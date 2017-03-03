@@ -1,0 +1,34 @@
+.label {
+  display: inline-block;
+  text-transform: uppercase;
+  min-width: 80px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 8pt;
+  text-align: center;
+}
+
+.discussion {
+  color: $color-picton-blue;
+  background-color: $color-link-water;
+}
+
+.event {
+  color: $color-medium-purple;
+  background-color: $color-moon-raker;
+}
+
+.offer {
+  color: $color-caribbean-green;
+  background-color: $color-iceberg;
+}
+
+.project {
+  color: $color-fuchsia-pink;
+  background-color: $color-prim;
+}
+
+.request {
+  color: $color-persimmon;
+  background-color: $color-peach-schnapps;
+}

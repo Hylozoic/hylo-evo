@@ -1,0 +1,78 @@
+.button {
+  height: 40px;
+  line-height: 40px;
+  padding: 0px 40px;
+  border-radius: 25px;
+  display: inline-block;
+}
+
+.small {
+  padding: 0px 30px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 10pt;
+}
+
+.narrow {
+  padding: 0px 25px;
+}
+
+.green {
+  background-color: $color-caribbean-green;
+  color: $color-white;
+  &:hover, &.hover {
+    background-color: lighten($color-caribbean-green, 2%);
+  }
+  &:active, &.active {
+    background-color: darken($color-caribbean-green, 2%);
+  }
+}
+
+.purple {
+  background-color: $color-medium-purple;
+  color: $color-white;
+  &:hover, &.hover {
+    background-color: lighten($color-medium-purple, 3%);
+  }
+  &:active, &.active {
+    background-color: darken($color-medium-purple, 3%);
+  }
+}
+
+.green-white {
+  color: $color-caribbean-green;
+  border: 1px solid $color-alto;
+  &:hover, &.hover {
+    background-color: $color-polar;
+    border-color: $color-caribbean-green;
+  }
+  &:active, &.active {
+    background-color: $color-ziggurat;
+    border-color: transparent;
+  }
+}
+
+.green-white-green-border {
+  composes: green-white;
+  border: 1px solid $color-caribbean-green;
+}
+
+.gray {
+  color: $color-alto;
+  border: 1px solid $color-alto;
+}
+
+.white {
+  color: $color-white;
+  border: 1px solid $color-white;
+  background-color: transparent;
+}
+
+.gray-blank {
+  composes: gray;
+  color: transparent;
+}
+
+.hover, .active {
+  display: inline-block;
+}

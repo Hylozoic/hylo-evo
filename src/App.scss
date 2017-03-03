@@ -1,0 +1,76 @@
+@mixin make-visible {
+  background-color: $color-white;
+  border: solid 1px $color-rhino;
+}
+
+@media (min-width: 81rem) {
+  .container {
+    width: 80rem;
+    @include make-container();
+  }
+}
+
+.row {
+  @include make-row();
+}
+
+.leftPanel {
+  @include make-visible();
+  @include make-col-ready();
+  @media (max-width: 32em) {
+    @include make-col(6);
+  }
+  @media (min-width: 32.1em) {
+    @include make-col(2.4);
+  }
+}
+
+.centerPanel {
+  @include make-visible();
+  @include make-col-ready();
+  @media (max-width: 32em) {
+    @include make-col(6);
+  }
+  @media (min-width: 32.1em) {
+    @include make-col(5.88);
+  }
+}
+
+.rightPanel {
+  @include make-visible();
+  @include make-col-ready();
+  @media (max-width: 32em) {
+    @include make-col(6);
+  }
+  @media (min-width: 32.1em) {
+    @include make-col(3.72);
+  }
+}
+
+// .topBar {
+//
+// }
+//
+// .leftPanel {
+//   background-color: $color-white;
+// }
+//
+// .centerPanel {
+//
+// }
+//
+// .rightPanel {
+//   background-color: $color-rhino;
+// }
+//
+//
+// leftPanel 20% 2.4 units / 12
+// centerPanel 630px 50% 6 / 12
+// rightPanel 370px 30% 3.6units / 12
+//
+// detailPanel
+//
+//
+// 1280
+//
+// 910-2180

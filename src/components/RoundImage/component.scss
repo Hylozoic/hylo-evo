@@ -1,0 +1,25 @@
+.image {
+  background-position: center;
+  background-size: cover;
+  border: solid 3px $color-white;
+  width: $space-11x-base;
+  height: $space-11x-base;
+}
+
+.overlaps {
+  margin-left: -$space-4x-base;
+}
+
+.overlaps:first-child {
+  margin-left: 0px;
+}
+
+.medium {
+  width: $space-9x-base;
+  height: $space-9x-base;
+}
+
+.small {
+  width: $space-7x-base;
+  height: $space-7x-base;
+}

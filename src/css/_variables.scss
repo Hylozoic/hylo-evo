@@ -1,0 +1,86 @@
+// Hylo App
+
+// DEFINE ONLY VARIABLES IN THIS FILE, NO CSS
+// These variables are globally included and should not
+// be manually manually imported into any SASS file.
+
+// Spacing
+$space-base-unit: 0.25rem;
+$space-2x-base: 0.5rem;
+$space-3x-base: 0.75rem;
+$space-4x-base: 1rem;
+$space-5x-base: 1.25rem;
+$space-6x-base: 1.5rem;
+$space-7x-base: 1.75rem;
+$space-8x-base: 2rem;
+$space-9x-base: 2.25rem;
+$space-10x-base: 2.5rem;
+$space-11x-base: 2.75rem;
+$space-12x-base: 3rem;
+$space-18x-base: 4rem;
+
+$space-sm: $space-3x-base;
+$space-std: $space-8x-base;
+$space-lg: $space-9x-base;
+$space-xl: $space-10x-base;
+$space-xxl: $space-18x-base;
+
+// Colors
+// For now standardized on using "Name that Color" naming:
+// http://chir.ag/projects/name-that-color http://chir.ag/projects/ntc/
+$color-rhino: #2C4059;
+$color-rhino-80: color($color-rhino a(80%));
+$color-rhino-60: color($color-rhino a(60%));
+$color-rhino-50: color($color-rhino a(50%));
+$color-rhino-30: color($color-rhino a(30%));
+$color-rhino-darker: #2C405A;
+$color-nepal: #8DABC4;
+
+$color-white: #FFFFFF;
+$color-black: #000000;
+$color-athens-gray: #FAFBFC;
+
+$color-caribbean-green: #0DC3A0;
+$color-medium-purple: #9883E5;
+$color-fuchsia-pink: #BB60A8;
+$color-picton-blue: #40A1DD;
+$color-persimmon: #FE6848;
+
+$color-iceberg: #CFF3EC;
+$color-moon-raker: #EAE6FA;
+$color-prim: #F1DFEE;
+$color-link-water: #D9ECF8;
+$color-peach-schnapps: #FFE1DA;
+
+$color-mountain-meadow: #23CC80;
+$color-amaranth: #EE4266;
+$color-yello-orange: #FFB949;
+
+$color-alto: #DCDCDC;
+$color-polar: #F0FCF9;
+$color-ziggurat: #BDE0DC;
+
+// Fonts
+@mixin font-regular {
+  font-family: 'Circular Book', sans-serif;
+}
+
+@mixin font-medium {
+  font-family: 'Circular Medium', sans-serif;
+}
+
+@mixin font-bold {
+  font-family: 'Circular bold', sans-serif;
+}
+
+// Bootstrap setup
+$font-family-base: 'Circular Book', sans-serif;
+$body-bg: $color-caribbean-green;
+$display4-size: 32px;
+$font-size-h1: 24px;
+$font-size-h2: 18px;
+$font-size-h3: 14px;
+
+
+@import './src/css/bootstrap-customizations.scss';
+@import './src/css/bootstrap-4-hylo.scss';

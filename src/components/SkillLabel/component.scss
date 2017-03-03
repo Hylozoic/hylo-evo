@@ -1,0 +1,33 @@
+.label {
+  display: inline-block;
+  text-transform: uppercase;
+  height: 25px;
+  line-height: 25px;
+  font-size: 8pt;
+  text-align: center;
+  border: 1px solid $color-alto;
+  background-color: transparent;
+  padding: 0 8px;
+  border-radius: 25px;
+}
+
+.dark {
+  color: $color-rhino-50;
+  border-color: $color-alto;
+  &.active {
+    color: $color-rhino-60;
+    border-color: $color-rhino-60;
+  }
+}
+
+.white {
+  color: $color-white;
+  border-color: color($color-white a(60%));
+  &.active {
+    border-color: $color-white;
+  }
+}
+
+.active {
+  display: inline-block;
+}

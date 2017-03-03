@@ -1,0 +1,141 @@
+// Global Typography
+
+@font-face {
+  font-family: 'Circular Book';
+  src: url('/assets/fonts/Circular-Font-Family/lineto-circular-book.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Circular Medium';
+  src: url('/assets/fonts/Circular-Font-Family/lineto-circular-medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Circular Bold';
+  src: url('/assets/fonts/Circular-Font-Family/lineto-circular-bold.ttf') format('truetype');
+}
+
+.hdr-display {
+  @include font-bold;
+  font-size: 32px;
+  letter-spacing: -0.5;
+  line-height: 36px;
+  color: $color-rhino;
+}
+
+.hdr-headline {
+  @include font-medium;
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: 28px;
+  color: $color-rhino;
+}
+
+.hdr-subheadline {
+  @include font-regular;
+  font-size: 18px;
+  letter-spacing: 0;
+  line-height: 22px;
+  color: $color-rhino;
+}
+
+.hdr-minor {
+  @include font-regular;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 18px;
+  color: $color-rhino;
+}
+
+/* Body */
+
+.bdy-drk-lg {
+  @include font-regular;
+  color: $color-rhino-80;
+  font-size: 18px;
+  letter-spacing: 0;
+  line-height: 24px;
+}
+
+.bdy-lt-lg {
+  @include font-regular;
+  color: $color-rhino-60;
+  font-size: 17px;
+  letter-spacing: 0;
+  line-height: 25px;
+}
+
+.bdy-drk-sm {
+  @include font-regular;
+  color: $color-rhino-80;
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: 22px;
+}
+
+.bdy-lt-sm {
+  @include font-regular;
+  color: $color-rhino-60;
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: 22px;
+}
+
+.caption-drk-lg{
+  @include font-regular;
+  color: $color-rhino-80;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 18px;
+}
+
+.caption-lt-lg {
+  @include font-regular;
+  color: $color-rhino-60;
+  font-size: 13px;
+  letter-spacing: 0;
+  line-height: 19px;
+}
+
+/* Misc */
+
+.tag {
+  @include font-bold;
+  color: $color-nepal;
+  font-size: 10px;
+  letter-spacing: 0.6;
+  line-height: 14px;
+  text-transform: uppercase;
+}
+
+.button {
+  @include font-medium;
+  color: $color-caribbean-green;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 20px;
+}
+
+.button-sm {
+  @include font-bold;
+  color: $color-caribbean-green;
+  font-size: 10px;
+  letter-spacing: 0.6;
+  line-height: 14px;
+}
+
+.cards {
+  @include font-bold;
+  color: $color-rhino;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 20px;
+}
+
+.timestamp {
+  @include font-regular;
+  color: $color-rhino-60;
+  font-size: 13px;
+  letter-spacing: 0;
+  line-height: 16px;
+}
