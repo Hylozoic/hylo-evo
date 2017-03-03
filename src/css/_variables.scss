@@ -83,4 +83,8 @@ $font-size-h3: 14px;
 
 
 @import './src/css/bootstrap-customizations.scss';
-@import './src/css/bootstrap-4-hylo.scss';
+
+// Core Bootstrap variables and mixins
+@import "./node_modules/bootstrap/scss/variables";
+@import "./node_modules/bootstrap/scss/mixins";
+@import "./node_modules/bootstrap/scss/custom";

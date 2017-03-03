@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 import { Link } from 'react-router'
+import CardOffer from './components/CardOffer';
 
 // Insert Global CSS
 import './css/global.scss'
@@ -11,17 +12,27 @@ import styles from './App.scss'
 class App extends Component {
   render () {
     return <div styleName='container'>
-      <div className='row'>
+      <div styleName='row'>
+        <div styleName='topBar'>
+          Top Bar
+        </div>
+      </div>
+      <div styleName='row'>
         <div styleName='leftPanel'>
-          stuff here in column 1
-          {this.props.children}
+          <CardOffer />
+          <CardOffer />
+          <CardOffer />
         </div>
         <div styleName='centerPanel'>
-          tests
+          <CardOffer />
+          <CardOffer />
+            {this.props.children}
         </div>
         <div styleName='rightPanel'>
-          stuff here in column 2
-          {this.props.children}
+          <CardOffer />
+          <CardOffer />
+          <CardOffer />
+          <CardOffer />
         </div>
       </div>
     </div>

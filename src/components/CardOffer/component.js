@@ -2,10 +2,9 @@ import React from 'react'
 import cx from 'classnames'
 import RoundImage from '../RoundImage'
 import SkillLabel from '../SkillLabel'
+import SAMPLE_POST from './samplePost'
 
-import styles from './component.scss'
-
-export default function CardOffer ({ post }) {
+export default function CardOffer ({ post = SAMPLE_POST }) {
   return <div className='card'>
     <CardHeader person={post.author} />
     <CardBlock className='m-0 py-0 px-6'>

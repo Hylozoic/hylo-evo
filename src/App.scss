@@ -1,6 +1,6 @@
 @mixin make-visible {
   background-color: $color-white;
-  border: solid 1px $color-rhino;
+  // border: solid 1px $color-rhino;
 }
 
 @media (min-width: 81rem) {
@@ -12,6 +12,12 @@
 
 .row {
   @include make-row();
+}
+
+.topBar {
+  @include make-col-ready();
+  @include make-visible();
+  background-color: $color-persimmon;
 }
 
 .leftPanel {
