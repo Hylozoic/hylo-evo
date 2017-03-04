@@ -6,12 +6,12 @@ import SAMPLE_POST from './samplePost'
 
 export default function CardOffer ({ post = SAMPLE_POST }) {
   return <div className='card'>
-    <CardHeader person={post.author} />
-    <CardBlock styleName='cardBlock'>
+    <CardHeader person={post.author} className='mb-3' />
+    <CardBlock styleName='cardBlock' className='mb-3'>
       <CardBody post={post} />
       <CardTags tags={post.tags} />
     </CardBlock>
-    <CardFooter votes={post.upVoters} />
+    <CardFooter votes={post.upVoters} className='mb-9' />
   </div>
 }
 
@@ -20,30 +20,31 @@ function CardBlock ({ children, className }) {
   return <div className={className}>{ children }</div>
 }
 
-function CardHeader ({person: { url, name }}) {
-  return <CardFlex
+function CardHeader ({person: { url, name }, className}) {
+  return <CardFlex className={className}
     lChildren={<RoundImage url={url} large />}
     rChildren={<RoundImage url={url} large />}>
-    {name}
+    <span className='hdr-subheadline'>{name}</span>
   </CardFlex>
 }
 
-function CardFlex ({ lChildren, rChildren, children }) {
-  return <div className='d-flex align-item-center m-6'>
+function CardFlex ({ lChildren, rChildren, children, className }) {
+  className = cx('d-flex align-item-center', className)
+  return <div className={className}>
     <div className='d-flex mr-1'>{lChildren}</div>
     <div className='w-100 mx-1'>{children}</div>
     <div className='ml-1'>{rChildren}</div>
   </div>
 }
 
-function CardBody ({ post: { title, body } }) {
-  return <div>
-    <div className='hdr-headline'>{title}</div>
+function CardBody ({ post: { title, body }, className }) {
+  return <div className={className}>
+    <div className='hdr-headline mb-3'>{title}</div>
     <p className='bdy-lt-lg'>{body}</p>
   </div>
 }
 
-function CardFooter ({ votes }) {
+function CardFooter ({ votes, className }) {
   let names = votes.slice(0, 2).map(vote => vote.name)
   if (votes.length > 2) {
     names = `${names.join(', ')} and ${votes.length - 3} others commented`
@@ -54,7 +55,9 @@ function CardFooter ({ votes }) {
     (vote, i) => <RoundImage url={vote.url} medium overlaps key={i} />
   )
   const rChildren = votes.length
-  return <CardFlex lChildren={lChildren} rChildren={rChildren}>{names}</CardFlex>
+  return <CardFlex lChildren={lChildren} rChildren={rChildren} className={className}>
+    {names}
+  </CardFlex>
 }
 
 function CardTags ({ tags }) {

@@ -1,20 +1,4 @@
 // Global Typography
-
-@font-face {
-  font-family: 'Circular Book';
-  src: url('/assets/fonts/Circular-Font-Family/lineto-circular-book.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Circular Medium';
-  src: url('/assets/fonts/Circular-Font-Family/lineto-circular-medium.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Circular Bold';
-  src: url('/assets/fonts/Circular-Font-Family/lineto-circular-bold.ttf') format('truetype');
-}
-
 .hdr-display {
   @include font-bold;
   font-size: 32px;

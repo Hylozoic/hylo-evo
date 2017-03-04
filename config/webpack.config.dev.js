@@ -77,26 +77,11 @@ module.exports = {
           cacheDirectory: true
         }
       },
-      // Global SASS resources (not loaded through modules)
-      {
-        test: /\.(css|scss|sass)$/,
-        include: [
-          paths.appCssGlobal
-        ],
-        loaders: [
-          'style?sourceMap',
-          'css?importLoaders=3',
-          'postcss',
-          'sass?sourceMap',
-          'sass-resources'
-        ]
-      },
       // CSS Modules for all SASS files not in resources or global
       {
         test: /\.(css|scss|sass)$/,
         exclude: [
-          paths.appSassResources,
-          paths.appCssGlobal
+          paths.appSassResources
         ],
         loaders: [
           'style?sourceMap',

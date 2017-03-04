@@ -1,2 +1,9 @@
-@import './bootstrap.scss';
-@import './typography.scss';
+// NOTE: font-face declarations need to be outside
+//       of CSS Modules global calls.
+//       ref: https://github.com/css-modules/css-modules/issues/95
+@import './fonts.scss';
+
+:global {
+  @import './bootstrap-global.scss';
+  @import '../typography.scss';
+}
