@@ -7,7 +7,7 @@ import SAMPLE_POST from './samplePost'
 export default function CardOffer ({ post = SAMPLE_POST }) {
   return <div className='card'>
     <CardHeader person={post.author} />
-    <CardBlock className='m-0 py-0 px-6'>
+    <CardBlock styleName='cardBlock'>
       <CardBody post={post} />
       <CardTags tags={post.tags} />
     </CardBlock>
@@ -16,7 +16,7 @@ export default function CardOffer ({ post = SAMPLE_POST }) {
 }
 
 function CardBlock ({ children, className }) {
-  className = cx('card-block', className)
+  className = cx(className)
   return <div className={className}>{ children }</div>
 }
 
@@ -38,8 +38,8 @@ function CardFlex ({ lChildren, rChildren, children }) {
 
 function CardBody ({ post: { title, body } }) {
   return <div>
-    <div className='h1'>{title}</div>
-    <p>{body}</p>
+    <div className='hdr-headline'>{title}</div>
+    <p className='bdy-lt-lg'>{body}</p>
   </div>
 }
 

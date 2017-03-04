@@ -13,7 +13,7 @@ class App extends Component {
   render () {
     return <div styleName='container'>
       <div styleName='row'>
-        <div styleName='topBar'>
+        <div styleName='topBar' className='hdr-display'>
           Top Bar
         </div>
       </div>

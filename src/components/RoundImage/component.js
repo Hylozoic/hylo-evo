@@ -11,7 +11,7 @@ const { string, bool } = React.PropTypes
 export default function RoundImage ({ url, small, medium, overlaps, className }) {
   let styleName = cx('image', { overlaps, small, medium })
   // LEJ: Note use of bootstrap utility classes here
-  className = cx(className, 'd-inline-block align-top img-thumbnail rounded-circle')
+  className = cx(className)
   return <div styleName={styleName}
     className={className}
     style={bgStyle(url)} />

@@ -73,14 +73,7 @@ $color-ziggurat: #BDE0DC;
   font-family: 'Circular bold', sans-serif;
 }
 
-// Bootstrap setup
-$font-family-base: 'Circular Book', sans-serif;
-$body-bg: $color-caribbean-green;
-$display4-size: 32px;
-$font-size-h1: 24px;
-$font-size-h2: 18px;
-$font-size-h3: 14px;
-
+$bootstrap-path: 'node_modules/bootstrap/scss/bootstrap.scss';
 
 @import './src/css/bootstrap-customizations.scss';
 
