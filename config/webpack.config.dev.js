@@ -39,10 +39,8 @@ module.exports = {
     alias: {
       'react-native': 'react-native-web'
     },
-    root: [
-      paths.appSrc,
-      paths.nodePaths
-    ]
+    // LEJ: Allow /src to operate as it's own absolute root
+    root: [paths.appSrc]
   },
 
   module: {
@@ -79,25 +77,26 @@ module.exports = {
           cacheDirectory: true
         }
       },
-      // Global SASS resources
+      // Global SASS resources (not loaded through modules)
       {
         test: /\.(css|scss|sass)$/,
         include: [
-          paths.appSrc + '/css/global.scss'
+          paths.appCssGlobal
         ],
         loaders: [
           'style?sourceMap',
-          'css',
+          'css?importLoaders=3',
           'postcss',
           'sass?sourceMap',
           'sass-resources'
         ]
       },
-      // CSS Modules for all SASS files not in /css directories
+      // CSS Modules for all SASS files not in resources or global
       {
         test: /\.(css|scss|sass)$/,
         exclude: [
-          paths.appSrc + '/css/global.scss'
+          paths.appSassResources,
+          paths.appCssGlobal
         ],
         loaders: [
           'style?sourceMap',
@@ -124,10 +123,12 @@ module.exports = {
     ]
   },
 
-  // Define global SASS variables in css/_variables for preloading by the
-  // sass-resources loader.
+  // LEJ: Define global SASS variables in the files specified here
+  // for preloading by the sass-resources loader. The explicit
+  // load order is on purpose.
   sassResources: [
-    paths.appSrc + '/css/_variables.scss'
+    paths.appSassResources + '/_app.scss',
+    paths.appSassResources + '/_bootstrap-customization.scss'
   ],
 
   postcss: function () {

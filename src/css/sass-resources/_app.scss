@@ -6,24 +6,24 @@
 
 // Spacing
 $space-base-unit: 0.25rem;
-$space-2x-base: 0.5rem;
-$space-3x-base: 0.75rem;
-$space-4x-base: 1rem;
-$space-5x-base: 1.25rem;
-$space-6x-base: 1.5rem;
-$space-7x-base: 1.75rem;
-$space-8x-base: 2rem;
-$space-9x-base: 2.25rem;
-$space-10x-base: 2.5rem;
-$space-11x-base: 2.75rem;
-$space-12x-base: 3rem;
-$space-18x-base: 4rem;
+$space-2x: $space-base-unit * 2;
+$space-3x: $space-base-unit * 3;
+$space-4x: $space-base-unit * 4;
+$space-5x: $space-base-unit * 5;
+$space-6x: $space-base-unit * 6;
+$space-7x: $space-base-unit * 7;
+$space-8x: $space-base-unit * 8;
+$space-9x: $space-base-unit * 9;
+$space-10x: $space-base-unit * 10;
+$space-11x: $space-base-unit * 11;
+$space-12x: $space-base-unit * 12;
+$space-18x: $space-base-unit * 18;
 
-$space-sm: $space-3x-base;
-$space-std: $space-8x-base;
-$space-lg: $space-9x-base;
-$space-xl: $space-10x-base;
-$space-xxl: $space-18x-base;
+// $space-sm: $space-3x;
+// $space-std: $space-8x;
+// $space-lg: $space-9x;
+// $space-xl: $space-10x;
+// $space-xxl: $space-18x;
 
 // Colors
 // For now standardized on using "Name that Color" naming:
@@ -74,10 +74,3 @@ $color-ziggurat: #BDE0DC;
 }
 
 $bootstrap-path: 'bootstrap/scss/bootstrap.scss';
-
-@import './src/css/bootstrap-customizations.scss';
-
-// Core Bootstrap variables and mixins
-@import './node_modules/bootstrap/scss/variables';
-@import './node_modules/bootstrap/scss/mixins';
-@import './node_modules/bootstrap/scss/custom';

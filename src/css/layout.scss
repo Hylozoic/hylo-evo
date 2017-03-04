@@ -3,13 +3,13 @@
   background-color: $color-white;
   // width: $sheet-width;
   // margin: $sheet-vertical-margin auto;
-  padding: $space-18x-base;
+  padding: $space-18x;
   // border-radius: $sheet-border-radius;
   &-title {
     @include font-bold;
-    padding-top: $space-3x-base;
+    padding-top: $space-3x;
     font-size: 24pt;
-    margin-bottom: $space-18x-base;
+    margin-bottom: $space-18x;
     color: #2C4059;
   }
 }
@@ -21,7 +21,7 @@
     flex-grow: 1;
     flex-shrink: 0;
     flex-basis: 100px;
-    margin-right: $space-6x-base;
+    margin-right: $space-6x;
   }
   &-item:last-child {
     margin-right: 0;
@@ -29,15 +29,15 @@
 }
 
 .section {
-  margin-bottom: $space-12x-base;
+  margin-bottom: $space-12x;
   &-title {
     margin-top: 0px;
     padding-top: 0px;
-    margin-bottom: $space-9x-base;
+    margin-bottom: $space-9x;
     color: #2C4059;
     opacity: 0.6;
     &--collapsed {
-      margin-bottom: $space-3x-base;
+      margin-bottom: $space-3x;
     }
   }
   &-box {

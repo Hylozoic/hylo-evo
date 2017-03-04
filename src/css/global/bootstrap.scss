@@ -1,0 +1,29 @@
+/*!
+ * Bootstrap v4.0.0-alpha.6 (https://getbootstrap.com)
+ * Copyright 2011-2017 The Bootstrap Authors
+ * Copyright 2011-2017 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+// // NOTE: Moved to variables resource file to make globally available in CSS Modules
+// // Core variables and mixins
+// @import "node_modules/bootstrap/scss/variables";
+// @import "node_modules/bootstrap/scss/mixins";
+// @import "node_modules/bootstrap/scss/custom";
+
+// Reset and dependencies
+@import "node_modules/bootstrap/scss/normalize";
+@import "node_modules/bootstrap/scss/print";
+
+// Core CSS
+@import "node_modules/bootstrap/scss/reboot";
+// @import "node_modules/bootstrap/scss/type";
+// @import "node_modules/bootstrap/scss/images";
+// @import "node_modules/bootstrap/scss/code";
+@import "node_modules/bootstrap/scss/grid";
+// @import "node_modules/bootstrap/scss/tables";
+// @import "node_modules/bootstrap/scss/forms";
+// @import "node_modules/bootstrap/scss/buttons";
+
+// Utility classes
+@import "node_modules/bootstrap/scss/utilities";

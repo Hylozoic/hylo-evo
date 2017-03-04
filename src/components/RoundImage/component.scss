@@ -2,8 +2,8 @@
   background-position: center;
   background-size: cover;
   border: solid 3px $color-white;
-  width: $space-11x-base;
-  height: $space-11x-base;
+  width: $space-11x;
+  height: $space-11x;
   composes: img-thumbnail from $bootstrap-path;
   composes: rounded-circle from $bootstrap-path;
   composes: d-inline-block from $bootstrap-path;
@@ -11,7 +11,7 @@
 }
 
 .overlaps {
-  margin-left: -$space-4x-base;
+  margin-left: -$space-4x;
 }
 
 .overlaps:first-child {
@@ -19,11 +19,11 @@
 }
 
 .medium {
-  width: $space-9x-base;
-  height: $space-9x-base;
+  width: $space-9x;
+  height: $space-9x;
 }
 
 .small {
-  width: $space-7x-base;
-  height: $space-7x-base;
+  width: $space-7x;
+  height: $space-7x;
 }

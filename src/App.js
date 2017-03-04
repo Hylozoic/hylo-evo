@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 import CardOffer from 'components/CardOffer'
 
 // Insert Global CSS
-import './css/global.scss'
+import './css/global/index.scss'
 
 import styles from './App.scss'
 
