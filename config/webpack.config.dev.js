@@ -6,19 +6,10 @@ var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeMod
 var getClientEnvironment = require('./env')
 var paths = require('./paths')
 
-// Webpack uses `publicPath` to determine where the app is being served from.
-// In development, we always serve from the root. This makes config easier.
 var publicPath = '/'
-// `publicUrl` is just like `publicPath`, but we will provide it to our app
-// as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
-// Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
 var publicUrl = ''
-// Get environment variables to inject into our app.
 var env = getClientEnvironment(publicUrl)
 
-// This is the development configuration.
-// It is focused on developer experience and fast rebuilds.
-// The production configuration is different and lives in a separate file.
 module.exports = {
   devtool: 'cheap-module-source-map',
 
@@ -34,25 +25,38 @@ module.exports = {
     publicPath: publicPath
   },
   resolve: {
-    fallback: paths.nodePaths,
-    extensions: ['.js', '.json', '.jsx', ''],
+    // LEJ: Allow /src to operate as it's own absolute root
+    modules: ['node_modules', paths.appSrc].concat(paths.nodePaths),
+    extensions: ['.js', '.json', '.jsx'],
     alias: {
       'react-native': 'react-native-web'
-    },
-    // LEJ: Allow /src to operate as it's own absolute root
-    root: [paths.appSrc]
+    }
   },
-
   module: {
-    preLoaders: [
+    rules: [
+      // Disable require.ensure as it's not a standard language feature.
+      { parser: { requireEnsure: false } },
+
+      // First, run the linter.
+      // It's important to do this before Babel processes the JS.
       {
         test: /\.(js|jsx)$/,
-        loader: 'eslint',
+        enforce: 'pre',
+        use: [{
+          loader: 'eslint-loader'
+        }],
         include: paths.appSrc
-      }
-    ],
-    loaders: [
+      },
+
       // Static resources
+      // ** ADDING/UPDATING LOADERS **
+      // The "url" loader handles all assets unless explicitly excluded.
+      // The `exclude` list *must* be updated with every change to loader extensions.
+      // When adding a new loader, you must add its `test`
+      // as a new entry in the `exclude` list for "url" loader.
+      //
+      // "url" loader embeds assets smaller than specified size as data URLs to avoid requests.
+      // Otherwise, it acts like the "file" loader.
       {
         exclude: [
           /\.html$/,
@@ -61,77 +65,91 @@ module.exports = {
           /\.json$/,
           /\.svg$/
         ],
-        loader: 'url',
-        query: {
+        loader: 'url-loader',
+        options: {
           limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]'
         }
       },
-      // Babel
+
+      // Process JS with Babel.
       {
         test: /\.(js|jsx)$/,
-        include: [paths.appNodeModules, paths.appSrc],
-        loader: 'babel',
-        query: {
+        include: paths.appSrc,
+        // include: [paths.appNodeModules, paths.appSrc],
+        loader: 'babel-loader',
+        options: {
+          // @remove-on-eject-begin
+          babelrc: false,
+          presets: [require.resolve('babel-preset-react-app')],
+          // @remove-on-eject-end
+          // This is a feature of `babel-loader` for webpack (not Babel itself).
+          // It enables caching results in ./node_modules/.cache/babel-loader/
+          // directory for faster rebuilds.
           cacheDirectory: true
         }
       },
+
       // CSS Modules for all SASS files not in resources or global
       {
         test: /\.(css|scss|sass)$/,
-        loaders: [
-          'style?sourceMap',
-          'css?modules&importLoaders=3&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
-          'postcss',
-          'sass?sourceMap',
-          'sass-resources'
+        use: [
+          {
+            loader: 'style-loader'
+          }, {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              localIdentName: '[path]___[name]__[local]___[hash:base64:5]',
+              importLoaders: 3
+            }
+          }, {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss', // eventually not necessary...
+              plugins: () => [
+                require('autoprefixer')({
+                  browsers: [
+                    '>1%',
+                    'last 4 versions',
+                    'Firefox ESR',
+                    'not ie < 9' // React doesn't support IE8 anyway
+                  ]
+                })
+              ]
+            }
+          }, {
+            loader: 'sass-loader'
+          }, {
+            loader: 'sass-resources-loader',
+            options: {
+              // LEJ: Define global SASS variables in the files specified here
+              // for preloading by the sass-resources loader. The explicit
+              // load order is on purpose.
+              resources: [
+                paths.appSrc + '/css/sass-resources/_app.scss',
+                paths.appSrc + '/css/sass-resources/_bootstrap-customization.scss'
+              ]
+            }
+          }
         ]
       },
+
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
       {
         test: /\.json$/,
         loader: 'json'
-      },
-      // "file" loader for svg
-      {
-        test: /\.svg$/,
-        loader: 'file',
-        query: {
-          name: 'static/media/[name].[hash:8].[ext]'
-        }
       }
     ]
   },
 
-  // LEJ: Define global SASS variables in the files specified here
-  // for preloading by the sass-resources loader. The explicit
-  // load order is on purpose.
-  sassResources: [
-    paths.appSrc + '/css/sass-resources/_app.scss',
-    paths.appSrc + '/css/sass-resources/_bootstrap-customization.scss'
-  ],
-
-  postcss: function () {
-    return [
-      require('postcss-cssnext')({
-        browsers: [
-          '>1%',
-          'last 4 versions',
-          'Firefox ESR',
-          'not ie < 9' // React doesn't support IE8 anyway
-        ]
-      })
-    ]
-  },
-
   plugins: [
-    // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
+    // Makes some environment variables available in index.html.
+    // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In development, this will be an empty string.
-    new InterpolateHtmlPlugin({
-      PUBLIC_URL: publicUrl
-    }),
+    new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
@@ -139,7 +157,7 @@ module.exports = {
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
-    new webpack.DefinePlugin(env),
+    new webpack.DefinePlugin(env.stringified),
     // This is necessary to emit hot updates (currently CSS only):
     new webpack.HotModuleReplacementPlugin(),
     // Watcher doesn't work well if you mistype casing in a path so we use
@@ -150,11 +168,12 @@ module.exports = {
     // to restart the development server for Webpack to discover it. This plugin
     // makes the discovery automatic so you don't have to restart.
     // See https://github.com/facebookincubator/create-react-app/issues/186
-    new WatchMissingNodeModulesPlugin(paths.appNodeModules),
-    // Required for bootstrap-loader
-    new webpack.ProvidePlugin({
-      'window.Tether': 'tether'
-    })
+    new WatchMissingNodeModulesPlugin(paths.appNodeModules)
+    // TODO: Check if necessary- May or may not be required for bootstrap
+    //        loading (probably not)
+    // new webpack.ProvidePlugin({
+    //   'window.Tether': 'tether'
+    // })
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
@@ -162,5 +181,11 @@ module.exports = {
     fs: 'empty',
     net: 'empty',
     tls: 'empty'
+  },
+  // Turn off performance hints during development because we don't do any
+  // splitting or minification in interest of speed. These warnings become
+  // cumbersome.
+  performance: {
+    hints: false
   }
 }
