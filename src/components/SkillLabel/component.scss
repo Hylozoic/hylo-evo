@@ -22,7 +22,7 @@
 
 .white {
   color: $color-white;
-  border-color: color($color-white a(60%));
+  border-color: rgba($color-white, .6);
   &.active {
     border-color: $color-white;
   }

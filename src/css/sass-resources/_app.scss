@@ -29,10 +29,10 @@ $space-18x: $space-base-unit * 18;
 // For now standardized on using "Name that Color" naming:
 // http://chir.ag/projects/name-that-color http://chir.ag/projects/ntc/
 $color-rhino: #2C4059;
-$color-rhino-80: color($color-rhino a(80%));
-$color-rhino-60: color($color-rhino a(60%));
-$color-rhino-50: color($color-rhino a(50%));
-$color-rhino-30: color($color-rhino a(30%));
+$color-rhino-80: rgba($color-rhino, .8);
+$color-rhino-60: rgba($color-rhino, .6);
+$color-rhino-50: rgba($color-rhino, .5);
+$color-rhino-30: rgba($color-rhino, .3);
 $color-rhino-darker: #2C405A;
 $color-nepal: #8DABC4;
 

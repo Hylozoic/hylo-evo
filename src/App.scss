@@ -18,6 +18,10 @@
 .topBar {
   @include make-col-ready();
   @include make-visible();
+  composes: p-6 mb-6 from 'css/bootstrap.scss';
+  box-shadow: 0px 3px 5px 0px $color-nepal;
+  color: $color-athens-gray;
+  background-color: $color-persimmon;
 }
 
 .leftPanel {
