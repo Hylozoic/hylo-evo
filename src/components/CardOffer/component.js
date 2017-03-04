@@ -1,7 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
-import RoundImage from '../RoundImage'
-import SkillLabel from '../SkillLabel'
+import RoundImage from 'components/RoundImage'
+import SkillLabel from 'components/SkillLabel'
 import SAMPLE_POST from './samplePost'
 
 export default function CardOffer ({ post = SAMPLE_POST }) {

@@ -38,7 +38,11 @@ module.exports = {
     extensions: ['.js', '.json', '.jsx', ''],
     alias: {
       'react-native': 'react-native-web'
-    }
+    },
+    root: [
+      paths.appSrc,
+      paths.nodePaths
+    ]
   },
 
   module: {

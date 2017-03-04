@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 import { Link } from 'react-router'
-import CardOffer from './components/CardOffer';
+import CardOffer from 'components/CardOffer'
 
 // Insert Global CSS
 import './css/global.scss'

@@ -12,7 +12,7 @@
 
 .row {
   @include make-row();
-  composes: justify-content-between from '../' + $bootstrap-path;
+  composes: justify-content-between from $bootstrap-path;
 }
 
 .topBar {

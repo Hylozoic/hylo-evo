@@ -73,11 +73,11 @@ $color-ziggurat: #BDE0DC;
   font-family: 'Circular bold', sans-serif;
 }
 
-$bootstrap-path: 'node_modules/bootstrap/scss/bootstrap.scss';
+$bootstrap-path: 'bootstrap/scss/bootstrap.scss';
 
 @import './src/css/bootstrap-customizations.scss';
 
 // Core Bootstrap variables and mixins
-@import "./node_modules/bootstrap/scss/variables";
-@import "./node_modules/bootstrap/scss/mixins";
-@import "./node_modules/bootstrap/scss/custom";
+@import './node_modules/bootstrap/scss/variables';
+@import './node_modules/bootstrap/scss/mixins';
+@import './node_modules/bootstrap/scss/custom';

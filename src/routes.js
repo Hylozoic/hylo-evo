@@ -1,6 +1,6 @@
 import React from 'react'
 import { Router, Route, hashHistory } from 'react-router'
-import App from './App'
+import App from 'App'
 
 // LEJ: The following throws and error looking for Typography.js
 //    import Typography from './components/Typography'

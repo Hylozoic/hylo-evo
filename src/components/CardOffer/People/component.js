@@ -1,5 +1,5 @@
 import React from 'react'
-import RoundImage from '../RoundImage'
+import RoundImage from 'components/RoundImage'
 
 export default function PeopleImages ({ peopleImageUrls }) {
   const urls = peopleImageUrls.map(function (url) {

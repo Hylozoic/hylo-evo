@@ -4,10 +4,10 @@
   border: solid 3px $color-white;
   width: $space-11x-base;
   height: $space-11x-base;
-  composes: img-thumbnail from '../../../node_modules/bootstrap/scss/_images.scss';
-  composes: rounded-circle from '../../../node_modules/bootstrap/scss/utilities/_borders.scss';
-  composes: d-inline-block from '../../../node_modules/bootstrap/scss/utilities/_display.scss';
-  composes: align-top from '../../../node_modules/bootstrap/scss/utilities/_align.scss';
+  composes: img-thumbnail from $bootstrap-path;
+  composes: rounded-circle from $bootstrap-path;
+  composes: d-inline-block from $bootstrap-path;
+  composes: align-top from $bootstrap-path;
 }
 
 .overlaps {
