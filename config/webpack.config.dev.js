@@ -57,8 +57,7 @@ module.exports = {
         exclude: [
           /\.html$/,
           /\.(js|jsx)$/,
-          /\.scss$/,
-          /\.css$/,
+          /\.(css|scss|sass)$/,
           /\.json$/,
           /\.svg$/
         ],
@@ -80,9 +79,6 @@ module.exports = {
       // CSS Modules for all SASS files not in resources or global
       {
         test: /\.(css|scss|sass)$/,
-        exclude: [
-          paths.appSassResources
-        ],
         loaders: [
           'style?sourceMap',
           'css?modules&importLoaders=3&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
@@ -112,8 +108,8 @@ module.exports = {
   // for preloading by the sass-resources loader. The explicit
   // load order is on purpose.
   sassResources: [
-    paths.appSassResources + '/_app.scss',
-    paths.appSassResources + '/_bootstrap-customization.scss'
+    paths.appSrc + '/css/sass-resources/_app.scss',
+    paths.appSrc + '/css/sass-resources/_bootstrap-customization.scss'
   ],
 
   postcss: function () {
@@ -128,6 +124,7 @@ module.exports = {
       })
     ]
   },
+
   plugins: [
     // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
