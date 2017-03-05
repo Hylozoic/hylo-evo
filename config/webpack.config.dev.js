@@ -26,7 +26,7 @@ module.exports = {
   },
   resolve: {
     // LEJ: Allow /src to operate as it's own absolute root
-    modules: ['node_modules', paths.appSrc].concat(paths.nodePaths),
+    modules: [paths.appSrc, 'node_modules'].concat(paths.nodePaths),
     extensions: ['.js', '.json', '.jsx'],
     alias: {
       'react-native': 'react-native-web'
@@ -79,10 +79,6 @@ module.exports = {
         // include: [paths.appNodeModules, paths.appSrc],
         loader: 'babel-loader',
         options: {
-          // @remove-on-eject-begin
-          babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
-          // @remove-on-eject-end
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/babel-loader/
           // directory for faster rebuilds.
@@ -106,7 +102,7 @@ module.exports = {
           }, {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss', // eventually not necessary...
+              ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
               plugins: () => [
                 require('autoprefixer')({
                   browsers: [
