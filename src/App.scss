@@ -33,6 +33,7 @@
   @media (min-width: 32.1em) {
     @include make-col(2.4);
   }
+  transition: 0.5s;
 }
 
 .leftPanel-collapsed {
@@ -44,6 +45,7 @@
   @media (min-width: 32.1em) {
     @include make-col(0.72);
   }
+  transition: 0.5s;
 }
 
 .centerPanel {
@@ -66,6 +68,7 @@
   @media (min-width: 32.1em) {
     @include make-col(3);
   }
+  transition: 0.5s;
 }
 
 .rightPanel-expanded {
@@ -77,4 +80,5 @@
   @media (min-width: 32.1em) {
     @include make-col(5.4);
   }
+  transition: 0.5s;
 }
