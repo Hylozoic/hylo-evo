@@ -11,6 +11,9 @@ import styles from 'App.scss'
 
 class App extends Component {
   render () {
+    
+    const { main, sidebar } = this.props
+
     return <div styleName='container'>
       <div styleName='row'>
         <div styleName='topBar' className='hdr-display'>
@@ -23,17 +26,8 @@ class App extends Component {
           <CardOffer />
           <CardOffer />
         </div>
-        <div styleName='centerPanel'>
-          <CardOffer />
-          <CardOffer />
-            {this.props.children}
-        </div>
-        <div styleName='rightPanel'>
-          <CardOffer />
-          <CardOffer />
-          <CardOffer />
-          <CardOffer />
-        </div>
+        {main}
+        {sidebar}
       </div>
     </div>
   }

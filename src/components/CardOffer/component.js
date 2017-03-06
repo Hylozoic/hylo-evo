@@ -16,9 +16,9 @@ export default function CardOffer ({post: { id, author, title, body, tags, upVot
   </div>
 }
 CardOffer.propTypes = {
-  id: PropTypes.any.isRequired,
-  author: PropTypes.object.isRequired,
-  title: PropTypes.string.isRequired,
+  id: PropTypes.any,
+  author: PropTypes.object,
+  title: PropTypes.string,
   body: PropTypes.string,
   tags: PropTypes.array,
   upVoters: PropTypes.array
