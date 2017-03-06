@@ -10,6 +10,7 @@ const SAMPLE_PEOPLE = [
 ]
 
 const SAMPLE_POST = {
+  id: 'SAMPLE_POST',
   title: 'We put this together as a PDF for hand-out at your next event or university class',
   body: 'Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!',
   votesCount: '2564',

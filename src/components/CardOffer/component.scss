@@ -1,4 +1,12 @@
+.cardHeader {
+  composes: mb-3 from $bootstrap-path;
+}
+
 .cardBlock {
-  composes: card-block from $bootstrap-path;
-  composes: m-0 py-0 px-0 from $bootstrap-path;
+  // composes: card-block from $bootstrap-path;
+  composes: mb-3 p-0 from $bootstrap-path;
+}
+
+.cardFooter {
+  composes: mb-9 from $bootstrap-path;
 }

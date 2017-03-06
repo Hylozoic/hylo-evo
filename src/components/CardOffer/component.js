@@ -1,18 +1,30 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
 import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
 import SkillLabel from 'components/SkillLabel'
 import SAMPLE_POST from './samplePost'
 
-export default function CardOffer ({ post = SAMPLE_POST }) {
+export default function CardOffer ({post: { id, author, title, body, tags, upVoters }}) {
   return <div className='card'>
-    <CardHeader person={post.author} className='mb-3' />
-    <CardBlock styleName='cardBlock' className='mb-3'>
-      <CardBody post={post} />
-      <CardTags tags={post.tags} />
+    <CardHeader person={author} styleName='cardHeader' />
+    <CardBlock styleName='cardBlock'>
+      <CardBody {...{id, title, body}} />
+      <CardTags tags={tags} />
     </CardBlock>
-    <CardFooter votes={post.upVoters} className='mb-9' />
+    <CardFooter votes={upVoters} styleName='cardFooter' />
   </div>
+}
+CardOffer.propTypes = {
+  id: PropTypes.any.isRequired,
+  author: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string,
+  tags: PropTypes.array,
+  upVoters: PropTypes.array
+}
+CardOffer.defaultProps = {
+  post: SAMPLE_POST
 }
 
 function CardBlock ({ children, className }) {
@@ -37,9 +49,11 @@ function CardFlex ({ lChildren, rChildren, children, className }) {
   </div>
 }
 
-function CardBody ({ post: { title, body }, className }) {
+function CardBody ({ id, title, body, className }) {
   return <div className={className}>
-    <div className='hdr-headline mb-3'>{title}</div>
+    <div className='hdr-headline mb-3'>
+      <Link to={`/post/${id}`}>{title}</Link>
+    </div>
     <p className='bdy-lt-lg'>{body}</p>
   </div>
 }
