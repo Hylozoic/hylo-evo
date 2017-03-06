@@ -11,8 +11,8 @@ import styles from 'App.scss'
 
 class App extends Component {
   render () {
-    
-    const { main, sidebar } = this.props
+    const { main, sidebar, detail } = this.props
+    const expanded = !!detail
 
     return <div styleName='container'>
       <div styleName='row'>
@@ -21,13 +21,18 @@ class App extends Component {
         </div>
       </div>
       <div styleName='row'>
-        <div styleName='leftPanel'>
-          <CardOffer />
-          <CardOffer />
-          <CardOffer />
+        <div styleName={expanded ? 'leftPanel-collapsed' : 'leftPanel'}>
+          <ul>
+            <li><Link to='/'>Home</Link></li>
+            <li><Link to='/events'>Events</Link></li>
+          </ul>
         </div>
-        {main}
-        {sidebar}
+        <div styleName='centerPanel'>
+          {main}
+        </div>
+        <div styleName={expanded ? 'rightPanel-expanded' : 'rightPanel'}>
+          {sidebar || detail}
+        </div>
       </div>
     </div>
   }

@@ -12,12 +12,11 @@ import EventPage from 'components/EventPage'
 // Need to figure-out why webpack? is defaulting to adding the .js
 // import Typography from './components/Typography/'
 
-
 export default
   <Router history={hashHistory}>
     <Route path='/' component={App}>
       <IndexRoute components={{main: OfferCardsMain, sidebar: OfferCardsSidebar}} />
       <Route path='events' components={{main: EventList, sidebar: EventListSidebar}} />
-      <Route path='events/:eventId' components={{main: EventList, sidebar: EventPage}} />
+      <Route path='events/:eventId' components={{main: EventList, detail: EventPage}} />
     </Route>
   </Router>
