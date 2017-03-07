@@ -95,7 +95,17 @@
       "react-app"
     ]
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "standard": {
+    "parser": "babel-eslint",
+    "global": [
+      "after",
+      "afterEach",
+      "before",
+      "beforeEach",
+      "describe",
+      "expect",
+      "it",
+      "spy"
+    ]
   }
 }

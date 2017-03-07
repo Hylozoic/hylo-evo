@@ -85,16 +85,25 @@ module.exports = {
     rules: [
       // Disable require.ensure as it's not a standard language feature.
       { parser: { requireEnsure: false } },
+
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
+      // Using standard js linter
       {
-        test: /\.(js|jsx)$/,
         enforce: 'pre',
-        use: [{
-          loader: 'eslint-loader'
-        }],
-        include: paths.appSrc
+        test: /\.jsx?$/,
+        loader: 'standard-loader',
+        include: paths.appSrc,
+        options: {
+          // Emit errors instead of warnings (default = false)
+          error: false,
+          // enable snazzy output (default = true)
+          snazzy: true,
+          // other config options to be passed through to standard e.g.
+          parser: 'babel-eslint'
+        }
       },
+
       // ** ADDING/UPDATING LOADERS **
       // The "url" loader handles all assets unless explicitly excluded.
       // The `exclude` list *must* be updated with every change to loader extensions.
