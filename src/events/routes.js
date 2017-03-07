@@ -5,5 +5,5 @@ import EventList from 'events/EventList'
 
 export default
   <Route path='events' components={{content: EventList}}>
-    <Route path=':eventId' components={{content: EventList, detail: EventDetail}} />
+    <Route path=':eventId' components={{detail: EventDetail}} />
   </Route>
