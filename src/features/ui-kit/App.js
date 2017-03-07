@@ -18,6 +18,7 @@ class App extends Component {
               <li styleName='menu_item'><Link to='/typography'>Typography</Link></li>
               <li styleName='menu_item'><Link to='/elements'>Elements</Link></li>
               <li styleName='menu_item'><Link to='/post-types'>Post Types</Link></li>
+              <li styleName='menu_item'><Link to='/'>Back to hylo-evo</Link></li>
             </ul>
             <div styleName='heading'>hylo-ui-kit</div>
           </div>
