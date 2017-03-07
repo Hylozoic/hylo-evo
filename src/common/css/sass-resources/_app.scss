@@ -1,0 +1,76 @@
+// Hylo App
+
+// DEFINE ONLY VARIABLES IN THIS FILE, NO CSS
+// These variables are globally included and should not
+// be manually manually imported into any SASS file.
+
+// Spacing
+$space-base-unit: 0.25rem;
+$space-2x: $space-base-unit * 2;
+$space-3x: $space-base-unit * 3;
+$space-4x: $space-base-unit * 4;
+$space-5x: $space-base-unit * 5;
+$space-6x: $space-base-unit * 6;
+$space-7x: $space-base-unit * 7;
+$space-8x: $space-base-unit * 8;
+$space-9x: $space-base-unit * 9;
+$space-10x: $space-base-unit * 10;
+$space-11x: $space-base-unit * 11;
+$space-12x: $space-base-unit * 12;
+$space-18x: $space-base-unit * 18;
+
+// $space-sm: $space-3x;
+// $space-std: $space-8x;
+// $space-lg: $space-9x;
+// $space-xl: $space-10x;
+// $space-xxl: $space-18x;
+
+// Colors
+// For now standardized on using "Name that Color" naming:
+// http://chir.ag/projects/name-that-color http://chir.ag/projects/ntc/
+$color-rhino: #2C4059;
+$color-rhino-80: rgba($color-rhino, .8);
+$color-rhino-60: rgba($color-rhino, .6);
+$color-rhino-50: rgba($color-rhino, .5);
+$color-rhino-30: rgba($color-rhino, .3);
+$color-rhino-darker: #2C405A;
+$color-nepal: #8DABC4;
+
+$color-white: #FFFFFF;
+$color-black: #000000;
+$color-athens-gray: #FAFBFC;
+
+$color-caribbean-green: #0DC3A0;
+$color-medium-purple: #9883E5;
+$color-fuchsia-pink: #BB60A8;
+$color-picton-blue: #40A1DD;
+$color-persimmon: #FE6848;
+
+$color-iceberg: #CFF3EC;
+$color-moon-raker: #EAE6FA;
+$color-prim: #F1DFEE;
+$color-link-water: #D9ECF8;
+$color-peach-schnapps: #FFE1DA;
+
+$color-mountain-meadow: #23CC80;
+$color-amaranth: #EE4266;
+$color-yello-orange: #FFB949;
+
+$color-alto: #DCDCDC;
+$color-polar: #F0FCF9;
+$color-ziggurat: #BDE0DC;
+
+// Fonts
+@mixin font-regular {
+  font-family: 'Circular Book', sans-serif;
+}
+
+@mixin font-medium {
+  font-family: 'Circular Medium', sans-serif;
+}
+
+@mixin font-bold {
+  font-family: 'Circular bold', sans-serif;
+}
+
+$bootstrap-path: 'common/css/bootstrap.scss';

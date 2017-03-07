@@ -1,20 +1,13 @@
 import React from 'react'
 import { Router, Route, hashHistory } from 'react-router'
-import GeneralLayout from 'features/layout/GeneralLayout'
-import EventDetail from 'features/events/EventDetail'
-import EventList from 'features/events/EventList'
-import UIKitRoutes from 'features/ui-kit/routes'
-
-// LEJ: The following throws and error looking for Typography.js
-//    import Typography from './components/Typography'
-// Need to figure-out why webpack? is defaulting to adding the .js
-// import Typography from './components/Typography/'
+import GeneralLayout from 'layout/GeneralLayout'
+import EventsRoutes from 'events/routes.js'
+import UIKitRoutes from 'ui-kit/routes'
 
 export default
   <Router history={hashHistory}>
     <Route path='/' component={GeneralLayout}>
-      <Route path='events' components={{content: EventList}} />
-      <Route path='events/:eventId' components={{content: EventList, detail: EventDetail}} />
+      {EventsRoutes}
     </Route>
     {UIKitRoutes}
   </Router>
