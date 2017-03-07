@@ -2,12 +2,12 @@
 import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 import { Link } from 'react-router'
-import SampleCard from 'App/components/SampleCard'
+import SampleCard from 'components/SampleCard'
 
 // Global styles
-import 'App/css/global/index.scss'
+import 'css/global/index.scss'
 
-export default function App (
+export default function PrimaryLayout (
   { header, navigation, content }
 ) {
   const detail = (content && content.props && content.props.detail)
