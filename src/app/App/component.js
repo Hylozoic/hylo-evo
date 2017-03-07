@@ -2,18 +2,18 @@
 import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 import { Link } from 'react-router'
-import SampleCard from 'common/components/SampleCard'
+import SampleCard from 'app/components/SampleCard'
 
 import 'app/css/global/index.scss'
 
-export default function GeneralLayout (
+export default function App (
   { header, navigation, content }
 ) {
   const detail = (content && content.props && content.props.detail)
   const expanded = !!detail
   return <div styleName='container'>
     <div styleName='row'>
-      <div styleName='header'>
+      <div styleName='header' className='hdr-display'>
         {header || <Header />}
       </div>
     </div>
@@ -39,5 +39,6 @@ export function Navigation () {
   return <ul>
     <li><Link to='/'>Home</Link></li>
     <li><Link to='/events'>Events</Link></li>
+    <li><Link to='/ui-kit'>UI Kit</Link></li>
   </ul>
 }

@@ -1,9 +1,12 @@
 import React from 'react'
 import { Route } from 'react-router'
-import EventDetail from 'events/EventDetail'
-import EventList from 'events/EventList'
+import EventDetail from './EventDetail'
+import EventList from './EventList'
 
-export default
+const routes = (
   <Route path='events' components={{content: EventList}}>
     <Route path=':eventId' components={{detail: EventDetail}} />
   </Route>
+)
+
+export default routes
