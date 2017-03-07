@@ -1,5 +1,5 @@
 import React from 'react'
-import SampleCard from 'app/components/SampleCard'
+import SampleCard from 'App/components/SampleCard'
 
 const SAMPLE_IMAGE_URL = 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
 

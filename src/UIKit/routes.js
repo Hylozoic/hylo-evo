@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
-import UIKit from './app/UIKit'
+import UIKit from './index'
 import Typography from './Typography'
 import Elements from './Elements'
 import PostTypes from './PostTypes'

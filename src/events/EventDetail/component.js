@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 import { Link } from 'react-router'
-import SampleCard from 'app/components/SampleCard'
+import SampleCard from 'App/components/SampleCard'
 
 export default function EventDetail ({ params: { eventId } }) {
   return <div styleName='event-page'>

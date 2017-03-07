@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import cx from 'classnames'
-import RoundImage from 'app/components/RoundImage'
-import SkillLabel from 'app/components/SkillLabel'
+import RoundImage from 'App/components/RoundImage'
+import SkillLabel from 'App/components/SkillLabel'
 import SAMPLE_POST from './samplePost'
 
 export default function SampleCard ({post: { id, author, title, body, tags, upVoters }}) {

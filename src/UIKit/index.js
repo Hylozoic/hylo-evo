@@ -6,7 +6,7 @@ import { Link } from 'react-router'
 // Insert Global CSS
 import './css/global.scss'
 
-import styles from './UIKit.scss'
+import styles from './component.scss'
 
 class UIKit extends Component {
   render () {

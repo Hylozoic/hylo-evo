@@ -2,9 +2,10 @@
 import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 import { Link } from 'react-router'
-import SampleCard from 'app/components/SampleCard'
+import SampleCard from 'App/components/SampleCard'
 
-import 'app/css/global/index.scss'
+// Global styles
+import 'App/css/global/index.scss'
 
 export default function App (
   { header, navigation, content }
