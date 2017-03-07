@@ -6,9 +6,9 @@ import { Link } from 'react-router'
 // Insert Global CSS
 import './css/global.scss'
 
-import styles from './App.scss'
+import styles from './UIKit.scss'
 
-class App extends Component {
+class UIKit extends Component {
   render () {
     return (
       (
@@ -29,4 +29,4 @@ class App extends Component {
   }
 }
 
-export default CSSModules(styles, {allowMultiple: true})(App)
+export default CSSModules(styles, {allowMultiple: true})(UIKit)

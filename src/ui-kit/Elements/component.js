@@ -1,8 +1,8 @@
 import React from 'react'
-import RoundImage from 'common/components/RoundImage'
-import Button from 'common/components/Button'
-import PostLabel from 'common/components/PostLabel'
-import SkillLabel from 'common/components/SkillLabel'
+import RoundImage from 'common/RoundImage'
+import Button from 'common/Button'
+import PostLabel from 'common/PostLabel'
+import SkillLabel from 'common/SkillLabel'
 
 const SAMPLE_IMAGE_URL = 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
 

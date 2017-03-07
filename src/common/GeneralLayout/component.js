@@ -2,9 +2,9 @@
 import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 import { Link } from 'react-router'
-import SampleCard from 'common/components/SampleCard'
+import SampleCard from 'common/SampleCard'
 
-import 'common/css/global/index.scss'
+import 'app/css/global/index.scss'
 
 export default function GeneralLayout (
   { header, navigation, content }

@@ -1,12 +1,12 @@
 .nav {
-  composes: sheet from './css/layout.scss';
+  composes: sheet from '../app/css/layout.scss';
   padding: $space-3x;
   padding-bottom: 0;
   margin-bottom: -$space-5x;
 }
 
 .heading {
-  composes: sheet-title from './css/layout.scss';
+  composes: sheet-title from '../app/css/layout.scss';
   margin: 0;
   padding: 0;
 }

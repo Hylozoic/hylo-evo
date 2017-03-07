@@ -12,13 +12,13 @@
 
 .row {
   @include make-row();
-  composes: justify-content-between from 'common/css/bootstrap.scss';
+  composes: justify-content-between from $bootstrap-path;
 }
 
 .header {
   @include make-col-ready();
   @include make-visible();
-  composes: p-6 mb-6 from 'common/css/bootstrap.scss';
+  composes: p-6 mb-6 from $bootstrap-path;
   box-shadow: 0px 3px 5px 0px $color-nepal;
   color: $color-athens-gray;
   background-color: $color-persimmon;

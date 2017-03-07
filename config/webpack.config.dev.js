@@ -130,9 +130,9 @@ module.exports = {
               // for preloading by the sass-resources loader. The explicit
               // load order is on purpose.
               resources: [
-                paths.appSrc + '/common/css/sass-resources/_app.scss',
-                paths.appSrc + '/common/css/sass-resources/_bootstrap-customization.scss',
-                paths.appSrc + '/ui-kit/css/sass-resources/_app.scss'
+                paths.appSrc + '/app/css/sass-resources/_app.scss',
+                paths.appSrc + '/app/css/sass-resources/_bootstrap-customization.scss',
+                paths.appSrc + '/ui-kit/app/css/_sass_resources.scss'
               ]
             }
           }
