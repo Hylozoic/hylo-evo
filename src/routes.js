@@ -1,6 +1,6 @@
 import React from 'react'
 import { Router, Route, hashHistory } from 'react-router'
-import GeneralLayout from 'layout/GeneralLayout'
+import GeneralLayout from 'common/layout/GeneralLayout'
 import EventsRoutes from 'events/routes.js'
 import UIKitRoutes from 'ui-kit/routes'
 
