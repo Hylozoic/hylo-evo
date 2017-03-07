@@ -6,7 +6,7 @@ import Elements from './Elements'
 import PostTypes from './PostTypes'
 
 export default
-  <Route path='ui-kit' component={UIKit}>
+  <Route component={UIKit}>
     <IndexRoute component={Typography} />
     <Route path='typography' component={Typography} />
     <Route path='elements' component={Elements} />
