@@ -124,7 +124,8 @@ module.exports = {
               // load order is on purpose.
               resources: [
                 paths.appSrc + '/css/sass-resources/_app.scss',
-                paths.appSrc + '/css/sass-resources/_bootstrap-customization.scss'
+                paths.appSrc + '/css/sass-resources/_bootstrap-customization.scss',
+                paths.appSrc + '/features/ui-kit/css/sass-resources/_app.scss'
               ]
             }
           }

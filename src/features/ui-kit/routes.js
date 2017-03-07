@@ -12,7 +12,7 @@ import PostTypes from './components/PostTypes/'
 export default
   <Route path='/ui-kit' component={App}>
     <IndexRoute component={Typography} />
-    <Route path='/typography' component={Typography} />
-    <Route path='/elements' component={Elements} />
-    <Route path='/post-types' component={PostTypes} />
+    <Route path='typography' component={Typography} />
+    <Route path='elements' component={Elements} />
+    <Route path='post-types' component={PostTypes} />
   </Route>

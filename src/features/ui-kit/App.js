@@ -15,9 +15,9 @@ class App extends Component {
         <div>
           <div styleName='nav' className='d-flex flex-row justify-content-between align-items-center'>
             <ul styleName='menu'>
-              <li styleName='menu_item'><Link to='/typography'>Typography</Link></li>
-              <li styleName='menu_item'><Link to='/elements'>Elements</Link></li>
-              <li styleName='menu_item'><Link to='/post-types'>Post Types</Link></li>
+              <li styleName='menu_item'><Link to='/ui-kit/typography'>Typography</Link></li>
+              <li styleName='menu_item'><Link to='/ui-kit/elements'>Elements</Link></li>
+              <li styleName='menu_item'><Link to='/ui-kit/post-types'>Post Types</Link></li>
               <li styleName='menu_item'><Link to='/'>Back to hylo-evo</Link></li>
             </ul>
             <div styleName='heading'>hylo-ui-kit</div>
