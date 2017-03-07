@@ -15,7 +15,7 @@
   composes: justify-content-between from 'css/bootstrap.scss';
 }
 
-.topBar {
+.header {
   @include make-col-ready();
   @include make-visible();
   composes: p-6 mb-6 from 'css/bootstrap.scss';
@@ -24,7 +24,7 @@
   background-color: $color-persimmon;
 }
 
-.leftPanel {
+.navigation {
   @include make-visible();
   @include make-col-ready();
   // @media (max-width: 32em) {
@@ -36,7 +36,7 @@
   transition: 0.5s;
 }
 
-.leftPanel-collapsed {
+.navigation-collapsed {
   @include make-visible();
   @include make-col-ready();
   // @media (max-width: 32em) {
@@ -48,7 +48,7 @@
   transition: 0.5s;
 }
 
-.centerPanel {
+.content {
   @include make-visible();
   @include make-col-ready();
   // @media (max-width: 32em) {
@@ -59,7 +59,7 @@
   }
 }
 
-.rightPanel {
+.detail {
   @include make-visible();
   @include make-col-ready();
   // @media (max-width: 32em) {
@@ -71,7 +71,7 @@
   transition: 0.5s;
 }
 
-.rightPanel-expanded {
+.detail-expanded {
   @include make-visible();
   @include make-col-ready();
   // @media (max-width: 32em) {

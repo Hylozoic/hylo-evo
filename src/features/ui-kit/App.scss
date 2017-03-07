@@ -1,0 +1,38 @@
+.nav {
+  composes: sheet from './css/layout.scss';
+  background-color: transparent;
+  padding: $space-3x;
+  padding-bottom: 0;
+  margin-bottom: -$space-5x;
+}
+
+.heading {
+  composes: sheet-title from './css/layout.scss';
+  margin: 0;
+  padding: 0;
+}
+
+.menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: inline;
+  &_item {
+    display: inline;
+    padding: 0 $space-3x;
+    border-right: solid 1px white;
+    &:first-child {
+      padding-left: 0px;
+    }
+    &:last-child {
+      border: 0px;
+    }
+    a {
+      color: white;
+      text-decoration: none;
+      &:hover {
+        text-shadow: 1px 1px $color-rhino;
+      }
+    }
+  }
+}
