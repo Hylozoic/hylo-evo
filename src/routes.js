@@ -1,13 +1,13 @@
 import React from 'react'
 import { Router, Route, hashHistory } from 'react-router'
-import GeneralLayout from 'common/GeneralLayout'
-import EventsRoutes from 'events/routes'
-import UIKitRoutes from 'ui-kit/routes'
+import GeneralLayout from 'layouts/GeneralLayout'
+import eventsRoutes from 'events/routes'
+import uIKitRoutes from 'ui-kit/routes'
 
 export default
   <Router history={hashHistory}>
     <Route path='/' component={GeneralLayout}>
-      {EventsRoutes}
+      {eventsRoutes}
     </Route>
-    {UIKitRoutes}
+    {uIKitRoutes}
   </Router>
