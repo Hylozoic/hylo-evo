@@ -1,6 +1,5 @@
 .nav {
   composes: sheet from './css/layout.scss';
-  background-color: transparent;
   padding: $space-3x;
   padding-bottom: 0;
   margin-bottom: -$space-5x;
@@ -28,10 +27,11 @@
       border: 0px;
     }
     a {
-      color: white;
+      color: $color-caribbean-green;
       text-decoration: none;
       &:hover {
-        text-shadow: 1px 1px $color-rhino;
+        // text-shadow: 1px 1px $color-rhino;
+        text-decoration: underline;
       }
     }
   }

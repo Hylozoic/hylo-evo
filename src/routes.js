@@ -4,6 +4,7 @@ import GeneralLayout from 'features/layout/GeneralLayout'
 import EventDetail from 'features/events/EventDetail'
 import EventList from 'features/events/EventList'
 import Feed from 'features/feed/Feed'
+import UIKitRoutes from 'features/ui-kit/routes'
 
 // LEJ: The following throws and error looking for Typography.js
 //    import Typography from './components/Typography'
@@ -13,8 +14,9 @@ import Feed from 'features/feed/Feed'
 export default
   <Router history={hashHistory}>
     <Route path='/' component={GeneralLayout}>
-      <IndexRoute components={{content: Feed}}/>
+      <IndexRoute components={{content: Feed}} />
       <Route path='events' components={{content: EventList}} />
       <Route path='events/:eventId' components={{content: EventList, detail: EventDetail}} />
     </Route>
+    {UIKitRoutes}
   </Router>
