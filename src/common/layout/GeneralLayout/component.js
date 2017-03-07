@@ -7,8 +7,9 @@ import SampleCard from 'common/components/SampleCard'
 import 'common/css/global/index.scss'
 
 export default function GeneralLayout (
-  { header, navigation, content, detail }
+  { header, navigation, content }
 ) {
+  const detail = (content && content.props && content.props.detail)
   const expanded = !!detail
   return <div styleName='container'>
     <div styleName='row'>
@@ -27,7 +28,7 @@ export default function GeneralLayout (
         {content || <SampleCard />}
       </div>
       <div styleName={expanded ? 'detail-expanded' : 'detail'}>
-        {(content && content.props && content.props.detail) || <SampleCard />}
+        {detail || <SampleCard />}
       </div>
     </div>
   </div>
