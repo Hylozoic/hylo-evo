@@ -39,13 +39,29 @@ module.exports = {
 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
+      // {
+      //   test: /\.(js|jsx)$/,
+      //   enforce: 'pre',
+      //   use: [{
+      //     loader: 'eslint-loader'
+      //   }],
+      //   include: paths.appSrc
+      // },
+      //
+      // Using standard js linter
       {
-        test: /\.(js|jsx)$/,
         enforce: 'pre',
-        use: [{
-          loader: 'eslint-loader'
-        }],
-        include: paths.appSrc
+        test: /\.jsx?$/,
+        loader: 'standard-loader',
+        exclude: /(node_modules|bower_components)/,
+        options: {
+          // Emit errors instead of warnings (default = false)
+          error: false,
+          // enable snazzy output (default = true)
+          snazzy: true,
+          // other config options to be passed through to standard e.g.
+          parser: 'babel-eslint'
+        }
       },
 
       // Static resources
@@ -123,9 +139,9 @@ module.exports = {
               // for preloading by the sass-resources loader. The explicit
               // load order is on purpose.
               resources: [
-                paths.appSrc + '/css/sass-resources/_app.scss',
-                paths.appSrc + '/css/sass-resources/_bootstrap-customization.scss',
-                paths.appSrc + '/features/ui-kit/css/sass-resources/_app.scss'
+                paths.appSrc + '/common/css/sass-resources/_app.scss',
+                paths.appSrc + '/common/css/sass-resources/_bootstrap-customization.scss',
+                paths.appSrc + '/ui-kit/css/sass-resources/_app.scss'
               ]
             }
           }
