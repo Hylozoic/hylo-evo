@@ -18,13 +18,16 @@ export default function GeneralLayout (
     </div>
     <div styleName='row'>
       <div styleName={expanded ? 'navigation-collapsed' : 'navigation'}>
-        {navigation || <CardOffer />}
+        {navigation || <ul>
+          <li><Link to='/'>Home</Link></li>
+          <li><Link to='/events'>Events</Link></li>
+        </ul>}
       </div>
       <div styleName='content'>
-        {content}
+        {content || <CardOffer />}
       </div>
       <div styleName={expanded ? 'detail-expanded' : 'detail'}>
-        {detail}
+        {detail || <CardOffer />}
       </div>
     </div>
   </div>

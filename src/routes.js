@@ -13,6 +13,6 @@ export default
   <Router history={hashHistory}>
     <Route path='/' component={GeneralLayout}>
       <Route path='events' components={{content: EventList}} />
-      <Route path='events/:eventId' components={{detail: EventDetail}} />
+      <Route path='events/:eventId' components={{content: EventList, detail: EventDetail}} />
     </Route>
   </Router>
