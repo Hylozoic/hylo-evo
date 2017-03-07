@@ -57,6 +57,9 @@
   @media (min-width: 32.1em) {
     @include make-col(5.439);
   }
+
+  overflow: auto;
+  max-height: 80vh;
 }
 
 .detail {
