@@ -6,13 +6,15 @@
 @media (min-width: 80rem) {
   .container {
     width: 80rem;
-    @include make-container();
+    // @include make-container();
   }
 }
 
 .row {
   @include make-row();
   composes: justify-content-between from $bootstrap-path;
+  // removes the negative margin from Bootrap row. There is likely a better way
+  margin: 0 0 !important;
 }
 
 .header {
