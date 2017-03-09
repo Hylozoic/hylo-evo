@@ -28,23 +28,7 @@
 }
 
 .badge {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  color: $color-white;
-  background-color: $color-persimmon;
-  font-weight: 600;
-  vertical-align: middle;
-  line-height: normal;
   float: right;
   position: relative;
   top: 10px;
-  text-align: center;
-}
-
-.badgeNumber {
-  position: relative;
-  right: 0.5px;
-  top: -1px;
 }

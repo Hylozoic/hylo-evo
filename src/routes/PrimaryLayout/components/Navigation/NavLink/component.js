@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 import Icon from 'components/Icon'
+import Badge from 'components/Badge'
 import cx from 'classnames'
 
 export default function NavLink (
@@ -12,7 +13,7 @@ export default function NavLink (
     <Link to={to} styleName='link'>
       <Icon name={icon} green={active} styleName='icon' />
       {label}
-      {badge && <span styleName='badge'><span styleName='badgeNumber'>{badge}</span></span>}
+      {badge && <Badge number={badge} expanded styleName='badge' />}
     </Link>
   </li>
 }

@@ -1,12 +1,13 @@
 import React from 'react'
 import NavLink from './NavLink'
+import TopicNavigation from './TopicNavigation'
 
 export default function Navigation (
-  { collapsed, styles }
+  { collapsed }
 ) {
   const links = [
-    {label: 'Home', icon: 'Home', to: '/', badge: 2},
-    {label: 'Events', icon: 'Events', to: '/events', active: true},
+    {label: 'Home', icon: 'Home', to: '/'},
+    {label: 'Events', icon: 'Events', to: '/events', active: true, badge: 3},
     {label: 'UI Kit', icon: 'Projects', to: '/ui-kit'}
   ]
 
@@ -14,5 +15,6 @@ export default function Navigation (
     <ul styleName='links'>
       {links.map(link => <NavLink key={link.label} {...link} />)}
     </ul>
+    <TopicNavigation />
   </div>
 }

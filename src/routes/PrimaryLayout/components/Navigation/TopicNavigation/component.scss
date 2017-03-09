@@ -1,0 +1,30 @@
+.topicNavigation {
+  padding: 32px 12.5px 0 12.5px;
+  color: $color-rhino-50;
+}
+
+.header {
+  color: $color-rhino-50;
+  margin-bottom: 14px;
+}
+
+.topics {
+  list-style: none;
+  padding: 0 0 0 46px;
+  line-height: 27px;
+}
+
+.icon {
+  margin-right: 24px;
+}
+
+.badge {
+  float: right;
+  position: relative;
+  top: 15px;
+}
+
+.addTopic {
+  color: $color-caribbean-green;
+  margin-left: 46px;
+}

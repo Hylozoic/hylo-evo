@@ -1,6 +1,6 @@
 @mixin make-visible {
-  background-color: $color-white;
-  border: dashed 1px $color-rhino-30;
+  // background-color: $color-white;
+  // border: dashed 1px $color-rhino-30;
 }
 
 .navigation {
@@ -30,4 +30,5 @@
   list-style: none;
   border-bottom: 2px solid $color-ghost-30;
   padding: 0 0 20px 0;
+  margin: 0;
 }

@@ -1,0 +1,39 @@
+.badgeWrapper {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.badge {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: $color-white;
+  background-color: $color-persimmon;
+  font-weight: 600;
+  vertical-align: middle;
+  line-height: normal;
+  text-align: center;
+  position: relative;
+  top: -13px;
+  left: -1px;
+}
+
+.badge--collapsed {
+  width: 7px;
+  height: 7px;
+  position: relative;
+  top: -13px;
+  left: 5px;
+}
+
+.badgeNumber {
+  position: relative;
+  right: 0.5px;
+  top: -1px;
+}
+
+.badgeNumber--collapsed {
+  display: none;
+}
