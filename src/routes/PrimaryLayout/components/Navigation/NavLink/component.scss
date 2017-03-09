@@ -1,0 +1,50 @@
+.item {
+  // FIXME use actual spacing vars
+  padding: 0 12.5px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 5px;
+}
+
+.link {
+  color: $color-rhino-50;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+    color: $color-rhino;
+  }
+}
+
+.active {
+  background-color: $color-iceberg;
+  .link {
+    text-decoration: none;
+    color: $color-rhino;
+  }
+}
+
+.icon {
+  margin-right: 24px;
+}
+
+.badge {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: $color-white;
+  background-color: $color-persimmon;
+  font-weight: 600;
+  vertical-align: middle;
+  line-height: normal;
+  float: right;
+  position: relative;
+  top: 10px;
+  text-align: center;
+}
+
+.badgeNumber {
+  position: relative;
+  right: 0.5px;
+  top: -1px;
+}
