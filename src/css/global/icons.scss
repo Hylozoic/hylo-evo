@@ -13,81 +13,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-Topics:before {
+.icon-Projects:before {
   content: "\e900";
 }
-.icon-Events .path1:before {
+.icon-Events:before {
   content: "\e901";
-  color: rgb(149, 159, 172);
-  opacity: 0.1;
 }
-.icon-Events .path2:before {
+.icon-Home:before {
   content: "\e902";
-  margin-left: -1em;
-  color: rgb(149, 159, 172);
-}
-.icon-Events .path3:before {
-  content: "\e903";
-  margin-left: -1em;
-  color: rgb(149, 159, 172);
-}
-.icon-Events .path4:before {
-  content: "\e904";
-  margin-left: -1em;
-  color: rgb(149, 159, 172);
-}
-.icon-Events .path5:before {
-  content: "\e905";
-  margin-left: -1em;
-  color: rgb(149, 159, 172);
-}
-.icon-Events .path6:before {
-  content: "\e906";
-  margin-left: -1em;
-  color: rgb(149, 159, 172);
-}
-.icon-Events .path7:before {
-  content: "\e907";
-  margin-left: -1em;
-  color: rgb(149, 159, 172);
-}
-.icon-Events .path8:before {
-  content: "\e908";
-  margin-left: -1em;
-  color: rgb(149, 159, 172);
-}
-.icon-Events .path9:before {
-  content: "\e909";
-  margin-left: -1em;
-  color: rgb(149, 159, 172);
-}
-.icon-Events .path10:before {
-  content: "\e90a";
-  margin-left: -1em;
-  color: rgb(149, 159, 172);
-}
-.icon-Home .path1:before {
-  content: "\e90b";
-  color: rgb(149, 159, 172);
-  opacity: 0.1;
-}
-.icon-Home .path2:before {
-  content: "\e90c";
-  margin-left: -1em;
-  color: rgb(149, 159, 172);
-}
-.icon-Projects .path1:before {
-  content: "\e90d";
-  color: rgb(149, 159, 172);
-}
-.icon-Projects .path2:before {
-  content: "\e90e";
-  margin-left: -0.900390625em;
-  color: rgb(149, 159, 172);
-  opacity: 0.1;
-}
-.icon-Projects .path3:before {
-  content: "\e90f";
-  margin-left: -0.900390625em;
-  color: rgb(149, 159, 172);
 }

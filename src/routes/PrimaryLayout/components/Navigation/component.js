@@ -7,24 +7,23 @@ export default function Navigation (
 ) {
   return <div styleName={collapsed ? 'navigation-collapsed' : 'navigation'}>
     <ul>
-      <li><Link to='/'>Home</Link></li>
-      <li><Link to='/events'>Events</Link></li>
-      <li><Link to='/ui-kit'>UI Kit</Link></li>
       <li>
-        <Icon name='Home' />
-        Home
+        <Link to='/'>
+          <Icon name='Home' />
+          Home
+        </Link>
       </li>
       <li>
-        <Icon name='Topics' />
-        Topics
+        <Link to='/events'>
+          <Icon name='Events' green />
+          Events
+        </Link>
       </li>
       <li>
-        <Icon name='Events' />
-        Events
-      </li>
-      <li>
-        <Icon name='Projects' />
-        Projects
+        <Link to='/ui-kit'>
+          <Icon name='Projects' />
+          UI Kit
+        </Link>
       </li>
     </ul>
   </div>

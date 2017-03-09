@@ -3,6 +3,10 @@
   border: dashed 1px $color-rhino-30;
 }
 
+.icon {
+  /* empty */
+}
+
 .navigation {
   @include make-visible();
   @include make-col-ready();
