@@ -5,9 +5,9 @@ import Badge from 'components/Badge'
 import cx from 'classnames'
 
 export default function NavLink (
-  { to, label, icon, badge }, { router }
+  { to, label, icon, badge, indexOnly = false }, { router }
 ) {
-  const active = router.isActive(to, true)
+  const active = router.isActive(to, indexOnly)
 
   return <li styleName={cx('item', {active})}>
     <Link to={to} styleName='link'>

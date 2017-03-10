@@ -6,7 +6,7 @@ export default function Navigation (
   { collapsed }
 ) {
   const links = [
-    {label: 'Home', icon: 'Home', to: '/', badge: 2},
+    {label: 'Home', icon: 'Home', to: '/', badge: 2, indexOnly: true},
     {label: 'Events', icon: 'Events', to: '/events', active: true, badge: 3},
     {label: 'UI Kit', icon: 'Projects', to: '/ui-kit'}
   ]
