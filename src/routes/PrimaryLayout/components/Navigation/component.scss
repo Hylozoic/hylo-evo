@@ -24,9 +24,11 @@
 .collapser-collapsed {
   composes: collapser;
 
-  @media (min-width: 32.1em) {
-    @include make-col(0.72);
-  }
+  // @media (min-width: 32.1em) {
+  //   @include make-col(0.72);
+  // }
+
+  max-width: 48px;
 }
 
 .navigation {
