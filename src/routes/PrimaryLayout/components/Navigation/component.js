@@ -11,10 +11,12 @@ export default function Navigation (
     {label: 'UI Kit', icon: 'Projects', to: '/ui-kit'}
   ]
 
-  return <div styleName={collapsed ? 'navigation-collapsed' : 'navigation'}>
-    <ul styleName='links'>
-      {links.map(link => <NavLink key={link.label} {...link} />)}
-    </ul>
-    <TopicNavigation />
+  return <div styleName={collapsed ? 'collapser-collapsed' : 'collapser'}>
+    <div styleName='navigation'>
+      <ul styleName='links'>
+        {links.map(link => <NavLink key={link.label} {...link} />)}
+      </ul>
+      <TopicNavigation />
+    </div>
   </div>
 }
