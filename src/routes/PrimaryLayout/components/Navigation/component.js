@@ -11,7 +11,7 @@ export default function Navigation (
     {label: 'UI Kit', icon: 'Projects', to: '/ui-kit'}
   ]
 
-  return <div styleName={collapsed ? 'navigation--collapsed' : 'navigation'}>
+  return <div styleName={collapsed ? 'navigation navigation--collapsed' : 'navigation'}>
     <ul styleName='links'>
       {links.map(link => <NavLink key={link.label} {...link} />)}
     </ul>
