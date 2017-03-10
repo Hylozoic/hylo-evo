@@ -49,6 +49,8 @@
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
     "classnames": "^2.2.5",
+    "express": "^4.15.2",
+    "isomorphic-webpack": "^2.0.2",
     "node-sass": "^4.5.0",
     "normalize.css": "^5.0.0",
     "react": "^15.4.2",
@@ -63,6 +65,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
+    "server": "node scripts/server.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },

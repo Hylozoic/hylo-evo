@@ -37,23 +37,23 @@ module.exports = {
       // Disable require.ensure as it's not a standard language feature.
       { parser: { requireEnsure: false } },
 
-      // First, run the linter.
-      // It's important to do this before Babel processes the JS.
-      // Using standard js linter
-      {
-        enforce: 'pre',
-        test: /\.jsx?$/,
-        loader: 'standard-loader',
-        include: paths.appSrc,
-        options: {
-          // Emit errors instead of warnings (default = false)
-          error: false,
-          // enable snazzy output (default = true)
-          snazzy: true,
-          // other config options to be passed through to standard e.g.
-          parser: 'babel-eslint'
-        }
-      },
+      // // First, run the linter.
+      // // It's important to do this before Babel processes the JS.
+      // // Using standard js linter
+      // {
+      //   enforce: 'pre',
+      //   test: /\.jsx?$/,
+      //   loader: 'standard-loader',
+      //   include: paths.appSrc,
+      //   options: {
+      //     // Emit errors instead of warnings (default = false)
+      //     error: false,
+      //     // enable snazzy output (default = true)
+      //     snazzy: true,
+      //     // other config options to be passed through to standard e.g.
+      //     parser: 'babel-eslint'
+      //   }
+      // },
 
       // Static resources
       // ** ADDING/UPDATING LOADERS **

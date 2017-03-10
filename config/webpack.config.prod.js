@@ -46,7 +46,7 @@ module.exports = {
   bail: true,
   // We generate sourcemaps in production. This is slow but gives good results.
   // You can exclude the *.map files from the build during deployment.
-  devtool: 'source-map',
+  // devtool: 'source-map',
   // In production, we only want to load the polyfills and the app code.
   entry: [
     require.resolve('./polyfills'),
@@ -58,8 +58,10 @@ module.exports = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
+    // filename: 'static/js/[name].js',
     filename: 'static/js/[name].[chunkhash:8].js',
-    chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
+    // chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
+
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath
   },
@@ -83,26 +85,26 @@ module.exports = {
   },
   module: {
     rules: [
-      // Disable require.ensure as it's not a standard language feature.
-      { parser: { requireEnsure: false } },
-
-      // First, run the linter.
-      // It's important to do this before Babel processes the JS.
-      // Using standard js linter
-      {
-        enforce: 'pre',
-        test: /\.jsx?$/,
-        loader: 'standard-loader',
-        include: paths.appSrc,
-        options: {
-          // Emit errors instead of warnings (default = false)
-          error: false,
-          // enable snazzy output (default = true)
-          snazzy: true,
-          // other config options to be passed through to standard e.g.
-          parser: 'babel-eslint'
-        }
-      },
+      // // Disable require.ensure as it's not a standard language feature.
+      // { parser: { requireEnsure: false } },
+      //
+      // // First, run the linter.
+      // // It's important to do this before Babel processes the JS.
+      // // Using standard js linter
+      // {
+      //   enforce: 'pre',
+      //   test: /\.jsx?$/,
+      //   loader: 'standard-loader',
+      //   include: paths.appSrc,
+      //   options: {
+      //     // Emit errors instead of warnings (default = false)
+      //     error: false,
+      //     // enable snazzy output (default = true)
+      //     snazzy: true,
+      //     // other config options to be passed through to standard e.g.
+      //     parser: 'babel-eslint'
+      //   }
+      // },
 
       // ** ADDING/UPDATING LOADERS **
       // The "url" loader handles all assets unless explicitly excluded.
@@ -174,7 +176,7 @@ module.exports = {
                 resources: [
                   paths.appSrc + '/css/sass-resources/_app.scss',
                   paths.appSrc + '/css/sass-resources/_bootstrap-customization.scss',
-                  paths.appSrc + '/UIKit/css/_sass_resources.scss'
+                  paths.appSrc + '/routes/UIKit/css/_sass_resources.scss'
                 ]
               }
             }
