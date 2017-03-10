@@ -13,7 +13,7 @@ export default function NavLink (
     <Link to={to} styleName='link'>
       <Icon name={icon} green={active} styleName='icon' />
       {label}
-      {badge && <Badge number={badge} expanded styleName='badge' />}
+      {badge && <Badge number={badge} expanded={badge % 2 == 0} styleName='badge' />}
     </Link>
   </li>
 }

@@ -23,12 +23,12 @@ export default function TopicNavigation (
     </div>
     <ul styleName='topics'>
       {topics.map(topic => <li key={topic.name}>
-        <Link>
+        <Link to='/'>
           #{topic.name}
           {topic.badge && <Badge number={topic.badge} styleName='badge' />}
         </Link>
       </li>)}
     </ul>
-    <div styleName='addTopic'><a>+ add topic</a></div>
+    <div styleName='addTopic'><Link to='/'>+ add topic</Link></div>
   </div>
 }

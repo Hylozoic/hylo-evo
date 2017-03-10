@@ -1,17 +1,18 @@
 import React from 'react'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
+import cx from 'classnames'
 
 export default function Navigation (
   { collapsed }
 ) {
   const links = [
-    {label: 'Home', icon: 'Home', to: '/'},
+    {label: 'Home', icon: 'Home', to: '/', badge: 2},
     {label: 'Events', icon: 'Events', to: '/events', active: true, badge: 3},
     {label: 'UI Kit', icon: 'Projects', to: '/ui-kit'}
   ]
 
-  return <div styleName={collapsed ? 'navigation--collapsed' : 'navigation'}>
+  return <div styleName={collapsed ? 'navigation-collapsed' : 'navigation'}>
     <ul styleName='links'>
       {links.map(link => <NavLink key={link.label} {...link} />)}
     </ul>
