@@ -1,25 +1,60 @@
-@mixin make-visible {
-  background-color: $color-white;
-  border: dashed 1px $color-rhino-30;
+
+.header,
+.navigation,
+.content,
+.detail {
+  // background-color: $color-white;
+  // border: dashed 1px $color-rhino-30;
 }
 
 @media (min-width: 80rem) {
   .container {
     width: 80rem;
     // @include make-container();
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      // @each $breakpoint in map-keys($gutters) {
+      //   @include media-breakpoint-up($breakpoint) {
+      //     $gutter: map-get($gutters, $breakpoint);
+      //     padding-right: ($gutter / 2);
+      //     padding-left:  ($gutter / 2);
+      //   }
+      // }
   }
 }
 
 .row {
-  @include make-row();
+  // @include make-row();
+    display: flex;
+    flex-wrap: wrap;
+    // @each $breakpoint in map-keys($gutters) {
+    //   @include media-breakpoint-up($breakpoint) {
+    //     $gutter: map-get($gutters, $breakpoint);
+    //     margin-right: ($gutter / -2);
+    //     margin-left:  ($gutter / -2);
+    //   }
+    // }
   composes: justify-content-between from $bootstrap-path;
   // removes the negative margin from Bootrap row. There is likely a better way
   margin: 0 0 !important;
 }
 
 .header {
-  @include make-col-ready();
-  @include make-visible();
+  // @include make-col-ready();
+    position: relative;
+    // Prevent columns from becoming too narrow when at smaller grid tiers by
+    // always setting `width: 100%;`. This works because we use `flex` values
+    // later on to override this initial width.
+    width: 100%;
+    min-height: 1px; // Prevent collapsing
+    // @each $breakpoint in map-keys($gutters) {
+    //   @include media-breakpoint-up($breakpoint) {
+    //     $gutter: map-get($gutters, $breakpoint);
+    //     padding-right: ($gutter / 2);
+    //     padding-left:  ($gutter / 2);
+    //   }
+    // }
   composes: p-6 mb-6 from $bootstrap-path;
   box-shadow: 0px 3px 5px 0px $color-nepal;
   color: $color-athens-gray;
@@ -27,63 +62,75 @@
 }
 
 .navigation {
-  @include make-visible();
-  @include make-col-ready();
-  // @media (max-width: 32em) {
-  //   @include make-col(6);
-  // }
-  @media (min-width: 32.1em) {
-    @include make-col(2.4);
-  }
+  // @include make-col-ready();
+    position: relative;
+    // Prevent columns from becoming too narrow when at smaller grid tiers by
+    // always setting `width: 100%;`. This works because we use `flex` values
+    // later on to override this initial width.
+    width: 100%;
+    min-height: 1px; // Prevent collapsing
+    // @each $breakpoint in map-keys($gutters) {
+    //   @include media-breakpoint-up($breakpoint) {
+    //     $gutter: map-get($gutters, $breakpoint);
+    //     padding-right: ($gutter / 2);
+    //     padding-left:  ($gutter / 2);
+    //   }
+    // }
+  // @include make-col(2.4);
+  flex: 0 0 20%;
+  max-width: 20%;
   transition: 0.5s;
-}
-
-.navigation-collapsed {
-  @include make-visible();
-  @include make-col-ready();
-  // @media (max-width: 32em) {
-  //   @include make-col(6);
-  // }
-  @media (min-width: 32.1em) {
-    @include make-col(0.72);
+  .collapsed {
+    // @include make-col(0.72);
+    flex: 0 0 6%;
+    max-width: 6%;
   }
-  transition: 0.5s;
 }
 
 .content {
-  @include make-visible();
-  @include make-col-ready();
-  // @media (max-width: 32em) {
-  //   @include make-col(6);
-  // }
-  @media (min-width: 32.1em) {
-    @include make-col(5.439);
-  }
-
+  // @include make-col-ready();
+    position: relative;
+    // Prevent columns from becoming too narrow when at smaller grid tiers by
+    // always setting `width: 100%;`. This works because we use `flex` values
+    // later on to override this initial width.
+    width: 100%;
+    min-height: 1px; // Prevent collapsing
+    // @each $breakpoint in map-keys($gutters) {
+    //   @include media-breakpoint-up($breakpoint) {
+    //     $gutter: map-get($gutters, $breakpoint);
+    //     padding-right: ($gutter / 2);
+    //     padding-left:  ($gutter / 2);
+    //   }
+    // }
+  // @include make-col(5.439);
+  flex: 0 0 45%;
+  max-width: 45%;
   overflow: auto;
   max-height: 80vh;
 }
 
 .detail {
-  @include make-visible();
-  @include make-col-ready();
-  // @media (max-width: 32em) {
-  //   @include make-col(3);
-  // }
-  @media (min-width: 32.1em) {
-    @include make-col(3);
-  }
+  // @include make-col-ready();
+    position: relative;
+    // Prevent columns from becoming too narrow when at smaller grid tiers by
+    // always setting `width: 100%;`. This works because we use `flex` values
+    // later on to override this initial width.
+    width: 100%;
+    min-height: 1px; // Prevent collapsing
+    // @each $breakpoint in map-keys($gutters) {
+    //   @include media-breakpoint-up($breakpoint) {
+    //     $gutter: map-get($gutters, $breakpoint);
+    //     padding-right: ($gutter / 2);
+    //     padding-left:  ($gutter / 2);
+    //   }
+    // }
+  // @include make-col(3);
+  flex: 0 0 25%;
+  max-width: 25%;
   transition: 0.5s;
-}
-
-.detail-expanded {
-  @include make-visible();
-  @include make-col-ready();
-  // @media (max-width: 32em) {
-  //   @include make-col(3);
-  // }
-  @media (min-width: 32.1em) {
-    @include make-col(5.4);
+  .expanded {
+    // @include make-col(5.4);
+    flex: 0 0 45%;
+    max-width: 45%;
   }
-  transition: 0.5s;
 }
