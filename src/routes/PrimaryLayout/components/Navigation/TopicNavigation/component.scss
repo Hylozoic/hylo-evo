@@ -4,6 +4,8 @@
 }
 
 .header {
+  composes: d-flex from $bootstrap-path;
+  composes: align-items-center from $bootstrap-path;
   color: $color-rhino-50;
   margin-bottom: 14px;
 }
@@ -18,14 +20,20 @@
   }
 }
 
+.topic {
+  composes: d-flex from $bootstrap-path;
+  composes: justify-content-start from $bootstrap-path;
+  composes: align-items-center from $bootstrap-path;
+}
+
 .icon {
   margin-right: 24px;
 }
 
 .badge {
-  float: right;
+  composes: ml-auto from $bootstrap-path;
   position: relative;
-  top: 15px;
+  top: 8px;
 }
 
 .addTopic {

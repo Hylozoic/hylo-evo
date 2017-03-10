@@ -2,14 +2,20 @@
 // composes: flex-item from $bootstrap-path;
 
 .item {
-  // FIXME use actual spacing vars
-  padding: 0 12.5px;
+  // FIXME this makes padding of 12px, actual spacing is 12.5px
+  padding: 0 $space-3x;
+  // height and line-height maybe should use spacing units too?
   height: 40px;
   line-height: 40px;
   border-radius: 5px;
+
 }
 
 .link {
+  // this is repeated multiple places, probably should make a mixin
+  composes: d-flex from $bootstrap-path;
+  composes: justify-content-start from $bootstrap-path;
+  composes: align-items-center from $bootstrap-path;
   color: $color-rhino-50;
   text-decoration: none;
   &:hover {
@@ -31,7 +37,6 @@
 }
 
 .badge {
-  float: right;
-  position: relative;
-  top: 10px;
+  // there's a gotcha here. This fails silently if the class doesn't exist
+  composes: ml-auto from $bootstrap-path;
 }
