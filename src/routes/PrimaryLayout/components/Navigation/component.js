@@ -1,7 +1,6 @@
 import React from 'react'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
-import cx from 'classnames'
 
 export default function Navigation (
   { collapsed }
