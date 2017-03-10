@@ -24,7 +24,7 @@ export default function PrimaryLayout (
       <div styleName='content'>
         {content || <SampleCard />}
       </div>
-      <div styleName={expanded ? 'detail expanded' : 'detail'}>
+      <div styleName={expanded ? 'detail-expanded' : 'detail'}>
         {detail || <SampleCard />}
       </div>
     </div>
