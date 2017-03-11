@@ -9,7 +9,7 @@ export default
   <Router history={hashHistory}>
     <Route path='/' component={PrimaryLayout}>
       <IndexRoute components={{content: Feed}} />
-      {eventsRoutes}
+      // {eventsRoutes}
     </Route>
-    {uIKitRoutes}
+    // {uIKitRoutes}
   </Router>
