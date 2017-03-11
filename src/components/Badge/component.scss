@@ -39,3 +39,11 @@
 .badgeNumber--collapsed {
   display: none;
 }
+
+.parent {
+  /* empty */
+}
+
+.parent:hover .badge {
+  background-color: red !important;
+}

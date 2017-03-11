@@ -14,8 +14,13 @@
   list-style: none;
   padding: 0 0 0 46px;
   line-height: 27px;
-  a, a:hover {
+  color: $color-rhino-50;
+  a {
     color: $color-rhino-50;
+    text-decoration: none;
+  }
+  a:hover {
+    color: $color-rhino;
     text-decoration: none;
   }
 }

@@ -2,9 +2,10 @@ import React from 'react'
 import Icon from 'components/Icon'
 import Badge from 'components/Badge'
 import { Link } from 'react-router'
+import badgeHoverStyles from 'components/Badge/component.scss'
 
 export default function TopicNavigation (
-  { collapsed }
+  { collapsed, styles }
 ) {
   const topics = [
     {name: 'petitions', badge: 2},
@@ -23,9 +24,9 @@ export default function TopicNavigation (
     </div>
     <ul styleName='topics'>
       {topics.map(topic => <li key={topic.name}>
-        <Link styleName='topic' to='/'>
+        <Link styleName='topic' className={badgeHoverStyles.parent} to='/'>
           <span styleName='name'>#{topic.name}</span>
-          {topic.badge && <Badge number={topic.badge} styleName='badge' />}
+          {topic.badge && <Badge number={topic.badge} styleName='badge' parentClassName={styles.topic} />}
         </Link>
       </li>)}
     </ul>
