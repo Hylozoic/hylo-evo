@@ -1,6 +1,3 @@
-// composes: d-flex from $bootstrap-path;
-// composes: flex-item from $bootstrap-path;
-
 .item {
   // FIXME this makes padding of 12px, actual spacing is 12.5px
   padding: 0 $space-3x;
@@ -14,7 +11,6 @@
 .link {
   // this is repeated multiple places, probably should make a mixin
   composes: d-flex from $bootstrap-path;
-  composes: justify-content-start from $bootstrap-path;
   composes: align-items-center from $bootstrap-path;
   color: $color-rhino-50;
   text-decoration: none;
@@ -47,7 +43,10 @@
   margin-right: 24px;
 }
 
+.label {
+  min-width: 164px;
+}
+
 .badge {
-  // there's a gotcha here. This fails silently if the class doesn't exist
-  composes: ml-auto from $bootstrap-path;
+  /* empty */
 }

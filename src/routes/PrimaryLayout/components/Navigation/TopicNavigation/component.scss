@@ -22,7 +22,6 @@
 
 .topic {
   composes: d-flex from $bootstrap-path;
-  composes: justify-content-start from $bootstrap-path;
   composes: align-items-center from $bootstrap-path;
 }
 
@@ -30,8 +29,11 @@
   margin-right: 24px;
 }
 
+.name {
+  min-width: 164px;
+}
+
 .badge {
-  composes: ml-auto from $bootstrap-path;
   position: relative;
   top: 8px;
 }

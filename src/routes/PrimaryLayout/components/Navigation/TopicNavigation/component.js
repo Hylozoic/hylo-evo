@@ -24,7 +24,7 @@ export default function TopicNavigation (
     <ul styleName='topics'>
       {topics.map(topic => <li key={topic.name}>
         <Link styleName='topic' to='/'>
-          #{topic.name}
+          <span styleName='name'>#{topic.name}</span>
           {topic.badge && <Badge number={topic.badge} styleName='badge' />}
         </Link>
       </li>)}
