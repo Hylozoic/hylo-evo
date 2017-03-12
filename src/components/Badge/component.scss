@@ -1,11 +1,6 @@
-.badgeWrapper {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  // border: 1px solid black;
-}
+// we use mixins here to get around the class selector limitation of 'composes'
 
-.badge {
+@mixin badge {
   display: inline-block;
   width: 20px;
   height: 20px;
@@ -19,9 +14,31 @@
   position: relative;
   top: -13px;
   left: -1px;
+  transition: 0.15s;
 }
 
-.badge--collapsed {
+@mixin badgeNumber {
+  display: inline;
+  font-size: 12px;
+  position: relative;
+  right: 0.5px;
+  top: -2px;
+  transition: 0.15s;
+}
+
+.badgeWrapper {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  // border: 1px solid black;
+}
+
+.badge {
+  @include badge();
+}
+
+.badge-collapsed {
+  composes: badge;
   width: 7px;
   height: 7px;
   position: relative;
@@ -30,20 +47,24 @@
 }
 
 .badgeNumber {
-  font-size: 12px;
-  position: relative;
-  right: 0.5px;
-  top: -2px;
+  @include badgeNumber();
 }
 
-.badgeNumber--collapsed {
-  display: none;
+.badgeNumber-collapsed {
+  composes: badgeNumber;
+  font-size: 0px;
+  top: -13px;
 }
 
 .parent {
   /* empty */
 }
 
-.parent:hover .badge {
-  background-color: red !important;
+.parent:hover .badge-collapsed {
+  @include badge();
+}
+
+.parent:hover .badgeNumber-collapsed {
+  @include badgeNumber();
+  right: -0.5px;
 }
