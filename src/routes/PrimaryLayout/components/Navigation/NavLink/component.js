@@ -10,10 +10,10 @@ export default function NavLink (
   const active = router.isActive(to, indexOnly)
 
   return <li styleName={cx('item', {active})}>
-    <Link to={to} styleName={cx('link', {collapsed})}>
+    <Link to={to} styleName={cx('link', {collapsed: collapsed})}>
       <BadgedIcon name={icon} green={active} showBadge={collapsed && badge} styleName='icon' />
       <span styleName='label'>{label}</span>
-      {badge && <Badge number={badge} styleName='badge' expanded />}
+      {badge && <Badge number={badge} styleName='badge' expanded={!collapsed} />}
     </Link>
   </li>
 }
