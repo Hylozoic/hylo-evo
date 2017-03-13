@@ -1,0 +1,52 @@
+.item {
+  // FIXME this makes padding of 12px, actual spacing is 12.5px
+  padding: 0 $space-3x;
+  // height and line-height maybe should use spacing units too?
+  height: 40px;
+  line-height: 40px;
+  border-radius: 5px;
+
+}
+
+.link {
+  // this is repeated multiple places, probably should make a mixin
+  composes: d-flex from $bootstrap-path;
+  composes: align-items-center from $bootstrap-path;
+  color: $color-rhino-50;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+    color: $color-rhino;
+  }
+
+  transition: 1.5s;
+
+  &.collapsed {
+    color: transparent;
+  }
+}
+
+
+
+.active {
+  background-color: $color-iceberg;
+  .link {
+    text-decoration: none;
+    color: $color-rhino;
+    &.collapsed {
+      color: transparent;
+    }
+  }
+}
+
+.icon {
+  margin-right: 24px;
+}
+
+.label {
+  min-width: 164px;
+}
+
+.badge {
+  /* empty */
+}

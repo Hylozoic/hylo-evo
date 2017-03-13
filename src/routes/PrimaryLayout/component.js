@@ -3,12 +3,13 @@ import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 import { Link } from 'react-router'
 import SampleCard from 'components/SampleCard'
+import Navigation from './components/Navigation'
 
 // Global styles
 import 'css/global/index.scss'
 
 export default function PrimaryLayout (
-  { header, navigation, content }
+  { header, content, navigation }
 ) {
   const detail = (content && content.props && content.props.detail)
   const expanded = !!detail
@@ -19,9 +20,7 @@ export default function PrimaryLayout (
       </div>
     </div>
     <div styleName='row'>
-      <div styleName={expanded ? 'navigation-collapsed' : 'navigation'}>
-        {navigation || <Navigation />}
-      </div>
+      {navigation || <Navigation collapsed={expanded} />}
       <div styleName='content'>
         {content || <SampleCard />}
       </div>
@@ -34,12 +33,4 @@ export default function PrimaryLayout (
 
 export function Header () {
   return <div className='hdr-display'>Top Bar</div>
-}
-
-export function Navigation () {
-  return <ul>
-    <li><Link to='/'>Home</Link></li>
-    <li><Link to='/events'>Events</Link></li>
-    <li><Link to='/ui-kit'>UI Kit</Link></li>
-  </ul>
 }

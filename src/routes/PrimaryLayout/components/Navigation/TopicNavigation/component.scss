@@ -1,0 +1,52 @@
+.topicNavigation {
+  padding: 32px 12.5px 0 12.5px;
+  color: $color-rhino-50;
+}
+
+.header {
+  composes: d-flex from $bootstrap-path;
+  composes: align-items-center from $bootstrap-path;
+  color: $color-rhino-50;
+  margin-bottom: 14px;
+}
+
+.topics {
+  list-style: none;
+  padding: 0 0 0 46px;
+  line-height: 27px;
+  color: $color-rhino-50;
+  a {
+    color: $color-rhino-50;
+    text-decoration: none;
+  }
+  a:hover {
+    color: $color-rhino;
+    text-decoration: none;
+  }
+}
+
+.topic {
+  composes: d-flex from $bootstrap-path;
+  composes: align-items-center from $bootstrap-path;
+}
+
+.icon {
+  margin-right: 24px;
+}
+
+.name {
+  min-width: 164px;
+}
+
+.badge {
+  position: relative;
+  top: 8px;
+}
+
+.addTopic {
+  margin-left: 46px;
+  a, a:hover {
+    color: $color-caribbean-green;
+    text-decoration: none;
+  }
+}

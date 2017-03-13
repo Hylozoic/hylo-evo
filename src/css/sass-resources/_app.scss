@@ -5,6 +5,8 @@
 // be manually manually imported into any SASS file.
 
 // Spacing
+// One REM equals 16px in a typical browser environment, so,
+// 0.25 REM is equal to 4px, our current spacing and sizing base unit
 $space-base-unit: 0.25rem;
 $space-2x: $space-base-unit * 2;
 $space-3x: $space-base-unit * 3;
@@ -39,6 +41,7 @@ $color-nepal: #8DABC4;
 $color-white: #FFFFFF;
 $color-black: #000000;
 $color-athens-gray: #FAFBFC;
+$color-ghost-30: rgba(#CCD1D7, .3);
 
 $color-caribbean-green: #0DC3A0;
 $color-medium-purple: #9883E5;
