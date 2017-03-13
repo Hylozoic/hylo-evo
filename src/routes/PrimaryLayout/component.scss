@@ -1,6 +1,4 @@
 
-.header,
-.navigation,
 .content,
 .detail {
   // background-color: $color-white;
@@ -106,7 +104,10 @@
 
 .detail-expanded {
   composes: detail;
+  padding-top: 24px;
+  position: relative;
+  top: -24px;
   flex: 0 0 45%;
   max-width: 45%;
-
+  box-shadow: 0px 4px 56px 0px $color-alto;
 }
