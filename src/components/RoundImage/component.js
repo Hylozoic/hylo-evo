@@ -5,6 +5,7 @@
 
 import React from 'react'
 import cx from 'classnames'
+import { bgImageStyle } from 'utils'
 
 const { string, bool } = React.PropTypes
 
@@ -14,7 +15,7 @@ export default function RoundImage ({ url, small, medium, overlaps, className })
   className = cx(className)
   return <div styleName={styleName}
     className={className}
-    style={bgStyle(url)} />
+    style={bgImageStyle(url)} />
 }
 RoundImage.propTypes = {
   url: string.isRequired,
@@ -22,10 +23,4 @@ RoundImage.propTypes = {
   medium: bool,
   overlaps: bool,
   className: string
-}
-
-function bgStyle (url) {
-  if (!url) return {}
-  const escaped = url.replace(/([\(\)])/g, (match, $1) => '\\' + $1) // eslint-disable-line
-  return {backgroundImage: `url(${escaped})`}
 }

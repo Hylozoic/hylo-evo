@@ -1,0 +1,44 @@
+.topNav {
+  // @include make-col-ready();
+    position: relative;
+    // Prevent columns from becoming too narrow when at smaller grid tiers by
+    // always setting `width: 100%;`. This works because we use `flex` values
+    // later on to override this initial width.
+    width: 100%;
+    height: 56px; // Prevent collapsing
+    // @each $breakpoint in map-keys($gutters) {
+    //   @include media-breakpoint-up($breakpoint) {
+    //     $gutter: map-get($gutters, $breakpoint);
+    //     padding-right: ($gutter / 2);
+    //     padding-left:  ($gutter / 2);
+    //   }
+    // }
+  composes: pl-5 pr-5 mb-6 from $bootstrap-path;
+  // mixing metaphors here because the top padding is not a multiple of the spacer
+  padding-top: 13px;
+  box-shadow: 0px 3px 5px 0px $color-nepal;
+}
+
+.image {
+  background-position: center;
+  background-size: cover;
+  display: inline-block;
+  border-radius: 4px;
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+}
+
+.title {
+  display: inline-block;
+}
+
+.label {
+  /* empty */
+}
+
+.communityName {
+  font-size: 16px !important;
+  position: relative;
+  top: -2px;
+}

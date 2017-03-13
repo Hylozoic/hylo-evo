@@ -4,6 +4,7 @@ import CSSModules from 'react-css-modules'
 import { Link } from 'react-router'
 import SampleCard from 'components/SampleCard'
 import Navigation from './components/Navigation'
+import TopNav from './components/TopNav'
 
 // Global styles
 import 'css/global/index.scss'
@@ -14,11 +15,7 @@ export default function PrimaryLayout (
   const detail = (content && content.props && content.props.detail)
   const expanded = !!detail
   return <div styleName='container'>
-    <div styleName='row'>
-      <div styleName='header' className='hdr-display'>
-        {header || <Header />}
-      </div>
-    </div>
+    {header || <TopNav />}
     <div styleName='row'>
       {navigation || <Navigation collapsed={expanded} />}
       <div styleName='content'>
