@@ -49,7 +49,9 @@
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
     "classnames": "^2.2.5",
+    "domino": "^1.0.28",
     "express": "^4.15.2",
+    "history": "^3.0.0",
     "isomorphic-webpack": "^2.0.2",
     "jsdom": "^9.11.0",
     "node-sass": "^4.5.0",
