@@ -5,7 +5,7 @@ import Badge from 'components/Badge'
 import cx from 'classnames'
 
 export default function NavLink (
-  { to, label, icon, badge, indexOnly = false }, { router, collapsed }
+  { to, label, icon, badge, collapsed = false, indexOnly = false }, { router }
 ) {
   const active = router.isActive(to, indexOnly)
 
