@@ -52,7 +52,7 @@ export default function Typography (props) {
                 description='Circular Book / 14pt, 0 ch, 18 line / Color: 2C4059 80%'
                 sampleKey='long' />
               <StyleCard styleClassName='tag' name='Tag'
-                description='Circular Bold / 10pt, 0.6 ch, 14 line / Color: 8DABC4'
+                description='Circular Bold / 10pt, 0.6 ch, 14 line / Color: 2C4059 50%'
                 sample='DASHBOARDS' />
             </div>
           </div>
