@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { matchPath, Route, Link } from 'react-router-dom'
 import SampleCard from 'components/SampleCard'
 import Navigation from './components/Navigation'
+import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 
@@ -10,7 +11,7 @@ import EventDetail from 'routes/Events/EventDetail'
 import 'css/global/index.scss'
 
 export default function PrimaryLayout ({ match, location }) {
-  // TODO: Replace with something more sensible 
+  // TODO: Replace with something more sensible
   const hasDetail = location.pathname.match(/\/events\//)
   return <div styleName='container'>
     <div styleName='row'>
@@ -21,11 +22,11 @@ export default function PrimaryLayout ({ match, location }) {
     <div styleName='row'>
       <Navigation collapsed={hasDetail} />
       <div styleName='content'>
-        <Route path='/' exact component={SampleCard} />
+        <Route path='/' exact component={Feed} />
         <Route path='/events' component={Events} />
       </div>
       <div styleName={hasDetail ? 'detail-expanded' : 'detail'}>
-        <Route path='/' exact component={SampleCard} />
+        <Route path='/' exact component={Feed} />
         <Route path='/events/:eventId' exact component={EventDetail} />
       </div>
     </div>
