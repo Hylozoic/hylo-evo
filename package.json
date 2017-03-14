@@ -48,15 +48,19 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "babel-plugin-react-css-modules": "^2.6.0",
     "bootstrap": "4.0.0-alpha.6",
     "classnames": "^2.2.5",
+    "enzyme": "^2.7.1",
     "lodash": "^4.17.4",
     "lodash-fp": "^0.10.4",
     "node-sass": "^4.5.0",
     "normalize.css": "^5.0.0",
     "pushstate-server": "^3.0.0",
+    "postcss-scss": "^0.4.1",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
+    "react-addons-test-utils": "^15.4.2",
     "react-css-modules": "^4.1.0",
     "react-dom": "^15.4.2",
     "react-router-dom": "^4.0.0",
@@ -107,6 +111,9 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      [ "react-css-modules", { "filetypes": { ".scss": "postcss-scss" } }]
     ]
   },
   "standard": {
