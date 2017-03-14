@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  Link
-} from 'react-router-dom'
-import CSSModules from 'react-css-modules'
-import styles from './component.scss'
+import { Link } from 'react-router-dom'
 
 const { string, bool } = React.PropTypes
 
@@ -21,5 +17,3 @@ Events.propTypes = {
   active: bool,
   className: string
 }
-
-export default CSSModules(styles, {allowMultiple: true})(Events)

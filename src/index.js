@@ -1,5 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import PrimaryLayout from 'routes/PrimaryLayout'
 
-ReactDOM.render(<PrimaryLayout />, document.getElementById('root'))
+ReactDOM.render(<BrowserRouter>
+  <Route path='/' exact component={PrimaryLayout} />
+</BrowserRouter>, document.getElementById('root'))

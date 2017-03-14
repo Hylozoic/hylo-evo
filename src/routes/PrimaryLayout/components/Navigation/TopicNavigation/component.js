@@ -1,11 +1,11 @@
 import React from 'react'
 import Icon from 'components/Icon'
 import Badge from 'components/Badge'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import badgeHoverStyles from 'components/Badge/component.scss'
 
 export default function TopicNavigation (
-  { collapsed }
+  { collapsed, match }
 ) {
   const topics = [
     {name: 'petitions', badge: 2},

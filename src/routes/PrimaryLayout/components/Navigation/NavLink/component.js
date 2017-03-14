@@ -1,11 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import BadgedIcon from 'components/BadgedIcon'
 import Badge from 'components/Badge'
 import cx from 'classnames'
 
 export default function NavLink (
-  { to, label, icon, badge, collapsed = false, indexOnly = false }, { router }
+  { to, label, icon, badge, collapsed = false, indexOnly = false, match },
 ) {
   const active = false
   // TODO: Replace with direct routes

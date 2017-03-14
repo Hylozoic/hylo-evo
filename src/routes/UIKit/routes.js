@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, IndexRoute } from 'react-router'
+import { Route, IndexRoute } from 'react-router-dom'
 import UIKit from './index'
 import Typography from './Typography'
 import Elements from './Elements'
