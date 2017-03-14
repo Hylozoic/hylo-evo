@@ -51,10 +51,12 @@
     "classnames": "^2.2.5",
     "lodash": "^4.17.4",
     "lodash-fp": "^0.10.4",
+    "enzyme": "^2.7.1",
     "node-sass": "^4.5.0",
     "normalize.css": "^5.0.0",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
+    "react-addons-test-utils": "^15.4.2",
     "react-css-modules": "^4.1.0",
     "react-dom": "^15.4.2",
     "react-router-dom": "^4.0.0",
@@ -74,6 +76,10 @@
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
     ],
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
