@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
-import CSSModules from 'react-css-modules'
-import { Link } from 'react-router'
+import { matchPath, Route, Link } from 'react-router-dom'
 import SampleCard from 'components/SampleCard'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
 import cx from 'classnames'
 import { get } from 'lodash/fp'
+import Feed from 'routes/Feed'
+import Events from 'routes/Events'
+import EventDetail from 'routes/Events/EventDetail'
 
 // Global styles
 import 'css/global/index.scss'
@@ -24,22 +26,25 @@ export default class PrimaryLayout extends Component {
   }
 
   render () {
-    const { header, content, navigation, sidebar } = this.props
-    const detail = (content && content.props && content.props.detail)
+    const { match, location } = this.props
     const { lastDetail } = this.state
-    const expanded = !!detail
+    // TODO: Replace with something more sensible
+    const hasDetail = location.pathname.match(/\/events\//)
     return <div styleName='container'>
-      {header || <TopNav />}
+      <TopNav />
       <div styleName='row'>
-        {navigation || <Navigation collapsed={expanded} />}
+        <Navigation collapsed={hasDetail} />
         <div styleName='content'>
-          {content || <SampleCard />}
+          <Route path='/' exact component={Feed} />
+          <Route path='/events' component={Events} />
         </div>
-        <div styleName={cx('sidebar', {hidden: expanded})}>
-          {sidebar || <SampleCard />}
+        <div styleName={cx('sidebar', {hidden: hasDetail})}>
+          <Route path='/' exact component={Feed} />
+          <Route path='/events/:eventId' exact component={EventDetail} />
         </div>
-        <div styleName={cx('detail', {hidden: !expanded})}>
-          {detail || lastDetail || <SampleCard />}
+        <div styleName={cx('detail', {hidden: !hasDetail})}>
+          <Route path='/' exact component={Feed} />
+          <Route path='/events/:eventId' exact component={EventDetail} />
         </div>
       </div>
     </div>

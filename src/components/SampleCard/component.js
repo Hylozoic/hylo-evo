@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
 import SkillLabel from 'components/SkillLabel'

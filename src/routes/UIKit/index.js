@@ -1,7 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
-import { Link } from 'react-router'
+import { Link, Route } from 'react-router-dom'
+import Typography from './Typography'
+import Elements from './Elements'
+import PostTypes from './PostTypes'
 
 // Insert Global CSS
 import './css/global.scss'
@@ -22,7 +25,10 @@ class UIKit extends Component {
             </ul>
             <div styleName='heading'>hylo-ui-kit</div>
           </div>
-          {this.props.children}
+          <Route path='/ui-kit' exact component={Typography} />
+          <Route path='/ui-kit/typography' component={Typography} />
+          <Route path='/ui-kit/elements' component={Elements} />
+          <Route path='/ui-kit/post-types' component={PostTypes} />
         </div>
       )
     )

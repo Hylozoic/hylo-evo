@@ -1,15 +1,13 @@
 import React from 'react'
-import { Router, Route, IndexRoute, hashHistory } from 'react-router'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import PrimaryLayout from './PrimaryLayout'
-import eventsRoutes from './Events/routes'
-import uIKitRoutes from './UIKit/routes'
-import Feed from './Feed'
+import UIKit from './UIKit'
 
-export default
-  <Router history={hashHistory}>
-    <Route path='/' component={PrimaryLayout}>
-      <IndexRoute components={{content: Feed}} />
-      {eventsRoutes}
-    </Route>
-    {uIKitRoutes}
-  </Router>
+const routes = <BrowserRouter>
+  <Switch>
+    <Route path='/ui-kit' component={UIKit} />
+    <Route path='/' component={PrimaryLayout} />
+  </Switch>
+</BrowserRouter>
+
+export default routes
