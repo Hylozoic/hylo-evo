@@ -39,8 +39,7 @@ export default class PrimaryLayout extends Component {
           <Route path='/events' component={Events} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
-          <Route path='/' exact component={Feed} />
-          <Route path='/events/:eventId' exact component={EventDetail} />
+          <Route path='/' component={Feed} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})}>
           <Route path='/' exact component={Feed} />
