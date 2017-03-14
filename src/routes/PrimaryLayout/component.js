@@ -10,21 +10,22 @@ import EventDetail from 'routes/Events/EventDetail'
 import 'css/global/index.scss'
 
 export default function PrimaryLayout ({ match }) {
+  console.log(match)
   const hasDetail = !!match.params.eventId
   return <div styleName='container'>
     <div styleName='row'>
       <div styleName='header' className='hdr-display'>
-        <Route path='/' exact component={Header} />
+        <Route path='/' component={Header} />
       </div>
     </div>
     <div styleName='row'>
       <Navigation collapsed={hasDetail} />
       <div styleName='content'>
-        <Route path='/' component={SampleCard} />
+        <Route path='/' exact component={SampleCard} />
         <Route path='/events' exact component={Events} />
       </div>
       <div styleName={hasDetail ? 'detail-expanded' : 'detail'}>
-        <Route path='/' component={SampleCard} />
+        <Route path='/' exact component={SampleCard} />
         <Route path='/events/:eventId' component={EventDetail} />
       </div>
     </div>
