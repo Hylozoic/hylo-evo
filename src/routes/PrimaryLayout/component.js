@@ -10,8 +10,7 @@ import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 
-// Global styles
-import 'css/global/index.scss'
+import './component.scss'
 
 export default function PrimaryLayout ({ match, location }) {
   const hasDetail = matchPath(location.pathname, {path: '/events/:eventId'})

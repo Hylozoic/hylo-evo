@@ -1,6 +1,7 @@
 import React from 'react'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
+import './component.scss'
 
 export default function Navigation ({ location, collapsed }) {
   let links = [

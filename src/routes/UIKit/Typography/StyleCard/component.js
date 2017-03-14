@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
-import hyloAppTypographyStyles from 'css/typography.scss'
+import hyloAppTypographyStyles from '../../../../css/typography.scss'
+import c from './component.scss'
 
 const SAMPLE_TEXT_OPTIONS = {
   short: 'Five quacking zephyrs jolt my wax bed.',
@@ -20,13 +21,13 @@ export default function StyleCard (
   }
   return (
     <div styleName={styleName} onClick={handleClick} {...props}>
-      <div styleName='name'>
+      <div styleName='c.name'>
         {nameText}
       </div>
-      <div styleName='attributes'>
+      <div styleName='c.attributes'>
         {description}
       </div>
-      <div styleName='sample' className={hyloAppTypographyStyles[styleClassName]}>
+      <div styleName='c.sample' className={hyloAppTypographyStyles[styleClassName]}>
         {sampleText}
       </div>
     </div>

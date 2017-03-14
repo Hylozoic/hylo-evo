@@ -1,16 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
-import CSSModules from 'react-css-modules'
 import { Link, Route } from 'react-router-dom'
 import Typography from './Typography'
 import Elements from './Elements'
 import PostTypes from './PostTypes'
 import Icons from './Icons'
 
-// Insert Global CSS
-import './css/global.scss'
-
-import styles from './component.scss'
+import './component.scss'
 
 class UIKit extends Component {
   render () {
@@ -38,4 +34,4 @@ class UIKit extends Component {
   }
 }
 
-export default CSSModules(styles, {allowMultiple: true})(UIKit)
+export default UIKit

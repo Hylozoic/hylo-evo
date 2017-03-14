@@ -4,6 +4,8 @@ import Button from 'components/Button'
 import PostLabel from 'components/PostLabel'
 import SkillLabel from 'components/SkillLabel'
 
+import './component.scss'
+
 const SAMPLE_IMAGE_URL = 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
 
 export default function Elements (props) {

@@ -89,7 +89,19 @@ module.exports = {
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/babel-loader/
           // directory for faster rebuilds.
-          cacheDirectory: true
+          cacheDirectory: true,
+          plugins: [
+            [
+              'react-css-modules',
+              {
+                context: paths.appSrc,
+                filetypes: {
+                  '.scss': 'postcss-scss'
+                },
+                exclude: 'node_modules'
+              }
+            ]
+          ]
         }
       },
 
