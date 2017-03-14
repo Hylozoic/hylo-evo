@@ -6,7 +6,7 @@ import UIKit from 'routes/UIKit'
 
 ReactDOM.render(<BrowserRouter>
   <Switch>
-    <Route path='/' component={PrimaryLayout} />
     <Route path='/ui-kit' component={UIKit} />
+    <Route path='/' component={PrimaryLayout} />
   </Switch>
 </BrowserRouter>, document.getElementById('root'))
