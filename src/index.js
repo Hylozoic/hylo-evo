@@ -1,4 +1,5 @@
+import React from 'react'
 import ReactDOM from 'react-dom'
-import routes from 'routes'
+import PrimaryLayout from 'routes/PrimaryLayout'
 
-ReactDOM.render(routes, document.getElementById('root'))
+ReactDOM.render(<PrimaryLayout />, document.getElementById('root'))

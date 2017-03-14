@@ -7,7 +7,9 @@ import cx from 'classnames'
 export default function NavLink (
   { to, label, icon, badge, collapsed = false, indexOnly = false }, { router }
 ) {
-  const active = router.isActive(to, indexOnly)
+  const active = false
+  // TODO: Replace with direct routes
+  // router.isActive(to, indexOnly)
 
   return <li styleName={cx('item', {active})}>
     <Link to={to} styleName={cx('link', {collapsed: collapsed})}>
