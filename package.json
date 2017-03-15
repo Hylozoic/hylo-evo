@@ -5,7 +5,6 @@
   "devDependencies": {
     "babel-core": "6.17.0",
     "babel-eslint": "7.1.1",
-    "babel-jest": "^19.0.0",
     "babel-loader": "6.2.7",
     "babel-preset-react-app": "^2.0.1",
     "case-sensitive-paths-webpack-plugin": "1.1.4",
@@ -30,7 +29,7 @@
     "gzip-size": "3.0.0",
     "html-webpack-plugin": "2.24.0",
     "http-proxy-middleware": "0.17.2",
-    "jest": "17.0.2",
+    "jest": "^19.0.2",
     "json-loader": "0.5.4",
     "object-assign": "4.1.0",
     "path-exists": "2.1.0",
@@ -89,15 +88,15 @@
       "<rootDir>/config/polyfills.js"
     ],
     "testPathIgnorePatterns": [
-      "<rootDir>[/\\\\](build|docs|node_modules)[/\\\\]"
+      "<rootDir>[/\\\\](build|docs|node_modules|scripts)[/\\\\]"
     ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
-      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest"
+      "^.+\\.jsx?$": "babel-jest"
     },
     "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+      "<rootDir>[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
     ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
