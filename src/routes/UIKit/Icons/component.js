@@ -3,14 +3,15 @@ import Icon from 'components/Icon'
 
 const ICON_NAMES = [
   'Messages',
-  'Notification',
+  'Notifications',
   'Search',
   'Share',
   'Members',
   'Topics',
   'Projects',
   'Events',
-  'Home'
+  'Home',
+  'More'
 ]
 
 export default function Elements (props) {

@@ -13,10 +13,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-More:before {
+  content: "\e909";
+}
 .icon-Messages:before {
   content: "\e905";
 }
-.icon-Notification:before {
+.icon-Notifications:before {
   content: "\e906";
 }
 .icon-Search:before {
