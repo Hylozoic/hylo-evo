@@ -5,6 +5,7 @@ import { Link, Route } from 'react-router-dom'
 import Typography from './Typography'
 import Elements from './Elements'
 import PostTypes from './PostTypes'
+import Icons from './Icons'
 
 // Insert Global CSS
 import './css/global.scss'
@@ -21,6 +22,7 @@ class UIKit extends Component {
               <li styleName='menu_item'><Link to='/ui-kit/typography'>Typography</Link></li>
               <li styleName='menu_item'><Link to='/ui-kit/elements'>Elements</Link></li>
               <li styleName='menu_item'><Link to='/ui-kit/post-types'>Post Types</Link></li>
+              <li styleName='menu_item'><Link to='/ui-kit/icons'>Icons</Link></li>
               <li styleName='menu_item'><Link to='/'>Back to hylo-evo</Link></li>
             </ul>
             <div styleName='heading'>hylo-ui-kit</div>
@@ -29,6 +31,7 @@ class UIKit extends Component {
           <Route path='/ui-kit/typography' component={Typography} />
           <Route path='/ui-kit/elements' component={Elements} />
           <Route path='/ui-kit/post-types' component={PostTypes} />
+          <Route path='/ui-kit/icons' component={Icons} />
         </div>
       )
     )
