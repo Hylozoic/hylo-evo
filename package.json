@@ -52,6 +52,7 @@
     "lodash": "^4.17.4",
     "lodash-fp": "^0.10.4",
     "enzyme": "^2.7.1",
+    "jest-css-modules": "^1.1.0",
     "node-sass": "^4.5.0",
     "normalize.css": "^5.0.0",
     "react": "^15.4.2",
@@ -98,7 +99,9 @@
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
     ],
     "moduleNameMapper": {
-      "^react-native$": "react-native-web"
+      "^react-native$": "react-native-web",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less|scss)$": "<rootDir>/__mocks__/styleMock.js"
     }
   },
   "babel": {
