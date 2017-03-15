@@ -3,6 +3,8 @@ general:
     only:
       - set-up-ci
 dependencies:
+  pre:
+    - yarn add babel-jest
   override:
     - yarn
   cache_directories:
