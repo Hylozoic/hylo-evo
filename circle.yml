@@ -2,8 +2,16 @@ machine:
   node:
     version: 7.7.3
 general:
-  artifacts:
-    - "coverage"
   branches:
     only:
       - set-up-ci
+dependencies:
+  override:
+    - yarn
+  cache_directories:
+    - ~/.cache/yarn
+environment:
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+test:
+  override:
+    - yarn test
