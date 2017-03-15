@@ -1,5 +1,7 @@
 import React from 'react'
 
+import './component.scss'
+
 export default function Feed () {
   return <div styleName='feed'>
     <div>Make this thing</div>

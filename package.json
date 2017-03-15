@@ -105,16 +105,6 @@
   "babel": {
     "presets": [
       "react-app"
-    ],
-    "plugins": [
-      [
-        "react-css-modules",
-        {
-          "filetypes": {
-            ".scss": "postcss-scss"
-          }
-        }
-      ]
     ]
   },
   "standard": {

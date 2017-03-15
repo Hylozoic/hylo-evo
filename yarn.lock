@@ -270,7 +270,7 @@ babel-code-frame@^6.11.0, babel-code-frame@^6.16.0, babel-code-frame@^6.22.0:
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-babel-core@6.17.0, babel-core@^6.0.0:
+babel-core@6.17.0:
   version "6.17.0"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.17.0.tgz#6c4576447df479e241e58c807e4bc7da4db7f425"
   dependencies:
@@ -296,7 +296,7 @@ babel-core@6.17.0, babel-core@^6.0.0:
     slash "^1.0.0"
     source-map "^0.5.0"
 
-babel-core@^6.22.0:
+babel-core@^6.0.0, babel-core@^6.22.0:
   version "6.22.1"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.22.1.tgz#9c5fd658ba1772d28d721f6d25d968fc7ae21648"
   dependencies:
@@ -452,14 +452,6 @@ babel-helpers@^6.16.0, babel-helpers@^6.22.0:
     babel-runtime "^6.22.0"
     babel-template "^6.22.0"
 
-babel-jest@^16.0.0:
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-16.0.0.tgz#348729aea6d624a4774b8a934d07a40dd2cfd640"
-  dependencies:
-    babel-core "^6.0.0"
-    babel-plugin-istanbul "^2.0.0"
-    babel-preset-jest "^16.0.0"
-
 babel-jest@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-17.0.2.tgz#8d51e0d03759713c331f108eb0b2eaa4c6efff74"
@@ -513,10 +505,6 @@ babel-plugin-istanbul@^4.0.0:
     find-up "^2.1.0"
     istanbul-lib-instrument "^1.4.2"
     test-exclude "^4.0.0"
-
-babel-plugin-jest-hoist@^16.0.0:
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-16.0.0.tgz#b58ca3f770982a7e7c25b5614b2e57e9dafc6e76"
 
 babel-plugin-jest-hoist@^17.0.2:
   version "17.0.2"
@@ -906,12 +894,6 @@ babel-preset-es2017@^6.16.0:
   dependencies:
     babel-plugin-syntax-trailing-function-commas "^6.22.0"
     babel-plugin-transform-async-to-generator "^6.22.0"
-
-babel-preset-jest@^16.0.0:
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/babel-preset-jest/-/babel-preset-jest-16.0.0.tgz#417aabc2d7d93170f43c20ef1ea0145e8f7f2db5"
-  dependencies:
-    babel-plugin-jest-hoist "^16.0.0"
 
 babel-preset-jest@^17.0.2:
   version "17.0.2"
@@ -3466,12 +3448,6 @@ jest-config@^17.0.3:
     jest-resolve "^17.0.3"
     jest-util "^17.0.2"
     json-stable-stringify "^1.0.0"
-
-jest-css-modules@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/jest-css-modules/-/jest-css-modules-1.1.0.tgz#19332cf767618e6052f0900de25e6b8859e65b95"
-  dependencies:
-    babel-jest "^16.0.0"
 
 jest-diff@^17.0.3:
   version "17.0.3"
