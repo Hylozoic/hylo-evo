@@ -14,20 +14,8 @@ import EventDetail from 'routes/Events/EventDetail'
 import 'css/global/index.scss'
 
 export default class PrimaryLayout extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {lastDetail: null}
-  }
-
-  componentDidUpdate (prevProps) {
-    if (get('content.props.detail', prevProps) && !get('content.props.detail', this.props)) {
-      this.setState({lastDetail: get('content.props.detail', prevProps)})
-    }
-  }
-
   render () {
     const { match, location } = this.props
-    const { lastDetail } = this.state
     // TODO: Replace with something more sensible
     const hasDetail = location.pathname.match(/\/events\//)
     return <div styleName='container'>
