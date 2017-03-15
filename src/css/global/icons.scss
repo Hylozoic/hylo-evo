@@ -1,6 +1,6 @@
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'hylo-evo-03-08-17' !important;
+  font-family: 'hylo-evo-03-15-17' !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -13,6 +13,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-Messages:before {
+  content: "\e905";
+}
+.icon-Notification:before {
+  content: "\e906";
+}
+.icon-Search:before {
+  content: "\e907";
+}
+.icon-Share:before {
+  content: "\e908";
+}
+.icon-Members:before {
+  content: "\e904";
+}
+.icon-Topics:before {
+  content: "\e903";
+}
 .icon-Projects:before {
   content: "\e900";
 }
@@ -21,10 +39,4 @@
 }
 .icon-Home:before {
   content: "\e902";
-}
-.icon-Topics:before {
-  content: "\e903";
-}
-.icon-Members:before {
-  content: "\e904";
 }
