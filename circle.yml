@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 7.7.3
+    version: 6.1.0
 general:
   branches:
     only:
