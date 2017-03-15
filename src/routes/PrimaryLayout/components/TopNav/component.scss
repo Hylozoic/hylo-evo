@@ -13,7 +13,7 @@
     //     padding-left:  ($gutter / 2);
     //   }
     // }
-  composes: pl-5 pr-5 mb-6 from $bootstrap-path;
+  composes: d-flex justify-content-start pl-5 pr-5 mb-6 from $bootstrap-path;
   // mixing metaphors here because the top padding is not a multiple of the spacer
   background-color: white;
   z-index: 10;
@@ -43,4 +43,23 @@
   font-size: 16px !important;
   position: relative;
   top: -2px;
+}
+
+.navIcons {
+  composes: ml-auto from $bootstrap-path;
+  display: inline-block;
+}
+
+.navIcon, .navIcon:hover {
+  margin-right: 15px;
+  text-decoration: none;
+}
+
+.icon {
+  font-size: 22px;
+  top: 3px;
+}
+
+.icon:hover {
+  color: $color-rhino;
 }
