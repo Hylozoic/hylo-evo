@@ -68,7 +68,7 @@
     "velocity-react": "^1.2.1"
   },
   "engines": {
-    "node": ">=7.7"
+    "node": "~7.7"
   },
   "scripts": {
     "start": "node scripts/start.js",
