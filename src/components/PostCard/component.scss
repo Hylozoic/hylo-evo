@@ -1,0 +1,50 @@
+.card {
+  padding: 15px 0px;
+  border: 1px solid $color-cape-cod-10;
+  border-radius: 4px;
+}
+
+.postBlock {
+  padding: 0px 15px;
+}
+
+.header {
+  composes: postBlock;
+  composes: d-flex justify-content-start align-items-center from $bootstrap-path;
+}
+
+.avatar, .avatar:hover {
+  margin-right: 10px;
+}
+
+.nameAndDate {
+  display: inline-block;
+  position: relative;
+  top: -2px;
+}
+
+.name {
+  text-decoration: none;
+}
+
+.date {
+  line-height: 12px;
+}
+
+.label {
+  composes: ml-auto from $bootstrap-path;
+  margin-right: 20px;
+}
+
+.menuLink {
+  /* composes: ml-auto from $bootstrap-path; */
+}
+
+.body {
+  composes: postBlock;
+}
+
+.footer {
+  composes: postBlock;
+  border-top: 1px solid $color-cape-cod-10;
+}

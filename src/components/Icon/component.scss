@@ -9,6 +9,11 @@
 }
 
 .icon-Home, .icon-Events, .icon-Projects, .icon-Members, .icon-Topics,
-.icon-Messages, .icon-Notifications, .icon-Share, .icon-Search, .icon-More {
+.icon-Messages, .icon-Notifications, .icon-Share, .icon-Search {
   /* empty */
+}
+
+.icon-More {
+  position: relative;
+  top: 3px;
 }
