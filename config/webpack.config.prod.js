@@ -174,7 +174,7 @@ module.exports = {
                 resources: [
                   paths.appSrc + '/css/sass-resources/_app.scss',
                   paths.appSrc + '/css/sass-resources/_bootstrap-customization.scss',
-                  paths.appSrc + '/UIKit/css/_sass_resources.scss'
+                  paths.appSrc + '/routes/UIKit/css/_sass_resources.scss'
                 ]
               }
             }
