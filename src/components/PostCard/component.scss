@@ -11,6 +11,7 @@
 .header {
   composes: postBlock;
   composes: d-flex justify-content-start align-items-center from $bootstrap-path;
+  margin-bottom: 30px;
 }
 
 .avatar, .avatar:hover {
@@ -42,6 +43,11 @@
 
 .body {
   composes: postBlock;
+  margin-bottom: 36px;
+}
+
+.title {
+  /* empty */
 }
 
 .footer {

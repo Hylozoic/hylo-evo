@@ -28,6 +28,16 @@ const SAMPLE_POST = {
   updated_at: '6 hours ago'
 }
 
+const SAMPLE_POST_WITH_DESCRIPTION = {
+  title: 'We put this together as a PDF for hand-out at your next event or university class',
+  description: 'Feel free to print and distribute or if you would like to suggest anything we have missed or better clarity, let us know!',
+  type: 'offer',
+  votesCount: '2564',
+  user: SAMPLE_AUTHOR,
+  commenters: SAMPLE_PEOPLE,
+  updated_at: '6 hours ago'
+}
+
 const SAMPLE_POST_WITH_IMAGE = {
   title: 'Three volunteers needed to collect signatures in East Van next weekend',
   type: 'request',
@@ -57,18 +67,11 @@ export default function PostTypes (props) {
   return <div>
     <div className='sheet'>
       <div className='sheet-title'>Post Types</div>
-      <div className='sheet-flexbox'>
-        <div className='sheet-flexbox-item'>
-          <PostCard post={SAMPLE_POST} styleName='postCard' />
-        </div>
-        <div className='sheet-flexbox-item'>
-          <PostCard post={SAMPLE_POST_WITH_IMAGE} styleName='postCard' />
-        </div>
-      </div>
-      <div className='sheet-flexbox'>
-        <div className='sheet-flexbox-item'>
-          <PostCard post={SAMPLE_POST_WITH_PREVIEW} styleName='postCard' />
-        </div>
+      <div styleName='postCards'>
+        <PostCard post={SAMPLE_POST} styleName='postCard' />
+        <PostCard post={SAMPLE_POST_WITH_IMAGE} styleName='postCard' />
+        <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='postCard' />
+        <PostCard post={SAMPLE_POST_WITH_PREVIEW} styleName='postCard' />
       </div>
     </div>
   </div>

@@ -44,7 +44,7 @@ export const PostHeader = CSSModules(({ post: { user, user: { name }, updated_at
 
 export const PostBody = CSSModules(({ post }) => {
   return <div styleName='body'>
-    Body
+    <div styleName='title' className='hdr-headline'>{post.title}</div>
   </div>
 }, styles)
 
