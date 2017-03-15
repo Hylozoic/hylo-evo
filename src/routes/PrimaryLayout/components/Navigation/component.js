@@ -7,7 +7,7 @@ export default class Navigation extends React.Component {
     const { collapsed } = this.props
 
     const links = [
-      {label: 'Home', icon: 'Home', to: '/', indexOnly: true},
+      {label: 'Home', icon: 'Home', to: '/', exact: true},
       {label: 'Events', icon: 'Events', to: '/events', badge: 3},
       {label: 'Members', icon: 'Members', to: '/members'},
       {label: 'UI Kit', icon: 'Projects', to: '/ui-kit'}

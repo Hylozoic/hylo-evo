@@ -1,15 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { matchPath } from 'react-router'
 import BadgedIcon from 'components/BadgedIcon'
 import Badge from 'components/Badge'
 import cx from 'classnames'
 
 export default function NavLink (
-  { to, label, icon, badge, collapsed = false, indexOnly = false, match },
+  // this gets the location param using withRouter, see the index.js
+  { to, label, icon, badge, collapsed = false, exact, location },
 ) {
-  const active = false
-  // TODO: Replace with direct routes
-  // router.isActive(to, indexOnly)
+  const active = !!matchPath(location.pathname, {
+    path: to,
+    exact
+  })
 
   return <li styleName={cx('item', {active})}>
     <Link to={to} styleName={cx('link', {collapsed: collapsed})}>
@@ -18,8 +21,4 @@ export default function NavLink (
       {badge && <Badge number={badge} styleName='badge' expanded={!collapsed} />}
     </Link>
   </li>
-}
-NavLink.contextTypes = {
-  router: React.PropTypes.object,
-  collapsed: React.PropTypes.bool
 }
