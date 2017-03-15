@@ -1,32 +1,33 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
-import CSSModules from 'react-css-modules'
-import { Link } from 'react-router'
+import { matchPath, Route, Link } from 'react-router-dom'
 import SampleCard from 'components/SampleCard'
+import Navigation from './components/Navigation'
+import Feed from 'routes/Feed'
+import Events from 'routes/Events'
+import EventDetail from 'routes/Events/EventDetail'
 
 // Global styles
 import 'css/global/index.scss'
 
-export default function PrimaryLayout (
-  { header, navigation, content }
-) {
-  const detail = (content && content.props && content.props.detail)
-  const expanded = !!detail
+export default function PrimaryLayout ({ match, location }) {
+  // TODO: Replace with something more sensible
+  const hasDetail = location.pathname.match(/\/events\//)
   return <div styleName='container'>
     <div styleName='row'>
       <div styleName='header' className='hdr-display'>
-        {header || <Header />}
+        <Route path='/' component={Header} />
       </div>
     </div>
     <div styleName='row'>
-      <div styleName={expanded ? 'navigation-collapsed' : 'navigation'}>
-        {navigation || <Navigation />}
-      </div>
+      <Navigation collapsed={hasDetail} />
       <div styleName='content'>
-        {content || <SampleCard />}
+        <Route path='/' exact component={Feed} />
+        <Route path='/events' component={Events} />
       </div>
-      <div styleName={expanded ? 'detail-expanded' : 'detail'}>
-        {detail || <SampleCard />}
+      <div styleName={hasDetail ? 'detail-expanded' : 'detail'}>
+        <Route path='/' exact component={Feed} />
+        <Route path='/events/:eventId' exact component={EventDetail} />
       </div>
     </div>
   </div>
@@ -34,12 +35,4 @@ export default function PrimaryLayout (
 
 export function Header () {
   return <div className='hdr-display'>Top Bar</div>
-}
-
-export function Navigation () {
-  return <ul>
-    <li><Link to='/'>Home</Link></li>
-    <li><Link to='/events'>Events</Link></li>
-    <li><Link to='/ui-kit'>UI Kit</Link></li>
-  </ul>
 }
