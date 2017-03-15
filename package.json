@@ -69,6 +69,9 @@
     "tether": "^1.4.0",
     "velocity-react": "^1.2.1"
   },
+  "engines": {
+    "node": ">=7.7"
+  },
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
