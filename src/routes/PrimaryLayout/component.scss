@@ -1,58 +1,26 @@
 
-.content,
-.detail {
-  // background-color: $color-white;
-  // border: dashed 1px $color-rhino-30;
-}
-
 @media (min-width: 80rem) {
   .container {
     width: 80rem;
-    // @include make-container();
-      position: relative;
-      margin-left: auto;
-      margin-right: auto;
-      // @each $breakpoint in map-keys($gutters) {
-      //   @include media-breakpoint-up($breakpoint) {
-      //     $gutter: map-get($gutters, $breakpoint);
-      //     padding-right: ($gutter / 2);
-      //     padding-left:  ($gutter / 2);
-      //   }
-      // }
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
 .row {
-  // @include make-row();
-    display: flex;
-    flex-wrap: wrap;
-    // @each $breakpoint in map-keys($gutters) {
-    //   @include media-breakpoint-up($breakpoint) {
-    //     $gutter: map-get($gutters, $breakpoint);
-    //     margin-right: ($gutter / -2);
-    //     margin-left:  ($gutter / -2);
-    //   }
-    // }
+  display: flex;
+  flex-wrap: wrap;
   composes: justify-content-between from $bootstrap-path;
-  // removes the negative margin from Bootrap row. There is likely a better way
-  margin: 0 0 !important;
+  margin: 0;
 }
 
 .header {
-  // @include make-col-ready();
-    position: relative;
-    // Prevent columns from becoming too narrow when at smaller grid tiers by
-    // always setting `width: 100%;`. This works because we use `flex` values
-    // later on to override this initial width.
-    width: 100%;
-    min-height: 1px; // Prevent collapsing
-    // @each $breakpoint in map-keys($gutters) {
-    //   @include media-breakpoint-up($breakpoint) {
-    //     $gutter: map-get($gutters, $breakpoint);
-    //     padding-right: ($gutter / 2);
-    //     padding-left:  ($gutter / 2);
-    //   }
-    // }
+  // From Bootstrap make-col-ready():
+  position: relative;
+  width: 100%;
+  min-height: 1px; // Prevent collapsing
+
   composes: p-6 mb-6 from $bootstrap-path;
   box-shadow: 0px 3px 5px 0px $color-nepal;
   color: $color-athens-gray;
@@ -60,21 +28,10 @@
 }
 
 .content {
-  // @include make-col-ready();
-    position: relative;
-    // Prevent columns from becoming too narrow when at smaller grid tiers by
-    // always setting `width: 100%;`. This works because we use `flex` values
-    // later on to override this initial width.
-    width: 100%;
-    min-height: 1px; // Prevent collapsing
-    // @each $breakpoint in map-keys($gutters) {
-    //   @include media-breakpoint-up($breakpoint) {
-    //     $gutter: map-get($gutters, $breakpoint);
-    //     padding-right: ($gutter / 2);
-    //     padding-left:  ($gutter / 2);
-    //   }
-    // }
-  // @include make-col(5.439);
+  // From Bootstrap make-col-ready():
+  position: relative;
+  width: 100%;
+  min-height: 1px; // Prevent collapsing
   flex: 0 0 45%;
   max-width: 45%;
   overflow: auto;
@@ -82,21 +39,11 @@
 }
 
 .sidebar {
-  // @include make-col-ready();
-    position: relative;
-    // Prevent columns from becoming too narrow when at smaller grid tiers by
-    // always setting `width: 100%;`. This works because we use `flex` values
-    // later on to override this initial width.
-    width: 100%;
-    min-height: 1px; // Prevent collapsing
-    // @each $breakpoint in map-keys($gutters) {
-    //   @include media-breakpoint-up($breakpoint) {
-    //     $gutter: map-get($gutters, $breakpoint);
-    //     padding-right: ($gutter / 2);
-    //     padding-left:  ($gutter / 2);
-    //   }
-    // }
-  // @include make-col(3);
+  // From Bootstrap make-col-ready():
+  position: relative;
+  width: 100%;
+  min-height: 1px; // Prevent collapsing
+
   flex: 0 0 25%;
   max-width: 25%;
   transition-delay: 0.1s;
