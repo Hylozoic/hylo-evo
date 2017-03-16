@@ -45,11 +45,11 @@ export default function Typography (props) {
           <div className='section'>
             <div className='section-title'>Captions & Tags</div>
             <div className='section-box'>
-              <StyleCard styleClassName='caption-drk-lg' name='Caption 13pt - Black'
+              <StyleCard styleClassName='caption-drk-lg' name='Caption 14pt - Black'
                 description='Circular Book / 14pt, 0 ch, 18 line / Color: 2C4059 80%'
                 sampleKey='long' />
-              <StyleCard styleClassName='caption-lt-lg' name='Caption 13pt - Grey'
-                description='Circular Book / 14pt, 0 ch, 18 line / Color: 2C4059 80%'
+              <StyleCard styleClassName='caption-lt-lg' name='Caption 14pt - Grey'
+                description='Circular Book / 14pt, 0 ch, 18 line / Color: 2C4059 60%'
                 sampleKey='long' />
               <StyleCard styleClassName='tag' name='Tag'
                 description='Circular Bold / 10pt, 0.6 ch, 14 line / Color: 2C4059 50%'
@@ -61,10 +61,10 @@ export default function Typography (props) {
           <div className='section'>
             <div className='section-title'>Buttons</div>
             <div className='section-box'>
-              <StyleCard styleClassName='button' name='Button - Regular'
-                description='Circular Medium / 16pt, 0 ch, 20 line / Color: 0DC3A0'
+              <StyleCard styleClassName='text-button' name='Button - Regular'
+                description='Circular Medium / 14pt, 0 ch, 20 line / Color: 0DC3A0'
                 sample='Save changes' />
-              <StyleCard styleClassName='button-sm' name='Button - Small'
+              <StyleCard styleClassName='text-button-sm' name='Button - Small'
                 description='Circular Bold / 10pt, 0.6 ch, 14 line / Color: 0DC3A0'
                 sample='Learn more' />
             </div>

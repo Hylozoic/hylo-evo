@@ -24,9 +24,9 @@ export default function TopNav ({ community = SAMPLE_COMMUNITY }) {
       <div className='hdr-subheadline' styleName='communityName'>{community.name}</div>
     </div>
     <div styleName='navIcons'>
-      <Link to='/' styleName='navIcon'><Icon name='Search' styleName='icon'/></Link>
-      <Link to='/' styleName='navIcon'><Icon name='Messages' styleName='icon'/></Link>
-      <Link to='/' styleName='navIcon'><Icon name='Notification' styleName='icon'/></Link>
+      <Link to='/' styleName='navIcon'><Icon name='Search' styleName='icon' /></Link>
+      <Link to='/' styleName='navIcon'><Icon name='Messages' styleName='icon' /></Link>
+      <Link to='/' styleName='navIcon'><Icon name='Notifications' styleName='icon' /></Link>
       <Link to='/' styleName='navIcon'><RoundImage url={SAMPLE_USER.avatarUrl} small /></Link>
     </div>
   </div>

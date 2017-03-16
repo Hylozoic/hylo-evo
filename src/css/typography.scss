@@ -92,15 +92,15 @@
   text-transform: uppercase;
 }
 
-.button {
+.text-button {
   @include font-medium;
   color: $color-caribbean-green;
-  font-size: 16px;
+  font-size: 14px;
   letter-spacing: 0;
   line-height: 20px;
 }
 
-.button-sm {
+.text-button-sm {
   @include font-bold;
   color: $color-caribbean-green;
   font-size: 10px;
@@ -118,8 +118,8 @@
 
 .timestamp {
   @include font-regular;
-  color: $color-rhino-60;
-  font-size: 13px;
+  color: $color-rhino-30;
+  font-size: 12px;
   letter-spacing: 0;
   line-height: 16px;
 }

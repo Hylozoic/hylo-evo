@@ -3,3 +3,8 @@ export function bgImageStyle (url) {
   const escaped = url.replace(/([\(\)])/g, (match, $1) => '\\' + $1) // eslint-disable-line
   return {backgroundImage: `url(${escaped})`}
 }
+
+export function personUrl (person) {
+  // placeholder
+  return '/'
+}

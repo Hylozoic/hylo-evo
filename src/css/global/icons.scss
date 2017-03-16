@@ -13,6 +13,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-ArrowUp:before {
+  content: "\e90a";
+}
 .icon-More:before {
   content: "\e909";
 }
