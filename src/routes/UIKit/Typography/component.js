@@ -62,7 +62,7 @@ export default function Typography (props) {
             <div className='section-title'>Buttons</div>
             <div className='section-box'>
               <StyleCard styleClassName='text-button' name='Button - Regular'
-                description='Circular Medium / 16pt, 0 ch, 20 line / Color: 0DC3A0'
+                description='Circular Medium / 14pt, 0 ch, 20 line / Color: 0DC3A0'
                 sample='Save changes' />
               <StyleCard styleClassName='text-button-sm' name='Button - Small'
                 description='Circular Bold / 10pt, 0.6 ch, 14 line / Color: 0DC3A0'

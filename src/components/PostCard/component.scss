@@ -16,22 +16,54 @@ $footer-height: 56px;
   margin-bottom: 30px;
 }
 
-.avatar, .avatar:hover {
+.avatar {
   margin-right: 10px;
 }
 
-.nameAndDate {
+.headerText {
   display: inline-block;
   position: relative;
   top: -2px;
 }
 
-.name {
-  text-decoration: none;
+.userName {
+  // TODO: Extract typography?
+  @include font-bold;
+  color: $color-rhino-80;
+  font-size: 14px;
+  &:hover {
+    color: $color-rhino;
+    text-decoration: none;
+  }
+}
+
+.userTitle {
+  // TODO: Extract typography? this one is very close to bdy-drk-sm
+  @include font-regular;
+  color: $color-rhino-80;
+  font-size: 14px;
 }
 
 .date {
   line-height: 12px;
+}
+
+.spacer {
+  margin: 0 7px;
+  font-size: 8px;
+  position: relative;
+  top: -2px;
+}
+
+.context {
+  // TODO: Extract typography?
+  @include font-regular;
+  color: $color-caribbean-green;
+  font-size: 12px;
+  &:hover {
+    color: $color-caribbean-green;
+    text-decoration: none;
+  }
 }
 
 .label {
@@ -39,8 +71,12 @@ $footer-height: 56px;
   margin-right: 20px;
 }
 
-.menuLink {
-  /* composes: ml-auto from $bootstrap-path; */
+.menuLink:hover {
+  text-decoration: none;
+}
+
+.menuLink:hover > span {
+  color: $color-rhino-80;
 }
 
 .body {

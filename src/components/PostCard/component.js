@@ -5,7 +5,7 @@ import cx from 'classnames'
 import Avatar from 'components/Avatar'
 import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
-import People from './People'
+import RoundImage from 'components/RoundImage'
 import { personUrl } from 'utils'
 const { shape, any, object, string, array } = React.PropTypes
 import CSSModules from 'react-css-modules'
@@ -31,17 +31,26 @@ PostCard.propTypes = {
   })
 }
 
-export const PostHeader = CSSModules(({ post: { user, user: { name }, updated_at, type } }) => {
+export const PostHeader = CSSModules(({ post: { user, updated_at, type, context } }) => {
   return <div styleName='header'>
     <Avatar person={user} styleName='avatar' />
-    <div styleName='nameAndDate'>
-      <Link to={personUrl(user)} styleName='name' className='hdr-minor'>{name}</Link>
-      <div styleName='date' className='timestamp'>{updated_at}</div>
-    </div>
+      <div styleName='headerText'>
+        <Link to={personUrl(user)} styleName='userName'>{user.name}{user.title && ', '}</Link>
+        {user.title && <span styleName='userTitle'>{user.title}</span>}
+        <div>
+          <span className='timestamp'>
+            {updated_at}{context && <span styleName='spacer'>•</span>}
+          </span>
+          {context && <Link to='/' styleName='context'>
+            {context}
+          </Link>}
+        </div>
+      </div>
     <PostLabel type={type} styleName='label' />
     <a href='' styleName='menuLink'><Icon name='More' /></a>
   </div>
 }, styles)
+
 
 export const PostBody = CSSModules(({ post }) => {
   return <div styleName='body'>
@@ -51,9 +60,15 @@ export const PostBody = CSSModules(({ post }) => {
 
 export const PostFooter = CSSModules(({ post }) => {
   return <div styleName='footer'>
-    <People imageUrls={post.commenters.map(c => c.avatarUrl)} styleName='people'/>
+    <PeopleImages imageUrls={post.commenters.map(c => c.avatarUrl)} styleName='people' />
     <span className='caption-lt-lg'>Steph, Cam, and 58 others commented</span>
     <div styleName='share'><a href=''><Icon name='Share' /></a></div>
     <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{post.voteCount}</a></div>
   </div>
 }, styles)
+
+export function PeopleImages ({ imageUrls, className }) {
+  const images = imageUrls.map(url =>
+    <RoundImage url={url} key={url} medium overlaps />)
+  return <div className={className}>{images}</div>
+}

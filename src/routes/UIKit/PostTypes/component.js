@@ -1,5 +1,6 @@
 import React from 'react'
 import PostCard from 'components/PostCard'
+import { omit } from 'lodash/fp'
 
 const rotateAndTrim = (arr, n) => arr.slice(n, arr.length).concat(arr.slice(0, n)).slice(0, 3)
 
@@ -12,7 +13,9 @@ const SAMPLE_AVATAR_URLS = [
 
 const SAMPLE_IMAGE_URL = 'https://d3ngex8q79bk55.cloudfront.net/community/1944/banner/1489599795424_16820055642_cec4641527_z.jpg'
 
-const SAMPLE_AUTHOR = {name: 'Sarah Pham', avatarUrl: SAMPLE_AVATAR_URLS[0]}
+const SAMPLE_AUTHOR = {
+  name: 'Sarah Pham', avatarUrl: SAMPLE_AVATAR_URLS[0], title: 'Environmental Specialist'
+}
 
 const SAMPLE_PEOPLE = [
   {name: 'Steph', avatarUrl: SAMPLE_AVATAR_URLS[0]},
@@ -24,6 +27,7 @@ const SAMPLE_PEOPLE = [
 const SAMPLE_POST = {
   title: 'We put this together as a PDF for hand-out at your next event or university class',
   type: 'offer',
+  context: 'Stop Wombat Walrus',
   voteCount: '2564',
   user: SAMPLE_AUTHOR,
   commenters: rotateAndTrim(SAMPLE_PEOPLE, 0),
@@ -45,9 +49,10 @@ const SAMPLE_POST_WITH_DESCRIPTION = {
 const SAMPLE_POST_WITH_IMAGE = {
   title: 'Three volunteers needed to collect signatures in East Van next weekend',
   type: 'request',
+  context: 'Stop Wombat Walrus',
   imageUrl: SAMPLE_IMAGE_URL,
   voteCount: '2564',
-  user: SAMPLE_AUTHOR,
+  user: omit('title', SAMPLE_AUTHOR),
   commenters: rotateAndTrim(SAMPLE_PEOPLE, 2),
   commentCount: 60,
   updated_at: '6 hours ago'
