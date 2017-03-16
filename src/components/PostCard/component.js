@@ -6,7 +6,7 @@ import Avatar from 'components/Avatar'
 import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
-import { personUrl } from 'utils'
+import { personUrl, bgImageStyle } from 'utils'
 const { shape, any, object, string, array } = React.PropTypes
 import CSSModules from 'react-css-modules'
 import styles from './component.scss'
@@ -34,26 +34,26 @@ PostCard.propTypes = {
 export const PostHeader = CSSModules(({ post: { user, updated_at, type, context } }) => {
   return <div styleName='header'>
     <Avatar person={user} styleName='avatar' />
-      <div styleName='headerText'>
-        <Link to={personUrl(user)} styleName='userName'>{user.name}{user.title && ', '}</Link>
-        {user.title && <span styleName='userTitle'>{user.title}</span>}
-        <div>
-          <span className='timestamp'>
-            {updated_at}{context && <span styleName='spacer'>•</span>}
-          </span>
-          {context && <Link to='/' styleName='context'>
-            {context}
-          </Link>}
-        </div>
+    <div styleName='headerText'>
+      <Link to={personUrl(user)} styleName='userName'>{user.name}{user.title && ', '}</Link>
+      {user.title && <span styleName='userTitle'>{user.title}</span>}
+      <div>
+        <span className='timestamp'>
+          {updated_at}{context && <span styleName='spacer'>•</span>}
+        </span>
+        {context && <Link to='/' styleName='context'>
+          {context}
+        </Link>}
       </div>
+    </div>
     <PostLabel type={type} styleName='label' />
     <a href='' styleName='menuLink'><Icon name='More' /></a>
   </div>
 }, styles)
 
-
 export const PostBody = CSSModules(({ post }) => {
   return <div styleName='body'>
+    {post.imageUrl && <img src={post.imageUrl} styleName='image' />}
     <div styleName='title' className='hdr-headline'>{post.title}</div>
   </div>
 }, styles)

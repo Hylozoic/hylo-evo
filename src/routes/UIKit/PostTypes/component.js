@@ -11,7 +11,7 @@ const SAMPLE_AVATAR_URLS = [
   'https://lh6.googleusercontent.com/-Yykp9BrS5pM/AAAAAAAAAAI/AAAAAAAAGFQ/45VGI9GhQCQ/photo.jpg'
 ]
 
-const SAMPLE_IMAGE_URL = 'https://d3ngex8q79bk55.cloudfront.net/community/1944/banner/1489599795424_16820055642_cec4641527_z.jpg'
+const SAMPLE_IMAGE_URL = 'https://d3ngex8q79bk55.cloudfront.net/community/1944/banner/1489687099172_ggbridge.jpg'
 
 const SAMPLE_AUTHOR = {
   name: 'Sarah Pham', avatarUrl: SAMPLE_AVATAR_URLS[0], title: 'Environmental Specialist'

@@ -1,17 +1,21 @@
 $footer-height: 56px;
 
+// card
+
 .card {
   padding-top: 15px;
   border: 1px solid $color-cape-cod-10;
   border-radius: 4px;
 }
 
-.postBlock {
+.cardPadding {
   padding: 0px 15px;
 }
 
+// header
+
 .header {
-  composes: postBlock;
+  composes: cardPadding;
   composes: d-flex justify-content-start align-items-center from $bootstrap-path;
   margin-bottom: 30px;
 }
@@ -79,17 +83,26 @@ $footer-height: 56px;
   color: $color-rhino-80;
 }
 
+// body
+
 .body {
-  composes: postBlock;
   margin-bottom: 36px;
 }
 
+.image {
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
 .title {
+  composes: cardPadding;
   /* empty */
 }
 
+// footer
+
 .footer {
-  composes: postBlock;
+  composes: cardPadding;
   composes: d-flex justify-content-start align-items-center from $bootstrap-path;
   height: $footer-height;
   border-top: 1px solid $color-cape-cod-10;
@@ -106,6 +119,12 @@ $footer-height: 56px;
   line-height: $footer-height;
   text-align: center;
   border-left: 1px solid $color-cape-cod-10;
+  & > a:hover {
+    text-decoration: none;
+    & > span {
+      color: $color-rhino-80;
+    }
+  }
 }
 
 .arrowIcon {
@@ -121,4 +140,8 @@ $footer-height: 56px;
   line-height: $footer-height;
   text-align: center;
   border-left: 1px solid $color-cape-cod-10;
+  & > a:hover {
+    text-decoration: none;
+    color: $color-caribbean-green;
+  }
 }
