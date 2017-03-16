@@ -7,14 +7,8 @@ import cx from 'classnames'
 
 export default function NavLink (
   // this gets the location param using withRouter, see the index.js
-  { to, label, icon, badge, collapsed = false, exact, location },
+  { to, label, icon, badge, active, collapsed = false },
 ) {
-  // TODO: make sure this is the best way to do this
-  const active = !!matchPath(location.pathname, {
-    path: to,
-    exact
-  })
-
   return <li styleName={cx('item', {active})}>
     <Link to={to} styleName={cx('link', {collapsed: collapsed})}>
       <BadgedIcon name={icon} green={active} showBadge={collapsed && badge} styleName='icon' />
