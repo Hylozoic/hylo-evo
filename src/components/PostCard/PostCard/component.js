@@ -62,22 +62,11 @@ export const PostBody = CSSModules(({ post, post: { linkPreview } }) => {
     {post.imageUrl && <img src={post.imageUrl} styleName='image' />}
     <div styleName='title' className='hdr-headline'>{post.title}</div>
     {truncated && <div styleName='description'>{truncated}</div>}
-    {linkPreview && <LinkPreview linkPreview={linkPreview} />}
-  </div>
-}, styles)
-
-export const LinkPreview = CSSModules(({ linkPreview }) => {
-  const domain = (new URL(linkPreview.url)).hostname.replace('www.', '')
-  return <div styleName='cardPadding'>
-    <div styleName='linkPreview'>
-      <a href={linkPreview.url}>
-        <div style={bgImageStyle(linkPreview.imageUrl)} styleName='previewImage' />
-        <div styleName='previewText'>
-          <span styleName='previewTitle'>{linkPreview.title}</span>
-          <div styleName='previewDomain'>{domain}</div>
-        </div>
-      </a>
-    </div>
+    {linkPreview && <div styleName='linkPreview'>
+      <div style={bgImageStyle(linkPreview.imageUrl)} styleName='previewImage'/>
+      <div style='previewTitle'>{linkPreview.title}</div>
+      <div style='previewTitle'>{linkPreview.title}</div>
+    </div>}
   </div>
 }, styles)
 

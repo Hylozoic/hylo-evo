@@ -4,6 +4,7 @@
   border: solid 3px $color-white;
   width: $space-11x;
   height: $space-11x;
+  // TODO: attn LEJ, here's a place we're still using some other bootstrap stuff.
   composes: img-thumbnail from $bootstrap-path;
   composes: rounded-circle from $bootstrap-path;
   composes: d-inline-block from $bootstrap-path;

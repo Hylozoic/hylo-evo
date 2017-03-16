@@ -30,10 +30,10 @@ export default class PrimaryLayout extends Component {
           <Route path='/' component={Feed} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})}>
-          // TODO: Display content of last detail page on '/' so that the
-          // animation transitions correctly.
-          // Best guess is to replace these routes with a render function
-          // defined above, and store the previous detail component in state
+          {/* TODO: Display content of last detail page on '/' so that the
+           animation transitions correctly.
+           Best guess is to replace these routes with a render function
+           defined above, and store the previous detail component in state */}
           <Route path='/events/:eventId' exact component={EventDetail} />
         </div>
       </div>

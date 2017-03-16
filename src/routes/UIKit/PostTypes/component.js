@@ -46,6 +46,17 @@ const SAMPLE_POST_WITH_DESCRIPTION = {
   updated_at: '6 hours ago'
 }
 
+const SAMPLE_POST_WITH_LONG_DESCRIPTION = {
+  title: 'We put this together as a PDF for hand-out at your next event or university class',
+  description: 'Feel free to print and distribute or if you would like to suggest anything we have missed or better clarity, let us know! Feel free to print and distribute or if you would like to suggest anything we have missed or better clarity, let us know!',
+  type: 'offer',
+  voteCount: '2564',
+  user: SAMPLE_AUTHOR,
+  commenters: rotateAndTrim(SAMPLE_PEOPLE, 1),
+  commentCount: 60,
+  updated_at: '6 hours ago'
+}
+
 const SAMPLE_POST_WITH_IMAGE = {
   title: 'Three volunteers needed to collect signatures in East Van next weekend',
   type: 'request',
@@ -66,7 +77,6 @@ const SAMPLE_POST_WITH_PREVIEW = {
     url: 'https://www.theguardian.com/technology/2017/mar/11/tim-berners-lee-web-inventor-save-internet',
     imageUrl: 'http://images.tate.org.uk/sites/default/files/images/picasso_pigeon_peas_0.jpg'
   },
-  imageUrl: SAMPLE_IMAGE_URL,
   voteCount: '2564',
   user: SAMPLE_AUTHOR,
   commenters: rotateAndTrim(SAMPLE_PEOPLE, 3),
@@ -82,6 +92,7 @@ export default function PostTypes (props) {
         <PostCard post={SAMPLE_POST} styleName='postCard' />
         <PostCard post={SAMPLE_POST_WITH_IMAGE} styleName='postCard' />
         <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='postCard' />
+        <PostCard post={SAMPLE_POST_WITH_LONG_DESCRIPTION} styleName='postCard' />
         <PostCard post={SAMPLE_POST_WITH_PREVIEW} styleName='postCard' />
       </div>
     </div>
