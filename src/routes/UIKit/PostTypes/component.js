@@ -1,6 +1,8 @@
 import React from 'react'
 import PostCard from 'components/PostCard'
 
+const rotateAndTrim = (arr, n) => arr.slice(n, arr.length).concat(arr.slice(0, n)).slice(0, 3)
+
 const SAMPLE_AVATAR_URLS = [
   'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png',
   'https://d3ngex8q79bk55.cloudfront.net/user/21/avatar/1466554313506_EdwardHeadshot2016Square.jpg',
@@ -22,9 +24,10 @@ const SAMPLE_PEOPLE = [
 const SAMPLE_POST = {
   title: 'We put this together as a PDF for hand-out at your next event or university class',
   type: 'offer',
-  votesCount: '2564',
+  voteCount: '2564',
   user: SAMPLE_AUTHOR,
-  commenters: SAMPLE_PEOPLE,
+  commenters: rotateAndTrim(SAMPLE_PEOPLE, 0),
+  commentCount: 60,
   updated_at: '6 hours ago'
 }
 
@@ -32,9 +35,10 @@ const SAMPLE_POST_WITH_DESCRIPTION = {
   title: 'We put this together as a PDF for hand-out at your next event or university class',
   description: 'Feel free to print and distribute or if you would like to suggest anything we have missed or better clarity, let us know!',
   type: 'offer',
-  votesCount: '2564',
+  voteCount: '2564',
   user: SAMPLE_AUTHOR,
-  commenters: SAMPLE_PEOPLE,
+  commenters: rotateAndTrim(SAMPLE_PEOPLE, 1),
+  commentCount: 60,
   updated_at: '6 hours ago'
 }
 
@@ -42,9 +46,10 @@ const SAMPLE_POST_WITH_IMAGE = {
   title: 'Three volunteers needed to collect signatures in East Van next weekend',
   type: 'request',
   imageUrl: SAMPLE_IMAGE_URL,
-  votesCount: '2564',
+  voteCount: '2564',
   user: SAMPLE_AUTHOR,
-  commenters: SAMPLE_PEOPLE,
+  commenters: rotateAndTrim(SAMPLE_PEOPLE, 2),
+  commentCount: 60,
   updated_at: '6 hours ago'
 }
 
@@ -57,9 +62,10 @@ const SAMPLE_POST_WITH_PREVIEW = {
     imageUrl: 'http://images.tate.org.uk/sites/default/files/images/picasso_pigeon_peas_0.jpg'
   },
   imageUrl: SAMPLE_IMAGE_URL,
-  votesCount: '2564',
+  voteCount: '2564',
   user: SAMPLE_AUTHOR,
-  commenters: SAMPLE_PEOPLE,
+  commenters: rotateAndTrim(SAMPLE_PEOPLE, 3),
+  commentCount: 60,
   updated_at: '6 hours ago'
 }
 

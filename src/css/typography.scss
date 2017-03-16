@@ -92,7 +92,7 @@
   text-transform: uppercase;
 }
 
-.button {
+.text-button {
   @include font-medium;
   color: $color-caribbean-green;
   font-size: 16px;
@@ -100,7 +100,7 @@
   line-height: 20px;
 }
 
-.button-sm {
+.text-button-sm {
   @include font-bold;
   color: $color-caribbean-green;
   font-size: 10px;

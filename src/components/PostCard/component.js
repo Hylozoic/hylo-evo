@@ -5,6 +5,7 @@ import cx from 'classnames'
 import Avatar from 'components/Avatar'
 import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
+import People from './People'
 import { personUrl } from 'utils'
 const { shape, any, object, string, array } = React.PropTypes
 import CSSModules from 'react-css-modules'
@@ -38,7 +39,7 @@ export const PostHeader = CSSModules(({ post: { user, user: { name }, updated_at
       <div styleName='date' className='timestamp'>{updated_at}</div>
     </div>
     <PostLabel type={type} styleName='label' />
-    <Link to='/' styleName='menuLink'><Icon name='More' /></Link>
+    <a href='' styleName='menuLink'><Icon name='More' /></a>
   </div>
 }, styles)
 
@@ -50,6 +51,9 @@ export const PostBody = CSSModules(({ post }) => {
 
 export const PostFooter = CSSModules(({ post }) => {
   return <div styleName='footer'>
-    Footer
+    <People imageUrls={post.commenters.map(c => c.avatarUrl)} styleName='people'/>
+    <span className='caption-lt-lg'>Steph, Cam, and 58 others commented</span>
+    <div styleName='share'><a href=''><Icon name='Share' /></a></div>
+    <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{post.voteCount}</a></div>
   </div>
 }, styles)

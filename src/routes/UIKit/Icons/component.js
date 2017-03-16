@@ -11,7 +11,8 @@ const ICON_NAMES = [
   'Projects',
   'Events',
   'Home',
-  'More'
+  'More',
+  'ArrowUp'
 ]
 
 export default function Elements (props) {
