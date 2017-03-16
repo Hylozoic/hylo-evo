@@ -3,8 +3,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var ManifestPlugin = require('webpack-manifest-plugin')
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
-var paths = require('./paths')
-var getClientEnvironment = require('./env')
+var paths = require('../config/paths')
+var getClientEnvironment = require('../config/env')
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -49,7 +49,7 @@ module.exports = {
   // devtool: 'source-map',
   // In production, we only want to load the polyfills and the app code.
   entry: [
-    require.resolve('./polyfills'),
+    require.resolve('../config/polyfills'),
     paths.appIndexJs
   ],
   output: {
@@ -58,7 +58,7 @@ module.exports = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: '[name].js',
+    // filename: 'static/[name].js',
     // filename: 'static/js/[name].[chunkhash:8].js',
     // chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
 
@@ -227,7 +227,6 @@ module.exports = {
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
-    // NOTE: Temporary for isomorphic-webpack testing
     // // Minify the code.
     // new webpack.optimize.UglifyJsPlugin({
     //   compress: {

@@ -1,8 +1,12 @@
 import path from 'path';
 export default {
   context: __dirname,
+  // Don't attempt to continue if there are any errors.
+  bail: true,
   entry: {
+
     app: [
+      require.resolve('../config/polyfills'),
       path.resolve(__dirname, './app')
     ]
   },
