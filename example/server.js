@@ -1,24 +1,19 @@
-import express from 'express';
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import {
-  renderToString
-} from 'react-dom/server';
-import {
-  createIsomorphicWebpack
-} from 'isomorphic-webpack';
-import webpackConfiguration from './webpack.configuration';
+import express from 'express'
+import webpack from 'webpack'
+import webpackDevMiddleware from 'webpack-dev-middleware'
+import { createIsomorphicWebpack } from 'isomorphic-webpack'
+import webpackConfiguration from './webpack.configuration'
 
-const app = express();
+const app = express()
 
-const compiler = webpack(webpackConfiguration);
+const compiler = webpack(webpackConfiguration)
 
 app.use(webpackDevMiddleware(compiler, {
   noInfo: false,
   publicPath: '/static',
   quiet: false,
   stats: 'minimal'
-}));
+}))
 
 const renderFullPage = (body) => {
   return `
@@ -30,41 +25,44 @@ const renderFullPage = (body) => {
       <script src='/static/app.js'></script>
     </body>
   </html>
-  `;
-};
+  `
+}
 
 // With isomorphic-webpack
 //
-const {
-  createCompilationPromise,
-  evalBundleCode,
-  formatErrorStack
-} = createIsomorphicWebpack(webpackConfiguration, {
+const { evalBundleCode } = createIsomorphicWebpack(webpackConfiguration, {
   // useCompilationPromise: true,
   nodeExternalsWhitelist: [
-    /^react\-router/,
+    /^react\-router/, // eslint-disable-line
     /^history/
   ]
-});
+})
 
 app.get('/*', (req, res) => {
-  // Evaluated in browser context:
-  // Issues with NPM history "Cannot read property 'getCurrentLocation' of undefined" https://github.com/ReactTraining/history/issues/402
-  evalBundleCode(req.protocol + '://' + req.get('host') + '#' + req.originalUrl);
-  const appBody = renderToString(require('./app').default);
-  res.send(renderFullPage(appBody));
-});
+  //  ReactDOM.render(router, document.getElementById('root'))
+  const requestUrl = req.protocol + '://' + req.get('host') + req.originalUrl
+  const myApp = evalBundleCode(requestUrl).default
+  res.status(200).send(renderFullPage(myApp))
+})
+
+app.listen(8000)
+
+//   // Evaluated in browser context:
+// // Issues with NPM history "Cannot read property 'getCurrentLocation' of undefined" https://github.com/ReactTraining/history/issues/402
+// evalBundleCode(req.protocol + '://' + req.get('host') + '#' + req.originalUrl)
+// const appBody = renderToString(require('./app').default)
+// res.send(renderFullPage(appBody))
 
 
-// const requestUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-// const myApp = ReactDOMServer.renderToString(evalBundleCode(requestUrl).default);
-// res.status(200).send(renderFullPage(myApp));
+// const requestUrl = req.protocol + '://' + req.get('host') + req.originalUrl
+// const myApp = ReactDOMServer.renderToString(evalBundleCode(requestUrl).default)
+// res.status(200).send(renderFullPage(myApp))
 
 // Without isomorphic-webpack
 //
 // import React from 'react'
 // import { match, RouterContext } from 'react-router'
-// import routes from './app';
+// import routes from './app'
 
 // app.get('/*', (req, res) => {
 //   match({ routes, location: req.url }, (err, redirect, props) => {
@@ -83,6 +81,4 @@ app.get('/*', (req, res) => {
 //       res.send(renderFullPage(appBody))
 //     }
 //   })
-// });
-
-app.listen(8000);
+// })

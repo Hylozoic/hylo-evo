@@ -1,28 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { renderToString } from 'react-dom/server'
 
-// http://stackoverflow.com/questions/33403549/cannot-access-dom-with-server-side-render-react-0-14-1-react-dom-0-14-1-and-r
-// import createBrowserHistory from 'react-router/node_modules/history'
-// import { createHistory } from 'history'
-// var history = require('history/lib/createBrowserHistory').createHistory
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import {
-  Router,
-  RouterContext,
-  Route,
-  IndexRoute,
-  browserHistory
-} from 'react-router'
+const HelloWorld = (props) => <div>{props.text}</div>
 
-const helloWorld = (props) => <div>{props.route.text}</div>;
+const router = <BrowserRouter>
+  <div>
+    <Route path='/' exact render={() => <HelloWorld text='hello!' />} />,
+    <Route path='/goodbye' render={() => <HelloWorld text='goodbye!' />} />
+  </div>
+</BrowserRouter>
 
-const routes = <Router history={browserHistory}>
-  <Route path='/' component={helloWorld} text='Hello, World this dsfffa it might work after all!!!!' />,
-  <Route path='hello2' component={helloWorld} text='Goodbye!!!!!!!!!!! Goodbye!!!!!!!!!!!' />
-</Router>
+let result
 
 if (typeof ISOMORPHIC_WEBPACK === 'undefined') {
-  ReactDOM.render(routes, document.getElementById('root'))
+  ReactDOM.render(router, document.getElementById('root'))
+  result = router
+} else {
+  result = renderToString(router)
 }
 
-export default router;
+export default result

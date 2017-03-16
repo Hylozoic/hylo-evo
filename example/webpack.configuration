@@ -7,7 +7,7 @@ export default {
     ]
   },
   module: {
-    loaders: [
+    rules: [
       {
         include: path.resolve(__dirname, './app'),
         loader: 'babel-loader',
