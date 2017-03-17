@@ -15,3 +15,9 @@ machine:
 test:
   override:
     - yarn test
+deployment:
+  production:
+    branch: master
+    owner: Hylozoic
+    heroku:
+      appname: hylo-evo
