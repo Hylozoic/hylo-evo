@@ -25,6 +25,7 @@ const SAMPLE_PEOPLE = [
 ]
 
 const SAMPLE_POST = {
+  id: '1',
   title: 'We put this together as a PDF for hand-out at your next event or university class',
   type: 'offer',
   context: 'Stop Wombat Walrus',
@@ -36,6 +37,7 @@ const SAMPLE_POST = {
 }
 
 const SAMPLE_POST_WITH_DESCRIPTION = {
+  id: '2',
   title: 'We put this together as a PDF for hand-out at your next event or university class',
   description: 'Feel free to print and distribute or if you would like to suggest anything we have missed or better clarity, let us know!',
   type: 'offer',
@@ -47,6 +49,7 @@ const SAMPLE_POST_WITH_DESCRIPTION = {
 }
 
 const SAMPLE_POST_WITH_LONG_DESCRIPTION = {
+  id: '3',
   title: 'We put this together as a PDF for hand-out at your next event or university class',
   description: 'Feel free to print and distribute or if you would like to suggest anything we have missed or better clarity, let us know! Feel free to print and distribute or if you would like to suggest anything we have missed or better clarity, let us know!',
   type: 'offer',
@@ -58,6 +61,7 @@ const SAMPLE_POST_WITH_LONG_DESCRIPTION = {
 }
 
 const SAMPLE_POST_WITH_IMAGE = {
+  id: '4',
   title: 'Three volunteers needed to collect signatures in East Van next weekend',
   type: 'request',
   context: 'Stop Wombat Walrus',
@@ -70,6 +74,7 @@ const SAMPLE_POST_WITH_IMAGE = {
 }
 
 const SAMPLE_POST_WITH_PREVIEW = {
+  id: '5',  
   title: 'Stop Wombat Walrus',
   type: 'discussion',
   linkPreview: {

@@ -175,12 +175,6 @@ $footer-height: 56px;
   line-height: $footer-height;
   text-align: center;
   border-left: 1px solid $color-cape-cod-10;
-  & > a:hover {
-    text-decoration: none;
-    & > span {
-      color: $color-rhino-80;
-    }
-  }
 }
 
 .arrowIcon {
