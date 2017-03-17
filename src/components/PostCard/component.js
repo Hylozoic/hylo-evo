@@ -71,7 +71,7 @@ export const LinkPreview = CSSModules(({ linkPreview }) => {
   const domain = (new URL(linkPreview.url)).hostname.replace('www.', '')
   return <div styleName='cardPadding'>
     <div styleName='linkPreview'>
-      <a href={linkPreview.url}>
+      <a href={linkPreview.url} target='_blank'>
         <div style={bgImageStyle(linkPreview.imageUrl)} styleName='previewImage' />
         <div styleName='previewText'>
           <span styleName='previewTitle'>{linkPreview.title}</span>
