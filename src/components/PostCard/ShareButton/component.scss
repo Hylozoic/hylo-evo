@@ -1,0 +1,6 @@
+.link:hover {
+  text-decoration: none;
+  & > span {
+    color: $color-caribbean-green;
+  }
+}

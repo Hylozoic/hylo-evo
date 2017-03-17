@@ -1,5 +1,6 @@
 import React from 'react'
 import PostCard from 'components/PostCard'
+import ShareButton from 'components/PostCard/ShareButton'
 import { omit } from 'lodash/fp'
 
 const rotateAndTrim = (arr, n) => arr.slice(n, arr.length).concat(arr.slice(0, n)).slice(0, 3)
@@ -25,6 +26,7 @@ const SAMPLE_PEOPLE = [
 ]
 
 const SAMPLE_POST = {
+  id: '1',
   title: 'We put this together as a PDF for hand-out at your next event or university class',
   type: 'offer',
   context: 'Stop Wombat Walrus',
@@ -36,6 +38,7 @@ const SAMPLE_POST = {
 }
 
 const SAMPLE_POST_WITH_DESCRIPTION = {
+  id: '2',
   title: 'We put this together as a PDF for hand-out at your next event or university class',
   description: 'Feel free to print and distribute or if you would like to suggest anything we have missed or better clarity, let us know!',
   type: 'offer',
@@ -46,7 +49,20 @@ const SAMPLE_POST_WITH_DESCRIPTION = {
   updated_at: '6 hours ago'
 }
 
+const SAMPLE_POST_WITH_LONG_DESCRIPTION = {
+  id: '3',
+  title: 'We put this together as a PDF for hand-out at your next event or university class',
+  description: 'Feel free to print and distribute or if you would like to suggest anything we have missed or better clarity, let us know! Feel free to print and distribute or if you would like to suggest anything we have missed or better clarity, let us know!',
+  type: 'offer',
+  voteCount: '2564',
+  user: SAMPLE_AUTHOR,
+  commenters: rotateAndTrim(SAMPLE_PEOPLE, 1),
+  commentCount: 60,
+  updated_at: '6 hours ago'
+}
+
 const SAMPLE_POST_WITH_IMAGE = {
+  id: '4',
   title: 'Three volunteers needed to collect signatures in East Van next weekend',
   type: 'request',
   context: 'Stop Wombat Walrus',
@@ -59,6 +75,7 @@ const SAMPLE_POST_WITH_IMAGE = {
 }
 
 const SAMPLE_POST_WITH_PREVIEW = {
+  id: '5',
   title: 'Stop Wombat Walrus',
   type: 'discussion',
   linkPreview: {
@@ -66,7 +83,6 @@ const SAMPLE_POST_WITH_PREVIEW = {
     url: 'https://www.theguardian.com/technology/2017/mar/11/tim-berners-lee-web-inventor-save-internet',
     imageUrl: 'http://images.tate.org.uk/sites/default/files/images/picasso_pigeon_peas_0.jpg'
   },
-  imageUrl: SAMPLE_IMAGE_URL,
   voteCount: '2564',
   user: SAMPLE_AUTHOR,
   commenters: rotateAndTrim(SAMPLE_PEOPLE, 3),
@@ -82,7 +98,9 @@ export default function PostTypes (props) {
         <PostCard post={SAMPLE_POST} styleName='postCard' />
         <PostCard post={SAMPLE_POST_WITH_IMAGE} styleName='postCard' />
         <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='postCard' />
+        <PostCard post={SAMPLE_POST_WITH_LONG_DESCRIPTION} styleName='postCard' />
         <PostCard post={SAMPLE_POST_WITH_PREVIEW} styleName='postCard' />
+        <div><ShareButton post={SAMPLE_POST} /></div>
       </div>
     </div>
   </div>

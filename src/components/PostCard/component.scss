@@ -1,6 +1,4 @@
-$footer-height: 56px;
-
-// card
+// PostCard
 
 .card {
   padding-top: 15px;
@@ -12,7 +10,7 @@ $footer-height: 56px;
   padding: 0px 15px;
 }
 
-// header
+// PostHeader
 
 .header {
   composes: cardPadding;
@@ -83,7 +81,7 @@ $footer-height: 56px;
   color: $color-rhino-80;
 }
 
-// body
+// PostBody
 
 .body {
   margin-bottom: 36px;
@@ -96,10 +94,68 @@ $footer-height: 56px;
 
 .title {
   composes: cardPadding;
-  /* empty */
+  margin-bottom: 12px;
 }
 
-// footer
+.description {
+  composes: cardPadding;
+  // TODO: Extract typography? This one is exactly half way between
+  // BDY-LT-LG and BDY-LT-SM
+  @include font-regular;
+  color: $color-rhino-60;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+//LinkPreview
+
+$preview-height: 80px;
+
+
+.linkPreview {
+  max-height: $preview-height;
+  background-color: $color-athens-gray;
+  border: 1px solid $color-athens-gray-dark;
+  border-radius: 4px;
+}
+
+.previewImage {
+  display: inline-block;
+  width: $preview-height;
+  height: $preview-height;
+  background-position: center;
+  background-size: cover;
+  margin-right: 15px;
+}
+
+.previewText {
+  display: inline-block;
+  margin-top: 15px;
+  vertical-align: top;
+}
+
+.previewTitle {
+  // TODO: Extract typography? Very close to BDY-DRK-SM
+  @include font-regular;
+  color: $color-rhino-80;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.previewDomain {
+  // TODO: Extract typography? Very close to BDY-DRK-SM
+  @include font-regular;
+  color: $color-dove-gray-50;
+  font-size: 12px;
+  line-height: 19px;
+  // TODO: Find a more robust way to position this element
+  position: relative;
+  top: 10px;
+}
+
+// PostFooter
+
+$footer-height: 56px;
 
 .footer {
   composes: cardPadding;
@@ -119,12 +175,6 @@ $footer-height: 56px;
   line-height: $footer-height;
   text-align: center;
   border-left: 1px solid $color-cape-cod-10;
-  & > a:hover {
-    text-decoration: none;
-    & > span {
-      color: $color-rhino-80;
-    }
-  }
 }
 
 .arrowIcon {

@@ -6,7 +6,8 @@ import Avatar from 'components/Avatar'
 import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
-import { personUrl, bgImageStyle } from 'utils'
+import ShareButton from './ShareButton'
+import { personUrl, bgImageStyle } from 'util/index'
 const { shape, any, object, string, array } = React.PropTypes
 import CSSModules from 'react-css-modules'
 import styles from './component.scss'
@@ -51,10 +52,33 @@ export const PostHeader = CSSModules(({ post: { user, updated_at, type, context 
   </div>
 }, styles)
 
-export const PostBody = CSSModules(({ post }) => {
+export const PostBody = CSSModules(({ post, post: { linkPreview } }) => {
+  // TODO: Present description as HTML and sanitize
+  const truncated = post.description &&
+    post.description.length > 147
+    ? post.description.slice(0, 144) + '...'
+    : post.description
+
   return <div styleName='body'>
     {post.imageUrl && <img src={post.imageUrl} styleName='image' />}
     <div styleName='title' className='hdr-headline'>{post.title}</div>
+    {truncated && <div styleName='description'>{truncated}</div>}
+    {linkPreview && <LinkPreview linkPreview={linkPreview} />}
+  </div>
+}, styles)
+
+export const LinkPreview = CSSModules(({ linkPreview }) => {
+  const domain = (new URL(linkPreview.url)).hostname.replace('www.', '')
+  return <div styleName='cardPadding'>
+    <div styleName='linkPreview'>
+      <a href={linkPreview.url} target='_blank'>
+        <div style={bgImageStyle(linkPreview.imageUrl)} styleName='previewImage' />
+        <div styleName='previewText'>
+          <span styleName='previewTitle'>{linkPreview.title}</span>
+          <div styleName='previewDomain'>{domain}</div>
+        </div>
+      </a>
+    </div>
   </div>
 }, styles)
 
@@ -62,7 +86,7 @@ export const PostFooter = CSSModules(({ post }) => {
   return <div styleName='footer'>
     <PeopleImages imageUrls={post.commenters.map(c => c.avatarUrl)} styleName='people' />
     <span className='caption-lt-lg'>Steph, Cam, and 58 others commented</span>
-    <div styleName='share'><a href=''><Icon name='Share' /></a></div>
+    <div styleName='share'><ShareButton post={post} /></div>
     <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{post.voteCount}</a></div>
   </div>
 }, styles)
