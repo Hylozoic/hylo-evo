@@ -110,16 +110,15 @@ export default class Dropdown extends React.Component {
 
   render () {
     const {
-      toggleChildren, children, alignRight, backdrop, triangle, openOnHover, id,
-      keyControlled, tabIndex, insteadOfOpening
+      toggleChildren, children, alignRight, triangle, openOnHover, id,
+      keyControlled, tabIndex, insteadOfOpening, className
     } = this.props
     const { hoverOpened } = this.state
     const { isMobile } = this.context
     const active = this.state.active && !isEmpty(children)
-    const className = cx('dropdown', this.props.className,
-      {active, 'has-triangle': triangle})
+    const styleName = cx('dropdown', {'has-triangle': triangle})
     const ulProps = {
-      className: cx('dropdown-menu', {'dropdown-menu-right': alignRight}),
+      styleName: cx('dropdown-menu', {active, 'dropdown-menu-right': alignRight}),
       style: mobileMenuStyle(isMobile && active, this.refs.parent),
       onClick: () => this.toggle(),
       onMouseLeave: () => hoverOpened && this.toggle()
@@ -127,16 +126,16 @@ export default class Dropdown extends React.Component {
 
     let items
     if (triangle) {
-      const triangleLi = <li className='triangle' key='triangle'
+      const triangleLi = <li styleName='triangle' key='triangle'
         style={{left: findTriangleLeftPos(isMobile, this.refs.parent)}} />
       items = [triangleLi].concat(children)
     } else {
       items = children
     }
 
-    return <div {...{id, className, tabIndex}} ref='parent'
+    return <div {...{id, styleName, className, tabIndex}} ref='parent'
       onKeyDown={this.handleKeys}>
-      <a className='dropdown-toggle' onClick={insteadOfOpening || this.toggle}
+      <a styleName='dropdown-toggle' onClick={insteadOfOpening || this.toggle}
         onMouseEnter={ev => openOnHover && this.toggle(ev, 'hover')}>
         {toggleChildren}
       </a>
@@ -148,11 +147,6 @@ export default class Dropdown extends React.Component {
           {active && items}
         </ul>
       }
-      <VelocityTransitionGroup
-        enter={{animation: 'fadeIn', duration: 100}}
-        leave={{animation: 'fadeOut', duration: 100}}>
-        {(backdrop || isMobile) && active && <a className='backdrop' />}
-      </VelocityTransitionGroup>
     </div>
   }
 }

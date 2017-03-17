@@ -1,5 +1,6 @@
 import React from 'react'
 import PostCard from 'components/PostCard'
+import ShareButton from 'components/PostCard/ShareButton'
 import { omit } from 'lodash/fp'
 
 const rotateAndTrim = (arr, n) => arr.slice(n, arr.length).concat(arr.slice(0, n)).slice(0, 3)
@@ -74,7 +75,7 @@ const SAMPLE_POST_WITH_IMAGE = {
 }
 
 const SAMPLE_POST_WITH_PREVIEW = {
-  id: '5',  
+  id: '5',
   title: 'Stop Wombat Walrus',
   type: 'discussion',
   linkPreview: {
@@ -99,6 +100,7 @@ export default function PostTypes (props) {
         <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='postCard' />
         <PostCard post={SAMPLE_POST_WITH_LONG_DESCRIPTION} styleName='postCard' />
         <PostCard post={SAMPLE_POST_WITH_PREVIEW} styleName='postCard' />
+        <div><ShareButton post={SAMPLE_POST} /></div>
       </div>
     </div>
   </div>

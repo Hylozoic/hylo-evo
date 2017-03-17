@@ -1,0 +1,77 @@
+$dropdown-border-color: rgba(0, 0, 0, 0.15);
+
+@mixin is-top-triangle($color: $color-athens-gray, $border-color: $color-athens-gray, $side-length: 7px) {
+  display: block;
+  position: absolute;
+  left: 50%;
+  width: $side-length * 2 !important;
+  height: $side-length * 2 !important;
+  margin-left: -$side-length;
+  top: -$side-length;
+  border-top: 1px solid $border-color !important;
+  border-left: 1px solid $border-color !important;
+  border-bottom: 0 !important;
+  border-right: 0 !important;
+  background-color: $color;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+}
+
+.dropdown {
+
+  &.has-triangle .dropdown-menu {
+    overflow-y: visible;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.dropdown-toggle {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  max-height: 50vh;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 4px;
+  position: relative;
+  top: -6px;
+  list-style: none;
+
+  &.active {
+    display: block;
+    background-color: white;
+    border: 1px solid $color-black-squeeze;
+  }
+
+  > li {
+    position: relative;
+
+    > div {
+      padding: 6px 15px;
+      min-width: 200px;
+    }
+
+    > a {
+      cursor: pointer;
+
+      img {
+        margin-right: 5px;
+      }
+
+      > * {
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .triangle {
+    min-width: 0 !important;
+    @include is-top-triangle(#fff, $dropdown-border-color, 7px);
+  }
+}
