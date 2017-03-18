@@ -1,4 +1,4 @@
 import ReactDOM from 'react-dom'
-import routes from './routes'
+import store from './store'
 
-ReactDOM.render(routes, document.getElementById('root'))
+ReactDOM.render(store, document.getElementById('root'))
