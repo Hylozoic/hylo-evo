@@ -1,6 +1,6 @@
 import { createStore } from 'redux'
 
-import enhancer from './enhancer'
-import reducer from './reducer'
+import middleware from './middleware'
+import reducers from './reducers'
 
-export default createStore(reducer, enhancer)
+export default createStore(reducers, middleware)
