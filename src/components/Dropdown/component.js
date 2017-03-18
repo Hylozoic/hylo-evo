@@ -1,7 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
 import { isEmpty } from 'lodash'
-import { VelocityTransitionGroup } from 'velocity-react'
 import { position } from 'util/scrolling'
 import { findChildLink, dispatchEvent } from 'util/index'
 import KeyControlledList from '../KeyControlledList'

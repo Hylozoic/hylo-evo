@@ -114,7 +114,6 @@ export default class KeyControlledList extends React.Component {
 }
 
 export class KeyControlledItemList extends React.Component {
-
   static propTypes = {
     onChange: func.isRequired,
     items: array,

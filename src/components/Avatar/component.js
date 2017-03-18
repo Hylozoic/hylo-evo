@@ -4,7 +4,6 @@
 // Not sure if this is too much granularity.
 
 import React from 'react'
-import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
 import { personUrl } from 'util/index'
 import { Link } from 'react-router-dom'

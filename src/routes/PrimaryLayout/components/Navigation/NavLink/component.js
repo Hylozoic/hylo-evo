@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { matchPath } from 'react-router'
 import BadgedIcon from 'components/BadgedIcon'
 import Badge from 'components/Badge'
 import cx from 'classnames'

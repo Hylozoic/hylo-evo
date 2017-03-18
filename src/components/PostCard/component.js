@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react'
 import { Link } from 'react-router-dom'
-import cx from 'classnames'
 import Avatar from 'components/Avatar'
 import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
@@ -68,7 +67,7 @@ export const PostBody = CSSModules(({ post, post: { linkPreview } }) => {
 }, styles)
 
 export const LinkPreview = CSSModules(({ linkPreview }) => {
-  const domain = (new URL(linkPreview.url)).hostname.replace('www.', '')
+  const domain = (new window.URL(linkPreview.url)).hostname.replace('www.', '')
   return <div styleName='cardPadding'>
     <div styleName='linkPreview'>
       <a href={linkPreview.url} target='_blank'>
