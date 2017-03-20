@@ -1,0 +1,2 @@
+export const FETCH_POST = 'FETCH_POST'
+export const SEND_GRAPHQL_QUERY = 'SEND_GRAPHQL_QUERY'

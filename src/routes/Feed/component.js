@@ -1,7 +1,10 @@
 import React from 'react'
+import PostCard from 'components/PostCard'
 
 export default function Feed () {
   return <div styleName='feed'>
+    <PostCard id={64} />
+    <hr />
     <div>Make this thing</div>
     <div>Really long</div>
     <div>With a lot of</div>

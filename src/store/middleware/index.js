@@ -1,10 +1,12 @@
 import { applyMiddleware, compose } from 'redux'
-import thunkMiddleware from 'redux-thunk'
+import promiseMiddleware from 'redux-promise'
+import apiMiddleware from './apiMiddleware'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const middleware = [
-  thunkMiddleware
+  apiMiddleware(),
+  promiseMiddleware
 ]
 
 export default composeEnhancers(

@@ -7,22 +7,32 @@ import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
 import ShareButton from './ShareButton'
 import { personUrl, bgImageStyle } from 'util/index'
-const { shape, any, object, string, array } = React.PropTypes
 import CSSModules from 'react-css-modules'
 import styles from './component.scss'
+import samplePost from './samplePost'
 
-export default function PostCard ({ post, className }) {
-  return <div styleName='card' className={className}>
-    <PostHeader post={post} />
-    <PostBody post={post} />
-    <PostFooter post={post} />
-  </div>
+const { shape, any, object, string, array } = React.PropTypes
+
+export default class PostCard extends React.Component {
+  componentDidMount () {
+    const { id, fetchPost, match } = this.props
+    fetchPost(id)
+      .then((t) => console.log('here!', t))
+  }
+  render () {
+    const { post, className } = this.props
+    return <div styleName='card' className={className}>
+      <PostHeader post={post} />
+      <PostBody post={post} />
+      <PostFooter post={post} />
+    </div>
+  }
 }
 PostCard.propTypes = {
   post: shape({
     id: any,
     type: string,
-    user: object,
+    author: object,
     name: string,
     description: string,
     commenters: array,
@@ -30,8 +40,11 @@ PostCard.propTypes = {
     updated_at: string
   })
 }
+PostCard.defaultProps = {
+  post: samplePost
+}
 
-export const PostHeader = CSSModules(({ post: { user, updated_at, type, context } }) => {
+export const PostHeader = CSSModules(({post: { author: user, updated_at, type, context }}) => {
   return <div styleName='header'>
     <Avatar person={user} styleName='avatar' />
     <div styleName='headerText'>
