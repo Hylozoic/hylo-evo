@@ -1,1 +1,4 @@
-.feed {/*! empty */}
+.feed {
+  overflow: auto;
+  max-height: 80vh;
+}
