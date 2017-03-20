@@ -4,6 +4,7 @@ import {
   FETCH_POST
 } from '../constants'
 
+import samplePostApi from 'components/PostCard/samplePostApi.json'
 export function fetchPost (id, opts = {}) {
   // let querystring = opts.minimal ? ''
   //   : cleanAndStringify({comments: 1, votes: 1, children: 1})
@@ -11,6 +12,8 @@ export function fetchPost (id, opts = {}) {
 
   return {
     type: FETCH_POST,
+    // Optionally bypass middleware and load response directly
+    // payload: samplePostApi
     payload: {api: true, path: `/noo/post/${id}?${querystring}`}
   }
 }

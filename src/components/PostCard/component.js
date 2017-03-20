@@ -17,7 +17,6 @@ export default class PostCard extends React.Component {
   componentDidMount () {
     const { id, fetchPost, match } = this.props
     fetchPost(id)
-      .then((t) => console.log('here!', t))
   }
   render () {
     const { post, className } = this.props

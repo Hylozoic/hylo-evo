@@ -3,7 +3,9 @@ import PostCard from 'components/PostCard'
 
 export default function Feed () {
   return <div styleName='feed'>
-    <PostCard id={64} />
+
+    <PostCard id={'17783'} />
+
     <hr />
     <div>Make this thing</div>
     <div>Really long</div>
