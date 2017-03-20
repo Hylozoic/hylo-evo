@@ -1,3 +1,4 @@
+// Feed
 .feed {
   overflow: auto;
   max-height: 80vh;
@@ -5,4 +6,29 @@
 
 .feedItem {
   margin-bottom: 24px;
+}
+
+// CommunityBanner
+.banner {
+  /* empty */
+}
+
+.image {
+  width: 630px;
+  height: 160px;
+  background-position: center;
+  background-size: cover;
+}
+
+.fade {
+  width: 576px;
+  height: 160px;
+  position: relative;
+  background-image: linear-gradient(180deg, $color-cod-gray-0, $color-cod-gray-0 30%, $color-cod-gray-dark);
+}
+
+.fade2 {
+  width: 576px;
+  height: 160px;
+  background-color: $color-rhino-30;
 }

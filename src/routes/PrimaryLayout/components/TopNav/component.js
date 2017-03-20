@@ -3,11 +3,7 @@ import { bgImageStyle } from 'util/index'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
-
-const SAMPLE_COMMUNITY = {
-  name: 'Generic Cause',
-  avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/community/1944/avatar/1489438401225_face.png'
-}
+import { SAMPLE_COMMUNITY } from 'routes/Feed/sampleData'
 
 const SAMPLE_USER = {
   id: '1',

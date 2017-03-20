@@ -15,7 +15,6 @@ const AVATAR_URLS = [
 ]
 
 const IMAGES = [
-  'https://d3ngex8q79bk55.cloudfront.net/community/1944/banner/1489687099172_ggbridge.jpg',
   'https://s-media-cache-ak0.pinimg.com/236x/3a/6c/44/3a6c44d440a12d5e3f04174e0156a478.jpg',
   'https://s-media-cache-ak0.pinimg.com/originals/ea/1b/0f/ea1b0f19b80647d23fde2a245b35806b.jpg',
   'http://static.boredpanda.com/blog/wp-content/uploads/2015/01/brothers-grimm-wanderings-landscape-photography-kilian-schonberger-3.jpg',
@@ -64,4 +63,11 @@ const SAMPLE_FEED_ITEMS = times(i => ({
   linkPreview: maybe(maybe(rndPreview()))
 }), 20)
 
-export default SAMPLE_FEED_ITEMS
+const SAMPLE_COMMUNITY = {
+  name: 'A Great Cause',
+  location: 'Oakland, CA',
+  avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/community/1944/avatar/1489438401225_face.png',
+  bannerUrl: 'https://d3ngex8q79bk55.cloudfront.net/community/1944/banner/1489687099172_ggbridge.jpg'
+}
+
+export { SAMPLE_FEED_ITEMS, SAMPLE_COMMUNITY }
