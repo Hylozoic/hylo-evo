@@ -1,5 +1,4 @@
 import { FETCH_POST } from 'store/constants'
-import samplePostApi from 'components/PostCard/samplePostApi.json'
 
 export default function postsReducer (state = {}, action) {
   const { error, type, payload } = action
