@@ -48,6 +48,7 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "babel-jest": "^19.0.0",
     "bootstrap": "4.0.0-alpha.6",
     "classnames": "^2.2.5",
     "dotenv-webpack": "^1.4.3",
