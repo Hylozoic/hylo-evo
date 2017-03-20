@@ -25,7 +25,7 @@ export default function PrimaryLayout ({ match, location }) {
         <Route path='/events' component={Events} />
       </div>
       <div styleName={cx('sidebar', {hidden: hasDetail})}>
-        <Route path='/' component={Feed} />
+        <Route path='/' component={null} />
       </div>
       <div styleName={cx('detail', {hidden: !hasDetail})}>
         {/*

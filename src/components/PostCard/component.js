@@ -6,7 +6,7 @@ import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
 import ShareButton from './ShareButton'
-import { personUrl, bgImageStyle } from 'util/index'
+import { personUrl, bgImageStyle, humanDate } from 'util/index'
 const { shape, any, object, string, array } = React.PropTypes
 import CSSModules from 'react-css-modules'
 import styles from './component.scss'
@@ -39,7 +39,7 @@ export const PostHeader = CSSModules(({ post: { user, updated_at, type, context 
       {user.title && <span styleName='userTitle'>{user.title}</span>}
       <div>
         <span className='timestamp'>
-          {updated_at}{context && <span styleName='spacer'>•</span>}
+          {humanDate(updated_at)}{context && <span styleName='spacer'>•</span>}
         </span>
         {context && <Link to='/' styleName='context'>
           {context}
@@ -91,7 +91,7 @@ export const PostFooter = CSSModules(({ post }) => {
 }, styles)
 
 export function PeopleImages ({ imageUrls, className }) {
-  const images = imageUrls.map(url =>
-    <RoundImage url={url} key={url} medium overlaps />)
+  const images = imageUrls.map((url, i) =>
+    <RoundImage url={url} key={i} medium overlaps />)
   return <div className={className}>{images}</div>
 }
