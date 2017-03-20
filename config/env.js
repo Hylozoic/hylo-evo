@@ -1,12 +1,14 @@
 // Grab NODE_ENV and REACT_APP_* environment variables and prepare them to be
 // injected into the application via DefinePlugin in Webpack configuration.
 
-var REACT_APP = /^REACT_APP_/i
+// TODO: Remove for good? By default create-react-app filters for only
+//       environment vars with the REACT_APP prefix
+// var REACT_APP = /^REACT_APP_/i
 
 function getClientEnvironment (publicUrl) {
   var raw = Object
     .keys(process.env)
-    .filter(key => REACT_APP.test(key))
+    // .filter(key => REACT_APP.test(key))
     .reduce((env, key) => {
       env[key] = process.env[key]
       return env
