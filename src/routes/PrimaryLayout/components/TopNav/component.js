@@ -3,6 +3,7 @@ import { bgImageStyle } from 'util/index'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
+import './component.scss'
 
 const SAMPLE_COMMUNITY = {
   name: 'Generic Cause',

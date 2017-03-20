@@ -10,6 +10,7 @@ import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 
+import '../../css/global/index.scss'
 import './component.scss'
 
 export default function PrimaryLayout ({ match, location }) {

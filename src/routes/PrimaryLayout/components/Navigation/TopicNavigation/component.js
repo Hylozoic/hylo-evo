@@ -2,6 +2,7 @@ import React from 'react'
 import Icon from 'components/Icon'
 import Badge from 'components/Badge'
 import { Link } from 'react-router-dom'
+import './component.scss'
 import badgeHoverStyles from 'components/Badge/component.scss'
 
 export default function TopicNavigation (

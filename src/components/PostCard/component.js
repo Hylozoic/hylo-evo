@@ -8,7 +8,6 @@ import RoundImage from 'components/RoundImage'
 import ShareButton from './ShareButton'
 import { personUrl, bgImageStyle } from 'util/index'
 const { shape, any, object, string, array } = React.PropTypes
-import CSSModules from 'react-css-modules'
 import styles from './component.scss'
 
 export default function PostCard ({ post, className }) {
@@ -31,7 +30,7 @@ PostCard.propTypes = {
   })
 }
 
-export const PostHeader = CSSModules(({ post: { user, updated_at, type, context } }) => {
+export const PostHeader = ({ post: { user, updated_at, type, context } }) => {
   return <div styleName='header'>
     <Avatar person={user} styleName='avatar' />
     <div styleName='headerText'>
@@ -49,9 +48,9 @@ export const PostHeader = CSSModules(({ post: { user, updated_at, type, context 
     <PostLabel type={type} styleName='label' />
     <a href='' styleName='menuLink'><Icon name='More' /></a>
   </div>
-}, styles)
+}
 
-export const PostBody = CSSModules(({ post, post: { linkPreview } }) => {
+export const PostBody = ({ post, post: { linkPreview } }) => {
   // TODO: Present description as HTML and sanitize
   const truncated = post.description &&
     post.description.length > 147
@@ -64,9 +63,9 @@ export const PostBody = CSSModules(({ post, post: { linkPreview } }) => {
     {truncated && <div styleName='description'>{truncated}</div>}
     {linkPreview && <LinkPreview linkPreview={linkPreview} />}
   </div>
-}, styles)
+}
 
-export const LinkPreview = CSSModules(({ linkPreview }) => {
+export const LinkPreview = ({ linkPreview }) => {
   const domain = (new window.URL(linkPreview.url)).hostname.replace('www.', '')
   return <div styleName='cardPadding'>
     <div styleName='linkPreview'>
@@ -79,7 +78,7 @@ export const LinkPreview = CSSModules(({ linkPreview }) => {
       </a>
     </div>
   </div>
-}, styles)
+}
 
 export const PostFooter = CSSModules(({ post }) => {
   return <div styleName='footer'>

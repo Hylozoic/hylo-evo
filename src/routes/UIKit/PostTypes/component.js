@@ -2,6 +2,7 @@ import React from 'react'
 import PostCard from 'components/PostCard'
 import ShareButton from 'components/PostCard/ShareButton'
 import { omit } from 'lodash/fp'
+import './component.scss'
 
 const rotateAndTrim = (arr, n) => arr.slice(n, arr.length).concat(arr.slice(0, n)).slice(0, 3)
 
