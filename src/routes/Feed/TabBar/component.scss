@@ -1,0 +1,22 @@
+// TabBar
+.tabBar {
+  /* empty */
+}
+
+.tab {
+  padding: 0 15px;
+  height: 28px;
+  line-height: 28px;
+  display: inline-block;
+  composes: caption-lt-lg from 'css/typography.scss'
+}
+
+.tab-active {
+  composes: tab;
+  // TODO: extract typography? 1px from .HDR-MINOR
+  @include font-bold;
+  color: $color-rhino;
+  font-size: 15px;
+  background-color: $color-cape-cod-05;
+  border-radius: 4px;
+}

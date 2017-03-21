@@ -3,12 +3,14 @@ import CSSModules from 'react-css-modules'
 import { SAMPLE_FEED_ITEMS, SAMPLE_COMMUNITY } from './sampleData'
 import FeedItem from 'components/FeedItem'
 import RoundImage from 'components/RoundImage'
+import TabBar from './TabBar'
 import styles from './component.scss'
 import { bgImageStyle } from 'util/index'
 
 export default function Feed ({ feedItems, community, currentUser }) {
   return <div styleName='feed'>
     <CommunityBanner community={community} currentUser={currentUser} />
+    <TabBar styleName='tabBar' />
     <div styleName='feedItems'>
       {SAMPLE_FEED_ITEMS.map(feedItem =>
         <FeedItem feedItem={feedItem} styleName='feedItem' key={feedItem.id} />)}
