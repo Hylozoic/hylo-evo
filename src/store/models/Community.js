@@ -1,5 +1,5 @@
 import { omit } from 'lodash'
-import { attr, fk, many, oneToOne, Model } from 'redux-orm'
+import { attr, Model } from 'redux-orm'
 
 export default class Community extends Model {
   toString () {

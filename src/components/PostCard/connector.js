@@ -13,8 +13,6 @@ export const mapDispatchToProps = { fetchPost }
 
 export default connect(mapStateToProps, mapDispatchToProps)
 
-
-
 // const session = orm.session(state)
 // const session = schema
 // console.log(schema)
