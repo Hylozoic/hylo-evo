@@ -8,16 +8,11 @@ export default function ormReducer (dbState, action) {
 
   // Session-specific Models are available
   // as properties on the Session instance.
-  const { Post, Person } = sess
+  const { Post } = sess
 
   switch (type) {
     case FETCH_POST:
-      const { people } = payload
-      Post.create(payload)
-      console.log(people)
-      if (people.length > 0) {
-        people.forEach(person => Person.create(person))
-      }
+      Post.parse(payload)
       break
   }
 
