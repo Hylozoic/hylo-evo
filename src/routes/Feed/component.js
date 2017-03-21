@@ -8,8 +8,10 @@ import { bgImageStyle } from 'util/index'
 export default function Feed ({ feedItems, community }) {
   return <div styleName='feed'>
     <CommunityBanner community={community} />
-    {SAMPLE_FEED_ITEMS.map(feedItem =>
-      <FeedItem feedItem={feedItem} styleName='feedItem' key={feedItem.id} />)}
+    <div styleName='feedItems'>
+      {SAMPLE_FEED_ITEMS.map(feedItem =>
+        <FeedItem feedItem={feedItem} styleName='feedItem' key={feedItem.id} />)}
+    </div>
   </div>
 }
 Feed.defaultProps = {

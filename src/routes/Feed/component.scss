@@ -2,6 +2,12 @@
 .feed {
   overflow: auto;
   max-height: 80vh;
+  width: 630px;
+}
+
+.feedItems {
+  margin: 0 auto;
+  width: 574px;
 }
 
 .feedItem {
@@ -13,22 +19,26 @@
   /* empty */
 }
 
-.image {
+.imageShape {
   width: 630px;
   height: 160px;
+  border-radius: 4px;
+}
+
+.image {
+  composes: imageShape;
   background-position: center;
   background-size: cover;
 }
 
 .fade {
-  width: 576px;
-  height: 160px;
+  // TODO: replace these with pseudo elements
+  composes: imageShape;
   position: relative;
   background-image: linear-gradient(180deg, $color-cod-gray-0, $color-cod-gray-0 30%, $color-cod-gray-dark);
 }
 
 .fade2 {
-  width: 576px;
-  height: 160px;
+  composes: imageShape;
   background-color: $color-rhino-30;
 }
