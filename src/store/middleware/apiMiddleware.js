@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch'
+// import fetch from 'isomorphic-fetch'
 import { upstreamHost } from '../../config'
 import samplePostApi from 'components/PostCard/samplePostApi.json'
 

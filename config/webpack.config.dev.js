@@ -137,15 +137,7 @@ module.exports = {
             }
           }
         ]
-      },
-
-      // TODO: Do we need a json loader? ref. create-react-app webpack 2 config in master branch
-      // // JSON is not enabled by default in Webpack but both Node and Browserify
-      // // allow it implicitly so we also enable it.
-      // {
-      //   test: /\.json$/,
-      //   loader: 'json'
-      // }
+      }
     ]
   },
 

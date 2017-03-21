@@ -1,18 +1,8 @@
-import {fk, many, attr, Model} from 'redux-orm'
+import { ORM } from 'redux-orm'
+import Post from './Post'
+import Person from './Person'
 
-class Post extends Model {
-  toString () {
-    return `Post: ${this.name}`
-  }
-  // Declare any static or instance methods you need.
-}
-Post.modelName = 'Post'
+export const orm = new ORM()
+orm.register(Post, Person)
 
-// Declare your related fields.
-Post.fields = {
-  id: attr(), // non-relational field for any value optional but highly recommended
-  name: attr(),
-  user: fk('Person'),
-  people: many('Person'),
-  communities: many('Community')
-}
+export default orm

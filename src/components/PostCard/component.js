@@ -15,7 +15,7 @@ const { shape, any, object, string, array } = React.PropTypes
 
 export default class PostCard extends React.Component {
   componentDidMount () {
-    const { id, fetchPost, match } = this.props
+    const { id, fetchPost } = this.props
     fetchPost(id)
   }
   render () {
