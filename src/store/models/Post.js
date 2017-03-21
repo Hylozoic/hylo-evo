@@ -9,7 +9,7 @@ export default class Post extends Model {
   static processRelatedData (postData) {
     const { Person, Community } = this.session
     const { people, communities } = postData
-    people.forEach(person => Person.create(person))
+    people.forEach(person => Person.parse(person))
     communities.forEach(community => Community.parse(community))
     return omit(postData, ['people', 'communities'])
   }
@@ -18,24 +18,18 @@ export default class Post extends Model {
     let clonedData = this.processRelatedData(postData)
     clonedData = {
       ...clonedData,
-      user: postData.user_id,
-      author: postData.user_id
+      author: postData.user_id,
+      communities: postData.community_ids
     }
     return this.create(clonedData)
   }
-
-  static toJSON () {
-    const data = {
-      ...this.ref,
-      user_id: this.user.id
-    }
-    return data
-  }
 }
+
 Post.modelName = 'Post'
+
 Post.fields = {
   id: attr(),
   name: attr(),
-  user: fk('Person'),
-  author: fk('Person', 'author')
+  author: fk('Person'),
+  communities: many('Community')
 }

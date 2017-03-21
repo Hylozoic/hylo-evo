@@ -17,15 +17,10 @@ export default class Community extends Model {
     }
     return this.create(clonedData)
   }
-
-  static toJSON () {
-    const data = {
-      ...this.ref
-    }
-    return data
-  }
 }
+
 Community.modelName = 'Community'
+
 Community.fields = {
   id: attr(),
   name: attr()

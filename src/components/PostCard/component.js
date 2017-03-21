@@ -43,12 +43,12 @@ PostCard.defaultProps = {
   post: samplePost
 }
 
-export const PostHeader = CSSModules(({post: { author: user, updated_at, type, context }}) => {
+export const PostHeader = CSSModules(({post: { author, updated_at, type, context, communities }}) => {
   return <div styleName='header'>
-    <Avatar person={user} styleName='avatar' />
+    <Avatar avatarUrl={author.avatarUrl} url={personUrl(author)} styleName='avatar' />
     <div styleName='headerText'>
-      <Link to={personUrl(user)} styleName='userName'>{user.name}{user.title && ', '}</Link>
-      {user.title && <span styleName='userTitle'>{user.title}</span>}
+      <Link to={personUrl(author)} styleName='userName'>{author.name}{author.title && ', '}</Link>
+      {author.title && <span styleName='userTitle'>{author.title}</span>}
       <div>
         <span className='timestamp'>
           {updated_at}{context && <span styleName='spacer'>•</span>}

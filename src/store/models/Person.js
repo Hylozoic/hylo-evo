@@ -13,21 +13,17 @@ export default class Person extends Model {
   static parse (personData) {
     let clonedData = this.processRelatedData(personData)
     clonedData = {
-      ...personData
+      ...personData,
+      avatarUrl: personData.avatar_url
     }
     return this.create(clonedData)
   }
-
-  static toJSON () {
-    const data = {
-      ...this.ref
-    }
-    return data
-  }
 }
+
 Person.modelName = 'Person'
+
 Person.fields = {
   id: attr(),
   name: attr(),
-  avatar_url: attr()
+  avatarUrl: attr()
 }

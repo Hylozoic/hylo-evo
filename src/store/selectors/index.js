@@ -10,8 +10,7 @@ export const getPostById = createSelector(
   (state, props) => props.id,
   ormCreateSelector(orm, (session, postId) => {
     if (session.Post.hasId(postId)) {
-      console.log(session.Post.withId(postId))
-      return session.Post.withId(postId).ref
+      return session.Post.withId(postId)
     }
   })
 )

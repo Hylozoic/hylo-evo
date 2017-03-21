@@ -5,14 +5,13 @@
 
 import React from 'react'
 import RoundImage from 'components/RoundImage'
-import { personUrl } from 'util/index'
 import { Link } from 'react-router-dom'
 
 const { string, bool } = React.PropTypes
 
-export default function Avatar ({ person, small, medium, className }) {
-  return <Link to={personUrl(person)} className={className}>
-    <RoundImage url={person.avatarUrl} small={small} medium={medium} />
+export default function Avatar ({ url, avatarUrl, small, medium, className }) {
+  return <Link to={url} className={className}>
+    <RoundImage url={avatarUrl} small={small} medium={medium} />
   </Link>
 }
 RoundImage.propTypes = {

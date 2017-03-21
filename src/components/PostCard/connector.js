@@ -3,8 +3,9 @@ import { fetchPost } from 'store/actions/posts'
 import { getPostById } from 'store/selectors'
 
 export function mapStateToProps (state, props) {
+  console.log(getPostById(state, props))
   return {
-    post2: getPostById(state, props)
+    post: getPostById(state, props)
   }
 }
 
