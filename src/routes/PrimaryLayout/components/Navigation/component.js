@@ -4,7 +4,7 @@ import TopicNavigation from './TopicNavigation'
 
 export default function Navigation ({ location, collapsed }) {
   let links = [
-    {label: 'Home', icon: 'Home', to: '/'},
+    {label: 'Home', icon: 'Home', to: '/', badge: 3},
     {label: 'Events', icon: 'Events', to: '/events', badge: 3},
     {label: 'Members', icon: 'Members', to: '/members'},
     {label: 'UI Kit', icon: 'Projects', to: '/ui-kit'}

@@ -83,4 +83,13 @@ $color-ziggurat: #BDE0DC;
   font-family: 'Circular bold', sans-serif;
 }
 
+// Utilities
+@mixin image($width: 32px, $height: false) {
+  background-position: center;
+  background-size: cover;
+  display: inline-block;
+  width: $width;
+  height: $height or $width;
+}
+
 $bootstrap-path: 'css/bootstrap.scss';

@@ -23,7 +23,10 @@ export const CommunityBanner = CSSModules(({ community }) => {
   return <div styleName='banner'>
     <div style={bgImageStyle(community.bannerUrl)} styleName='image'>
       <div styleName='fade'><div styleName='fade2' /></div>
-      {community.name}
+      <div styleName='header'>
+        <div styleName='logo' style={bgImageStyle(community.avatarUrl)} />
+        {community.name}
+      </div>
     </div>
   </div>
 }, styles)

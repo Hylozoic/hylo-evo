@@ -22,13 +22,9 @@
 }
 
 .image {
-  background-position: center;
-  background-size: cover;
-  display: inline-block;
+  @include image(30px);
   border-radius: 4px;
   margin-right: 10px;
-  width: 30px;
-  height: 30px;
 }
 
 .title {

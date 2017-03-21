@@ -14,9 +14,20 @@
   margin-bottom: 24px;
 }
 
+.header {
+  position: relative;
+  top: -100px;
+  left: 24px;
+}
+
+.logo {
+  @include image(60px);
+  border-radius: 4px;
+}
+
 // CommunityBanner
 .banner {
-  /* empty */
+  margin-bottom: 72px;
 }
 
 .imageShape {

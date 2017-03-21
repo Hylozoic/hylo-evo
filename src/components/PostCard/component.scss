@@ -88,8 +88,10 @@
 }
 
 .image {
+  display: block;
   max-width: 100%;
   margin-bottom: 20px;
+  margin: 0 auto 20px auto;
 }
 
 .title {
@@ -121,11 +123,7 @@ $preview-height: 80px;
 }
 
 .previewImage {
-  display: inline-block;
-  width: $preview-height;
-  height: $preview-height;
-  background-position: center;
-  background-size: cover;
+  @include image($preview-height);
   margin-right: 15px;
 }
 

@@ -1,7 +1,7 @@
 import { times } from 'lodash/fp'
 import faker from 'faker'
 
-faker.seed(1)
+faker.seed(2)
 
 const AVATAR_URLS = [
   'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png',
