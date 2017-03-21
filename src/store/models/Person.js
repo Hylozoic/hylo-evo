@@ -1,3 +1,4 @@
+import { omit } from 'lodash'
 import { attr, Model } from 'redux-orm'
 
 export default class Person extends Model {
@@ -5,14 +6,16 @@ export default class Person extends Model {
     return `Person: ${this.name}`
   }
 
-  static storeRelatedData (personData) {}
+  static processRelatedData (personData) {
+    return omit(personData, [])
+  }
 
   static parse (personData) {
-    // this.storeRelatedData(personData)
-    // let clonedData = {
-    //   ...personData
-    // }
-    return this.create(personData)
+    let clonedData = this.processRelatedData(personData)
+    clonedData = {
+      ...personData
+    }
+    return this.create(clonedData)
   }
 
   static toJSON () {

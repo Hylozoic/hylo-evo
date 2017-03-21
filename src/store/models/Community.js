@@ -1,3 +1,4 @@
+import { omit } from 'lodash'
 import { attr, fk, many, oneToOne, Model } from 'redux-orm'
 
 export default class Community extends Model {
@@ -5,13 +6,13 @@ export default class Community extends Model {
     return `Community: ${this.name}`
   }
 
-  static storeRelatedData (communityData) {
-    return {}
+  static processRelatedData (communityData) {
+    return omit(communityData, [])
   }
 
   static parse (communityData) {
-    this.storeRelatedData(communityData)
-    let clonedData = {
+    let clonedData = this.processRelatedData(communityData)
+    clonedData = {
       ...communityData
     }
     return this.create(clonedData)
