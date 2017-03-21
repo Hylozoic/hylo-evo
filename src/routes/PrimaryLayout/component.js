@@ -19,7 +19,7 @@ export default function PrimaryLayout ({ match, location }) {
   return <div styleName='container'>
     <TopNav />
     <div styleName='row'>
-      <Route path='/' component={Navigation} collapsed={hasDetail} />
+      <Route path='/' render={() => <Navigation collapsed={hasDetail} location={location} />} />
       <div styleName='content'>
         <Route path='/' exact component={Feed} />
         <Route path='/events' component={Events} />
