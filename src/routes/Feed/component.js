@@ -2,6 +2,7 @@ import React from 'react'
 import CSSModules from 'react-css-modules'
 import { SAMPLE_FEED_ITEMS, SAMPLE_COMMUNITY } from './sampleData'
 import FeedItem from 'components/FeedItem'
+import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import TabBar from './TabBar'
 import styles from './component.scss'
@@ -37,7 +38,10 @@ export const CommunityBanner = CSSModules(({ community, currentUser }) => {
         <div styleName='logo' style={bgImageStyle(community.avatarUrl)} />
         <div styleName='header-text'>
           <span styleName='header-name'>{community.name}</span>
-          {community.location && <div styleName='header-location'>{community.location}</div>}
+          {community.location && <div styleName='header-location'>
+            <Icon name='Location' styleName='header-icon' />
+            {community.location}
+          </div>}
         </div>
       </div>
     </div>
