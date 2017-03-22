@@ -2,7 +2,7 @@ import React from 'react'
 import Dropdown from 'components/Dropdown'
 import { capitalize, sortBy, throttle } from 'lodash/fp'
 import { viewportTop, position } from 'util/scrolling'
-import cx from 'classnames'
+// import cx from 'classnames'
 
 export const tabNames = [
   'all', 'discusions', 'activity', 'requests', 'offers'
@@ -40,20 +40,12 @@ export default class TabBar extends React.Component {
 
     const feedScrollTop = this.feedScrollTop()
 
-    console.log('startingY', this.startingY)
-    console.log('feedScrollTop', feedScrollTop)
-    console.log('+ topNavHeight', this.topNavHeight())
-    console.log('----')
     if (this.state.isStatic) {
-      console.log('is static')
       if (feedScrollTop + this.topNavHeight() > this.startingY) {
-        console.log('no more')
         this.setState({isStatic: false, position: feedScrollTop - 153})
       }
     } else {
-      console.log('NOT static')
       if (feedScrollTop + this.topNavHeight() < this.startingY) {
-        console.log('now it is')
         this.setState({isStatic: true})
       }
     }
@@ -73,12 +65,11 @@ export default class TabBar extends React.Component {
     const { tabName, sortOption, onChange, className } = this.props
     const { isStatic, position } = this.state
 
-    const styleNames = cx('tabBar', isStatic ? 'static' : 'floating')
-
+    const styleName = isStatic ? 'tabBar' : 'tabBar-floating'
     const style = isStatic ? {} : {top: position}
 
     return <div ref='placeholder' className={className} styleName='placeholder'>
-      <div styleName={styleNames} style={style}>
+      <div styleName={styleName} style={style}>
         <div styleName='tabs'>
           {tabNames.map(name => <span
             key={name}
