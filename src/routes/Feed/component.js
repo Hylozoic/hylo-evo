@@ -56,6 +56,6 @@ export const PostPrompt = CSSModules(({ currentUser }) => {
   return <div styleName='postPrompt' onClick={() => console.log('Open Post Form')}>
     <div styleName='shadow' />
     <RoundImage url={currentUser.avatarUrl} small styleName='prompt-image' />
-    Hi {currentUser.name}, what's on your mind?
+    Hi {currentUser.firstName}, what's on your mind?
   </div>
 }, styles)

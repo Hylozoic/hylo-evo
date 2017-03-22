@@ -35,12 +35,17 @@ const rndType = () => faker.random.arrayElement(['offer', 'request', 'discussion
 
 const maybe = value => faker.random.boolean() ? value : null
 
-const rndPerson = () => ({
-  id: faker.random.number(),
-  name: faker.name.findName(),
-  title: maybe(`${faker.name.jobArea()} ${faker.name.jobType()}`),
-  avatarUrl: rndAvatarUrl()
-})
+const rndPerson = () => {
+  const person = {
+    id: faker.random.number(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    title: maybe(`${faker.name.jobArea()} ${faker.name.jobType()}`),
+    avatarUrl: rndAvatarUrl()
+  }
+  person.name = `${person.firstName} ${person.lastName}`
+  return person
+}
 
 const rndPreview = () => ({
   title: faker.lorem.sentence(),

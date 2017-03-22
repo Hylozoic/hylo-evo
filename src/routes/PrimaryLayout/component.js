@@ -16,7 +16,8 @@ import 'css/global/index.scss'
 
 const SAMPLE_USER = {
   id: '1',
-  name: 'Axolotl',
+  firstName: 'Axolotl',
+  lastName: 'Jones',
   avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
 }
 

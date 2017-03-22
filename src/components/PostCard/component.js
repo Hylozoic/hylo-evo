@@ -81,10 +81,24 @@ export const LinkPreview = CSSModules(({ linkPreview }) => {
   </div>
 }, styles)
 
+export const commentCaption = ({ commenters, commentCount }) => {
+  var names = ''
+  if (commenters.length === 0) {
+    return 'Be the first to comment'
+  } else if (commenters.length === 1) {
+    names = commenters[0].firstName
+  } else if (commenters.length === 2) {
+    names = `${commenters[0].firstName} and ${commenters[1].firstName}`
+  } else {
+    names = `${commenters[0].firstName}, ${commenters[1].firstName} and ${commentCount - 2} others`
+  }
+  return `${names} commented`
+}
+
 export const PostFooter = CSSModules(({ post }) => {
   return <div styleName='footer'>
     <PeopleImages imageUrls={post.commenters.map(c => c.avatarUrl)} styleName='people' />
-    <span className='caption-lt-lg'>Steph, Cam, and 58 others commented</span>
+    <span className='caption-lt-lg'>{commentCaption(post)}</span>
     <div styleName='share'><ShareButton post={post} /></div>
     <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{post.voteCount}</a></div>
   </div>
