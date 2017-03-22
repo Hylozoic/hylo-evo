@@ -1,6 +1,13 @@
 {
   "id": "17783",
   "name": "Architecture of collaborative software tools",
+  "public": true,
+  "type": "project",
+  "updated_at": "2017-02-10T18:59:30.220Z",
+  "user_id": "13687",
+  "voter_ids": [],
+  "created_at": "2016-02-05T18:34:11.877Z",
+  "description": "<p>Core Intention: Documentation of existing software tools that together will be able to create an eco-system of infrastructure for solidarity economy groups.<p><p>Suggested output:</p>\n<ol>\n<li>Architectural diagram of existing software available for solidarity groups to use.</li>\n<li>Detail on each piece of software included, filterable.</li>\n</ol>\n<p>Goals:</p>\n<ol>\n<li>Solidarity groups working for change on the ground could use this as input to assembling software infrastructure needed for their group.</li>\n<li>Software developers can determine where there is overlap and thus opportunity for collaboration; where there are gaps and thus opportunity for new useful software; and where interoperability would be most useful so that it can be developed.</li>\n</ol>\n",
   "numComments": 2,
   "comments": [
     {
@@ -18,13 +25,9 @@
       "thank_ids": []
     }
   ],
-  "public": true,
-  "type": "project",
-  "updated_at": "2017-02-10T18:59:30.220Z",
-  "user_id": "13687",
-  "voter_ids": [],
-  "created_at": "2016-02-05T18:34:11.877Z",
-  "description": "<p>Core Intention: Documentation of existing software tools that together will be able to create an eco-system of infrastructure for solidarity economy groups.<p><p>Suggested output:</p>\n<ol>\n<li>Architectural diagram of existing software available for solidarity groups to use.</li>\n<li>Detail on each piece of software included, filterable.</li>\n</ol>\n<p>Goals:</p>\n<ol>\n<li>Solidarity groups working for change on the ground could use this as input to assembling software infrastructure needed for their group.</li>\n<li>Software developers can determine where there is overlap and thus opportunity for collaboration; where there are gaps and thus opportunity for new useful software; and where interoperability would be most useful so that it can be developed.</li>\n</ol>\n",
+  "community_ids": [
+    "1222"
+  ],
   "communities": [
     {
       "avatar_url": "https://d3ngex8q79bk55.cloudfront.net/community/1222/avatar/1451885428347_CTASeal-40.png",
@@ -33,9 +36,6 @@
       "name": "Collaborative Technology Alliance",
       "slug": "collaborative-technology-alliance"
     }
-  ],
-  "community_ids": [
-    "1222"
   ],
   "follower_ids": [
     "23845",
@@ -58,6 +58,11 @@
     "10984"
   ],
   "people": [
+    {
+      "avatar_url": "https://media.licdn.com/mpr/mprx/0_sMe3tizezAMua5TAssWYtT5Fzzg826TAqjyYt8NJoPWK1Cnl9xZDphhcR4jx738jUsE0gF6Iq2yn",
+      "id": "42",
+      "name": "John Doe"
+    },
     {
       "avatar_url": "https://media.licdn.com/mpr/mprx/0_sMe3tizezAMua5TAssWYtT5Fzzg826TAqjyYt8NJoPWK1Cnl9xZDphhcR4jx738jUsE0gF6Iq2yn",
       "id": "23845",

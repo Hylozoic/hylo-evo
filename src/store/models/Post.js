@@ -15,12 +15,15 @@ export default class Post extends Model {
   }
 
   static parse (postData) {
+    const { Comment } = this.session
     let clonedData = this.processRelatedData(postData)
     clonedData = {
       ...clonedData,
       author: postData.user_id,
-      communities: postData.community_ids
+      communities: postData.community_ids,
+      comments: postData.comments.map(commentData => Comment.parse(commentData))
     }
+    clonedData = omit(clonedData, ['user_id', 'community_id'])
     return this.create(clonedData)
   }
 }
