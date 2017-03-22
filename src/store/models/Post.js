@@ -21,7 +21,7 @@ export default class Post extends Model {
 
     return this.create({
       id,
-      name,
+      title: name,
       description,
       author: user_id,
       communities: community_ids,
