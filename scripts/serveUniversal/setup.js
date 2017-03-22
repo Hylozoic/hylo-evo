@@ -19,14 +19,14 @@ addPath(join(__dirname, '../../src'))
 // load webpack config
 const env = process.env.NODE_ENV === 'production' ? 'prod' : 'dev'
 const webpackConfig = require(root(`config/webpack.config.${env}`))
+const sharedConfig = require(root('config/webpack.config.shared'))
 
 // add a header to each css file that gets imported. this does two things:
 // 1. reproduces the behavior of sass-resources-loader
 // 2. sets the global Sass variable $bootstrap-path to an absolute path, because
 //    it is used with `composes` and
 const cssHeader = once(() => {
-  const sassResourcesLoader = findLoader('sass-resources')
-  const { resources } = sassResourcesLoader.options
+  const { resources } = sharedConfig.sassResourcesLoader.options
   return resources.map(path => `@import "${path}";`).join('\n') +
   `\n$bootstrap-path: '${paths.appSrc}/css/bootstrap.scss';\n`
 })
@@ -34,7 +34,7 @@ const cssHeader = once(() => {
 // handle CSS imports and generate class names the same way that webpack does
 cssHook({
   extensions: ['.css', '.scss'],
-  generateScopedName: findLoader('css').options.localIdentName,
+  generateScopedName: sharedConfig.cssLoader.options.localIdentName,
   preprocessCss: (css, filename) =>
     sass.renderSync({
       file: filename,
