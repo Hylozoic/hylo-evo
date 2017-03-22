@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "babel-cli": "^6.24.0",
     "babel-core": "6.17.0",
     "babel-eslint": "7.1.1",
     "babel-loader": "6.2.7",
@@ -48,8 +49,13 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "app-module-path": "^2.2.0",
     "bootstrap": "4.0.0-alpha.6",
     "classnames": "^2.2.5",
+    "compression": "^1.6.2",
+    "cookie-parser": "^1.4.3",
+    "css-modules-require-hook": "^4.0.6",
+    "express": "^4.15.2",
     "lodash": "^4.17.4",
     "lodash-fp": "^0.10.4",
     "node-sass": "^4.5.0",
