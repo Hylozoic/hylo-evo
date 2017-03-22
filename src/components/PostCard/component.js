@@ -7,8 +7,9 @@ import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
 import ShareButton from './ShareButton'
 import { personUrl, bgImageStyle } from 'util/index'
+import { parse } from 'url'
 const { shape, any, object, string, array } = React.PropTypes
-import styles from './component.scss'
+import './component.scss'
 
 export default function PostCard ({ post, className }) {
   return <div styleName='card' className={className}>
@@ -66,7 +67,7 @@ export const PostBody = ({ post, post: { linkPreview } }) => {
 }
 
 export const LinkPreview = ({ linkPreview }) => {
-  const domain = (new window.URL(linkPreview.url)).hostname.replace('www.', '')
+  const domain = parse(linkPreview.url).hostname.replace('www.', '')
   return <div styleName='cardPadding'>
     <div styleName='linkPreview'>
       <a href={linkPreview.url} target='_blank'>
@@ -80,14 +81,14 @@ export const LinkPreview = ({ linkPreview }) => {
   </div>
 }
 
-export const PostFooter = CSSModules(({ post }) => {
+export const PostFooter = ({ post }) => {
   return <div styleName='footer'>
     <PeopleImages imageUrls={post.commenters.map(c => c.avatarUrl)} styleName='people' />
     <span className='caption-lt-lg'>Steph, Cam, and 58 others commented</span>
     <div styleName='share'><ShareButton post={post} /></div>
     <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{post.voteCount}</a></div>
   </div>
-}, styles)
+}
 
 export function PeopleImages ({ imageUrls, className }) {
   const images = imageUrls.map(url =>
