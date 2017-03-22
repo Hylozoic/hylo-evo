@@ -1,6 +1,16 @@
-// TabBar
+.placeholder {
+  position: relative;
+  top: -48px;
+}
+
 .tabBar {
-  /* empty */
+  position: absolute;
+}
+
+.tabs {
+  height: 50px;
+  width: $size-feed-width;
+  background-color: $color-white-50;
 }
 
 .tab {
@@ -19,4 +29,15 @@
   font-size: 15px;
   background-color: $color-cape-cod-05;
   border-radius: 4px;
+}
+
+.static {
+  /* empty */
+}
+
+.floating {
+  position: fixed;
+  // 80px is the height of the top nav
+  top: 80px;
+  margin-top: 5px;
 }

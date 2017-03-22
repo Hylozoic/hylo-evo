@@ -7,19 +7,26 @@ import TabBar from './TabBar'
 import styles from './component.scss'
 import { bgImageStyle } from 'util/index'
 
-export default function Feed ({ feedItems, community, currentUser }) {
-  return <div styleName='feed'>
-    <CommunityBanner community={community} currentUser={currentUser} />
-    <TabBar styleName='tabBar' />
-    <div styleName='feedItems'>
-      {SAMPLE_FEED_ITEMS.map(feedItem =>
-        <FeedItem feedItem={feedItem} styleName='feedItem' key={feedItem.id} />)}
+export default class Feed extends React.Component {
+  static defaultProps = {
+    feedItems: SAMPLE_FEED_ITEMS,
+    community: SAMPLE_COMMUNITY
+  }
+
+  render () {
+    const { feedItems, community, currentUser } = this.props
+
+    const feedId = 'feed'
+
+    return <div styleName='feed' id={feedId}>
+      <CommunityBanner community={community} currentUser={currentUser} />
+      <TabBar styleName='tabBar' feedId={feedId} />
+      <div styleName='feedItems'>
+        {feedItems.map(feedItem =>
+          <FeedItem feedItem={feedItem} styleName='feedItem' key={feedItem.id} />)}
+      </div>
     </div>
-  </div>
-}
-Feed.defaultProps = {
-  feedItems: SAMPLE_FEED_ITEMS,
-  community: SAMPLE_COMMUNITY
+  }
 }
 
 export const CommunityBanner = CSSModules(({ community, currentUser }) => {
