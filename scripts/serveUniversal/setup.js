@@ -6,7 +6,8 @@ import { addPath } from 'app-module-path'
 import cssHook from 'css-modules-require-hook'
 import { compact, flatten, flow, map, once } from 'lodash/fp'
 import sass from 'node-sass'
-import paths from '../../config/paths'
+import root from 'root-path'
+const paths = require(root('config/paths'))
 
 const startTime = new Date().getTime()
 export default startTime
@@ -17,7 +18,7 @@ addPath(join(__dirname, '../../src'))
 
 // load webpack config
 const env = process.env.NODE_ENV === 'production' ? 'prod' : 'dev'
-const webpackConfig = require(`../../config/webpack.config.${env}`)
+const webpackConfig = require(root(`config/webpack.config.${env}`))
 
 // add a header to each css file that gets imported. this does two things:
 // 1. reproduces the behavior of sass-resources-loader
