@@ -1,0 +1,34 @@
+import setupStartTime from './setup' // this must be first
+import express from 'express'
+import compression from 'compression'
+import cookieParser from 'cookie-parser'
+import appMiddleware from './appMiddleware'
+// import './simpleTest'
+
+global.SERVER_SIDE_RENDERING = true
+
+const port = process.env.PORT || 9001
+
+const server = express()
+server.use(cookieParser())
+server.use(compression())
+server.use(express.static('build'))
+server.use(appMiddleware)
+
+const listener = server.listen(port, err => {
+  if (err) throw err
+  const elapsed = new Date().getTime() - setupStartTime
+  console.log(`listening on port ${port} (pid ${process.pid}) after ${elapsed}ms`)
+})
+
+function shutdown () {
+  const waitForClose = process.env.NODE_ENV === 'production'
+    ? listener.close.bind(listener)
+    : fn => fn()
+  waitForClose(() => {
+    console.log(`shutting down (pid ${process.pid})`)
+    process.exit()
+  })
+}
+process.once('SIGINT', shutdown)
+process.once('SIGUSR2', shutdown) // used by nodemon

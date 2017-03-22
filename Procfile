@@ -1,1 +1,1 @@
-web: node scripts/serveStatic.js
+web: node es5/scripts/serveUniversal

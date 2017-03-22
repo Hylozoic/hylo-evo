@@ -7,6 +7,7 @@ import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
 import ShareButton from './ShareButton'
 import { personUrl, bgImageStyle } from 'util/index'
+import { parse } from 'url'
 const { shape, any, object, string, array } = React.PropTypes
 import CSSModules from 'react-css-modules'
 import styles from './component.scss'
@@ -67,7 +68,7 @@ export const PostBody = CSSModules(({ post, post: { linkPreview } }) => {
 }, styles)
 
 export const LinkPreview = CSSModules(({ linkPreview }) => {
-  const domain = (new window.URL(linkPreview.url)).hostname.replace('www.', '')
+  const domain = parse(linkPreview.url).hostname.replace('www.', '')
   return <div styleName='cardPadding'>
     <div styleName='linkPreview'>
       <a href={linkPreview.url} target='_blank'>
