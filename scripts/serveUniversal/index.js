@@ -2,8 +2,8 @@ import setupStartTime from './setup' // this must be first
 import express from 'express'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
-import appMiddleware from './appMiddleware'
-// import './simpleTest'
+// import appMiddleware from './appMiddleware'
+import './simpleTest'
 
 global.SERVER_SIDE_RENDERING = true
 

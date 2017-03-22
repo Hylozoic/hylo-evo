@@ -11,23 +11,23 @@ import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 
 import '../../css/global/index.scss'
-import './component.scss'
+import p from './component.scss'
 
 export default function PrimaryLayout ({ match, location }) {
   const hasDetail = matchPath(location.pathname, {path: '/events/:eventId'})
 
-  return <div styleName='container'>
+  return <div styleName='p.container'>
     <TopNav />
-    <div styleName='row'>
+    <div styleName='p.row'>
       <Route path='/' component={Navigation} collapsed={hasDetail} />
-      <div styleName='content'>
+      <div styleName='p.content'>
         <Route path='/' exact component={Feed} />
         <Route path='/events' component={Events} />
       </div>
-      <div styleName={cx('sidebar', {hidden: hasDetail})}>
+      <div styleName={cx('p.sidebar', {hidden: hasDetail})}>
         <Route path='/' component={Feed} />
       </div>
-      <div styleName={cx('detail', {hidden: !hasDetail})}>
+      <div styleName={cx('p.detail', {hidden: !hasDetail})}>
         {/*
           TODO: Display content of last detail page on '/' so that the
           animation transitions correctly.

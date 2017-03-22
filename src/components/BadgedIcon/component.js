@@ -1,6 +1,7 @@
 import React from 'react'
 import Icon from '../Icon'
 import cx from 'classnames'
+import './component.scss'
 
 export default function BadgedIcon (props) {
   const { showBadge, green } = props

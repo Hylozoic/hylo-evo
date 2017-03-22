@@ -3,11 +3,6 @@
 
 import { join } from 'path'
 import { addPath } from 'app-module-path'
-import cssHook from 'css-modules-require-hook'
-import { once } from 'lodash/fp'
-import sass from 'node-sass'
-import root from 'root-path'
-const paths = require(root('config/paths'))
 
 const startTime = new Date().getTime()
 export default startTime
@@ -16,26 +11,27 @@ export default startTime
 // the effect of resolve.modules in webpack config)
 addPath(join(__dirname, '../../src'))
 
-const sharedConfig = require(root('config/webpack.config.shared'))
+function scratchpad () {
+  // to be added to a fork of babel-plugin-react-css-modules
+  function preprocess (file, data) {
+    console.log('preprocessing ' + file)
+    const sass = require('node-sass')
+    const root = require('root-path')
+    const sharedConfig = require(root('config/webpack.config.shared'))
+    const paths = require(root('config/paths'))
 
-// add a header to each css file that gets imported. this does two things:
-// 1. reproduces the behavior of sass-resources-loader
-// 2. sets the global Sass variable $bootstrap-path to an absolute path, because
-//    it is used with `composes` and
-const cssHeader = once(() => {
-  const { resources } = sharedConfig.sassResourcesLoader.options
-  return resources.map(path => `@import "${path}";`).join('\n') +
-  `\n$bootstrap-path: '${paths.appSrc}/css/bootstrap.scss';\n`
-})
+    function cssHeader () {
+      const { resources } = sharedConfig.sassResourcesLoader.options
+      return resources.map(path => `@import "${path}";`).join('\n') +
+      `\n$bootstrap-path: '${paths.appSrc}/css/bootstrap.scss';\n`
+    }
 
-// handle CSS imports and generate class names the same way that webpack does
-cssHook({
-  extensions: ['.css', '.scss'],
-  generateScopedName: sharedConfig.cssLoader.options.localIdentName,
-  preprocessCss: (css, filename) =>
-    sass.renderSync({
-      file: filename,
-      data: cssHeader() + css,
+    return sass.renderSync({
+      file,
+      data: cssHeader() + data,
       includePaths: [paths.appSrc]
     }).css
-})
+  }
+  const text = (0, _fs.readFileSync)(cssSourceFilePath, 'utf-8');
+  const lazyResult = runner.process(preprocess(cssSourceFilePath, text), options);
+}
