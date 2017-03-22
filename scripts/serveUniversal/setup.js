@@ -4,7 +4,7 @@
 import { join } from 'path'
 import { addPath } from 'app-module-path'
 import cssHook from 'css-modules-require-hook'
-import { compact, flatten, flow, map, once } from 'lodash/fp'
+import { once } from 'lodash/fp'
 import sass from 'node-sass'
 import root from 'root-path'
 const paths = require(root('config/paths'))
@@ -16,9 +16,6 @@ export default startTime
 // the effect of resolve.modules in webpack config)
 addPath(join(__dirname, '../../src'))
 
-// load webpack config
-const env = process.env.NODE_ENV === 'production' ? 'prod' : 'dev'
-const webpackConfig = require(root(`config/webpack.config.${env}`))
 const sharedConfig = require(root('config/webpack.config.shared'))
 
 // add a header to each css file that gets imported. this does two things:
@@ -42,13 +39,3 @@ cssHook({
       includePaths: [paths.appSrc]
     }).css
 })
-
-function findLoader (name) {
-  const loaders = flow(
-    map(x => [x.loader ? x : null].concat(x.use)),
-    flatten,
-    compact
-  )(webpackConfig.module.rules)
-
-  return loaders.find(x => x.loader === name || x.loader === name + '-loader')
-}
