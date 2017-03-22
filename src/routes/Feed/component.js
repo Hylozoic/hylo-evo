@@ -4,6 +4,7 @@ import { SAMPLE_FEED_ITEMS, SAMPLE_COMMUNITY } from './sampleData'
 import FeedItem from 'components/FeedItem'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
+import ScrollListener from 'components/ScrollListener'
 import TabBar from './TabBar'
 import styles from './component.scss'
 import { bgImageStyle } from 'util/index'
@@ -26,6 +27,7 @@ export default class Feed extends React.Component {
         {feedItems.map(feedItem =>
           <FeedItem feedItem={feedItem} styleName='feedItem' key={feedItem.id} />)}
       </div>
+      <ScrollListener elementId={feedId} onBottom={() => console.log('Load More Posts')} />
     </div>
   }
 }

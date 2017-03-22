@@ -36,13 +36,11 @@ export default class TabBar extends React.Component {
   }
 
   handleScrollEvents = throttle(50, event => {
-    event.preventDefault()
-
     const feedScrollTop = this.feedScrollTop()
 
     if (this.state.isStatic) {
       if (feedScrollTop + this.topNavHeight() > this.startingY) {
-        this.setState({isStatic: false, position: feedScrollTop - 153})
+        this.setState({isStatic: false, top: feedScrollTop - 153})
       }
     } else {
       if (feedScrollTop + this.topNavHeight() < this.startingY) {
@@ -54,6 +52,7 @@ export default class TabBar extends React.Component {
   componentDidMount () {
     const { feedId } = this.props
     this.startingY = position(this.refs.placeholder).y - 5
+    this.startingX = position(this.refs.placeholder).x
     this.setState({isStatic: viewportTop() + this.topNavHeight() < this.startingY})
     const feedElement = document.getElementById(feedId)
     if (feedElement) {
@@ -63,10 +62,10 @@ export default class TabBar extends React.Component {
 
   render () {
     const { tabName, sortOption, onChange, className } = this.props
-    const { isStatic, position } = this.state
+    const { isStatic, top } = this.state
 
     const styleName = isStatic ? 'tabBar' : 'tabBar-floating'
-    const style = isStatic ? {} : {top: position}
+    const style = isStatic ? {} : {top}
 
     return <div ref='placeholder' className={className} styleName='placeholder'>
       <div styleName={styleName} style={style}>
