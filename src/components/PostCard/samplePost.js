@@ -1,13 +1,12 @@
-const SAMPLE_IMAGE_URL = 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+import faker from 'faker'
+import { times } from 'lodash'
 
-const SAMPLE_AUTHOR = {name: 'Sarah Pham', avatarUrl: SAMPLE_IMAGE_URL}
-
-const SAMPLE_PEOPLE = [
-  {name: 'Steph', avatarUrl: SAMPLE_IMAGE_URL},
-  {name: 'Cam', avatarUrl: SAMPLE_IMAGE_URL},
-  {name: 'Christy', avatarUrl: SAMPLE_IMAGE_URL},
-  {name: 'Sam', avatarUrl: SAMPLE_IMAGE_URL}
-]
+function fakePerson () {
+  return {
+    name: faker.name.findName(),
+    avatarUrl: faker.image.avatar()
+  }
+}
 
 const SAMPLE_POST = {
   id: 'SAMPLE_POST',
@@ -16,9 +15,9 @@ const SAMPLE_POST = {
   body: 'Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!',
   votesCount: '2564',
   tags: ['activism', 'petition'],
-  commenters: SAMPLE_PEOPLE,
-  author: SAMPLE_AUTHOR,
-  upVoters: SAMPLE_PEOPLE
+  commenters: times(3, fakePerson),
+  author: fakePerson(),
+  upVoters: times(5, fakePerson)
 }
 
 export default SAMPLE_POST
