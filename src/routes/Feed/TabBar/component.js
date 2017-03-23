@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import Dropdown from 'components/Dropdown'
 import { capitalize, sortBy, throttle } from 'lodash/fp'

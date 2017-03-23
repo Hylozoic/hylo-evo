@@ -2,8 +2,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Avatar from 'components/Avatar'
-// import Dropdown from 'components/Dropdown'
-// import Dropdowna from 'components/Dropdowna'
+import Dropdowna from 'components/Dropdowna'
 import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
@@ -17,8 +16,8 @@ const { shape, any, object, string, func, array } = React.PropTypes
 
 export default class PostCard extends React.Component {
   componentDidMount () {
-    const { id, fetchPost } = this.props
-    fetchPost(id)
+    // const { id, fetchPost } = this.props
+    // fetchPost(id)
   }
   render () {
     const { post, className, Dd } = this.props
@@ -48,6 +47,10 @@ PostCard.defaultProps = {
 }
 
 export const PostHeader = CSSModules(({ author, updatedAt, type, context, communities, Dd }) => {
+  if (!Dd) {
+    Dd = Dropdowna
+  }
+
   return <div styleName='header'>
     <Avatar avatarUrl={author.avatarUrl} url={personUrl(author)} styleName='avatar' />
     <div styleName='headerText'>
