@@ -9,6 +9,7 @@ import { get } from 'lodash/fp'
 import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
+import Sidebar from './components/Sidebar'
 
 // Global styles
 import 'css/global/index.scss'
@@ -25,7 +26,7 @@ export default function PrimaryLayout ({ match, location }) {
         <Route path='/events' component={Events} />
       </div>
       <div styleName={cx('sidebar', {hidden: hasDetail})}>
-        <Route path='/' component={Feed} />
+        <Route path='/' component={Sidebar} />
       </div>
       <div styleName={cx('detail', {hidden: !hasDetail})}>
         {/*
