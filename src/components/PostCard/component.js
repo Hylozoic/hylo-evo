@@ -21,9 +21,9 @@ export default class PostCard extends React.Component {
   render () {
     const { post, className } = this.props
     return <div styleName='card' className={className}>
-      <PostHeader post={post} />
-      <PostBody post={post} />
-      <PostFooter post={post} />
+      <PostHeader {...post} />
+      <PostBody {...post} />
+      <PostFooter {...post} />
     </div>
   }
 }
@@ -44,7 +44,7 @@ PostCard.defaultProps = {
   post: samplePost
 }
 
-export const PostHeader = CSSModules(({post: { author, updated_at, type, context, communities }}) => {
+export const PostHeader = CSSModules(({ author, updatedAt, type, context, communities }) => {
   return <div styleName='header'>
     <Avatar avatarUrl={author.avatarUrl} url={personUrl(author)} styleName='avatar' />
     <div styleName='headerText'>
@@ -52,7 +52,7 @@ export const PostHeader = CSSModules(({post: { author, updated_at, type, context
       {author.title && <span styleName='userTitle'>{author.title}</span>}
       <div>
         <span className='timestamp'>
-          {humanDate(updated_at)}{context && <span styleName='spacer'>•</span>}
+          {humanDate(updatedAt)}{context && <span styleName='spacer'>•</span>}
         </span>
         {context && <Link to='/' styleName='context'>
           {context}
@@ -66,29 +66,29 @@ export const PostHeader = CSSModules(({post: { author, updated_at, type, context
   </div>
 }, styles)
 
-export const PostBody = CSSModules(({ post, post: { linkPreview } }) => {
+export const PostBody = CSSModules(({ title, description, imageUrl, linkPreview }) => {
   // TODO: Present description as HTML and sanitize
-  const truncated = post.description &&
-    post.description.length > 147
-    ? post.description.slice(0, 144) + '...'
-    : post.description
+  const truncated = description &&
+    description.length > 147
+    ? description.slice(0, 144) + '...'
+    : description
 
   return <div styleName='body'>
-    {post.imageUrl && <img src={post.imageUrl} styleName='image' />}
-    <div styleName='title' className='hdr-headline'>{post.title}</div>
+    {imageUrl && <div style={bgImageStyle(imageUrl)} styleName='image' />}
+    <div styleName='title' className='hdr-headline'>{title}</div>
     {truncated && <div styleName='description'>{truncated}</div>}
-    {linkPreview && <LinkPreview linkPreview={linkPreview} />}
+    {linkPreview && <LinkPreview {...linkPreview} />}
   </div>
 }, styles)
 
-export const LinkPreview = CSSModules(({ linkPreview }) => {
-  const domain = (new window.URL(linkPreview.url)).hostname.replace('www.', '')
+export const LinkPreview = CSSModules(({ title, url, imageUrl }) => {
+  const domain = (new window.URL(url)).hostname.replace('www.', '')
   return <div styleName='cardPadding'>
     <div styleName='linkPreview'>
-      <a href={linkPreview.url} target='_blank'>
-        <div style={bgImageStyle(linkPreview.imageUrl)} styleName='previewImage' />
+      <a href={url} target='_blank'>
+        <div style={bgImageStyle(imageUrl)} styleName='previewImage' />
         <div styleName='previewText'>
-          <span styleName='previewTitle'>{linkPreview.title}</span>
+          <span styleName='previewTitle'>{title}</span>
           <div styleName='previewDomain'>{domain}</div>
         </div>
       </a>
@@ -96,7 +96,7 @@ export const LinkPreview = CSSModules(({ linkPreview }) => {
   </div>
 }, styles)
 
-export const commentCaption = ({ commenters, commentCount }) => {
+export const commentCaption = (commenters, commentersTotal) => {
   var names = ''
   if (commenters.length === 0) {
     return 'Be the first to comment'
@@ -105,20 +105,17 @@ export const commentCaption = ({ commenters, commentCount }) => {
   } else if (commenters.length === 2) {
     names = `${commenters[0].firstName} and ${commenters[1].firstName}`
   } else {
-    names = `${commenters[0].firstName}, ${commenters[1].firstName} and ${commentCount - 2} others`
+    names = `${commenters[0].firstName}, ${commenters[1].firstName} and ${commentersTotal - 2} others`
   }
   return `${names} commented`
 }
 
-export const PostFooter = CSSModules(({ post }) => {
-  const { commenters, commentersTotal } = post
-  const firstName = person => person.name.split(' ')[0]
-  const blurb = `${firstName(commenters[0])}, ${firstName(commenters[1])}, and ${commentersTotal - 2} others`
+export const PostFooter = CSSModules(({ id, commenters, commentersTotal, voteCount }) => {
   return <div styleName='footer'>
-    <PeopleImages imageUrls={post.commenters.map(c => c.avatarUrl)} styleName='people' />
-    <span className='caption-lt-lg'>{commentCaption(post)}</span>
-    <div styleName='share'><ShareButton post={post} /></div>
-    <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{post.voteCount}</a></div>
+    <PeopleImages imageUrls={commenters.map(c => c.avatarUrl)} styleName='people' />
+    <span className='caption-lt-lg'>{commentCaption(commenters, commentersTotal)}</span>
+    <div styleName='share'><ShareButton postId={id} /></div>
+    <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{voteCount}</a></div>
   </div>
 }, styles)
 

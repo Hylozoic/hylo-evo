@@ -99,8 +99,11 @@
 }
 
 .image {
-  display: block;
-  max-width: 100%;
+  background-position: center;
+  background-size: cover;
+  display: inline-block;
+  width: 590px;
+  height: 280px;
   margin-bottom: 20px;
   margin: 0 auto 20px auto;
 }

@@ -61,9 +61,9 @@ const SAMPLE_FEED_ITEMS = times(i => ({
   voteCount: faker.random.number(),
   author: rndPerson(),
   commenters: times(rndPerson, 3),
-  commentCount: faker.random.number(500),
+  commentersTotal: faker.random.number(500),
   imageUrl: maybe(maybe(rndImage())),
-  updated_at: (maybe(faker.date.recent()) || faker.date.past()).toString(),
+  updatedAt: (maybe(faker.date.recent()) || faker.date.past()).toString(),
   description: maybe(faker.lorem.sentences(faker.random.number(10))),
   linkPreview: maybe(maybe(rndPreview()))
 }), 20)
