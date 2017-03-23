@@ -1,4 +1,5 @@
 import parserMiddleware from './parserMiddleware'
+import { data } from './parserMiddleware.test.json'
 
 it('Returns a function to handle next', () => {
   const nextHandler = parserMiddleware({ action: 'ADD_POST' })
@@ -18,4 +19,7 @@ it('Returns the value of next', () => {
   const actionHandler = nextHandler(() => expected)
   const actual = actionHandler()
   expect(actual).toBe(expected)
+})
+
+it('Dispatches an ADD_POST action when payload contains a post', () => {
 })
