@@ -59,7 +59,7 @@ const SAMPLE_FEED_ITEMS = times(i => ({
   type: rndType(),
   context: maybe(faker.lorem.words(faker.random.number(3))),
   voteCount: faker.random.number(),
-  user: rndPerson(),
+  author: rndPerson(),
   commenters: times(rndPerson, 3),
   commentCount: faker.random.number(500),
   imageUrl: maybe(maybe(rndImage())),
