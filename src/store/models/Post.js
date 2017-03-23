@@ -1,4 +1,5 @@
 import { attr, fk, many, Model } from 'redux-orm'
+import { fakePerson } from 'components/PostCard/samplePost'
 
 const fields = {
   id: attr(),
@@ -25,7 +26,9 @@ export default class Post extends Model {
       description,
       author: user_id,
       communities: community_ids,
-      comments: postData.comments.map(c => c.id)
+      comments: postData.comments.map(c => c.id),
+      commenters: fakePerson(3),
+      commentersTotal: 77
     })
   }
 

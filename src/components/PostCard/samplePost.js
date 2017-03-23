@@ -1,23 +1,26 @@
 import faker from 'faker'
 import { times } from 'lodash'
 
-function fakePerson () {
-  return {
+export function fakePerson (count = 1) {
+  const data = times(count, () => ({
+    id: faker.random.number(),
     name: faker.name.findName(),
-    avatarUrl: faker.image.avatar()
-  }
+    avatarUrl: faker.image.avatar() + '?' + faker.random.number()
+  }))
+  return count === 1 ? data[0] : data
 }
 
 const SAMPLE_POST = {
   id: 'SAMPLE_POST',
-  type: 'event',
+  type: 'offer',
   title: 'We put this together as a PDF for hand-out at your next event or university class',
   body: 'Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!',
   votesCount: '2564',
   tags: ['activism', 'petition'],
-  commenters: times(3, fakePerson),
+  commenters: fakePerson(3),
+  commentersTotal: Math.round(Math.random() * 100),
   author: fakePerson(),
-  upVoters: times(5, fakePerson)
+  upVoters: fakePerson(5)
 }
 
 export default SAMPLE_POST

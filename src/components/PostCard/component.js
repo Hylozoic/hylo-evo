@@ -11,7 +11,7 @@ import CSSModules from 'react-css-modules'
 import styles from './component.scss'
 import samplePost from './samplePost'
 
-const { shape, any, object, string, array } = React.PropTypes
+const { shape, any, object, string, func, array } = React.PropTypes
 
 export default class PostCard extends React.Component {
   componentDidMount () {
@@ -37,7 +37,8 @@ PostCard.propTypes = {
     commenters: array,
     upVotes: string,
     updated_at: string
-  })
+  }),
+  fetchPost: func.isRequired
 }
 PostCard.defaultProps = {
   post: samplePost
@@ -96,9 +97,12 @@ export const LinkPreview = CSSModules(({ linkPreview }) => {
 }, styles)
 
 export const PostFooter = CSSModules(({ post }) => {
+  const { commenters, commentersTotal } = post
+  const firstName = person => person.name.split(' ')[0]
+  const blurb = `${firstName(commenters[0])}, ${firstName(commenters[1])}, and ${commentersTotal - 2} others`
   return <div styleName='footer'>
-    <PeopleImages imageUrls={post.commenters.map(c => c.avatarUrl)} styleName='people' />
-    <span className='caption-lt-lg'>Steph, Cam, and 58 others commented</span>
+    <PeopleImages imageUrls={commenters.slice(0, 5).map(c => c.avatarUrl)} styleName='people' />
+    <span className='caption-lt-lg'>{blurb} commented</span>
     <div styleName='share'><ShareButton post={post} /></div>
     <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{post.voteCount}</a></div>
   </div>
