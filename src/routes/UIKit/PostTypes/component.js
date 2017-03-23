@@ -2,6 +2,10 @@ import React from 'react'
 import PostCard from 'components/PostCard'
 import ShareButton from 'components/PostCard/ShareButton'
 import { omit } from 'lodash/fp'
+import Dropdown from 'components/Dropdown'
+import Dropdowna from 'components/Dropdowna'
+
+const Dropdownf = ({ toggleChildren }) => toggleChildren
 
 const rotateAndTrim = (arr, n) => arr.slice(n, arr.length).concat(arr.slice(0, n)).slice(0, 3)
 
@@ -31,9 +35,9 @@ const SAMPLE_POST = {
   type: 'offer',
   context: 'Stop Wombat Walrus',
   voteCount: '2564',
-  user: SAMPLE_AUTHOR,
+  author: SAMPLE_AUTHOR,
   commenters: rotateAndTrim(SAMPLE_PEOPLE, 0),
-  commentCount: 60,
+  commentersTotal: 60,
   updated_at: '6 hours ago'
 }
 
@@ -43,9 +47,9 @@ const SAMPLE_POST_WITH_DESCRIPTION = {
   description: 'Feel free to print and distribute or if you would like to suggest anything we have missed or better clarity, let us know!',
   type: 'offer',
   voteCount: '2564',
-  user: SAMPLE_AUTHOR,
+  author: SAMPLE_AUTHOR,
   commenters: rotateAndTrim(SAMPLE_PEOPLE, 1),
-  commentCount: 60,
+  commentersTotal: 60,
   updated_at: '6 hours ago'
 }
 
@@ -55,9 +59,9 @@ const SAMPLE_POST_WITH_LONG_DESCRIPTION = {
   description: 'Feel free to print and distribute or if you would like to suggest anything we have missed or better clarity, let us know! Feel free to print and distribute or if you would like to suggest anything we have missed or better clarity, let us know!',
   type: 'offer',
   voteCount: '2564',
-  user: SAMPLE_AUTHOR,
+  author: SAMPLE_AUTHOR,
   commenters: rotateAndTrim(SAMPLE_PEOPLE, 1),
-  commentCount: 60,
+  commentersTotal: 60,
   updated_at: '6 hours ago'
 }
 
@@ -68,9 +72,9 @@ const SAMPLE_POST_WITH_IMAGE = {
   context: 'Stop Wombat Walrus',
   imageUrl: SAMPLE_IMAGE_URL,
   voteCount: '2564',
-  user: omit('title', SAMPLE_AUTHOR),
+  author: omit('title', SAMPLE_AUTHOR),
   commenters: rotateAndTrim(SAMPLE_PEOPLE, 2),
-  commentCount: 60,
+  commentersTotal: 60,
   updated_at: '6 hours ago'
 }
 
@@ -84,9 +88,9 @@ const SAMPLE_POST_WITH_PREVIEW = {
     imageUrl: 'http://images.tate.org.uk/sites/default/files/images/picasso_pigeon_peas_0.jpg'
   },
   voteCount: '2564',
-  user: SAMPLE_AUTHOR,
+  author: SAMPLE_AUTHOR,
   commenters: rotateAndTrim(SAMPLE_PEOPLE, 3),
-  commentCount: 60,
+  commentersTotal: 60,
   updated_at: '6 hours ago'
 }
 
@@ -95,11 +99,11 @@ export default function PostTypes (props) {
     <div className='sheet'>
       <div className='sheet-title'>Post Types</div>
       <div styleName='postCards'>
-        <PostCard post={SAMPLE_POST} styleName='postCard' />
-        <PostCard post={SAMPLE_POST_WITH_IMAGE} styleName='postCard' />
-        <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='postCard' />
-        <PostCard post={SAMPLE_POST_WITH_LONG_DESCRIPTION} styleName='postCard' />
-        <PostCard post={SAMPLE_POST_WITH_PREVIEW} styleName='postCard' />
+        <PostCard post={SAMPLE_POST} styleName='postCard' Dd={Dropdownf} />
+        <PostCard post={SAMPLE_POST_WITH_IMAGE} styleName='postCard' Dd={Dropdownf} />
+        <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='postCard' Dd={Dropdownf} />
+        <PostCard post={SAMPLE_POST_WITH_LONG_DESCRIPTION} styleName='postCard' Dd={Dropdown} />
+        <PostCard post={SAMPLE_POST_WITH_PREVIEW} styleName='postCard' Dd={Dropdowna} />
         <div><ShareButton post={SAMPLE_POST} /></div>
       </div>
     </div>
