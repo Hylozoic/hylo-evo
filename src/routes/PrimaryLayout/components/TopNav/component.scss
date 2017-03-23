@@ -16,19 +16,15 @@
   composes: d-flex justify-content-start pl-5 pr-5 mb-6 from $bootstrap-path;
   // mixing metaphors here because the top padding is not a multiple of the spacer
   background-color: white;
-  z-index: 10;
+  z-index: 50;
   padding-top: 13px;
   box-shadow: 0px 4px 56px 0px $color-alto;
 }
 
 .image {
-  background-position: center;
-  background-size: cover;
-  display: inline-block;
+  @include image(30px);
   border-radius: 4px;
   margin-right: 10px;
-  width: 30px;
-  height: 30px;
 }
 
 .title {

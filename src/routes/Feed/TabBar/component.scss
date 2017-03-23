@@ -1,0 +1,48 @@
+.placeholder {
+  position: relative;
+  top: -48px;
+}
+
+.tabBar {
+  position: absolute;
+}
+
+.tabBar-floating {
+  position: fixed;
+  // 80px is the height of the top nav
+  top: 80px;
+  margin-top: 5px;
+  z-index: 20;
+  &:before {
+    z-index: -1;
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    top: -100px;
+    height: 200px;
+    width: $size-feed-width;
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(255, 255, 255, 0.9) 55%, rgba(255, 255, 255, 0));
+  }
+}
+
+.tabs {
+  /* empty */
+}
+
+.tab {
+  padding: 0 15px;
+  height: 28px;
+  line-height: 28px;
+  display: inline-block;
+  composes: caption-lt-lg from 'css/typography.scss'
+}
+
+.tab-active {
+  composes: tab;
+  // TODO: extract typography? 1px from .HDR-MINOR
+  @include font-bold;
+  color: $color-rhino;
+  font-size: 15px;
+  background-color: $color-cape-cod-05;
+  border-radius: 4px;
+}

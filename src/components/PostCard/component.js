@@ -6,7 +6,7 @@ import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
 import ShareButton from './ShareButton'
-import { personUrl, bgImageStyle } from 'util/index'
+import { personUrl, bgImageStyle, humanDate } from 'util/index'
 const { shape, any, object, string, array } = React.PropTypes
 import CSSModules from 'react-css-modules'
 import styles from './component.scss'
@@ -39,7 +39,7 @@ export const PostHeader = CSSModules(({ post: { user, updated_at, type, context 
       {user.title && <span styleName='userTitle'>{user.title}</span>}
       <div>
         <span className='timestamp'>
-          {updated_at}{context && <span styleName='spacer'>•</span>}
+          {humanDate(updated_at)}{context && <span styleName='spacer'>•</span>}
         </span>
         {context && <Link to='/' styleName='context'>
           {context}
@@ -81,17 +81,31 @@ export const LinkPreview = CSSModules(({ linkPreview }) => {
   </div>
 }, styles)
 
+export const commentCaption = ({ commenters, commentCount }) => {
+  var names = ''
+  if (commenters.length === 0) {
+    return 'Be the first to comment'
+  } else if (commenters.length === 1) {
+    names = commenters[0].firstName
+  } else if (commenters.length === 2) {
+    names = `${commenters[0].firstName} and ${commenters[1].firstName}`
+  } else {
+    names = `${commenters[0].firstName}, ${commenters[1].firstName} and ${commentCount - 2} others`
+  }
+  return `${names} commented`
+}
+
 export const PostFooter = CSSModules(({ post }) => {
   return <div styleName='footer'>
     <PeopleImages imageUrls={post.commenters.map(c => c.avatarUrl)} styleName='people' />
-    <span className='caption-lt-lg'>Steph, Cam, and 58 others commented</span>
+    <span className='caption-lt-lg'>{commentCaption(post)}</span>
     <div styleName='share'><ShareButton post={post} /></div>
     <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{post.voteCount}</a></div>
   </div>
 }, styles)
 
 export function PeopleImages ({ imageUrls, className }) {
-  const images = imageUrls.map(url =>
-    <RoundImage url={url} key={url} medium overlaps />)
+  const images = imageUrls.map((url, i) =>
+    <RoundImage url={url} key={i} medium overlaps />)
   return <div className={className}>{images}</div>
 }

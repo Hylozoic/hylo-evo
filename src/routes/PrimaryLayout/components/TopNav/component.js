@@ -4,18 +4,7 @@ import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 
-const SAMPLE_COMMUNITY = {
-  name: 'Generic Cause',
-  avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/community/1944/avatar/1489438401225_face.png'
-}
-
-const SAMPLE_USER = {
-  id: '1',
-  name: 'Axolotl',
-  avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
-}
-
-export default function TopNav ({ community = SAMPLE_COMMUNITY }) {
+export default function TopNav ({ community, currentUser }) {
   const imageStyle = bgImageStyle(community.avatarUrl)
   return <div styleName='topNav'>
     <span styleName='image' style={imageStyle} />
@@ -27,7 +16,7 @@ export default function TopNav ({ community = SAMPLE_COMMUNITY }) {
       <Link to='/' styleName='navIcon'><Icon name='Search' styleName='icon' /></Link>
       <Link to='/' styleName='navIcon'><Icon name='Messages' styleName='icon' /></Link>
       <Link to='/' styleName='navIcon'><Icon name='Notifications' styleName='icon' /></Link>
-      <Link to='/' styleName='navIcon'><RoundImage url={SAMPLE_USER.avatarUrl} small /></Link>
+      <Link to='/' styleName='navIcon'><RoundImage url={currentUser.avatarUrl} small /></Link>
     </div>
   </div>
 }

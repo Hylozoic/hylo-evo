@@ -50,10 +50,12 @@
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
     "classnames": "^2.2.5",
+    "faker": "^4.1.0",
     "lodash": "^4.17.4",
     "lodash-fp": "^0.10.4",
     "node-sass": "^4.5.0",
     "normalize.css": "^5.0.0",
+    "pretty-date": "^0.2.0",
     "pushstate-server": "^3.0.0",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
