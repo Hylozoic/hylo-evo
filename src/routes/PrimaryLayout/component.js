@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import { matchPath, Route, Link } from 'react-router-dom'
+import cx from 'classnames'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
-import cx from 'classnames'
+import HyloEditor from 'components/HyloEditor'
 import { get } from 'lodash/fp'
 import Feed from 'routes/Feed'
 import Events from 'routes/Events'
@@ -29,6 +30,7 @@ export default function PrimaryLayout ({ match, location }) {
       {/* TODO: is using render here the best way to pass params to a route? */}
       <Route path='/' render={() => <Navigation collapsed={hasDetail} location={location} />} />
       <div styleName='content'>
+        <HyloEditor />
         <Route path='/' exact render={() => <Feed community={SAMPLE_COMMUNITY} currentUser={SAMPLE_USER} />} />
         <Route path='/events' component={Events} />
       </div>
