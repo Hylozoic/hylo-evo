@@ -22,6 +22,10 @@
   margin-bottom: 30px;
 }
 
+.authorName {
+  /* !empty */
+}
+
 .avatar {
   margin-right: 10px;
 }
@@ -72,8 +76,11 @@
   }
 }
 
-.label {
+.upperRight {
   composes: ml-auto from $bootstrap-path;
+}
+
+.label {
   margin-right: 20px;
 }
 

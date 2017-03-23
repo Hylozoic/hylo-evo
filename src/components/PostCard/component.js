@@ -7,36 +7,49 @@ import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
 import ShareButton from './ShareButton'
 import { personUrl, bgImageStyle, humanDate } from 'util/index'
-const { shape, any, object, string, array } = React.PropTypes
 import CSSModules from 'react-css-modules'
 import styles from './component.scss'
+import samplePost from './samplePost'
 
-export default function PostCard ({ post, className }) {
-  return <div styleName='card' className={className}>
-    <PostHeader post={post} />
-    <PostBody post={post} />
-    <PostFooter post={post} />
-  </div>
+const { shape, any, object, string, func, array } = React.PropTypes
+
+export default class PostCard extends React.Component {
+  componentDidMount () {
+    const { id, fetchPost } = this.props
+    fetchPost(id)
+  }
+  render () {
+    const { post, className } = this.props
+    return <div styleName='card' className={className}>
+      <PostHeader post={post} />
+      <PostBody post={post} />
+      <PostFooter post={post} />
+    </div>
+  }
 }
 PostCard.propTypes = {
   post: shape({
     id: any,
     type: string,
-    user: object,
+    author: object,
     name: string,
     description: string,
     commenters: array,
     upVotes: string,
     updated_at: string
-  })
+  }),
+  fetchPost: func.isRequired
+}
+PostCard.defaultProps = {
+  post: samplePost
 }
 
-export const PostHeader = CSSModules(({ post: { user, updated_at, type, context } }) => {
+export const PostHeader = CSSModules(({post: { author, updated_at, type, context, communities }}) => {
   return <div styleName='header'>
-    <Avatar person={user} styleName='avatar' />
+    <Avatar avatarUrl={author.avatarUrl} url={personUrl(author)} styleName='avatar' />
     <div styleName='headerText'>
-      <Link to={personUrl(user)} styleName='userName'>{user.name}{user.title && ', '}</Link>
-      {user.title && <span styleName='userTitle'>{user.title}</span>}
+      <Link to={personUrl(author)} styleName='userName'>{author.name}{author.title && ', '}</Link>
+      {author.title && <span styleName='userTitle'>{author.title}</span>}
       <div>
         <span className='timestamp'>
           {humanDate(updated_at)}{context && <span styleName='spacer'>•</span>}
@@ -46,8 +59,10 @@ export const PostHeader = CSSModules(({ post: { user, updated_at, type, context 
         </Link>}
       </div>
     </div>
-    <PostLabel type={type} styleName='label' />
-    <a href='' styleName='menuLink'><Icon name='More' /></a>
+    <div styleName='upperRight'>
+      {type && <PostLabel type={type} styleName='label' />}
+      <a href='' styleName='menuLink'><Icon name='More' /></a>
+    </div>
   </div>
 }, styles)
 
@@ -96,6 +111,9 @@ export const commentCaption = ({ commenters, commentCount }) => {
 }
 
 export const PostFooter = CSSModules(({ post }) => {
+  const { commenters, commentersTotal } = post
+  const firstName = person => person.name.split(' ')[0]
+  const blurb = `${firstName(commenters[0])}, ${firstName(commenters[1])}, and ${commentersTotal - 2} others`
   return <div styleName='footer'>
     <PeopleImages imageUrls={post.commenters.map(c => c.avatarUrl)} styleName='people' />
     <span className='caption-lt-lg'>{commentCaption(post)}</span>

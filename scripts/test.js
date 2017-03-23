@@ -15,4 +15,7 @@ if (!process.env.CI && argv.indexOf('--coverage') < 0) {
   argv.push('--watch')
 }
 
+// Disable cache if it's causing problems (will make Jest much slower).
+// argv.push('--no-cache')
+
 jest.run(argv)

@@ -12,6 +12,10 @@ build
 # misc
 .DS_Store
 .env
+.env.test
+.env.deploy
 npm-debug.log
 
 .vscode
+.floo
+.flooignore
