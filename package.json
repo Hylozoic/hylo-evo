@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "babel-jest": "^19.0.0",
+    "babel-plugin-remove-stylename": "^0.1.0",
     "bootstrap": "4.0.0-alpha.6",
     "classnames": "^2.2.5",
     "dotenv-webpack": "^1.4.3",
@@ -104,12 +105,6 @@
     ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    },
-    "transformIgnorePatterns": [
-      "<rootDir>[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/jest/__mocks__/fileMock.js",
@@ -119,7 +114,16 @@
   "babel": {
     "presets": [
       "react-app"
-    ]
+    ],
+    "env": {
+      "test": {
+        "plugins": [
+          [
+            "remove-stylename"
+          ]
+        ]
+      }
+    }
   },
   "standard": {
     "parser": "babel-eslint",
