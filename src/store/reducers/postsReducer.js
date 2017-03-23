@@ -6,10 +6,10 @@ export default function postsReducer (state = {}, action) {
 
   switch (type) {
     case FETCH_POST:
-      return Object.assign({}, {
+      return {
         ...state,
         [payload.id]: payload
-      })
+      }
     default:
       return state
   }
