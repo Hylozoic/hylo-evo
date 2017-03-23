@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import { matchPath, Route, Link } from 'react-router-dom'
-import SampleCard from 'components/SampleCard'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
 import cx from 'classnames'
