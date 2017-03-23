@@ -17,3 +17,5 @@ build
 npm-debug.log
 
 .vscode
+.floo
+.flooignore
