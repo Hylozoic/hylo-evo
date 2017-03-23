@@ -58,8 +58,10 @@ export const PostHeader = CSSModules(({post: { author, updated_at, type, context
         </Link>}
       </div>
     </div>
-    <PostLabel type={type} styleName='label' />
-    <a href='' styleName='menuLink'><Icon name='More' /></a>
+    <div styleName='upperRight'>
+      {type && <PostLabel type={type} styleName='label' />}
+      <a href='' styleName='menuLink'><Icon name='More' /></a>
+    </div>
   </div>
 }, styles)
 

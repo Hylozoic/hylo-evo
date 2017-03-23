@@ -72,8 +72,11 @@
   }
 }
 
-.label {
+.upperRight {
   composes: ml-auto from $bootstrap-path;
+}
+
+.label {
   margin-right: 20px;
 }
 
