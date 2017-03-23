@@ -94,6 +94,7 @@
 .image {
   display: block;
   max-width: 100%;
+  max-height: 280px;
   margin-bottom: 20px;
   margin: 0 auto 20px auto;
 }
@@ -185,6 +186,9 @@ $footer-height: 56px;
   top: 4px;
   margin-right: 8px;
   color: $color-caribbean-green;
+  &:hover {
+    color: $color-gossamer;
+  }
 }
 
 .votes {
@@ -195,6 +199,6 @@ $footer-height: 56px;
   border-left: 1px solid $color-cape-cod-10;
   & > a:hover {
     text-decoration: none;
-    color: $color-caribbean-green;
+    color: $color-gossamer;
   }
 }

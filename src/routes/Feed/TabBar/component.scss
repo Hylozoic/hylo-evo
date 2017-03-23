@@ -16,6 +16,7 @@
   &:before {
     z-index: -1;
     content: '';
+    pointer-events: none;
     position: absolute;
     top: -100px;
     height: 200px;
