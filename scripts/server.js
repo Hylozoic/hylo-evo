@@ -2,6 +2,7 @@ import express from 'express'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import { createIsomorphicWebpack } from 'isomorphic-webpack'
+import ReactDOMServer from 'react-dom/server'
 import webpackConfiguration from '../config/webpack.config.prod.js'
 
 const app = express()
@@ -41,7 +42,7 @@ const { evalBundleCode } = createIsomorphicWebpack(webpackConfiguration, {
 
 app.get('/*', (req, res) => {
   const requestUrl = req.protocol + '://' + req.get('host') + req.originalUrl
-  const myApp = evalBundleCode(requestUrl).default
+  const myApp = ReactDOMServer.renderToString(evalBundleCode(requestUrl).default)
   res.status(200).send(renderFullPage(myApp))
 })
 
