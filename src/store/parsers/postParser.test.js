@@ -32,3 +32,36 @@ it('normalizes ids from followers', () => {
   const actual = normalize(post)
   expect(actual).toEqual(expected)
 })
+
+it('normalizes ids from communities', () => {
+  const post = {
+    communities: [
+      { id: '1234', name: 'Wombat Central' },
+      { id: '5678', name: 'Wombat Quarterly' },
+      { id: '9012', name: 'Wombats-R-Us' }
+    ]
+  }
+  const expected = { communities: [ '1234', '5678', '9012' ] }
+  const actual = normalize(post)
+  expect(actual).toEqual(expected)
+})
+
+it('normalizes ids from comments', () => {
+  const post = {
+    comments: [
+      {
+        "id": "1",
+        "createdAt": "Fri Mar 24 2017 10:55:41 GMT+1300 (NZDT)",
+        "text": "<p>Here's a comment!</p>",
+        "creator": {
+            "id": "46816",
+            "name": "Rich",
+            "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+        }
+      }
+    ]
+  }
+  const expected = { comments: [ '1' ] }
+  const actual = normalize(post)
+  expect(actual).toEqual(expected)
+})
