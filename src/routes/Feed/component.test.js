@@ -1,8 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Feed from './component'
+import TabBar from './TabBar'
 
-it('Has at least one linebreak!', () => {
+it('has a TabBar', () => {
   const wrapper = shallow(<Feed />)
-  expect(wrapper.contains(<br />)).toEqual(true)
+  const tabBar = <TabBar feedId='feed' tabName='all' sortOption='latest' />
+  expect(wrapper.contains(tabBar)).toEqual(true)
 })

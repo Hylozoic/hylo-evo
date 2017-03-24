@@ -1,11 +1,8 @@
 @import '../../css/bootstrap';
 
 .image {
-  background-position: center;
-  background-size: cover;
+  @include image($space-11x);
   border: solid 3px $color-white;
-  width: $space-11x;
-  height: $space-11x;
   // TODO: attn LEJ, here's a place we're still using some other bootstrap stuff.
   @extend .img-thumbnail, .rounded-circle, .d-inline-block, .align-top;
 }

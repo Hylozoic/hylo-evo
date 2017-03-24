@@ -1,7 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import routes from './routes'
-import { BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
 
-const app = <BrowserRouter>{routes}</BrowserRouter>
-ReactDOM.render(app, document.getElementById('root'))
+import router from './router'
+import store from './store'
+
+ReactDOM.render(
+  <Provider store={store}>{ router }</Provider>,
+  document.getElementById('root')
+)

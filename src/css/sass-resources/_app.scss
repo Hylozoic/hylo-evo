@@ -27,6 +27,8 @@ $space-18x: $space-base-unit * 18;
 // $space-xl: $space-10x;
 // $space-xxl: $space-18x;
 
+$size-feed-width: 590px;
+
 // Colors
 // For now standardized on using "Name that Color" naming:
 // http://chir.ag/projects/name-that-color http://chir.ag/projects/ntc/
@@ -40,13 +42,20 @@ $color-nepal: #8DABC4;
 
 // Grays
 $color-white: #FFFFFF;
+$color-white-50: rgba($color-white, .5);
 $color-black: #000000;
+$color-black-10: rgba($color-black, .1);
 $color-athens-gray: #FAFBFC;
 $color-athens-gray-dark: #E1E5EA;
 $color-ghost-30: rgba(#CCD1D7, .3);
-$color-cape-cod-10: rgba(#363D3C, .1);
+$color-cape-cod: #363D3C;
+$color-cape-cod-10: rgba($color-cape-cod, .1);
+$color-cape-cod-05: rgba($color-cape-cod, .05);
 $color-dove-gray-50: rgba(#717171, .5);
 $color-black-squeeze: #E5EEF5;
+$color-cod-gray-0: rgba(#161616, 0);
+$color-cod-gray-dark: #1C1C1C;
+$color-seashell: #F1F1F1;
 
 $color-caribbean-green: #0DC3A0;
 $color-medium-purple: #9883E5;
@@ -67,6 +76,7 @@ $color-yello-orange: #FFB949;
 $color-alto: #DCDCDC;
 $color-polar: #F0FCF9;
 $color-ziggurat: #BDE0DC;
+$color-gossamer: #0A9682;
 
 // Fonts
 @mixin font-regular {
@@ -79,4 +89,13 @@ $color-ziggurat: #BDE0DC;
 
 @mixin font-bold {
   font-family: 'Circular bold', sans-serif;
+}
+
+// Utilities
+@mixin image($width: 32px, $height: false) {
+  background-position: center;
+  background-size: cover;
+  display: inline-block;
+  width: $width;
+  height: $height or $width;
 }

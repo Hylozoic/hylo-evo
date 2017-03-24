@@ -20,6 +20,8 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
 
 .dropdown {
 
+  display: inline-block;
+
   &.has-triangle .dropdown-menu {
     overflow-y: visible;
   }

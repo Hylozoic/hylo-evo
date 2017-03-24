@@ -1,7 +1,7 @@
 /*
 This file is copied from Hylo-Redux. All we're currently using is keyMap and getKeyCode.
 */
-import { hashtagCharacterRegex } from 'models/hashtag'
+import { hashtagCharacterRegex } from 'store/models/hashtag'
 import { curry, has } from 'lodash'
 
 export const keyMap = {

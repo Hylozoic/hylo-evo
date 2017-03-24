@@ -2,78 +2,104 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Avatar from 'components/Avatar'
+import Dropdown2 from 'components/Dropdown2'
 import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
 import ShareButton from './ShareButton'
-import { personUrl, bgImageStyle } from 'util/index'
+import { personUrl, bgImageStyle, humanDate } from 'util/index'
 import { parse } from 'url'
-const { shape, any, object, string, array } = React.PropTypes
 import styles from './component.scss' // eslint-disable-line no-unused-vars
+import samplePost from './samplePost'
+const { shape, any, object, string, func, array } = React.PropTypes
 
-export default function PostCard ({ post, className }) {
-  return <div styleName='card' className={className}>
-    <PostHeader post={post} />
-    <PostBody post={post} />
-    <PostFooter post={post} />
-  </div>
+export default class PostCard extends React.Component {
+  componentDidMount () {
+    // const { id, fetchPost } = this.props
+    // fetchPost(id)
+  }
+  render () {
+    const { post, className, Dd } = this.props
+    return <div styleName='card' className={className}>
+      <PostHeader {...post} Dd={Dd} />
+      <PostBody {...post} />
+      <PostFooter {...post} />
+    </div>
+  }
 }
 PostCard.propTypes = {
   post: shape({
     id: any,
     type: string,
-    user: object,
+    author: object,
     name: string,
     description: string,
     commenters: array,
     upVotes: string,
     updated_at: string
-  })
+  }),
+  Dd: object,
+  fetchPost: func.isRequired
+}
+PostCard.defaultProps = {
+  post: samplePost
 }
 
-export const PostHeader = ({ post: { user, updated_at, type, context } }) => {
+export const PostHeader = ({ author, updatedAt, type, context, communities, Dd }) => {
+  if (!Dd) {
+    Dd = Dropdown2
+  }
+
   return <div styleName='header'>
-    <Avatar person={user} styleName='avatar' />
+    <Avatar avatarUrl={author.avatarUrl} url={personUrl(author)} styleName='avatar' />
     <div styleName='headerText'>
-      <Link to={personUrl(user)} styleName='userName'>{user.name}{user.title && ', '}</Link>
-      {user.title && <span styleName='userTitle'>{user.title}</span>}
+      <Link to={personUrl(author)} styleName='userName'>{author.name}{author.title && ', '}</Link>
+      {author.title && <span styleName='userTitle'>{author.title}</span>}
       <div>
         <span className='timestamp'>
-          {updated_at}{context && <span styleName='spacer'>•</span>}
+          {humanDate(updatedAt)}{context && <span styleName='spacer'>•</span>}
         </span>
         {context && <Link to='/' styleName='context'>
           {context}
         </Link>}
       </div>
     </div>
-    <PostLabel type={type} styleName='label' />
-    <a href='' styleName='menuLink'><Icon name='More' /></a>
+    <div styleName='upperRight'>
+      {type && <PostLabel type={type} styleName='label' />}
+      <Dd toggleChildren={<Icon name='More' />} triangle>
+        <li><Icon name='Home' />Pin</li>
+        <li><Icon name='Home' />Flag</li>
+        <li><Icon name='Home' />Delete</li>
+        <li>Other</li>
+        <li><Icon name='Home' />Mark as complete</li>
+      </Dd>
+    </div>
   </div>
 }
 
-export const PostBody = ({ post, post: { linkPreview } }) => {
+export const PostBody = ({ title, description, imageUrl, linkPreview }) => {
   // TODO: Present description as HTML and sanitize
-  const truncated = post.description &&
-    post.description.length > 147
-    ? post.description.slice(0, 144) + '...'
-    : post.description
+  const truncated = description &&
+    description.length > 147
+    ? description.slice(0, 144) + '...'
+    : description
 
   return <div styleName='body'>
-    {post.imageUrl && <img src={post.imageUrl} styleName='image' />}
-    <div styleName='title' className='hdr-headline'>{post.title}</div>
+    {imageUrl && <div style={bgImageStyle(imageUrl)} styleName='image' />}
+    <div styleName='title' className='hdr-headline'>{title}</div>
     {truncated && <div styleName='description'>{truncated}</div>}
-    {linkPreview && <LinkPreview linkPreview={linkPreview} />}
+    {linkPreview && <LinkPreview {...linkPreview} />}
   </div>
 }
 
-export const LinkPreview = ({ linkPreview }) => {
-  const domain = parse(linkPreview.url).hostname.replace('www.', '')
+export const LinkPreview = ({ title, url, imageUrl }) => {
+  const domain = parse(url).hostname.replace('www.', '')
   return <div styleName='cardPadding'>
     <div styleName='linkPreview'>
-      <a href={linkPreview.url} target='_blank'>
-        <div style={bgImageStyle(linkPreview.imageUrl)} styleName='previewImage' />
+      <a href={url} target='_blank'>
+        <div style={bgImageStyle(imageUrl)} styleName='previewImage' />
         <div styleName='previewText'>
-          <span styleName='previewTitle'>{linkPreview.title}</span>
+          <span styleName='previewTitle'>{title}</span>
           <div styleName='previewDomain'>{domain}</div>
         </div>
       </a>
@@ -81,17 +107,31 @@ export const LinkPreview = ({ linkPreview }) => {
   </div>
 }
 
-export const PostFooter = ({ post }) => {
+export const commentCaption = (commenters, commentersTotal) => {
+  var names = ''
+  if (commenters.length === 0) {
+    return 'Be the first to comment'
+  } else if (commenters.length === 1) {
+    names = commenters[0].firstName
+  } else if (commenters.length === 2) {
+    names = `${commenters[0].firstName} and ${commenters[1].firstName}`
+  } else {
+    names = `${commenters[0].firstName}, ${commenters[1].firstName} and ${commentersTotal - 2} others`
+  }
+  return `${names} commented`
+}
+
+export const PostFooter = ({ id, commenters, commentersTotal, voteCount }) => {
   return <div styleName='footer'>
-    <PeopleImages imageUrls={post.commenters.map(c => c.avatarUrl)} styleName='people' />
-    <span className='caption-lt-lg'>Steph, Cam, and 58 others commented</span>
-    <div styleName='share'><ShareButton post={post} /></div>
-    <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{post.voteCount}</a></div>
+    <PeopleImages imageUrls={commenters.map(c => c.avatarUrl)} styleName='people' />
+    <span className='caption-lt-lg'>{commentCaption(commenters, commentersTotal)}</span>
+    <div styleName='share'><ShareButton postId={id} /></div>
+    <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{voteCount}</a></div>
   </div>
 }
 
 export function PeopleImages ({ imageUrls, className }) {
-  const images = imageUrls.map(url =>
-    <RoundImage url={url} key={url} medium overlaps />)
+  const images = imageUrls.map((url, i) =>
+    <RoundImage url={url} key={i} medium overlaps />)
   return <div className={className}>{images}</div>
 }

@@ -14,7 +14,8 @@ const ICON_NAMES = [
   'Events',
   'Home',
   'More',
-  'ArrowUp'
+  'ArrowUp',
+  'Location'
 ]
 
 export default function Elements (props) {
