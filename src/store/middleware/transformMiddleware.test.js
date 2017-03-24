@@ -4,26 +4,26 @@ import transformMiddleware from './transformMiddleware'
 import { data } from './transformMiddleware.test.json'
 
 it('Returns a function to handle next', () => {
-  const nextHandler = transformMiddleware({ action: 'ADD_POST' })
+  const nextHandler = transformMiddleware({ action: 'ADD_OR_UPDATE_POST' })
   expect(typeof nextHandler).toBe('function')
   expect(nextHandler.length).toBe(1)
 })
 
 it('Returns a function to handle action', () => {
-  const actionHandler = transformMiddleware({ action: 'ADD_POST' })()
+  const actionHandler = transformMiddleware({ action: 'ADD_OR_UPDATE_POST' })()
   expect(typeof actionHandler).toBe('function')
   expect(actionHandler.length).toBe(1)
 })
 
 it('Returns the value of next', () => {
   const expected = 'Wombat'
-  const nextHandler = transformMiddleware({ action: 'ADD_POST' })
+  const nextHandler = transformMiddleware({ action: 'ADD_OR_UPDATE_POST' })
   const actionHandler = nextHandler(() => expected)
   const actual = actionHandler()
   expect(actual).toBe(expected)
 })
 
-describe('Dispatching the correct actions', () => {
+describe('Actions', () => {
   let store = null
   let mockStore = configureStore([transformMiddleware])
 
@@ -43,31 +43,31 @@ describe('Dispatching the correct actions', () => {
     expect(actual).toEqual([expected])
   })
 
-  it('Dispatches ADD_POST when payload includes a post', () => {
+  it('Dispatches ADD_OR_UPDATE_POST when payload includes a post', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
       payload: data.me.posts
     })
-    const actual = store.getActions().find(a => a.type === 'ADD_POST')
+    const actual = store.getActions().find(a => a.type === 'ADD_OR_UPDATE_POST')
     expect(actual).toBeTruthy()
   })
 
-  it('Does not dispatch ADD_POST when payload does not include a post', () => {
+  it('Does not dispatch ADD_OR_UPDATE_POST when payload does not include a post', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
       payload: []
     })
-    const actual = store.getActions().find(a => a.type === 'ADD_POST')
+    const actual = store.getActions().find(a => a.type === 'ADD_OR_UPDATE_POST')
     expect(actual).toBeFalsy()
   })
 
-  it('Dispatches correct number of ADD_POST actions', () => {
+  it('Dispatches correct number of ADD_OR_UPDATE_POST actions', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
       payload: data.me.posts
     })
     const expected = data.me.posts.length
-    const actual = store.getActions().filter(a => a.type === 'ADD_POST').length
+    const actual = store.getActions().filter(a => a.type === 'ADD_OR_UPDATE_POST').length
     expect(actual).toBe(expected)
   })
 
@@ -93,8 +93,48 @@ describe('Dispatching the correct actions', () => {
       communities: [ '1836' ],
       comments: [ '1' ]
     }
-    const actual = store.getActions().filter(a => a.type === 'ADD_POST')[0].payload
+    const actual = store.getActions().filter(a => a.type === 'ADD_OR_UPDATE_POST')[0].payload
     expect(actual).toEqual(expected)
+  })
+
+  it('Dispatches ADD_OR_UPDATE_COMMENT when a comment is present', () => {
+    store.dispatch({
+      type: 'FETCH_POSTS',
+      payload: data.me.posts
+    })
+    const expected = data.me.posts.reduce((total, post) => total + post.comments.length, 0)
+    const actual = store.getActions().filter(a => a.type === 'ADD_OR_UPDATE_COMMENT').length
+    expect(actual).toBe(expected)
+  })
+
+  it('Does not dispatch ADD_OR_UPDATE_COMMENT when no comment is present', () => {
+    store.dispatch({
+      type: 'FETCH_POSTS',
+      payload: data.me.posts.map(p => ({ ...p, comments: [] }))
+    })
+    const actual = store.getActions().filter(a => a.type === 'ADD_OR_UPDATE_COMMENT').length
+    expect(actual).toBe(0)
+  })
+
+  it('Dispatches ADD_OR_UPDATE_COMMUNITY for communities', () => {
+    store.dispatch({
+      type: 'FETCH_POSTS',
+      payload: data.me.posts
+    })
+    const expected = data.me.posts.reduce((total, post) => total + post.communities.length, 0)
+    const actual = store.getActions().filter(a => a.type === 'ADD_OR_UPDATE_COMMUNITY').length
+    expect(actual).toBe(expected)
+  })
+
+  it('Dispatches the right number of ADD_OR_UPDATE_PERSON actions', () => {
+    store.dispatch({
+      type: 'FETCH_POSTS',
+      payload: data.me.posts
+    })
+    // Although there are six entities in the test data that qualify as Person, they all
+    // have the same ID so only one action should be sent.
+    const actual = store.getActions().filter(a => a.type === 'ADD_OR_UPDATE_PERSON').length
+    expect(actual).toBe(1)
   })
 })
 
