@@ -2,7 +2,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Avatar from 'components/Avatar'
-import Dropdowna from 'components/Dropdowna'
+import Dropdown2 from 'components/Dropdown2'
 import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
@@ -48,7 +48,7 @@ PostCard.defaultProps = {
 
 export const PostHeader = CSSModules(({ author, updatedAt, type, context, communities, Dd }) => {
   if (!Dd) {
-    Dd = Dropdowna
+    Dd = Dropdown2
   }
 
   return <div styleName='header'>

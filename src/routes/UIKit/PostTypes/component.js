@@ -3,7 +3,7 @@ import PostCard from 'components/PostCard'
 import ShareButton from 'components/PostCard/ShareButton'
 import { omit } from 'lodash/fp'
 import Dropdown from 'components/Dropdown'
-import Dropdowna from 'components/Dropdowna'
+import Dropdown2 from 'components/Dropdown2'
 
 const Dropdownf = ({ toggleChildren }) => toggleChildren
 
@@ -103,7 +103,7 @@ export default function PostTypes (props) {
         <PostCard post={SAMPLE_POST_WITH_IMAGE} styleName='postCard' Dd={Dropdownf} />
         <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='postCard' Dd={Dropdownf} />
         <PostCard post={SAMPLE_POST_WITH_LONG_DESCRIPTION} styleName='postCard' Dd={Dropdown} />
-        <PostCard post={SAMPLE_POST_WITH_PREVIEW} styleName='postCard' Dd={Dropdowna} />
+        <PostCard post={SAMPLE_POST_WITH_PREVIEW} styleName='postCard' Dd={Dropdown2} />
         <div><ShareButton post={SAMPLE_POST} /></div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash'
 import { position } from 'util/scrolling'
 const { array, object, string, bool } = React.PropTypes
 
-export default class Dropdowna extends React.Component {
+export default class Dropdown2 extends React.Component {
   constructor (props) {
     super(props)
     this.state = {neverOpened: true}
