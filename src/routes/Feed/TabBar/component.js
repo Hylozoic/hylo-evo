@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import Dropdown from 'components/Dropdown'
 import { capitalize, sortBy, throttle } from 'lodash/fp'
@@ -40,7 +41,7 @@ export default class TabBar extends React.Component {
 
     if (this.state.isStatic) {
       if (feedScrollTop + this.topNavHeight() > this.startingY) {
-        this.setState({isStatic: false, top: feedScrollTop - 153})
+        this.setState({isStatic: false})
       }
     } else {
       if (feedScrollTop + this.topNavHeight() < this.startingY) {
@@ -51,7 +52,7 @@ export default class TabBar extends React.Component {
 
   componentDidMount () {
     const { feedId } = this.props
-    this.startingY = position(this.refs.placeholder).y - 5
+    this.startingY = position(this.refs.placeholder).y
     this.startingX = position(this.refs.placeholder).x
     this.setState({isStatic: viewportTop() + this.topNavHeight() < this.startingY})
     const feedElement = document.getElementById(feedId)
@@ -65,7 +66,7 @@ export default class TabBar extends React.Component {
     const { isStatic, top } = this.state
 
     const styleName = isStatic ? 'tabBar' : 'tabBar-floating'
-    const style = isStatic ? {} : {top}
+    const style = isStatic ? {} : {top: 75}
 
     return <div ref='placeholder' className={className} styleName='placeholder'>
       <div styleName={styleName} style={style}>
