@@ -1,7 +1,6 @@
 import React from 'react'
 import Icon from 'components/Icon'
-import s from './component.scss' // eslint-disable-line no-unused-vars
-import layout from '../css/layout.scss' // eslint-disable-line no-unused-vars
+import './component.scss' // eslint-disable-line no-unused-vars
 
 const ICON_NAMES = [
   'Messages',
@@ -18,15 +17,15 @@ const ICON_NAMES = [
   'Location'
 ]
 
-export default function Elements (props) {
+export default function Icons (props) {
   return <div>
-    <div styleName='layout.sheet'>
-      <div styleName='layout.sheet-title'>Icons</div>
-      <div styleName='layout.sheet-flexbox'>
-        {ICON_NAMES.map(name => <div styleName='s.iconCard' key={name}>
-          <Icon name={name} styleName='s.icon' />
-          <div styleName='s.name' className='hdr-subheadline'>{name}</div>
-          <div styleName='s.code' className='bdy-lt-sm'>{`<Icon name='${name}' />`}</div>
+    <div className='sheet'>
+      <div className='sheet-title'>Icons</div>
+      <div className='sheet-flexbox'>
+        {ICON_NAMES.map(name => <div styleName='iconCard' key={name}>
+          <Icon name={name} styleName='icon' />
+          <div styleName='name' className='hdr-subheadline'>{name}</div>
+          <div styleName='code' className='bdy-lt-sm'>{`<Icon name='${name}' />`}</div>
         </div>)}
       </div>
     </div>

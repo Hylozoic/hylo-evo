@@ -4,8 +4,7 @@ import ShareButton from 'components/PostCard/ShareButton'
 import { omit } from 'lodash/fp'
 import Dropdown from 'components/Dropdown'
 import Dropdown2 from 'components/Dropdown2'
-import s from './component.scss' // eslint-disable-line no-unused-vars
-import layout from '../css/layout.scss' // eslint-disable-line no-unused-vars
+import './component.scss'
 
 const Dropdownf = ({ toggleChildren }) => toggleChildren
 
@@ -98,14 +97,14 @@ const SAMPLE_POST_WITH_PREVIEW = {
 
 export default function PostTypes (props) {
   return <div>
-    <div styleName='layout.sheet'>
-      <div styleName='layout.sheet-title'>Post Types</div>
-      <div styleName='s.postCards'>
-        <PostCard post={SAMPLE_POST} styleName='s.postCard' Dd={Dropdownf} />
-        <PostCard post={SAMPLE_POST_WITH_IMAGE} styleName='s.postCard' Dd={Dropdownf} />
-        <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='s.postCard' Dd={Dropdownf} />
-        <PostCard post={SAMPLE_POST_WITH_LONG_DESCRIPTION} styleName='s.postCard' Dd={Dropdown} />
-        <PostCard post={SAMPLE_POST_WITH_PREVIEW} styleName='s.postCard' Dd={Dropdown2} />
+    <div className='sheet'>
+      <div className='sheet-title'>Post Types</div>
+      <div styleName='postCards'>
+        <PostCard post={SAMPLE_POST} styleName='postCard' Dd={Dropdownf} />
+        <PostCard post={SAMPLE_POST_WITH_IMAGE} styleName='postCard' Dd={Dropdownf} />
+        <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='postCard' Dd={Dropdownf} />
+        <PostCard post={SAMPLE_POST_WITH_LONG_DESCRIPTION} styleName='postCard' Dd={Dropdown} />
+        <PostCard post={SAMPLE_POST_WITH_PREVIEW} styleName='postCard' Dd={Dropdown2} />
         <div><ShareButton post={SAMPLE_POST} /></div>
       </div>
     </div>

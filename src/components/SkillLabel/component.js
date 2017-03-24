@@ -1,5 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
+import './component.scss'
 
 const { string, bool } = React.PropTypes
 

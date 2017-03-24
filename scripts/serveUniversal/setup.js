@@ -7,7 +7,6 @@ import scss from 'postcss-scss'
 import cssHook from 'css-modules-require-hook'
 import { once } from 'lodash/fp'
 import root from 'root-path'
-const paths = require(root('config/paths'))
 
 const startTime = new Date().getTime()
 export default startTime
