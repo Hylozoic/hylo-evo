@@ -46,7 +46,7 @@ describe('Dispatching the correct actions', () => {
   it('Dispatches ADD_POST when payload includes a post', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data
+      payload: data.me.posts
     })
     const actual = store.getActions().find(a => a.type === 'ADD_POST')
     expect(actual).toBeTruthy()
@@ -55,7 +55,7 @@ describe('Dispatching the correct actions', () => {
   it('Does not dispatch ADD_POST when payload does not include a post', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: {}
+      payload: []
     })
     const actual = store.getActions().find(a => a.type === 'ADD_POST')
     expect(actual).toBeFalsy()
@@ -64,7 +64,7 @@ describe('Dispatching the correct actions', () => {
   it('Dispatches correct number of ADD_POST actions', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data
+      payload: data.me.posts
     })
     const expected = data.me.posts.length
     const actual = store.getActions().filter(a => a.type === 'ADD_POST').length
@@ -74,7 +74,7 @@ describe('Dispatching the correct actions', () => {
   it('Has the correct payload', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data
+      payload: data.me.posts
     })
     const expected = {
       id: '30002',

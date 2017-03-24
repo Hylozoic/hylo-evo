@@ -8,6 +8,10 @@ export default function transformMiddleware ({dispatch, getState}) {
 
       switch (type) {
         case FETCH_POSTS:
+          if (payload.length === 0) break
+          addCommunities(dispatch, payload)
+          //addComments(dispatch, payload)
+          //addPersons(dispatch, payload)
           addPosts(dispatch, payload)
           break
       }
@@ -16,10 +20,19 @@ export default function transformMiddleware ({dispatch, getState}) {
   }
 }
 
-function addPosts (dispatch, payload) {
-  if (!payload.me || !payload.me.posts || payload.me.posts.length === 0) return
+function addCommunities (dispatch, { communities }) {
+  if (communities) {
+    communities.forEach(community => {
+      dispatch({
+        type: ADD_COMMUNITY,
+        payload: transform(community)
+      })
+    })
+  }
+}
 
-  payload.me.posts.forEach(post => {
+function addPosts (dispatch, posts) {
+  posts.forEach(post => {
     dispatch({
       type: ADD_POST,
       payload: transform(post)
