@@ -1,4 +1,4 @@
-import postParser from './parsers'
+import postParser from './postParser'
 
 it('Post is invalid if missing any of the core properties', () => {
   const id = '1'

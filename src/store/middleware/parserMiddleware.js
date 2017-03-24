@@ -1,5 +1,5 @@
 import { FETCH_POSTS, ADD_POST } from '../constants'
-import postParser from './parsers'
+import postParser from '../parsers/postParser'
 
 export default function parserMiddleware ({dispatch, getState}) {
   return next => action => {
