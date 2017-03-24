@@ -5,6 +5,6 @@ import TabBar from './TabBar'
 
 it('has a TabBar', () => {
   const wrapper = shallow(<Feed />)
-  const tabBar = <TabBar feedId='feed' tabName='all' sortOption='latest' />
+  const tabBar = <TabBar feedId='feed' />
   expect(wrapper.contains(tabBar)).toEqual(true)
 })
