@@ -70,5 +70,31 @@ describe('Dispatching the correct actions', () => {
     const actual = store.getActions().filter(a => a.type === 'ADD_POST').length
     expect(actual).toBe(expected)
   })
+
+  it('Has the correct payload', () => {
+    store.dispatch({
+      type: 'FETCH_POSTS',
+      payload: data
+    })
+    const expected = {
+      id: '30002',
+      title: 'Hello',
+      details: '<p><a href="https://wombat.life">https://wombat.life</a></p>\n<p></p>\n<p></p>',
+      type: null,
+      creator: '46816',
+      followersTotal: '1',
+      communitiesTotal: '1',
+      commentsTotal: '1',
+      createdAt: 'Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)',
+      startsAt: null,
+      endsAt: null,
+      fulfilledAt: null,
+      followers: [ '46816' ],
+      communities: [ '1836' ],
+      comments: [ '1' ]
+    }
+    const actual = store.getActions().filter(a => a.type === 'ADD_POST')[0].payload
+    expect(actual).toEqual(expected)
+  })
 })
 

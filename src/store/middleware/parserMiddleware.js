@@ -19,12 +19,14 @@ export default function parserMiddleware ({dispatch, getState}) {
 function addPosts (dispatch, payload) {
   if (!payload.me || !payload.me.posts || payload.me.posts.length === 0) return
 
+  const { isValid, parse } = postParser
   payload.me.posts.forEach(post => {
-    if (!postParser.isValid(post)) return
+    if (!isValid(post)) return
       
+    // TODO: handle parsing errors?
     dispatch({
       type: ADD_POST,
-      payload: postParser.parse(post)
+      payload: parse(post)
     })
   })
 }
