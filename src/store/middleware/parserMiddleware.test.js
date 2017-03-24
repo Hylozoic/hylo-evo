@@ -1,3 +1,5 @@
+import configureStore from 'redux-mock-store'
+
 import parserMiddleware from './parserMiddleware'
 import { data } from './parserMiddleware.test.json'
 
@@ -21,5 +23,33 @@ it('Returns the value of next', () => {
   expect(actual).toBe(expected)
 })
 
-it('Dispatches an ADD_POST action when payload contains a post', () => {
+describe('Dispatching the correct actions', () => {
+  let store = null
+  let mockStore = configureStore([parserMiddleware])
+
+  beforeEach(() => {
+    store = mockStore({})
+  })
+
+  it('Ignores actions that are not FETCH_*', () => {
+    const expected = {
+      type: 'NOT_A_FETCH',
+      payload: {
+        wombat: true
+      }
+    } 
+    store.dispatch(expected)
+    const actual = store.getActions()
+    expect(actual).toEqual([expected])
+  })
+
+  it('Dispatches ADD_POST when payload includes a post', () => {
+    store.dispatch({
+      type: 'FETCH_POSTS',
+      payload: data
+    })
+    const actual = store.getActions().find(a => a.type === 'ADD_POST')
+    expect(actual).toBeTruthy()
+  })
 })
+
