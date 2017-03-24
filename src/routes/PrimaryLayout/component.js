@@ -11,7 +11,7 @@ import EventDetail from 'routes/Events/EventDetail'
 import { SAMPLE_COMMUNITY } from 'routes/Feed/sampleData'
 
 // Global styles
-import 'css/global/index.scss'
+import '../../css/global/index.scss'
 
 const SAMPLE_USER = {
   id: '1',
