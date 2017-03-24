@@ -1,6 +1,6 @@
 import React from 'react'
 import Icon from 'components/Icon'
-import './component.scss' // eslint-disable-line no-unused-vars
+import './component.scss'
 
 const ICON_NAMES = [
   'Messages',
