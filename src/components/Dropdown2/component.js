@@ -32,7 +32,6 @@ export default class Dropdown2 extends React.Component {
     const styleName = cx('dropdown', {'has-triangle': triangle})
 
     const ulProps = {
-      styleName: cx('dropdown-menu', {active, alignRight}),
       onClick: () => this.toggle(),
       onMouseLeave: () => hoverOpened && this.toggle()
     }
@@ -46,12 +45,12 @@ export default class Dropdown2 extends React.Component {
       items = children
     }
 
-    return <div {...{styleName, className}} ref='parent'
+    return <div styleName={styleName} className={className} ref='parent'
       onKeyDown={this.handleKeys}>
       <a styleName='dropdown-toggle' onClick={this.toggle}>
         {toggleChildren}
       </a>
-      <ul {...ulProps}>
+      <ul styleName={cx('dropdown-menu', {active, alignRight})} {...ulProps}>
         {active && items}
       </ul>
     </div>

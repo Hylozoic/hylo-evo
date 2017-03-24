@@ -34,6 +34,7 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
 .dropdown-toggle {
   text-decoration: none;
   cursor: pointer;
+  display: inline-block;
 }
 
 .dropdown-menu {
@@ -51,7 +52,7 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
     display: block;
     background-color: white;
     border: 1px solid $color-black-squeeze;
-    white-space: nowrap;    
+    white-space: nowrap;
   }
 
   .triangle {
