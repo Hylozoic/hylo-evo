@@ -18,7 +18,7 @@ server.use(appMiddleware)
 const listener = server.listen(port, err => {
   if (err) throw err
   const elapsed = new Date().getTime() - setupStartTime
-  console.log(`listening on port ${port} (pid ${process.pid}) after ${elapsed}ms`)
+  console.log(`listening on port ${port} after ${elapsed}ms (pid ${process.pid})`)
 })
 
 function shutdown () {
