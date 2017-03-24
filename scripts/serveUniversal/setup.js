@@ -15,10 +15,6 @@ export default startTime
 // the effect of resolve.modules in webpack config)
 addPath(join(__dirname, '../../src'))
 
-// allow files to require or import paths that are relative to src/ (duplicate
-// the effect of resolve.modules in webpack config)
-addPath(join(__dirname, '../../src'))
-
 const sharedConfig = require(root('config/webpack.config.shared'))
 
 // add a header to each css file that gets imported, to mimic the behavior of
