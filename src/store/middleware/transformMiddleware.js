@@ -1,5 +1,6 @@
-import { FETCH_POSTS, ADD_POST } from '../constants'
-import transform from '../transformers/postTransformer'
+import { FETCH_POSTS, ADD_COMMUNITY, ADD_POST } from '../constants'
+import transformCommunity from '../transformers/communityTransformer'
+import transformPost from '../transformers/postTransformer'
 
 export default function transformMiddleware ({dispatch, getState}) {
   return next => action => {
@@ -10,7 +11,7 @@ export default function transformMiddleware ({dispatch, getState}) {
         case FETCH_POSTS:
           if (payload.length === 0) break
           addCommunities(dispatch, payload)
-          //addComments(dispatch, payload)
+          addComments(dispatch, payload)
           //addPersons(dispatch, payload)
           addPosts(dispatch, payload)
           break
@@ -20,23 +21,34 @@ export default function transformMiddleware ({dispatch, getState}) {
   }
 }
 
+function addComments (dispatch, { comments }) {
+  if (comments) {
+    comments.forEach(comment => 
+      dispatch({
+        type: ADD_COMMENT,
+        payload: transformComment(comment)
+      })
+    )
+  }
+}
+
 function addCommunities (dispatch, { communities }) {
   if (communities) {
-    communities.forEach(community => {
+    communities.forEach(community =>
       dispatch({
         type: ADD_COMMUNITY,
-        payload: transform(community)
+        payload: transformCommunity(community)
       })
-    })
+    )
   }
 }
 
 function addPosts (dispatch, posts) {
-  posts.forEach(post => {
+  posts.forEach(post => 
     dispatch({
       type: ADD_POST,
-      payload: transform(post)
+      payload: transformPost(post)
     })
-  })
+  )
 }
 
