@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from './component.scss' // eslint-disable-line no-unused-vars
 
 export default function Badge ({ number, expanded, className, parentClassName }) {
   return <span styleName='badgeWrapper' className={className}>

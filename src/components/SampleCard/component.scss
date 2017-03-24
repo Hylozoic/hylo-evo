@@ -1,12 +1,14 @@
+@import '../../css/bootstrap';
+
 .cardHeader {
-  composes: mb-3 from $bootstrap-path;
+  @extend .mb-3;
 }
 
 .cardBlock {
-  // composes: card-block from $bootstrap-path;
-  composes: mb-3 p-0 from $bootstrap-path;
+  // @extend .card-block;
+  @extend .mb-3, .p-0;
 }
 
 .cardFooter {
-  composes: mb-9 from $bootstrap-path;
+  @extend .mb-9;
 }

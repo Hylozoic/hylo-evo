@@ -5,8 +5,7 @@ import Typography from './Typography'
 import Elements from './Elements'
 import PostTypes from './PostTypes'
 import Icons from './Icons'
-
-import './component.scss'
+import styles from './component.scss' // eslint-disable-line no-unused-vars
 
 class UIKit extends Component {
   render () {

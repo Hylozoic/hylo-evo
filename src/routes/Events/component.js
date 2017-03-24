@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './component.scss'
+import styles from './component.scss' // eslint-disable-line no-unused-vars
 
 const { string, bool } = React.PropTypes
 

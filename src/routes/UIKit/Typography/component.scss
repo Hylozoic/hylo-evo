@@ -5,14 +5,15 @@
   margin-top: 15px;
   margin-right: 25px;
   min-height: 180px;
-  &-title {
-    text-transform: uppercase;
-    font-size: 8pt;
-    color: $color-rhino-60;
-    margin-bottom: 20px;
-  }
-  &-description {
-    font-size: 10pt;
-    color: $color-rhino-80;
-  }
+}
+
+.colorSection-title {
+  text-transform: uppercase;
+  font-size: 8pt;
+  color: $color-rhino-60;
+  margin-bottom: 20px;
+}
+.colorSection-description {
+  font-size: 10pt;
+  color: $color-rhino-80;
 }

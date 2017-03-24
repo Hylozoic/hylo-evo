@@ -1,15 +1,16 @@
 import React from 'react'
 import StyleCard from './StyleCard'
 import ColorSample from './ColorSample'
-import './component.scss'
+import s from './component.scss' // eslint-disable-line no-unused-vars
+import layout from '../css/layout.scss' // eslint-disable-line no-unused-vars
 
 export default function Typography (props) {
   return <div>
-    <div className='sheet'>
-      <div className='sheet-title'>Typography</div>
-      <div className='section'>
-        <div className='section-title'>Headers</div>
-        <div className='section-box'>
+    <div styleName='layout.sheet'>
+      <div styleName='layout.sheet-title'>Typography</div>
+      <div styleName='layout.section'>
+        <div styleName='layout.section-title'>Headers</div>
+        <div styleName='layout.section-box'>
           <StyleCard styleClassName='hdr-display' name='display'
             description='Circular Bold / 32pt, -0.5 ch, 36 line / Color: 2C4059'
             sampleKey='short' />
@@ -24,9 +25,9 @@ export default function Typography (props) {
             sampleKey='short' noBottomBorder />
         </div>
       </div>
-      <div className='section'>
-        <div className='section-title'>Body Styles</div>
-        <div className='section-box'>
+      <div styleName='layout.section'>
+        <div styleName='layout.section-title'>Body Styles</div>
+        <div styleName='layout.section-box'>
           <StyleCard styleClassName='bdy-drk-lg'
             description='Circular Book / 18pt, 0 ch, 24 line / Color: 2C4059 80%'
             sampleKey='medium' />
@@ -41,11 +42,11 @@ export default function Typography (props) {
             sampleKey='medium' noBottomBorder />
         </div>
       </div>
-      <div className='sheet-flexbox'>
-        <div className='sheet-flexbox-item'>
-          <div className='section'>
-            <div className='section-title'>Captions & Tags</div>
-            <div className='section-box'>
+      <div styleName='layout.sheet-flexbox'>
+        <div styleName='layout.sheet-flexbox-item'>
+          <div styleName='layout.section'>
+            <div styleName='layout.section-title'>Captions & Tags</div>
+            <div styleName='layout.section-box'>
               <StyleCard styleClassName='caption-drk-lg' name='Caption 14pt - Black'
                 description='Circular Book / 14pt, 0 ch, 18 line / Color: 2C4059 80%'
                 sampleKey='long' />
@@ -58,10 +59,10 @@ export default function Typography (props) {
             </div>
           </div>
         </div>
-        <div className='sheet-flexbox-item'>
-          <div className='section'>
-            <div className='section-title'>Buttons</div>
-            <div className='section-box'>
+        <div styleName='layout.sheet-flexbox-item'>
+          <div styleName='layout.section'>
+            <div styleName='layout.section-title'>Buttons</div>
+            <div styleName='layout.section-box'>
               <StyleCard styleClassName='text-button' name='Button - Regular'
                 description='Circular Medium / 14pt, 0 ch, 20 line / Color: 0DC3A0'
                 sample='Save changes' />
@@ -70,9 +71,9 @@ export default function Typography (props) {
                 sample='Learn more' />
             </div>
           </div>
-          <div className='section'>
-            <div className='section-title section-title--collapsed'>Other</div>
-            <div className='section-box'>
+          <div styleName='layout.section'>
+            <div styleName='layout.section-title layout.section-title--collapsed'>Other</div>
+            <div styleName='layout.section-box'>
               <StyleCard styleClassName='cards' name='User Name - Cards'
                 description='Circular Bold / 14pt, 0 ch, 20 line / Color: 2C4059'
                 sample='Steven Pham' />
@@ -84,10 +85,10 @@ export default function Typography (props) {
         </div>
       </div>
     </div>
-    <div className='sheet'>
-      <div className='sheet-title'>Colors</div>
-      <div styleName='colorSection-title'>7 Shades of grey:</div>
-      <div className='sheet-flexbox'>
+    <div styleName='layout.sheet'>
+      <div styleName='layout.sheet-title'>Colors</div>
+      <div styleName='s.colorSection-title'>7 Shades of grey:</div>
+      <div styleName='layout.sheet-flexbox'>
         <ColorSample color='#2C4059' colorName='rhino' description='Backgrounds, Header text styles' />
         <ColorSample color='#2C4059' opacity='0.8' colorName='rhino-80' description='Body black text styles' />
         <ColorSample color='#2C4059' opacity='0.6' colorName='rhino-60' description='Body grey text styles' />
@@ -96,10 +97,10 @@ export default function Typography (props) {
         <ColorSample color='#FFFFFF' colorName='white' textColor='#879BAB' borderColor='#DCDCDC' description='Main background, Card Background' />
         <ColorSample color='#FAFBFC' colorName='athens-gray' textColor='#879BAB' borderColor='#DCDCDC' description='Divider background, grey blocks background' />
       </div>
-      <div className='sheet-flexbox'>
-        <div styleName='colorSection'>
-          <div styleName='colorSection-title'>Active Colors</div>
-          <div styleName='colorSection-description'>
+      <div styleName='layout.sheet-flexbox'>
+        <div styleName='s.colorSection'>
+          <div styleName='s.colorSection-title'>Active Colors</div>
+          <div styleName='s.colorSection-description'>
             Colors for interactive elements: <br />
             - Fills for buttons, inputs, notifications, bars, etc <br />
             - Status indicators (error, success, etc) <br />
@@ -112,10 +113,10 @@ export default function Typography (props) {
         <ColorSample color='#40A1DD' colorName='picton-blue' />
         <ColorSample color='#FE6848' colorName='persimmon' />
       </div>
-      <div className='sheet-flexbox'>
-        <div styleName='colorSection'>
-          <div styleName='colorSection-title'>Highlight Colors</div>
-          <div styleName='colorSection-description'>
+      <div styleName='layout.sheet-flexbox'>
+        <div styleName='s.colorSection'>
+          <div styleName='s.colorSection-title'>Highlight Colors</div>
+          <div styleName='s.colorSection-description'>
             Can be used only for labels and backgrounds
           </div>
         </div>
@@ -125,10 +126,10 @@ export default function Typography (props) {
         <ColorSample color='#D9ECF8' colorName='link-water' textColor='#40A1DD' />
         <ColorSample color='#FFE1DA' colorName='peach-schnapps' textColor='#FE6848' />
       </div>
-      <div className='sheet-flexbox'>
-        <div styleName='colorSection'>
-          <div styleName='colorSection-title'>System Colors</div>
-          <div styleName='colorSection-description'>
+      <div styleName='layout.sheet-flexbox'>
+        <div styleName='s.colorSection'>
+          <div styleName='s.colorSection-title'>System Colors</div>
+          <div styleName='s.colorSection-description'>
             To be used for Success, Warning and Error Messages
           </div>
         </div>

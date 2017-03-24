@@ -1,7 +1,7 @@
 import React from 'react'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
-import './component.scss'
+import styles from './component.scss' // eslint-disable-line no-unused-vars
 
 export default function Navigation ({ location, collapsed }) {
   let links = [

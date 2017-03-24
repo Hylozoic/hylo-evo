@@ -1,5 +1,5 @@
 import React from 'react'
-import './component.scss'
+import styles from './component.scss' // eslint-disable-line no-unused-vars
 
 export default function Feed () {
   return <div styleName='feed'>

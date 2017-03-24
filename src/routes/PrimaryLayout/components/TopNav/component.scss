@@ -1,3 +1,5 @@
+@import '../../../../css/bootstrap';
+
 .topNav {
   // @include make-col-ready();
     position: relative;
@@ -13,7 +15,7 @@
     //     padding-left:  ($gutter / 2);
     //   }
     // }
-  composes: d-flex justify-content-start pl-5 pr-5 mb-6 from $bootstrap-path;
+  @extend .d-flex, .justify-content-start, .pl-5, .pr-5, .mb-6;
   // mixing metaphors here because the top padding is not a multiple of the spacer
   background-color: white;
   z-index: 10;
@@ -46,7 +48,7 @@
 }
 
 .navIcons {
-  composes: ml-auto from $bootstrap-path;
+  @extend .ml-auto;
   display: inline-block;
 }
 

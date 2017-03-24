@@ -10,7 +10,7 @@ import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 
-import '../../css/global/index.scss'
+import globalStyles from '../../css/global/index.scss' // eslint-disable-line no-unused-vars
 import p from './component.scss'
 
 export default function PrimaryLayout ({ match, location }) {
@@ -24,10 +24,10 @@ export default function PrimaryLayout ({ match, location }) {
         <Route path='/' exact component={Feed} />
         <Route path='/events' component={Events} />
       </div>
-      <div styleName={cx('p.sidebar', {hidden: hasDetail})}>
+      <div styleName={cx('p.sidebar', {'p.hidden': hasDetail})}>
         <Route path='/' component={Feed} />
       </div>
-      <div styleName={cx('p.detail', {hidden: !hasDetail})}>
+      <div styleName={cx('p.detail', {'p.hidden': !hasDetail})}>
         {/*
           TODO: Display content of last detail page on '/' so that the
           animation transitions correctly.

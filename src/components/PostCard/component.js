@@ -9,7 +9,7 @@ import ShareButton from './ShareButton'
 import { personUrl, bgImageStyle } from 'util/index'
 import { parse } from 'url'
 const { shape, any, object, string, array } = React.PropTypes
-import './component.scss'
+import styles from './component.scss' // eslint-disable-line no-unused-vars
 
 export default function PostCard ({ post, className }) {
   return <div styleName='card' className={className}>

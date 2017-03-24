@@ -1,3 +1,5 @@
+@import '../../css/bootstrap';
+
 .image {
   background-position: center;
   background-size: cover;
@@ -5,10 +7,7 @@
   width: $space-11x;
   height: $space-11x;
   // TODO: attn LEJ, here's a place we're still using some other bootstrap stuff.
-  composes: img-thumbnail from $bootstrap-path;
-  composes: rounded-circle from $bootstrap-path;
-  composes: d-inline-block from $bootstrap-path;
-  composes: align-top from $bootstrap-path;
+  @extend .img-thumbnail, .rounded-circle, .d-inline-block, .align-top;
 }
 
 .overlaps {

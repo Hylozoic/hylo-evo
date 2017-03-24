@@ -4,7 +4,7 @@ import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
 import SkillLabel from 'components/SkillLabel'
 import SAMPLE_POST from './samplePost'
-import './component.scss'
+import styles from './component.scss' // eslint-disable-line no-unused-vars
 
 export default function SampleCard ({post: { id, author, title, body, tags, upVoters }}) {
   return <div className='card'>

@@ -1,3 +1,5 @@
+@import '../../css/bootstrap';
+
 // PostCard
 
 .card {
@@ -14,7 +16,7 @@
 
 .header {
   composes: cardPadding;
-  composes: d-flex justify-content-start align-items-center from $bootstrap-path;
+  @extend .d-flex, .justify-content-start, .align-items-center;
   margin-bottom: 30px;
 }
 
@@ -69,7 +71,7 @@
 }
 
 .label {
-  composes: ml-auto from $bootstrap-path;
+  @extend .ml-auto;
   margin-right: 20px;
 }
 
@@ -159,7 +161,7 @@ $footer-height: 56px;
 
 .footer {
   composes: cardPadding;
-  composes: d-flex justify-content-start align-items-center from $bootstrap-path;
+  @extend .d-flex, .justify-content-start, .align-items-center;
   height: $footer-height;
   border-top: 1px solid $color-cape-cod-10;
 }
@@ -169,7 +171,7 @@ $footer-height: 56px;
 }
 
 .share {
-  composes: ml-auto from $bootstrap-path;
+  @extend .ml-auto;
   width: $footer-height;
   height: $footer-height;
   line-height: $footer-height;

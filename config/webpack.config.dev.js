@@ -95,6 +95,7 @@ module.exports = {
             [
               'react-css-modules',
               {
+                webpackHotModuleReloading: true,
                 context: paths.appSrc,
                 filetypes: {
                   '.scss': 'postcss-scss'

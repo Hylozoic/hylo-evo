@@ -2,7 +2,8 @@ import React from 'react'
 import PostCard from 'components/PostCard'
 import ShareButton from 'components/PostCard/ShareButton'
 import { omit } from 'lodash/fp'
-import './component.scss'
+import s from './component.scss' // eslint-disable-line no-unused-vars
+import layout from '../css/layout.scss' // eslint-disable-line no-unused-vars
 
 const rotateAndTrim = (arr, n) => arr.slice(n, arr.length).concat(arr.slice(0, n)).slice(0, 3)
 
@@ -93,14 +94,14 @@ const SAMPLE_POST_WITH_PREVIEW = {
 
 export default function PostTypes (props) {
   return <div>
-    <div className='sheet'>
-      <div className='sheet-title'>Post Types</div>
-      <div styleName='postCards'>
-        <PostCard post={SAMPLE_POST} styleName='postCard' />
-        <PostCard post={SAMPLE_POST_WITH_IMAGE} styleName='postCard' />
-        <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='postCard' />
-        <PostCard post={SAMPLE_POST_WITH_LONG_DESCRIPTION} styleName='postCard' />
-        <PostCard post={SAMPLE_POST_WITH_PREVIEW} styleName='postCard' />
+    <div styleName='layout.sheet'>
+      <div styleName='layout.sheet-title'>Post Types</div>
+      <div styleName='s.postCards'>
+        <PostCard post={SAMPLE_POST} styleName='s.postCard' />
+        <PostCard post={SAMPLE_POST_WITH_IMAGE} styleName='s.postCard' />
+        <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='s.postCard' />
+        <PostCard post={SAMPLE_POST_WITH_LONG_DESCRIPTION} styleName='s.postCard' />
+        <PostCard post={SAMPLE_POST_WITH_PREVIEW} styleName='s.postCard' />
         <div><ShareButton post={SAMPLE_POST} /></div>
       </div>
     </div>

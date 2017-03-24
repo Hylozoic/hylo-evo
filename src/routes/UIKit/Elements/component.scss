@@ -24,16 +24,18 @@
 
 .buttonRow {
   margin-bottom: $space-4x;
-  &_label {
-    display: inline-block;
-    width: $space-11x;
-    margin-right: $space-3x;
-    font-size: 10pt;
-    color: $color-rhino-50;
-  }
-  &-small {
-    margin-bottom: $space-7x;
-  }
+}
+
+.buttonRow_label {
+  display: inline-block;
+  width: $space-11x;
+  margin-right: $space-3x;
+  font-size: 10pt;
+  color: $color-rhino-50;
+}
+
+.buttonRow-small {
+  margin-bottom: $space-7x;
 }
 
 .buttonMargin {
