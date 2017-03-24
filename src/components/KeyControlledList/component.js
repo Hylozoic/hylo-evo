@@ -1,6 +1,6 @@
 import React from 'react'
 import { indexOf, isEmpty, omit } from 'lodash/fp'
-import { getKeyCode, keyMap } from 'util/textInput'
+import { getKeyCode, keyMap } from '../../util/textInput'
 var { array, func, object, bool, number } = React.PropTypes
 
 const propsToOmit = ['onChange', 'tabChooses', 'spaceChooses', 'selectedIndex']

@@ -5,7 +5,7 @@
 
 import React from 'react'
 import cx from 'classnames'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle } from '../../util'
 
 const { string, bool } = React.PropTypes
 

@@ -7,7 +7,7 @@ import RoundImage from 'components/RoundImage'
 import ScrollListener from 'components/ScrollListener'
 import TabBar from './TabBar'
 import styles from './component.scss'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle } from '../../util'
 
 export default class Feed extends React.Component {
   static defaultProps = {
