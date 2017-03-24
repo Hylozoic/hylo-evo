@@ -1,5 +1,5 @@
 import { orm } from '../models'
-import { FETCH_POST } from 'store/constants'
+import { FETCH_POSTS } from 'store/constants'
 
 export default function ormReducer (state, action) {
   const session = orm.session(state)
@@ -11,7 +11,7 @@ export default function ormReducer (state, action) {
   const { Post } = session
 
   switch (type) {
-    case FETCH_POST:
+    case FETCH_POSTS:
       Post.parse(payload)
       break
   }
