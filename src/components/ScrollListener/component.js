@@ -2,7 +2,7 @@ import React from 'react'
 import { throttle } from 'lodash/fp'
 import { isAtBottom } from 'util/scrolling'
 const { func, number, string } = React.PropTypes
-import styles from './component.scss' // eslint-disable-line no-unused-vars
+import './component.scss'
 
 export default class ScrollListener extends React.Component {
   static propTypes = {

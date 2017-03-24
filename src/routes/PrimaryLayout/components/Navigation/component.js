@@ -2,7 +2,7 @@ import React from 'react'
 import { matchPath } from 'react-router-dom'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
-import styles from './component.scss' // eslint-disable-line no-unused-vars
+import './component.scss'
 
 export default function Navigation ({ location, collapsed }) {
   let links = [

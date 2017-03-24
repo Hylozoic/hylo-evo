@@ -3,7 +3,7 @@ import { bgImageStyle } from 'util/index'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
-import styles from './component.scss' // eslint-disable-line no-unused-vars
+import './component.scss'
 
 export default function TopNav ({ community, currentUser }) {
   const imageStyle = bgImageStyle(community.avatarUrl)

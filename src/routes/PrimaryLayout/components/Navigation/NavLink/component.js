@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import BadgedIcon from 'components/BadgedIcon'
 import Badge from 'components/Badge'
 import cx from 'classnames'
-import styles from './component.scss' // eslint-disable-line no-unused-vars
+import './component.scss'
 
 export default function NavLink (
   { to, label, icon, badge, active, collapsed = false }

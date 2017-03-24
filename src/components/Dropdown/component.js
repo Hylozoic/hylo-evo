@@ -5,7 +5,7 @@ import { position } from 'util/scrolling'
 import { findChildLink, dispatchEvent } from 'util/index'
 import KeyControlledList from '../KeyControlledList'
 const { array, bool, func, object, string, number, oneOfType } = React.PropTypes
-import styles from './component.scss' // eslint-disable-line no-unused-vars
+import './component.scss'
 
 const DROPDOWN_OPENED = 'dropdown-opened'
 

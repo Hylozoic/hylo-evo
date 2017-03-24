@@ -2,7 +2,7 @@
 import React from 'react'
 import PostCard from 'components/PostCard'
 import { includes } from 'lodash/fp'
-import styles from './component.scss' // eslint-disable-line no-unused-vars
+import './component.scss'
 
 const POST_TYPES = ['offer', 'request', 'discussion']
 

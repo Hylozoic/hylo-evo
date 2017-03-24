@@ -1,7 +1,7 @@
 import React from 'react'
 import Icon from '../Icon'
 import cx from 'classnames'
-import styles from './component.scss' // eslint-disable-line no-unused-vars
+import './component.scss' // eslint-disable-line no-unused-vars
 
 export default function BadgedIcon (props) {
   const { showBadge, green } = props

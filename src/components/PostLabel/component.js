@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
-import styles from './component.scss' // eslint-disable-line no-unused-vars
+import './component.scss'
 
 const { string } = React.PropTypes
 

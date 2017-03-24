@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
-import styles from './component.scss' // eslint-disable-line no-unused-vars
+import './component.scss'
 
 export default function EventDetail ({ match: { params: { eventId } } }) {
   return <div styleName='event-page'>

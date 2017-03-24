@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './component.scss' // eslint-disable-line no-unused-vars
+import './component.scss'
 import { SAMPLE_FEED_ITEMS, SAMPLE_COMMUNITY } from './sampleData'
 import FeedItem from 'components/FeedItem'
 import Icon from 'components/Icon'

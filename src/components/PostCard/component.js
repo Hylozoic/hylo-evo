@@ -9,7 +9,7 @@ import RoundImage from 'components/RoundImage'
 import ShareButton from './ShareButton'
 import { personUrl, bgImageStyle, humanDate } from 'util/index'
 import { parse } from 'url'
-import styles from './component.scss' // eslint-disable-line no-unused-vars
+import './component.scss'
 import samplePost from './samplePost'
 const { shape, any, object, string, func, array } = React.PropTypes
 
