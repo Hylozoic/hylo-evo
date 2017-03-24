@@ -1,6 +1,4 @@
-import React from 'react'
-import { StaticRouter } from 'react-router'
-import routes from 'routes'
+import { serverRouter } from 'router'
 import { renderToString } from 'react-dom/server'
 import { readFileSync } from 'fs'
 import root from 'root-path'
@@ -9,11 +7,7 @@ export default function appMiddleware (req, res, next) {
   // TODO: async data loading
 
   const context = {}
-  const app = <StaticRouter location={req.url} context={context}>
-    {routes}
-  </StaticRouter>
-
-  const markup = renderToString(app)
+  const markup = renderToString(serverRouter(req, context))
 
   // context may now have been mutated; check its values and redirect,
   // show an error, etc. as appropriate

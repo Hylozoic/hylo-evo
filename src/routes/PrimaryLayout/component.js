@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { matchPath, Route, Link } from 'react-router-dom'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
+import Sidebar from './components/Sidebar'
 import cx from 'classnames'
 import { get } from 'lodash/fp'
 import Feed from 'routes/Feed'
@@ -28,13 +29,12 @@ export default function PrimaryLayout ({ match, location }) {
     <div styleName='p.row'>
       {/* TODO: is using render here the best way to pass params to a route? */}
       <Route path='/' render={() => <Navigation collapsed={hasDetail} location={location} />} />
-      <Route path='/' component={Navigation} collapsed={hasDetail} />
       <div styleName='p.content'>
         <Route path='/' exact component={() => <Feed community={SAMPLE_COMMUNITY} currentUser={SAMPLE_USER} />} />
         <Route path='/events' component={Events} />
       </div>
       <div styleName={cx('p.sidebar', {'p.hidden': hasDetail})}>
-        <Route path='/' component={Feed} />
+        <Route path='/' component={Sidebar} />
       </div>
       <div styleName={cx('p.detail', {'p.hidden': !hasDetail})}>
         {/*

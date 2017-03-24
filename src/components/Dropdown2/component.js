@@ -3,6 +3,7 @@ import cx from 'classnames'
 import { isEmpty } from 'lodash'
 import { position } from 'util/scrolling'
 const { array, object, string, bool } = React.PropTypes
+import styles from './component.scss' // eslint-disable-line no-unused-vars
 
 export default class Dropdown2 extends React.Component {
   constructor (props) {
