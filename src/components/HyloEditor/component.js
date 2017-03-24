@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import { Editor, EditorState } from 'draft-js'
+import { Editor, EditorState, RichUtils } from 'draft-js'
 
 export default class HyloEditor extends Component {
   constructor (props) {
@@ -8,9 +7,19 @@ export default class HyloEditor extends Component {
     this.state = {editorState: EditorState.createEmpty()}
     this.onChange = (editorState) => this.setState({editorState})
   }
+
+  _onBoldClick () {
+    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'))
+  }
+
   render () {
+    const { editorState } = this.state
     return (
-      <Editor editorState={this.state.editorState} onChange={this.onChange} />
+      <div>
+        <h2>Hylo Editor</h2>
+        <button onClick={this._onBoldClick.bind(this)}>Bold</button>
+        <Editor editorState={editorState} placeholder='Enter your request' onChange={this.onChange} />
+      </div>
     )
   }
 }

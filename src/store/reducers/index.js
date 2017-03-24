@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
-import postsReducer from './postsReducer'
-import ormReducer from './ormReducer'
+import posts from './postsReducer'
+import orm from './ormReducer'
+import hyloEditor from 'components/HyloEditor/reducer.js'
 
 export default combineReducers({
-  orm: ormReducer,
-  posts: postsReducer,
+  orm,
+  posts,
+  hyloEditor,
   router: routerReducer
 })
