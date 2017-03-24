@@ -33,6 +33,7 @@ const renderFullPage = (body) => {
 const { evalBundleCode } = createIsomorphicWebpack(webpackConfiguration, {
   // useCompilationPromise: true,
   nodeExternalsWhitelist: [
+    /^bootstrap/, // eslint-disable-line
     /^react\-router/, // eslint-disable-line
     /^history/
   ]
