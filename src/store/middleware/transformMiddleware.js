@@ -25,10 +25,8 @@ export default function transformMiddleware ({dispatch, getState}) {
   }
 }
 
-function addPersonIfUnique (people, person) {
-  const result = [ ...people ]
-  if (!people.find(p => p.id === person.id)) result.push(person)
-  return result
+function pushIfUnique (arr, entity) {
+  if (!arr.find(e => e.id === entity.id)) arr.push(entity)
 }
 
 function addRelations (dispatch, posts) {
@@ -38,27 +36,23 @@ function addRelations (dispatch, posts) {
     const { comments, communities, followers } = post
     if (comments) {
       comments.forEach(c => {
-        people = addPersonIfUnique(people, c.creator)
+        pushIfUnique(people, c.creator)
         dispatch({ type: ADD_OR_UPDATE_COMMENT, payload: transformComment(c) })
       })
     }
     if (communities) {
       communities.forEach(c => {
         if (c.members) {
-          c.members.forEach(m => {
-            people = addPersonIfUnique(people, m)
-          })
+          c.members.forEach(m => pushIfUnique(people, m))
         }
         dispatch({ type: ADD_OR_UPDATE_COMMUNITY, payload: transformCommunity(c) })
       })
     }
     if (followers) {
-      followers.forEach(f => {
-        people = addPersonIfUnique(people, post.creator)
-      })
+      followers.forEach(f => pushIfUnique(people, post.creator))
     }
     
-    people = addPersonIfUnique(people, post.creator)
+    pushIfUnique(people, post.creator)
     dispatch({ type: ADD_OR_UPDATE_POST, payload: transformPost(post) })
   })
   people.forEach(p => dispatch({ type: ADD_OR_UPDATE_PERSON, payload: p }))
