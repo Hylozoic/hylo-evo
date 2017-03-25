@@ -4,6 +4,7 @@
 import { join } from 'path'
 import { addPath } from 'app-module-path'
 import scss from 'postcss-scss'
+import nested from 'postcss-nested'
 import cssHook from 'css-modules-require-hook'
 import root from 'root-path'
 
@@ -20,5 +21,6 @@ const sharedConfig = require(root('config/webpack.config.shared'))
 cssHook({
   extensions: ['.css', '.scss'],
   generateScopedName: sharedConfig.cssLoader.options.localIdentName,
-  processorOpts: {parser: scss.parse}
+  processorOpts: {parser: scss.parse},
+  prepend: [nested]
 })
