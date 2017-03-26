@@ -92,7 +92,7 @@ module.exports = {
           cacheDirectory: true
         }
       },
-      // Simple CSS loading for draft-js-editor plugins
+      // Simple CSS loading for node_modules fond CSS (need in particular for draft-js-plugins-editor styles)
       {
         test: /plugin\.css$/,
         use: [

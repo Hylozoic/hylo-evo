@@ -3,6 +3,6 @@ import component from './component'
 import connector from './connector'
 import styles from './component.scss'
 
-export const stylesWrap = CSSModules(styles, {allowMultiple: true})
+export const styledComponent = CSSModules(component, styles, {allowMultiple: true})
 
-export default stylesWrap(connector(component))
+export default connector(styledComponent)

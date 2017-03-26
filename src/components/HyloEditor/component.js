@@ -3,7 +3,6 @@ import Editor from 'draft-js-plugins-editor'
 import createMentionPlugin from 'draft-js-mention-plugin'
 import createHashtagPlugin from 'draft-js-hashtag-plugin'
 import { EditorState } from 'draft-js'
-
 import 'draft-js-mention-plugin/lib/plugin.css'
 import 'draft-js-hashtag-plugin/lib/plugin.css'
 
@@ -32,28 +31,25 @@ export default class HyloEditor extends Component {
     this.setState({editorState})
 
   onSearchChange = ({ value }) => {
-    this.setState({
-      suggestions: this.props.mentionResults
-    })
+    console.log(value)
+    return this.props.findMentions(value)
   }
 
   render () {
     const { editorState } = this.state
-    const { mentionResults, findMentions } = this.props
-    return (
-      <div styleName='editor'>
-        <h2>Hylo Editor</h2>
-        <Editor
-          editorState={editorState}
-          placeholder='Enter your request'
-          onChange={this.onChange}
-          plugins={plugins}
-        />
-        <MentionSuggestions
-          onSearchChange={findMentions}
-          suggestions={mentionResults}
-        />
-      </div>
-    )
+    const { mentionResults } = this.props
+    return <div styleName='editor'>
+      <h2>Hylo Editor</h2>
+      <Editor
+        editorState={editorState}
+        placeholder='Enter your request'
+        onChange={this.onChange}
+        plugins={plugins}
+      />
+      <MentionSuggestions
+        onSearchChange={this.onSearchChange}
+        suggestions={mentionResults}
+      />
+    </div>
   }
 }
