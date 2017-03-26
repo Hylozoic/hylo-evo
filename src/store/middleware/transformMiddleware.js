@@ -63,8 +63,8 @@ function dispatchRelations (dispatch, relations) {
 
 // Eliminate duplicate entries for various entities (by ID equality).
 // Deliberately has side-effects!
-function addRelation (lookupTable, entities, transformer) {
-  Object.assign(lookupTable, transform(entities, transformer))
+function addRelation (realtions, entities, transformer) {
+  Object.assign(realtions, transform(entities, transformer))
 }
 
 function ensureArray (entities) {
