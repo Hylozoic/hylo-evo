@@ -112,15 +112,33 @@ describe('Actions', () => {
     expect(actual).toBe(0)
   })
 
-  it('Dispatches ADD_COMMUNITIES for communities', () => {
+  it('Dispatches a single ADD_COMMUNITIES action when a community is present', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
       payload: data.me.posts
     })
-    // Communities should be consolidated: there's a single community repeated twice in test data
     const expected = 1
     const actual = store.getActions().filter(a => a.type === 'ADD_COMMUNITIES').length
     expect(actual).toBe(expected)
+  })
+
+  it('Does not dispatch ADD_COMMUNITIES when no community is present', () => {
+    store.dispatch({
+      type: 'FETCH_POSTS',
+      payload: data.me.posts.map(p => ({ ...p, communities: [] }))
+    })
+    const actual = store.getActions().filter(a => a.type === 'ADD_COMMUNITIES').length
+    expect(actual).toBe(0)
+  })
+
+  it('Consolidates communities with the same ID', () => {
+    store.dispatch({
+      type: 'FETCH_POSTS',
+      payload: data.me.posts
+    })
+    const action = store.getActions().filter(a => a.type === 'ADD_COMMUNITIES')[0]
+    const actual = Object.keys(action.payload).map(id => Number(id))
+    expect(actual.length).toBe([...new Set(actual)].length)
   })
 
   it('Dispatches a single ADD_PEOPLE action when a person is present', () => {
@@ -140,6 +158,17 @@ describe('Actions', () => {
     const actual = store.getActions().filter(a => a.type === 'ADD_PEOPLE').length
     expect(actual).toBe(0)
   })
+
+  it('Consolidates people with the same ID', () => {
+    store.dispatch({
+      type: 'FETCH_POSTS',
+      payload: data.me.posts
+    })
+    const action = store.getActions().filter(a => a.type === 'ADD_PEOPLE')[0]
+    const actual = Object.keys(action.payload).map(id => Number(id))
+    expect(actual.length).toBe([...new Set(actual)].length)
+  })
+
 
   it('Has the correct payload', () => {
     store.dispatch({
