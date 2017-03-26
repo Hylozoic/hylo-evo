@@ -22,6 +22,8 @@ export default function transformMiddleware ({dispatch, getState}) {
 }
 
 function getRelations (rawPosts) {
+  if (rawPosts.length === 0) return {}
+
   const normalize = curry(addRelation)
   const relations = {
     comments: {},
@@ -41,8 +43,7 @@ function getRelations (rawPosts) {
     }
     if (post.communities) getCommunities(post.communities, transformCommunity)
     if (post.followers) getPeople(post.followers, null)
-
-    getPeople(post.creator, null)
+    if (post.creator) getPeople(post.creator, null)
     getPosts(post, transformPost)
   })
 

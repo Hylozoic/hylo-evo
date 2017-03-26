@@ -61,49 +61,45 @@ describe('Actions', () => {
     expect(actual).toBeFalsy()
   })
 
-  it('Dispatches correct number of ADD_POSTS actions', () => {
+  it('Dispatches a single ADD_POSTS action when a post is present', () => {
+    store.dispatch({
+      type: 'FETCH_POSTS',
+      payload: data.me.posts
+    })
+    const actual = store.getActions().filter(a => a.type === 'ADD_POSTS').length
+    expect(actual).toBe(1)
+  })
+
+  it('Sends the correct number of posts in the ADD_POSTS payload', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
       payload: data.me.posts
     })
     const expected = data.me.posts.length
-    const actual = store.getActions().filter(a => a.type === 'ADD_POSTS').length
+    const action = store.getActions().filter(a => a.type === 'ADD_POSTS')[0]
+    const actual = Object.keys(action.payload).length
     expect(actual).toBe(expected)
   })
 
-  it('Has the correct payload', () => {
+  it('Dispatches a single ADD_COMMENTS action when a comment is present', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
       payload: data.me.posts
     })
-    const expected = {
-      id: '30002',
-      title: 'Hello',
-      details: '<p><a href="https://wombat.life">https://wombat.life</a></p>\n<p></p>\n<p></p>',
-      type: null,
-      creator: '46816',
-      followersTotal: '1',
-      communitiesTotal: '1',
-      commentsTotal: '1',
-      createdAt: 'Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)',
-      startsAt: null,
-      endsAt: null,
-      fulfilledAt: null,
-      followers: [ '46816' ],
-      communities: [ '1836' ],
-      comments: [ '1' ]
-    }
-    const actual = store.getActions().filter(a => a.type === 'ADD_POSTS')[0].payload
-    expect(actual).toEqual(expected)
+    // Comments are consolidated into a single action
+    const expected = 1
+    const actual = store.getActions().filter(a => a.type === 'ADD_COMMENTS').length
+    expect(actual).toBe(expected)
   })
 
-  it('Dispatches ADD_COMMENTS when a comment is present', () => {
+  it('Sends the correct number of comments in ADD_COMMENTS payload', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
       payload: data.me.posts
     })
     const expected = data.me.posts.reduce((total, post) => total + post.comments.length, 0)
-    const actual = store.getActions().filter(a => a.type === 'ADD_COMMENTS').length
+    const action = store.getActions().filter(a => a.type === 'ADD_COMMENTS')[0]
+    const actual = Object.keys(action.payload).length
     expect(actual).toBe(expected)
   })
 
@@ -121,20 +117,74 @@ describe('Actions', () => {
       type: 'FETCH_POSTS',
       payload: data.me.posts
     })
-    const expected = data.me.posts.reduce((total, post) => total + post.communities.length, 0)
+    // Communities should be consolidated: there's a single community repeated twice in test data
+    const expected = 1
     const actual = store.getActions().filter(a => a.type === 'ADD_COMMUNITIES').length
     expect(actual).toBe(expected)
   })
 
-  it('Dispatches the right number of ADD_PEOPLE actions', () => {
+  it('Dispatches a single ADD_PEOPLE action when a person is present', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
       payload: data.me.posts
     })
-    // Although there are six entities in the test data that qualify as Person, they all
-    // have the same ID so only one action should be sent.
     const actual = store.getActions().filter(a => a.type === 'ADD_PEOPLE').length
     expect(actual).toBe(1)
+  })
+
+  it('Does not dispatch ADD_PEOPLE when no person is present', () => {
+    store.dispatch({
+      type: 'FETCH_POSTS',
+      payload: data.me.posts.map(({ id, name }) => ({ id, name }))
+    })
+    const actual = store.getActions().filter(a => a.type === 'ADD_PEOPLE').length
+    expect(actual).toBe(0)
+  })
+
+  it('Has the correct payload', () => {
+    store.dispatch({
+      type: 'FETCH_POSTS',
+      payload: data.me.posts
+    })
+    const expected = 
+    {
+      '30002': {
+        id: '30002',
+        title: 'Hello',
+        type: null,
+        details: '<p><a href="https://wombat.life">https://wombat.life</a></p>\n<p></p>\n<p></p>',
+        creator: '46816',
+        followers: [ '46816' ],
+        followersTotal: '1',
+        communities: [ '1836' ],
+        communitiesTotal: '1',
+        comments: [ '1' ],
+        commentsTotal: '1',
+        createdAt: 'Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)',
+        startsAt: null,
+        endsAt: null,
+        fulfilledAt: null
+      },
+      '30003': {
+        id: '30003',
+        title: 'Yup',
+        type: null,
+        details: '<p>So true.</p>',
+        creator: '46816',
+        followers: [ '46816' ],
+        followersTotal: '1',
+        communities: [ '1836' ],
+        communitiesTotal: '1',
+        comments: [ '2' ],
+        commentsTotal: '1',
+        createdAt: 'Sat Mar 18 2017 10:49:43 GMT+1300 (NZDT)',
+        startsAt: null,
+        endsAt: null,
+        fulfilledAt: null
+      }
+    }
+    const actual = store.getActions().filter(a => a.type === 'ADD_POSTS')[0].payload
+    expect(actual).toEqual(expected)
   })
 })
 
