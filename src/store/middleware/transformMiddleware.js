@@ -1,13 +1,9 @@
+import { curry, isEmpty } from 'lodash'
+
 import transformComment from '../transformers/commentTransformer'
 import transformCommunity from '../transformers/communityTransformer'
 import transformPost from '../transformers/postTransformer'
-import {
-  ADD_OR_UPDATE_COMMENT,
-  ADD_OR_UPDATE_COMMUNITY,
-  ADD_OR_UPDATE_PERSON,
-  ADD_OR_UPDATE_POST,
-  FETCH_POSTS
-} from '../constants'
+import { FETCH_POSTS } from '../constants'
 
 export default function transformMiddleware ({dispatch, getState}) {
   return next => action => {
@@ -17,7 +13,7 @@ export default function transformMiddleware ({dispatch, getState}) {
       switch (type) {
         case FETCH_POSTS:
           if (payload.length === 0) break
-          addRelations(dispatch, payload)
+          dispatchRelations(dispatch, getRelations(payload))
           break
       }
     }
@@ -25,36 +21,59 @@ export default function transformMiddleware ({dispatch, getState}) {
   }
 }
 
-function pushIfUnique (arr, entity) {
-  if (!arr.find(e => e.id === entity.id)) arr.push(entity)
-}
+function getRelations (rawPosts) {
+  const normalize = curry(addRelation)
+  const relations = {
+    comments: {},
+    communities: {},
+    people: {},
+    posts: {}
+  }
+  const getComments = normalize(relations.comments)
+  const getCommunities = normalize(relations.communities)
+  const getPeople = normalize(relations.people)
+  const getPosts = normalize(relations.posts)
 
-function addRelations (dispatch, posts) {
-  let people = []
+  rawPosts.forEach(post => {
+    if (post.comments) {
+      getComments(post.comments, transformComment)
+      getPeople(post.comments.map(c => c.creator), null)
+    }
+    if (post.communities) getCommunities(post.communities, transformCommunity)
+    if (post.followers) getPeople(post.followers, null)
 
-  posts.forEach(post => {
-    const { comments, communities, followers } = post
-    if (comments) {
-      comments.forEach(c => {
-        pushIfUnique(people, c.creator)
-        dispatch({ type: ADD_OR_UPDATE_COMMENT, payload: transformComment(c) })
-      })
-    }
-    if (communities) {
-      communities.forEach(c => {
-        if (c.members) {
-          c.members.forEach(m => pushIfUnique(people, m))
-        }
-        dispatch({ type: ADD_OR_UPDATE_COMMUNITY, payload: transformCommunity(c) })
-      })
-    }
-    if (followers) {
-      followers.forEach(f => pushIfUnique(people, post.creator))
-    }
-    
-    pushIfUnique(people, post.creator)
-    dispatch({ type: ADD_OR_UPDATE_POST, payload: transformPost(post) })
+    getPeople(post.creator, null)
+    getPosts(post, transformPost)
   })
-  people.forEach(p => dispatch({ type: ADD_OR_UPDATE_PERSON, payload: p }))
+
+  return relations
 }
 
+function dispatchRelations (dispatch, relations) {
+  Object.keys(relations).forEach(key => {
+    if (!isEmpty(relations[key])) {
+      dispatch({
+        type: `ADD_${key.toUpperCase()}`,
+        payload: relations[key]
+      })
+    }
+  })
+}
+
+// Eliminate duplicate entries for various entities (by ID equality).
+// Deliberately has side-effects!
+function addRelation (lookupTable, entities, transformer) {
+  Object.assign(lookupTable, transform(entities, transformer))
+}
+
+function ensureArray (entities) {
+  return entities.constructor === Array ? entities : [ entities ]
+}
+
+function transform (entities, transformer) {
+  return [ ...ensureArray(entities) ]
+    .reduce((acc, entity) => {
+      acc[entity.id] = transformer ? transformer(entity) : entity
+      return acc
+    }, {})
+}

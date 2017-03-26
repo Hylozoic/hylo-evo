@@ -1,6 +1,6 @@
 // import fetch from 'isomorphic-fetch'
 import { upstreamHost } from '../../config'
-import samplePostApi from 'components/PostCard/samplePostApi.json'
+import samplePostApi from './transformMiddleware.test.json'
 
 export default function apiMiddleware (req) {
   return store => next => action => {
@@ -29,7 +29,7 @@ export const HOST = upstreamHost
 // FIXME: Temporarily hardcoding the API response to a samplePostApi
 //        for testing purposes
 export function fetchJSON (path, params, options = {}) {
-  return Promise.resolve(samplePostApi)
+  return samplePostApi.data.me.posts
 }
 // export function fetchJSON (path, params, options = {}) {
 //   const fetchURL = (options.host || HOST) + path
