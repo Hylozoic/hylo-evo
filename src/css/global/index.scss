@@ -8,4 +8,7 @@
   @import './icons.scss';
   @import '../typography.scss';
 
+  body {
+    overflow-x: hidden;
+  }
 }
