@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
-import { updateEditor, getEditorState } from './reducer'
+import { findMentions, getMentionResults } from './store'
 
 export function mapStateToProps (state, props) {
   return {
-    // editorState: getEditorState(state, props)
+    mentionResults: getMentionResults(state, props)
   }
 }
 
 export const mapDispatchToProps = {
-  // updateEditor
+  findMentions
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)

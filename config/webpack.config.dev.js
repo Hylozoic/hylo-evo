@@ -92,10 +92,18 @@ module.exports = {
           cacheDirectory: true
         }
       },
-
+      // Simple CSS loading for draft-js-editor plugins
+      {
+        test: /plugin\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
       // CSS Modules for all SASS files not in resources or global
       {
         test: /\.(css|scss|sass)$/,
+        exclude: /plugin\.css$/,
         use: [
           {
             loader: 'style-loader'
