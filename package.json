@@ -163,5 +163,6 @@
       "it",
       "jest"
     ]
-  }
+  },
+  "proxy": "http://localhost:3001"
 }
