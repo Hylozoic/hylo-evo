@@ -1,12 +1,12 @@
 // NOTE: font-face declarations need to be outside
 //       of CSS Modules global calls.
 //       ref: https://github.com/css-modules/css-modules/issues/95
-@import './fonts.scss';
+@import './fonts';
 
 :global {
-  @import './bootstrap-global.scss';
-  @import './icons.scss';
-  @import '../typography.scss';
+  @import './bootstrap-global';
+  @import './icons';
+  @import '../typography';
 
   body {
     overflow-x: hidden;

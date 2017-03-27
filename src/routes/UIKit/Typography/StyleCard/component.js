@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
-import hyloAppTypographyStyles from 'css/typography.scss'
+import hyloAppTypographyStyles from '../../../../css/typography.scss'
+import s from './component.scss' // eslint-disable-line no-unused-vars
 
 const SAMPLE_TEXT_OPTIONS = {
   short: 'Five quacking zephyrs jolt my wax bed.',
@@ -12,7 +13,7 @@ export default function StyleCard (
 ) {
   const sampleTextOptions = SAMPLE_TEXT_OPTIONS
   const sampleText = children || sample || sampleTextOptions[sampleKey]
-  let styleName = noBottomBorder ? 'card card--no-bottom-border' : 'card'
+  let styleName = 's.card' + (noBottomBorder ? ' s.card-no-bottom-border' : '')
   let nameText = '.' + styleClassName
   if (name) nameText = `${name} (.${styleClassName})`
   function handleClick (event) {
@@ -20,13 +21,13 @@ export default function StyleCard (
   }
   return (
     <div styleName={styleName} onClick={handleClick} {...props}>
-      <div styleName='name'>
+      <div styleName='s.name'>
         {nameText}
       </div>
-      <div styleName='attributes'>
+      <div styleName='s.attributes'>
         {description}
       </div>
-      <div styleName='sample' className={hyloAppTypographyStyles[styleClassName]}>
+      <div styleName='s.sample' className={hyloAppTypographyStyles[styleClassName]}>
         {sampleText}
       </div>
     </div>

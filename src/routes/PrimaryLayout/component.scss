@@ -1,3 +1,4 @@
+@import '../../css/bootstrap';
 
 @media (min-width: 80rem) {
   .container {
@@ -11,7 +12,7 @@
 .row {
   display: flex;
   flex-wrap: wrap;
-  composes: justify-content-between from $bootstrap-path;
+  @extend .justify-content-between;
   margin: 0;
 }
 
@@ -21,7 +22,7 @@
   width: 100%;
   min-height: 1px; // Prevent collapsing
 
-  composes: p-6 mb-6 from $bootstrap-path;
+  @extend .p-6, .mb-6;
   box-shadow: 0px 3px 5px 0px $color-nepal;
   color: $color-athens-gray;
   background-color: $color-persimmon;

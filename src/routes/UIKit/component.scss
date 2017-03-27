@@ -16,23 +16,24 @@
   margin: 0;
   padding: 0;
   display: inline;
-  &_item {
-    display: inline;
-    padding: 0 $space-3x;
-    border-right: solid 1px white;
-    &:first-child {
-      padding-left: 0px;
-    }
-    &:last-child {
-      border: 0px;
-    }
-    a {
-      color: $color-caribbean-green;
-      text-decoration: none;
-      &:hover {
-        // text-shadow: 1px 1px $color-rhino;
-        text-decoration: underline;
-      }
+}
+
+.menu_item {
+  display: inline;
+  padding: 0 $space-3x;
+  border-right: solid 1px white;
+  &:first-child {
+    padding-left: 0px;
+  }
+  &:last-child {
+    border: 0px;
+  }
+  a {
+    color: $color-caribbean-green;
+    text-decoration: none;
+    &:hover {
+      // text-shadow: 1px 1px $color-rhino;
+      text-decoration: underline;
     }
   }
 }

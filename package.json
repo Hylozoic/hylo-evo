@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "babel-cli": "^6.24.0",
     "babel-core": "6.17.0",
     "babel-eslint": "7.1.1",
     "babel-loader": "6.2.7",
@@ -32,6 +33,7 @@
     "http-proxy-middleware": "0.17.2",
     "jest": "^19.0.2",
     "json-loader": "0.5.4",
+    "mock-fs": "^4.2.0",
     "object-assign": "4.1.0",
     "path-exists": "2.1.0",
     "postcss-cssnext": "^2.9.0",
@@ -51,22 +53,29 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "app-module-path": "^2.2.0",
     "babel-jest": "^19.0.0",
+    "babel-plugin-react-css-modules": "levity/babel-plugin-react-css-modules#dist",
     "babel-plugin-remove-stylename": "^0.1.0",
     "bootstrap": "4.0.0-alpha.6",
     "classnames": "^2.2.5",
-    "faker": "^4.1.0",
+    "compression": "^1.6.2",
+    "cookie-parser": "^1.4.3",
+    "css-modules-require-hook": "^4.0.6",
     "dotenv-webpack": "^1.4.3",
+    "enzyme": "^2.7.1",
+    "express": "^4.15.2",
+    "faker": "^4.1.0",
     "lodash": "^4.17.4",
-    "lodash-fp": "^0.10.4",
     "node-sass": "^4.5.0",
     "normalize.css": "^5.0.0",
+    "postcss-scss": "^0.4.1",
     "pretty-date": "^0.2.0",
     "pushstate-server": "^3.0.0",
     "querystring": "^0.2.0",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
-    "react-css-modules": "^4.1.0",
+    "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
     "react-router-dom": "^4.0.0",
@@ -77,6 +86,7 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^2.5.4",
     "resolve-url-loader": "^2.0.0",
+    "root-path": "^0.2.0",
     "sass-loader": "^6.0.2",
     "sass-resources-loader": "1.2.0-beta.2",
     "standard": "^9.0.1",
@@ -89,7 +99,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "node scripts/build.js && scripts/build-es5.sh",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
@@ -104,7 +114,7 @@
       "<rootDir>/config/polyfills.js"
     ],
     "testPathIgnorePatterns": [
-      "<rootDir>[/\\\\](build|docs|node_modules|scripts)[/\\\\]"
+      "<rootDir>[/\\\\](build|docs|node_modules|scripts|es5)[/\\\\]"
     ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
@@ -117,6 +127,17 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      [
+        "react-css-modules",
+        {
+          "filetypes": {
+            ".scss": "postcss-scss"
+          },
+          "exclude": "node_modules"
+        }
+      ]
     ],
     "env": {
       "test": {
@@ -131,14 +152,14 @@
   "standard": {
     "parser": "babel-eslint",
     "global": [
-      "after",
+      "afterAll",
       "afterEach",
-      "before",
+      "beforeAll",
       "beforeEach",
       "describe",
       "expect",
       "it",
-      "spy"
+      "jest"
     ]
   }
 }

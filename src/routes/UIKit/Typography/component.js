@@ -1,6 +1,7 @@
 import React from 'react'
 import StyleCard from './StyleCard'
 import ColorSample from './ColorSample'
+import './component.scss'
 
 export default function Typography (props) {
   return <div>

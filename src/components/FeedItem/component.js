@@ -2,6 +2,7 @@
 import React from 'react'
 import PostCard from 'components/PostCard'
 import { includes } from 'lodash/fp'
+import './component.scss'
 
 const POST_TYPES = ['offer', 'request', 'discussion']
 

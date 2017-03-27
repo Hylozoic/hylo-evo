@@ -8,10 +8,9 @@ import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
 import ShareButton from './ShareButton'
 import { personUrl, bgImageStyle, humanDate } from 'util/index'
-import CSSModules from 'react-css-modules'
-import styles from './component.scss'
+import { parse } from 'url'
+import './component.scss'
 import samplePost from './samplePost'
-
 const { shape, any, object, string, func, array } = React.PropTypes
 
 export default class PostCard extends React.Component {
@@ -46,7 +45,7 @@ PostCard.defaultProps = {
   post: samplePost
 }
 
-export const PostHeader = CSSModules(({ author, updatedAt, type, context, communities, Dd }) => {
+export const PostHeader = ({ author, updatedAt, type, context, communities, Dd }) => {
   if (!Dd) {
     Dd = Dropdown2
   }
@@ -76,9 +75,9 @@ export const PostHeader = CSSModules(({ author, updatedAt, type, context, commun
       </Dd>
     </div>
   </div>
-}, styles)
+}
 
-export const PostBody = CSSModules(({ title, description, imageUrl, linkPreview }) => {
+export const PostBody = ({ title, description, imageUrl, linkPreview }) => {
   // TODO: Present description as HTML and sanitize
   const truncated = description &&
     description.length > 147
@@ -91,10 +90,10 @@ export const PostBody = CSSModules(({ title, description, imageUrl, linkPreview 
     {truncated && <div styleName='description'>{truncated}</div>}
     {linkPreview && <LinkPreview {...linkPreview} />}
   </div>
-}, styles)
+}
 
-export const LinkPreview = CSSModules(({ title, url, imageUrl }) => {
-  const domain = (new window.URL(url)).hostname.replace('www.', '')
+export const LinkPreview = ({ title, url, imageUrl }) => {
+  const domain = parse(url).hostname.replace('www.', '')
   return <div styleName='cardPadding'>
     <div styleName='linkPreview'>
       <a href={url} target='_blank'>
@@ -106,7 +105,7 @@ export const LinkPreview = CSSModules(({ title, url, imageUrl }) => {
       </a>
     </div>
   </div>
-}, styles)
+}
 
 export const commentCaption = (commenters, commentersTotal) => {
   var names = ''
@@ -122,14 +121,14 @@ export const commentCaption = (commenters, commentersTotal) => {
   return `${names} commented`
 }
 
-export const PostFooter = CSSModules(({ id, commenters, commentersTotal, voteCount }) => {
+export const PostFooter = ({ id, commenters, commentersTotal, voteCount }) => {
   return <div styleName='footer'>
     <PeopleImages imageUrls={commenters.map(c => c.avatarUrl)} styleName='people' />
     <span className='caption-lt-lg'>{commentCaption(commenters, commentersTotal)}</span>
     <div styleName='share'><ShareButton postId={id} /></div>
     <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{voteCount}</a></div>
   </div>
-}, styles)
+}
 
 export function PeopleImages ({ imageUrls, className }) {
   const images = imageUrls.map((url, i) =>

@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { matchPath, Route, Link } from 'react-router-dom'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
+import Sidebar from './components/Sidebar'
 import cx from 'classnames'
 import { get } from 'lodash/fp'
 import Feed from 'routes/Feed'
@@ -10,8 +11,8 @@ import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 import { SAMPLE_COMMUNITY } from 'routes/Feed/sampleData'
 
-// Global styles
-import 'css/global/index.scss'
+import globalStyles from '../../css/global/index.scss' // eslint-disable-line no-unused-vars
+import p from './component.scss'
 
 const SAMPLE_USER = {
   id: '1',
@@ -23,19 +24,19 @@ const SAMPLE_USER = {
 export default function PrimaryLayout ({ match, location }) {
   const hasDetail = matchPath(location.pathname, {path: '/events/:eventId'})
 
-  return <div styleName='container'>
+  return <div styleName='p.container'>
     <TopNav community={SAMPLE_COMMUNITY} currentUser={SAMPLE_USER} />
-    <div styleName='row'>
+    <div styleName='p.row'>
       {/* TODO: is using render here the best way to pass params to a route? */}
       <Route path='/' render={() => <Navigation collapsed={hasDetail} location={location} />} />
-      <div styleName='content'>
-        <Route path='/' exact render={() => <Feed community={SAMPLE_COMMUNITY} currentUser={SAMPLE_USER} />} />
+      <div styleName='p.content'>
+        <Route path='/' exact component={() => <Feed community={SAMPLE_COMMUNITY} currentUser={SAMPLE_USER} />} />
         <Route path='/events' component={Events} />
       </div>
-      <div styleName={cx('sidebar', {hidden: hasDetail})}>
-        <Route path='/' component={null} />
+      <div styleName={cx('p.sidebar', {'p.hidden': hasDetail})}>
+        <Route path='/' component={Sidebar} />
       </div>
-      <div styleName={cx('detail', {hidden: !hasDetail})}>
+      <div styleName={cx('p.detail', {'p.hidden': !hasDetail})}>
         {/*
           TODO: Display content of last detail page on '/' so that the
           animation transitions correctly.
