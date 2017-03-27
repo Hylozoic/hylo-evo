@@ -1,6 +1,6 @@
 // import fetch from 'isomorphic-fetch'
 import { upstreamHost } from '../../config'
-import samplePostApi from './transformMiddleware.test.json'
+import samplePostApi from './normalizingMiddleware.test.json'
 
 export default function apiMiddleware (req) {
   return store => next => action => {

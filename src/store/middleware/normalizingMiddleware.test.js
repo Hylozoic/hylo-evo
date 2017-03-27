@@ -1,23 +1,23 @@
 import configureStore from 'redux-mock-store'
 
-import transformMiddleware from './transformMiddleware'
-import { data } from './transformMiddleware.test.json'
+import normalizingMiddleware from './normalizingMiddleware'
+import { data } from './normalizingMiddleware.test.json'
 
 it('Returns a function to handle next', () => {
-  const nextHandler = transformMiddleware({ action: 'ADD_POSTS' })
+  const nextHandler = normalizingMiddleware({ action: 'ADD_POSTS' })
   expect(typeof nextHandler).toBe('function')
   expect(nextHandler.length).toBe(1)
 })
 
 it('Returns a function to handle action', () => {
-  const actionHandler = transformMiddleware({ action: 'ADD_POSTS' })()
+  const actionHandler = normalizingMiddleware({ action: 'ADD_POSTS' })()
   expect(typeof actionHandler).toBe('function')
   expect(actionHandler.length).toBe(1)
 })
 
 it('Returns the value of next', () => {
   const expected = 'Wombat'
-  const nextHandler = transformMiddleware({ action: 'ADD_POSTS' })
+  const nextHandler = normalizingMiddleware({ action: 'ADD_POSTS' })
   const actionHandler = nextHandler(() => expected)
   const actual = actionHandler()
   expect(actual).toBe(expected)
@@ -25,7 +25,7 @@ it('Returns the value of next', () => {
 
 describe('Actions', () => {
   let store = null
-  let mockStore = configureStore([transformMiddleware])
+  let mockStore = configureStore([normalizingMiddleware])
 
   beforeEach(() => {
     store = mockStore({})
