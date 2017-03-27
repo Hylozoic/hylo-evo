@@ -6,7 +6,6 @@ import Dropdown2 from 'components/Dropdown2'
 import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
-import ShareButton from './ShareButton'
 import { personUrl, bgImageStyle, humanDate } from 'util/index'
 import { parse } from 'url'
 import './component.scss'
@@ -125,7 +124,6 @@ export const PostFooter = ({ id, commenters, commentersTotal, voteCount }) => {
   return <div styleName='footer'>
     <PeopleImages imageUrls={commenters.map(c => c.avatarUrl)} styleName='people' />
     <span className='caption-lt-lg'>{commentCaption(commenters, commentersTotal)}</span>
-    <div styleName='share'><ShareButton postId={id} /></div>
     <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{voteCount}</a></div>
   </div>
 }
