@@ -39,7 +39,7 @@ PostCard.propTypes = {
     updated_at: string
   }),
   Dd: object,
-  fetchPost: func.isRequired
+  fetchPost: func
 }
 PostCard.defaultProps = {
   post: samplePost
