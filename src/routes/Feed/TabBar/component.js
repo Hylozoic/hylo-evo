@@ -4,6 +4,7 @@ import Dropdown from 'components/Dropdown'
 import { capitalize, sortBy, throttle } from 'lodash/fp'
 import { viewportTop, position } from 'util/scrolling'
 // import cx from 'classnames'
+import './component.scss'
 
 export const tabNames = [
   'all', 'discusions', 'activity', 'requests', 'offers'

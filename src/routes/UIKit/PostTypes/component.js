@@ -4,6 +4,7 @@ import ShareButton from 'components/PostCard/ShareButton'
 import { omit } from 'lodash/fp'
 import Dropdown from 'components/Dropdown'
 import Dropdown2 from 'components/Dropdown2'
+import './component.scss'
 
 const Dropdownf = ({ toggleChildren }) => toggleChildren
 

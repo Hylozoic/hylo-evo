@@ -5,6 +5,7 @@ var ManifestPlugin = require('webpack-manifest-plugin')
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 var paths = require('./paths')
 var getClientEnvironment = require('./env')
+var sharedConfig = require('./webpack.config.shared')
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -139,14 +140,8 @@ module.exports = {
         loader: ExtractTextPlugin.extract(Object.assign({
           fallback: 'style-loader',
           use: [
+            sharedConfig.cssLoader,
             {
-              loader: 'css-loader',
-              options: {
-                modules: true,
-                localIdentName: '[path]___[name]__[local]___[hash:base64:5]',
-                importLoaders: 3
-              }
-            }, {
               loader: 'postcss-loader',
               options: {
                 ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
@@ -165,19 +160,8 @@ module.exports = {
               }
             }, {
               loader: 'sass-loader'
-            }, {
-              loader: 'sass-resources-loader',
-              options: {
-                // LEJ: Define global SASS variables in the files specified here
-                // for preloading by the sass-resources loader. The explicit
-                // load order is on purpose.
-                resources: [
-                  paths.appSrc + '/css/sass-resources/_app.scss',
-                  paths.appSrc + '/css/sass-resources/_bootstrap-customization.scss',
-                  paths.appSrc + '/routes/UIKit/css/_sass_resources.scss'
-                ]
-              }
-            }
+            },
+            sharedConfig.sassResourcesLoader
           ]
         }, extractTextPluginOptions))
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.

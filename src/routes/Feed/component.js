@@ -1,12 +1,11 @@
 import React from 'react'
-import CSSModules from 'react-css-modules'
+import './component.scss'
 import { SAMPLE_FEED_ITEMS, SAMPLE_COMMUNITY } from './sampleData'
 import FeedItem from 'components/FeedItem'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import ScrollListener from 'components/ScrollListener'
 import TabBar from './TabBar'
-import styles from './component.scss'
 import { bgImageStyle } from 'util/index'
 
 export default class Feed extends React.Component {
@@ -32,7 +31,7 @@ export default class Feed extends React.Component {
   }
 }
 
-export const CommunityBanner = CSSModules(({ community, currentUser }) => {
+export const CommunityBanner = ({ community, currentUser }) => {
   return <div styleName='banner'>
     <div style={bgImageStyle(community.bannerUrl)} styleName='image'>
       <div styleName='fade'><div styleName='fade2' /></div>
@@ -49,13 +48,13 @@ export const CommunityBanner = CSSModules(({ community, currentUser }) => {
     </div>
     <PostPrompt currentUser={currentUser} />
   </div>
-}, styles)
+}
 
-export const PostPrompt = CSSModules(({ currentUser }) => {
+export const PostPrompt = ({ currentUser }) => {
   if (!currentUser) return null
   return <div styleName='postPrompt' onClick={() => console.log('Open Post Form')}>
     <div styleName='shadow' />
     <RoundImage url={currentUser.avatarUrl} small styleName='prompt-image' />
     Hi {currentUser.firstName}, what's on your mind?
   </div>
-}, styles)
+}

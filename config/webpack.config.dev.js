@@ -5,6 +5,7 @@ var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 var getClientEnvironment = require('./env')
 var paths = require('./paths')
+var sharedConfig = require('./webpack.config.shared')
 
 var publicPath = '/'
 var publicUrl = ''
@@ -107,14 +108,9 @@ module.exports = {
         use: [
           {
             loader: 'style-loader'
-          }, {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              localIdentName: '[path]___[name]__[local]___[hash:base64:5]',
-              importLoaders: 3
-            }
-          }, {
+          },
+          sharedConfig.cssLoader,
+          {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
@@ -131,19 +127,8 @@ module.exports = {
             }
           }, {
             loader: 'sass-loader'
-          }, {
-            loader: 'sass-resources-loader',
-            options: {
-              // LEJ: Define global SASS variables in the files specified here
-              // for preloading by the sass-resources loader. The explicit
-              // load order is on purpose.
-              resources: [
-                paths.appSrc + '/css/sass-resources/_app.scss',
-                paths.appSrc + '/css/sass-resources/_bootstrap-customization.scss',
-                paths.appSrc + '/routes/UIKit/css/_sass_resources.scss'
-              ]
-            }
-          }
+          },
+          sharedConfig.sassResourcesLoader
         ]
       }
     ]

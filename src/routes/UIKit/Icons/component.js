@@ -1,5 +1,6 @@
 import React from 'react'
 import Icon from 'components/Icon'
+import './component.scss'
 
 const ICON_NAMES = [
   'Messages',
@@ -16,7 +17,7 @@ const ICON_NAMES = [
   'Location'
 ]
 
-export default function Elements (props) {
+export default function Icons (props) {
   return <div>
     <div className='sheet'>
       <div className='sheet-title'>Icons</div>

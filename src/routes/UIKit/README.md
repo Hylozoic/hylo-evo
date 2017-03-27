@@ -54,7 +54,7 @@ A living stylesheet derived from the mock-ups for hylo-app.
 
 ## Our CSS "Stack"
 
-- [React CSS Modules](https://github.com/gajus/react-css-modules)
+- [babel-plugin-react-css-modules](https://github.com/gajus/babel-plugin-react-css-modules)
 - [SASS](http://sass-lang.com/) used for all variables and mixins at this stage (it is required for Bootstrap 4 either way)
 - [Bootstrap v4.0 alpha 6 (final alpha release)](https://v4-alpha.getbootstrap.com) configured to match our spacing requirements and to include only the following modules:
   - Core variables and mixins

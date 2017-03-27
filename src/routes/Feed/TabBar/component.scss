@@ -34,7 +34,7 @@
   height: 28px;
   line-height: 28px;
   display: inline-block;
-  composes: caption-lt-lg from 'css/typography.scss'
+  composes: caption-lt-lg from '../../../css/typography.scss'
 }
 
 .tab-active {
