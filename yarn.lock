@@ -517,9 +517,9 @@ babel-plugin-jest-hoist@^19.0.0:
   version "19.0.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-19.0.0.tgz#4ae2a04ea612a6e73651f3fde52c178991304bea"
 
-babel-plugin-react-css-modules@^2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-react-css-modules/-/babel-plugin-react-css-modules-2.6.0.tgz#5d7e73c745c7c72083f711e977bcf586da5cf778"
+babel-plugin-react-css-modules@levity/babel-plugin-react-css-modules#dist:
+  version "1.0.0"
+  resolved "https://codeload.github.com/levity/babel-plugin-react-css-modules/tar.gz/c05dc619eece7accc5956ebb00c21efd184d61f0"
   dependencies:
     ajv "^4.11.4"
     babel-plugin-syntax-jsx "^6.18.0"
@@ -532,6 +532,7 @@ babel-plugin-react-css-modules@^2.6.0:
     postcss-modules-parser "^1.1.0"
     postcss-modules-scope "^1.0.2"
     postcss-modules-values "^1.2.2"
+    postcss-nested "^1.0.0"
 
 babel-plugin-remove-stylename@^0.1.0:
   version "0.1.0"
@@ -1796,19 +1797,19 @@ debug-log@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/debug-log/-/debug-log-1.0.1.tgz#2307632d4c04382b8df8a32f70b895046d52745f"
 
-debug@2.2.0, debug@~2.2.0:
+debug@2.2.0, debug@^2.2.0, debug@~2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.2.0.tgz#f87057e995b1a1f6ae6a4960664137bc56f039da"
   dependencies:
     ms "0.7.1"
 
-debug@2.6.1:
+debug@2.6.1, debug@^2.1.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.1.tgz#79855090ba2c4e3115cc7d8769491d58f0491351"
   dependencies:
     ms "0.7.2"
 
-debug@2.6.3, debug@^2.1.0, debug@^2.1.1, debug@^2.2.0:
+debug@2.6.3, debug@^2.1.0:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.3.tgz#0f7eb8c30965ec08c72accfa0130c8b79984141d"
   dependencies:
@@ -5189,6 +5190,12 @@ postcss-modules@^0.6.2:
     generic-names "^1.0.2"
     postcss "^5.2.8"
     string-hash "^1.1.1"
+
+postcss-nested@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/postcss-nested/-/postcss-nested-1.0.0.tgz#d136bd4b576bd5632df142c12b2198a9ccf794df"
+  dependencies:
+    postcss "^5.0.2"
 
 postcss-nesting@^2.0.5:
   version "2.3.1"
