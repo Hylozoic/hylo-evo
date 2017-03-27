@@ -2,6 +2,7 @@
 import React from 'react'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
+import './component.scss'
 
 export default function ShareButton ({ post, className }) {
   return <Dropdown triangle toggleChildren={<Icon name='Share' />}>

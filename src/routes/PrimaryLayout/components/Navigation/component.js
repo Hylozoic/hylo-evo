@@ -2,6 +2,7 @@ import React from 'react'
 import { matchPath } from 'react-router-dom'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
+import './component.scss'
 
 export default function Navigation ({ location, collapsed }) {
   let links = [

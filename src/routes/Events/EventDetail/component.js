@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
-import CSSModules from 'react-css-modules'
+import './component.scss'
 
 export default function EventDetail ({ match: { params: { eventId } } }) {
   return <div styleName='event-page'>

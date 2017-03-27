@@ -1,11 +1,12 @@
+@import '../../../../../css/bootstrap';
+
 .topicNavigation {
   padding: 32px 12.5px 0 12.5px;
   color: $color-rhino-50;
 }
 
 .header {
-  composes: d-flex from $bootstrap-path;
-  composes: align-items-center from $bootstrap-path;
+  @extend .d-flex, .align-items-center;
   color: $color-rhino-50;
   margin-bottom: 14px;
 }
@@ -26,8 +27,7 @@
 }
 
 .topic {
-  composes: d-flex from $bootstrap-path;
-  composes: align-items-center from $bootstrap-path;
+  @extend .d-flex, .align-items-center;
 }
 
 .icon {
