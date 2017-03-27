@@ -1,4 +1,4 @@
-import { curry, each, isEmpty } from 'lodash'
+import { castArray, curry, each, isEmpty } from 'lodash'
 
 import transformComment from '../transformers/commentTransformer'
 import transformCommunity from '../transformers/communityTransformer'
@@ -67,12 +67,8 @@ function addRelation (realtions, entities, transformer) {
   Object.assign(realtions, transform(entities, transformer))
 }
 
-function ensureArray (entities) {
-  return entities.constructor === Array ? entities : [ entities ]
-}
-
 function transform (entities, transformer) {
-  return [ ...ensureArray(entities) ]
+  return [ ...castArray(entities) ]
     .reduce((acc, entity) => {
       acc[entity.id] = transformer ? transformer(entity) : entity
       return acc
