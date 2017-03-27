@@ -59,7 +59,7 @@ export default function ormReducer (state = {}, action) {
       Post.withId(payload.id).delete()
       break
 
-    case a.upDATE_POST:
+    case a.UPDATE_POST:
       Post.withId(payload.id).update(payload)
       break
   }
