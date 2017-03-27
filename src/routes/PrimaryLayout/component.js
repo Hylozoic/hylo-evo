@@ -7,7 +7,6 @@ import TopNav from './components/TopNav'
 import HyloEditor from 'components/HyloEditor'
 import Sidebar from './components/Sidebar'
 import cx from 'classnames'
->>>>>>> master
 import { get } from 'lodash/fp'
 import Feed from 'routes/Feed'
 import Events from 'routes/Events'
