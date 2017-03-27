@@ -6,8 +6,6 @@ import promiseMiddleware from 'redux-promise'
 import apiMiddleware from './apiMiddleware'
 import normalizingMiddleware from './normalizingMiddleware'
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-
 const middleware = compact([
   apiMiddleware(),
   normalizingMiddleware,
@@ -15,6 +13,10 @@ const middleware = compact([
   process.env.NODE_ENV === 'development' && createLogger({collapsed: true})
 ])
 
-export default composeEnhancers(
+const composeFn = typeof __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined'
+  ? __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line no-undef
+  : compose
+
+export default composeFn(
   applyMiddleware(...middleware)
 )
