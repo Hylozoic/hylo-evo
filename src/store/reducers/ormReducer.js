@@ -1,6 +1,6 @@
 import { each } from 'lodash'
 
-import { ADD_COMMENTS, ADD_COMMUNITIES, ADD_PEOPLE, ADD_POSTS } from 'store/constants'
+import * as a from 'store/constants'
 import { orm } from 'store/models'
 
 export default function ormReducer (state = {}, action) {
@@ -11,24 +11,56 @@ export default function ormReducer (state = {}, action) {
   const { Comment, Community, Person, Post } = session
 
   switch (type) {
-    case ADD_COMMENTS:
+    case a.ADD_COMMENTS:
       each(payload, comment =>
         Comment.hasId(comment.id) ? Comment.update(comment) : Comment.create(comment))
       break
 
-    case ADD_COMMUNITIES:
+    case a.DELETE_COMMENT:
+      Comment.withId(payload.id).delete()
+      break
+
+    case a.UPDATE_COMMENT:
+      Comment.withId(payload.id).update(payload)
+      break
+
+    case a.ADD_COMMUNITIES:
       each(payload, community =>
         Community.hasId(community.id) ? Community.update(community) : Community.create(community))
       break
 
-    case ADD_PEOPLE:
+    case a.DELETE_COMMUNITY:
+      Community.withId(payload.id).delete()
+      break
+
+    case a.UPDATE_COMMUNITY:
+      Community.withId(payload.id).update(payload)
+      break
+
+    case a.ADD_PEOPLE:
       each(payload, person =>
         Person.hasId(person.id) ? Person.update(person) : Person.create(person))
       break
 
-    case ADD_POSTS:
+    case a.DELETE_PERSON:
+      Person.withId(payload.id).delete()
+      break
+
+    case a.UPDATE_PERSON:
+      Person.withId(payload.id).update(payload)
+      break
+
+    case a.ADD_POSTS:
       each(payload, post =>
         Post.hasId(post.id) ? Post.update(post) : Post.create(post))
+      break
+
+    case a.DELETE_POST:
+      Post.withId(payload.id).delete()
+      break
+
+    case a.upDATE_POST:
+      Post.withId(payload.id).update(payload)
       break
   }
 
