@@ -33,6 +33,7 @@
     "http-proxy-middleware": "0.17.2",
     "jest": "^19.0.2",
     "json-loader": "0.5.4",
+    "mock-fs": "^4.2.0",
     "object-assign": "4.1.0",
     "path-exists": "2.1.0",
     "postcss-cssnext": "^2.9.0",
@@ -151,14 +152,14 @@
   "standard": {
     "parser": "babel-eslint",
     "global": [
-      "after",
+      "afterAll",
       "afterEach",
-      "before",
+      "beforeAll",
       "beforeEach",
       "describe",
       "expect",
       "it",
-      "spy"
+      "jest"
     ]
   }
 }

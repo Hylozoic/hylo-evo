@@ -2,6 +2,7 @@ import { serverRouter } from 'router'
 import { renderToString } from 'react-dom/server'
 import { readFileSync } from 'fs'
 import root from 'root-path'
+import { once } from 'lodash'
 
 export default function appMiddleware (req, res, next) {
   // TODO: async data loading
@@ -16,10 +17,14 @@ export default function appMiddleware (req, res, next) {
   return res.status(200).send(html(markup))
 }
 
-const indexPath = root('build/index.html')
-const indexFile = readFileSync(indexPath, {encoding: 'utf-8'})
+// this is set up as a property to make it easy to mock in tests
+appMiddleware.getIndexFile = once(() => {
+  const indexPath = root('build/index.html')
+  return readFileSync(indexPath, {encoding: 'utf-8'})
+})
+
 
 function html (markup) {
   const newRoot = `<div id="root">${markup}</div>`
-  return indexFile.replace('<div id="root"></div>', newRoot)
+  return appMiddleware.getIndexFile().replace('<div id="root"></div>', newRoot)
 }
