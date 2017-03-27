@@ -8,24 +8,32 @@ import { get } from 'lodash/fp'
 import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
-import Sidebar from './components/Sidebar'
+import { SAMPLE_COMMUNITY } from 'routes/Feed/sampleData'
 
 // Global styles
 import 'css/global/index.scss'
+
+const SAMPLE_USER = {
+  id: '1',
+  firstName: 'Axolotl',
+  lastName: 'Jones',
+  avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+}
 
 export default function PrimaryLayout ({ match, location }) {
   const hasDetail = matchPath(location.pathname, {path: '/events/:eventId'})
 
   return <div styleName='container'>
-    <TopNav />
+    <TopNav community={SAMPLE_COMMUNITY} currentUser={SAMPLE_USER} />
     <div styleName='row'>
-      <Route path='/' component={Navigation} collapsed={hasDetail} />
+      {/* TODO: is using render here the best way to pass params to a route? */}
+      <Route path='/' render={() => <Navigation collapsed={hasDetail} location={location} />} />
       <div styleName='content'>
-        <Route path='/' exact component={Feed} />
+        <Route path='/' exact render={() => <Feed community={SAMPLE_COMMUNITY} currentUser={SAMPLE_USER} />} />
         <Route path='/events' component={Events} />
       </div>
       <div styleName={cx('sidebar', {hidden: hasDetail})}>
-        <Route path='/' component={Sidebar} />
+        <Route path='/' component={null} />
       </div>
       <div styleName={cx('detail', {hidden: !hasDetail})}>
         {/*

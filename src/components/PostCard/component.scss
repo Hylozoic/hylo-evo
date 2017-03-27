@@ -4,6 +4,10 @@
   padding-top: 15px;
   border: 1px solid $color-cape-cod-10;
   border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0px 2px 6px 0px $color-black-10;
+  }
 }
 
 .cardPadding {
@@ -78,6 +82,9 @@
 
 .label {
   margin-right: 20px;
+  // TODO: remove this positioning. Only necessary because of Dropdown breaking layout
+  position: relative;
+  top: -3px;
 }
 
 .menuLink:hover {
@@ -95,8 +102,13 @@
 }
 
 .image {
-  max-width: 100%;
+  background-position: center;
+  background-size: cover;
+  display: inline-block;
+  width: 590px;
+  height: 280px;
   margin-bottom: 20px;
+  margin: 0 auto 20px auto;
 }
 
 .title {
@@ -112,6 +124,7 @@
   color: $color-rhino-60;
   font-size: 16px;
   line-height: 24px;
+  margin-bottom: 20px;
 }
 
 //LinkPreview
@@ -127,11 +140,7 @@ $preview-height: 80px;
 }
 
 .previewImage {
-  display: inline-block;
-  width: $preview-height;
-  height: $preview-height;
-  background-position: center;
-  background-size: cover;
+  @include image($preview-height);
   margin-right: 15px;
 }
 
@@ -189,6 +198,9 @@ $footer-height: 56px;
   top: 4px;
   margin-right: 8px;
   color: $color-caribbean-green;
+  &:hover {
+    color: $color-gossamer;
+  }
 }
 
 .votes {
@@ -199,6 +211,6 @@ $footer-height: 56px;
   border-left: 1px solid $color-cape-cod-10;
   & > a:hover {
     text-decoration: none;
-    color: $color-caribbean-green;
+    color: $color-gossamer;
   }
 }

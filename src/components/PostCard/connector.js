@@ -4,7 +4,7 @@ import { getPostById } from 'store/selectors/getPostById'
 
 export function mapStateToProps (state, props) {
   return {
-    post: getPostById(state, props)
+    post2: getPostById(state, props)
   }
 }
 

@@ -19,8 +19,8 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
 }
 
 .dropdown {
-
   display: inline-block;
+  position: relative;
 
   &.has-triangle .dropdown-menu {
     overflow-y: visible;
@@ -41,35 +41,17 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   border-radius: 4px;
-  position: relative;
+  position: absolute;
   top: -6px;
   list-style: none;
+  display: none;
+  padding: 0;
 
   &.active {
     display: block;
     background-color: white;
     border: 1px solid $color-black-squeeze;
-  }
-
-  > li {
-    position: relative;
-
-    > div {
-      padding: 6px 15px;
-      min-width: 200px;
-    }
-
-    > a {
-      cursor: pointer;
-
-      img {
-        margin-right: 5px;
-      }
-
-      > * {
-        vertical-align: middle;
-      }
-    }
+    white-space: nowrap;    
   }
 
   .triangle {

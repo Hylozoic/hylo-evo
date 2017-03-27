@@ -1,3 +1,15 @@
+import { has } from 'lodash/fp'
+
+const bottomScrollPosition = () =>
+  document.body.scrollHeight - window.innerHeight
+
+export const viewportTop = () =>
+  has('pageYOffset', window)
+    ? window.pageYOffset
+    : document.documentElement.clientHeight
+      ? document.documentElement.scrollTop
+      : document.body.scrollTop
+
 export function position (element, parent) {
   let x = 0
   let y = 0
@@ -10,3 +22,8 @@ export function position (element, parent) {
 
   return {x, y}
 }
+
+export const isAtBottom = (offset, element) =>
+  (!element || element === window)
+    ? viewportTop() >= bottomScrollPosition() - offset
+    : element.scrollTop >= element.scrollHeight - element.offsetHeight - offset

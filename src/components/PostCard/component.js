@@ -2,11 +2,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Avatar from 'components/Avatar'
+import Dropdown2 from 'components/Dropdown2'
 import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
 import ShareButton from './ShareButton'
-import { personUrl, bgImageStyle } from 'util/index'
+import { personUrl, bgImageStyle, humanDate } from 'util/index'
 import CSSModules from 'react-css-modules'
 import styles from './component.scss'
 import samplePost from './samplePost'
@@ -15,15 +16,15 @@ const { shape, any, object, string, func, array } = React.PropTypes
 
 export default class PostCard extends React.Component {
   componentDidMount () {
-    const { id, fetchPost } = this.props
-    fetchPost(id)
+    // const { id, fetchPost } = this.props
+    // fetchPost(id)
   }
   render () {
-    const { post, className } = this.props
+    const { post, className, Dd } = this.props
     return <div styleName='card' className={className}>
-      <PostHeader post={post} />
-      <PostBody post={post} />
-      <PostFooter post={post} />
+      <PostHeader {...post} Dd={Dd} />
+      <PostBody {...post} />
+      <PostFooter {...post} />
     </div>
   }
 }
@@ -38,13 +39,18 @@ PostCard.propTypes = {
     upVotes: string,
     updated_at: string
   }),
+  Dd: object,
   fetchPost: func.isRequired
 }
 PostCard.defaultProps = {
   post: samplePost
 }
 
-export const PostHeader = CSSModules(({post: { author, updated_at, type, context, communities }}) => {
+export const PostHeader = CSSModules(({ author, updatedAt, type, context, communities, Dd }) => {
+  if (!Dd) {
+    Dd = Dropdown2
+  }
+
   return <div styleName='header'>
     <Avatar avatarUrl={author.avatarUrl} url={personUrl(author)} styleName='avatar' />
     <div styleName='headerText'>
@@ -52,7 +58,7 @@ export const PostHeader = CSSModules(({post: { author, updated_at, type, context
       {author.title && <span styleName='userTitle'>{author.title}</span>}
       <div>
         <span className='timestamp'>
-          {updated_at}{context && <span styleName='spacer'>•</span>}
+          {humanDate(updatedAt)}{context && <span styleName='spacer'>•</span>}
         </span>
         {context && <Link to='/' styleName='context'>
           {context}
@@ -61,34 +67,40 @@ export const PostHeader = CSSModules(({post: { author, updated_at, type, context
     </div>
     <div styleName='upperRight'>
       {type && <PostLabel type={type} styleName='label' />}
-      <a href='' styleName='menuLink'><Icon name='More' /></a>
+      <Dd toggleChildren={<Icon name='More' />} triangle>
+        <li><Icon name='Home' />Pin</li>
+        <li><Icon name='Home' />Flag</li>
+        <li><Icon name='Home' />Delete</li>
+        <li>Other</li>
+        <li><Icon name='Home' />Mark as complete</li>
+      </Dd>
     </div>
   </div>
 }, styles)
 
-export const PostBody = CSSModules(({ post, post: { linkPreview } }) => {
+export const PostBody = CSSModules(({ title, description, imageUrl, linkPreview }) => {
   // TODO: Present description as HTML and sanitize
-  const truncated = post.description &&
-    post.description.length > 147
-    ? post.description.slice(0, 144) + '...'
-    : post.description
+  const truncated = description &&
+    description.length > 147
+    ? description.slice(0, 144) + '...'
+    : description
 
   return <div styleName='body'>
-    {post.imageUrl && <img src={post.imageUrl} styleName='image' />}
-    <div styleName='title' className='hdr-headline'>{post.title}</div>
+    {imageUrl && <div style={bgImageStyle(imageUrl)} styleName='image' />}
+    <div styleName='title' className='hdr-headline'>{title}</div>
     {truncated && <div styleName='description'>{truncated}</div>}
-    {linkPreview && <LinkPreview linkPreview={linkPreview} />}
+    {linkPreview && <LinkPreview {...linkPreview} />}
   </div>
 }, styles)
 
-export const LinkPreview = CSSModules(({ linkPreview }) => {
-  const domain = (new window.URL(linkPreview.url)).hostname.replace('www.', '')
+export const LinkPreview = CSSModules(({ title, url, imageUrl }) => {
+  const domain = (new window.URL(url)).hostname.replace('www.', '')
   return <div styleName='cardPadding'>
     <div styleName='linkPreview'>
-      <a href={linkPreview.url} target='_blank'>
-        <div style={bgImageStyle(linkPreview.imageUrl)} styleName='previewImage' />
+      <a href={url} target='_blank'>
+        <div style={bgImageStyle(imageUrl)} styleName='previewImage' />
         <div styleName='previewText'>
-          <span styleName='previewTitle'>{linkPreview.title}</span>
+          <span styleName='previewTitle'>{title}</span>
           <div styleName='previewDomain'>{domain}</div>
         </div>
       </a>
@@ -96,20 +108,31 @@ export const LinkPreview = CSSModules(({ linkPreview }) => {
   </div>
 }, styles)
 
-export const PostFooter = CSSModules(({ post }) => {
-  const { commenters, commentersTotal } = post
-  const firstName = person => person.name.split(' ')[0]
-  const blurb = `${firstName(commenters[0])}, ${firstName(commenters[1])}, and ${commentersTotal - 2} others`
+export const commentCaption = (commenters, commentersTotal) => {
+  var names = ''
+  if (commenters.length === 0) {
+    return 'Be the first to comment'
+  } else if (commenters.length === 1) {
+    names = commenters[0].firstName
+  } else if (commenters.length === 2) {
+    names = `${commenters[0].firstName} and ${commenters[1].firstName}`
+  } else {
+    names = `${commenters[0].firstName}, ${commenters[1].firstName} and ${commentersTotal - 2} others`
+  }
+  return `${names} commented`
+}
+
+export const PostFooter = CSSModules(({ id, commenters, commentersTotal, voteCount }) => {
   return <div styleName='footer'>
-    <PeopleImages imageUrls={commenters.slice(0, 5).map(c => c.avatarUrl)} styleName='people' />
-    <span className='caption-lt-lg'>{blurb} commented</span>
-    <div styleName='share'><ShareButton post={post} /></div>
-    <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{post.voteCount}</a></div>
+    <PeopleImages imageUrls={commenters.map(c => c.avatarUrl)} styleName='people' />
+    <span className='caption-lt-lg'>{commentCaption(commenters, commentersTotal)}</span>
+    <div styleName='share'><ShareButton postId={id} /></div>
+    <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{voteCount}</a></div>
   </div>
 }, styles)
 
 export function PeopleImages ({ imageUrls, className }) {
-  const images = imageUrls.map(url =>
-    <RoundImage url={url} key={url} medium overlaps />)
+  const images = imageUrls.map((url, i) =>
+    <RoundImage url={url} key={i} medium overlaps />)
   return <div className={className}>{images}</div>
 }
