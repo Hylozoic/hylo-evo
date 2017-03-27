@@ -1,5 +1,4 @@
 import { each } from 'lodash'
-import { combineReducers } from 'redux'
 
 import { ADD_COMMENTS, ADD_COMMUNITIES, ADD_PEOPLE, ADD_POSTS } from 'store/constants'
 import { orm } from 'store/models'
@@ -13,19 +12,23 @@ export default function ormReducer (state = {}, action) {
 
   switch (type) {
     case ADD_COMMENTS:
-      each(payload, comment => Comment.create(comment))
+      each(payload, comment =>
+        Comment.hasId(comment.id) ? Comment.update(comment) : Comment.create(comment))
       break
 
     case ADD_COMMUNITIES:
-      each(payload, community => Community.create(community))
+      each(payload, community =>
+        Community.hasId(community.id) ? Community.update(community) : Community.create(community))
       break
 
     case ADD_PEOPLE:
-      each(payload, person => Person.create(person))
+      each(payload, person =>
+        Person.hasId(person.id) ? Person.update(person) : Person.create(person))
       break
 
     case ADD_POSTS:
-      each(payload, post => Post.create(post))
+      each(payload, post =>
+        Post.hasId(post.id) ? Post.update(post) : Post.create(post))
       break
   }
 
