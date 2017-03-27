@@ -1,4 +1,4 @@
-import { curry, isEmpty } from 'lodash'
+import { curry, each, isEmpty } from 'lodash'
 
 import transformComment from '../transformers/commentTransformer'
 import transformCommunity from '../transformers/communityTransformer'
@@ -51,11 +51,11 @@ function getRelations (rawPosts) {
 }
 
 function dispatchRelations (dispatch, relations) {
-  Object.keys(relations).forEach(key => {
-    if (!isEmpty(relations[key])) {
+  each(relations, (relation, key) => {
+    if (!isEmpty(relation)) {
       dispatch({
         type: `ADD_${key.toUpperCase()}`,
-        payload: relations[key]
+        payload: relation
       })
     }
   })
