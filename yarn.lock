@@ -1994,6 +1994,12 @@ domutils@1.5.1, domutils@^1.5.1:
     dom-serializer "0"
     domelementtype "1"
 
+dotenv-safe@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/dotenv-safe/-/dotenv-safe-4.0.3.tgz#3c98f69f6072f7b2d0df120a65add27ac2550029"
+  dependencies:
+    dotenv "^4.0.0"
+
 dotenv-webpack@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/dotenv-webpack/-/dotenv-webpack-1.4.3.tgz#f2ff3841e22d360807648d1a070d7fb22b8e2a02"

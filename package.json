@@ -63,6 +63,7 @@
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",
     "css-modules-require-hook": "^4.0.6",
+    "dotenv-safe": "^4.0.3",
     "dotenv-webpack": "^1.4.3",
     "enzyme": "^2.7.1",
     "express": "^4.15.2",

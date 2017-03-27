@@ -1,6 +1,4 @@
-// import fetch from 'isomorphic-fetch'
-import { upstreamHost } from '../../config'
-import samplePostApi from './normalizingMiddleware.test.json'
+import fetch from 'isomorphic-fetch'
 
 export default function apiMiddleware (req) {
   return store => next => action => {
@@ -19,38 +17,30 @@ export default function apiMiddleware (req) {
   }
 }
 
-// FIXME: For now disable proxy through window.location.origin
-//        and go directly to API host in both client and server modes
-// export const HOST = typeof window === 'undefined'
-//   ? upstreamHost
-//   : window.location.origin
-export const HOST = upstreamHost
+export const HOST = typeof window === 'undefined'
+  ? process.env.API_HOST
+  : window.location.origin
 
-// FIXME: Temporarily hardcoding the API response to a samplePostApi
-//        for testing purposes
 export function fetchJSON (path, params, options = {}) {
-  return samplePostApi.data.me.posts
+  const fetchURL = (options.host || HOST) + path
+  const fetchOptions = {
+    method: options.method || 'get',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Cookie': options.cookie
+    },
+    credentials: 'same-origin',
+    body: JSON.stringify(params)
+  }
+  const processResults = (resp) => {
+    let { status, statusText, url } = resp
+    if (status === 200) return resp.json()
+    return resp.text().then(body => {
+      let error = new Error(body)
+      error.response = {status, statusText, url, body}
+      throw error
+    })
+  }
+  return fetch(fetchURL, fetchOptions).then(processResults)
 }
-// export function fetchJSON (path, params, options = {}) {
-//   const fetchURL = (options.host || HOST) + path
-//   const fetchOptions = {
-//     method: options.method || 'get',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json',
-//       'Cookie': options.cookie
-//     },
-//     credentials: 'same-origin',
-//     body: JSON.stringify(params)
-//   }
-//   const processResults = (resp) => {
-//     let { status, statusText, url } = resp
-//     if (status === 200) return resp.json()
-//     return resp.text().then(body => {
-//       let error = new Error(body)
-//       error.response = {status, statusText, url, body}
-//       throw error
-//     })
-//   }
-//   return fetch(fetchURL, fetchOptions).then(processResults)
-// }
