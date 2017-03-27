@@ -1,4 +1,4 @@
-import { attr, Model } from 'redux-orm'
+import { attr, many, Model } from 'redux-orm'
 
 export default class Community extends Model {
   toString () {
@@ -10,5 +10,6 @@ Community.modelName = 'Community'
 
 Community.fields = {
   id: attr(),
-  name: attr()
+  name: attr(),
+  members: many('Person')
 }

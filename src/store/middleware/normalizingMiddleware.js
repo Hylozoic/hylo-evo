@@ -1,8 +1,6 @@
 import { castArray, curry, each, isEmpty } from 'lodash'
 
-import transformComment from '../transformers/commentTransformer'
-import transformCommunity from '../transformers/communityTransformer'
-import transformPost from '../transformers/postTransformer'
+import transformer from '../transformers'
 import { FETCH_POSTS } from '../constants'
 
 export default function transformMiddleware ({dispatch, getState}) {
@@ -38,13 +36,13 @@ function getRelations (rawPosts) {
 
   rawPosts.forEach(post => {
     if (post.comments) {
-      getComments(post.comments, transformComment)
+      getComments(post.comments, 'Comment')
       getPeople(post.comments.map(c => c.creator), null)
     }
-    if (post.communities) getCommunities(post.communities, transformCommunity)
+    if (post.communities) getCommunities(post.communities, 'Community')
     if (post.followers) getPeople(post.followers, null)
     if (post.creator) getPeople(post.creator, null)
-    getPosts(post, transformPost)
+    getPosts(post, 'Post')
   })
 
   return relations
@@ -67,10 +65,10 @@ function addRelation (realtions, entities, transformer) {
   Object.assign(realtions, transform(entities, transformer))
 }
 
-function transform (entities, transformer) {
+function transform (entities, entityType) {
   return [ ...castArray(entities) ]
     .reduce((acc, entity) => {
-      acc[entity.id] = transformer ? transformer(entity) : entity
+      acc[entity.id] = entityType ? transformer(entity, entityType) : entity
       return acc
     }, {})
 }
