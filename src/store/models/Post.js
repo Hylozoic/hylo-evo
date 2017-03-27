@@ -2,9 +2,19 @@ import { attr, fk, many, Model } from 'redux-orm'
 
 const fields = {
   id: attr(),
-  name: attr(),
+  title: attr(),
+  type: attr(),
+  details: attr(),
   creator: fk('Person'),
-  communities: many('Community')
+  followers: many('Person'),
+  communities: many('Community'),
+  communitiesTotal: attr(),
+  comments: many('Comment'),
+  commentsTotal: attr(),
+  createdAt: attr(),
+  startsAt: attr(),
+  endsAt: attr(),
+  fulfilledAt: attr()
 }
 
 export default class Post extends Model {
