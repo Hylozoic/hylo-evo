@@ -5,7 +5,7 @@ export default function apiMiddleware (req) {
     const { payload, meta } = action
     if (!payload || !payload.api) return next(action)
 
-    const { path, params, method } = payload
+    const { path, params, method } = payload.api
     const cookie = req && req.headers.cookie
     let promise = fetchJSON(path, params, {method, cookie})
 

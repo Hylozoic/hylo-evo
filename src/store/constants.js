@@ -16,3 +16,5 @@ export const UPDATE_PERSON = 'UPDATE_PERSON'
 export const ADD_POSTS = 'ADD_POSTS'
 export const DELETE_POST = 'DELETE_POST'
 export const UPDATE_POST = 'UPDATE_POST'
+
+export const LOGIN = 'LOGIN'
