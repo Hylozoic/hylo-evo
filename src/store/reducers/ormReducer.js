@@ -1,23 +1,33 @@
-import { orm } from '../models'
-import { FETCH_POSTS } from 'store/constants'
+import { each } from 'lodash'
+import { combineReducers } from 'redux'
 
-export default function ormReducer (state, action) {
+import { ADD_COMMENTS, ADD_COMMUNITIES, ADD_PEOPLE, ADD_POSTS } from 'store/constants'
+import { orm } from 'store/models'
+
+export default function ormReducer (state = {}, action) {
+  const { error, type, payload } = action
+  if (error) return state
+
   const session = orm.session(state)
-
-  const { type, payload } = action
-
-  // Session-specific Models are available
-  // as properties on the Session instance.
-  const { Post } = session
+  const { Comment, Community, Person, Post } = session
 
   switch (type) {
-    case FETCH_POSTS:
-      Post.parse(payload)
+    case ADD_COMMENTS:
+      each(payload, comment => Comment.create(comment))
+      break
+
+    case ADD_COMMUNITIES:
+      each(payload, community => Community.create(community))
+      break
+
+    case ADD_PEOPLE:
+      each(payload, person => Person.create(person))
+      break
+
+    case ADD_POSTS:
+      each(payload, post => Post.create(post))
       break
   }
 
-  // the state property of Session always points to the current database.
-  // Updates don't mutate the original state, so this reference is not
-  // equal to `dbState` that was an argument to this reducer.
   return session.state
 }
