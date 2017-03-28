@@ -31,7 +31,6 @@ export default function PrimaryLayout ({ match, location }) {
       {/* TODO: is using render here the best way to pass params to a route? */}
       <Route path='/' render={() => <Navigation collapsed={hasDetail} location={location} />} />
       <div styleName='p.content'>
-        <HyloEditor />
         <Route path='/' exact component={() => <Feed community={SAMPLE_COMMUNITY} currentUser={SAMPLE_USER} />} />
         <Route path='/events' component={Events} />
       </div>

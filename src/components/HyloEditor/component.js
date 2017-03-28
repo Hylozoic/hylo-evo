@@ -3,11 +3,11 @@ import Editor from 'draft-js-plugins-editor'
 import createMentionPlugin from 'draft-js-mention-plugin'
 import createHashtagPlugin from 'draft-js-hashtag-plugin'
 import { EditorState } from 'draft-js'
+import 'draft-js/dist/Draft.css'
 import 'draft-js-mention-plugin/lib/plugin.css'
 import 'draft-js-hashtag-plugin/lib/plugin.css'
+import './component.scss'
 
-// Creates an Instance. At this step, a configuration object can be passed in
-// as an argument.
 const hashtagPlugin = createHashtagPlugin()
 const mentionPlugin = createMentionPlugin()
 
@@ -38,18 +38,17 @@ export default class HyloEditor extends Component {
   render () {
     const { editorState } = this.state
     const { mentionResults } = this.props
+    const placeholder = "Hi Axolotl, what's on your mind?"
+
     return <div styleName='editor'>
-      <h2>Hylo Editor</h2>
       <Editor
         editorState={editorState}
-        placeholder='Enter your request'
+        placeholder={placeholder}
         onChange={this.onChange}
-        plugins={plugins}
-      />
+        plugins={plugins} />
       <MentionSuggestions
         onSearchChange={this.onSearchChange}
-        suggestions={mentionResults}
-      />
+        suggestions={mentionResults} />
     </div>
   }
 }

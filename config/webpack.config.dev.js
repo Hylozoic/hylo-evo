@@ -95,7 +95,7 @@ module.exports = {
       },
       // Simple CSS loading for node_modules fond CSS (need in particular for draft-js-plugins-editor styles)
       {
-        test: /plugin\.css$/,
+        test: /draft-js.*\.css$/,
         use: [
           'style-loader',
           'css-loader'
@@ -104,7 +104,7 @@ module.exports = {
       // CSS Modules for all SASS files not in resources or global
       {
         test: /\.(css|scss|sass)$/,
-        exclude: /plugin\.css$/,
+        exclude: /draft-js.*\.css$/,
         use: [
           {
             loader: 'style-loader'

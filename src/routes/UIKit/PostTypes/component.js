@@ -1,5 +1,6 @@
 import React from 'react'
 import PostCard from 'components/PostCard'
+import HyloEditor from 'components/HyloEditor'
 import ShareButton from 'components/PostCard/ShareButton'
 import { omit } from 'lodash/fp'
 import Dropdown from 'components/Dropdown'
@@ -100,6 +101,8 @@ export default function PostTypes (props) {
     <div className='sheet'>
       <div className='sheet-title'>Post Types</div>
       <div styleName='postCards'>
+        <HyloEditor />
+
         <PostCard post={SAMPLE_POST} styleName='postCard' Dd={Dropdownf} />
         <PostCard post={SAMPLE_POST_WITH_IMAGE} styleName='postCard' Dd={Dropdownf} />
         <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='postCard' Dd={Dropdownf} />
