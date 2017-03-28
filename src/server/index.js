@@ -3,6 +3,7 @@ import express from 'express'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import appMiddleware from './appMiddleware'
+import apiProxy from './apiProxy'
 
 global.SERVER_SIDE_RENDERING = true
 
@@ -13,6 +14,7 @@ export default function () {
   server.use(cookieParser())
   server.use(compression())
   server.use(express.static('build'))
+  server.use(apiProxy)
   server.use(appMiddleware)
 
   const listener = server.listen(port, err => {

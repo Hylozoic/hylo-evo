@@ -1,6 +1,7 @@
 // this file sets up an environment that allows us to do server-side rendering
 // without webpack.
 
+import dotenv from 'dotenv-safe'
 import { join } from 'path'
 import { addPath } from 'app-module-path'
 import scss from 'postcss-scss'
@@ -10,6 +11,8 @@ import root from 'root-path'
 
 const startTime = new Date().getTime()
 export default startTime
+
+dotenv.load()
 
 // allow files to require or import paths that are relative to src/ (duplicate
 // the effect of resolve.modules in webpack config)
