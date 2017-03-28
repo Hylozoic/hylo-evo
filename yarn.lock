@@ -1994,6 +1994,12 @@ domutils@1.5.1, domutils@^1.5.1:
     dom-serializer "0"
     domelementtype "1"
 
+dotenv-safe@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/dotenv-safe/-/dotenv-safe-4.0.3.tgz#3c98f69f6072f7b2d0df120a65add27ac2550029"
+  dependencies:
+    dotenv "^4.0.0"
+
 dotenv-webpack@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/dotenv-webpack/-/dotenv-webpack-1.4.3.tgz#f2ff3841e22d360807648d1a070d7fb22b8e2a02"
@@ -5681,6 +5687,10 @@ redux-logger@^2.10.2:
   resolved "https://registry.yarnpkg.com/redux-logger/-/redux-logger-2.10.2.tgz#3c5a5f0a6f32577c1deadf6655f257f82c6c3937"
   dependencies:
     deep-diff "0.3.4"
+
+redux-mock-store@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/redux-mock-store/-/redux-mock-store-1.2.2.tgz#38007dc38f12ca8d965c7521afee5ccacc234d03"
 
 redux-orm@^0.9.0-rc.3:
   version "0.9.0-rc.3"

@@ -1,6 +1,5 @@
 import React from 'react'
 import './component.scss'
-import { SAMPLE_FEED_ITEMS, SAMPLE_COMMUNITY } from './sampleData'
 import FeedItem from 'components/FeedItem'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
@@ -10,8 +9,7 @@ import { bgImageStyle } from 'util/index'
 
 export default class Feed extends React.Component {
   static defaultProps = {
-    feedItems: SAMPLE_FEED_ITEMS,
-    community: SAMPLE_COMMUNITY
+    feedItems: []
   }
 
   render () {

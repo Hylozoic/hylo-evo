@@ -4,7 +4,7 @@ var req, res
 
 beforeEach(() => {
   req = {
-    url: '/'
+    url: '/login'
   }
 
   res = {

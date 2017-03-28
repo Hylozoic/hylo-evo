@@ -1,62 +1,37 @@
 import { attr, fk, many, Model } from 'redux-orm'
-import { fakePerson } from 'components/PostCard/samplePost'
 
-const fields = {
-  id: attr(),
-  name: attr(),
-  author: fk('Person'),
-  communities: many('Community')
+export class PostFollower extends Model {}
+PostFollower.modelName = 'PostFollower'
+PostFollower.fields = {
+  post: fk('Post', 'postfollowers'),
+  follower: fk('Person', 'postfollowers')
 }
 
 export default class Post extends Model {
-  static parse (postData) {
-    const {
-      id,
-      community_ids,
-      description,
-      name,
-      user_id
-    } = postData
-
-    this.processRelations(postData)
-
-    return this.create({
-      id,
-      title: name,
-      description,
-      author: user_id,
-      communities: community_ids,
-      comments: postData.comments.map(c => c.id),
-      commenters: fakePerson(3),
-      commentersTotal: 77
-    })
-  }
-
-  static processRelations ({ comments, communities, people }) {
-    const { Comment, Community, Person } = this.session
-    comments.forEach(c => Comment.parse(c))
-    communities.forEach(c => Community.parse(c))
-    people.forEach(p => Person.parse(p))
-  }
-
-  // TODO: Might need to get much more fine-grained than this, depending on what
-  // the API expects (including re-hydrating arrays of relations).
-  toJSON () {
-    const { id, author, comments, communities, description, name } = this.ref
-    return JSON.stringify({
-      id,
-      user_id: author,
-      comments,
-      community_ids: communities,
-      description,
-      name
-    })
-  }
-
   toString () {
     return `Post: ${this.name}`
   }
 }
 
 Post.modelName = 'Post'
-Post.fields = fields
+Post.fields = {
+  id: attr(),
+  title: attr(),
+  type: attr(),
+  details: attr(),
+  creator: fk('Person'),
+  followers: many({
+    to: 'Person',
+    relatedName: 'posts',
+    through: 'PostFollower',
+    throughFields: [ 'post', 'follower' ]
+  }),
+  communities: many('Community'),
+  communitiesTotal: attr(),
+  comments: many('Comment'),
+  commentsTotal: attr(),
+  createdAt: attr(),
+  startsAt: attr(),
+  endsAt: attr(),
+  fulfilledAt: attr()
+}

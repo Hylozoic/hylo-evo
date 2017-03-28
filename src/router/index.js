@@ -5,6 +5,10 @@ import { Switch, Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 import PrimaryLayout from '../routes/PrimaryLayout'
 import UIKit from '../routes/UIKit'
+import AuthRoute from './AuthRoute'
+import NonAuthRoute from './NonAuthRoute'
+import Login from 'routes/Login'
+import '../css/global/index.scss'
 
 export function clientRouter () {
   return <ConnectedRouter history={createHistory()}>
@@ -21,6 +25,7 @@ export function serverRouter (req, context) {
 function rootRoutes () {
   return <Switch>
     <Route path='/ui-kit' component={UIKit} />
-    <Route path='/' component={PrimaryLayout} />
+    <NonAuthRoute path='/login' component={Login} />
+    <AuthRoute path='/' component={PrimaryLayout} />
   </Switch>
 }

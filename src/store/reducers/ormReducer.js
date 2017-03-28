@@ -1,23 +1,48 @@
-import { orm } from '../models'
-import { FETCH_POST } from 'store/constants'
+import { each } from 'lodash'
 
-export default function ormReducer (state, action) {
+import * as a from 'store/constants'
+import { orm } from 'store/models'
+
+export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
+  const { Comment, Community, Person, Post } = session
+  const { payload, type } = action
 
-  const { type, payload } = action
-
-  // Session-specific Models are available
-  // as properties on the Session instance.
-  const { Post } = session
+  const add = addEntities(payload)
+  const update = updateEntity(payload)
+  const del = deleteEntity(payload)
 
   switch (type) {
-    case FETCH_POST:
-      Post.parse(payload)
-      break
+    case a.ADD_COMMENTS: add(Comment); break
+    case a.UPDATE_COMMENT: update(Comment); break
+    case a.DELETE_COMMENT: del(Comment); break
+
+    case a.ADD_COMMUNITIES: add(Community); break
+    case a.UPDATE_COMMUNITY: update(Community); break
+    case a.DELETE_COMMUNITY: del(Community); break
+
+    case a.ADD_PEOPLE: add(Person); break
+    case a.UPDATE_PERSON: update(Person); break
+    case a.DELETE_PERSON: del(Person); break
+
+    case a.ADD_POSTS: add(Post); break
+    case a.UPDATE_POST: update(Post); break
+    case a.DELETE_POST: del(Post); break
   }
 
-  // the state property of Session always points to the current database.
-  // Updates don't mutate the original state, so this reference is not
-  // equal to `dbState` that was an argument to this reducer.
   return session.state
+}
+
+function addEntities (payload) {
+  return model =>
+    each(payload, entity =>
+      model.hasId(entity.id) ? model.update(entity) : model.create(entity))
+}
+
+function deleteEntity (payload) {
+  return model => model.withId(payload.id).delete()
+}
+
+function updateEntity (payload) {
+  return model => model.withId(payload.id).update(payload)
 }
