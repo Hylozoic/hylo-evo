@@ -35,8 +35,8 @@ export default class HyloEditor extends Component {
     }
   }
 
-  handleEditorStateUpdate = (editorState) => {
-    // if (this.props.debug) console.log(stateToHTML(editorState))
+  handleEditorChange = (editorState) => {
+    if (this.props.debug) console.log(stateToHTML(editorState.getCurrentContent()))
     this.setState({ editorState })
   }
 
@@ -49,7 +49,7 @@ export default class HyloEditor extends Component {
     return <div styleName='wrapper' className={this.props.className}>
       <Editor
         editorState={this.state.editorState}
-        onChange={this.handleEditorStateUpdate}
+        onChange={this.handleEditorChange}
         placeholder={this.props.placeholder}
         plugins={plugins} />
       <MentionSuggestions

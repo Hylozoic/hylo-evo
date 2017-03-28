@@ -9,8 +9,6 @@ const TITLE_PLACEHOLDER = 'What’s on your mind?'
 const BODY_PLACEHOLDER = 'Add a description'
 
 export default class PostEditor extends React.Component {
-  static propTypes = {}
-
   constructor (props) {
     super(props)
     this.state = {
