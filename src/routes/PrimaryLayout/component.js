@@ -1,21 +1,10 @@
-<<<<<<< HEAD
-/* eslint-disable no-unused-vars */
-import React, { Component } from 'react'
-import { matchPath, Route, Link } from 'react-router-dom'
-import cx from 'classnames'
-=======
+
 import React, { PropTypes, Component } from 'react'
 import { matchPath, Route } from 'react-router-dom'
->>>>>>> master
+import cx from 'classnames'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
-import HyloEditor from 'components/HyloEditor'
 import Sidebar from './components/Sidebar'
-<<<<<<< HEAD
-import { get } from 'lodash/fp'
-=======
-import cx from 'classnames'
->>>>>>> master
 import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
