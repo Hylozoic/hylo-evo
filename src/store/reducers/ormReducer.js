@@ -7,7 +7,6 @@ export default function ormReducer (state = {}, action) {
   const { payload, type } = action
   const session = orm.session(state)
   const { Comment, Community, Person, Post } = session
-  const { type, payload } = action
 
   switch (type) {
     case a.ADD_COMMENTS:
