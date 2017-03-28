@@ -1,5 +1,4 @@
 export const FETCH_POSTS = 'FETCH_POSTS'
-export const SEND_GRAPHQL_QUERY = 'SEND_GRAPHQL_QUERY'
 
 export const ADD_COMMENTS = 'ADD_COMMENTS'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
