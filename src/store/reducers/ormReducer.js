@@ -4,63 +4,42 @@ import * as a from 'store/constants'
 import { orm } from 'store/models'
 
 export default function ormReducer (state = {}, action) {
-  const { payload, type } = action
   const session = orm.session(state)
   const { Comment, Community, Person, Post } = session
+  const { payload, type } = action
+
+  const add = addEntities(payload)
+  const update = updateEntity(payload)
+  const del = deleteEntity(payload)
 
   switch (type) {
-    case a.ADD_COMMENTS:
-      each(payload, comment =>
-        Comment.hasId(comment.id) ? Comment.update(comment) : Comment.create(comment))
-      break
-
-    case a.DELETE_COMMENT:
-      Comment.withId(payload.id).delete()
-      break
-
-    case a.UPDATE_COMMENT:
-      Comment.withId(payload.id).update(payload)
-      break
-
-    case a.ADD_COMMUNITIES:
-      each(payload, community =>
-        Community.hasId(community.id) ? Community.update(community) : Community.create(community))
-      break
-
-    case a.DELETE_COMMUNITY:
-      Community.withId(payload.id).delete()
-      break
-
-    case a.UPDATE_COMMUNITY:
-      Community.withId(payload.id).update(payload)
-      break
-
-    case a.ADD_PEOPLE:
-      each(payload, person =>
-        Person.hasId(person.id) ? Person.update(person) : Person.create(person))
-      break
-
-    case a.DELETE_PERSON:
-      Person.withId(payload.id).delete()
-      break
-
-    case a.UPDATE_PERSON:
-      Person.withId(payload.id).update(payload)
-      break
-
-    case a.ADD_POSTS:
-      each(payload, post =>
-        Post.hasId(post.id) ? Post.update(post) : Post.create(post))
-      break
-
-    case a.DELETE_POST:
-      Post.withId(payload.id).delete()
-      break
-
-    case a.UPDATE_POST:
-      Post.withId(payload.id).update(payload)
-      break
+    case a.ADD_COMMENTS: add(Comment); break
+    case a.ADD_COMMUNITIES: add(Community); break
+    case a.ADD_PEOPLE: add(Person); break
+    case a.ADD_POSTS: add(Post); break
+    case a.UPDATE_COMMENT: update(Comment); break
+    case a.UPDATE_COMMUNITY: update(Community); break
+    case a.UPDATE_PERSON: update(Person); break
+    case a.UPDATE_POST: update(Post); break
+    case a.DELETE_COMMENT: del(Comment); break
+    case a.DELETE_COMMUNITY: del(Community); break
+    case a.DELETE_PERSON: del(Person); break
+    case a.DELETE_POST: del(Post); break
   }
 
   return session.state
+}
+
+function addEntities (payload) {
+  return model =>
+    each(payload, entity =>
+      model.hasId(entity.id) ? model.update(entity) : model.create(entity))
+}
+
+function deleteEntity (payload) {
+  return model => model.withId(payload.id).delete()
+}
+
+function updateEntity (payload) {
+  return model => model.withId(payload.id).update(payload)
 }
