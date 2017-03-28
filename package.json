@@ -44,6 +44,7 @@
     "react-router-test-context": "^0.1.0",
     "recursive-readdir": "2.1.0",
     "redux-logger": "^2.10.2",
+    "redux-mock-store": "^1.2.2",
     "strip-ansi": "3.0.1",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
@@ -62,6 +63,7 @@
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",
     "css-modules-require-hook": "^4.0.6",
+    "dotenv-safe": "^4.0.3",
     "dotenv-webpack": "^1.4.3",
     "draft-js": "^0.10.0",
     "draft-js-export-html": "^0.5.2",
@@ -166,5 +168,6 @@
       "it",
       "jest"
     ]
-  }
+  },
+  "proxy": "http://localhost:3001"
 }

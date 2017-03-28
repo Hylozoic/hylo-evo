@@ -2,19 +2,22 @@ import { compact } from 'lodash'
 import { applyMiddleware, compose } from 'redux'
 import createLogger from 'redux-logger'
 import promiseMiddleware from 'redux-promise'
-
+import graphqlMiddleware from './graphql'
 import apiMiddleware from './apiMiddleware'
-import parserMiddleware from './parserMiddleware'
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+import normalizingMiddleware from './normalizingMiddleware'
 
 const middleware = compact([
+  graphqlMiddleware,
   apiMiddleware(),
-  parserMiddleware,
+  normalizingMiddleware,
   promiseMiddleware,
   process.env.NODE_ENV === 'development' && createLogger({collapsed: true})
 ])
 
-export default composeEnhancers(
+const composeFn = typeof __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined'
+  ? __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line no-undef
+  : compose
+
+export default composeFn(
   applyMiddleware(...middleware)
 )
