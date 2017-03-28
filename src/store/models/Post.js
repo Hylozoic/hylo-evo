@@ -1,20 +1,10 @@
 import { attr, fk, many, Model } from 'redux-orm'
 
-const fields = {
-  id: attr(),
-  title: attr(),
-  type: attr(),
-  details: attr(),
-  creator: fk('Person'),
-  // followers: many('Person'),
-  communities: many('Community'),
-  communitiesTotal: attr(),
-  comments: many('Comment'),
-  commentsTotal: attr(),
-  createdAt: attr(),
-  startsAt: attr(),
-  endsAt: attr(),
-  fulfilledAt: attr()
+export class PostFollower extends Model {}
+PostFollower.modelName = 'PostFollower'
+PostFollower.fields = {
+  post: fk('Post', 'postfollowers'),
+  follower: fk('Person', 'postfollowers')
 }
 
 export default class Post extends Model {
@@ -24,4 +14,24 @@ export default class Post extends Model {
 }
 
 Post.modelName = 'Post'
-Post.fields = fields
+Post.fields = {
+  id: attr(),
+  title: attr(),
+  type: attr(),
+  details: attr(),
+  creator: fk('Person'),
+  followers: many({
+    to: 'Person',
+    relatedName: 'posts',
+    through: 'PostFollower',
+    throughFields: [ 'post', 'follower' ]
+  }),
+  communities: many('Community'),
+  communitiesTotal: attr(),
+  comments: many('Comment'),
+  commentsTotal: attr(),
+  createdAt: attr(),
+  startsAt: attr(),
+  endsAt: attr(),
+  fulfilledAt: attr()
+}
