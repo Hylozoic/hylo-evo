@@ -1,5 +1,5 @@
 import { each } from 'lodash'
-import { attr, fk, many } from 'redux-orm'
+import { fk, many } from 'redux-orm'
 
 import Comment from 'store/models/Comment'
 import Community from 'store/models/Community'
@@ -21,7 +21,6 @@ export default function transformer (entity, entityType) {
     ...entity
   }
 
-  const attrType = attr().constructor.name
   const fkType = fk().constructor.name
   const manyType = many().constructor.name
 

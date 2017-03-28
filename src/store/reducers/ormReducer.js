@@ -4,6 +4,7 @@ import * as a from 'store/constants'
 import { orm } from 'store/models'
 
 export default function ormReducer (state = {}, action) {
+  const { payload, type } = action
   const session = orm.session(state)
   const { Comment, Community, Person, Post } = session
 
