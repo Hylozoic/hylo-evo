@@ -1,8 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
+import Immutable from 'immutable'
 import Editor from 'draft-js-plugins-editor'
 import createMentionPlugin from 'draft-js-mention-plugin'
 import createHashtagPlugin from 'draft-js-hashtag-plugin'
 import { EditorState } from 'draft-js'
+import { stateToHTML } from 'draft-js-export-html'
 import 'draft-js/dist/Draft.css'
 import 'draft-js-mention-plugin/lib/plugin.css'
 import 'draft-js-hashtag-plugin/lib/plugin.css'
@@ -19,36 +21,41 @@ const plugins = [
 ]
 
 export default class HyloEditor extends Component {
+  static propTypes = {
+    mentionResults: PropTypes.instanceOf(Immutable.List),
+    placeholder: PropTypes.string,
+    className: PropTypes.string,
+    debug: PropTypes.bool
+  }
+
   constructor (props) {
     super(props)
-
     this.state = {
       editorState: EditorState.createEmpty()
     }
   }
 
-  onChange = (editorState) =>
-    this.setState({editorState})
+  handleEditorStateUpdate = (editorState) => {
+    // if (this.props.debug) console.log(stateToHTML(editorState))
+    this.setState({ editorState })
+  }
 
-  onSearchChange = ({ value }) => {
-    console.log(value)
+  handleMentionsSearch = ({ value }) => {
+    console.log('!!!', value)
     return this.props.findMentions(value)
   }
 
   render () {
-    const { editorState } = this.state
-    const { mentionResults } = this.props
-    const placeholder = "Hi Axolotl, what's on your mind?"
-
-    return <div styleName='editor'>
+    return <div styleName='wrapper' className={this.props.className}>
       <Editor
-        editorState={editorState}
-        placeholder={placeholder}
-        onChange={this.onChange}
+        editorState={this.state.editorState}
+        onChange={this.handleEditorStateUpdate}
+        placeholder={this.props.placeholder}
         plugins={plugins} />
       <MentionSuggestions
-        onSearchChange={this.onSearchChange}
-        suggestions={mentionResults} />
+        onSearchChange={this.handleMentionsSearch}
+        suggestions={this.props.mentionResults}
+        onClose={this.props.clearMentions} />
     </div>
   }
 }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { findMentions, getMentionResults } from './store'
+import { findMentions, clearMentions, getMentionResults } from './store'
 
 export function mapStateToProps (state, props) {
   return {
@@ -8,7 +8,8 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = {
-  findMentions
+  findMentions,
+  clearMentions
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)

@@ -14,10 +14,10 @@ export default function Avatar ({ url, avatarUrl, small, medium, className }) {
     <RoundImage url={avatarUrl} small={small} medium={medium} />
   </Link>
 }
-RoundImage.propTypes = {
+Avatar.propTypes = {
   url: string.isRequired,
+  avatarUrl: string,
   small: bool,
   medium: bool,
-  overlaps: bool,
   className: string
 }
