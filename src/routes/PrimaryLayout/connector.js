@@ -1,22 +1,12 @@
 import { connect } from 'react-redux'
 import { SAMPLE_COMMUNITY } from 'routes/Feed/sampleData'
+import { fetchCurrentUser } from './actions'
 
-const SAMPLE_USER = {
-  id: '1',
-  firstName: 'Axolotl',
-  lastName: 'Jones',
-  avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
-}
-
-function mapStateToProps (state) {
+function mapStateToProps ({currentUser}) {
   return {
     community: SAMPLE_COMMUNITY,
-    currentUser: SAMPLE_USER
+    currentUser
   }
 }
 
-function mapDispatchToProps (dispatch, props) {
-  return {}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)
+export default connect(mapStateToProps, {fetchCurrentUser})

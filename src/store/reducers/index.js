@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
-import { CHECK_LOGIN, LOGIN } from 'store/constants'
+import { CHECK_LOGIN, FETCH_CURRENT_USER, LOGIN } from 'store/constants'
 
 import ormReducer from './ormReducer'
 
@@ -14,6 +14,11 @@ export default combineReducers({
       case LOGIN: return true
       case CHECK_LOGIN: return !!payload.signedIn
     }
+    return state
+  },
+
+  currentUser: (state = {}, { type, error, payload }) => {
+    if (!error && type === FETCH_CURRENT_USER) return payload.data.me
     return state
   }
 })

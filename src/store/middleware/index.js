@@ -2,11 +2,12 @@ import { compact } from 'lodash'
 import { applyMiddleware, compose } from 'redux'
 import createLogger from 'redux-logger'
 import promiseMiddleware from 'redux-promise'
-
+import graphqlMiddleware from './graphql'
 import apiMiddleware from './apiMiddleware'
 import normalizingMiddleware from './normalizingMiddleware'
 
 const middleware = compact([
+  graphqlMiddleware,
   apiMiddleware(),
   normalizingMiddleware,
   promiseMiddleware,

@@ -16,6 +16,11 @@ export default class PrimaryLayout extends Component {
     location: PropTypes.object
   }
 
+  componentDidMount () {
+    // FIXME this doesn't belong here
+    this.props.fetchCurrentUser()
+  }
+
   render () {
     const { location, community, currentUser } = this.props
     const hasDetail = matchPath(location.pathname, {path: '/events/:eventId'})

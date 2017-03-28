@@ -6,7 +6,7 @@ const fields = {
   type: attr(),
   details: attr(),
   creator: fk('Person'),
-  followers: many('Person'),
+  // followers: many('Person'),
   communities: many('Community'),
   communitiesTotal: attr(),
   comments: many('Comment'),
