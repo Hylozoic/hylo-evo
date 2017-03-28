@@ -7,6 +7,12 @@ export default class Login extends React.Component {
     this.state = {}
   }
 
+  componentDidMount () {
+    // FIXME this should go somewhere else -- ideally in a parent route of the
+    // login page and the logged-in components
+    this.props.checkLogin()
+  }
+
   submit = () => {
     return this.props.login(this.state.email, this.state.password)
   }
