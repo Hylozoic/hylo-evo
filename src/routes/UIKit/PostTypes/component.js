@@ -3,11 +3,7 @@ import PostCard from 'components/PostCard'
 import PostEditor from 'components/PostEditor'
 import ShareButton from 'components/PostCard/ShareButton'
 import { omit } from 'lodash/fp'
-import Dropdown from 'components/Dropdown'
-import Dropdown2 from 'components/Dropdown2'
 import './component.scss'
-
-const Dropdownf = ({ toggleChildren }) => toggleChildren
 
 const rotateAndTrim = (arr, n) => arr.slice(n, arr.length).concat(arr.slice(0, n)).slice(0, 3)
 
@@ -105,11 +101,11 @@ export default function PostTypes (props) {
       </div>
       <div className='sheet-title'>Post Types</div>
       <div styleName='postCards'>
-        <PostCard post={SAMPLE_POST} styleName='postCard' Dd={Dropdownf} />
-        <PostCard post={SAMPLE_POST_WITH_IMAGE} styleName='postCard' Dd={Dropdownf} />
-        <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='postCard' Dd={Dropdownf} />
-        <PostCard post={SAMPLE_POST_WITH_LONG_DESCRIPTION} styleName='postCard' Dd={Dropdown} />
-        <PostCard post={SAMPLE_POST_WITH_PREVIEW} styleName='postCard' Dd={Dropdown2} />
+        <PostCard post={SAMPLE_POST} styleName='postCard' />
+        <PostCard post={SAMPLE_POST_WITH_IMAGE} styleName='postCard' />
+        <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='postCard' />
+        <PostCard post={SAMPLE_POST_WITH_LONG_DESCRIPTION} styleName='postCard' />
+        <PostCard post={SAMPLE_POST_WITH_PREVIEW} styleName='postCard' />
         <div><ShareButton post={SAMPLE_POST} /></div>
       </div>
     </div>
