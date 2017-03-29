@@ -2,6 +2,7 @@ import React from 'react'
 import cx from 'classnames'
 import { isEmpty } from 'lodash'
 import { position } from 'util/scrolling'
+import Icon from 'components/Icon'
 const { array, object, string, bool } = React.PropTypes
 import './component.scss'
 
@@ -20,46 +21,64 @@ export default class Dropdown extends React.Component {
 
   toggle = (event, context) => {
     this.setState({active: !this.state.active})
+    if (event) {
+      event.stopPropagation()
+      event.preventDefault()
+    }
+  }
+
+  hide = () => {
+    if (this.state.active) this.setState({active: false})
+    return true
+  }
+
+  componentDidMount () {
+    window.addEventListener('click', () => {
+      this.hide()
+    })
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('click', this.hide)
   }
 
   render () {
     const {
-      toggleChildren, children, className, triangle, alignRight
+      toggleChildren, items, className, triangle, alignRight
     } = this.props
-    const { hoverOpened } = this.state
-    const { isMobile } = this.context
-    const active = this.state.active && !isEmpty(children)
+    const active = this.state.active && !isEmpty(items)
     const styleName = cx('dropdown', {'has-triangle': triangle})
 
-    const ulProps = {
-      onClick: () => this.toggle(),
-      onMouseLeave: () => hoverOpened && this.toggle()
-    }
+    let children = items.map(item => <li styleName={item.onClick ? 'linkItem' : 'headerItem'}
+      onClick={item.onClick} key={item.label}>
+      {item.icon && <Icon styleName='icon' name={item.icon} />}
+      {item.label}
+    </li>)
 
-    let items
     if (triangle) {
       const triangleLi = <li styleName='triangle' key='triangle'
-        style={{left: findTriangleLeftPos(isMobile, this.refs.parent)}} />
-      items = [triangleLi].concat(children)
-    } else {
-      items = children
+        style={{left: findTriangleLeftPos(this.refs.parent)}} />
+      children = [triangleLi].concat(children)
     }
 
-    return <div styleName={styleName} className={className} ref='parent'
+    return <div className={className} styleName={styleName} ref='parent'
       onKeyDown={this.handleKeys}>
       <a styleName='dropdown-toggle' onClick={this.toggle}>
         {toggleChildren}
       </a>
-      <ul styleName={cx('dropdown-menu', {active, alignRight})} {...ulProps}>
-        {active && items}
-      </ul>
+      <div styleName='wrapper'>
+        <ul styleName={cx('dropdown-menu', {active, alignRight})}
+          onClick={() => this.toggle()}>
+          {active && children}
+        </ul>
+      </div>
     </div>
   }
 }
 
 const margin = 10
 
-const findTriangleLeftPos = (isMobile, parent) => {
-  if (!isMobile || !parent) return
-  return position(parent).x + parent.offsetWidth / 2 - margin - 1
+const findTriangleLeftPos = parent => {
+  if (!parent) return
+  return position(parent).x + parent.offsetWidth - margin - 1
 }
