@@ -13,6 +13,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-Trash:before {
+  content: "\e90c";
+}
+.icon-Pin:before {
+  content: "\e90d";
+}
+.icon-Complete:before {
+  content: "\e90e";
+}
+.icon-Flag:before {
+  content: "\e90f";
+}
 .icon-Location:before {
   content: "\e90b";
 }

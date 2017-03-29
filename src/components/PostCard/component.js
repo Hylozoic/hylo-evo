@@ -61,11 +61,11 @@ export const PostHeader = ({ author, updatedAt, type, context, communities }) =>
     <div styleName='upperRight'>
       {type && <PostLabel type={type} styleName='label' />}
       <Dropdown toggleChildren={<Icon name='More' />} triangle items={[
-        {icon: 'Home', label: 'Pin', onClick: () => console.log('Pin')},
-        {icon: 'Home', label: 'Flag', onClick: () => console.log('Flag')},
-        {icon: 'Home', label: 'Delete', onClick: () => console.log('Delete')},
+        {icon: 'Pin', label: 'Pin', onClick: () => console.log('Pin')},
+        {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')},
+        {icon: 'Trash', label: 'Delete', onClick: () => console.log('Delete')},
         {label: 'Other'},
-        {icon: 'Home', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
+        {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
       ]} />
     </div>
   </div>
