@@ -12,6 +12,10 @@ export default class Feed extends React.Component {
     feedItems: []
   }
 
+  componentDidMount () {
+    this.props.fetchPosts('hylo')
+  }
+
   render () {
     const { feedItems, community, currentUser } = this.props
 

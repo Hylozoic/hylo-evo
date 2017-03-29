@@ -8,6 +8,8 @@ export default function transformMiddleware ({dispatch, getState}) {
     if (action) {
       const { type, payload } = action
 
+      console.log('in transformMiddleware', action)
+
       switch (type) {
         case FETCH_POSTS:
           if (payload.length === 0) break
@@ -33,6 +35,8 @@ function getRelations (rawPosts) {
   const getCommunities = normalize(relations.communities)
   const getPeople = normalize(relations.people)
   const getPosts = normalize(relations.posts)
+
+  console.log('rawPosts', rawPosts)
 
   rawPosts.forEach(post => {
     if (post.comments) {

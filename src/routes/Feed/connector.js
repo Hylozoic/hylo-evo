@@ -1,14 +1,13 @@
 import { connect } from 'react-redux'
 import { SAMPLE_FEED_ITEMS } from './sampleData'
+import { fetchPosts } from './actions'
 
 function mapStateToProps (state) {
   return {
-    feedItems: SAMPLE_FEED_ITEMS
+    feedItems: state.posts
   }
 }
 
-function mapDispatchToProps (dispatch, props) {
-  return {}
-}
+export const mapDispatchToProps = { fetchPosts }
 
 export default connect(mapStateToProps, mapDispatchToProps)
