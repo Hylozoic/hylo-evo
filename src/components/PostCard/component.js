@@ -2,7 +2,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Avatar from 'components/Avatar'
-import Dropdown2 from 'components/Dropdown2'
+import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
@@ -18,9 +18,9 @@ export default class PostCard extends React.Component {
     // fetchPost(id)
   }
   render () {
-    const { post, className, Dd } = this.props
+    const { post, className } = this.props
     return <div styleName='card' className={className}>
-      <PostHeader {...post} Dd={Dd} />
+      <PostHeader {...post} />
       <PostBody {...post} />
       <PostFooter {...post} />
     </div>
@@ -37,18 +37,13 @@ PostCard.propTypes = {
     upVotes: string,
     updated_at: string
   }),
-  Dd: object,
   fetchPost: func
 }
 PostCard.defaultProps = {
   post: samplePost
 }
 
-export const PostHeader = ({ author, updatedAt, type, context, communities, Dd }) => {
-  if (!Dd) {
-    Dd = Dropdown2
-  }
-
+export const PostHeader = ({ author, updatedAt, type, context, communities }) => {
   return <div styleName='header'>
     <Avatar avatarUrl={author.avatarUrl} url={personUrl(author)} styleName='avatar' />
     <div styleName='headerText'>
@@ -65,13 +60,13 @@ export const PostHeader = ({ author, updatedAt, type, context, communities, Dd }
     </div>
     <div styleName='upperRight'>
       {type && <PostLabel type={type} styleName='label' />}
-      <Dd toggleChildren={<Icon name='More' />} triangle>
+      <Dropdown toggleChildren={<Icon name='More' />} triangle>
         <li><Icon name='Home' />Pin</li>
         <li><Icon name='Home' />Flag</li>
         <li><Icon name='Home' />Delete</li>
         <li>Other</li>
         <li><Icon name='Home' />Mark as complete</li>
-      </Dd>
+      </Dropdown>
     </div>
   </div>
 }
