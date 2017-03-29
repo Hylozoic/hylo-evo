@@ -14,7 +14,11 @@ const ICON_NAMES = [
   'Home',
   'More',
   'ArrowUp',
-  'Location'
+  'Location',
+  'Flag',
+  'Complete',
+  'Pin',
+  'Trash'
 ]
 
 export default function Icons (props) {

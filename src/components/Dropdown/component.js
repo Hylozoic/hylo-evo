@@ -2,12 +2,9 @@ import React from 'react'
 import cx from 'classnames'
 import { isEmpty } from 'lodash'
 import { position } from 'util/scrolling'
-import { findChildLink, dispatchEvent } from 'util/index'
-import KeyControlledList from '../KeyControlledList'
-const { array, bool, func, object, string, number, oneOfType } = React.PropTypes
+import Icon from 'components/Icon'
+const { array, object, string, bool } = React.PropTypes
 import './component.scss'
-
-const DROPDOWN_OPENED = 'dropdown-opened'
 
 export default class Dropdown extends React.Component {
   constructor (props) {
@@ -17,54 +14,13 @@ export default class Dropdown extends React.Component {
 
   static propTypes = {
     children: array,
-    id: string,
     className: string,
-    alignRight: bool,
-    toggleChildren: object.isRequired,
-    onFirstOpen: func,
-    onOpen: func,
-    onClose: func,
-    backdrop: bool,
     triangle: bool,
-    openOnHover: bool,
-    rivalrous: string,
-    keyControlled: bool,
-    tabIndex: number,
-    onChange: func,
-    insteadOfOpening: oneOfType([func, bool])
-  }
-
-  static defaultProps = {
-    tabIndex: 99
-  }
-
-  static contextTypes = {
-    isMobile: bool
+    toggleChildren: object.isRequired
   }
 
   toggle = (event, context) => {
-    const { active, neverOpened } = this.state
-    const { onFirstOpen, onOpen, rivalrous } = this.props
-
-    this.setState({active: !active})
-    if (active) {
-      this.setState({hoverOpened: false})
-    } else {
-      this.refs.parent.focus()
-      if (context === 'hover') {
-        this.setState({hoverOpened: true})
-      }
-      if (neverOpened) {
-        this.setState({neverOpened: false})
-        if (onFirstOpen) onFirstOpen()
-      }
-      if (rivalrous) {
-        window.dispatchEvent(new window.CustomEvent(DROPDOWN_OPENED, {
-          detail: {name: rivalrous}
-        }))
-      }
-      if (onOpen) onOpen()
-    }
+    this.setState({active: !this.state.active})
     if (event) {
       event.stopPropagation()
       event.preventDefault()
@@ -72,98 +28,57 @@ export default class Dropdown extends React.Component {
   }
 
   hide = () => {
-    const { onClose } = this.props
     if (this.state.active) this.setState({active: false})
-    if (onClose) onClose()
     return true
   }
 
-  rivalrousHide = event => {
-    if (event.detail.name === this.props.rivalrous) {
-      return this.hide()
-    }
-  }
-
   componentDidMount () {
-    window.addEventListener('click', this.hide)
-    if (this.props.rivalrous) {
-      window.addEventListener(DROPDOWN_OPENED, this.rivalrousHide)
-    }
+    window.addEventListener('click', () => {
+      this.hide()
+    })
   }
 
   componentWillUnmount () {
     window.removeEventListener('click', this.hide)
-    if (this.props.rivalrous) {
-      window.removeEventListener(DROPDOWN_OPENED, this.rivalrousHide)
-    }
-  }
-
-  handleKeys = event => {
-    if (this.state.active && this.refs.list) this.refs.list.handleKeys(event)
-  }
-
-  chooseChild = (element, node) => {
-    const link = findChildLink(node)
-    dispatchEvent(link, 'click')
-    if (this.props.onChange) this.props.onChange(link)
   }
 
   render () {
     const {
-      toggleChildren, children, alignRight, triangle, openOnHover, id,
-      keyControlled, tabIndex, insteadOfOpening, className
+      toggleChildren, items, className, triangle, alignRight
     } = this.props
-    const { hoverOpened } = this.state
-    const { isMobile } = this.context
-    const active = this.state.active && !isEmpty(children)
+    const active = this.state.active && !isEmpty(items)
     const styleName = cx('dropdown', {'has-triangle': triangle})
-    const ulProps = {
-      styleName: cx('dropdown-menu', {active, 'dropdown-menu-right': alignRight}),
-      style: mobileMenuStyle(isMobile && active, this.refs.parent),
-      onClick: () => this.toggle(),
-      onMouseLeave: () => hoverOpened && this.toggle()
-    }
 
-    let items
+    let children = items.map(item => <li styleName={item.onClick ? 'linkItem' : 'headerItem'}
+      onClick={item.onClick} key={item.label}>
+      {item.icon && <Icon styleName='icon' name={item.icon} />}
+      {item.label}
+    </li>)
+
     if (triangle) {
       const triangleLi = <li styleName='triangle' key='triangle'
-        style={{left: findTriangleLeftPos(isMobile, this.refs.parent)}} />
-      items = [triangleLi].concat(children)
-    } else {
-      items = children
+        style={{left: findTriangleLeftPos(this.refs.parent)}} />
+      children = [triangleLi].concat(children)
     }
 
-    return <div {...{id, styleName, className, tabIndex}} ref='parent'
+    return <div className={className} styleName={styleName} ref='parent'
       onKeyDown={this.handleKeys}>
-      <a styleName='dropdown-toggle' onClick={insteadOfOpening || this.toggle}
-        onMouseEnter={ev => openOnHover && this.toggle(ev, 'hover')}>
+      <a styleName='dropdown-toggle' onClick={this.toggle}>
         {toggleChildren}
       </a>
-      {keyControlled
-        ? <KeyControlledList ref='list' {...ulProps} onChange={this.chooseChild}>
-          {items}
-        </KeyControlledList>
-        : <ul {...ulProps}>
-          {active && items}
+      <div styleName='wrapper'>
+        <ul styleName={cx('dropdown-menu', {active, alignRight})}
+          onClick={() => this.toggle()}>
+          {active && children}
         </ul>
-      }
+      </div>
     </div>
   }
 }
 
 const margin = 10
 
-const mobileMenuStyle = (shouldUse, parent) => {
-  if (!shouldUse) return {}
-  return {
-    left: findLeftPos(parent) + margin,
-    width: document.documentElement.clientWidth - margin * 2
-  }
-}
-
-const findLeftPos = parent => parent ? -position(parent).x : null
-
-const findTriangleLeftPos = (isMobile, parent) => {
-  if (!isMobile || !parent) return
-  return position(parent).x + parent.offsetWidth / 2 - margin - 1
+const findTriangleLeftPos = parent => {
+  if (!parent) return
+  return position(parent).x + parent.offsetWidth - margin - 1
 }
