@@ -519,7 +519,7 @@ babel-plugin-jest-hoist@^19.0.0:
 
 babel-plugin-react-css-modules@levity/babel-plugin-react-css-modules#dist:
   version "1.0.0"
-  resolved "https://codeload.github.com/levity/babel-plugin-react-css-modules/tar.gz/c05dc619eece7accc5956ebb00c21efd184d61f0"
+  resolved "https://codeload.github.com/levity/babel-plugin-react-css-modules/tar.gz/ab83008694bf14fb82c3e09e2bee70077127506b"
   dependencies:
     ajv "^4.11.4"
     babel-plugin-syntax-jsx "^6.18.0"
@@ -530,6 +530,7 @@ babel-plugin-react-css-modules@levity/babel-plugin-react-css-modules#dist:
     postcss-modules-extract-imports "^1.0.1"
     postcss-modules-local-by-default "^1.1.1"
     postcss-modules-parser "^1.1.0"
+    postcss-modules-resolve-path "^1.0.0"
     postcss-modules-scope "^1.0.2"
     postcss-modules-values "^1.2.2"
     postcss-nested "^1.0.0"
@@ -5178,6 +5179,12 @@ postcss-modules-parser@^1.1.0:
     lodash.foreach "^3.0.3"
     postcss "^5.0.10"
 
+postcss-modules-resolve-path@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/postcss-modules-resolve-path/-/postcss-modules-resolve-path-1.0.0.tgz#748278c5b469dd47b4096bf885826df6cf20aaae"
+  dependencies:
+    postcss "5.0.10"
+
 postcss-modules-scope@1.0.2, postcss-modules-scope@^1.0.0, postcss-modules-scope@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/postcss-modules-scope/-/postcss-modules-scope-1.0.2.tgz#ff977395e5e06202d7362290b88b1e8cd049de29"
@@ -5339,6 +5346,14 @@ postcss-zindex@^2.0.1:
     has "^1.0.1"
     postcss "^5.0.4"
     uniqs "^2.0.0"
+
+postcss@5.0.10:
+  version "5.0.10"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-5.0.10.tgz#86eacc9036c5c063e27138bf9503e1de26ab69fe"
+  dependencies:
+    js-base64 "^2.1.9"
+    source-map "^0.5.1"
+    supports-color "^3.1.2"
 
 postcss@5.1.2:
   version "5.1.2"
@@ -6219,7 +6234,7 @@ source-map-url@~0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/source-map-url/-/source-map-url-0.3.0.tgz#7ecaf13b57bcd09da8a40c5d269db33799d4aaf9"
 
-source-map@0.5.x, source-map@^0.5.0, source-map@^0.5.3, source-map@^0.5.6, source-map@~0.5.1, source-map@~0.5.3:
+source-map@0.5.x, source-map@^0.5.0, source-map@^0.5.1, source-map@^0.5.3, source-map@^0.5.6, source-map@~0.5.1, source-map@~0.5.3:
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.6.tgz#75ce38f52bf0733c5a7f0c118d81334a2bb5f412"
 
