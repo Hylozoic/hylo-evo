@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { SAMPLE_FEED_ITEMS } from './sampleData'
-import { fetchPosts } from './actions'
+import { fetchFeedItems } from './actions'
 
 function mapStateToProps (state) {
   return {
@@ -8,6 +8,6 @@ function mapStateToProps (state) {
   }
 }
 
-export const mapDispatchToProps = { fetchPosts }
+export const mapDispatchToProps = { fetchFeedItems }
 
 export default connect(mapStateToProps, mapDispatchToProps)

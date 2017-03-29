@@ -5,13 +5,15 @@ import Comment from 'store/models/Comment'
 import Community from 'store/models/Community'
 import Person from 'store/models/Person'
 import Post from 'store/models/Post'
+import FeedItem from 'store/models/FeedItem'
 
 export default function transformer (entity, entityType) {
   const fields = [
     Comment,
     Community,
     Person,
-    Post
+    Post,
+    FeedItem
   ].reduce(
     (fields, entityClass) => ({ ...fields, [entityClass.modelName]: entityClass.fields }),
     {}
@@ -31,9 +33,7 @@ export default function transformer (entity, entityType) {
           case fkType:
             transformed[fieldName] = fkTransform(transformed[fieldName])
             break
-
           case manyType:
-
             transformed[fieldName] = manyTransform(transformed[fieldName])
             break
         }

@@ -1,7 +1,8 @@
 import { castArray, curry, each, isEmpty } from 'lodash'
+import { get, omit } from 'lodash/fp'
 
 import transformer from '../transformers'
-import { FETCH_POSTS } from '../constants'
+import { FETCH_POSTS, FETCH_FEED_ITEMS } from '../constants'
 
 export default function transformMiddleware ({dispatch, getState}) {
   return next => action => {
@@ -13,7 +14,12 @@ export default function transformMiddleware ({dispatch, getState}) {
       switch (type) {
         case FETCH_POSTS:
           if (payload.length === 0) break
-          dispatchRelations(dispatch, getRelations(payload))
+          dispatchRelations(dispatch, getPostRelations(payload))
+          break
+        case FETCH_FEED_ITEMS:
+          let feedItems = get('data.community.feedItems', payload)
+          if (feedItems.length === 0) break
+          dispatchRelations(dispatch, getFeedItemRelations(feedItems))
           break
       }
     }
@@ -21,7 +27,19 @@ export default function transformMiddleware ({dispatch, getState}) {
   }
 }
 
-function getRelations (rawPosts) {
+function getFeedItemRelations (rawFeedItems) {
+  const slightlyCookedFeedItems = rawFeedItems.map(f =>
+    ({...omit('content', f), post: f.content}))
+  const feed_items = {}
+  addRelation(feed_items, slightlyCookedFeedItems, 'FeedItem')
+  console.log('rawFeedItems', slightlyCookedFeedItems)
+  return {
+    ...getPostRelations(slightlyCookedFeedItems.map(feedItem => feedItem.post)),
+    feed_items
+  }
+}
+
+function getPostRelations (rawPosts) {
   if (rawPosts.length === 0) return {}
 
   const normalize = curry(addRelation)

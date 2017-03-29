@@ -13,7 +13,7 @@ export default class Feed extends React.Component {
   }
 
   componentDidMount () {
-    this.props.fetchPosts('hylo')
+    this.props.fetchFeedItems('hylo')
   }
 
   render () {

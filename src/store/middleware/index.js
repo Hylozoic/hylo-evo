@@ -9,8 +9,8 @@ import normalizingMiddleware from './normalizingMiddleware'
 const middleware = compact([
   graphqlMiddleware,
   apiMiddleware(),
-  normalizingMiddleware,
   promiseMiddleware,
+  normalizingMiddleware,
   process.env.NODE_ENV === 'development' && createLogger({collapsed: true})
 ])
 

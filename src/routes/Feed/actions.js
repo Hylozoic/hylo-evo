@@ -1,10 +1,24 @@
-import { FETCH_POSTS } from 'store/constants'
+import { FETCH_FEED_ITEMS } from 'store/constants'
 
-export function fetchPosts (id, opts = {}) {
+export function fetchFeedItems (id, opts = {}) {
   return {
-    type: FETCH_POSTS,
-    payload: {
-      api: {method: 'GET', path: `/noo/community/${id}/posts`}
+    type: FETCH_FEED_ITEMS,
+    graphql: {
+      query: `{
+        community(slug: "${id}") {
+          id
+          name
+          feedItems(first: 2, order: "desc") {
+            type
+            content {
+              ... on Post {
+                id
+                title
+              }
+            }
+          }
+        }
+      }`
     }
   }
 }
