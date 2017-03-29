@@ -1,4 +1,5 @@
 export const FETCH_POSTS = 'FETCH_POSTS'
+export const FETCH_FEED_ITEMS = 'FETCH_FEED_ITEMS'
 
 export const ADD_COMMENTS = 'ADD_COMMENTS'
 export const DELETE_COMMENT = 'DELETE_COMMENT'

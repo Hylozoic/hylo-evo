@@ -13,10 +13,6 @@ import samplePost from './samplePost'
 const { shape, any, object, string, func, array } = React.PropTypes
 
 export default class PostCard extends React.Component {
-  componentDidMount () {
-    // const { id, fetchPost } = this.props
-    // fetchPost(id)
-  }
   render () {
     const { post, className } = this.props
     return <div styleName='card' className={className}>
@@ -128,3 +124,4 @@ export function PeopleImages ({ imageUrls, className }) {
     <RoundImage url={url} key={i} medium overlaps />)
   return <div className={className}>{images}</div>
 }
+

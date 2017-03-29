@@ -13,7 +13,11 @@ export default function transformMiddleware ({dispatch, getState}) {
       switch (type) {
         case FETCH_POSTS:
           if (payload.length === 0) break
-          dispatchRelations(dispatch, getRelations(payload))
+          dispatchRelations(dispatch, getPostRelations(payload))
+          break
+        case FETCH_FEED_ITEMS:
+          if (payload.length === 0) break
+          dispatchRelations(dispatch, getFeedItemRelations(payload.data.community.feedItems))
           break
       }
     }
@@ -21,7 +25,7 @@ export default function transformMiddleware ({dispatch, getState}) {
   }
 }
 
-function getRelations (rawPosts) {
+function getPostRelations (rawPosts) {
   if (rawPosts.length === 0) return {}
 
   const normalize = curry(addRelation)
@@ -76,3 +80,4 @@ function transform (entities, entityType) {
       return acc
     }, {})
 }
+
