@@ -1,4 +1,6 @@
-var paths = require('./paths')
+const { appSrc, resolveApp } = require('./paths')
+const { babel } = require('../package.json')
+const cssModulesConfig = babel.plugins.find(x => x[0] === 'react-css-modules')[1]
 
 module.exports = {
   cssLoader: {
@@ -9,6 +11,25 @@ module.exports = {
       importLoaders: 3
     }
   },
+  postcssLoader: {
+    loader: 'postcss-loader',
+    options: {
+      ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
+      plugins: () => [
+        require('postcss-modules-resolve-path')({
+          paths: cssModulesConfig.searchPaths.map(resolveApp)
+        }),
+        require('autoprefixer')({
+          browsers: [
+            '>1%',
+            'last 4 versions',
+            'Firefox ESR',
+            'not ie < 9' // React doesn't support IE8 anyway
+          ]
+        })
+      ]
+    }
+  },
   sassResourcesLoader: {
     loader: 'sass-resources-loader',
     options: {
@@ -16,9 +37,9 @@ module.exports = {
       // for preloading by the sass-resources loader. The explicit
       // load order is on purpose.
       resources: [
-        paths.appSrc + '/css/sass-resources/_app.scss',
-        paths.appSrc + '/css/sass-resources/_bootstrap-customization.scss',
-        paths.appSrc + '/routes/UIKit/css/_sass_resources.scss'
+        appSrc + '/css/sass-resources/_app.scss',
+        appSrc + '/css/sass-resources/_bootstrap-customization.scss',
+        appSrc + '/routes/UIKit/css/_sass_resources.scss'
       ]
     }
   }
