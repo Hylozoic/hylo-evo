@@ -1,5 +1,5 @@
 export const FETCH_POSTS = 'FETCH_POSTS'
-export const FETCH_FEED_ITEMS = 'FETCH_FEED_ITEMS'
+export const FETCH_FEEDITEMS = 'FETCH_FEEDITEMS'
 
 export const ADD_COMMENTS = 'ADD_COMMENTS'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
@@ -17,9 +17,9 @@ export const ADD_POSTS = 'ADD_POSTS'
 export const DELETE_POST = 'DELETE_POST'
 export const UPDATE_POST = 'UPDATE_POST'
 
-export const ADD_FEED_ITEMS = 'ADD_FEED_ITEMS'
-export const DELETE_FEED_ITEM = 'DELETE_FEED_ITEM'
-export const UPDATE_FEED_ITEM = 'UPDATE_FEED_ITEM'
+export const ADD_FEEDITEMS = 'ADD_FEEDITEMS'
+export const DELETE_FEEDITEM = 'DELETE_FEEDITEM'
+export const UPDATE_FEEDITEM = 'UPDATE_FEEDITEM'
 
 export const CHECK_LOGIN = 'CHECK_LOGIN'
 export const LOGIN = 'LOGIN'

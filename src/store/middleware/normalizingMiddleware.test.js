@@ -172,7 +172,7 @@ describe('Actions', () => {
     expect(actual.length).toBe([...new Set(actual)].length)
   })
 
-  it('Has the correct payload', () => {
+  it.only('Has the correct payload', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
       payload
