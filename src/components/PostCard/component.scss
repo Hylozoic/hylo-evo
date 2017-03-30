@@ -1,5 +1,3 @@
-@import '../../css/bootstrap';
-
 // PostCard
 
 .card {
@@ -20,7 +18,11 @@
 
 .header {
   composes: cardPadding;
-  @extend .d-flex, .justify-content-start, .align-items-center;
+  // composes: d-flex justify-content-start align-items-center from 'css/bootstrap.scss';
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  //
   margin-bottom: 30px;
 }
 
@@ -79,7 +81,7 @@
 }
 
 .upperRight {
-  @extend .ml-auto;
+  margin-left: auto;
 }
 
 .label {
@@ -177,7 +179,11 @@ $footer-height: 56px;
 
 .footer {
   composes: cardPadding;
-  @extend .d-flex, .justify-content-start, .align-items-center;
+  // composes: d-flex justify-content-start align-items-center from 'css/bootstrap.scss';
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  //
   height: $footer-height;
   border-top: 1px solid $color-cape-cod-10;
 }
@@ -187,7 +193,7 @@ $footer-height: 56px;
 }
 
 .share {
-  @extend .ml-auto;
+  margin-left: auto;
   width: $footer-height;
   height: $footer-height;
   line-height: $footer-height;
@@ -206,7 +212,7 @@ $footer-height: 56px;
 }
 
 .votes {
-  @extend .ml-auto;
+  margin-left: auto;
   padding: 0 10px 0 20px;
   height: $footer-height;
   line-height: $footer-height;

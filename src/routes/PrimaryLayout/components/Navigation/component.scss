@@ -1,21 +1,18 @@
-@mixin make-visible {
-  // background-color: $color-white;
-  // border: dashed 1px $color-rhino-30;
-}
-
 .collapser {
-  @include make-visible();
-  @include make-col-ready();
-  // @media (max-width: 32em) {
-  //   @include make-col(6);
-  // }
-  @media (min-width: 32.1em) {
-    @include make-col(1.8);
-  }
+  position: relative;
+  // Prevent columns from becoming too narrow when at smaller grid tiers by
+  // always setting `width: 100%;`. This works because we use `flex` values
+  // later on to override this initial width.
+  width: 100%;
+  min-height: 1px; // Prevent collapsing
+  flex: 0 0 15%;
+  // Add a `max-width` to ensure content within each column does not blow out
+  // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
+  // do not appear to require this.
+  max-width: 15%;
   transition: 0.5s;
-
-  // ovverriding bootstrap default. Seems broken
-  padding: 0 0 !important;
+  // // overriding bootstrap default. Seems broken
+  // padding: 0 0 !important;
   margin: 0 15px;
   overflow: hidden;
   white-space: nowrap;
@@ -23,12 +20,11 @@
 
 .collapser-collapsed {
   composes: collapser;
-
-  // @media (min-width: 32.1em) {
-  //   @include make-col(0.72);
-  // }
-
-  max-width: 48px;
+  flex: 0 0 3rem;
+  // Add a `max-width` to ensure content within each column does not blow out
+  // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
+  // do not appear to require this.
+  max-width: 3rem;
 }
 
 .navigation {
