@@ -3,7 +3,7 @@
   flex-shrink: 1;
   // LEJ: This calc is mostly just for fun, but this is propertly
   // the width of the card for a 2 column layout.
-  flex-basis: calc((#{$sheet-width} / 2) - (#{$space-8x} * 4) - 1px);
+  flex-basis: calc((#{$sheet-width} / 2) - (#{$space-8x} * 4) - 10px);
   padding: $space-8x 0;
   margin: 0 $space-8x;
   box-sizing: border-box;
