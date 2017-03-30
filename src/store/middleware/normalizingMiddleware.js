@@ -2,23 +2,22 @@ import { castArray, curry, each, isEmpty } from 'lodash'
 import { get, omit } from 'lodash/fp'
 
 import transformer from '../transformers'
-import { FETCH_POSTS, FETCH_FEED_ITEMS } from '../constants'
+import { FETCH_POSTS, FETCH_FEEDITEMS } from '../constants'
 
 export default function transformMiddleware ({dispatch, getState}) {
   return next => action => {
     if (action) {
       const { type, payload } = action
 
-      console.log('in transformMiddleware', action)
-
       switch (type) {
         case FETCH_POSTS:
-          if (payload.length === 0) break
-          dispatchRelations(dispatch, getPostRelations(payload))
+          const posts = get('data.me.posts', payload)
+          if (isEmpty(posts)) break
+          dispatchRelations(dispatch, getPostRelations(posts))
           break
-        case FETCH_FEED_ITEMS:
+        case FETCH_FEEDITEMS:
           let feedItems = get('data.community.feedItems', payload)
-          if (feedItems.length === 0) break
+          if (isEmpty(posts)) break
           dispatchRelations(dispatch, getFeedItemRelations(feedItems))
           break
       }
@@ -28,20 +27,16 @@ export default function transformMiddleware ({dispatch, getState}) {
 }
 
 function getFeedItemRelations (rawFeedItems) {
-  const slightlyCookedFeedItems = rawFeedItems.map(f =>
-    ({...omit('content', f), post: f.content}))
-  const feed_items = {}
-  addRelation(feed_items, slightlyCookedFeedItems, 'FeedItem')
-  console.log('rawFeedItems', slightlyCookedFeedItems)
+  const relabelled = rawFeedItems.map(({ name, content }) => ({ name, post: content }))
+  const feeditems = {}
+  addRelation(feeditems, relabelled, 'FeedItem')
   return {
-    ...getPostRelations(slightlyCookedFeedItems.map(feedItem => feedItem.post)),
-    feed_items
+    ...getPostRelations(relabelled.map(feedItem => feedItem.post)),
+    feeditems
   }
 }
 
 function getPostRelations (rawPosts) {
-  if (rawPosts.length === 0) return {}
-
   const normalize = curry(addRelation)
   const relations = {
     comments: {},
@@ -53,8 +48,6 @@ function getPostRelations (rawPosts) {
   const getCommunities = normalize(relations.communities)
   const getPeople = normalize(relations.people)
   const getPosts = normalize(relations.posts)
-
-  console.log('rawPosts', rawPosts)
 
   rawPosts.forEach(post => {
     if (post.comments) {
@@ -83,8 +76,8 @@ function dispatchRelations (dispatch, relations) {
 
 // Eliminate duplicate entries for various entities (by ID equality).
 // Deliberately has side-effects!
-function addRelation (realtions, entities, transformer) {
-  Object.assign(realtions, transform(entities, transformer))
+function addRelation (relations, entities, transformer) {
+  Object.assign(relations, transform(entities, transformer))
 }
 
 function transform (entities, entityType) {
