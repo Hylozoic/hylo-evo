@@ -7,7 +7,7 @@ import Person from 'store/models/Person'
 import Post from 'store/models/Post'
 import FeedItem from 'store/models/FeedItem'
 
-export default function transformer (entity, entityType) {
+export default function normalize (entity, entityType) {
   const fields = [
     Comment,
     Community,
@@ -19,7 +19,7 @@ export default function transformer (entity, entityType) {
     {}
   )
 
-  const transformed = {
+  const normalized = {
     ...entity
   }
 
@@ -28,26 +28,26 @@ export default function transformer (entity, entityType) {
 
   if (entityType) {
     each(fields[entityType], (field, fieldName) => {
-      if (transformed[fieldName]) {
+      if (normalized[fieldName]) {
         switch (field.constructor.name) {
           case fkType:
-            transformed[fieldName] = fkTransform(transformed[fieldName])
+            normalized[fieldName] = fkNormalize(normalized[fieldName])
             break
           case manyType:
-            transformed[fieldName] = manyTransform(transformed[fieldName])
+            normalized[fieldName] = manyNormalize(normalized[fieldName])
             break
         }
       }
     })
   }
 
-  return transformed
+  return normalized
 }
 
-function fkTransform (entity) {
+function fkNormalize (entity) {
   return entity.id
 }
 
-function manyTransform (entityCollection) {
+function manyNormalize (entityCollection) {
   return entityCollection.map(entity => entity.id)
 }

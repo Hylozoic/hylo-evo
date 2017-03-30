@@ -29,18 +29,25 @@ export default function ormReducer (state = {}, action) {
     case a.UPDATE_POST: update(Post); break
     case a.DELETE_POST: del(Post); break
 
-    case a.ADD_FEED_ITEMS: add(FeedItem); break
-    case a.UPDATE_FEED_ITEM: update(FeedItem); break
-    case a.DELETE_FEED_ITEM: del(FeedItem); break
+    case a.ADD_FEEDITEMS:
+      console.log('ADD_FEEDITEMS case')
+      add(FeedItem);
+      break
+    case a.UPDATE_FEEDITEM: update(FeedItem); break
+    case a.DELETE_FEEDITEM: del(FeedItem); break
   }
 
   return session.state
 }
 
 function addEntities (payload) {
-  return model =>
+  return model => {
+    console.log('adding entities')
+    console.log('model', model)
+    console.log('payload', payload)        
     each(payload, entity =>
       model.hasId(entity.id) ? model.update(entity) : model.create(entity))
+  }
 }
 
 function deleteEntity (payload) {

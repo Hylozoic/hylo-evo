@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { SAMPLE_FEED_ITEMS } from './sampleData'
 import { fetchFeedItems } from './actions'
 
 function mapStateToProps (state) {
@@ -8,6 +7,15 @@ function mapStateToProps (state) {
   }
 }
 
-export const mapDispatchToProps = { fetchFeedItems }
+// export const mapDispatchToProps = { fetchFeedItems }
+
+function mapDispatchToProps (dispatch) {
+  return {
+    fetchFeedItems: slug => {
+      console.log('calling action', slug)
+      return dispatch(fetchFeedItems(slug))
+    }
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)

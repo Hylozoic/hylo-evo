@@ -1,8 +1,8 @@
-import { FETCH_FEED_ITEMS } from 'store/constants'
+import { FETCH_FEEDITEMS } from 'store/constants'
 
 export function fetchFeedItems (id, opts = {}) {
   return {
-    type: FETCH_FEED_ITEMS,
+    type: FETCH_FEEDITEMS,
     graphql: {
       query: `{
         community(slug: "${id}") {

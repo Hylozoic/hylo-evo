@@ -1,10 +1,9 @@
-import { castArray, curry, each, isEmpty } from 'lodash'
-import { get, omit } from 'lodash/fp'
-
-import transformer from '../transformers'
+import { each, isEmpty } from 'lodash'
+import { get } from 'lodash/fp'
+import normalize from '../normalize'
 import { FETCH_POSTS, FETCH_FEEDITEMS } from '../constants'
 
-export default function transformMiddleware ({dispatch, getState}) {
+export default function normalizingMiddleware ({dispatch, getState}) {
   return next => action => {
     if (action) {
       const { type, payload } = action
@@ -17,7 +16,7 @@ export default function transformMiddleware ({dispatch, getState}) {
           break
         case FETCH_FEEDITEMS:
           let feedItems = get('data.community.feedItems', payload)
-          if (isEmpty(posts)) break
+          if (isEmpty(feedItems)) break
           dispatchRelations(dispatch, getFeedItemRelations(feedItems))
           break
       }
@@ -26,38 +25,48 @@ export default function transformMiddleware ({dispatch, getState}) {
   }
 }
 
+function transformFeedItem ({ type, content }) {
+  // this assumes that all feed items contain posts. This will change
+  // and that all feed items content will have an id. This should not change
+  return {
+    id: `${type}_${content.id}`,
+    type,
+    post: content
+  }
+}
+
 function getFeedItemRelations (rawFeedItems) {
-  const relabelled = rawFeedItems.map(({ name, content }) => ({ name, post: content }))
-  const feeditems = {}
-  addRelation(feeditems, relabelled, 'FeedItem')
+  const relabelled = rawFeedItems.map(transformFeedItem)
+
   return {
     ...getPostRelations(relabelled.map(feedItem => feedItem.post)),
-    feeditems
+    feeditems: relabelled.map(f => normalize(f, 'FeedItem'))
   }
 }
 
 function getPostRelations (rawPosts) {
-  const normalize = curry(addRelation)
   const relations = {
-    comments: {},
-    communities: {},
-    people: {},
-    posts: {}
+    comments: [],
+    communities: [],
+    people: [],
+    posts: []
   }
-  const getComments = normalize(relations.comments)
-  const getCommunities = normalize(relations.communities)
-  const getPeople = normalize(relations.people)
-  const getPosts = normalize(relations.posts)
 
   rawPosts.forEach(post => {
     if (post.comments) {
-      getComments(post.comments, 'Comment')
-      getPeople(post.comments.map(c => c.creator), null)
+      relations.comments = relations.comments.concat(post.comments.map(c => normalize(c, 'Comment')))
+      relations.people = relations.people.concat(post.comments.map(c => c.creator))
     }
-    if (post.communities) getCommunities(post.communities, 'Community')
-    if (post.followers) getPeople(post.followers, null)
-    if (post.creator) getPeople(post.creator, null)
-    getPosts(post, 'Post')
+    if (post.communities) {
+      relations.communities = relations.communities.concat(post.communities.map(c => normalize(c, 'Community')))
+    }
+    if (post.followers) {
+      relations.people = relations.people.concat(post.followers)
+    }
+    if (post.creator) {
+      relations.people.push(post.creator)
+    }
+    relations.posts = relations.posts.concat(normalize(post, 'Post'))
   })
 
   return relations
@@ -72,18 +81,4 @@ function dispatchRelations (dispatch, relations) {
       })
     }
   })
-}
-
-// Eliminate duplicate entries for various entities (by ID equality).
-// Deliberately has side-effects!
-function addRelation (relations, entities, transformer) {
-  Object.assign(relations, transform(entities, transformer))
-}
-
-function transform (entities, entityType) {
-  return [ ...castArray(entities) ]
-    .reduce((acc, entity) => {
-      acc[entity.id] = entityType ? transformer(entity, entityType) : entity
-      return acc
-    }, {})
 }
