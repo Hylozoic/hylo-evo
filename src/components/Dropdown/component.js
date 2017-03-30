@@ -44,12 +44,12 @@ export default class Dropdown extends React.Component {
 
   render () {
     const {
-      toggleChildren, items, className, triangle, alignRight
+      toggleChildren, items, className, triangle, alignRight, children
     } = this.props
     const active = this.state.active && !isEmpty(items)
     const styleName = cx('dropdown', {'has-triangle': triangle})
 
-    let children = items.map(item => <li styleName={item.onClick ? 'linkItem' : 'headerItem'}
+    let menuItems = children || items.map(item => <li styleName={item.onClick ? 'linkItem' : 'headerItem'}
       onClick={item.onClick} key={item.label}>
       {item.icon && <Icon styleName='icon' name={item.icon} />}
       {item.label}
@@ -58,7 +58,7 @@ export default class Dropdown extends React.Component {
     if (triangle) {
       const triangleLi = <li styleName='triangle' key='triangle'
         style={{left: findTriangleLeftPos(this.refs.parent)}} />
-      children = [triangleLi].concat(children)
+      menuItems = [triangleLi].concat(menuItems)
     }
 
     return <div className={className} styleName={styleName} ref='parent'
@@ -69,7 +69,7 @@ export default class Dropdown extends React.Component {
       <div styleName='wrapper'>
         <ul styleName={cx('dropdown-menu', {active, alignRight})}
           onClick={() => this.toggle()}>
-          {active && children}
+          {active && menuItems}
         </ul>
       </div>
     </div>
