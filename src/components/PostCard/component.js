@@ -10,15 +10,30 @@ import { personUrl, bgImageStyle, humanDate } from 'util/index'
 import { parse } from 'url'
 import './component.scss'
 import samplePost from './samplePost'
+import { uniqBy } from 'lodash/fp'
 const { shape, any, object, string, func, array } = React.PropTypes
 
 export default class PostCard extends React.Component {
   render () {
     const { post, className } = this.props
+
+    // TODO: get commenters from graphql directly
+    const commenters = uniqBy('id', post.comments.toModelArray().map(c => c.creator))
+
     return <div styleName='card' className={className}>
-      <PostHeader {...post} />
-      <PostBody {...post} />
-      <PostFooter {...post} />
+      <PostHeader creator={post.creator}
+        date={post.updatedAt || post.createdAt}
+        type={post.type}
+        context={post.context}
+        communities={post.communities} />
+      <PostBody title={post.title}
+        description={post.details}
+        imageUrl={post.imageUrl}
+        linkPreview={post.linkPreview} />
+      <PostFooter id={post.id}
+        commenters={commenters}
+        commentersTotal={commenters.length}
+        voteCount={post.voteCount} />
     </div>
   }
 }
@@ -26,7 +41,7 @@ PostCard.propTypes = {
   post: shape({
     id: any,
     type: string,
-    author: object,
+    creator: object,
     name: string,
     description: string,
     commenters: array,
@@ -39,15 +54,15 @@ PostCard.defaultProps = {
   post: samplePost
 }
 
-export const PostHeader = ({ author, updatedAt, type, context, communities }) => {
+export const PostHeader = ({ creator, date, type, context, communities }) => {
   return <div styleName='header'>
-    <Avatar avatarUrl={author.avatarUrl} url={personUrl(author)} styleName='avatar' />
+    <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator)} styleName='avatar' />
     <div styleName='headerText'>
-      <Link to={personUrl(author)} styleName='userName'>{author.name}{author.title && ', '}</Link>
-      {author.title && <span styleName='userTitle'>{author.title}</span>}
+      <Link to={personUrl(creator)} styleName='userName'>{creator.name}{creator.title && ', '}</Link>
+      {creator.title && <span styleName='userTitle'>{creator.title}</span>}
       <div>
         <span className='timestamp'>
-          {humanDate(updatedAt)}{context && <span styleName='spacer'>•</span>}
+          {humanDate(date)}{context && <span styleName='spacer'>•</span>}
         </span>
         {context && <Link to='/' styleName='context'>
           {context}
@@ -99,21 +114,22 @@ export const LinkPreview = ({ title, url, imageUrl }) => {
 
 export const commentCaption = (commenters, commentersTotal) => {
   var names = ''
+  const firstName = person => person.name.split(' ')[0]
   if (commenters.length === 0) {
     return 'Be the first to comment'
   } else if (commenters.length === 1) {
-    names = commenters[0].firstName
+    names = firstName(commenters[0])
   } else if (commenters.length === 2) {
-    names = `${commenters[0].firstName} and ${commenters[1].firstName}`
+    names = `${firstName(commenters[0])} and ${firstName(commenters[1])}`
   } else {
-    names = `${commenters[0].firstName}, ${commenters[1].firstName} and ${commentersTotal - 2} others`
+    names = `${firstName(commenters[0])}, ${firstName(commenters[1])} and ${commentersTotal - 2} others`
   }
   return `${names} commented`
 }
 
 export const PostFooter = ({ id, commenters, commentersTotal, voteCount }) => {
   return <div styleName='footer'>
-    <PeopleImages imageUrls={commenters.map(c => c.avatarUrl)} styleName='people' />
+    <PeopleImages imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
     <span className='caption-lt-lg'>{commentCaption(commenters, commentersTotal)}</span>
     <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{voteCount}</a></div>
   </div>
@@ -124,4 +140,3 @@ export function PeopleImages ({ imageUrls, className }) {
     <RoundImage url={url} key={i} medium overlaps />)
   return <div className={className}>{images}</div>
 }
-

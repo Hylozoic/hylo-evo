@@ -16,6 +16,7 @@ export default function normalizingMiddleware ({dispatch, getState}) {
           break
         case FETCH_FEEDITEMS:
           let feedItems = get('data.community.feedItems', payload)
+
           if (isEmpty(feedItems)) break
           dispatchRelations(dispatch, getFeedItemRelations(feedItems))
           break

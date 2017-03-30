@@ -29,9 +29,7 @@ export default function ormReducer (state = {}, action) {
     case a.UPDATE_POST: update(Post); break
     case a.DELETE_POST: del(Post); break
 
-    case a.ADD_FEEDITEMS:
-      add(FeedItem);
-      break
+    case a.ADD_FEEDITEMS: add(FeedItem); break
     case a.UPDATE_FEEDITEM: update(FeedItem); break
     case a.DELETE_FEEDITEM: del(FeedItem); break
   }
@@ -41,8 +39,9 @@ export default function ormReducer (state = {}, action) {
 
 function addEntities (payload) {
   return model => {
-    each(payload, entity =>
-      model.hasId(entity.id) ? model.update(entity) : model.create(entity))
+    return each(payload, entity => {
+      model.hasId(entity.id) ? model.withId(entity.id).update(entity) : model.create(entity)
+    })
   }
 }
 
