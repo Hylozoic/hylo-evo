@@ -1,0 +1,82 @@
+.background {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: url(/william-white-34988-community.jpg);
+  background-position: top center;
+  background-size: cover;
+}
+
+.container {
+  background-color: white;
+  padding: 50px 40px 40px;
+  border-radius: 8px;
+  width: 420px;
+}
+
+.title {
+  composes: hdr-headline from 'typography.scss';
+  color: $color-caribbean-green;
+  text-align: center;
+}
+
+.blurb {
+  composes: bdy-lt-sm from 'typography.scss';
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.field {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.field-label {
+  display: block;
+  composes: caption-drk-lg from 'typography.scss';
+}
+
+.submit {
+  width: 100%;
+  text-align: center;
+}
+
+.connect-label {
+  margin-top: 40px;
+  composes: caption-lt-lg from 'typography.scss';
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.auth-buttons {
+  background-color: $color-seashell;
+  border-radius: 42px;
+  composes: caption-lt-lg from 'typography.scss';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > a {
+    display: block;
+    text-align: center;
+    height: 42px;
+    line-height: 40px;
+    vertical-align: baseline;
+    flex: 1;
+  }
+}
+
+.facebook {
+
+}
+
+.google {
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+}
+
+.linkedin {
+
+}
