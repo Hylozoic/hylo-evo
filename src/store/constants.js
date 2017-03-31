@@ -18,5 +18,6 @@ export const UPDATE_POST = 'UPDATE_POST'
 
 export const CHECK_LOGIN = 'CHECK_LOGIN'
 export const LOGIN = 'LOGIN'
+export const LOGOUT = 'LOGOUT'
 
 export const FETCH_CURRENT_USER = 'FETCH_CURRENT_USER'
