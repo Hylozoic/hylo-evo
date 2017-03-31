@@ -9,7 +9,7 @@
 .input {
   border: none;
   outline: none;
-  composes: bdy-drk-sm from 'typography.scss';
+  composes: bdy-drk-sm from 'css/typography.scss';
   color: $color-rhino;
   width: 100%;
   padding: 0;

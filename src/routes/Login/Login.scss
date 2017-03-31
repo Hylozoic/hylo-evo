@@ -18,13 +18,13 @@
 }
 
 .title {
-  composes: hdr-headline from 'typography.scss';
+  composes: hdr-headline from 'css/typography.scss';
   color: $color-caribbean-green;
   text-align: center;
 }
 
 .blurb {
-  composes: bdy-lt-sm from 'typography.scss';
+  composes: bdy-lt-sm from 'css/typography.scss';
   text-align: center;
   margin-bottom: 30px;
 }
@@ -35,8 +35,8 @@
 }
 
 .field-label {
+  composes: caption-drk-lg from 'css/typography.scss';
   display: block;
-  composes: caption-drk-lg from 'typography.scss';
 }
 
 .submit {
@@ -46,16 +46,16 @@
 }
 
 .connect-label {
+  composes: caption-lt-lg from 'css/typography.scss';
   margin-top: 40px;
-  composes: caption-lt-lg from 'typography.scss';
   margin-bottom: 20px;
   text-align: center;
 }
 
 .auth-buttons {
+  composes: caption-lt-lg from 'css/typography.scss';
   background-color: $color-seashell;
   border-radius: 42px;
-  composes: caption-lt-lg from 'typography.scss';
   display: flex;
   justify-content: center;
   align-items: center;
