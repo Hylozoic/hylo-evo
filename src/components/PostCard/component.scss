@@ -18,11 +18,9 @@
 
 .header {
   composes: cardPadding;
-  // composes: d-flex justify-content-start align-items-center from 'css/bootstrap.scss';
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  //
   margin-bottom: 30px;
 }
 
@@ -179,11 +177,9 @@ $footer-height: 56px;
 
 .footer {
   composes: cardPadding;
-  // composes: d-flex justify-content-start align-items-center from 'css/bootstrap.scss';
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  //
   height: $footer-height;
   border-top: 1px solid $color-cape-cod-10;
 }
