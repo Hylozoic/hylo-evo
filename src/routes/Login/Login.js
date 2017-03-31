@@ -37,7 +37,9 @@ export default class Login extends React.Component {
 
         <div styleName='field'>
           <label styleName='field-label'>Password</label>
-          <TextInput type='password' name='password' onChange={setState('password')} />
+          <TextInput type='password' name='password'
+            onChange={setState('password')}
+            onEnter={this.submit} />
         </div>
         <Button styleName='submit' label='Log In' onClick={this.submit} />
 
