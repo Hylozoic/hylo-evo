@@ -49,7 +49,7 @@
     margin-right: $space-2x;
   }
   &-input {
-    composes: hdr-headline from 'css/typography.scss';
+    composes: hdr-headline from '../../css/typography.scss';
     outline: none;
     border: none;
   }
