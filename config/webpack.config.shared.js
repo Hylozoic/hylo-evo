@@ -1,6 +1,4 @@
-const { appSrc, resolveApp } = require('./paths')
-const { babel } = require('../package.json')
-const cssModulesConfig = babel.plugins.find(x => x[0] === 'react-css-modules')[1]
+const { appSrc } = require('./paths')
 
 module.exports = {
   cssLoader: {
@@ -16,9 +14,6 @@ module.exports = {
     options: {
       ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
       plugins: () => [
-        require('postcss-modules-resolve-path')({
-          paths: cssModulesConfig.searchPaths.map(resolveApp)
-        }),
         require('autoprefixer')({
           browsers: [
             '>1%',

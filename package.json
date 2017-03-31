@@ -145,9 +145,8 @@
             ".scss": "postcss-scss"
           },
           "exclude": "node_modules",
-          "searchPaths": [
-            "src/css"
-          ]
+          "searchPaths": ["src"],
+          "webpackHotModuleReloading": true
         }
       ]
     ],
