@@ -67,14 +67,14 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
 }
 
 .linkItem {
-  height: 50px;
-  line-height: 50px;
-  padding: 0 20px;
+  composes: itemBorder;
   // TODO: Extract typography?
   @include font-regular;
   color: $color-rhino;
   font-size: 16px;
-  composes: itemBorder;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 20px;
 }
 
 .icon {
@@ -84,16 +84,16 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
 }
 
 .headerItem {
+  composes: itemBorder;
+  // TODO: Extract typography?
+  @include font-bold;
+  color: $color-rhino-50;
+  font-size: 10px;
   display: inline-block;
   height: 32px;
   line-height: 32px;
   padding: 0 15px;
   width: 100%;
-  // TODO: Extract typography?
-  @include font-bold;
-  color: $color-rhino-50;
-  font-size: 10px;
-  composes: itemBorder;
 }
 
 

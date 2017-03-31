@@ -1,7 +1,6 @@
-@import '../../css/bootstrap';
-
 .wrapper {
-  @extend .d-flex, .flex-column;
+  display: flex;
+  flex-direction: column;
   width: 590px;
   list-style: none;
   border: solid 1px rgb(0,0,0);
@@ -18,7 +17,10 @@
 }
 
 .postTypes {
-  @extend .d-flex, .flex-nowrap, .flex-row, .justify-content-between;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-between;
   margin-bottom: $space-6x;
 }
 
@@ -47,8 +49,7 @@
     margin-right: $space-2x;
   }
   &-input {
-    // TODO: Composes from independent files isn't working
-    // composes: hdr-headline from '../../css/typography.scss';
+    composes: hdr-headline from 'typography.scss';
     outline: none;
     border: none;
   }
@@ -80,7 +81,10 @@
 }
 
 .actionsBar {
-  @extend .d-flex, .flex-nowrap, .flex-row, .justify-content-between;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-between;
   height: 3.75rem;
   padding: $space-3x;
   background-color: $color-athens-gray-dark;

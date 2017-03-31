@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { Component } from 'react'
+import React from 'react'
 import './component.scss'
 
 export default function EventDetail ({ match: { params: { eventId } } }) {
