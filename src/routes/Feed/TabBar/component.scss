@@ -30,7 +30,7 @@
 }
 
 .tab {
-  composes: caption-lt-lg from 'typography.scss';
+  composes: caption-lt-lg from 'css/typography.scss';
   padding: 0 15px;
   height: 28px;
   line-height: 28px;

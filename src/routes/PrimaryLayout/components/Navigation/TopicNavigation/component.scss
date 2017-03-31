@@ -4,10 +4,8 @@
 }
 
 .header {
-  // composes: d-flex align-items-center from 'css/bootstrap.scss';
   display: flex;
   align-items: center;
-  //
   color: $color-rhino-50;
   margin-bottom: 14px;
 }
@@ -28,10 +26,8 @@
 }
 
 .topic {
-  // composes: d-flex align-items-center from 'css/bootstrap.scss';
   display: flex;
   align-items: center;
-  // 
 }
 
 .icon {
