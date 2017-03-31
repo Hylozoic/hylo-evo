@@ -50,6 +50,9 @@
 .navIcons {
   margin-left: auto;
   display: inline-block;
+  > * {
+    vertical-align: middle;
+  }
 }
 
 .navIcon, .navIcon:hover {
