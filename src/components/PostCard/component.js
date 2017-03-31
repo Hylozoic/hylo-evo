@@ -16,8 +16,6 @@ export default class PostCard extends React.Component {
   render () {
     const { post, className } = this.props
 
-    console.log('post', post)
-
     return <div styleName='card' className={className}>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}

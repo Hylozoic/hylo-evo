@@ -29,9 +29,9 @@ export default function ormReducer (state = {}, action) {
     case a.UPDATE_POST: update(Post); break
     case a.DELETE_POST: del(Post); break
 
-    case a.ADD_FEEDITEMS: add(FeedItem); break
-    case a.UPDATE_FEEDITEM: update(FeedItem); break
-    case a.DELETE_FEEDITEM: del(FeedItem); break
+    case a.ADD_FEED_ITEMS: add(FeedItem); break
+    case a.UPDATE_FEED_ITEM: update(FeedItem); break
+    case a.DELETE_FEED_ITEM: del(FeedItem); break
   }
 
   return session.state

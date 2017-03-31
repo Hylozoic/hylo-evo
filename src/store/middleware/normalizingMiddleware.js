@@ -1,7 +1,7 @@
 import { each, isEmpty } from 'lodash'
-import { get } from 'lodash/fp'
+import { get, snakeCase } from 'lodash/fp'
 import normalize from '../normalize'
-import { FETCH_POSTS, FETCH_FEEDITEMS } from '../constants'
+import { FETCH_POSTS, FETCH_FEED_ITEMS } from '../constants'
 
 export default function normalizingMiddleware ({dispatch, getState}) {
   return next => action => {
@@ -14,7 +14,7 @@ export default function normalizingMiddleware ({dispatch, getState}) {
           if (isEmpty(posts)) break
           dispatchRelations(dispatch, getPostRelations(posts))
           break
-        case FETCH_FEEDITEMS:
+        case FETCH_FEED_ITEMS:
           let feedItems = get('data.community.feedItems', payload)
 
           if (isEmpty(feedItems)) break
@@ -41,7 +41,7 @@ function getFeedItemRelations (rawFeedItems) {
 
   return {
     ...getPostRelations(relabelled.map(feedItem => feedItem.post)),
-    feeditems: relabelled.map(f => normalize(f, 'FeedItem'))
+    feedItems: relabelled.map(f => normalize(f, 'FeedItem'))
   }
 }
 
@@ -77,7 +77,7 @@ function dispatchRelations (dispatch, relations) {
   each(relations, (relation, key) => {
     if (!isEmpty(relation)) {
       dispatch({
-        type: `ADD_${key.toUpperCase()}`,
+        type: `ADD_${snakeCase(key).toUpperCase()}`,
         payload: relation
       })
     }
