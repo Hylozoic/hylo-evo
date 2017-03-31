@@ -1,5 +1,6 @@
 import React from 'react'
 import PostCard from 'components/PostCard'
+import PostEditor from 'components/PostEditor'
 import ShareButton from 'components/PostCard/ShareButton'
 import { omit } from 'lodash/fp'
 import './component.scss'
@@ -94,6 +95,10 @@ const SAMPLE_POST_WITH_PREVIEW = {
 export default function PostTypes (props) {
   return <div>
     <div className='sheet'>
+      <div className='sheet-title'>Post Editor</div>
+      <div styleName='postCards'>
+        <PostEditor />
+      </div>
       <div className='sheet-title'>Post Types</div>
       <div styleName='postCards'>
         <PostCard post={SAMPLE_POST} styleName='postCard' />

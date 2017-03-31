@@ -1,6 +1,10 @@
+:global {
+  @import './css/layout';
+}
+
 .nav {
   composes: sheet from './css/layout.scss';
-  padding: $space-3x;
+  padding: 0;
   padding-bottom: 0;
   margin-bottom: -$space-5x;
 }

@@ -1,5 +1,3 @@
-@import '../../css/bootstrap';
-
 @media (min-width: 80rem) {
   .container {
     width: 80rem;
@@ -12,7 +10,7 @@
 .row {
   display: flex;
   flex-wrap: wrap;
-  @extend .justify-content-between;
+  justify-content: space-between;
   margin: 0;
 }
 
@@ -21,8 +19,8 @@
   position: relative;
   width: 100%;
   min-height: 1px; // Prevent collapsing
-
-  @extend .p-6, .mb-6;
+  margin-bottom: $space-6x;
+  padding: $space-6x;
   box-shadow: 0px 3px 5px 0px $color-nepal;
   color: $color-athens-gray;
   background-color: $color-persimmon;

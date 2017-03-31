@@ -1,5 +1,3 @@
-@import '../../../../../css/bootstrap';
-
 .item {
   // FIXME this makes padding of 12px, actual spacing is 12.5px
   padding: 0 $space-3x;
@@ -11,8 +9,10 @@
 }
 
 .link {
-  // this is repeated multiple places, probably should make a mixin
-  @extend .d-flex, .align-items-center;
+  // composes: d-flex align-items-center from '../../../../../css/bootstrap.scss';
+  display: flex;
+  align-items: center;
+  // 
   color: $color-rhino-50;
   text-decoration: none;
   &:hover {

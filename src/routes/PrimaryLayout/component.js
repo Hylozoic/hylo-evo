@@ -1,9 +1,10 @@
+
 import React, { PropTypes, Component } from 'react'
 import { matchPath, Route } from 'react-router-dom'
+import cx from 'classnames'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
 import Sidebar from './components/Sidebar'
-import cx from 'classnames'
 import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'

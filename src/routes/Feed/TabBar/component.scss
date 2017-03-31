@@ -30,11 +30,11 @@
 }
 
 .tab {
+  composes: caption-lt-lg from 'typography.scss';
   padding: 0 15px;
   height: 28px;
   line-height: 28px;
   display: inline-block;
-  composes: caption-lt-lg from 'typography.scss';
 }
 
 .tab-active {

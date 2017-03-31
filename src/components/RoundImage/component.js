@@ -12,7 +12,6 @@ const { string, bool } = React.PropTypes
 
 export default function RoundImage ({ url, small, medium, overlaps, className }) {
   let styleName = cx('image', { overlaps, small, medium })
-  // LEJ: Note use of bootstrap utility classes here
   className = cx(className)
   return <div styleName={styleName}
     className={className}
