@@ -1,3 +1,9 @@
+.section {
+  padding: 25px;
+  margin: 25px;
+  border: 1px solid $color-rhino-50;
+}
+
 .elementLabel {
   font-size: 10pt;
   margin-bottom: $space-8x;
@@ -62,4 +68,12 @@
   padding: $space-6x;
   text-align: center;
   margin-right: 0;
+}
+
+.labels {
+  > * {
+    margin-right: 20px;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
 }

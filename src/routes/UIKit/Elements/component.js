@@ -12,7 +12,7 @@ export default function Elements (props) {
     <div className='sheet'>
       <div className='sheet-title'>Elements</div>
       <div className='sheet-flexbox'>
-        <div>
+        <div styleName='section'>
           <div styleName='elementLabel'>Imagery</div>
           <div styleName='imagesCard'>
             <RoundImage url={SAMPLE_IMAGE_URL} styleName='imageMargin' />
@@ -25,7 +25,7 @@ export default function Elements (props) {
             <span styleName='imageLabel'>24px</span>
           </div>
         </div>
-        <div styleName='buttonsCard'>
+        <div styleName='buttonsCard section'>
           <div styleName='elementLabel'>Buttons / 40px</div>
           <div styleName='buttonRow'>
             <div styleName='buttonRow_label'>Normal</div>
@@ -52,7 +52,7 @@ export default function Elements (props) {
             <Button label='Button' color='green-white-green-border' styleName='buttonMargin' narrow />
           </div>
         </div>
-        <div>
+        <div styleName='section'>
           <div styleName='elementLabel'>Buttons / 32px</div>
           <div styleName='buttonRow-small'>
             <Button label='Button' styleName='buttonMargin' small />
@@ -73,41 +73,29 @@ export default function Elements (props) {
             </div>
           </div>
         </div>
-      </div>
-      <div>
-        <div styleName='elementLabel'>Labels</div>
-        <div className='sheet-flexbox mb-5'>
-          <div className='sheet-flexbox-item'>
+
+        <div styleName='section'>
+          <div styleName='elementLabel'>Labels</div>
+          <div styleName='labels'>
             <PostLabel type='discussion' />
-          </div>
-          <div className='sheet-flexbox-item'>
             <PostLabel type='event' />
-          </div>
-          <div className='sheet-flexbox-item'>
             <PostLabel type='offer' />
-          </div>
-          <div className='sheet-flexbox-item'>
             <PostLabel type='project' />
-          </div>
-          <div className='sheet-flexbox-item'>
             <PostLabel type='request' />
           </div>
-        </div>
-        <div>
-          <div styleName='skillContainer' className='sheet-flexbox-item'>
-            <SkillLabel label='skill' />
-          </div>
-          <div styleName='skillContainer' className='sheet-flexbox-item'>
-            <SkillLabel label='skill' active />
-          </div>
-          <div styleName='skillContainer skillBackground-rhino' className='sheet-flexbox-item'>
-            <SkillLabel label='skill' color='white' />
-          </div>
-          <div styleName='skillContainer skillBackground-rhino' className='sheet-flexbox-item'>
-            <SkillLabel label='skill' color='white' active />
-          </div>
-          <div className='sheet-flexbox-item'>
-            <span />
+          <div styleName='labels'>
+            <div styleName='skillContainer'>
+              <SkillLabel label='skill' />
+            </div>
+            <div styleName='skillContainer'>
+              <SkillLabel label='skill' active />
+            </div>
+            <div styleName='skillContainer skillBackground-rhino'>
+              <SkillLabel label='skill' color='white' />
+            </div>
+            <div styleName='skillContainer skillBackground-rhino'>
+              <SkillLabel label='skill' color='white' active />
+            </div>
           </div>
         </div>
       </div>
