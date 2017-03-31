@@ -1,7 +1,8 @@
 .section {
-  padding: 25px;
-  margin: 25px;
-  border: 1px solid $color-rhino-50;
+  composes: section-box from '../css/layout.scss';
+  display: block;
+  padding: $space-7x;
+  margin: $space-7x;
 }
 
 .elementLabel {
@@ -25,6 +26,7 @@
 }
 
 .buttonsCard {
+  composes: section;
   margin-right: $space-10x;
 }
 

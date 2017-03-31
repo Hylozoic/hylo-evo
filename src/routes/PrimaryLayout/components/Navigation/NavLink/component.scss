@@ -9,10 +9,8 @@
 }
 
 .link {
-  // composes: d-flex align-items-center from '../../../../../css/bootstrap.scss';
   display: flex;
   align-items: center;
-  // 
   color: $color-rhino-50;
   text-decoration: none;
   &:hover {

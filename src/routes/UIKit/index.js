@@ -11,7 +11,7 @@ class UIKit extends Component {
     return (
       (
         <div>
-          <div styleName='nav' className='d-flex flex-row justify-content-between align-items-center'>
+          <div styleName='nav'>
             <ul styleName='menu'>
               <li styleName='menu_item'><Link to='/ui-kit/typography'>Typography</Link></li>
               <li styleName='menu_item'><Link to='/ui-kit/elements'>Elements</Link></li>

@@ -25,7 +25,7 @@ export default function Elements (props) {
             <span styleName='imageLabel'>24px</span>
           </div>
         </div>
-        <div styleName='buttonsCard section'>
+        <div styleName='buttonsCard'>
           <div styleName='elementLabel'>Buttons / 40px</div>
           <div styleName='buttonRow'>
             <div styleName='buttonRow_label'>Normal</div>
