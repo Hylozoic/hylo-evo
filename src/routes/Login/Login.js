@@ -2,6 +2,7 @@ import React from 'react'
 import './Login.scss'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
+import Icon from 'components/Icon'
 
 export default class Login extends React.Component {
   constructor (props) {
@@ -38,9 +39,18 @@ export default class Login extends React.Component {
         <Button styleName='submit' label='Log In' onClick={this.submit} />
         <p styleName='connect-label'>Or connect with:</p>
         <div styleName='auth-buttons'>
-          <a styleName='facebook'>Facebook</a>
-          <a styleName='google'>Google</a>
-          <a styleName='linkedin'>LinkedIn</a>
+          <a styleName='facebook'>
+            <Icon name='Facebook' />
+            Facebook
+          </a>
+          <a styleName='google'>
+            <Icon name='Google' />
+            Google
+            </a>
+          <a styleName='linkedin'>
+            <Icon name='Linkedin' />
+            LinkedIn
+          </a>
         </div>
       </div>
     </div>
