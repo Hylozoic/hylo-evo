@@ -10,15 +10,13 @@ import { personUrl, bgImageStyle, humanDate } from 'util/index'
 import { parse } from 'url'
 import './component.scss'
 import samplePost from './samplePost'
-import { uniqBy } from 'lodash/fp'
 const { shape, any, object, string, func, array } = React.PropTypes
 
 export default class PostCard extends React.Component {
   render () {
     const { post, className } = this.props
 
-    // TODO: get commenters from graphql directly
-    const commenters = uniqBy('id', post.comments.toModelArray().map(c => c.creator))
+    console.log('post', post)
 
     return <div styleName='card' className={className}>
       <PostHeader creator={post.creator}
@@ -27,13 +25,13 @@ export default class PostCard extends React.Component {
         context={post.context}
         communities={post.communities} />
       <PostBody title={post.title}
-        description={post.details}
+        details={post.details}
         imageUrl={post.imageUrl}
         linkPreview={post.linkPreview} />
       <PostFooter id={post.id}
-        commenters={commenters}
-        commentersTotal={commenters.length}
-        voteCount={post.voteCount} />
+        commenters={post.commenters}
+        commentersTotal={post.commentersTotal}
+        votesTotal={post.votesTotal} />
     </div>
   }
 }
@@ -82,12 +80,12 @@ export const PostHeader = ({ creator, date, type, context, communities }) => {
   </div>
 }
 
-export const PostBody = ({ title, description, imageUrl, linkPreview }) => {
-  // TODO: Present description as HTML and sanitize
-  const truncated = description &&
-    description.length > 147
-    ? description.slice(0, 144) + '...'
-    : description
+export const PostBody = ({ title, details, imageUrl, linkPreview }) => {
+  // TODO: Present details as HTML and sanitize
+  const truncated = details &&
+    details.length > 147
+    ? details.slice(0, 144) + '...'
+    : details
 
   return <div styleName='body'>
     {imageUrl && <div style={bgImageStyle(imageUrl)} styleName='image' />}
@@ -115,23 +113,23 @@ export const LinkPreview = ({ title, url, imageUrl }) => {
 export const commentCaption = (commenters, commentersTotal) => {
   var names = ''
   const firstName = person => person.name.split(' ')[0]
-  if (commenters.length === 0) {
+  if (commentersTotal === 0) {
     return 'Be the first to comment'
-  } else if (commenters.length === 1) {
+  } else if (commentersTotal === 1) {
     names = firstName(commenters[0])
-  } else if (commenters.length === 2) {
+  } else if (commentersTotal === 2) {
     names = `${firstName(commenters[0])} and ${firstName(commenters[1])}`
   } else {
-    names = `${firstName(commenters[0])}, ${firstName(commenters[1])} and ${commentersTotal - 2} others`
+    names = `${firstName(commenters[0])}, ${firstName(commenters[1])} and ${commentersTotal - 2} other${commentersTotal - 2 > 1 ? 's' : ''}`
   }
   return `${names} commented`
 }
 
-export const PostFooter = ({ id, commenters, commentersTotal, voteCount }) => {
+export const PostFooter = ({ id, commenters, commentersTotal, votesTotal }) => {
   return <div styleName='footer'>
     <PeopleImages imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
     <span className='caption-lt-lg'>{commentCaption(commenters, commentersTotal)}</span>
-    <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{voteCount}</a></div>
+    <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{votesTotal}</a></div>
   </div>
 }
 

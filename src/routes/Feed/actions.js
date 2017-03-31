@@ -23,15 +23,18 @@ export function fetchFeedItems (id, opts = {}) {
                 }
                 createdAt
                 updatedAt
-                comments(order: "desc") {
+                commenters(first: 2) {
                   id
-                  creator {
-                    id
-                    name
-                    avatarUrl
-                  }
+                  name
+                  avatarUrl
                 }
-                commentsTotal
+                commentersTotal
+                linkPreview {
+                  title
+                  url
+                  imageUrl
+                }
+                votesTotal
               }
             }
           }
