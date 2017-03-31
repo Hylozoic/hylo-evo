@@ -93,10 +93,18 @@ module.exports = {
           cacheDirectory: true
         }
       },
-
+      // Simple CSS loading for node_modules fond CSS (need in particular for draft-js-plugins-editor styles)
+      {
+        test: /draft-js.*\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
       // CSS Modules for all SASS files not in resources or global
       {
         test: /\.(css|scss|sass)$/,
+        exclude: /draft-js.*\.css$/,
         use: [
           {loader: 'style-loader'},
           sharedConfig.cssLoader,
