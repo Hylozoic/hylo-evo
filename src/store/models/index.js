@@ -5,8 +5,30 @@ import Community from './Community'
 import Comment from './Comment'
 import FeedItem from './FeedItem'
 
-const orm = new ORM()
+export const orm = new ORM()
+orm.register(
+  Comment,
+  Community,
+  FeedItem,
+  Person,
+  Post,
+  PostFollower
+)
 
-orm.register(Post, PostFollower, Person, Community, Comment, FeedItem)
+// get Model.fields for each model
+export function allFields () {
+  return [
+    Comment,
+    Community,
+    FeedItem,
+    Person,
+    Post
+  ].reduce(
+    (fields, entityClass) => ({
+      ...fields,
+      [entityClass.modelName]: entityClass.fields
+    }), {}
+  )
+}
 
 export default orm

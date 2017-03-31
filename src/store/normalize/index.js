@@ -1,28 +1,13 @@
 import { each } from 'lodash'
 import { fk, many } from 'redux-orm'
 
-import Comment from 'store/models/Comment'
-import Community from 'store/models/Community'
-import Person from 'store/models/Person'
-import Post from 'store/models/Post'
-import FeedItem from 'store/models/FeedItem'
+import { allFields } from 'store/models'
 
-export default function normalize (entity, entityType) {
-  const fields = [
-    Comment,
-    Community,
-    Person,
-    Post,
-    FeedItem
-  ].reduce(
-    (fields, entityClass) => ({ ...fields, [entityClass.modelName]: entityClass.fields }),
-    {}
-  )
-
-  const normalized = {
+export default function transformer (entity, entityType) {
+  const fields = allFields
+  const transformed = {
     ...entity
   }
-
   const fkType = fk().constructor.name
   const manyType = many().constructor.name
 
