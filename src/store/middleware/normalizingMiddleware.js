@@ -1,6 +1,6 @@
 import { castArray, each, isObject, isArray, reduce, uniqBy } from 'lodash/fp'
 
-import { FETCH_POSTS, FETCH_FEEDITEMS } from '../constants'
+import { FETCH_POST, FETCH_FEEDITEMS } from '../constants'
 import { allRelations } from '../models'
 
 const relations = allRelations()
@@ -11,10 +11,10 @@ export default function normalizingMiddleware ({dispatch, getState}) {
       const { type, payload } = action
 
       switch (type) {
-        case FETCH_POSTS:
+        case FETCH_POST:
         case FETCH_FEEDITEMS:
           console.log(normalize(payload.data))
-          each(normalize(payload.data), dispatch)
+          each(dispatch)(normalize(payload.data))
           break
       }
     }
@@ -35,6 +35,7 @@ function normalize (graphqlResult) {
 function getRelation (relation, resultFragment) {
   let result = []
   const eachWithKey = each.convert({ cap: false })
+
   eachWithKey((entity, key) => {
     if (relation.hasOwnProperty(key)) {
       const type = `ADD_${relation[key].relationType.toUpperCase()}`
@@ -47,4 +48,8 @@ function getRelation (relation, resultFragment) {
   })(resultFragment)
 
   return result
+}
+
+function transform (entity, relationType) {
+  const r = relations(relationType)
 }
