@@ -15,7 +15,7 @@ export default function ormReducer (state = {}, action) {
     case a.UPDATE_COMMENT: update(Comment); break
     case a.DELETE_COMMENT: del(Comment); break
 
-    case a.ADD_COMMUNITIE: add(Community); break
+    case a.ADD_COMMUNITY: add(Community); break
     case a.UPDATE_COMMUNITY: update(Community); break
     case a.DELETE_COMMUNITY: del(Community); break
 
