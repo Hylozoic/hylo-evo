@@ -1,4 +1,4 @@
-import { castArray, each, isObject, isArray, reduce, uniqBy } from 'lodash/fp'
+import { castArray, each, isObject, reduce, uniqBy } from 'lodash/fp'
 
 import { FETCH_POST, FETCH_FEEDITEMS } from '../constants'
 import { allRelations } from '../models'
