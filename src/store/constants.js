@@ -1,5 +1,5 @@
 export const FETCH_POST = 'FETCH_POST'
-export const FETCH_FEEDITEMS = 'FETCH_FEEDITEMS'
+export const FETCH_FEEDITEM = 'FETCH_FEEDITEM'
 
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'

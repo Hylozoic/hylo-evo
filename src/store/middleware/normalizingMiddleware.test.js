@@ -46,7 +46,7 @@ describe('Actions', () => {
   it('Dispatches ADD_POST when payload includes a post', () => {
     store.dispatch({
       type: 'FETCH_POST',
-      payload
+      payload: payload.FETCH_POST
     })
     const actual = store.getActions().find(a => a.type === 'ADD_POST')
     expect(actual).toBeTruthy()
@@ -62,7 +62,7 @@ describe('Actions', () => {
   })
 
   it('Does not dispatch ADD_COMMENTS when no comment is present', () => {
-    const posts = payload.data.me.posts.map(p => ({ ...p, comments: [] }))
+    const posts = payload.FETCH_POST.data.me.posts.map(p => ({ ...p, comments: [] }))
     store.dispatch({
       type: 'FETCH_POST',
       payload: { data: { me: { posts } } }
@@ -72,7 +72,7 @@ describe('Actions', () => {
   })
 
   it('Does not dispatch ADD_COMMUNITY when no community is present', () => {
-    const posts = payload.data.me.posts.map(p => ({ ...p, communities: [] }))
+    const posts = payload.FETCH_POST.data.me.posts.map(p => ({ ...p, communities: [] }))
     store.dispatch({
       type: 'FETCH_POST',
       payload: { data: { me: { posts } } }
@@ -84,7 +84,7 @@ describe('Actions', () => {
   it('Dispatches correct number of ADD_PERSON actions', () => {
     store.dispatch({
       type: 'FETCH_POST',
-      payload
+      payload: payload.FETCH_POST
     })
     // Two people in the test data
     const actual = store.getActions().filter(a => a.type === 'ADD_PERSON').length
@@ -92,7 +92,7 @@ describe('Actions', () => {
   })
 
   it('Does not dispatch ADD_PERSON when no person is present', () => {
-    const posts = payload.data.me.posts.map(({ id, name }) => ({ id, name }))
+    const posts = payload.FETCH_POST.data.me.posts.map(({ id, name }) => ({ id, name }))
     store.dispatch({
       type: 'FETCH_POST',
       payload: { data: { me: { posts } } }
@@ -104,7 +104,7 @@ describe('Actions', () => {
   it('Has the correct payload', () => {
     store.dispatch({
       type: 'FETCH_POST',
-      payload
+      payload: payload.FETCH_POST
     })
     const expected = {
       id: '30002',
@@ -125,6 +125,23 @@ describe('Actions', () => {
     }
     const actual = store.getActions().filter(a => a.type === 'ADD_POST')[0].payload
     expect(actual).toEqual(expected)
+  })
+
+  describe('FETCH_FEEDITEM', () => {
+    it('Has the correct payload', () => {
+      store.dispatch({
+        type: 'FETCH_FEEDITEM',
+        payload: payload.FETCH_FEEDITEM
+      })
+      const expected = {
+        creator: "12345",
+        details: "<p>This is a FeedItem.</p>",
+        id: "30002",
+        title: "Hello",
+      }
+      const actual = store.getActions().filter(a => a.type === 'ADD_POST')[0].payload
+      expect(actual).toEqual(expected)
+    })
   })
 })
 
