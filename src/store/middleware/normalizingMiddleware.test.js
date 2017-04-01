@@ -31,7 +31,7 @@ describe('Actions', () => {
     store = mockStore({})
   })
 
-  it('Ignores actions that are not FETCH_*', () => {
+  it.only('Ignores actions that are not FETCH_*', () => {
     const expected = {
       type: 'NOT_A_FETCH',
       payload: {
@@ -43,7 +43,7 @@ describe('Actions', () => {
     expect(actual).toEqual([expected])
   })
 
-  it('Dispatches ADD_POSTS when payload includes a post', () => {
+  it.only('Dispatches ADD_POSTS when payload includes a post', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
       payload
@@ -172,7 +172,7 @@ describe('Actions', () => {
     expect(actual.length).toBe([...new Set(actual)].length)
   })
 
-  it.only('Has the correct payload', () => {
+  it('Has the correct payload', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
       payload
