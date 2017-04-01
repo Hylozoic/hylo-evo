@@ -61,48 +61,6 @@ describe('Actions', () => {
     expect(actual).toBeFalsy()
   })
 
-  it('Dispatches a single ADD_POST action when a post is present', () => {
-    store.dispatch({
-      type: 'FETCH_POST',
-      payload
-    })
-    const actual = store.getActions().filter(a => a.type === 'ADD_POST').length
-    expect(actual).toBe(1)
-  })
-
-  it('Sends the correct number of posts in the ADD_POST payload', () => {
-    store.dispatch({
-      type: 'FETCH_POST',
-      payload
-    })
-    const expected = payload.data.me.posts.length
-    const action = store.getActions().filter(a => a.type === 'ADD_POST')[0]
-    const actual = Object.keys(action.payload).length
-    expect(actual).toBe(expected)
-  })
-
-  it('Dispatches a single ADD_COMMENTS action when a comment is present', () => {
-    store.dispatch({
-      type: 'FETCH_POST',
-      payload
-    })
-    // Comments are consolidated into a single action
-    const expected = 1
-    const actual = store.getActions().filter(a => a.type === 'ADD_COMMENTS').length
-    expect(actual).toBe(expected)
-  })
-
-  it('Sends the correct number of comments in ADD_COMMENTS payload', () => {
-    store.dispatch({
-      type: 'FETCH_POST',
-      payload
-    })
-    const expected = payload.data.me.posts.reduce((total, post) => total + post.comments.length, 0)
-    const action = store.getActions().filter(a => a.type === 'ADD_COMMENTS')[0]
-    const actual = Object.keys(action.payload).length
-    expect(actual).toBe(expected)
-  })
-
   it('Does not dispatch ADD_COMMENTS when no comment is present', () => {
     const posts = payload.data.me.posts.map(p => ({ ...p, comments: [] }))
     store.dispatch({
@@ -113,63 +71,34 @@ describe('Actions', () => {
     expect(actual).toBe(0)
   })
 
-  it('Dispatches a single ADD_COMMUNITIES action when a community is present', () => {
-    store.dispatch({
-      type: 'FETCH_POST',
-      payload
-    })
-    const expected = 1
-    const actual = store.getActions().filter(a => a.type === 'ADD_COMMUNITIES').length
-    expect(actual).toBe(expected)
-  })
-
-  it('Does not dispatch ADD_COMMUNITIES when no community is present', () => {
+  it('Does not dispatch ADD_COMMUNITY when no community is present', () => {
     const posts = payload.data.me.posts.map(p => ({ ...p, communities: [] }))
     store.dispatch({
       type: 'FETCH_POST',
       payload: { data: { me: { posts } } }
     })
-    const actual = store.getActions().filter(a => a.type === 'ADD_COMMUNITIES').length
+    const actual = store.getActions().filter(a => a.type === 'ADD_COMMUNITY').length
     expect(actual).toBe(0)
   })
 
-  it('Consolidates communities with the same ID', () => {
+  it('Dispatches correct number of ADD_PERSON actions', () => {
     store.dispatch({
       type: 'FETCH_POST',
       payload
     })
-    const action = store.getActions().filter(a => a.type === 'ADD_COMMUNITIES')[0]
-    const actual = Object.keys(action.payload).map(id => Number(id))
-    expect(actual.length).toBe([...new Set(actual)].length)
+    // Two people in the test data
+    const actual = store.getActions().filter(a => a.type === 'ADD_PERSON').length
+    expect(actual).toBe(2)
   })
 
-  it('Dispatches a single ADD_PEOPLE action when a person is present', () => {
-    store.dispatch({
-      type: 'FETCH_POST',
-      payload
-    })
-    const actual = store.getActions().filter(a => a.type === 'ADD_PEOPLE').length
-    expect(actual).toBe(1)
-  })
-
-  it('Does not dispatch ADD_PEOPLE when no person is present', () => {
+  it('Does not dispatch ADD_PERSON when no person is present', () => {
     const posts = payload.data.me.posts.map(({ id, name }) => ({ id, name }))
     store.dispatch({
       type: 'FETCH_POST',
       payload: { data: { me: { posts } } }
     })
-    const actual = store.getActions().filter(a => a.type === 'ADD_PEOPLE').length
+    const actual = store.getActions().filter(a => a.type === 'ADD_PERSON').length
     expect(actual).toBe(0)
-  })
-
-  it('Consolidates people with the same ID', () => {
-    store.dispatch({
-      type: 'FETCH_POST',
-      payload
-    })
-    const action = store.getActions().filter(a => a.type === 'ADD_PEOPLE')[0]
-    const actual = Object.keys(action.payload).map(id => Number(id))
-    expect(actual.length).toBe([...new Set(actual)].length)
   })
 
   it('Has the correct payload', () => {
@@ -177,42 +106,22 @@ describe('Actions', () => {
       type: 'FETCH_POST',
       payload
     })
-    const expected = 
-    {
-      '30002': {
-        id: '30002',
-        title: 'Hello',
-        type: null,
-        details: '<p><a href="https://wombat.life">https://wombat.life</a></p>\n<p></p>\n<p></p>',
-        creator: '46816',
-        followers: [ '46816' ],
-        followersTotal: '1',
-        communities: [ '1836' ],
-        communitiesTotal: '1',
-        comments: [ '1' ],
-        commentsTotal: '1',
-        createdAt: 'Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)',
-        startsAt: null,
-        endsAt: null,
-        fulfilledAt: null
-      },
-      '30003': {
-        id: '30003',
-        title: 'Yup',
-        type: null,
-        details: '<p>So true.</p>',
-        creator: '46816',
-        followers: [ '46816' ],
-        followersTotal: '1',
-        communities: [ '1836' ],
-        communitiesTotal: '1',
-        comments: [ '2' ],
-        commentsTotal: '1',
-        createdAt: 'Sat Mar 18 2017 10:49:43 GMT+1300 (NZDT)',
-        startsAt: null,
-        endsAt: null,
-        fulfilledAt: null
-      }
+    const expected = {
+      id: '30002',
+      title: 'Hello',
+      type: null,
+      details: '<p><a href="https://wombat.life">https://wombat.life</a></p>\n<p></p>\n<p></p>',
+      creator: '46816',
+      followers: [ '46816' ],
+      followersTotal: '1',
+      communities: [ '1836' ],
+      communitiesTotal: '1',
+      comments: [ '1' ],
+      commentsTotal: '1',
+      createdAt: 'Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)',
+      startsAt: null,
+      endsAt: null,
+      fulfilledAt: null
     }
     const actual = store.getActions().filter(a => a.type === 'ADD_POST')[0].payload
     expect(actual).toEqual(expected)

@@ -8,7 +8,7 @@ export default function ormReducer (state = {}, action) {
   const { Comment, Community, Person, Post, FeedItem } = session
   const { payload, type } = action
 
-  const add = addEntities(payload)
+  const add = addEntity(payload)
   const update = updateEntity(payload)
   const del = deleteEntity(payload)
 
@@ -37,12 +37,8 @@ export default function ormReducer (state = {}, action) {
   return session.state
 }
 
-function addEntities (payload) {
-  return model => {
-    return each(payload, entity => {
-      model.hasId(entity.id) ? model.withId(entity.id).update(entity) : model.create(entity)
-    })
-  }
+function addEntity (payload) {
+  return model => model.hasId(payload.id) ? model.update(payload) : model.create(payload)
 }
 
 function deleteEntity (payload) {

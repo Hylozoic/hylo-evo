@@ -5,7 +5,7 @@ import { allRelations } from '../models'
 
 const relations = allRelations()
 
-export default function normalizingMiddleware ({dispatch, getState}) {
+export default function normalizingMiddleware ({ dispatch }) {
   return next => action => {
     if (action) {
       const { type, payload } = action
@@ -13,7 +13,6 @@ export default function normalizingMiddleware ({dispatch, getState}) {
       switch (type) {
         case FETCH_POST:
         case FETCH_FEEDITEMS:
-          console.log(normalize(payload.data))
           each(dispatch)(normalize(payload.data))
           break
       }
@@ -29,6 +28,7 @@ function normalize (graphqlResult) {
     (actions, relation) => [ ...actions, ...getRelation(relation, graphqlResult) ],
     []
   )(relations)
+  // TODO: by action type also
   return uniqBy(a => a.payload.id)(result)
 }
 
@@ -38,9 +38,10 @@ function getRelation (relation, resultFragment) {
 
   eachWithKey((entity, key) => {
     if (relation.hasOwnProperty(key)) {
-      const type = `ADD_${relation[key].relationType.toUpperCase()}`
+      const rtype = relation[key].relationType
+      const type = `ADD_${rtype.toUpperCase()}`
       each(e => {
-        result.push({ type, payload: e })
+        result.push({ type, payload: transform(e, rtype) })
       })(castArray(entity))
     } else if (isObject(entity)) {
       result = [ ...result, ...getRelation(relation, entity) ]
@@ -51,5 +52,17 @@ function getRelation (relation, resultFragment) {
 }
 
 function transform (entity, relationType) {
-  const r = relations(relationType)
+  const reduceWithKey = reduce.convert({ cap: false })
+  const relation = relations[relationType]
+  return reduceWithKey(
+    (transformed, val, key) => {
+      if (relation.hasOwnProperty(key)) {
+        transformed[key] = relation[key].transform(val)
+      } else {
+        transformed[key] = val
+      }
+      return transformed
+    },
+    {}
+  )(entity)
 }
