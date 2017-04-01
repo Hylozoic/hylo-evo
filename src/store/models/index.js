@@ -4,6 +4,7 @@ import { reduce } from 'lodash/fp'
 import Comment from './Comment'
 import Community from './Community'
 import FeedItem from './FeedItem'
+import Me from './Me'
 import Person from './Person'
 import Post, { PostFollower } from './Post'
 
@@ -12,6 +13,7 @@ orm.register(
   Comment,
   Community,
   FeedItem,
+  Me,
   Person,
   Post,
   PostFollower
@@ -28,6 +30,7 @@ export function allRelations () {
     Comment,
     Community,
     FeedItem,
+    Me,
     Person,
     Post
   ].reduce(onlyRelationalFields, {})

@@ -23,7 +23,14 @@
           "communities": [
             {
               "id": "1836",
-              "name": "Wombats"
+              "name": "Wombats",
+              "members": [
+                {
+                  "id": "99",
+                  "name": "Flargle Argleson",
+                  "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+                }
+              ]
             }
           ],
           "communitiesTotal": "1",
