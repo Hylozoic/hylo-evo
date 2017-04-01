@@ -21,6 +21,9 @@ orm.register(
 
 export default orm
 
+const FK_TYPE = fk().constructor.name
+const MANY_TYPE = many().constructor.name
+
 // Get all fields for each model that are related to other models.
 // For each type return an object with transform functions to normalize
 // the type.
@@ -39,14 +42,20 @@ export function allRelations () {
 function onlyRelationalFields (fields, entityClass) {
   const reduceWithKey = reduce.convert({ cap: false })
   const entityRelations = reduceWithKey(includeIfRelation, {})(entityClass.fields)
+
+  // TODO: temporary! Find a better solution for polymorphism.
+  if (entityClass.name === 'FeedItem') {
+    entityRelations.content = {
+      relationType: 'Post',
+      transform: fkTransform
+    }
+  }
+
   return {
     ...fields,
     [entityClass.modelName]: entityRelations
   }
 }
-
-const FK_TYPE = fk().constructor.name
-const MANY_TYPE = many().constructor.name
 
 function includeIfRelation (relations, field, fieldName) {
   const fieldType = field.constructor.name
