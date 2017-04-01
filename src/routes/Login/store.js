@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { createSelector } from 'reselect'
 import { get, pick } from 'lodash/fp'
+import authWithService from './authWithService'
 
 const CHECK_LOGIN = 'CHECK_LOGIN'
 const LOGIN = 'LOGIN'
@@ -12,6 +13,13 @@ export function login (email, password) {
     payload: {
       api: {method: 'post', path: '/noo/login', params: {email, password}}
     }
+  }
+}
+
+export function loginWithService (name) {
+  return {
+    type: LOGIN,
+    payload: authWithService(name)
   }
 }
 

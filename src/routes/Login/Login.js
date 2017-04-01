@@ -23,6 +23,7 @@ export default class Login extends React.Component {
 
   render () {
     const setState = key => event => this.setState({[key]: event.target.value})
+    const { loginWithService } = this.props
     return <div styleName='background'>
       <div styleName='container'>
         <h1 styleName='title'>Log in to Hylo-Evo</h1>
@@ -45,15 +46,15 @@ export default class Login extends React.Component {
 
         <p styleName='connect-label'>Or connect with:</p>
         <div styleName='auth-buttons'>
-          <a styleName='facebook'>
+          <a styleName='facebook' onClick={() => loginWithService('facebook')}>
             <Icon name='Facebook' />
             Facebook
           </a>
-          <a styleName='google'>
+          <a styleName='google' onClick={() => loginWithService('google')}>
             <Icon name='Google' />
             Google
             </a>
-          <a styleName='linkedin'>
+          <a styleName='linkedin' onClick={() => loginWithService('linkedin')}>
             <Icon name='Linkedin' />
             LinkedIn
           </a>
