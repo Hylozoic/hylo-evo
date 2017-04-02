@@ -27,7 +27,6 @@ const MANY_TYPE = many().constructor.name
 // Get all fields for each model that are related to other models.
 // For each type return an object with transform functions to normalize
 // the type.
-// TODO: consider moving the transforms inside each model.
 export function allRelations () {
   return [
     Comment,
@@ -57,6 +56,7 @@ function onlyRelationalFields (fields, entityClass) {
   }
 }
 
+// Add field to relations if it's a foreign key or many relationship
 function includeIfRelation (relations, field, fieldName) {
   const fieldType = field.constructor.name
   if (fieldType === FK_TYPE) {

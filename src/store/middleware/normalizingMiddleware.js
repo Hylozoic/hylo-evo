@@ -1,4 +1,4 @@
-import { castArray, each, isObject, reduce, uniqBy } from 'lodash/fp'
+import { castArray, each, isObject, reduce, uniqWith } from 'lodash/fp'
 
 import { FETCH_POST, FETCH_FEEDITEM } from '../constants'
 import { allRelations } from '../models'
@@ -28,8 +28,11 @@ function normalize (graphqlResult) {
     (actions, relation) => [ ...actions, ...getRelation(relation, graphqlResult) ],
     []
   )(relations)
-  // TODO: by action type also
-  return uniqBy(a => a.payload.id)(result)
+  return uniqWith(isUniqueAction)(result)
+}
+
+function isUniqueAction (a, b) {
+  return a.payload.id === b.payload.id && a.type === b.type
 }
 
 function getRelation (relation, resultFragment) {
