@@ -34,7 +34,6 @@ export function fetchFeedItems (id, opts = {}) {
                   url
                   imageUrl
                 }
-                votesTotal
               }
             }
           }
