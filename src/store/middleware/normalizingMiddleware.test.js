@@ -15,14 +15,6 @@ it('Returns a function to handle action', () => {
   expect(actionHandler.length).toBe(1)
 })
 
-it('Returns the value of next', () => {
-  const expected = 'Wombat'
-  const nextHandler = normalizingMiddleware({ action: 'ADD_POST' })
-  const actionHandler = nextHandler(() => expected)
-  const actual = actionHandler()
-  expect(actual).toBe(expected)
-})
-
 describe('Actions', () => {
   let store = null
   let mockStore = configureStore([normalizingMiddleware])
