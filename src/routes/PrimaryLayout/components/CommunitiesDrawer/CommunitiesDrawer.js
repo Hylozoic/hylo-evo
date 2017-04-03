@@ -26,7 +26,7 @@ export default class CommunitiesDrawer extends React.Component {
     const imageStyle = bgImageStyle(currentCommunity.avatarUrl)
     return <div styleName='drawer'>
       <Icon name='Ex' styleName='closeDrawer' />
-      <Link styleName='currentCommunity' to={`/c/${currentCommunity.id}`}>
+      <Link styleName='currentCommunity' to={`/c/${currentCommunity.slug}`}>
         <div styleName='avatar' style={imageStyle} />
         <div styleName='name' className='drawer-inv-bd'>{currentCommunity.name}</div>
         <div className='drawer-inv-sm'>{currentCommunity.location}</div>
@@ -42,7 +42,7 @@ export default class CommunitiesDrawer extends React.Component {
           const imageStyle = bgImageStyle(community.avatarUrl)
           const badge = communityNotifications.find(n => n && n.communityId === community.id)
           return <li styleName='community' key={`community${community.id}`}>
-            <Link to={`/c/${community.id}`} title={community.name}>
+            <Link to={`/c/${community.slug}`} title={community.name}>
               <div styleName='avatar' style={imageStyle} />
               <span styleName='name' className='drawer-inv-li'>{community.name}</span>
               {badge && <Badge number={badge.count} styleName='badge' expanded='true' />}

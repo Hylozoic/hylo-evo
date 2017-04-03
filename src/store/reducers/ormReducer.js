@@ -3,7 +3,7 @@ import orm from 'store/models'
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
-  const { Comment, Community, Person, Post, FeedItem } = session
+  const { Comment, Community, Membership, Person, Post, FeedItem } = session
   const { payload, type } = action
 
   const add = addEntity(payload)
@@ -18,6 +18,10 @@ export default function ormReducer (state = {}, action) {
     case a.ADD_COMMUNITY: add(Community); break
     case a.UPDATE_COMMUNITY: update(Community); break
     case a.DELETE_COMMUNITY: del(Community); break
+
+    case a.ADD_MEMBERSHIP: add(Membership); break
+    case a.UPDATE_MEMBERSHIP: update(Membership); break
+    case a.DELETE_MEMBERSHIP: del(Membership); break
 
     case a.ADD_PERSON: add(Person); break
     case a.UPDATE_PERSON: update(Person); break

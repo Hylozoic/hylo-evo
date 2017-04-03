@@ -12,6 +12,18 @@ export function fetchCurrentUser () {
           id
           name
           avatarUrl
+          memberships {
+            id
+            person {
+              id
+            }
+            community {
+              id
+              name
+              slug
+              avatarUrl
+            }
+          }
         }
       }`
     }

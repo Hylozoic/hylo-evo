@@ -9,5 +9,6 @@ export default class Me extends Model {
 Me.modelName = 'Me'
 Me.fields = {
   name: attr(),
-  posts: many('Post')
+  posts: many('Post'),
+  memberships: many('Membership')
 }

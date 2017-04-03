@@ -22,7 +22,7 @@ export default class PrimaryLayout extends Component {
 
   componentDidMount () {
     // FIXME this doesn't belong here
-    if (this.props.currentUser) return
+    //if (this.props.currentUser) return
     this.props.fetchCurrentUser()
   }
 
