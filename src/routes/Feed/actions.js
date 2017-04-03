@@ -1,9 +1,9 @@
-import { FETCH_FEED_ITEMS } from 'store/constants'
+import { FETCH_FEEDITEM } from 'store/constants'
 
 export function fetchFeedItems (slug, opts = {}) {
   const feedItemParams = `(first: ${opts.first || 2}, ${opts.cursor ? `cursor: ${opts.cursor},` : ''} order: "desc")`
   return {
-    type: FETCH_FEED_ITEMS,
+    type: FETCH_FEEDITEM,
     graphql: {
       query: `{
         community(slug: "${slug}") {

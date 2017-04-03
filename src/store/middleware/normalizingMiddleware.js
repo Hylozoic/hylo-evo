@@ -1,85 +1,71 @@
-import { each, isEmpty } from 'lodash'
-import { get, snakeCase } from 'lodash/fp'
-import normalize from '../normalize'
-import { FETCH_POSTS, FETCH_FEED_ITEMS } from '../constants'
+import { castArray, each, isObject, reduce, uniqWith } from 'lodash/fp'
 
-export default function normalizingMiddleware ({dispatch, getState}) {
+import { FETCH_POST, FETCH_FEEDITEM } from '../constants'
+import { allRelations } from '../models'
+
+const relations = allRelations()
+
+export default function normalizingMiddleware ({ dispatch }) {
   return next => action => {
-    if (action) {
+    if (action && action.type) {
       const { type, payload } = action
 
       switch (type) {
-        case FETCH_POSTS:
-          const posts = get('data.me.posts', payload)
-          if (isEmpty(posts)) break
-          dispatchRelations(dispatch, getPostRelations(posts))
-          break
-        case FETCH_FEED_ITEMS:
-          let feedItems = get('data.community.feedItems', payload)
-
-          if (isEmpty(feedItems)) break
-          dispatchRelations(dispatch, getFeedItemRelations(feedItems))
+        case FETCH_FEEDITEM:
+        case FETCH_POST:
+          each(dispatch)(normalize(payload.data))
           break
       }
+      return next(action)
     }
-    return next(action)
   }
 }
 
-function transformFeedItem ({ type, content }) {
-  // this assumes that all feed items contain posts. This will change
-  // and that all feed items content will have an id. This should not change
-  return {
-    id: `${type}_${content.id}`,
-    type,
-    post: content
-  }
+function normalize (graphqlResult) {
+  const reduceWithKey = reduce.convert({ cap: false })
+
+  const result = reduceWithKey(
+    (actions, relation) => [ ...actions, ...getRelation(relation, graphqlResult) ],
+    []
+  )(relations)
+  return uniqWith(isUniqueAction)(result)
 }
 
-function getFeedItemRelations (rawFeedItems) {
-  const relabelled = rawFeedItems.map(transformFeedItem)
-
-  return {
-    ...getPostRelations(relabelled.map(feedItem => feedItem.post)),
-    feedItems: relabelled.map(f => normalize(f, 'FeedItem'))
-  }
+function isUniqueAction (a, b) {
+  return a.payload.id === b.payload.id && a.type === b.type
 }
 
-function getPostRelations (rawPosts) {
-  const relations = {
-    comments: [],
-    communities: [],
-    people: [],
-    posts: []
-  }
+function getRelation (relation, resultFragment) {
+  let result = []
+  const eachWithKey = each.convert({ cap: false })
 
-  rawPosts.forEach(post => {
-    if (post.comments) {
-      relations.comments = relations.comments.concat(post.comments.map(c => normalize(c, 'Comment')))
-      relations.people = relations.people.concat(post.comments.map(c => c.creator))
+  eachWithKey((entity, key) => {
+    if (relation.hasOwnProperty(key)) {
+      const rtype = relation[key].relationType
+      const type = `ADD_${rtype.toUpperCase()}`
+      each(e => {
+        result.push({ type, payload: transform(e, rtype) })
+      })(castArray(entity))
+    } else if (isObject(entity)) {
+      result = [ ...result, ...getRelation(relation, entity) ]
     }
-    if (post.communities) {
-      relations.communities = relations.communities.concat(post.communities.map(c => normalize(c, 'Community')))
-    }
-    if (post.followers) {
-      relations.people = relations.people.concat(post.followers)
-    }
-    if (post.creator) {
-      relations.people.push(post.creator)
-    }
-    relations.posts = relations.posts.concat(normalize(post, 'Post'))
-  })
+  })(resultFragment)
 
-  return relations
+  return result
 }
 
-function dispatchRelations (dispatch, relations) {
-  each(relations, (relation, key) => {
-    if (!isEmpty(relation)) {
-      dispatch({
-        type: `ADD_${snakeCase(key).toUpperCase()}`,
-        payload: relation
-      })
-    }
-  })
+function transform (entity, relationType) {
+  const reduceWithKey = reduce.convert({ cap: false })
+  const relation = relations[relationType]
+  return reduceWithKey(
+    (transformed, val, key) => {
+      if (relation.hasOwnProperty(key)) {
+        transformed[key] = relation[key].transform(val)
+      } else {
+        transformed[key] = val
+      }
+      return transformed
+    },
+    {}
+  )(entity)
 }
