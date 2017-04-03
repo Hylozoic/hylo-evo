@@ -2,8 +2,6 @@ $drawer-width: 367px;
 $drawer-height: 100vh;
 $drawer-z-index: 51;
 
-$pure-white: #FFFFFF;
-
 $close-color: #98AFBE;
 $close-offset-top: 27px;
 $close-offset-right: 18px;
@@ -115,7 +113,7 @@ $new-community-spacing: 16px;
   display: block;
 
   &:hover, &:active, &:visited {
-    color: $pure-white;
+    color: $color-white;
   }
 
   .allCommunitiesText {
@@ -150,6 +148,6 @@ li.community {
 
 .newCommunityIcon {
   font-size: $new-community-font-size;
-  color: $pure-white;
+  color: $color-white;
   margin-right: $new-community-spacing;
 }
