@@ -28,14 +28,14 @@ export default class CommunitiesDrawer extends React.Component {
       <Icon name='Ex' styleName='closeDrawer' />
       <Link styleName='currentCommunity' to={`/c/${currentCommunity.id}`}>
         <div styleName='avatar' style={imageStyle} />
-        <div styleName='name'>{currentCommunity.name}</div>
-        <div styleName='location'>{currentCommunity.location}</div>
+        <div styleName='name' className='drawer-inv-bd'>{currentCommunity.name}</div>
+        <div className='drawer-inv-sm'>{currentCommunity.location}</div>
       </Link>
       <ul styleName='communitiesList'>
         <li>
           <Link styleName='allCommunities' to='/all'>
             <AllFeedsIcon />
-            <span styleName='allCommunitiesText'>All Communities</span>
+            <span styleName='allCommunitiesText' className='drawer-inv-lg'>All Communities</span>
           </Link>
         </li>
         {communities.map(community => {
@@ -44,7 +44,7 @@ export default class CommunitiesDrawer extends React.Component {
           return <li styleName='community' key={`community${community.id}`}>
             <Link to={`/c/${community.id}`} title={community.name}>
               <div styleName='avatar' style={imageStyle} />
-              <span styleName='name'>{community.name}</span>
+              <span styleName='name' className='drawer-inv-li'>{community.name}</span>
               {badge && <Badge number={badge.count} styleName='badge' expanded='true' />}
             </Link>
           </li>
