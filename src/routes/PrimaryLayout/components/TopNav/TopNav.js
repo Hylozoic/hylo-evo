@@ -6,10 +6,10 @@ import RoundImage from 'components/RoundImage'
 import './component.scss'
 import Dropdown from 'components/Dropdown'
 
-export default function TopNav ({ community, currentUser, logout }) {
+export default function TopNav ({ community, currentUser, logout, toggleCommunitiesDrawer }) {
   const imageStyle = bgImageStyle(community.avatarUrl)
   return <div styleName='topNav'>
-    <span styleName='image' style={imageStyle} />
+    <span styleName='image' style={imageStyle} onClick={toggleCommunitiesDrawer} />
     <div styleName='title'>
       <div className='tag' styleName='label'>COMMUNITY</div>
       <div className='hdr-subheadline' styleName='communityName'>{community.name}</div>

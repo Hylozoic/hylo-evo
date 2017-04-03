@@ -2,7 +2,13 @@ import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import orm from './ormReducer'
 import hyloEditor from 'components/HyloEditor/store.js'
-import { CHECK_LOGIN, FETCH_CURRENT_USER, LOGIN, LOGOUT } from 'store/constants'
+import {
+  CHECK_LOGIN,
+  FETCH_CURRENT_USER,
+  LOGIN,
+  LOGOUT,
+  TOGGLE_COMMUNITIES_DRAWER
+} from 'store/constants'
 
 export default combineReducers({
   orm,
@@ -21,6 +27,11 @@ export default combineReducers({
 
   currentUser: (state = {}, { type, error, payload }) => {
     if (!error && type === FETCH_CURRENT_USER) return payload.data.me
+    return state
+  },
+
+  communitiesDrawerOpen: (state = false, { type }) => {
+    if (type === TOGGLE_COMMUNITIES_DRAWER) return !state
     return state
   }
 })

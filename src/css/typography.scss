@@ -81,6 +81,30 @@
   line-height: 19px;
 }
 
+/* Communities Drawer */
+
+.drawer-inv-bd {
+  @include font-bold;
+  color: $color-white;
+  font-size: 17px;
+}
+
+.drawer-inv-lg {
+  @include font-medium;
+  font-size: 19px;
+  color: $color-white;
+}
+
+.drawer-inv-sm {
+  font-size: 12px;
+  color: $color-white-60;
+}
+
+.drawer-inv-li {
+  font-size: 16px;
+  color: $color-white-80;
+}
+
 /* Misc */
 
 .tag {

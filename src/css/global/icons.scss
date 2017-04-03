@@ -13,51 +13,60 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-Trash:before {
-  content: "\e90c";
+.icon-Circle:before {
+  content: "\e914";
 }
-.icon-Pin:before {
-  content: "\e90d";
+.icon-NewCommunity:before {
+  content: "\e901";
 }
-.icon-Complete:before {
-  content: "\e90e";
+.icon-Ex:before {
+  content: "\e900";
 }
-.icon-Flag:before {
-  content: "\e90f";
+.icon-Projects:before {
+  content: "\e902";
 }
-.icon-Location:before {
-  content: "\e90b";
+.icon-Events:before {
+  content: "\e903";
 }
-.icon-ArrowUp:before {
-  content: "\e90a";
-}
-.icon-More:before {
-  content: "\e909";
-}
-.icon-Messages:before {
-  content: "\e905";
-}
-.icon-Notifications:before {
-  content: "\e906";
-}
-.icon-Search:before {
-  content: "\e907";
-}
-.icon-Share:before {
-  content: "\e908";
-}
-.icon-Members:before {
+.icon-Home:before {
   content: "\e904";
 }
 .icon-Topics:before {
-  content: "\e903";
+  content: "\e905";
 }
-.icon-Projects:before {
-  content: "\e900";
+.icon-Members:before {
+  content: "\e906";
 }
-.icon-Events:before {
-  content: "\e901";
+.icon-Messages:before {
+  content: "\e907";
 }
-.icon-Home:before {
-  content: "\e902";
+.icon-Notifications:before {
+  content: "\e908";
+}
+.icon-Search:before {
+  content: "\e909";
+}
+.icon-Share:before {
+  content: "\e90a";
+}
+.icon-More:before {
+  content: "\e90b";
+}
+.icon-ArrowUp:before {
+  content: "\e90c";
+}
+.icon-Location:before {
+  content: "\e90d";
+}
+.icon-Trash:before {
+  content: "\e90e";
+}
+.icon-Pin:before {
+  content: "\e90f";
+}
+.icon-Complete:before {
+  content: "\e910";
+}
+.icon-Flag:before {
+  content: "\e911";
 }
