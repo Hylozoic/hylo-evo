@@ -1,11 +1,11 @@
 import { each } from 'lodash'
 
 import * as a from 'store/constants'
-import { orm } from 'store/models'
+import orm from 'store/models'
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
-  const { Comment, Community, Person, Post } = session
+  const { Comment, Community, Person, Post, FeedItem } = session
   const { payload, type } = action
 
   const add = addEntities(payload)
@@ -28,15 +28,21 @@ export default function ormReducer (state = {}, action) {
     case a.ADD_POSTS: add(Post); break
     case a.UPDATE_POST: update(Post); break
     case a.DELETE_POST: del(Post); break
+
+    case a.ADD_FEED_ITEMS: add(FeedItem); break
+    case a.UPDATE_FEED_ITEM: update(FeedItem); break
+    case a.DELETE_FEED_ITEM: del(FeedItem); break
   }
 
   return session.state
 }
 
 function addEntities (payload) {
-  return model =>
-    each(payload, entity =>
-      model.hasId(entity.id) ? model.update(entity) : model.create(entity))
+  return model => {
+    return each(payload, entity => {
+      model.hasId(entity.id) ? model.withId(entity.id).update(entity) : model.create(entity)
+    })
+  }
 }
 
 function deleteEntity (payload) {

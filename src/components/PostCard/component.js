@@ -13,16 +13,23 @@ import samplePost from './samplePost'
 const { shape, any, object, string, func, array } = React.PropTypes
 
 export default class PostCard extends React.Component {
-  componentDidMount () {
-    // const { id, fetchPost } = this.props
-    // fetchPost(id)
-  }
   render () {
     const { post, className } = this.props
+
     return <div styleName='card' className={className}>
-      <PostHeader {...post} />
-      <PostBody {...post} />
-      <PostFooter {...post} />
+      <PostHeader creator={post.creator}
+        date={post.updatedAt || post.createdAt}
+        type={post.type}
+        context={post.context}
+        communities={post.communities} />
+      <PostBody title={post.title}
+        details={post.details}
+        imageUrl={post.imageUrl}
+        linkPreview={post.linkPreview} />
+      <PostFooter id={post.id}
+        commenters={post.commenters}
+        commentersTotal={post.commentersTotal}
+        votesTotal={post.votesTotal} />
     </div>
   }
 }
@@ -30,7 +37,7 @@ PostCard.propTypes = {
   post: shape({
     id: any,
     type: string,
-    author: object,
+    creator: object,
     name: string,
     description: string,
     commenters: array,
@@ -43,15 +50,15 @@ PostCard.defaultProps = {
   post: samplePost
 }
 
-export const PostHeader = ({ author, updatedAt, type, context, communities }) => {
+export const PostHeader = ({ creator, date, type, context, communities }) => {
   return <div styleName='header'>
-    <Avatar avatarUrl={author.avatarUrl} url={personUrl(author)} styleName='avatar' />
+    <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator)} styleName='avatar' />
     <div styleName='headerText'>
-      <Link to={personUrl(author)} styleName='userName'>{author.name}{author.title && ', '}</Link>
-      {author.title && <span styleName='userTitle'>{author.title}</span>}
+      <Link to={personUrl(creator)} styleName='userName'>{creator.name}{creator.title && ', '}</Link>
+      {creator.title && <span styleName='userTitle'>{creator.title}</span>}
       <div>
         <span className='timestamp'>
-          {humanDate(updatedAt)}{context && <span styleName='spacer'>•</span>}
+          {humanDate(date)}{context && <span styleName='spacer'>•</span>}
         </span>
         {context && <Link to='/' styleName='context'>
           {context}
@@ -71,12 +78,12 @@ export const PostHeader = ({ author, updatedAt, type, context, communities }) =>
   </div>
 }
 
-export const PostBody = ({ title, description, imageUrl, linkPreview }) => {
-  // TODO: Present description as HTML and sanitize
-  const truncated = description &&
-    description.length > 147
-    ? description.slice(0, 144) + '...'
-    : description
+export const PostBody = ({ title, details, imageUrl, linkPreview }) => {
+  // TODO: Present details as HTML and sanitize
+  const truncated = details &&
+    details.length > 147
+    ? details.slice(0, 144) + '...'
+    : details
 
   return <div styleName='body'>
     {imageUrl && <div style={bgImageStyle(imageUrl)} styleName='image' />}
@@ -103,23 +110,24 @@ export const LinkPreview = ({ title, url, imageUrl }) => {
 
 export const commentCaption = (commenters, commentersTotal) => {
   var names = ''
-  if (commenters.length === 0) {
+  const firstName = person => person.name.split(' ')[0]
+  if (commentersTotal === 0) {
     return 'Be the first to comment'
-  } else if (commenters.length === 1) {
-    names = commenters[0].firstName
-  } else if (commenters.length === 2) {
-    names = `${commenters[0].firstName} and ${commenters[1].firstName}`
+  } else if (commentersTotal === 1) {
+    names = firstName(commenters[0])
+  } else if (commentersTotal === 2) {
+    names = `${firstName(commenters[0])} and ${firstName(commenters[1])}`
   } else {
-    names = `${commenters[0].firstName}, ${commenters[1].firstName} and ${commentersTotal - 2} others`
+    names = `${firstName(commenters[0])}, ${firstName(commenters[1])} and ${commentersTotal - 2} other${commentersTotal - 2 > 1 ? 's' : ''}`
   }
   return `${names} commented`
 }
 
-export const PostFooter = ({ id, commenters, commentersTotal, voteCount }) => {
+export const PostFooter = ({ id, commenters, commentersTotal, votesTotal }) => {
   return <div styleName='footer'>
-    <PeopleImages imageUrls={commenters.map(c => c.avatarUrl)} styleName='people' />
+    <PeopleImages imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
     <span className='caption-lt-lg'>{commentCaption(commenters, commentersTotal)}</span>
-    <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{voteCount}</a></div>
+    <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{votesTotal}</a></div>
   </div>
 }
 

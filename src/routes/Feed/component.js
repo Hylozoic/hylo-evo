@@ -6,10 +6,21 @@ import RoundImage from 'components/RoundImage'
 import ScrollListener from 'components/ScrollListener'
 import TabBar from './TabBar'
 import { bgImageStyle } from 'util/index'
+import { throttle } from 'lodash/fp'
 
 export default class Feed extends React.Component {
   static defaultProps = {
     feedItems: []
+  }
+
+  componentDidMount () {
+    this.props.fetchFeedItems(this.props.slug)
+  }
+
+  fetchMoreFeedItems () {
+    this.props.fetchFeedItems(this.props.slug, {
+      // cursor: this.props.feedItems.slice(-1)[0].id
+    })
   }
 
   render () {
@@ -24,7 +35,7 @@ export default class Feed extends React.Component {
         {feedItems.map(feedItem =>
           <FeedItem feedItem={feedItem} styleName='feedItem' key={feedItem.id} />)}
       </div>
-      <ScrollListener elementId={feedId} onBottom={() => console.log('Load More Posts')} />
+      <ScrollListener elementId={feedId} onBottom={() => this.fetchMoreFeedItems()} />
     </div>
   }
 }

@@ -1,7 +1,7 @@
 import configureStore from 'redux-mock-store'
 
 import normalizingMiddleware from './normalizingMiddleware'
-import { data } from './normalizingMiddleware.test.json'
+import payload from './normalizingMiddleware.test.json'
 
 it('Returns a function to handle next', () => {
   const nextHandler = normalizingMiddleware({ action: 'ADD_POSTS' })
@@ -46,7 +46,7 @@ describe('Actions', () => {
   it('Dispatches ADD_POSTS when payload includes a post', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data.me.posts
+      payload
     })
     const actual = store.getActions().find(a => a.type === 'ADD_POSTS')
     expect(actual).toBeTruthy()
@@ -64,7 +64,7 @@ describe('Actions', () => {
   it('Dispatches a single ADD_POSTS action when a post is present', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data.me.posts
+      payload
     })
     const actual = store.getActions().filter(a => a.type === 'ADD_POSTS').length
     expect(actual).toBe(1)
@@ -73,9 +73,9 @@ describe('Actions', () => {
   it('Sends the correct number of posts in the ADD_POSTS payload', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data.me.posts
+      payload
     })
-    const expected = data.me.posts.length
+    const expected = payload.data.me.posts.length
     const action = store.getActions().filter(a => a.type === 'ADD_POSTS')[0]
     const actual = Object.keys(action.payload).length
     expect(actual).toBe(expected)
@@ -84,7 +84,7 @@ describe('Actions', () => {
   it('Dispatches a single ADD_COMMENTS action when a comment is present', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data.me.posts
+      payload
     })
     // Comments are consolidated into a single action
     const expected = 1
@@ -95,18 +95,19 @@ describe('Actions', () => {
   it('Sends the correct number of comments in ADD_COMMENTS payload', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data.me.posts
+      payload
     })
-    const expected = data.me.posts.reduce((total, post) => total + post.comments.length, 0)
+    const expected = payload.data.me.posts.reduce((total, post) => total + post.comments.length, 0)
     const action = store.getActions().filter(a => a.type === 'ADD_COMMENTS')[0]
     const actual = Object.keys(action.payload).length
     expect(actual).toBe(expected)
   })
 
   it('Does not dispatch ADD_COMMENTS when no comment is present', () => {
+    const posts = payload.data.me.posts.map(p => ({ ...p, comments: [] }))
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data.me.posts.map(p => ({ ...p, comments: [] }))
+      payload: { data: { me: { posts } } }
     })
     const actual = store.getActions().filter(a => a.type === 'ADD_COMMENTS').length
     expect(actual).toBe(0)
@@ -115,7 +116,7 @@ describe('Actions', () => {
   it('Dispatches a single ADD_COMMUNITIES action when a community is present', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data.me.posts
+      payload
     })
     const expected = 1
     const actual = store.getActions().filter(a => a.type === 'ADD_COMMUNITIES').length
@@ -123,9 +124,10 @@ describe('Actions', () => {
   })
 
   it('Does not dispatch ADD_COMMUNITIES when no community is present', () => {
+    const posts = payload.data.me.posts.map(p => ({ ...p, communities: [] }))
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data.me.posts.map(p => ({ ...p, communities: [] }))
+      payload: { data: { me: { posts } } }
     })
     const actual = store.getActions().filter(a => a.type === 'ADD_COMMUNITIES').length
     expect(actual).toBe(0)
@@ -134,7 +136,7 @@ describe('Actions', () => {
   it('Consolidates communities with the same ID', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data.me.posts
+      payload
     })
     const action = store.getActions().filter(a => a.type === 'ADD_COMMUNITIES')[0]
     const actual = Object.keys(action.payload).map(id => Number(id))
@@ -144,16 +146,17 @@ describe('Actions', () => {
   it('Dispatches a single ADD_PEOPLE action when a person is present', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data.me.posts
+      payload
     })
     const actual = store.getActions().filter(a => a.type === 'ADD_PEOPLE').length
     expect(actual).toBe(1)
   })
 
   it('Does not dispatch ADD_PEOPLE when no person is present', () => {
+    const posts = payload.data.me.posts.map(({ id, name }) => ({ id, name }))
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data.me.posts.map(({ id, name }) => ({ id, name }))
+      payload: { data: { me: { posts } } }
     })
     const actual = store.getActions().filter(a => a.type === 'ADD_PEOPLE').length
     expect(actual).toBe(0)
@@ -162,7 +165,7 @@ describe('Actions', () => {
   it('Consolidates people with the same ID', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data.me.posts
+      payload
     })
     const action = store.getActions().filter(a => a.type === 'ADD_PEOPLE')[0]
     const actual = Object.keys(action.payload).map(id => Number(id))
@@ -172,7 +175,7 @@ describe('Actions', () => {
   it('Has the correct payload', () => {
     store.dispatch({
       type: 'FETCH_POSTS',
-      payload: data.me.posts
+      payload
     })
     const expected = 
     {

@@ -1,17 +1,24 @@
-import { castArray, curry, each, isEmpty } from 'lodash'
+import { each, isEmpty } from 'lodash'
+import { get, snakeCase } from 'lodash/fp'
+import normalize from '../normalize'
+import { FETCH_POSTS, FETCH_FEED_ITEMS } from '../constants'
 
-import transformer from '../transformers'
-import { FETCH_POSTS } from '../constants'
-
-export default function transformMiddleware ({dispatch, getState}) {
+export default function normalizingMiddleware ({dispatch, getState}) {
   return next => action => {
     if (action) {
       const { type, payload } = action
 
       switch (type) {
         case FETCH_POSTS:
-          if (payload.length === 0) break
-          dispatchRelations(dispatch, getRelations(payload))
+          const posts = get('data.me.posts', payload)
+          if (isEmpty(posts)) break
+          dispatchRelations(dispatch, getPostRelations(posts))
+          break
+        case FETCH_FEED_ITEMS:
+          let feedItems = get('data.community.feedItems', payload)
+
+          if (isEmpty(feedItems)) break
+          dispatchRelations(dispatch, getFeedItemRelations(feedItems))
           break
       }
     }
@@ -19,30 +26,48 @@ export default function transformMiddleware ({dispatch, getState}) {
   }
 }
 
-function getRelations (rawPosts) {
-  if (rawPosts.length === 0) return {}
-
-  const normalize = curry(addRelation)
-  const relations = {
-    comments: {},
-    communities: {},
-    people: {},
-    posts: {}
+function transformFeedItem ({ type, content }) {
+  // this assumes that all feed items contain posts. This will change
+  // and that all feed items content will have an id. This should not change
+  return {
+    id: `${type}_${content.id}`,
+    type,
+    post: content
   }
-  const getComments = normalize(relations.comments)
-  const getCommunities = normalize(relations.communities)
-  const getPeople = normalize(relations.people)
-  const getPosts = normalize(relations.posts)
+}
+
+function getFeedItemRelations (rawFeedItems) {
+  const relabelled = rawFeedItems.map(transformFeedItem)
+
+  return {
+    ...getPostRelations(relabelled.map(feedItem => feedItem.post)),
+    feedItems: relabelled.map(f => normalize(f, 'FeedItem'))
+  }
+}
+
+function getPostRelations (rawPosts) {
+  const relations = {
+    comments: [],
+    communities: [],
+    people: [],
+    posts: []
+  }
 
   rawPosts.forEach(post => {
     if (post.comments) {
-      getComments(post.comments, 'Comment')
-      getPeople(post.comments.map(c => c.creator), null)
+      relations.comments = relations.comments.concat(post.comments.map(c => normalize(c, 'Comment')))
+      relations.people = relations.people.concat(post.comments.map(c => c.creator))
     }
-    if (post.communities) getCommunities(post.communities, 'Community')
-    if (post.followers) getPeople(post.followers, null)
-    if (post.creator) getPeople(post.creator, null)
-    getPosts(post, 'Post')
+    if (post.communities) {
+      relations.communities = relations.communities.concat(post.communities.map(c => normalize(c, 'Community')))
+    }
+    if (post.followers) {
+      relations.people = relations.people.concat(post.followers)
+    }
+    if (post.creator) {
+      relations.people.push(post.creator)
+    }
+    relations.posts = relations.posts.concat(normalize(post, 'Post'))
   })
 
   return relations
@@ -52,23 +77,9 @@ function dispatchRelations (dispatch, relations) {
   each(relations, (relation, key) => {
     if (!isEmpty(relation)) {
       dispatch({
-        type: `ADD_${key.toUpperCase()}`,
+        type: `ADD_${snakeCase(key).toUpperCase()}`,
         payload: relation
       })
     }
   })
-}
-
-// Eliminate duplicate entries for various entities (by ID equality).
-// Deliberately has side-effects!
-function addRelation (realtions, entities, transformer) {
-  Object.assign(realtions, transform(entities, transformer))
-}
-
-function transform (entities, entityType) {
-  return [ ...castArray(entities) ]
-    .reduce((acc, entity) => {
-      acc[entity.id] = entityType ? transformer(entity, entityType) : entity
-      return acc
-    }, {})
 }
