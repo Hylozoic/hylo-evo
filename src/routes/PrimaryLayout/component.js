@@ -32,7 +32,8 @@ export default class PrimaryLayout extends Component {
         {/* TODO: is using render here the best way to pass params to a route? */}
         <Route path='/' render={() => <Navigation collapsed={hasDetail} location={location} />} />
         <div styleName='content'>
-          <Route path='/' exact component={() => <Feed {...{community, currentUser}} />} />
+          <Route path='/' exact render={() => <Feed {...{community, currentUser}} />} />
+          <Route path='/c/:slug' render={({ match }) => <Feed {...{community, currentUser, match}} />} />
           <Route path='/events' component={Events} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>

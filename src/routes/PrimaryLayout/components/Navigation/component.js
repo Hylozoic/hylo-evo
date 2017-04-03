@@ -9,7 +9,10 @@ export default function Navigation ({ location, collapsed }) {
     {label: 'Home', icon: 'Home', to: '/', badge: 3, exact: true},
     {label: 'Events', icon: 'Events', to: '/events', badge: 3},
     {label: 'Members', icon: 'Members', to: '/members'},
-    {label: 'UI Kit', icon: 'Projects', to: '/ui-kit'}
+    {label: 'UI Kit', icon: 'Projects', to: '/ui-kit'},
+    {label: 'Hylo on Hylo', icon: 'Members', to: '/c/hylo'},
+    {label: 'Hub Oak', icon: 'Members', to: '/c/impact-hub-oakland'},
+    {label: 'Heliopolis', icon: 'Members', to: '/c/heliopolis'}
   ]
   links = links.map(link => ({...link, active: matchPath(location.pathname, {path: link.to, exact: link.exact})}))
 
