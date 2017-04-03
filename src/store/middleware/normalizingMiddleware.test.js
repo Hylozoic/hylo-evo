@@ -29,7 +29,7 @@ describe('Actions', () => {
       payload: {
         wombat: true
       }
-    } 
+    }
     store.dispatch(expected)
     const actual = store.getActions()
     expect(actual).toEqual([expected])
@@ -119,21 +119,20 @@ describe('Actions', () => {
     expect(actual).toEqual(expected)
   })
 
-  describe('FETCH_FEEDITEM', () => {
+  describe('FETCH_FEED_ITEMS', () => {
     it('Has the correct payload', () => {
       store.dispatch({
-        type: 'FETCH_FEEDITEM',
-        payload: payload.FETCH_FEEDITEM
+        type: 'FETCH_FEED_ITEMS',
+        payload: payload.FETCH_FEED_ITEMS
       })
       const expected = {
-        creator: "12345",
-        details: "<p>This is a FeedItem.</p>",
-        id: "30002",
-        title: "Hello",
+        creator: '12345',
+        details: '<p>This is a FeedItem.</p>',
+        id: '30002',
+        title: 'Hello'
       }
       const actual = store.getActions().filter(a => a.type === 'ADD_POST')[0].payload
       expect(actual).toEqual(expected)
     })
   })
 })
-

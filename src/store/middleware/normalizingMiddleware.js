@@ -1,6 +1,6 @@
-import { castArray, each, isObject, reduce, uniqWith } from 'lodash/fp'
+import { castArray, each, isObject, reduce, uniqWith, snakeCase } from 'lodash/fp'
 
-import { FETCH_POST, FETCH_FEEDITEM } from '../constants'
+import { FETCH_POST, FETCH_FEED_ITEMS } from '../constants'
 import { allRelations } from '../models'
 
 const relations = allRelations()
@@ -9,9 +9,8 @@ export default function normalizingMiddleware ({ dispatch }) {
   return next => action => {
     if (action && action.type) {
       const { type, payload } = action
-
       switch (type) {
-        case FETCH_FEEDITEM:
+        case FETCH_FEED_ITEMS:
         case FETCH_POST:
           each(dispatch)(normalize(payload.data))
           break
@@ -42,7 +41,7 @@ function getRelation (relation, resultFragment) {
   eachWithKey((entity, key) => {
     if (relation.hasOwnProperty(key)) {
       const rtype = relation[key].relationType
-      const type = `ADD_${rtype.toUpperCase()}`
+      const type = `ADD_${snakeCase(rtype).toUpperCase()}`
       each(e => {
         result.push({ type, payload: transform(e, rtype) })
       })(castArray(entity))

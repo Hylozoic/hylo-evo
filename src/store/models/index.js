@@ -42,14 +42,6 @@ function onlyRelationalFields (fields, entityClass) {
   const reduceWithKey = reduce.convert({ cap: false })
   const entityRelations = reduceWithKey(includeIfRelation, {})(entityClass.fields)
 
-  // TODO: temporary! Find a better solution for polymorphism.
-  if (entityClass.name === 'FeedItem') {
-    entityRelations.content = {
-      relationType: 'Post',
-      transform: fkTransform
-    }
-  }
-
   return {
     ...fields,
     [entityClass.modelName]: entityRelations

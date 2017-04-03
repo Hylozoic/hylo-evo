@@ -100,7 +100,7 @@
       }
     }
   },
-  "FETCH_FEEDITEM": {
+  "FETCH_FEED_ITEMS": {
     "data": {
       "community": {
         "name": "Wombats",
