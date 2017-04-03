@@ -3,7 +3,10 @@ import Icon from 'components/Icon'
 import './component.scss'
 
 const ICON_NAMES = [
+  'Circle',
   'Messages',
+  'Ex',
+  'NewCommunity',
   'Notifications',
   'Search',
   'Share',

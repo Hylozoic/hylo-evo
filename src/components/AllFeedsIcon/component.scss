@@ -1,0 +1,36 @@
+$final-dimension: 32px;
+$width: 22px;
+$height: 21px;
+$circle-size: 9px;
+
+.allFeedsIcon {
+  position: relative;
+  width: $width;
+  height: $height;
+  margin: (($final-dimension - $height) / 2) (($final-dimension - $width) / 2);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.circleIcon {
+  position: absolute;
+  font-size: $circle-size;
+}
+
+.purple {
+  top: 0;
+  left: (($width - $circle-size) / 2);
+  color: $color-fuchsia-pink;
+}
+
+.blue {
+  bottom: 0;
+  left: 0;
+  color: $color-picton-blue;
+}
+
+.green {
+  bottom: 0;
+  right: 0;
+  color: $color-caribbean-green;
+}

@@ -1,10 +1,22 @@
-@import '../../css/bootstrap';
+// extracted from bootstrap v4 img-thumbnail
+.img-thumbnail {
+  padding: 0.25rem;
+  background-color: #FFFFFF;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  max-width: 100%;
+  height: auto;
+}
 
 .image {
+  composes: img-thumbnail;
   @include image($space-11x);
   border: solid 3px $color-white;
-  // TODO: attn LEJ, here's a place we're still using some other bootstrap stuff.
-  @extend .img-thumbnail, .rounded-circle, .d-inline-block, .align-top;
+  vertical-align: top;
+  display: inline-block;
+  border-radius: 50%;
 }
 
 .overlaps {

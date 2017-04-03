@@ -1,4 +1,4 @@
-import { CHECK_LOGIN, LOGIN } from 'store/constants'
+import { CHECK_LOGIN, LOGIN, LOGOUT } from 'store/constants'
 
 export function login (email, password) {
   return {
@@ -14,6 +14,15 @@ export function checkLogin () {
     type: CHECK_LOGIN,
     payload: {
       api: {path: '/noo/user/status'}
+    }
+  }
+}
+
+export function logout () {
+  return {
+    type: LOGOUT,
+    payload: {
+      api: {path: '/noo/session', method: 'DELETE'}
     }
   }
 }

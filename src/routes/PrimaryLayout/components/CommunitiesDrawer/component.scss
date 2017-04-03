@@ -1,0 +1,153 @@
+$drawer-width: 367px;
+$drawer-height: 100vh;
+$drawer-z-index: 51;
+
+$close-color: #98AFBE;
+$close-offset-top: 27px;
+$close-offset-right: 18px;
+$close-dimension: 24px;
+
+$current-avatar-size: 106px;
+$current-avatar-border-radius: 8px;
+$current-padding-top: 53px;
+$current-padding-bottom: 32px;
+$current-name-margin-top: 13px;
+
+$ul-vertical-spacing: 32px;
+$ul-horizontal-spacing: 37px;
+$li-padding: 4px;
+$li-spacing: 22px;
+$li-height: 40px;
+$li-avatar-size: 32px;
+$counteract-badge-styling: 13px;
+
+$badge-width: 20px;
+
+$calculated-name-width: $drawer-width -
+                        (2 * $ul-horizontal-spacing) -
+                        (2 * $li-padding) -
+                        $li-avatar-size -
+                        (2 * $li-spacing) -
+                        $badge-width;
+
+$break-border: 1px solid rgba(255,255,255,0.11);
+
+$new-community-width: 310px;
+$new-community-vertical-margin: 15px;
+$new-community-font-size: 18px;
+$new-community-spacing: 16px;
+
+
+.drawer {
+  width: $drawer-width;
+  height: $drawer-height;
+  background-image: linear-gradient(0deg, $color-rhino 0%, $color-chambray 100%);
+  position: absolute;
+  z-index: $drawer-z-index;
+  display: flex;
+  flex-direction: column;
+}
+
+.closeDrawer {
+  color: $close-color;
+  cursor: pointer;
+  position: absolute;
+  top: $close-offset-top;
+  right: $close-offset-right;
+  font-size: $close-dimension;
+}
+
+.currentCommunity {
+  padding: $current-padding-top 0 $current-padding-bottom;
+  text-align: center;
+  border-bottom: $break-border;
+
+  .avatar {
+    @include image($current-avatar-size);
+    margin: 0 auto;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+    border-radius: $current-avatar-border-radius;
+  }
+
+  .name {
+    margin-top: $current-name-margin-top;
+  }
+}
+
+.communitiesList {
+  padding: $ul-vertical-spacing $ul-horizontal-spacing;
+  margin: 0;
+  flex-grow: 1;
+  list-style: none;
+  overflow-y: auto;
+  border-bottom: $break-border;
+
+  li {
+    height: $li-height;
+    padding: $li-padding;
+    border-radius: 4px;
+
+    &:hover {
+      background: $color-rhino;
+    }
+
+    .avatar {
+      @include image($li-avatar-size);
+      display: inline-block;
+      vertical-align: middle;
+      border-radius: 4px;
+      margin-right: $li-spacing;
+    }
+  }
+
+  a {
+    display: block;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.allCommunities {
+  display: block;
+
+  &:hover, &:active, &:visited {
+    color: $color-white;
+  }
+
+  .allCommunitiesText {
+    margin-left: $li-spacing;
+  }
+}
+
+li.community {
+
+  .name {
+    vertical-align: middle;
+    width: $calculated-name-width;
+    margin-right: $li-spacing;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  .badge {
+    position: relative;
+    top: $counteract-badge-styling;
+  }
+}
+
+.newCommunity {
+  text-align: center;
+  width: $new-community-width;
+  margin: $new-community-vertical-margin auto;
+  box-shadow: 0 5px 15px 0 rgba(0,0,0,0.05);
+}
+
+.newCommunityIcon {
+  font-size: $new-community-font-size;
+  color: $color-white;
+  margin-right: $new-community-spacing;
+}

@@ -1,14 +1,15 @@
 import { FETCH_FEEDITEM } from 'store/constants'
 
-export function fetchFeedItems (id, opts = {}) {
+export function fetchFeedItems (slug, opts = {}) {
+  const feedItemParams = `(first: ${opts.first || 2}, ${opts.cursor ? `cursor: ${opts.cursor},` : ''} order: "desc")`
   return {
     type: FETCH_FEEDITEM,
     graphql: {
       query: `{
-        community(slug: "${id}") {
+        community(slug: "${slug}") {
           id
           name
-          feedItems(first: 10, order: "desc") {
+          feedItems${feedItemParams} {
             type
             content {
               ... on Post {
@@ -33,6 +34,12 @@ export function fetchFeedItems (id, opts = {}) {
                   title
                   url
                   imageUrl
+                }
+                votesTotal
+                communities {
+                  id
+                  name
+                  slug
                 }
               }
             }

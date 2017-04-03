@@ -1,3 +1,10 @@
+.section {
+  composes: section-box from '../css/layout.scss';
+  display: block;
+  padding: $space-7x;
+  margin: $space-7x;
+}
+
 .elementLabel {
   font-size: 10pt;
   margin-bottom: $space-8x;
@@ -19,6 +26,7 @@
 }
 
 .buttonsCard {
+  composes: section;
   margin-right: $space-10x;
 }
 
@@ -62,4 +70,12 @@
   padding: $space-6x;
   text-align: center;
   margin-right: 0;
+}
+
+.labels {
+  > * {
+    margin-right: 20px;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
 }

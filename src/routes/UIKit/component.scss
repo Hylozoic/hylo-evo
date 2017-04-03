@@ -1,6 +1,14 @@
+:global {
+  @import './css/layout.scss';
+}
+
 .nav {
   composes: sheet from './css/layout.scss';
-  padding: $space-3x;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
   padding-bottom: 0;
   margin-bottom: -$space-5x;
 }

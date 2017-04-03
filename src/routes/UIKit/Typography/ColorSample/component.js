@@ -4,7 +4,6 @@ import './component.scss'
 const { string } = React.PropTypes
 
 export default function ColorSample ({ color, colorName, opacity = 1, textColor = '#FFF', borderColor, description }) {
-  const colorLabel = opacity !== 1 ? `${opacity * 100}%` : color
   const circleStyle = {
     backgroundColor: color,
     border: borderColor ? `${borderColor} 1px solid` : null,
@@ -19,7 +18,7 @@ export default function ColorSample ({ color, colorName, opacity = 1, textColor 
   return <div styleName='colorSample'>
     <div styleName='circle' style={circleStyle}>
       <div styleName='label' style={{color: textColor}}>
-        {colorLabel}
+        {colorName}
       </div>
     </div>
     {description && <div styleName='tailSection'>

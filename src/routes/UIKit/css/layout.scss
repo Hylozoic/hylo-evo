@@ -3,13 +3,13 @@
   background-color: $color-white;
   width: $sheet-width;
   margin: $sheet-vertical-margin auto;
-  padding: $space-18x;
+  padding: $space-4x;
   border-radius: $sheet-border-radius;
   &-title {
     @include font-bold;
     padding-top: $space-3x;
     font-size: 24pt;
-    margin-bottom: $space-18x;
+    margin-bottom: $space-8x;
     color: #2C4059;
   }
 }

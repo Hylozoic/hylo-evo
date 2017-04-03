@@ -8,13 +8,9 @@
   color: $color-caribbean-green;
 }
 
-.icon-Home, .icon-Events, .icon-Projects, .icon-Members, .icon-Topics,
-.icon-Messages, .icon-Notifications, .icon-Share, .icon-Search, .icon-ArrowUp, .icon-Location,
-.icon-Flag, .icon-Complete, .icon-Pin, .icon-Trash {
-  /* empty */
-}
-
-.icon-More {
-  position: relative;
-  top: 3px;
+:global {
+  .icon-More {
+    position: relative;
+    top: 3px;
+  }
 }

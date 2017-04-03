@@ -42,24 +42,33 @@ export default class Dropdown extends React.Component {
     window.removeEventListener('click', this.hide)
   }
 
-  render () {
-    const {
-      toggleChildren, items, className, triangle, alignRight
-    } = this.props
-    const active = this.state.active && !isEmpty(items)
-    const styleName = cx('dropdown', {'has-triangle': triangle})
+  renderMenuItems () {
+    const { children, triangle, items } = this.props
 
-    let children = items.map(item => <li styleName={item.onClick ? 'linkItem' : 'headerItem'}
-      onClick={item.onClick} key={item.label}>
-      {item.icon && <Icon styleName='icon' name={item.icon} />}
-      {item.label}
-    </li>)
+    if (!this.state.active || (isEmpty(items) && isEmpty(children))) {
+      return null
+    }
+
+    let menuItems = children || items.map(item =>
+      <li styleName={item.onClick ? 'linkItem' : 'headerItem'}
+        onClick={item.onClick} key={item.label}>
+        {item.icon && <Icon styleName='icon' name={item.icon} />}
+        {item.label}
+      </li>)
 
     if (triangle) {
       const triangleLi = <li styleName='triangle' key='triangle'
         style={{left: findTriangleLeftPos(this.refs.parent)}} />
-      children = [triangleLi].concat(children)
+      menuItems = [triangleLi].concat(menuItems)
     }
+
+    return menuItems
+  }
+
+  render () {
+    const { toggleChildren, className, triangle, alignRight } = this.props
+    const { active } = this.state
+    const styleName = cx('dropdown', {'has-triangle': triangle})
 
     return <div className={className} styleName={styleName} ref='parent'
       onKeyDown={this.handleKeys}>
@@ -69,7 +78,7 @@ export default class Dropdown extends React.Component {
       <div styleName='wrapper'>
         <ul styleName={cx('dropdown-menu', {active, alignRight})}
           onClick={() => this.toggle()}>
-          {active && children}
+          {this.renderMenuItems()}
         </ul>
       </div>
     </div>

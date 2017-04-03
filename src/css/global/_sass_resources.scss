@@ -8,6 +8,7 @@
 // One REM equals 16px in a typical browser environment, so,
 // 0.25 REM is equal to 4px, our current spacing and sizing base unit
 $space-base-unit: 0.25rem;
+$space-1x: $space-base-unit;
 $space-2x: $space-base-unit * 2;
 $space-3x: $space-base-unit * 3;
 $space-4x: $space-base-unit * 4;
@@ -19,6 +20,11 @@ $space-9x: $space-base-unit * 9;
 $space-10x: $space-base-unit * 10;
 $space-11x: $space-base-unit * 11;
 $space-12x: $space-base-unit * 12;
+$space-13x: $space-base-unit * 13;
+$space-14x: $space-base-unit * 14;
+$space-15x: $space-base-unit * 15;
+$space-16x: $space-base-unit * 16;
+$space-17x: $space-base-unit * 17;
 $space-18x: $space-base-unit * 18;
 
 // $space-sm: $space-3x;
@@ -39,9 +45,12 @@ $color-rhino-50: rgba($color-rhino, .5);
 $color-rhino-30: rgba($color-rhino, .3);
 $color-rhino-darker: #2C405A;
 $color-nepal: #8DABC4;
+$color-chambray: #315280;
 
 // Grays
 $color-white: #FFFFFF;
+$color-white-80: rgba($color-white, .8);
+$color-white-60: rgba($color-white, .6);
 $color-white-50: rgba($color-white, .5);
 $color-black: #000000;
 $color-black-10: rgba($color-black, .1);

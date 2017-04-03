@@ -56,7 +56,7 @@
   "dependencies": {
     "app-module-path": "^2.2.0",
     "babel-jest": "^19.0.0",
-    "babel-plugin-react-css-modules": "levity/babel-plugin-react-css-modules#dist",
+    "babel-plugin-react-css-modules": "levity/babel-plugin-react-css-modules#ab83008",
     "babel-plugin-remove-stylename": "^0.1.0",
     "bootstrap": "4.0.0-alpha.6",
     "classnames": "^2.2.5",
@@ -65,12 +65,19 @@
     "css-modules-require-hook": "^4.0.6",
     "dotenv-safe": "^4.0.3",
     "dotenv-webpack": "^1.4.3",
+    "draft-js": "^0.10.0",
+    "draft-js-export-html": "^0.5.2",
+    "draft-js-hashtag-plugin": "2.0.0-beta10",
+    "draft-js-mention-plugin": "@2.0.0-beta10",
+    "draft-js-plugins-editor": "2.0.0-beta10",
     "enzyme": "^2.7.1",
     "express": "^4.15.2",
     "faker": "^4.1.0",
+    "immutable": "^3.8.1",
     "lodash": "^4.17.4",
     "node-sass": "^4.5.0",
     "normalize.css": "^5.0.0",
+    "postcss-modules-resolve-path": "^1.0.0",
     "postcss-scss": "^0.4.1",
     "pretty-date": "^0.2.0",
     "pushstate-server": "^3.0.0",
@@ -137,7 +144,9 @@
           "filetypes": {
             ".scss": "postcss-scss"
           },
-          "exclude": "node_modules"
+          "exclude": "node_modules",
+          "searchPaths": ["src"],
+          "webpackHotModuleReloading": true
         }
       ]
     ],

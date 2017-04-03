@@ -93,33 +93,23 @@ module.exports = {
           cacheDirectory: true
         }
       },
-
+      // Simple CSS loading for node_modules fond CSS (need in particular for draft-js-plugins-editor styles)
+      {
+        test: /draft-js.*\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
       // CSS Modules for all SASS files not in resources or global
       {
         test: /\.(css|scss|sass)$/,
+        exclude: /draft-js.*\.css$/,
         use: [
-          {
-            loader: 'style-loader'
-          },
+          {loader: 'style-loader'},
           sharedConfig.cssLoader,
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
-              plugins: () => [
-                require('autoprefixer')({
-                  browsers: [
-                    '>1%',
-                    'last 4 versions',
-                    'Firefox ESR',
-                    'not ie < 9' // React doesn't support IE8 anyway
-                  ]
-                })
-              ]
-            }
-          }, {
-            loader: 'sass-loader'
-          },
+          sharedConfig.postcssLoader,
+          {loader: 'sass-loader'},
           sharedConfig.sassResourcesLoader
         ]
       }
@@ -151,11 +141,6 @@ module.exports = {
     // makes the discovery automatic so you don't have to restart.
     // See https://github.com/facebookincubator/create-react-app/issues/186
     new WatchMissingNodeModulesPlugin(paths.appNodeModules)
-    // TODO: Check if necessary- May or may not be required for bootstrap
-    //        loading (probably not)
-    // new webpack.ProvidePlugin({
-    //   'window.Tether': 'tether'
-    // })
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
