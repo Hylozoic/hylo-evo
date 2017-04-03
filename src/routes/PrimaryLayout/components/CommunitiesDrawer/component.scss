@@ -1,34 +1,66 @@
+$drawer-width: 367px;
+$drawer-height: 100vh;
+$drawer-z-index: 51;
+
+$pure-white: #FFFFFF;
+
+$close-color: #98AFBE;
+$close-offset-top: 27px;
+$close-offset-right: 18px;
+$close-dimension: 24px;
+
+$current-avatar-size: 106px;
+$current-avatar-border-radius: 8px;
+
+$ul-vertical-spacing: 32px;
+$ul-horizontal-spacing: 37px;
+$li-padding: 4px;
+$li-spacing: 22px;
+$li-avatar-size: 32px;
+
+$badge-width: 20px;
+
+$calculated-name-width: $drawer-width -
+                        (2 * $ul-horizontal-spacing) -
+                        (2 * $li-padding) -
+                        $li-avatar-size -
+                        (2 * $li-spacing) -
+                        $badge-width;
+
+$break-border: 1px solid rgba(255,255,255,0.11);
+
+
 .drawer {
-  width: 367px;
-  height: 100vh;
+  width: $drawer-width;
+  height: $drawer-height;
   background-image: linear-gradient(0deg, $color-rhino 0%, $color-chambray 100%);
   position: absolute;
-  z-index: 51;
+  z-index: $drawer-z-index;
   display: flex;
   flex-direction: column;
 }
 
 .closeDrawer {
-  color: #FFFFFF;
+  color: $close-color;
   cursor: pointer;
   position: absolute;
-  top: 27px;
-  right: 18px;
-  font-size: 24px;
+  top: $close-offset-top;
+  right: $close-offset-right;
+  font-size: $close-dimension;
 }
 
 .currentCommunity {
   padding: 53px 0 32px;
   text-align: center;
-  border-bottom: 1px solid rgba(255,255,255,0.11);
+  border-bottom: $break-border;
 
   .avatar {
     margin: 0 auto;
-    width: 106px;
-    height: 106px;
-    background-size: 106px 106px;
+    width: $current-avatar-size;
+    height: $current-avatar-size;
+    background-size: $current-avatar-size;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
-    border-radius: 8px;
+    border-radius: $current-avatar-border-radius;
   }
 
   .name {
@@ -36,7 +68,7 @@
     /* TODO: extract typography */
     font-family: "Circular Bold", sans-serif;
     font-size: 17px;
-    color: #FFFFFF;
+    color: $pure-white;
   }
 
   .location {
@@ -47,51 +79,78 @@
 }
 
 .communitiesList {
-  padding: 32px 37px;
+  padding: $ul-vertical-spacing $ul-horizontal-spacing;
   margin: 0;
   flex-grow: 1;
   list-style: none;
   overflow-y: auto;
-  border-bottom: 1px solid rgba(255,255,255,0.11);
+  border-bottom: $break-border;
+
+  li {
+    height: 40px;
+    padding: $li-padding;
+    border-radius: 4px;
+
+    &:hover {
+      background: $color-rhino;
+    }
+
+    .avatar {
+      width: $li-avatar-size;
+      height: $li-avatar-size;
+      background-size: $li-avatar-size;
+      display: inline-block;
+      vertical-align: middle;
+      border-radius: 4px;
+      margin-right: $li-spacing;
+    }
+  }
+
+  a {
+    display: block;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }
 
-.all-communities {
+.allCommunities {
+  display: block;
   /* TODO: extract typography */
   font-family: "Circular Medium", sans-serif;
   font-size: 19px;
-  color: #FFFFFF;
+  color: $pure-white;
+
+  &:hover, &:active, &:visited {
+    color: $pure-white;
+  }
+
+  .allCommunitiesText {
+    margin-left: $li-spacing;
+  }
 }
 
 li.community {
-  padding: 4px;
-
-  &:hover {
-    background: $color-rhino;
-  }
-
   a {
     /* TODO: extract typography */
     font-size: 16px;
     color: rgba(255,255,255,0.8);
-    display: flex;
-  }
-
-  .avatar {
-    width: 32px;
-    height: 32px;
-    background-size: 32px 32px;
-    display: inline-block;
-    vertical-align: middle;
-    border-radius: 4px;
-    margin-right: 22px;
   }
 
   .name {
-    flex-grow: 1;
+    vertical-align: middle;
+    width: $calculated-name-width;
+    margin-right: $li-spacing;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
   }
 
   .badge {
-    top: 0;
+    position: relative;
+    top: 13px;
   }
 }
 
@@ -104,6 +163,6 @@ li.community {
 
 .newCommunityIcon {
   font-size: 18px;
-  color: #FFFFFF;
+  color: $pure-white;
   margin-right: 16px;
 }

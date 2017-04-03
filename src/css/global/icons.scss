@@ -13,6 +13,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-Circle:before {
+  content: "\e914";
+}
 .icon-NewCommunity:before {
   content: "\e901";
 }

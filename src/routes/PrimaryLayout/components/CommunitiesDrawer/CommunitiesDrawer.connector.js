@@ -7,7 +7,7 @@ export function mapStateToProps (state, props) {
   return {
     currentCommunity: SAMPLE_COMMUNITY,
     communities: times(i => merge({id: i}, SAMPLE_COMMUNITY), 4),
-    communityNotifications: times(i => ({communityId: i, count: 1}), 4)
+    communityNotifications: times(i => (i % 2 === 0 ? {communityId: i, count: 1} : null), 4)
   }
 }
 
