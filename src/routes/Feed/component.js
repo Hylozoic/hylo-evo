@@ -16,6 +16,12 @@ export default class Feed extends React.Component {
     this.props.fetchFeedItems('hylo')
   }
 
+  fetchMoreFeedItems () {
+    this.props.fetchFeedItems('hylo', {
+      // cursor: this.props.feedItems.slice(-1)[0].id
+    })
+  }
+
   render () {
     const { feedItems, community, currentUser } = this.props
 
@@ -28,7 +34,7 @@ export default class Feed extends React.Component {
         {feedItems.map(feedItem =>
           <FeedItem feedItem={feedItem} styleName='feedItem' key={feedItem.id} />)}
       </div>
-      <ScrollListener elementId={feedId} onBottom={() => console.log('Load More Posts')} />
+      <ScrollListener elementId={feedId} onBottom={() => this.fetchMoreFeedItems()} />
     </div>
   }
 }
