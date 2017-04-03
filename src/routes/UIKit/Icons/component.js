@@ -4,6 +4,8 @@ import './component.scss'
 
 const ICON_NAMES = [
   'Messages',
+  'Ex',
+  'NewCommunity',
   'Notifications',
   'Search',
   'Share',

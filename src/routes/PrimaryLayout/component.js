@@ -2,6 +2,7 @@
 import React, { PropTypes, Component } from 'react'
 import { matchPath, Route } from 'react-router-dom'
 import cx from 'classnames'
+import CommunitiesDrawer from './components/CommunitiesDrawer'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
 import Sidebar from './components/Sidebar'
@@ -14,7 +15,9 @@ export default class PrimaryLayout extends Component {
   static propTypes = {
     community: PropTypes.object,
     currentUser: PropTypes.object,
-    location: PropTypes.object
+    location: PropTypes.object,
+    communitiesDrawerOpen: PropTypes.bool,
+    toggleCommunitiesDrawer: PropTypes.func
   }
 
   componentDidMount () {
@@ -23,10 +26,12 @@ export default class PrimaryLayout extends Component {
   }
 
   render () {
-    const { location, community, currentUser } = this.props
+    const { location, community, currentUser, communitiesDrawerOpen, toggleCommunitiesDrawer } = this.props
     const hasDetail = matchPath(location.pathname, {path: '/events/:eventId'})
+    const closeDrawer = () => communitiesDrawerOpen && toggleCommunitiesDrawer()
 
-    return <div styleName='container'>
+    return <div styleName='container' onClick={closeDrawer}>
+      {communitiesDrawerOpen && <CommunitiesDrawer />}
       <TopNav {...{community, currentUser}} />
       <div styleName='row'>
         {/* TODO: is using render here the best way to pass params to a route? */}
