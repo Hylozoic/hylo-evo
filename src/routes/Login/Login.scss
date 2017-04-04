@@ -1,4 +1,4 @@
-$third-party-icon-size: 16px;
+$third-party-icon-size: 14px;
 
 .background {
   width: 100vw;
@@ -66,7 +66,7 @@ $third-party-icon-size: 16px;
     text-align: center;
     height: 42px;
     line-height: 40px;
-    vertical-align: baseline;
+    vertical-align: middle;
     flex: 1;
     cursor: pointer;
   }
@@ -78,12 +78,19 @@ $third-party-icon-size: 16px;
 }
 
 .facebook {
-
+  span {
+    position: relative;
+    top: 1px;
+  }
 }
 
 .google {
   border-left: 2px solid white;
   border-right: 2px solid white;
+  span {
+    position: relative;
+    top: 1px;
+  }
 }
 
 .linkedin {
