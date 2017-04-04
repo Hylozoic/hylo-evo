@@ -9,7 +9,7 @@ import Sidebar from './components/Sidebar'
 import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
-import './component.scss'
+import './PrimaryLayout.scss'
 
 export default class PrimaryLayout extends Component {
   static propTypes = {
