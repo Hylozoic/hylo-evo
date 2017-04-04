@@ -14,9 +14,6 @@ export function fetchCurrentUser () {
           avatarUrl
           memberships {
             id
-            person {
-              id
-            }
             community {
               id
               name

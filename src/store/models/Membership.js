@@ -9,6 +9,5 @@ export default class Membership extends Model {
 Membership.modelName = 'Membership'
 Membership.fields = {
   id: attr(),
-  person: fk('Person'),
   community: fk('Community')
 }
