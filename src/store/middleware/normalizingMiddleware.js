@@ -1,6 +1,6 @@
 import { castArray, each, isObject, reduce, uniqWith } from 'lodash/fp'
 
-import { FETCH_POST, FETCH_FEEDITEM } from '../constants'
+import { FETCH_CURRENT_USER, FETCH_POST, FETCH_FEEDITEM } from '../constants'
 import { allRelations } from '../models'
 
 const relations = allRelations()
@@ -11,6 +11,7 @@ export default function normalizingMiddleware ({ dispatch }) {
       const { type, payload } = action
 
       switch (type) {
+        case FETCH_CURRENT_USER:
         case FETCH_FEEDITEM:
         case FETCH_POST:
           each(dispatch)(normalize(payload.data))

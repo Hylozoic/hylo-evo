@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router-dom'
+import { sortBy } from 'lodash/fp'
 import { bgImageStyle } from 'util/index'
 import Badge from 'components/Badge'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import AllFeedsIcon from 'components/AllFeedsIcon'
 import './component.scss'
+const { string, number, arrayOf, shape } = PropTypes
 
 function NewCommunity () {
   return <div>
@@ -14,19 +16,34 @@ function NewCommunity () {
   </div>
 }
 
-export default class CommunitiesDrawer extends React.Component {
+export default class CommunitiesDrawer extends Component {
   static propTypes = {
-    currentCommunity: React.PropTypes.object,
-    communities: React.PropTypes.array,
-    communityNotifications: React.PropTypes.array
+    currentCommunity: shape({
+      id: string,
+      name: string,
+      location: string,
+      slug: string,
+      avatarUrl: string
+    }),
+    communities: arrayOf(shape({
+      id: string,
+      name: string,
+      slug: string,
+      avatarUrl: string
+    })),
+    communityNotifications: arrayOf(shape({
+      communityId: string,
+      count: number
+    }))
   }
 
   render () {
     const { currentCommunity, communities, communityNotifications } = this.props
+    const communitiesSorted = sortBy('name', communities)
     const imageStyle = bgImageStyle(currentCommunity.avatarUrl)
     return <div styleName='drawer'>
       <Icon name='Ex' styleName='closeDrawer' />
-      <Link styleName='currentCommunity' to={`/c/${currentCommunity.id}`}>
+      <Link styleName='currentCommunity' to={`/c/${currentCommunity.slug}`}>
         <div styleName='avatar' style={imageStyle} />
         <div styleName='name' className='drawer-inv-bd'>{currentCommunity.name}</div>
         <div className='drawer-inv-sm'>{currentCommunity.location}</div>
@@ -38,11 +55,11 @@ export default class CommunitiesDrawer extends React.Component {
             <span styleName='allCommunitiesText' className='drawer-inv-lg'>All Communities</span>
           </Link>
         </li>
-        {communities.map(community => {
+        {communitiesSorted.map(community => {
           const imageStyle = bgImageStyle(community.avatarUrl)
           const badge = communityNotifications.find(n => n && n.communityId === community.id)
           return <li styleName='community' key={`community${community.id}`}>
-            <Link to={`/c/${community.id}`} title={community.name}>
+            <Link to={`/c/${community.slug}`} title={community.name}>
               <div styleName='avatar' style={imageStyle} />
               <span styleName='name' className='drawer-inv-li'>{community.name}</span>
               {badge && <Badge number={badge.count} styleName='badge' expanded='true' />}
