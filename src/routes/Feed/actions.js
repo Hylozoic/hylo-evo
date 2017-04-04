@@ -1,7 +1,7 @@
 import { FETCH_FEED_ITEMS } from 'store/constants'
 
 export function fetchFeedItems (slug, opts = {}) {
-  const feedItemParams = `(first: ${opts.first || 1}, ${opts.cursor ? `cursor: ${opts.cursor},` : ''} order: "desc")`
+  const feedItemParams = `(first: ${opts.first || 10}, ${opts.cursor ? `cursor: ${opts.cursor},` : ''} order: "desc")`
   return {
     type: FETCH_FEED_ITEMS,
     graphql: {

@@ -6,7 +6,13 @@ import orm from 'store/models'
 import { fetchFeedItems } from './actions'
 
 export const getFeedItems = ormCreateSelector(orm, (session) => {
-  return session.FeedItem.all().toModelArray()
+  return session.FeedItem.all().toModelArray().map(feedItem => ({
+    ...feedItem.ref,
+    post: {
+      ...feedItem.post.ref,
+      commenters: feedItem.post.commenters.toModelArray()
+    }
+  }))
 })
 
 function mapStateToProps (state, { match, community }) {

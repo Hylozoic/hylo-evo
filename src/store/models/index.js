@@ -6,7 +6,7 @@ import Community from './Community'
 import FeedItem from './FeedItem'
 import Me from './Me'
 import Person from './Person'
-import Post, { PostFollower } from './Post'
+import Post, { PostFollower, PostCommenter } from './Post'
 
 export const orm = new ORM()
 orm.register(
@@ -16,7 +16,8 @@ orm.register(
   Me,
   Person,
   Post,
-  PostFollower
+  PostFollower,
+  PostCommenter
 )
 
 export default orm
