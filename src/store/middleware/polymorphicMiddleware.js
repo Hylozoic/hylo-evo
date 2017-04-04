@@ -1,15 +1,16 @@
 import { mapValues, map, omit } from 'lodash/fp'
 
 export default function polymorphicMiddleware (store) {
-  return next => action =>
-    next({
+  return next => action => {
+    return next({
       ...action,
       payload: transformPolymorph(action.payload)
     })
+  }
 }
 
 const transformPolymorph = node => {
-  if (!node) return {}
+  if (!node) return node
   if (typeof node !== 'object') return node
   if (node.type && node.content) {
     // Assumes NO nested polymorphic objects
