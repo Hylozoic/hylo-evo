@@ -1,3 +1,4 @@
 import { connect } from 'react-redux'
-import { checkLogin, login } from './actions'
-export default connect(null, {checkLogin, login})
+import { checkLogin, login, loginWithService, pickError } from './store'
+
+export default connect(pickError, {checkLogin, login, loginWithService})

@@ -5,6 +5,7 @@ import Comment from './Comment'
 import Community from './Community'
 import FeedItem from './FeedItem'
 import Me from './Me'
+import Membership from './Membership'
 import Person from './Person'
 import Post, { PostFollower, PostCommenter } from './Post'
 
@@ -14,6 +15,7 @@ orm.register(
   Community,
   FeedItem,
   Me,
+  Membership,
   Person,
   Post,
   PostFollower,
@@ -34,6 +36,7 @@ export function allRelations () {
     Community,
     FeedItem,
     Me,
+    Membership,
     Person,
     Post
   ].reduce(onlyRelationalFields, {})
