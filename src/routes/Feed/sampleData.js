@@ -71,7 +71,7 @@ const SAMPLE_FEED_ITEMS = times(i => ({
 const SAMPLE_COMMUNITY = {
   name: 'A Great Cause',
   location: 'Oakland, CA',
-  slug: 'hylo',
+  slug: 'great-cause',
   avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/community/1944/avatar/1489438401225_face.png',
   bannerUrl: 'https://d3ngex8q79bk55.cloudfront.net/community/1944/banner/1489687099172_ggbridge.jpg'
 }

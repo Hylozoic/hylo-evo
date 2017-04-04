@@ -9,6 +9,7 @@ import Sidebar from './components/Sidebar'
 import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
+import Members from 'routes/Members'
 import './component.scss'
 
 export default class PrimaryLayout extends Component {
@@ -28,6 +29,7 @@ export default class PrimaryLayout extends Component {
 
   render () {
     const { location, community, currentUser, communitiesDrawerOpen, toggleCommunitiesDrawer } = this.props
+    const communitySlug = community && community.slug
     const hasDetail = matchPath(location.pathname, {path: '/events/:eventId'})
     const closeDrawer = () => communitiesDrawerOpen && toggleCommunitiesDrawer()
 
@@ -36,11 +38,12 @@ export default class PrimaryLayout extends Component {
       <TopNav {...{community, currentUser}} />
       <div styleName='row'>
         {/* TODO: is using render here the best way to pass params to a route? */}
-        <Route path='/' render={() => <Navigation collapsed={hasDetail} location={location} />} />
+        <Route path='/' render={() => <Navigation collapsed={hasDetail} location={location} communitySlug={communitySlug} />} />
         <div styleName='content'>
           <Route path='/' exact render={() => <Feed {...{community, currentUser}} />} />
-          <Route path='/c/:slug' render={({ match }) => <Feed {...{community, currentUser, match}} />} />
+          <Route path='/c/:slug' exact render={({ match }) => <Feed {...{community, currentUser, match}} />} />
           <Route path='/events' component={Events} />
+          <Route path='/c/:slug/members' component={Members} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/' component={Sidebar} />
