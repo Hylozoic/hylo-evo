@@ -47,15 +47,15 @@ export default class Login extends React.Component {
         <p styleName='connect-label'>Or connect with:</p>
         <div styleName='auth-buttons'>
           <a styleName='facebook' onClick={() => loginWithService('facebook')}>
-            <Icon name='Facebook' />
+            <Icon name='Facebook' styleName='auth-icon' />
             Facebook
           </a>
           <a styleName='google' onClick={() => loginWithService('google')}>
-            <Icon name='Google' />
+            <Icon name='Google' styleName='auth-icon' />
             Google
             </a>
           <a styleName='linkedin' onClick={() => loginWithService('linkedin')}>
-            <Icon name='Linkedin' />
+            <Icon name='LinkedIn' styleName='auth-icon' />
             LinkedIn
           </a>
         </div>
