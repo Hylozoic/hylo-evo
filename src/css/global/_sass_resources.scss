@@ -90,10 +90,12 @@ $color-gossamer: #0A9682;
 // Fonts
 @mixin font-regular {
   font-family: 'Circular Book', sans-serif;
+  font-weight: normal;
 }
 
 @mixin font-medium {
   font-family: 'Circular Medium', sans-serif;
+  font-weight: normal;
 }
 
 @mixin font-bold {
