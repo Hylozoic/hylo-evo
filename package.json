@@ -111,8 +111,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js && scripts/build-es5.sh",
-    "test": "node scripts/test.js --env=jsdom",
-    "generate": "node scripts/generate.js"
+    "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
     "collectCoverageFrom": [
