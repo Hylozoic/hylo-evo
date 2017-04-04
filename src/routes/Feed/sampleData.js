@@ -53,6 +53,14 @@ const rndPreview = () => ({
   imageUrl: rndImage()
 })
 
+const SAMPLE_MEMBERS = times(i => ({
+  id: i,
+  name: `${faker.name.firstName()} ${faker.name.lastName()}`,
+  location: `${faker.address.city()}, ${faker.address.state()}`,
+  tagline: faker.lorem.sentence(),
+  avatarUrl: rndAvatarUrl()
+}), 20)
+
 const SAMPLE_FEED_ITEMS = times(i => ({
   id: i,
   title: faker.lorem.sentence(),
@@ -76,4 +84,4 @@ const SAMPLE_COMMUNITY = {
   bannerUrl: 'https://d3ngex8q79bk55.cloudfront.net/community/1944/banner/1489687099172_ggbridge.jpg'
 }
 
-export { SAMPLE_FEED_ITEMS, SAMPLE_COMMUNITY }
+export { SAMPLE_FEED_ITEMS, SAMPLE_COMMUNITY, SAMPLE_MEMBERS }

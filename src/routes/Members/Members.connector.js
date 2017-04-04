@@ -1,9 +1,11 @@
 import { connect } from 'react-redux'
+import { SAMPLE_MEMBERS } from 'routes/Feed/sampleData'
 // import { someAction } from 'some/path/to/actions'
 
 export function mapStateToProps (state, props) {
   return {
-    exampleProp: 'example'
+    total: 1276,
+    members: SAMPLE_MEMBERS
   }
 }
 
