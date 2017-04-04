@@ -8,7 +8,7 @@ export default function apiMiddleware (req) {
     const { path, params, method } = payload.api
     const cookie = req && req.headers.cookie
     let promise = fetchJSON(path, params, {method, cookie})
-      
+
     if (meta && meta.then) {
       promise = promise.then(meta.then)
     }

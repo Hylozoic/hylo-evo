@@ -6,7 +6,6 @@ import RoundImage from 'components/RoundImage'
 import ScrollListener from 'components/ScrollListener'
 import TabBar from './TabBar'
 import { bgImageStyle } from 'util/index'
-import { throttle } from 'lodash/fp'
 
 export default class Feed extends React.Component {
   static defaultProps = {
