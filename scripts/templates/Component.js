@@ -1,14 +1,11 @@
-import React, { PropTypes, Component } from 'react'
-import './component.scss'
-const { string } = PropTypes
+import React from 'react'
+import './ReplaceComponent.scss'
 
-export default class ReplaceComponent extends Component {
-  static propTypes = {
-    exampleProp: string
-  }
+const { string } = React.PropTypes
 
-  render () {
-    const { exampleProp } = this.props
-    return <div>{exampleProp}</div>
-  }
+export default function ReplaceComponent ({ exampleProp }) {
+  return <div styleName='exampleName'>{exampleProp}</div>
+}
+ReplaceComponent.propTypes = {
+  exampleProp: string
 }
