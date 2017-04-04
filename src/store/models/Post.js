@@ -30,8 +30,11 @@ Post.fields = {
   communitiesTotal: attr(),
   comments: many('Comment'),
   commentsTotal: attr(),
+  // commenters: many('Person'),
+  commentersTotal: attr(),
   createdAt: attr(),
   startsAt: attr(),
   endsAt: attr(),
-  fulfilledAt: attr()
+  fulfilledAt: attr(),
+  votesTotal: attr()
 }
