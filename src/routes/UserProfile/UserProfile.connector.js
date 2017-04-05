@@ -1,14 +1,23 @@
+import { get } from 'lodash/fp'
+import { createSelector as ormCreateSelector } from 'redux-orm'
 import { connect } from 'react-redux'
-// import { someAction } from 'some/path/to/actions'
 
-export function mapStateToProps (state, props) {
+import { fetchPerson } from './actions'
+import orm from 'store/models'
+
+export function getPerson (id) {
+  return ormCreateSelector(orm, session => {
+    if (session.Person.hasIs(id)) {
+      return session.Person.withId(id).withRefs
+    }
+    return null
+  })
+}
+
+export function mapStateToProps ({ orm }, { match }) {
   return {
-    exampleProp: 'example'
+    person: getPerson(get('params.id', match))(orm)
   }
 }
 
-export const mapDispatchToProps = {
-  // someAction
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)
+export default connect(mapStateToProps, { fetchPerson })

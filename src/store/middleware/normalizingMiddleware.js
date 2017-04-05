@@ -2,7 +2,12 @@ import {
   compact, each, keys, reduce, snakeCase, toPairs, uniqWith, values 
 } from 'lodash/fp'
 
-import { FETCH_CURRENT_USER, FETCH_POSTS, FETCH_FEED_ITEMS } from '../constants'
+import {
+  FETCH_CURRENT_USER,
+  FETCH_FEED_ITEMS,
+  FETCH_PERSON,
+  FETCH_POSTS
+} from '../constants'
 import { allRelations } from '../models'
 
 const relations = allRelations()
@@ -17,8 +22,9 @@ export default function normalizingMiddleware ({ dispatch }) {
     if (action && action.type) {
       const { type, payload } = action
       switch (type) {
-        case FETCH_FEED_ITEMS:
         case FETCH_CURRENT_USER:
+        case FETCH_FEED_ITEMS:
+        case FETCH_PERSON:
         case FETCH_POSTS:
           const actions = collectActions('data', payload.data)
           each(dispatch)(actions)

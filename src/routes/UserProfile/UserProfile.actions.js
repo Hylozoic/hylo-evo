@@ -1,8 +1,8 @@
 import { FETCH_PERSON } from 'store/constants'
 
-export function getPerson (id) {
+export function fetchPerson (id) {
   return {
-    type: FETCH_CURRENT_USER,
+    type: FETCH_PERSON,
     graphql: {
       query: `{
         person (id: "${id}") {
