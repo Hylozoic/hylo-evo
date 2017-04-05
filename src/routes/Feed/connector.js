@@ -1,12 +1,21 @@
 import { connect } from 'react-redux'
 // import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { get } from 'lodash/fp'
+import { get, includes } from 'lodash/fp'
 import orm from 'store/models'
 import { fetchFeedItems } from './actions'
 
 export const getFeedItems = slug => ormCreateSelector(orm, (session) => {
+  var community
+  try {
+    community = session.Community.get({slug})
+  } catch (e) {
+    return []
+  }
+
   return session.FeedItem.all()
+  .filter(feedItem => includes(feedItem.id, community.feedItemsOrder))
+  .orderBy(feedItem => community.feedItemsOrder.indexOf(feedItem.id))
   .toModelArray()
   .map(feedItem => ({
     ...feedItem.ref,
@@ -15,7 +24,6 @@ export const getFeedItems = slug => ormCreateSelector(orm, (session) => {
       commenters: feedItem.post.commenters.toModelArray()
     }
   }))
-  .reverse()
 })
 
 function mapStateToProps (state, { match, community }) {

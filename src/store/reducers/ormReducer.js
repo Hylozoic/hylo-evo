@@ -34,6 +34,12 @@ export default function ormReducer (state = {}, action) {
     case a.ADD_FEED_ITEM: add(FeedItem); break
     case a.UPDATE_FEED_ITEM: update(FeedItem); break
     case a.DELETE_FEED_ITEM: del(FeedItem); break
+
+    case a.FETCH_FEED_ITEMS:
+      Community.withId(payload.data.community.id).update({
+        feedItemsOrder: payload.data.community.feedItems.map(f => f.id)
+      })
+      break
   }
 
   return session.state
