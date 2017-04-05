@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
 import {
-  castArray, each, isObject, reduce, uniqWith, snakeCase, toPairs, includes, compact,
-  flatten, values, keys, find
+  compact, each, keys, reduce, snakeCase, toPairs, uniqWith, values 
 } from 'lodash/fp'
 
 import { FETCH_CURRENT_USER, FETCH_POSTS, FETCH_FEED_ITEMS } from '../constants'
@@ -13,7 +11,6 @@ const flattenedRelations = values(relations).reduce((acc, model) => {
   each(key => { acc[key] = model[key] }, keys(model))
   return acc
 }, {})
-const relationKeys = keys(flattenedRelations)
 
 export default function normalizingMiddleware ({ dispatch }) {
   return next => action => {
@@ -49,8 +46,11 @@ function collectActions (key, node, actions = []) {
   const newActions = reduceWithKey((actions, [key, val]) => {
     return collectActions(key, val, actions)
   }, [thisAction, ...actions])(children)
+  return uniqWith(isUniqueAction, compact(newActions))
+}
 
-  return compact(newActions)
+function isUniqueAction (a, b) {
+  return a.payload.id === b.payload.id && a.type === b.type
 }
 
 function makeAction (key, node) {
