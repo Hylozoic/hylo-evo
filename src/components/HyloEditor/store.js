@@ -1,8 +1,9 @@
 import { createSelector } from 'reselect'
 import { fromJS } from 'immutable'
 import sampleMentions from './sampleMentions'
-import mentionPlugin from 'draft-js-mention-plugin'
-import hashtagPlugin from './hashtagPlugin'
+import sampleHashtags from './sampleHashtags'
+import * as mentionPlugin from 'draft-js-mention-plugin'
+import * as hashtagPlugin from './hashtagPlugin'
 
 const defaultMentionsSuggestionFilter = mentionPlugin.defaultSuggestionsFilter
 const defaultHashtagSuggestionFilter = hashtagPlugin.defaultSuggestionsFilter
@@ -38,19 +39,25 @@ export function clearHashtags (searchText) {
 
 // Reducer
 
-export default function reducer (state = {mentionResults: fromJS([])}, action) {
+const defaultState = {
+  mentionResults: fromJS([]),
+  hashtagResults: sampleHashtags
+}
+
+export default function reducer (state = defaultState, action) {
   const { error, type, payload } = action
   if (error) return state
 
   switch (type) {
     case FIND_MENTIONS:
-      return {...state, mentionResults: defaultMentionsSuggestionFilter(payload.searchText, fromJS(sampleMentions))}
+      return {...state, mentionResults: defaultMentionsSuggestionFilter(payload.searchText, sampleMentions)}
     case CLEAR_MENTIONS:
       return {...state, mentionResults: fromJS([])}
     case FIND_HASHTAGS:
-      return {...state, mentionResults: defaultHashtagSuggestionFilter(payload.searchText, fromJS(['test', 'test2']))}
+      console.log(payload, sampleHashtags, defaultHashtagSuggestionFilter(payload.searchText, sampleHashtags))
+      return {...state, hashtagResults: defaultHashtagSuggestionFilter(payload.searchText, sampleHashtags)}
     case CLEAR_HASHTAGS:
-      return {...state, mentionResults: fromJS([])}
+      return {...state, hashtagResults: fromJS([])}
     default:
       return state
   }
@@ -65,5 +72,5 @@ export const getMentionResults = createSelector(
 
 export const getHashtagResults = createSelector(
   (state) => state.hyloEditor,
-  (state, props) => state.hasTagResults
+  (state, props) => state.hashtagResults
 )

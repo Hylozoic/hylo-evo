@@ -15,6 +15,7 @@ const mentionPlugin = createMentionPlugin()
 const hashtagPlugin = createHashtagPlugin()
 
 const { MentionSuggestions } = mentionPlugin
+// const { CompletionSuggestions } = hashtagPlugin
 const { CompletionSuggestions: HashtagSuggestions } = hashtagPlugin
 
 const plugins = [
@@ -47,7 +48,7 @@ export default class HyloEditor extends Component {
     return this.props.findMentions(value)
   }
 
-  handleMentionsSearch = ({ value }) => {
+  handleHashtagSearch = ({ value }) => {
     // const searchValue = value.substring(1, value.length)
     // this.setState({
     //   hashtagResults: defaultSuggestionsFilter(searchValue, suggestions),
@@ -68,8 +69,7 @@ export default class HyloEditor extends Component {
         onClose={this.props.clearMentions} />
       <HashtagSuggestions
         onSearchChange={this.handleHashtagSearch}
-        suggestions={this.state.hashtagResults}
-      />
+        suggestions={this.props.hashtagResults} />
     </div>
   }
 }
