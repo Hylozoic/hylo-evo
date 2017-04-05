@@ -46,10 +46,10 @@ function collectActions (key, node, actions = []) {
   const newActions = reduceWithKey((actions, [key, val]) => {
     return collectActions(key, val, actions)
   }, [thisAction, ...actions])(children)
-  return uniqWith(isUniqueAction, compact(newActions))
+  return uniqWith(isEqualAction, compact(newActions))
 }
 
-function isUniqueAction (a, b) {
+function isEqualAction (a, b) {
   return a.payload.id === b.payload.id && a.type === b.type
 }
 
