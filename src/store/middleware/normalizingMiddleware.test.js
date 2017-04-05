@@ -15,7 +15,7 @@ it('Returns a function to handle action', () => {
   expect(actionHandler.length).toBe(1)
 })
 
-describe('Actions', () => {
+describe('Actions:', () => {
   let store = null
   let mockStore = configureStore([normalizingMiddleware])
 
@@ -23,100 +23,102 @@ describe('Actions', () => {
     store = mockStore({})
   })
 
-  it('Ignores actions that are not FETCH_*', () => {
-    const expected = {
-      type: 'NOT_A_FETCH',
-      payload: {
-        wombat: true
+  describe('FETCH_POSTS', () => {
+    it('Ignores actions that are not FETCH_*', () => {
+      const expected = {
+        type: 'NOT_A_FETCH',
+        payload: {
+          wombat: true
+        }
       }
-    }
-    store.dispatch(expected)
-    const actual = store.getActions()
-    expect(actual).toEqual([expected])
-  })
-
-  it('Dispatches ADD_POST when payload includes a post', () => {
-    store.dispatch({
-      type: 'FETCH_POST',
-      payload: payload.FETCH_POST
+      store.dispatch(expected)
+      const actual = store.getActions()
+      expect(actual).toEqual([expected])
     })
-    const actual = store.getActions().find(a => a.type === 'ADD_POST')
-    expect(actual).toBeTruthy()
-  })
 
-  it('Does not dispatch ADD_POST when payload does not include a post', () => {
-    store.dispatch({
-      type: 'FETCH_POST',
-      payload: []
+    it('Dispatches ADD_POST when payload includes a post', () => {
+      store.dispatch({
+        type: 'FETCH_POSTS',
+        payload: payload.FETCH_POSTS
+      })
+      const actual = store.getActions().find(a => a.type === 'ADD_POST')
+      expect(actual).toBeTruthy()
     })
-    const actual = store.getActions().find(a => a.type === 'ADD_POST')
-    expect(actual).toBeFalsy()
-  })
 
-  it('Does not dispatch ADD_COMMENTS when no comment is present', () => {
-    const posts = payload.FETCH_POST.data.me.posts.map(p => ({ ...p, comments: [] }))
-    store.dispatch({
-      type: 'FETCH_POST',
-      payload: { data: { me: { posts } } }
+    it('Does not dispatch ADD_POST when payload does not include a post', () => {
+      store.dispatch({
+        type: 'FETCH_POSTS',
+        payload: []
+      })
+      const actual = store.getActions().find(a => a.type === 'ADD_POST')
+      expect(actual).toBeFalsy()
     })
-    const actual = store.getActions().filter(a => a.type === 'ADD_COMMENTS').length
-    expect(actual).toBe(0)
-  })
 
-  it('Does not dispatch ADD_COMMUNITY when no community is present', () => {
-    const posts = payload.FETCH_POST.data.me.posts.map(p => ({ ...p, communities: [] }))
-    store.dispatch({
-      type: 'FETCH_POST',
-      payload: { data: { me: { posts } } }
+    it('Does not dispatch ADD_COMMENTS when no comment is present', () => {
+      const posts = payload.FETCH_POSTS.data.me.posts.map(p => ({ ...p, comments: [] }))
+      store.dispatch({
+        type: 'FETCH_POSTS',
+        payload: { data: { me: { posts } } }
+      })
+      const actual = store.getActions().filter(a => a.type === 'ADD_COMMENTS').length
+      expect(actual).toBe(0)
     })
-    const actual = store.getActions().filter(a => a.type === 'ADD_COMMUNITY').length
-    expect(actual).toBe(0)
-  })
 
-  it('Dispatches correct number of ADD_PERSON actions', () => {
-    store.dispatch({
-      type: 'FETCH_POST',
-      payload: payload.FETCH_POST
+    it('Does not dispatch ADD_COMMUNITY when no community is present', () => {
+      const posts = payload.FETCH_POSTS.data.me.posts.map(p => ({ ...p, communities: [] }))
+      store.dispatch({
+        type: 'FETCH_POSTS',
+        payload: { data: { me: { posts } } }
+      })
+      const actual = store.getActions().filter(a => a.type === 'ADD_COMMUNITY').length
+      expect(actual).toBe(0)
     })
-    // Two people in the test data
-    const actual = store.getActions().filter(a => a.type === 'ADD_PERSON').length
-    expect(actual).toBe(2)
-  })
 
-  it('Does not dispatch ADD_PERSON when no person is present', () => {
-    const posts = payload.FETCH_POST.data.me.posts.map(({ id, name }) => ({ id, name }))
-    store.dispatch({
-      type: 'FETCH_POST',
-      payload: { data: { me: { posts } } }
+    it('Dispatches correct number of ADD_PERSON actions', () => {
+      store.dispatch({
+        type: 'FETCH_POSTS',
+        payload: payload.FETCH_POSTS
+      })
+      // Two people in the test data
+      const actual = store.getActions().filter(a => a.type === 'ADD_PERSON').length
+      expect(actual).toBe(2)
     })
-    const actual = store.getActions().filter(a => a.type === 'ADD_PERSON').length
-    expect(actual).toBe(0)
-  })
 
-  it('Has the correct payload', () => {
-    store.dispatch({
-      type: 'FETCH_POST',
-      payload: payload.FETCH_POST
+    it('Does not dispatch ADD_PERSON when no person is present', () => {
+      const posts = payload.FETCH_POSTS.data.me.posts.map(({ id, name }) => ({ id, name }))
+      store.dispatch({
+        type: 'FETCH_POSTS',
+        payload: { data: { me: { posts } } }
+      })
+      const actual = store.getActions().filter(a => a.type === 'ADD_PERSON').length
+      expect(actual).toBe(0)
     })
-    const expected = {
-      id: '30002',
-      title: 'Hello',
-      type: null,
-      details: '<p><a href="https://wombat.life">https://wombat.life</a></p>\n<p></p>\n<p></p>',
-      creator: '46816',
-      followers: [ '46816' ],
-      followersTotal: '1',
-      communities: [ '1836' ],
-      communitiesTotal: '1',
-      comments: [ '1' ],
-      commentsTotal: '1',
-      createdAt: 'Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)',
-      startsAt: null,
-      endsAt: null,
-      fulfilledAt: null
-    }
-    const actual = store.getActions().filter(a => a.type === 'ADD_POST')[0].payload
-    expect(actual).toEqual(expected)
+
+    it('Has the correct payload', () => {
+      store.dispatch({
+        type: 'FETCH_POSTS',
+        payload: payload.FETCH_POSTS
+      })
+      const expected = {
+        id: '30002',
+        title: 'Hello',
+        type: null,
+        details: '<p><a href="https://wombat.life">https://wombat.life</a></p>\n<p></p>\n<p></p>',
+        creator: '46816',
+        followers: [ '46816' ],
+        followersTotal: '1',
+        communities: [ '1836' ],
+        communitiesTotal: '1',
+        comments: [ '1' ],
+        commentsTotal: '1',
+        createdAt: 'Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)',
+        startsAt: null,
+        endsAt: null,
+        fulfilledAt: null
+      }
+      const actual = store.getActions().filter(a => a.type === 'ADD_POST')[0].payload
+      expect(actual).toEqual(expected)
+    })
   })
 
   describe('FETCH_FEED_ITEMS', () => {
