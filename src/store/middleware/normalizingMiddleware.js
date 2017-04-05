@@ -1,5 +1,5 @@
 import {
-  compact, each, keys, reduce, snakeCase, toPairs, uniqWith, values 
+  compact, each, keys, reduce, snakeCase, toPairs, uniqWith, values
 } from 'lodash/fp'
 
 import { FETCH_CURRENT_USER, FETCH_POSTS, FETCH_FEED_ITEMS } from '../constants'
@@ -21,7 +21,7 @@ export default function normalizingMiddleware ({ dispatch }) {
         case FETCH_CURRENT_USER:
         case FETCH_POSTS:
           const actions = collectActions('data', payload.data)
-          each(dispatch)(actions)
+          each(dispatch, actions)
           break
       }
     }

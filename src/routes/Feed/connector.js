@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 // import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { get, find } from 'lodash/fp'
+import { get } from 'lodash/fp'
 import orm from 'store/models'
 import { fetchFeedItems } from './actions'
 
