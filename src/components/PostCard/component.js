@@ -39,23 +39,23 @@ PostCard.propTypes = {
     type: string,
     creator: object,
     name: string,
-    description: string,
+    details: string,
     commenters: array,
     upVotes: string,
-    updated_at: string
+    updatedAt: string
   }),
   fetchPost: func
 }
 PostCard.defaultProps = {
-  post: samplePost
+  post: samplePost()
 }
 
 export const PostHeader = ({ creator, date, type, context, communities }) => {
   return <div styleName='header'>
     <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator)} styleName='avatar' />
     <div styleName='headerText'>
-      <Link to={personUrl(creator)} styleName='userName'>{creator.name}{creator.title && ', '}</Link>
-      {creator.title && <span styleName='userTitle'>{creator.title}</span>}
+      <Link to={personUrl(creator)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
+      {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
       <div>
         <span className='timestamp'>
           {humanDate(date)}{context && <span styleName='spacer'>•</span>}

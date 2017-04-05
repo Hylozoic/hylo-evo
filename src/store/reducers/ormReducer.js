@@ -34,13 +34,21 @@ export default function ormReducer (state = {}, action) {
     case a.ADD_FEED_ITEM: add(FeedItem); break
     case a.UPDATE_FEED_ITEM: update(FeedItem); break
     case a.DELETE_FEED_ITEM: del(FeedItem); break
+
+    case a.FETCH_POSTS:
+      const { id, posts } = payload.data.community
+      const community = Community.get({id})
+      community.update({
+        feedOrder: (community.feedOrder || []).concat(posts.map(f => f.id))
+      })
+      break
   }
 
   return session.state
 }
 
 function addEntity (payload) {
-  return model => model.hasId(payload.id) ? model.update(payload) : model.create(payload)
+  return model => model.hasId(payload.id) ? model.withId(payload.id).update(payload) : model.create(payload)
 }
 
 function deleteEntity (payload) {

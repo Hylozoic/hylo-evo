@@ -1,5 +1,5 @@
 import {
-  compact, each, keys, reduce, snakeCase, toPairs, uniqWith, values 
+  compact, each, keys, reduce, snakeCase, toPairs, uniqWith, values
 } from 'lodash/fp'
 
 import {
@@ -27,7 +27,7 @@ export default function normalizingMiddleware ({ dispatch }) {
         case FETCH_PERSON:
         case FETCH_POSTS:
           const actions = collectActions('data', payload.data)
-          each(dispatch)(actions)
+          each(dispatch, actions)
           break
       }
     }
