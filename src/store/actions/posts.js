@@ -1,13 +1,13 @@
 import { omitBy, includes } from 'lodash'
 import qs from 'querystring'
 import {
-  FETCH_POST
+  FETCH_POSTS
 } from '../constants'
 // import samplePostApi from 'components/PostCard/samplePostApi.json'
 
 export function fetchPost (id, opts = {}) {
   return {
-    type: FETCH_POST,
+    type: FETCH_POSTS,
     // Optionally bypass middleware and load response directly
     // payload: samplePostApi
     payload: {api: true, path: `/noo/post/${id}`}

@@ -5,14 +5,23 @@ import { get } from 'lodash/fp'
 import orm from 'store/models'
 import { fetchFeedItems } from './actions'
 
-export const getFeedItems = ormCreateSelector(orm, (session) => {
-  return session.FeedItem.all().toModelArray()
+export const getFeedItems = slug => ormCreateSelector(orm, (session) => {
+  return session.FeedItem.all()
+  .toModelArray()
+  .map(feedItem => ({
+    ...feedItem.ref,
+    post: {
+      ...feedItem.post.ref,
+      commenters: feedItem.post.commenters.toModelArray()
+    }
+  }))
+  .reverse()
 })
 
 function mapStateToProps (state, { match, community }) {
   const slug = get('params.slug', match) || get('slug', community)
   return {
-    feedItems: getFeedItems(state.orm),
+    feedItems: getFeedItems(slug)(state.orm),
     slug
   }
 }

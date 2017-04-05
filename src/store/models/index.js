@@ -7,7 +7,7 @@ import FeedItem from './FeedItem'
 import Me from './Me'
 import Membership from './Membership'
 import Person from './Person'
-import Post, { PostFollower } from './Post'
+import Post, { PostFollower, PostCommenter } from './Post'
 
 export const orm = new ORM()
 orm.register(
@@ -18,7 +18,8 @@ orm.register(
   Membership,
   Person,
   Post,
-  PostFollower
+  PostFollower,
+  PostCommenter
 )
 
 export default orm
@@ -44,14 +45,6 @@ export function allRelations () {
 function onlyRelationalFields (fields, entityClass) {
   const reduceWithKey = reduce.convert({ cap: false })
   const entityRelations = reduceWithKey(includeIfRelation, {})(entityClass.fields)
-
-  // TODO: temporary! Find a better solution for polymorphism.
-  if (entityClass.name === 'FeedItem') {
-    entityRelations.content = {
-      relationType: 'Post',
-      transform: fkTransform
-    }
-  }
 
   return {
     ...fields,
