@@ -1,15 +1,14 @@
 import { FETCH_FEED_ITEMS } from 'store/constants'
 
 export function fetchFeedItems (slug, opts = {}) {
-  const feedItemParams = `(first: ${opts.first || 10}, ${opts.cursor ? `cursor: ${opts.cursor},` : ''} order: "desc")`
   return {
     type: FETCH_FEED_ITEMS,
     graphql: {
-      query: `{
-        community(slug: "${slug}") {
+      query: `query ($slug: String, $first: Int, $cursor: ID) {
+        community(slug: $slug) {
           id
           name
-          feedItems${feedItemParams} {
+          feedItems(first: $first, cursor: $cursor, order: "desc") {
             type
             content {
               ... on Post {
@@ -45,7 +44,12 @@ export function fetchFeedItems (slug, opts = {}) {
             }
           }
         }
-      }`
+      }`,
+      variables: {
+        slug,
+        first: opts.first || 10,
+        cursor: opts.cursor
+      }
     }
   }
 }
