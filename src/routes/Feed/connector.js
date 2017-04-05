@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { get, includes } from 'lodash/fp'
 import orm from 'store/models'
-import { fetchFeedItems } from './actions'
+import { FETCH_POSTS } from 'store/constants'
+import { fetchPosts } from './actions'
 
-export const getFeedItems = slug => ormCreateSelector(orm, (session) => {
+export const getPosts = slug => ormCreateSelector(orm, (session) => {
   var community
   try {
     community = session.Community.get({slug})
@@ -13,27 +14,26 @@ export const getFeedItems = slug => ormCreateSelector(orm, (session) => {
     return []
   }
 
-  return session.FeedItem.all()
-  .filter(feedItem => includes(feedItem.id, community.feedItemsOrder))
-  .orderBy(feedItem => community.feedItemsOrder.indexOf(feedItem.id))
+  return session.Post.all()
+  .filter(post => includes(post.id, community.feedOrder))
+  .orderBy(post => community.feedOrder.indexOf(post.id))
   .toModelArray()
-  .map(feedItem => ({
-    ...feedItem.ref,
-    post: {
-      ...feedItem.post.ref,
-      commenters: feedItem.post.commenters.toModelArray()
-    }
+  .map(post => ({
+    ...post.ref,
+    creator: post.creator,
+    commenters: post.commenters.toModelArray()
   }))
 })
 
 function mapStateToProps (state, { match, community }) {
   const slug = get('params.slug', match) || get('slug', community)
   return {
-    feedItems: getFeedItems(slug)(state.orm),
-    slug
+    posts: getPosts(slug)(state.orm),
+    slug,
+    pending: state.pending[FETCH_POSTS]
   }
 }
 
-export const mapDispatchToProps = { fetchFeedItems }
+export const mapDispatchToProps = { fetchPosts }
 
 export default connect(mapStateToProps, mapDispatchToProps)

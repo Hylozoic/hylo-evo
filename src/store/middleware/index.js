@@ -6,10 +6,12 @@ import graphqlMiddleware from './graphql'
 import polymorphicMiddleware from './polymorphicMiddleware'
 import apiMiddleware from './apiMiddleware'
 import normalizingMiddleware from './normalizingMiddleware'
+import pendingMiddleware from './pendingMiddleware'
 
 const middleware = compact([
   graphqlMiddleware,
   apiMiddleware(),
+  pendingMiddleware,
   promiseMiddleware,
   polymorphicMiddleware,
   normalizingMiddleware,

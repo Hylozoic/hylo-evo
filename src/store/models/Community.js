@@ -13,5 +13,6 @@ Community.fields = {
   name: attr(),
   members: many('Person'),
   feedItems: many('FeedItem'),
-  feedItemsOrder: attr()
+  posts: many('Post'),
+  feedOrder: attr()
 }
