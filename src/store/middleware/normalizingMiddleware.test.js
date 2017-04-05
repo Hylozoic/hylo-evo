@@ -95,9 +95,13 @@ describe('Actions:', () => {
     })
 
     it('Has the correct payload', () => {
+      const withSinglePost = { ...payload.FETCH_POSTS }
+      withSinglePost.data.me.posts = [withSinglePost.data.me.posts.find(
+        post => post.id === '30002'
+      )]
       store.dispatch({
         type: 'FETCH_POSTS',
-        payload: payload.FETCH_POSTS
+        payload: withSinglePost
       })
       const expected = {
         id: '30002',

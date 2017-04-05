@@ -1,4 +1,4 @@
-export const FETCH_POST = 'FETCH_POST'
+export const FETCH_POSTS = 'FETCH_POSTS'
 export const FETCH_FEED_ITEMS = 'FETCH_FEED_ITEMS'
 
 export const ADD_COMMENT = 'ADD_COMMENT'
