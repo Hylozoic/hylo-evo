@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import orm from './ormReducer'
+import pending from './pending'
 import hyloEditor from 'components/HyloEditor/store'
 import {
   FETCH_CURRENT_USER,
@@ -13,6 +14,7 @@ export default combineReducers({
   router: routerReducer,
   hyloEditor,
   login,
+  pending,
 
   currentUser: (state = {}, { type, error, payload }) => {
     if (!error && type === FETCH_CURRENT_USER) return payload.data.me
@@ -22,5 +24,7 @@ export default combineReducers({
   communitiesDrawerOpen: (state = false, { type }) => {
     if (type === TOGGLE_COMMUNITIES_DRAWER) return !state
     return state
-  }
+  },
+
+
 })

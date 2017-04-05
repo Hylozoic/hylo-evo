@@ -1,46 +1,41 @@
-import { FETCH_FEED_ITEMS } from 'store/constants'
+import { FETCH_POSTS } from 'store/constants'
 
-export function fetchFeedItems (slug, opts = {}) {
+export function fetchPosts (slug, opts = {}) {
   return {
-    type: FETCH_FEED_ITEMS,
+    type: FETCH_POSTS,
     graphql: {
       query: `query ($slug: String, $first: Int, $cursor: ID) {
         community(slug: $slug) {
           id
           name
-          feedItems(first: $first, cursor: $cursor, order: "desc") {
+          posts(first: $first, cursor: $cursor, order: "desc") {
+            id
+            title
+            details
             type
-            content {
-              ... on Post {
-                id
-                title
-                details
-                type
-                creator {
-                  id
-                  name
-                  avatarUrl
-                }
-                createdAt
-                updatedAt
-                commenters(first: 2) {
-                  id
-                  name
-                  avatarUrl
-                }
-                commentersTotal
-                linkPreview {
-                  title
-                  url
-                  imageUrl
-                }
-                votesTotal
-                communities {
-                  id
-                  name
-                  slug
-                }
-              }
+            creator {
+              id
+              name
+              avatarUrl
+            }
+            createdAt
+            updatedAt
+            commenters(first: 2) {
+              id
+              name
+              avatarUrl
+            }
+            commentersTotal
+            linkPreview {
+              title
+              url
+              imageUrl
+            }
+            votesTotal
+            communities {
+              id
+              name
+              slug
             }
           }
         }
