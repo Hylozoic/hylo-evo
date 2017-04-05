@@ -4,7 +4,9 @@ import { SAMPLE_MEMBERS } from 'routes/Feed/sampleData'
 
 export function mapStateToProps (state, props) {
   return {
+    isAdmin: true,
     total: 1276,
+    sort: 'name',
     members: SAMPLE_MEMBERS
   }
 }

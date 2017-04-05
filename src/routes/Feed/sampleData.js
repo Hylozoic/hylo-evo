@@ -54,7 +54,7 @@ const rndPreview = () => ({
 })
 
 const SAMPLE_MEMBERS = times(i => ({
-  id: i,
+  id: i.toString(),
   name: `${faker.name.firstName()} ${faker.name.lastName()}`,
   location: `${faker.address.city()}, ${faker.address.state()}`,
   tagline: faker.lorem.sentence(),

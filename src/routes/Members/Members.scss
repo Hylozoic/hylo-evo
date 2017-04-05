@@ -1,3 +1,53 @@
-.memberLi {
-  float: left;
+$heading-margin-bottom: 57px;
+$members-margin-top: 22px;
+$member-spacing: 16px;
+$search-width: 460px;
+
+.title {
+  composes: hdr-display from 'css/typography.scss';
+}
+
+.total-members {
+  composes: caption-lt-lg from 'css/typography.scss';
+  margin-bottom: $heading-margin-bottom;
+}
+
+.invite {
+  float: right;
+}
+
+.search {
+  width: $search-width;
+}
+
+.sort-dropdown {
+  float: right;
+}
+
+.sort {
+  composes: bdy-lt-sm from 'css/typography.scss';
+
+  span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.sort-icon {
+  margin-left: 8px;
+}
+
+.members {
+  margin-top: $members-margin-top;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.member:nth-child(odd) {
+  margin-right: $member-spacing;
+}
+
+.member {
+  margin-bottom: $member-spacing;
 }

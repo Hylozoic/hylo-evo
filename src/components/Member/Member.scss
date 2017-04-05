@@ -10,6 +10,10 @@ $avatar-size: 120px;
   text-align: center;
   border: 1px solid rgba(54,60,60,0.10);
   border-radius: 4px;
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .avatar {
@@ -17,8 +21,16 @@ $avatar-size: 120px;
   border-radius: $avatar-size/2;
 }
 
-.name { /* !empty */ }
+.name {
+  composes: hdr-headline from 'css/typography.scss';
+  margin-top: $member-padding;
+}
 
-.location { /* !empty */ }
+.location {
+  composes: caption-lt-lg from 'css/typography.scss';
+}
 
-.tagline { /* !empty */ }
+.tagline {
+  composes: bdy-lt-sm from 'css/typography.scss';
+  margin-top: $member-padding;
+}
