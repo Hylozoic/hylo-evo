@@ -9,15 +9,14 @@ export default function Navigation ({ location, collapsed, communitySlug }) {
     {label: 'Home', icon: 'Home', to: '/', badge: 3, exact: true},
     {label: 'Events', icon: 'Events', to: '/events', badge: 3},
     {label: 'Members', icon: 'Members', to: `/c/${communitySlug}/members`},
-    {label: 'UI Kit', icon: 'Projects', to: '/ui-kit'},
-    {label: 'Hylo on Hylo', icon: 'Members', to: '/c/hylo'},
-    {label: 'Hub Oak', icon: 'Members', to: '/c/impact-hub-oakland'},
-    {label: 'Heliopolis', icon: 'Members', to: '/c/heliopolis'}
+    {label: 'UI Kit', icon: 'Projects', to: '/ui-kit'}
   ]
   links = links.map(link => ({...link, active: matchPath(location.pathname, {path: link.to, exact: link.exact})}))
 
+  const style = collapsed ? {} : {position: 'fixed'}
+
   return <div styleName={collapsed ? 'collapser-collapsed' : 'collapser'}>
-    <div styleName='navigation'>
+    <div styleName='navigation' style={style}>
       <ul styleName='links'>
         {links.map(link => <NavLink key={link.label} {...link} collapsed={collapsed} />)}
       </ul>

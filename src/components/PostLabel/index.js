@@ -1,3 +1,2 @@
-import component from './component'
-
+import component from './PostLabel'
 export default component

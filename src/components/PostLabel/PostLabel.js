@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
-import './component.scss'
+import './PostLabel.scss'
 
 const { string } = React.PropTypes
 

@@ -5,10 +5,12 @@ import promiseMiddleware from 'redux-promise'
 import graphqlMiddleware from './graphql'
 import apiMiddleware from './apiMiddleware'
 import normalizingMiddleware from './normalizingMiddleware'
+import pendingMiddleware from './pendingMiddleware'
 
 const middleware = compact([
   graphqlMiddleware,
   apiMiddleware(),
+  pendingMiddleware,
   promiseMiddleware,
   normalizingMiddleware,
   process.env.NODE_ENV === 'development' && createLogger({collapsed: true})

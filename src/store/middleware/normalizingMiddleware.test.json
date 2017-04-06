@@ -1,5 +1,5 @@
 {
-  "FETCH_POST": {
+  "FETCH_POSTS": {
     "data": {
       "me": {
         "posts": [
@@ -100,7 +100,7 @@
       }
     }
   },
-  "FETCH_FEEDITEM": {
+  "FETCH_FEED_ITEMS": {
     "data": {
       "community": {
         "name": "Wombats",
@@ -116,7 +116,7 @@
         "feedItems": [
           {
             "type": "post",
-            "content": {
+            "post": {
               "id": "30002",
               "creator": {
                 "id": "12345",

@@ -10,7 +10,7 @@ import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 import Members from 'routes/Members'
-import './component.scss'
+import './PrimaryLayout.scss'
 
 export default class PrimaryLayout extends Component {
   static propTypes = {
@@ -23,7 +23,6 @@ export default class PrimaryLayout extends Component {
 
   componentDidMount () {
     // FIXME this doesn't belong here
-    //if (this.props.currentUser) return
     this.props.fetchCurrentUser()
   }
 

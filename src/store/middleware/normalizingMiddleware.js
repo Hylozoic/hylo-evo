@@ -1,61 +1,71 @@
-import { castArray, each, isObject, reduce, uniqWith } from 'lodash/fp'
+import {
+  compact, each, keys, reduce, snakeCase, toPairs, uniqWith, values
+} from 'lodash/fp'
 
-import { FETCH_CURRENT_USER, FETCH_POST, FETCH_FEEDITEM } from '../constants'
+import { FETCH_CURRENT_USER, FETCH_POSTS, FETCH_FEED_ITEMS } from '../constants'
 import { allRelations } from '../models'
 
 const relations = allRelations()
+// TODO: these two might be better off in models/index.js
+const flattenedRelations = values(relations).reduce((acc, model) => {
+  each(key => { acc[key] = model[key] }, keys(model))
+  return acc
+}, {})
 
 export default function normalizingMiddleware ({ dispatch }) {
   return next => action => {
     if (action && action.type) {
       const { type, payload } = action
-
       switch (type) {
+        case FETCH_FEED_ITEMS:
         case FETCH_CURRENT_USER:
-        case FETCH_FEEDITEM:
-        case FETCH_POST:
-          each(dispatch)(normalize(payload.data))
+        case FETCH_POSTS:
+          const actions = collectActions('data', payload.data)
+          each(dispatch, actions)
           break
       }
-      return next(action)
     }
+    return next(action)
   }
 }
 
-function normalize (graphqlResult) {
+function collectActions (key, node, actions = []) {
+  if (!node) return actions
   const reduceWithKey = reduce.convert({ cap: false })
 
-  const result = reduceWithKey(
-    (actions, relation) => [ ...actions, ...getRelation(relation, graphqlResult) ],
-    []
-  )(relations)
-  return uniqWith(isUniqueAction)(result)
+  var thisAction = null
+  var children = []
+
+  if (Array.isArray(node)) {
+    children = node.map(child => [key, child])
+  } else if (!!node && typeof node === 'object') {
+    thisAction = makeAction(key, node)
+    children = toPairs(node)
+  }
+
+  const newActions = reduceWithKey((actions, [key, val]) => {
+    return collectActions(key, val, actions)
+  }, [thisAction, ...actions])(children)
+  return uniqWith(isEqualAction, compact(newActions))
 }
 
-function isUniqueAction (a, b) {
+function isEqualAction (a, b) {
   return a.payload.id === b.payload.id && a.type === b.type
 }
 
-function getRelation (relation, resultFragment) {
-  let result = []
-  const eachWithKey = each.convert({ cap: false })
-
-  eachWithKey((entity, key) => {
-    if (relation.hasOwnProperty(key)) {
-      const rtype = relation[key].relationType
-      const type = `ADD_${rtype.toUpperCase()}`
-      each(e => {
-        result.push({ type, payload: transform(e, rtype) })
-      })(castArray(entity))
-    } else if (isObject(entity)) {
-      result = [ ...result, ...getRelation(relation, entity) ]
-    }
-  })(resultFragment)
-
-  return result
+function makeAction (key, node) {
+  const relation = flattenedRelations[key]
+  if (relation) {
+    const rtype = relation.relationType
+    const type = `ADD_${snakeCase(rtype).toUpperCase()}`
+    const payload = normalize(node, rtype)
+    return {type, payload}
+  } else {
+    return null
+  }
 }
 
-function transform (entity, relationType) {
+function normalize (entity, relationType) {
   const reduceWithKey = reduce.convert({ cap: false })
   const relation = relations[relationType]
   return reduceWithKey(

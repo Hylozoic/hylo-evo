@@ -1,41 +1,39 @@
 import React from 'react'
 import './component.scss'
-import FeedItem from 'components/FeedItem'
+import PostCard from 'components/PostCard'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import ScrollListener from 'components/ScrollListener'
 import TabBar from './TabBar'
 import { bgImageStyle } from 'util/index'
-import { throttle } from 'lodash/fp'
 
 export default class Feed extends React.Component {
   static defaultProps = {
-    feedItems: []
+    posts: []
   }
 
   componentDidMount () {
-    this.props.fetchFeedItems(this.props.slug)
+    this.props.fetchPosts(this.props.slug)
   }
 
-  fetchMoreFeedItems () {
-    this.props.fetchFeedItems(this.props.slug, {
-      // cursor: this.props.feedItems.slice(-1)[0].id
+  fetchMorePosts () {
+    if (this.props.pending) return
+    this.props.fetchPosts(this.props.slug, {
+      cursor: this.props.posts.slice(-1)[0].id
     })
   }
 
   render () {
-    const { feedItems, community, currentUser } = this.props
+    const { posts, community, currentUser } = this.props
 
-    const feedId = 'feed'
-
-    return <div styleName='feed' id={feedId}>
+    return <div styleName='feed'>
       <CommunityBanner community={community} currentUser={currentUser} />
-      <TabBar styleName='tabBar' feedId={feedId} />
+      <TabBar styleName='tabBar' />
       <div styleName='feedItems'>
-        {feedItems.map(feedItem =>
-          <FeedItem feedItem={feedItem} styleName='feedItem' key={feedItem.id} />)}
+        {posts.map(post =>
+          <PostCard post={post} styleName='feedItem' key={post.id} />)}
       </div>
-      <ScrollListener elementId={feedId} onBottom={() => this.fetchMoreFeedItems()} />
+      <ScrollListener onBottom={() => this.fetchMorePosts()} />
     </div>
   }
 }

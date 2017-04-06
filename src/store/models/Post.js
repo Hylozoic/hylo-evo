@@ -7,6 +7,13 @@ PostFollower.fields = {
   follower: fk('Person', 'postfollowers')
 }
 
+export class PostCommenter extends Model {}
+PostCommenter.modelName = 'PostCommenter'
+PostCommenter.fields = {
+  post: fk('Post', 'postcommenters'),
+  commenter: fk('Person', 'postcommenters')
+}
+
 export default class Post extends Model {
   toString () {
     return `Post: ${this.name}`
@@ -30,8 +37,16 @@ Post.fields = {
   communitiesTotal: attr(),
   comments: many('Comment'),
   commentsTotal: attr(),
+  commenters: many({
+    to: 'Person',
+    relatedName: 'posts2',
+    through: 'PostCommenter',
+    throughFields: [ 'post', 'commenter' ]
+  }),
+  commentersTotal: attr(),
   createdAt: attr(),
   startsAt: attr(),
   endsAt: attr(),
-  fulfilledAt: attr()
+  fulfilledAt: attr(),
+  votesTotal: attr()
 }
