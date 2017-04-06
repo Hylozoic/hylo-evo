@@ -160,6 +160,7 @@ $preview-height: 80px;
   display: inline-block;
   margin-top: 15px;
   vertical-align: top;
+  width: 450px;
 }
 
 .previewTitle {
@@ -175,10 +176,6 @@ $preview-height: 80px;
   @include font-regular;
   color: $color-dove-gray-50;
   font-size: 12px;
-  line-height: 19px;
-  // TODO: Find a more robust way to position this element
-  position: relative;
-  top: 10px;
 }
 
 // PostFooter
