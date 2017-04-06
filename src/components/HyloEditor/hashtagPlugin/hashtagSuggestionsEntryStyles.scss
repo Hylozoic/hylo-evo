@@ -6,12 +6,12 @@
   }
 
   .hashtagSuggestionsEntry:active {
-    background-color: #CCE7FF;
+    background-color: $color-black-squeeze;
   }
 
   .hashtagSuggestionsEntryFocused {
     @extend .hashtagSuggestionsEntry;
-    background-color: #E6F3FF;
+    background-color: $color-black-squeeze;
   }
 
   .hashtagSuggestionsEntryText {

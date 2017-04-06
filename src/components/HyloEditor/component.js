@@ -8,10 +8,12 @@ import { stateToHTML } from 'draft-js-export-html'
 import 'draft-js/dist/Draft.css'
 import 'draft-js-mention-plugin/lib/plugin.css'
 // import 'draft-js-hashtag-plugin/lib/plugin.css'
-import './component.scss'
+import styles from './component.scss'
 // import './IssueEditor.scss'
 
-const mentionPlugin = createMentionPlugin()
+const mentionPlugin = createMentionPlugin({
+  // theme: styles
+})
 const hashtagPlugin = createHashtagPlugin()
 
 const { MentionSuggestions } = mentionPlugin
@@ -49,10 +51,6 @@ export default class HyloEditor extends Component {
   }
 
   handleHashtagSearch = ({ value }) => {
-    // const searchValue = value.substring(1, value.length)
-    // this.setState({
-    //   hashtagResults: defaultSuggestionsFilter(searchValue, suggestions),
-    // })
     return this.props.findHashtags(value)
   }
 
