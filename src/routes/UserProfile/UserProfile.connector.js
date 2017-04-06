@@ -15,8 +15,10 @@ export function getPerson (id) {
 }
 
 export function mapStateToProps ({ orm }, { match }) {
+  const id = get('params.id', match)
   return {
-    person: getPerson(get('params.id', match))(orm)
+    id,
+    person: getPerson(id)(orm)
   }
 }
 
