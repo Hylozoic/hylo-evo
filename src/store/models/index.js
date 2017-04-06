@@ -9,8 +9,20 @@ import Membership from './Membership'
 import Person from './Person'
 import Post, { PostFollower, PostCommenter } from './Post'
 
+// see https://github.com/tommikaikkonen/redux-orm/issues/53 for explanation of
+// this weird workaround
+function proxyClassForORM (klass) {
+  // return klass
+  if (!navigator.userAgent.includes('Node.js')) return klass
+  return new Proxy(klass, {
+    apply (Target, thisArg, rest) {
+      return new Target(...rest)
+    }
+  })
+}
+
 export const orm = new ORM()
-orm.register(
+orm.register(...[
   Comment,
   Community,
   FeedItem,
@@ -20,7 +32,7 @@ orm.register(
   Post,
   PostFollower,
   PostCommenter
-)
+].map(proxyClassForORM))
 
 export default orm
 

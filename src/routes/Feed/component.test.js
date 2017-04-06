@@ -2,7 +2,6 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Feed from './component'
 import TabBar from './TabBar'
-import samplePost from 'components/PostCard/samplePost'
 
 describe('Feed', () => {
   it('has a TabBar', () => {
