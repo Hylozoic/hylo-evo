@@ -49,7 +49,6 @@ export default class TabBar extends React.Component {
   })
 
   componentDidMount () {
-    const { feedId } = this.props
     this.startingY = position(this.refs.placeholder).y
     this.startingX = position(this.refs.placeholder).x
     this.setState({isStatic: viewportTop() + this.topNavHeight() < this.startingY})
