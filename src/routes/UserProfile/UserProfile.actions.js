@@ -1,6 +1,6 @@
 import { FETCH_PERSON } from 'store/constants'
 
-const defaultQuery =
+const fetchPersonQuery =
 `query PersonWithPosts ($id: ID) {
   person (id: $id) {
     id
@@ -21,7 +21,7 @@ const defaultQuery =
   }
 }`
 
-export function fetchPerson (id, query = defaultQuery) {
+export function fetchPerson (id, query = fetchPersonQuery) {
   return {
     type: FETCH_PERSON,
     graphql: {
