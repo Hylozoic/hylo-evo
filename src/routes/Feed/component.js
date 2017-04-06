@@ -25,16 +25,15 @@ export default class Feed extends React.Component {
 
   render () {
     const { posts, community, currentUser } = this.props
-    const feedId = 'feed'
 
-    return <div styleName='feed' id={feedId}>
+    return <div styleName='feed'>
       <CommunityBanner community={community} currentUser={currentUser} />
-      <TabBar styleName='tabBar' feedId={feedId} />
+      <TabBar styleName='tabBar' />
       <div styleName='feedItems'>
         {posts.map(post =>
           <PostCard post={post} styleName='feedItem' key={post.id} />)}
       </div>
-      <ScrollListener elementId={feedId} onBottom={() => this.fetchMorePosts()} />
+      <ScrollListener onBottom={() => this.fetchMorePosts()} />
     </div>
   }
 }

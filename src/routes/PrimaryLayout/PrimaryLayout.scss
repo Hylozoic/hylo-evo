@@ -1,23 +1,21 @@
-@media (min-width: 80rem) {
-  .container {
-    width: 80rem;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-  }
+.container {
+  /* empty */
 }
 
 .row {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 0;
+  padding: 80px 0 0;
+  width: $content-width;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .header {
   // From Bootstrap make-col-ready():
   position: relative;
-  width: 100%;
+  width: $content-width;
   min-height: 1px; // Prevent collapsing
   margin-bottom: $space-6x;
   padding: $space-6x;
@@ -29,7 +27,6 @@
 .content {
   // From Bootstrap make-col-ready():
   position: relative;
-  width: 100%;
   min-height: 1px; // Prevent collapsing
   flex: 0 0 49%;
   max-width: 49%;

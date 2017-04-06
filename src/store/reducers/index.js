@@ -24,7 +24,5 @@ export default combineReducers({
   communitiesDrawerOpen: (state = false, { type }) => {
     if (type === TOGGLE_COMMUNITIES_DRAWER) return !state
     return state
-  },
-
-
+  }
 })
