@@ -3,11 +3,13 @@ import React, { PropTypes, Component } from 'react'
 import { matchPath, Route } from 'react-router-dom'
 import cx from 'classnames'
 import CommunitiesDrawer from './components/CommunitiesDrawer'
+import Messages from 'routes/Messages'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
 import Sidebar from './components/Sidebar'
 import Feed from 'routes/Feed'
 import Events from 'routes/Events'
+
 import EventDetail from 'routes/Events/EventDetail'
 import './PrimaryLayout.scss'
 
@@ -54,6 +56,7 @@ export default class PrimaryLayout extends Component {
           <Route path='/events/:eventId' exact component={EventDetail} />
         </div>
       </div>
+      <Route path='/messages' component={Messages} />
     </div>
   }
 }
