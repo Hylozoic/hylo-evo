@@ -1,9 +1,17 @@
+.topNavWrapper {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
 .topNav {
-  position: relative;
   // Notes from Bootstrap make-col-ready(): Prevent columns from becoming too
   // narrow when at smaller grid tiers by always setting `width: 100%;`. This
   // works because we use `flex` values later on to override this initial width.
-  width: 100%;
+  width: $content-width;
+  margin-left: auto;
+  margin-right: auto;
   height: 56px; // Prevent collapsing
   display: flex;
   justify-content: flex-start;
