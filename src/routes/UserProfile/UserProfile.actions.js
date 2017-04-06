@@ -4,8 +4,8 @@ export function fetchPerson (id) {
   return {
     type: FETCH_PERSON,
     graphql: {
-      query: `{
-        person (id: "${id}") {
+      query: `query PersonWithPosts ($id: ID) {
+        person (id: $id) {
           id
           name
           avatarUrl
@@ -22,7 +22,8 @@ export function fetchPerson (id) {
           }
           postsTotal
         }
-      }`
+      }`,
+      variables: { id }
     }
   }
 }

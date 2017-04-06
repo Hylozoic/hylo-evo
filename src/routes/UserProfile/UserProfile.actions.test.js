@@ -1,24 +1,22 @@
 import configureStore from 'redux-mock-store'
+import { get } from 'lodash/fp'
 import promiseMiddleware from 'redux-promise'
 
 import graphqlMiddleware from 'store/middleware/graphql'
 import normalizingMiddleware from 'store/middleware/normalizingMiddleware'
-import { ADD_PERSON, FETCH_PERSON } from 'store/constants'
+import { ADD_PERSON } from 'store/constants'
 import payload from './UserProfile.test.json'
 import { fetchPerson } from './UserProfile.actions'
 
-// Return a payload without hitting the API
 const apiMiddleware = store => next => action => {
-  const { payload, meta } = action
-  if (!payload || !payload.api) return next(action)
-  return next({...action, payload: Promise.resolve(payload)})
+  const id = get('payload.api.params.variables.id', action)
+  return id === '46816' ? next({...action, payload }) : next(action)
 }
 
 let store = null
 let mockStore = configureStore([
   graphqlMiddleware,
   apiMiddleware,
-  promiseMiddleware,
   normalizingMiddleware
 ])
 
@@ -26,11 +24,10 @@ beforeEach(() => {
   store = mockStore({})
 })
 
-it('Has a store', () => {
-  const expected = { type: 'NOT_A_FETCH', payload: { wombat: true } }
-  store.dispatch(expected)
-  const actual = store.getActions()
-  expect(actual).toEqual([expected])
+it('Does not dispatch ADD_PERSON when no person in payload', () => {
+  store.dispatch({ type: 'FLARGLE_ARGLE', payload: {} })
+  const actual = store.getActions().find(a => a.type === ADD_PERSON)
+  expect(actual).toBeFalsy()
 })
 
 it('Dispatches ADD_PERSON when person is requested', () => {
