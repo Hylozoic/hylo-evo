@@ -71,7 +71,6 @@
     "draft-js-hashtag-plugin": "2.0.0-beta10",
     "draft-js-mention-plugin": "@2.0.0-beta10",
     "draft-js-plugins-editor": "2.0.0-beta10",
-    "ent": "^2.2.0",
     "enzyme": "^2.7.1",
     "express": "^4.15.2",
     "faker": "^4.1.0",
