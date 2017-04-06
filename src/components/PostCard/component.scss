@@ -73,7 +73,7 @@
   color: $color-caribbean-green;
   font-size: 12px;
   &:hover {
-    color: $color-caribbean-green;
+    color: $color-gossamer;
     text-decoration: none;
   }
 }
@@ -98,6 +98,16 @@
 }
 
 // PostBody
+
+:global {
+  .hashtag {
+    color: $color-caribbean-green;
+    &:hover {
+      text-decoration: none;
+      color: $color-gossamer;
+    }
+  }
+}
 
 .body {
   margin-bottom: 36px;
