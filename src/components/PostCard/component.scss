@@ -97,6 +97,13 @@
   color: $color-rhino-80;
 }
 
+.close {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+}
+
 // PostBody
 
 .body {

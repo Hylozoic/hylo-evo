@@ -1,1 +1,25 @@
-.post { /* !empty */ }
+.post {
+  background-color: white;
+}
+
+.header {
+  margin-bottom: 5px;
+}
+
+// PostTag
+
+.tags {
+  padding: 0px 25px;
+}
+
+.tag {
+  // TODO: Extract typography
+  @include font-regular;
+  color: $color-caribbean-green;
+  font-size: 12px;
+  &:hover {
+    text-decoration: none;
+    color: $color-gossamer;
+  }
+  margin-right: 7px;
+}

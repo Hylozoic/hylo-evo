@@ -8,8 +8,15 @@ export function bgImageStyle (url) {
 }
 
 export function personUrl (person) {
-  // placeholder
-  return '/'
+  return `/u/${person.id}`
+}
+
+export function tagUrl (tagName, slug) {
+  if (slug) {
+    return `/c/${slug}/tag/${tagName}`
+  } else {
+    return `/tag/${tagName}`
+  }
 }
 
 export const findChildLink = element => {

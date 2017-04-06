@@ -51,8 +51,8 @@ PostCard.defaultProps = {
   post: samplePost()
 }
 
-export const PostHeader = ({ creator, date, type, context, communities }) => {
-  return <div styleName='header'>
+export const PostHeader = ({ creator, date, type, context, communities, close, className }) => {
+  return <div styleName='header' className={className}>
     <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator)} styleName='avatar' />
     <div styleName='headerText'>
       <Link to={personUrl(creator)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
@@ -75,6 +75,7 @@ export const PostHeader = ({ creator, date, type, context, communities }) => {
         {label: 'Other'},
         {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
       ]} />
+    {close && <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
     </div>
   </div>
 }
