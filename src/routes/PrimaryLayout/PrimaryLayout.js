@@ -1,4 +1,3 @@
-
 import React, { PropTypes, Component } from 'react'
 import { matchPath, Route } from 'react-router-dom'
 import cx from 'classnames'
@@ -9,6 +8,7 @@ import Sidebar from './components/Sidebar'
 import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
+import PostDetail from 'routes/PostDetail'
 import './PrimaryLayout.scss'
 
 export default class PrimaryLayout extends Component {
@@ -27,7 +27,8 @@ export default class PrimaryLayout extends Component {
 
   render () {
     const { location, community, currentUser, communitiesDrawerOpen, toggleCommunitiesDrawer } = this.props
-    const hasDetail = matchPath(location.pathname, {path: '/events/:eventId'})
+    const hasDetail = matchPath(location.pathname, {path: '/events/:eventId'}) ||
+      matchPath(location.pathname, {path: '/p/:postId'})
     const closeDrawer = () => communitiesDrawerOpen && toggleCommunitiesDrawer()
 
     return <div styleName='container' onClick={closeDrawer}>
@@ -40,6 +41,7 @@ export default class PrimaryLayout extends Component {
           <Route path='/' exact render={() => <Feed {...{community, currentUser}} />} />
           <Route path='/c/:slug' render={({ match }) => <Feed {...{community, currentUser, match}} />} />
           <Route path='/events' component={Events} />
+          <Route path='/p/:postId' render={({ match }) => <Feed {...{community, currentUser, match}} />} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/' component={Sidebar} />
@@ -52,6 +54,7 @@ export default class PrimaryLayout extends Component {
             defined above, and store the previous detail component in state
           */}
           <Route path='/events/:eventId' exact component={EventDetail} />
+          <Route path='/p/:postId' exact component={PostDetail} />
         </div>
       </div>
     </div>

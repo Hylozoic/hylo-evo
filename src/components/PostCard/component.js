@@ -23,6 +23,7 @@ export default class PostCard extends React.Component {
         context={post.context}
         communities={post.communities} />
       <PostBody title={post.title}
+        id={post.id}
         details={post.details}
         imageUrl={post.imageUrl}
         linkPreview={post.linkPreview} />
@@ -78,7 +79,7 @@ export const PostHeader = ({ creator, date, type, context, communities }) => {
   </div>
 }
 
-export const PostBody = ({ title, details, imageUrl, linkPreview }) => {
+export const PostBody = ({ id, title, details, imageUrl, linkPreview }) => {
   // TODO: Present details as HTML and sanitize
   const truncated = details &&
     details.length > 147
@@ -87,7 +88,7 @@ export const PostBody = ({ title, details, imageUrl, linkPreview }) => {
 
   return <div styleName='body'>
     {imageUrl && <div style={bgImageStyle(imageUrl)} styleName='image' />}
-    <div styleName='title' className='hdr-headline'>{title}</div>
+    <div styleName='title' className='hdr-headline'><Link to={`/p/${id}`}>{title}</Link></div>
     {truncated && <div styleName='description'>{truncated}</div>}
     {linkPreview && <LinkPreview {...linkPreview} />}
   </div>
