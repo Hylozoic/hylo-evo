@@ -20,6 +20,7 @@ export default function samplePost () {
     details: 'Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!',
     votesTotal: Math.round(Math.random() * 1000),
     tags: ['activism', 'petition'],
+    communities: [{id: '1', slug: 'great'}],
     commenters: fakePerson(3),
     commentersTotal: Math.round(Math.random() * 100),
     creator: fakePerson(),

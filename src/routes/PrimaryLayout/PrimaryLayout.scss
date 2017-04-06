@@ -12,18 +12,6 @@
   margin-right: auto;
 }
 
-.header {
-  // From Bootstrap make-col-ready():
-  position: relative;
-  width: $content-width;
-  min-height: 1px; // Prevent collapsing
-  margin-bottom: $space-6x;
-  padding: $space-6x;
-  box-shadow: 0px 3px 5px 0px $color-nepal;
-  color: $color-athens-gray;
-  background-color: $color-persimmon;
-}
-
 .content {
   background: $color-white;
   // From Bootstrap make-col-ready():
@@ -51,14 +39,13 @@
 }
 
 .detail {
-  composes: detail;
   background-color: white;
   padding-top: 80px;
   position: absolute;
   top: 0;
   right: 0px;
-  flex: 0 0 45%;
-  max-width: 45%;
+  flex: 0 0 43%;
+  max-width: 43%;
   box-shadow: 0px 4px 56px 0px $color-alto;
   transition-delay: 0.1s;
   transition-duration: 0.2s;

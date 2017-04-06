@@ -6,7 +6,9 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
-import { personUrl, bgImageStyle, humanDate } from 'util/index'
+import { personUrl, bgImageStyle } from 'util/index'
+import { present, textLength, truncate, appendInP, humanDate } from 'util/text'
+import { sanitize } from 'hylo-utils/text'
 import { parse } from 'url'
 import './component.scss'
 import samplePost from './samplePost'
@@ -15,6 +17,7 @@ const { shape, any, object, string, func, array } = React.PropTypes
 export default class PostCard extends React.Component {
   render () {
     const { post, className } = this.props
+    const slug = post.communities.length > 0 && post.communities[0].slug
 
     return <div styleName='card' className={className}>
       <PostHeader creator={post.creator}
@@ -22,11 +25,12 @@ export default class PostCard extends React.Component {
         type={post.type}
         context={post.context}
         communities={post.communities} />
+      <PostImage imageUrl={post.imageUrl} />
       <PostBody title={post.title}
         id={post.id}
         details={post.details}
-        imageUrl={post.imageUrl}
-        linkPreview={post.linkPreview} />
+        linkPreview={post.linkPreview}
+        slug={slug} />
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
@@ -75,22 +79,30 @@ export const PostHeader = ({ creator, date, type, context, communities, close, c
         {label: 'Other'},
         {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
       ]} />
-    {close && <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
+      {close && <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
     </div>
   </div>
 }
 
-export const PostBody = ({ id, title, details, imageUrl, linkPreview }) => {
+export const PostImage = ({ imageUrl, className }) => {
+  if (!imageUrl) return null
+  return <div style={bgImageStyle(imageUrl)} styleName='image' className={className} />
+}
+
+const maxDetailsLength = 144
+
+export const PostBody = ({ id, title, details, imageUrl, linkPreview, slug, expanded }) => {
   // TODO: Present details as HTML and sanitize
-  const truncated = details &&
-    details.length > 147
-    ? details.slice(0, 144) + '...'
-    : details
+  let presentedDetails = present(sanitize(details), {slug})
+  const shouldTruncate = !expanded && textLength(presentedDetails) > maxDetailsLength
+  if (shouldTruncate) {
+    presentedDetails = truncate(presentedDetails, maxDetailsLength)
+  }
+  if (presentedDetails) presentedDetails = appendInP(presentedDetails, '&nbsp;')
 
   return <div styleName='body'>
-    {imageUrl && <div style={bgImageStyle(imageUrl)} styleName='image' />}
-    <div styleName='title' className='hdr-headline'><Link to={`/p/${id}`}>{title}</Link></div>
-    {truncated && <div styleName='description'>{truncated}</div>}
+    <div styleName='title' className='hdr-headline'>{title}</div>
+    {presentedDetails && <div styleName='description' dangerouslySetInnerHTML={{__html: presentedDetails}} />}
     {linkPreview && <LinkPreview {...linkPreview} />}
   </div>
 }

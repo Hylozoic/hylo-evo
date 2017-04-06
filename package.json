@@ -71,10 +71,13 @@
     "draft-js-hashtag-plugin": "2.0.0-beta10",
     "draft-js-mention-plugin": "@2.0.0-beta10",
     "draft-js-plugins-editor": "2.0.0-beta10",
+    "ent": "^2.2.0",
     "enzyme": "^2.7.1",
     "express": "^4.15.2",
     "faker": "^4.1.0",
+    "hylo-utils": "https://github.com/Hylozoic/hylo-utils.git",
     "immutable": "^3.8.1",
+    "linkifyjs": "^2.1.4",
     "lodash": "^4.17.4",
     "node-sass": "^4.5.0",
     "normalize.css": "^5.0.0",
@@ -103,6 +106,7 @@
     "standard": "^9.0.1",
     "standard-loader": "^6.0.1",
     "tether": "^1.4.0",
+    "trunc-html": "^1.1.2",
     "velocity-react": "^1.2.1"
   },
   "engines": {

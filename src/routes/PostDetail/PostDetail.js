@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { isEmpty } from 'lodash/fp'
 import './PostDetail.scss'
 const { object, string } = PropTypes
-import { PostHeader, PostFooter } from 'components/PostCard/component'
+import { PostHeader, PostImage, PostBody, PostFooter } from 'components/PostCard/component'
 import { tagUrl } from 'util/index'
 
 export default class PostDetail extends Component {
@@ -13,7 +13,7 @@ export default class PostDetail extends Component {
   }
 
   render () {
-    const { post } = this.props
+    const { post, slug } = this.props
     return <div styleName='post'>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}
@@ -22,7 +22,14 @@ export default class PostDetail extends Component {
         communities={post.communities}
         close={() => console.log('close')}
         styleName='header' />
+      <PostImage imageUrl={post.imageUrl} styleName='image' />
       <PostTags tags={post.tags} />
+      <PostBody title={post.title}
+        id={post.id}
+        details={post.details}
+        linkPreview={post.linkPreview}
+        slug={slug}
+        expanded />
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}

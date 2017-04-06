@@ -73,7 +73,7 @@
   color: $color-caribbean-green;
   font-size: 12px;
   &:hover {
-    color: $color-caribbean-green;
+    color: $color-gossamer;
     text-decoration: none;
   }
 }
@@ -104,11 +104,7 @@
   top: 2px;
 }
 
-// PostBody
-
-.body {
-  margin-bottom: 36px;
-}
+// PostImage
 
 .image {
   background-position: center;
@@ -118,6 +114,22 @@
   height: 280px;
   margin-bottom: 20px;
   margin: 0 auto 20px auto;
+}
+
+// PostBody
+
+:global {
+  .hashtag {
+    color: $color-caribbean-green;
+    &:hover {
+      text-decoration: none;
+      color: $color-gossamer;
+    }
+  }
+}
+
+.body {
+  margin-bottom: 36px;
 }
 
 .title {
@@ -157,6 +169,7 @@ $preview-height: 80px;
   display: inline-block;
   margin-top: 15px;
   vertical-align: top;
+  width: 450px;
 }
 
 .previewTitle {
@@ -172,10 +185,6 @@ $preview-height: 80px;
   @include font-regular;
   color: $color-dove-gray-50;
   font-size: 12px;
-  line-height: 19px;
-  // TODO: Find a more robust way to position this element
-  position: relative;
-  top: 10px;
 }
 
 // PostFooter
