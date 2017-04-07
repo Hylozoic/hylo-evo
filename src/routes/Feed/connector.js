@@ -21,7 +21,8 @@ export const getPosts = slug => ormCreateSelector(orm, (session) => {
   .map(post => ({
     ...post.ref,
     creator: post.creator,
-    commenters: post.commenters.toModelArray()
+    commenters: post.commenters.toModelArray(),
+    communities: post.communities.toModelArray()
   }))
 })
 
