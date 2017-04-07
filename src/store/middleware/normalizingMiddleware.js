@@ -20,7 +20,7 @@ export default function normalizingMiddleware ({ dispatch }) {
       switch (type) {
         case FETCH_CURRENT_USER:
         case FETCH_POSTS:
-          const actions = collectActions('data', payload.data)
+          const actions = collectAndMergeActions('data', payload.data)
 
           each(dispatch, actions)
           break
@@ -30,7 +30,11 @@ export default function normalizingMiddleware ({ dispatch }) {
   }
 }
 
-export function collectActions (key, node, actions = [], recursing = false) {
+export function collectAndMergeActions (key, node) {
+  return mergeDuplicates(collectActions(key, node, []))
+}
+
+function collectActions (key, node, actions = []) {
   if (!node) return actions
 
   var thisAction = null
@@ -43,12 +47,10 @@ export function collectActions (key, node, actions = [], recursing = false) {
     children = toPairs(node)
   }
 
-  const newActions = reduce(
-    (actions, [key, val]) => collectActions(key, val, actions, true),
+  return reduce(
+    (actions, [key, val]) => collectActions(key, val, actions),
     thisAction ? [thisAction].concat(actions) : actions
   )(children)
-
-  return recursing ? newActions : mergeDuplicates(newActions)
 }
 
 function mergeDuplicates (actions) {

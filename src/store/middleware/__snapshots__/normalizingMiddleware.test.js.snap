@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`collectActions produces a list of ADD actions from the payload's tree, leaf-first 1`] = `
+exports[`collectAndMergeActions produces a list of ADD actions from the payload's tree, leaf-first 1`] = `
 Array [
   Object {
     "payload": Object {

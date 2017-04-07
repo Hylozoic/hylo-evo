@@ -1,6 +1,5 @@
 import configureStore from 'redux-mock-store'
-import normalizingMiddleware, { collectActions
-} from './normalizingMiddleware'
+import normalizingMiddleware, { collectAndMergeActions } from './normalizingMiddleware'
 import testPayloads from './normalizingMiddleware.test.json'
 
 const payload = testPayloads['FETCH_POSTS for me']
@@ -17,9 +16,9 @@ it('Returns a function to handle action', () => {
   expect(actionHandler.length).toBe(1)
 })
 
-describe('collectActions', () => {
+describe('collectAndMergeActions', () => {
   it("produces a list of ADD actions from the payload's tree, leaf-first", () => {
-    const actions = collectActions('data', payload.data)
+    const actions = collectAndMergeActions('data', payload.data)
     expect(actions).toMatchSnapshot()
   })
 })
