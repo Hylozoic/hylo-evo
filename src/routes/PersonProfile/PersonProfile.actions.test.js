@@ -5,8 +5,8 @@ import promiseMiddleware from 'redux-promise'
 import graphqlMiddleware from 'store/middleware/graphql'
 import normalizingMiddleware from 'store/middleware/normalizingMiddleware'
 import { ADD_PERSON, FETCH_PERSON } from 'store/constants'
-import payload from './UserProfile.test.json'
-import { fetchPerson } from './UserProfile.actions'
+import payload from './PersonProfile.test.json'
+import { fetchPerson } from './PersonProfile.actions'
 
 const apiMiddleware = store => next => action => {
   const id = get('payload.api.params.variables.id', action)

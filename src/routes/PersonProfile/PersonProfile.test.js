@@ -1,16 +1,16 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 
-import UserProfile from './UserProfile'
-import payload from './UserProfile.test.json'
+import PersonProfile from './PersonProfile'
+import payload from './PersonProfile.test.json'
 
 it('Exists', () => {
-  const wrapper = shallow(<UserProfile />)
+  const wrapper = shallow(<PersonProfile />)
   expect(wrapper.find('<div>')).toBeTruthy()
 })
 
 it('Sets the username correctly', () => {
   const { person } = payload.data
-  const wrapper = shallow(<UserProfile id={person.id} person={person} />)
+  const wrapper = shallow(<PersonProfile id={person.id} person={person} />)
   expect(wrapper.find('h1').text()).toBe(person.name)
 })

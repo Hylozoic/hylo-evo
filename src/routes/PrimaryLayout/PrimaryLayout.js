@@ -1,4 +1,3 @@
-
 import React, { PropTypes, Component } from 'react'
 import { matchPath, Route } from 'react-router-dom'
 import cx from 'classnames'
@@ -9,7 +8,7 @@ import Sidebar from './components/Sidebar'
 import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
-import UserProfile from 'routes/UserProfile'
+import PersonProfile from 'routes/PersonProfile'
 import './PrimaryLayout.scss'
 
 export default class PrimaryLayout extends Component {
@@ -41,7 +40,7 @@ export default class PrimaryLayout extends Component {
           <Route path='/' exact render={() => <Feed {...{community, currentUser}} />} />
           <Route path='/c/:slug' render={({ match }) => <Feed {...{community, currentUser, match}} />} />
           <Route path='/events' component={Events} />
-          <Route path='/u/:id' component={UserProfile} />
+          <Route path='/p/:id' component={PersonProfile} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/' component={Sidebar} />
