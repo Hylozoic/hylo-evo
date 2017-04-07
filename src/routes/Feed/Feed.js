@@ -1,5 +1,5 @@
 import React from 'react'
-import './component.scss'
+import './Feed.scss'
 import PostCard from 'components/PostCard'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
@@ -14,6 +14,13 @@ export default class Feed extends React.Component {
 
   componentDidMount () {
     this.props.fetchPosts(this.props.slug)
+  }
+
+  componentDidUpdate (prevProps) {
+    if (this.props.slug === prevProps.slug) return
+    if (this.props.posts.length === 0) {
+      this.props.fetchPosts(this.props.slug)
+    }
   }
 
   fetchMorePosts () {

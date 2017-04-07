@@ -21,7 +21,8 @@ export const getPosts = slug => ormCreateSelector(orm, (session) => {
   .map(post => ({
     ...post.ref,
     creator: post.creator,
-    commenters: post.commenters.toModelArray()
+    commenters: post.commenters.toModelArray(),
+    communities: post.communities.toModelArray()
   }))
 })
 
@@ -35,7 +36,7 @@ export const getCommunity = slug => ormCreateSelector(orm, (session) => {
   return community
 })
 
-function mapStateToProps (state, { match, slug }) {
+export function mapStateToProps (state, { match, slug }) {
   slug = get('params.slug', match) || slug
   const community = getCommunity(slug)(state.orm)
   return {

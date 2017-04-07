@@ -37,7 +37,7 @@ export default function ormReducer (state = {}, action) {
 
     case a.FETCH_POSTS:
       const { id, posts } = payload.data.community
-      const community = Community.get({id})
+      const community = Community.withId(id)
       community.update({
         feedOrder: (community.feedOrder || []).concat(posts.map(f => f.id))
       })
@@ -48,7 +48,9 @@ export default function ormReducer (state = {}, action) {
 }
 
 function addEntity (payload) {
-  return model => model.hasId(payload.id) ? model.withId(payload.id).update(payload) : model.create(payload)
+  return model => model.hasId(payload.id)
+    ? model.withId(payload.id).update(payload)
+    : model.create(payload)
 }
 
 function deleteEntity (payload) {
