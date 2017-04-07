@@ -74,7 +74,7 @@
     "enzyme": "^2.7.1",
     "express": "^4.15.2",
     "faker": "^4.1.0",
-    "hylo-utils": "Hylozoic/hylo-utils#5e2685f",
+    "hylo-utils": "https://github.com/Hylozoic/hylo-utils",
     "immutable": "^3.8.1",
     "linkifyjs": "^2.1.4",
     "lodash": "^4.17.4",

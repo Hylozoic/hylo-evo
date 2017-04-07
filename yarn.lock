@@ -3193,6 +3193,17 @@ hylo-utils@Hylozoic/hylo-utils#5e2685f:
     pretty-date "^0.2.0"
     trunc-html "^1.1.2"
 
+"hylo-utils@https://github.com/Hylozoic/hylo-utils":
+  version "1.0.3"
+  resolved "https://github.com/Hylozoic/hylo-utils#5e2685f039294dc0c153422bd1cf200257b1abae"
+  dependencies:
+    cheerio "^0.22.0"
+    insane "^2.6.1"
+    linkifyjs "^2.1.4"
+    marked "^0.3.5"
+    pretty-date "^0.2.0"
+    trunc-html "^1.1.2"
+
 iconv-lite@0.4.13:
   version "0.4.13"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.13.tgz#1f88aba4ab0b1508e8312acc39345f36e992e2f2"
