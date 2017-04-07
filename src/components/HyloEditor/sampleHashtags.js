@@ -1,22 +1,24 @@
 import { fromJS } from 'immutable'
 
 const hashtags = fromJS([
-  {
-    id: 1,
-    subject: 'New Cool Feature'
-  },
-  {
-    id: 2,
-    subject: 'Bug'
-  },
-  {
-    id: 3,
-    subject: 'Improve Documentation'
-  },
-  {
-    id: 11,
-    subject: 'Upgrade Version'
-  }
+  {name: 'designer'},
+  {name: 'developer'},
+  {name: 'petitions'},
+  {name: 'freebies'},
+  {name: 'press'},
+  {name: 'inspiration'},
+  {name: 'vent'},
+  {name: 'questions'},
+  {name: 'progress'},
+  {name: 'announcements'},
+  {name: 'sustainable'},
+  {name: 'climate'},
+  {name: 'rally2017'},
+  {name: 'organics'},
+  {name: 'organicfoods'},
+  {name: 'onlyorganic'},
+  {name: 'vancouver'},
+  {name: 'photos'}
 ])
 
 export default hashtags

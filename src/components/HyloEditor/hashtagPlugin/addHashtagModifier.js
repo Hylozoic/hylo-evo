@@ -15,7 +15,7 @@ export default (editorState, hashtag) => {
   let hashtagReplacedContent = Modifier.replaceText(
     editorState.getCurrentContent(),
     hashtagTextSelection,
-    `#${hashtag.get('subject')}`,
+    `#${hashtag.get('name')}`
   )
 
   // If the hashtag is inserted at the end, a space is appended right after for
