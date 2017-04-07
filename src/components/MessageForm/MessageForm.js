@@ -1,7 +1,7 @@
 import React from 'react'
 import { throttle } from 'lodash'
 import { onEnterNoShift } from 'util/textInput'
-// import { getSocket, socketUrl } from '../../client/websockets'
+import { getSocket, socketUrl } from 'client/websockets'
 var { func, object, string, bool } = React.PropTypes
 import './MessageForm.scss'
 
@@ -39,7 +39,7 @@ export default class MessageForm extends React.Component {
   }
 
   componentDidMount () {
-    // this.socket = getSocket()
+    this.socket = getSocket()
   }
 
   focus () {

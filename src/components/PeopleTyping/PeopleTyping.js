@@ -1,7 +1,7 @@
 import React from 'react'
 import { each, keys, values } from 'lodash'
 import cx from 'classnames'
-//import { getSocket } from '../client/websockets'
+import { getSocket } from 'client/websockets'
 import { STARTED_TYPING_INTERVAL } from 'components/MessageForm/MessageForm'
 const { bool } = React.PropTypes
 import './PeopleTyping.scss'
@@ -22,8 +22,8 @@ export default class PeopleTyping extends React.Component {
   }
 
   componentDidMount () {
-    // this.socket = getSocket()
-    // this.socket.on('userTyping', this.userTyping.bind(this))
+    this.socket = getSocket()
+    this.socket.on('userTyping', this.userTyping.bind(this))
     this.clearTypingInterval = window.setInterval(this.clearTyping.bind(this), 1000)
   }
 
