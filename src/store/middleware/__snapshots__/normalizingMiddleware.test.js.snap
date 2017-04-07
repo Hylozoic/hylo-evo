@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`collectAndMergeActions produces a list of ADD actions from the payload's tree, leaf-first 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+      "id": "46816",
+      "name": "Rich",
+    },
+    "type": "ADD_PERSON",
+  },
+  Object {
+    "payload": Object {
+      "createdAt": "Fri Mar 24 2017 10:50:41 GMT+1300 (NZDT)",
+      "creator": "46816",
+      "id": "2",
+      "text": "<p>Another comment.</p>",
+    },
+    "type": "ADD_COMMENT",
+  },
+  Object {
+    "payload": Object {
+      "id": "1836",
+      "members": Array [
+        "99",
+      ],
+      "name": "Wombats",
+    },
+    "type": "ADD_COMMUNITY",
+  },
+  Object {
+    "payload": Object {
+      "comments": Array [
+        "2",
+      ],
+      "commentsTotal": "1",
+      "communities": Array [
+        "1836",
+      ],
+      "communitiesTotal": "1",
+      "createdAt": "Sat Mar 18 2017 10:49:43 GMT+1300 (NZDT)",
+      "creator": "46816",
+      "details": "<p>So true.</p>",
+      "endsAt": null,
+      "followers": Array [
+        "46816",
+      ],
+      "followersTotal": "1",
+      "fulfilledAt": null,
+      "id": "30003",
+      "startsAt": null,
+      "title": "Yup",
+      "type": null,
+    },
+    "type": "ADD_POST",
+  },
+  Object {
+    "payload": Object {
+      "createdAt": "Fri Mar 24 2017 10:55:41 GMT+1300 (NZDT)",
+      "creator": "46816",
+      "id": "1",
+      "text": "<p>Here's a comment!</p>",
+    },
+    "type": "ADD_COMMENT",
+  },
+  Object {
+    "payload": Object {
+      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+      "id": "99",
+      "name": "Flargle Argleson",
+    },
+    "type": "ADD_PERSON",
+  },
+  Object {
+    "payload": Object {
+      "comments": Array [
+        "1",
+      ],
+      "commentsTotal": "1",
+      "communities": Array [
+        "1836",
+      ],
+      "communitiesTotal": "1",
+      "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+      "creator": "46816",
+      "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+<p></p>
+<p></p>",
+      "endsAt": null,
+      "followers": Array [
+        "46816",
+      ],
+      "followersTotal": "1",
+      "fulfilledAt": null,
+      "id": "30002",
+      "startsAt": null,
+      "title": "Hello",
+      "type": null,
+    },
+    "type": "ADD_POST",
+  },
+]
+`;
