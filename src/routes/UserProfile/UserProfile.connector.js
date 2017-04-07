@@ -8,7 +8,11 @@ import orm from 'store/models'
 export function getPerson (id) {
   return ormCreateSelector(orm, session => {
     if (session.Person.hasId(id)) {
-      return session.Person.withId(id).withRefs
+      const person = session.Person.withId(id)
+      return {
+        ...person.ref,
+        posts: person.postsCreated.toRefArray()
+      }
     }
     return {
       name: ''

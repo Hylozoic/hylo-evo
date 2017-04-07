@@ -4,12 +4,6 @@ import './UserProfile.scss'
 const { any, array, string, shape } = React.PropTypes
 
 export default class UserProfile extends React.Component {
-  static defaultProps = {
-    person: {
-      name: ''
-    }
-  }
-
   static propTypes = {
     id: any,
     person: shape({
