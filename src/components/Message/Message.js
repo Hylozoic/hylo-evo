@@ -2,7 +2,10 @@ import React from 'react'
 import cx from 'classnames'
 import Avatar from 'components/Avatar'
 import { personUrl } from 'util'
-import { humanDate, present } from 'util/text'
+// import { humanDate, present } from 'util/text'
+// TODO: fix these two functions to be proper from import
+const humanDate = (text) => text
+const present = (text) => text
 import { sanitize } from 'hylo-utils/text'
 import './Message.scss'
 

@@ -17,7 +17,7 @@ export default function TopNav ({ community, currentUser, logout, toggleCommunit
       </div>
       <div styleName='navIcons'>
         <Link to='/' styleName='navIcon'><Icon name='Search' styleName='icon' /></Link>
-        <Link to='/' styleName='navIcon'><Icon name='Messages' styleName='icon' /></Link>
+        <Link to='/messages' styleName='navIcon'><Icon name='Messages' styleName='icon' /></Link>
         <Link to='/' styleName='navIcon'><Icon name='Notifications' styleName='icon' /></Link>
         <Dropdown styleName='navIcon dropdown' triangle
           toggleChildren={<RoundImage url={currentUser.avatarUrl} small />}>

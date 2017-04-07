@@ -5,15 +5,16 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { filter, sortBy } from 'lodash'
 import { get, map, min, max } from 'lodash/fp'
-const { array, bool, func, object } = React.PropTypes
+const { array, bool, func, object, string } = React.PropTypes
 import MessageSection from 'components/MessageSection'
 import MessageForm from 'components/MessageForm'
 import PeopleTyping from 'components/PeopleTyping'
-//import { getSocket, socketUrl } from '../../client/websockets'
+import { getSocket, socketUrl } from 'client/websockets'
 import './Thread.scss'
 
 export default class Thread extends React.Component {
   static propTypes = {
+    id: string,
     currentUser: object,
     thread: object,
     messages: array,
@@ -30,6 +31,7 @@ export default class Thread extends React.Component {
   }
 
   setupForThread () {
+    return
     const { thread: { id }, onThreadPage } = this.props
     onThreadPage()
     if (this.socket) {
@@ -53,7 +55,7 @@ export default class Thread extends React.Component {
   }
 
   componentDidMount () {
-    //this.socket = getSocket()
+    this.socket = getSocket()
     this.setupForThread()
   }
 
@@ -93,7 +95,7 @@ export default class Thread extends React.Component {
       .then(() => this.refs.messageSection.scrollToMessage(beforeId))
     }
     const messages = sortBy(this.props.messages || [], 'created_at')
-
+    return <div>A Thread!</div>
     return <div className='thread'>
       <Header thread={thread} />
       <MessageSection {...{messages, pending}} thread={thread}

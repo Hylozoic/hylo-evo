@@ -1,4 +1,5 @@
 import React from 'react'
+import visibility from 'visibility'
 import { throttle, isEmpty, maxBy } from 'lodash'
 import { get } from 'lodash/fp'
 const { array, bool, func, object } = React.PropTypes
@@ -53,7 +54,7 @@ export default class MessageSection extends React.Component {
   }
 
   componentDidMount () {
-    this.visibility = require('visibility')()
+    this.visibility = visibility()
     this.scrollToBottom()
   }
 

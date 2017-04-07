@@ -1,1 +1,106 @@
-.exampleName { /* !empty */ }
+$thread-list-width: 392px;
+$header-height: 80px;
+$header-vertical-padding: 19px;
+$header-horizontal-padding: 24px;
+$light-border: 1px solid $color-cape-cod-10;
+$search-vertical-padding: 11px;
+$search-horizontal-padding: 24px;
+$thread-height: 105px;
+$thread-padding: 16px;
+$thread-avatars-width: 56px;
+$names-margin-bottom: 4px;
+$thread-text-width: 200px;
+$counteract-badge-styling: 13px;
+$active-thread-border-width: 4px;
+
+.thread-list {
+  width: $thread-list-width;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.header {
+  height: $header-height;
+  padding: $header-vertical-padding $header-horizontal-padding;
+  border-bottom: $light-border;
+}
+
+.header-text {
+  composes: hdr-headline from 'css/typography.scss';
+  padding: 6px 0;
+}
+
+.new-message {
+  float: right;
+}
+
+.search {
+  padding: $search-vertical-padding $search-horizontal-padding;
+  border-bottom: $light-border;
+}
+
+.list {
+  flex: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.list-item {
+  position: relative;
+  width: 100%;
+  height: $thread-height;
+  margin: 0;
+  border-bottom: $light-border;
+
+  a {
+    display: flex;
+    padding: $thread-padding;
+    height: 100%;
+
+    &:hover, &:active, &:focus, &:visited {
+      text-decoration: none;
+    }
+  }
+}
+
+.active-thread {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-left: $active-thread-border-width solid $color-caribbean-green;
+}
+
+.thread-avatars {
+  width: $thread-avatars-width;
+}
+
+.li-center-content {
+  width: $thread-text-width;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.thread-names {
+  composes: cards from 'css/typography.scss';
+  margin-bottom: $names-margin-bottom;
+}
+
+.thread-message-text {
+  composes: bdy-lt-sm from 'css/typography.scss';
+}
+
+.li-right-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.message-time {
+  composes: timestamp from 'css/typography.scss'
+}

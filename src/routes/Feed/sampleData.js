@@ -35,7 +35,7 @@ const rndType = () => faker.random.arrayElement(['offer', 'request', 'discussion
 
 const maybe = value => faker.random.boolean() ? value : null
 
-const rndPerson = () => {
+export const rndPerson = () => {
   const person = {
     id: faker.random.number(),
     firstName: faker.name.firstName(),

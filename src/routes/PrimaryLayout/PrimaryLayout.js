@@ -56,8 +56,8 @@ export default class PrimaryLayout extends Component {
           <Route path='/events/:eventId' exact component={EventDetail} />
         </div>
       </div>
-      <Route path='/messages' component={Messages} />
-      <Route path='/messages/new' component={Messages} />
+      <Route path='/messages' exact component={Messages} />
+      <Route path='/messages/new' exact component={Messages} />
       <Route path='/t/:threadId' component={Messages} />
     </div>
   }
