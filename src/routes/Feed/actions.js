@@ -7,7 +7,11 @@ export function fetchPosts (slug, opts = {}) {
       query: `query ($slug: String, $first: Int, $cursor: ID) {
         community(slug: $slug) {
           id
+          slug
           name
+          avatarUrl
+          bannerUrl
+          postCount
           posts(first: $first, cursor: $cursor, order: "desc") {
             id
             title
@@ -42,7 +46,7 @@ export function fetchPosts (slug, opts = {}) {
       }`,
       variables: {
         slug,
-        first: opts.first || 10,
+        first: opts.first || 20,
         cursor: opts.cursor
       }
     }

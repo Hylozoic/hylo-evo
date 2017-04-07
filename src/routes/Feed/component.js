@@ -17,7 +17,11 @@ export default class Feed extends React.Component {
   }
 
   fetchMorePosts () {
-    if (this.props.pending) return
+    const { pending, posts, postCount } = this.props
+    if (pending ||
+      posts.length === 0 ||
+      posts.length >= postCount) return
+
     this.props.fetchPosts(this.props.slug, {
       cursor: this.props.posts.slice(-1)[0].id
     })
