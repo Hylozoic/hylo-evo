@@ -1,5 +1,6 @@
 import {
-  compact, each, keys, reduce, snakeCase, toPairs, uniqWith, values
+  // uniqWith,
+  compact, each, keys, reduce, snakeCase, toPairs, values
 } from 'lodash/fp'
 
 import { FETCH_CURRENT_USER, FETCH_POSTS, FETCH_FEED_ITEMS } from '../constants'
@@ -20,7 +21,7 @@ export default function normalizingMiddleware ({ dispatch }) {
         case FETCH_FEED_ITEMS:
         case FETCH_CURRENT_USER:
         case FETCH_POSTS:
-          const actions = collectActions('data', payload.data)
+          const actions = compact(collectActions('data', payload.data))
           each(dispatch, actions)
           break
       }
@@ -46,12 +47,16 @@ function collectActions (key, node, actions = []) {
   const newActions = reduceWithKey((actions, [key, val]) => {
     return collectActions(key, val, actions)
   }, [thisAction, ...actions])(children)
-  return uniqWith(isEqualAction, compact(newActions))
+  return newActions
 }
 
+/*
 function isEqualAction (a, b) {
+  // not using this now for now as removing the dupes is causing a bug.
+  // (they're not always actually dupes)
   return a.payload.id === b.payload.id && a.type === b.type
 }
+*/
 
 function makeAction (key, node) {
   const relation = flattenedRelations[key]

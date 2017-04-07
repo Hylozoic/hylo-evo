@@ -1,10 +1,12 @@
 import { attr, fk, Model } from 'redux-orm'
 
-export default class FeedItem extends Model {
+const FeedItem = Model.createClass({
   toString () {
     return `Post: ${this.name}`
   }
-}
+})
+
+export default FeedItem
 
 FeedItem.modelName = 'FeedItem'
 FeedItem.fields = {

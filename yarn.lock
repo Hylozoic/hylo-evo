@@ -2140,10 +2140,6 @@ enhanced-resolve@^3.0.0:
     object-assign "^4.0.1"
     tapable "^0.2.5"
 
-ent@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/ent/-/ent-2.2.0.tgz#e964219325a21d05f44466a2f686ed6ce5f5dd1d"
-
 entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
@@ -3186,12 +3182,27 @@ https-browserify@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
 
-"hylo-utils@https://github.com/Hylozoic/hylo-utils.git":
-  version "1.0.2"
-  resolved "https://github.com/Hylozoic/hylo-utils.git#844c29dbf3cf1c1b719dd083f747c6b49f0ea8a3"
+hylo-utils@Hylozoic/hylo-utils#5e2685f:
+  version "1.0.3"
+  resolved "https://codeload.github.com/Hylozoic/hylo-utils/tar.gz/5e2685f"
   dependencies:
+    cheerio "^0.22.0"
     insane "^2.6.1"
+    linkifyjs "^2.1.4"
     marked "^0.3.5"
+    pretty-date "^0.2.0"
+    trunc-html "^1.1.2"
+
+"hylo-utils@https://github.com/Hylozoic/hylo-utils":
+  version "1.0.3"
+  resolved "https://github.com/Hylozoic/hylo-utils#5e2685f039294dc0c153422bd1cf200257b1abae"
+  dependencies:
+    cheerio "^0.22.0"
+    insane "^2.6.1"
+    linkifyjs "^2.1.4"
+    marked "^0.3.5"
+    pretty-date "^0.2.0"
+    trunc-html "^1.1.2"
 
 iconv-lite@0.4.13:
   version "0.4.13"
@@ -3286,16 +3297,9 @@ inquirer@^0.12.0:
     strip-ansi "^3.0.0"
     through "^2.3.6"
 
-insane@2.6.1:
+insane@2.6.1, insane@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/insane/-/insane-2.6.1.tgz#c7dcae7b51c20346883b71078fad6ce0483c198f"
-  dependencies:
-    assignment "2.0.0"
-    he "0.5.0"
-
-insane@^2.6.1:
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/insane/-/insane-2.6.2.tgz#c2ab68bb3e006ab451560d1b446917329c0a8120"
   dependencies:
     assignment "2.0.0"
     he "0.5.0"
@@ -5830,9 +5834,9 @@ redux-mock-store@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/redux-mock-store/-/redux-mock-store-1.2.2.tgz#38007dc38f12ca8d965c7521afee5ccacc234d03"
 
-redux-orm@^0.9.0-rc.3:
+redux-orm@Hylozoic/redux-orm#model-createClass-dist:
   version "0.9.0-rc.3"
-  resolved "https://registry.yarnpkg.com/redux-orm/-/redux-orm-0.9.0-rc.3.tgz#48e3f6984d104e09734ad6a006376ee791841682"
+  resolved "https://codeload.github.com/Hylozoic/redux-orm/tar.gz/ef12967163e79b492df76449874c42fd01559459"
   dependencies:
     babel-runtime "^6.6.1"
     immutable-ops "^0.5.2"

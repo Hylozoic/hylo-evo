@@ -1,24 +1,26 @@
 import { attr, fk, many, Model } from 'redux-orm'
 
-export class PostFollower extends Model {}
+export const PostFollower = Model.createClass({})
 PostFollower.modelName = 'PostFollower'
 PostFollower.fields = {
   post: fk('Post', 'postfollowers'),
   follower: fk('Person', 'postfollowers')
 }
 
-export class PostCommenter extends Model {}
+export const PostCommenter = Model.createClass({})
 PostCommenter.modelName = 'PostCommenter'
 PostCommenter.fields = {
   post: fk('Post', 'postcommenters'),
   commenter: fk('Person', 'postcommenters')
 }
 
-export default class Post extends Model {
+const Post = Model.createClass({
   toString () {
     return `Post: ${this.name}`
   }
-}
+})
+
+export default Post
 
 Post.modelName = 'Post'
 Post.fields = {

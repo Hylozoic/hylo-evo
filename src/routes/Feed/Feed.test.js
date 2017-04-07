@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Feed from './component'
+import Feed from './Feed'
 import TabBar from './TabBar'
 
 describe('Feed', () => {
