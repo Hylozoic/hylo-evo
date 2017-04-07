@@ -2,25 +2,26 @@ import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router-dom'
 import { isEmpty } from 'lodash/fp'
 import './PostDetail.scss'
-const { object, string } = PropTypes
+const { object, string, func } = PropTypes
 import { PostHeader, PostImage, PostBody, PostFooter } from 'components/PostCard/component'
-import { tagUrl } from 'util/index'
+import { tagUrl, communityUrl } from 'util/index'
 
 export default class PostDetail extends Component {
   static propTypes = {
     post: object,
-    slug: string
+    slug: string,
+    navigate: func
   }
 
   render () {
-    const { post, slug } = this.props
+    const { post, slug, navigate } = this.props
     return <div styleName='post'>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}
         type={post.type}
         context={post.context}
         communities={post.communities}
-        close={() => console.log('close')}
+        close={() => navigate(communityUrl(slug))}
         styleName='header' />
       <PostImage imageUrl={post.imageUrl} styleName='image' />
       <PostTags tags={post.tags} />
@@ -29,7 +30,8 @@ export default class PostDetail extends Component {
         details={post.details}
         linkPreview={post.linkPreview}
         slug={slug}
-        expanded />
+        expanded
+        styleName='body' />
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
@@ -42,7 +44,7 @@ function PostTags ({ tags, slug }) {
   if (isEmpty(tags)) return null
 
   return <div styleName='tags'>
-    {tags.map(tag => <Link styleName='tag' to={tagUrl(tag, slug)}>
+    {tags.map(tag => <Link styleName='tag' to={tagUrl(tag, slug)} key={tag}>
       #{tag}
     </Link>)}
   </div>

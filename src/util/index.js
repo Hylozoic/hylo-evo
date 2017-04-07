@@ -26,6 +26,10 @@ export function postUrl (id, slug) {
   }
 }
 
+export function communityUrl (slug) {
+  return `/c/${slug}`
+}
+
 export const findChildLink = element => {
   if (element.nodeName === 'A') return element
   if (element.hasChildNodes()) {

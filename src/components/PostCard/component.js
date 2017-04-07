@@ -91,7 +91,7 @@ export const PostImage = ({ imageUrl, className }) => {
 
 const maxDetailsLength = 144
 
-export const PostBody = ({ id, title, details, imageUrl, linkPreview, slug, expanded }) => {
+export const PostBody = ({ id, title, details, imageUrl, linkPreview, slug, expanded, className }) => {
   // TODO: Present details as HTML and sanitize
   let presentedDetails = present(sanitize(details), {slug})
   const shouldTruncate = !expanded && textLength(presentedDetails) > maxDetailsLength
@@ -100,7 +100,7 @@ export const PostBody = ({ id, title, details, imageUrl, linkPreview, slug, expa
   }
   if (presentedDetails) presentedDetails = appendInP(presentedDetails, '&nbsp;')
 
-  return <div styleName='body'>
+  return <div styleName='body' className={className}>
     <div styleName='title' className='hdr-headline'>{title}</div>
     {presentedDetails && <div styleName='description' dangerouslySetInnerHTML={{__html: presentedDetails}} />}
     {linkPreview && <LinkPreview {...linkPreview} />}
