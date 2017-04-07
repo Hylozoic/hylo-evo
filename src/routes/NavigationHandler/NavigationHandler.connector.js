@@ -1,10 +1,14 @@
 import { connect } from 'react-redux'
-import { navigate } from 'routes/NavigationHandler/store'
+import { resetNavigation } from './store'
 
 export function mapStateToProps (state, props) {
-  return {}
+  return {
+    to: state.navigation
+  }
 }
 
-export const mapDispatchToProps = { navigate }
+export const mapDispatchToProps = {
+  resetNavigation
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)

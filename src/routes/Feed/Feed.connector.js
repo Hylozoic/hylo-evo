@@ -37,6 +37,8 @@ export const getCommunity = slug => ormCreateSelector(orm, (session) => {
 })
 
 export function mapStateToProps (state, { match, slug }) {
+  // passing slug directly as a prop here is just a temporary convenience for
+  // displaying something in the '/' route
   slug = get('params.slug', match) || slug
   const community = getCommunity(slug)(state.orm)
   return {
