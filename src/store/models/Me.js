@@ -1,10 +1,12 @@
 import { attr, many, Model } from 'redux-orm'
 
-export default class Me extends Model {
+const Me = Model.createClass({
   toString () {
     return `Me: ${this.name}`
   }
-}
+})
+
+export default Me
 
 Me.modelName = 'Me'
 Me.fields = {

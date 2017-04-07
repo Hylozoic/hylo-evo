@@ -1,10 +1,12 @@
 import { attr, many, Model } from 'redux-orm'
 
-export default class Community extends Model {
+const Community = Model.createClass({
   toString () {
     return `Community: ${this.name}`
   }
-}
+})
+
+export default Community
 
 Community.modelName = 'Community'
 
@@ -14,5 +16,6 @@ Community.fields = {
   members: many('Person'),
   feedItems: many('FeedItem'),
   posts: many('Post'),
+  postCount: attr(),
   feedOrder: attr()
 }

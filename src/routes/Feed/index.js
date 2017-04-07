@@ -1,3 +1,3 @@
-import component from './component'
-import connector from './connector'
+import component from './Feed'
+import connector from './Feed.connector'
 export default connector(component)
