@@ -14,10 +14,16 @@
             "id": "46816",
             "name": "Rich",
             "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
-          }
+          },
+          "communities": [
+            {
+              "id": "1",
+              "name": "Wombats"
+            }
+          ]
         }
       ],
-      "postsTotal": null
+      "postsTotal": 1
     }
   }
 }

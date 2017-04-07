@@ -11,7 +11,10 @@ export function getPerson (id) {
       const person = session.Person.withId(id)
       return {
         ...person.ref,
-        posts: person.postsCreated.toRefArray()
+        posts: person.postsCreated.toModelArray().map(post => ({
+          ...post.ref,
+          communities: post.communities.toRefArray()
+        }))
       }
     }
     return null
