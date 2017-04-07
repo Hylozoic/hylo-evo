@@ -3,16 +3,16 @@ import React from 'react'
 import './PersonProfile.scss'
 import RoundImage from 'components/RoundImage'
 
-const { any, array, string, shape } = React.PropTypes
+const { any, arrayOf, object, string, shape } = React.PropTypes
 
 export default class PersonProfile extends React.Component {
   static propTypes = {
     id: any,
     person: shape({
-      id: any,
+      id: any.isRequired,
       name: string,
       avatarUrl: string,
-      posts: array,
+      posts: arrayOf(object),
       postsTotal: any
     })
   }

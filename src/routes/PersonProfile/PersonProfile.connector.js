@@ -14,17 +14,20 @@ export function getPerson (id) {
         posts: person.postsCreated.toRefArray()
       }
     }
-    return {
-      name: ''
-    }
+    return null
   })
 }
 
 export function mapStateToProps ({ orm }, { match }) {
+  const defaultPerson = {
+    name: '',
+    avatarUrl: '',
+    bannerUrl: ''
+  }
   const id = get('params.id', match)
   return {
     id,
-    person: getPerson(id)(orm)
+    person: getPerson(id)(orm) || defaultPerson
   }
 }
 
