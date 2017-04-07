@@ -8,7 +8,7 @@ describe('mapStateToProps', () => {
 
   beforeEach(() => {
     const session = orm.session(orm.getEmptyState())
-    session.Community.create({id: '1', slug: 'foo', feedOrder: ['1', '3', '2']})
+    session.Community.create({id: '1', slug: 'foo', feedOrder: ['1', '3', '2'], postCount: 3})
     times(i => {
       session.Post.create({id: i.toString(), communities: ['1']})
     }, 5)
@@ -22,16 +22,22 @@ describe('mapStateToProps', () => {
     const expected = {
       slug: 'bar',
       posts: [],
-      pending: undefined
+      pending: undefined,
+      postCount: undefined,
+      community: {}
     }
     expect(mapStateToProps(state, {match: {params: {slug: 'bar'}}}))
     .toEqual(expected)
   })
 
-  it('returns the correct posts in the correct order', () => {
+  it('returns the community, postCount, and correct posts in the correct order', () => {
     const expected = {
       slug: 'foo',
-      pending: undefined
+      pending: undefined,
+      postCount: 3,
+      community: {
+        slug: 'foo'
+      }
     }
 
     const result = mapStateToProps(state, {match: {params: {slug: 'foo'}}})
