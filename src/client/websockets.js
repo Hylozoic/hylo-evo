@@ -12,14 +12,11 @@ if (isClient) {
   io.sails.environment = environment
   io.sails.reconnection = true
   socket = io.socket
+} else {
+  const noop = () => {}
+  socket = {get: noop, post: noop, on: noop, off: noop}
 }
 
 export const socketUrl = path => `${socketHost}/${path.replace(/^\//, '')}`
 
-export const getSocket = () => {
-  if (!isClient) {
-    const noop = () => {}
-    return {get: noop, post: noop, on: noop, off: noop}
-  }
-  return socket
-}
+export const getSocket = () => socket
