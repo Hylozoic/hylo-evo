@@ -4588,11 +4588,11 @@ oauth-sign@~0.8.1:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"
 
-object-assign@4.1.0, object-assign@^4.1.0:
+object-assign@4.1.0, object-assign@^4.0.1, object-assign@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.0.tgz#7a3b3d0e98063d43f4c03f2e8ae6cd51a86883a0"
 
-object-assign@^4.0.1, object-assign@^4.1.1:
+object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
@@ -5781,9 +5781,9 @@ redux-mock-store@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/redux-mock-store/-/redux-mock-store-1.2.2.tgz#38007dc38f12ca8d965c7521afee5ccacc234d03"
 
-redux-orm@^0.9.0-rc.3:
+redux-orm@Hylozoic/redux-orm#model-createClass-dist:
   version "0.9.0-rc.3"
-  resolved "https://registry.yarnpkg.com/redux-orm/-/redux-orm-0.9.0-rc.3.tgz#48e3f6984d104e09734ad6a006376ee791841682"
+  resolved "https://codeload.github.com/Hylozoic/redux-orm/tar.gz/ef12967163e79b492df76449874c42fd01559459"
   dependencies:
     babel-runtime "^6.6.1"
     immutable-ops "^0.5.2"

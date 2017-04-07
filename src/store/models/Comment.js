@@ -1,10 +1,18 @@
 import { attr, fk, Model } from 'redux-orm'
 
-export default class Comment extends Model {
+const Comment = Model.createClass({
   toString () {
     return `Comment: ${this.name}`
   }
-}
+})
+
+export default Comment
+
+// export default class Comment extends Model {
+//   toString () {
+//     return `Comment: ${this.name}`
+//   }
+// }
 
 Comment.modelName = 'Comment'
 
