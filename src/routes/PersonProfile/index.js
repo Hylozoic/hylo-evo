@@ -1,3 +1,3 @@
-import UserProfile from './UserProfile'
-import connector from './UserProfile.connector'
-export default connector(UserProfile)
+import PersonProfile from './PersonProfile'
+import connector from './PersonProfile.connector'
+export default connector(PersonProfile)

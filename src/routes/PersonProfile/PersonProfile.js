@@ -1,11 +1,11 @@
 import React from 'react'
 
-import './UserProfile.scss'
+import './PersonProfile.scss'
 import RoundImage from 'components/RoundImage'
 
 const { any, array, string, shape } = React.PropTypes
 
-export default class UserProfile extends React.Component {
+export default class PersonProfile extends React.Component {
   static propTypes = {
     id: any,
     person: shape({
