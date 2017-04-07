@@ -3182,12 +3182,16 @@ https-browserify@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
 
-"hylo-utils@https://github.com/Hylozoic/hylo-utils.git":
-  version "1.0.2"
-  resolved "https://github.com/Hylozoic/hylo-utils.git#844c29dbf3cf1c1b719dd083f747c6b49f0ea8a3"
+hylo-utils@Hylozoic/hylo-utils#5e2685f:
+  version "1.0.3"
+  resolved "https://codeload.github.com/Hylozoic/hylo-utils/tar.gz/5e2685f"
   dependencies:
+    cheerio "^0.22.0"
     insane "^2.6.1"
+    linkifyjs "^2.1.4"
     marked "^0.3.5"
+    pretty-date "^0.2.0"
+    trunc-html "^1.1.2"
 
 iconv-lite@0.4.13:
   version "0.4.13"
@@ -3282,16 +3286,9 @@ inquirer@^0.12.0:
     strip-ansi "^3.0.0"
     through "^2.3.6"
 
-insane@2.6.1:
+insane@2.6.1, insane@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/insane/-/insane-2.6.1.tgz#c7dcae7b51c20346883b71078fad6ce0483c198f"
-  dependencies:
-    assignment "2.0.0"
-    he "0.5.0"
-
-insane@^2.6.1:
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/insane/-/insane-2.6.2.tgz#c2ab68bb3e006ab451560d1b446917329c0a8120"
   dependencies:
     assignment "2.0.0"
     he "0.5.0"
