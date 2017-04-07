@@ -1,7 +1,9 @@
 import configureStore from 'redux-mock-store'
+import normalizingMiddleware, { collectActions
+} from './normalizingMiddleware'
+import testPayloads from './normalizingMiddleware.test.json'
 
-import normalizingMiddleware from './normalizingMiddleware'
-import payload from './normalizingMiddleware.test.json'
+const payload = testPayloads['FETCH_POSTS for me']
 
 it('Returns a function to handle next', () => {
   const nextHandler = normalizingMiddleware({ action: 'ADD_POST' })
@@ -13,6 +15,13 @@ it('Returns a function to handle action', () => {
   const actionHandler = normalizingMiddleware({ action: 'ADD_POST' })()
   expect(typeof actionHandler).toBe('function')
   expect(actionHandler.length).toBe(1)
+})
+
+describe('collectActions', () => {
+  it("produces a list of ADD actions from the payload's tree, leaf-first", () => {
+    const actions = collectActions('data', payload.data)
+    expect(actions).toMatchSnapshot()
+  })
 })
 
 describe('Actions:', () => {
@@ -39,7 +48,7 @@ describe('Actions:', () => {
     it('Dispatches ADD_POST when payload includes a post', () => {
       store.dispatch({
         type: 'FETCH_POSTS',
-        payload: payload.FETCH_POSTS
+        payload
       })
       const actual = store.getActions().find(a => a.type === 'ADD_POST')
       expect(actual).toBeTruthy()
@@ -55,7 +64,7 @@ describe('Actions:', () => {
     })
 
     it('Does not dispatch ADD_COMMENTS when no comment is present', () => {
-      const posts = payload.FETCH_POSTS.data.me.posts.map(p => ({ ...p, comments: [] }))
+      const posts = payload.data.me.posts.map(p => ({ ...p, comments: [] }))
       store.dispatch({
         type: 'FETCH_POSTS',
         payload: { data: { me: { posts } } }
@@ -65,7 +74,7 @@ describe('Actions:', () => {
     })
 
     it('Does not dispatch ADD_COMMUNITY when no community is present', () => {
-      const posts = payload.FETCH_POSTS.data.me.posts.map(p => ({ ...p, communities: [] }))
+      const posts = payload.data.me.posts.map(p => ({ ...p, communities: [] }))
       store.dispatch({
         type: 'FETCH_POSTS',
         payload: { data: { me: { posts } } }
@@ -74,11 +83,10 @@ describe('Actions:', () => {
       expect(actual).toBe(0)
     })
 
-    it.skip('Dispatches correct number of ADD_PERSON actions', () => {
-      // skipping this until we figure out the right thing to do with duplicates in the payload
+    it('Dispatches correct number of ADD_PERSON actions', () => {
       store.dispatch({
         type: 'FETCH_POSTS',
-        payload: payload.FETCH_POSTS
+        payload: payload
       })
       // Two people in the test data
       const actual = store.getActions().filter(a => a.type === 'ADD_PERSON').length
@@ -86,7 +94,7 @@ describe('Actions:', () => {
     })
 
     it('Does not dispatch ADD_PERSON when no person is present', () => {
-      const posts = payload.FETCH_POSTS.data.me.posts.map(({ id, name }) => ({ id, name }))
+      const posts = payload.data.me.posts.map(({ id, name }) => ({ id, name }))
       store.dispatch({
         type: 'FETCH_POSTS',
         payload: { data: { me: { posts } } }
@@ -96,10 +104,13 @@ describe('Actions:', () => {
     })
 
     it('Has the correct payload', () => {
-      const withSinglePost = { ...payload.FETCH_POSTS }
-      withSinglePost.data.me.posts = [withSinglePost.data.me.posts.find(
-        post => post.id === '30002'
-      )]
+      const withSinglePost = {
+        data: {
+          me: {
+            posts: payload.data.me.posts.filter(p => p.id === '30002')
+          }
+        }
+      }
       store.dispatch({
         type: 'FETCH_POSTS',
         payload: withSinglePost
@@ -124,22 +135,24 @@ describe('Actions:', () => {
       const actual = store.getActions().filter(a => a.type === 'ADD_POST')[0].payload
       expect(actual).toEqual(expected)
     })
-  })
 
-  describe('FETCH_FEED_ITEMS', () => {
-    it('Has the correct payload', () => {
+    it('merges data from different actions related to the same object', () => {
       store.dispatch({
-        type: 'FETCH_FEED_ITEMS',
-        payload: payload.FETCH_FEED_ITEMS
+        type: 'FETCH_POSTS',
+        payload: testPayloads['FETCH_POSTS for community']
       })
-      const expected = {
-        creator: '12345',
-        details: '<p>This is a FeedItem.</p>',
-        id: '30002',
-        title: 'Hello'
-      }
-      const actual = store.getActions().filter(a => a.type === 'ADD_POST')[0].payload
-      expect(actual).toEqual(expected)
+
+      const action = store.getActions().find(a => a.type === 'ADD_COMMUNITY')
+      expect(action.payload).toEqual({
+        id: '1',
+        name: 'foo',
+        slug: 'foo',
+        bannerUrl: 'http://foo.com/banner.png',
+        postCount: 21,
+        avatarUrl: 'http://foo.com/avatar.png',
+        memberCount: 42,
+        posts: ['2', '3']
+      })
     })
   })
 })

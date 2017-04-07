@@ -1,5 +1,5 @@
 {
-  "FETCH_POSTS": {
+  "FETCH_POSTS for me": {
     "data": {
       "me": {
         "posts": [
@@ -100,31 +100,40 @@
       }
     }
   },
-  "FETCH_FEED_ITEMS": {
+
+  "FETCH_POSTS for community": {
     "data": {
       "community": {
-        "name": "Wombats",
-        "createdAt": "Sat Mar 18 2017 10:47:05 GMT+1300 (NZDT)",
-        "members": [
+        "id": "1",
+        "name": "foo",
+        "slug": "foo",
+        "bannerUrl": "http://foo.com/banner.png",
+        "postCount": 21,
+        "posts": [
           {
-            "id": "46816",
-            "name": "Rich",
-            "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
-          }
-        ],
-        "memberCount": 1,
-        "feedItems": [
+            "id": "2",
+            "title": "Hello!",
+            "communities": [
+              {
+                "id": "1",
+                "name": "foo",
+                "slug": "foo",
+                "avatarUrl": "http://foo.com/avatar.png"
+              }
+            ]
+          },
           {
-            "type": "post",
-            "post": {
-              "id": "30002",
-              "creator": {
-                "id": "12345",
-                "name": "Wombat McWombatson"
-              },
-              "title": "Hello",
-              "details": "<p>This is a FeedItem.</p>"
-            }
+            "id": "3",
+            "title": "Hello Again!",
+            "communities": [
+              {
+                "id": "1",
+                "name": "foo",
+                "slug": "foo",
+                "avatarUrl": "http://foo.com/avatar.png",
+                "memberCount": 42
+              }
+            ]
           }
         ]
       }
