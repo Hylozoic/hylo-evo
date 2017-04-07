@@ -6,7 +6,7 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
-import { personUrl, bgImageStyle } from 'util/index'
+import { personUrl, postUrl, bgImageStyle } from 'util/index'
 import { sanitize, present, textLength, truncate, appendInP, humanDate } from 'hylo-utils/text'
 import { parse } from 'url'
 import './component.scss'
@@ -15,10 +15,11 @@ const { shape, any, object, string, func, array } = React.PropTypes
 
 export default class PostCard extends React.Component {
   render () {
-    const { post, className } = this.props
+    const { post, className, navigate } = this.props
     const slug = post.communities.length > 0 && post.communities[0].slug
 
-    return <div styleName='card' className={className}>
+    return <div styleName='card' className={className}
+      onClick={() => navigate(postUrl(post.id, slug))}>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}
         type={post.type}

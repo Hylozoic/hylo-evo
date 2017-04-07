@@ -8,6 +8,7 @@ import {
   TOGGLE_COMMUNITIES_DRAWER
 } from 'store/constants'
 import login from 'routes/Login/store'
+import navigation from 'routes/NavigationHandler/store'
 
 export default combineReducers({
   orm,
@@ -15,6 +16,7 @@ export default combineReducers({
   hyloEditor,
   login,
   pending,
+  navigation,
 
   currentUser: (state = {}, { type, error, payload }) => {
     if (!error && type === FETCH_CURRENT_USER) return payload.data.me

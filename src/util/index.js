@@ -18,6 +18,14 @@ export function tagUrl (tagName, slug) {
   }
 }
 
+export function postUrl (id, slug) {
+  if (slug) {
+    return `/c/${slug}/p/${id}`
+  } else {
+    return `/p/${id}`
+  }
+}
+
 export const findChildLink = element => {
   if (element.nodeName === 'A') return element
   if (element.hasChildNodes()) {
