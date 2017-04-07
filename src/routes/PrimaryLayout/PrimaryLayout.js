@@ -57,6 +57,8 @@ export default class PrimaryLayout extends Component {
         </div>
       </div>
       <Route path='/messages' component={Messages} />
+      <Route path='/messages/new' component={Messages} />
+      <Route path='/t/:threadId' component={Messages} />
     </div>
   }
 }

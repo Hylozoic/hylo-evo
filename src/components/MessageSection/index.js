@@ -1,3 +1,3 @@
 import component from './MessageSection'
-import connector from './connector'
+import connector from './MessageSection.connector'
 export default connector(component)

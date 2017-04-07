@@ -1,3 +1,3 @@
 import component from './MessageForm'
-import connector from './connector'
+import connector from './MessageForm.connector'
 export default connector(component)
