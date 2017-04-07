@@ -1,7 +1,7 @@
 import React from 'react'
 import './UserProfile.scss'
 
-const { any, array, object, string, shape } = React.PropTypes
+const { any, array, string, shape } = React.PropTypes
 
 export default class UserProfile extends React.Component {
   static defaultProps = {

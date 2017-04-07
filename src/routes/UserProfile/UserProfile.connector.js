@@ -7,10 +7,12 @@ import orm from 'store/models'
 
 export function getPerson (id) {
   return ormCreateSelector(orm, session => {
-    if (session.Person.hasIs(id)) {
+    if (session.Person.hasId(id)) {
       return session.Person.withId(id).withRefs
     }
-    return null
+    return {
+      name: ''
+    }
   })
 }
 
