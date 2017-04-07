@@ -7,7 +7,7 @@ const { string, bool } = React.PropTypes
 export default function Button ({ label, color = 'green', hover, active, narrow, small, className }) {
   let styleName = cx('button', color, {hover, active, narrow, small})
   return <div styleName={styleName} className={className}>
-    {label}
+    {label || children}
   </div>
 }
 Button.propTypes = {

@@ -25,19 +25,43 @@
 }
 
 .postType {
+  display: inline-block;
+  text-transform: uppercase;
+  text-align: center;
   width: 100%;
   font-size: 0.625rem;
   line-height: 0;
   margin: 0 $space-2x;
   padding: $space-5x;
   border-radius: $space-1x;
+  color: $color-rhino-30;
+  background-color: $color-athens-gray-dark;
   &-right {
     margin-right: 0;
   }
   &-left {
     margin-left: 0;
   }
+  &-discussion {
+    &:hover, &:active {
+      color: $color-picton-blue;
+      background-color: $color-link-water;
+    }
+  }
+  &-request {
+    &:hover, &:active {
+      color: $color-persimmon;
+      background-color: $color-peach-schnapps;
+    }
+  }
+  &-offer {
+    &:hover, &:active  {
+      color: $color-caribbean-green;
+      background-color: $color-iceberg;
+    }
+  }
 }
+
 
 .title {
   border: none;

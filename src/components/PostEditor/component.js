@@ -36,9 +36,9 @@ export default class PostEditor extends React.Component {
       <div styleName='body'>
         <div styleName='initialPrompt' className='bdy-lt-sm'>What are you looking to post?</div>
         <div styleName='postTypes'>
-          <PostLabel type='discussion' styleName='postType postType-left' />
-          <PostLabel type='request' styleName='postType' />
-          <PostLabel type='offer' styleName='postType postType-right' />
+          <Button label='discussion' styleName='postType postType-discussion postType-left' />
+          <Button label='request' styleName='postType postType-request' />
+          <Button label='offer' styleName='postType postType-offer postType-right' />
         </div>
         <div styleName='title'>
           <Avatar medium
