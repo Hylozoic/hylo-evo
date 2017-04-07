@@ -1,5 +1,5 @@
 import React from 'react'
-import './component.scss'
+import './Feed.scss'
 import PostCard from 'components/PostCard'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'

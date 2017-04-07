@@ -26,7 +26,7 @@ export const getPosts = slug => ormCreateSelector(orm, (session) => {
   }))
 })
 
-function mapStateToProps (state, { match, community }) {
+export function mapStateToProps (state, { match, community }) {
   const slug = get('params.slug', match) || get('slug', community)
   return {
     posts: getPosts(slug)(state.orm),
