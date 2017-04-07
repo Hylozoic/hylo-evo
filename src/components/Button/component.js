@@ -4,14 +4,15 @@ import './component.scss'
 
 const { string, bool } = React.PropTypes
 
-export default function Button ({ label, color = 'green', hover, active, narrow, small, className }) {
+export default function Button ({ label, color = 'green', hover, active, narrow, small, children, className }) {
   let styleName = cx('button', color, {hover, active, narrow, small})
   return <div styleName={styleName} className={className}>
     {label || children}
   </div>
 }
 Button.propTypes = {
-  label: string.isRequired,
+  label: string,
+  children: string,
   color: string,
   className: string,
   hover: bool,

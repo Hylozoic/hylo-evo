@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 import './component.scss'
-import PostLabel from 'components/PostLabel'
 import Avatar from 'components/Avatar'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
+import CommunitiesSelector from 'components/CommunitiesSelector'
 
 const TITLE_PLACEHOLDER = 'What’s on your mind?'
 const BODY_PLACEHOLDER = 'Add a description'
@@ -36,9 +36,9 @@ export default class PostEditor extends React.Component {
       <div styleName='body'>
         <div styleName='initialPrompt' className='bdy-lt-sm'>What are you looking to post?</div>
         <div styleName='postTypes'>
-          <Button label='discussion' styleName='postType postType-discussion postType-left' />
-          <Button label='request' styleName='postType postType-request' />
-          <Button label='offer' styleName='postType postType-offer postType-right' />
+          <Button styleName='postType postType-discussion'>Discussion</Button>
+          <Button styleName='postType postType-request'>Request</Button>
+          <Button styleName='postType postType-offer'>Offer</Button>
         </div>
         <div styleName='title'>
           <Avatar medium
@@ -59,7 +59,7 @@ export default class PostEditor extends React.Component {
             Post in
           </div>
           <div styleName='postIn-communities'>
-            ...
+            <CommunitiesSelector />
           </div>
         </div>
         <div styleName='actionsBar'>
