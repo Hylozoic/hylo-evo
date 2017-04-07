@@ -4,6 +4,7 @@ import { isEmpty } from 'lodash/fp'
 import './PostDetail.scss'
 const { object, string, func } = PropTypes
 import { PostHeader, PostImage, PostBody, PostFooter } from 'components/PostCard/component'
+import Comments from './Comments'
 import { tagUrl, communityUrl } from 'util/index'
 
 export default class PostDetail extends Component {
@@ -32,10 +33,12 @@ export default class PostDetail extends Component {
         slug={slug}
         expanded
         styleName='body' />
+      <div styleName='activity-header'>Activity</div>
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
         votesTotal={post.votesTotal} />
+      <Comments comments={post.comments} />
     </div>
   }
 }
