@@ -11,5 +11,7 @@ Person.modelName = 'Person'
 Person.fields = {
   id: attr(),
   name: attr(),
-  avatarUrl: attr()
+  avatarUrl: attr(),
+  bannerUrl: attr(),
+  postsTotal: attr()
 }
