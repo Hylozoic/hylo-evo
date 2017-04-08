@@ -6,6 +6,13 @@ const fetchPersonQuery =
     id
     name
     avatarUrl
+    bannerUrl
+    bio
+    twitter_name
+    linkedin_url
+    facebook_url
+    url
+    location
     posts {
       id
       title
