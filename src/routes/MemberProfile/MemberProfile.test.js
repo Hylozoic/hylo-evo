@@ -1,10 +1,10 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 
-import PersonProfile, { ProfileHeader } from './PersonProfile'
-import payload from './PersonProfile.normalized.test.json'
+import MemberProfile, { ProfileNamePlate } from './MemberProfile'
+import payload from './MemberProfile.normalized.test.json'
 
-describe.only('PersonProfile', () => {
+describe.only('MemberProfile', () => {
   const defaultPerson = {
     name: '',
     avatarUrl: '',
@@ -17,13 +17,13 @@ describe.only('PersonProfile', () => {
       error: 'WOMBAT-TYPE INVALID',
       person: defaultPerson
     }
-    const wrapper = shallow(<PersonProfile { ...props } />)
+    const wrapper = shallow(<MemberProfile { ...props } />)
     expect(wrapper.contains(props.error)).toBe(true)
   })
 
-  describe('ProfileHeader', () => {
+  describe('ProfileNamePlate', () => {
     it('Sets the username correctly', () => {
-      const wrapper = shallow(<ProfileHeader { ...payload.person } />)
+      const wrapper = shallow(<ProfileNamePlate { ...payload.person } />)
       expect(wrapper.find('h1').text()).toBe(payload.person.name)
     })
 

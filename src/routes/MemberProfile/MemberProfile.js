@@ -1,11 +1,11 @@
 import React from 'react'
 
-import './PersonProfile.scss'
+import './MemberProfile.scss'
 import RoundImage from 'components/RoundImage'
 
 const { any, arrayOf, object, string, shape } = React.PropTypes
 
-export default class PersonProfile extends React.Component {
+export default class MemberProfile extends React.Component {
   static propTypes = {
     id: any,
     person: shape({
@@ -22,7 +22,7 @@ export default class PersonProfile extends React.Component {
   }
 
   displayError (error) {
-    return <div styleName='person-profile'>
+    return <div styleName='member-profile'>
       <span styleName='error'>{ error }</span>
     </div>
   }
@@ -33,15 +33,21 @@ export default class PersonProfile extends React.Component {
     const { person } = this.props
     const { avatarUrl, bannerUrl, name } = person
 
-    return <div styleName='person-profile'>
-      <ProfileHeader avatarUrl={avatarUrl} bannerUrl={bannerUrl} name={name} />
+    return <div styleName='member-profile'>
+      <ProfileBanner avatarUrl={avatarUrl} bannerUrl={bannerUrl} name={name} />
     </div>
   }
 }
 
-export function ProfileHeader ({ avatarUrl, bannerUrl, name }) {
-  return <div styleName='profile-header'>
-    <RoundImage url={avatarUrl} />
-    <h1>{name}</h1>
+export function ProfileBanner ({ avatarUrl, bannerUrl, name }) {
+  return <div styleName='banner'>
+    <ProfileNamePlate avatarUrl={avatarUrl} name={name} />
+  </div>
+}
+
+export function ProfileNamePlate ({ avatarUrl, name }) {
+  return <div styleName='name-plate'>
+    <RoundImage url={avatarUrl} large />
+    <h1 styleName='name'>{name}</h1>
   </div>
 }

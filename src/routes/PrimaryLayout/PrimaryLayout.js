@@ -8,7 +8,7 @@ import Sidebar from './components/Sidebar'
 import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
-import PersonProfile from 'routes/PersonProfile'
+import MemberProfile from 'routes/MemberProfile'
 import './PrimaryLayout.scss'
 
 export default class PrimaryLayout extends Component {
@@ -38,9 +38,9 @@ export default class PrimaryLayout extends Component {
         <Route path='/' render={() => <Navigation collapsed={hasDetail} location={location} />} />
         <div styleName='content'>
           <Route path='/' exact render={() => <Feed {...{community, currentUser}} />} />
-          <Route path='/c/:slug' render={({ match }) => <Feed {...{community, currentUser, match}} />} />
+          <Route exact path='/c/:slug' render={({ match }) => <Feed {...{community, currentUser, match}} />} />
+          <Route path='/c/:slug/m/:id' component={MemberProfile} />
           <Route path='/events' component={Events} />
-          <Route path='/p/:id' component={PersonProfile} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/' component={Sidebar} />

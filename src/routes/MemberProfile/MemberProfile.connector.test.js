@@ -1,9 +1,9 @@
 import orm from 'store/models'
-import { getPerson, mapStateToProps } from './PersonProfile.connector'
-import payload from './PersonProfile.normalized.test.json'
-import denormalized from './PersonProfile.test.json'
+import { getPerson, mapStateToProps } from './MemberProfile.connector'
+import payload from './MemberProfile.normalized.test.json'
+import denormalized from './MemberProfile.test.json'
 
-describe('PersonProfile.connector', () => {
+describe('MemberProfile.connector', () => {
   let session = null
 
   beforeEach(() => {

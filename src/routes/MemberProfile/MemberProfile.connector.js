@@ -2,7 +2,7 @@ import { get } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { connect } from 'react-redux'
 
-import { fetchPerson } from './PersonProfile.actions'
+import { fetchPerson } from './MemberProfile.actions'
 import orm from 'store/models'
 
 const defaultPerson = {
