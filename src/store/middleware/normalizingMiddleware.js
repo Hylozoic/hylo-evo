@@ -23,7 +23,6 @@ export default function normalizingMiddleware ({ dispatch }) {
       const { type, payload } = action
       switch (type) {
         case FETCH_CURRENT_USER:
-        case FETCH_FEED_ITEMS:
         case FETCH_PERSON:
         case FETCH_POSTS:
           const actions = collectAndMergeActions('data', payload.data)
