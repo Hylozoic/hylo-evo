@@ -22,8 +22,8 @@ export default class PersonProfile extends React.Component {
   }
 
   displayError (error) {
-    return <div styleName="user-profile">
-      <span styleName="error">{ error }</span>
+    return <div styleName='user-profile'>
+      <span styleName='error'>{ error }</span>
     </div>
   }
 
@@ -32,7 +32,7 @@ export default class PersonProfile extends React.Component {
 
     const { person } = this.props
 
-    return <div styleName="user-profile">
+    return <div styleName='user-profile'>
       <RoundImage url={person.avatarUrl} />
       <h1>{person.name}</h1>
     </div>
