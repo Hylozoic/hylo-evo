@@ -12,6 +12,15 @@ const fetchPersonQuery =
     linkedinUrl
     facebookUrl
     url
+    memberships {
+      id
+      role
+      community {
+        id
+        name
+      }
+    }
+    membershipsTotal
     location
     posts {
       id
