@@ -9,7 +9,7 @@ export default class PersonProfile extends React.Component {
   static propTypes = {
     id: any,
     person: shape({
-      id: any.isRequired,
+      id: any,
       name: string,
       avatarUrl: string,
       posts: arrayOf(object),
@@ -21,10 +21,18 @@ export default class PersonProfile extends React.Component {
     this.props.fetchPerson(this.props.id)
   }
 
+  displayError (error) {
+    return <div styleName="user-profile">
+      <span styleName="error">{ error }</span>
+    </div>
+  }
+
   render () {
+    if (this.props.error) return this.displayError(this.props.error)
+
     const { person } = this.props
 
-    return <div styleName='user-profile'>
+    return <div styleName="user-profile">
       <RoundImage url={person.avatarUrl} />
       <h1>{person.name}</h1>
     </div>
