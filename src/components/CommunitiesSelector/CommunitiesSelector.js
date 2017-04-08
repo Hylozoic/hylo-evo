@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import ReactTags from 'react-tag-autocomplete'
-import './CommunitiesSelector.scss'
+import styles from './CommunitiesSelector.scss'
 
 export default class CommunitiesSelector extends Component {
   static propTypes = {
@@ -35,11 +35,12 @@ export default class CommunitiesSelector extends Component {
   render () {
     return (
       <ReactTags
-        placeholder='Type community name...'
+        placeholder='Begin typing...'
         tags={this.state.communities}
         suggestions={this.state.communitySuggestions}
         handleDelete={this.handleDelete}
         handleAddition={this.handleAddition}
+        classNames={styles}
       />
     )
   }
