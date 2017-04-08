@@ -66,11 +66,11 @@ export default function reducer (state = defaultState, action) {
 // Selectors
 
 export const getMentionResults = createSelector(
-  (state) => state.hyloEditor,
+  (state) => state.HyloEditor,
   (state, props) => state.mentionResults
 )
 
 export const getHashtagResults = createSelector(
-  (state) => state.hyloEditor,
+  (state) => state.HyloEditor,
   (state, props) => state.hashtagResults
 )

@@ -1,13 +1,15 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import orm from './ormReducer'
-import hyloEditor from 'components/HyloEditor/store.js'
+import HyloEditor from 'components/HyloEditor/store.js'
+import CommunitiesSelector from 'components/CommunitiesSelector/store.js'
 import { CHECK_LOGIN, FETCH_CURRENT_USER, LOGIN, LOGOUT } from 'store/constants'
 
 export default combineReducers({
   orm,
   router: routerReducer,
-  hyloEditor,
+  HyloEditor,
+  CommunitiesSelector,
 
   loggedIn: (state = false, { type, error, payload, meta }) => {
     if (error) return state
