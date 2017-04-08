@@ -28,9 +28,14 @@ export function mapStateToProps ({ orm }, { match }) {
     bannerUrl: ''
   }
   const id = get('params.id', match)
+  const error = Number.isSafeInteger(Number(id)) ? null :
+    "Can't find that person."
+  const person = error ? defaultPerson : getPerson(id)(orm)
+
   return {
     id,
-    person: getPerson(id)(orm) || defaultPerson
+    error,
+    person
   }
 }
 
