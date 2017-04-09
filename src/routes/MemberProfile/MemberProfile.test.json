@@ -4,6 +4,24 @@
       "id": "46816",
       "name": "Rich",
       "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+      "bannerUrl": "http://www.axolotl.org/images/tiger/tiger_larva.jpg",
+      "bio": "I like wombats.",
+      "twitterName": "richchurcher",
+      "linkedinUrl": "https://www.linkedin.com/in/rich/",
+      "facebookUrl": "https://www.facebook.com/rich",
+      "url": "https://rich.com",
+      "location": "Somewhere, New Zealand",
+      "memberships": [
+        {
+          "id": "3",
+          "role": 1,
+          "community": {
+            "id": "1836",
+            "name": "Wombats"
+          }
+        }
+      ],
+      "membershipsTotal": null,
       "posts": [
         {
           "id": "30002",
