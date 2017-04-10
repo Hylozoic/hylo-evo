@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import cx from 'classnames'
 import './component.scss'
 
-const { func, string, bool } = PropTypes
+const { string, bool, func, object, oneOfType } = React.PropTypes
 
 export default function Button ({ label, color = 'green', hover, active, narrow, small, children, onClick, className }) {
   let styleName = cx('button', color, {hover, active, narrow, small})
@@ -11,7 +11,10 @@ export default function Button ({ label, color = 'green', hover, active, narrow,
   </div>
 }
 Button.propTypes = {
-  label: string,
+  label: oneOfType([
+    string,
+    object
+  ]),
   children: string,
   onClick: func,
   color: string,

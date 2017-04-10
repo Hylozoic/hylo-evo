@@ -18,7 +18,7 @@ export default function RoundImage ({ url, small, medium, overlaps, className })
     style={bgImageStyle(url)} />
 }
 RoundImage.propTypes = {
-  url: string.isRequired,
+  url: string,
   small: bool,
   medium: bool,
   overlaps: bool,

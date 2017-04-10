@@ -13,51 +13,69 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-Trash:before {
-  content: "\e90c";
+.icon-LinkedIn:before {
+  content: "\e900";
 }
-.icon-Pin:before {
-  content: "\e90d";
+.icon-Google:before {
+  content: "\e901";
 }
-.icon-Complete:before {
-  content: "\e90e";
+.icon-Facebook:before {
+  content: "\e902";
 }
-.icon-Flag:before {
-  content: "\e90f";
+.icon-Ex:before {
+  content: "\e903";
 }
-.icon-Location:before {
-  content: "\e90b";
+.icon-NewCommunity:before {
+  content: "\e904";
 }
-.icon-ArrowUp:before {
-  content: "\e90a";
-}
-.icon-More:before {
-  content: "\e909";
-}
-.icon-Messages:before {
+.icon-Projects:before {
   content: "\e905";
 }
-.icon-Notifications:before {
+.icon-Events:before {
   content: "\e906";
 }
-.icon-Search:before {
+.icon-Home:before {
   content: "\e907";
 }
-.icon-Share:before {
+.icon-Topics:before {
   content: "\e908";
 }
 .icon-Members:before {
-  content: "\e904";
+  content: "\e909";
 }
-.icon-Topics:before {
-  content: "\e903";
+.icon-Messages:before {
+  content: "\e90a";
 }
-.icon-Projects:before {
-  content: "\e900";
+.icon-Notifications:before {
+  content: "\e90b";
 }
-.icon-Events:before {
-  content: "\e901";
+.icon-Search:before {
+  content: "\e90c";
 }
-.icon-Home:before {
-  content: "\e902";
+.icon-Share:before {
+  content: "\e90d";
+}
+.icon-More:before {
+  content: "\e90e";
+}
+.icon-ArrowUp:before {
+  content: "\e90f";
+}
+.icon-Location:before {
+  content: "\e910";
+}
+.icon-Trash:before {
+  content: "\e911";
+}
+.icon-Pin:before {
+  content: "\e912";
+}
+.icon-Complete:before {
+  content: "\e913";
+}
+.icon-Flag:before {
+  content: "\e914";
+}
+.icon-Circle:before {
+  content: "\e915";
 }

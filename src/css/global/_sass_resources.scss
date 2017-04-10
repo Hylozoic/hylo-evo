@@ -33,6 +33,8 @@ $space-18x: $space-base-unit * 18;
 // $space-xl: $space-10x;
 // $space-xxl: $space-18x;
 
+$content-width: 80rem;
+$layout-spacing: 70px;
 $size-feed-width: 590px;
 
 // Colors
@@ -45,9 +47,12 @@ $color-rhino-50: rgba($color-rhino, .5);
 $color-rhino-30: rgba($color-rhino, .3);
 $color-rhino-darker: #2C405A;
 $color-nepal: #8DABC4;
+$color-chambray: #315280;
 
 // Grays
 $color-white: #FFFFFF;
+$color-white-80: rgba($color-white, .8);
+$color-white-60: rgba($color-white, .6);
 $color-white-50: rgba($color-white, .5);
 $color-black: #000000;
 $color-black-10: rgba($color-black, .1);
@@ -87,10 +92,12 @@ $color-gossamer: #0A9682;
 // Fonts
 @mixin font-regular {
   font-family: 'Circular Book', sans-serif;
+  font-weight: normal;
 }
 
 @mixin font-medium {
   font-family: 'Circular Medium', sans-serif;
+  font-weight: normal;
 }
 
 @mixin font-bold {

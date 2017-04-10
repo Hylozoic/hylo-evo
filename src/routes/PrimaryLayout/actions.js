@@ -1,4 +1,7 @@
-import { FETCH_CURRENT_USER } from 'store/constants'
+import {
+  FETCH_CURRENT_USER,
+  TOGGLE_COMMUNITIES_DRAWER
+} from 'store/constants'
 
 export function fetchCurrentUser () {
   return {
@@ -9,8 +12,23 @@ export function fetchCurrentUser () {
           id
           name
           avatarUrl
+          memberships {
+            id
+            community {
+              id
+              name
+              slug
+              avatarUrl
+            }
+          }
         }
       }`
     }
+  }
+}
+
+export function toggleCommunitiesDrawer () {
+  return {
+    type: TOGGLE_COMMUNITIES_DRAWER
   }
 }

@@ -1,17 +1,26 @@
 import { attr, fk, many, Model } from 'redux-orm'
 
-export class PostFollower extends Model {}
+export const PostFollower = Model.createClass({})
 PostFollower.modelName = 'PostFollower'
 PostFollower.fields = {
   post: fk('Post', 'postfollowers'),
   follower: fk('Person', 'postfollowers')
 }
 
-export default class Post extends Model {
+export const PostCommenter = Model.createClass({})
+PostCommenter.modelName = 'PostCommenter'
+PostCommenter.fields = {
+  post: fk('Post', 'postcommenters'),
+  commenter: fk('Person', 'postcommenters')
+}
+
+const Post = Model.createClass({
   toString () {
     return `Post: ${this.name}`
   }
-}
+})
+
+export default Post
 
 Post.modelName = 'Post'
 Post.fields = {
@@ -30,8 +39,16 @@ Post.fields = {
   communitiesTotal: attr(),
   comments: many('Comment'),
   commentsTotal: attr(),
+  commenters: many({
+    to: 'Person',
+    relatedName: 'posts2',
+    through: 'PostCommenter',
+    throughFields: [ 'post', 'commenter' ]
+  }),
+  commentersTotal: attr(),
   createdAt: attr(),
   startsAt: attr(),
   endsAt: attr(),
-  fulfilledAt: attr()
+  fulfilledAt: attr(),
+  votesTotal: attr()
 }

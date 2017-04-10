@@ -13,7 +13,7 @@
   transition: 0.5s;
   // // overriding bootstrap default. Seems broken
   // padding: 0 0 !important;
-  margin: 0 15px;
+  margin: 0 $layout-spacing 0 15px;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -25,11 +25,10 @@
   // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
   // do not appear to require this.
   max-width: 3rem;
+  margin: 0 15px;
 }
 
-.navigation {
-  /* empty */
-}
+.navigation { /* empty */ }
 
 .links {
   list-style: none;

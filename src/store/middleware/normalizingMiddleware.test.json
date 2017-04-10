@@ -1,94 +1,142 @@
 {
-  "data": {
-    "me": {
-      "posts": [
-        {
-          "id": "30002",
-          "title": "Hello",
-          "type": null,
-          "details": "<p><a href=\"https://wombat.life\">https://wombat.life</a></p>\n<p></p>\n<p></p>",
-          "creator": {
+  "FETCH_POSTS for me": {
+    "data": {
+      "me": {
+        "posts": [
+          {
+            "id": "30002",
+            "title": "Hello",
+            "type": null,
+            "details": "<p><a href=\"https://wombat.life\">https://wombat.life</a></p>\n<p></p>\n<p></p>",
+            "creator": {
               "id": "46816",
               "name": "Rich",
               "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
-          },
-          "followers": [
-            {
-              "id": "46816",
-              "name": "Rich",
-              "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
-            }
-          ],
-          "followersTotal": "1",
-          "communities": [
-            {
-              "id": "1836",
-              "name": "Wombats"
-            }
-          ],
-          "communitiesTotal": "1",
-          "comments": [
-            {
-              "id": "1",
-              "createdAt": "Fri Mar 24 2017 10:55:41 GMT+1300 (NZDT)",
-              "text": "<p>Here's a comment!</p>",
-              "creator": {
+            },
+            "followers": [
+              {
+                "id": "46816",
+                "name": "Rich",
+                "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+              }
+            ],
+            "followersTotal": "1",
+            "communities": [
+              {
+                "id": "1836",
+                "name": "Wombats",
+                "members": [
+                  {
+                    "id": "99",
+                    "name": "Flargle Argleson",
+                    "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+                  }
+                ]
+              }
+            ],
+            "communitiesTotal": "1",
+            "comments": [
+              {
+                "id": "1",
+                "createdAt": "Fri Mar 24 2017 10:55:41 GMT+1300 (NZDT)",
+                "text": "<p>Here's a comment!</p>",
+                "creator": {
                   "id": "46816",
                   "name": "Rich",
                   "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+                }
               }
-            }
-          ],
-          "commentsTotal": "1",
-          "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
-          "startsAt": null,
-          "endsAt": null,
-          "fulfilledAt": null
-        },
-        {
-          "id": "30003",
-          "title": "Yup",
-          "type": null,
-          "details": "<p>So true.</p>",
-          "creator": {
-              "id": "46816",
-              "name": "Rich",
-              "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+            ],
+            "commentsTotal": "1",
+            "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+            "startsAt": null,
+            "endsAt": null,
+            "fulfilledAt": null
           },
-          "followers": [
-            {
+          {
+            "id": "30003",
+            "title": "Yup",
+            "type": null,
+            "details": "<p>So true.</p>",
+            "creator": {
               "id": "46816",
               "name": "Rich",
               "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
-            }
-          ],
-          "followersTotal": "1",
-          "communities": [
-            {
-              "id": "1836",
-              "name": "Wombats"
-            }
-          ],
-          "communitiesTotal": "1",
-          "comments": [
-            {
-              "id": "2",
-              "createdAt": "Fri Mar 24 2017 10:50:41 GMT+1300 (NZDT)",
-              "text": "<p>Another comment.</p>",
-              "creator": {
+            },
+            "followers": [
+              {
+                "id": "46816",
+                "name": "Rich",
+                "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+              }
+            ],
+            "followersTotal": "1",
+            "communities": [
+              {
+                "id": "1836",
+                "name": "Wombats"
+              }
+            ],
+            "communitiesTotal": "1",
+            "comments": [
+              {
+                "id": "2",
+                "createdAt": "Fri Mar 24 2017 10:50:41 GMT+1300 (NZDT)",
+                "text": "<p>Another comment.</p>",
+                "creator": {
                   "id": "46816",
                   "name": "Rich",
                   "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+                }
               }
-            }
-          ],
-          "commentsTotal": "1",
-          "createdAt": "Sat Mar 18 2017 10:49:43 GMT+1300 (NZDT)",
-          "startsAt": null,
-          "endsAt": null,
-          "fulfilledAt": null
-        }
-      ]
+            ],
+            "commentsTotal": "1",
+            "createdAt": "Sat Mar 18 2017 10:49:43 GMT+1300 (NZDT)",
+            "startsAt": null,
+            "endsAt": null,
+            "fulfilledAt": null
+          }
+        ]
+      }
+    }
+  },
+
+  "FETCH_POSTS for community": {
+    "data": {
+      "community": {
+        "id": "1",
+        "name": "foo",
+        "slug": "foo",
+        "bannerUrl": "http://foo.com/banner.png",
+        "postCount": 21,
+        "posts": [
+          {
+            "id": "2",
+            "title": "Hello!",
+            "communities": [
+              {
+                "id": "1",
+                "name": "foo",
+                "slug": "foo",
+                "avatarUrl": "http://foo.com/avatar.png"
+              }
+            ]
+          },
+          {
+            "id": "3",
+            "title": "Hello Again!",
+            "communities": [
+              {
+                "id": "1",
+                "name": "foo",
+                "slug": "foo",
+                "avatarUrl": "http://foo.com/avatar.png",
+                "memberCount": 42
+              }
+            ]
+          }
+        ]
+      }
     }
   }
 }

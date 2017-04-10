@@ -1,29 +1,29 @@
 import configureStore from 'redux-mock-store'
+import normalizingMiddleware, { collectAndMergeActions } from './normalizingMiddleware'
+import testPayloads from './normalizingMiddleware.test.json'
 
-import normalizingMiddleware from './normalizingMiddleware'
-import { data } from './normalizingMiddleware.test.json'
+const payload = testPayloads['FETCH_POSTS for me']
 
 it('Returns a function to handle next', () => {
-  const nextHandler = normalizingMiddleware({ action: 'ADD_POSTS' })
+  const nextHandler = normalizingMiddleware({ action: 'ADD_POST' })
   expect(typeof nextHandler).toBe('function')
   expect(nextHandler.length).toBe(1)
 })
 
 it('Returns a function to handle action', () => {
-  const actionHandler = normalizingMiddleware({ action: 'ADD_POSTS' })()
+  const actionHandler = normalizingMiddleware({ action: 'ADD_POST' })()
   expect(typeof actionHandler).toBe('function')
   expect(actionHandler.length).toBe(1)
 })
 
-it('Returns the value of next', () => {
-  const expected = 'Wombat'
-  const nextHandler = normalizingMiddleware({ action: 'ADD_POSTS' })
-  const actionHandler = nextHandler(() => expected)
-  const actual = actionHandler()
-  expect(actual).toBe(expected)
+describe('collectAndMergeActions', () => {
+  it("produces a list of ADD actions from the payload's tree, leaf-first", () => {
+    const actions = collectAndMergeActions('data', payload.data)
+    expect(actions).toMatchSnapshot()
+  })
 })
 
-describe('Actions', () => {
+describe('Actions:', () => {
   let store = null
   let mockStore = configureStore([normalizingMiddleware])
 
@@ -31,152 +31,90 @@ describe('Actions', () => {
     store = mockStore({})
   })
 
-  it('Ignores actions that are not FETCH_*', () => {
-    const expected = {
-      type: 'NOT_A_FETCH',
-      payload: {
-        wombat: true
+  describe('FETCH_POSTS', () => {
+    it('Ignores actions that are not FETCH_*', () => {
+      const expected = {
+        type: 'NOT_A_FETCH',
+        payload: {
+          wombat: true
+        }
       }
-    } 
-    store.dispatch(expected)
-    const actual = store.getActions()
-    expect(actual).toEqual([expected])
-  })
-
-  it('Dispatches ADD_POSTS when payload includes a post', () => {
-    store.dispatch({
-      type: 'FETCH_POSTS',
-      payload: data.me.posts
+      store.dispatch(expected)
+      const actual = store.getActions()
+      expect(actual).toEqual([expected])
     })
-    const actual = store.getActions().find(a => a.type === 'ADD_POSTS')
-    expect(actual).toBeTruthy()
-  })
 
-  it('Does not dispatch ADD_POSTS when payload does not include a post', () => {
-    store.dispatch({
-      type: 'FETCH_POSTS',
-      payload: []
+    it('Dispatches ADD_POST when payload includes a post', () => {
+      store.dispatch({
+        type: 'FETCH_POSTS',
+        payload
+      })
+      const actual = store.getActions().find(a => a.type === 'ADD_POST')
+      expect(actual).toBeTruthy()
     })
-    const actual = store.getActions().find(a => a.type === 'ADD_POSTS')
-    expect(actual).toBeFalsy()
-  })
 
-  it('Dispatches a single ADD_POSTS action when a post is present', () => {
-    store.dispatch({
-      type: 'FETCH_POSTS',
-      payload: data.me.posts
+    it('Does not dispatch ADD_POST when payload does not include a post', () => {
+      store.dispatch({
+        type: 'FETCH_POSTS',
+        payload: []
+      })
+      const actual = store.getActions().find(a => a.type === 'ADD_POST')
+      expect(actual).toBeFalsy()
     })
-    const actual = store.getActions().filter(a => a.type === 'ADD_POSTS').length
-    expect(actual).toBe(1)
-  })
 
-  it('Sends the correct number of posts in the ADD_POSTS payload', () => {
-    store.dispatch({
-      type: 'FETCH_POSTS',
-      payload: data.me.posts
+    it('Does not dispatch ADD_COMMENTS when no comment is present', () => {
+      const posts = payload.data.me.posts.map(p => ({ ...p, comments: [] }))
+      store.dispatch({
+        type: 'FETCH_POSTS',
+        payload: { data: { me: { posts } } }
+      })
+      const actual = store.getActions().filter(a => a.type === 'ADD_COMMENTS').length
+      expect(actual).toBe(0)
     })
-    const expected = data.me.posts.length
-    const action = store.getActions().filter(a => a.type === 'ADD_POSTS')[0]
-    const actual = Object.keys(action.payload).length
-    expect(actual).toBe(expected)
-  })
 
-  it('Dispatches a single ADD_COMMENTS action when a comment is present', () => {
-    store.dispatch({
-      type: 'FETCH_POSTS',
-      payload: data.me.posts
+    it('Does not dispatch ADD_COMMUNITY when no community is present', () => {
+      const posts = payload.data.me.posts.map(p => ({ ...p, communities: [] }))
+      store.dispatch({
+        type: 'FETCH_POSTS',
+        payload: { data: { me: { posts } } }
+      })
+      const actual = store.getActions().filter(a => a.type === 'ADD_COMMUNITY').length
+      expect(actual).toBe(0)
     })
-    // Comments are consolidated into a single action
-    const expected = 1
-    const actual = store.getActions().filter(a => a.type === 'ADD_COMMENTS').length
-    expect(actual).toBe(expected)
-  })
 
-  it('Sends the correct number of comments in ADD_COMMENTS payload', () => {
-    store.dispatch({
-      type: 'FETCH_POSTS',
-      payload: data.me.posts
+    it('Dispatches correct number of ADD_PERSON actions', () => {
+      store.dispatch({
+        type: 'FETCH_POSTS',
+        payload: payload
+      })
+      // Two people in the test data
+      const actual = store.getActions().filter(a => a.type === 'ADD_PERSON').length
+      expect(actual).toBe(2)
     })
-    const expected = data.me.posts.reduce((total, post) => total + post.comments.length, 0)
-    const action = store.getActions().filter(a => a.type === 'ADD_COMMENTS')[0]
-    const actual = Object.keys(action.payload).length
-    expect(actual).toBe(expected)
-  })
 
-  it('Does not dispatch ADD_COMMENTS when no comment is present', () => {
-    store.dispatch({
-      type: 'FETCH_POSTS',
-      payload: data.me.posts.map(p => ({ ...p, comments: [] }))
+    it('Does not dispatch ADD_PERSON when no person is present', () => {
+      const posts = payload.data.me.posts.map(({ id, name }) => ({ id, name }))
+      store.dispatch({
+        type: 'FETCH_POSTS',
+        payload: { data: { me: { posts } } }
+      })
+      const actual = store.getActions().filter(a => a.type === 'ADD_PERSON').length
+      expect(actual).toBe(0)
     })
-    const actual = store.getActions().filter(a => a.type === 'ADD_COMMENTS').length
-    expect(actual).toBe(0)
-  })
 
-  it('Dispatches a single ADD_COMMUNITIES action when a community is present', () => {
-    store.dispatch({
-      type: 'FETCH_POSTS',
-      payload: data.me.posts
-    })
-    const expected = 1
-    const actual = store.getActions().filter(a => a.type === 'ADD_COMMUNITIES').length
-    expect(actual).toBe(expected)
-  })
-
-  it('Does not dispatch ADD_COMMUNITIES when no community is present', () => {
-    store.dispatch({
-      type: 'FETCH_POSTS',
-      payload: data.me.posts.map(p => ({ ...p, communities: [] }))
-    })
-    const actual = store.getActions().filter(a => a.type === 'ADD_COMMUNITIES').length
-    expect(actual).toBe(0)
-  })
-
-  it('Consolidates communities with the same ID', () => {
-    store.dispatch({
-      type: 'FETCH_POSTS',
-      payload: data.me.posts
-    })
-    const action = store.getActions().filter(a => a.type === 'ADD_COMMUNITIES')[0]
-    const actual = Object.keys(action.payload).map(id => Number(id))
-    expect(actual.length).toBe([...new Set(actual)].length)
-  })
-
-  it('Dispatches a single ADD_PEOPLE action when a person is present', () => {
-    store.dispatch({
-      type: 'FETCH_POSTS',
-      payload: data.me.posts
-    })
-    const actual = store.getActions().filter(a => a.type === 'ADD_PEOPLE').length
-    expect(actual).toBe(1)
-  })
-
-  it('Does not dispatch ADD_PEOPLE when no person is present', () => {
-    store.dispatch({
-      type: 'FETCH_POSTS',
-      payload: data.me.posts.map(({ id, name }) => ({ id, name }))
-    })
-    const actual = store.getActions().filter(a => a.type === 'ADD_PEOPLE').length
-    expect(actual).toBe(0)
-  })
-
-  it('Consolidates people with the same ID', () => {
-    store.dispatch({
-      type: 'FETCH_POSTS',
-      payload: data.me.posts
-    })
-    const action = store.getActions().filter(a => a.type === 'ADD_PEOPLE')[0]
-    const actual = Object.keys(action.payload).map(id => Number(id))
-    expect(actual.length).toBe([...new Set(actual)].length)
-  })
-
-  it('Has the correct payload', () => {
-    store.dispatch({
-      type: 'FETCH_POSTS',
-      payload: data.me.posts
-    })
-    const expected = 
-    {
-      '30002': {
+    it('Has the correct payload', () => {
+      const withSinglePost = {
+        data: {
+          me: {
+            posts: payload.data.me.posts.filter(p => p.id === '30002')
+          }
+        }
+      }
+      store.dispatch({
+        type: 'FETCH_POSTS',
+        payload: withSinglePost
+      })
+      const expected = {
         id: '30002',
         title: 'Hello',
         type: null,
@@ -192,27 +130,28 @@ describe('Actions', () => {
         startsAt: null,
         endsAt: null,
         fulfilledAt: null
-      },
-      '30003': {
-        id: '30003',
-        title: 'Yup',
-        type: null,
-        details: '<p>So true.</p>',
-        creator: '46816',
-        followers: [ '46816' ],
-        followersTotal: '1',
-        communities: [ '1836' ],
-        communitiesTotal: '1',
-        comments: [ '2' ],
-        commentsTotal: '1',
-        createdAt: 'Sat Mar 18 2017 10:49:43 GMT+1300 (NZDT)',
-        startsAt: null,
-        endsAt: null,
-        fulfilledAt: null
       }
-    }
-    const actual = store.getActions().filter(a => a.type === 'ADD_POSTS')[0].payload
-    expect(actual).toEqual(expected)
+      const actual = store.getActions().filter(a => a.type === 'ADD_POST')[0].payload
+      expect(actual).toEqual(expected)
+    })
+
+    it('merges data from different actions related to the same object', () => {
+      store.dispatch({
+        type: 'FETCH_POSTS',
+        payload: testPayloads['FETCH_POSTS for community']
+      })
+
+      const action = store.getActions().find(a => a.type === 'ADD_COMMUNITY')
+      expect(action.payload).toEqual({
+        id: '1',
+        name: 'foo',
+        slug: 'foo',
+        bannerUrl: 'http://foo.com/banner.png',
+        postCount: 21,
+        avatarUrl: 'http://foo.com/avatar.png',
+        memberCount: 42,
+        posts: ['2', '3']
+      })
+    })
   })
 })
-
