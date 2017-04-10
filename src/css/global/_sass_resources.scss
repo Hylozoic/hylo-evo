@@ -36,6 +36,9 @@ $space-18x: $space-base-unit * 18;
 $content-width: 80rem;
 $layout-spacing: 70px;
 $size-feed-width: 590px;
+$messages-header-height: 80px;
+$messages-header-vertical-padding: 19px;
+$messages-header-horizontal-padding: 24px;
 
 // Colors
 // For now standardized on using "Name that Color" naming:
@@ -112,3 +115,5 @@ $color-gossamer: #0A9682;
   width: $width;
   height: $height or $width;
 }
+
+$light-border: 1px solid $color-cape-cod-10;

@@ -1,5 +1,9 @@
 .thread {
-
+  height: 100vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 .new-messages-notify {
@@ -7,5 +11,17 @@
 }
 
 .header {
-  
+  composes: bdy-drk-lg from 'css/typography.scss';
+  height: $messages-header-height;
+  padding: $messages-header-vertical-padding $messages-header-horizontal-padding;
+  border-bottom: $light-border;
+  border-left: $light-border;
+  border-right: $light-border;
+}
+
+.message-form {
+  position: absolute;
+  bottom: 41px;
+  padding: 0 30px;
+  width: 100%;
 }

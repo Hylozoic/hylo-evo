@@ -102,7 +102,9 @@ export default class Thread extends React.Component {
         <div styleName='new-messages-notify' onClick={this.refs.messageSection.scrollToBottom}>
           New Messages
         </div>}
-      <MessageForm threadId={thread.id} ref='form' />
+      <div styleName='message-form'>
+        <MessageForm threadId={thread.id} ref='form' />
+      </div>
     </div>
   }
 }
@@ -122,6 +124,6 @@ function Header ({ thread, currentUser }) {
 
   return <div styleName='header'>
     You and <Link to={`/u/${others[0].id}`}>{others[0].name}</Link>
-    {others.length > 1 && <span>and {gt2} other{gt2 === 1 ? '' : 's'}</span>}
+    {others.length > 1 && <span> and {gt2} other{gt2 === 1 ? '' : 's'}</span>}
   </div>
 }

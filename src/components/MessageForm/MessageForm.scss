@@ -1,0 +1,24 @@
+$height: 56px;
+
+.message-form {
+  border: $light-border;
+  border-radius: 4px;
+  width: 100%;
+  height: $height;
+  padding: $space-2x $space-4x;
+  display: flex;
+  background: $color-white;
+}
+
+.message-textarea {
+  composes: bdy-drk-lg from 'css/typography.scss';
+  flex: 1;
+  border: none;
+  resize: none;
+  outline: none;
+  padding: 0 $space-2x;
+}
+
+.user-image {
+
+}

@@ -1,8 +1,4 @@
 $thread-list-width: 392px;
-$header-height: 80px;
-$header-vertical-padding: 19px;
-$header-horizontal-padding: 24px;
-$light-border: 1px solid $color-cape-cod-10;
 $search-vertical-padding: 11px;
 $search-horizontal-padding: 24px;
 $thread-height: 105px;
@@ -22,8 +18,8 @@ $active-thread-border-width: 4px;
 }
 
 .header {
-  height: $header-height;
-  padding: $header-vertical-padding $header-horizontal-padding;
+  height: $messages-header-height;
+  padding: $messages-header-vertical-padding $messages-header-horizontal-padding;
   border-bottom: $light-border;
 }
 

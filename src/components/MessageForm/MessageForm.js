@@ -2,6 +2,7 @@ import React from 'react'
 import { throttle } from 'lodash'
 import { onEnterNoShift } from 'util/textInput'
 import { getSocket, socketUrl } from 'client/websockets'
+import RoundImage from 'components/RoundImage'
 var { func, object, string, bool } = React.PropTypes
 import './MessageForm.scss'
 
@@ -10,6 +11,7 @@ export const STARTED_TYPING_INTERVAL = 3000
 
 export default class MessageForm extends React.Component {
   static propTypes = {
+    className: string,
     currentUser: object,
     postId: string,
     placeholder: string,
@@ -66,8 +68,8 @@ export default class MessageForm extends React.Component {
   }, STARTED_TYPING_INTERVAL)
 
   render () {
-    const { onFocus, onBlur } = this.props
-    const placeholder = this.props.placeholder || 'Type a message...'
+    const { onFocus, onBlur, className, currentUser } = this.props
+    const placeholder = this.props.placeholder || 'Write something...'
     const { text } = this.state
 
     const handleKeyDown = e => {
@@ -78,8 +80,9 @@ export default class MessageForm extends React.Component {
       }, e)
     }
 
-    return <form onSubmit={this.submit} className='message-form'>
-      <textarea ref='editor' name='message' value={text}
+    return <form onSubmit={this.submit} styleName='message-form' className={className}>
+      <RoundImage url={currentUser.avatarUrl} styleName='user-image' medium />
+      <textarea ref='editor' name='message' value={text} styleName='message-textarea'
         placeholder={placeholder}
         onFocus={onFocus}
         onChange={e => this.setState({text: e.target.value})}

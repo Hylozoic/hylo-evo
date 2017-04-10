@@ -118,11 +118,11 @@ export default class MessageSection extends React.Component {
   render () {
     const { messages } = this.props
     const messageList = createMessageList(messages)
-
-    return <div className={cx('messages-section', {empty: isEmpty(messages)})}
+    const sName = cx('messages-section', {empty: isEmpty(messages)})
+    return <div styleName={sName}
       ref={list => { this.list = list }}
       onScroll={this.handleScroll}>
-      <div className='messages-section-inner'>
+      <div styleName='messages-section-inner'>
         {messageList}
       </div>
     </div>

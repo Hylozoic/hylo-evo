@@ -1,3 +1,5 @@
+import faker from 'faker'
+
 export default {
   id: '1',
   lastReadAt: '',
@@ -13,11 +15,102 @@ export default {
 export const messages = [
   {
     id: '1',
-    text: 'hello',
+    text: faker.lorem.sentence(),
     creator: {
       id: '2',
-      name: 'Person 2'
+      name: 'Person 2',
+      avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
     },
-    createdAt: 'date'
+    createdAt: new Date()
+  },
+  {
+    id: '2',
+    text: faker.lorem.sentence(),
+    creator: {
+      id: '2',
+      name: 'Person 2',
+      avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+    },
+    createdAt: new Date()
+  },
+  {
+    id: '3',
+    text: faker.lorem.sentence(),
+    creator: {
+      id: '2',
+      name: 'Person 2',
+      avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+    },
+    createdAt: new Date()
+  },
+  {
+    id: '4',
+    text: faker.lorem.sentence(),
+    creator: {
+      id: '2',
+      name: 'Person 2',
+      avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+    },
+    createdAt: new Date()
+  },
+  {
+    id: '5',
+    text: faker.lorem.sentence(),
+    creator: {
+      id: '2',
+      name: 'Person 2',
+      avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+    },
+    createdAt: new Date()
+  },
+  {
+    id: '6',
+    text: faker.lorem.sentence(),
+    creator: {
+      id: '2',
+      name: 'Person 2',
+      avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+    },
+    createdAt: new Date()
+  },
+  {
+    id: '7',
+    text: faker.lorem.sentence(),
+    creator: {
+      id: '2',
+      name: 'Person 2',
+      avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+    },
+    createdAt: new Date()
+  },
+  {
+    id: '8',
+    text: faker.lorem.sentence(),
+    creator: {
+      id: '1',
+      name: 'Person 1',
+      avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+    },
+    createdAt: new Date()
+  },
+  {
+    id: '9',
+    text: faker.lorem.sentence(),
+    creator: {
+      id: '2',
+      name: 'Person 2',
+      avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+    },
+    createdAt: new Date()
+  },
+  {
+    id: '10',
+    text: faker.lorem.sentence(),
+    creator: {
+      id: '2',
+      name: 'Person 2',
+      avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+    },
+    createdAt: new Date()
   }
 ]
