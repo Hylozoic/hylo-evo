@@ -54,7 +54,6 @@ export default function reducer (state = defaultState, action) {
     case CLEAR_MENTIONS:
       return {...state, mentionResults: fromJS([])}
     case FIND_HASHTAGS:
-      console.log(payload, sampleHashtags, defaultHashtagSuggestionFilter(payload.searchText, sampleHashtags))
       return {...state, hashtagResults: defaultHashtagSuggestionFilter(payload.searchText, sampleHashtags)}
     case CLEAR_HASHTAGS:
       return {...state, hashtagResults: fromJS([])}

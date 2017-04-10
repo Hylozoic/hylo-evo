@@ -7,9 +7,7 @@ import { EditorState } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
 import 'draft-js/dist/Draft.css'
 import 'draft-js-mention-plugin/lib/plugin.css'
-// import 'draft-js-hashtag-plugin/lib/plugin.css'
-import styles from './component.scss'
-// import './IssueEditor.scss'
+import './component.scss'
 
 const mentionPlugin = createMentionPlugin({
   // theme: styles

@@ -90,7 +90,6 @@
     "react-redux": "^5.0.3",
     "react-router-dom": "^4.0.0",
     "react-router-redux": "next",
-    "react-tag-autocomplete": "^5.2.0",
     "redux": "^3.6.0",
     "redux-orm": "^0.9.0-rc.3",
     "redux-promise": "^0.5.3",

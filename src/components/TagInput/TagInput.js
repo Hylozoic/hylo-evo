@@ -1,28 +1,44 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import { debounce, includes, isEmpty } from 'lodash'
 import { uniqBy } from 'lodash/fp'
 import cx from 'classnames'
-import { KeyControlledItemList } from 'components/KeyControlledList'
 import { getKeyCode, keyMap } from 'util/textInput'
+import { KeyControlledItemList } from 'components/KeyControlledList'
 import Avatar from 'components/Avatar'
 
-const { array, bool, string, func } = React.PropTypes
+const { object, array, bool, string, func } = PropTypes
 
 // keys that can be pressed to create a new tag
 const creationKeyCodes = [keyMap.ENTER, keyMap.SPACE, keyMap.COMMA]
 
-export default class TagInput extends React.Component {
+export default class TagInput extends Component {
   static propTypes = {
     tags: array,
     type: string,
-    choices: array,
+    suggestions: array,
     handleInputChange: func.isRequired,
     handleAddition: func,
     handleDelete: func,
     allowNewTags: bool,
     placeholder: string,
     filter: func,
-    className: string
+    className: string,
+    theme: object
+  }
+
+  static defaultProps = {
+    theme: {
+      root: 'root',
+      selected: 'selected',
+      selectedTag: 'selectedTag',
+      selectedTagName: 'selectedTagName',
+      selectedTagRemove: 'selectedTagRemove',
+      search: 'search',
+      searchInput: 'searchInput',
+      suggestions: 'suggestions',
+      suggestionsList: 'suggestionsList',
+      suggestion: 'suggestion'
+    }
   }
 
   resetInput () {
@@ -79,26 +95,42 @@ export default class TagInput extends React.Component {
 
   render () {
     let { tags, placeholder } = this.props
-    const { choices, className } = this.props
+    const { suggestions, className, theme } = this.props
     if (!tags) tags = []
     if (!placeholder) placeholder = 'Type...'
-    return <div className={cx('tag-input', className)} onClick={this.focus}>
-      <ul>
-        {uniqBy('id', tags).map(t => <li key={t.id} className='tag'>
-          {t.avatar_url && <Avatar person={t} isLink={false} />}
-          {t.label || t.name}
-          <a onClick={this.remove(t)} className='remove'>&times;</a>
-        </li>)}
+
+    const selectedItems = uniqBy('id', tags).map(t =>
+      <li key={t.id} className={theme.selectedTag}>
+        {t.avatar_url && <Avatar person={t} isLink={false} />}
+        <span className={theme.selectedTagName}>{t.label || t.name}</span>
+        <a onClick={this.remove(t)} className={theme.selectedTagRemove}>&times;</a>
+      </li>
+    )
+
+    return <div className={cx(theme.root, className)} onClick={this.focus}>
+      <ul className={theme.selected}>
+        {selectedItems}
       </ul>
-
-      <input ref='input' type='text' placeholder={placeholder} spellCheck={false}
-        onChange={event => this.handleChange(event.target.value)}
-        onKeyDown={this.handleKeys} />
-
-      {!isEmpty(choices) && <div className='dropdown'>
-        <KeyControlledItemList className='dropdown-menu' ref='list'
-          items={choices} onChange={this.select} />
-      </div>}
+      <div className={theme.search}>
+        <div className={theme.searchInput}>
+          <input
+            className={theme.searchInput}
+            ref='input'
+            type='text'
+            placeholder={placeholder}
+            spellCheck={false}
+            onChange={event => this.handleChange(event.target.value)}
+            onKeyDown={this.handleKeys} />
+        </div>
+        {!isEmpty(suggestions) &&
+          <div className={theme.suggestions}>
+            <KeyControlledItemList
+              items={suggestions}
+              onChange={this.select}
+              ref='list' />
+          </div>
+        }
+      </div>
     </div>
   }
 }

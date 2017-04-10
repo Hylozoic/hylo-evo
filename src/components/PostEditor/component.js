@@ -36,9 +36,15 @@ export default class PostEditor extends React.Component {
       <div styleName='body'>
         <div styleName='initialPrompt' className='bdy-lt-sm'>What are you looking to post?</div>
         <div styleName='postTypes'>
-          <Button styleName='postType postType-discussion'>Discussion</Button>
-          <Button styleName='postType postType-request'>Request</Button>
-          <Button styleName='postType postType-offer'>Offer</Button>
+          <Button styleName='postType postType-discussion' onClick={this.handlePostTypeSelection}>
+            Discussion
+          </Button>
+          <Button styleName='postType postType-request' onClick={this.handlePostTypeSelection}>
+            Request
+          </Button>
+          <Button styleName='postType postType-offer' onClick={this.handlePostTypeSelection}>
+            Offer
+          </Button>
         </div>
         <div styleName='title'>
           <Avatar medium
@@ -63,9 +69,7 @@ export default class PostEditor extends React.Component {
           </div>
         </div>
         <div styleName='actionsBar'>
-          <div styleName='actions'>
-            ...
-          </div>
+          <div styleName='actions' />
           <Button styleName='postButton' label='Post' color='green' />
         </div>
       </div>

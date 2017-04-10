@@ -20,7 +20,7 @@ export function clearCommunities (searchText) {
 // Reducer
 
 const defaultState = {
-  communitiesResults: sampleCommunities
+  communitiesResults: []
 }
 
 export default function reducer (state = defaultState, action) {
@@ -29,16 +29,10 @@ export default function reducer (state = defaultState, action) {
 
   switch (type) {
     case FIND_COMMUNITIES:
-      // filter(i =>
-      //   String(i
-      //     .get('name')
-      //     .replace(/\s+/g, '')
-      //     .toLowerCase()
-      //     .indexOf(lowerSearch) !== -1
-      //   )
-      // )
-      // .take(5)
-      return {...state, communitiesResults: filter(payload.searchText)(sampleCommunities)}
+      const communitiesResults = sampleCommunities.filter(community =>
+        community.name.match(new RegExp('^' + payload.searchText))
+      )
+      return {...state, communitiesResults}
     case CLEAR_COMMUNITIES:
       return {...state, communitiesResults: []}
     default:

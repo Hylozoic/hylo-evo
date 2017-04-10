@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { indexOf, isEmpty, omit } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
-import './component.scss'
-var { array, func, object, bool, number } = React.PropTypes
 
-const propsToOmit = ['onChange', 'tabChooses', 'spaceChooses', 'selectedIndex']
+const { array, func, object, bool, number, string } = PropTypes
+
+const propsToOmit = ['onChange', 'tabChooses', 'spaceChooses', 'selectedIndex', 'items', 'theme']
 
 export default class KeyControlledList extends React.Component {
   static propTypes = {
@@ -12,7 +12,8 @@ export default class KeyControlledList extends React.Component {
     children: array,
     selectedIndex: number,
     tabChooses: bool,
-    spaceChooses: bool
+    spaceChooses: bool,
+    className: string
   }
 
   static defaultProps = {
@@ -107,7 +108,6 @@ export default class KeyControlledList extends React.Component {
           ? React.cloneElement(element, {ref: i, className})
           : element
       })
-
     return <ul {...omit(propsToOmit, props)}>
       {this.childrenWithRefs}
     </ul>
@@ -119,7 +119,16 @@ export class KeyControlledItemList extends React.Component {
     onChange: func.isRequired,
     items: array,
     selected: object,
-    tabChooses: bool
+    tabChooses: bool,
+    theme: object,
+    className: string
+  }
+
+  static defaultProps = {
+    theme: {
+      suggestionsList: null,
+      suggestion: null
+    }
   }
 
   // this method is called from other components
@@ -140,14 +149,20 @@ export class KeyControlledItemList extends React.Component {
   // FIXME use more standard props e.g. {label, value} instead of {id, name}, or
   // provide an API for configuring them
   render () {
-    const { items, selected, ...props } = this.props
+    const { items, selected, className, theme } = this.props
     const selectedIndex = indexOf(selected, items)
-    return <KeyControlledList ref='kcl' tabChooses selectedIndex={selectedIndex}
-      onChange={this.onChangeExtractingItem} {...omit('onChange', props)}>
-      {items.map((c, i) =>
-        <li key={c.id || 'blank'}>
-          <a onClick={event => this.change(c, event)}>{c.name}</a>
-        </li>)}
-    </KeyControlledList>
+    const listItems = items.map((c, i) =>
+      <li className={theme.suggestion} key={c.id || 'blank'}>
+        <a onClick={event => this.change(c, event)}>{c.name}</a>
+      </li>
+    )
+    return <KeyControlledList
+      className={theme.suggestionsList || className}
+      children={listItems}
+      ref='kcl'
+      tabChooses
+      selectedIndex={selectedIndex}
+      onChange={this.onChangeExtractingItem}
+      {...omit('onChange', this.props)} />
   }
 }
