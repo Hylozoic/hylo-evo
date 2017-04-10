@@ -16,7 +16,8 @@
           "id": "1",
           "role": 1,
           "community": {
-            "id": "1836"
+            "id": "1836",
+            "slug": "hylo"
           }
         }
       ],

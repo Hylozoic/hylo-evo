@@ -31,24 +31,28 @@ export default class MemberProfile extends React.Component {
     if (this.props.error) return this.displayError(this.props.error)
 
     const { person } = this.props
-    const { avatarUrl, bannerUrl, name } = person
+    const { avatarUrl, bannerUrl, location, name, role } = person
 
     return <div styleName='member-profile'>
-      <ProfileBanner avatarUrl={avatarUrl} bannerUrl={bannerUrl} name={name} location={location} />
+      <ProfileBanner avatarUrl={avatarUrl} bannerUrl={bannerUrl} name={name} location={location} role={role} />
     </div>
   }
 }
 
-export function ProfileBanner ({ avatarUrl, bannerUrl, name }) {
+export function ProfileBanner ({ avatarUrl, bannerUrl, location, name, role }) {
   return <div styleName='banner'>
-    <ProfileNamePlate avatarUrl={avatarUrl} name={name} location={location} />
+    <ProfileNamePlate avatarUrl={avatarUrl} name={name} location={location} role={role} />
   </div>
 }
 
-export function ProfileNamePlate ({ avatarUrl, name, location }) {
+export function ProfileNamePlate ({ avatarUrl, name, location, role }) {
   return <div styleName='name-plate'>
-    <RoundImage url={avatarUrl} large />
-    <h1 styleName='name'>{name}</h1>
-    <span styleName='location'>{location}</span>
+    <RoundImage url={avatarUrl} xlarge />
+    <div styleName='details'>
+      <h1 styleName='name'>{name}</h1>
+      <span styleName='location'>{location}</span>
+      {role && <span styleName='spacer'>•</span>}
+      {role && <span styleName='role'>{ role }</span>}
+    </div>
   </div>
 }

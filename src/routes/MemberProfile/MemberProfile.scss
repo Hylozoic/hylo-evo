@@ -11,8 +11,25 @@
 }
 
 .name {
+  composes: hdr-display from 'css/typography.scss';
+}
+
+.details {
   padding: $space-1x $space-5x;
 }
 
 .location {
+  composes: caption-lt-lg from 'css/typography.scss'; 
 }
+
+.role {
+  composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.spacer {
+  margin: 0 7px;
+  font-size: 8px;
+  position: relative;
+  top: -2px;
+}
+
