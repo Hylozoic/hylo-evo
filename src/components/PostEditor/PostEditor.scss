@@ -67,7 +67,7 @@
 .titleAndDescription {
   display: flex;
   flex-direction: row;
-  &-row {
+  &-column:last-child {
     width: 100%;
   }
 }
