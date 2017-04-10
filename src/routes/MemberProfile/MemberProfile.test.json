@@ -1,44 +1,37 @@
 {
   "data": {
-    "community": {
-      "id": "52",
-      "name": "wombats",
-      "avatarUrl": "http://hylo-dev.s3.amazonaws.com/community/52/avatar/default_community_avatar.png",
-      "members": [
+    "person": {
+      "id": "1001",
+      "name": "Rich Churcher",
+      "twitterName": "richchurcher",
+      "linkedinUrl": "https://www.linkedin.com/in/rich/",
+      "facebookUrl": "https://www.facebook.com/rich",
+      "bio": "I like wombats.",
+      "location": "Auckland, NZ",
+      "url": "https://example.com",
+      "avatarUrl": "https://www.gravatar.com/avatar/9b8d53dbc30a2db40a85586731e8c5bf?d=mm&s=140",
+      "bannerUrl": "http://www.axolotl.org/images/tiger/tiger_larva.jpg",
+      "memberships": [
         {
-          "id": "1001",
-          "name": "Rich Churcher",
-          "twitterName": "richchurcher",
-          "linkedinUrl": "https://www.linkedin.com/in/rich/",
-          "facebookUrl": "https://www.facebook.com/rich",
-          "bio": "I like wombats.",
-          "location": "Auckland, NZ",
-          "url": "https://example.com",
-          "avatarUrl": "https://www.gravatar.com/avatar/9b8d53dbc30a2db40a85586731e8c5bf?d=mm&s=140",
-          "bannerUrl": "http://www.axolotl.org/images/tiger/tiger_larva.jpg",
-          "memberships": [
-            {
-              "id": "1",
-              "role": 1,
-              "community": {
-                "id": "1836"
-              }
-            }
-          ],
-          "membershipsTotal": 1,
-          "posts": [
-            {
-              "id": "3001",
-              "title": "This is a post in #all-topics."
-            },
-            {
-              "id": "3002",
-              "title": "Here is another post. It has a picture in it."
-            }
-          ],
-          "postsTotal": null
+          "id": "1",
+          "role": 1,
+          "community": {
+            "id": "1836"
+          }
         }
-      ]
+      ],
+      "membershipsTotal": 1,
+      "posts": [
+        {
+          "id": "3001",
+          "title": "This is a post in #all-topics."
+        },
+        {
+          "id": "3002",
+          "title": "Here is another post. It has a picture in it."
+        }
+      ],
+      "postsTotal": null
     }
   }
 }

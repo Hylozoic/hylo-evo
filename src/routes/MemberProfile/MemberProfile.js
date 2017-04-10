@@ -34,20 +34,21 @@ export default class MemberProfile extends React.Component {
     const { avatarUrl, bannerUrl, name } = person
 
     return <div styleName='member-profile'>
-      <ProfileBanner avatarUrl={avatarUrl} bannerUrl={bannerUrl} name={name} />
+      <ProfileBanner avatarUrl={avatarUrl} bannerUrl={bannerUrl} name={name} location={location} />
     </div>
   }
 }
 
 export function ProfileBanner ({ avatarUrl, bannerUrl, name }) {
   return <div styleName='banner'>
-    <ProfileNamePlate avatarUrl={avatarUrl} name={name} />
+    <ProfileNamePlate avatarUrl={avatarUrl} name={name} location={location} />
   </div>
 }
 
-export function ProfileNamePlate ({ avatarUrl, name }) {
+export function ProfileNamePlate ({ avatarUrl, name, location }) {
   return <div styleName='name-plate'>
     <RoundImage url={avatarUrl} large />
     <h1 styleName='name'>{name}</h1>
+    <span styleName='location'>{location}</span>
   </div>
 }

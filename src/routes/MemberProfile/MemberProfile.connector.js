@@ -3,6 +3,7 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import { connect } from 'react-redux'
 
 import { fetchPerson } from './MemberProfile.actions'
+import payload from './MemberProfile.test.json'
 import orm from 'store/models'
 
 const defaultPerson = {
@@ -18,17 +19,7 @@ const messages = {
 
 export function getPerson (id) {
   return ormCreateSelector(orm, session => {
-    if (session.Person.hasId(id)) {
-      const person = session.Person.withId(id)
-      return {
-        ...person.ref,
-        posts: person.postsCreated.toModelArray().map(post => ({
-          ...post.ref,
-          communities: post.communities.toRefArray()
-        }))
-      }
-    }
-    return null
+    return payload.data.person
   })
 }
 
