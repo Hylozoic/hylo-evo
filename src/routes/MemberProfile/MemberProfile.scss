@@ -8,6 +8,12 @@
 
 .name-plate {
   display: flex;
+
+  background-color: $color-athens-gray;
+  width: 630px;
+  height: 160px;
+  border-radius: $space-2x;
+  padding: $space-7x $space-4x;
 }
 
 .name {
