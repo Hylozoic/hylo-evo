@@ -43,19 +43,19 @@
     margin-left: 0;
   }
   &-discussion {
-    &:hover, &:active {
+    &:hover, &:active, &-active {
       color: $color-picton-blue;
       background-color: $color-link-water;
     }
   }
   &-request {
-    &:hover, &:active {
+    &:hover, &:active, &-active {
       color: $color-persimmon;
       background-color: $color-peach-schnapps;
     }
   }
   &-offer {
-    &:hover, &:active  {
+    &:hover, &:active, &-active  {
       color: $color-caribbean-green;
       background-color: $color-iceberg;
     }

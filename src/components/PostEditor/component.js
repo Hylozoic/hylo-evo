@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
-import './component.scss'
+import cx from 'classnames'
+import styles from './component.scss'
 import Avatar from 'components/Avatar'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
@@ -22,29 +23,38 @@ export default class PostEditor extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      title: ''
+      title: '',
+      postType: 'discussion'
     }
   }
 
   handleTitleChange = (event) => this.setState({title: event.target.value})
 
+  handlePostTypeSelection = type => event => this.setState({postType: type})
+
   render () {
     const { titlePlaceholder, bodyPlaceholder } = this.props
-    const { title } = this.state
+    const { title, postType } = this.state
+
+    const postTypeButtonProps = type => ({
+      label: type,
+      onClick: this.handlePostTypeSelection(type),
+      className: cx(
+        styles.postType,
+        styles[`postType-${type}`],
+        {
+          [styles[`postType-${type}-active`]]: postType === type
+        }
+      )
+    })
 
     return <div styleName='wrapper'>
       <div styleName='body'>
         <div styleName='initialPrompt' className='bdy-lt-sm'>What are you looking to post?</div>
         <div styleName='postTypes'>
-          <Button styleName='postType postType-discussion' onClick={this.handlePostTypeSelection}>
-            Discussion
-          </Button>
-          <Button styleName='postType postType-request' onClick={this.handlePostTypeSelection}>
-            Request
-          </Button>
-          <Button styleName='postType postType-offer' onClick={this.handlePostTypeSelection}>
-            Offer
-          </Button>
+          <Button {...postTypeButtonProps('discussion')} />
+          <Button {...postTypeButtonProps('request')} />
+          <Button {...postTypeButtonProps('offer')} />
         </div>
         <div styleName='title'>
           <Avatar medium
