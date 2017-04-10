@@ -4,7 +4,7 @@ $height: 56px;
   border: $light-border;
   border-radius: 4px;
   width: 100%;
-  height: $height;
+  min-height: $height;
   padding: $space-2x $space-4x;
   display: flex;
   background: $color-white;
