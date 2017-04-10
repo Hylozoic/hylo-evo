@@ -152,8 +152,8 @@ export class KeyControlledItemList extends React.Component {
     const { items, selected, className, theme } = this.props
     const selectedIndex = indexOf(selected, items)
     const listItems = items.map((c, i) =>
-      <li className={theme.suggestion} key={c.id || 'blank'} onClick={event => this.change(c, event)}>
-        <a>{c.name}</a>
+      <li className={theme.suggestion} key={c.id || 'blank'}>
+        <a onClick={event => this.change(c, event)}>{c.name}</a>
       </li>
     )
     return <KeyControlledList

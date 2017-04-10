@@ -13,6 +13,7 @@
 }
 
 .initialPrompt {
+  composes: bdy-lt-sm from 'css/typography.scss';
   margin-bottom: $space-4x;
 }
 

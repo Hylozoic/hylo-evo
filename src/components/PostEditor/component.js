@@ -32,11 +32,9 @@ export default class PostEditor extends React.Component {
 
   handlePostTypeSelection = type => event => this.setState({postType: type})
 
-  render () {
-    const { titlePlaceholder, bodyPlaceholder } = this.props
-    const { title, postType } = this.state
-
-    const postTypeButtonProps = type => ({
+  postTypeButtonProps = type => {
+    const { postType } = this.state
+    return {
       label: type,
       onClick: this.handlePostTypeSelection(type),
       className: cx(
@@ -46,41 +44,53 @@ export default class PostEditor extends React.Component {
           [styles[`postType-${type}-active`]]: postType === type
         }
       )
-    })
+    }
+  }
+
+  save = () => {
+    const { postType } = this.state
+    return {
+      postType
+    }
+  }
+
+  render () {
+    const { titlePlaceholder, bodyPlaceholder } = this.props
+    const { title } = this.state
 
     return <div styleName='wrapper'>
       <div styleName='body'>
-        <div styleName='initialPrompt' className='bdy-lt-sm'>What are you looking to post?</div>
+        <div styleName='initialPrompt'>What are you looking to post?</div>
         <div styleName='postTypes'>
-          <Button {...postTypeButtonProps('discussion')} />
-          <Button {...postTypeButtonProps('request')} />
-          <Button {...postTypeButtonProps('offer')} />
+          <Button {...this.postTypeButtonProps('discussion')} />
+          <Button {...this.postTypeButtonProps('request')} />
+          <Button {...this.postTypeButtonProps('offer')} />
         </div>
         <div styleName='title'>
-          <Avatar medium
+          <Avatar
+            medium
             styleName='title-avatar'
             url=''
             avatarUrl='https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png' />
-          <input type='text'
+          <input
+            type='text'
             styleName='title-input'
             placeholder={titlePlaceholder}
             value={title}
             onChange={this.handleTitleChange} />
         </div>
-        <HyloEditor styleName='editor' debug placeholder={bodyPlaceholder} />
+        <HyloEditor styleName='editor' placeholder={bodyPlaceholder} />
       </div>
       <div styleName='footer'>
         <div styleName='postIn'>
-          <div styleName='postIn-label'>
-            Post in
-          </div>
+          <div styleName='postIn-label'>Post in</div>
           <div styleName='postIn-communities'>
             <CommunitiesSelector />
           </div>
         </div>
         <div styleName='actionsBar'>
           <div styleName='actions' />
-          <Button styleName='postButton' label='Post' color='green' />
+          <Button onClick={this.save} styleName='postButton' label='Post' color='green' />
         </div>
       </div>
     </div>

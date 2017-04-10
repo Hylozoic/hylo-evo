@@ -5,6 +5,8 @@ import sampleHashtags from './sampleHashtags'
 import * as mentionPlugin from 'draft-js-mention-plugin'
 import * as hashtagPlugin from './hashtagPlugin'
 
+export const MODULE_NAME = 'HyloEditor'
+
 const defaultMentionsSuggestionFilter = mentionPlugin.defaultSuggestionsFilter
 const defaultHashtagSuggestionFilter = hashtagPlugin.defaultSuggestionsFilter
 
@@ -64,12 +66,17 @@ export default function reducer (state = defaultState, action) {
 
 // Selectors
 
+export const moduleSelector = (state) => {
+  console.log(state[MODULE_NAME])
+  return state[MODULE_NAME]
+}
+
 export const getMentionResults = createSelector(
-  (state) => state.HyloEditor,
+  moduleSelector,
   (state, props) => state.mentionResults
 )
 
 export const getHashtagResults = createSelector(
-  (state) => state.HyloEditor,
+  moduleSelector,
   (state, props) => state.hashtagResults
 )

@@ -5,8 +5,8 @@ import styles from './CommunitiesSelector.scss'
 export default class CommunitiesSelector extends Component {
   static propTypes = {
     communitySuggestions: PropTypes.object,
-    findCommunities: PropTypes.func.isRequired,
-    clearCommunities: PropTypes.func.isRequired
+    findSuggestions: PropTypes.func.isRequired,
+    clearSuggestions: PropTypes.func.isRequired
   }
 
   constructor (props) {
@@ -16,9 +16,9 @@ export default class CommunitiesSelector extends Component {
 
   handleInputChange = (input) => {
     if (input && input.length > 0) {
-      this.props.findCommunities(input)
+      this.props.findSuggestions(input)
     } else {
-      this.props.clearCommunities()
+      this.props.clearSuggestions()
     }
   }
 
@@ -34,7 +34,7 @@ export default class CommunitiesSelector extends Component {
     this.setState({
       selectedCommunities: selectedCommunities.concat(community)
     })
-    this.props.clearCommunities()
+    this.props.clearSuggestions()
   }
 
   render () {

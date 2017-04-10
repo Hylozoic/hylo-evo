@@ -1,19 +1,21 @@
 import { createSelector } from 'reselect'
 import sampleCommunities from './sampleCommunities'
 
+export const MODULE_NAME = 'CommunitiesSelector'
+
 const FIND_COMMUNITIES = 'hyloEditor/FIND_COMMUNITIES'
 const CLEAR_COMMUNITIES = 'hyloEditor/CLEAR_COMMUNITIES'
 
 // Action Creators
 
-export function findCommunities (searchText) {
+export function findSuggestions (searchText) {
   return {
     type: FIND_COMMUNITIES,
     payload: { searchText }
   }
 }
 
-export function clearCommunities (searchText) {
+export function clearSuggestions (searchText) {
   return { type: CLEAR_COMMUNITIES }
 }
 
@@ -42,7 +44,9 @@ export default function reducer (state = defaultState, action) {
 
 // Selectors
 
+export const moduleSelector = (state) => state[MODULE_NAME]
+
 export const getCommunitiesResults = createSelector(
-  (state) => state.CommunitiesSelector,
+  moduleSelector,
   (state, props) => state.communitiesResults
 )
