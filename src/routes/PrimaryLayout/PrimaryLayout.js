@@ -9,7 +9,6 @@ import Sidebar from './components/Sidebar'
 import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
-import NavigationHandler from 'routes/NavigationHandler'
 import './PrimaryLayout.scss'
 
 export default class PrimaryLayout extends Component {
@@ -55,7 +54,6 @@ export default class PrimaryLayout extends Component {
           <Route path='/events/:eventId' exact component={EventDetail} />
         </div>
       </div>
-      <NavigationHandler />
     </div>
   }
 }

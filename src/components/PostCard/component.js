@@ -14,8 +14,13 @@ import samplePost from './samplePost'
 const { shape, any, object, string, func, array } = React.PropTypes
 
 export default class PostCard extends React.Component {
+  static contextTypes = {
+    navigate: func
+  }
+
   render () {
-    const { post, className, navigate } = this.props
+    const { post, className } = this.props
+    const { navigate } = this.context
     const slug = post.communities.length > 0 && post.communities[0].slug
 
     return <div styleName='card' className={className}
