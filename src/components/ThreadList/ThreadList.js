@@ -28,6 +28,7 @@ export default class ThreadList extends Component {
       <ul styleName='list'>
         {threads.map(t => {
           return <ThreadListItem id={t.id}
+            key={`thread-li-${t.id}`}
             currentUser={currentUser}
             active={t.id === activeId}
             participants={t.participants}
