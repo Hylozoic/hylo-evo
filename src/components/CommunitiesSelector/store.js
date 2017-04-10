@@ -3,20 +3,20 @@ import sampleCommunities from './sampleCommunities'
 
 export const MODULE_NAME = 'CommunitiesSelector'
 
-const FIND_COMMUNITIES = 'hyloEditor/FIND_COMMUNITIES'
-const CLEAR_COMMUNITIES = 'hyloEditor/CLEAR_COMMUNITIES'
+const FIND_SUGGESTIONS = 'hyloEditor/FIND_SUGGESTIONS'
+const CLEAR_SUGGESTIONS = 'hyloEditor/CLEAR_SUGGESTIONS'
 
 // Action Creators
 
 export function findSuggestions (searchText) {
   return {
-    type: FIND_COMMUNITIES,
+    type: FIND_SUGGESTIONS,
     payload: { searchText }
   }
 }
 
 export function clearSuggestions (searchText) {
-  return { type: CLEAR_COMMUNITIES }
+  return { type: CLEAR_SUGGESTIONS }
 }
 
 // Reducer
@@ -30,12 +30,12 @@ export default function reducer (state = defaultState, action) {
   if (error) return state
 
   switch (type) {
-    case FIND_COMMUNITIES:
+    case FIND_SUGGESTIONS:
       const communitiesResults = sampleCommunities.filter(community =>
         community.name.match(new RegExp('^' + payload.searchText))
       )
       return {...state, communitiesResults}
-    case CLEAR_COMMUNITIES:
+    case CLEAR_SUGGESTIONS:
       return {...state, communitiesResults: []}
     default:
       return state

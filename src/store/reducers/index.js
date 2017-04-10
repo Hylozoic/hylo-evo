@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { router as routerReducer } from 'react-router-redux'
+import { routerReducer } from 'react-router-redux'
 import {
   CHECK_LOGIN,
   FETCH_CURRENT_USER,
@@ -12,7 +12,7 @@ import CommunitiesSelector from 'components/CommunitiesSelector/store.js'
 
 export default combineReducers({
   orm,
-  routerReducer,
+  router: routerReducer,
   HyloEditor,
   CommunitiesSelector,
 

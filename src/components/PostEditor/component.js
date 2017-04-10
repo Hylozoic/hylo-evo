@@ -24,6 +24,7 @@ export default class PostEditor extends React.Component {
     super(props)
     this.state = {
       title: '',
+      titlePlaceholder: props.titlePlaceholder,
       postType: 'discussion'
     }
   }
@@ -63,11 +64,16 @@ export default class PostEditor extends React.Component {
     }
   }
 
+  setSelectedCommunities = selectedCommunities => this.setState({ selectedCommunities })
+
   save = () => {
-    const { postType } = this.state
-    return {
-      postType
+    const { postType, selectedCommunities } = this.state
+    const results = {
+      postType,
+      selectedCommunities
     }
+    console.log(results)
+    return results
   }
 
   render () {
@@ -101,7 +107,7 @@ export default class PostEditor extends React.Component {
         <div styleName='postIn'>
           <div styleName='postIn-label'>Post in</div>
           <div styleName='postIn-communities'>
-            <CommunitiesSelector />
+            <CommunitiesSelector onChange={this.setSelectedCommunities} />
           </div>
         </div>
         <div styleName='actionsBar'>

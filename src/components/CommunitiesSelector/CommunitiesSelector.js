@@ -6,7 +6,8 @@ export default class CommunitiesSelector extends Component {
   static propTypes = {
     communitySuggestions: PropTypes.object,
     findSuggestions: PropTypes.func.isRequired,
-    clearSuggestions: PropTypes.func.isRequired
+    clearSuggestions: PropTypes.func.isRequired,
+    onChange: PropTypes.func
   }
 
   constructor (props) {
@@ -24,17 +25,21 @@ export default class CommunitiesSelector extends Component {
 
   handleDelete = (community) => {
     const { selectedCommunities } = this.state
+    const { onChange } = this.props
     this.setState({
       selectedCommunities: selectedCommunities.filter(c => c.id !== community.id)
     })
+    onChange(this.state.selectedCommunities)
   }
 
   handleAddition = (community) => {
     const { selectedCommunities } = this.state
+    const { onChange } = this.props
     this.setState({
       selectedCommunities: selectedCommunities.concat(community)
     })
     this.props.clearSuggestions()
+    onChange(this.state.selectedCommunities)
   }
 
   render () {
