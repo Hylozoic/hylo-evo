@@ -9,7 +9,7 @@ import payload from './MemberProfile.test.json'
 import { fetchPerson } from './MemberProfile.actions'
 
 const apiMiddleware = store => next => action => {
-  const { id, slug } = get('payload.api.params.variables', action)
+  const { id, slug } = get('payload.api.params.variables', action) || {}
   return id === '46816' && slug === 'wombats' ? next({ ...action, payload }) : next(action)
 }
 
