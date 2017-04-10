@@ -6,7 +6,7 @@ import {
   findHashtags,
   clearHashtags,
   getHashtagResults
-} from './store'
+} from './HyloEditor.store'
 
 export function mapStateToProps (state, props) {
   return {

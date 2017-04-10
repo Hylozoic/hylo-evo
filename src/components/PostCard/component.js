@@ -11,12 +11,13 @@ import { sanitize, present, textLength, truncate, appendInP, humanDate } from 'h
 import { parse } from 'url'
 import './component.scss'
 import samplePost from './samplePost'
+
 const { shape, any, object, string, func, array } = React.PropTypes
 
 export default class PostCard extends React.Component {
   render () {
     const { post, className } = this.props
-    const slug = post.communities.length > 0 && post.communities[0].slug
+    const slug = post.communities && post.communities.length > 0 && post.communities[0].slug
 
     return <div styleName='card' className={className}>
       <PostHeader creator={post.creator}

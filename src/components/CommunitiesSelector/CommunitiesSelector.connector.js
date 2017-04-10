@@ -3,7 +3,7 @@ import {
   findSuggestions,
   clearSuggestions,
   getCommunitiesResults
-} from './store'
+} from './CommunitiesSelector.store'
 
 export function mapStateToProps (state, props) {
   return {
