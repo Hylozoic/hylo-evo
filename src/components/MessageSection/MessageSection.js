@@ -1,12 +1,11 @@
 import React from 'react'
 import visibility from 'visibility'
-import { throttle, isEmpty, maxBy } from 'lodash'
-import { get } from 'lodash/fp'
+import { throttle, isEmpty } from 'lodash'
+import { get, maxBy } from 'lodash/fp'
 const { array, bool, func, object } = React.PropTypes
 import cx from 'classnames'
 import Message from 'components/Message'
 import { position } from 'util/scrolling'
-import { updatePostReadTime } from 'store/actions'
 import './MessageSection.scss'
 
 // the maximum amount of time in minutes that can pass between messages to still
@@ -22,14 +21,14 @@ function createMessageList (messages) {
       isHeader = true
       currentHeader = m
     } else {
-      headerDate = new Date(currentHeader.created_at)
-      messageDate = new Date(m.created_at)
+      headerDate = new Date(currentHeader.createdAt)
+      messageDate = new Date(m.createdAt)
       diff = Math.abs(headerDate - messageDate)
       greaterThanMax = Math.floor(diff / 60000) > MAX_MINS_TO_BATCH
-      isHeader = greaterThanMax || m.user.id !== currentHeader.user.id
+      isHeader = greaterThanMax || m.creator.id !== currentHeader.creator.id
       currentHeader = isHeader ? m : currentHeader
     }
-    return <Message message={m} key={m.id} isHeader={isHeader} />
+    return <Message message={m} key={`message-${m.id}`} isHeader={isHeader} />
   })
 }
 
@@ -42,7 +41,7 @@ export default class MessageSection extends React.Component {
     onLeftBottom: func,
     pending: bool,
     thread: object,
-    updatePostReadTime,
+    updateThreadReadTime: func,
     currentUser: object
   }
 
@@ -62,8 +61,8 @@ export default class MessageSection extends React.Component {
     const messagesLength = this.props.messages.length
     const oldMessagesLength = prevProps.messages.length
     const { currentUser } = this.props
-    const latestMessage = maxBy(this.props.messages || [], 'created_at')
-    const userSentLatest = get('user_id', latestMessage) === currentUser.id
+    const latestMessage = maxBy('createdAt', this.props.messages || [])
+    const userSentLatest = get('creator.id', latestMessage) === currentUser.id
     const { scrolledUp } = this.state
     if (messagesLength !== oldMessagesLength && (!scrolledUp || userSentLatest)) this.scrollToBottom()
   }
@@ -112,8 +111,8 @@ export default class MessageSection extends React.Component {
   }
 
   markAsRead = () => {
-    const { thread, updatePostReadTime } = this.props
-    updatePostReadTime(thread.id)
+    const { thread, updateThreadReadTime } = this.props
+    updateThreadReadTime(thread.id)
   }
 
   render () {

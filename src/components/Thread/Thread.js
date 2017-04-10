@@ -1,10 +1,6 @@
-
-// TODO: change 'followers' to 'participants' or something like that
-
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { filter, sortBy } from 'lodash'
-import { get, map, min, max } from 'lodash/fp'
+import { filter, get, map, min, max, sortBy } from 'lodash/fp'
 const { array, bool, func, object, string } = React.PropTypes
 import MessageSection from 'components/MessageSection'
 import MessageForm from 'components/MessageForm'
@@ -89,22 +85,21 @@ export default class Thread extends React.Component {
     const { thread, pending, fetchBefore, currentUser } = this.props
     const { scrolledUp } = this.state
     const loadMore = () => {
-      if (pending || messages.length >= thread.numComments) return
+      if (pending || messages.length >= thread.messagesTotal) return
       const beforeId = min(map('id', messages))
       fetchBefore(beforeId)
       .then(() => this.refs.messageSection.scrollToMessage(beforeId))
     }
-    const messages = sortBy(this.props.messages || [], 'created_at')
-    return <div>A Thread!</div>
-    return <div className='thread'>
-      <Header thread={thread} />
+    const messages = sortBy('createdAt', this.props.messages || [])
+    return <div styleName='thread'>
+      <Header thread={thread} currentUser={currentUser} />
       <MessageSection {...{messages, pending}} thread={thread}
         onLeftBottom={() => this.setState({scrolledUp: true})}
         onHitBottom={() => this.setState({scrolledUp: false})}
         onScrollToTop={loadMore} ref='messageSection' />
       <PeopleTyping showNames showBorder={scrolledUp} />
       {hasNewMessages(messages, currentUser, thread) && scrolledUp &&
-        <div className='newMessagesNotify' onClick={this.refs.messageSection.scrollToBottom}>
+        <div styleName='new-messages-notify' onClick={this.refs.messageSection.scrollToBottom}>
           New Messages
         </div>}
       <MessageForm threadId={thread.id} ref='form' />
@@ -114,20 +109,19 @@ export default class Thread extends React.Component {
 
 function hasNewMessages (messages, thread, currentUser) {
   const latestMessage = messages.length && messages[messages.length - 1]
-  const latestFromOther = latestMessage && latestMessage.user_id !== currentUser.id
-  return latestFromOther && thread.last_read_at &&
-    new Date(latestMessage.created_at) > new Date(thread.last_read_at)
+  const latestFromOther = latestMessage && latestMessage.creator.id !== currentUser.id
+  return latestFromOther && thread.lastReadAt &&
+    new Date(latestMessage.createdAt) > new Date(thread.lastReadAt)
 }
 
-function Header ({ thread }, { currentUser }) {
-  const followers = thread.followers
-  const gt2 = followers.length - 2
+function Header ({ thread, currentUser }) {
+  const participants = thread.participants
+  const gt2 = participants.length - 2
   const { id } = currentUser
-  const others = filter(followers, f => f.id !== id)
+  const others = filter(f => f.id !== id, participants)
 
-  return <div className='header'>
+  return <div styleName='header'>
     You and <Link to={`/u/${others[0].id}`}>{others[0].name}</Link>
-    {others.length > 1 && <span>and ${gt2} other{gt2 === 1 ? '' : 's'}</span>}
+    {others.length > 1 && <span>and {gt2} other{gt2 === 1 ? '' : 's'}</span>}
   </div>
 }
-Header.contextTypes = {currentUser: object}

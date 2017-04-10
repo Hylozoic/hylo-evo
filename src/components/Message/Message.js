@@ -1,7 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
 import Avatar from 'components/Avatar'
-import { personUrl } from 'util'
+import { personUrl } from 'util/index'
 // import { humanDate, present } from 'util/text'
 // TODO: fix these two functions to be proper from import
 const humanDate = (text) => text
@@ -12,8 +12,9 @@ import './Message.scss'
 const { bool, object } = React.PropTypes
 
 export default function Message ({ message, message: { fromTemp, image }, isHeader }) {
-  const person = message.user
+  const person = message.creator
   // const notPending = message.id.slice(0, 4) === 'post' ? null : true
+  // <span className='date'>{notPending ? humanDate(message.created_at) : 'sending...'}</span>
   let text = present(sanitize(message.text).replace(/\n/g, '<br />'), {noP: true})
 
   return <div className={cx('message', {messageHeader: isHeader})}
@@ -22,8 +23,7 @@ export default function Message ({ message, message: { fromTemp, image }, isHead
     <div className='content'>
       {isHeader && <div>
         <strong className='name'>{sanitize(person.name)}</strong>
-        // <span className='date'>{notPending ? humanDate(message.created_at) : 'sending...'}</span>
-        <span className='date'>{humanDate(message.created_at)}</span>
+        <span className='date'>{humanDate(message.createdAt)}</span>
       </div>}
       <div className='text'>
         <span dangerouslySetInnerHTML={{__html: text}} />
