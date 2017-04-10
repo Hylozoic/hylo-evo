@@ -75,6 +75,7 @@
   }
   &-input {
     composes: hdr-headline from 'css/typography.scss';
+    width: 100%;
     outline: none;
     border: none;
   }

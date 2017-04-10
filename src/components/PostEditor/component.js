@@ -6,8 +6,8 @@ import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 
-const TITLE_PLACEHOLDER = 'What’s on your mind?'
-const BODY_PLACEHOLDER = 'Add a description'
+const DEFAULT_TITLE_PLACEHOLDER = 'What’s on your mind?'
+const DEFAULT_BODY_PLACEHOLDER = 'Add a description'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
@@ -16,8 +16,8 @@ export default class PostEditor extends React.Component {
   }
 
   static defaultProps = {
-    titlePlaceholder: TITLE_PLACEHOLDER,
-    bodyPlaceholder: BODY_PLACEHOLDER
+    titlePlaceholder: DEFAULT_TITLE_PLACEHOLDER,
+    bodyPlaceholder: DEFAULT_BODY_PLACEHOLDER
   }
 
   constructor (props) {
@@ -30,7 +30,23 @@ export default class PostEditor extends React.Component {
 
   handleTitleChange = (event) => this.setState({title: event.target.value})
 
-  handlePostTypeSelection = type => event => this.setState({postType: type})
+  handlePostTypeSelection = postType => event => {
+    let titlePlaceholder
+    switch (postType) {
+      case 'discussions':
+        titlePlaceholder = DEFAULT_TITLE_PLACEHOLDER
+        break
+      case 'request':
+        titlePlaceholder = DEFAULT_TITLE_PLACEHOLDER
+        break
+      case 'offer':
+        titlePlaceholder = 'What super powers can you offer?'
+        break
+      default:
+        titlePlaceholder = DEFAULT_TITLE_PLACEHOLDER
+    }
+    this.setState({titlePlaceholder, postType})
+  }
 
   postTypeButtonProps = type => {
     const { postType } = this.state
@@ -55,8 +71,8 @@ export default class PostEditor extends React.Component {
   }
 
   render () {
-    const { titlePlaceholder, bodyPlaceholder } = this.props
-    const { title } = this.state
+    const { bodyPlaceholder } = this.props
+    const { titlePlaceholder, title } = this.state
 
     return <div styleName='wrapper'>
       <div styleName='body'>

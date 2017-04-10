@@ -10,8 +10,6 @@ import orm from './ormReducer'
 import HyloEditor from 'components/HyloEditor/store.js'
 import CommunitiesSelector from 'components/CommunitiesSelector/store.js'
 
-console.log(HyloEditor)
-
 export default combineReducers({
   orm,
   routerReducer,
