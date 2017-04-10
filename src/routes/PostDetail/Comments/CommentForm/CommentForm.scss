@@ -1,0 +1,16 @@
+.commentForm {
+  padding: 0 25px;
+}
+
+.reply {
+  composes: text-button from 'css/typography.scss';
+}
+
+.prompt {
+  width: 100%;
+  box-shadow: 0px 4px 56px 0px $color-alto;
+}
+
+.avatar {
+  margin-right: 15px;
+}
