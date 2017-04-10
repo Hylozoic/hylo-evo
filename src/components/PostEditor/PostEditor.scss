@@ -67,6 +67,9 @@
 .titleAndDescription {
   display: flex;
   flex-direction: row;
+  &-row {
+    width: 100%;
+  }
 }
 
 .titleAvatar {

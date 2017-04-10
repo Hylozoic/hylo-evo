@@ -89,14 +89,14 @@ export default class PostEditor extends React.Component {
           <Button {...this.postTypeButtonProps('offer')} />
         </div>
         <div styleName='titleAndDescription'>
-          <div>
+          <div styleName='titleAndDescription-row'>
             <Avatar
               medium
               styleName='titleAvatar'
               url=''
               avatarUrl='https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png' />
           </div>
-          <div>
+          <div styleName='titleAndDescription-row'>
             <input
               type='text'
               styleName='titleInput'
