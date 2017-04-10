@@ -62,7 +62,7 @@ export const PostHeader = ({ creator, date, type, context, communities, close, c
       <Link to={personUrl(creator)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
       {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
       <div>
-        <span className='timestamp'>
+        <span styleName='timestamp'>
           {humanDate(date)}{context && <span styleName='spacer'>•</span>}
         </span>
         {context && <Link to='/' styleName='context'>
@@ -140,7 +140,7 @@ export const commentCaption = (commenters, commentersTotal) => {
 export const PostFooter = ({ id, commenters, commentersTotal, votesTotal }) => {
   return <div styleName='footer'>
     <PeopleImages imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
-    <span className='caption-lt-lg'>{commentCaption(commenters, commentersTotal)}</span>
+    <span styleName='caption'>{commentCaption(commenters, commentersTotal)}</span>
     <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{votesTotal}</a></div>
   </div>
 }

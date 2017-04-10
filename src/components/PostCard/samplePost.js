@@ -27,3 +27,12 @@ export default function samplePost () {
     updatedAt: faker.date.recent().toString()
   }
 }
+
+export function sampleComment () {
+  return {
+    id: 'FAKE_' + Math.round(Math.random() * 10000),
+    creator: fakePerson(),
+    createdAt: faker.date.recent().toString(),
+    text: "Hey Steven! I live right next to there and can come help out. I've never done petitioning but I'm open to learn."
+  }
+}
