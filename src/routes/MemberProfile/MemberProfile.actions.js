@@ -17,6 +17,15 @@ const fetchPersonQuery =
       facebook_url
       url
       location
+      memberships {
+        id
+        role
+        community {
+          id
+          name
+        }
+      }
+      membershipsTotal
       posts {
         id
         title

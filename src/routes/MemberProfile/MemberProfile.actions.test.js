@@ -9,8 +9,8 @@ import payload from './MemberProfile.test.json'
 import { fetchPerson } from './MemberProfile.actions'
 
 const apiMiddleware = store => next => action => {
-  const id = get('payload.api.params.variables.id', action)
-  return id === '46816' ? next({...action, payload }) : next(action)
+  const { id, slug } = get('payload.api.params.variables', action)
+  return id === '46816' && slug === 'wombats' ? next({ ...action, payload }) : next(action)
 }
 
 it('Returns the correct action', () => {
@@ -19,12 +19,13 @@ it('Returns the correct action', () => {
     graphql: {
       query: 'A very wombaty query.',
       variables: {
-        id: '12345'
+        id: '12345',
+        slug: 'wombats'
       }
     }
   }
   const { query, variables } = expected.graphql
-  const actual = fetchPerson(variables.id, query)
+  const actual = fetchPerson(variables.id, variables.slug, query)
   expect(actual).toEqual(expected)
 })
 
@@ -47,7 +48,7 @@ describe('ACTIONS', () => {
   })
 
   it('Dispatches ADD_PERSON when person is requested', () => {
-    store.dispatch(fetchPerson('46816'))
+    store.dispatch(fetchPerson('46816', 'wombats'))
     const actual = store.getActions().find(a => a.type === ADD_PERSON)
     expect(actual).toBeTruthy()
   })
