@@ -63,18 +63,29 @@
   }
 }
 
+.titleAndDescription {
+  display: flex;
+  flex-direction: row;
+  &-column:first-child {
+    /* !empty */
+  }
+  &-column:last-child {
+    /* !empty */
+  }
+}
+
+.titleAvatar {
+  margin-right: $space-2x;
+  padding: $space-1x;
+  height: $space-9x;
+}
 
 .title {
   border: none;
-  margin-bottom: $space-2x;
-  // TODO: Wrap the title input and HyloEditor and flexbox this layout
-  margin-left: $space-12x;
-  &-avatar {
-    margin-left: -$space-12x;
-    margin-right: $space-2x;
-  }
   &-input {
     composes: hdr-headline from 'css/typography.scss';
+    margin-bottom: $space-2x;
+    height: $space-9x;
     width: 100%;
     outline: none;
     border: none;
@@ -83,7 +94,6 @@
 
 .editor {
   height: 200px;
-  margin-left: $space-12x;
   margin-bottom: $space-6x;
 }
 

@@ -88,20 +88,24 @@ export default class PostEditor extends React.Component {
           <Button {...this.postTypeButtonProps('request')} />
           <Button {...this.postTypeButtonProps('offer')} />
         </div>
-        <div styleName='title'>
-          <Avatar
-            medium
-            styleName='title-avatar'
-            url=''
-            avatarUrl='https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png' />
-          <input
-            type='text'
-            styleName='title-input'
-            placeholder={titlePlaceholder}
-            value={title}
-            onChange={this.handleTitleChange} />
+        <div styleName='titleAndDescription'>
+          <div>
+            <Avatar
+              medium
+              styleName='titleAvatar'
+              url=''
+              avatarUrl='https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png' />
+          </div>
+          <div>
+            <input
+              type='text'
+              styleName='title-input'
+              placeholder={titlePlaceholder}
+              value={title}
+              onChange={this.handleTitleChange} />
+            <HyloEditor styleName='editor' placeholder={bodyPlaceholder} />
+          </div>
         </div>
-        <HyloEditor styleName='editor' placeholder={bodyPlaceholder} />
       </div>
       <div styleName='footer'>
         <div styleName='postIn'>
