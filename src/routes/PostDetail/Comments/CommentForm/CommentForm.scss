@@ -1,16 +1,28 @@
 .commentForm {
   padding: 0 25px;
+  margin-bottom: 40px;
 }
 
 .reply {
   composes: text-button from 'css/typography.scss';
+  margin-bottom: 20px;
 }
 
 .prompt {
+  border-radius: 4px;
   width: 100%;
-  box-shadow: 0px 4px 56px 0px $color-alto;
+  height: 56px;
+  line-height: 56px;
+  box-shadow: 0px 4px 21px 2px $color-black-squeeze;
+  cursor: pointer;
+  @include font-regular;
+  font-size: 16px;
+  color: $color-rhino-30;
 }
 
-.avatar {
-  margin-right: 15px;
+.image {
+  margin-right: 10px;
+  margin-left: 20px;
+  position: relative;
+  top: 14px;
 }

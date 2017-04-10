@@ -22,7 +22,7 @@ export default class CommentForm extends Component {
     return <div styleName='commentForm' onClick={() => this.setState({open: !open})}>
       <div styleName='reply'><Icon name='Home' />Reply</div>
       {!open && <div styleName='prompt'>
-        <RoundImage url={currentUser.avatarUrl} small styleName='avatar' />
+        <RoundImage url={currentUser.avatarUrl} small styleName='image' />
         Hi {firstName}, what's on your mind?
       </div>}
       {open && <div>FORM</div>}
