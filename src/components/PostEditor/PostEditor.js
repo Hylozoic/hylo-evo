@@ -99,7 +99,7 @@ export default class PostEditor extends React.Component {
           <div>
             <input
               type='text'
-              styleName='title-input'
+              styleName='titleInput'
               placeholder={titlePlaceholder}
               value={title}
               onChange={this.handleTitleChange} />

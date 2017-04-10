@@ -37,6 +37,7 @@
   border-radius: $space-1x;
   color: $color-rhino-30;
   background-color: $color-athens-gray-dark;
+  cursor: pointer;
   &:last-child {
     margin-right: 0;
   }
@@ -66,12 +67,6 @@
 .titleAndDescription {
   display: flex;
   flex-direction: row;
-  &-column:first-child {
-    /* !empty */
-  }
-  &-column:last-child {
-    /* !empty */
-  }
 }
 
 .titleAvatar {
@@ -80,16 +75,13 @@
   height: $space-9x;
 }
 
-.title {
+.titleInput {
+  composes: hdr-headline from 'css/typography.scss';
+  margin-bottom: $space-2x;
+  height: $space-9x;
+  width: 100%;
+  outline: none;
   border: none;
-  &-input {
-    composes: hdr-headline from 'css/typography.scss';
-    margin-bottom: $space-2x;
-    height: $space-9x;
-    width: 100%;
-    outline: none;
-    border: none;
-  }
 }
 
 .editor {
@@ -135,5 +127,4 @@
 }
 
 .postButton {
-  /* !empty */
 }
