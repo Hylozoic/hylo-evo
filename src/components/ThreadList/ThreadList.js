@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react'
 import { filter, map } from 'lodash/fp'
-import cx from 'classnames'
 import { Link } from 'react-router-dom'
 import RoundImage from 'components/RoundImage'
 import Badge from 'components/Badge'
@@ -16,13 +15,8 @@ export default class ThreadList extends Component {
     activeId: string
   }
 
-  componentDidMount () {
-    // fetchThreads
-  }
-
   render () {
     const { currentUser, threads, activeId } = this.props
-    console.log(threads)
     return <div styleName='thread-list'>
       <div styleName='header'>
         <Link to='/messages/new'><Button label='New Message' styleName='new-message' /></Link>

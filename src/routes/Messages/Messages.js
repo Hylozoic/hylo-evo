@@ -3,18 +3,20 @@ import ThreadList from 'components/ThreadList'
 import Thread from 'components/Thread'
 import NewThread from 'components/NewThread'
 import './Messages.scss'
-const { object } = PropTypes
+const { array, object } = PropTypes
 
 export default class Messages extends Component {
   static propTypes = {
-    match: object
+    currentUser: object,
+    match: object,
+    threads: array
   }
 
   render () {
-    const { match: { params: { threadId } } } = this.props
+    const { match: { params: { threadId } }, threads } = this.props
     return <div styleName='modal'>
       <div styleName='content'>
-        <ThreadList activeId={threadId} />
+        <ThreadList activeId={threadId} threads={threads} />
         {threadId ? <Thread id={threadId} /> : <NewThread />}
       </div>
     </div>
