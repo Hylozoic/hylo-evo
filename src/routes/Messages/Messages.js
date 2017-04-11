@@ -12,6 +12,11 @@ export default class Messages extends Component {
     threads: array
   }
 
+  componentDidMount () {
+    // FIXME this doesn't belong here
+    this.props.fetchCurrentUser()
+  }
+
   render () {
     const { match: { params: { threadId } }, threads } = this.props
     return <div styleName='modal'>

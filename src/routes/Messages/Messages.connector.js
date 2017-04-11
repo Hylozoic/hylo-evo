@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-// import { someAction } from 'some/path/to/actions'
+import { fetchCurrentUser } from 'routes/PrimaryLayout/actions'
 import getCurrentUser from 'store/selectors/getCurrentUser'
 import { rndPerson } from 'routes/Feed/sampleData'
 const SAMPLE_PERSON_1 = rndPerson()
@@ -42,7 +42,7 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = {
-  // someAction
+  fetchCurrentUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
