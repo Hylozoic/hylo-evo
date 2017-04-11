@@ -42,6 +42,7 @@ export default class HyloEditor extends Component {
   handleEditorChange = (editorState) => {
     if (this.props.debug) console.log(stateToHTML(editorState.getCurrentContent()))
     this.setState({ editorState })
+    this.props.onChange(stateToHTML(editorState.getCurrentContent()))
   }
 
   handleMentionsSearch = ({ value }) => {

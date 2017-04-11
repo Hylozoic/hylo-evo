@@ -6,45 +6,46 @@ import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 
-const DEFAULT_TITLE_PLACEHOLDER = 'What’s on your mind?'
-const DEFAULT_BODY_PLACEHOLDER = 'Add a description'
+export const PROP_DEFAULTS = {
+  titlePlaceholder: 'What’s on your mind?',
+  bodyPlaceholder: 'Add a description',
+  postType: 'discussion'
+}
 
 export default class PostEditor extends React.Component {
   static propTypes = {
     titlePlaceholder: PropTypes.string,
-    bodyPlaceholder: PropTypes.string
+    bodyPlaceholder: PropTypes.string,
+    postType: PropTypes.string,
   }
 
   static defaultProps = {
-    titlePlaceholder: DEFAULT_TITLE_PLACEHOLDER,
-    bodyPlaceholder: DEFAULT_BODY_PLACEHOLDER
+    titlePlaceholder: PROP_DEFAULTS.titlePlaceholder,
+    bodyPlaceholder: PROP_DEFAULTS.bodyPlaceholder,
+    postType: PROP_DEFAULTS.postType
   }
 
   constructor (props) {
     super(props)
     this.state = {
+      postType: props.postType,
       title: '',
       titlePlaceholder: props.titlePlaceholder,
-      postType: 'discussion'
+      description: '',
+      selectedCommunities: []
     }
   }
-
-  handleTitleChange = (event) => this.setState({title: event.target.value})
 
   handlePostTypeSelection = postType => event => {
     let titlePlaceholder
     switch (postType) {
-      case 'discussions':
-        titlePlaceholder = DEFAULT_TITLE_PLACEHOLDER
-        break
-      case 'request':
-        titlePlaceholder = DEFAULT_TITLE_PLACEHOLDER
-        break
       case 'offer':
         titlePlaceholder = 'What super powers can you offer?'
         break
+      case 'discussions':
+      case 'request':
       default:
-        titlePlaceholder = DEFAULT_TITLE_PLACEHOLDER
+        titlePlaceholder = PROP_DEFAULTS.titlePlaceholder
     }
     this.setState({titlePlaceholder, postType})
   }
@@ -64,16 +65,26 @@ export default class PostEditor extends React.Component {
     }
   }
 
+  handleTitleChange = (event) => this.setState({title: event.target.value})
+
+  setDescription = description => this.setState({ description })
+
   setSelectedCommunities = selectedCommunities => this.setState({ selectedCommunities })
 
   save = () => {
-    const { postType, selectedCommunities } = this.state
+    const {
+      postType,
+      selectedCommunities,
+      title,
+      description
+    } = this.state
     const results = {
       postType,
-      selectedCommunities
+      selectedCommunities,
+      title,
+      description
     }
     console.log(results)
-    return results
   }
 
   render () {
@@ -104,7 +115,10 @@ export default class PostEditor extends React.Component {
             placeholder={titlePlaceholder}
             value={title}
             onChange={this.handleTitleChange} />
-          <HyloEditor styleName='editor' placeholder={bodyPlaceholder} />
+          <HyloEditor
+            styleName='editor'
+            placeholder={bodyPlaceholder}
+            onChange={this.setDescription} />
         </div>
       </div>
       <div styleName='footer'>
