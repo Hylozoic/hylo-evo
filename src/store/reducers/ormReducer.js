@@ -41,7 +41,7 @@ export default function ormReducer (state = {}, action) {
       ModelExtractor.addAll({
         session,
         root: payload.data.me,
-        modelName: 'Person'
+        modelName: 'Me'
       })
       break
 

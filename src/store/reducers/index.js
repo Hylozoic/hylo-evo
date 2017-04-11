@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import {
-  FETCH_CURRENT_USER,
   TOGGLE_COMMUNITIES_DRAWER
 } from 'store/constants'
 import orm from './ormReducer'
@@ -16,11 +15,6 @@ export default combineReducers({
   orm,
   router: routerReducer,
   pending,
-
-  currentUser: (state = {}, { type, error, payload }) => {
-    if (!error && type === FETCH_CURRENT_USER) return payload.data.me
-    return state
-  },
 
   // NOTE: Move local to PrimaryLayout?
   communitiesDrawerOpen: (state = false, { type }) => {
