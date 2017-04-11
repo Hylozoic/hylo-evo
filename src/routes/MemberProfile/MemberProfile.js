@@ -2,6 +2,7 @@ import React from 'react'
 
 import './MemberProfile.scss'
 import RoundImage from 'components/RoundImage'
+import { bgImageStyle } from 'util/index'
 
 const { any, arrayOf, object, string, shape } = React.PropTypes
 
@@ -30,18 +31,26 @@ export default class MemberProfile extends React.Component {
   render () {
     if (this.props.error) return this.displayError(this.props.error)
 
-    const { person } = this.props
-    const { avatarUrl, bannerUrl, location, name, role } = person
+    const { avatarUrl, bannerUrl, location, name, role } = this.props.person
 
     return <div styleName='member-profile'>
-      <ProfileBanner avatarUrl={avatarUrl} bannerUrl={bannerUrl} name={name} location={location} role={role} />
-    </div>
+      <ProfileBanner
+        avatarUrl={avatarUrl}
+        bannerUrl={bannerUrl}
+        location={location}
+        name={name}
+        role={role} /></div>
   }
 }
 
 export function ProfileBanner ({ avatarUrl, bannerUrl, location, name, role }) {
   return <div styleName='banner'>
-    <ProfileNamePlate avatarUrl={avatarUrl} name={name} location={location} role={role} />
+    <ProfileNamePlate
+      avatarUrl={avatarUrl}
+      location={location}
+      name={name}
+      role={role} />
+    {bannerUrl && <div style={bgImageStyle(bannerUrl)} styleName='banner-image' />}
   </div>
 }
 
