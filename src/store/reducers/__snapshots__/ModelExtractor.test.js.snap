@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`produces the expected flattened list of model instances 1`] = `
+Array [
+  Object {
+    "modelName": "Person",
+    "payload": Object {
+      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+      "id": "46816",
+      "name": "Rich",
+    },
+  },
+  Object {
+    "modelName": "Person",
+    "payload": Object {
+      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+      "id": "46816",
+      "name": "Rich",
+    },
+  },
+  Object {
+    "modelName": "Person",
+    "payload": Object {
+      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+      "id": "99",
+      "name": "Flargle Argleson",
+    },
+  },
+  Object {
+    "modelName": "Community",
+    "payload": Object {
+      "id": "1836",
+      "members": Array [
+        "99",
+      ],
+      "name": "Wombats",
+    },
+  },
+  Object {
+    "modelName": "Person",
+    "payload": Object {
+      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+      "id": "46816",
+      "name": "Rich",
+    },
+  },
+  Object {
+    "modelName": "Comment",
+    "payload": Object {
+      "createdAt": "Fri Mar 24 2017 10:55:41 GMT+1300 (NZDT)",
+      "creator": "46816",
+      "id": "1",
+      "text": "<p>Here's a comment!</p>",
+    },
+  },
+  Object {
+    "modelName": "Post",
+    "payload": Object {
+      "comments": Array [
+        "1",
+      ],
+      "commentsTotal": "1",
+      "communities": Array [
+        "1836",
+      ],
+      "communitiesTotal": "1",
+      "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+      "creator": "46816",
+      "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+<p></p>
+<p></p>",
+      "endsAt": null,
+      "followers": Array [
+        "46816",
+      ],
+      "followersTotal": "1",
+      "fulfilledAt": null,
+      "id": "30002",
+      "startsAt": null,
+      "title": "Hello",
+      "type": null,
+    },
+  },
+  Object {
+    "modelName": "Person",
+    "payload": Object {
+      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+      "id": "46816",
+      "name": "Rich",
+    },
+  },
+  Object {
+    "modelName": "Person",
+    "payload": Object {
+      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+      "id": "46816",
+      "name": "Rich",
+    },
+  },
+  Object {
+    "modelName": "Community",
+    "payload": Object {
+      "id": "1836",
+      "name": "Wombats",
+    },
+  },
+  Object {
+    "modelName": "Person",
+    "payload": Object {
+      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+      "id": "46816",
+      "name": "Rich",
+    },
+  },
+  Object {
+    "modelName": "Comment",
+    "payload": Object {
+      "createdAt": "Fri Mar 24 2017 10:50:41 GMT+1300 (NZDT)",
+      "creator": "46816",
+      "id": "2",
+      "text": "<p>Another comment.</p>",
+    },
+  },
+  Object {
+    "modelName": "Post",
+    "payload": Object {
+      "comments": Array [
+        "2",
+      ],
+      "commentsTotal": "1",
+      "communities": Array [
+        "1836",
+      ],
+      "communitiesTotal": "1",
+      "createdAt": "Sat Mar 18 2017 10:49:43 GMT+1300 (NZDT)",
+      "creator": "46816",
+      "details": "<p>So true.</p>",
+      "endsAt": null,
+      "followers": Array [
+        "46816",
+      ],
+      "followersTotal": "1",
+      "fulfilledAt": null,
+      "id": "30003",
+      "startsAt": null,
+      "title": "Yup",
+      "type": null,
+    },
+  },
+  Object {
+    "modelName": "Me",
+    "payload": Object {
+      "avatarUrl": "http://foo.com/bar.png",
+      "name": "Foo Bar",
+      "posts": Array [
+        "30002",
+        "30003",
+      ],
+    },
+  },
+]
+`;
