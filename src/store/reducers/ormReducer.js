@@ -5,7 +5,8 @@ import ModelExtractor from './ModelExtractor'
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
   const { Comment, Community, Membership, Person, Post, FeedItem } = session
-  const { payload, type, meta } = action
+  const { payload, type, meta, error } = action
+  if (error) return state
 
   const add = addEntity(payload)
   const update = updateEntity(payload)
