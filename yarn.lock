@@ -2102,6 +2102,14 @@ dotenv@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
 
+draft-js-autocomplete-plugin-creator@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/draft-js-autocomplete-plugin-creator/-/draft-js-autocomplete-plugin-creator-0.2.0.tgz#fe017ca88475bc56f8518598740e20cdd9a80020"
+  dependencies:
+    decorate-component-with-props "^1.0.2"
+    find-with-regex "^1.0.2"
+    union-class-names "^1.0.0"
+
 draft-js-export-html@^0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/draft-js-export-html/-/draft-js-export-html-0.5.2.tgz#089e55ce06d5aed0dbd9af5eee2eb56c58a1c428"

@@ -3,16 +3,16 @@ import { applyMiddleware, compose } from 'redux'
 import createLogger from 'redux-logger'
 import promiseMiddleware from 'redux-promise'
 import graphqlMiddleware from './graphql'
+import graphqlErrorMiddleware from './graphqlError'
 import apiMiddleware from './apiMiddleware'
-import normalizingMiddleware from './normalizingMiddleware'
 import pendingMiddleware from './pendingMiddleware'
 
 const middleware = compact([
   graphqlMiddleware,
   apiMiddleware(),
+  graphqlErrorMiddleware,
   pendingMiddleware,
   promiseMiddleware,
-  normalizingMiddleware,
   process.env.NODE_ENV === 'development' && createLogger({collapsed: true})
 ])
 

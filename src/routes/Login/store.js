@@ -61,11 +61,11 @@ const reducer = combineReducers({
 export default reducer
 
 export const pickIsLoggedIn = createSelector(
-  get('login'),
+  get('Login'),
   pick('isLoggedIn')
 )
 
 export const pickError = createSelector(
-  get('login'),
+  get('Login'),
   pick('error')
 )

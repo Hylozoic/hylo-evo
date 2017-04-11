@@ -13,6 +13,7 @@
 }
 
 .initialPrompt {
+  composes: bdy-lt-sm from 'css/typography.scss';
   margin-bottom: $space-4x;
 }
 
@@ -25,19 +26,43 @@
 }
 
 .postType {
+  display: inline-block;
   width: 100%;
-  font-size: 0.625rem;
-  line-height: 0;
   margin: 0 $space-2x;
   padding: $space-5x;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 0;
   border-radius: $space-1x;
-  &-right {
+  color: $color-rhino-30;
+  background-color: $color-athens-gray-dark;
+  &:last-child {
     margin-right: 0;
   }
-  &-left {
+  &:first-child {
     margin-left: 0;
   }
+  &-discussion {
+    &:hover, &:active, &-active {
+      color: $color-picton-blue;
+      background-color: $color-link-water;
+    }
+  }
+  &-request {
+    &:hover, &:active, &-active {
+      color: $color-persimmon;
+      background-color: $color-peach-schnapps;
+    }
+  }
+  &-offer {
+    &:hover, &:active, &-active  {
+      color: $color-caribbean-green;
+      background-color: $color-iceberg;
+    }
+  }
 }
+
 
 .title {
   border: none;
@@ -50,6 +75,7 @@
   }
   &-input {
     composes: hdr-headline from 'css/typography.scss';
+    width: 100%;
     outline: none;
     border: none;
   }
@@ -68,15 +94,19 @@
 }
 
 .postIn {
-  height: 3rem;
+  min-height: 3rem;
   border-top: solid 1px $color-ghost-30;
-  padding: $space-3x;
+  padding: $space-5x;
+  line-height: 1;
+  display: flex;
+  align-items: flex-start;
   &-label {
-    display: inline-block;
-    margin-right: $space-2x;
+    color: $color-rhino-80;
+    white-space: nowrap;
+    margin-right: $space-4x;
   }
   &-communities {
-    display: inline-block;
+    /* !empty */
   }
 }
 
