@@ -12,7 +12,7 @@ const middleware = compact([
   apiMiddleware(),
   pendingMiddleware,
   promiseMiddleware,
-  normalizingMiddleware,
+  // normalizingMiddleware,
   process.env.NODE_ENV === 'development' && createLogger({collapsed: true})
 ])
 

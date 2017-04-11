@@ -49,6 +49,9 @@ export function fetchPosts (slug, opts = {}) {
         first: opts.first || 20,
         cursor: opts.cursor
       }
+    },
+    meta: {
+      rootModelName: 'Community'
     }
   }
 }

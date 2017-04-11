@@ -1,10 +1,11 @@
 import * as a from 'store/constants'
 import orm from 'store/models'
+import ModelExtractor from './ModelExtractor'
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
   const { Comment, Community, Membership, Person, Post, FeedItem } = session
-  const { payload, type } = action
+  const { payload, type, meta } = action
 
   const add = addEntity(payload)
   const update = updateEntity(payload)
@@ -35,7 +36,21 @@ export default function ormReducer (state = {}, action) {
     case a.UPDATE_FEED_ITEM: update(FeedItem); break
     case a.DELETE_FEED_ITEM: del(FeedItem); break
 
+    case a.FETCH_CURRENT_USER:
+      ModelExtractor.addAll({
+        session,
+        root: payload.data.me,
+        modelName: 'Person'
+      })
+      break
+
     case a.FETCH_POSTS:
+      ModelExtractor.addAll({
+        session,
+        root: payload.data.community,
+        modelName: meta.rootModelName
+      })
+
       const { id, posts } = payload.data.community
       const community = Community.withId(id)
       community.update({
