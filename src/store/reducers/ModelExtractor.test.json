@@ -2,6 +2,8 @@
   "FETCH_POSTS for me": {
     "data": {
       "me": {
+        "name": "Foo Bar",
+        "avatarUrl": "http://foo.com/bar.png",
         "posts": [
           {
             "id": "30002",

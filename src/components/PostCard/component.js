@@ -11,13 +11,19 @@ import { sanitize, present, textLength, truncate, appendInP, humanDate } from 'h
 import { parse } from 'url'
 import './component.scss'
 import samplePost from './samplePost'
+import { isEmpty } from 'lodash'
 
 const { shape, any, object, string, func, array } = React.PropTypes
 
 export default class PostCard extends React.Component {
+  static contextTypes = {
+    navigate: func
+  }
+
   render () {
-    const { post, className, navigate } = this.props
-    const slug = post.communities && post.communities.length > 0 && post.communities[0].slug
+    const { post, post: { communities }, className } = this.props
+    const { navigate } = this.context
+    const slug = !isEmpty(communities) && communities[0].slug
 
     return <div styleName='card' className={className}
       onClick={() => navigate(postUrl(post.id, slug))}>
