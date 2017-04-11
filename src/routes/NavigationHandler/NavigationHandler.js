@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react'
+import { Children, PropTypes, Component } from 'react'
 import './NavigationHandler.scss'
 const { func, object } = PropTypes
 
@@ -14,14 +14,11 @@ export default class NavigationHandler extends Component {
   getChildContext () {
     const { history } = this.props
     return {
-      navigate: to => {
-        history.push(to)
-      }
+      navigate: to => history.push(to)
     }
   }
 
   render () {
-    const { children } = this.props
-    return <span>{children}</span>
+    return Children.only(this.props.children)
   }
 }
