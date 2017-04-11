@@ -5,6 +5,7 @@ import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import './component.scss'
 import Dropdown from 'components/Dropdown'
+import { get } from 'lodash/fp'
 
 export default function TopNav ({ community, currentUser, logout, toggleCommunitiesDrawer }) {
   const imageStyle = bgImageStyle(community.avatarUrl)
@@ -20,7 +21,9 @@ export default function TopNav ({ community, currentUser, logout, toggleCommunit
         <Link to='/messages' styleName='navIcon'><Icon name='Messages' styleName='icon' /></Link>
         <Link to='/' styleName='navIcon'><Icon name='Notifications' styleName='icon' /></Link>
         <Dropdown styleName='navIcon dropdown' triangle
-          toggleChildren={<RoundImage url={currentUser.avatarUrl} small />}>
+          toggleChildren={
+            <RoundImage url={get('avatarUrl', currentUser)} small />
+          }>
           <li><Link to='/'>Profile</Link></li>
           <li><Link to='/'>Settings</Link></li>
           <li><a onClick={logout}>Log out</a></li>
