@@ -47,7 +47,7 @@ export default class PostEditor extends React.Component {
       default:
         titlePlaceholder = PROP_DEFAULTS.titlePlaceholder
     }
-    this.setState({titlePlaceholder, postType})
+    this.setState({ titlePlaceholder, postType })
   }
 
   postTypeButtonProps = type => {

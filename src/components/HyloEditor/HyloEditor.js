@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 import Editor from 'draft-js-plugins-editor'
 import createMentionPlugin from 'draft-js-mention-plugin'
 import createHashtagPlugin from './hashtagPlugin'
+import createLinkifyPlugin from 'draft-js-linkify-plugin'
 import { EditorState } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
 import 'draft-js/dist/Draft.css'
@@ -14,13 +15,15 @@ const mentionPlugin = createMentionPlugin({
   // theme: styles
 })
 const hashtagPlugin = createHashtagPlugin()
+const linkifyPlugin = createLinkifyPlugin()
 
 const { MentionSuggestions } = mentionPlugin
 const { CompletionSuggestions: HashtagSuggestions } = hashtagPlugin
 
 const plugins = [
   mentionPlugin,
-  hashtagPlugin
+  hashtagPlugin,
+  linkifyPlugin
 ]
 
 export default class HyloEditor extends Component {
@@ -28,6 +31,7 @@ export default class HyloEditor extends Component {
     mentionResults: PropTypes.instanceOf(Immutable.List),
     hashtagResults: PropTypes.instanceOf(Immutable.List),
     placeholder: PropTypes.string,
+    onChange: PropTypes.func,
     className: PropTypes.string,
     debug: PropTypes.bool
   }

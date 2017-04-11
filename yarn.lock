@@ -2126,6 +2126,19 @@ draft-js-hashtag-plugin@2.0.0-beta10:
     immutable "~3.7.4"
     union-class-names "^1.0.0"
 
+draft-js-linkify-plugin@^2.0.0-beta1:
+  version "2.0.0-beta1"
+  resolved "https://registry.yarnpkg.com/draft-js-linkify-plugin/-/draft-js-linkify-plugin-2.0.0-beta1.tgz#03098dce5744c66228f2851cd13777182ad24d61"
+  dependencies:
+    decorate-component-with-props "^1.0.2"
+    draft-js ">=0.7.0"
+    immutable ">=3.8.1"
+    linkify-it "2.0.0"
+    react ">=15.1.0"
+    react-dom ">=15.1.0"
+    tlds "1.132.0"
+    union-class-names "^1.0.0"
+
 draft-js-mention-plugin@@2.0.0-beta10:
   version "2.0.0-beta10"
   resolved "https://registry.yarnpkg.com/draft-js-mention-plugin/-/draft-js-mention-plugin-2.0.0-beta10.tgz#f70869010fb996485fe3439890a0970f734c6e0c"
@@ -2151,7 +2164,7 @@ draft-js-utils@^0.1.5:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/draft-js-utils/-/draft-js-utils-0.1.7.tgz#e2b6927ca620edf1855a4bfc1cf1d21080a70f16"
 
-draft-js@>=0.9.1, draft-js@^0.10.0:
+draft-js@>=0.7.0, draft-js@>=0.9.1, draft-js@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/draft-js/-/draft-js-0.10.0.tgz#29d16191012b932fdab28a9b37ec1538f421abf6"
   dependencies:
@@ -3367,7 +3380,7 @@ immutable-ops@^0.5.2:
   dependencies:
     ramda "^0.22.1"
 
-immutable@^3.8.1:
+immutable@>=3.8.1, immutable@^3.8.1:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.1.tgz#200807f11ab0f72710ea485542de088075f68cd2"
 
@@ -4108,6 +4121,12 @@ levn@^0.3.0, levn@~0.3.0:
   dependencies:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
+
+linkify-it@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-2.0.0.tgz#61de35c5f22c3633189a75d3c40cd3dc96acbb94"
+  dependencies:
+    uc.micro "^1.0.1"
 
 linkifyjs@^2.1.4:
   version "2.1.4"
@@ -5865,7 +5884,7 @@ react-dev-utils@^0.4.2:
     sockjs-client "1.0.3"
     strip-ansi "3.0.1"
 
-react-dom@>=0.14.0, react-dom@^15.4.2:
+react-dom@>=0.14.0, react-dom@>=15.1.0, react-dom@^15.4.2:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.4.2.tgz#015363f05b0a1fd52ae9efdd3a0060d90695208f"
   dependencies:
@@ -5911,7 +5930,7 @@ react-router@^4.0.0:
     path-to-regexp "^1.5.3"
     warning "^3.0.0"
 
-react@>=0.14.0, react@^15.4.2:
+react@>=0.14.0, react@>=15.1.0, react@^15.4.2:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.2.tgz#41f7991b26185392ba9bae96c8889e7e018397ef"
   dependencies:
@@ -6900,6 +6919,10 @@ timers-browserify@^2.0.2:
   dependencies:
     setimmediate "^1.0.4"
 
+tlds@1.132.0:
+  version "1.132.0"
+  resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.132.0.tgz#85b8edba2e664531ccf6a69989be790c16777305"
+
 tmpl@1.0.x:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.4.tgz#23640dd7b42d00433911140820e5cf440e521dd1"
@@ -6988,6 +7011,10 @@ typedarray@^0.0.6:
 ua-parser-js@^0.7.9:
   version "0.7.12"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.12.tgz#04c81a99bdd5dc52263ea29d24c6bf8d4818a4bb"
+
+uc.micro@^1.0.1:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/uc.micro/-/uc.micro-1.0.3.tgz#7ed50d5e0f9a9fb0a573379259f2a77458d50192"
 
 uglify-js@2.8.x, uglify-js@^2.6, uglify-js@^2.7.5:
   version "2.8.16"
