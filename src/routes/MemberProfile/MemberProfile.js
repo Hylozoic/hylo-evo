@@ -4,6 +4,8 @@ import './MemberProfile.scss'
 import RoundImage from 'components/RoundImage'
 import { bgImageStyle } from 'util/index'
 
+import SimpleTabBar from 'components/SimpleTabBar'
+
 const { any, arrayOf, object, string, shape } = React.PropTypes
 
 export default class MemberProfile extends React.Component {
@@ -39,7 +41,11 @@ export default class MemberProfile extends React.Component {
         bannerUrl={bannerUrl}
         location={location}
         name={name}
-        role={role} /></div>
+        role={role} />
+      <div styleName='content'>
+        <ProfileControls />
+      </div>
+    </div>
   }
 }
 
@@ -65,3 +71,12 @@ export function ProfileNamePlate ({ avatarUrl, name, location, role }) {
     </div>
   </div>
 }
+
+export function ProfileControls () {
+  return <div styleName='controls'>
+    <SimpleTabBar
+      currentTab='Overview'
+      tabNames={['Overview', 'Posts', 'Comments', 'Upvotes']} />
+  </div>
+}
+
