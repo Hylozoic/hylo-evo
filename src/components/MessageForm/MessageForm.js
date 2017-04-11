@@ -13,7 +13,7 @@ export default class MessageForm extends React.Component {
   static propTypes = {
     className: string,
     currentUser: object,
-    postId: string,
+    threadId: string,
     placeholder: string,
     onFocus: func,
     onBlur: func,
@@ -29,11 +29,11 @@ export default class MessageForm extends React.Component {
   submit = event => {
     if (event) event.preventDefault()
     if (!this.state.text) return false
-    const { postId, createComment } = this.props
+    const { threadId, createComment } = this.props
     const { currentUser } = this.context
     const userId = currentUser.id
     const { text } = this.state
-    createComment({postId, text, userId})
+    createComment({threadId, text, userId})
     this.startTyping.cancel()
     this.sendIsTyping(false)
     this.setState({text: ''})
@@ -53,9 +53,9 @@ export default class MessageForm extends React.Component {
   }
 
   sendIsTyping (isTyping) {
-    const { postId } = this.props
+    const { threadId } = this.props
     if (this.socket) {
-      this.socket.post(socketUrl(`/noo/post/${postId}/typing`), {isTyping})
+      this.socket.post(socketUrl(`/noo/post/${threadId}/typing`), {isTyping})
     }
   }
 
