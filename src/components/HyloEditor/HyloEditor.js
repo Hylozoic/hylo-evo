@@ -2,18 +2,21 @@ import React, { Component, PropTypes } from 'react'
 import Immutable from 'immutable'
 import Editor from 'draft-js-plugins-editor'
 import createMentionPlugin from 'draft-js-mention-plugin'
-import createHashtagPlugin from 'draft-js-hashtag-plugin'
+import createHashtagPlugin from './hashtagPlugin'
 import { EditorState } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
 import 'draft-js/dist/Draft.css'
 import 'draft-js-mention-plugin/lib/plugin.css'
-import 'draft-js-hashtag-plugin/lib/plugin.css'
-import './component.scss'
+import './HyloEditor.scss'
 
+const mentionPlugin = createMentionPlugin({
+  // TODO: Map to local CSS Modules stylesheet (copy from plugin)
+  // theme: styles
+})
 const hashtagPlugin = createHashtagPlugin()
-const mentionPlugin = createMentionPlugin()
 
 const { MentionSuggestions } = mentionPlugin
+const { CompletionSuggestions: HashtagSuggestions } = hashtagPlugin
 
 const plugins = [
   mentionPlugin,
@@ -23,6 +26,7 @@ const plugins = [
 export default class HyloEditor extends Component {
   static propTypes = {
     mentionResults: PropTypes.instanceOf(Immutable.List),
+    hashtagResults: PropTypes.instanceOf(Immutable.List),
     placeholder: PropTypes.string,
     className: PropTypes.string,
     debug: PropTypes.bool
@@ -41,8 +45,11 @@ export default class HyloEditor extends Component {
   }
 
   handleMentionsSearch = ({ value }) => {
-    console.log('!!!', value)
     return this.props.findMentions(value)
+  }
+
+  handleHashtagSearch = ({ value }) => {
+    return this.props.findHashtags(value)
   }
 
   render () {
@@ -56,6 +63,9 @@ export default class HyloEditor extends Component {
         onSearchChange={this.handleMentionsSearch}
         suggestions={this.props.mentionResults}
         onClose={this.props.clearMentions} />
+      <HashtagSuggestions
+        onSearchChange={this.handleHashtagSearch}
+        suggestions={this.props.hashtagResults} />
     </div>
   }
 }

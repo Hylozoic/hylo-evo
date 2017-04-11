@@ -6,15 +6,18 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
-import { personUrl, bgImageStyle, humanDate } from 'util/index'
+import { personUrl, bgImageStyle } from 'util/index'
+import { sanitize, present, textLength, truncate, appendInP, humanDate } from 'hylo-utils/text'
 import { parse } from 'url'
 import './component.scss'
 import samplePost from './samplePost'
+
 const { shape, any, object, string, func, array } = React.PropTypes
 
 export default class PostCard extends React.Component {
   render () {
     const { post, className } = this.props
+    const slug = post.communities && post.communities.length > 0 && post.communities[0].slug
 
     return <div styleName='card' className={className}>
       <PostHeader creator={post.creator}
@@ -25,7 +28,8 @@ export default class PostCard extends React.Component {
       <PostBody title={post.title}
         details={post.details}
         imageUrl={post.imageUrl}
-        linkPreview={post.linkPreview} />
+        linkPreview={post.linkPreview}
+        slug={slug} />
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
@@ -78,17 +82,21 @@ export const PostHeader = ({ creator, date, type, context, communities }) => {
   </div>
 }
 
-export const PostBody = ({ title, details, imageUrl, linkPreview }) => {
+const maxDetailsLength = 144
+
+export const PostBody = ({ title, details, imageUrl, linkPreview, slug }) => {
   // TODO: Present details as HTML and sanitize
-  const truncated = details &&
-    details.length > 147
-    ? details.slice(0, 144) + '...'
-    : details
+  let presentedDetails = present(sanitize(details), {slug})
+  const shouldTruncate = textLength(presentedDetails) > maxDetailsLength
+  if (shouldTruncate) {
+    presentedDetails = truncate(presentedDetails, maxDetailsLength)
+  }
+  if (presentedDetails) presentedDetails = appendInP(presentedDetails, '&nbsp;')
 
   return <div styleName='body'>
     {imageUrl && <div style={bgImageStyle(imageUrl)} styleName='image' />}
     <div styleName='title' className='hdr-headline'>{title}</div>
-    {truncated && <div styleName='description'>{truncated}</div>}
+    {presentedDetails && <div styleName='description' dangerouslySetInnerHTML={{__html: presentedDetails}} />}
     {linkPreview && <LinkPreview {...linkPreview} />}
   </div>
 }
