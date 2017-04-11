@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { filter, map } from 'lodash/fp'
+import { filter, get, map } from 'lodash/fp'
 import { Link } from 'react-router-dom'
 import RoundImage from 'components/RoundImage'
 import Badge from 'components/Badge'
@@ -41,7 +41,7 @@ export default class ThreadList extends Component {
 }
 
 function ThreadListItem ({currentUser, active, id, participants, latestMessage, unreadCount}) {
-  const otherParticipants = filter(p => p.id !== currentUser.id, participants)
+  const otherParticipants = filter(p => p.id !== get('id', currentUser), participants)
   return <li styleName='list-item'>
     <Link to={`/t/${id}`}>
       {active && <div styleName='active-thread' />}

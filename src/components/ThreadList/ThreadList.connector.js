@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
 // import { someAction } from 'some/path/to/actions'
-import getCurrentUser from 'store/selectors/getCurrentUser'
+import { getMe } from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
   return {
-    currentUser: getCurrentUser(state)
+    currentUser: getMe(state.orm)
   }
 }
 

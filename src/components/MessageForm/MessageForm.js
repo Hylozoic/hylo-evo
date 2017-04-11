@@ -1,5 +1,6 @@
 import React from 'react'
 import { throttle } from 'lodash'
+import { get } from 'lodash/fp'
 import { onEnterNoShift } from 'util/textInput'
 import { getSocket, socketUrl } from 'client/websockets'
 import RoundImage from 'components/RoundImage'
@@ -81,7 +82,7 @@ export default class MessageForm extends React.Component {
     }
 
     return <form onSubmit={this.submit} styleName='message-form' className={className}>
-      <RoundImage url={currentUser.avatarUrl} styleName='user-image' medium />
+      <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
       <textarea ref='editor' name='message' value={text} styleName='message-textarea'
         rows='1'
         placeholder={placeholder}

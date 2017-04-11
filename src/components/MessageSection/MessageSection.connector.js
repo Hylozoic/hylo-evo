@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
-import getCurrentUser from 'store/selectors/getCurrentUser'
+import { getMe } from 'store/selectors/getMe'
 
 const updateThreadReadTime = () => {}
 
 export function mapStateToProps (state) {
   return {
-    currentUser: getCurrentUser(state)
+    currentUser: getMe(state.orm)
   }
 }
 

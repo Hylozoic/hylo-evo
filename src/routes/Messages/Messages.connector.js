@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { fetchCurrentUser } from 'routes/PrimaryLayout/actions'
-import getCurrentUser from 'store/selectors/getCurrentUser'
+import { getMe } from 'store/selectors/getMe'
 import { rndPerson } from 'routes/Feed/sampleData'
 const SAMPLE_PERSON_1 = rndPerson()
 const SAMPLE_PERSON_2 = rndPerson()
@@ -10,7 +10,7 @@ const SAMPLE_PERSON_5 = rndPerson()
 
 export function mapStateToProps (state, props) {
   return {
-    currentUser: getCurrentUser(state),
+    currentUser: getMe(state.orm),
     threads: [
       {
         id: '1',
