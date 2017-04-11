@@ -67,7 +67,6 @@ export default class PrimaryLayout extends Component {
           <Route path='/c/:slug/p/:postId' exact component={PostDetail} />
         </div>
       </div>
-      <NavigationHandler />
     </div>
   }
 }

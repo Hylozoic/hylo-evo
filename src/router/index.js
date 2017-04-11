@@ -24,9 +24,11 @@ export function serverRouter (req, context) {
 }
 
 function rootRoutes () {
-  return <Switch>
-    <Route path='/ui-kit' component={UIKit} />
-    <NonAuthRoute path='/login' component={Login} />
-    <AuthRoute path='/' component={PrimaryLayout} />
-  </Switch>
+  return <NavigationHandler>
+    <Switch>
+      <Route path='/ui-kit' component={UIKit} />
+      <NonAuthRoute path='/login' component={Login} />
+      <AuthRoute path='/' component={PrimaryLayout} />
+    </Switch>
+  </NavigationHandler>
 }
