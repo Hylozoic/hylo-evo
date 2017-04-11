@@ -1,10 +1,10 @@
-$height: 56px;
+$min-height: 56px;
 
 .message-form {
   border: $light-border;
   border-radius: 4px;
   width: 100%;
-  min-height: $height;
+  min-height: $min-height;
   padding: $space-2x $space-4x;
   display: flex;
   background: $color-white;
@@ -16,7 +16,7 @@ $height: 56px;
   border: none;
   resize: none;
   outline: none;
-  padding: 0 $space-2x;
+  padding: $space-2x;
 }
 
 .user-image {

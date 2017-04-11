@@ -1,3 +1,4 @@
+import { times } from 'lodash'
 import faker from 'faker'
 
 export default {
@@ -7,8 +8,8 @@ export default {
   messagesTotal: 100,
   participants: [
     {id: '1', name: 'Person 1'},
-    {id: '2', name: 'Person 2'},
-    {id: '7', name: 'Person 7'}
+    {id: '3', name: 'Jane Smith'},
+    {id: '2', name: 'Person 2'}
   ]
 }
 
@@ -25,7 +26,7 @@ export const messages = [
   },
   {
     id: '2',
-    text: faker.lorem.sentence(),
+    text: times(3, () => faker.lorem.paragraph()).join(),
     creator: {
       id: '2',
       name: 'Person 2',
@@ -85,7 +86,7 @@ export const messages = [
   },
   {
     id: '8',
-    text: faker.lorem.sentence(),
+    text: times(3, () => faker.lorem.paragraph()).join(),
     creator: {
       id: '1',
       name: 'Person 1',
@@ -105,10 +106,20 @@ export const messages = [
   },
   {
     id: '10',
-    text: faker.lorem.sentence(),
+    text: times(3, () => faker.lorem.paragraph()).join(),
     creator: {
       id: '2',
       name: 'Person 2',
+      avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+    },
+    createdAt: new Date()
+  },
+  {
+    id: '11',
+    text: times(3, () => faker.lorem.paragraph()).join(),
+    creator: {
+      id: '1',
+      name: 'Person 1',
       avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
     },
     createdAt: new Date()

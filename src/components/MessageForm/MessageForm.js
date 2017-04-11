@@ -83,6 +83,7 @@ export default class MessageForm extends React.Component {
     return <form onSubmit={this.submit} styleName='message-form' className={className}>
       <RoundImage url={currentUser.avatarUrl} styleName='user-image' medium />
       <textarea ref='editor' name='message' value={text} styleName='message-textarea'
+        rows='1'
         placeholder={placeholder}
         onFocus={onFocus}
         onChange={e => this.setState({text: e.target.value})}

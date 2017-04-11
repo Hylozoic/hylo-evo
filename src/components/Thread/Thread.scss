@@ -6,12 +6,8 @@
   position: relative;
 }
 
-.new-messages-notify {
-
-}
-
 .header {
-  composes: bdy-drk-lg from 'css/typography.scss';
+  display: flex;
   height: $messages-header-height;
   padding: $messages-header-vertical-padding $messages-header-horizontal-padding;
   border-bottom: $light-border;
@@ -19,9 +15,35 @@
   border-right: $light-border;
 }
 
+.header-text {
+  composes: bdy-drk-lg from 'css/typography.scss';
+  padding: $space-2x $space-2x $space-2x 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.close-messages {
+  cursor: pointer;
+  padding: $space-2x 0;
+
+  &:hover {
+    text-decoration: none;
+
+    .close-messages-icon {
+      color: $color-rhino-60;
+    }
+  }
+}
+
+.more-icon {
+  padding: $space-1x 0;
+}
+
 .message-form {
   position: absolute;
-  bottom: 41px;
+  bottom: 40px;
   padding: 0 30px;
   width: 100%;
 }

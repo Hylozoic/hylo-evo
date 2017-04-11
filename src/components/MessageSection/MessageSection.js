@@ -70,6 +70,7 @@ export default class MessageSection extends React.Component {
   scrollToMessage (id) {
     const message = document.querySelector(`[data-message-id="${id}"]`)
 
+    // FIXME: this won't work anymore
     // the last portion of the offset varies because sometimes the message that
     // is first in the list before pagination won't have a header after the
     // pagination is done
@@ -112,7 +113,7 @@ export default class MessageSection extends React.Component {
 
   markAsRead = () => {
     const { thread, updateThreadReadTime } = this.props
-    updateThreadReadTime(thread.id)
+    //updateThreadReadTime(thread.id)
   }
 
   render () {

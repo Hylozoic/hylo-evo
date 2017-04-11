@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { filter, get, map, min, max, sortBy } from 'lodash/fp'
 const { array, bool, func, object, string } = React.PropTypes
+import Icon from 'components/Icon'
 import MessageSection from 'components/MessageSection'
 import MessageForm from 'components/MessageForm'
 import PeopleTyping from 'components/PeopleTyping'
@@ -29,7 +30,7 @@ export default class Thread extends React.Component {
   setupForThread () {
     return
     const { thread: { id }, onThreadPage } = this.props
-    onThreadPage()
+    //onThreadPage()
     if (this.socket) {
       this.socket.post(socketUrl(`/noo/post/${id}/subscribe`)) // for people typing
 
@@ -77,19 +78,20 @@ export default class Thread extends React.Component {
 
   componentWillUnmount () {
     const { offThreadPage } = this.props
-    offThreadPage()
+    //offThreadPage()
     this.disableSocket()
   }
 
   render () {
     const { thread, pending, fetchBefore, currentUser } = this.props
     const { scrolledUp } = this.state
-    const loadMore = () => {
+    /*const loadMore = () => {
       if (pending || messages.length >= thread.messagesTotal) return
       const beforeId = min(map('id', messages))
       fetchBefore(beforeId)
       .then(() => this.refs.messageSection.scrollToMessage(beforeId))
-    }
+    }*/
+    const loadMore = () => {}
     const messages = sortBy('createdAt', this.props.messages || [])
     return <div styleName='thread'>
       <Header thread={thread} currentUser={currentUser} />
@@ -97,14 +99,10 @@ export default class Thread extends React.Component {
         onLeftBottom={() => this.setState({scrolledUp: true})}
         onHitBottom={() => this.setState({scrolledUp: false})}
         onScrollToTop={loadMore} ref='messageSection' />
-      <PeopleTyping showNames showBorder={scrolledUp} />
-      {hasNewMessages(messages, currentUser, thread) && scrolledUp &&
-        <div styleName='new-messages-notify' onClick={this.refs.messageSection.scrollToBottom}>
-          New Messages
-        </div>}
       <div styleName='message-form'>
         <MessageForm threadId={thread.id} ref='form' />
       </div>
+      <PeopleTyping showNames showBorder={scrolledUp} />
     </div>
   }
 }
@@ -118,12 +116,17 @@ function hasNewMessages (messages, thread, currentUser) {
 
 function Header ({ thread, currentUser }) {
   const participants = thread.participants
-  const gt2 = participants.length - 2
   const { id } = currentUser
-  const others = filter(f => f.id !== id, participants)
+  const others = map('name', filter(f => f.id !== id, participants))
+  const othersMinusLast = others.slice(0, others.length - 1)
 
   return <div styleName='header'>
-    You and <Link to={`/u/${others[0].id}`}>{others[0].name}</Link>
-    {others.length > 1 && <span> and {gt2} other{gt2 === 1 ? '' : 's'}</span>}
+    <div styleName='header-text'>
+      You{others.length > 1 ? `, ${othersMinusLast.join(', ')}` : ''} and {others[others.length - 1]}
+    </div>
+    <Icon name='More' styleName='more-icon' />
+    <Link to='/' styleName='close-messages'>
+      <Icon name='Ex' styleName='close-messages-icon' />
+    </Link>
   </div>
 }
