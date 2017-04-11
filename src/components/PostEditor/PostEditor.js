@@ -81,30 +81,30 @@ export default class PostEditor extends React.Component {
     const { titlePlaceholder, title } = this.state
 
     return <div styleName='wrapper'>
-      <div styleName='body'>
+      <div styleName='header'>
         <div styleName='initialPrompt'>What are you looking to post?</div>
         <div styleName='postTypes'>
           <Button {...this.postTypeButtonProps('discussion')} />
           <Button {...this.postTypeButtonProps('request')} />
           <Button {...this.postTypeButtonProps('offer')} />
         </div>
-        <div styleName='titleAndDescription'>
-          <div styleName='titleAndDescription-column'>
-            <Avatar
-              medium
-              styleName='titleAvatar'
-              url=''
-              avatarUrl='https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png' />
-          </div>
-          <div styleName='titleAndDescription-column'>
-            <input
-              type='text'
-              styleName='titleInput'
-              placeholder={titlePlaceholder}
-              value={title}
-              onChange={this.handleTitleChange} />
-            <HyloEditor styleName='editor' placeholder={bodyPlaceholder} />
-          </div>
+      </div>
+      <div styleName='body'>
+        <div styleName='body-column'>
+          <Avatar
+            medium
+            styleName='titleAvatar'
+            url=''
+            avatarUrl='https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png' />
+        </div>
+        <div styleName='body-column'>
+          <input
+            type='text'
+            styleName='titleInput'
+            placeholder={titlePlaceholder}
+            value={title}
+            onChange={this.handleTitleChange} />
+          <HyloEditor styleName='editor' placeholder={bodyPlaceholder} />
         </div>
       </div>
       <div styleName='footer'>
@@ -115,7 +115,6 @@ export default class PostEditor extends React.Component {
           </div>
         </div>
         <div styleName='actionsBar'>
-          <div styleName='actions' />
           <Button onClick={this.save} styleName='postButton' label='Post' color='green' />
         </div>
       </div>
