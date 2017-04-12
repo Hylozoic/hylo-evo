@@ -10,12 +10,16 @@ import { tagUrl, communityUrl } from 'util/index'
 export default class PostDetail extends Component {
   static propTypes = {
     post: object,
-    slug: string,
+    slug: string
+  }
+
+  static contextTypes = {
     navigate: func
   }
 
   render () {
-    const { post, slug, navigate } = this.props
+    const { post, slug } = this.props
+    const { navigate } = this.context
     return <div styleName='post'>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}
