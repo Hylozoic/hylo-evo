@@ -1,6 +1,7 @@
 import React from 'react'
 
 import './MemberProfile.scss'
+import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import { bgImageStyle } from 'util/index'
 
@@ -33,7 +34,17 @@ export default class MemberProfile extends React.Component {
   render () {
     if (this.props.error) return this.displayError(this.props.error)
 
-    const { avatarUrl, bannerUrl, location, name, role } = this.props.person
+    const {
+      avatarUrl,
+      bannerUrl,
+      facebookUrl,
+      linkedinUrl,
+      location,
+      name,
+      role,
+      twitterName,
+      url
+    } = this.props.person
 
     return <div styleName='member-profile'>
       <ProfileBanner
@@ -43,7 +54,12 @@ export default class MemberProfile extends React.Component {
         name={name}
         role={role} />
       <div styleName='content'>
-        <ProfileControls />
+        <ProfileControls
+          facebookUrl={facebookUrl}
+          linkedinUrl={linkedinUrl}
+          twitterName={twitterName}
+          url={url} />
+        <h2 styleName='subhead'>About me</h2>
       </div>
     </div>
   }
@@ -72,10 +88,25 @@ export function ProfileNamePlate ({ avatarUrl, name, location, role }) {
   </div>
 }
 
-export function ProfileControls () {
+export function ProfileControls ({ facebookUrl, linkedinUrl, twitterName, url }) {
   return <div styleName='controls'>
+    <SocialButtons
+      facebookUrl={facebookUrl}
+      linkedinUrl={linkedinUrl}
+      twitterName={twitterName}
+      url={url} />
+    <hr styleName='separator' />
     <SimpleTabBar
       currentTab='Overview'
       tabNames={['Overview', 'Posts', 'Comments', 'Upvotes']} />
   </div>
+}
+
+export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
+  return <ul styleName='social-buttons'>
+    {facebookUrl && <li><a href={facebookUrl}><Icon name='ArrowUp' /></a></li>}
+    {linkedinUrl && <li><a href={linkedinUrl}><Icon name='ArrowUp' /></a></li>}
+    {twitterName && <li><a href={twitterName}><Icon name='ArrowUp' /></a></li>}
+    {url && <li><a href={url}><Icon name='ArrowUp' /></a></li>}
+  </ul>
 }

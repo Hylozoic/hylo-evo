@@ -1,12 +1,10 @@
 import { connect } from 'react-redux'
 
 import { fetchPerson, personSelector } from './MemberProfile.store'
-import orm from 'store/models'
 
-const defaultPerson = {
-  name: '',
-  avatarUrl: '',
-  bannerUrl: ''
+// TODO: this sort of thing belongs in an i18n module
+const messages = {
+  invalid: "That doesn't seem to be a valid person ID."
 }
 
 export function mapStateToProps (state, { match }) {

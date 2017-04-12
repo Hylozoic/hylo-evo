@@ -55,10 +55,15 @@
   justify-content: center;
 }
 
+.subhead {
+  composes: hdr-headline from 'css/typography.scss';
+  margin: $space-8x 0;
+}
+
 .banner-image {
   width: 93%;
-  height: 4 * $space-20x;
-  margin-top: -$space-8x;
+  height: 4 * $space-18x;
+  margin-top: -$space-10x;
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: $space-1x;
@@ -68,4 +73,22 @@
   margin: $space-2x 0;
   flex-direction: row;
   justify-content: flex-start;
+}
+
+.separator {
+  margin: $space-4x 0 $space-8x 0;
+  opacity: 0.3;
+}
+
+.social-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: $space-6x 0;
+
+  li {
+    list-style: none;
+    border: 1px dotted grey;
+    margin: 0 $space-2x;
+  }
 }

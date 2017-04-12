@@ -1,6 +1,7 @@
 import { createSelector } from 'redux-orm'
 
 import { FETCH_PERSON } from 'store/constants'
+import orm from 'store/models'
 
 const fetchPersonQuery =
 `query PersonDetails ($id: ID) {
@@ -48,15 +49,16 @@ export function fetchPerson (id, query = fetchPersonQuery) {
   }
 }
 
-// TODO: this sort of thing belongs in an i18n module
-const messages = {
-  invalid: "That doesn't seem to be a valid person ID."
-}
-
 export function getRole (slug, memberships = []) {
   return memberships.find(m => m.community.slug === slug && m.hasModeratorRole)
     ? 'Community Manager'
     : null
+}
+
+const defaultPerson = {
+  name: '',
+  avatarUrl: '',
+  bannerUrl: ''
 }
 
 export const personSelector = createSelector(
