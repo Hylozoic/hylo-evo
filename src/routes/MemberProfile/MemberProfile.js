@@ -14,10 +14,19 @@ export default class MemberProfile extends React.Component {
     id: any,
     person: shape({
       id: any,
-      name: string,
       avatarUrl: string,
+      bannerUrl: string,
+      bio: string,
+      facebookUrl: string,
+      linkedinUrl: string,
+      memberships: arrayOf(object),
+      membershipsTotal: any,
+      name: string,
       posts: arrayOf(object),
-      postsTotal: any
+      postsTotal: any,
+      role: string,
+      twitterName: string,
+      url: string
     })
   }
 
@@ -37,6 +46,7 @@ export default class MemberProfile extends React.Component {
     const {
       avatarUrl,
       bannerUrl,
+      bio,
       facebookUrl,
       linkedinUrl,
       location,
