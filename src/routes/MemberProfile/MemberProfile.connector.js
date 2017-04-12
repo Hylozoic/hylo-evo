@@ -1,8 +1,7 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { connect } from 'react-redux'
 
-import { fetchPerson } from './MemberProfile.actions'
-import payload from './MemberProfile.test.json'
+import { fetchPerson } from './MemberProfile.store'
 import orm from 'store/models'
 
 const defaultPerson = {
@@ -18,14 +17,28 @@ const messages = {
 
 export function getPerson (id) {
   return ormCreateSelector(orm, session => {
-    return payload.data.person
+    if (session.Person.hasId(id)) {
+      const person = session.Person.withId(id)
+      return {
+        ...person.ref,
+        memberships: person.memberships.toModelArray().map(membership => ({
+          ...membership.ref,
+          community: membership.community.ref
+        })),
+        posts: person.postsCreated.toModelArray().map(post => ({
+          ...post.ref,
+          communities: post.communities.toRefArray()
+        }))
+      }
+    }
+    return null
   })
 }
 
 export function getRole (slug, memberships = []) {
   // TODO: get proper roles, avoid assuming 1 === admin!
   return memberships
-    .find(m => m.community.slug === slug && m.role === 1)
+    .find(m => m.community.slug === slug && m.hasModeratorRole)
       ? 'Community Manager'
       : null
 }
@@ -34,10 +47,8 @@ export function mapStateToProps ({ orm }, { match }) {
   const { id, slug } = match.params
   const error = Number.isSafeInteger(Number(id)) ? null : messages.invalid
   let person = error ? defaultPerson : getPerson(id)(orm)
-  const role = getRole(slug, person.memberships)
-  if (role) {
-    person = { ...person, role }
-  }
+
+  if (person) person = { ...person, role: getRole(slug, person.memberships) }
 
   return {
     id,

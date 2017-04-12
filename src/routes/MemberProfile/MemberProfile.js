@@ -79,4 +79,3 @@ export function ProfileControls () {
       tabNames={['Overview', 'Posts', 'Comments', 'Upvotes']} />
   </div>
 }
-
