@@ -68,13 +68,11 @@ export default class PostEditor extends React.Component {
       selectedCommunities,
       title
     } = this.state
-
-    console.log('getContent', this.editor.getWrappedInstance().getContent())
     const results = {
       postType,
       selectedCommunities,
       title,
-      description
+      description: this.editor.getContent()
     }
     console.log(results)
   }
@@ -109,9 +107,8 @@ export default class PostEditor extends React.Component {
             onChange={this.handleTitleChange} />
           <HyloEditor
             styleName='editor'
-            submitOnReturnHandler={this.save}
             placeholder={bodyPlaceholder}
-            ref={e => { this.editor = e }} />
+            ref={component => { this.editor = component.getWrappedInstance() }} />
         </div>
       </div>
       <div styleName='footer'>

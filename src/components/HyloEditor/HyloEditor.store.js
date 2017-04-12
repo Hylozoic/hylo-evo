@@ -10,10 +10,10 @@ export const MODULE_NAME = 'HyloEditor'
 const defaultMentionsSuggestionFilter = mentionPlugin.defaultSuggestionsFilter
 const defaultHashtagSuggestionFilter = hashtagPlugin.defaultSuggestionsFilter
 
-const FIND_MENTIONS = 'hyloEditor/FIND_MENTIONS'
-const CLEAR_MENTIONS = 'hyloEditor/CLEAR_MENTIONS'
-const FIND_HASHTAGS = 'hyloEditor/FIND_HASHTAGS'
-const CLEAR_HASHTAGS = 'hyloEditor/CLEAR_HASHTAGS'
+const FIND_MENTIONS = `${MODULE_NAME}/FIND_MENTIONS`
+const CLEAR_MENTIONS = `${MODULE_NAME}/CLEAR_MENTIONS`
+const FIND_HASHTAGS = `${MODULE_NAME}/FIND_HASHTAGS`
+const CLEAR_HASHTAGS = `${MODULE_NAME}/CLEAR_HASHTAGS`
 
 // Action Creators
 
