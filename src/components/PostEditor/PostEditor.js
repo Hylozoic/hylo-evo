@@ -68,7 +68,11 @@ export default class PostEditor extends React.Component {
       selectedCommunities,
       title
     } = this.state
-    console.log(this.editor)
+    console.log('thetest', this.refs.thetest)
+    this.refs.thetest.test()
+
+    console.log('theeditor', this.refs.theeditor)
+    console.log('getContent', this.refs.theeditor.getContent())
     const results = {
       postType,
       selectedCommunities,
@@ -110,7 +114,8 @@ export default class PostEditor extends React.Component {
             styleName='editor'
             submitOnReturnHandler={this.save}
             placeholder={bodyPlaceholder}
-            ref={e => this.editor = e} />
+            ref='theeditor' />
+          <Test ref='thetest' />
         </div>
       </div>
       <div styleName='footer'>
@@ -125,5 +130,15 @@ export default class PostEditor extends React.Component {
         </div>
       </div>
     </div>
+  }
+}
+
+class Test extends React.Component {
+  test = () => {
+    console.log('running test!!!')
+  }
+
+  render () {
+    return <h1>Hello</h1>
   }
 }

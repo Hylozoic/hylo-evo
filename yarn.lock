@@ -276,6 +276,10 @@ autoprefixer@^6.0.2, autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
+autoproxy@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/autoproxy/-/autoproxy-1.0.1.tgz#a8242b9dac0aeeb96dbeade07dd00a6b5e221b15"
+
 aws-sign2@~0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.6.0.tgz#14342dd38dbcc94d0e5b87d763cd63612c0e794f"

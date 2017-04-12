@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import autoproxy from 'autoproxy'
 import {
   findMentions,
   clearMentions,
@@ -22,4 +23,4 @@ export const mapDispatchToProps = {
   clearHashtags
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export default autoproxy(connect(mapStateToProps, mapDispatchToProps))
