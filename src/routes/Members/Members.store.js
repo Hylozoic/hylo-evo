@@ -36,10 +36,14 @@ export function fetchMembers (slug, order, afterId) {
   }
 }
 
+// TODO change this if the sort order changes -- i.e. store the sort order in
+// state or query params and then add an input selector for it
 export const getMembers = createSelector(
   state => orm.session(state.orm),
   getCommunityForCurrentRoute,
   (session, community) => {
+    if (!community) return []
+
     return session.Person.all()
     .filter(x => includes(x.id, community.membersOrder))
     .orderBy(x => community.membersOrder.indexOf(x.id))

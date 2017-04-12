@@ -44,15 +44,23 @@ export default class Members extends Component {
     const sortText = sortKeys[sort]
     const membersSorted = sortBy(sort, members)
     return <div>
-      {canInvite && <Button styleName='invite' label='Invite People' color='green-white-green-border' narrow />}
+      {canInvite && <Button styleName='invite'
+        label='Invite People'
+        color='green-white-green-border'
+        narrow />}
       <div styleName='title'>Members</div>
       <div styleName='total-members'>{total} Total Members</div>
-      <Dropdown styleName='sort-dropdown' toggleChildren={<Sort sortText={sortText} />} triangle items={Object.keys(sortKeys).map(k => {
-        return {label: sortKeys[k], onClick: () => changeSort(k)}
-      })} />
+      <Dropdown styleName='sort-dropdown'
+        toggleChildren={<Sort sortText={sortText} />}
+        triangle
+        items={Object.keys(sortKeys).map(k => ({
+          label: sortKeys[k],
+          onClick: () => changeSort(k)
+        }))} />
       <TextInput placeholder='Search by name or location' styleName='search' />
       <div styleName='members'>
-        {membersSorted.map(m => <Member member={m} styleName='member' key={`member${m.id}`} />)}
+        {membersSorted.map(m =>
+          <Member member={m} styleName='member' key={`member${m.id}`} />)}
       </div>
     </div>
   }
