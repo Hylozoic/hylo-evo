@@ -40,9 +40,10 @@ export default class HyloEditor extends Component {
     this.state = {
       editorState: EditorState.createEmpty()
     }
+    this.getContent = this.getContent.bind(this)
   }
 
-  getContent = () => {
+  getContent () {
     const { editorState } = this.state
     return stateToHTML(editorState.getCurrentContent())
   }
