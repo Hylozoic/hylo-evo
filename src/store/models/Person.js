@@ -1,4 +1,4 @@
-import { attr, Model } from 'redux-orm'
+import { attr, many, Model } from 'redux-orm'
 
 const Person = Model.createClass({
   toString () {
@@ -21,6 +21,7 @@ Person.fields = {
   linkedinUrl: attr(),
   url: attr(),
   location: attr(),
+  memberships: many('Membership'),
   membershipsTotal: attr(),
   postsTotal: attr()
 }

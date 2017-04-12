@@ -58,6 +58,14 @@ export default function ormReducer (state = {}, action) {
         feedOrder: (community.feedOrder || []).concat(posts.map(f => f.id))
       })
       break
+
+    case a.FETCH_PERSON:
+      ModelExtractor.addAll({
+        session,
+        root: payload.data.person,
+        modelName: 'Person'
+      })
+      break
   }
 
   return session.state
