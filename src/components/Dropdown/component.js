@@ -75,7 +75,7 @@ export default class Dropdown extends React.Component {
       <a styleName='dropdown-toggle' onClick={this.toggle}>
         {toggleChildren}
       </a>
-      <div styleName='wrapper'>
+      <div styleName={cx('wrapper', {alignRight})}>
         <ul styleName={cx('dropdown-menu', {active, alignRight})}
           onClick={() => this.toggle()}>
           {this.renderMenuItems()}
