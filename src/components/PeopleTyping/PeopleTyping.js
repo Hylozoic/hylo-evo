@@ -1,24 +1,22 @@
 import React from 'react'
 import { each, keys, values } from 'lodash'
-import cx from 'classnames'
 import { getSocket } from 'client/websockets'
 import { STARTED_TYPING_INTERVAL } from 'components/MessageForm/MessageForm'
-const { bool } = React.PropTypes
 import './PeopleTyping.scss'
+const { string } = React.PropTypes
 
 const MS_CLEAR_TYPING = STARTED_TYPING_INTERVAL + 1000
 
 export default class PeopleTyping extends React.Component {
+  static propTypes = {
+    className: string
+  }
+
   constructor (props) {
     super(props)
     this.state = {
       peopleTyping: {}
     }
-  }
-
-  static propTypes = {
-    showNames: bool,
-    showBorder: bool
   }
 
   componentDidMount () {
@@ -54,23 +52,14 @@ export default class PeopleTyping extends React.Component {
   }
 
   render () {
-    const { showNames, showBorder } = this.props
+    const { className } = this.props
     const names = values(this.state.peopleTyping).map(v => v.name)
-    return names.length ? <div className={cx('typing', {showBorder})}>
+    return names.length ? <div styleName='typing' className={className}>
       {names.length === 1 && <div>
-        {showNames ? names[0] : 'Someone'} is typing
+        {names[0]} is typing...
       </div>}
-      {names.length > 1 && <div>Multiple people are typing</div>}
+      {names.length > 1 && <div>Multiple people are typing...</div>}
       &nbsp;
-      <Chillipsis />
     </div> : null
   }
-}
-
-function Chillipsis () {
-  return <div className='chillipsis'>
-    <div className='dot d1' />
-    <div className='dot d2' />
-    <div className='dot d3' />
-  </div>
 }

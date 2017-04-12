@@ -1,1 +1,3 @@
-.exampleName { /* !empty */ }
+.typing {
+  composes: is-typing from 'css/typography.scss';
+}

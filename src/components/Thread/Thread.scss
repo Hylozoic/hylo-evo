@@ -1,4 +1,5 @@
 $message-form-bg-height: 165px;
+$messages-inner-padding: 30px;
 
 .thread {
   height: 100vh;
@@ -55,6 +56,14 @@ $message-form-bg-height: 165px;
 .message-form {
   position: absolute;
   bottom: 40px;
-  padding: 0 30px;
+  padding: 0 $messages-inner-padding;
   width: 100%;
+}
+
+.people-typing {
+  position: absolute;
+  bottom: 15px;
+  height: 18px;
+  left: $messages-inner-padding;
+  background: $color-white;
 }
