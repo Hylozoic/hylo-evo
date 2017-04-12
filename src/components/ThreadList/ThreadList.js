@@ -5,14 +5,20 @@ import RoundImage from 'components/RoundImage'
 import Badge from 'components/Badge'
 import Button from 'components/Button'
 import TextInput from 'components/TextInput'
+import { humanDate } from 'hylo-utils/text'
 import './ThreadList.scss'
-const { array, object, string } = PropTypes
+const { array, func, object, string } = PropTypes
 
 export default class ThreadList extends Component {
   static propTypes = {
     currentUser: object,
     threads: array,
-    activeId: string
+    activeId: string,
+    fetchThreads: func
+  }
+
+  componentDidMount () {
+    this.props.fetchThreads()
   }
 
   render () {
@@ -33,7 +39,7 @@ export default class ThreadList extends Component {
             active={t.id === activeId}
             participants={t.participants}
             latestMessage={t.messages[0]}
-            unreadCount={2} />
+            unreadCount={t.unreadCount} />
         })}
       </ul>
     </div>
@@ -48,11 +54,11 @@ function ThreadListItem ({currentUser, active, id, participants, latestMessage, 
       <ThreadAvatars avatarUrls={map('avatarUrl', otherParticipants)} />
       <div styleName='li-center-content'>
         <ThreadNames names={map('name', otherParticipants)} />
-        <div styleName='thread-message-text'>{latestMessage.message}</div>
+        <div styleName='thread-message-text'>{get('text', latestMessage)}</div>
       </div>
       <div styleName='li-right-content'>
-        <div styleName='message-time'>15:45</div>
-        {unreadCount && <Badge number={unreadCount} expanded />}
+        <div styleName='message-time'>{humanDate(get('createdAt', latestMessage))}</div>
+        {unreadCount > 0 && <Badge number={unreadCount} expanded />}
       </div>
     </Link>
   </li>

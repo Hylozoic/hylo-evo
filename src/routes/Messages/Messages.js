@@ -8,8 +8,7 @@ const { array, object } = PropTypes
 export default class Messages extends Component {
   static propTypes = {
     currentUser: object,
-    match: object,
-    threads: array
+    match: object
   }
 
   componentDidMount () {
@@ -18,10 +17,10 @@ export default class Messages extends Component {
   }
 
   render () {
-    const { match: { params: { threadId } }, threads } = this.props
+    const { match: { params: { threadId } } } = this.props
     return <div styleName='modal'>
       <div styleName='content'>
-        <ThreadList activeId={threadId} threads={threads} />
+        <ThreadList activeId={threadId} />
         {threadId ? <Thread id={threadId} /> : <NewThread />}
       </div>
     </div>

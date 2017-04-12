@@ -1,15 +1,16 @@
 import { connect } from 'react-redux'
-// import { someAction } from 'some/path/to/actions'
 import { getMe } from 'store/selectors/getMe'
+import { fetchThreads, getThreads } from './ThreadList.store'
 
 export function mapStateToProps (state, props) {
   return {
-    currentUser: getMe(state.orm)
+    currentUser: getMe(state.orm),
+    threads: getThreads(state, props)
   }
 }
 
 export const mapDispatchToProps = {
-  // someAction
+  fetchThreads
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
