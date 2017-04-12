@@ -1,6 +1,6 @@
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'hylo-evo-03-21-17' !important;
+  font-family: 'hylo-evo-04-11-17' !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -13,6 +13,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-Reply:before {
+  content: "\e900";
+}
 .icon-LinkedIn:before {
   content: "\e901";
 }
@@ -60,9 +63,6 @@
 }
 .icon-ArrowUp:before {
   content: "\e910";
-}
-.icon-ArrowDown:before {
-  content: "\e917";
 }
 .icon-Location:before {
   content: "\e911";
