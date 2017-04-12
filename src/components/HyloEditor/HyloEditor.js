@@ -31,7 +31,6 @@ export default class HyloEditor extends Component {
     mentionResults: PropTypes.instanceOf(Immutable.List),
     hashtagResults: PropTypes.instanceOf(Immutable.List),
     placeholder: PropTypes.string,
-    onChange: PropTypes.func,
     className: PropTypes.string,
     debug: PropTypes.bool
   }
@@ -43,10 +42,14 @@ export default class HyloEditor extends Component {
     }
   }
 
+  getContent = () => {
+    const { editorState } = this.state
+    return stateToHTML(editorState.getCurrentContent())
+  }
+
   handleEditorChange = (editorState) => {
     if (this.props.debug) console.log(stateToHTML(editorState.getCurrentContent()))
     this.setState({ editorState })
-    this.props.onChange(stateToHTML(editorState.getCurrentContent()))
   }
 
   handleMentionsSearch = ({ value }) => {
@@ -63,6 +66,7 @@ export default class HyloEditor extends Component {
         editorState={this.state.editorState}
         onChange={this.handleEditorChange}
         placeholder={this.props.placeholder}
+        handleReturn={e => console.log(e)}
         plugins={plugins} />
       <MentionSuggestions
         onSearchChange={this.handleMentionsSearch}

@@ -6,12 +6,6 @@ import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 
-export const PROP_DEFAULTS = {
-  titlePlaceholder: 'What’s on your mind?',
-  bodyPlaceholder: 'Add a description',
-  postType: 'discussion'
-}
-
 export default class PostEditor extends React.Component {
   static propTypes = {
     titlePlaceholder: PropTypes.string,
@@ -20,9 +14,9 @@ export default class PostEditor extends React.Component {
   }
 
   static defaultProps = {
-    titlePlaceholder: PROP_DEFAULTS.titlePlaceholder,
-    bodyPlaceholder: PROP_DEFAULTS.bodyPlaceholder,
-    postType: PROP_DEFAULTS.postType
+    titlePlaceholder: 'What’s on your mind?',
+    bodyPlaceholder: 'Add a description',
+    postType: 'discussion'
   }
 
   constructor (props) {
@@ -37,15 +31,14 @@ export default class PostEditor extends React.Component {
   }
 
   handlePostTypeSelection = postType => event => {
-    let titlePlaceholder
+    let { titlePlaceholder } = this.state
     switch (postType) {
+      case 'discussions':
+      case 'request':
       case 'offer':
         titlePlaceholder = 'What super powers can you offer?'
         break
-      case 'discussions':
-      case 'request':
       default:
-        titlePlaceholder = PROP_DEFAULTS.titlePlaceholder
     }
     this.setState({ titlePlaceholder, postType })
   }
@@ -67,22 +60,20 @@ export default class PostEditor extends React.Component {
 
   handleTitleChange = (event) => this.setState({title: event.target.value})
 
-  setDescription = description => this.setState({ description })
-
   setSelectedCommunities = selectedCommunities => this.setState({ selectedCommunities })
 
   save = () => {
     const {
       postType,
       selectedCommunities,
-      title,
-      description
+      title
     } = this.state
+    console.log(this.editor)
     const results = {
       postType,
       selectedCommunities,
       title,
-      description
+      description: this.editor.getContent()
     }
     console.log(results)
   }
@@ -118,7 +109,7 @@ export default class PostEditor extends React.Component {
           <HyloEditor
             styleName='editor'
             placeholder={bodyPlaceholder}
-            onChange={this.setDescription} />
+            ref={e => this.editor = e} />
         </div>
       </div>
       <div styleName='footer'>
