@@ -1,4 +1,4 @@
-import { createSelector as ormCreateSelector } from 'redux-orm'
+import { createSelector } from 'redux-orm'
 import { connect } from 'react-redux'
 
 import { fetchPerson } from './MemberProfile.store'
@@ -15,11 +15,21 @@ const messages = {
   invalid: "That doesn't seem to be a valid person ID."
 }
 
-export function getPerson (id) {
-  return ormCreateSelector(orm, session => {
+export function getRole (slug, memberships = []) {
+  return memberships.find(m => m.community.slug === slug && m.hasModeratorRole)
+    ? 'Community Manager'
+    : null
+}
+
+const getPerson = createSelector(
+  orm,
+  state => state.orm,
+  (_, params) => params,
+  (session, params) => {
+    const { id, slug } = params
     if (session.Person.hasId(id)) {
       const person = session.Person.withId(id)
-      return {
+      let result = {
         ...person.ref,
         memberships: person.memberships.toModelArray().map(membership => ({
           ...membership.ref,
@@ -30,28 +40,20 @@ export function getPerson (id) {
           communities: post.communities.toRefArray()
         }))
       }
+      return { ...result, role: getRole(slug, result.memberships) }
     }
-    return null
-  })
-}
+    return defaultPerson
+  }
+)
 
-export function getRole (slug, memberships = []) {
-  return memberships.find(m => m.community.slug === slug && m.hasModeratorRole)
-    ? 'Community Manager'
-    : null
-}
-
-export function mapStateToProps ({ orm }, { match }) {
-  const { id, slug } = match.params
+export function mapStateToProps (state, { match }) {
+  const { id } = match.params
   const error = Number.isSafeInteger(Number(id)) ? null : messages.invalid
-  let person = error ? defaultPerson : getPerson(id)(orm)
-
-  if (person) person = { ...person, role: getRole(slug, person.memberships) }
 
   return {
     id,
     error,
-    person: person || defaultPerson
+    person: getPerson(state, match.params)
   }
 }
 
