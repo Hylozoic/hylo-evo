@@ -1,49 +1,36 @@
 import { connect } from 'react-redux'
-// import { createSelector } from 'reselect'
-import { createSelector as ormCreateSelector } from 'redux-orm'
+import { createSelector } from 'reselect'
 import { get, includes } from 'lodash/fp'
 import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
 import { fetchPosts } from './actions'
+import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getParam from 'store/selectors/getParam'
 
-export const getPosts = slug => ormCreateSelector(orm, (session) => {
-  var community
-  try {
-    community = session.Community.get({slug})
-  } catch (e) {
-    return []
+export const getCommunityPosts = createSelector(
+  state => orm.session(state.orm),
+  getCommunityForCurrentRoute,
+  (session, community) => {
+    if (!community) return []
+
+    return session.Post.all()
+    .filter(post => includes(post.id, community.feedOrder))
+    .orderBy(post => community.feedOrder.indexOf(post.id))
+    .toModelArray()
+    .map(post => ({
+      ...post.ref,
+      creator: post.creator,
+      commenters: post.commenters.toModelArray(),
+      communities: post.communities.toModelArray()
+    }))
   }
+)
 
-  return session.Post.all()
-  .filter(post => includes(post.id, community.feedOrder))
-  .orderBy(post => community.feedOrder.indexOf(post.id))
-  .toModelArray()
-  .map(post => ({
-    ...post.ref,
-    creator: post.creator,
-    commenters: post.commenters.toModelArray(),
-    communities: post.communities.toModelArray()
-  }))
-})
-
-export const getCommunity = slug => ormCreateSelector(orm, (session) => {
-  var community
-  try {
-    community = session.Community.get({slug})
-  } catch (e) {
-    return {}
-  }
-  return community
-})
-
-export function mapStateToProps (state, { match, slug }) {
-  // passing slug directly as a prop here is just a temporary convenience for
-  // displaying something in the '/' route
-  slug = get('params.slug', match) || slug
-  const community = getCommunity(slug)(state.orm)
+export function mapStateToProps (state, props) {
+  const community = getCommunityForCurrentRoute(state, props)
   return {
-    posts: getPosts(slug)(state.orm),
-    slug,
+    posts: getCommunityPosts(state, props),
+    slug: getParam('slug', state, props),
     community,
     postCount: get('postCount', community),
     pending: state.pending[FETCH_POSTS]
