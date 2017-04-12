@@ -1,18 +1,22 @@
 import { connect } from 'react-redux'
-import { SAMPLE_MEMBERS } from 'routes/Feed/sampleData'
-// import { someAction } from 'some/path/to/actions'
+import { fetchMembers, getMembers } from './Members.store'
 
 export function mapStateToProps (state, props) {
   return {
-    isAdmin: true,
+    canInvite: true,
     total: 1276,
     sort: 'name',
-    members: SAMPLE_MEMBERS
+    members: getMembers(state, props)
   }
 }
 
-export const mapDispatchToProps = {
-  // someAction
+export function mapDispatchToProps (dispatch, props) {
+  const { slug } = props.match.params
+  return {
+    fetchMembers: function (order, afterId) {
+      return dispatch(fetchMembers(slug, order, afterId))
+    }
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)

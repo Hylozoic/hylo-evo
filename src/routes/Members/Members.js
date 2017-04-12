@@ -17,7 +17,7 @@ function Sort ({sortText}) {
 
 export default class Members extends Component {
   static propTypes = {
-    isAdmin: bool,
+    canInvite: bool,
     total: number,
     sort: string,
     members: arrayOf(shape({
@@ -30,8 +30,12 @@ export default class Members extends Component {
     changeSort: func
   }
 
+  componentDidMount () {
+    this.props.fetchMembers()
+  }
+
   render () {
-    const { isAdmin, total, members, sort, changeSort } = this.props
+    const { canInvite, total, members, sort, changeSort } = this.props
     const sortKeys = {
       name: 'Name',
       joined: 'Latest',
@@ -40,7 +44,7 @@ export default class Members extends Component {
     const sortText = sortKeys[sort]
     const membersSorted = sortBy(sort, members)
     return <div>
-      {isAdmin && <Button styleName='invite' label='Invite People' color='green-white-green-border' narrow />}
+      {canInvite && <Button styleName='invite' label='Invite People' color='green-white-green-border' narrow />}
       <div styleName='title'>Members</div>
       <div styleName='total-members'>{total} Total Members</div>
       <Dropdown styleName='sort-dropdown' toggleChildren={<Sort sortText={sortText} />} triangle items={Object.keys(sortKeys).map(k => {
