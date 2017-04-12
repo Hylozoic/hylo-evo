@@ -36,8 +36,7 @@ export default class PrimaryLayout extends Component {
       {communitiesDrawerOpen && <CommunitiesDrawer />}
       <TopNav {...{community, currentUser}} />
       <div styleName='row'>
-        {/* TODO: is using render here the best way to pass params to a route? */}
-        <Route path='/' render={() => <Navigation collapsed={hasDetail} location={location} communitySlug={communitySlug} />} />
+        <Navigation collapsed={hasDetail} />
         <div styleName='content'>
           <Route path='/' exact render={() => <Feed {...{community, currentUser}} />} />
           <Route path='/c/:slug' exact render={({ match }) => <Feed {...{community, currentUser, match}} />} />

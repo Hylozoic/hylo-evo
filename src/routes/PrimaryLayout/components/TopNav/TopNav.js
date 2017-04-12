@@ -8,14 +8,10 @@ import Dropdown from 'components/Dropdown'
 import { get } from 'lodash/fp'
 
 export default function TopNav ({ community, currentUser, logout, toggleCommunitiesDrawer }) {
-  const imageStyle = bgImageStyle(community.avatarUrl)
   return <div styleName='topNavWrapper'>
     <div styleName='topNav'>
-      <span styleName='image' style={imageStyle} onClick={toggleCommunitiesDrawer} />
-      <div styleName='title'>
-        <div className='tag' styleName='label'>COMMUNITY</div>
-        <div className='hdr-subheadline' styleName='communityName'>{community.name}</div>
-      </div>
+      <CommunityImage {...{community, toggleCommunitiesDrawer}} />
+      <CommunityTitle community={community} />
       <div styleName='navIcons'>
         <Link to='/' styleName='navIcon'><Icon name='Search' styleName='icon' /></Link>
         <Link to='/' styleName='navIcon'><Icon name='Messages' styleName='icon' /></Link>
@@ -29,6 +25,23 @@ export default function TopNav ({ community, currentUser, logout, toggleCommunit
           <li><a onClick={logout}>Log out</a></li>
         </Dropdown>
       </div>
+    </div>
+  </div>
+}
+
+function CommunityImage ({ community, toggleCommunitiesDrawer }) {
+  if (!community) return null
+  const imageStyle = bgImageStyle(get('avatarUrl', community))
+  return <span styleName='image' style={imageStyle}
+    onClick={toggleCommunitiesDrawer} />
+}
+
+function CommunityTitle ({ community }) {
+  if (!community) return null
+  return <div styleName='title'>
+    <div className='tag' styleName='label'>COMMUNITY</div>
+    <div className='hdr-subheadline' styleName='communityName'>
+      {community.name}
     </div>
   </div>
 }
