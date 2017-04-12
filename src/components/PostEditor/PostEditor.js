@@ -62,7 +62,7 @@ export default class PostEditor extends React.Component {
 
   setSelectedCommunities = selectedCommunities => this.setState({ selectedCommunities })
 
-  save = () => {
+  save = (description) => {
     const {
       postType,
       selectedCommunities,
@@ -73,7 +73,7 @@ export default class PostEditor extends React.Component {
       postType,
       selectedCommunities,
       title,
-      description: this.editor.getContent()
+      description
     }
     console.log(results)
   }
@@ -108,6 +108,7 @@ export default class PostEditor extends React.Component {
             onChange={this.handleTitleChange} />
           <HyloEditor
             styleName='editor'
+            submitOnReturnHandler={this.save}
             placeholder={bodyPlaceholder}
             ref={e => this.editor = e} />
         </div>

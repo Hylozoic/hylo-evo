@@ -48,7 +48,7 @@ export default class HyloEditor extends Component {
   }
 
   handleEditorChange = (editorState) => {
-    if (this.props.debug) console.log(stateToHTML(editorState.getCurrentContent()))
+    if (this.props.debug) console.log(this.getContent())
     this.setState({ editorState })
   }
 
@@ -60,18 +60,43 @@ export default class HyloEditor extends Component {
     return this.props.findHashtags(value)
   }
 
+  handleReturn = (event) => {
+    const { submitOnReturnHandler } = this.props
+    if (submitOnReturnHandler && !this.mentionsOpen) {
+      if (!event.shiftKey) {
+        console.log(event)
+        submitOnReturnHandler(this.getContent())
+        this.setState({
+          editorState: EditorState.moveFocusToEnd(EditorState.createEmpty())
+        })
+        return 'handled'
+      }
+      return 'not-handled'
+    }
+  }
+
+  handleMentionsOpen = () => {
+    this.mentionsOpen = true
+  }
+
+  handleMentionsClose = () => {
+    this.props.clearMentions()
+    this.mentionsOpen = false
+  }
+
   render () {
     return <div styleName='wrapper' className={this.props.className}>
       <Editor
         editorState={this.state.editorState}
         onChange={this.handleEditorChange}
         placeholder={this.props.placeholder}
-        handleReturn={e => console.log(e)}
+        handleReturn={this.handleReturn}
         plugins={plugins} />
       <MentionSuggestions
         onSearchChange={this.handleMentionsSearch}
         suggestions={this.props.mentionResults}
-        onClose={this.props.clearMentions} />
+        onOpen={this.handleMentionsOpen}
+        onClose={this.handleMentionsClose} />
       <HashtagSuggestions
         onSearchChange={this.handleHashtagSearch}
         suggestions={this.props.hashtagResults} />
