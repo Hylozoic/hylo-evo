@@ -36,11 +36,9 @@ export function getPerson (id) {
 }
 
 export function getRole (slug, memberships = []) {
-  // TODO: get proper roles, avoid assuming 1 === admin!
-  return memberships
-    .find(m => m.community.slug === slug && m.hasModeratorRole)
-      ? 'Community Manager'
-      : null
+  return memberships.find(m => m.community.slug === slug && m.hasModeratorRole)
+    ? 'Community Manager'
+    : null
 }
 
 export function mapStateToProps ({ orm }, { match }) {
