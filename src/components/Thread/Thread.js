@@ -99,6 +99,7 @@ export default class Thread extends React.Component {
         onLeftBottom={() => this.setState({scrolledUp: true})}
         onHitBottom={() => this.setState({scrolledUp: false})}
         onScrollToTop={loadMore} ref='messageSection' />
+      <div styleName='message-form-bg'></div>
       <div styleName='message-form'>
         <MessageForm threadId={thread.id} ref='form' />
       </div>

@@ -1,3 +1,5 @@
+$message-form-bg-height: 165px;
+
 .thread {
   height: 100vh;
   flex: 1;
@@ -39,6 +41,15 @@
 
 .more-icon {
   padding: $space-1x 0;
+}
+
+.message-form-bg {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  height: $message-form-bg-height;
+  opacity: 0.8;
+  background-image: linear-gradient(-180deg, rgba(255,255,255,0.00) 0%, #FAFBFC 48%);
 }
 
 .message-form {

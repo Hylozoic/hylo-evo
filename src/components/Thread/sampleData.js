@@ -116,7 +116,7 @@ export const messages = [
   },
   {
     id: '11',
-    text: times(3, () => faker.lorem.paragraph()).join(),
+    text: times(5, () => faker.lorem.paragraph()).join(),
     creator: {
       id: '1',
       name: 'Person 1',
