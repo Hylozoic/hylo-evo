@@ -67,7 +67,6 @@ export default function reducer (state = defaultState, action) {
 // Selectors
 
 export const moduleSelector = (state) => {
-  console.log(state[MODULE_NAME])
   return state[MODULE_NAME]
 }
 
