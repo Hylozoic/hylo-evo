@@ -1,6 +1,6 @@
-import { curry } from 'lodash'
+import { curry, get } from 'lodash/fp'
 
 const getParam = curry((key, state, props) =>
-  props.match.params[key])
+  get(['match', 'params', key], props))
 
 export default getParam
