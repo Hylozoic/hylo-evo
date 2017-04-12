@@ -10,11 +10,16 @@ import { tagUrl, communityUrl } from 'util/index'
 export default class PostDetail extends Component {
   static propTypes = {
     post: object,
-    slug: string
+    slug: string,
+    fetchPost: func
   }
 
   static contextTypes = {
     navigate: func
+  }
+
+  componentDidMount () {
+    this.props.fetchPost()
   }
 
   render () {

@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import samplePost from 'components/PostCard/samplePost'
+import { fetchPost } from './actions'
 
 const SAMPLE_IMAGE_URL = 'https://d3ngex8q79bk55.cloudfront.net/community/1944/banner/1489687099172_ggbridge.jpg'
 
@@ -10,6 +11,10 @@ export function mapStateToProps (state, { match: { params: { postId } } }) {
   }
 }
 
-export const mapDispatchToProps = {}
+export const mapDispatchToProps = (dispatch, { match: { params: { postId } } }) => {
+  return {
+    fetchPost: () => dispatch(fetchPost(postId))
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)
