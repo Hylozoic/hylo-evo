@@ -116,7 +116,7 @@ function hasNewMessages (messages, thread, currentUser) {
 
 function Header ({ thread, currentUser }) {
   const participants = thread.participants
-  const { id } = currentUser
+  const id = get('id', currentUser)
   const others = map('name', filter(f => f.id !== id, participants))
   const othersMinusLast = others.slice(0, others.length - 1)
 
