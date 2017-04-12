@@ -105,3 +105,11 @@ $third-party-icon-size: 14px;
   padding: 9px 16px;
   margin-bottom: 20px;
 }
+
+.below-container {
+  margin-top: $space-2x;
+  a {
+    color: white !important;
+    cursor: pointer;
+  }
+}
