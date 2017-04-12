@@ -3330,9 +3330,9 @@ https-browserify@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
 
-"hylo-utils@https://github.com/Hylozoic/hylo-utils":
+"hylo-utils@https://github.com/Hylozoic/hylo-utils#d7765ac3":
   version "1.0.3"
-  resolved "https://github.com/Hylozoic/hylo-utils#5e2685f039294dc0c153422bd1cf200257b1abae"
+  resolved "https://github.com/Hylozoic/hylo-utils#d7765ac3"
   dependencies:
     cheerio "^0.22.0"
     insane "^2.6.1"
