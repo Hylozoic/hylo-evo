@@ -40,3 +40,14 @@
   composes: bdy-lt-sm from 'css/typography.scss';
   margin-left: 69px;
 }
+
+.reply {
+  composes: text-button from 'css/typography.scss';
+  margin-bottom: 20px;
+  &:hover {
+    //hack to get the icon to change on hover
+    .icon {
+      color: $color-gossamer;
+    }
+  }
+}

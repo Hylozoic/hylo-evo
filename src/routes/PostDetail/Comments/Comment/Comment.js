@@ -32,6 +32,7 @@ export default class Comment extends Component {
         </div>
       </div>
       <div styleName='text'>{comment.text}</div>
+      {/* <div styleName='reply'><Icon name='Reply' styleName='icon' />Reply</div> */}
     </div>
   }
 }
