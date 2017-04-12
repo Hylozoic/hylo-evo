@@ -50,6 +50,7 @@ export default class Feed extends React.Component {
 }
 
 export const CommunityBanner = ({ community, currentUser }) => {
+  if (!community) return null
   return <div styleName='banner'>
     <div style={bgImageStyle(community.bannerUrl)} styleName='image'>
       <div styleName='fade'><div styleName='fade2' /></div>

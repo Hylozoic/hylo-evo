@@ -24,7 +24,7 @@ describe('mapStateToProps', () => {
       posts: [],
       pending: undefined,
       postCount: undefined,
-      community: {}
+      community: null
     }
     expect(mapStateToProps(state, {match: {params: {slug: 'bar'}}}))
     .toEqual(expected)
