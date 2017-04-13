@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
-import { SAMPLE_COMMUNITY } from 'routes/Feed/sampleData'
 import { fetchCurrentUser, toggleCommunitiesDrawer } from './actions'
 import { getMe } from 'store/selectors/getMe'
+import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 
-function mapStateToProps (state) {
+function mapStateToProps (state, props) {
   return {
-    community: SAMPLE_COMMUNITY,
+    community: getCommunityForCurrentRoute(state, props),
     currentUser: getMe(state.orm),
     communitiesDrawerOpen: state.communitiesDrawerOpen
   }

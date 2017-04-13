@@ -33,6 +33,12 @@
 
   &:hover {
     background: $color-caribbean-green !important;
+    &::after {
+      content: "<";
+      color: $color-white;
+      font-size: 20px;
+      padding-left: 9px;
+    }
   }
 }
 
@@ -72,7 +78,8 @@
   color: $color-rhino;
 }
 
-.dropdown {
+.user-menu {
+  margin-right: 0 !important;
   li a {
     &, &:not([href]) {
       color: $color-rhino-50;

@@ -8,7 +8,7 @@ import pending from './pending'
 // Local store
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import CommunitiesSelector from 'components/CommunitiesSelector/CommunitiesSelector.store'
-import Login from 'routes/Login/store'
+import Login from 'routes/Login/Login.store'
 
 export default combineReducers({
   // Global store

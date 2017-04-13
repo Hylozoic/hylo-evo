@@ -1,4 +1,4 @@
-import testPayloads from '../middleware/normalizingMiddleware.test.json'
+import testPayloads from './ModelExtractor.test.json'
 import ModelExtractor from './ModelExtractor'
 import orm from '../models'
 
