@@ -22,6 +22,10 @@ const fetchPersonQuery =
       creator {
         id
       }
+      post {
+        id
+        title
+      }
       createdAt
     }
     memberships {
@@ -91,7 +95,8 @@ export const personSelector = createSelector(
         ...person.ref,
         comments: person.comments.toModelArray().map(comment => ({
           ...comment.ref,
-          creator: comment.creator.ref
+          creator: comment.creator.ref,
+          post: comment.post.ref
         })),
         memberships: person.memberships.toModelArray().map(membership => ({
           ...membership.ref,
@@ -105,6 +110,7 @@ export const personSelector = createSelector(
           communities: post.communities.toRefArray()
         })})
       }
+      console.log(result)
       return { ...result, role: getRole(slug, result.memberships) }
     }
     return defaultPerson

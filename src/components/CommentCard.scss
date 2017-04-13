@@ -1,9 +1,27 @@
-.avatar {
-}
+.avatar { }
 
 .comment-card {
   composes: bdy-lt-sm from 'css/typography.scss';
   border: 1px solid $color-cape-cod-10;
   border-radius: $space-1x;
-  padding: $space-5x;
+  padding: $space-4x $space-5x;
+  margin: $space-5x 0;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0px 2px 6px 0px $color-black-10;
+  }
+}
+
+.comment-header { }
+
+.person-name {
+  composes: person-name from 'css/typography.scss';
+  &:hover {
+    color: $color-rhino;
+    text-decoration: none;
+  }
+}
+
+.post-title {
+  composes: person-name;
 }

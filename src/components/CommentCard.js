@@ -7,6 +7,6 @@ export default function CommentCard ({ comment }) {
   const { creator } = comment
   return <div styleName='comment-card'>
     <RoundImage url={creator.avatarUrl} large />
-    {creator.name} commented on ... postname ...
+    <span styleName='person-name'>{creator.name}</span> commented on  <span styleName='post-title'>{comment.post.title}</span>
   </div>
 }
