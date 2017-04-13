@@ -25,6 +25,8 @@ export default class PostDetail extends Component {
   render () {
     const { post, slug } = this.props
     const { navigate } = this.context
+    if (!post) return null
+
     return <div styleName='post'>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}

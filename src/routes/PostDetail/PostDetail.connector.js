@@ -1,12 +1,28 @@
 import { connect } from 'react-redux'
-import samplePost from 'components/PostCard/samplePost'
 import { fetchPost } from './actions'
+import { createSelector } from 'reselect'
+import orm from 'store/models'
 
-const SAMPLE_IMAGE_URL = 'https://d3ngex8q79bk55.cloudfront.net/community/1944/banner/1489687099172_ggbridge.jpg'
+const getPost = createSelector(
+  state => orm.session(state.orm),
+  (state, { match: { params: { postId } } }) => postId,
+  (session, id) => {
+    try {
+      const post = session.Post.get({id})
+      return {
+        ...post.ref,
+        creator: post.creator,
+        commenters: post.commenters.toModelArray(),
+        communities: post.communities.toModelArray()
+      }
+    } catch (e) {
+      return null
+    }
+  })
 
-export function mapStateToProps (state, { match: { params: { postId } } }) {
+export function mapStateToProps (state, props) {
   return {
-    post: {...samplePost(), id: postId, imageUrl: SAMPLE_IMAGE_URL},
+    post: getPost(state, props),
     slug: 'hylo'
   }
 }
