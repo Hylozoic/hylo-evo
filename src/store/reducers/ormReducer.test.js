@@ -54,6 +54,9 @@ describe('FETCH_POSTS', () => {
             ]
           }
         }
+      },
+      meta: {
+        rootModelName: 'Community'
       }
     }
     const nextState = ormReducer(state, action)

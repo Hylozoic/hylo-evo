@@ -3,6 +3,7 @@ import Icon from 'components/Icon'
 import './component.scss'
 
 const ICON_NAMES = [
+  'Reply',
   'LinkedIn',
   'Google',
   'Facebook',
@@ -19,6 +20,7 @@ const ICON_NAMES = [
   'Events',
   'Home',
   'More',
+  'ArrowDown',
   'ArrowUp',
   'Location',
   'Flag',

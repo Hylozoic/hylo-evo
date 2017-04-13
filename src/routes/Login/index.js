@@ -1,3 +1,3 @@
 import component from './Login'
-import connector from './connector'
+import connector from './Login.connector'
 export default connector(component)

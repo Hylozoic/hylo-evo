@@ -6,7 +6,10 @@ export default function graphqlMiddleware (store) {
     const { query, variables } = graphql
     return next({
       type,
-      meta,
+      meta: {
+        ...meta,
+        graphql: {query, variables}
+      },
       payload: {
         api: {
           path: '/noo/graphql',

@@ -1,10 +1,13 @@
 import * as a from 'store/constants'
 import orm from 'store/models'
+import ModelExtractor from './ModelExtractor'
+import { FETCH_MEMBERS } from 'routes/Members/Members.store'
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
   const { Comment, Community, Membership, Person, Post, FeedItem } = session
-  const { payload, type } = action
+  const { payload, type, meta, error } = action
+  if (error) return state
 
   const add = addEntity(payload)
   const update = updateEntity(payload)
@@ -35,13 +38,29 @@ export default function ormReducer (state = {}, action) {
     case a.UPDATE_FEED_ITEM: update(FeedItem); break
     case a.DELETE_FEED_ITEM: del(FeedItem); break
 
-    case a.FETCH_POSTS:
-      const { id, posts } = payload.data.community
-      const community = Community.withId(id)
-      community.update({
-        feedOrder: (community.feedOrder || []).concat(posts.map(f => f.id))
+    case a.FETCH_CURRENT_USER:
+      ModelExtractor.addAll({
+        session,
+        root: payload.data.me,
+        modelName: 'Me'
       })
       break
+
+    case a.FETCH_POSTS:
+      ModelExtractor.addAll({
+        session,
+        root: payload.data.community,
+        modelName: meta.rootModelName
+      })
+      addToOrdering(Community, payload.data.community, 'feedOrder', 'posts')
+      break
+
+    case FETCH_MEMBERS:
+      ModelExtractor.addAll({
+        session,
+        root: payload.data.community,
+        modelName: 'Community'
+      })
   }
 
   return session.state
@@ -59,4 +78,11 @@ function deleteEntity (payload) {
 
 function updateEntity (payload) {
   return model => model.withId(payload.id).update(payload)
+}
+
+function addToOrdering (model, data, orderingKey, itemsKey) {
+  const parent = model.withId(data.id)
+  parent.update({
+    [orderingKey]: (parent[orderingKey] || []).concat(data[itemsKey].map(x => x.id))
+  })
 }
