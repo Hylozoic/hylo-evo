@@ -21,7 +21,7 @@ export default class ModelExtractor {
     this.accumulator.forEach(({ modelName, payload }) => {
       const model = this.session[modelName]
       model.hasId(payload.id)
-        ? model.withId(payload.id).update(payload)
+        ? model.withId(payload.id).updateAppending(payload)
         : model.create(payload)
     })
   }

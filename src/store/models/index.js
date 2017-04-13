@@ -1,5 +1,5 @@
 import { ORM } from 'redux-orm'
-
+import './Model.extension'
 import Comment from './Comment'
 import Community from './Community'
 import FeedItem from './FeedItem'
