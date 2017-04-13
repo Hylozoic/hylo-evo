@@ -17,13 +17,15 @@ export function fetchMembers (slug, sortBy, offset) {
           avatarUrl
           memberCount
           members (first: $first, sortBy: $sortBy, offset: $offset) {
-            id
-            name
-            avatarUrl
-            location
-            tagline
+            total
+            items {
+              id
+              name
+              avatarUrl
+              location
+              tagline
+            }
           }
-          membersTotal
         }
       }`,
       variables: {

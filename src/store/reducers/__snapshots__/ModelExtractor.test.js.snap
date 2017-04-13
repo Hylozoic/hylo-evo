@@ -1,6 +1,63 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`produces the expected flattened list of model instances 1`] = `
+exports[`produces a flat list from a "nested-totals-style" response 1`] = `
+Array [
+  Object {
+    "modelName": "Community",
+    "payload": Object {
+      "avatarUrl": "http://foo.com/avatar.png",
+      "id": "1",
+      "name": "foo",
+      "slug": "foo",
+    },
+  },
+  Object {
+    "modelName": "Post",
+    "payload": Object {
+      "communities": Array [
+        "1",
+      ],
+      "id": "2",
+      "title": "Hello!",
+    },
+  },
+  Object {
+    "modelName": "Community",
+    "payload": Object {
+      "avatarUrl": "http://foo.com/avatar.png",
+      "id": "1",
+      "memberCount": 42,
+      "name": "foo",
+      "slug": "foo",
+    },
+  },
+  Object {
+    "modelName": "Post",
+    "payload": Object {
+      "communities": Array [
+        "1",
+      ],
+      "id": "3",
+      "title": "Hello Again!",
+    },
+  },
+  Object {
+    "modelName": "Community",
+    "payload": Object {
+      "bannerUrl": "http://foo.com/banner.png",
+      "id": "1",
+      "name": "foo",
+      "posts": Array [
+        "2",
+        "3",
+      ],
+      "slug": "foo",
+    },
+  },
+]
+`;
+
+exports[`produces a flat list from a "separate-totals-style" response 1`] = `
 Array [
   Object {
     "modelName": "Person",

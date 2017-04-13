@@ -15,8 +15,10 @@ it('adds data to empty state', () => {
     payload: {
       data: {
         community: {
-          members: [{id: 7}, {id: 8}, {id: 9}],
-          membersTotal: 22
+          members: {
+            total: 22,
+            items: [{id: 7}, {id: 8}, {id: 9}]
+          }
         }
       }
     },
@@ -46,8 +48,10 @@ it('appends to existing data, ignoring duplicates', () => {
     payload: {
       data: {
         community: {
-          members: [{id: 7}, {id: 8}, {id: 9}],
-          membersTotal: 22
+          members: {
+            total: 22,
+            items: [{id: 7}, {id: 8}, {id: 9}]
+          }
         }
       }
     },

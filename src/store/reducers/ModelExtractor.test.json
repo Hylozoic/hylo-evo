@@ -110,34 +110,36 @@
         "name": "foo",
         "slug": "foo",
         "bannerUrl": "http://foo.com/banner.png",
-        "postCount": 21,
-        "posts": [
-          {
-            "id": "2",
-            "title": "Hello!",
-            "communities": [
-              {
-                "id": "1",
-                "name": "foo",
-                "slug": "foo",
-                "avatarUrl": "http://foo.com/avatar.png"
-              }
-            ]
-          },
-          {
-            "id": "3",
-            "title": "Hello Again!",
-            "communities": [
-              {
-                "id": "1",
-                "name": "foo",
-                "slug": "foo",
-                "avatarUrl": "http://foo.com/avatar.png",
-                "memberCount": 42
-              }
-            ]
-          }
-        ]
+        "posts": {
+          "total": 21,
+          "items": [
+            {
+              "id": "2",
+              "title": "Hello!",
+              "communities": [
+                {
+                  "id": "1",
+                  "name": "foo",
+                  "slug": "foo",
+                  "avatarUrl": "http://foo.com/avatar.png"
+                }
+              ]
+            },
+            {
+              "id": "3",
+              "title": "Hello Again!",
+              "communities": [
+                {
+                  "id": "1",
+                  "name": "foo",
+                  "slug": "foo",
+                  "avatarUrl": "http://foo.com/avatar.png",
+                  "memberCount": 42
+                }
+              ]
+            }
+          ]
+        }
       }
     }
   }

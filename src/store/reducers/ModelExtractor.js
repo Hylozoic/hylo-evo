@@ -38,7 +38,8 @@ export default class ModelExtractor {
           this.walk(value, type.toModelName)
           return value.id
         case MANY_TYPE:
-          return value.map(x => {
+          const items = Array.isArray(value) ? value : value.items
+          return items.map(x => {
             this.walk(x, type.toModelName)
             return x.id
           })
