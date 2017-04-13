@@ -101,7 +101,7 @@ export default class Thread extends React.Component {
         onScrollToTop={loadMore} ref='messageSection' />
       <div styleName='message-form-bg' />
       <div styleName='message-form'>
-        <MessageForm threadId={thread.id} ref='form' />
+        <MessageForm messageThreadId={thread.id} ref='form' />
       </div>
       <PeopleTyping styleName='people-typing' />
     </div>

@@ -14,30 +14,23 @@ export default class MessageForm extends React.Component {
   static propTypes = {
     className: string,
     currentUser: object,
-    threadId: string,
+    messageThreadId: string,
     placeholder: string,
     onFocus: func,
     onBlur: func,
     pending: bool,
-    createComment: func
-  }
-
-  constructor (props) {
-    super(props)
-    this.state = {}
+    createMessage: func,
+    updateText: func
   }
 
   submit = event => {
     if (event) event.preventDefault()
-    if (!this.state.text) return false
-    const { threadId, createComment } = this.props
-    const { currentUser } = this.context
-    const userId = currentUser.id
-    const { text } = this.state
-    createComment({threadId, text, userId})
+    const { text, messageThreadId, createMessage, currentUser } = this.props
+    if (!text) return false
+    const userId = get('id', currentUser)
+    createMessage(messageThreadId, text, userId)
     this.startTyping.cancel()
     this.sendIsTyping(false)
-    this.setState({text: ''})
     return false
   }
 
@@ -54,9 +47,9 @@ export default class MessageForm extends React.Component {
   }
 
   sendIsTyping (isTyping) {
-    const { threadId } = this.props
+    const { messageThreadId } = this.props
     if (this.socket) {
-      this.socket.post(socketUrl(`/noo/post/${threadId}/typing`), {isTyping})
+      this.socket.post(socketUrl(`/noo/post/${messageThreadId}/typing`), {isTyping})
     }
   }
 
@@ -69,9 +62,8 @@ export default class MessageForm extends React.Component {
   }, STARTED_TYPING_INTERVAL)
 
   render () {
-    const { onFocus, onBlur, className, currentUser } = this.props
+    const { messageThreadId, text, onFocus, onBlur, className, currentUser, updateText } = this.props
     const placeholder = this.props.placeholder || 'Write something...'
-    const { text } = this.state
 
     const handleKeyDown = e => {
       this.startTyping()
@@ -87,7 +79,7 @@ export default class MessageForm extends React.Component {
         rows='1'
         placeholder={placeholder}
         onFocus={onFocus}
-        onChange={e => this.setState({text: e.target.value})}
+        onChange={e => updateText(messageThreadId, e.target.value)}
         onBlur={onBlur}
         onKeyUp={this.stopTyping}
         onKeyDown={handleKeyDown} />
