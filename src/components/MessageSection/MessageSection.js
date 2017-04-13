@@ -1,9 +1,8 @@
 import React from 'react'
 import visibility from 'visibility'
-import { throttle, isEmpty } from 'lodash'
+import { throttle } from 'lodash'
 import { get, maxBy } from 'lodash/fp'
 const { array, bool, func, object } = React.PropTypes
-import cx from 'classnames'
 import Message from 'components/Message'
 import { position } from 'util/scrolling'
 import './MessageSection.scss'
@@ -119,8 +118,7 @@ export default class MessageSection extends React.Component {
   render () {
     const { messages } = this.props
     const messageList = createMessageList(messages)
-    const sName = cx('messages-section', {empty: isEmpty(messages)})
-    return <div styleName={sName}
+    return <div styleName='messages-section'
       ref={list => { this.list = list }}
       onScroll={this.handleScroll}>
       <div styleName='messages-section-inner'>

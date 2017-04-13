@@ -3,7 +3,7 @@ import ThreadList from 'components/ThreadList'
 import Thread from 'components/Thread'
 import NewThread from 'components/NewThread'
 import './Messages.scss'
-const { array, object } = PropTypes
+const { object } = PropTypes
 
 export default class Messages extends Component {
   static propTypes = {
@@ -21,7 +21,7 @@ export default class Messages extends Component {
     return <div styleName='modal'>
       <div styleName='content'>
         <ThreadList activeId={threadId} />
-        {threadId ? <Thread id={threadId} /> : <NewThread />}
+        {threadId ? <Thread threadId={threadId} /> : <NewThread />}
       </div>
     </div>
   }

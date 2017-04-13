@@ -1,28 +1,26 @@
 import { connect } from 'react-redux'
-// import { someAction } from 'some/path/to/actions'
+import {
+  fetchThread,
+  fetchBeforeMessages,
+  getThread
+} from './Thread.store'
 import { getMe } from 'store/selectors/getMe'
-import thread, { messages } from './sampleData'
-
-// TODO: convert to actions
-const fetchAfter = () => {}
-const fetchBefore = () => {}
-const onThreadPage = () => {}
-const offThreadPage = () => {}
 
 export function mapStateToProps (state, props) {
   return {
     currentUser: getMe(state.orm),
-    thread,
-    messages,
-    pending: false
+    thread: getThread(state, props),
+    pending: false,
+    // TODO: convert to actions
+    onThreadPage: () => {},
+    offThreadPage: () => {},
+    fetchAfterMessages: () => {}
   }
 }
 
 export const mapDispatchToProps = {
-  fetchAfter,
-  fetchBefore,
-  onThreadPage,
-  offThreadPage
+  fetchThread,
+  fetchBeforeMessages
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)

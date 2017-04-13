@@ -4,7 +4,7 @@ import ModelExtractor from './ModelExtractor'
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
-  const { Comment, Community, Membership, Person, Post, FeedItem } = session
+  const { Comment, Community, Membership, MessageThread, Person, Post, FeedItem } = session
   const { payload, type, meta, error } = action
   if (error) return state
 
@@ -24,6 +24,10 @@ export default function ormReducer (state = {}, action) {
     case a.ADD_MEMBERSHIP: add(Membership); break
     case a.UPDATE_MEMBERSHIP: update(Membership); break
     case a.DELETE_MEMBERSHIP: del(Membership); break
+
+    case a.ADD_MESSAGE_THREAD: add(MessageThread); break
+    case a.UPDATE_MESSAGE_THREAD: update(MessageThread); break
+    case a.DELETE_MESSAGE_THREAD: del(MessageThread); break
 
     case a.ADD_PERSON: add(Person); break
     case a.UPDATE_PERSON: update(Person); break
@@ -64,6 +68,14 @@ export default function ormReducer (state = {}, action) {
         session,
         root: payload.data.me,
         modelName: 'Me'
+      })
+      break
+
+    case a.FETCH_THREAD:
+      ModelExtractor.addAll({
+        session,
+        root: payload.data.messageThread,
+        modelName: meta.rootModelName
       })
   }
 
