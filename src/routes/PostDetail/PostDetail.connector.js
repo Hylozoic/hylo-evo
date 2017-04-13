@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { fetchPost } from './actions'
+import { fetchPost } from './PostDetail.store'
 import { createSelector } from 'reselect'
 import getParam from 'store/selectors/getParam'
 import orm from 'store/models'

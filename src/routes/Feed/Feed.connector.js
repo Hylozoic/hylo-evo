@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 import { get, includes } from 'lodash/fp'
 import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
-import { fetchPosts } from './actions'
+import { fetchPosts } from './Feed.store.js'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getParam from 'store/selectors/getParam'
 
