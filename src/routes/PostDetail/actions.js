@@ -23,6 +23,17 @@ export function fetchPost (id, opts = {}) {
             avatarUrl
           }
           commentersTotal
+          comments(first: 10) {
+            id
+            text
+            creator {
+              id
+              name
+              avatarUrl
+            }
+            createdAt
+          }
+          commentsTotal
           linkPreview {
             title
             url

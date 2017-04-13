@@ -10,7 +10,6 @@ import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 import PostDetail from 'routes/PostDetail'
-import NavigationHandler from 'routes/NavigationHandler'
 import './PrimaryLayout.scss'
 
 export default class PrimaryLayout extends Component {

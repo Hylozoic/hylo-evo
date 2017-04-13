@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 import { fetchPost } from './actions'
 import { createSelector } from 'reselect'
+import getParam from 'store/selectors/getParam'
 import orm from 'store/models'
 
-const getPost = createSelector(
+export const getPost = createSelector(
   state => orm.session(state.orm),
-  (state, { match: { params: { postId } } }) => postId,
+  (state, props) => getParam('postId', state, props),
   (session, id) => {
     try {
       const post = session.Post.get({id})

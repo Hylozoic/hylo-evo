@@ -12,6 +12,7 @@ export default class CommentForm extends Component {
 
   render () {
     const { currentUser, createComment } = this.props
+    if (!currentUser) return null
 
     const save = text => {
       console.log('saving', text)

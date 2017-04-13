@@ -14,6 +14,7 @@ export default class Comments extends Component {
   }
 
   render () {
+    console.log('props for comments', this.props)
     const { comments, commentsTotal, fetchComments, currentUser, createComment } = this.props
     return <div styleName='comments'>
       <ShowMore

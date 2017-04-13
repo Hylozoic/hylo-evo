@@ -1,23 +1,40 @@
 import { connect } from 'react-redux'
-import { navigate } from 'routes/NavigationHandler/store'
-import { sampleComment, fakePerson } from 'components/PostCard/samplePost'
-import { times } from 'lodash/fp'
+import { get } from 'lodash/fp'
+import { createSelector } from 'reselect'
+import { getMe } from 'store/selectors/getMe'
+import orm from 'store/models'
+import { getPost } from 'routes/PostDetail/PostDetail.connector.js'
+import getParam from 'store/selectors/getParam'
 
-const comments = times(i => sampleComment(), 5)
+// const getComments = createSelector(
+//   state => orm.session(state.orm),
+//   (state, props) => getParam('postId', state, props),
+//   (session, id) => {
+//     try {
+//       const post = session.Post.get({id})
+//       return post.comments.toModelArray()
+//       .map(comment => ({
+//         ...comment.ref,
+//         creator: comment.creator
+//       }))
+//     } catch (e) {
+//       return []
+//     }
+//   })
+
+const getComments = () => []
 
 export function mapStateToProps (state, props) {
   return {
-    comments: comments,
-    commentsTotal: 20,
+    comments: getComments(state, props),
+    commentsTotal: get('commentsTotal', getPost(state, props)),
     fetchComments: () => console.log('Fetch more comments'),
     createComment: params => console.log('creating comment', params),
     slug: 'hylo',
-    currentUser: fakePerson()
+    currentUser: getMe(state.orm)
   }
 }
 
-export const mapDispatchToProps = {
-  navigate
-}
+export const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)
