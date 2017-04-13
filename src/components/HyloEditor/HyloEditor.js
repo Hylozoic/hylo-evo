@@ -4,8 +4,8 @@ import Editor from 'draft-js-plugins-editor'
 import createMentionPlugin from 'draft-js-mention-plugin'
 import createHashtagPlugin from './hashtagPlugin'
 import createLinkifyPlugin from 'draft-js-linkify-plugin'
-import { EditorState } from 'draft-js'
-import { stateToHTML } from 'draft-js-export-html'
+import { EditorState, convertToRaw } from 'draft-js'
+// import { stateToHTML } from 'draft-js-export-html'
 import 'draft-js/dist/Draft.css'
 import 'draft-js-mention-plugin/lib/plugin.css'
 import './HyloEditor.scss'
@@ -44,7 +44,7 @@ export default class HyloEditor extends Component {
 
   getContent = () => {
     const { editorState } = this.state
-    return stateToHTML(editorState.getCurrentContent())
+    return convertToRaw(editorState.getCurrentContent())
   }
 
   handleEditorChange = (editorState) => {

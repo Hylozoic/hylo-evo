@@ -14,7 +14,10 @@ export default class PostEditor extends React.Component {
   }
 
   static defaultProps = {
-    titlePlaceholder: 'What’s on your mind?',
+    titlePlaceholders: {
+      offer: 'What super powers can you offer?',
+      default: 'What’s on your mind?'
+    },
     bodyPlaceholder: 'Add a description',
     postType: 'discussion'
   }
@@ -31,16 +34,12 @@ export default class PostEditor extends React.Component {
   }
 
   handlePostTypeSelection = postType => event => {
-    let { titlePlaceholder } = this.state
-    switch (postType) {
-      case 'discussions':
-      case 'request':
-      case 'offer':
-        titlePlaceholder = 'What super powers can you offer?'
-        break
-      default:
-    }
-    this.setState({ titlePlaceholder, postType })
+    const { titlePlaceholders } = this.props
+    this.setState({
+      postType,
+      titlePlaceholder: titlePlaceholders[postType] ||
+                        titlePlaceholders['default']
+    })
   }
 
   postTypeButtonProps = type => {
@@ -108,7 +107,7 @@ export default class PostEditor extends React.Component {
           <HyloEditor
             styleName='editor'
             placeholder={bodyPlaceholder}
-            ref={component => { this.editor = component.getWrappedInstance() }} />
+            ref={component => { this.editor = component && component.getWrappedInstance() }} />
         </div>
       </div>
       <div styleName='footer'>

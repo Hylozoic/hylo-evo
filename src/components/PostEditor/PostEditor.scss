@@ -127,7 +127,7 @@
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   height: 3.75rem;
   padding: $space-3x;
   background-color: $color-athens-gray-dark;
