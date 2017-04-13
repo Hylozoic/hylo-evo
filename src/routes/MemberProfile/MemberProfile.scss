@@ -57,7 +57,7 @@
 
 .subhead {
   composes: hdr-headline from 'css/typography.scss';
-  margin: $space-8x 0;
+  margin: $space-8x 0 $space-6x 0;
 }
 
 .banner-image {
@@ -91,4 +91,11 @@
     border: 1px dotted grey;
     margin: 0 $space-2x;
   }
+}
+
+.bio {
+  composes: bdy-lt-lg from 'css/typography.scss';
+  border: 1px solid $color-cape-cod-10;
+  border-radius: $space-1x;
+  padding: $space-6x;
 }

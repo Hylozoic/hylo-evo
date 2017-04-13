@@ -34,6 +34,15 @@ export default class MemberProfile extends React.Component {
     this.props.fetchPerson(this.props.id)
   }
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      currentTab: 'Overview'
+    }
+  }
+
+  selectTab = tab => this.setState({ currentTab: tab })
+
   displayError (error) {
     return <div styleName='member-profile'>
       <span styleName='error'>{ error }</span>
@@ -65,11 +74,13 @@ export default class MemberProfile extends React.Component {
         role={role} />
       <div styleName='content'>
         <ProfileControls
+          currentTab={this.state.currentTab}
           facebookUrl={facebookUrl}
           linkedinUrl={linkedinUrl}
+          selectTab={this.selectTab}
           twitterName={twitterName}
           url={url} />
-        <h2 styleName='subhead'>About me</h2>
+        <TabContentSwitcher bio={bio} currentTab={this.state.currentTab} />
       </div>
     </div>
   }
@@ -98,7 +109,7 @@ export function ProfileNamePlate ({ avatarUrl, name, location, role }) {
   </div>
 }
 
-export function ProfileControls ({ facebookUrl, linkedinUrl, twitterName, url }) {
+export function ProfileControls ({ currentTab, facebookUrl, linkedinUrl, selectTab, twitterName, url }) {
   return <div styleName='controls'>
     <SocialButtons
       facebookUrl={facebookUrl}
@@ -107,7 +118,8 @@ export function ProfileControls ({ facebookUrl, linkedinUrl, twitterName, url })
       url={url} />
     <hr styleName='separator' />
     <SimpleTabBar
-      currentTab='Overview'
+      currentTab={currentTab}
+      selectTab={selectTab}
       tabNames={['Overview', 'Posts', 'Comments', 'Upvotes']} />
   </div>
 }
@@ -119,4 +131,34 @@ export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
     {twitterName && <li><a href={twitterName}><Icon name='ArrowUp' /></a></li>}
     {url && <li><a href={url}><Icon name='ArrowUp' /></a></li>}
   </ul>
+}
+
+export function TabContentSwitcher ({ bio, currentTab }) {
+  const tabContent = {
+    Overview:
+      <div>
+        <h2 styleName='subhead'>About Me</h2>
+        <div styleName='bio'>{bio}</div>
+        <h2 styleName='subhead'>Recent Activity</h2>
+      </div>,
+
+    Posts:
+      <div>
+        <h2 styleName='subhead'>Posts</h2>
+      </div>,
+
+    Comments:
+      <div>
+        <h2 styleName='subhead'>Comments</h2>
+      </div>,
+
+    Upvotes:
+      <div>
+        <h2 styleName='subhead'>Upvotes</h2>
+      </div>
+  }
+
+  return <div>
+    {tabContent[currentTab]}
+  </div>
 }

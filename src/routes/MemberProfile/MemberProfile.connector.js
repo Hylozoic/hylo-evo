@@ -13,6 +13,7 @@ export function mapStateToProps (state, { match }) {
 
   return {
     id,
+    currentTab: 'Overview',
     error,
     person: personSelector(state, match.params)
   }
