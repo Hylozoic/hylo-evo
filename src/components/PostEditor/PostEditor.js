@@ -27,18 +27,21 @@ export default class PostEditor extends React.Component {
     this.state = {
       postType: props.postType,
       title: '',
-      titlePlaceholder: props.titlePlaceholder,
+      titlePlaceholder: this.titlePlaceholderForPostType(props.postType),
       description: '',
       selectedCommunities: []
     }
   }
 
-  handlePostTypeSelection = postType => event => {
+  titlePlaceholderForPostType (postType) {
     const { titlePlaceholders } = this.props
+    return titlePlaceholders[postType] || titlePlaceholders['default']
+  }
+
+  handlePostTypeSelection = postType => event => {
     this.setState({
       postType,
-      titlePlaceholder: titlePlaceholders[postType] ||
-                        titlePlaceholders['default']
+      titlePlaceholder: this.titlePlaceholderForPostType(postType)
     })
   }
 
