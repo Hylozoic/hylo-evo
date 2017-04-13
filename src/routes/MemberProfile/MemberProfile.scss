@@ -99,3 +99,17 @@
   border-radius: $space-1x;
   padding: $space-6x;
 }
+
+.icon {
+  margin: $space-1x;
+
+  &-facebook {
+    color: #3b5998;
+  }
+  &-linkedin {
+    color: #007BB6;
+  }
+  &-twitter {
+    color: #4099FF;
+  }
+}

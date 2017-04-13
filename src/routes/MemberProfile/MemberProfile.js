@@ -129,10 +129,10 @@ export function ProfileControls ({ currentTab, facebookUrl, linkedinUrl, selectT
 
 export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
   return <ul styleName='social-buttons'>
-    {facebookUrl && <li><a href={facebookUrl}><Icon name='ArrowUp' /></a></li>}
-    {linkedinUrl && <li><a href={linkedinUrl}><Icon name='ArrowUp' /></a></li>}
-    {twitterName && <li><a href={twitterName}><Icon name='ArrowUp' /></a></li>}
-    {url && <li><a href={url}><Icon name='ArrowUp' /></a></li>}
+    {twitterName && <a href={`https://twitter.com/${twitterName}`}><Icon name='ProfileTwitter' styleName='icon icon-twitter' /></a>}
+    {facebookUrl && <a href={facebookUrl}><Icon name='ProfileFacebook' styleName='icon icon-facebook' /></a>}
+    {linkedinUrl && <a href={linkedinUrl}><Icon name='ProfileLinkedin' styleName='icon icon-linkedin' /></a>}
+    {url && <a href={url}><Icon name='ProfileUrl' green styleName='icon' /></a>}
   </ul>
 }
 
