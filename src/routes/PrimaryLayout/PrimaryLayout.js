@@ -9,6 +9,7 @@ import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 import MemberProfile from 'routes/MemberProfile'
+import Members from 'routes/Members'
 import './PrimaryLayout.scss'
 
 export default class PrimaryLayout extends Component {
@@ -40,6 +41,7 @@ export default class PrimaryLayout extends Component {
           <Route exact path='/c/:slug' render={({ match }) => <Feed {...{community, currentUser, match}} />} />
           <Route path='/c/:slug/m/:id' component={MemberProfile} />
           <Route path='/events' component={Events} />
+          <Route path='/c/:slug/members' component={Members} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/' component={Sidebar} />

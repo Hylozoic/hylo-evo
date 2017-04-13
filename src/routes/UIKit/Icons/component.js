@@ -20,6 +20,7 @@ const ICON_NAMES = [
   'Events',
   'Home',
   'More',
+  'ArrowDown',
   'ArrowUp',
   'Location',
   'Flag',
