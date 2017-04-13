@@ -17,7 +17,8 @@ it('adds data to empty state', () => {
         community: {
           members: {
             total: 22,
-            items: [{id: 7}, {id: 8}, {id: 9}]
+            items: [{id: 7}, {id: 8}, {id: 9}],
+            hasMore: true
           }
         }
       }
@@ -30,7 +31,8 @@ it('adds data to empty state', () => {
   expect(queryResults(state, action)).toEqual({
     [key]: {
       ids: [7, 8, 9],
-      total: 22
+      total: 22,
+      hasMore: true
     }
   })
 })
@@ -39,7 +41,8 @@ it('appends to existing data, ignoring duplicates', () => {
   const state = {
     [key]: {
       ids: [4, 7, 5, 6],
-      total: 21
+      total: 21,
+      hasMore: true
     }
   }
 
@@ -50,7 +53,8 @@ it('appends to existing data, ignoring duplicates', () => {
         community: {
           members: {
             total: 22,
-            items: [{id: 7}, {id: 8}, {id: 9}]
+            items: [{id: 7}, {id: 8}, {id: 9}],
+            hasMore: false
           }
         }
       }
@@ -65,7 +69,8 @@ it('appends to existing data, ignoring duplicates', () => {
   expect(queryResults(state, action)).toEqual({
     [key]: {
       ids: [4, 7, 5, 6, 8, 9],
-      total: 22
+      total: 22,
+      hasMore: false
     }
   })
 })

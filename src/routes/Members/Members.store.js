@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
-import { getOr, includes, isEmpty } from 'lodash/fp'
+import { get, includes, isEmpty } from 'lodash/fp'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 
 export const FETCH_MEMBERS = 'FETCH_MEMBERS'
@@ -17,7 +17,6 @@ export function fetchMembers (slug, sortBy, offset) {
           avatarUrl
           memberCount
           members (first: $first, sortBy: $sortBy, offset: $offset) {
-            total
             items {
               id
               name
@@ -25,6 +24,7 @@ export function fetchMembers (slug, sortBy, offset) {
               location
               tagline
             }
+            hasMore
           }
         }
       }`,
@@ -45,10 +45,12 @@ export default function reducer (state = {}, action) {
   return state
 }
 
+const getMemberResults = makeGetQueryResults(FETCH_MEMBERS)
+
 export const getMembers = ormCreateSelector(
   orm,
   state => state.orm,
-  makeGetQueryResults(FETCH_MEMBERS),
+  getMemberResults,
   (session, results) => {
     if (isEmpty(results) || isEmpty(results.ids)) return []
     return session.Person.all()
@@ -58,7 +60,7 @@ export const getMembers = ormCreateSelector(
   }
 )
 
-export const getMembersTotal = createSelector(
-  makeGetQueryResults(FETCH_MEMBERS),
-  getOr(0, 'total')
+export const getHasMoreMembers = createSelector(
+  getMemberResults,
+  get('hasMore')
 )

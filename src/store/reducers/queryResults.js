@@ -27,14 +27,15 @@ export default function (state = {}, action) {
   return state
 }
 
-function appendIds (state, type, params, { items, total }) {
+function appendIds (state, type, params, { items, total, hasMore }) {
   const key = buildKey(type, params)
   const existingIds = get('ids', state[key]) || []
   return {
     ...state,
     [key]: {
       ids: uniq(existingIds.concat(items.map(x => x.id))),
-      total
+      total,
+      hasMore
     }
   }
 }

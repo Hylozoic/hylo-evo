@@ -18,7 +18,6 @@ function Sort ({sortText}) {
 export default class Members extends Component {
   static propTypes = {
     canInvite: bool,
-    total: number,
     sortBy: string,
     members: arrayOf(shape({
       id: string,
@@ -27,18 +26,18 @@ export default class Members extends Component {
       tagline: string,
       avatarUrl: string
     })),
+    hasMore: bool,
     changeSort: func
   }
 
   componentDidMount () {
+    // TODO skip this if we already have some
     this.props.fetchMembers(this.props.sortBy)
   }
 
   fetchMore () {
-    const { sortBy, members, membersTotal, fetchMembers, pending } = this.props
-    if (pending || members.length === 0 || members.length >= membersTotal) {
-      return
-    }
+    const { sortBy, members, hasMore, fetchMembers, pending } = this.props
+    if (pending || members.length === 0 || !hasMore) return
     fetchMembers(sortBy, members.length)
   }
 
