@@ -34,6 +34,15 @@ const fetchPersonQuery =
       creator {
         id
       }
+      commenters {
+        id,
+        name
+      }
+      commentersTotal
+      communities {
+        id
+        name
+      }
     }
     postsTotal
   }
@@ -75,10 +84,12 @@ export const personSelector = createSelector(
           ...membership.ref,
           community: membership.community.ref
         })),
-        posts: person.postsCreated.toModelArray().map(post => ({
+        posts: person.posts.toModelArray().map(post => {
+          return ({
           ...post.ref,
+          commenters: post.commenters.toRefArray(),
           communities: post.communities.toRefArray()
-        }))
+        })})
       }
       return { ...result, role: getRole(slug, result.memberships) }
     }

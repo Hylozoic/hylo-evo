@@ -6,6 +6,7 @@ import RoundImage from 'components/RoundImage'
 import { bgImageStyle } from 'util/index'
 
 import SimpleTabBar from 'components/SimpleTabBar'
+import PostCard from 'components/PostCard'
 
 const { any, arrayOf, object, string, shape } = React.PropTypes
 
@@ -60,6 +61,7 @@ export default class MemberProfile extends React.Component {
       linkedinUrl,
       location,
       name,
+      posts,
       role,
       twitterName,
       url
@@ -80,7 +82,7 @@ export default class MemberProfile extends React.Component {
           selectTab={this.selectTab}
           twitterName={twitterName}
           url={url} />
-        <TabContentSwitcher bio={bio} currentTab={this.state.currentTab} />
+        <TabContentSwitcher bio={bio} currentTab={this.state.currentTab} posts={posts} />
       </div>
     </div>
   }
@@ -133,18 +135,20 @@ export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
   </ul>
 }
 
-export function TabContentSwitcher ({ bio, currentTab }) {
+export function TabContentSwitcher ({ bio, currentTab, posts }) {
   const tabContent = {
     Overview:
       <div>
         <h2 styleName='subhead'>About Me</h2>
         <div styleName='bio'>{bio}</div>
         <h2 styleName='subhead'>Recent Activity</h2>
+        {posts && posts.map(post => <PostCard post={post} />)}
       </div>,
 
     Posts:
       <div>
         <h2 styleName='subhead'>Posts</h2>
+        {posts && posts.map(post => <div>{post.title}</div>)}
       </div>,
 
     Comments:
