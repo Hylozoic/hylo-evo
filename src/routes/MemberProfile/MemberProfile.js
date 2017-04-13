@@ -20,11 +20,10 @@ export default class MemberProfile extends React.Component {
       bio: string,
       facebookUrl: string,
       linkedinUrl: string,
+      comments: arrayOf(object),
       memberships: arrayOf(object),
-      membershipsTotal: any,
       name: string,
       posts: arrayOf(object),
-      postsTotal: any,
       role: string,
       twitterName: string,
       url: string
@@ -38,7 +37,7 @@ export default class MemberProfile extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentTab: 'Overview'
+      currentTab: props.currentTab
     }
   }
 
@@ -61,6 +60,7 @@ export default class MemberProfile extends React.Component {
       linkedinUrl,
       location,
       name,
+      comments,
       posts,
       role,
       twitterName,
@@ -82,7 +82,7 @@ export default class MemberProfile extends React.Component {
           selectTab={this.selectTab}
           twitterName={twitterName}
           url={url} />
-        <TabContentSwitcher bio={bio} currentTab={this.state.currentTab} posts={posts} />
+        <TabContentSwitcher bio={bio} comments={comments} currentTab={this.state.currentTab} posts={posts} />
       </div>
     </div>
   }
@@ -135,20 +135,24 @@ export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
   </ul>
 }
 
-export function TabContentSwitcher ({ bio, currentTab, posts }) {
+export function TabContentSwitcher ({ bio, comments, currentTab, posts }) {
   const tabContent = {
     Overview:
       <div>
         <h2 styleName='subhead'>About Me</h2>
         <div styleName='bio'>{bio}</div>
         <h2 styleName='subhead'>Recent Activity</h2>
-        {posts && posts.map(post => <PostCard post={post} />)}
+        {posts && comments && posts.concat(comments).map((item, i) => {
+          return item.hasOwnProperty('title')
+            ? <PostCard key={i} post={item} />
+            : <CommentCard key={i} comment={item} />
+        })}
       </div>,
 
     Posts:
       <div>
         <h2 styleName='subhead'>Posts</h2>
-        {posts && posts.map(post => <div>{post.title}</div>)}
+        {posts && posts.map(post => <PostCard key={post.id} post={post} />)}
       </div>,
 
     Comments:
@@ -164,5 +168,11 @@ export function TabContentSwitcher ({ bio, currentTab, posts }) {
 
   return <div>
     {tabContent[currentTab]}
+  </div>
+}
+
+export function CommentCard ({ text }) {
+  return <div>
+    {text}
   </div>
 }

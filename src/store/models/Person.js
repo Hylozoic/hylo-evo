@@ -21,8 +21,9 @@ Person.fields = {
   linkedinUrl: attr(),
   url: attr(),
   location: attr(),
-  memberships: many('Membership', 'person'),
+  comments: many('Comment'),
+  memberships: many('Membership'),
   membershipsTotal: attr(),
-  posts: many('Post', 'creator'),
+  posts: many('Post'),
   postsTotal: attr()
 }

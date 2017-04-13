@@ -16,6 +16,14 @@ const fetchPersonQuery =
     facebookUrl
     url
     location
+    comments {
+      id
+      text
+      creator {
+        id
+      }
+      createdAt
+    }
     memberships {
       id
       role
@@ -36,7 +44,8 @@ const fetchPersonQuery =
       }
       commenters {
         id,
-        name
+        name,
+        avatarUrl
       }
       commentersTotal
       communities {
@@ -73,13 +82,17 @@ const defaultPerson = {
 export const personSelector = createSelector(
   orm,
   state => state.orm,
-  (_, params) => params,
+  (_, props) => props.match.params,
   (session, params) => {
     const { id, slug } = params
     if (session.Person.hasId(id)) {
       const person = session.Person.withId(id)
       let result = {
         ...person.ref,
+        comments: person.comments.toModelArray().map(comment => ({
+          ...comment.ref,
+          creator: comment.creator.ref
+        })),
         memberships: person.memberships.toModelArray().map(membership => ({
           ...membership.ref,
           community: membership.community.ref
@@ -87,6 +100,7 @@ export const personSelector = createSelector(
         posts: person.posts.toModelArray().map(post => {
           return ({
           ...post.ref,
+          creator: post.creator.ref,
           commenters: post.commenters.toRefArray(),
           communities: post.communities.toRefArray()
         })})

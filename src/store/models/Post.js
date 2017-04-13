@@ -26,6 +26,7 @@ Post.modelName = 'Post'
 Post.fields = {
   id: attr(),
   title: attr(),
+  creator: fk('Person'),
   type: attr(),
   details: attr(),
   followers: many({

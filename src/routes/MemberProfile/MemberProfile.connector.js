@@ -7,15 +7,15 @@ const messages = {
   invalid: "That doesn't seem to be a valid person ID."
 }
 
-export function mapStateToProps (state, { match }) {
-  const { id } = match.params
+export function mapStateToProps (state, props) {
+  const { id } = props.match.params
   const error = Number.isSafeInteger(Number(id)) ? null : messages.invalid
 
   return {
     id,
     currentTab: 'Overview',
     error,
-    person: personSelector(state, match.params)
+    person: personSelector(state, props)
   }
 }
 
