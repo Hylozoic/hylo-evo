@@ -60,6 +60,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case a.FETCH_POST:
+    case a.FETCH_COMMENTS:
       ModelExtractor.addAll({
         session,
         root: payload.data.post,

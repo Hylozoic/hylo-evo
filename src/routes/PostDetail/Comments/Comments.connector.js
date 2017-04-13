@@ -1,7 +1,9 @@
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import { getMe } from 'store/selectors/getMe'
+import { isEmpty } from 'lodash/fp'
 import orm from 'store/models'
+import { fetchComments } from './Comments.store'
 
 const getCommentsAndTotal = createSelector(
   state => orm.session(state.orm),
@@ -39,6 +41,22 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = {}
+export const mapDispatchToProps = (dispatch, props) => {
+  return {
+    fetchCommentsMaker: cursor => () => dispatch(fetchComments(props.postId, {cursor}))
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  const { comments } = stateProps
+  const { fetchCommentsMaker } = dispatchProps
+  const cursor = !isEmpty(comments) && comments.slice(-1)[0].id
+  return {
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
+    fetchComments: fetchCommentsMaker(cursor)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
