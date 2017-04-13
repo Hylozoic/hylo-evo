@@ -12,7 +12,7 @@ describe.only('MemberProfile', () => {
     posts: []
   }
 
-  it('Displays an error if one is present', () => {
+  it('displays an error if one is present', () => {
     const props = {
       error: 'WOMBAT-TYPE INVALID',
       person: defaultPerson
@@ -27,11 +27,11 @@ describe.only('MemberProfile', () => {
       expect(wrapper.find('h1').text()).toBe(payload.person.name)
     })
 
-    it('Displays an avatar if one is present', () => {
+    it('displays an avatar if one is present', () => {
 
     })
 
-    it('Displays a default avatar if avatarUrl is null', () => {
+    it('displays a default avatar if avatarUrl is null', () => {
 
     })
   })

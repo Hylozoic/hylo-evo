@@ -7,6 +7,7 @@ import { bgImageStyle } from 'util/index'
 
 import SimpleTabBar from 'components/SimpleTabBar'
 import PostCard from 'components/PostCard'
+import CommentCard from 'components/CommentCard'
 
 const { any, arrayOf, object, string, shape } = React.PropTypes
 
@@ -136,9 +137,9 @@ export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
 }
 
 export function TabContentSwitcher ({ bio, comments, currentTab, posts }) {
-  const tabContent = {
-    Overview:
-      <div>
+  switch (currentTab) {
+    case 'Overview':
+      return <div>
         <h2 styleName='subhead'>About Me</h2>
         <div styleName='bio'>{bio}</div>
         <h2 styleName='subhead'>Recent Activity</h2>
@@ -147,32 +148,22 @@ export function TabContentSwitcher ({ bio, comments, currentTab, posts }) {
             ? <PostCard key={i} post={item} />
             : <CommentCard key={i} comment={item} />
         })}
-      </div>,
+      </div>
 
-    Posts:
-      <div>
+    case 'Posts':
+      return <div>
         <h2 styleName='subhead'>Posts</h2>
         {posts && posts.map(post => <PostCard key={post.id} post={post} />)}
-      </div>,
+      </div>
 
-    Comments:
-      <div>
+    case 'Comments':
+      return <div>
         <h2 styleName='subhead'>Comments</h2>
-      </div>,
+      </div>
 
-    Upvotes:
-      <div>
+    case 'Upvotes':
+      return <div>
         <h2 styleName='subhead'>Upvotes</h2>
       </div>
   }
-
-  return <div>
-    {tabContent[currentTab]}
-  </div>
-}
-
-export function CommentCard ({ text }) {
-  return <div>
-    {text}
-  </div>
 }
