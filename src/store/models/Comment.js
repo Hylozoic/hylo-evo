@@ -8,17 +8,12 @@ const Comment = Model.createClass({
 
 export default Comment
 
-// export default class Comment extends Model {
-//   toString () {
-//     return `Comment: ${this.name}`
-//   }
-// }
-
 Comment.modelName = 'Comment'
 
 Comment.fields = {
   id: attr(),
   text: attr(),
   creator: fk('Person'),
+  post: fk('Post'),
   createdAt: attr()
 }

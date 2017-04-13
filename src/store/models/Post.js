@@ -37,7 +37,7 @@ Post.fields = {
   }),
   communities: many('Community'),
   communitiesTotal: attr(),
-  comments: many('Comment'),
+  comments: many('Comment', 'onPost'),
   commentsTotal: attr(),
   commenters: many({
     to: 'Person',
