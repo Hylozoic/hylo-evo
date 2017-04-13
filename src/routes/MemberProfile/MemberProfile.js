@@ -128,12 +128,24 @@ export function ProfileControls ({ currentTab, facebookUrl, linkedinUrl, selectT
 }
 
 export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
-  return <ul styleName='social-buttons'>
-    {twitterName && <a href={`https://twitter.com/${twitterName}`}><Icon name='ProfileTwitter' styleName='icon icon-twitter' /></a>}
-    {facebookUrl && <a href={facebookUrl}><Icon name='ProfileFacebook' styleName='icon icon-facebook' /></a>}
-    {linkedinUrl && <a href={linkedinUrl}><Icon name='ProfileLinkedin' styleName='icon icon-linkedin' /></a>}
-    {url && <a href={url}><Icon name='ProfileUrl' green styleName='icon' /></a>}
-  </ul>
+  return <div styleName='social-buttons'>
+    {twitterName &&
+      <a styleName='social-link' href={`https://twitter.com/${twitterName}`}>
+        <Icon name='ProfileTwitter' styleName='icon icon-twitter' />
+      </a>}
+    {facebookUrl &&
+      <a styleName='social-link' href={facebookUrl}>
+        <Icon name='ProfileFacebook' styleName='icon icon-facebook' />
+      </a>}
+    {linkedinUrl &&
+      <a styleName='social-link' href={linkedinUrl}>
+        <Icon name='ProfileLinkedin' styleName='icon icon-linkedin' />
+      </a>}
+    {url &&
+      <a styleName='social-link' href={url}>
+        <Icon name='ProfileUrl' green styleName='icon' />
+      </a>}
+  </div>
 }
 
 export function TabContentSwitcher ({ bio, comments, currentTab, posts }) {

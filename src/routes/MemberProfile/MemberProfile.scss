@@ -85,12 +85,6 @@
   flex-direction: row;
   justify-content: flex-end;
   margin: $space-6x 0;
-
-  li {
-    list-style: none;
-    border: 1px dotted grey;
-    margin: 0 $space-2x;
-  }
 }
 
 .bio {
@@ -98,6 +92,12 @@
   border: 1px solid $color-cape-cod-10;
   border-radius: $space-1x;
   padding: $space-6x;
+}
+
+.social-link {
+  &:focus, &:hover {
+    text-decoration: none;
+  }
 }
 
 .icon {
