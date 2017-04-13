@@ -1,20 +1,32 @@
 import { connect } from 'react-redux'
-import { fetchMembers, getMembers } from './Members.store'
+import {
+  FETCH_MEMBERS, fetchMembers, getMembers, getMembersTotal
+} from './Members.store'
+import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import { get } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
+  const community = getCommunityForCurrentRoute(state, props)
+  const extraProps = {
+    ...props,
+    sortBy: 'name',
+    slug: get('slug', community)
+  }
   return {
     canInvite: true,
-    total: 1276,
-    sort: 'name',
-    members: getMembers(state, props)
+    memberCount: get('memberCount', community),
+    sortBy: 'name',
+    members: getMembers(state, extraProps),
+    membersTotal: getMembersTotal(state, extraProps),
+    pending: state.pending[FETCH_MEMBERS]
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
   const { slug } = props.match.params
   return {
-    fetchMembers: function (order, afterId) {
-      return dispatch(fetchMembers(slug, order, afterId))
+    fetchMembers: function (sortBy, offset) {
+      return dispatch(fetchMembers(slug, sortBy, offset))
     }
   }
 }

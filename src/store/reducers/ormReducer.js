@@ -61,7 +61,6 @@ export default function ormReducer (state = {}, action) {
         root: payload.data.community,
         modelName: 'Community'
       })
-      addToOrdering(Community, payload.data.community, 'membersOrder', 'members')
   }
 
   return session.state

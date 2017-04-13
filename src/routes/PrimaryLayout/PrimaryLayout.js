@@ -28,7 +28,6 @@ export default class PrimaryLayout extends Component {
 
   render () {
     const { location, community, currentUser, communitiesDrawerOpen, toggleCommunitiesDrawer } = this.props
-    const communitySlug = community && community.slug
     const hasDetail = matchPath(location.pathname, {path: '/events/:eventId'})
     const closeDrawer = () => communitiesDrawerOpen && toggleCommunitiesDrawer()
 
