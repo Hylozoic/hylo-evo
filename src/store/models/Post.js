@@ -28,7 +28,6 @@ Post.fields = {
   title: attr(),
   type: attr(),
   details: attr(),
-  creator: fk('Person', 'postsCreated'),
   followers: many({
     to: 'Person',
     relatedName: 'postsFollowing',
