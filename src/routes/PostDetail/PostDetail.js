@@ -49,7 +49,7 @@ export default class PostDetail extends Component {
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
         votesTotal={post.votesTotal} />
-      <Comments comments={post.comments} />
+      <Comments postId={post.id} />
     </div>
   }
 }

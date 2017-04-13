@@ -5,10 +5,12 @@ import getParam from 'store/selectors/getParam'
 import orm from 'store/models'
 
 export const getPost = createSelector(
+  state => state,
   state => orm.session(state.orm),
   (state, props) => getParam('postId', state, props),
-  (session, id) => {
+  (state, session, id) => {
     try {
+      // console.log('trying to get post with id', id)
       const post = session.Post.get({id})
       return {
         ...post.ref,
