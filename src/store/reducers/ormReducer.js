@@ -1,6 +1,7 @@
 import * as a from 'store/constants'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
+import { FETCH_MEMBERS } from 'routes/Members/Members.store'
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
@@ -51,13 +52,15 @@ export default function ormReducer (state = {}, action) {
         root: payload.data.community,
         modelName: meta.rootModelName
       })
-
-      const { id, posts } = payload.data.community
-      const community = Community.withId(id)
-      community.update({
-        feedOrder: (community.feedOrder || []).concat(posts.map(f => f.id))
-      })
+      addToOrdering(Community, payload.data.community, 'feedOrder', 'posts')
       break
+
+    case FETCH_MEMBERS:
+      ModelExtractor.addAll({
+        session,
+        root: payload.data.community,
+        modelName: 'Community'
+      })
   }
 
   return session.state
@@ -75,4 +78,11 @@ function deleteEntity (payload) {
 
 function updateEntity (payload) {
   return model => model.withId(payload.id).update(payload)
+}
+
+function addToOrdering (model, data, orderingKey, itemsKey) {
+  const parent = model.withId(data.id)
+  parent.update({
+    [orderingKey]: (parent[orderingKey] || []).concat(data[itemsKey].map(x => x.id))
+  })
 }

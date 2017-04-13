@@ -26,6 +26,10 @@ export function postUrl (id, slug) {
   }
 }
 
+export function getSlugInPath (pathname) {
+  return pathname.match(/\/c\/([^/]+)/)[1]
+}
+
 export const findChildLink = element => {
   if (element.nodeName === 'A') return element
   if (element.hasChildNodes()) {

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { createSelector } from 'reselect'
+import { createSelector as ormCreateSelector } from 'redux-orm'
 import { get, includes } from 'lodash/fp'
 import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
@@ -7,8 +7,9 @@ import { fetchPosts } from './actions'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getParam from 'store/selectors/getParam'
 
-export const getCommunityPosts = createSelector(
-  state => orm.session(state.orm),
+export const getCommunityPosts = ormCreateSelector(
+  orm,
+  state => state.orm,
   getCommunityForCurrentRoute,
   (session, community) => {
     if (!community) return []

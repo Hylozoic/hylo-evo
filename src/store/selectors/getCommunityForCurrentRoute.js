@@ -1,9 +1,11 @@
 import orm from 'store/models'
-import { createSelector } from 'reselect'
+import { createSelector as ormCreateSelector } from 'redux-orm'
 import getParam from './getParam'
+import { getSlugInPath } from 'util/index'
 
-const getCommunityForCurrentRoute = createSelector(
-  state => orm.session(state.orm),
+const getCommunityForCurrentRoute = ormCreateSelector(
+  orm,
+  state => state.orm,
   (state, props) => getParam('slug', state, props) || tryLocation(props),
   (session, slug) => {
     try {
@@ -21,5 +23,5 @@ export default getCommunityForCurrentRoute
 // slug is a parameter
 function tryLocation (props) {
   if (!props.location) return null
-  return props.location.pathname.match(/\/c\/([^/]+)/)[1]
+  return getSlugInPath(props.location.pathname)
 }
