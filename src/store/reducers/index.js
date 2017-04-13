@@ -7,6 +7,7 @@ import orm from './ormReducer'
 import pending from './pending'
 // Local store
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
+import MessageForm from 'components/MessageForm/MessageForm.store'
 import CommunitiesSelector from 'components/CommunitiesSelector/CommunitiesSelector.store'
 import Login from 'routes/Login/Login.store'
 
@@ -23,6 +24,7 @@ export default combineReducers({
   },
 
   // Local store (Component)
+  MessageForm,
   HyloEditor,
   CommunitiesSelector,
   Login
