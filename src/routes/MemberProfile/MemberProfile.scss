@@ -47,11 +47,17 @@
   }
 
   .star {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: $space-1x;
     font-size: 18px;
+    width: 15px;
+    height: 15px;
     color: $color-link-water;
     background-color: $color-rhino-60;
     border-radius: 50%;
-    margin: $space-1x;
+    border: 1px solid white;
   }
 }
 
