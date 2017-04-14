@@ -110,7 +110,6 @@ export const personSelector = createSelector(
           communities: post.communities.toRefArray()
         })})
       }
-      console.log(result)
       return { ...result, role: getRole(slug, result.memberships) }
     }
     return defaultPerson
