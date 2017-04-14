@@ -37,7 +37,7 @@ export function mapStateToProps (state, props) {
     comments,
     commentsTotal,
     slug: 'hylo',
-    currentUser: getMe(state.orm)
+    currentUser: getMe(state)
   }
 }
 

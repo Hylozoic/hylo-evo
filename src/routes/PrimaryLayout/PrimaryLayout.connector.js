@@ -6,7 +6,7 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 function mapStateToProps (state, props) {
   return {
     community: getCommunityForCurrentRoute(state, props),
-    currentUser: getMe(state.orm),
+    currentUser: getMe(state),
     communitiesDrawerOpen: state.communitiesDrawerOpen
   }
 }

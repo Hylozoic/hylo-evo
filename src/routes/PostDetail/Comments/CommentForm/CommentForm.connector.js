@@ -3,7 +3,7 @@ import { getMe } from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
   return {
-    currentUser: getMe(state.orm)
+    currentUser: getMe(state)
   }
 }
 

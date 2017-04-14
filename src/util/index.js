@@ -30,6 +30,11 @@ export function communityUrl (slug) {
   return `/c/${slug}`
 }
 
+export function getSlugInPath (pathname) {
+  const match = pathname.match(/\/c\/([^/]+)/)
+  return match ? match[1] : null
+}
+
 export const findChildLink = element => {
   if (element.nodeName === 'A') return element
   if (element.hasChildNodes()) {

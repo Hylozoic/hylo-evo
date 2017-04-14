@@ -1,6 +1,5 @@
 import { createStore } from 'redux'
-
-import middleware from './middleware'
+import createMiddleware from './middleware'
 import orm from './models'
 import reducers from './reducers'
 
@@ -8,4 +7,6 @@ const initialState = {
   orm: orm.getEmptyState()
 }
 
-export default createStore(reducers, initialState, middleware)
+export default function (history) {
+  return createStore(reducers, initialState, createMiddleware(history))
+}

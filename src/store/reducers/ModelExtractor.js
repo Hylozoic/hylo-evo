@@ -20,8 +20,9 @@ export default class ModelExtractor {
   addAll () {
     this.accumulator.forEach(({ modelName, payload }) => {
       const model = this.session[modelName]
+      if (!payload.id) return
       model.hasId(payload.id)
-        ? model.withId(payload.id).update(payload)
+        ? model.withId(payload.id).updateAppending(payload)
         : model.create(payload)
     })
   }
@@ -38,7 +39,8 @@ export default class ModelExtractor {
           this.walk(value, type.toModelName)
           return value.id
         case MANY_TYPE:
-          return value.map(x => {
+          const items = Array.isArray(value) ? value : value.items
+          return items.map(x => {
             this.walk(x, type.toModelName)
             return x.id
           })

@@ -44,8 +44,6 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   border-radius: 4px;
-  position: absolute;
-  right: -28px;
   list-style: none;
   display: none;
   padding: 0;
@@ -75,6 +73,7 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
   height: 50px;
   line-height: 50px;
   padding: 0 20px;
+  cursor: pointer;
 }
 
 .icon {
@@ -96,8 +95,12 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
   width: 100%;
 }
 
-
 .triangle {
   min-width: 0 !important;
   @include is-top-triangle(#fff, $dropdown-border-color, 7px);
+}
+
+.alignRight {
+  left: auto;
+  right: 0;
 }

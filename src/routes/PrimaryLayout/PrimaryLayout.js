@@ -10,8 +10,8 @@ import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 import PostDetail from 'routes/PostDetail'
+import Members from 'routes/Members'
 import './PrimaryLayout.scss'
-import orm from 'store/models'
 
 export default class PrimaryLayout extends Component {
   static propTypes = {
@@ -47,9 +47,10 @@ export default class PrimaryLayout extends Component {
       <div styleName='row'>
         <Navigation collapsed={hasDetail} />
         <div styleName='content'>
-          <Route path='/' exact render={() => <Feed {...{community, currentUser, slug: 'hylo'}} />} />
+          <Route path='/' exact render={() => <Feed {...{community, currentUser}} />} />
           <Route path='/c/:slug' render={({ match }) => <Feed {...{community, currentUser, match}} />} />
           <Route path='/events' component={Events} />
+          <Route path='/c/:slug/members' component={Members} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/' component={Sidebar} />
