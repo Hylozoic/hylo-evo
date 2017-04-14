@@ -12,6 +12,7 @@ import { parse } from 'url'
 import './component.scss'
 import samplePost from './samplePost'
 import { isEmpty } from 'lodash'
+import cx from 'classnames'
 
 const { shape, any, object, string, func, array, bool } = React.PropTypes
 
@@ -25,7 +26,7 @@ export default class PostCard extends React.Component {
     const { navigate } = this.context
     const slug = !isEmpty(communities) && communities[0].slug
 
-    return <div styleName='card' className={className}
+    return <div styleName={cx('card', {expanded})} className={className}
       onClick={() => navigate(postUrl(post.id, slug))}>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}
