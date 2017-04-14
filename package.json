@@ -168,7 +168,10 @@
           ]
         ]
       }
-    }
+    },
+    "ignore": [
+      "scripts/templates/*"
+    ]
   },
   "standard": {
     "parser": "babel-eslint",
