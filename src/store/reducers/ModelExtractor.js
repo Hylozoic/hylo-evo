@@ -20,6 +20,7 @@ export default class ModelExtractor {
   addAll () {
     this.accumulator.forEach(({ modelName, payload }) => {
       const model = this.session[modelName]
+      if (!payload.id) return
       model.hasId(payload.id)
         ? model.withId(payload.id).updateAppending(payload)
         : model.create(payload)

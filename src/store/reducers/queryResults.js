@@ -27,14 +27,15 @@ export default function (state = {}, action) {
   return state
 }
 
-function appendIds (state, type, params, { items, total }) {
+function appendIds (state, type, params, { items, total, hasMore }) {
   const key = buildKey(type, params)
   const existingIds = get('ids', state[key]) || []
   return {
     ...state,
     [key]: {
       ids: uniq(existingIds.concat(items.map(x => x.id))),
-      total
+      total,
+      hasMore
     }
   }
 }
@@ -49,7 +50,7 @@ export function makeGetQueryResults (actionType) {
 }
 
 function buildKey (type, params) {
-  return JSON.stringify({type, params: pick(whitelist, params)})
+  return JSON.stringify({type, params: pick(queryParamWhitelist, params)})
 }
 
-const whitelist = ['slug', 'sortBy']
+export const queryParamWhitelist = ['slug', 'sortBy', 'search']

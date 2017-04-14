@@ -112,6 +112,7 @@
         "bannerUrl": "http://foo.com/banner.png",
         "posts": {
           "total": 21,
+          "hasMore": true,
           "items": [
             {
               "id": "2",

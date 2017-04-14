@@ -1,11 +1,9 @@
 $member-width: 288px;
 $member-padding: 16px;
-
 $avatar-size: 120px;
 
 .member {
   display: block;
-  width: $member-width;
   padding: $member-padding;
   text-align: center;
   border: 1px solid rgba(54,60,60,0.10);
