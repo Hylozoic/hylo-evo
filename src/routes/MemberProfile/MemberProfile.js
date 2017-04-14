@@ -161,9 +161,11 @@ export function TabContentSwitcher ({ bio, comments, currentTab, posts }) {
         <div styleName='bio'>{bio}</div>
         <h2 styleName='subhead'>Recent Activity</h2>
         {posts && comments && posts.concat(comments).map((item, i) => {
-          return item.hasOwnProperty('title')
-            ? <PostCard key={i} post={item} />
-            : <CommentCard key={i} comment={item} />
+          return <div styleName='activity-item' key={i}>
+            {item.hasOwnProperty('title')
+              ? <PostCard post={item} />
+              : <CommentCard key={i} comment={item} />}
+          </div>
         })}
       </div>
 

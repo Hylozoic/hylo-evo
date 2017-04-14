@@ -75,6 +75,10 @@
 .content {
   width: 93%;
   justify-content: center;
+
+  .activity-item {
+    margin: $space-5x 0;
+  }
 }
 
 .subhead {
