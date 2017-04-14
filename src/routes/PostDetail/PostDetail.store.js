@@ -23,17 +23,20 @@ export function fetchPost (id, opts = {}) {
             avatarUrl
           }
           commentersTotal
-          comments(first: 10, order: "desc") {
-            id
-            text
-            creator {
+          comments(first: 3, order: "desc") {
+            items {
               id
-              name
-              avatarUrl
+              text
+              creator {
+                id
+                name
+                avatarUrl
+              }
+              createdAt
             }
-            createdAt
+            total
+            hasMore
           }
-          commentsTotal
           linkPreview {
             title
             url

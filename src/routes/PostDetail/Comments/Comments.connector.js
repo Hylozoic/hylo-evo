@@ -3,42 +3,34 @@ import { createSelector } from 'reselect'
 import { getMe } from 'store/selectors/getMe'
 import { isEmpty } from 'lodash/fp'
 import orm from 'store/models'
-import { fetchComments, createComment } from './Comments.store'
+import { fetchComments, createComment, getHasMoreComments, getTotalComments } from './Comments.store'
 
-const getCommentsAndTotal = createSelector(
+const getComments = createSelector(
   state => orm.session(state.orm),
   (state, props) => props.postId,
   (session, id) => {
     try {
       const post = session.Post.get({id})
-      const comments = post.comments.toModelArray()
-      .map(comment => ({
-        ...comment.ref,
-        creator: comment.creator
-      }))
-      .reverse()
-      // reversed because they're returned in descending order
+      const comments = post.comments
+      .orderBy(c => c.id)
+      .toModelArray()
 
-      return {
-        comments,
-        commentsTotal: post.commentsTotal
-      }
+      return comments
     } catch (e) {
-      return {
-        comments: [],
-        commentsTotal: null
-      }
+      return []
     }
   })
 
 export function mapStateToProps (state, props) {
-  const { comments, commentsTotal } = getCommentsAndTotal(state, props)
-  return {
-    comments,
-    commentsTotal,
+  const ret = {
+    comments: getComments(state, props),
+    total: getTotalComments(state, {id: props.postId}),
+    hasMore: getHasMoreComments(state, {id: props.postId}),
     slug: 'hylo',
     currentUser: getMe(state)
   }
+  console.log('mapStateToProps result:', ret)
+  return ret
 }
 
 export const mapDispatchToProps = (dispatch, props) => {

@@ -16,22 +16,23 @@ export default class Comments extends Component {
   }
 
   render () {
-    const { comments, commentsTotal, fetchComments, currentUser, createComment, postId, slug } = this.props
+    const { comments, total, hasMore, fetchComments, currentUser, createComment, postId, slug } = this.props
     return <div styleName='comments'>
       <ShowMore
         commentsLength={comments.length}
-        commentsTotal={commentsTotal}
+        total={total}
+        hasMore={hasMore}
         fetchComments={fetchComments} />
-      {comments.map(c => <Comment comment={c} key={c.id} slug={slug}/>)}
+      {comments.map(c => <Comment comment={c} key={c.id} slug={slug} />)}
       <CommentForm currentUser={currentUser} createComment={createComment} postId={postId} />
     </div>
   }
 }
 
-export function ShowMore ({commentsLength, commentsTotal, fetchComments}) {
-  if (commentsLength >= commentsTotal) return null
+export function ShowMore ({commentsLength, total, hasMore, fetchComments}) {
+  if (!hasMore) return null
 
-  const extra = commentsTotal - commentsLength
+  const extra = total - 3
 
   return <div styleName='showMore' onClick={fetchComments}>
     View {extra} previous comment{extra > 1 ? 's' : ''}

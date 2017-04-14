@@ -1,4 +1,7 @@
 import { FETCH_COMMENTS, CREATE_COMMENT } from 'store/constants'
+import { get } from 'lodash/fp'
+import { createSelector } from 'reselect'
+import { makeGetQueryResults } from 'store/reducers/queryResults'
 
 export function fetchComments (id, opts = {}) {
   return {
@@ -8,16 +11,19 @@ export function fetchComments (id, opts = {}) {
         post(id: $id) {
           id
           comments(first: 3, cursor: $cursor, order: "desc") {
-            id
-            text
-            creator {
+            items {
               id
-              name
-              avatarUrl
+              text
+              creator {
+                id
+                name
+                avatarUrl
+              }
+              createdAt
             }
-            createdAt
+            total
+            hasMore
           }
-          commentsTotal
         }
       }`,
       variables: {
@@ -31,7 +37,7 @@ export function fetchComments (id, opts = {}) {
   }
 }
 
-export function createComment(postId, text) {
+export function createComment (postId, text) {
   return {
     type: CREATE_COMMENT,
     graphql: {
@@ -58,3 +64,15 @@ export function createComment(postId, text) {
     }
   }
 }
+
+const getCommentResults = makeGetQueryResults(FETCH_COMMENTS)
+
+export const getHasMoreComments = createSelector(
+  getCommentResults,
+  get('hasMore')
+)
+
+export const getTotalComments = createSelector(
+  getCommentResults,
+  get('total')
+)
