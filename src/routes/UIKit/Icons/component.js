@@ -30,7 +30,8 @@ const ICON_NAMES = [
   'ProfileFacebook',
   'ProfileLinkedin',
   'ProfileTwitter',
-  'ProfileUrl'
+  'ProfileUrl',
+  'Star'
 ]
 
 export default function Icons (props) {
