@@ -7,7 +7,7 @@ import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
 import './Members.scss'
 const { bool, func, string, arrayOf, shape } = PropTypes
-import { debounce, some, times } from 'lodash/fp'
+import { debounce, isEmpty, some, times } from 'lodash/fp'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
 
 export default class Members extends Component {
@@ -27,8 +27,8 @@ export default class Members extends Component {
   }
 
   fetchOrShowCached () {
-    // TODO skip fetching if cached results are available
-    this.props.fetchMembers()
+    const { hasMore, members, fetchMembers } = this.props
+    if (isEmpty(members) && hasMore !== false) fetchMembers()
   }
 
   componentDidMount () {
