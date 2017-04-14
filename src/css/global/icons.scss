@@ -1,6 +1,7 @@
+
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'hylo-evo-04-11-17' !important;
+  font-family: 'hylo-evo-icons' !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -64,21 +65,24 @@
 .icon-ArrowUp:before {
   content: "\e910";
 }
-.icon-Location:before {
+.icon-ArrowDown:before {
   content: "\e911";
 }
-.icon-Trash:before {
+.icon-Location:before {
   content: "\e912";
 }
-.icon-Pin:before {
+.icon-Trash:before {
   content: "\e913";
 }
-.icon-Complete:before {
+.icon-Pin:before {
   content: "\e914";
 }
-.icon-Flag:before {
+.icon-Complete:before {
   content: "\e915";
 }
-.icon-Circle:before {
+.icon-Flag:before {
   content: "\e916";
+}
+.icon-Circle:before {
+  content: "\e917";
 }
