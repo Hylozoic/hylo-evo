@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import ThreadList from 'components/ThreadList'
 import Thread from 'components/Thread'
-import NewThread from 'components/NewThread'
 import './Messages.scss'
 const { object } = PropTypes
 
@@ -21,7 +20,7 @@ export default class Messages extends Component {
     return <div styleName='modal'>
       <div styleName='content'>
         <ThreadList activeId={threadId} />
-        {threadId ? <Thread threadId={threadId} /> : <NewThread />}
+        {threadId ? <Thread threadId={threadId} /> : null}
       </div>
     </div>
   }
