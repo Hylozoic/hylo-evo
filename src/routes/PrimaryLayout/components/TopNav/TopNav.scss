@@ -78,7 +78,8 @@
   color: $color-rhino;
 }
 
-.dropdown {
+.user-menu {
+  margin-right: 0 !important;
   li a {
     &, &:not([href]) {
       color: $color-rhino-50;

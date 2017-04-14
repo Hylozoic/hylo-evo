@@ -10,12 +10,15 @@ import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import MessageForm from 'components/MessageForm/MessageForm.store'
 import CommunitiesSelector from 'components/CommunitiesSelector/CommunitiesSelector.store'
 import Login from 'routes/Login/Login.store'
+import Members from 'routes/Members/Members.store'
+import queryResults from './queryResults'
 
 export default combineReducers({
   // Global store
   orm,
   router: routerReducer,
   pending,
+  queryResults,
 
   // NOTE: Move local to PrimaryLayout?
   communitiesDrawerOpen: (state = false, { type }) => {
@@ -27,5 +30,6 @@ export default combineReducers({
   MessageForm,
   HyloEditor,
   CommunitiesSelector,
-  Login
+  Login,
+  Members
 })

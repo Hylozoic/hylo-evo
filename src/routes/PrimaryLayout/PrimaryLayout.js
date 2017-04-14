@@ -11,6 +11,7 @@ import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 
 import EventDetail from 'routes/Events/EventDetail'
+import Members from 'routes/Members'
 import './PrimaryLayout.scss'
 
 export default class PrimaryLayout extends Component {
@@ -36,12 +37,12 @@ export default class PrimaryLayout extends Component {
       {communitiesDrawerOpen && <CommunitiesDrawer />}
       <TopNav {...{community, currentUser}} />
       <div styleName='row'>
-        {/* TODO: is using render here the best way to pass params to a route? */}
-        <Route path='/' render={() => <Navigation collapsed={hasDetail} location={location} />} />
+        <Navigation collapsed={hasDetail} />
         <div styleName='content'>
           <Route path='/' exact render={() => <Feed {...{community, currentUser}} />} />
-          <Route path='/c/:slug' render={({ match }) => <Feed {...{community, currentUser, match}} />} />
+          <Route path='/c/:slug' exact render={({ match }) => <Feed {...{community, currentUser, match}} />} />
           <Route path='/events' component={Events} />
+          <Route path='/c/:slug/members' component={Members} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/' component={Sidebar} />

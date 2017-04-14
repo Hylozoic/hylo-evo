@@ -8,7 +8,7 @@ export default function graphqlMiddleware (store) {
       type,
       meta: {
         ...meta,
-        graphql: true
+        graphql: {query, variables}
       },
       payload: {
         api: {

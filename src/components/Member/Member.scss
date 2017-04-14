@@ -1,0 +1,36 @@
+$member-width: 288px;
+$member-padding: 16px;
+
+$avatar-size: 120px;
+
+.member {
+  display: block;
+  width: $member-width;
+  padding: $member-padding;
+  text-align: center;
+  border: 1px solid rgba(54,60,60,0.10);
+  border-radius: 4px;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.avatar {
+  @include image($avatar-size);
+  border-radius: $avatar-size/2;
+}
+
+.name {
+  composes: hdr-headline from 'css/typography.scss';
+  margin-top: $member-padding;
+}
+
+.location {
+  composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.tagline {
+  composes: bdy-lt-sm from 'css/typography.scss';
+  margin-top: $member-padding;
+}

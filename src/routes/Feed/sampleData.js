@@ -53,6 +53,14 @@ const rndPreview = () => ({
   imageUrl: rndImage()
 })
 
+const SAMPLE_MEMBERS = times(i => ({
+  id: i.toString(),
+  name: `${faker.name.firstName()} ${faker.name.lastName()}`,
+  location: `${faker.address.city()}, ${faker.address.state()}`,
+  tagline: faker.lorem.sentence(),
+  avatarUrl: rndAvatarUrl()
+}), 20)
+
 const SAMPLE_FEED_ITEMS = times(i => ({
   id: i,
   title: faker.lorem.sentence(),
@@ -71,9 +79,9 @@ const SAMPLE_FEED_ITEMS = times(i => ({
 const SAMPLE_COMMUNITY = {
   name: 'A Great Cause',
   location: 'Oakland, CA',
-  slug: 'hylo',
+  slug: 'great-cause',
   avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/community/1944/avatar/1489438401225_face.png',
   bannerUrl: 'https://d3ngex8q79bk55.cloudfront.net/community/1944/banner/1489687099172_ggbridge.jpg'
 }
 
-export { SAMPLE_FEED_ITEMS, SAMPLE_COMMUNITY }
+export { SAMPLE_FEED_ITEMS, SAMPLE_COMMUNITY, SAMPLE_MEMBERS }

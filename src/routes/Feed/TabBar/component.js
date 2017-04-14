@@ -55,6 +55,10 @@ export default class TabBar extends React.Component {
     document.addEventListener('scroll', this.handleScrollEvents)
   }
 
+  componentWillUnmount () {
+    document.removeEventListener('scroll', this.handleScrollEvents)
+  }
+
   render () {
     const { tabName, sortOption, onChange, className } = this.props
     const { isStatic, top } = this.state
