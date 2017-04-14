@@ -11,6 +11,7 @@ import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 import PostDetail from 'routes/PostDetail'
 import './PrimaryLayout.scss'
+import orm from 'store/models'
 
 export default class PrimaryLayout extends Component {
   static propTypes = {

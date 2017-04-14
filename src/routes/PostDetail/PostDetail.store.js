@@ -23,7 +23,7 @@ export function fetchPost (id, opts = {}) {
             avatarUrl
           }
           commentersTotal
-          comments(first: 10) {
+          comments(first: 10, order: "desc") {
             id
             text
             creator {

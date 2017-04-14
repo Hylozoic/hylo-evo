@@ -16,6 +16,8 @@ const getCommentsAndTotal = createSelector(
         ...comment.ref,
         creator: comment.creator
       }))
+      .reverse()
+      // reversed because they're returned in descending order
 
       return {
         comments,
@@ -34,8 +36,6 @@ export function mapStateToProps (state, props) {
   return {
     comments,
     commentsTotal,
-    fetchComments: () => console.log('Fetch more comments'),
-    createComment: params => console.log('creating comment', params),
     slug: 'hylo',
     currentUser: getMe(state.orm)
   }
@@ -50,7 +50,7 @@ export const mapDispatchToProps = (dispatch, props) => {
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { comments } = stateProps
   const { fetchCommentsMaker } = dispatchProps
-  const cursor = !isEmpty(comments) && comments.slice(-1)[0].id
+  const cursor = !isEmpty(comments) && comments[0].id
   return {
     ...ownProps,
     ...stateProps,
