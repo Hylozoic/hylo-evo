@@ -5,7 +5,7 @@ const updateThreadReadTime = () => {}
 
 export function mapStateToProps (state) {
   return {
-    currentUser: getMe(state.orm)
+    currentUser: getMe(state)
   }
 }
 

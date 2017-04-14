@@ -8,7 +8,7 @@ import { getMe } from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
   return {
-    currentUser: getMe(state.orm),
+    currentUser: getMe(state),
     thread: getThread(state, props),
     pending: false,
     // TODO: convert to actions

@@ -9,7 +9,7 @@ import {
 export function mapStateToProps (state, props) {
   return {
     text: getTextForMessageThread(state, props),
-    currentUser: getMe(state.orm)
+    currentUser: getMe(state)
   }
 }
 

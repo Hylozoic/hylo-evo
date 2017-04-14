@@ -4,7 +4,7 @@ import { fetchThreads, getThreads } from './ThreadList.store'
 
 export function mapStateToProps (state, props) {
   return {
-    currentUser: getMe(state.orm),
+    currentUser: getMe(state),
     threads: getThreads(state, props)
   }
 }
