@@ -1,7 +1,7 @@
 import React from 'react'
 import visibility from 'visibility'
 import { throttle } from 'lodash'
-import { get, maxBy } from 'lodash/fp'
+import { get, maxBy, sortBy } from 'lodash/fp'
 const { array, func, object } = React.PropTypes
 import Message from 'components/Message'
 import { position } from 'util/scrolling'
@@ -113,7 +113,7 @@ export default class MessageSection extends React.Component {
   }
 
   render () {
-    const { messages } = this.props
+    const messages = sortBy(x => new Date(x.createdAt).getTime(), this.props.messages)
     const messageList = createMessageList(messages)
     return <div styleName='messages-section'
       ref={list => { this.list = list }}

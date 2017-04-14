@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect'
+import { CREATE_MESSAGE } from 'store/constants'
 
 export const MODULE_NAME = 'MessageForm'
 
 // Constants
-export const CREATE_MESSAGE = 'CREATE_MESSAGE'
 export const UPDATE_MESSAGE_TEXT = 'UPDATE_MESSAGE_TEXT'
 
 // Action Creators

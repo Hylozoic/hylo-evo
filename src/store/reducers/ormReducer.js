@@ -5,7 +5,7 @@ import { FETCH_MEMBERS } from 'routes/Members/Members.store'
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
-  const { Comment, Community, Membership, MessageThread, Person, Post, FeedItem } = session
+  const { Comment, Community, Membership, Message, MessageThread, Person, Post, FeedItem } = session
   const { payload, type, meta, error } = action
   if (error) return state
 
@@ -80,6 +80,17 @@ export default function ormReducer (state = {}, action) {
         session,
         root: payload.data.messageThread,
         modelName: meta.rootModelName
+      })
+      break
+
+    case a.CREATE_MESSAGE:
+      ModelExtractor.addAll({
+        session,
+        root: {
+          id: meta.messageThreadId,
+          messages: [payload.data.createMessage]
+        },
+        modelName: 'MessageThread'
       })
   }
 
