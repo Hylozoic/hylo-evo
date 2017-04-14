@@ -48,7 +48,8 @@ export default class PrimaryLayout extends Component {
         <Navigation collapsed={hasDetail} />
         <div styleName='content'>
           <Route path='/' exact render={() => <Feed {...{community, currentUser}} />} />
-          <Route path='/c/:slug' render={({ match }) => <Feed {...{community, currentUser, match}} />} />
+          <Route path='/c/:slug/' exact component={Feed} />
+          <Route path='/c/:slug/p/:postId' component={Feed} />
           <Route path='/events' component={Events} />
           <Route path='/c/:slug/members' component={Members} />
         </div>

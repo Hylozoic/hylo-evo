@@ -32,6 +32,7 @@ export function mapStateToProps (state, props) {
   return {
     posts: getCommunityPosts(state, props),
     slug: getParam('slug', state, props),
+    selectedPostId: getParam('postId', state, props),
     community,
     postCount: get('postCount', community),
     pending: state.pending[FETCH_POSTS]

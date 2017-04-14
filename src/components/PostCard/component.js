@@ -13,7 +13,7 @@ import './component.scss'
 import samplePost from './samplePost'
 import { isEmpty } from 'lodash'
 
-const { shape, any, object, string, func, array } = React.PropTypes
+const { shape, any, object, string, func, array, bool } = React.PropTypes
 
 export default class PostCard extends React.Component {
   static contextTypes = {
@@ -21,7 +21,7 @@ export default class PostCard extends React.Component {
   }
 
   render () {
-    const { post, post: { communities }, className } = this.props
+    const { post, post: { communities }, className, expanded } = this.props
     const { navigate } = this.context
     const slug = !isEmpty(communities) && communities[0].slug
 
@@ -56,7 +56,8 @@ PostCard.propTypes = {
     upVotes: string,
     updatedAt: string
   }),
-  fetchPost: func
+  fetchPost: func,
+  expanded: bool
 }
 PostCard.defaultProps = {
   post: samplePost()

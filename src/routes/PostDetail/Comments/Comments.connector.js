@@ -22,15 +22,13 @@ const getComments = createSelector(
   })
 
 export function mapStateToProps (state, props) {
-  const ret = {
+  return {
     comments: getComments(state, props),
     total: getTotalComments(state, {id: props.postId}),
     hasMore: getHasMoreComments(state, {id: props.postId}),
     slug: 'hylo',
     currentUser: getMe(state)
   }
-  console.log('mapStateToProps result:', ret)
-  return ret
 }
 
 export const mapDispatchToProps = (dispatch, props) => {

@@ -9,7 +9,8 @@ import { bgImageStyle } from 'util/index'
 
 export default class Feed extends React.Component {
   static defaultProps = {
-    posts: []
+    posts: [],
+    selectedPostId: null
   }
 
   componentDidMount () {
@@ -35,14 +36,18 @@ export default class Feed extends React.Component {
   }
 
   render () {
-    const { posts, community, currentUser } = this.props
+    const { posts, community, currentUser, selectedPostId } = this.props
 
     return <div styleName='feed'>
       <CommunityBanner community={community} currentUser={currentUser} />
       <TabBar styleName='tabBar' />
       <div styleName='feedItems'>
         {posts.map(post =>
-          <PostCard post={post} styleName='feedItem' key={post.id} />)}
+          <PostCard
+            post={post}
+            styleName='feedItem'
+            expanded={post.id === selectedPostId}
+            key={post.id} />)}
       </div>
       <ScrollListener onBottom={() => this.fetchMorePosts()} />
     </div>
