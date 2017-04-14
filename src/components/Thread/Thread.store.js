@@ -53,8 +53,8 @@ export function fetchBeforeMessages (threadId, cursor) {
     type: FETCH_BEFORE_MESSAGES,
     graphql: {
       query: `
-        query ($threadId: ID, $cursor: ID)
-          messageThread(id: $threadId) {
+        query ($threadId: ID, $cursor: ID) {
+          messageThread (id: $threadId) {
             id
             messages(first: 20, cursor: $cursor) {
               id
@@ -67,6 +67,7 @@ export function fetchBeforeMessages (threadId, cursor) {
               }
             }
           }
+        }
       `,
       variables: {
         threadId,
