@@ -6,17 +6,17 @@ import { makeGetQueryResults } from 'store/reducers/queryResults'
 
 export const FETCH_MEMBERS = 'FETCH_MEMBERS'
 
-export function fetchMembers (slug, sortBy, offset) {
+export function fetchMembers (slug, sortBy, offset, search) {
   return {
     type: FETCH_MEMBERS,
     graphql: {
-      query: `query ($slug: String, $first: Int, $sortBy: String, $offset: Int) {
+      query: `query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: String) {
         community (slug: $slug) {
           id
           name
           avatarUrl
           memberCount
-          members (first: $first, sortBy: $sortBy, offset: $offset) {
+          members (first: $first, sortBy: $sortBy, offset: $offset, search: $search) {
             items {
               id
               name
@@ -28,12 +28,7 @@ export function fetchMembers (slug, sortBy, offset) {
           }
         }
       }`,
-      variables: {
-        slug,
-        first: 20,
-        offset,
-        sortBy
-      }
+      variables: {slug, first: 20, offset, sortBy, search}
     },
     meta: {
       rootModelName: 'Community'

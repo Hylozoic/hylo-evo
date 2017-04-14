@@ -6,14 +6,9 @@ import Member from 'components/Member'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
 import './Members.scss'
-const { bool, func, number, string, arrayOf, shape } = PropTypes
-
-function Sort ({sortText}) {
-  return <div styleName='sort'>
-    <span>{sortText}</span>
-    <Icon name='ArrowDown' styleName='sort-icon' />
-  </div>
-}
+const { bool, func, string, arrayOf, shape } = PropTypes
+import { debounce, some } from 'lodash/fp'
+import { queryParamWhitelist } from 'store/reducers/queryResults'
 
 export default class Members extends Component {
   static propTypes = {
@@ -27,28 +22,43 @@ export default class Members extends Component {
       avatarUrl: string
     })),
     hasMore: bool,
-    changeSort: func
+    changeSort: func,
+    changeSearch: func
+  }
+
+  fetchOrShowCached () {
+    // TODO skip fetching if cached results are available
+    this.props.fetchMembers()
   }
 
   componentDidMount () {
-    // TODO skip this if we already have some
-    this.props.fetchMembers(this.props.sortBy)
+    this.fetchOrShowCached()
+  }
+
+  componentDidUpdate (prevProps) {
+    if (!prevProps) return
+    if (some(key => this.props[key] !== prevProps[key], queryParamWhitelist)) {
+      this.fetchOrShowCached()
+    }
   }
 
   fetchMore () {
-    const { sortBy, members, hasMore, fetchMembers, pending } = this.props
+    const { members, hasMore, fetchMembers, pending } = this.props
     if (pending || members.length === 0 || !hasMore) return
-    fetchMembers(sortBy, members.length)
+    fetchMembers(members.length)
+  }
+
+  search (term) {
+    if (!this.debouncedSearch) {
+      this.debouncedSearch = debounce(300, this.props.changeSearch)
+    }
+    return this.debouncedSearch(term)
   }
 
   render () {
-    const { canInvite, memberCount, members, sortBy, changeSort } = this.props
-    const sortKeys = {
-      name: 'Name',
-      joined: 'Latest',
-      location: 'Location'
-    }
-    const sortText = sortKeys[sortBy]
+    const {
+      canInvite, memberCount, members, sortBy, changeSort, search
+    } = this.props
     return <div>
       {canInvite && <Button styleName='invite'
         label='Invite People'
@@ -59,18 +69,34 @@ export default class Members extends Component {
         {memberCount} Total Members
       </div>
       <Dropdown styleName='sort-dropdown'
-        toggleChildren={<Sort sortText={sortText} />}
+        toggleChildren={<SortLabel text={sortKeys[sortBy]} />}
         triangle
         alignRight
         items={Object.keys(sortKeys).map(k => ({
           label: sortKeys[k],
           onClick: () => changeSort(k)
         }))} />
-      <TextInput placeholder='Search by name or location' styleName='search' />
+      <TextInput placeholder='Search by name or location'
+        styleName='search'
+        defaultValue={search}
+        onChange={e => this.search(e.target.value)} />
       <div styleName='members'>
         {members.map(m => <Member member={m} styleName='member' key={m.id} />)}
       </div>
       <ScrollListener onBottom={() => this.fetchMore()} />
     </div>
   }
+}
+
+function SortLabel ({ text }) {
+  return <div styleName='sort'>
+    <span>{text}</span>
+    <Icon name='ArrowDown' styleName='sort-icon' />
+  </div>
+}
+
+const sortKeys = {
+  name: 'Name',
+  joined: 'Latest',
+  location: 'Location'
 }

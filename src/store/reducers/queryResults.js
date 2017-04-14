@@ -50,7 +50,7 @@ export function makeGetQueryResults (actionType) {
 }
 
 function buildKey (type, params) {
-  return JSON.stringify({type, params: pick(whitelist, params)})
+  return JSON.stringify({type, params: pick(queryParamWhitelist, params)})
 }
 
-const whitelist = ['slug', 'sortBy']
+export const queryParamWhitelist = ['slug', 'sortBy', 'search']
