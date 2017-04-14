@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
 import './Comments.scss'
-const { array, func, object, number } = PropTypes
+const { array, func, object, number, string } = PropTypes
 
 export default class Comments extends Component {
   static propTypes = {
@@ -10,18 +10,19 @@ export default class Comments extends Component {
     commentsTotal: number,
     fetchComments: func,
     createComment: func,
-    currentUser: object
+    currentUser: object,
+    postId: string
   }
 
   render () {
-    const { comments, commentsTotal, fetchComments, currentUser, createComment } = this.props
+    const { comments, commentsTotal, fetchComments, currentUser, createComment, postId } = this.props
     return <div styleName='comments'>
       <ShowMore
         commentsLength={comments.length}
         commentsTotal={commentsTotal}
         fetchComments={fetchComments} />
       {comments.map(c => <Comment comment={c} key={c.id} />)}
-      <CommentForm currentUser={currentUser} createComment={createComment} />
+      <CommentForm currentUser={currentUser} createComment={createComment} postId={postId} />
     </div>
   }
 }

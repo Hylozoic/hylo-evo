@@ -1,4 +1,4 @@
-import { FETCH_COMMENTS } from 'store/constants'
+import { FETCH_COMMENTS, CREATE_COMMENT } from 'store/constants'
 
 export function fetchComments (id, opts = {}) {
   return {
@@ -27,6 +27,34 @@ export function fetchComments (id, opts = {}) {
     },
     meta: {
       rootModelName: 'Post'
+    }
+  }
+}
+
+export function createComment(postId, text) {
+  return {
+    type: CREATE_COMMENT,
+    graphql: {
+      query: `mutation ($postId: String, $text: String) {
+        createComment(data: {postId: $postId, text: $text}) {
+          id
+          text
+          post {
+            id
+          }
+          createdAt
+          creator {
+            id
+          }
+        }
+      }`,
+      variables: {
+        postId,
+        text
+      }
+    },
+    meta: {
+      postId
     }
   }
 }

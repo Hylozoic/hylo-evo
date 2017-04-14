@@ -1,3 +1,5 @@
+export const CREATE_COMMENT = 'CREATE_COMMENT'
+
 export const FETCH_COMMENTS = 'FETCH_COMMENTS'
 export const FETCH_FEED_ITEMS = 'FETCH_FEED_ITEMS'
 export const FETCH_POST = 'FETCH_POST'

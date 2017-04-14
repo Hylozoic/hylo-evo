@@ -11,11 +11,11 @@ export default class CommentForm extends Component {
   }
 
   render () {
-    const { currentUser, createComment } = this.props
+    const { currentUser, createComment, postId } = this.props
     if (!currentUser) return null
 
     const save = text => {
-      console.log('saving', text)
+      createComment(postId, text)
     }
 
     const firstName = currentUser.name.split(' ')[0]

@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 import { getMe } from 'store/selectors/getMe'
 import { isEmpty } from 'lodash/fp'
 import orm from 'store/models'
-import { fetchComments } from './Comments.store'
+import { fetchComments, createComment } from './Comments.store'
 
 const getCommentsAndTotal = createSelector(
   state => orm.session(state.orm),
@@ -43,7 +43,8 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = (dispatch, props) => {
   return {
-    fetchCommentsMaker: cursor => () => dispatch(fetchComments(props.postId, {cursor}))
+    fetchCommentsMaker: cursor => () => dispatch(fetchComments(props.postId, {cursor})),
+    createComment: (postId, text) => dispatch(createComment(postId, text))
   }
 }
 
