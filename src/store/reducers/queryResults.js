@@ -13,7 +13,7 @@ import { get, pick, uniq } from 'lodash/fp'
 
 export default function (state = {}, action) {
   const { type, payload, error, meta } = action
-  if (error) return
+  if (error) return state
 
   // If this starts to feel too coupled to specific actions, we could move the
   // parameters below into the action's metadata, write a piece of middleware to
@@ -21,20 +21,21 @@ export default function (state = {}, action) {
   // handle only that action.
   switch (type) {
     case FETCH_MEMBERS:
-      return appendIds(state, type, meta.graphql.variables, payload.data.community, 'members')
+      return appendIds(state, type, meta.graphql.variables, payload.data.community.members)
   }
 
   return state
 }
 
-function appendIds (state, type, params, data, itemsKey) {
+function appendIds (state, type, params, { items, total, hasMore }) {
   const key = buildKey(type, params)
   const existingIds = get('ids', state[key]) || []
   return {
     ...state,
     [key]: {
-      ids: uniq(existingIds.concat(data[itemsKey].map(x => x.id))),
-      total: data[itemsKey + 'Total']
+      ids: uniq(existingIds.concat(items.map(x => x.id))),
+      total,
+      hasMore
     }
   }
 }
@@ -49,7 +50,7 @@ export function makeGetQueryResults (actionType) {
 }
 
 function buildKey (type, params) {
-  return JSON.stringify({type, params: pick(whitelist, params)})
+  return JSON.stringify({type, params: pick(queryParamWhitelist, params)})
 }
 
-const whitelist = ['slug', 'sortBy']
+export const queryParamWhitelist = ['slug', 'sortBy', 'search']

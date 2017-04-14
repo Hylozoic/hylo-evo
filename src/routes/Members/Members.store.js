@@ -1,37 +1,34 @@
 import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
-import { getOr, includes, isEmpty } from 'lodash/fp'
+import { get, includes, isEmpty } from 'lodash/fp'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 
 export const FETCH_MEMBERS = 'FETCH_MEMBERS'
 
-export function fetchMembers (slug, sortBy, offset) {
+export function fetchMembers (slug, sortBy, offset, search) {
   return {
     type: FETCH_MEMBERS,
     graphql: {
-      query: `query ($slug: String, $first: Int, $sortBy: String, $offset: Int) {
+      query: `query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: String) {
         community (slug: $slug) {
           id
           name
           avatarUrl
           memberCount
-          members (first: $first, sortBy: $sortBy, offset: $offset) {
-            id
-            name
-            avatarUrl
-            location
-            tagline
+          members (first: $first, sortBy: $sortBy, offset: $offset, search: $search) {
+            items {
+              id
+              name
+              avatarUrl
+              location
+              tagline
+            }
+            hasMore
           }
-          membersTotal
         }
       }`,
-      variables: {
-        slug,
-        first: 20,
-        offset,
-        sortBy
-      }
+      variables: {slug, first: 20, offset, sortBy, search}
     },
     meta: {
       rootModelName: 'Community'
@@ -43,10 +40,12 @@ export default function reducer (state = {}, action) {
   return state
 }
 
+const getMemberResults = makeGetQueryResults(FETCH_MEMBERS)
+
 export const getMembers = ormCreateSelector(
   orm,
   state => state.orm,
-  makeGetQueryResults(FETCH_MEMBERS),
+  getMemberResults,
   (session, results) => {
     if (isEmpty(results) || isEmpty(results.ids)) return []
     return session.Person.all()
@@ -56,7 +55,7 @@ export const getMembers = ormCreateSelector(
   }
 )
 
-export const getMembersTotal = createSelector(
-  makeGetQueryResults(FETCH_MEMBERS),
-  getOr(0, 'total')
+export const getHasMoreMembers = createSelector(
+  getMemberResults,
+  get('hasMore')
 )
