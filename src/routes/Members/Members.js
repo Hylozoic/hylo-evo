@@ -7,7 +7,7 @@ import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
 import './Members.scss'
 const { bool, func, string, arrayOf, shape } = PropTypes
-import { debounce, some } from 'lodash/fp'
+import { debounce, some, times } from 'lodash/fp'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
 
 export default class Members extends Component {
@@ -60,28 +60,35 @@ export default class Members extends Component {
       canInvite, memberCount, members, sortBy, changeSort, search
     } = this.props
     return <div>
-      {canInvite && <Button styleName='invite'
-        label='Invite People'
-        color='green-white-green-border'
-        narrow />}
-      <div styleName='title'>Members</div>
-      <div styleName='total-members'>
-        {memberCount} Total Members
+      <div styleName='header'>
+        {canInvite && <Button styleName='invite'
+          label='Invite People'
+          color='green-white-green-border'
+          narrow />}
+        <div styleName='title'>Members</div>
+        <div styleName='total-members'>
+          {memberCount} Total Members
+        </div>
       </div>
-      <Dropdown styleName='sort-dropdown'
-        toggleChildren={<SortLabel text={sortKeys[sortBy]} />}
-        triangle
-        alignRight
-        items={Object.keys(sortKeys).map(k => ({
-          label: sortKeys[k],
-          onClick: () => changeSort(k)
-        }))} />
-      <TextInput placeholder='Search by name or location'
-        styleName='search'
-        defaultValue={search}
-        onChange={e => this.search(e.target.value)} />
-      <div styleName='members'>
-        {members.map(m => <Member member={m} styleName='member' key={m.id} />)}
+      <div styleName='content'>
+        <Dropdown styleName='sort-dropdown'
+          toggleChildren={<SortLabel text={sortKeys[sortBy]} />}
+          triangle
+          alignRight
+          items={Object.keys(sortKeys).map(k => ({
+            label: sortKeys[k],
+            onClick: () => changeSort(k)
+          }))} />
+        <TextInput placeholder='Search by name'
+          styleName='search'
+          defaultValue={search}
+          onChange={e => this.search(e.target.value)} />
+        <div styleName='members'>
+          {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
+            {pair.map(m => <Member member={m} key={m.id} />)}
+            {pair.length === 1 && <div />}
+          </div>)}
+        </div>
       </div>
       <ScrollListener onBottom={() => this.fetchMore()} />
     </div>
@@ -89,7 +96,7 @@ export default class Members extends Component {
 }
 
 function SortLabel ({ text }) {
-  return <div styleName='sort'>
+  return <div styleName='sort-label'>
     <span>{text}</span>
     <Icon name='ArrowDown' styleName='sort-icon' />
   </div>
@@ -99,4 +106,8 @@ const sortKeys = {
   name: 'Name',
   joined: 'Latest',
   location: 'Location'
+}
+
+export function twoByTwo (list) {
+  return times(i => list.slice(i * 2, i * 2 + 2), (list.length + 1) / 2)
 }

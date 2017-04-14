@@ -36,8 +36,11 @@ export function mapDispatchToProps (dispatch, props) {
   const params = getQueryParam(['s', 'q'], null, props)
   var { s: sortBy = defaultSortBy, q: search } = params
 
-  const changeQueryParam = (key, value) => {
-    const newParams = {...params, [key]: value}
+  const changeQueryParam = (key, value, defaultValue) => {
+    const newParams = {
+      ...params,
+      [key]: value === defaultValue ? null : value
+    }
     const newUrl = makeUrl(props.location.pathname, newParams)
     return dispatch(push(newUrl))
   }
@@ -46,7 +49,7 @@ export function mapDispatchToProps (dispatch, props) {
     fetchMembers: (offset = 0) =>
       dispatch(fetchMembers(slug, sortBy, offset, search)),
     changeSearch: term => changeQueryParam('q', term),
-    changeSort: name => changeQueryParam('s', name)
+    changeSort: sort => changeQueryParam('s', sort, 'name')
   }
 }
 
