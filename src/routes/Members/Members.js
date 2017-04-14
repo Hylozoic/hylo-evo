@@ -102,9 +102,10 @@ function SortLabel ({ text }) {
   </div>
 }
 
+// these keys must match the values that hylo-node can handle
 const sortKeys = {
   name: 'Name',
-  joined: 'Latest',
+  join: 'Newest',
   location: 'Location'
 }
 
