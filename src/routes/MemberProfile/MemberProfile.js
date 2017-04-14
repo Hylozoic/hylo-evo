@@ -102,7 +102,7 @@ export function ProfileBanner ({ avatarUrl, bannerUrl, location, name, role }) {
 
 export function ProfileNamePlate ({ avatarUrl, name, location, role }) {
   return <div styleName='name-plate'>
-    <RoundImage url={avatarUrl} xlarge />
+    <RoundImage styleName='avatar' url={avatarUrl} xlarge />
     <div styleName='details'>
       <h1 styleName='name'>{name}</h1>
       <span styleName='location'>{location}</span>

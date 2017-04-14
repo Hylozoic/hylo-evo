@@ -3,6 +3,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .avatar {
+    margin-left: $space-2x;
+    border: none;
+  }
 }
 
 .error { color: red }
