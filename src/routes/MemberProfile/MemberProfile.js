@@ -105,9 +105,14 @@ export function ProfileNamePlate ({ avatarUrl, name, location, role }) {
     <RoundImage styleName='avatar' url={avatarUrl} xlarge />
     <div styleName='details'>
       <h1 styleName='name'>{name}</h1>
-      <span styleName='location'>{location}</span>
-      {role && <span styleName='spacer'>•</span>}
-      {role && <span styleName='role'>{ role }</span>}
+      <div styleName='fine-details'>
+        <span styleName='location'>{location}</span>
+        {role && <span styleName='role-bling'>
+          <span styleName='spacer'>•</span>
+          <Icon styleName='star' name='Star' />
+          <span styleName='role'>{role}</span>
+        </span>}
+      </div>
     </div>
   </div>
 }
