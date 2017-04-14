@@ -6,8 +6,14 @@ Array [
     "modelName": "Community",
     "payload": Object {
       "avatarUrl": "http://foo.com/avatar.png",
+      "bannerUrl": "http://foo.com/banner.png",
       "id": "1",
+      "memberCount": 42,
       "name": "foo",
+      "posts": Array [
+        "2",
+        "3",
+      ],
       "slug": "foo",
     },
   },
@@ -22,16 +28,6 @@ Array [
     },
   },
   Object {
-    "modelName": "Community",
-    "payload": Object {
-      "avatarUrl": "http://foo.com/avatar.png",
-      "id": "1",
-      "memberCount": 42,
-      "name": "foo",
-      "slug": "foo",
-    },
-  },
-  Object {
     "modelName": "Post",
     "payload": Object {
       "communities": Array [
@@ -39,19 +35,6 @@ Array [
       ],
       "id": "3",
       "title": "Hello Again!",
-    },
-  },
-  Object {
-    "modelName": "Community",
-    "payload": Object {
-      "bannerUrl": "http://foo.com/banner.png",
-      "id": "1",
-      "name": "foo",
-      "posts": Array [
-        "2",
-        "3",
-      ],
-      "slug": "foo",
     },
   },
 ]
@@ -63,14 +46,7 @@ Array [
     "modelName": "Person",
     "payload": Object {
       "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
-      "id": "46816",
-      "name": "Rich",
-    },
-  },
-  Object {
-    "modelName": "Person",
-    "payload": Object {
-      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+      "bannerUrl": "https://pbs.twimg.com/profile_banners/18696471/1435442798/1500x500",
       "id": "46816",
       "name": "Rich",
     },
@@ -91,14 +67,6 @@ Array [
         "99",
       ],
       "name": "Wombats",
-    },
-  },
-  Object {
-    "modelName": "Person",
-    "payload": Object {
-      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
-      "id": "46816",
-      "name": "Rich",
     },
   },
   Object {
@@ -136,37 +104,6 @@ Array [
       "startsAt": null,
       "title": "Hello",
       "type": null,
-    },
-  },
-  Object {
-    "modelName": "Person",
-    "payload": Object {
-      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
-      "id": "46816",
-      "name": "Rich",
-    },
-  },
-  Object {
-    "modelName": "Person",
-    "payload": Object {
-      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
-      "id": "46816",
-      "name": "Rich",
-    },
-  },
-  Object {
-    "modelName": "Community",
-    "payload": Object {
-      "id": "1836",
-      "name": "Wombats",
-    },
-  },
-  Object {
-    "modelName": "Person",
-    "payload": Object {
-      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
-      "id": "46816",
-      "name": "Rich",
     },
   },
   Object {
@@ -208,6 +145,7 @@ Array [
     "modelName": "Me",
     "payload": Object {
       "avatarUrl": "http://foo.com/bar.png",
+      "id": "1",
       "name": "Foo Bar",
       "posts": Array [
         "30002",
