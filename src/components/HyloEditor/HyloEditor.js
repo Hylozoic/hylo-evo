@@ -14,7 +14,9 @@ const mentionPlugin = createMentionPlugin({
   // TODO: Map to local CSS Modules stylesheet (copy from plugin)
   // theme: styles
 })
-const hashtagPlugin = createHashtagPlugin()
+const hashtagPlugin = createHashtagPlugin({
+  entityMutability: 'IMMUTABLE'
+})
 const linkifyPlugin = createLinkifyPlugin()
 
 const { MentionSuggestions } = mentionPlugin
@@ -37,6 +39,7 @@ export default class HyloEditor extends Component {
 
   constructor (props) {
     super(props)
+    this.submitOnReturnEnabled = true
     this.state = {
       editorState: EditorState.createEmpty()
     }
@@ -62,7 +65,7 @@ export default class HyloEditor extends Component {
 
   handleReturn = (event) => {
     const { submitOnReturnHandler } = this.props
-    if (submitOnReturnHandler && !this.mentionsOpen) {
+    if (submitOnReturnHandler && this.submitOnReturnEnabled) {
       if (!event.shiftKey) {
         submitOnReturnHandler(this.getContent())
         this.setState({
@@ -74,14 +77,20 @@ export default class HyloEditor extends Component {
     }
   }
 
-  handleMentionsOpen = () => {
-    this.mentionsOpen = true
+  enableSubmitOnReturn = () => {
+    this.submitOnReturnEnabled = true
+  }
+
+  disableSubmitOnReturn = () => {
+    this.submitOnReturnEnabled = false
   }
 
   handleMentionsClose = () => {
     this.props.clearMentions()
-    this.mentionsOpen = false
+    this.enableSubmitOnReturn()
   }
+
+  disableSubmitOnReturn
 
   render () {
     return <div styleName='wrapper' className={this.props.className}>
@@ -94,11 +103,13 @@ export default class HyloEditor extends Component {
       <MentionSuggestions
         onSearchChange={this.handleMentionsSearch}
         suggestions={this.props.mentionResults}
-        onOpen={this.handleMentionsOpen}
+        onOpen={this.disableSubmitOnReturn}
         onClose={this.handleMentionsClose} />
       <HashtagSuggestions
         onSearchChange={this.handleHashtagSearch}
-        suggestions={this.props.hashtagResults} />
+        suggestions={this.props.hashtagResults}
+        onOpen={this.disableSubmitOnReturn}
+        onClose={this.enableSubmitOnReturn} />
     </div>
   }
 }
