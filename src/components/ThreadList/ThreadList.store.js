@@ -8,6 +8,7 @@ export function fetchThreads () {
     graphql: {
       query: `{
         me {
+          id
           messageThreads {
             id
             unreadCount
