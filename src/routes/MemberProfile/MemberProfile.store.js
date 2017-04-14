@@ -96,19 +96,19 @@ export const personSelector = createSelector(
         comments: person.comments.toModelArray().map(comment => ({
           ...comment.ref,
           creator: comment.creator.ref,
-          post: comment.post.ref
+          post: comment.post.ref,
+          slug
         })),
         memberships: person.memberships.toModelArray().map(membership => ({
           ...membership.ref,
           community: membership.community.ref
         })),
-        posts: person.posts.toModelArray().map(post => {
-          return ({
+        posts: person.posts.toModelArray().map(post => ({
           ...post.ref,
           creator: post.creator.ref,
           commenters: post.commenters.toRefArray(),
           communities: post.communities.toRefArray()
-        })})
+        }))
       }
       return { ...result, role: getRole(slug, result.memberships) }
     }

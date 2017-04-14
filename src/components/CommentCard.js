@@ -6,11 +6,9 @@ import { humanDate, present, sanitize } from 'hylo-utils/text'
 import './CommentCard.scss'
 
 export default function CommentCard ({ comment }) {
-  const { creator, post } = comment
+  const { creator, post, slug } = comment
   const postTitle = present(sanitize(post.title), { maxlength: 25, noP: true })
-  console.log(postTitle)
-  const commentText = present(sanitize(comment.text), { noP: true })
-  console.log(commentText)
+  const commentText = present(sanitize(comment.text), { noP: true, slug })
   return <div styleName='comment-card'>
     <div styleName='comment-header'>
       <RoundImage url={creator.avatarUrl} large />
