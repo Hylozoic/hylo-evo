@@ -26,7 +26,11 @@ const ICON_NAMES = [
   'Pin',
   'Complete',
   'Flag',
-  'Circle'
+  'Circle',
+  'ProfileFacebook',
+  'ProfileLinkedin',
+  'ProfileTwitter',
+  'ProfileUrl'
 ]
 
 export default function Icons (props) {
