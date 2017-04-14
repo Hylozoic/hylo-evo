@@ -2,7 +2,7 @@ import React from 'react'
 import visibility from 'visibility'
 import { throttle } from 'lodash'
 import { get, maxBy } from 'lodash/fp'
-const { array, bool, func, object } = React.PropTypes
+const { array, func, object } = React.PropTypes
 import Message from 'components/Message'
 import { position } from 'util/scrolling'
 import './MessageSection.scss'
@@ -38,7 +38,6 @@ export default class MessageSection extends React.Component {
     onScrollToTop: func,
     onHitBottom: func,
     onLeftBottom: func,
-    pending: bool,
     thread: object,
     updateThreadReadTime: func,
     currentUser: object
@@ -74,9 +73,7 @@ export default class MessageSection extends React.Component {
     // is first in the list before pagination won't have a header after the
     // pagination is done
     this.list.scrollTop = position(message, this.list).y -
-      document.querySelector('#topNav').offsetHeight -
-      document.querySelector('.thread .header').offsetHeight -
-      (message.className.includes('messageHeader') ? 11 : 41)
+      document.querySelector('#thread-header').offsetHeight
   }
 
   detectScrollExtremes = throttle(target => {
@@ -112,7 +109,7 @@ export default class MessageSection extends React.Component {
 
   markAsRead = () => {
     const { thread, updateThreadReadTime } = this.props
-    //updateThreadReadTime(thread.id)
+    if (thread) updateThreadReadTime(thread.id)
   }
 
   render () {

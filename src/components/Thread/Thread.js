@@ -43,7 +43,7 @@ export default class Thread extends React.Component {
         const { messages, fetchAfterMessages } = this.props
         const afterId = max(map('id', messages))
         fetchAfterMessages(afterId)
-        .then(() => this.refs.messageSection.scrollToBottom())
+        .then(() => this.refs.messageSection.getWrappedInstance().scrollToBottom())
         this.socket.post(socketUrl(`/noo/post/${threadId}/subscribe`))
       }
       this.socket.on('reconnect', this.reconnectHandler)
@@ -90,11 +90,11 @@ export default class Thread extends React.Component {
       if (pending || messages.length >= thread.messagesTotal) return
       const beforeId = min(map('id', messages))
       fetchBeforeMessages(thread.id, beforeId)
-      .then(() => this.refs.messageSection.scrollToMessage(beforeId))
+      .then(() => this.refs.messageSection.getWrappedInstance().scrollToMessage(beforeId))
     }
     return <div styleName='thread'>
       <Header thread={thread} currentUser={currentUser} />
-      <MessageSection {...{messages, pending}} thread={thread}
+      <MessageSection messages={messages} thread={thread}
         lastReadAt={lastReadAt}
         onLeftBottom={() => this.setState({scrolledUp: true})}
         onHitBottom={() => this.setState({scrolledUp: false})}
@@ -108,20 +108,13 @@ export default class Thread extends React.Component {
   }
 }
 
-function hasNewMessages (messages, thread, currentUser) {
-  const latestMessage = messages.length && messages[messages.length - 1]
-  const latestFromOther = latestMessage && latestMessage.creator.id !== currentUser.id
-  return latestFromOther && thread.lastReadAt &&
-    new Date(latestMessage.createdAt) > new Date(thread.lastReadAt)
-}
-
 function Header ({ thread, currentUser }) {
   const participants = get('participants', thread) || []
   const id = get('id', currentUser)
   const others = map('name', filter(f => f.id !== id, participants))
   const othersMinusLast = others.slice(0, others.length - 1)
 
-  return <div styleName='header'>
+  return <div styleName='header' id='thread-header'>
     <div styleName='header-text'>
       You{others.length > 1 ? `, ${othersMinusLast.join(', ')}` : ''} and {others[others.length - 1]}
     </div>
