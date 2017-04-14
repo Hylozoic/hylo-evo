@@ -11,17 +11,18 @@ export default class Comments extends Component {
     fetchComments: func,
     createComment: func,
     currentUser: object,
-    postId: string
+    postId: string,
+    slug: string
   }
 
   render () {
-    const { comments, commentsTotal, fetchComments, currentUser, createComment, postId } = this.props
+    const { comments, commentsTotal, fetchComments, currentUser, createComment, postId, slug } = this.props
     return <div styleName='comments'>
       <ShowMore
         commentsLength={comments.length}
         commentsTotal={commentsTotal}
         fetchComments={fetchComments} />
-      {comments.map(c => <Comment comment={c} key={c.id} />)}
+      {comments.map(c => <Comment comment={c} key={c.id} slug={slug}/>)}
       <CommentForm currentUser={currentUser} createComment={createComment} postId={postId} />
     </div>
   }

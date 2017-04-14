@@ -5,7 +5,7 @@ import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import { personUrl } from 'util/index'
-import { humanDate } from 'hylo-utils/text'
+import { humanDate, present, sanitize } from 'hylo-utils/text'
 const { object } = PropTypes
 
 export default class Comment extends Component {
@@ -14,8 +14,10 @@ export default class Comment extends Component {
   }
 
   render () {
-    const { comment } = this.props
+    const { comment, slug } = this.props
     const { creator, createdAt } = comment
+
+    let text = present(sanitize(comment.text), {slug})
 
     return <div styleName='comment'>
       <div styleName='header'>
@@ -31,7 +33,7 @@ export default class Comment extends Component {
           ]} />
         </div>
       </div>
-      <div styleName='text'>{comment.text}</div>
+      <div styleName='text' dangerouslySetInnerHTML={{__html: text}} />
       {/* <div styleName='reply'><Icon name='Reply' styleName='icon' />Reply</div> */}
     </div>
   }
