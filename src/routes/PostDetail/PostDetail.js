@@ -54,7 +54,7 @@ export default class PostDetail extends Component {
   }
 }
 
-function PostTags ({ tags, slug }) {
+export function PostTags ({ tags, slug }) {
   if (isEmpty(tags)) return null
 
   return <div styleName='tags'>
