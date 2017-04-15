@@ -10,7 +10,7 @@ export function fetchComments (id, opts = {}) {
       query: `query ($id: ID, $cursor: ID) {
         post(id: $id) {
           id
-          comments(first: 3, cursor: $cursor, order: "desc") {
+          comments(first: 10, cursor: $cursor, order: "desc") {
             items {
               id
               text

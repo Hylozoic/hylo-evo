@@ -32,7 +32,7 @@ export default class Comments extends Component {
 export function ShowMore ({commentsLength, total, hasMore, fetchComments}) {
   if (!hasMore) return null
 
-  const extra = total - 3
+  const extra = total - 10
 
   return <div styleName='showMore' onClick={fetchComments}>
     View {extra} previous comment{extra > 1 ? 's' : ''}
