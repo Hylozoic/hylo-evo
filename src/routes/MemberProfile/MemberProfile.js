@@ -70,20 +70,17 @@ export default class MemberProfile extends React.Component {
     } = this.props.person
 
     return <div styleName='member-profile'>
-      <ProfileBanner
-        avatarUrl={avatarUrl}
-        bannerUrl={bannerUrl}
-        location={location}
-        name={name}
-        role={role} />
+      <ProfileBanner bannerUrl={bannerUrl}>
+        <ProfileNamePlate avatarUrl={avatarUrl} location={location} name={name} role={role} />
+      </ProfileBanner>
       <div styleName='content'>
-        <ProfileControls
-          currentTab={this.state.currentTab}
-          facebookUrl={facebookUrl}
-          linkedinUrl={linkedinUrl}
-          selectTab={this.selectTab}
-          twitterName={twitterName}
-          url={url} />
+        <ProfileControls currentTab={this.state.currentTab} selectTab={this.selectTab}>
+          <SocialButtons
+            facebookUrl={facebookUrl}
+            linkedinUrl={linkedinUrl}
+            twitterName={twitterName}
+            url={url} />
+        </ProfileControls>
         <TabContentSwitcher
           activityItems={activityItems}
           bio={bio}
@@ -95,13 +92,9 @@ export default class MemberProfile extends React.Component {
   }
 }
 
-export function ProfileBanner ({ avatarUrl, bannerUrl, location, name, role }) {
+export function ProfileBanner ({ bannerUrl, children }) {
   return <div styleName='banner'>
-    <ProfileNamePlate
-      avatarUrl={avatarUrl}
-      location={location}
-      name={name}
-      role={role} />
+    {children}
     {bannerUrl && <div style={bgImageStyle(bannerUrl)} styleName='banner-image' />}
   </div>
 }
@@ -123,13 +116,9 @@ export function ProfileNamePlate ({ avatarUrl, name, location, role }) {
   </div>
 }
 
-export function ProfileControls ({ currentTab, facebookUrl, linkedinUrl, selectTab, twitterName, url }) {
+export function ProfileControls ({ children, currentTab, selectTab }) {
   return <div styleName='controls'>
-    <SocialButtons
-      facebookUrl={facebookUrl}
-      linkedinUrl={linkedinUrl}
-      twitterName={twitterName}
-      url={url} />
+    {children}
     <hr styleName='separator' />
     <SimpleTabBar
       currentTab={currentTab}
@@ -178,12 +167,21 @@ export function TabContentSwitcher ({ activityItems, bio, comments, currentTab, 
     case 'Posts':
       return <div>
         <h2 styleName='subhead'>Posts</h2>
-        {posts && posts.map(post => <PostCard key={post.id} post={post} />)}
+        {posts && posts.map((post, i) => {
+          return <div styleName='activity-item' key={i}>
+            <PostCard post={post} />
+          </div>
+        })}
       </div>
 
     case 'Comments':
       return <div>
         <h2 styleName='subhead'>Comments</h2>
+        {comments && comments.map((comment, i) => {
+          return <div styleName='activity-item' key={i}>
+            <CommentCard comment={comment} />
+          </div>
+        })}
       </div>
 
     case 'Upvotes':
