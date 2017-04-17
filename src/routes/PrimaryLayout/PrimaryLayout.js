@@ -10,6 +10,7 @@ import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 import Members from 'routes/Members'
+import Settings from 'routes/Settings'
 import './PrimaryLayout.scss'
 
 export default class PrimaryLayout extends Component {
@@ -41,6 +42,7 @@ export default class PrimaryLayout extends Component {
           <Route path='/c/:slug' exact render={({ match }) => <Feed {...{community, currentUser, match}} />} />
           <Route path='/events' component={Events} />
           <Route path='/c/:slug/members' component={Members} />
+          <Route path='/settings' component={Settings} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/c/:slug' exact component={Sidebar} />
