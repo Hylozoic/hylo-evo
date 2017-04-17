@@ -84,8 +84,7 @@ const fetchPersonQuery =
       voter {
         id
       }
-      dateVoted
-
+      createdAt
     }
     votesTotal
   }

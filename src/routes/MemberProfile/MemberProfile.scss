@@ -84,6 +84,10 @@
 
   .activity-item {
     margin: $space-5x 0;
+
+    a:first-child {
+      text-decoration: none;
+    }
   }
 }
 
