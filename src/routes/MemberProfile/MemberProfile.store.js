@@ -59,6 +59,35 @@ const fetchPersonQuery =
       createdAt
     }
     postsTotal
+    votes (first: $limit, order: $order) {
+      id
+      post {
+        id
+        title
+        details
+        type
+        creator {
+          id
+        }
+        commenters {
+          id,
+          name,
+          avatarUrl
+        }
+        commentersTotal
+        communities {
+          id
+          name
+        }
+        createdAt
+      }
+      voter {
+        id
+      }
+      dateVoted
+
+    }
+    votesTotal
   }
 }`
 
@@ -117,6 +146,12 @@ export const personSelector = createSelector(
           community: membership.community.ref
         })),
         posts: person.posts.toModelArray().map(post => ({
+          ...post.ref,
+          creator: post.creator.ref,
+          commenters: post.commenters.toRefArray(),
+          communities: post.communities.toRefArray()
+        })),
+        votes: person.votes.toModelArray().map(({ post }) => ({
           ...post.ref,
           creator: post.creator.ref,
           commenters: post.commenters.toRefArray(),

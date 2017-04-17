@@ -66,7 +66,8 @@ export default class MemberProfile extends React.Component {
       posts,
       role,
       twitterName,
-      url
+      url,
+      votes
     } = this.props.person
 
     return <div styleName='member-profile'>
@@ -86,7 +87,8 @@ export default class MemberProfile extends React.Component {
           bio={bio}
           comments={comments}
           currentTab={this.state.currentTab}
-          posts={posts} />
+          posts={posts}
+          votes={votes} />
       </div>
     </div>
   }
@@ -148,7 +150,7 @@ export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
   </div>
 }
 
-export function TabContentSwitcher ({ activityItems, bio, comments, currentTab, posts }) {
+export function TabContentSwitcher ({ activityItems, bio, comments, currentTab, posts, votes }) {
   switch (currentTab) {
     case 'Overview':
       return <div>
@@ -187,6 +189,11 @@ export function TabContentSwitcher ({ activityItems, bio, comments, currentTab, 
     case 'Upvotes':
       return <div>
         <h2 styleName='subhead'>Upvotes</h2>
+        {votes && votes.map(post => {
+          return <div styleName='activity-item' key={post.id}>
+            <PostCard post={post} />
+          </div>
+        })}
       </div>
   }
 }

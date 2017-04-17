@@ -7,6 +7,7 @@ import Me from './Me'
 import Membership from './Membership'
 import Person from './Person'
 import Post, { PostFollower, PostCommenter } from './Post'
+import Vote from './Vote'
 
 export const orm = new ORM()
 orm.register(
@@ -18,7 +19,8 @@ orm.register(
   Person,
   Post,
   PostFollower,
-  PostCommenter
+  PostCommenter,
+  Vote
 )
 
 export default orm
