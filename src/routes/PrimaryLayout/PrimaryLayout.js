@@ -43,7 +43,7 @@ export default class PrimaryLayout extends Component {
           <Route path='/c/:slug/members' component={Members} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
-          <Route path='/' component={Sidebar} />
+          <Route path='/c/:slug' exact component={Sidebar} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})}>
           {/*
