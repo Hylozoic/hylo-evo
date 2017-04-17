@@ -46,7 +46,7 @@ export default class PrimaryLayout extends Component {
       <TopNav {...{community, currentUser}} styleName='top' />
       <div styleName='main'>
         <Navigation collapsed={hasDetail} styleName='left' />
-        <div styleName='center'>
+        <div styleName='center' id={CENTER_COLUMN_ID}>
           <Route path='/' exact render={() => <Feed {...{community, currentUser}} />} />
           <Route path='/c/:slug/' exact component={Feed} />
           <Route path='/c/:slug/p/:postId' component={Feed} />
@@ -71,3 +71,5 @@ export default class PrimaryLayout extends Component {
     </div>
   }
 }
+
+export const CENTER_COLUMN_ID = 'center-column'
