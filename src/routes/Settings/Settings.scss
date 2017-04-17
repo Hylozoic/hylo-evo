@@ -45,13 +45,41 @@ $size-sidebar-width: 10rem;
   color: $color-rhino;
 }
 
+.right-sidebar {
+  width: $size-sidebar-width;
+}
+
+// SettingsControls
 .center {
   width: $size-feed-width;
   padding: 72px 94px 0 94px;
 }
 
-.right-sidebar {
-  width: $size-sidebar-width;
+.name {
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 4px;
+  margin-bottom: 25px;
+  composes: hdr-display from 'css/typography.scss';
+  background-color: $color-catskill-white;
+}
+
+.banner {
+  width: 100%;
+  height: 165px;
+  border-radius: 4px;
+  background-position: center;
+  background-size: cover;
+}
+
+.avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  margin: -70px auto 0 auto;
 }
 
 // CloseButton

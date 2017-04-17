@@ -1,5 +1,8 @@
 import { connect } from 'react-redux'
-import { fakePerson } from 'components/PostCard/samplePost'
+import { fakePerson, SAMPLE_IMAGE_URL } from 'components/PostCard/samplePost'
+import faker from 'faker'
+
+faker.seed(995)
 
 const SAMPLE_USER = {
   ...fakePerson(),
@@ -7,7 +10,9 @@ const SAMPLE_USER = {
   location: 'Vancouver, BC',
   website: 'www.soniajohnson.com',
   facebookUrl: 'facebook.com/soniaj',
-  twitterUrl: 'twitter.com/soniaj'
+  twitterUrl: 'twitter.com/soniaj',
+  avatarUrl: faker.image.avatar(),
+  bannerUrl: SAMPLE_IMAGE_URL
 }
 
 export function mapStateToProps (state, props) {
