@@ -1,3 +1,5 @@
+$size-sidebar-width: 10rem;
+
 // Duplicated from routes/Messages/Messages.scss
 .modal {
   position: fixed;
@@ -10,7 +12,65 @@
 }
 
 .content {
+  display: flex;
+  justify-content: center;
   width: $content-width;
   margin: 0 auto;
   display: flex;
+}
+
+.centered-content {
+  margin: 0 auto;
+}
+
+.left-sidebar {
+  width: $size-sidebar-width;
+  padding-top: 220px;
+  padding-right: 32px;
+  border-right: 1px solid $color-cape-cod-10;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.nav-link {
+  margin-bottom: 8px;
+  @include font-regular;
+  font-size: 17px;
+  color: $color-rhino-30;
+}
+
+.nav-link--active {
+  color: $color-rhino;
+}
+
+.center {
+  width: $size-feed-width;
+  padding: 72px 94px 0 94px;
+}
+
+.right-sidebar {
+  width: $size-sidebar-width;
+}
+
+// CloseButton
+.close-button {
+  width: 56px;
+  height: 56px;
+  line-height: 56px;
+  text-align: center;
+  border-radius: 50%;
+  position: relative;
+  top: 15px;
+  left: 273px;
+  background-color: $color-athens-gray-medium;
+  cursor: pointer;
+}
+
+.icon {
+  font-size: 30px;
+  position: relative;
+  top: 7px;
+  color: $color-rhino;
 }
