@@ -9,6 +9,10 @@ export default class Settings extends Component {
 
   render () {
     const { exampleProp } = this.props
-    return <div styleName='exampleName'>Settings! {exampleProp}</div>
+    return <div styleName='modal'>
+      <div styleName='content'>
+        Settings
+      </div>
+    </div>
   }
 }
