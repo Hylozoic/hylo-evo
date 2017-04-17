@@ -15,9 +15,9 @@ export default class Comment extends Component {
 
   render () {
     const { comment, slug } = this.props
-    const { creator, createdAt } = comment
+    const { creator, createdAt, text } = comment
 
-    let text = present(sanitize(comment.text), {slug})
+    const presentedText = present(sanitize(text), {slug})
 
     return <div styleName='comment'>
       <div styleName='header'>
@@ -33,7 +33,7 @@ export default class Comment extends Component {
           ]} />
         </div>
       </div>
-      <div styleName='text' dangerouslySetInnerHTML={{__html: text}} />
+      <div id='text' styleName='text' dangerouslySetInnerHTML={{__html: presentedText}} />
       {/* <div styleName='reply'><Icon name='Reply' styleName='icon' />Reply</div> */}
     </div>
   }
