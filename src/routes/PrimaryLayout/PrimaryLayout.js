@@ -43,10 +43,10 @@ export default class PrimaryLayout extends Component {
 
     return <div styleName='container' onClick={closeDrawer}>
       {communitiesDrawerOpen && <CommunitiesDrawer />}
-      <TopNav {...{community, currentUser}} />
-      <div styleName='row'>
-        <Navigation collapsed={hasDetail} />
-        <div styleName='content'>
+      <TopNav {...{community, currentUser}} styleName='top' />
+      <div styleName='main'>
+        <Navigation collapsed={hasDetail} styleName='left' />
+        <div styleName='center'>
           <Route path='/' exact render={() => <Feed {...{community, currentUser}} />} />
           <Route path='/c/:slug/' exact component={Feed} />
           <Route path='/c/:slug/p/:postId' component={Feed} />
