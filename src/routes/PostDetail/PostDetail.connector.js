@@ -10,7 +10,6 @@ export const getPost = createSelector(
   (state, props) => getParam('postId', state, props),
   (state, session, id) => {
     try {
-      // console.log('trying to get post with id', id)
       const post = session.Post.get({id})
       return {
         ...post.ref,
@@ -30,9 +29,9 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = (dispatch, { match: { params: { postId } } }) => {
+export const mapDispatchToProps = (dispatch, props) => {
   return {
-    fetchPost: () => dispatch(fetchPost(postId))
+    fetchPost: () => dispatch(fetchPost(getParam('postId', {}, props)))
   }
 }
 
