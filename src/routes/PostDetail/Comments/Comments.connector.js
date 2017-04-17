@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash/fp'
 import orm from 'store/models'
 import { fetchComments, createComment, getHasMoreComments, getTotalComments } from './Comments.store'
 
-const getComments = createSelector(
+export const getComments = createSelector(
   state => orm.session(state.orm),
   (state, props) => props.postId,
   (session, id) => {
