@@ -54,6 +54,7 @@ export default class MemberProfile extends React.Component {
     if (this.props.error) return this.displayError(this.props.error)
 
     const {
+      activityItems,
       avatarUrl,
       bannerUrl,
       bio,
@@ -83,7 +84,12 @@ export default class MemberProfile extends React.Component {
           selectTab={this.selectTab}
           twitterName={twitterName}
           url={url} />
-        <TabContentSwitcher bio={bio} comments={comments} currentTab={this.state.currentTab} posts={posts} />
+        <TabContentSwitcher
+          activityItems={activityItems}
+          bio={bio}
+          comments={comments}
+          currentTab={this.state.currentTab}
+          posts={posts} />
       </div>
     </div>
   }
@@ -153,14 +159,14 @@ export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
   </div>
 }
 
-export function TabContentSwitcher ({ bio, comments, currentTab, posts }) {
+export function TabContentSwitcher ({ activityItems, bio, comments, currentTab, posts }) {
   switch (currentTab) {
     case 'Overview':
       return <div>
         <h2 styleName='subhead'>About Me</h2>
         <div styleName='bio'>{bio}</div>
         <h2 styleName='subhead'>Recent Activity</h2>
-        {posts && comments && posts.concat(comments).map((item, i) => {
+        {activityItems && activityItems.map((item, i) => {
           return <div styleName='activity-item' key={i}>
             {item.hasOwnProperty('title')
               ? <PostCard post={item} />

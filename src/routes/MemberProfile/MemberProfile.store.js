@@ -4,7 +4,7 @@ import { FETCH_PERSON } from 'store/constants'
 import orm from 'store/models'
 
 const fetchPersonQuery =
-`query PersonDetails ($id: ID) {
+`query PersonDetails ($id: ID, $order: String, $limit: Int) {
   person (id: $id) {
     id
     name
@@ -16,7 +16,7 @@ const fetchPersonQuery =
     facebookUrl
     url
     location
-    comments {
+    comments (first: $limit, order: $order) {
       id
       text
       creator {
@@ -38,7 +38,7 @@ const fetchPersonQuery =
       }
     }
     membershipsTotal
-    posts {
+    posts (first: $limit, order: $order) {
       id
       title
       details
@@ -56,17 +56,18 @@ const fetchPersonQuery =
         id
         name
       }
+      createdAt
     }
     postsTotal
   }
 }`
 
-export function fetchPerson (id, query = fetchPersonQuery) {
+export function fetchPerson (id, order = 'desc', limit = 20, query = fetchPersonQuery) {
   return {
     type: FETCH_PERSON,
     graphql: {
       query,
-      variables: { id }
+      variables: { id, limit, order }
     }
   }
 }
@@ -75,6 +76,18 @@ export function getRole (slug, memberships = []) {
   return memberships.find(m => m.community.slug === slug && m.hasModeratorRole)
     ? 'Community Manager'
     : null
+}
+
+// Deliberately preserves object references
+// Used to display interspersed posts and comments on 'Recent Activity'
+export function indexActivityItems (comments, posts) {
+  // TODO: support something other than descending order
+  return comments.concat(posts)
+    .sort((a, b) => {
+      const aDate = new Date(a.createdAt)
+      const bDate = new Date(b.createdAt)
+      return aDate < bDate ? 1 : aDate > bDate ? -1 : 0
+    })
 }
 
 const defaultPerson = {
@@ -110,7 +123,11 @@ export const personSelector = createSelector(
           communities: post.communities.toRefArray()
         }))
       }
-      return { ...result, role: getRole(slug, result.memberships) }
+      return {
+        ...result,
+        activityItems: indexActivityItems(result.comments, result.posts),
+        role: getRole(slug, result.memberships)
+      }
     }
     return defaultPerson
   }
