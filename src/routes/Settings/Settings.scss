@@ -63,6 +63,8 @@ $size-sidebar-width: 10rem;
   margin-bottom: 25px;
   composes: hdr-display from 'css/typography.scss';
   background-color: $color-catskill-white;
+  border: none;
+  width: 100%;
 }
 
 .banner {
