@@ -1,4 +1,4 @@
-import { upload } from '../client/filepicker'
+import { upload } from 'client/filepicker'
 import {
   UPLOAD_IMAGE
 } from 'store/constants'

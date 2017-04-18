@@ -1,8 +1,9 @@
 import React, { PropTypes, Component } from 'react'
 import './Settings.scss'
 import { Link } from 'react-router-dom'
-import Icon from 'components/Icon'
 import Button from 'components/Button'
+import ChangeImageButton from 'components/ChangeImageButton'
+import Icon from 'components/Icon'
 import { bgImageStyle } from 'util/index'
 const { object } = PropTypes
 import cx from 'classnames'
@@ -67,7 +68,15 @@ export class SettingsControls extends Component {
       this.setState({changed: false})
     }
 
+    const uploadSettings = {
+      id: 123456789,
+      subject: 'user-avatar',
+      path: `user/123456789/avatar`,
+      convert: {width: 200, height: 200, fit: 'crop', rotate: 'exif'}
+    }
+
     return <div styleName='center'>
+      <ChangeImageButton update={updateSetting('avatarUrl')} uploadSettings={uploadSettings} />
       <input styleName='name' onChange={updateSetting('name')} value={name} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner' />
       <div style={bgImageStyle(avatarUrl)} styleName='avatar' />

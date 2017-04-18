@@ -1,14 +1,18 @@
 import { connect } from 'react-redux'
-// import { someAction } from 'some/path/to/actions'
+import { uploadImage } from './ChangeImageButton.store.js'
+import { UPLOAD_IMAGE } from ''
 
-export function mapStateToProps (state, props) {
+export function mapStateToProps (state, { uploadSettings }) {
+  const pending = state.pending[UPLOAD_IMAGE]
+  console.log('pending', pending)
+  console.log('uploadSettings', uploadSettings)
   return {
-    exampleProp: 'example'
+    loading: false
   }
 }
 
 export const mapDispatchToProps = {
-  // someAction
+  uploadImage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
