@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 import Editor from 'draft-js-plugins-editor'
 import createMentionPlugin from 'draft-js-mention-plugin'
 import createHashtagPlugin from './hashtagPlugin'
+import createLinkifyPlugin from 'draft-js-linkify-plugin'
 import { EditorState } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
 import 'draft-js/dist/Draft.css'
@@ -14,13 +15,15 @@ const mentionPlugin = createMentionPlugin({
   // theme: styles
 })
 const hashtagPlugin = createHashtagPlugin()
+const linkifyPlugin = createLinkifyPlugin()
 
 const { MentionSuggestions } = mentionPlugin
 const { CompletionSuggestions: HashtagSuggestions } = hashtagPlugin
 
 const plugins = [
   mentionPlugin,
-  hashtagPlugin
+  hashtagPlugin,
+  linkifyPlugin
 ]
 
 export default class HyloEditor extends Component {
@@ -39,8 +42,13 @@ export default class HyloEditor extends Component {
     }
   }
 
+  getContent = () => {
+    const { editorState } = this.state
+    return stateToHTML(editorState.getCurrentContent())
+  }
+
   handleEditorChange = (editorState) => {
-    if (this.props.debug) console.log(stateToHTML(editorState.getCurrentContent()))
+    if (this.props.debug) console.log(this.getContent())
     this.setState({ editorState })
   }
 
@@ -52,17 +60,42 @@ export default class HyloEditor extends Component {
     return this.props.findHashtags(value)
   }
 
+  handleReturn = (event) => {
+    const { submitOnReturnHandler } = this.props
+    if (submitOnReturnHandler && !this.mentionsOpen) {
+      if (!event.shiftKey) {
+        submitOnReturnHandler(this.getContent())
+        this.setState({
+          editorState: EditorState.moveFocusToEnd(EditorState.createEmpty())
+        })
+        return 'handled'
+      }
+      return 'not-handled'
+    }
+  }
+
+  handleMentionsOpen = () => {
+    this.mentionsOpen = true
+  }
+
+  handleMentionsClose = () => {
+    this.props.clearMentions()
+    this.mentionsOpen = false
+  }
+
   render () {
     return <div styleName='wrapper' className={this.props.className}>
       <Editor
         editorState={this.state.editorState}
         onChange={this.handleEditorChange}
         placeholder={this.props.placeholder}
+        handleReturn={this.handleReturn}
         plugins={plugins} />
       <MentionSuggestions
         onSearchChange={this.handleMentionsSearch}
         suggestions={this.props.mentionResults}
-        onClose={this.props.clearMentions} />
+        onOpen={this.handleMentionsOpen}
+        onClose={this.handleMentionsClose} />
       <HashtagSuggestions
         onSearchChange={this.handleHashtagSearch}
         suggestions={this.props.hashtagResults} />

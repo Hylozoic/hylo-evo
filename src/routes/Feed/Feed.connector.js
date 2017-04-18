@@ -3,9 +3,10 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import { get, includes } from 'lodash/fp'
 import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
-import { fetchPosts } from './actions'
+import { fetchPosts } from './Feed.store.js'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getParam from 'store/selectors/getParam'
+import { getMe } from 'store/selectors/getMe'
 
 export const getCommunityPosts = ormCreateSelector(
   orm,
@@ -32,9 +33,11 @@ export function mapStateToProps (state, props) {
   return {
     posts: getCommunityPosts(state, props),
     slug: getParam('slug', state, props),
+    selectedPostId: getParam('postId', state, props),
     community,
     postCount: get('postCount', community),
-    pending: state.pending[FETCH_POSTS]
+    pending: state.pending[FETCH_POSTS],
+    currentUser: getMe(state, props)
   }
 }
 

@@ -7,6 +7,7 @@
 // shown when something has been typed into the search field.
 
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
+import { FETCH_POST, FETCH_COMMENTS } from 'store/constants'
 import { get, pick, uniq } from 'lodash/fp'
 
 // reducer
@@ -22,6 +23,10 @@ export default function (state = {}, action) {
   switch (type) {
     case FETCH_MEMBERS:
       return appendIds(state, type, meta.graphql.variables, payload.data.community.members)
+
+    case FETCH_POST:
+    case FETCH_COMMENTS:
+      return appendIds(state, FETCH_COMMENTS, meta.graphql.variables, payload.data.post.comments)
   }
 
   return state
@@ -53,4 +58,4 @@ function buildKey (type, params) {
   return JSON.stringify({type, params: pick(queryParamWhitelist, params)})
 }
 
-export const queryParamWhitelist = ['slug', 'sortBy', 'search']
+export const queryParamWhitelist = ['id', 'slug', 'sortBy', 'search']

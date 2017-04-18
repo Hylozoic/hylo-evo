@@ -42,14 +42,14 @@ export default class TagInput extends Component {
   }
 
   resetInput () {
-    this.refs.input.value = ''
+    this.input.value = ''
     this.props.handleInputChange('')
   }
 
   handleKeys = event => {
     let { allowNewTags, handleAddition, handleInputChange, filter } = this.props
     const keyCode = getKeyCode(event)
-    const keyWasHandled = this.refs.list && this.refs.list.handleKeys(event)
+    const keyWasHandled = this.list && this.list.handleKeys(event)
 
     if (!keyWasHandled && allowNewTags) {
       // if the current input has matching search results, you can press Escape
@@ -86,7 +86,7 @@ export default class TagInput extends Component {
   }
 
   focus = () => {
-    this.refs.input.focus()
+    this.input.focus()
   }
 
   handleChange = debounce(value => {
@@ -115,7 +115,7 @@ export default class TagInput extends Component {
         <div className={theme.searchInput}>
           <input
             className={theme.searchInput}
-            ref='input'
+            ref={i => this.input = i}
             type='text'
             placeholder={placeholder}
             spellCheck={false}
@@ -127,7 +127,7 @@ export default class TagInput extends Component {
             <KeyControlledItemList
               items={suggestions}
               onChange={this.select}
-              ref='list' />
+              ref={l => this.list = l} />
           </div>
         }
       </div>

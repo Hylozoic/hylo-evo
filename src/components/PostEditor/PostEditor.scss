@@ -1,3 +1,5 @@
+// Overall wrapper
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -8,8 +10,10 @@
   border: 1px solid $color-cape-cod-10;
 }
 
-.body {
-  padding: $space-4x;
+// Header area
+
+.header {
+  padding: $space-4x $space-4x 0 $space-4x;
 }
 
 .initialPrompt {
@@ -37,6 +41,7 @@
   border-radius: $space-1x;
   color: $color-rhino-30;
   background-color: $color-athens-gray-dark;
+  cursor: pointer;
   &:last-child {
     margin-right: 0;
   }
@@ -63,34 +68,42 @@
   }
 }
 
+// Body area
 
-.title {
-  border: none;
-  margin-bottom: $space-2x;
-  // TODO: Wrap the title input and HyloEditor and flexbox this layout
-  margin-left: $space-12x;
-  &-avatar {
-    margin-left: -$space-12x;
-    margin-right: $space-2x;
-  }
-  &-input {
-    composes: hdr-headline from 'css/typography.scss';
+.body {
+  padding: 0 $space-4x;
+  display: flex;
+  flex-direction: row;
+  &-column:last-child {
     width: 100%;
-    outline: none;
-    border: none;
   }
+}
+
+.titleAvatar {
+  margin-right: $space-2x;
+  padding: $space-1x;
+  height: $space-9x;
+}
+
+.titleInput {
+  composes: hdr-headline from 'css/typography.scss';
+  margin-bottom: $space-2x;
+  padding: 0;
+  height: $space-9x;
+  width: 100%;
+  outline: none;
+  border: none;
 }
 
 .editor {
   height: 200px;
-  margin-left: $space-12x;
   margin-bottom: $space-6x;
 }
 
 // Footer area
 
 .footer {
-  /* !empty */
+  padding: 0;
 }
 
 .postIn {
@@ -99,7 +112,7 @@
   padding: $space-5x;
   line-height: 1;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   &-label {
     color: $color-rhino-80;
     white-space: nowrap;
@@ -118,10 +131,6 @@
   height: 3.75rem;
   padding: $space-3x;
   background-color: $color-athens-gray-dark;
-}
-
-.actions {
-  /* !empty */
 }
 
 .postButton {
