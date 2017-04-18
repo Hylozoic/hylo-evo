@@ -11,10 +11,7 @@ export default class PostDetail extends Component {
   static propTypes = {
     post: object,
     slug: string,
-    fetchPost: func
-  }
-
-  static contextTypes = {
+    fetchPost: func,
     navigate: func
   }
 
@@ -23,8 +20,7 @@ export default class PostDetail extends Component {
   }
 
   render () {
-    const { post, slug } = this.props
-    const { navigate } = this.context
+    const { post, slug, navigate } = this.props
     if (!post) return null
 
     return <div styleName='post'>
