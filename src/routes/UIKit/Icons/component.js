@@ -3,6 +3,8 @@ import Icon from 'components/Icon'
 import './component.scss'
 
 const ICON_NAMES = [
+  'Clock',
+  'AddImage',
   'Reply',
   'LinkedIn',
   'Google',
