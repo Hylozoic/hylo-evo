@@ -19,10 +19,6 @@ $size-sidebar-width: 10rem;
   display: flex;
 }
 
-.centered-content {
-  margin: 0 auto;
-}
-
 .left-sidebar {
   width: $size-sidebar-width;
   padding-top: 220px;
@@ -82,6 +78,58 @@ $size-sidebar-width: 10rem;
   background-position: center;
   background-size: cover;
   margin: -70px auto 0 auto;
+}
+
+.control-label {
+  display: block;
+  composes: tag from 'css/typography.scss';
+  color: $color-rhino-30;
+  margin-bottom: $space-1x;
+}
+
+.social-label {
+  composes: control-label;
+  margin-top: $space-9x;
+}
+
+.button-row {
+  display: flex;
+  width: 100%;
+  margin-top: $space-9x;
+}
+
+.save-button {
+  margin: 0 auto;
+}
+
+// Control
+.control {
+  margin-bottom: $space-4x;
+}
+
+.control-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid $color-ghost;
+  composes: bdy-drk-sm from 'css/typography.scss';
+  font-size: 16px;
+  padding-bottom: $space-2x;
+  resize: none;
+}
+
+// SocialControl
+.linked {
+  border-bottom: 1px solid $color-caribbean-green;
+}
+
+.social-control-label {
+  composes: control-input;
+  display: flex;
+}
+
+.link-button {
+  margin-left: auto;
+  composes: text-button from 'css/typography.scss';
 }
 
 // CloseButton

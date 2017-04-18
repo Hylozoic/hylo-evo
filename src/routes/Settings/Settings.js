@@ -5,6 +5,7 @@ import Icon from 'components/Icon'
 import Button from 'components/Button'
 import { bgImageStyle } from 'util/index'
 const { object } = PropTypes
+import cx from 'classnames'
 
 export default class Settings extends Component {
   static propTypes = {
@@ -35,19 +36,21 @@ export class SettingsControls extends Component {
   }
 
   componentDidMount () {
-    const { name, avatarUrl, bannerUrl, tagline, bio, location, email, url } = this.props.currentUser
+    const {
+      name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl
+    } = this.props.currentUser
     this.setState({
       edits: {
-        name, avatarUrl, bannerUrl, tagline, bio, location, email, url
+        name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl
       }
     })
   }
 
   render () {
     const { edits, changed } = this.state
-    const { name, avatarUrl, bannerUrl, tagline, bio, location, email, url } = edits
-
-    console.log({changed})
+    const {
+      name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl
+    } = edits
 
     const updateSetting = key => event => {
       const { edits } = this.state
@@ -62,7 +65,6 @@ export class SettingsControls extends Component {
 
     const save = () => {
       this.setState({changed: false})
-      console.log('saving changes', edits)
     }
 
     return <div styleName='center'>
@@ -70,20 +72,53 @@ export class SettingsControls extends Component {
       <div style={bgImageStyle(bannerUrl)} styleName='banner' />
       <div style={bgImageStyle(avatarUrl)} styleName='avatar' />
       <Control label='Tagline' onChange={updateSetting('tagline')} value={tagline} />
-      <Control label='About Me' onChange={updateSetting('bio')} value={bio} />
+      <Control label='About Me' onChange={updateSetting('bio')} value={bio} type='textarea' />
       <Control label='Location' onChange={updateSetting('location')} value={location} />
       <Control label='Email' onChange={updateSetting('email')} value={email} />
       <Control label='Website' onChange={updateSetting('url')} value={url} />
-      <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} />
+      <label styleName='social-label'>Social Accounts</label>
+      <SocialControl label='Facebook' onChange={updateSetting('facebookUrl')} value={facebookUrl} />
+      <SocialControl label='Twitter' onChange={updateSetting('twitterName')} value={twitterName} />
+      <SocialControl label='LinkedIn' onChange={updateSetting('linkedInUrl')} value={linkedInUrl} />
+      <div styleName='button-row'>
+        <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
+      </div>
     </div>
   }
 }
 
-export function Control ({ label, value, onChange }) {
-  return <div>
-    <label>{label}</label>
-    <input type='text' value={value} onChange={onChange} />
+export function Control ({ label, value, onChange, type }) {
+  return <div styleName='control'>
+    <label styleName='control-label'>{label}</label>
+    {type === 'textarea'
+      ? <textarea styleName='control-input' value={value} onChange={onChange} />
+      : <input styleName='control-input' type='text' value={value} onChange={onChange} />}
   </div>
+}
+
+export class SocialControl extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {open: false}
+  }
+
+  render () {
+    const { label, onChange, value } = this.props
+    const { open } = this.state
+    const linked = !!value
+    const unlinkClicked = () => onChange({target: {value: ''}})
+    const linkClicked = () => this.setState({open: true})
+    const linkButton = <span
+      styleName='link-button'
+      onClick={linked ? unlinkClicked : linkClicked}>
+      {linked ? 'Unlink' : 'Link'}
+    </span>
+    return <div styleName='control'>
+      {open
+        ? <input styleName={cx('control-input', {linked})} type='text' value={value} onChange={onChange} />
+        : <div styleName={cx('social-control-label', {linked})}>{label}{linkButton}</div>}
+    </div>
+  }
 }
 
 export function CloseButton ({ onClose }) {
