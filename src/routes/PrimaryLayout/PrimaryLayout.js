@@ -12,6 +12,7 @@ import EventDetail from 'routes/Events/EventDetail'
 import PostDetail from 'routes/PostDetail'
 import Members from 'routes/Members'
 import './PrimaryLayout.scss'
+import { CENTER_COLUMN_ID } from 'util/scrolling'
 
 export default class PrimaryLayout extends Component {
   static propTypes = {
@@ -71,5 +72,3 @@ export default class PrimaryLayout extends Component {
     </div>
   }
 }
-
-export const CENTER_COLUMN_ID = 'center-column'

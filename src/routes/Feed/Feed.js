@@ -5,7 +5,7 @@ import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import ScrollListener from 'components/ScrollListener'
 import TabBar from './TabBar'
-import { CENTER_COLUMN_ID } from 'routes/PrimaryLayout'
+import { CENTER_COLUMN_ID } from 'util/scrolling'
 import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
 

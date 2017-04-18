@@ -5,7 +5,7 @@ import Icon from 'components/Icon'
 import Member from 'components/Member'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
-import { CENTER_COLUMN_ID } from 'routes/PrimaryLayout'
+import { CENTER_COLUMN_ID } from 'util/scrolling'
 import './Members.scss'
 const { bool, func, string, arrayOf, shape } = PropTypes
 import { debounce, isEmpty, some, times } from 'lodash/fp'
