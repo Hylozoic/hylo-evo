@@ -87,10 +87,21 @@ describe('personSelector', () => {
     session.Post.create(normalized.posts[0])
     const expected = payload.data.person.posts[0]
     const actual = personSelector({ orm: session.state }, props).posts[0]
-    console.log(actual)
+
     expect(actual.id).toEqual(expected.id)
     expect(actual.creator.id).toEqual(expected.creator.id)
     expect(actual.communities[0].id).toEqual(expected.communities[0].id)
+  })
+
+  it('populates comments correctly', () => {
+    session.Post.create(normalized.posts[1])
+    session.Comment.create(normalized.comments[0])
+    const expected = payload.data.person.comments[0]
+    const actual = personSelector({ orm: session.state }, props).comments[0]
+
+    expect(actual.id).toEqual(expected.id)
+    expect(actual.creator.id).toEqual(expected.creator.id)
+    expect(actual.post.id).toEqual(expected.post.id)
   })
 })
 
