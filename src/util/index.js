@@ -26,6 +26,10 @@ export function postUrl (id, slug) {
   }
 }
 
+export function communityUrl (slug) {
+  return `/c/${slug}`
+}
+
 export function getSlugInPath (pathname) {
   const match = pathname.match(/\/c\/([^/]+)/)
   return match ? match[1] : null

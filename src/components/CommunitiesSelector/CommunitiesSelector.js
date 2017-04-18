@@ -24,22 +24,18 @@ export default class CommunitiesSelector extends Component {
   }
 
   handleDelete = (community) => {
-    const { selectedCommunities } = this.state
     const { onChange } = this.props
-    this.setState({
-      selectedCommunities: selectedCommunities.filter(c => c.id !== community.id)
-    })
-    onChange(this.state.selectedCommunities)
+    let selectedCommunities = this.state.selectedCommunities.filter(c => c.id !== community.id)
+    this.setState({ selectedCommunities })
+    onChange(selectedCommunities)
   }
 
   handleAddition = (community) => {
-    const { selectedCommunities } = this.state
     const { onChange } = this.props
-    this.setState({
-      selectedCommunities: selectedCommunities.concat(community)
-    })
+    let selectedCommunities = this.state.selectedCommunities.concat(community)
+    this.setState({ selectedCommunities })
     this.props.clearSuggestions()
-    onChange(this.state.selectedCommunities)
+    onChange(selectedCommunities)
   }
 
   render () {

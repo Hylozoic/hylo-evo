@@ -12,8 +12,9 @@ import { parse } from 'url'
 import './component.scss'
 import samplePost from './samplePost'
 import { isEmpty } from 'lodash'
+import cx from 'classnames'
 
-const { shape, any, object, string, func, array } = React.PropTypes
+const { shape, any, object, string, func, array, bool } = React.PropTypes
 
 export default class PostCard extends React.Component {
   static contextTypes = {
@@ -21,11 +22,11 @@ export default class PostCard extends React.Component {
   }
 
   render () {
-    const { post, post: { communities }, className } = this.props
+    const { post, post: { communities }, className, expanded } = this.props
     const { navigate } = this.context
     const slug = !isEmpty(communities) && communities[0].slug
 
-    return <div styleName='card' className={className}
+    return <div styleName={cx('card', {expanded})} className={className}
       onClick={() => navigate(postUrl(post.id, slug))}>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}
@@ -33,9 +34,10 @@ export default class PostCard extends React.Component {
         context={post.context}
         communities={post.communities}
         slug={slug} />
+      <PostImage imageUrl={post.imageUrl} />
       <PostBody title={post.title}
+        id={post.id}
         details={post.details}
-        imageUrl={post.imageUrl}
         linkPreview={post.linkPreview}
         slug={slug} />
       <PostFooter id={post.id}
@@ -56,20 +58,21 @@ PostCard.propTypes = {
     upVotes: string,
     updatedAt: string
   }),
-  fetchPost: func
+  fetchPost: func,
+  expanded: bool
 }
 PostCard.defaultProps = {
   post: samplePost()
 }
 
-export const PostHeader = ({ creator, date, type, context, communities, slug }) => {
-  return <div styleName='header'>
+export const PostHeader = ({ creator, date, type, context, communities, close, className, slug }) => {
+  return <div styleName='header' className={className}>
     <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
     <div styleName='headerText'>
       <Link to={personUrl(creator.id, slug)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
       {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
       <div>
-        <span className='timestamp'>
+        <span styleName='timestamp'>
           {humanDate(date)}{context && <span styleName='spacer'>•</span>}
         </span>
         {context && <Link to='/' styleName='context'>
@@ -86,23 +89,28 @@ export const PostHeader = ({ creator, date, type, context, communities, slug }) 
         {label: 'Other'},
         {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
       ]} />
+      {close && <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
     </div>
   </div>
 }
 
+export const PostImage = ({ imageUrl, className }) => {
+  if (!imageUrl) return null
+  return <div style={bgImageStyle(imageUrl)} styleName='image' className={className} />
+}
+
 const maxDetailsLength = 144
 
-export const PostBody = ({ title, details, imageUrl, linkPreview, slug }) => {
+export const PostBody = ({ id, title, details, imageUrl, linkPreview, slug, expanded, className }) => {
   // TODO: Present details as HTML and sanitize
   let presentedDetails = present(sanitize(details), {slug})
-  const shouldTruncate = textLength(presentedDetails) > maxDetailsLength
+  const shouldTruncate = !expanded && textLength(presentedDetails) > maxDetailsLength
   if (shouldTruncate) {
     presentedDetails = truncate(presentedDetails, maxDetailsLength)
   }
   if (presentedDetails) presentedDetails = appendInP(presentedDetails, '&nbsp;')
 
-  return <div styleName='body'>
-    {imageUrl && <div style={bgImageStyle(imageUrl)} styleName='image' />}
+  return <div styleName='body' className={className}>
     <div styleName='title' className='hdr-headline'>{title}</div>
     {presentedDetails && <div styleName='description' dangerouslySetInnerHTML={{__html: presentedDetails}} />}
     {linkPreview && <LinkPreview {...linkPreview} />}
@@ -142,7 +150,7 @@ export const commentCaption = (commenters, commentersTotal) => {
 export const PostFooter = ({ id, commenters, commentersTotal, votesTotal }) => {
   return <div styleName='footer'>
     <PeopleImages imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
-    <span className='caption-lt-lg'>{commentCaption(commenters, commentersTotal)}</span>
+    <span styleName='caption'>{commentCaption(commenters, commentersTotal)}</span>
     <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{votesTotal}</a></div>
   </div>
 }

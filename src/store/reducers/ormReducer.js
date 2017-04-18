@@ -70,6 +70,25 @@ export default function ormReducer (state = {}, action) {
         modelName: 'Person'
       })
       break
+
+    case a.FETCH_POST:
+    case a.FETCH_COMMENTS:
+      ModelExtractor.addAll({
+        session,
+        root: payload.data.post,
+        modelName: meta.rootModelName
+      })
+      break
+
+    case a.CREATE_COMMENT:
+      ModelExtractor.addAll({
+        session,
+        root: {
+          id: meta.postId,
+          comments: [payload.data.createComment]
+        },
+        modelName: 'Post'
+      })
   }
 
   return session.state

@@ -1,0 +1,44 @@
+.post {
+  background-color: white;
+}
+
+.header {
+  margin-bottom: 10px;
+}
+
+.image {
+  margin-bottom: 10px;
+}
+
+.body {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.activity-header {
+  // TODO: Extract Typography
+  padding: 0 25px;
+  margin-bottom: 20px;
+  @include font-regular;
+  color: $color-rhino-80;
+  font-size: 17px;
+}
+
+// PostTag
+
+.tags {
+  padding: 0px 25px;
+  margin-bottom: 10px;
+}
+
+.tag {
+  // TODO: Extract typography
+  @include font-regular;
+  color: $color-caribbean-green;
+  font-size: 12px;
+  &:hover {
+    text-decoration: none;
+    color: $color-gossamer;
+  }
+  margin-right: 7px;
+}

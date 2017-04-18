@@ -6,47 +6,41 @@ import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 
-const DEFAULT_TITLE_PLACEHOLDER = 'What’s on your mind?'
-const DEFAULT_BODY_PLACEHOLDER = 'Add a description'
-
 export default class PostEditor extends React.Component {
   static propTypes = {
     titlePlaceholder: PropTypes.string,
-    bodyPlaceholder: PropTypes.string
+    bodyPlaceholder: PropTypes.string,
+    postType: PropTypes.string
   }
 
   static defaultProps = {
-    titlePlaceholder: DEFAULT_TITLE_PLACEHOLDER,
-    bodyPlaceholder: DEFAULT_BODY_PLACEHOLDER
+    titlePlaceholder: 'What’s on your mind?',
+    bodyPlaceholder: 'Add a description',
+    postType: 'discussion'
   }
 
   constructor (props) {
     super(props)
     this.state = {
+      postType: props.postType,
       title: '',
       titlePlaceholder: props.titlePlaceholder,
-      postType: 'discussion'
+      description: '',
+      selectedCommunities: []
     }
   }
 
-  handleTitleChange = (event) => this.setState({title: event.target.value})
-
   handlePostTypeSelection = postType => event => {
-    let titlePlaceholder
+    let { titlePlaceholder } = this.state
     switch (postType) {
       case 'discussions':
-        titlePlaceholder = DEFAULT_TITLE_PLACEHOLDER
-        break
       case 'request':
-        titlePlaceholder = DEFAULT_TITLE_PLACEHOLDER
-        break
       case 'offer':
         titlePlaceholder = 'What super powers can you offer?'
         break
       default:
-        titlePlaceholder = DEFAULT_TITLE_PLACEHOLDER
     }
-    this.setState({titlePlaceholder, postType})
+    this.setState({ titlePlaceholder, postType })
   }
 
   postTypeButtonProps = type => {
@@ -64,16 +58,25 @@ export default class PostEditor extends React.Component {
     }
   }
 
+  handleTitleChange = (event) => this.setState({title: event.target.value})
+
   setSelectedCommunities = selectedCommunities => this.setState({ selectedCommunities })
 
-  save = () => {
-    const { postType, selectedCommunities } = this.state
+  save = (description) => {
+    const {
+      postType,
+      selectedCommunities,
+      title
+    } = this.state
+
+    console.log('getContent', this.editor.getWrappedInstance().getContent())
     const results = {
       postType,
-      selectedCommunities
+      selectedCommunities,
+      title,
+      description
     }
     console.log(results)
-    return results
   }
 
   render () {
@@ -81,27 +84,35 @@ export default class PostEditor extends React.Component {
     const { titlePlaceholder, title } = this.state
 
     return <div styleName='wrapper'>
-      <div styleName='body'>
+      <div styleName='header'>
         <div styleName='initialPrompt'>What are you looking to post?</div>
         <div styleName='postTypes'>
           <Button {...this.postTypeButtonProps('discussion')} />
           <Button {...this.postTypeButtonProps('request')} />
           <Button {...this.postTypeButtonProps('offer')} />
         </div>
-        <div styleName='title'>
+      </div>
+      <div styleName='body'>
+        <div styleName='body-column'>
           <Avatar
             medium
-            styleName='title-avatar'
+            styleName='titleAvatar'
             url=''
             avatarUrl='https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png' />
+        </div>
+        <div styleName='body-column'>
           <input
             type='text'
-            styleName='title-input'
+            styleName='titleInput'
             placeholder={titlePlaceholder}
             value={title}
             onChange={this.handleTitleChange} />
+          <HyloEditor
+            styleName='editor'
+            submitOnReturnHandler={this.save}
+            placeholder={bodyPlaceholder}
+            ref={e => { this.editor = e }} />
         </div>
-        <HyloEditor styleName='editor' placeholder={bodyPlaceholder} />
       </div>
       <div styleName='footer'>
         <div styleName='postIn'>
@@ -111,7 +122,6 @@ export default class PostEditor extends React.Component {
           </div>
         </div>
         <div styleName='actionsBar'>
-          <div styleName='actions' />
           <Button onClick={this.save} styleName='postButton' label='Post' color='green' />
         </div>
       </div>

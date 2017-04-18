@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { matchPath, Route } from 'react-router-dom'
 import cx from 'classnames'
+import { flow, map, some, identity } from 'lodash/fp'
 import CommunitiesDrawer from './components/CommunitiesDrawer'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
@@ -9,6 +10,7 @@ import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 import MemberProfile from 'routes/MemberProfile'
+import PostDetail from 'routes/PostDetail'
 import Members from 'routes/Members'
 import MessageMember from 'components/MessageMember'
 import './PrimaryLayout.scss'
@@ -29,7 +31,16 @@ export default class PrimaryLayout extends Component {
 
   render () {
     const { location, community, currentUser, communitiesDrawerOpen, toggleCommunitiesDrawer } = this.props
-    const hasDetail = matchPath(location.pathname, {path: '/events/:eventId'})
+
+    const hasDetail = flow(
+      map(path => matchPath(location.pathname, {path: path})),
+      some(identity)
+    )([
+      '/events/:eventId',
+      '/p/:postId',
+      '/c/:slug/p/:postId'
+    ])
+
     const closeDrawer = () => communitiesDrawerOpen && toggleCommunitiesDrawer()
 
     return <div styleName='container' onClick={closeDrawer}>
@@ -39,13 +50,14 @@ export default class PrimaryLayout extends Component {
         <Navigation collapsed={hasDetail} />
         <div styleName='content'>
           <Route path='/' exact render={() => <Feed {...{community, currentUser}} />} />
-          <Route exact path='/c/:slug' render={({ match }) => <Feed {...{community, currentUser, match}} />} />
+          <Route path='/c/:slug/' exact component={Feed} />
+          <Route path='/c/:slug/p/:postId' component={Feed} />
           <Route path='/c/:slug/m/:id' component={MemberProfile} />
           <Route path='/events' component={Events} />
           <Route path='/c/:slug/members' component={Members} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
-          <Route path='/' exact component={Sidebar} />
+          <Route path='/c/:slug' exact component={Sidebar} />
           <Route path='/c/:slug/m/:id' component={MessageMember} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})}>
@@ -56,6 +68,8 @@ export default class PrimaryLayout extends Component {
             defined above, and store the previous detail component in state
           */}
           <Route path='/events/:eventId' exact component={EventDetail} />
+          <Route path='/p/:postId' exact component={PostDetail} />
+          <Route path='/c/:slug/p/:postId' exact component={PostDetail} />
         </div>
       </div>
     </div>
