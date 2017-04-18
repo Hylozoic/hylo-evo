@@ -4,7 +4,7 @@ import TopicNavigation from './TopicNavigation'
 import './Navigation.scss'
 import { getSlugInPath } from 'util/index'
 
-export default function Navigation ({ collapsed, location }) {
+export default function Navigation ({ className, collapsed, location }) {
   const style = collapsed ? {} : {position: 'fixed'}
   const slug = getSlugInPath(location.pathname)
 
@@ -15,7 +15,8 @@ export default function Navigation ({ collapsed, location }) {
     {label: 'UI Kit', icon: 'Projects', to: '/ui-kit'}
   ]
 
-  return <div styleName={collapsed ? 'collapser-collapsed' : 'collapser'}>
+  return <div styleName={collapsed ? 'collapser-collapsed' : 'collapser'}
+    className={className}>
     <div styleName='navigation' style={style}>
       <ul styleName='links'>
         {links.map(link =>

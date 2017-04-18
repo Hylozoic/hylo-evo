@@ -5,7 +5,6 @@
   border: 1px solid $color-cape-cod-10;
   border-radius: 4px;
   cursor: pointer;
-  width: $size-feed-width;
   position: relative;
   right: 0px;
   transition: 0.25s;
@@ -15,8 +14,6 @@
 }
 
 .expanded {
-  width: $size-expanded-post-card-width;
-  right: 10px;
   box-shadow: 0px 2px 6px 0px $color-black-10;
 }
 

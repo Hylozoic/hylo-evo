@@ -1,18 +1,23 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import Dropdown from 'components/Dropdown'
+import Icon from 'components/Icon'
 import { capitalize, sortBy, throttle } from 'lodash/fp'
 import { viewportTop, position } from 'util/scrolling'
-// import cx from 'classnames'
+import { CENTER_COLUMN_ID } from 'routes/PrimaryLayout'
+import cx from 'classnames'
 import './component.scss'
 
 export const tabNames = [
-  'all', 'discusions', 'activity', 'requests', 'offers'
+  'all', 'discussions', 'activity', 'requests', 'offers'
 ]
 
 export const sortOptions = [
   'latest', 'popular'
 ]
+
+// how far down from the top the bar is when it's fixed
+const offset = 144
 
 export default class TabBar extends React.Component {
   static defaultProps = {
@@ -23,51 +28,38 @@ export default class TabBar extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = {isStatic: true}
-  }
-
-  topNavHeight () {
-    return 56
-  }
-
-  feedScrollTop () {
-    return document.body.scrollTop
+    this.state = {}
   }
 
   handleScrollEvents = throttle(50, event => {
-    const feedScrollTop = this.feedScrollTop()
+    const { scrollTop } = this.element
 
-    if (this.state.isStatic) {
-      if (feedScrollTop + this.topNavHeight() > this.startingY) {
-        this.setState({isStatic: false})
-      }
-    } else {
-      if (feedScrollTop + this.topNavHeight() < this.startingY) {
-        this.setState({isStatic: true})
-      }
+    if (this.state.fixed && scrollTop < this.threshold + offset) {
+      this.setState({fixed: false})
+    } else if (!this.state.fixed && scrollTop > this.threshold + offset) {
+      this.setState({fixed: true})
     }
   })
 
   componentDidMount () {
-    this.startingY = position(this.refs.placeholder).y
-    this.startingX = position(this.refs.placeholder).x
-    this.setState({isStatic: viewportTop() + this.topNavHeight() < this.startingY})
-    document.addEventListener('scroll', this.handleScrollEvents)
+    this.element = document.getElementById(CENTER_COLUMN_ID)
+    this.threshold = position(this.refs.placeholder).y
+    this.setState({
+      fixed: this.element.scrollTop > this.threshold + offset
+    })
+    this.element.addEventListener('scroll', this.handleScrollEvents)
   }
 
   componentWillUnmount () {
-    document.removeEventListener('scroll', this.handleScrollEvents)
+    this.element.removeEventListener('scroll', this.handleScrollEvents)
   }
 
   render () {
-    const { tabName, sortOption, onChange, className } = this.props
-    const { isStatic, top } = this.state
+    const { tabName, sortOption, onChange } = this.props
+    const { fixed } = this.state
 
-    const styleName = isStatic ? 'tabBar' : 'tabBar-floating'
-    const style = isStatic ? {} : {top: this.topNavHeight()}
-
-    return <div ref='placeholder' className={className} styleName='placeholder'>
-      <div styleName={styleName} style={style}>
+    return <div ref='placeholder' styleName='placeholder'>
+      <div styleName={cx('bar', {fixed})}>
         <div styleName='tabs'>
           {tabNames.map(name => <span
             key={name}
@@ -76,15 +68,17 @@ export default class TabBar extends React.Component {
             {capitalize(name)}
           </span>)}
         </div>
-        {/*
-        <Dropdown toggleChildren={<span>{capitalize(sortOption)}</span>}>
+        <Dropdown styleName='sorter'
+          toggleChildren={<span styleName='sorter-label'>
+            {capitalize(sortOption)}
+            <Icon name='ArrowDown' />
+          </span>}>
           {sortBy(s => s === sortOption, sortOptions).map(option => <li
             key={option}
             onClick={() => onChange({sort: option})}>
             {capitalize(option)}
           </li>)}
         </Dropdown>
-        */}
       </div>
     </div>
   }

@@ -7,8 +7,8 @@ import './TopNav.scss'
 import Dropdown from 'components/Dropdown'
 import { get } from 'lodash/fp'
 
-export default function TopNav ({ community, currentUser, logout, toggleCommunitiesDrawer }) {
-  return <div styleName='topNavWrapper'>
+export default function TopNav ({ className, community, currentUser, logout, toggleCommunitiesDrawer }) {
+  return <div styleName='topNavWrapper' className={className}>
     <div styleName='topNav'>
       <CommunityImage {...{community, toggleCommunitiesDrawer}} />
       <CommunityTitle community={community} />
