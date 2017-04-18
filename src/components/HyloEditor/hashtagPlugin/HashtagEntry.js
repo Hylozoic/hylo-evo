@@ -50,7 +50,7 @@ export default class HashtagEntry extends Component {
         role='option'
       >
         <span className='hashtagSuggestionsEntryText'>
-          <span className='bold'>{`#${this.props.completion.get('name')}`}</span>
+          <span className='bold'>#{this.props.completion.get('name')}</span>
         </span>
       </div>
     )

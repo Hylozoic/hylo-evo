@@ -72,7 +72,7 @@
     "draft-js-export-html": "^0.5.2",
     "draft-js-hashtag-plugin": "2.0.0-beta10",
     "draft-js-linkify-plugin": "^2.0.0-beta1",
-    "draft-js-mention-plugin": "@2.0.0-beta10",
+    "draft-js-mention-plugin": "2.0.0-beta10",
     "draft-js-plugins-editor": "2.0.0-beta10",
     "enzyme": "^2.7.1",
     "express": "^4.15.2",
