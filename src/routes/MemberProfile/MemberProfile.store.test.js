@@ -39,8 +39,9 @@ describe('personSelector', () => {
   beforeEach(() => {
     session = orm.mutableSession(orm.getEmptyState())
 
-    const { person } = payload.data
+    const { communities, memberships, person } = normalized
     session.Person.create(person)
+    session.Community.create(communities[0])
     state = { orm: session.state }
     props = { match: { params: { id: '46816', slug: 'wombats' } } }
   })
@@ -50,6 +51,23 @@ describe('personSelector', () => {
     props.match.params.id = '1'
     const actual = personSelector(state, props)
     expect(actual).toEqual(expected)
+  })
+
+  it('returns the correct person', () => {
+    const expected = '46816'
+    const actual = personSelector(state, props).id
+    expect(actual).toBe(expected)
+  })
+
+  it('sets role to null if person is not moderator', () => {
+    const actual = personSelector(state, props).role
+    expect(actual).toBe(null)
+  })
+
+  it('adds a role if person is moderator', () => {
+    session.Membership.create(normalized.memberships[0])
+    const actual = personSelector({ orm: session.state }, props).role
+    expect(actual).toBeTruthy()
   })
 })
 
