@@ -6,8 +6,8 @@ export function bgImageStyle (url) {
   return {backgroundImage: `url(${escaped})`}
 }
 
-export function personUrl (person) {
-  return `/u/${person.id}`
+export function personUrl (id, slug) {
+  return `/c/${slug}/m/${id}`
 }
 
 export function tagUrl (tagName, slug) {

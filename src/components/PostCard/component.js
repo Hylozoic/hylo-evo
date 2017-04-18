@@ -31,7 +31,8 @@ export default class PostCard extends React.Component {
         date={post.updatedAt || post.createdAt}
         type={post.type}
         context={post.context}
-        communities={post.communities} />
+        communities={post.communities}
+        slug={slug} />
       <PostBody title={post.title}
         details={post.details}
         imageUrl={post.imageUrl}
@@ -61,11 +62,11 @@ PostCard.defaultProps = {
   post: samplePost()
 }
 
-export const PostHeader = ({ creator, date, type, context, communities }) => {
+export const PostHeader = ({ creator, date, type, context, communities, slug }) => {
   return <div styleName='header'>
-    <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator)} styleName='avatar' />
+    <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
     <div styleName='headerText'>
-      <Link to={personUrl(creator)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
+      <Link to={personUrl(creator.id, slug)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
       {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
       <div>
         <span className='timestamp'>
