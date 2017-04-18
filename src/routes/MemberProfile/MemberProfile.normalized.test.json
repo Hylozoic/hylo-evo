@@ -1,5 +1,6 @@
 {
   "person": {
+    "id": "46816",
     "name": "Rich Churcher",
     "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
     "bannerUrl": "http://www.axolotl.org/images/tiger/tiger_larva.jpg",
@@ -17,5 +18,20 @@
     "postsTotal": 2,
     "votes": [ "2" ],
     "votesTotal": 1
-  }
+  },
+  "memberships": [
+    {
+      "id": "3",
+      "role": "1",
+      "hasModeratorRole": true,
+      "community": "1836"
+    }
+  ],
+  "communities": [
+    {
+      "id": "1836",
+      "name": "Wombats",
+      "slug": "wombats"
+    }
+  ]
 }

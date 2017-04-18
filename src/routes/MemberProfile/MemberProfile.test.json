@@ -44,7 +44,8 @@
           "hasModeratorRole": true,
           "community": {
             "id": "1836",
-            "name": "Wombats"
+            "name": "Wombats",
+            "slug": "wombats"
           }
         }
       ],
