@@ -3,6 +3,7 @@ import { fetchPost } from './PostDetail.store'
 import { createSelector } from 'reselect'
 import getParam from 'store/selectors/getParam'
 import orm from 'store/models'
+import { push } from 'react-router-redux'
 
 export const getPost = createSelector(
   state => state,
@@ -31,7 +32,8 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = (dispatch, props) => {
   return {
-    fetchPost: () => dispatch(fetchPost(getParam('postId', {}, props)))
+    fetchPost: () => dispatch(fetchPost(getParam('postId', {}, props))),
+    navigate: to => dispatch(push(to))
   }
 }
 
