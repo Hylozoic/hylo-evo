@@ -73,14 +73,24 @@ describe('personSelector', () => {
   it('indexes activityItems preseving sort order', () => {
     session.Post.create(normalized.posts[1])
     session.Comment.create(normalized.comments[0])
-
     const expected = [
       "Sat Apr 15 2017 16:27:55 GMT+1200 (NZST)",
       "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)"
     ]
     const actual = personSelector({ orm: session.state }, props)
       .activityItems.map(item => item.createdAt)
+
     expect(actual).toEqual(expected)
+  })
+
+  it('populates posts correctly', () => {
+    session.Post.create(normalized.posts[0])
+    const expected = payload.data.person.posts[0]
+    const actual = personSelector({ orm: session.state }, props).posts[0]
+    console.log(actual)
+    expect(actual.id).toEqual(expected.id)
+    expect(actual.creator.id).toEqual(expected.creator.id)
+    expect(actual.communities[0].id).toEqual(expected.communities[0].id)
   })
 })
 
