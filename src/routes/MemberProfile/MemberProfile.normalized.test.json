@@ -77,5 +77,19 @@
       "communities": [ "1836" ],
       "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)"
     }
+  ],
+  "votes": [
+    {
+      "id": "2",
+      "post": "30002",
+      "voter": "46816",
+      "createdAt": "Tue Apr 18 2017 09:50:25 GMT+1200 (NZST)"
+    },
+    {
+      "id": "1",
+      "post": "30003",
+      "voter": "46816",
+      "createdAt": "Tue Apr 18 2017 09:20:39 GMT+1200 (NZST)"
+    }
   ]
 }

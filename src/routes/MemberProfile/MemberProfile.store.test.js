@@ -103,6 +103,17 @@ describe('personSelector', () => {
     expect(actual.creator.id).toEqual(expected.creator.id)
     expect(actual.post.id).toEqual(expected.post.id)
   })
+
+  it('populates votes correctly (returning the post fk)', () => {
+    session.Post.create(normalized.posts[1])
+    session.Vote.create(normalized.votes[0])
+    const expected = payload.data.person.votes[0].post
+    const actual = personSelector({ orm: session.state }, props).votes[0]
+
+    expect(actual.id).toEqual(expected.id)
+    expect(actual.creator.id).toEqual(expected.creator.id)
+    expect(actual.communities[0].id).toEqual(expected.communities[0].id)
+  })
 })
 
 describe('ACTIONS', () => {
