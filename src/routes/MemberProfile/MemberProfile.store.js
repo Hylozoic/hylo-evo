@@ -35,6 +35,7 @@ const fetchPersonQuery =
       community {
         id
         name
+        slug
       }
     }
     membershipsTotal
