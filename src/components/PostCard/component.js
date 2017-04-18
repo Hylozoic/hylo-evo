@@ -22,8 +22,9 @@ export default class PostCard extends React.Component {
   }
 
   render () {
-    const { post, post: { communities }, className, expanded } = this.props
-    const { navigate } = this.context
+    const {
+      post, post: { communities }, className, expanded, navigate
+     } = this.props
     const slug = !isEmpty(communities) && communities[0].slug
 
     return <div styleName={cx('card', {expanded})} className={className}
