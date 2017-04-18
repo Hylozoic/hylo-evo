@@ -42,7 +42,7 @@ export default class Feed extends React.Component {
 
     return <div styleName='feed'>
       <CommunityBanner community={community} currentUser={currentUser} />
-      <TabBar styleName='tabBar' />
+      <TabBar />
       <div styleName='feedItems'>
         {posts.map(post => {
           const expanded = post.id === selectedPostId

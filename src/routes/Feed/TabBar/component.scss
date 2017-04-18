@@ -1,17 +1,18 @@
 .placeholder {
-  position: relative;
-  height: $space-8x;
+  height: $space-7x;
+  margin-bottom: $space-3x;
 }
 
-.tabBar {
-  position: absolute;
+.bar {
+  width: 100%;
+  padding: 0 $space-4x;
+  display: flex;
+  align-content: stretch;
 }
 
-.tabBar-floating {
+.fixed {
   position: fixed;
-  // 80px is the height of the top nav
-  top: 80px;
-  margin-top: 5px;
+  top: 72px;
   z-index: 20;
   &:before {
     z-index: -1;
@@ -26,7 +27,7 @@
 }
 
 .tabs {
-  /* empty */
+  flex-grow: 1;
 }
 
 .tab {
@@ -45,4 +46,17 @@
   font-size: 15px;
   background-color: $color-cape-cod-05;
   border-radius: 4px;
+}
+
+.sorter {
+  /* empty */
+}
+
+.sorter-label {
+  composes: caption-lt-lg from 'css/typography.scss';
+  > span {
+    vertical-align: middle;
+    font-size: 14px;
+    margin-left: $space-1x;
+  }
 }
