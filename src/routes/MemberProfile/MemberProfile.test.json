@@ -1,38 +1,158 @@
 {
   "data": {
     "person": {
-      "id": "1001",
+      "id": "46816",
       "name": "Rich Churcher",
-      "twitterName": "richchurcher",
-      "linkedinUrl": "https://www.linkedin.com/in/rich/",
-      "facebookUrl": "https://www.facebook.com/rich",
-      "bio": "I like wombats.",
-      "location": "Auckland, NZ",
-      "url": "https://example.com",
-      "avatarUrl": "https://www.gravatar.com/avatar/9b8d53dbc30a2db40a85586731e8c5bf?d=mm&s=140",
+      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
       "bannerUrl": "http://www.axolotl.org/images/tiger/tiger_larva.jpg",
-      "memberships": [
+      "bio": "I like wombats.",
+      "twitterName": "richchurcher",
+      "linkedinUrl": "https://www.linkedin.com/in/richchurcher/",
+      "facebookUrl": "https://www.facebook.com/rich.churcher",
+      "url": "https://eloquentgeek.com",
+      "location": "Auckland, New Zealand",
+      "comments": [
+        {
+          "id": "2",
+          "text": "<p>So much more to say.</p>",
+          "creator": {
+            "id": "46816"
+          },
+          "post": {
+            "id": "30002",
+            "title": "0123456789 0123456789 0123456789"
+          },
+          "createdAt": "Sat Apr 15 2017 16:27:55 GMT+1200 (NZST)"
+        },
         {
           "id": "1",
+          "text": "<p>Here's a comment!</p>",
+          "creator": {
+            "id": "46816"
+          },
+          "post": {
+            "id": "30002",
+            "title": "0123456789 0123456789 0123456789"
+          },
+          "createdAt": "Fri Mar 24 2017 10:39:41 GMT+1300 (NZDT)"
+        }
+      ],
+      "memberships": [
+        {
+          "id": "3",
           "role": 1,
+          "hasModeratorRole": true,
           "community": {
             "id": "1836",
-            "slug": "hylo"
+            "name": "Wombats"
           }
         }
       ],
-      "membershipsTotal": 1,
+      "membershipsTotal": null,
       "posts": [
         {
-          "id": "3001",
-          "title": "This is a post in #all-topics."
+          "id": "30003",
+          "title": "Some other post",
+          "details": "<p>With nothing of importance in it.</p>",
+          "type": "discussion",
+          "creator": {
+            "id": "46816"
+          },
+          "commenters": [],
+          "commentersTotal": 0,
+          "communities": [
+            {
+              "id": "1836",
+              "name": "Wombats"
+            }
+          ],
+          "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)"
         },
         {
-          "id": "3002",
-          "title": "Here is another post. It has a picture in it."
+          "id": "30002",
+          "title": "0123456789 0123456789 0123456789",
+          "details": "<p><a href=\"https://wombat.life\">https://wombat.life</a></p>\n<p></p>\n<p></p>",
+          "type": "discussion",
+          "creator": {
+            "id": "46816"
+          },
+          "commenters": [
+            {
+              "id": "46816",
+              "name": "Rich Churcher",
+              "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+            }
+          ],
+          "commentersTotal": 1,
+          "communities": [
+            {
+              "id": "1836",
+              "name": "Wombats"
+            }
+          ],
+          "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)"
         }
       ],
-      "postsTotal": null
+      "postsTotal": 2,
+      "votes": [
+        {
+          "id": "2",
+          "post": {
+            "id": "30002",
+            "title": "0123456789 0123456789 0123456789",
+            "details": "<p><a href=\"https://wombat.life\">https://wombat.life</a></p>\n<p></p>\n<p></p>",
+            "type": "discussion",
+            "creator": {
+              "id": "46816"
+            },
+            "commenters": [
+              {
+                "id": "46816",
+                "name": "Rich Churcher",
+                "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+              }
+            ],
+            "commentersTotal": 1,
+            "communities": [
+              {
+                "id": "1836",
+                "name": "Wombats"
+              }
+            ],
+            "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)"
+          },
+          "voter": {
+            "id": "46816"
+          },
+          "createdAt": "Tue Apr 18 2017 09:50:25 GMT+1200 (NZST)"
+        },
+        {
+          "id": "1",
+          "post": {
+            "id": "30003",
+            "title": "Some other post",
+            "details": "<p>With nothing of importance in it.</p>",
+            "type": "discussion",
+            "creator": {
+              "id": "46816"
+            },
+            "commenters": [],
+            "commentersTotal": 0,
+            "communities": [
+              {
+                "id": "1836",
+                "name": "Wombats"
+              }
+            ],
+            "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)"
+          },
+          "voter": {
+            "id": "46816"
+          },
+          "createdAt": "Tue Apr 18 2017 09:20:39 GMT+1200 (NZST)"
+        }
+      ],
+      "votesTotal": 2
     }
   }
 }

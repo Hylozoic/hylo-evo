@@ -1,31 +1,21 @@
 {
   "person": {
-    "id": "46816",
-    "name": "Rich",
+    "name": "Rich Churcher",
     "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
-    "posts": [ "30002" ],
-    "postsTotal": 1
-  },
-  "posts": [
-    {
-      "id": "30002",
-      "title": "Hello",
-      "details": "<p><a href=\"https://wombat.life\">https://wombat.life</a></p>\n<p></p>\n<p></p>",
-      "type": null,
-      "creator": "46816",
-      "communities": [ "1" ],
-      "commenters": [],
-      "comments": [],
-      "followers": [ "46816" ]
-    }
-  ],
-  "communities": [
-    {
-      "id": "1",
-      "name": "Wombats",
-      "feedItems": [],
-      "posts": [ "30002" ],
-      "members": [ "46816" ]
-    }
-  ]
+    "bannerUrl": "http://www.axolotl.org/images/tiger/tiger_larva.jpg",
+    "bio": "I like wombats.",
+    "twitterName": "richchurcher",
+    "linkedinUrl": "https://www.linkedin.com/in/richchurcher/",
+    "facebookUrl": "https://www.facebook.com/rich.churcher",
+    "url": "https://eloquentgeek.com",
+    "location": "Auckland, New Zealand",
+    "comments": [ "2", "1" ],
+    "commentsTotal": 2,
+    "memberships": [ "3" ],
+    "membershipsTotal": 1,
+    "posts": [ "30003", "30002" ],
+    "postsTotal": 2,
+    "votes": [ "2" ],
+    "votesTotal": 1
+  }
 }
