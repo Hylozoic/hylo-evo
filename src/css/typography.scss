@@ -122,6 +122,10 @@
   font-size: 14px;
   letter-spacing: 0;
   line-height: 20px;
+  &:hover {
+    color: $color-gossamer;
+    cursor: pointer;
+  }
 }
 
 .text-button-sm {
@@ -130,6 +134,10 @@
   font-size: 10px;
   letter-spacing: 0.6;
   line-height: 14px;
+  &:hover {
+    color: $color-gossamer;
+    cursor: pointer;
+  }
 }
 
 .cards {

@@ -1,0 +1,53 @@
+.comment {
+  padding: 0px 25px;
+  margin-bottom: $space-6x;
+ }
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  margin-right: 25px;
+}
+
+.userName {
+  composes: userName from 'components/PostCard/component.scss';
+  margin-right: 7px;
+}
+
+.commented {
+  composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.upperRight {
+  margin-left: auto;
+}
+
+.timestamp {
+  composes: timestamp from 'css/typography.scss';
+  margin-right: 10px;
+  position: relative;
+  top: -3px;
+}
+
+.dropdown {
+/* !empty */
+}
+
+.text {
+  composes: bdy-lt-sm from 'css/typography.scss';
+  margin-left: 69px;
+}
+
+.reply {
+  composes: text-button from 'css/typography.scss';
+  margin-bottom: 20px;
+  &:hover {
+    //hack to get the icon to change on hover
+    .icon {
+      color: $color-gossamer;
+    }
+  }
+}
