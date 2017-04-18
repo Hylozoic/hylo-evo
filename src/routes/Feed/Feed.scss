@@ -33,6 +33,7 @@
   composes: imageShape;
   background-position: center;
   background-size: cover;
+  overflow: hidden;
 }
 
 .fade {
