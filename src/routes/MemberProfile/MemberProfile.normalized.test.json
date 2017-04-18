@@ -27,11 +27,51 @@
       "community": "1836"
     }
   ],
+  "comments": [
+    {
+      "id": "2",
+      "text": "<p>So much more to say.</p>",
+      "creator": "46816",
+      "post": "30002",
+      "createdAt": "Sat Apr 15 2017 16:27:55 GMT+1200 (NZST)"
+    },
+    {
+      "id": "1",
+      "text": "<p>Here's a comment!</p>",
+      "creator": "46816",
+      "post": "30002",
+      "createdAt": "Fri Mar 24 2017 10:39:41 GMT+1300 (NZDT)"
+    }
+  ],
   "communities": [
     {
       "id": "1836",
       "name": "Wombats",
       "slug": "wombats"
+    }
+  ],
+  "posts": [
+    {
+      "id": "30003",
+      "title": "Some other post",
+      "details": "<p>With nothing of importance in it.</p>",
+      "type": "discussion",
+      "creator": "46816",
+      "commenters": [],
+      "commentersTotal": 0,
+      "communities": [ "1836" ],
+      "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)"
+    },
+    {
+      "id": "30002",
+      "title": "0123456789 0123456789 0123456789",
+      "details": "<p><a href=\"https://wombat.life\">https://wombat.life</a></p>\n<p></p>\n<p></p>",
+      "type": "discussion",
+      "creator": "46816",
+      "commenters": [ "46816" ],
+      "commentersTotal": 1,
+      "communities": [ "1836" ],
+      "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)"
     }
   ]
 }

@@ -69,16 +69,29 @@ describe('personSelector', () => {
     const actual = personSelector({ orm: session.state }, props).role
     expect(actual).toBeTruthy()
   })
+
+  it('indexes activityItems preseving sort order', () => {
+    session.Post.create(normalized.posts[1])
+    session.Comment.create(normalized.comments[0])
+
+    const expected = [
+      "Sat Apr 15 2017 16:27:55 GMT+1200 (NZST)",
+      "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)"
+    ]
+    const actual = personSelector({ orm: session.state }, props)
+      .activityItems.map(item => item.createdAt)
+    expect(actual).toEqual(expected)
+  })
 })
 
 describe('ACTIONS', () => {
   let store = null
-  let mockStore = configureStore([
-    graphqlMiddleware,
-    apiMiddleware
-  ])
+    let mockStore = configureStore([
+        graphqlMiddleware,
+        apiMiddleware
+    ])
 
-  beforeEach(() => {
-    store = mockStore({})
-  })
+    beforeEach(() => {
+      store = mockStore({})
+    })
 })
