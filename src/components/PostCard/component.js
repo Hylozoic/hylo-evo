@@ -26,8 +26,12 @@ export default class PostCard extends React.Component {
     const { navigate } = this.context
     const slug = !isEmpty(communities) && communities[0].slug
 
+    const visitPost = event => {
+      if (event.target.tagName !== 'A') navigate(postUrl(post.id, slug))
+    }
+
     return <div styleName={cx('card', {expanded})} className={className}
-      onClick={() => navigate(postUrl(post.id, slug))}>
+      onClick={visitPost}>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}
         type={post.type}
