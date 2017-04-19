@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { fetchCurrentUser } from 'routes/PrimaryLayout/actions'
+import { fetchCurrentUser } from 'routes/PrimaryLayout/PrimaryLayout.store'
 import { getMe } from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {

@@ -113,8 +113,7 @@ export default class MessageSection extends React.Component {
   }
 
   render () {
-    const messages = sortBy(x => new Date(x.createdAt).getTime(), this.props.messages)
-    const messageList = createMessageList(messages)
+    const messageList = createMessageList(this.props.messages)
     return <div styleName='messages-section'
       ref={list => { this.list = list }}
       onScroll={this.handleScroll}>

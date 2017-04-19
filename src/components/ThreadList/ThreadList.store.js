@@ -41,11 +41,13 @@ export const getThreads = ormCreateSelector(
   state => state.orm,
   session => {
     return session.MessageThread.all()
-    .orderBy(x => x.updatedAt)
+    .orderBy(x => -1 * new Date(x.updatedAt).getTime())
     .toModelArray()
     .map(thread => ({
       ...thread.ref,
-      messages: thread.messages.toModelArray(),
+      messages: thread.messages
+        .orderBy(x => -1 * new Date(x.createdAt).getTime())
+        .toModelArray(),
       participants: thread.participants.toModelArray()
     }))
   }

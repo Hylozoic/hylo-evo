@@ -103,6 +103,9 @@ export const getThread = ormCreateSelector(
     return {
       ...thread.ref,
       participants: thread.participants.toModelArray(),
-      messages: thread.messages.toModelArray().map(m => ({...m.ref, creator: m.creator.ref}))
+      messages: thread.messages
+        .orderBy(x => new Date(x.createdAt).getTime())
+        .toModelArray()
+        .map(m => ({...m.ref, creator: m.creator.ref}))
     }
   })
