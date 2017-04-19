@@ -11,10 +11,6 @@ export default class Login extends React.Component {
     this.state = {}
   }
 
-  static contextTypes = {
-    navigate: React.PropTypes.func
-  }
-
   componentDidMount () {
     // FIXME this should go somewhere else -- ideally in a parent route of the
     // login page and the logged-in components
@@ -65,7 +61,7 @@ export default class Login extends React.Component {
         </div>
       </div>
       <div styleName='below-container'>
-        <a onClick={() => this.context.navigate('/ui-kit')}>UI Kit</a>
+        <a onClick={() => this.props.navigate('/ui-kit')}>UI Kit</a>
       </div>
     </div>
   }

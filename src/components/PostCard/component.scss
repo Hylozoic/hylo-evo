@@ -5,7 +5,6 @@
   border: 1px solid $color-cape-cod-10;
   border-radius: 4px;
   cursor: pointer;
-  width: $size-feed-width;
   position: relative;
   right: 0px;
   transition: 0.25s;
@@ -15,8 +14,6 @@
 }
 
 .expanded {
-  width: $size-expanded-post-card-width;
-  right: 10px;
   box-shadow: 0px 2px 6px 0px $color-black-10;
 }
 
@@ -167,32 +164,30 @@
 
 $preview-height: 80px;
 
-
 .linkPreview {
-  max-height: $preview-height;
+  height: $preview-height + 2;
   background-color: $color-athens-gray;
   border: 1px solid $color-athens-gray-dark;
   border-radius: 4px;
+  padding-top: $space-2x;
+  padding-right: $space-3x;
 }
 
 .previewImage {
   @include image($preview-height);
+  margin-top: -$space-2x;
   margin-right: 15px;
+  float: left;
 }
 
 .previewText {
-  display: inline-block;
-  margin-top: 15px;
+  display: inline;
   vertical-align: top;
-  width: 450px;
 }
 
 .previewTitle {
-  // TODO: Extract typography? Very close to BDY-DRK-SM
-  @include font-regular;
+  composes: bdy-drk-sm from 'css/typography.scss';
   color: $color-rhino-80;
-  font-size: 16px;
-  line-height: 22px;
 }
 
 .previewDomain {

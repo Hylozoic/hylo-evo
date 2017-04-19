@@ -14,6 +14,7 @@ import PostDetail from 'routes/PostDetail'
 import Members from 'routes/Members'
 import MessageMember from 'components/MessageMember'
 import './PrimaryLayout.scss'
+import { CENTER_COLUMN_ID } from 'util/scrolling'
 
 export default class PrimaryLayout extends Component {
   static propTypes = {
@@ -45,10 +46,10 @@ export default class PrimaryLayout extends Component {
 
     return <div styleName='container' onClick={closeDrawer}>
       {communitiesDrawerOpen && <CommunitiesDrawer />}
-      <TopNav {...{community, currentUser}} />
-      <div styleName='row'>
-        <Navigation collapsed={hasDetail} />
-        <div styleName='content'>
+      <TopNav {...{community, currentUser}} styleName='top' />
+      <div styleName='main'>
+        <Navigation collapsed={hasDetail} styleName='left' />
+        <div styleName='center' id={CENTER_COLUMN_ID}>
           <Route path='/' exact render={() => <Feed {...{community, currentUser}} />} />
           <Route path='/c/:slug/' exact component={Feed} />
           <Route path='/c/:slug/p/:postId' component={Feed} />

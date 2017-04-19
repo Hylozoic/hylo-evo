@@ -34,6 +34,7 @@ export default class ModelExtractor {
       }
 
       if (type instanceof ForeignKey) {
+        if (typeof value !== 'object') return value
         this.walk(value, type.toModelName)
         return value.id
       }

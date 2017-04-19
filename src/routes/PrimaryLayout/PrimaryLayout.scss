@@ -1,24 +1,57 @@
 .container {
-  /* empty */
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+  align-items: stretch;
+  height: 100vh;
 }
 
-.row {
+.debug {
+  .main {
+    border: 1px dashed red;
+  }
+  .left {
+    border: 1px dashed blue;
+  }
+  .center {
+    border: 1px dashed green;
+  }
+  .sidebar {
+    border: 1px dashed magenta;
+  }
+  .detail {
+    border: 1px dashed purple;
+  }
+}
+
+.top {
+  /* empty */
+  margin-bottom: -1 * $space-6x;
+}
+
+.main {
   position: relative;
+  flex-grow: 1;
   display: flex;
-  flex-wrap: wrap;
-  padding: 80px 0 0;
+  flex-wrap: nowrap;
   width: $content-width;
   margin-left: auto;
   margin-right: auto;
 }
 
-.content {
+.left {
+  overflow-y: scroll;
+}
+
+.center {
   background: $color-white;
   // From Bootstrap make-col-ready():
   position: relative;
   min-height: 1px; // Prevent collapsing
   flex: 0 0 49%;
   max-width: 49%;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .sidebar {
@@ -31,6 +64,8 @@
   transition-duration: 0.3s;
   right: 0px;
   padding: 0 16px 0 $layout-spacing;
+  overflow-y: scroll;
+
   &.hidden {
     opacity: 0;
     right: -60px;
@@ -40,16 +75,16 @@
 
 .detail {
   background-color: white;
-  padding-top: 80px;
   position: absolute;
   top: 0;
   right: 0px;
-  flex: 0 0 43%;
-  max-width: 43%;
+  height: 100%;
+  width: 43%;
   box-shadow: 0px 4px 56px 0px $color-alto;
   transition-delay: 0.1s;
   transition-duration: 0.2s;
-  width: 100vw;
+  overflow-y: scroll;
+
   &.hidden {
     opacity: 0;
     right: -580px;

@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router-dom'
-import { isEmpty } from 'lodash/fp'
+import { isEmpty, get } from 'lodash/fp'
 import './PostDetail.scss'
 const { object, string, func } = PropTypes
 import { PostHeader, PostImage, PostBody, PostFooter } from 'components/PostCard/component'
@@ -11,10 +11,7 @@ export default class PostDetail extends Component {
   static propTypes = {
     post: object,
     slug: string,
-    fetchPost: func
-  }
-
-  static contextTypes = {
+    fetchPost: func,
     navigate: func
   }
 
@@ -22,9 +19,14 @@ export default class PostDetail extends Component {
     this.props.fetchPost()
   }
 
+  componentDidUpdate (prevProps) {
+    if (get('post.id', this.props) !== get('post.id', prevProps)) {
+      this.props.fetchPost()
+    }
+  }
+
   render () {
-    const { post, slug } = this.props
-    const { navigate } = this.context
+    const { post, slug, navigate } = this.props
     if (!post) return null
 
     return <div styleName='post'>

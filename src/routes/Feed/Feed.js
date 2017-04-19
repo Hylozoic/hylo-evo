@@ -5,7 +5,9 @@ import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import ScrollListener from 'components/ScrollListener'
 import TabBar from './TabBar'
+import { CENTER_COLUMN_ID } from 'util/scrolling'
 import { bgImageStyle } from 'util/index'
+import cx from 'classnames'
 
 export default class Feed extends React.Component {
   static defaultProps = {
@@ -40,16 +42,19 @@ export default class Feed extends React.Component {
 
     return <div styleName='feed'>
       <CommunityBanner community={community} currentUser={currentUser} />
-      <TabBar styleName='tabBar' />
+      <TabBar />
       <div styleName='feedItems'>
-        {posts.map(post =>
-          <PostCard
+        {posts.map(post => {
+          const expanded = post.id === selectedPostId
+          return <PostCard
             post={post}
-            styleName='feedItem'
-            expanded={post.id === selectedPostId}
-            key={post.id} />)}
+            styleName={cx('feedItem', {expanded})}
+            expanded={expanded}
+            key={post.id} />
+        })}
       </div>
-      <ScrollListener onBottom={() => this.fetchMorePosts()} />
+      <ScrollListener onBottom={() => this.fetchMorePosts()}
+        id={CENTER_COLUMN_ID} />
     </div>
   }
 }
@@ -71,13 +76,13 @@ export const CommunityBanner = ({ community, currentUser }) => {
       </div>
     </div>
     <PostPrompt currentUser={currentUser} />
+    <div styleName='shadow' />
   </div>
 }
 
 export const PostPrompt = ({ currentUser }) => {
   if (!currentUser) return null
   return <div styleName='postPrompt' onClick={() => console.log('Open Post Form')}>
-    <div styleName='shadow' />
     <RoundImage url={currentUser.avatarUrl} small styleName='prompt-image' />
     Hi {currentUser.firstName}, what's on your mind?
   </div>
