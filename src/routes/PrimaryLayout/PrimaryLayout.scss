@@ -40,7 +40,7 @@
 }
 
 .left {
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .center {
@@ -50,7 +50,7 @@
   min-height: 1px; // Prevent collapsing
   flex: 0 0 $center-column-width;
   max-width: $center-column-width;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
@@ -64,7 +64,7 @@
   transition-duration: 0.3s;
   right: 0px;
   padding: 0 16px 0 $layout-spacing;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   &.hidden {
     opacity: 0;
@@ -83,7 +83,7 @@
   box-shadow: 0px 4px 56px 0px $color-alto;
   transition-delay: 0.1s;
   transition-duration: 0.2s;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   &.hidden {
     opacity: 0;
