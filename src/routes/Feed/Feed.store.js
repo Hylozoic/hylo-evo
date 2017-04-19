@@ -56,7 +56,7 @@ export function fetchPosts (slug, sortBy, offset, search) {
       }
     },
     meta: {
-      rootModelName: 'Community'
+      extractModel: 'Community'
     }
   }
 }
