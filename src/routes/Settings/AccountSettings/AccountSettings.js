@@ -5,7 +5,7 @@ import ChangeImageButton from 'components/ChangeImageButton'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
-import { bannerUploadSettings, avatarUploadSettings } from 'store/models/Me'
+import { bannerUploadSettings, avatarUploadSettings, DEFAULT_BANNER } from 'store/models/Me'
 const { object } = PropTypes
 
 export default class AccountSettings extends Component {
@@ -31,17 +31,23 @@ export default class AccountSettings extends Component {
     const { currentUser } = this.props
     if (!currentUser) return
 
-    let {
+    const {
       name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl
     } = currentUser
 
-    if (!bannerUrl) {
-
-    }
-
     this.setState({
       edits: {
-        name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl
+        name,
+        avatarUrl,
+        bannerUrl: bannerUrl || DEFAULT_BANNER,
+        tagline,
+        bio,
+        location,
+        email,
+        url,
+        facebookUrl,
+        twitterName,
+        linkedInUrl
       }
     })
   }
@@ -74,7 +80,7 @@ export default class AccountSettings extends Component {
     }
 
     return <div>
-      <input styleName='name' onChange={updateSetting('name')} value={name} />
+      <input type='text' styleName='name' onChange={updateSetting('name')} value={name} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <ChangeImageButton
           update={updateSettingDirectly('bannerUrl')}

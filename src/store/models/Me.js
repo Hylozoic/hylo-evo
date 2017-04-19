@@ -28,3 +28,5 @@ export const bannerUploadSettings = person => ({
   path: `user/${person.id}/banner`,
   convert: {width: 1600, format: 'jpg', fit: 'max', rotate: 'exif'}
 })
+
+export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_user_banner.jpg'

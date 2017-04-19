@@ -11,6 +11,16 @@ export default class Settings extends Component {
     currentUser: object
   }
 
+  componentDidMount () {
+    this.props.fetchUserSettings()
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (prevProps.currentUser !== this.props.currentUser) {
+      this.props.fetchUserSettings()
+    }
+  }
+
   render () {
     const { currentUser, goBack } = this.props
     return <div styleName='modal'>

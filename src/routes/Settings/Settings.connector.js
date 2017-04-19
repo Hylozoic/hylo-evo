@@ -3,6 +3,7 @@ import { fakePerson, SAMPLE_IMAGE_URL } from 'components/PostCard/samplePost'
 import faker from 'faker'
 import { goBack } from 'react-router-redux'
 import { getMe } from 'store/selectors/getMe'
+import { fetchUserSettings } from './Settings.store'
 
 faker.seed(993)
 
@@ -25,7 +26,8 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = {
-  goBack
+  goBack,
+  fetchUserSettings
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)

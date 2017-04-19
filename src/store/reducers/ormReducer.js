@@ -39,6 +39,7 @@ export default function ormReducer (state = {}, action) {
     case a.DELETE_FEED_ITEM: del(FeedItem); break
 
     case a.FETCH_CURRENT_USER:
+    case a.FETCH_USER_SETTINGS:
       ModelExtractor.addAll({
         session,
         root: payload.data.me,
