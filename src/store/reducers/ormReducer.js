@@ -105,11 +105,26 @@ export default function ormReducer (state = {}, action) {
       break
 
     case a.ADD_MESSAGE_FROM_SOCKET:
-      addMessageAsMessageThread(payload, meta.messageThreadId, session)
+      ModelExtractor.addAll({
+        session,
+        root: payload,
+        modelName: 'Message'
+      })
+      MessageThread.withId(payload.messageThread.id).update({
+        updatedAt: new Date().toString()
+      })
       break
 
     case a.CREATE_MESSAGE:
-      addMessageAsMessageThread(payload.data.createMessage, meta.messageThreadId, session)
+      const message = payload.data.createMessage
+      ModelExtractor.addAll({
+        session,
+        root: message,
+        modelName: 'Message'
+      })
+      MessageThread.withId(message.messageThread.id).update({
+        updatedAt: new Date().toString()
+      })
       break
 
     case a.CREATE_COMMENT:
@@ -121,17 +136,6 @@ export default function ormReducer (state = {}, action) {
   }
 
   return session.state
-}
-
-function addMessageAsMessageThread (message, messageThreadId, session) {
-  ModelExtractor.addAll({
-    session,
-    root: {
-      id: messageThreadId,
-      messages: [message]
-    },
-    modelName: 'MessageThread'
-  })
 }
 
 function addEntity (payload) {

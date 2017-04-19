@@ -18,7 +18,7 @@ export default class SocketListener extends Component {
       addThreadFromSocket(convertThreadToModelFormat(data))
     })
     this.socket.on('messageAdded', data => {
-      addMessageFromSocket(convertMessageToModelFormat(data.message), data.postId)
+      addMessageFromSocket(convertMessageToModelFormat(data.message, data.postId))
     })
     this.reconnectHandler = () => {
       this.socket.post(socketUrl('/noo/threads/subscribe'))
@@ -38,13 +38,16 @@ export default class SocketListener extends Component {
   }
 }
 
-function convertMessageToModelFormat ({ id, created_at, text, user_id }) {
+function convertMessageToModelFormat ({ id, created_at, text, user_id }, messageThreadId) {
   return {
     id,
-    createdAt: created_at,
+    createdAt: new Date(created_at).toString(),
     text,
     creator: {
       id: user_id
+    },
+    messageThread: {
+      id: messageThreadId
     }
   }
 }
@@ -53,10 +56,10 @@ function convertThreadToModelFormat (data) {
   const { id, created_at, updated_at, people, comments } = data
   return {
     id,
-    createdAt: created_at,
-    updatetAt: updated_at,
+    createdAt: new Date(created_at).toString(),
+    updatetAt: new Date(updated_at).toString(),
     participants: people.map(({id, name, avatar_url}) => ({id, name, avatarUrl: avatar_url})),
-    messages: comments.map(convertMessageToModelFormat),
+    messages: comments.map(c => convertMessageToModelFormat(c, id)),
     messagesTotal: 1
   }
 }

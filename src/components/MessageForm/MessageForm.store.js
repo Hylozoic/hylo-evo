@@ -19,6 +19,9 @@ export function createMessage (messageThreadId, text, userId) {
           creator {
             id
           }
+          messageThread {
+            id
+          }
         }
       }`,
       variables: {

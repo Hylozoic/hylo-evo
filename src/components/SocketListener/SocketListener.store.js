@@ -3,13 +3,10 @@ import {
   ADD_THREAD_FROM_SOCKET
 } from 'store/constants'
 
-export function addMessageFromSocket (message, messageThreadId) {
+export function addMessageFromSocket (message) {
   return {
     type: ADD_MESSAGE_FROM_SOCKET,
-    payload: message,
-    meta: {
-      messageThreadId
-    }
+    payload: message
   }
 }
 

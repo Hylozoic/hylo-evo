@@ -12,6 +12,5 @@ MessageThread.modelName = 'MessageThread'
 
 MessageThread.fields = {
   id: attr(),
-  participants: many('Person'),
-  messages: many('Message')
+  participants: many('Person')
 }
