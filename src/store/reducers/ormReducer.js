@@ -52,7 +52,6 @@ export default function ormReducer (state = {}, action) {
         root: payload.data.community,
         modelName: meta.rootModelName
       })
-      addToOrdering(Community, payload.data.community, 'feedOrder', 'posts')
       break
 
     case FETCH_MEMBERS:
@@ -95,11 +94,4 @@ function deleteEntity (payload) {
 
 function updateEntity (payload) {
   return model => model.withId(payload.id).update(payload)
-}
-
-function addToOrdering (model, data, orderingKey, itemsKey) {
-  const parent = model.withId(data.id)
-  parent.update({
-    [orderingKey]: (parent[orderingKey] || []).concat(data[itemsKey].map(x => x.id))
-  })
 }

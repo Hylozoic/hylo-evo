@@ -2,19 +2,26 @@ import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
 import { mapStateToProps } from './Feed.connector'
 import { times } from 'lodash/fp'
+import { buildKey } from 'store/reducers/queryResults'
 
 describe('mapStateToProps', () => {
   let state
 
   beforeEach(() => {
     const session = orm.session(orm.getEmptyState())
-    session.Community.create({id: '1', slug: 'foo', feedOrder: ['1', '3', '2'], postCount: 3})
+    session.Community.create({id: '1', slug: 'foo', postCount: 10})
     times(i => {
       session.Post.create({id: i.toString(), communities: ['1']})
     }, 5)
+
     state = {
       orm: session.state,
-      pending: {}
+      pending: {},
+      queryResults: {
+        [buildKey(FETCH_POSTS, {slug: 'foo'})]: {
+          ids: ['1', '3', '2']
+        }
+      }
     }
   })
 
@@ -34,7 +41,7 @@ describe('mapStateToProps', () => {
     const expected = {
       slug: 'foo',
       pending: undefined,
-      postCount: 3,
+      postCount: 10,
       community: {
         slug: 'foo'
       }

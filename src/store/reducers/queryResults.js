@@ -7,8 +7,8 @@
 // shown when something has been typed into the search field.
 
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
-import { FETCH_POST, FETCH_COMMENTS } from 'store/constants'
-import { get, pick, uniq } from 'lodash/fp'
+import { FETCH_POST, FETCH_POSTS, FETCH_COMMENTS } from 'store/constants'
+import { get, isNull, omitBy, pick, uniq } from 'lodash/fp'
 
 // reducer
 
@@ -23,6 +23,9 @@ export default function (state = {}, action) {
   switch (type) {
     case FETCH_MEMBERS:
       return appendIds(state, type, meta.graphql.variables, payload.data.community.members)
+
+    case FETCH_POSTS:
+      return appendIds(state, type, meta.graphql.variables, payload.data.community.posts)
 
     case FETCH_POST:
     case FETCH_COMMENTS:
@@ -49,13 +52,20 @@ function appendIds (state, type, params, { items, total, hasMore }) {
 
 export function makeGetQueryResults (actionType) {
   return (state, props) => {
+    // TBD: Sometimes parameters like "id" and "slug" are to be found in the
+    // URL, in which case they are in e.g. props.match.params.id; and sometimes
+    // they are passed directly to a component. Should buildKey handle both
+    // cases?
     const key = buildKey(actionType, props)
     return state.queryResults[key]
   }
 }
 
-function buildKey (type, params) {
-  return JSON.stringify({type, params: pick(queryParamWhitelist, params)})
+export function buildKey (type, params) {
+  return JSON.stringify({
+    type,
+    params: omitBy(isNull, pick(queryParamWhitelist, params))
+  })
 }
 
 export const queryParamWhitelist = ['id', 'slug', 'sortBy', 'search']

@@ -32,37 +32,3 @@ describe('UPDATE_PERSON', () => {
     expect(items).toEqual([person.id])
   })
 })
-
-describe('FETCH_POSTS', () => {
-  let state
-
-  beforeEach(() => {
-    const session = orm.session(orm.getEmptyState())
-    session.Community.create({id: '1'})
-    state = session.state
-  })
-
-  it('adds feedOrder to community', () => {
-    const action = {
-      type: FETCH_POSTS,
-      payload: {
-        data: {
-          community: {
-            id: '1',
-            posts: [
-              {id: 1}, {id: 5}, {id: 2}, {id: 4}, {id: 3}
-            ]
-          }
-        }
-      },
-      meta: {
-        rootModelName: 'Community'
-      }
-    }
-    const nextState = ormReducer(state, action)
-    expect(nextState.Community.itemsById['1']).toEqual({
-      id: '1',
-      feedOrder: [1, 5, 2, 4, 3]
-    })
-  })
-})
