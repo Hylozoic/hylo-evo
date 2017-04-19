@@ -3,13 +3,16 @@ import { serverRouter } from 'router'
 import { renderToString } from 'react-dom/server'
 import { readFileSync } from 'fs'
 import { Provider } from 'react-redux'
-import store from '../store'
+import createStore from '../store'
 import root from 'root-path'
 import { once } from 'lodash'
+import createHistory from 'history/createMemoryHistory'
 
 export default function appMiddleware (req, res, next) {
   // TODO: async data loading
 
+  const history = createHistory()
+  const store = createStore(history)
   const context = {}
   const markup = renderToString(<Provider store={store}>
     {serverRouter(req, context)}

@@ -1,0 +1,41 @@
+.commentForm {
+  margin-bottom: $space-10x;
+}
+
+.icon {
+  color: $color-caribbean-green;
+  font-size: 10px;
+  margin-right: 7px;
+}
+
+.prompt {
+  display: flex;
+  border-radius: 4px;
+  width: 100%;
+  min-height: 56px;
+  margin-bottom: 10px;
+  background-color: white;
+  box-shadow: 0px 4px 21px 2px $color-black-squeeze;
+  cursor: pointer;
+  @include font-regular;
+  font-size: 16px;
+  color: $color-rhino-30;
+}
+
+.image {
+  margin-right: 10px;
+  margin-left: 20px;
+  position: relative;
+  top: 14px;
+}
+
+.placeholder {
+  width: 100%;
+}
+
+.editor {
+  width: 100%;
+  position: relative;
+  top: 18px;
+  padding-bottom: 30px;
+}

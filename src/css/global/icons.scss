@@ -1,6 +1,6 @@
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'hylo-evo-04-11-17' !important;
+  font-family: 'hylo-evo-icons' !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -13,72 +13,96 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-Reply:before {
+.icon-AddImage:before {
   content: "\e900";
 }
-.icon-LinkedIn:before {
+.icon-Clock:before {
   content: "\e901";
 }
-.icon-Google:before {
+.icon-Star:before {
   content: "\e902";
 }
-.icon-Facebook:before {
+.icon-ProfileUrl:before {
   content: "\e903";
 }
-.icon-Ex:before {
+.icon-ProfileTwitter:before {
   content: "\e904";
 }
-.icon-NewCommunity:before {
+.icon-ProfileLinkedin:before {
   content: "\e905";
 }
-.icon-Projects:before {
+.icon-ProfileFacebook:before {
   content: "\e906";
 }
-.icon-Events:before {
+.icon-Reply:before {
   content: "\e907";
 }
-.icon-Home:before {
+.icon-LinkedIn:before {
   content: "\e908";
 }
-.icon-Topics:before {
+.icon-Google:before {
   content: "\e909";
 }
-.icon-Members:before {
+.icon-Facebook:before {
   content: "\e90a";
 }
-.icon-Messages:before {
+.icon-Ex:before {
   content: "\e90b";
 }
-.icon-Notifications:before {
+.icon-NewCommunity:before {
   content: "\e90c";
 }
-.icon-Search:before {
+.icon-Projects:before {
   content: "\e90d";
 }
-.icon-Share:before {
+.icon-Events:before {
   content: "\e90e";
 }
-.icon-More:before {
+.icon-Home:before {
   content: "\e90f";
 }
-.icon-ArrowUp:before {
+.icon-Topics:before {
   content: "\e910";
 }
-.icon-Location:before {
+.icon-Members:before {
   content: "\e911";
 }
-.icon-Trash:before {
+.icon-Messages:before {
   content: "\e912";
 }
-.icon-Pin:before {
+.icon-Notifications:before {
   content: "\e913";
 }
-.icon-Complete:before {
+.icon-Search:before {
   content: "\e914";
 }
-.icon-Flag:before {
+.icon-Share:before {
   content: "\e915";
 }
-.icon-Circle:before {
+.icon-More:before {
   content: "\e916";
+}
+.icon-ArrowUp:before {
+  content: "\e917";
+}
+.icon-ArrowDown:before {
+  content: "\e918";
+}
+.icon-Location:before {
+  content: "\e919";
+}
+.icon-Trash:before {
+  content: "\e91a";
+}
+.icon-Pin:before {
+  content: "\e91b";
+}
+.icon-Complete:before {
+  content: "\e91c";
+}
+.icon-Flag:before {
+  content: "\e91d";
+}
+.icon-Circle:before {
+  content: "\e91e";
 }

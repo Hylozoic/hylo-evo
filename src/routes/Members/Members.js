@@ -5,20 +5,15 @@ import Icon from 'components/Icon'
 import Member from 'components/Member'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
+import { CENTER_COLUMN_ID } from 'util/scrolling'
 import './Members.scss'
-const { bool, func, number, string, arrayOf, shape } = PropTypes
-
-function Sort ({sortText}) {
-  return <div styleName='sort'>
-    <span>{sortText}</span>
-    <Icon name='ArrowDown' styleName='sort-icon' />
-  </div>
-}
+const { bool, func, string, arrayOf, shape } = PropTypes
+import { debounce, isEmpty, some, times } from 'lodash/fp'
+import { queryParamWhitelist } from 'store/reducers/queryResults'
 
 export default class Members extends Component {
   static propTypes = {
     canInvite: bool,
-    total: number,
     sortBy: string,
     members: arrayOf(shape({
       id: string,
@@ -27,51 +22,95 @@ export default class Members extends Component {
       tagline: string,
       avatarUrl: string
     })),
-    changeSort: func
+    hasMore: bool,
+    changeSort: func,
+    changeSearch: func
+  }
+
+  fetchOrShowCached () {
+    const { hasMore, members, fetchMembers } = this.props
+    if (isEmpty(members) && hasMore !== false) fetchMembers()
   }
 
   componentDidMount () {
-    this.props.fetchMembers(this.props.sortBy)
+    this.fetchOrShowCached()
+  }
+
+  componentDidUpdate (prevProps) {
+    if (!prevProps) return
+    if (some(key => this.props[key] !== prevProps[key], queryParamWhitelist)) {
+      this.fetchOrShowCached()
+    }
   }
 
   fetchMore () {
-    const { sortBy, members, membersTotal, fetchMembers, pending } = this.props
-    if (pending || members.length === 0 || members.length >= membersTotal) {
-      return
+    const { members, hasMore, fetchMembers, pending } = this.props
+    if (pending || members.length === 0 || !hasMore) return
+    fetchMembers(members.length)
+  }
+
+  search (term) {
+    if (!this.debouncedSearch) {
+      this.debouncedSearch = debounce(300, this.props.changeSearch)
     }
-    fetchMembers(sortBy, members.length)
+    return this.debouncedSearch(term)
   }
 
   render () {
-    const { canInvite, memberCount, members, sortBy, changeSort } = this.props
-    const sortKeys = {
-      name: 'Name',
-      joined: 'Latest',
-      location: 'Location'
-    }
-    const sortText = sortKeys[sortBy]
+    const {
+      canInvite, memberCount, members, sortBy, changeSort, search
+    } = this.props
     return <div>
-      {canInvite && <Button styleName='invite'
-        label='Invite People'
-        color='green-white-green-border'
-        narrow />}
-      <div styleName='title'>Members</div>
-      <div styleName='total-members'>
-        {memberCount} Total Members
+      <div styleName='header'>
+        {canInvite && <Button styleName='invite'
+          label='Invite People'
+          color='green-white-green-border'
+          narrow />}
+        <div styleName='title'>Members</div>
+        <div styleName='total-members'>
+          {memberCount} Total Members
+        </div>
       </div>
-      <Dropdown styleName='sort-dropdown'
-        toggleChildren={<Sort sortText={sortText} />}
-        triangle
-        alignRight
-        items={Object.keys(sortKeys).map(k => ({
-          label: sortKeys[k],
-          onClick: () => changeSort(k)
-        }))} />
-      <TextInput placeholder='Search by name or location' styleName='search' />
-      <div styleName='members'>
-        {members.map(m => <Member member={m} styleName='member' key={m.id} />)}
+      <div styleName='content'>
+        <Dropdown styleName='sort-dropdown'
+          toggleChildren={<SortLabel text={sortKeys[sortBy]} />}
+          triangle
+          alignRight
+          items={Object.keys(sortKeys).map(k => ({
+            label: sortKeys[k],
+            onClick: () => changeSort(k)
+          }))} />
+        <TextInput placeholder='Search by name'
+          styleName='search'
+          defaultValue={search}
+          onChange={e => this.search(e.target.value)} />
+        <div styleName='members'>
+          {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
+            {pair.map(m => <Member member={m} key={m.id} />)}
+            {pair.length === 1 && <div />}
+          </div>)}
+        </div>
       </div>
-      <ScrollListener onBottom={() => this.fetchMore()} />
+      <ScrollListener onBottom={() => this.fetchMore()}
+        elementId={CENTER_COLUMN_ID} />
     </div>
   }
+}
+
+function SortLabel ({ text }) {
+  return <div styleName='sort-label'>
+    <span>{text}</span>
+    <Icon name='ArrowDown' styleName='sort-icon' />
+  </div>
+}
+
+// these keys must match the values that hylo-node can handle
+const sortKeys = {
+  name: 'Name',
+  join: 'Newest',
+  location: 'Location'
+}
+
+export function twoByTwo (list) {
+  return times(i => list.slice(i * 2, i * 2 + 2), (list.length + 1) / 2)
 }

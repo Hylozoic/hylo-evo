@@ -87,6 +87,15 @@ export default function ormReducer (state = {}, action) {
       })
       break
 
+    case a.FETCH_POST:
+    case a.FETCH_COMMENTS:
+      ModelExtractor.addAll({
+        session,
+        root: payload.data.post,
+        modelName: meta.rootModelName
+      })
+      break
+
     case a.ADD_THREAD_FROM_SOCKET:
       ModelExtractor.addAll({
         session,
@@ -101,6 +110,17 @@ export default function ormReducer (state = {}, action) {
 
     case a.CREATE_MESSAGE:
       addMessageAsMessageThread(payload.data.createMessage, meta.messageThreadId, session)
+      break
+
+    case a.CREATE_COMMENT:
+      ModelExtractor.addAll({
+        session,
+        root: {
+          id: meta.postId,
+          comments: [payload.data.createComment]
+        },
+        modelName: 'Post'
+      })
   }
 
   return session.state

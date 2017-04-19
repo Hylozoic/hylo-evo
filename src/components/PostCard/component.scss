@@ -5,9 +5,16 @@
   border: 1px solid $color-cape-cod-10;
   border-radius: 4px;
   cursor: pointer;
+  position: relative;
+  right: 0px;
+  transition: 0.25s;
   &:hover {
     box-shadow: 0px 2px 6px 0px $color-black-10;
   }
+}
+
+.expanded {
+  box-shadow: 0px 2px 6px 0px $color-black-10;
 }
 
 .cardPadding {
@@ -35,7 +42,8 @@
 .headerText {
   display: inline-block;
   position: relative;
-  top: -2px;
+  top: 1px;
+  line-height: 15px;
 }
 
 .userName {
@@ -65,6 +73,10 @@
   font-size: 8px;
   position: relative;
   top: -2px;
+}
+
+.timestamp {
+  composes: timestamp from 'css/typography.scss';
 }
 
 .context {
@@ -97,6 +109,25 @@
   color: $color-rhino-80;
 }
 
+.close {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+}
+
+// PostImage
+
+.image {
+  background-position: center;
+  background-size: cover;
+  display: inline-block;
+  width: 590px;
+  height: 280px;
+  margin-bottom: 20px;
+  margin: 0 auto 20px auto;
+}
+
 // PostBody
 
 :global {
@@ -111,16 +142,6 @@
 
 .body {
   margin-bottom: 36px;
-}
-
-.image {
-  background-position: center;
-  background-size: cover;
-  display: inline-block;
-  width: 590px;
-  height: 280px;
-  margin-bottom: 20px;
-  margin: 0 auto 20px auto;
 }
 
 .title {
@@ -143,32 +164,30 @@
 
 $preview-height: 80px;
 
-
 .linkPreview {
-  max-height: $preview-height;
+  height: $preview-height + 2;
   background-color: $color-athens-gray;
   border: 1px solid $color-athens-gray-dark;
   border-radius: 4px;
+  padding-top: $space-2x;
+  padding-right: $space-3x;
 }
 
 .previewImage {
   @include image($preview-height);
+  margin-top: -$space-2x;
   margin-right: 15px;
+  float: left;
 }
 
 .previewText {
-  display: inline-block;
-  margin-top: 15px;
+  display: inline;
   vertical-align: top;
-  width: 450px;
 }
 
 .previewTitle {
-  // TODO: Extract typography? Very close to BDY-DRK-SM
-  @include font-regular;
+  composes: bdy-drk-sm from 'css/typography.scss';
   color: $color-rhino-80;
-  font-size: 16px;
-  line-height: 22px;
 }
 
 .previewDomain {
@@ -193,6 +212,10 @@ $footer-height: 56px;
 
 .people {
   margin-right: 20px;
+}
+
+.caption {
+  composes: caption-lt-lg from 'css/typography.scss';
 }
 
 .share {

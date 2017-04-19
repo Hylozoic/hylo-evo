@@ -11,9 +11,9 @@ $space-base-unit: 0.25rem;
 $space-1x: $space-base-unit;
 $space-2x: $space-base-unit * 2;
 $space-3x: $space-base-unit * 3;
-$space-4x: $space-base-unit * 4;
-$space-5x: $space-base-unit * 5;
-$space-6x: $space-base-unit * 6;
+$space-4x: $space-base-unit * 4; // 16px
+$space-5x: $space-base-unit * 5; // 20px
+$space-6x: $space-base-unit * 6; // 24px
 $space-7x: $space-base-unit * 7;
 $space-8x: $space-base-unit * 8;
 $space-9x: $space-base-unit * 9;
@@ -34,8 +34,9 @@ $space-18x: $space-base-unit * 18;
 // $space-xxl: $space-18x;
 
 $content-width: 80rem;
+$center-column-width: 49%;
+$detail-column-width: 43%;
 $layout-spacing: 70px;
-$size-feed-width: 590px;
 $messages-header-height: 80px;
 $messages-header-vertical-padding: 20px;
 $messages-header-horizontal-padding: 24px;
@@ -71,7 +72,7 @@ $color-cod-gray-0: rgba(#161616, 0);
 $color-cod-gray-dark: #1C1C1C;
 $color-seashell: #F1F1F1;
 
-$color-caribbean-green: #0DC3A0;
+$color-caribbean-green: #0DC39F;
 $color-medium-purple: #9883E5;
 $color-fuchsia-pink: #BB60A8;
 $color-picton-blue: #40A1DD;

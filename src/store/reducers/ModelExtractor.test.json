@@ -2,6 +2,7 @@
   "FETCH_POSTS for me": {
     "data": {
       "me": {
+        "id": "1",
         "name": "Foo Bar",
         "avatarUrl": "http://foo.com/bar.png",
         "posts": [
@@ -63,7 +64,8 @@
             "creator": {
               "id": "46816",
               "name": "Rich",
-              "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+              "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+              "bannerUrl": "https://pbs.twimg.com/profile_banners/18696471/1435442798/1500x500"
             },
             "followers": [
               {
@@ -112,6 +114,7 @@
         "bannerUrl": "http://foo.com/banner.png",
         "posts": {
           "total": 21,
+          "hasMore": true,
           "items": [
             {
               "id": "2",

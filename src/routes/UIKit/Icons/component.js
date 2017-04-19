@@ -3,30 +3,37 @@ import Icon from 'components/Icon'
 import './component.scss'
 
 const ICON_NAMES = [
+  'Clock',
+  'AddImage',
   'Reply',
   'LinkedIn',
   'Google',
   'Facebook',
-  'Circle',
-  'Messages',
   'Ex',
   'NewCommunity',
-  'Notifications',
-  'Search',
-  'Share',
-  'Members',
-  'Topics',
   'Projects',
   'Events',
   'Home',
+  'Topics',
+  'Members',
+  'Messages',
+  'Notifications',
+  'Search',
+  'Share',
   'More',
-  'ArrowDown',
   'ArrowUp',
+  'ArrowDown',
   'Location',
-  'Flag',
-  'Complete',
+  'Trash',
   'Pin',
-  'Trash'
+  'Complete',
+  'Flag',
+  'Circle',
+  'ProfileFacebook',
+  'ProfileLinkedin',
+  'ProfileTwitter',
+  'ProfileUrl',
+  'Star'
 ]
 
 export default function Icons (props) {

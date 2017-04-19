@@ -22,4 +22,4 @@ export const mapDispatchToProps = {
   clearHashtags
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})

@@ -28,7 +28,9 @@
   margin: 0 15px;
 }
 
-.navigation { /* empty */ }
+.navigation {
+  padding-top: $space-4x;
+}
 
 .links {
   list-style: none;

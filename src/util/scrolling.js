@@ -27,3 +27,5 @@ export const isAtBottom = (offset, element) =>
   (!element || element === window)
     ? viewportTop() >= bottomScrollPosition() - offset
     : element.scrollTop >= element.scrollHeight - element.offsetHeight - offset
+
+export const CENTER_COLUMN_ID = 'center-column'
