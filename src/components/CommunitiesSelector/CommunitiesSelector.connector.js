@@ -1,19 +1,9 @@
 import { connect } from 'react-redux'
-import {
-  findSuggestions,
-  clearSuggestions,
-  getCommunitiesResults
-} from './CommunitiesSelector.store'
 
 export function mapStateToProps (state, props) {
-  return {
-    communitiesResults: getCommunitiesResults(state, props)
-  }
+  return {}
 }
 
-export const mapDispatchToProps = {
-  findSuggestions,
-  clearSuggestions
-}
+export const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)

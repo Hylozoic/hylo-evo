@@ -84,7 +84,7 @@ export default class PostEditor extends React.Component {
   }
 
   render () {
-    const { bodyPlaceholder } = this.props
+    const { bodyPlaceholder, communities } = this.props
     const { titlePlaceholder, title } = this.state
 
     return <div styleName='wrapper'>
@@ -121,7 +121,7 @@ export default class PostEditor extends React.Component {
         <div styleName='postIn'>
           <div styleName='postIn-label'>Post in</div>
           <div styleName='postIn-communities'>
-            <CommunitiesSelector onChange={this.setSelectedCommunities} />
+            <CommunitiesSelector options={communities} onChange={this.setSelectedCommunities} />
           </div>
         </div>
         <div styleName='actionsBar'>

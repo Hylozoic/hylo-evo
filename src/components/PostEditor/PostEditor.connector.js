@@ -3,8 +3,12 @@ import { createPost } from 'store/actions/posts'
 import { getMe } from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
+  const currentUser = getMe(state)
+  const communities = currentUser &&
+    currentUser.memberships.toModelArray().map(m => m.community)
   return {
-    currentUser: getMe(state, props)
+    currentUser,
+    communities
   }
 }
 

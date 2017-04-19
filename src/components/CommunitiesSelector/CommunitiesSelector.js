@@ -7,45 +7,64 @@ export default class CommunitiesSelector extends Component {
     communitySuggestions: PropTypes.object,
     findSuggestions: PropTypes.func.isRequired,
     clearSuggestions: PropTypes.func.isRequired,
+    options: PropTypes.array.isRequired,
     onChange: PropTypes.func
+  }
+
+  static defaultProps = {
+    options: []
   }
 
   constructor (props) {
     super(props)
-    this.state = {selectedCommunities: []}
+    this.state = {
+      selected: [],
+      suggestions: []
+    }
   }
+
+  findSuggestions = (searchText) => {
+    const { options } = this.props
+    const suggestions = options.filter(o =>
+      o.name.match(new RegExp(searchText))
+    )
+    this.setState({ suggestions })
+  }
+
+  clearSuggestions = () =>
+    this.setState({suggestions: []})
 
   handleInputChange = (input) => {
     if (input && input.length > 0) {
-      this.props.findSuggestions(input)
+      this.findSuggestions(input)
     } else {
-      this.props.clearSuggestions()
+      this.clearSuggestions()
     }
   }
 
   handleDelete = (community) => {
     const { onChange } = this.props
-    let selectedCommunities = this.state.selectedCommunities.filter(c => c.id !== community.id)
-    this.setState({ selectedCommunities })
-    onChange(selectedCommunities)
+    let selected = this.state.selected.filter(c => c.id !== community.id)
+    this.setState({ selected })
+    onChange(selected)
   }
 
   handleAddition = (community) => {
     const { onChange } = this.props
-    let selectedCommunities = this.state.selectedCommunities.concat(community)
-    this.setState({ selectedCommunities })
-    this.props.clearSuggestions()
-    onChange(selectedCommunities)
+    let selected = this.state.selected.concat(community)
+    this.setState({ selected })
+    this.clearSuggestions()
+    onChange(selected)
   }
 
   render () {
-    const { communitiesResults } = this.props
-    const { selectedCommunities } = this.state
+    const { selected, suggestions } = this.state
+
     return (
       <TagInput
         placeholder='Begin typing...'
-        tags={selectedCommunities}
-        suggestions={communitiesResults}
+        tags={selected}
+        suggestions={suggestions}
         handleInputChange={this.handleInputChange}
         handleAddition={this.handleAddition}
         handleDelete={this.handleDelete}
