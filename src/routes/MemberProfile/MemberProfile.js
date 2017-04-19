@@ -7,10 +7,10 @@ import RoundImage from 'components/RoundImage'
 import { bgImageStyle } from 'util/index'
 
 import SimpleTabBar from 'components/SimpleTabBar'
-import PostCard from 'components/PostCard'
-import CommentCard from 'components/CommentCard'
 import RecentActivity from './RecentActivity'
 import MemberPosts from './MemberPosts'
+import MemberComments from './MemberComments'
+import MemberVotes from './MemberVotes'
 
 const { any, arrayOf, object, string, shape } = React.PropTypes
 
@@ -67,8 +67,7 @@ export default class MemberProfile extends React.Component {
       name,
       role,
       twitterName,
-      url,
-      votes
+      url
     } = this.props.person
     const { id, slug } = this.props.match.params
 
@@ -88,8 +87,7 @@ export default class MemberProfile extends React.Component {
           bio={bio}
           currentTab={this.state.currentTab}
           personId={id}
-          slug={slug}
-          votes={votes} />
+          slug={slug} />
       </div>
     </div>
   }
@@ -151,7 +149,7 @@ export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
   </div>
 }
 
-export function TabContentSwitcher ({ bio, currentTab, personId, slug, votes }) {
+export function TabContentSwitcher ({ bio, currentTab, personId, slug }) {
   switch (currentTab) {
     case 'Overview':
       return <div>
@@ -164,23 +162,9 @@ export function TabContentSwitcher ({ bio, currentTab, personId, slug, votes }) 
       return <MemberPosts personId={personId} slug={slug} />
 
     case 'Comments':
-      return <div>
-        <h2 styleName='subhead'>Comments</h2>
-        {comments && comments.map((comment, i) => {
-          return <div styleName='activity-item' key={i}>
-            <CommentCard comment={comment} />
-          </div>
-        })}
-      </div>
+      return <MemberComments personId={personId} slug={slug} />
 
     case 'Upvotes':
-      return <div>
-        <h2 styleName='subhead'>Upvotes</h2>
-        {votes && votes.map(post => {
-          return <div styleName='activity-item' key={post.id}>
-            <PostCard post={post} />
-          </div>
-        })}
-      </div>
+      return <MemberVotes personId={personId} slug={slug} />
   }
 }
