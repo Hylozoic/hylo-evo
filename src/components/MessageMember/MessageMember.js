@@ -5,7 +5,9 @@ import Button from 'components/Button'
 import './MessageMember.scss'
 
 export default function MessageMember ({ match }) {
-  return <Link to={`/messages/new/${match.params.id}`}>
-    <Button styleName='message-member'>Message</Button>
-  </Link>
+  return <div styleName='container'>
+    <Link to={`/messages/new/${match.params.id}`}>
+      <Button styleName='message-member'>Message</Button>
+    </Link>
+  </div>
 }

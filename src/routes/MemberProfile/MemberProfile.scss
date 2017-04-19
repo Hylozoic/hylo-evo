@@ -1,4 +1,5 @@
 .member-profile {
+  padding-top: $space-6x;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -66,7 +67,7 @@
 }
 
 .location {
-  composes: caption-lt-lg from 'css/typography.scss'; 
+  composes: caption-lt-lg from 'css/typography.scss';
 }
 
 .role-bling {
