@@ -16,3 +16,48 @@ it('produces a flat list from a "nested-totals-style" response', () => {
   extractor.walk(payload2.data.community, 'Community')
   expect(extractor.mergedNodes()).toMatchSnapshot()
 })
+
+it('handles ids for foreign keys', () => {
+  const extractor = new ModelExtractor(orm.session(orm.getEmptyState()))
+  const comment = {
+    id: '1',
+    text: 'Hi!',
+    creator: '2'
+  }
+
+  extractor.walk(comment, 'Comment')
+  expect(extractor.mergedNodes()).toEqual([
+    {
+      modelName: 'Comment',
+      payload: comment
+    }
+  ])
+})
+
+it('handles objects for foreign keys', () => {
+  const extractor = new ModelExtractor(orm.session(orm.getEmptyState()))
+  const person = {
+    id: '2',
+    name: 'Alice'
+  }
+  const comment = {
+    id: '1',
+    text: 'Hi!',
+    creator: person
+  }
+
+  extractor.walk(comment, 'Comment')
+  expect(extractor.mergedNodes()).toEqual([
+    {
+      modelName: 'Person',
+      payload: person
+    },
+    {
+      modelName: 'Comment',
+      payload: {
+        ...comment,
+        creator: person.id
+      }
+    }
+  ])
+})

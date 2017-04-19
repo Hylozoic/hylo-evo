@@ -58,9 +58,6 @@ export function createComment (postId, text) {
         postId,
         text
       }
-    },
-    meta: {
-      postId
     }
   }
 }
