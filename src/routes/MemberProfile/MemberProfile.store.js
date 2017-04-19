@@ -160,7 +160,6 @@ export const personSelector = createSelector(
       }
       return {
         ...result,
-        activityItems: indexActivityItems(result.comments, result.posts),
         role: getRole(slug, result.memberships)
       }
     }

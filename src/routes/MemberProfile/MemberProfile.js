@@ -8,6 +8,7 @@ import { bgImageStyle } from 'util/index'
 import SimpleTabBar from 'components/SimpleTabBar'
 import PostCard from 'components/PostCard'
 import CommentCard from 'components/CommentCard'
+import RecentActivity from './RecentActivity'
 
 const { any, arrayOf, object, string, shape } = React.PropTypes
 
@@ -54,17 +55,18 @@ export default class MemberProfile extends React.Component {
     if (this.props.error) return this.displayError(this.props.error)
 
     const {
-      activityItems,
       avatarUrl,
       bannerUrl,
       bio,
+      comments,
       facebookUrl,
+      id,
       linkedinUrl,
       location,
       name,
-      comments,
       posts,
       role,
+      slug,
       twitterName,
       url,
       votes
@@ -83,11 +85,12 @@ export default class MemberProfile extends React.Component {
             url={url} />
         </ProfileControls>
         <TabContentSwitcher
-          activityItems={activityItems}
           bio={bio}
           comments={comments}
           currentTab={this.state.currentTab}
+          personId={id}
           posts={posts}
+          slug={slug}
           votes={votes} />
       </div>
     </div>
@@ -150,20 +153,13 @@ export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
   </div>
 }
 
-export function TabContentSwitcher ({ activityItems, bio, comments, currentTab, posts, votes }) {
+export function TabContentSwitcher ({ bio, comments, currentTab, personId, posts, slug, votes }) {
   switch (currentTab) {
     case 'Overview':
       return <div>
         <h2 styleName='subhead'>About Me</h2>
         <div styleName='bio'>{bio}</div>
-        <h2 styleName='subhead'>Recent Activity</h2>
-        {activityItems && activityItems.map((item, i) => {
-          return <div styleName='activity-item' key={i}>
-            {item.hasOwnProperty('title')
-              ? <PostCard post={item} />
-              : <CommentCard key={i} comment={item} />}
-          </div>
-        })}
+        <RecentActivity personId={personId} slug={slug} />
       </div>
 
     case 'Posts':
