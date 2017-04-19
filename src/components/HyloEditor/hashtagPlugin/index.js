@@ -7,32 +7,9 @@ import addHashtagModifier from './addHashtagModifier'
 import HashtagEntry from './HashtagEntry'
 import Hashtag from './Hashtag'
 
-import './hashtagSuggestionsEntryStyles.scss'
 import './hashtagSuggestionsStyles.scss'
 
-// import decorateComponentWithProps from 'decorate-component-with-props'
-
-const HashtagSpan = (props) => {
-  const styles = {
-    hashtag: {
-      color: 'rgba(95, 184, 138, 1.0)'
-    }
-  }
-  return (
-    <span
-      style={styles.hashtag}
-      data-offset-key={props.offsetKey}
-    >
-      {props.children}
-    </span>
-  )
-}
-
-// const ColorComponent = (props) => {
-//   return (
-//     <span className='testcolor'>{props.children}</span>
-//   )
-// }
+import decorateComponentWithProps from 'decorate-component-with-props'
 
 const createHashtagPlugin = (config = {}) => {
   const defaultTheme = {
@@ -47,7 +24,7 @@ const createHashtagPlugin = (config = {}) => {
     [
       {
         strategy: findHashtagEntitiesStrategy,
-        component: HashtagSpan
+        component: decorateComponentWithProps(Hashtag, { theme: defaultTheme })
       }
     ]
   )

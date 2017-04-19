@@ -28,7 +28,8 @@ export default function Hashtag (props) {
     children,
     decoratedText,
     className,
-    contentState
+    contentState,
+    offsetKey
   } = props
 
   const combinedClassName = unionClassNames(theme.hashtag, className)
@@ -45,6 +46,7 @@ export default function Hashtag (props) {
       theme={theme}
       className={combinedClassName}
       decoratedText={decoratedText}
+      data-offset-key={offsetKey}
     >
       {children}
     </Component>

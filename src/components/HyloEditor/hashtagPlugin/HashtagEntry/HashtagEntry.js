@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Immutable from 'immutable'
 
-import './hashtagSuggestionsEntryStyles.scss'
+import './HashtagEntry.scss'
 
 export default class HashtagEntry extends Component {
   static propTypes = {
