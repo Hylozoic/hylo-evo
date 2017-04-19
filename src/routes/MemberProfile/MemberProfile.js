@@ -1,4 +1,5 @@
 import React from 'react'
+import { get } from 'lodash/fp'
 
 import './MemberProfile.scss'
 import Icon from 'components/Icon'
@@ -33,7 +34,8 @@ export default class MemberProfile extends React.Component {
   }
 
   componentDidMount () {
-    this.props.fetchPerson(this.props.id)
+    const id = get('match.params.id', this.props)
+    if (id) this.props.fetchPerson(id)
   }
 
   constructor (props) {
@@ -58,19 +60,16 @@ export default class MemberProfile extends React.Component {
       avatarUrl,
       bannerUrl,
       bio,
-      comments,
       facebookUrl,
-      id,
       linkedinUrl,
       location,
       name,
-      posts,
       role,
-      slug,
       twitterName,
       url,
       votes
     } = this.props.person
+    const { id, slug } = this.props.match.params
 
     return <div styleName='member-profile'>
       <ProfileBanner bannerUrl={bannerUrl}>
@@ -86,10 +85,8 @@ export default class MemberProfile extends React.Component {
         </ProfileControls>
         <TabContentSwitcher
           bio={bio}
-          comments={comments}
           currentTab={this.state.currentTab}
           personId={id}
-          posts={posts}
           slug={slug}
           votes={votes} />
       </div>
@@ -153,7 +150,7 @@ export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
   </div>
 }
 
-export function TabContentSwitcher ({ bio, comments, currentTab, personId, posts, slug, votes }) {
+export function TabContentSwitcher ({ bio, currentTab, personId, slug, votes }) {
   switch (currentTab) {
     case 'Overview':
       return <div>

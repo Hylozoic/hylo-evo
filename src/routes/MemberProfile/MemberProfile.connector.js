@@ -8,11 +8,9 @@ const messages = {
 }
 
 export function mapStateToProps (state, props) {
-  const { id } = props.match.params
-  const error = Number.isSafeInteger(Number(id)) ? null : messages.invalid
+  const error = Number.isSafeInteger(Number(props.match.params.id)) ? null : messages.invalid
 
   return {
-    id,
     currentTab: 'Overview',
     error,
     person: personSelector(state, props)

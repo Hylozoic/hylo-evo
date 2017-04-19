@@ -13,6 +13,10 @@ export default class MemberProfile extends React.Component {
     posts: arrayOf(object)
   }
 
+  componentDidMount () {
+    this.props.fetchRecentActivity(this.props.personId)
+  }
+
   render () {
     const { activityItems } = this.props
     return <div>

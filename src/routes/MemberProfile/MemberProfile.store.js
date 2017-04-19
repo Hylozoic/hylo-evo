@@ -16,18 +16,6 @@ const fetchPersonQuery =
     facebookUrl
     url
     location
-    comments (first: $limit, order: $order) {
-      id
-      text
-      creator {
-        id
-      }
-      post {
-        id
-        title
-      }
-      createdAt
-    }
     memberships {
       id
       role
@@ -38,28 +26,6 @@ const fetchPersonQuery =
         slug
       }
     }
-    membershipsTotal
-    posts (first: $limit, order: $order) {
-      id
-      title
-      details
-      type
-      creator {
-        id
-      }
-      commenters {
-        id,
-        name,
-        avatarUrl
-      }
-      commentersTotal
-      communities {
-        id
-        name
-      }
-      createdAt
-    }
-    postsTotal
     votes (first: $limit, order: $order) {
       id
       post {
@@ -87,7 +53,6 @@ const fetchPersonQuery =
       }
       createdAt
     }
-    votesTotal
   }
 }`
 
@@ -135,21 +100,9 @@ export const personSelector = createSelector(
       const person = session.Person.withId(id)
       let result = {
         ...person.ref,
-        comments: person.comments.toModelArray().map(comment => ({
-          ...comment.ref,
-          creator: comment.creator.ref,
-          post: comment.post.ref,
-          slug
-        })),
         memberships: person.memberships.toModelArray().map(membership => ({
           ...membership.ref,
           community: membership.community.ref
-        })),
-        posts: person.posts.toModelArray().map(post => ({
-          ...post.ref,
-          creator: post.creator.ref,
-          commenters: post.commenters.toRefArray(),
-          communities: post.communities.toRefArray()
         })),
         votes: person.votes.toModelArray().map(({ post }) => ({
           ...post.ref,
