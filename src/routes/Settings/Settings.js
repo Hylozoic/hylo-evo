@@ -12,7 +12,7 @@ export default class Settings extends Component {
   }
 
   render () {
-    const { currentUser } = this.props
+    const { currentUser, goBack } = this.props
     return <div styleName='modal'>
       <div styleName='content'>
         <div styleName='left-sidebar'>
@@ -24,7 +24,7 @@ export default class Settings extends Component {
           <Route path='/settings/communities' exact render={() => <CommunitySettings currentUser={currentUser} />} />
         </div>
         <div styleName='right-sidebar'>
-          <CloseButton onClose={() => console.log('What do we do here?')} />
+          <CloseButton onClose={goBack} />
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { fakePerson, SAMPLE_IMAGE_URL } from 'components/PostCard/samplePost'
 import faker from 'faker'
+import { goBack } from 'react-router-redux'
 
 faker.seed(993)
 
@@ -23,7 +24,7 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = {
-  // someAction
+  goBack
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
