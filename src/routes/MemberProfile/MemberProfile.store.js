@@ -1,7 +1,10 @@
 import { createSelector } from 'redux-orm'
 
-import { FETCH_PERSON } from 'store/constants'
 import orm from 'store/models'
+
+export const FETCH_PERSON = 'FETCH_PERSON'
+export const FETCH_RECENT_ACTIVITY = 'FETCH_RECENT_ACTIVITY'
+export const FETCH_MEMBER_POSTS = 'FETCH_MEMBER_POSTS'
 
 const fetchPersonQuery =
 `query PersonDetails ($id: ID, $order: String, $limit: Int) {

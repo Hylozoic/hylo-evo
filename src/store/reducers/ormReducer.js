@@ -2,7 +2,7 @@ import * as a from 'store/constants'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
-import { FETCH_RECENT_ACTIVITY } from 'routes/MemberProfile/RecentActivity/RecentActivity.store'
+import { FETCH_PERSON, FETCH_RECENT_ACTIVITY, FETCH_MEMBER_POSTS } from 'routes/MemberProfile/MemberProfile.store'
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
@@ -66,6 +66,7 @@ export default function ormReducer (state = {}, action) {
 
     case a.FETCH_PERSON:
     case FETCH_RECENT_ACTIVITY:
+    case FETCH_MEMBER_POSTS:
       ModelExtractor.addAll({
         session,
         root: payload.data.person,

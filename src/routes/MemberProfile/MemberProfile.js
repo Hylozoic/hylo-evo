@@ -10,6 +10,7 @@ import SimpleTabBar from 'components/SimpleTabBar'
 import PostCard from 'components/PostCard'
 import CommentCard from 'components/CommentCard'
 import RecentActivity from './RecentActivity'
+import MemberPosts from './MemberPosts'
 
 const { any, arrayOf, object, string, shape } = React.PropTypes
 
@@ -160,14 +161,7 @@ export function TabContentSwitcher ({ bio, currentTab, personId, slug, votes }) 
       </div>
 
     case 'Posts':
-      return <div>
-        <h2 styleName='subhead'>Posts</h2>
-        {posts && posts.map((post, i) => {
-          return <div styleName='activity-item' key={i}>
-            <PostCard post={post} />
-          </div>
-        })}
-      </div>
+      return <MemberPosts personId={personId} slug={slug} />
 
     case 'Comments':
       return <div>
