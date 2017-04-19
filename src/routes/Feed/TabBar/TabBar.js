@@ -5,7 +5,7 @@ import Icon from 'components/Icon'
 import { capitalize, sortBy, throttle } from 'lodash/fp'
 import { CENTER_COLUMN_ID, viewportTop, position } from 'util/scrolling'
 import cx from 'classnames'
-import './component.scss'
+import './TabBar.scss'
 
 export const tabNames = [
   'all', 'discussions', 'activity', 'requests', 'offers'
