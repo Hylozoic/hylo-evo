@@ -26,6 +26,10 @@ export default function ormReducer (state = {}, action) {
     case a.UPDATE_MEMBERSHIP: update(Membership); break
     case a.DELETE_MEMBERSHIP: del(Membership); break
 
+    case a.ADD_MESSAGE: add(Message); break
+    case a.UPDATE_MESSAGE: update(Message); break
+    case a.DELETE_MESSAGE: del(Message); break
+
     case a.ADD_MESSAGE_THREAD: add(MessageThread); break
     case a.UPDATE_MESSAGE_THREAD: update(MessageThread); break
     case a.DELETE_MESSAGE_THREAD: del(MessageThread); break
@@ -83,18 +87,34 @@ export default function ormReducer (state = {}, action) {
       })
       break
 
-    case a.CREATE_MESSAGE:
+    case a.ADD_THREAD_FROM_SOCKET:
       ModelExtractor.addAll({
         session,
-        root: {
-          id: meta.messageThreadId,
-          messages: [payload.data.createMessage]
-        },
+        root: payload,
         modelName: 'MessageThread'
       })
+      break
+
+    case a.ADD_MESSAGE_FROM_SOCKET:
+      addMessageAsMessageThread(payload, meta.messageThreadId, session)
+      break
+
+    case a.CREATE_MESSAGE:
+      addMessageAsMessageThread(payload.data.createMessage, meta.messageThreadId, session)
   }
 
   return session.state
+}
+
+function addMessageAsMessageThread (message, messageThreadId, session) {
+  ModelExtractor.addAll({
+    session,
+    root: {
+      id: messageThreadId,
+      messages: [message]
+    },
+    modelName: 'MessageThread'
+  })
 }
 
 function addEntity (payload) {

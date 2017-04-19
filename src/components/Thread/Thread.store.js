@@ -94,14 +94,15 @@ export const getThread = ormCreateSelector(
   state => state.orm,
   (_, props) => props.threadId,
   (session, threadId) => {
+    var thread
     try {
-      const thread = session.MessageThread.get({id: threadId})
-      return {
-        ...thread.ref,
-        participants: thread.participants.toModelArray(),
-        messages: thread.messages.toModelArray().map(m => ({...m.ref, creator: m.creator.ref}))
-      }
+      thread = session.MessageThread.get({id: threadId})
     } catch (e) {
       return null
+    }
+    return {
+      ...thread.ref,
+      participants: thread.participants.toModelArray(),
+      messages: thread.messages.toModelArray().map(m => ({...m.ref, creator: m.creator.ref}))
     }
   })

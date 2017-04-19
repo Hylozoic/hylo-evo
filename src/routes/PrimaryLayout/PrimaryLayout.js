@@ -4,6 +4,7 @@ import { matchPath, Route } from 'react-router-dom'
 import cx from 'classnames'
 import CommunitiesDrawer from './components/CommunitiesDrawer'
 import Messages from 'routes/Messages'
+import SocketListener from 'components/SocketListener'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
 import Sidebar from './components/Sidebar'
@@ -60,6 +61,7 @@ export default class PrimaryLayout extends Component {
       <Route path='/messages' exact component={Messages} />
       <Route path='/messages/new' exact component={Messages} />
       <Route path='/t/:threadId' component={Messages} />
+      <SocketListener />
     </div>
   }
 }
