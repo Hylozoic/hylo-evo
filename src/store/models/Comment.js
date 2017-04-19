@@ -14,6 +14,6 @@ Comment.fields = {
   id: attr(),
   text: attr(),
   creator: fk('Person'),
-  post: fk('Post'),
+  post: fk('Post', 'comments'),
   createdAt: attr()
 }

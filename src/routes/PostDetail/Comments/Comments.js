@@ -24,7 +24,10 @@ export default class Comments extends Component {
         hasMore={hasMore}
         fetchComments={fetchComments} />
       {comments.map(c => <Comment comment={c} key={c.id} slug={slug} />)}
-      <CommentForm currentUser={currentUser} createComment={createComment} postId={postId} />
+      <div styleName='form-wrapper'>
+        <CommentForm currentUser={currentUser} createComment={createComment}
+          postId={postId} />
+      </div>
     </div>
   }
 }

@@ -19,9 +19,10 @@
     content: '';
     pointer-events: none;
     position: absolute;
+    left: 0;
     top: -100px;
     height: 200px;
-    width: $size-feed-width;
+    width: $center-column-width;
     background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(255, 255, 255, 0.9) 55%, rgba(255, 255, 255, 0));
   }
 }

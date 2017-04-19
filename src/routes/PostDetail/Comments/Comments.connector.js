@@ -9,16 +9,13 @@ export const getComments = createSelector(
   state => orm.session(state.orm),
   (state, props) => props.postId,
   (session, id) => {
+    var post
     try {
-      const post = session.Post.get({id})
-      const comments = post.comments
-      .orderBy(c => c.id)
-      .toModelArray()
-
-      return comments
+      post = session.Post.get({id})
     } catch (e) {
       return []
     }
+    return post.comments.orderBy(c => c.id).toModelArray()
   })
 
 export function mapStateToProps (state, props) {

@@ -94,11 +94,8 @@ export default function ormReducer (state = {}, action) {
     case a.CREATE_COMMENT:
       ModelExtractor.addAll({
         session,
-        root: {
-          id: meta.postId,
-          comments: [payload.data.createComment]
-        },
-        modelName: 'Post'
+        root: payload.data.createComment,
+        modelName: 'Comment'
       })
   }
 
