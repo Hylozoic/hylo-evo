@@ -48,8 +48,8 @@
   // From Bootstrap make-col-ready():
   position: relative;
   min-height: 1px; // Prevent collapsing
-  flex: 0 0 49%;
-  max-width: 49%;
+  flex: 0 0 $center-column-width;
+  max-width: $center-column-width;
   overflow-y: scroll;
   overflow-x: hidden;
 }
