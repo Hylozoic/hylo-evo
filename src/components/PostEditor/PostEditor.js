@@ -10,7 +10,9 @@ export default class PostEditor extends React.Component {
   static propTypes = {
     titlePlaceholder: PropTypes.string,
     bodyPlaceholder: PropTypes.string,
-    postType: PropTypes.string
+    postType: PropTypes.string,
+    createPost: PropTypes.func
+
   }
 
   static defaultProps = {
@@ -65,6 +67,7 @@ export default class PostEditor extends React.Component {
   setSelectedCommunities = selectedCommunities => this.setState({ selectedCommunities })
 
   save = (description) => {
+    const { createPost } = this.props
     const {
       postType,
       selectedCommunities,
@@ -74,9 +77,10 @@ export default class PostEditor extends React.Component {
       postType,
       selectedCommunities,
       title,
-      description: this.editor.getContent()
+      description: this.editor.getContentHTML()
     }
-    console.log(results)
+    console.log(title, this.editor.getContentHTML(), selectedCommunities.map(c => c.id))
+    createPost(title, this.editor.getContentHTML(), selectedCommunities.map(c => c.id))
   }
 
   render () {

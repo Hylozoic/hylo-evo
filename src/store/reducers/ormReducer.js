@@ -81,6 +81,16 @@ export default function ormReducer (state = {}, action) {
         },
         modelName: 'Post'
       })
+      break
+
+    case a.CREATE_POST:
+      ModelExtractor.addAll({
+        session,
+        root: {
+          post: [payload.data]
+        },
+        modelName: 'Post'
+      })
   }
 
   return session.state

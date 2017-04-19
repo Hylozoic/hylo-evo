@@ -1,7 +1,8 @@
 import { omitBy, includes } from 'lodash'
 import qs from 'querystring'
 import {
-  FETCH_POSTS
+  FETCH_POSTS,
+  CREATE_POST
 } from '../constants'
 // import samplePostApi from 'components/PostCard/samplePostApi.json'
 
@@ -11,6 +12,32 @@ export function fetchPost (id, opts = {}) {
     // Optionally bypass middleware and load response directly
     // payload: samplePostApi
     payload: {api: true, path: `/noo/post/${id}`}
+  }
+}
+
+// title,
+// details,
+// communityIds,
+// startsAt,
+// endsAt,
+// parentPostId
+export function createPost (title, details, communityIds) {
+  console.log(title, details, communityIds)
+  return {
+    type: CREATE_POST,
+    graphql: {
+      query: `mutation ($title: String, $details: String, $communityIds: [String]) {
+        createPost(data: {title: $title, details: $details, communityIds: $communityIds}) {
+          id
+          title
+          details
+        }
+      }`,
+      variables: {
+        title,
+        details
+      }
+    }
   }
 }
 
