@@ -80,7 +80,12 @@ export default class PostEditor extends React.Component {
       description: this.editor.getContentHTML()
     }
     console.log(title, this.editor.getContentHTML(), selectedCommunities.map(c => c.id))
-    createPost(title, this.editor.getContentHTML(), selectedCommunities.map(c => c.id))
+    const selectedCommunityIds = selectedCommunities.map(c => c.id)
+    createPost(
+      title,
+      this.editor.getContentHTML(),
+      selectedCommunityIds
+    )
   }
 
   render () {
@@ -121,7 +126,10 @@ export default class PostEditor extends React.Component {
         <div styleName='postIn'>
           <div styleName='postIn-label'>Post in</div>
           <div styleName='postIn-communities'>
-            <CommunitiesSelector options={communities} onChange={this.setSelectedCommunities} />
+            <CommunitiesSelector
+              options={communities}
+              onChange={this.setSelectedCommunities}
+            />
           </div>
         </div>
         <div styleName='actionsBar'>

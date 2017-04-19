@@ -1,12 +1,10 @@
 import React, { Component, PropTypes } from 'react'
+import { differenceBy } from 'lodash'
 import TagInput from 'components/TagInput'
 import styles from './CommunitiesSelector.scss'
 
 export default class CommunitiesSelector extends Component {
   static propTypes = {
-    communitySuggestions: PropTypes.object,
-    findSuggestions: PropTypes.func.isRequired,
-    clearSuggestions: PropTypes.func.isRequired,
     options: PropTypes.array.isRequired,
     onChange: PropTypes.func
   }
@@ -25,10 +23,10 @@ export default class CommunitiesSelector extends Component {
 
   findSuggestions = (searchText) => {
     const { options } = this.props
-    const suggestions = options.filter(o =>
-      o.name.match(new RegExp(searchText))
-    )
-    this.setState({ suggestions })
+    const { selected } = this.state
+    const newSuggestions = differenceBy(options, selected, 'id')
+      .filter(o => o.name.match(new RegExp(searchText)))
+    this.setState({ suggestions: newSuggestions })
   }
 
   clearSuggestions = () =>
