@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import './AccountSettings.scss'
 import Button from 'components/Button'
 import ChangeImageButton from 'components/ChangeImageButton'
+import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
 import { bannerUploadSettings, avatarUploadSettings } from 'store/models/Me'
@@ -17,9 +18,27 @@ export default class AccountSettings extends Component {
   }
 
   componentDidMount () {
-    const {
+    this.setEditState()
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (prevProps.currentUser !== this.props.currentUser) {
+      this.setEditState()
+    }
+  }
+
+  setEditState () {
+    const { currentUser } = this.props
+    if (!currentUser) return
+
+    let {
       name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl
-    } = this.props.currentUser
+    } = currentUser
+
+    if (!bannerUrl) {
+
+    }
+
     this.setState({
       edits: {
         name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl
@@ -29,6 +48,8 @@ export default class AccountSettings extends Component {
 
   render () {
     const { currentUser } = this.props
+    if (!currentUser) return <Loading />
+
     const { edits, changed } = this.state
     const {
       name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl

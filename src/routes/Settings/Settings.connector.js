@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { fakePerson, SAMPLE_IMAGE_URL } from 'components/PostCard/samplePost'
 import faker from 'faker'
 import { goBack } from 'react-router-redux'
+import { getMe } from 'store/selectors/getMe'
 
 faker.seed(993)
 
@@ -19,7 +20,7 @@ const SAMPLE_USER = {
 
 export function mapStateToProps (state, props) {
   return {
-    currentUser: SAMPLE_USER
+    currentUser: getMe(state, props)
   }
 }
 
