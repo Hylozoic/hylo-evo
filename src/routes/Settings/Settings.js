@@ -22,7 +22,7 @@ export default class Settings extends Component {
   }
 
   render () {
-    const { currentUser, goBack } = this.props
+    const { currentUser, goBack, updateUserSettings } = this.props
     return <div styleName='modal'>
       <div styleName='content'>
         <div styleName='left-sidebar'>
@@ -30,8 +30,10 @@ export default class Settings extends Component {
           <NavLink to='/settings/communities' exact activeClassName={styles.active} styleName='nav-link'>Communities</NavLink>
         </div>
         <div styleName='center'>
-          <Route path='/settings' exact render={() => <AccountSettings currentUser={currentUser} />} />
-          <Route path='/settings/communities' exact render={() => <CommunitySettings currentUser={currentUser} />} />
+          <Route path='/settings' exact render={() =>
+            <AccountSettings currentUser={currentUser} updateUserSettings={updateUserSettings} />} />
+          <Route path='/settings/communities' exact render={() =>
+            <CommunitySettings currentUser={currentUser} />} />
         </div>
         <div styleName='right-sidebar'>
           <CloseButton onClose={goBack} />

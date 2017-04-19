@@ -40,6 +40,7 @@ export default function ormReducer (state = {}, action) {
 
     case a.FETCH_CURRENT_USER:
     case a.FETCH_USER_SETTINGS:
+    case a.UPDATE_USER_SETTINGS:
       ModelExtractor.addAll({
         session,
         root: payload.data.me,

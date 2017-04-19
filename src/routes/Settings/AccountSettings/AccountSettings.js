@@ -6,11 +6,12 @@ import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
 import { bannerUploadSettings, avatarUploadSettings, DEFAULT_BANNER } from 'store/models/Me'
-const { object } = PropTypes
+const { object, func } = PropTypes
 
 export default class AccountSettings extends Component {
   static propTypes = {
-    currentUser: object
+    currentUser: object,
+    updateUserSettings: func
   }
   constructor (props) {
     super(props)
@@ -53,7 +54,7 @@ export default class AccountSettings extends Component {
   }
 
   render () {
-    const { currentUser } = this.props
+    const { currentUser, updateUserSettings } = this.props
     if (!currentUser) return <Loading />
 
     const { edits, changed } = this.state
@@ -77,6 +78,7 @@ export default class AccountSettings extends Component {
 
     const save = () => {
       this.setState({changed: false})
+      updateUserSettings(edits)
     }
 
     return <div>
