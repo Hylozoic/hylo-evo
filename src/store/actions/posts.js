@@ -35,7 +35,8 @@ export function createPost (title, details, communityIds) {
       }`,
       variables: {
         title,
-        details
+        details,
+        communityIds
       }
     }
   }
