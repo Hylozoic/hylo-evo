@@ -1,6 +1,6 @@
 import Loading from './Loading'
 import { shallow } from 'enzyme'
-import Rea ct from 'react'
+import React from 'react'
 
 it('does something', () => {
   const wrapper = shallow(<Loading />)
