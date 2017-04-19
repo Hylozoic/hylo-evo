@@ -14,12 +14,11 @@
 
 .black {
   color: $color-black;
-  position: absolute;
 }
 
 .white {
   color: $color-white;
   position: relative;
-  top: 1px;
-  left: 1px;
+  top: 2px;
+  left: -29px;
 }
