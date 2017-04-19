@@ -69,15 +69,27 @@ $size-sidebar-width: 10rem;
   border-radius: 4px;
   background-position: center;
   background-size: cover;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+.change-banner-button {
+  /* empty */
 }
 
 .avatar {
+  display: flex;
+  align-items: flex-end;
   width: 140px;
   height: 140px;
   border-radius: 50%;
   background-position: center;
   background-size: cover;
   margin: -70px auto $space-8x auto;
+}
+
+.change-avatar-button {
+  margin: 0 auto;
 }
 
 .control-label {

@@ -7,6 +7,7 @@ import Icon from 'components/Icon'
 import { bgImageStyle } from 'util/index'
 const { object } = PropTypes
 import cx from 'classnames'
+import { bannerUploadSettings, avatarUploadSettings } from 'store/models/Me'
 
 export default class Settings extends Component {
   static propTypes = {
@@ -48,6 +49,7 @@ export class SettingsControls extends Component {
   }
 
   render () {
+    const { currentUser } = this.props
     const { edits, changed } = this.state
     const {
       name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl
@@ -64,22 +66,27 @@ export class SettingsControls extends Component {
       })
     }
 
+    const updateSettingDirectly = key => value =>
+      updateSetting(key)({target: {value}})
+
     const save = () => {
       this.setState({changed: false})
     }
 
-    const uploadSettings = {
-      id: 123456789,
-      subject: 'user-avatar',
-      path: `user/123456789/avatar`,
-      convert: {width: 200, height: 200, fit: 'crop', rotate: 'exif'}
-    }
-
     return <div styleName='center'>
-      <ChangeImageButton update={updateSetting('avatarUrl')} uploadSettings={uploadSettings} />
       <input styleName='name' onChange={updateSetting('name')} value={name} />
-      <div style={bgImageStyle(bannerUrl)} styleName='banner' />
-      <div style={bgImageStyle(avatarUrl)} styleName='avatar' />
+      <div style={bgImageStyle(bannerUrl)} styleName='banner'>
+        <ChangeImageButton
+          update={updateSettingDirectly('bannerUrl')}
+          uploadSettings={bannerUploadSettings(currentUser)}
+          styleName='change-banner-button' />
+      </div>
+      <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
+        <ChangeImageButton
+          update={updateSettingDirectly('avatarUrl')}
+          uploadSettings={avatarUploadSettings(currentUser)}
+          styleName='change-avatar-button' />
+      </div>
       <Control label='Tagline' onChange={updateSetting('tagline')} value={tagline} />
       <Control label='About Me' onChange={updateSetting('bio')} value={bio} type='textarea' />
       <Control label='Location' onChange={updateSetting('location')} value={location} />
