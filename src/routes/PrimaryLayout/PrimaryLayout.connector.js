@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
-import { fetchCurrentUser, toggleCommunitiesDrawer } from './PrimaryLayout.store'
+import { toggleCommunitiesDrawer } from './PrimaryLayout.store'
+import fetchCurrentUser from 'store/actions/fetchCurrentUser'
+
 import { getMe } from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 
@@ -11,4 +13,9 @@ function mapStateToProps (state, props) {
   }
 }
 
-export default connect(mapStateToProps, {fetchCurrentUser, toggleCommunitiesDrawer})
+export const mapDispatchToProps = {
+  fetchCurrentUser,
+  toggleCommunitiesDrawer
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)

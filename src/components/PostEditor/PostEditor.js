@@ -11,8 +11,8 @@ export default class PostEditor extends React.Component {
     titlePlaceholder: PropTypes.string,
     bodyPlaceholder: PropTypes.string,
     postType: PropTypes.string,
+    currentUser: PropTypes.object,
     createPost: PropTypes.func
-
   }
 
   static defaultProps = {

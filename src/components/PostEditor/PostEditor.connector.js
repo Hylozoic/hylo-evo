@@ -1,8 +1,11 @@
 import { connect } from 'react-redux'
 import { createPost } from 'store/actions/posts'
+import { getMe } from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
-  return {}
+  return {
+    currentUser: getMe(state, props)
+  }
 }
 
 export const mapDispatchToProps = {
