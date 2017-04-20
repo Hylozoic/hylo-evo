@@ -85,7 +85,7 @@ export default class Thread extends React.Component {
   render () {
     const { threadId, thread, pending, fetchBeforeMessages, currentUser } = this.props
     const lastReadAt = get('lastReadAt', thread)
-    const messages = sortBy('createdAt', get('messages', thread) || [])
+    const messages = get('messages', thread) || []
     const loadMore = () => {
       if (pending || messages.length >= thread.messagesTotal) return
       const beforeId = min(map('id', messages))

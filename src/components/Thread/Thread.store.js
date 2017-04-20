@@ -1,3 +1,4 @@
+import { sortBy } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 import {
@@ -103,9 +104,7 @@ export const getThread = ormCreateSelector(
     return {
       ...thread.ref,
       participants: thread.participants.toModelArray(),
-      messages: thread.messages
-        .orderBy(x => new Date(x.createdAt).getTime())
-        .toModelArray()
-        .map(m => ({...m.ref, creator: m.creator.ref}))
+      messages: sortBy(m => new Date(m.createdAt).getTime(),
+        thread.messages.toModelArray().map(m => ({...m.ref, creator: m.creator.ref})))
     }
   })

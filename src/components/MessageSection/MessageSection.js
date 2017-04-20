@@ -11,9 +11,9 @@ import './MessageSection.scss'
 // include them under the same avatar and timestamp
 const MAX_MINS_TO_BATCH = 5
 
-function createMessageList (messages) {
-  let currentHeader
-  return messages.map((m, index) => {
+function createMessageList (messages, lastReadAt) {
+  let currentHeader, lastTimestamp
+  return messages.reduce((acc, m) => {
     let headerDate, messageDate, diff, greaterThanMax
     let isHeader = false
     if (!currentHeader) {
@@ -27,8 +27,14 @@ function createMessageList (messages) {
       isHeader = greaterThanMax || m.creator.id !== currentHeader.creator.id
       currentHeader = isHeader ? m : currentHeader
     }
-    return <Message message={m} key={`message-${m.id}`} isHeader={isHeader} />
-  })
+    let messageTime = new Date(m.createdAt).getTime()
+    if (lastTimestamp < lastReadAt && lastReadAt < messageTime) {
+      acc.push(<div styleName='new-messages' />)
+    }
+    lastTimestamp = messageTime
+    acc.push(<Message message={m} key={`message-${m.id}`} isHeader={isHeader} />)
+    return acc
+  }, [])
 }
 
 export default class MessageSection extends React.Component {
@@ -113,12 +119,12 @@ export default class MessageSection extends React.Component {
   }
 
   render () {
-    const messageList = createMessageList(this.props.messages)
+    const { messages, lastReadAt } = this.props
     return <div styleName='messages-section'
       ref={list => { this.list = list }}
       onScroll={this.handleScroll}>
       <div styleName='messages-section-inner'>
-        {messageList}
+        {createMessageList(messages, new Date("Thu Apr 19 2017 13:30:47 GMT-0400 (EDT)").getTime())}
       </div>
     </div>
   }
