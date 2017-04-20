@@ -8,7 +8,10 @@ import TabBar from './TabBar'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
-import { isEmpty } from 'lodash'
+import { isEmpty, some } from 'lodash/fp'
+import { queryParamWhitelist } from 'store/reducers/queryResults'
+
+const whitelist = [...queryParamWhitelist, 'selectedTab']
 
 export default class Feed extends React.Component {
   static defaultProps = {
@@ -26,8 +29,10 @@ export default class Feed extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.slug === prevProps.slug) return
-    this.fetchOrShowCached()
+    if (!prevProps) return
+    if (some(key => this.props[key] !== prevProps[key], whitelist)) {
+      this.fetchOrShowCached()
+    }
   }
 
   fetchMorePosts () {
@@ -37,11 +42,13 @@ export default class Feed extends React.Component {
   }
 
   render () {
-    const { posts, community, currentUser, selectedPostId } = this.props
+    const {
+      posts, community, currentUser, selectedPostId, changeTab, selectedTab
+    } = this.props
 
     return <div styleName='feed'>
       <CommunityBanner community={community} currentUser={currentUser} />
-      <TabBar />
+      <TabBar onChangeTab={changeTab} selectedTab={selectedTab} />
       <div styleName='feedItems'>
         {posts.map(post => {
           const expanded = post.id === selectedPostId

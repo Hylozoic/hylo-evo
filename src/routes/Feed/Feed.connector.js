@@ -9,6 +9,8 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import getParam from 'store/selectors/getParam'
 import { getMe } from 'store/selectors/getMe'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
+import changeQueryParam from 'store/actions/changeQueryParam'
+import getQueryParam from 'store/selectors/getQueryParam'
 
 const getPostResults = makeGetQueryResults(FETCH_POSTS)
 
@@ -36,11 +38,14 @@ const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
 export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
   const slug = getParam('slug', state, props)
-  const extraProps = {...props, slug}
+  const filter = getQueryParam('filter', state, props)
+  const extraProps = {...props, slug, filter}
+
   return {
     posts: getPosts(state, extraProps),
     hasMore: getHasMorePosts(state, extraProps),
     slug,
+    selectedTab: filter,
     selectedPostId: getParam('postId', state, props),
     community,
     postCount: get('postCount', community),
@@ -51,11 +56,15 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = function (dispatch, props) {
   const slug = getParam('slug', null, props)
+  const filter = getQueryParam('filter', null, props)
   const sortBy = null // TODO
   const search = null // TODO
   return {
     fetchPosts: function (offset) {
-      return dispatch(fetchPosts(slug, sortBy, offset, search))
+      return dispatch(fetchPosts({slug, sortBy, offset, search, filter}))
+    },
+    changeTab: function (tab) {
+      return dispatch(changeQueryParam(props, 'filter', tab, 'all'))
     }
   }
 }

@@ -4,6 +4,13 @@ import { mapStateToProps } from './Feed.connector'
 import { times } from 'lodash/fp'
 import { buildKey } from 'store/reducers/queryResults'
 
+const props = {
+  location: {
+    search: '',
+    pathname: '/'
+  }
+}
+
 describe('mapStateToProps', () => {
   let state
 
@@ -33,7 +40,10 @@ describe('mapStateToProps', () => {
       postCount: undefined,
       community: null
     }
-    expect(mapStateToProps(state, {match: {params: {slug: 'bar'}}}))
+    expect(mapStateToProps(state, {
+      ...props,
+      match: {params: {slug: 'bar'}}
+    }))
     .toEqual(expected)
   })
 
@@ -47,7 +57,10 @@ describe('mapStateToProps', () => {
       }
     }
 
-    const result = mapStateToProps(state, {match: {params: {slug: 'foo'}}})
+    const result = mapStateToProps(state, {
+      ...props,
+      match: {params: {slug: 'foo'}}
+    })
     expect(result).toMatchObject(expected)
     expect(result.posts).toHaveLength(3)
     expect(result.posts.map(p => p.id)).toEqual(['1', '3', '2'])
@@ -66,7 +79,10 @@ describe('mapStateToProps', () => {
       }
     }
 
-    const result = mapStateToProps(stateWithPending, {match: {params: {slug: 'foo'}}})
+    const result = mapStateToProps(stateWithPending, {
+      ...props,
+      match: {params: {slug: 'foo'}}
+    })
     expect(result).toMatchObject(expected)
   })
 })

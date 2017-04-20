@@ -1,10 +1,17 @@
 import { FETCH_POSTS } from 'store/constants'
 
-export function fetchPosts (slug, sortBy, offset, search) {
+export function fetchPosts ({ slug, sortBy, offset, search, filter }) {
   return {
     type: FETCH_POSTS,
     graphql: {
-      query: `query ($slug: String, $sortBy: String, $offset: Int, $search: String, $first: Int) {
+      query: `query (
+        $slug: String,
+        $sortBy: String,
+        $offset: Int,
+        $search: String,
+        $filter: String,
+        $first: Int
+      ) {
         community(slug: $slug) {
           id
           slug
@@ -12,7 +19,14 @@ export function fetchPosts (slug, sortBy, offset, search) {
           avatarUrl
           bannerUrl
           postCount
-          posts(first: $first, offset: $offset, sortBy: $sortBy, search: $search, order: "desc") {
+          posts(
+            first: $first,
+            offset: $offset,
+            sortBy: $sortBy,
+            search: $search,
+            filter: $filter,
+            order: "desc"
+          ) {
             hasMore
             items {
               id
@@ -52,6 +66,7 @@ export function fetchPosts (slug, sortBy, offset, search) {
         sortBy,
         offset,
         search,
+        filter,
         first: 20
       }
     },

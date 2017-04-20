@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import { capitalize, sortBy, throttle } from 'lodash/fp'
@@ -7,8 +7,11 @@ import { CENTER_COLUMN_ID, viewportTop, position } from 'util/scrolling'
 import cx from 'classnames'
 import './TabBar.scss'
 
-export const tabNames = [
-  'all', 'discussions', 'requests', 'offers'
+export const tabs = [
+  {id: 'all', label: 'All'},
+  {id: 'discussion', label: 'Discussions'},
+  {id: 'request', label: 'Requests'},
+  {id: 'offer', label: 'Offers'}
 ]
 
 export const sortOptions = [
@@ -19,10 +22,14 @@ export const sortOptions = [
 const offset = 144
 
 export default class TabBar extends React.Component {
+  static propTypes = {
+    onChangeTab: PropTypes.func.isRequired,
+    selectedTab: PropTypes.string
+  }
+
   static defaultProps = {
-    tabName: 'all',
-    sortOption: 'latest',
-    onChange: settings => console.log('Tab Bar changed: ', settings)
+    selectedTab: 'all',
+    sortOption: 'latest'
   }
 
   constructor (props) {
@@ -54,17 +61,17 @@ export default class TabBar extends React.Component {
   }
 
   render () {
-    const { tabName, sortOption, onChange } = this.props
+    const { selectedTab, sortOption, onChangeTab } = this.props
     const { fixed } = this.state
 
     return <div ref='placeholder' styleName='placeholder'>
       <div styleName={cx('bar', {fixed})}>
         <div styleName='tabs'>
-          {tabNames.map(name => <span
-            key={name}
-            styleName={name === tabName ? 'tab-active' : 'tab'}
-            onClick={() => onChange({tab: name})}>
-            {capitalize(name)}
+          {tabs.map(({ id, label }) => <span
+            key={id}
+            styleName={id === selectedTab ? 'tab-active' : 'tab'}
+            onClick={() => onChangeTab(id)}>
+            {label}
           </span>)}
         </div>
         <Dropdown styleName='sorter'
@@ -73,8 +80,7 @@ export default class TabBar extends React.Component {
             <Icon name='ArrowDown' />
           </span>}
           items={sortOptions.map(opt => ({
-            label: capitalize(opt),
-            onClick: () => onChange({sort: opt})
+            label: capitalize(opt)
           }))}
           alignRight />
       </div>
