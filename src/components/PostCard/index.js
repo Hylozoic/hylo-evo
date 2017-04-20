@@ -1,3 +1,3 @@
-import component from './component'
-import connector from './connector'
-export default connector(component)
+import component from './PostCard'
+export { PostHeader, PostImage, PostBody, PostFooter } from './PostCard'
+export default component

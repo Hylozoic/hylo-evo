@@ -1,12 +1,11 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
 import {
   FETCH_MEMBERS, fetchMembers, getMembers, getHasMoreMembers
 } from './Members.store'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import { get } from 'lodash/fp'
 import getQueryParam from 'store/selectors/getQueryParam'
-import { makeUrl } from 'util/navigation'
+import changeQueryParam from 'store/actions/changeQueryParam'
 
 export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
@@ -36,20 +35,11 @@ export function mapDispatchToProps (dispatch, props) {
   const params = getQueryParam(['s', 'q'], null, props)
   var { s: sortBy = defaultSortBy, q: search } = params
 
-  const changeQueryParam = (key, value, defaultValue) => {
-    const newParams = {
-      ...params,
-      [key]: value === defaultValue ? null : value
-    }
-    const newUrl = makeUrl(props.location.pathname, newParams)
-    return dispatch(push(newUrl))
-  }
-
   return {
     fetchMembers: (offset = 0) =>
       dispatch(fetchMembers(slug, sortBy, offset, search)),
-    changeSearch: term => changeQueryParam('q', term),
-    changeSort: sort => changeQueryParam('s', sort, 'name')
+    changeSearch: term => dispatch(changeQueryParam(props, 'q', term)),
+    changeSort: sort => dispatch(changeQueryParam(props, 's', sort, 'name'))
   }
 }
 

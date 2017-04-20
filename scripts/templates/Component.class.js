@@ -4,11 +4,11 @@ const { string } = PropTypes
 
 export default class ReplaceComponent extends Component {
   static propTypes = {
-    exampleProp: string
+    example: string
   }
 
   render () {
-    const { exampleProp } = this.props
-    return <div styleName='exampleName'>{exampleProp}</div>
+    const { example } = this.props
+    return <div styleName='exampleName'>{example}</div>
   }
 }
