@@ -117,4 +117,13 @@ $color-gossamer: #0A9682;
   height: $height or $width;
 }
 
+/* handling long lines */
+@mixin word-wrap {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-word-break: break-all;
+  hyphens: auto;
+}
+
 $light-border: 1px solid $color-cape-cod-10;

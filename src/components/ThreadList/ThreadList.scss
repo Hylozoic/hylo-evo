@@ -142,6 +142,7 @@ $active-thread-border-width: 4px;
 
 .thread-message-text {
   composes: bdy-lt-sm from 'css/typography.scss';
+  @include word-wrap;
 }
 
 .li-right-content {

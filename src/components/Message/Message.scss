@@ -27,4 +27,5 @@
 
 .text {
   composes: bdy-drk-sm from 'css/typography.scss';
+  @include word-wrap;
 }

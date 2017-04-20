@@ -51,13 +51,21 @@ export default class ThreadList extends Component {
 
 function ThreadListItem ({currentUser, active, id, participants, latestMessage, unreadCount}) {
   const otherParticipants = filter(p => p.id !== get('id', currentUser), participants)
+  let text = ''
+  const maxTextLength = 54
+  if (latestMessage) {
+    text = latestMessage.text.substring(0, maxTextLength)
+    if (latestMessage.text.length > maxTextLength) {
+      text += '...'
+    }
+  }
   return <li styleName='list-item'>
     <Link to={`/t/${id}`}>
       {active && <div styleName='active-thread' />}
       <ThreadAvatars avatarUrls={map('avatarUrl', otherParticipants)} />
       <div styleName='li-center-content'>
         <ThreadNames names={map('name', otherParticipants)} />
-        <div styleName='thread-message-text'>{get('text', latestMessage)}</div>
+        <div styleName='thread-message-text'>{text}</div>
       </div>
       <div styleName='li-right-content'>
         <div styleName='message-time'>{humanDate(get('createdAt', latestMessage))}</div>
