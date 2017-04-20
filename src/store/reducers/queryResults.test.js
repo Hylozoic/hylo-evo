@@ -1,4 +1,4 @@
-import queryResults from './queryResults'
+import queryResults, { buildKey } from './queryResults'
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
 
 const variables = {slug: 'foo', sortBy: 'name'}
@@ -72,5 +72,12 @@ it('appends to existing data, ignoring duplicates', () => {
       total: 22,
       hasMore: false
     }
+  })
+})
+
+describe('buildKey', () => {
+  it('omits blank parameters', () => {
+    expect(buildKey('actionType', {slug: 'foo', search: null}))
+    .toEqual('{"type":"actionType","params":{"slug":"foo"}}')
   })
 })

@@ -31,7 +31,7 @@ export function fetchMembers (slug, sortBy, offset, search) {
       variables: {slug, first: 20, offset, sortBy, search}
     },
     meta: {
-      rootModelName: 'Community'
+      extractModel: 'Community'
     }
   }
 }

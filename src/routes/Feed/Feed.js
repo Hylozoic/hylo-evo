@@ -8,6 +8,10 @@ import TabBar from './TabBar'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
+import { isEmpty, some } from 'lodash/fp'
+import { queryParamWhitelist } from 'store/reducers/queryResults'
+
+const whitelist = [...queryParamWhitelist, 'selectedTab']
 
 export default class Feed extends React.Component {
   static defaultProps = {
@@ -15,34 +19,36 @@ export default class Feed extends React.Component {
     selectedPostId: null
   }
 
+  fetchOrShowCached () {
+    const { hasMore, posts, fetchPosts } = this.props
+    if (isEmpty(posts) && hasMore !== false) fetchPosts()
+  }
+
   componentDidMount () {
-    this.props.fetchPosts(this.props.slug)
+    this.fetchOrShowCached()
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.slug === prevProps.slug) return
-    if (this.props.posts.length === 0) {
-      this.props.fetchPosts(this.props.slug)
+    if (!prevProps) return
+    if (some(key => this.props[key] !== prevProps[key], whitelist)) {
+      this.fetchOrShowCached()
     }
   }
 
   fetchMorePosts () {
-    const { pending, posts, postCount } = this.props
-    if (pending ||
-      posts.length === 0 ||
-      posts.length >= postCount) return
-
-    this.props.fetchPosts(this.props.slug, {
-      cursor: this.props.posts.slice(-1)[0].id
-    })
+    const { pending, posts, hasMore, fetchPosts } = this.props
+    if (pending || posts.length === 0 || !hasMore) return
+    fetchPosts(posts.length)
   }
 
   render () {
-    const { posts, community, currentUser, selectedPostId } = this.props
+    const {
+      posts, community, currentUser, selectedPostId, changeTab, selectedTab
+    } = this.props
 
     return <div styleName='feed'>
       <CommunityBanner community={community} currentUser={currentUser} />
-      <TabBar />
+      <TabBar onChangeTab={changeTab} selectedTab={selectedTab} />
       <div styleName='feedItems'>
         {posts.map(post => {
           const expanded = post.id === selectedPostId
@@ -54,7 +60,7 @@ export default class Feed extends React.Component {
         })}
       </div>
       <ScrollListener onBottom={() => this.fetchMorePosts()}
-        id={CENTER_COLUMN_ID} />
+        elementId={CENTER_COLUMN_ID} />
     </div>
   }
 }

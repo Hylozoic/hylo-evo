@@ -52,3 +52,7 @@ export const dispatchEvent = (el, etype) => {
   evObj.initEvent(etype, true, false)
   el.dispatchEvent(evObj)
 }
+
+export function isPromise (value) {
+  return value && typeof value.then === 'function'
+}
