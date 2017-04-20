@@ -11,6 +11,6 @@ describe('Feed', () => {
   it('renders a post list', () => {
     const posts = [{id: 1}, {id: 2}, {id: 3}]
     const wrapper = shallow(<Feed posts={posts} />)
-    expect(wrapper.find('Connect(PostCard)').length).toEqual(3)
+    expect(wrapper.find('PostCard').length).toEqual(3)
   })
 })

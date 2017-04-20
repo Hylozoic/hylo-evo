@@ -6,7 +6,7 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
     Posts
   </h2>
   <div>
-    <Connect(PostCard)
+    <PostCard
       post={
         Object {
           "commenters": Array [],
@@ -30,7 +30,7 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
     />
   </div>
   <div>
-    <Connect(PostCard)
+    <PostCard
       post={
         Object {
           "commenters": Array [
