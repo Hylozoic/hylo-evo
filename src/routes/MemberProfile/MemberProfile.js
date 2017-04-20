@@ -106,9 +106,9 @@ export function ProfileNamePlate ({ avatarUrl, name, location, role }) {
     <div styleName='details'>
       <h1 styleName='name'>{name}</h1>
       <div styleName='fine-details'>
-        <span styleName='location'>{location}</span>
+        {location && <span styleName='location'>{location}</span>}
         {role && <span styleName='role-bling'>
-          <span styleName='spacer'>•</span>
+          {location && <span styleName='spacer'>•</span>}
           <Icon styleName='star' name='Star' />
           <span styleName='role'>{role}</span>
         </span>}
