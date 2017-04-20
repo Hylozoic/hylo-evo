@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecentActivity renders the same as the last snapshot 1`] = `
+<div>
+  <h2>
+    Recent Activity
+  </h2>
+  <div>
+    <CommentCard
+      comment={
+        Object {
+          "createdAt": "Sat Apr 15 2017 16:27:55 GMT+1200 (NZST)",
+          "creator": Object {
+            "id": "46816",
+          },
+          "id": "2",
+          "post": Object {
+            "id": "30002",
+            "title": "0123456789 0123456789 0123456789",
+          },
+          "text": "<p>So much more to say.</p>",
+        }
+      }
+    />
+  </div>
+  <div>
+    <CommentCard
+      comment={
+        Object {
+          "createdAt": "Fri Mar 24 2017 10:39:41 GMT+1300 (NZDT)",
+          "creator": Object {
+            "id": "46816",
+          },
+          "id": "1",
+          "post": Object {
+            "id": "30002",
+            "title": "0123456789 0123456789 0123456789",
+          },
+          "text": "<p>Here's a comment!</p>",
+        }
+      }
+    />
+  </div>
+  <div>
+    <Connect(PostCard)
+      post={
+        Object {
+          "commenters": Array [],
+          "commentersTotal": 0,
+          "communities": Array [
+            Object {
+              "id": "1836",
+              "name": "Wombats",
+            },
+          ],
+          "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+          "creator": Object {
+            "id": "46816",
+          },
+          "details": "<p>With nothing of importance in it.</p>",
+          "id": "30003",
+          "title": "Some other post",
+          "type": "discussion",
+        }
+      }
+    />
+  </div>
+  <div>
+    <Connect(PostCard)
+      post={
+        Object {
+          "commenters": Array [
+            Object {
+              "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+              "id": "46816",
+              "name": "Rich Churcher",
+            },
+          ],
+          "commentersTotal": 1,
+          "communities": Array [
+            Object {
+              "id": "1836",
+              "name": "Wombats",
+            },
+          ],
+          "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+          "creator": Object {
+            "id": "46816",
+          },
+          "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+        <p></p>
+        <p></p>",
+          "id": "30002",
+          "title": "0123456789 0123456789 0123456789",
+          "type": "discussion",
+        }
+      }
+    />
+  </div>
+</div>
+`;

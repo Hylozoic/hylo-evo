@@ -1,38 +1,26 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 
-import MemberProfile, { ProfileNamePlate } from './MemberProfile'
-import payload from './MemberProfile.normalized.test.json'
+import MemberProfile from './MemberProfile'
+import denormalized from './MemberProfile.test.json'
 
 describe.only('MemberProfile', () => {
-  const defaultPerson = {
-    name: '',
-    avatarUrl: '',
-    bannerUrl: '',
-    posts: []
-  }
+  const { person } = denormalized.data
+
+  it('renders the same as the last snapshot', () => {
+    const match = { params: { id: '1' } }
+    const wrapper = shallow(
+      <MemberProfile match={match} person={person} ready={true} />
+    )
+    expect(wrapper).toMatchSnapshot()
+  })
 
   it('displays an error if one is present', () => {
     const props = {
       error: 'WOMBAT-TYPE INVALID',
-      person: defaultPerson
+      person
     }
     const wrapper = shallow(<MemberProfile { ...props } />)
     expect(wrapper.contains(props.error)).toBe(true)
-  })
-
-  describe('ProfileNamePlate', () => {
-    it('Sets the username correctly', () => {
-      const wrapper = shallow(<ProfileNamePlate { ...payload.person } />)
-      expect(wrapper.find('h1').text()).toBe(payload.person.name)
-    })
-
-    it('displays an avatar if one is present', () => {
-
-    })
-
-    it('displays a default avatar if avatarUrl is null', () => {
-
-    })
   })
 })
