@@ -2,7 +2,8 @@ import Messages from './Messages'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-it('does something', () => {
-  const wrapper = shallow(<Messages params={{}} />)
-  // expect(wrapper.find('element')).toBeTruthy()
+it('matches the last snapshot', () => {
+  const match = { params: { threadId: '1' } }
+  const wrapper = shallow(<Messages match={match} />)
+  expect(wrapper).toMatchSnapshot()
 })

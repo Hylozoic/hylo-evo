@@ -3,6 +3,6 @@ import { shallow } from 'enzyme'
 import React from 'react'
 
 it('does something', () => {
-  const wrapper = shallow(<MessageSection />)
-  // expect(wrapper.find('element')).toBeTruthy()
+  const wrapper = shallow(<MessageSection messages={[]} />)
+  expect(wrapper).toMatchSnapshot()
 })
