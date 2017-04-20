@@ -8,7 +8,7 @@ import cx from 'classnames'
 import './TabBar.scss'
 
 export const tabNames = [
-  'all', 'discussions', 'activity', 'requests', 'offers'
+  'all', 'discussions', 'requests', 'offers'
 ]
 
 export const sortOptions = [
@@ -71,13 +71,12 @@ export default class TabBar extends React.Component {
           toggleChildren={<span styleName='sorter-label'>
             {capitalize(sortOption)}
             <Icon name='ArrowDown' />
-          </span>}>
-          {sortBy(s => s === sortOption, sortOptions).map(option => <li
-            key={option}
-            onClick={() => onChange({sort: option})}>
-            {capitalize(option)}
-          </li>)}
-        </Dropdown>
+          </span>}
+          items={sortOptions.map(opt => ({
+            label: capitalize(opt),
+            onClick: () => onChange({sort: opt})
+          }))}
+          alignRight />
       </div>
     </div>
   }
