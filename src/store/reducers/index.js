@@ -11,6 +11,7 @@ import MessageForm from 'components/MessageForm/MessageForm.store'
 import CommunitiesSelector from 'components/CommunitiesSelector/CommunitiesSelector.store'
 import Login from 'routes/Login/Login.store'
 import Members from 'routes/Members/Members.store'
+import ThreadList from 'components/ThreadList/ThreadList.store'
 import queryResults from './queryResults'
 
 export default combineReducers({
@@ -31,5 +32,6 @@ export default combineReducers({
   HyloEditor,
   CommunitiesSelector,
   Login,
+  ThreadList,
   Members
 })

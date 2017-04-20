@@ -12,9 +12,11 @@ const { array, func, object, string } = PropTypes
 export default class ThreadList extends Component {
   static propTypes = {
     currentUser: object,
+    threadSearch: string,
     threads: array,
     activeId: string,
-    fetchThreads: func
+    fetchThreads: func,
+    setThreadSearch: func
   }
 
   componentDidMount () {
@@ -22,14 +24,15 @@ export default class ThreadList extends Component {
   }
 
   render () {
-    const { currentUser, threads, activeId } = this.props
+    const { currentUser, threads, threadSearch, activeId, setThreadSearch } = this.props
+    const onSearchChange = (event) => setThreadSearch(event.target.value)
     return <div styleName='thread-list'>
       <div styleName='header'>
         <Link to='/messages/new'><Button label='New Message' styleName='new-message' /></Link>
         <div styleName='header-text'>Messages</div>
       </div>
       <div styleName='search'>
-        <TextInput placeholder='Search Messages' />
+        <TextInput placeholder='Search for people...' value={threadSearch} onChange={onSearchChange} />
       </div>
       <ul styleName='list'>
         {threads.map(t => {
