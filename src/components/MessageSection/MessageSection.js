@@ -1,7 +1,7 @@
 import React from 'react'
 import visibility from 'visibility'
 import { throttle } from 'lodash'
-import { get, maxBy, sortBy } from 'lodash/fp'
+import { get, maxBy } from 'lodash/fp'
 const { array, func, object } = React.PropTypes
 import Message from 'components/Message'
 import { position } from 'util/scrolling'
