@@ -5,7 +5,7 @@ import './MemberComments.scss'
 
 const { arrayOf, object } = React.PropTypes
 
-export default class MemberProfile extends React.Component {
+export default class MemberComments extends React.Component {
   static propTypes = {
     comments: arrayOf(object)
   }

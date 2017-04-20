@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the same as the last snapshot 1`] = `
+<ul>
+  <li
+    onClick={[Function]}
+  >
+    Wombats
+  </li>
+  <li
+    onClick={[Function]}
+  >
+    Aardvarks
+  </li>
+  <li
+    onClick={[Function]}
+  >
+    Ocelots
+  </li>
+</ul>
+`;

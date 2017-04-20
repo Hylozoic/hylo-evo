@@ -6,7 +6,7 @@ import './RecentActivity.scss'
 
 const { arrayOf, object } = React.PropTypes
 
-export default class MemberProfile extends React.Component {
+export default class RecentActivity extends React.Component {
   static propTypes = {
     activityItems: arrayOf(object),
     comments: arrayOf(object),

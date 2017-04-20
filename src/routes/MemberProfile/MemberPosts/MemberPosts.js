@@ -5,7 +5,7 @@ import './MemberPosts.scss'
 
 const { arrayOf, object } = React.PropTypes
 
-export default class MemberProfile extends React.Component {
+export default class MemberPosts extends React.Component {
   static propTypes = {
     posts: arrayOf(object)
   }
