@@ -11,6 +11,9 @@ import { getMe } from 'store/selectors/getMe'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 import changeQueryParam from 'store/actions/changeQueryParam'
 import getQueryParam from 'store/selectors/getQueryParam'
+import { push } from 'react-router-redux'
+import { postUrl } from 'util/index'
+import { makeUrl } from 'util/navigation'
 
 const getPostResults = makeGetQueryResults(FETCH_POSTS)
 
@@ -58,8 +61,8 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = function (dispatch, props) {
   const slug = getParam('slug', null, props)
-  const filter = getQueryParam('t', null, props)
-  const sortBy = getQueryParam('s', null, props)
+  const params = getQueryParam(['s', 't'], null, props)
+  const { s: sortBy, t: filter } = params
   const search = null
   return {
     fetchPosts: function (offset) {
@@ -70,6 +73,11 @@ export const mapDispatchToProps = function (dispatch, props) {
     },
     changeSort: function (sort) {
       return dispatch(changeQueryParam(props, 's', sort, 'all'))
+    },
+    showPostDetails: function (postId) {
+      // we need to preserve url parameters when opening the details for a post,
+      // or the center column will revert to its default sort & filter settings
+      return dispatch(push(makeUrl(postUrl(postId, slug), params)))
     }
   }
 }

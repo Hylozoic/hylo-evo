@@ -48,7 +48,8 @@ export default class Feed extends React.Component {
       changeTab,
       filter,
       changeSort,
-      sortBy
+      sortBy,
+      showPostDetails
     } = this.props
 
     return <div styleName='feed'>
@@ -64,6 +65,7 @@ export default class Feed extends React.Component {
             post={post}
             styleName={cx('feedItem', {expanded})}
             expanded={expanded}
+            showDetails={() => showPostDetails(post.id)}
             key={post.id} />
         })}
       </div>

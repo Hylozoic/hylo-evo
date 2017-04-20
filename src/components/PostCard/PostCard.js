@@ -6,29 +6,42 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
-import { personUrl, postUrl, bgImageStyle } from 'util/index'
+import { personUrl, bgImageStyle } from 'util/index'
 import { sanitize, present, textLength, truncate, appendInP, humanDate } from 'hylo-utils/text'
 import { parse } from 'url'
 import './PostCard.scss'
 import samplePost from './samplePost'
-import { isEmpty } from 'lodash'
+import { get, isEmpty } from 'lodash/fp'
 import cx from 'classnames'
 
 const { shape, any, object, string, func, array, bool } = React.PropTypes
 
 export default class PostCard extends React.Component {
-  static contextTypes = {
-    navigate: func
+  static propTypes = {
+    post: shape({
+      id: any,
+      type: string,
+      creator: object,
+      name: string,
+      details: string,
+      commenters: array,
+      upVotes: string,
+      updatedAt: string
+    }),
+    fetchPost: func,
+    expanded: bool,
+    showDetails: func
+  }
+
+  static defaultProps = {
+    post: samplePost()
   }
 
   render () {
-    const {
-      post, post: { communities }, className, expanded, navigate
-     } = this.props
-    const slug = !isEmpty(communities) && communities[0].slug
+    const { post, className, expanded, showDetails } = this.props
 
     return <div styleName={cx('card', {expanded})} className={className}
-      onClick={() => navigate(postUrl(post.id, slug))}>
+      onClick={showDetails}>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}
         type={post.type}
@@ -39,30 +52,13 @@ export default class PostCard extends React.Component {
         id={post.id}
         details={post.details}
         linkPreview={post.linkPreview}
-        slug={slug} />
+        slug={get('0.slug', post.communities)} />
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
         votesTotal={post.votesTotal} />
     </div>
   }
-}
-PostCard.propTypes = {
-  post: shape({
-    id: any,
-    type: string,
-    creator: object,
-    name: string,
-    details: string,
-    commenters: array,
-    upVotes: string,
-    updatedAt: string
-  }),
-  fetchPost: func,
-  expanded: bool
-}
-PostCard.defaultProps = {
-  post: samplePost()
 }
 
 export const PostHeader = ({ creator, date, type, context, communities, close, className }) => {
