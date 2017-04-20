@@ -11,8 +11,6 @@ import cx from 'classnames'
 import { isEmpty, some } from 'lodash/fp'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
 
-const whitelist = [...queryParamWhitelist, 'selectedTab']
-
 export default class Feed extends React.Component {
   static defaultProps = {
     posts: [],
@@ -30,7 +28,7 @@ export default class Feed extends React.Component {
 
   componentDidUpdate (prevProps) {
     if (!prevProps) return
-    if (some(key => this.props[key] !== prevProps[key], whitelist)) {
+    if (some(key => this.props[key] !== prevProps[key], queryParamWhitelist)) {
       this.fetchOrShowCached()
     }
   }
@@ -43,12 +41,22 @@ export default class Feed extends React.Component {
 
   render () {
     const {
-      posts, community, currentUser, selectedPostId, changeTab, selectedTab
+      posts,
+      community,
+      currentUser,
+      selectedPostId,
+      changeTab,
+      filter,
+      changeSort,
+      sortBy
     } = this.props
 
     return <div styleName='feed'>
       <CommunityBanner community={community} currentUser={currentUser} />
-      <TabBar onChangeTab={changeTab} selectedTab={selectedTab} />
+      <TabBar onChangeTab={changeTab}
+        selectedTab={filter}
+        onChangeSort={changeSort}
+        selectedSort={sortBy} />
       <div styleName='feedItems'>
         {posts.map(post => {
           const expanded = post.id === selectedPostId

@@ -38,14 +38,16 @@ const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
 export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
   const slug = getParam('slug', state, props)
-  const filter = getQueryParam('filter', state, props)
-  const extraProps = {...props, slug, filter}
+  const filter = getQueryParam('t', state, props)
+  const sortBy = getQueryParam('s', state, props)
+  const extraProps = {...props, slug, filter, sortBy}
 
   return {
     posts: getPosts(state, extraProps),
     hasMore: getHasMorePosts(state, extraProps),
     slug,
-    selectedTab: filter,
+    filter,
+    sortBy,
     selectedPostId: getParam('postId', state, props),
     community,
     postCount: get('postCount', community),
@@ -56,15 +58,18 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = function (dispatch, props) {
   const slug = getParam('slug', null, props)
-  const filter = getQueryParam('filter', null, props)
-  const sortBy = null // TODO
-  const search = null // TODO
+  const filter = getQueryParam('t', null, props)
+  const sortBy = getQueryParam('s', null, props)
+  const search = null
   return {
     fetchPosts: function (offset) {
       return dispatch(fetchPosts({slug, sortBy, offset, search, filter}))
     },
     changeTab: function (tab) {
-      return dispatch(changeQueryParam(props, 'filter', tab, 'all'))
+      return dispatch(changeQueryParam(props, 't', tab, 'all'))
+    },
+    changeSort: function (sort) {
+      return dispatch(changeQueryParam(props, 's', sort, 'all'))
     }
   }
 }
