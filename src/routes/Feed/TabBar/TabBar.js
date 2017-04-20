@@ -7,15 +7,16 @@ import { CENTER_COLUMN_ID, viewportTop, position } from 'util/scrolling'
 import cx from 'classnames'
 import './TabBar.scss'
 
-export const tabs = [
+const tabs = [
   {id: 'all', label: 'All'},
   {id: 'discussion', label: 'Discussions'},
   {id: 'request', label: 'Requests'},
   {id: 'offer', label: 'Offers'}
 ]
 
-export const sortOptions = [
-  'latest', 'popular'
+const sortOptions = [
+  {id: 'updated', label: 'Latest'},
+  {id: 'votes', label: 'Popular'}
 ]
 
 // how far down from the top the bar is when it's fixed
@@ -23,13 +24,17 @@ const offset = 144
 
 export default class TabBar extends React.Component {
   static propTypes = {
-    onChangeTab: PropTypes.func.isRequired,
-    selectedTab: PropTypes.string
+    onChangeTab: PropTypes.func,
+    onChangeSort: PropTypes.func,
+    selectedTab: PropTypes.string,
+    selectedSort: PropTypes.string
   }
 
   static defaultProps = {
-    selectedTab: 'all',
-    sortOption: 'latest'
+    selectedTab: tabs[0].id,
+    selectedSort: sortOptions[0].id,
+    onChangeTab: () => {},
+    onChangeSort: () => {}
   }
 
   constructor (props) {
@@ -61,7 +66,7 @@ export default class TabBar extends React.Component {
   }
 
   render () {
-    const { selectedTab, sortOption, onChangeTab } = this.props
+    const { selectedTab, selectedSort, onChangeTab, onChangeSort } = this.props
     const { fixed } = this.state
 
     return <div ref='placeholder' styleName='placeholder'>
@@ -76,11 +81,12 @@ export default class TabBar extends React.Component {
         </div>
         <Dropdown styleName='sorter'
           toggleChildren={<span styleName='sorter-label'>
-            {capitalize(sortOption)}
+            {sortOptions.find(o => o.id === selectedSort).label}
             <Icon name='ArrowDown' />
           </span>}
-          items={sortOptions.map(opt => ({
-            label: capitalize(opt)
+          items={sortOptions.map(({ id, label }) => ({
+            label,
+            onClick: () => onChangeSort(id)
           }))}
           alignRight />
       </div>

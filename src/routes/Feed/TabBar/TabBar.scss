@@ -61,6 +61,7 @@
 }
 
 .sorter-label {
+  line-height: 28px;
   composes: caption-lt-lg from 'css/typography.scss';
   > span {
     vertical-align: middle;
