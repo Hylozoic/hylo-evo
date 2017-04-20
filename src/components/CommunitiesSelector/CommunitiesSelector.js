@@ -21,6 +21,13 @@ export default class CommunitiesSelector extends Component {
     }
   }
 
+  reset = () => {
+    this.setState({
+      selected: [],
+      suggestions: []
+    })
+  }
+
   findSuggestions = (searchText) => {
     const { options } = this.props
     const { selected } = this.state

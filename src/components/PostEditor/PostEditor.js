@@ -35,6 +35,18 @@ export default class PostEditor extends React.Component {
     }
   }
 
+  reset = () => {
+    this.editor.reset()
+    this.communitiesSelector.reset()
+    this.setState({
+      postType: this.props.postType,
+      title: '',
+      titlePlaceholder: this.titlePlaceholderForPostType(this.props.postType),
+      description: '',
+      selectedCommunities: []
+    })
+  }
+
   titlePlaceholderForPostType (postType) {
     const { titlePlaceholders } = this.props
     return titlePlaceholders[postType] || titlePlaceholders['default']
@@ -66,26 +78,26 @@ export default class PostEditor extends React.Component {
 
   setSelectedCommunities = selectedCommunities => this.setState({ selectedCommunities })
 
-  save = (description) => {
+  save = () => {
     const { createPost } = this.props
     const {
       postType,
-      selectedCommunities,
-      title
+      title,
+      selectedCommunities
     } = this.state
-    const results = {
-      postType,
-      selectedCommunities,
-      title,
-      description: this.editor.getContentHTML()
-    }
-    console.log(title, this.editor.getContentHTML(), selectedCommunities.map(c => c.id))
+    const description = this.editor.getContentHTML()
     const selectedCommunityIds = selectedCommunities.map(c => c.id)
-    createPost(
+    console.log(
+      postType,
       title,
-      this.editor.getContentHTML(),
+      description,
       selectedCommunityIds
     )
+    createPost(
+      title,
+      description,
+      selectedCommunityIds
+    ).then(() => this.reset())
   }
 
   render () {
@@ -115,11 +127,13 @@ export default class PostEditor extends React.Component {
             styleName='titleInput'
             placeholder={titlePlaceholder}
             value={title}
-            onChange={this.handleTitleChange} />
+            onChange={this.handleTitleChange}
+          />
           <HyloEditor
             styleName='editor'
             placeholder={bodyPlaceholder}
-            ref={component => { this.editor = component && component.getWrappedInstance() }} />
+            ref={component => { this.editor = component && component.getWrappedInstance() }}
+          />
         </div>
       </div>
       <div styleName='footer'>
@@ -129,6 +143,7 @@ export default class PostEditor extends React.Component {
             <CommunitiesSelector
               options={communities}
               onChange={this.setSelectedCommunities}
+              ref={component => { this.communitiesSelector = component }}
             />
           </div>
         </div>

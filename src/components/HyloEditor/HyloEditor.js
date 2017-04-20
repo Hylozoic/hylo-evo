@@ -45,6 +45,12 @@ export default class HyloEditor extends Component {
     }
   }
 
+  reset = () => {
+    this.setState({
+      editorState: EditorState.createEmpty()
+    })
+  }
+
   getContentHTML = () => {
     const { editorState } = this.state
     return stateToHTML(editorState.getCurrentContent())
