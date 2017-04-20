@@ -131,19 +131,19 @@ export function ProfileControls ({ children, currentTab, selectTab }) {
 export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
   return <div styleName='social-buttons'>
     {twitterName &&
-      <a styleName='social-link' href={`https://twitter.com/${twitterName}`}>
+      <a styleName='social-link' href={`https://twitter.com/${twitterName}`} target='_blank'>
         <Icon name='ProfileTwitter' styleName='icon icon-twitter' />
       </a>}
     {facebookUrl &&
-      <a styleName='social-link' href={facebookUrl}>
+      <a styleName='social-link' href={facebookUrl} target='_blank'>
         <Icon name='ProfileFacebook' styleName='icon icon-facebook' />
       </a>}
     {linkedinUrl &&
-      <a styleName='social-link' href={linkedinUrl}>
+      <a styleName='social-link' href={linkedinUrl} target='_blank'>
         <Icon name='ProfileLinkedin' styleName='icon icon-linkedin' />
       </a>}
     {url &&
-      <a styleName='social-link' href={url}>
+      <a styleName='social-link' href={url} target='_blank'>
         <Icon name='ProfileUrl' green styleName='icon' />
       </a>}
   </div>
