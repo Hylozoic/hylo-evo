@@ -1,9 +1,10 @@
 import React, { PropTypes, Component } from 'react'
 import './CommunitySettings.scss'
-import Button from 'components/Button'
+import { Link } from 'react-router-dom'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
 const { string } = PropTypes
+import { communityUrl } from 'util/index'
 
 export default class CommunitySettings extends Component {
   static propTypes = {
@@ -16,7 +17,7 @@ export default class CommunitySettings extends Component {
 
     return <div>
       {communities.map(c =>
-        <CommunityControl community={c} leaveCommunity={leaveCommunity} />)}
+        <CommunityControl community={c} leaveCommunity={leaveCommunity} key={c.id} />)}
     </div>
   }
 }
@@ -28,8 +29,10 @@ export function CommunityControl ({ community, leaveCommunity }) {
     }
   }
   return <div styleName='community-control'>
-    <RoundImage url={community.avatarUrl} medium styleName='avatar' />
-    {community.name}
+    <Link to={communityUrl(community.slug)}>
+      <RoundImage url={community.avatarUrl} medium styleName='avatar' />
+    </Link>
+    <Link to={communityUrl(community.slug)} styleName='name'>{community.name}</Link>
     <span onClick={leave} styleName='leave-button'>Leave</span>
   </div>
 }

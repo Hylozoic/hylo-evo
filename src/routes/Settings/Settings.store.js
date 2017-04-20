@@ -65,6 +65,14 @@ export function updateUserSettings (settings) {
 
 export function leaveCommunity (id) {
   return {
-    type: LEAVE_COMMUNITY
+    type: LEAVE_COMMUNITY,
+    graphql: {
+      query: `mutation ($id: ID) {
+        leaveCommunity(id: $id)
+      }`,
+      variables: {
+        id
+      }
+    }
   }
 }
