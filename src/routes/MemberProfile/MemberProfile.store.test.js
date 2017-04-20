@@ -38,11 +38,10 @@ describe('connector', () => {
   })
 
   describe('personSelector', () => {
-    it('returns a default object for a non-existent person', () => {
-      const expected = { avatarUrl: '', bannerUrl: '', name: '' }
+    it('returns null for a non-existent person', () => {
       props.match.params.id = '1'
       const actual = personSelector(state, props)
-      expect(actual).toEqual(expected)
+      expect(actual).toBe(null)
     })
 
     it('returns the correct person', () => {

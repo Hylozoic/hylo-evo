@@ -31,7 +31,14 @@ export default class PrimaryLayout extends Component {
   }
 
   render () {
-    const { location, community, currentUser, communitiesDrawerOpen, toggleCommunitiesDrawer } = this.props
+    const {
+      community,
+      currentUser,
+      communitiesDrawerOpen,
+      location,
+      memberProfileReady,
+      toggleCommunitiesDrawer
+    } = this.props
 
     const hasDetail = flow(
       map(path => matchPath(location.pathname, {path: path})),
@@ -59,7 +66,7 @@ export default class PrimaryLayout extends Component {
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/c/:slug' exact component={Sidebar} />
-          <Route path='/c/:slug/m/:id' component={MessageMember} />
+          {memberProfileReady && <Route path='/c/:slug/m/:id' component={MessageMember} />}
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})}>
           {/*

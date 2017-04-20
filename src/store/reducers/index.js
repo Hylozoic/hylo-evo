@@ -9,6 +9,7 @@ import pending from './pending'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import CommunitiesSelector from 'components/CommunitiesSelector/CommunitiesSelector.store'
 import Login from 'routes/Login/Login.store'
+import MemberProfile from 'routes/MemberProfile/MemberProfile.store'
 import Members from 'routes/Members/Members.store'
 import queryResults from './queryResults'
 
@@ -29,5 +30,6 @@ export default combineReducers({
   HyloEditor,
   CommunitiesSelector,
   Login,
+  MemberProfile,
   Members
 })

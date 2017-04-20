@@ -9,11 +9,13 @@ const messages = {
 
 export function mapStateToProps (state, props) {
   const error = Number.isSafeInteger(Number(props.match.params.id)) ? null : messages.invalid
+  const person = personSelector(state, props)
 
   return {
     currentTab: 'Overview',
     error,
-    person: personSelector(state, props)
+    person,
+    ready: state.MemberProfile ? state.MemberProfile.ready : false
   }
 }
 

@@ -7,7 +7,8 @@ function mapStateToProps (state, props) {
   return {
     community: getCommunityForCurrentRoute(state, props),
     currentUser: getMe(state),
-    communitiesDrawerOpen: state.communitiesDrawerOpen
+    communitiesDrawerOpen: state.communitiesDrawerOpen,
+    memberProfileReady: state.MemberProfile.ready
   }
 }
 

@@ -6,17 +6,20 @@ import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import { bgImageStyle } from 'util/index'
 
+import Loading from 'components/Loading'
 import SimpleTabBar from 'components/SimpleTabBar'
 import RecentActivity from './RecentActivity'
 import MemberPosts from './MemberPosts'
 import MemberComments from './MemberComments'
 import MemberVotes from './MemberVotes'
 
-const { any, arrayOf, object, string, shape } = React.PropTypes
+const { any, arrayOf, bool, object, string, shape } = React.PropTypes
 
 export default class MemberProfile extends React.Component {
   static propTypes = {
-    id: any,
+    currentTab: string,
+    error: any,
+    ready: bool,
     person: shape({
       id: any,
       avatarUrl: string,
@@ -56,6 +59,7 @@ export default class MemberProfile extends React.Component {
 
   render () {
     if (this.props.error) return this.displayError(this.props.error)
+    if (!this.props.ready) return <Loading />
 
     const {
       avatarUrl,

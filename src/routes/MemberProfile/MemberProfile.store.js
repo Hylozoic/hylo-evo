@@ -1,5 +1,6 @@
 import { createSelector } from 'redux-orm'
 
+import { EXTRACT_MODEL } from 'store/constants'
 import orm from 'store/models'
 
 export const FETCH_PERSON = 'FETCH_PERSON'
@@ -51,12 +52,6 @@ export function getRole (slug, memberships = []) {
     : null
 }
 
-const defaultPerson = {
-  name: '',
-  avatarUrl: '',
-  bannerUrl: ''
-}
-
 export const personSelector = createSelector(
   orm,
   state => state.orm,
@@ -75,6 +70,19 @@ export const personSelector = createSelector(
         role: getRole(slug, memberships)
       }
     }
-    return defaultPerson
+    return null
   }
 )
+
+export default function reducer (state = {}, action) {
+  const { meta, type } = action
+  switch (type) {
+    case EXTRACT_MODEL:
+      return { ...state, ready: meta.modelName === 'Person' }
+
+    case FETCH_PERSON:
+      return { ...state, ready: false }
+  }
+
+  return state
+}
