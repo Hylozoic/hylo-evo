@@ -2,6 +2,7 @@ import orm from 'store/models'
 import payload from '../MemberProfile.test.json'
 import normalized from '../MemberProfile.normalized.test.json'
 import { fetchRecentActivity, activitySelector } from './RecentActivity.store'
+import { mapStateToProps } from './RecentActivity.connector'
 
 describe('fetchRecentActivity', () => {
   it('returns the correct action', () => {
@@ -22,7 +23,7 @@ describe('fetchRecentActivity', () => {
   })
 })
 
-describe('activitySelector', () => {
+describe('connector', () => {
   let session = null
   let state = null
   let props = null
@@ -30,22 +31,36 @@ describe('activitySelector', () => {
   beforeEach(() => {
     session = orm.mutableSession(orm.getEmptyState())
 
-    const { communities, memberships, person } = normalized
-    session.Person.create(person)
+    session.Person.create(normalized.person)
+    session.Post.create(normalized.posts[1])
+    session.Comment.create(normalized.comments[0])
     state = { orm: session.state }
     props = { personId: '46816', slug: 'wombats' }
   })
 
-  it('indexes activityItems preseving sort order', () => {
-    session.Post.create(normalized.posts[1])
-    session.Comment.create(normalized.comments[0])
-    const expected = [
-      "Sat Apr 15 2017 16:27:55 GMT+1200 (NZST)",
-      "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)"
-    ]
-    const actual = activitySelector({ orm: session.state }, props)
-      .map(item => item.createdAt)
+  describe('activitySelector', () => {
+    it('indexes activityItems preseving sort order', () => {
+      const expected = [
+        "Sat Apr 15 2017 16:27:55 GMT+1200 (NZST)",
+        "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)"
+      ]
+      const actual = activitySelector(state, props)
+        .map(item => item.createdAt)
 
-    expect(actual).toEqual(expected)
+      expect(actual).toEqual(expected)
+    })
+
+    it('selects Comments and Posts if both are present', () => {
+      const allItems = activitySelector(state, props)
+      const postItems = allItems.filter(item => item.title)
+      expect(postItems.length).toBeLessThan(allItems.length)
+    })
+  })
+
+  describe('mapStateToProps', () => {
+    it('returns an activityItems property of the correct length', () => {
+      const actual = mapStateToProps(state, props).activityItems.length
+      expect(actual).toBe(2)
+    })
   })
 })

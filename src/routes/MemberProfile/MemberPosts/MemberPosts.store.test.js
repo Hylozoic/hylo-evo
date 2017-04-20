@@ -2,6 +2,7 @@ import orm from 'store/models'
 import payload from '../MemberProfile.test.json'
 import normalized from '../MemberProfile.normalized.test.json'
 import { fetchMemberPosts, memberPostsSelector } from './MemberPosts.store'
+import { mapStateToProps } from './MemberPosts.connector'
 
 describe('fetchMemberPosts', () => {
   it('returns the correct action', () => {
@@ -22,27 +23,36 @@ describe('fetchMemberPosts', () => {
   })
 })
 
-describe('memberPostsSelector', () => {
+describe('connector', () => {
   let session = null
   let state = null
   let props = null
 
   beforeEach(() => {
     session = orm.mutableSession(orm.getEmptyState())
-    const { communities, person } = normalized
+    const { communities, person, posts } = normalized
     session.Person.create(person)
     session.Community.create(communities[0])
+    posts.forEach(post => session.Post.create(post))
     state = { orm: session.state }
     props = { personId: '46816', slug: 'wombats' }
   })
 
-  it('populates posts correctly', () => {
-    session.Post.create(normalized.posts[0])
-    const expected = payload.data.person.posts[0]
-    const actual = memberPostsSelector({ orm: session.state }, props)[0]
+  describe('memberPostsSelector', () => {
+    it('populates posts correctly', () => {
+      const expected = payload.data.person.posts[0]
+      const actual = memberPostsSelector(state, props)[0]
 
-    expect(actual.id).toEqual(expected.id)
-    expect(actual.creator.id).toEqual(expected.creator.id)
-    expect(actual.communities[0].id).toEqual(expected.communities[0].id)
+      expect(actual.id).toEqual(expected.id)
+      expect(actual.creator.id).toEqual(expected.creator.id)
+      expect(actual.communities[0].id).toEqual(expected.communities[0].id)
+    })
+  })
+
+  describe('mapStateToProps', () => {
+    it('returns a posts array property of the correct length', () => {
+      const actual = mapStateToProps(state, props).posts.length
+      expect(actual).toBe(2)
+    })
   })
 })

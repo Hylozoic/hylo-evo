@@ -29,7 +29,7 @@ describe('connector', () => {
   beforeEach(() => {
     session = orm.mutableSession(orm.getEmptyState())
 
-    const { communities, memberships, person } = normalized
+    const { communities, person } = normalized
     session.Person.create(person)
     session.Community.create(communities[0])
     state = { orm: session.state }
