@@ -76,6 +76,9 @@
   font-size: 16px;
   padding-bottom: $space-2x;
   resize: none;
+  &:focus {
+    outline: none;
+  }
 }
 
 // SocialControl
