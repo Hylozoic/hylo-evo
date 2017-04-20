@@ -15,7 +15,8 @@ describe('fetchMemberPosts', () => {
           limit: 10,
           order: 'desc'
         }
-      }
+      },
+      meta: { extractModel: 'Person' }
     }
     const { query, variables } = expected.graphql
     const actual = fetchMemberPosts(variables.id, 'desc', 10, query)

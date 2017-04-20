@@ -49,7 +49,8 @@ export function fetchRecentActivity (id, order = 'desc', limit = 20, query = rec
     graphql: {
       query,
       variables: { id, limit, order }
-    }
+    },
+    meta: { extractModel: 'Person' }
   }
 }
 

@@ -15,7 +15,8 @@ describe('fetchRecentActivity', () => {
           limit: 10,
           order: 'desc'
         }
-      }
+      },
+      meta: { extractModel: 'Person' }
     }
     const { query, variables } = expected.graphql
     const actual = fetchRecentActivity(variables.id, 'desc', 10, query)

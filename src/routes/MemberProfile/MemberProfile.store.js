@@ -40,7 +40,8 @@ export function fetchPerson (id, query = fetchPersonQuery) {
     graphql: {
       query,
       variables: { id }
-    }
+    },
+    meta: { extractModel: 'Person' }
   }
 }
 

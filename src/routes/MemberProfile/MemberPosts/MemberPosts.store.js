@@ -36,7 +36,8 @@ export function fetchMemberPosts (id, order = 'desc', limit = 20, query = member
     graphql: {
       query,
       variables: { id, limit, order }
-    }
+    },
+    meta: { extractModel: 'Person' }
   }
 }
 
