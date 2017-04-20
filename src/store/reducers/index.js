@@ -6,6 +6,7 @@ import {
 import orm from './ormReducer'
 import pending from './pending'
 // Local store
+// generator-marker-local-store-import
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import CommunitiesSelector from 'components/CommunitiesSelector/CommunitiesSelector.store'
 import Login from 'routes/Login/Login.store'
@@ -26,6 +27,7 @@ export default combineReducers({
   },
 
   // Local store (Component)
+  // generator-marker-local-store-reducer
   HyloEditor,
   CommunitiesSelector,
   Login,
