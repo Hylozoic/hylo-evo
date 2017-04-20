@@ -22,7 +22,7 @@ export default class Settings extends Component {
   }
 
   render () {
-    const { currentUser, goBack, updateUserSettings } = this.props
+    const { currentUser, communities, goBack, updateUserSettings, leaveCommunity } = this.props
     return <div styleName='modal'>
       <div styleName='content'>
         <div styleName='left-sidebar'>
@@ -33,7 +33,7 @@ export default class Settings extends Component {
           <Route path='/settings' exact render={() =>
             <AccountSettings currentUser={currentUser} updateUserSettings={updateUserSettings} />} />
           <Route path='/settings/communities' exact render={() =>
-            <CommunitySettings currentUser={currentUser} />} />
+            <CommunitySettings communities={communities} leaveCommunity={leaveCommunity} />} />
         </div>
         <div styleName='right-sidebar'>
           <CloseButton onClose={goBack} />

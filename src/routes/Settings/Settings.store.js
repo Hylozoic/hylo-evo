@@ -1,4 +1,4 @@
-import { FETCH_USER_SETTINGS, UPDATE_USER_SETTINGS } from 'store/constants'
+import { FETCH_USER_SETTINGS, UPDATE_USER_SETTINGS, LEAVE_COMMUNITY } from 'store/constants'
 
 export function fetchUserSettings () {
   return {
@@ -60,5 +60,11 @@ export function updateUserSettings (settings) {
         settings
       }
     }
+  }
+}
+
+export function leaveCommunity (id) {
+  return {
+    type: LEAVE_COMMUNITY
   }
 }
