@@ -4,7 +4,7 @@ import Editor from 'draft-js-plugins-editor'
 import createMentionPlugin from 'draft-js-mention-plugin'
 import createHashtagPlugin from './hashtagPlugin'
 import createLinkifyPlugin from 'draft-js-linkify-plugin'
-import { EditorState, convertToRaw } from 'draft-js'
+import { EditorState, ContentState, convertToRaw } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
 import 'draft-js/dist/Draft.css'
 import 'draft-js-mention-plugin/lib/plugin.css'
@@ -40,16 +40,21 @@ export default class HyloEditor extends Component {
   constructor (props) {
     super(props)
     this.submitOnReturnEnabled = true
-    this.state = {
-      editorState: EditorState.createEmpty()
-    }
+    this.state = {editorState: EditorState.createEmpty()}
   }
 
   reset = () => {
+    // https://github.com/draft-js-plugins/draft-js-plugins/blob/master/FAQ.md
     this.setState({
-      editorState: EditorState.createEmpty()
+      editorState: EditorState.push(
+        this.state.editorState,
+        ContentState.createFromText('')
+      )
     })
   }
+
+  isEmpty = () =>
+    !this.state.editorState.getCurrentContent().hasText()
 
   getContentHTML = () => {
     const { editorState } = this.state
@@ -61,13 +66,14 @@ export default class HyloEditor extends Component {
     return convertToRaw(editorState.getCurrentContent())
   }
 
-  handleEditorChange = (editorState) => {
-    if (this.props.debug) console.log(this.getContentRaw())
+  handleChange = (editorState) => {
     this.setState({ editorState })
+    if (this.props.onChange) this.props.onChange(editorState)
   }
 
   handleMentionsSearch = ({ value }) => {
-    return this.props.findMentions(value)
+    const findFunc = (v) => this.props.findMentions(v)
+    return setTimeout(findFunc, 2000, value)
   }
 
   handleHashtagSearch = ({ value }) => {
@@ -101,13 +107,11 @@ export default class HyloEditor extends Component {
     this.enableSubmitOnReturn()
   }
 
-  disableSubmitOnReturn
-
   render () {
     return <div styleName='wrapper' className={this.props.className}>
       <Editor
         editorState={this.state.editorState}
-        onChange={this.handleEditorChange}
+        onChange={this.handleChange}
         placeholder={this.props.placeholder}
         handleReturn={this.handleReturn}
         plugins={plugins} />

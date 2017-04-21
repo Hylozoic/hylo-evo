@@ -21,8 +21,7 @@ export function fetchPost (id, opts = {}) {
 // startsAt,
 // endsAt,
 // parentPostId
-export function createPost (title, details, communityIds) {
-  console.log(title, details, communityIds)
+export function createPost (title, details, communityIds, postType) {
   return {
     type: CREATE_POST,
     graphql: {

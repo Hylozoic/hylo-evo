@@ -24,27 +24,25 @@ export default class PostEditor extends React.Component {
     postType: 'discussion'
   }
 
+  defaultState = ({ postType }) => {
+    return {
+      postType: postType,
+      title: '',
+      titlePlaceholder: this.titlePlaceholderForPostType(postType),
+      selectedCommunities: [],
+      valid: false
+    }
+  }
+
   constructor (props) {
     super(props)
-    this.state = {
-      postType: props.postType,
-      title: '',
-      titlePlaceholder: this.titlePlaceholderForPostType(props.postType),
-      description: '',
-      selectedCommunities: []
-    }
+    this.state = this.defaultState(props)
   }
 
   reset = () => {
     this.editor.reset()
     this.communitiesSelector.reset()
-    this.setState({
-      postType: this.props.postType,
-      title: '',
-      titlePlaceholder: this.titlePlaceholderForPostType(this.props.postType),
-      description: '',
-      selectedCommunities: []
-    })
+    this.setState(this.defaultState(this.props))
   }
 
   titlePlaceholderForPostType (postType) {
@@ -55,7 +53,8 @@ export default class PostEditor extends React.Component {
   handlePostTypeSelection = postType => event => {
     this.setState({
       postType,
-      titlePlaceholder: this.titlePlaceholderForPostType(postType)
+      titlePlaceholder: this.titlePlaceholderForPostType(postType),
+      valid: this.isValid({ postType })
     })
   }
 
@@ -74,35 +73,46 @@ export default class PostEditor extends React.Component {
     }
   }
 
-  handleTitleChange = (event) => this.setState({title: event.target.value})
+  handleTitleChange = (event) => {
+    const title = event.target.value
+    this.setState({
+      title,
+      valid: this.isValid({ title })
+    })
+  }
 
-  setSelectedCommunities = selectedCommunities => this.setState({ selectedCommunities })
+  setSelectedCommunities = selectedCommunities => {
+    this.setState({
+      selectedCommunities,
+      valid: this.isValid({ selectedCommunities })
+    })
+  }
+
+  isValid = (updates = {}) => {
+    const { selectedCommunities, postType, title } = Object.assign({}, this.state, updates)
+    return !!(this.editor &&
+      selectedCommunities &&
+      postType.length > 0 &&
+      title.length > 0 &&
+      !this.editor.isEmpty() &&
+      selectedCommunities.length > 0)
+  }
+
+  setValid = () =>
+    this.setState({valid: this.isValid()})
 
   save = () => {
     const { createPost } = this.props
-    const {
-      postType,
-      title,
-      selectedCommunities
-    } = this.state
+    const { title, postType, selectedCommunities } = this.state
     const description = this.editor.getContentHTML()
     const selectedCommunityIds = selectedCommunities.map(c => c.id)
-    console.log(
-      postType,
-      title,
-      description,
-      selectedCommunityIds
-    )
-    createPost(
-      title,
-      description,
-      selectedCommunityIds
-    ).then(() => this.reset())
+    createPost(title, description, selectedCommunityIds, postType)
+      .then(this.reset)
   }
 
   render () {
     const { bodyPlaceholder, communities } = this.props
-    const { titlePlaceholder, title } = this.state
+    const { titlePlaceholder, title, valid } = this.state
 
     return <div styleName='wrapper'>
       <div styleName='header'>
@@ -119,7 +129,8 @@ export default class PostEditor extends React.Component {
             medium
             styleName='titleAvatar'
             url=''
-            avatarUrl='https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png' />
+            avatarUrl='https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+          />
         </div>
         <div styleName='body-column'>
           <input
@@ -132,6 +143,7 @@ export default class PostEditor extends React.Component {
           <HyloEditor
             styleName='editor'
             placeholder={bodyPlaceholder}
+            onChange={this.setValid}
             ref={component => { this.editor = component && component.getWrappedInstance() }}
           />
         </div>
@@ -148,7 +160,13 @@ export default class PostEditor extends React.Component {
           </div>
         </div>
         <div styleName='actionsBar'>
-          <Button onClick={this.save} styleName='postButton' label='Post' color='green' />
+          <Button
+            onClick={this.save}
+            disabled={!valid}
+            styleName='postButton'
+            label='Post'
+            color='green'
+          />
         </div>
       </div>
     </div>
