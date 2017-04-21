@@ -9,10 +9,10 @@ export default function optimisticMiddleware (store) {
       const prevState = store.getState()
       action.payload = action.payload.then(
         result => {
-          if (result.errors) {
-            store.dispatch({type: SET_STATE, payload: prevState})
-            throw result.errors
-          }
+          // if (result.errors) {
+          //   store.dispatch({type: SET_STATE, payload: prevState})
+          //   throw result.errors
+          // }
           return result
         },
         error => {

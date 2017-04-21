@@ -8,7 +8,11 @@ export default function graphqlMiddleware (store) {
       type,
       meta: {
         ...meta,
-        graphql: {query, variables}
+        graphql: {query, variables},
+        then: payload => {
+          if (payload.errors) return Promise.reject(payload.errors)
+          return payload
+        }
       },
       payload: {
         api: {
