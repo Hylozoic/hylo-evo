@@ -45,6 +45,20 @@ describe('optimisticMiddleware', () => {
 describe('graphqlMiddleware', () => {
   let next, initialState, store, middleware
 
+  const expectMetaThenToReject = (shouldReject, action) =>
+    middleware(next)(action)
+    .then(({meta}) => {
+      expect(next).toHaveBeenCalled()
+      const then = meta.then
+      let rejected = false
+      return Promise.resolve(action.payload)
+      .then(then)
+      .then(result => result, reject => { rejected = true })
+      .then(() => {
+        expect(rejected).toEqual(shouldReject)
+      })
+    })
+
   beforeEach(() => {
     initialState = {
       aReducer: {a: 1, b: 2}
@@ -62,19 +76,10 @@ describe('graphqlMiddleware', () => {
         errors: [{message: 'problems'}]
       }
     }
-    return middleware(next)(action)
-    .then(({meta}) => {
-      expect(next).toHaveBeenCalled()
-      const then = meta.then
-      let rejected = false
-      return Promise.resolve(action.payload)
-      .then(then)
-      .then(result => result, reject => { rejected = true })
-      .then(() => {
-        expect(rejected).toEqual(true)
-      })
-    })
+    return expectMetaThenToReject(true, action)
   })
+
+
 
   it('adds a then that passes through the payload when there are no errors', () => {
     const action = {
@@ -84,17 +89,6 @@ describe('graphqlMiddleware', () => {
         data: 'no problems'
       }
     }
-    return middleware(next)(action)
-    .then(({meta}) => {
-      expect(next).toHaveBeenCalled()
-      const then = meta.then
-      let rejected = false
-      return Promise.resolve(action.payload)
-      .then(then)
-      .then(result => result, reject => { rejected = true })
-      .then(() => {
-        expect(rejected).toEqual(false)
-      })
-    })
+    return expectMetaThenToReject(false, action)
   })
 })
