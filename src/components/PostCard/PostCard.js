@@ -39,6 +39,7 @@ export default class PostCard extends React.Component {
 
   render () {
     const { post, className, expanded, showDetails } = this.props
+    const slug = get('0.slug', post.communities)
 
     const visitPost = event => {
       if (event.target.tagName !== 'A') navigate(postUrl(post.id, slug))
@@ -57,7 +58,7 @@ export default class PostCard extends React.Component {
         id={post.id}
         details={post.details}
         linkPreview={post.linkPreview}
-        slug={get('0.slug', post.communities)} />
+        slug={slug} />
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
