@@ -1,18 +1,5 @@
-.feed {
+.container {
   padding-top: $space-6x;
-}
-
-.feedItems {
-  margin: 0 auto;
-  overflow: auto; // prevent margin collapse
-}
-
-.feedItem {
-  margin: 0 $space-4x $space-6x;
-}
-
-.expanded {
-  margin: 0 $space-2x $space-6x;
 }
 
 // CommunityBanner
@@ -124,9 +111,4 @@
   background-color: transparent;
   box-shadow: 0px 4px 42px 0px $color-seashell;
   z-index: -10;
-}
-
-// TabBar
-.tabBar {
-  /* empty */
 }

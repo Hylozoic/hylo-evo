@@ -1,7 +1,8 @@
 import React, { PropTypes, Component } from 'react'
-import { matchPath, Route } from 'react-router-dom'
+import { matchPath, Redirect, Route } from 'react-router-dom'
 import cx from 'classnames'
 import { flow, map, some, identity } from 'lodash/fp'
+import Loading from 'components/Loading'
 import CommunitiesDrawer from './components/CommunitiesDrawer'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
@@ -36,7 +37,6 @@ export default class PrimaryLayout extends Component {
       currentUser,
       communitiesDrawerOpen,
       location,
-      memberProfileReady,
       toggleCommunitiesDrawer
     } = this.props
 
@@ -57,7 +57,7 @@ export default class PrimaryLayout extends Component {
       <div styleName='main'>
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
-          <Route path='/' exact render={() => <CommunityFeed {...{community, currentUser}} />} />
+          <RedirectToCommunity currentUser={currentUser} />
           <Route path='/c/:slug/' exact component={CommunityFeed} />
           <Route path='/c/:slug/p/:postId' component={CommunityFeed} />
           <Route path='/c/:slug/m/:id' component={MemberProfile} />
@@ -82,4 +82,17 @@ export default class PrimaryLayout extends Component {
       </div>
     </div>
   }
+}
+
+function RedirectToCommunity ({ currentUser }) {
+  return <Route path='/' exact render={() => {
+    if (!currentUser) return <Loading type='top' />
+
+    const mostRecentCommunity = currentUser.memberships
+    .orderBy(m => new Date(m.lastViewedAt), 'desc')
+    .first()
+    .community
+
+    return <Redirect to={`/c/${mostRecentCommunity.slug}`} />
+  }} />
 }
