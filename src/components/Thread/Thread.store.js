@@ -76,7 +76,7 @@ export function fetchBeforeMessages (threadId, cursor) {
       }
     },
     meta: {
-      rootModelName: 'MessageThread'
+      extractModel: 'MessageThread'
     }
   }
 }
