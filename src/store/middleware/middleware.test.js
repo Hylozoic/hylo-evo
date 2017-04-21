@@ -1,6 +1,6 @@
 import { mockReduxStore } from 'tests/mocks'
 import optimisticMiddleware from 'store/middleware/optimisticMiddleware'
-import grapphqlMiddleware from 'store/middleware/graphql'
+import graphqlMiddleware from 'store/middleware/graphql'
 import { SET_STATE } from 'store/constants'
 
 describe('optimisticMiddleware', () => {
@@ -54,23 +54,46 @@ describe('graphqlMiddleware', () => {
     next = jest.fn(val => Promise.resolve(val))
   })
 
-
-  describe('with a promise payload and meta.optimistic', () => {
-    it('dispatches SET_STATE on error', () => {
-      const action = {
-        type: 'FOO',
-        payload: Promise.reject(new Error('promise failed')),
-        meta: {optimistic: true}
+  it('adds a then that rejects when there are errors', () => {
+    const action = {
+      type: 'FOO',
+      graphql: true,
+      payload: {
+        errors: [{message: 'problems'}]
       }
-      let setStatePayload
-      store.transformAction(SET_STATE, action => {
-        setStatePayload = action.payload
-      })
-      return middleware(next)(action)
+    }
+    return middleware(next)(action)
+    .then(({meta}) => {
+      expect(next).toHaveBeenCalled()
+      const then = meta.then
+      let rejected = false
+      return Promise.resolve(action.payload)
+      .then(then)
+      .then(result => result, reject => { rejected = true })
       .then(() => {
-        expect(next).toHaveBeenCalled()
-        expect(setStatePayload).toEqual(store.getState())
-        expect(setStatePayload).toEqual(initialState)
+        expect(rejected).toEqual(true)
+      })
+    })
+  })
+
+  it('adds a then that passes through the payload when there are no errors', () => {
+    const action = {
+      type: 'FOO',
+      graphql: true,
+      payload: {
+        data: 'no problems'
+      }
+    }
+    return middleware(next)(action)
+    .then(({meta}) => {
+      expect(next).toHaveBeenCalled()
+      const then = meta.then
+      let rejected = false
+      return Promise.resolve(action.payload)
+      .then(then)
+      .then(result => result, reject => { rejected = true })
+      .then(() => {
+        expect(rejected).toEqual(false)
       })
     })
   })
