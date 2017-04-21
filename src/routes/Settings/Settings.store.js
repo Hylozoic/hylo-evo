@@ -70,9 +70,8 @@ export function leaveCommunity (id) {
       query: `mutation ($id: ID) {
         leaveCommunity(id: $id)
       }`,
-      variables: {
-        id
-      }
-    }
+      variables: {id}
+    },
+    meta: {id}
   }
 }

@@ -2,10 +2,11 @@ import * as a from 'store/constants'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
+import { find } from 'lodash/fp'
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
-  const { Comment, Community, Membership, Person, Post, FeedItem } = session
+  const { Comment, Community, Me, Membership, Person, Post, FeedItem } = session
   const { payload, type, meta, error } = action
   if (error) return state
 
@@ -83,6 +84,12 @@ export default function ormReducer (state = {}, action) {
         },
         modelName: 'Post'
       })
+      break
+
+    case a.LEAVE_COMMUNITY:
+      const me = Me.first()
+      const membership = find(m => m.community.id === meta.id, me.memberships.toModelArray())
+      membership && membership.delete()
   }
 
   return session.state
