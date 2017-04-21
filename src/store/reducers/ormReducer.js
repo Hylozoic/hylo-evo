@@ -13,7 +13,6 @@ export default function ormReducer (state = {}, action) {
   if (error) return state
 
   const { MessageThread } = session
-  console.log(type)
 
   switch (type) {
     case EXTRACT_MODEL:
