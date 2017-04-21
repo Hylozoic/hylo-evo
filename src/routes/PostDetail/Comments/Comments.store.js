@@ -60,7 +60,8 @@ export function createComment (postId, text) {
       }
     },
     meta: {
-      extractModel: 'Comment'
+      postId,
+      text
     }
   }
 }
