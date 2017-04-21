@@ -31,7 +31,7 @@ export function fetchUserSettings () {
       }`
     },
     meta: {
-      rootModelName: 'Person'
+      extractModel: 'Me'
     }
   }
 }
