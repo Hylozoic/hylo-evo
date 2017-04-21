@@ -22,7 +22,7 @@ export default class ChangeImageButton extends Component {
     const iconName = loading ? 'Clock' : 'AddImage'
 
     return <div styleName='button' onClick={onClick} className={className}>
-      <Icon name={iconName} styleName='icon black' /><Icon name={iconName} styleName='icon white' />
+      <Icon name={iconName} styleName='icon' />
     </div>
   }
 }
