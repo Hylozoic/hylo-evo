@@ -1,5 +1,5 @@
 import { FETCH_COMMENTS, CREATE_COMMENT } from 'store/constants'
-import { get } from 'lodash/fp'
+import { get, uniqueId } from 'lodash/fp'
 import { createSelector } from 'reselect'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 
@@ -61,6 +61,8 @@ export function createComment (postId, text) {
     },
     meta: {
       optimistic: true,
+      extractModel: 'Comment',
+      tempId: uniqueId(`post${postId}_`),
       postId,
       text
     }
