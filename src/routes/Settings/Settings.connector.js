@@ -1,12 +1,11 @@
 import { connect } from 'react-redux'
 import { goBack } from 'react-router-redux'
 import { getMe } from 'store/selectors/getMe'
-import { fetchUserSettings, updateUserSettings, leaveCommunity } from './Settings.store'
+import { fetchUserSettings, updateUserSettings, leaveCommunity, getCurrentUserCommunities } from './Settings.store'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
-  const communities = currentUser &&
-    currentUser.memberships.toModelArray().map(m => m.community)
+  const communities = getCurrentUserCommunities(state, props)
 
   return {
     currentUser,

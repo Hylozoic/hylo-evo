@@ -1,4 +1,14 @@
 import { FETCH_USER_SETTINGS, UPDATE_USER_SETTINGS, LEAVE_COMMUNITY } from 'store/constants'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import orm from 'store/models'
+
+// this selector assumes that all Memberships belong to the currentUser
+export const getCurrentUserCommunities = ormCreateSelector(
+  orm,
+  state => state.orm,
+  (session) =>
+    session.Membership.all().toModelArray().map(m => m.community)
+)
 
 export function fetchUserSettings () {
   return {
