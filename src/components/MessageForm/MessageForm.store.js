@@ -30,7 +30,8 @@ export function createMessage (messageThreadId, text, userId) {
       }
     },
     meta: {
-      extractModel: 'Message'
+      extractModel: 'Message',
+      messageThreadId
     }
   }
 }
