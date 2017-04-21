@@ -12,8 +12,9 @@ import CommunitiesSelector from 'components/CommunitiesSelector/CommunitiesSelec
 import Login from 'routes/Login/Login.store'
 import Members from 'routes/Members/Members.store'
 import queryResults from './queryResults'
+import { handleSetState, composeReducers } from './util'
 
-export default combineReducers({
+const combinedReducers = combineReducers({
   // Global store
   orm,
   router: routerReducer,
@@ -33,3 +34,5 @@ export default combineReducers({
   Login,
   Members
 })
+
+export default composeReducers(combinedReducers, handleSetState)

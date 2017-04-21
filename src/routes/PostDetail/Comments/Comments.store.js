@@ -60,6 +60,7 @@ export function createComment (postId, text) {
       }
     },
     meta: {
+      optimistic: true,
       postId,
       text
     }

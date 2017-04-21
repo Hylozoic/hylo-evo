@@ -1,4 +1,4 @@
-import { EXTRACT_MODEL, CREATE_COMMENT, CREATE_COMMENT_PENDING } from 'store/constants'
+import { EXTRACT_MODEL, CREATE_COMMENT_PENDING } from 'store/constants'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
 import { uniqueId } from 'lodash'
