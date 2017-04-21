@@ -44,7 +44,7 @@ export function fetchThread (threadId) {
       }
     },
     meta: {
-      rootModelName: 'MessageThread'
+      extractModel: 'MessageThread'
     }
   }
 }
