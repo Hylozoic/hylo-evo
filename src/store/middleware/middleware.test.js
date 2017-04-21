@@ -10,7 +10,7 @@ describe('optimisticMiddleware', () => {
     initialState = {
       aReducer: {a: 1, b: 2}
     }
-    store = mockReduxStore(initialState)
+    store = {dispatch: jest.fn(), getState: () => initialState}
     middleware = optimisticMiddleware(store)
     next = jest.fn(val => Promise.resolve(val))
   })
@@ -28,15 +28,10 @@ describe('optimisticMiddleware', () => {
         payload: Promise.reject(new Error('promise failed')),
         meta: {optimistic: true}
       }
-      let setStatePayload
-      store.transformAction(SET_STATE, action => {
-        setStatePayload = action.payload
-      })
       return middleware(next)(action)
       .then(() => {
         expect(next).toHaveBeenCalled()
-        expect(setStatePayload).toEqual(store.getState())
-        expect(setStatePayload).toEqual(initialState)
+        expect(store.dispatch).toBeCalledWith({type: SET_STATE, payload: initialState})
       })
     })
   })
@@ -78,8 +73,6 @@ describe('graphqlMiddleware', () => {
     }
     return expectMetaThenToReject(true, action)
   })
-
-
 
   it('adds a then that passes through the payload when there are no errors', () => {
     const action = {

@@ -17,7 +17,11 @@ export default function ormReducer (state = {}, action) {
   }
 
   if (type === CREATE_COMMENT_PENDING) {
-    session.Comment.create({id: uniqueId(`post${meta.postId}_`), post: meta.postId, text: meta.text, creator: session.Me.first().id})
+    session.Comment.create({
+      id: uniqueId(`post${meta.postId}_`),
+      post: meta.postId,
+      text: meta.text,
+      creator: session.Me.first().id})
   }
 
   return session.state
