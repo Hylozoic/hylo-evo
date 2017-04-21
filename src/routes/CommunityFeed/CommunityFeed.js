@@ -1,5 +1,5 @@
 import React from 'react'
-import './Feed.scss'
+import './CommunityFeed.scss'
 import PostCard from 'components/PostCard'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
@@ -11,7 +11,7 @@ import cx from 'classnames'
 import { isEmpty, some } from 'lodash/fp'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
 
-export default class Feed extends React.Component {
+export default class CommunityFeed extends React.Component {
   static defaultProps = {
     posts: [],
     selectedPostId: null

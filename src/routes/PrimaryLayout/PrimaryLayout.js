@@ -6,7 +6,7 @@ import CommunitiesDrawer from './components/CommunitiesDrawer'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
 import Sidebar from './components/Sidebar'
-import Feed from 'routes/Feed'
+import CommunityFeed from 'routes/CommunityFeed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 import MemberProfile from 'routes/MemberProfile'
@@ -57,9 +57,9 @@ export default class PrimaryLayout extends Component {
       <div styleName='main'>
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
-          <Route path='/' exact render={() => <Feed {...{community, currentUser}} />} />
-          <Route path='/c/:slug/' exact component={Feed} />
-          <Route path='/c/:slug/p/:postId' component={Feed} />
+          <Route path='/' exact render={() => <CommunityFeed {...{community, currentUser}} />} />
+          <Route path='/c/:slug/' exact component={CommunityFeed} />
+          <Route path='/c/:slug/p/:postId' component={CommunityFeed} />
           <Route path='/c/:slug/m/:id' component={MemberProfile} />
           <Route path='/events' component={Events} />
           <Route path='/c/:slug/members' component={Members} />

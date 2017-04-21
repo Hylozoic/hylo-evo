@@ -1,6 +1,6 @@
 import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
-import { mapStateToProps } from './Feed.connector'
+import { mapStateToProps } from './CommunityFeed.connector'
 import { times } from 'lodash/fp'
 import { buildKey } from 'store/reducers/queryResults'
 
