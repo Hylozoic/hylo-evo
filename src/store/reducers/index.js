@@ -6,6 +6,7 @@ import {
 import orm from './ormReducer'
 import pending from './pending'
 // Local store
+// generator-marker-local-store-import
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import Login from 'routes/Login/Login.store'
 import Members from 'routes/Members/Members.store'
@@ -25,6 +26,7 @@ export default combineReducers({
   },
 
   // Local store (Component)
+  // generator-marker-local-store-reducer
   HyloEditor,
   Login,
   Members

@@ -22,7 +22,7 @@ export default function fetchCurrentUser () {
       }`
     },
     meta: {
-      rootModelName: 'Person'
+      extractModel: 'Me'
     }
   }
 }

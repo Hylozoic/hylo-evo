@@ -1,5 +1,5 @@
 import React from 'react'
-import './Feed.scss'
+import './CommunityFeed.scss'
 import PostCard from 'components/PostCard'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
@@ -8,9 +8,10 @@ import TabBar from './TabBar'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
-import { isEmpty } from 'lodash'
+import { isEmpty, some } from 'lodash/fp'
+import { queryParamWhitelist } from 'store/reducers/queryResults'
 
-export default class Feed extends React.Component {
+export default class CommunityFeed extends React.Component {
   static defaultProps = {
     posts: [],
     selectedPostId: null
@@ -26,8 +27,10 @@ export default class Feed extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.slug === prevProps.slug) return
-    this.fetchOrShowCached()
+    if (!prevProps) return
+    if (some(key => this.props[key] !== prevProps[key], queryParamWhitelist)) {
+      this.fetchOrShowCached()
+    }
   }
 
   fetchMorePosts () {
@@ -37,11 +40,24 @@ export default class Feed extends React.Component {
   }
 
   render () {
-    const { posts, community, currentUser, selectedPostId } = this.props
+    const {
+      posts,
+      community,
+      currentUser,
+      selectedPostId,
+      changeTab,
+      filter,
+      changeSort,
+      sortBy,
+      showPostDetails
+    } = this.props
 
     return <div styleName='feed'>
       <CommunityBanner community={community} currentUser={currentUser} />
-      <TabBar />
+      <TabBar onChangeTab={changeTab}
+        selectedTab={filter}
+        onChangeSort={changeSort}
+        selectedSort={sortBy} />
       <div styleName='feedItems'>
         {posts.map(post => {
           const expanded = post.id === selectedPostId
@@ -49,6 +65,7 @@ export default class Feed extends React.Component {
             post={post}
             styleName={cx('feedItem', {expanded})}
             expanded={expanded}
+            showDetails={() => showPostDetails(post.id)}
             key={post.id} />
         })}
       </div>

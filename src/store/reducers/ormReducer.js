@@ -1,14 +1,13 @@
-import * as a from 'store/constants'
+import { EXTRACT_MODEL } from 'store/constants'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
-import { FETCH_MEMBERS } from 'routes/Members/Members.store'
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
-  const { Comment, Community, Membership, Person, Post, FeedItem } = session
   const { payload, type, meta, error } = action
   if (error) return state
 
+<<<<<<< HEAD
   const add = addEntity(payload)
   const update = updateEntity(payload)
   const del = deleteEntity(payload)
@@ -79,21 +78,15 @@ export default function ormReducer (state = {}, action) {
         modelName: 'Comment'
       })
       break
+=======
+  if (type === EXTRACT_MODEL) {
+    ModelExtractor.addAll({
+      session,
+      root: payload,
+      modelName: meta.modelName
+    })
+>>>>>>> master
   }
 
   return session.state
-}
-
-function addEntity (payload) {
-  return model => model.hasId(payload.id)
-    ? model.withId(payload.id).update(payload)
-    : model.create(payload)
-}
-
-function deleteEntity (payload) {
-  return model => model.withId(payload.id).delete()
-}
-
-function updateEntity (payload) {
-  return model => model.withId(payload.id).update(payload)
 }

@@ -55,7 +55,7 @@ export function fetchPost (id, opts = {}) {
       }
     },
     meta: {
-      rootModelName: 'Post'
+      extractModel: 'Post'
     }
   }
 }

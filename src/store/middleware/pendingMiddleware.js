@@ -1,6 +1,4 @@
-function isPromise (value) {
-  return value && typeof value.then === 'function'
-}
+import { isPromise } from 'util/index'
 
 export default function pendingMiddleware (store) {
   return next => action => {

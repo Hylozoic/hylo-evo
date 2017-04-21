@@ -68,4 +68,4 @@ export function buildKey (type, params) {
   })
 }
 
-export const queryParamWhitelist = ['id', 'slug', 'sortBy', 'search']
+export const queryParamWhitelist = ['id', 'slug', 'sortBy', 'search', 'filter']

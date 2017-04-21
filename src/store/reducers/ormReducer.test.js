@@ -1,34 +1,49 @@
 import orm from 'store/models' // this initializes redux-orm
 import ormReducer from './ormReducer'
-import { ADD_PERSON, UPDATE_PERSON, FETCH_POSTS } from 'store/constants'
+import { EXTRACT_MODEL } from 'store/constants'
 
-describe('ADD_PERSON', () => {
-  it('adds a person to app state', () => {
-    const person = {id: '1', name: 'Lolo'}
-    const state = orm.getEmptyState()
-    const action = {type: ADD_PERSON, payload: person}
+it('responds to EXTRACT_MODEL', () => {
+  const state = orm.getEmptyState()
 
-    const { Person: { itemsById, items } } = ormReducer(state, action)
-    expect(itemsById[person.id]).toEqual(person)
-    expect(items).toEqual([person.id])
-  })
-})
+  const action = {
+    type: EXTRACT_MODEL,
+    payload: {
+      id: '1',
+      title: 'Cat on the loose',
+      communities: [
+        {
+          id: '1',
+          name: 'Neighborhood'
+        }
+      ],
+      creator: {
+        id: '2',
+        name: 'Greg'
+      }
+    },
+    meta: {
+      modelName: 'Post'
+    }
+  }
 
-describe('UPDATE_PERSON', () => {
-  let state
+  const newState = ormReducer(state, action)
 
-  beforeEach(() => {
-    const session = orm.session(orm.getEmptyState())
-    session.Person.create({id: '1'})
-    state = session.state
-  })
-
-  it('updates a person in app state', () => {
-    const person = {id: '1', name: 'Lolo'}
-    const action = {type: UPDATE_PERSON, payload: person}
-
-    const { Person: { itemsById, items } } = ormReducer(state, action)
-    expect(itemsById[person.id]).toEqual(person)
-    expect(items).toEqual([person.id])
+  expect(newState).toMatchObject({
+    Community: {
+      items: ['1'],
+      itemsById: {'1': {id: '1', name: 'Neighborhood'}}
+    },
+    Person: {
+      items: ['2'],
+      itemsById: {'2': {id: '2', name: 'Greg'}}
+    },
+    Post: {
+      items: ['1'],
+      itemsById: {'1': {id: '1', title: 'Cat on the loose', creator: '2'}}
+    },
+    PostCommunities: {
+      items: [0],
+      itemsById: {'0': {fromPostId: '1', toCommunityId: '1', id: 0}}
+    }
   })
 })
