@@ -59,7 +59,7 @@ export default class AccountSettings extends Component {
 
     const { edits, changed } = this.state
     const {
-      name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl
+      name = '', avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl
     } = edits
 
     const updateSetting = key => event => {
@@ -82,7 +82,7 @@ export default class AccountSettings extends Component {
     }
 
     return <div>
-      <input type='text' styleName='name' onChange={updateSetting('name')} value={name} />
+      <input type='text' styleName='name' onChange={updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <ChangeImageButton
           update={updateSettingDirectly('bannerUrl')}
@@ -111,7 +111,7 @@ export default class AccountSettings extends Component {
   }
 }
 
-export function Control ({ label, value, onChange, type }) {
+export function Control ({ label, value = '', onChange, type }) {
   return <div styleName='control'>
     <label styleName='control-label'>{label}</label>
     {type === 'textarea'
@@ -127,7 +127,7 @@ export class SocialControl extends Component {
   }
 
   render () {
-    const { label, onChange, value } = this.props
+    const { label, onChange, value = '' } = this.props
     const { open } = this.state
     const linked = !!value
     const unlinkClicked = () => onChange({target: {value: ''}})
