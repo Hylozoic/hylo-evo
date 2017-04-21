@@ -1,13 +1,14 @@
 import { connect } from 'react-redux'
 import { getMe } from 'store/selectors/getMe'
+import { updateThreadReadTime } from './MessageSection.store'
 
 export function mapStateToProps (state) {
   return {
-    currentUser: getMe(state),
-//  TODO: move this into actions
-    updateThreadReadTime: () => {}
+    currentUser: getMe(state)
   }
 }
 
-export const mapDispatchToProps = {}
+export const mapDispatchToProps = {
+  updateThreadReadTime
+}
 export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})
