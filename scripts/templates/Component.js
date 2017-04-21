@@ -3,9 +3,9 @@ import './ReplaceComponent.scss'
 
 const { string } = React.PropTypes
 
-export default function ReplaceComponent ({ exampleProp }) {
-  return <div styleName='exampleName'>{exampleProp}</div>
+export default function ReplaceComponent ({ example }) {
+  return <div styleName='exampleName'>{example}</div>
 }
 ReplaceComponent.propTypes = {
-  exampleProp: string
+  example: string
 }

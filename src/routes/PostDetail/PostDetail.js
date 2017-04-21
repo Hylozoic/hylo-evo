@@ -1,9 +1,9 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router-dom'
-import { isEmpty } from 'lodash/fp'
+import { isEmpty, get } from 'lodash/fp'
 import './PostDetail.scss'
 const { object, string, func } = PropTypes
-import { PostHeader, PostImage, PostBody, PostFooter } from 'components/PostCard/component'
+import { PostHeader, PostImage, PostBody, PostFooter } from 'components/PostCard'
 import Comments from './Comments'
 import { tagUrl, communityUrl } from 'util/index'
 
@@ -17,6 +17,12 @@ export default class PostDetail extends Component {
 
   componentDidMount () {
     this.props.fetchPost()
+  }
+
+  componentDidUpdate (prevProps) {
+    if (get('post.id', this.props) !== get('post.id', prevProps)) {
+      this.props.fetchPost()
+    }
   }
 
   render () {

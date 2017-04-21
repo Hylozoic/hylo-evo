@@ -1,28 +1,40 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import { capitalize, sortBy, throttle } from 'lodash/fp'
 import { CENTER_COLUMN_ID, viewportTop, position } from 'util/scrolling'
 import cx from 'classnames'
-import './component.scss'
+import './TabBar.scss'
 
-export const tabNames = [
-  'all', 'discussions', 'activity', 'requests', 'offers'
+const tabs = [
+  {id: 'all', label: 'All'},
+  {id: 'discussion', label: 'Discussions'},
+  {id: 'request', label: 'Requests'},
+  {id: 'offer', label: 'Offers'}
 ]
 
-export const sortOptions = [
-  'latest', 'popular'
+const sortOptions = [
+  {id: 'updated', label: 'Latest'},
+  {id: 'votes', label: 'Popular'}
 ]
 
 // how far down from the top the bar is when it's fixed
 const offset = 144
 
 export default class TabBar extends React.Component {
+  static propTypes = {
+    onChangeTab: PropTypes.func,
+    onChangeSort: PropTypes.func,
+    selectedTab: PropTypes.string,
+    selectedSort: PropTypes.string
+  }
+
   static defaultProps = {
-    tabName: 'all',
-    sortOption: 'latest',
-    onChange: settings => console.log('Tab Bar changed: ', settings)
+    selectedTab: tabs[0].id,
+    selectedSort: sortOptions[0].id,
+    onChangeTab: () => {},
+    onChangeSort: () => {}
   }
 
   constructor (props) {
@@ -54,30 +66,29 @@ export default class TabBar extends React.Component {
   }
 
   render () {
-    const { tabName, sortOption, onChange } = this.props
+    const { selectedTab, selectedSort, onChangeTab, onChangeSort } = this.props
     const { fixed } = this.state
 
     return <div ref='placeholder' styleName='placeholder'>
       <div styleName={cx('bar', {fixed})}>
         <div styleName='tabs'>
-          {tabNames.map(name => <span
-            key={name}
-            styleName={name === tabName ? 'tab-active' : 'tab'}
-            onClick={() => onChange({tab: name})}>
-            {capitalize(name)}
+          {tabs.map(({ id, label }) => <span
+            key={id}
+            styleName={id === selectedTab ? 'tab-active' : 'tab'}
+            onClick={() => onChangeTab(id)}>
+            {label}
           </span>)}
         </div>
         <Dropdown styleName='sorter'
           toggleChildren={<span styleName='sorter-label'>
-            {capitalize(sortOption)}
+            {sortOptions.find(o => o.id === selectedSort).label}
             <Icon name='ArrowDown' />
-          </span>}>
-          {sortBy(s => s === sortOption, sortOptions).map(option => <li
-            key={option}
-            onClick={() => onChange({sort: option})}>
-            {capitalize(option)}
-          </li>)}
-        </Dropdown>
+          </span>}
+          items={sortOptions.map(({ id, label }) => ({
+            label,
+            onClick: () => onChangeSort(id)
+          }))}
+          alignRight />
       </div>
     </div>
   }

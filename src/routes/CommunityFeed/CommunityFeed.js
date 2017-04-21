@@ -1,5 +1,5 @@
 import React from 'react'
-import './Feed.scss'
+import './CommunityFeed.scss'
 import PostCard from 'components/PostCard'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
@@ -8,41 +8,56 @@ import TabBar from './TabBar'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
+import { isEmpty, some } from 'lodash/fp'
+import { queryParamWhitelist } from 'store/reducers/queryResults'
 
-export default class Feed extends React.Component {
+export default class CommunityFeed extends React.Component {
   static defaultProps = {
     posts: [],
     selectedPostId: null
   }
 
+  fetchOrShowCached () {
+    const { hasMore, posts, fetchPosts } = this.props
+    if (isEmpty(posts) && hasMore !== false) fetchPosts()
+  }
+
   componentDidMount () {
-    this.props.fetchPosts(this.props.slug)
+    this.fetchOrShowCached()
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.slug === prevProps.slug) return
-    if (this.props.posts.length === 0) {
-      this.props.fetchPosts(this.props.slug)
+    if (!prevProps) return
+    if (some(key => this.props[key] !== prevProps[key], queryParamWhitelist)) {
+      this.fetchOrShowCached()
     }
   }
 
   fetchMorePosts () {
-    const { pending, posts, postCount } = this.props
-    if (pending ||
-      posts.length === 0 ||
-      posts.length >= postCount) return
-
-    this.props.fetchPosts(this.props.slug, {
-      cursor: this.props.posts.slice(-1)[0].id
-    })
+    const { pending, posts, hasMore, fetchPosts } = this.props
+    if (pending || posts.length === 0 || !hasMore) return
+    fetchPosts(posts.length)
   }
 
   render () {
-    const { posts, community, currentUser, selectedPostId } = this.props
+    const {
+      posts,
+      community,
+      currentUser,
+      selectedPostId,
+      changeTab,
+      filter,
+      changeSort,
+      sortBy,
+      showPostDetails
+    } = this.props
 
     return <div styleName='feed'>
       <CommunityBanner community={community} currentUser={currentUser} />
-      <TabBar />
+      <TabBar onChangeTab={changeTab}
+        selectedTab={filter}
+        onChangeSort={changeSort}
+        selectedSort={sortBy} />
       <div styleName='feedItems'>
         {posts.map(post => {
           const expanded = post.id === selectedPostId
@@ -50,11 +65,12 @@ export default class Feed extends React.Component {
             post={post}
             styleName={cx('feedItem', {expanded})}
             expanded={expanded}
+            showDetails={() => showPostDetails(post.id)}
             key={post.id} />
         })}
       </div>
       <ScrollListener onBottom={() => this.fetchMorePosts()}
-        id={CENTER_COLUMN_ID} />
+        elementId={CENTER_COLUMN_ID} />
     </div>
   }
 }

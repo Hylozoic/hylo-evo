@@ -72,6 +72,9 @@ export function leaveCommunity (id) {
       }`,
       variables: {id}
     },
-    meta: {id}
+    meta: {
+      id,
+      optimistic: true
+    }
   }
 }

@@ -16,6 +16,7 @@ export default class Dropdown extends React.Component {
     children: array,
     className: string,
     triangle: bool,
+    items: array,
     toggleChildren: object.isRequired
   }
 

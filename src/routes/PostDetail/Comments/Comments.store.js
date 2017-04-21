@@ -32,7 +32,7 @@ export function fetchComments (id, opts = {}) {
       }
     },
     meta: {
-      rootModelName: 'Post'
+      extractModel: 'Post'
     }
   }
 }
@@ -60,7 +60,9 @@ export function createComment (postId, text) {
       }
     },
     meta: {
-      postId
+      optimistic: true,
+      postId,
+      text
     }
   }
 }

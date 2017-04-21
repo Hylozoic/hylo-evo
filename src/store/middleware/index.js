@@ -3,17 +3,19 @@ import { applyMiddleware, compose } from 'redux'
 import createLogger from 'redux-logger'
 import promiseMiddleware from 'redux-promise'
 import graphqlMiddleware from './graphql'
-import graphqlErrorMiddleware from './graphqlError'
 import apiMiddleware from './apiMiddleware'
 import pendingMiddleware from './pendingMiddleware'
+import optimisticMiddleware from './optimisticMiddleware'
 import { routerMiddleware } from 'react-router-redux'
+import extractModelMiddleware from './extractModel'
 
 export default function createMiddleware (history) {
   const middleware = compact([
     routerMiddleware(history),
     graphqlMiddleware,
     apiMiddleware(),
-    graphqlErrorMiddleware,
+    extractModelMiddleware,
+    optimisticMiddleware,
     pendingMiddleware,
     promiseMiddleware,
     process.env.NODE_ENV === 'development' && createLogger({collapsed: true})

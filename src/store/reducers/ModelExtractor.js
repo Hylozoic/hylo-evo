@@ -26,26 +26,36 @@ export default class ModelExtractor {
     const model = this.session[modelName]
 
     const normalized = mapValues(node, (value, key) => {
-      const type = model.fields[key]
-      if (!type) return value
+      var type = model.fields[key]
 
       if (type instanceof Attribute) {
         return value
       }
 
       if (type instanceof ForeignKey) {
-        this.walk(value, type.toModelName)
-        return value.id
+        return this._walkOne(value, type)
       }
 
       if (type instanceof ManyToMany) {
-        const items = Array.isArray(value) ? value : value.items
-        return items.map(x => {
-          this.walk(x, type.toModelName)
-          return x.id
-        })
+        return this._walkMany(value, type)
       }
 
+      if (!type && key in model.prototype) {
+        // this is a reverse relation defined by relatedName
+        type = model.virtualFields[key]
+
+        if (type instanceof ForeignKey) {
+          // each of the related values needs to have a foreign key back to
+          // the current value
+          return this._walkMany(value, type, {[type.relatedName]: node.id})
+        }
+
+        if (type instanceof ManyToMany) {
+          return this._walkOne(value, type)
+        }
+      }
+
+      if (!type) return value
       throw new Error(`don't know how to handle type: ${type}`)
     })
 
@@ -59,6 +69,20 @@ export default class ModelExtractor {
 
   mergedNodes () {
     return mergeDuplicates(this.accumulator)
+  }
+
+  _walkOne (value, type) {
+    if (typeof value !== 'object') return value
+    this.walk(value, type.toModelName)
+    return value.id
+  }
+
+  _walkMany (value, type, extraProps) {
+    const items = Array.isArray(value) ? value : value.items
+    return items.map(x => {
+      this.walk(extraProps ? Object.assign(x, extraProps) : x, type.toModelName)
+      return x.id
+    })
   }
 }
 

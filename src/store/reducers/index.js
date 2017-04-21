@@ -6,13 +6,15 @@ import {
 import orm from './ormReducer'
 import pending from './pending'
 // Local store
+// generator-marker-local-store-import
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import CommunitiesSelector from 'components/CommunitiesSelector/CommunitiesSelector.store'
 import Login from 'routes/Login/Login.store'
 import Members from 'routes/Members/Members.store'
 import queryResults from './queryResults'
+import { handleSetState, composeReducers } from './util'
 
-export default combineReducers({
+const combinedReducers = combineReducers({
   // Global store
   orm,
   router: routerReducer,
@@ -26,8 +28,11 @@ export default combineReducers({
   },
 
   // Local store (Component)
+  // generator-marker-local-store-reducer
   HyloEditor,
   CommunitiesSelector,
   Login,
   Members
 })
+
+export default composeReducers(combinedReducers, handleSetState)

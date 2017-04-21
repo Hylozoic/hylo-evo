@@ -56,28 +56,14 @@ describe('getComments', () => {
     const session = orm.session(orm.getEmptyState())
     const { Post, Comment } = session;
     [
-      {
-        model: Comment, attrs: {id: '4'}
-      },
-      {
-        model: Comment, attrs: {id: '5'}
-      },
-      {
-        model: Comment, attrs: {id: '1'}
-      },
-      {
-        model: Comment, attrs: {id: '3'}
-      },
-      {
-        model: Comment, attrs: {id: '2'}
-      },
-      {
-        model: Post, attrs: {id: '1', comments: ['1', '4', '2']}
-      },
-      {
-        model: Post, attrs: {id: '2', comments: ['3', '5']}
-      }
-    ].forEach(spec => spec.model.create(spec.attrs))
+      {model: Comment, attrs: {id: '4', post: '1'}},
+      {model: Comment, attrs: {id: '5', post: '2'}},
+      {model: Comment, attrs: {id: '1', post: '1'}},
+      {model: Comment, attrs: {id: '3', post: '2'}},
+      {model: Comment, attrs: {id: '2', post: '1'}},
+      {model: Post, attrs: {id: '1'}},
+      {model: Post, attrs: {id: '2'}}
+    ].forEach(({ model, attrs }) => model.create(attrs))
 
     expect(getComments({orm: session.state}, {postId: '1'}).map(c => c.id))
     .toEqual(['1', '2', '4'])
