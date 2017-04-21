@@ -163,3 +163,11 @@
   letter-spacing: 0;
   line-height: 18px;
 }
+
+.new-messages {
+  @include font-regular;
+  color: $color-caribbean-green;
+  font-size: 12px;
+  letter-spacing: 0.6;
+  line-height: 14px;
+}

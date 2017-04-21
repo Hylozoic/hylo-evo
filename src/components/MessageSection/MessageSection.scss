@@ -12,6 +12,17 @@
 
 .new-messages {
   width: 100%;
-  margin: $space-1x auto;
-  border: 1px solid $color-caribbean-green-50;
+  margin: $space-4x auto;
+  display: flex;
+}
+
+.new-messages-text {
+  composes: new-messages from 'css/typography.scss';
+  margin-right: $space-4x;
+}
+
+.new-messages-line {
+  margin-top: 7px;
+  border-top: 1px solid $color-caribbean-green-50;
+  flex: 1;
 }

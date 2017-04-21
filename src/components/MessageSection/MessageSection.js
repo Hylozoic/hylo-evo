@@ -29,7 +29,10 @@ function createMessageList (messages, lastReadAt) {
     }
     let messageTime = new Date(m.createdAt).getTime()
     if (lastTimestamp < lastReadAt && lastReadAt < messageTime) {
-      acc.push(<div styleName='new-messages' />)
+      acc.push(<div styleName='new-messages'>
+        <div styleName='new-messages-text'>new messages</div>
+        <div styleName='new-messages-line' />
+      </div>)
     }
     lastTimestamp = messageTime
     acc.push(<Message message={m} key={`message-${m.id}`} isHeader={isHeader} />)
