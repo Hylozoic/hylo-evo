@@ -45,6 +45,9 @@ export function fetchThreads () {
           }
         }
       }`
+    },
+    meta: {
+      extractModel: 'Me'
     }
   }
 }
