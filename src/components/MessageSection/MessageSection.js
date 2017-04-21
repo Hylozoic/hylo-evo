@@ -2,7 +2,7 @@ import React from 'react'
 import visibility from 'visibility'
 import { throttle } from 'lodash'
 import { get, maxBy } from 'lodash/fp'
-const { array, func, object } = React.PropTypes
+const { array, bool, func, number, object, string } = React.PropTypes
 import Message from 'components/Message'
 import { position } from 'util/scrolling'
 import './MessageSection.scss'
@@ -11,7 +11,9 @@ import './MessageSection.scss'
 // include them under the same avatar and timestamp
 const MAX_MINS_TO_BATCH = 5
 
-function createMessageList (messages, lastReadAt) {
+const lastSeenAtTimes = {}
+
+function createMessageList (messages, lastSeenAt) {
   let currentHeader, lastTimestamp
   return messages.reduce((acc, m) => {
     let headerDate, messageDate, diff, greaterThanMax
@@ -28,8 +30,8 @@ function createMessageList (messages, lastReadAt) {
       currentHeader = isHeader ? m : currentHeader
     }
     let messageTime = new Date(m.createdAt).getTime()
-    if (lastTimestamp < lastReadAt && lastReadAt < messageTime) {
-      acc.push(<div styleName='new-messages'>
+    if (lastTimestamp && lastSeenAt && lastTimestamp < lastSeenAt && lastSeenAt < messageTime) {
+      acc.push(<div styleName='new-messages' key='new-messages'>
         <div styleName='new-messages-text'>new messages</div>
         <div styleName='new-messages-line' />
       </div>)
@@ -42,14 +44,19 @@ function createMessageList (messages, lastReadAt) {
 
 export default class MessageSection extends React.Component {
   static propTypes = {
+    currentUser: object,
+    messageThreadId: string,
     messages: array,
+    pending: bool,
+    total: number,
+    hasMore: bool,
     onScroll: func,
     onScrollToTop: func,
     onHitBottom: func,
     onLeftBottom: func,
     thread: object,
     updateThreadReadTime: func,
-    currentUser: object
+    fetchMessages: func
   }
 
   constructor (props) {
@@ -67,11 +74,19 @@ export default class MessageSection extends React.Component {
   componentDidUpdate (prevProps) {
     const messagesLength = this.props.messages.length
     const oldMessagesLength = prevProps.messages.length
-    const { currentUser } = this.props
+    const { currentUser, thread } = this.props
     const latestMessage = maxBy('createdAt', this.props.messages || [])
     const userSentLatest = get('creator.id', latestMessage) === get('id', currentUser)
     const { scrolledUp } = this.state
     if (messagesLength !== oldMessagesLength && (!scrolledUp || userSentLatest)) this.scrollToBottom()
+    if (thread && !lastSeenAtTimes[thread.id] && thread.unreadCount) {
+      lastSeenAtTimes[thread.id] = new Date(thread.lastReadAt).getTime()
+    }
+  }
+
+  fetchMore = () => {
+    const { hasMore, pending, fetchMessages } = this.props
+    if (hasMore && !pending) fetchMessages()
   }
 
   scrollToMessage (id) {
@@ -81,8 +96,9 @@ export default class MessageSection extends React.Component {
     // the last portion of the offset varies because sometimes the message that
     // is first in the list before pagination won't have a header after the
     // pagination is done
-    this.list.scrollTop = position(message, this.list).y -
-      document.querySelector('#thread-header').offsetHeight
+    const newtop = position(message, this.list)
+    //console.log(newtop)
+    this.list.scrollTop = newtop.y
   }
 
   detectScrollExtremes = throttle(target => {
@@ -98,7 +114,7 @@ export default class MessageSection extends React.Component {
       this.markAsRead()
       onHitBottom()
     }
-    if (scrollTop <= 50 && this.props.onScrollToTop) this.props.onScrollToTop()
+    if (scrollTop <= 50) this.fetchMore()
   }, 500, {trailing: true})
 
   handleScroll = event => {
@@ -114,6 +130,7 @@ export default class MessageSection extends React.Component {
       this.visibility.once('show', this.markAsRead)
     }
     this.props.onHitBottom()
+    this.setState({ scrolledUp: false })
   }
 
   markAsRead = () => {
@@ -122,12 +139,26 @@ export default class MessageSection extends React.Component {
   }
 
   render () {
-    const { messages, lastReadAt } = this.props
+    const { messages, thread } = this.props
+
+    /*
+    const { messages, fetchAfterMessages } = this.props
+    const afterId = max(map('id', messages))
+    fetchAfterMessages(afterId)
+    .then(() => this.refs.messageSection.getWrappedInstance().scrollToBottom())
+
+    const loadMore = () => {
+      if (pending || messages.length >= thread.messagesTotal) return
+      const beforeId = min(map('id', messages))
+      fetchBeforeMessages(thread.id, beforeId)
+      .then(() => this.refs.messageSection.getWrappedInstance().scrollToMessage(beforeId))
+    }
+    */
     return <div styleName='messages-section'
       ref={list => { this.list = list }}
       onScroll={this.handleScroll}>
       <div styleName='messages-section-inner'>
-        {createMessageList(messages, new Date("Thu Apr 19 2017 13:30:47 GMT-0400 (EDT)").getTime())}
+        {createMessageList(messages, lastSeenAtTimes[get('id', thread)])}
       </div>
     </div>
   }

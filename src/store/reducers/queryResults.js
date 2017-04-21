@@ -7,7 +7,7 @@
 // shown when something has been typed into the search field.
 
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
-import { FETCH_POST, FETCH_POSTS, FETCH_COMMENTS } from 'store/constants'
+import { FETCH_POST, FETCH_POSTS, FETCH_COMMENTS, FETCH_THREAD, FETCH_MESSAGES } from 'store/constants'
 import { get, isNull, omitBy, pick, uniq } from 'lodash/fp'
 
 // reducer
@@ -26,6 +26,10 @@ export default function (state = {}, action) {
 
     case FETCH_POSTS:
       return appendIds(state, type, meta.graphql.variables, payload.data.community.posts)
+
+    case FETCH_THREAD:
+    case FETCH_MESSAGES:
+      return appendIds(state, FETCH_MESSAGES, meta.graphql.variables, payload.data.messageThread.messages)
 
     case FETCH_POST:
     case FETCH_COMMENTS:

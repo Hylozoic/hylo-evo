@@ -33,13 +33,15 @@ export function fetchThreads () {
               name
               avatarUrl
             }
-            messages(first: 1) {
-              id
-              createdAt
-              text
-              creator {
+            messages(first: 1, order: "desc") {
+              items {
                 id
-                name
+                createdAt
+                text
+                creator {
+                  id
+                  name
+                }
               }
             }
           }

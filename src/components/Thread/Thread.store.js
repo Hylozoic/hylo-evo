@@ -1,22 +1,19 @@
-import { sortBy } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 import {
-  FETCH_THREAD,
-  FETCH_BEFORE_MESSAGES,
-  FETCH_AFTER_MESSAGES
+  FETCH_THREAD
 } from 'store/constants'
 
 export const MODULE_NAME = 'Thread'
 
 // Action Creators
-export function fetchThread (threadId) {
+export function fetchThread (id) {
   return {
     type: FETCH_THREAD,
     graphql: {
       query: `
-        query ($threadId: ID) {
-          messageThread (id: $threadId) {
+        query ($id: ID) {
+          messageThread (id: $id) {
             id
             unreadCount
             lastReadAt
@@ -27,63 +24,30 @@ export function fetchThread (threadId) {
               name
               avatarUrl
             }
-            messages(first: 20) {
-              id
-              createdAt
-              text
-              creator {
+            messages(first: 40, order: "desc") {
+              items {
                 id
-                name
+                text
+                creator {
+                  id
+                  name
+                  avatarUrl
+                }
+                createdAt
               }
+              total
+              hasMore
             }
           }
         }
       `,
       variables: {
-        threadId
+        id
       }
     },
     meta: {
       extractModel: 'MessageThread'
     }
-  }
-}
-
-export function fetchBeforeMessages (threadId, cursor) {
-  return {
-    type: FETCH_BEFORE_MESSAGES,
-    graphql: {
-      query: `
-        query ($threadId: ID, $cursor: ID) {
-          messageThread (id: $threadId) {
-            id
-            messages(first: 20, cursor: $cursor) {
-              id
-              createdAt
-              text
-              creator {
-                id
-                name
-                avatarUrl
-              }
-            }
-          }
-        }
-      `,
-      variables: {
-        threadId,
-        cursor
-      }
-    },
-    meta: {
-      extractModel: 'MessageThread'
-    }
-  }
-}
-
-export function fetchAfterMessages () {
-  return {
-    type: FETCH_AFTER_MESSAGES
   }
 }
 
@@ -103,8 +67,6 @@ export const getThread = ormCreateSelector(
     }
     return {
       ...thread.ref,
-      participants: thread.participants.toModelArray(),
-      messages: sortBy(m => new Date(m.createdAt).getTime(),
-        thread.messages.toModelArray().map(m => ({...m.ref, creator: m.creator.ref})))
+      participants: thread.participants.toModelArray()
     }
   })

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { filter, get, map, min, max, sortBy } from 'lodash/fp'
-const { array, bool, func, object, string } = React.PropTypes
+import { filter, get, map } from 'lodash/fp'
+const { func, object, string } = React.PropTypes
 import Icon from 'components/Icon'
 import MessageSection from 'components/MessageSection'
 import MessageForm from 'components/MessageForm'
@@ -14,13 +14,9 @@ export default class Thread extends React.Component {
     threadId: string.isRequired,
     currentUser: object,
     thread: object,
-    messages: array,
-    pending: bool,
     fetchThread: func,
     onThreadPage: func,
-    offThreadPage: func,
-    fetchBeforeMessages: func,
-    fetchAfterMessages: func
+    offThreadPage: func
   }
 
   constructor (props) {
@@ -40,10 +36,6 @@ export default class Thread extends React.Component {
       }
 
       this.reconnectHandler = () => {
-        const { messages, fetchAfterMessages } = this.props
-        const afterId = max(map('id', messages))
-        fetchAfterMessages(afterId)
-        .then(() => this.refs.messageSection.getWrappedInstance().scrollToBottom())
         this.socket.post(socketUrl(`/noo/post/${threadId}/subscribe`))
       }
       this.socket.on('reconnect', this.reconnectHandler)
@@ -83,22 +75,13 @@ export default class Thread extends React.Component {
   }
 
   render () {
-    const { threadId, thread, pending, fetchBeforeMessages, currentUser } = this.props
-    const lastReadAt = get('lastReadAt', thread)
-    const messages = get('messages', thread) || []
-    const loadMore = () => {
-      if (pending || messages.length >= thread.messagesTotal) return
-      const beforeId = min(map('id', messages))
-      fetchBeforeMessages(thread.id, beforeId)
-      .then(() => this.refs.messageSection.getWrappedInstance().scrollToMessage(beforeId))
-    }
+    const { threadId, thread, currentUser } = this.props
     return <div styleName='thread'>
       <Header thread={thread} currentUser={currentUser} />
-      <MessageSection messages={messages} thread={thread}
-        lastReadAt={lastReadAt}
+      <MessageSection thread={thread} messageThreadId={threadId}
         onLeftBottom={() => this.setState({scrolledUp: true})}
         onHitBottom={() => this.setState({scrolledUp: false})}
-        onScrollToTop={loadMore} ref='messageSection' />
+        ref='messageSection' />
       <div styleName='message-form-bg' />
       <div styleName='message-form'>
         <MessageForm messageThreadId={threadId} ref='form' />
