@@ -115,7 +115,7 @@ export default class TagInput extends Component {
         <div className={theme.searchInput}>
           <input
             className={theme.searchInput}
-            ref={i => this.input = i}
+            ref={i => this.input = i} // eslint-disable-line no-return-assign
             type='text'
             placeholder={placeholder}
             spellCheck={false}
@@ -126,8 +126,8 @@ export default class TagInput extends Component {
           <div className={theme.suggestions}>
             <KeyControlledItemList
               items={suggestions}
-              onChange={this.select}
-              ref={l => this.list = l} />
+              ref={l => this.list = l} // eslint-disable-line no-return-assign
+              onChange={this.select} />
           </div>
         }
       </div>
