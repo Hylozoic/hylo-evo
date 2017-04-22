@@ -37,6 +37,7 @@ const recentActivityQuery =
       communities {
         id
         name
+        slug
       }
       createdAt
     }

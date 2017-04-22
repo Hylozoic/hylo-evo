@@ -24,6 +24,7 @@ const memberPostsQuery =
       communities {
         id
         name
+        slug
       }
       createdAt
     }
