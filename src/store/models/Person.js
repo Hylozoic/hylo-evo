@@ -24,7 +24,6 @@ Person.fields = {
   comments: many('Comment'),
   memberships: many('Membership'),
   membershipsTotal: attr(),
-  posts: many('Post'),
   postsTotal: attr(),
   votes: many('Vote'),
   votesTotal: attr()

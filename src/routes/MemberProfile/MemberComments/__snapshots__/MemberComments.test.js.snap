@@ -2,9 +2,6 @@
 
 exports[`MemberComments renders the same as the last snapshot 1`] = `
 <div>
-  <h2>
-    Comments
-  </h2>
   <div>
     <CommentCard
       comment={

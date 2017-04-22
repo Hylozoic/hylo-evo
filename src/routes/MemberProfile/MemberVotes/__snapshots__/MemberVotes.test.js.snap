@@ -2,9 +2,6 @@
 
 exports[`MemberVotes renders the same as the last snapshot 1`] = `
 <div>
-  <h2>
-    Upvotes
-  </h2>
   <div>
     <PostCard
       post={
