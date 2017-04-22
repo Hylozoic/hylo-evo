@@ -4,13 +4,40 @@ import PostCard from 'components/PostCard'
 import CommentCard from 'components/CommentCard'
 import './RecentActivity.scss'
 
-const { arrayOf, object } = React.PropTypes
+const { any, arrayOf, number, shape, string } = React.PropTypes
+
+const personShape = shape({
+  id: any,
+  name: string,
+  avatarUrl: string
+})
+const communityShape = shape({
+  id: any,
+  name: string,
+  slug: string
+})
+const postShape = shape({
+  id: any,
+  title: string
+})
 
 export default class RecentActivity extends React.Component {
   static propTypes = {
-    activityItems: arrayOf(object),
-    comments: arrayOf(object),
-    posts: arrayOf(object)
+    // Can be a comment or a post
+    activityItems: arrayOf(shape({
+      id: any,
+      commenters: arrayOf(personShape),
+      communities: arrayOf(communityShape),
+      commentersTotal: number,
+      creator: personShape,
+      createdAt: string,
+      details: string,
+      followers: arrayOf(personShape),
+      post: postShape,
+      text: string,
+      title: string,
+      type: string
+    }))
   }
 
   componentDidMount () {

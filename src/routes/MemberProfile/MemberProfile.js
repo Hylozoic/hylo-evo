@@ -27,10 +27,8 @@ export default class MemberProfile extends React.Component {
       bio: string,
       facebookUrl: string,
       linkedinUrl: string,
-      comments: arrayOf(object),
       memberships: arrayOf(object),
       name: string,
-      posts: arrayOf(object),
       role: string,
       twitterName: string,
       url: string

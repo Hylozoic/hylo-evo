@@ -3,11 +3,33 @@ import React from 'react'
 import PostCard from 'components/PostCard'
 import './MemberVotes.scss'
 
-const { arrayOf, object } = React.PropTypes
+const { any, arrayOf, number, shape, string } = React.PropTypes
+
+const personShape = shape({
+  id: any,
+  name: string,
+  avatarUrl: string
+})
+const communityShape = shape({
+  id: any,
+  name: string,
+  slug: string
+})
 
 export default class MemberVotes extends React.Component {
   static propTypes = {
-    votes: arrayOf(object)
+    votes: arrayOf(shape({
+      id: any,
+      commenters: arrayOf(personShape),
+      communities: arrayOf(communityShape),
+      commentersTotal: number,
+      creator: personShape,
+      createdAt: string,
+      details: string,
+      followers: arrayOf(personShape),
+      title: string,
+      type: string
+    }))
   }
 
   componentDidMount () {
