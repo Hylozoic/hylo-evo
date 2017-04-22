@@ -17,7 +17,7 @@ export default class MemberComments extends React.Component {
       id: any,
       creator: personShape,
       createdAt: string,
-      text: string 
+      text: string
     }))
   }
 
