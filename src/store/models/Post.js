@@ -28,10 +28,10 @@ Post.fields = {
   title: attr(),
   type: attr(),
   details: attr(),
-  creator: fk('Person', 'createdPosts'),
+  creator: fk('Person', 'posts'),
   followers: many({
     to: 'Person',
-    relatedName: 'posts',
+    relatedName: 'followedPosts',
     through: 'PostFollower',
     throughFields: [ 'post', 'follower' ]
   }),
@@ -40,7 +40,7 @@ Post.fields = {
   commentsTotal: attr(),
   commenters: many({
     to: 'Person',
-    relatedName: 'posts2',
+    relatedName: 'commentedPosts',
     through: 'PostCommenter',
     throughFields: [ 'post', 'commenter' ]
   }),
