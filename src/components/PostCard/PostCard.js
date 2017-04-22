@@ -11,7 +11,7 @@ import { sanitize, present, textLength, truncate, appendInP, humanDate } from 'h
 import { parse } from 'url'
 import './PostCard.scss'
 import samplePost from './samplePost'
-import { get, isEmpty } from 'lodash/fp'
+import { get } from 'lodash/fp'
 import cx from 'classnames'
 
 const { shape, any, object, string, func, array, bool } = React.PropTypes
@@ -40,10 +40,6 @@ export default class PostCard extends React.Component {
   render () {
     const { post, className, expanded, showDetails } = this.props
     const slug = get('0.slug', post.communities)
-
-    const visitPost = event => {
-      if (event.target.tagName !== 'A') navigate(postUrl(post.id, slug))
-    }
 
     return <div styleName={cx('card', {expanded})} className={className}
       onClick={showDetails}>
