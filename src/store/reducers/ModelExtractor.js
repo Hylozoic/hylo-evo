@@ -1,5 +1,6 @@
 import { Attribute, ForeignKey, ManyToMany } from 'redux-orm/lib/fields'
 import { compact, filter, mapValues } from 'lodash'
+import { isUndefined, omitBy } from 'lodash/fp'
 
 export default class ModelExtractor {
   static addAll ({ session, root, modelName }) {
@@ -23,9 +24,13 @@ export default class ModelExtractor {
   }
 
   walk (node, modelName) {
+    if (Array.isArray(node)) {
+      return node.forEach(x => this.walk(x, modelName))
+    }
+
     const model = this.session[modelName]
 
-    const normalized = mapValues(node, (value, key) => {
+    const normalized = omitBy(isUndefined, mapValues(node, (value, key) => {
       var type = model.fields[key]
 
       if (type instanceof Attribute) {
@@ -46,18 +51,23 @@ export default class ModelExtractor {
 
         if (type instanceof ForeignKey) {
           // each of the related values needs to have a foreign key back to
-          // the current value
-          return this._walkMany(value, type, {[type.relatedName]: node.id})
+          // the current value...
+          this._walkMany(value, type, {[type.relatedName]: node.id})
+
+          // ...and because the related values store the foreign key, the
+          // current value does not need to record anything about the relation,
+          // so we return nothing
+          return
         }
 
         if (type instanceof ManyToMany) {
-          return this._walkOne(value, type)
+          return this._walkMany(value, type)
         }
       }
 
       if (!type) return value
       throw new Error(`don't know how to handle type: ${type}`)
-    })
+    }))
 
     if (normalized.id) {
       this.accumulator.push({
@@ -78,7 +88,7 @@ export default class ModelExtractor {
   }
 
   _walkMany (value, type, extraProps) {
-    const items = Array.isArray(value) ? value : value.items
+    const items = Array.isArray(value) ? value : value[QUERY_SET_ITEMS_KEY]
     return items.map(x => {
       this.walk(extraProps ? Object.assign(x, extraProps) : x, type.toModelName)
       return x.id
@@ -121,3 +131,18 @@ function mergeDuplicates (nodes) {
     }
   }))
 }
+
+// this is the key under which our GraphQL API stores the list of items for
+// "query-set style" pagination, e.g.:
+//
+//   person(id: 2) {
+//     posts(first: 3) {
+//       hasMore
+//       items {
+//         id
+//         title
+//       }
+//     }
+//   }
+//
+const QUERY_SET_ITEMS_KEY = 'items'

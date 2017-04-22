@@ -1,0 +1,13 @@
+
+.feedItems {
+  margin: 0 auto;
+  overflow: auto; // prevent margin collapse
+}
+
+.feedItem {
+  margin: 0 $space-4x $space-6x;
+}
+
+.expanded {
+  margin: 0 $space-2x $space-6x;
+}

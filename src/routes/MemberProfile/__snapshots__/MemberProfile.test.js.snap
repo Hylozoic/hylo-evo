@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MemberProfile renders the same as the last snapshot 1`] = `
+<div>
+  <ProfileBanner
+    bannerUrl="http://www.axolotl.org/images/tiger/tiger_larva.jpg"
+  >
+    <ProfileNamePlate
+      avatarUrl="https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+      location="Auckland, New Zealand"
+      name="Rich Churcher"
+    />
+  </ProfileBanner>
+  <div>
+    <ProfileControls
+      selectTab={[Function]}
+    >
+      <SocialButtons
+        facebookUrl="https://www.facebook.com/rich.churcher"
+        linkedinUrl="https://www.linkedin.com/in/richchurcher/"
+        twitterName="richchurcher"
+        url="https://eloquentgeek.com"
+      />
+    </ProfileControls>
+    <TabContentSwitcher
+      bio="I like wombats."
+      personId="1"
+    />
+  </div>
+</div>
+`;

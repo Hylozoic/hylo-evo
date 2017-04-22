@@ -1,15 +1,10 @@
 import React from 'react'
 import './CommunityFeed.scss'
-import PostCard from 'components/PostCard'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
-import ScrollListener from 'components/ScrollListener'
-import TabBar from './TabBar'
-import { CENTER_COLUMN_ID } from 'util/scrolling'
+import Feed from 'components/Feed'
 import { bgImageStyle } from 'util/index'
-import cx from 'classnames'
-import { isEmpty, some } from 'lodash/fp'
-import { queryParamWhitelist } from 'store/reducers/queryResults'
+import { get, pick } from 'lodash/fp'
 
 export default class CommunityFeed extends React.Component {
   static defaultProps = {
@@ -17,60 +12,24 @@ export default class CommunityFeed extends React.Component {
     selectedPostId: null
   }
 
-  fetchOrShowCached () {
-    const { hasMore, posts, fetchPosts } = this.props
-    if (isEmpty(posts) && hasMore !== false) fetchPosts()
-  }
-
-  componentDidMount () {
-    this.fetchOrShowCached()
-  }
-
-  componentDidUpdate (prevProps) {
-    if (!prevProps) return
-    if (some(key => this.props[key] !== prevProps[key], queryParamWhitelist)) {
-      this.fetchOrShowCached()
-    }
-  }
-
-  fetchMorePosts () {
-    const { pending, posts, hasMore, fetchPosts } = this.props
-    if (pending || posts.length === 0 || !hasMore) return
-    fetchPosts(posts.length)
-  }
-
   render () {
-    const {
-      posts,
-      community,
-      currentUser,
-      selectedPostId,
-      changeTab,
-      filter,
-      changeSort,
-      sortBy,
-      showPostDetails
-    } = this.props
+    const { community, currentUser } = this.props
+    const feedProps = {
+      subject: 'community',
+      id: get('slug', community),
+      ...pick([
+        'filter',
+        'sortBy',
+        'changeSort',
+        'changeTab',
+        'showPostDetails',
+        'selectedPostId'
+      ], this.props)
+    }
 
-    return <div styleName='feed'>
+    return <div styleName='container'>
       <CommunityBanner community={community} currentUser={currentUser} />
-      <TabBar onChangeTab={changeTab}
-        selectedTab={filter}
-        onChangeSort={changeSort}
-        selectedSort={sortBy} />
-      <div styleName='feedItems'>
-        {posts.map(post => {
-          const expanded = post.id === selectedPostId
-          return <PostCard
-            post={post}
-            styleName={cx('feedItem', {expanded})}
-            expanded={expanded}
-            showDetails={() => showPostDetails(post.id)}
-            key={post.id} />
-        })}
-      </div>
-      <ScrollListener onBottom={() => this.fetchMorePosts()}
-        elementId={CENTER_COLUMN_ID} />
+      <Feed {...feedProps} />
     </div>
   }
 }
