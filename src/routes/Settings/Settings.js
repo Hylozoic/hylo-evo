@@ -13,10 +13,7 @@ export default class Settings extends Component {
   }
 
   componentDidMount () {
-    const { fetchUserSettings, onClose } = this.props
-    fetchUserSettings()
-    // storing onClose here because we only want the version that's passed in initially.
-    this.onClose = onClose
+    this.props.fetchUserSettings()
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -26,12 +23,25 @@ export default class Settings extends Component {
   }
 
   render () {
-    const { currentUser, communities, updateUserSettings, leaveCommunity } = this.props
+    const {
+      currentUser,
+      communities,
+      updateUserSettings,
+      leaveCommunity,
+      history,
+      goBack,
+      push
+    } = this.props
+
+    const onClose = history.length > 2
+      ? () => goBack()
+      : () => push('/')
+
     return <div styleName='modal'>
       <div styleName='content'>
         <div styleName='left-sidebar'>
-          <NavLink to='/settings' exact activeClassName={styles.active} styleName='nav-link'>Account</NavLink>
-          <NavLink to='/settings/communities' exact activeClassName={styles.active} styleName='nav-link'>Communities</NavLink>
+          <NavLink to='/settings' exact replace activeClassName={styles.active} styleName='nav-link'>Account</NavLink>
+          <NavLink to='/settings/communities' exact replace activeClassName={styles.active} styleName='nav-link'>Communities</NavLink>
         </div>
         <div styleName='center'>
           <Route path='/settings' exact render={() =>
@@ -40,7 +50,7 @@ export default class Settings extends Component {
             <CommunitySettings communities={communities} leaveCommunity={leaveCommunity} />} />
         </div>
         <div styleName='right-sidebar'>
-          <CloseButton onClose={this.onClose} />
+          <CloseButton onClose={onClose} />
         </div>
       </div>
     </div>

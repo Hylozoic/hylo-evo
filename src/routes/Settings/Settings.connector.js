@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { goBack, push } from 'react-router-redux'
+import { withRouter } from 'react-router-dom'
 import { getMe } from 'store/selectors/getMe'
 import { fetchUserSettings, updateUserSettings, leaveCommunity } from './Settings.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
@@ -19,35 +20,18 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const communities = getCurrentUserCommunities(state, props)
 
-  const previousLocation = state.history.slice(-2)[0].pathname
-  let backLocation = '/'
-  if (state.history.length > 1 && previousLocation !== '/login') {
-    backLocation = previousLocation
-  }
-
   return {
     currentUser,
-    communities,
-    backLocation
+    communities
   }
 }
 
 export const mapDispatchToProps = {
+  goBack,
   push,
   fetchUserSettings,
   updateUserSettings,
   leaveCommunity
 }
 
-export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { backLocation } = stateProps
-  const { push } = dispatchProps
-  return {
-    ...ownProps,
-    ...stateProps,
-    ...dispatchProps,
-    onClose: () => push(backLocation)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
+export default component => connect(mapStateToProps, mapDispatchToProps)(withRouter(component))
