@@ -13,7 +13,7 @@ Comment.modelName = 'Comment'
 Comment.fields = {
   id: attr(),
   text: attr(),
-  creator: fk('Person'),
+  creator: fk('Person', 'comments'),
   post: fk('Post', 'comments'),
   createdAt: attr()
 }

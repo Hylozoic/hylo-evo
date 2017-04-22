@@ -12,7 +12,7 @@ Vote.modelName = 'Vote'
 
 Vote.fields = {
   id: attr(),
-  post: fk('Post'),
-  voter: fk('Person'),
+  post: fk('Post', 'votes'),
+  voter: fk('Person', 'votes'),
   dateVoted: attr()
 }
