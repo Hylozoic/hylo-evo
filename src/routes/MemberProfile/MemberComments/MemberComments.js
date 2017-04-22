@@ -28,7 +28,6 @@ export default class MemberComments extends React.Component {
   render () {
     const { comments } = this.props
     return <div>
-      <h2 styleName='subhead'>Comments</h2>
       {comments && comments.map(comment =>
         <div styleName='activity-item' key={comment.id}>
           <CommentCard comment={comment} />

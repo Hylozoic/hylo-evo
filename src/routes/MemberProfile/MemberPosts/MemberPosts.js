@@ -39,7 +39,6 @@ export default class MemberPosts extends React.Component {
   render () {
     const { posts } = this.props
     return <div>
-      <h2 styleName='subhead'>Posts</h2>
       {posts && posts.map(post =>
         <div styleName='activity-item' key={post.id}>
           <PostCard post={post} />

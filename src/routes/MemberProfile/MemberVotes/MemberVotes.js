@@ -39,7 +39,6 @@ export default class MemberVotes extends React.Component {
   render () {
     const { votes } = this.props
     return <div>
-      <h2 styleName='subhead'>Upvotes</h2>
       {votes && votes.map(post =>
         <div styleName='activity-item' key={post.id}>
           <PostCard post={post} />
