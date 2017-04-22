@@ -31,16 +31,15 @@ Post.fields = {
   creator: fk('Person', 'posts'),
   followers: many({
     to: 'Person',
-    relatedName: 'followedPosts',
+    relatedName: 'postsFollowing',
     through: 'PostFollower',
     throughFields: [ 'post', 'follower' ]
   }),
   communities: many('Community'),
   communitiesTotal: attr(),
-  commentsTotal: attr(),
   commenters: many({
     to: 'Person',
-    relatedName: 'commentedPosts',
+    relatedName: 'postsCommented',
     through: 'PostCommenter',
     throughFields: [ 'post', 'commenter' ]
   }),

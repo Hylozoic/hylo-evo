@@ -8,5 +8,4 @@ export default function Loading ({ type }) {
     default:
       return <div styleName='loading'>Loading...</div>
   }
-
 }

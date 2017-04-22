@@ -10,8 +10,10 @@ import Sidebar from './components/Sidebar'
 import CommunityFeed from 'routes/CommunityFeed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
+import MemberProfile from 'routes/MemberProfile'
 import PostDetail from 'routes/PostDetail'
 import Members from 'routes/Members'
+import MessageMember from 'components/MessageMember'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 
@@ -31,10 +33,10 @@ export default class PrimaryLayout extends Component {
 
   render () {
     const {
-      location,
       community,
       currentUser,
       communitiesDrawerOpen,
+      location,
       toggleCommunitiesDrawer
     } = this.props
 
@@ -58,11 +60,13 @@ export default class PrimaryLayout extends Component {
           <RedirectToCommunity currentUser={currentUser} />
           <Route path='/c/:slug/' exact component={CommunityFeed} />
           <Route path='/c/:slug/p/:postId' component={CommunityFeed} />
+          <Route path='/c/:slug/m/:id' component={MemberProfile} />
           <Route path='/events' component={Events} />
           <Route path='/c/:slug/members' component={Members} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/c/:slug' exact component={Sidebar} />
+          <Route path='/c/:slug/m/:id' component={MessageMember} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})}>
           {/*

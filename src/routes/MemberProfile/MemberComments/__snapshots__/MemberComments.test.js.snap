@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MemberComments renders the same as the last snapshot 1`] = `
+<div>
+  <h2>
+    Comments
+  </h2>
+  <div>
+    <CommentCard
+      comment={
+        Object {
+          "createdAt": "Sat Apr 15 2017 16:27:55 GMT+1200 (NZST)",
+          "creator": Object {
+            "id": "46816",
+          },
+          "id": "2",
+          "post": Object {
+            "id": "30002",
+            "title": "0123456789 0123456789 0123456789",
+          },
+          "text": "<p>So much more to say.</p>",
+        }
+      }
+    />
+  </div>
+  <div>
+    <CommentCard
+      comment={
+        Object {
+          "createdAt": "Fri Mar 24 2017 10:39:41 GMT+1300 (NZDT)",
+          "creator": Object {
+            "id": "46816",
+          },
+          "id": "1",
+          "post": Object {
+            "id": "30002",
+            "title": "0123456789 0123456789 0123456789",
+          },
+          "text": "<p>Here's a comment!</p>",
+        }
+      }
+    />
+  </div>
+</div>
+`;

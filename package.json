@@ -17,6 +17,7 @@
     "detect-port": "1.0.1",
     "dotenv": "2.0.0",
     "enzyme": "^2.7.1",
+    "enzyme-to-json": "^1.5.1",
     "eslint": "3.8.1",
     "eslint-config-react-app": "^0.5.0",
     "eslint-loader": "1.6.0",
@@ -131,6 +132,9 @@
     ],
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
+    ],
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/enzyme-to-json/serializer"
     ],
     "testPathIgnorePatterns": [
       "<rootDir>[/\\\\](build|docs|node_modules|scripts|es5)[/\\\\]"
