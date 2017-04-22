@@ -61,3 +61,36 @@ it('handles objects for foreign keys', () => {
     }
   ])
 })
+
+it('handles an array root', () => {
+  const extractor = new ModelExtractor(orm.session(orm.getEmptyState()))
+
+  extractor.walk([
+    {
+      id: '1',
+      name: 'Alice',
+      posts: [
+        {id: '1', title: 'Hi!'}
+      ]
+    },
+    {
+      id: '2',
+      name: 'Bob'
+    }
+  ], 'Person')
+
+  expect(extractor.mergedNodes()).toEqual([
+    {
+      modelName: 'Post',
+      payload: {id: '1', title: 'Hi!', creator: '1'}
+    },
+    {
+      modelName: 'Person',
+      payload: {id: '1', name: 'Alice'}
+    },
+    {
+      modelName: 'Person',
+      payload: {id: '2', name: 'Bob'}
+    }
+  ])
+})
