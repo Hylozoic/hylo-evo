@@ -8,6 +8,7 @@ import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
 import Sidebar from './components/Sidebar'
 import CommunityFeed from 'routes/CommunityFeed'
+import AllCommunitiesFeed from 'routes/AllCommunitiesFeed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 import MemberProfile from 'routes/MemberProfile'
@@ -58,7 +59,8 @@ export default class PrimaryLayout extends Component {
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToCommunity currentUser={currentUser} />
-          <Route path='/c/:slug/' exact component={CommunityFeed} />
+          <Route path='/all' exact component={AllCommunitiesFeed} />
+          <Route path='/c/:slug' exact component={CommunityFeed} />
           <Route path='/c/:slug/p/:postId' component={CommunityFeed} />
           <Route path='/c/:slug/m/:id' component={MemberProfile} />
           <Route path='/events' component={Events} />

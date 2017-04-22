@@ -4,6 +4,10 @@ export function fetchPosts ({ subject, id, sortBy, offset, search, filter }) {
   var query
   if (subject === 'community') {
     query = communityQuery
+  } else if (subject === 'all-communities') {
+    return {
+      type: 'TODO: FETCH_POSTS for all communities'
+    }
   } else {
     throw new Error(`FETCH_POSTS with subject=${subject} is not implemented`)
   }
@@ -27,6 +31,49 @@ export function fetchPosts ({ subject, id, sortBy, offset, search, filter }) {
   }
 }
 
+const postsQueryFragment = `
+  posts(
+    first: $first,
+    offset: $offset,
+    sortBy: $sortBy,
+    search: $search,
+    filter: $filter,
+    order: "desc"
+  ) {
+    hasMore
+    items {
+      id
+      title
+      details
+      type
+      creator {
+        id
+        name
+        avatarUrl
+      }
+      createdAt
+      updatedAt
+      commenters(first: 2) {
+        id
+        name
+        avatarUrl
+      }
+      commentersTotal
+      linkPreview {
+        title
+        url
+        imageUrl
+      }
+      votesTotal
+      communities {
+        id
+        name
+        slug
+      }
+    }
+  }
+`
+
 const communityQuery = `query (
   $id: String,
   $sortBy: String,
@@ -42,45 +89,6 @@ const communityQuery = `query (
     avatarUrl
     bannerUrl
     postCount
-    posts(
-      first: $first,
-      offset: $offset,
-      sortBy: $sortBy,
-      search: $search,
-      filter: $filter,
-      order: "desc"
-    ) {
-      hasMore
-      items {
-        id
-        title
-        details
-        type
-        creator {
-          id
-          name
-          avatarUrl
-        }
-        createdAt
-        updatedAt
-        commenters(first: 2) {
-          id
-          name
-          avatarUrl
-        }
-        commentersTotal
-        linkPreview {
-          title
-          url
-          imageUrl
-        }
-        votesTotal
-        communities {
-          id
-          name
-          slug
-        }
-      }
-    }
+${postsQueryFragment}
   }
 }`
