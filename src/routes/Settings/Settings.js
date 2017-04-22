@@ -4,15 +4,19 @@ import { NavLink, Route } from 'react-router-dom'
 import Icon from 'components/Icon'
 import AccountSettings from './AccountSettings/AccountSettings'
 import CommunitySettings from './CommunitySettings/CommunitySettings'
-const { object } = PropTypes
+const { object, func } = PropTypes
 
 export default class Settings extends Component {
   static propTypes = {
-    currentUser: object
+    currentUser: object,
+    onClose: func
   }
 
   componentDidMount () {
-    this.props.fetchUserSettings()
+    const { fetchUserSettings, onClose } = this.props
+    fetchUserSettings()
+    // storing onClose here because we only want the version that's passed in initially.
+    this.onClose = onClose
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -22,7 +26,7 @@ export default class Settings extends Component {
   }
 
   render () {
-    const { currentUser, communities, goBack, updateUserSettings, leaveCommunity } = this.props
+    const { currentUser, communities, updateUserSettings, leaveCommunity } = this.props
     return <div styleName='modal'>
       <div styleName='content'>
         <div styleName='left-sidebar'>
@@ -36,7 +40,7 @@ export default class Settings extends Component {
             <CommunitySettings communities={communities} leaveCommunity={leaveCommunity} />} />
         </div>
         <div styleName='right-sidebar'>
-          <CloseButton onClose={goBack} />
+          <CloseButton onClose={this.onClose} />
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import {
 } from 'store/constants'
 import orm from './ormReducer'
 import pending from './pending'
+import history from './history'
 // Local store
 // generator-marker-local-store-import
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
@@ -19,6 +20,7 @@ const combinedReducers = combineReducers({
   orm,
   router: routerReducer,
   pending,
+  history,
   queryResults,
 
   // NOTE: Move local to PrimaryLayout?
