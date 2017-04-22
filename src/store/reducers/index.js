@@ -13,8 +13,9 @@ import Login from 'routes/Login/Login.store'
 import MemberProfile from 'routes/MemberProfile/MemberProfile.store'
 import Members from 'routes/Members/Members.store'
 import queryResults from './queryResults'
+import { handleSetState, composeReducers } from './util'
 
-export default combineReducers({
+const combinedReducers = combineReducers({
   // Global store
   orm,
   router: routerReducer,
@@ -35,3 +36,5 @@ export default combineReducers({
   MemberProfile,
   Members
 })
+
+export default composeReducers(combinedReducers, handleSetState)
