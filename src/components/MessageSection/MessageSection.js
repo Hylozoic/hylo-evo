@@ -15,7 +15,7 @@ const MAX_MINS_TO_BATCH = 5
 const lastSeenAtTimes = {}
 
 function createMessageList (messages, lastSeenAt) {
-  let currentHeader, lastTimestamp
+  let currentHeader
   return messages.reduce((acc, m) => {
     let headerDate, messageDate, diff, greaterThanMax
     let isHeader = false
@@ -30,11 +30,12 @@ function createMessageList (messages, lastSeenAt) {
       isHeader = greaterThanMax || m.creator.id !== currentHeader.creator.id
       currentHeader = isHeader ? m : currentHeader
     }
+    /* on hold
     let messageTime = new Date(m.createdAt).getTime()
     if (lastTimestamp && lastSeenAt && lastTimestamp < lastSeenAt && lastSeenAt < messageTime) {
       acc.push(<NewMessages />)
     }
-    lastTimestamp = messageTime
+    lastTimestamp = messageTime */
     acc.push(<Message message={m} key={`message-${m.id}`} isHeader={isHeader} />)
     return acc
   }, [])
@@ -79,14 +80,15 @@ export default class MessageSection extends React.Component {
   componentDidUpdate (prevProps) {
     const messagesLength = this.props.messages.length
     const oldMessagesLength = prevProps.messages.length
-    const { currentUser, thread } = this.props
+    const { currentUser } = this.props
     const latestMessage = maxBy('createdAt', this.props.messages || [])
     const userSentLatest = get('creator.id', latestMessage) === get('id', currentUser)
     const { scrolledUp } = this.state
     if (messagesLength !== oldMessagesLength && (!scrolledUp || userSentLatest)) this.scrollToBottom()
+    /* on hold
     if (thread && !lastSeenAtTimes[thread.id] && thread.unreadCount) {
       lastSeenAtTimes[thread.id] = new Date(thread.lastReadAt).getTime()
-    }
+    } */
   }
 
   fetchMore = () => {
@@ -149,9 +151,10 @@ export default class MessageSection extends React.Component {
   }
 }
 
+/* on hold
 function NewMessages () {
   return <div styleName='new-messages' key='new-messages'>
     <div styleName='new-messages-text'>new messages</div>
     <div styleName='new-messages-line' />
   </div>
-}
+} */
