@@ -1,6 +1,6 @@
 import { uniqueId } from 'lodash/fp'
 import { createSelector } from 'reselect'
-import { CREATE_MESSAGE } from 'store/constants'
+import { CREATE_MESSAGE, CREATE_MESSAGE_PENDING } from 'store/constants'
 
 export const MODULE_NAME = 'MessageForm'
 
@@ -58,7 +58,7 @@ export default function reducer (state = defaultState, action) {
   if (error) return state
 
   switch (type) {
-    case CREATE_MESSAGE:
+    case CREATE_MESSAGE_PENDING:
       return {...state, [meta.messageThreadId]: ''}
     case UPDATE_MESSAGE_TEXT:
       return {...state, [meta.messageThreadId]: meta.text}
