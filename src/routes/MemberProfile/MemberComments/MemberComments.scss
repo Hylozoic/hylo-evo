@@ -1,0 +1,12 @@
+.subhead {
+  composes: hdr-headline from 'css/typography.scss';
+  margin: $space-8x 0 $space-6x 0;
+}
+
+.activity-item {
+  margin: $space-5x 0;
+
+  a:first-child {
+    text-decoration: none;
+  }
+}

@@ -155,3 +155,11 @@
   letter-spacing: 0;
   line-height: 16px;
 }
+
+.person-name {
+  @include font-bold;
+  color: $color-rhino-80;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 20px;
+}

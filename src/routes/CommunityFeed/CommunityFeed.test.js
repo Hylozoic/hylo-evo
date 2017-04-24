@@ -3,14 +3,20 @@ import { shallow } from 'enzyme'
 import CommunityFeed from './CommunityFeed'
 
 describe('CommunityFeed', () => {
-  it('has a TabBar', () => {
-    const wrapper = shallow(<CommunityFeed />)
-    expect(wrapper.find('TabBar')).toBeTruthy()
-  })
+  it('renders a Feed with correct props', () => {
+    const wrapper = shallow(<CommunityFeed community={{slug: 'foo'}}
+      filter='request'
+      selectedPostId='5'
+      sortBy='votes' />)
 
-  it('renders a post list', () => {
-    const posts = [{id: 1}, {id: 2}, {id: 3}]
-    const wrapper = shallow(<CommunityFeed posts={posts} />)
-    expect(wrapper.find('PostCard').length).toEqual(3)
+    const feed = wrapper.find('Connect(Feed)')
+    expect(feed).toHaveLength(1)
+    expect(feed.props()).toEqual({
+      subject: 'community',
+      id: 'foo',
+      filter: 'request',
+      sortBy: 'votes',
+      selectedPostId: '5'
+    })
   })
 })
