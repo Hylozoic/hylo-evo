@@ -1,7 +1,8 @@
 import React, { PropTypes, Component } from 'react'
-import { matchPath, Route } from 'react-router-dom'
+import { matchPath, Redirect, Route } from 'react-router-dom'
 import cx from 'classnames'
 import { flow, map, some, identity } from 'lodash/fp'
+import Loading from 'components/Loading'
 import CommunitiesDrawer from './components/CommunitiesDrawer'
 import Messages from 'routes/Messages'
 import SocketListener from 'components/SocketListener'
@@ -12,8 +13,10 @@ import CommunityFeed from 'routes/CommunityFeed'
 import Events from 'routes/Events'
 
 import EventDetail from 'routes/Events/EventDetail'
+import MemberProfile from 'routes/MemberProfile'
 import PostDetail from 'routes/PostDetail'
 import Members from 'routes/Members'
+import MessageMember from 'components/MessageMember'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 
@@ -32,7 +35,13 @@ export default class PrimaryLayout extends Component {
   }
 
   render () {
-    const { location, community, currentUser, communitiesDrawerOpen, toggleCommunitiesDrawer } = this.props
+    const {
+      community,
+      currentUser,
+      communitiesDrawerOpen,
+      location,
+      toggleCommunitiesDrawer
+    } = this.props
 
     const hasDetail = flow(
       map(path => matchPath(location.pathname, {path: path})),
@@ -51,14 +60,16 @@ export default class PrimaryLayout extends Component {
       <div styleName='main'>
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
-          <Route path='/' exact render={() => <CommunityFeed {...{community, currentUser}} />} />
+          <RedirectToCommunity currentUser={currentUser} />
           <Route path='/c/:slug/' exact component={CommunityFeed} />
           <Route path='/c/:slug/p/:postId' component={CommunityFeed} />
+          <Route path='/c/:slug/m/:id' component={MemberProfile} />
           <Route path='/events' component={Events} />
           <Route path='/c/:slug/members' component={Members} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/c/:slug' exact component={Sidebar} />
+          <Route path='/c/:slug/m/:id' component={MessageMember} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})}>
           {/*
@@ -78,4 +89,17 @@ export default class PrimaryLayout extends Component {
       <SocketListener />
     </div>
   }
+}
+
+function RedirectToCommunity ({ currentUser }) {
+  return <Route path='/' exact render={() => {
+    if (!currentUser) return <Loading type='top' />
+
+    const mostRecentCommunity = currentUser.memberships
+    .orderBy(m => new Date(m.lastViewedAt), 'desc')
+    .first()
+    .community
+
+    return <Redirect to={`/c/${mostRecentCommunity.slug}`} />
+  }} />
 }

@@ -1,4 +1,6 @@
 import {
+  CREATE_COMMENT,
+  CREATE_COMMENT_PENDING,
   ADD_MESSAGE_FROM_SOCKET,
   CREATE_MESSAGE,
   EXTRACT_MODEL,
@@ -12,7 +14,7 @@ export default function ormReducer (state = {}, action) {
   const { payload, type, meta, error } = action
   if (error) return state
 
-  const { MessageThread } = session
+  const { Comment, MessageThread } = session
 
   switch (type) {
     case EXTRACT_MODEL:
@@ -21,6 +23,18 @@ export default function ormReducer (state = {}, action) {
         root: payload,
         modelName: meta.modelName
       })
+      break
+
+    case CREATE_COMMENT_PENDING:
+      Comment.create({
+        id: meta.tempId,
+        post: meta.postId,
+        text: meta.text,
+        creator: session.Me.first().id})
+      break
+
+    case CREATE_COMMENT:
+      Comment.withId(meta.tempId).delete()
       break
 
     case CREATE_MESSAGE:

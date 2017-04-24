@@ -134,7 +134,9 @@
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
-    "snapshotSerializers": [ "enzyme-to-json/serializer" ],
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/enzyme-to-json/serializer"
+    ],
     "testPathIgnorePatterns": [
       "<rootDir>[/\\\\](build|docs|node_modules|scripts|es5)[/\\\\]"
     ],
