@@ -1,31 +1,698 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MemberProfile renders the same as the last snapshot 1`] = `
-<div>
-  <ProfileBanner
-    bannerUrl="http://www.axolotl.org/images/tiger/tiger_larva.jpg"
-  >
-    <ProfileNamePlate
-      avatarUrl="https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
-      location="Auckland, New Zealand"
-      name="Rich Churcher"
-    />
-  </ProfileBanner>
-  <div>
-    <ProfileControls
-      selectTab={[Function]}
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <div>
+    <ProfileBanner
+        bannerUrl="http://www.axolotl.org/images/tiger/tiger_larva.jpg"
     >
-      <SocialButtons
-        facebookUrl="https://www.facebook.com/rich.churcher"
-        linkedinUrl="https://www.linkedin.com/in/richchurcher/"
-        twitterName="richchurcher"
-        url="https://eloquentgeek.com"
-      />
-    </ProfileControls>
-    <TabContentSwitcher
-      bio="I like wombats."
-      personId="1"
-    />
-  </div>
-</div>
+        <ProfileNamePlate
+            avatarUrl="https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+            location="Auckland, New Zealand"
+            name="Rich Churcher"
+            role={undefined}
+        />
+    </ProfileBanner>
+    <div>
+        <ProfileControls
+            currentTab={undefined}
+            selectTab={[Function]}
+        >
+            <span />
+            <SocialButtons
+                facebookUrl="https://www.facebook.com/rich.churcher"
+                linkedinUrl="https://www.linkedin.com/in/richchurcher/"
+                twitterName="richchurcher"
+                url="https://eloquentgeek.com"
+            />
+        </ProfileControls>
+        <TabContentSwitcher
+            bio="I like wombats."
+            currentTab={undefined}
+            personId="1"
+            slug={undefined}
+        />
+    </div>
+</div>,
+  "nodes": Array [
+    <div>
+      <ProfileBanner
+            bannerUrl="http://www.axolotl.org/images/tiger/tiger_larva.jpg"
+      >
+            <ProfileNamePlate
+                  avatarUrl="https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+                  location="Auckland, New Zealand"
+                  name="Rich Churcher"
+                  role={undefined}
+            />
+      </ProfileBanner>
+      <div>
+            <ProfileControls
+                  currentTab={undefined}
+                  selectTab={[Function]}
+            >
+                  <span />
+                  <SocialButtons
+                        facebookUrl="https://www.facebook.com/rich.churcher"
+                        linkedinUrl="https://www.linkedin.com/in/richchurcher/"
+                        twitterName="richchurcher"
+                        url="https://eloquentgeek.com"
+                  />
+            </ProfileControls>
+            <TabContentSwitcher
+                  bio="I like wombats."
+                  currentTab={undefined}
+                  personId="1"
+                  slug={undefined}
+            />
+      </div>
+</div>,
+  ],
+  "options": Object {},
+  "renderer": ReactShallowRenderer {
+    "_instance":  {
+      "_calledComponentWillUnmount": false,
+      "_compositeType": 0,
+      "_context": Object {},
+      "_currentElement": <MemberProfile
+        match={
+                Object {
+                        "params": Object {
+                          "id": "1",
+                        },
+                      }
+        }
+        person={
+                Object {
+                        "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+                        "bannerUrl": "http://www.axolotl.org/images/tiger/tiger_larva.jpg",
+                        "bio": "I like wombats.",
+                        "comments": Array [
+                          Object {
+                            "createdAt": "Sat Apr 15 2017 16:27:55 GMT+1200 (NZST)",
+                            "creator": Object {
+                              "id": "46816",
+                            },
+                            "id": "2",
+                            "post": Object {
+                              "id": "30002",
+                              "title": "0123456789 0123456789 0123456789",
+                            },
+                            "text": "<p>So much more to say.</p>",
+                          },
+                          Object {
+                            "createdAt": "Fri Mar 24 2017 10:39:41 GMT+1300 (NZDT)",
+                            "creator": Object {
+                              "id": "46816",
+                            },
+                            "id": "1",
+                            "post": Object {
+                              "id": "30002",
+                              "title": "0123456789 0123456789 0123456789",
+                            },
+                            "text": "<p>Here's a comment!</p>",
+                          },
+                        ],
+                        "facebookUrl": "https://www.facebook.com/rich.churcher",
+                        "id": "46816",
+                        "linkedinUrl": "https://www.linkedin.com/in/richchurcher/",
+                        "location": "Auckland, New Zealand",
+                        "memberships": Array [
+                          Object {
+                            "community": Object {
+                              "id": "1836",
+                              "name": "Wombats",
+                              "slug": "wombats",
+                            },
+                            "hasModeratorRole": true,
+                            "id": "3",
+                            "role": 1,
+                          },
+                        ],
+                        "membershipsTotal": null,
+                        "name": "Rich Churcher",
+                        "posts": Array [
+                          Object {
+                            "commenters": Array [],
+                            "commentersTotal": 0,
+                            "communities": Array [
+                              Object {
+                                "id": "1836",
+                                "name": "Wombats",
+                              },
+                            ],
+                            "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+                            "creator": Object {
+                              "id": "46816",
+                            },
+                            "details": "<p>With nothing of importance in it.</p>",
+                            "id": "30003",
+                            "title": "Some other post",
+                            "type": "discussion",
+                          },
+                          Object {
+                            "commenters": Array [
+                              Object {
+                                "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+                                "id": "46816",
+                                "name": "Rich Churcher",
+                              },
+                            ],
+                            "commentersTotal": 1,
+                            "communities": Array [
+                              Object {
+                                "id": "1836",
+                                "name": "Wombats",
+                              },
+                            ],
+                            "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+                            "creator": Object {
+                              "id": "46816",
+                            },
+                            "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+                <p></p>
+                <p></p>",
+                            "id": "30002",
+                            "title": "0123456789 0123456789 0123456789",
+                            "type": "discussion",
+                          },
+                        ],
+                        "postsTotal": 2,
+                        "twitterName": "richchurcher",
+                        "url": "https://eloquentgeek.com",
+                        "votes": Array [
+                          Object {
+                            "createdAt": "Tue Apr 18 2017 09:50:25 GMT+1200 (NZST)",
+                            "id": "2",
+                            "post": Object {
+                              "commenters": Array [
+                                Object {
+                                  "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+                                  "id": "46816",
+                                  "name": "Rich Churcher",
+                                },
+                              ],
+                              "commentersTotal": 1,
+                              "communities": Array [
+                                Object {
+                                  "id": "1836",
+                                  "name": "Wombats",
+                                },
+                              ],
+                              "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+                              "creator": Object {
+                                "id": "46816",
+                              },
+                              "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+                <p></p>
+                <p></p>",
+                              "id": "30002",
+                              "title": "0123456789 0123456789 0123456789",
+                              "type": "discussion",
+                            },
+                            "voter": Object {
+                              "id": "46816",
+                            },
+                          },
+                          Object {
+                            "createdAt": "Tue Apr 18 2017 09:20:39 GMT+1200 (NZST)",
+                            "id": "1",
+                            "post": Object {
+                              "commenters": Array [],
+                              "commentersTotal": 0,
+                              "communities": Array [
+                                Object {
+                                  "id": "1836",
+                                  "name": "Wombats",
+                                },
+                              ],
+                              "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+                              "creator": Object {
+                                "id": "46816",
+                              },
+                              "details": "<p>With nothing of importance in it.</p>",
+                              "id": "30003",
+                              "title": "Some other post",
+                              "type": "discussion",
+                            },
+                            "voter": Object {
+                              "id": "46816",
+                            },
+                          },
+                        ],
+                        "votesTotal": 2,
+                      }
+        }
+        ready={true}
+/>,
+      "_debugID": 1,
+      "_hostContainerInfo": null,
+      "_hostParent": null,
+      "_instance": MemberProfile {
+        "_reactInternalInstance": [Circular],
+        "context": Object {},
+        "props": Object {
+          "match": Object {
+            "params": Object {
+              "id": "1",
+            },
+          },
+          "person": Object {
+            "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+            "bannerUrl": "http://www.axolotl.org/images/tiger/tiger_larva.jpg",
+            "bio": "I like wombats.",
+            "comments": Array [
+              Object {
+                "createdAt": "Sat Apr 15 2017 16:27:55 GMT+1200 (NZST)",
+                "creator": Object {
+                  "id": "46816",
+                },
+                "id": "2",
+                "post": Object {
+                  "id": "30002",
+                  "title": "0123456789 0123456789 0123456789",
+                },
+                "text": "<p>So much more to say.</p>",
+              },
+              Object {
+                "createdAt": "Fri Mar 24 2017 10:39:41 GMT+1300 (NZDT)",
+                "creator": Object {
+                  "id": "46816",
+                },
+                "id": "1",
+                "post": Object {
+                  "id": "30002",
+                  "title": "0123456789 0123456789 0123456789",
+                },
+                "text": "<p>Here's a comment!</p>",
+              },
+            ],
+            "facebookUrl": "https://www.facebook.com/rich.churcher",
+            "id": "46816",
+            "linkedinUrl": "https://www.linkedin.com/in/richchurcher/",
+            "location": "Auckland, New Zealand",
+            "memberships": Array [
+              Object {
+                "community": Object {
+                  "id": "1836",
+                  "name": "Wombats",
+                  "slug": "wombats",
+                },
+                "hasModeratorRole": true,
+                "id": "3",
+                "role": 1,
+              },
+            ],
+            "membershipsTotal": null,
+            "name": "Rich Churcher",
+            "posts": Array [
+              Object {
+                "commenters": Array [],
+                "commentersTotal": 0,
+                "communities": Array [
+                  Object {
+                    "id": "1836",
+                    "name": "Wombats",
+                  },
+                ],
+                "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+                "creator": Object {
+                  "id": "46816",
+                },
+                "details": "<p>With nothing of importance in it.</p>",
+                "id": "30003",
+                "title": "Some other post",
+                "type": "discussion",
+              },
+              Object {
+                "commenters": Array [
+                  Object {
+                    "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+                    "id": "46816",
+                    "name": "Rich Churcher",
+                  },
+                ],
+                "commentersTotal": 1,
+                "communities": Array [
+                  Object {
+                    "id": "1836",
+                    "name": "Wombats",
+                  },
+                ],
+                "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+                "creator": Object {
+                  "id": "46816",
+                },
+                "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+<p></p>
+<p></p>",
+                "id": "30002",
+                "title": "0123456789 0123456789 0123456789",
+                "type": "discussion",
+              },
+            ],
+            "postsTotal": 2,
+            "twitterName": "richchurcher",
+            "url": "https://eloquentgeek.com",
+            "votes": Array [
+              Object {
+                "createdAt": "Tue Apr 18 2017 09:50:25 GMT+1200 (NZST)",
+                "id": "2",
+                "post": Object {
+                  "commenters": Array [
+                    Object {
+                      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+                      "id": "46816",
+                      "name": "Rich Churcher",
+                    },
+                  ],
+                  "commentersTotal": 1,
+                  "communities": Array [
+                    Object {
+                      "id": "1836",
+                      "name": "Wombats",
+                    },
+                  ],
+                  "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+                  "creator": Object {
+                    "id": "46816",
+                  },
+                  "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+<p></p>
+<p></p>",
+                  "id": "30002",
+                  "title": "0123456789 0123456789 0123456789",
+                  "type": "discussion",
+                },
+                "voter": Object {
+                  "id": "46816",
+                },
+              },
+              Object {
+                "createdAt": "Tue Apr 18 2017 09:20:39 GMT+1200 (NZST)",
+                "id": "1",
+                "post": Object {
+                  "commenters": Array [],
+                  "commentersTotal": 0,
+                  "communities": Array [
+                    Object {
+                      "id": "1836",
+                      "name": "Wombats",
+                    },
+                  ],
+                  "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+                  "creator": Object {
+                    "id": "46816",
+                  },
+                  "details": "<p>With nothing of importance in it.</p>",
+                  "id": "30003",
+                  "title": "Some other post",
+                  "type": "discussion",
+                },
+                "voter": Object {
+                  "id": "46816",
+                },
+              },
+            ],
+            "votesTotal": 2,
+          },
+          "ready": true,
+        },
+        "refs": Object {},
+        "selectTab": [Function],
+        "state": Object {
+          "currentTab": undefined,
+        },
+        "updater": Object {
+          "enqueueCallback": [Function],
+          "enqueueCallbackInternal": [Function],
+          "enqueueElementInternal": [Function],
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+          "validateCallback": [Function],
+        },
+      },
+      "_mountOrder": 1,
+      "_pendingCallbacks": null,
+      "_pendingElement": null,
+      "_pendingForceUpdate": false,
+      "_pendingReplaceState": false,
+      "_pendingStateQueue": null,
+      "_renderedComponent": NoopInternalComponent {
+        "_currentElement": <div>
+          <ProfileBanner
+                    bannerUrl="http://www.axolotl.org/images/tiger/tiger_larva.jpg"
+          >
+                    <ProfileNamePlate
+                              avatarUrl="https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+                              location="Auckland, New Zealand"
+                              name="Rich Churcher"
+                              role={undefined}
+                    />
+          </ProfileBanner>
+          <div>
+                    <ProfileControls
+                              currentTab={undefined}
+                              selectTab={[Function]}
+                    >
+                              <span />
+                              <SocialButtons
+                                        facebookUrl="https://www.facebook.com/rich.churcher"
+                                        linkedinUrl="https://www.linkedin.com/in/richchurcher/"
+                                        twitterName="richchurcher"
+                                        url="https://eloquentgeek.com"
+                              />
+                    </ProfileControls>
+                    <TabContentSwitcher
+                              bio="I like wombats."
+                              currentTab={undefined}
+                              personId="1"
+                              slug={undefined}
+                    />
+          </div>
+</div>,
+        "_debugID": 2,
+        "_renderedOutput": <div>
+          <ProfileBanner
+                    bannerUrl="http://www.axolotl.org/images/tiger/tiger_larva.jpg"
+          >
+                    <ProfileNamePlate
+                              avatarUrl="https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
+                              location="Auckland, New Zealand"
+                              name="Rich Churcher"
+                              role={undefined}
+                    />
+          </ProfileBanner>
+          <div>
+                    <ProfileControls
+                              currentTab={undefined}
+                              selectTab={[Function]}
+                    >
+                              <span />
+                              <SocialButtons
+                                        facebookUrl="https://www.facebook.com/rich.churcher"
+                                        linkedinUrl="https://www.linkedin.com/in/richchurcher/"
+                                        twitterName="richchurcher"
+                                        url="https://eloquentgeek.com"
+                              />
+                    </ProfileControls>
+                    <TabContentSwitcher
+                              bio="I like wombats."
+                              currentTab={undefined}
+                              personId="1"
+                              slug={undefined}
+                    />
+          </div>
+</div>,
+      },
+      "_renderedNodeType": 0,
+      "_rootNodeID": 0,
+      "_topLevelWrapper": null,
+      "_updateBatchNumber": null,
+      "_warnedAboutRefsInRender": false,
+    },
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <MemberProfile
+    match={
+        Object {
+            "params": Object {
+              "id": "1",
+            },
+          }
+    }
+    person={
+        Object {
+            "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+            "bannerUrl": "http://www.axolotl.org/images/tiger/tiger_larva.jpg",
+            "bio": "I like wombats.",
+            "comments": Array [
+              Object {
+                "createdAt": "Sat Apr 15 2017 16:27:55 GMT+1200 (NZST)",
+                "creator": Object {
+                  "id": "46816",
+                },
+                "id": "2",
+                "post": Object {
+                  "id": "30002",
+                  "title": "0123456789 0123456789 0123456789",
+                },
+                "text": "<p>So much more to say.</p>",
+              },
+              Object {
+                "createdAt": "Fri Mar 24 2017 10:39:41 GMT+1300 (NZDT)",
+                "creator": Object {
+                  "id": "46816",
+                },
+                "id": "1",
+                "post": Object {
+                  "id": "30002",
+                  "title": "0123456789 0123456789 0123456789",
+                },
+                "text": "<p>Here's a comment!</p>",
+              },
+            ],
+            "facebookUrl": "https://www.facebook.com/rich.churcher",
+            "id": "46816",
+            "linkedinUrl": "https://www.linkedin.com/in/richchurcher/",
+            "location": "Auckland, New Zealand",
+            "memberships": Array [
+              Object {
+                "community": Object {
+                  "id": "1836",
+                  "name": "Wombats",
+                  "slug": "wombats",
+                },
+                "hasModeratorRole": true,
+                "id": "3",
+                "role": 1,
+              },
+            ],
+            "membershipsTotal": null,
+            "name": "Rich Churcher",
+            "posts": Array [
+              Object {
+                "commenters": Array [],
+                "commentersTotal": 0,
+                "communities": Array [
+                  Object {
+                    "id": "1836",
+                    "name": "Wombats",
+                  },
+                ],
+                "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+                "creator": Object {
+                  "id": "46816",
+                },
+                "details": "<p>With nothing of importance in it.</p>",
+                "id": "30003",
+                "title": "Some other post",
+                "type": "discussion",
+              },
+              Object {
+                "commenters": Array [
+                  Object {
+                    "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+                    "id": "46816",
+                    "name": "Rich Churcher",
+                  },
+                ],
+                "commentersTotal": 1,
+                "communities": Array [
+                  Object {
+                    "id": "1836",
+                    "name": "Wombats",
+                  },
+                ],
+                "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+                "creator": Object {
+                  "id": "46816",
+                },
+                "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+        <p></p>
+        <p></p>",
+                "id": "30002",
+                "title": "0123456789 0123456789 0123456789",
+                "type": "discussion",
+              },
+            ],
+            "postsTotal": 2,
+            "twitterName": "richchurcher",
+            "url": "https://eloquentgeek.com",
+            "votes": Array [
+              Object {
+                "createdAt": "Tue Apr 18 2017 09:50:25 GMT+1200 (NZST)",
+                "id": "2",
+                "post": Object {
+                  "commenters": Array [
+                    Object {
+                      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+                      "id": "46816",
+                      "name": "Rich Churcher",
+                    },
+                  ],
+                  "commentersTotal": 1,
+                  "communities": Array [
+                    Object {
+                      "id": "1836",
+                      "name": "Wombats",
+                    },
+                  ],
+                  "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+                  "creator": Object {
+                    "id": "46816",
+                  },
+                  "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+        <p></p>
+        <p></p>",
+                  "id": "30002",
+                  "title": "0123456789 0123456789 0123456789",
+                  "type": "discussion",
+                },
+                "voter": Object {
+                  "id": "46816",
+                },
+              },
+              Object {
+                "createdAt": "Tue Apr 18 2017 09:20:39 GMT+1200 (NZST)",
+                "id": "1",
+                "post": Object {
+                  "commenters": Array [],
+                  "commentersTotal": 0,
+                  "communities": Array [
+                    Object {
+                      "id": "1836",
+                      "name": "Wombats",
+                    },
+                  ],
+                  "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+                  "creator": Object {
+                    "id": "46816",
+                  },
+                  "details": "<p>With nothing of importance in it.</p>",
+                  "id": "30003",
+                  "title": "Some other post",
+                  "type": "discussion",
+                },
+                "voter": Object {
+                  "id": "46816",
+                },
+              },
+            ],
+            "votesTotal": 2,
+          }
+    }
+    ready={true}
+/>,
+}
 `;

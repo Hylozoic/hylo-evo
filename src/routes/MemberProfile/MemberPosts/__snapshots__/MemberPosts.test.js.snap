@@ -1,62 +1,438 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MemberPosts renders the same as the last snapshot 1`] = `
-<div>
-  <div>
-    <PostCard
-      post={
-        Object {
-          "commenters": Array [],
-          "commentersTotal": 0,
-          "communities": Array [
-            Object {
-              "id": "1836",
-              "name": "Wombats",
-            },
-          ],
-          "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
-          "creator": Object {
-            "id": "46816",
-          },
-          "details": "<p>With nothing of importance in it.</p>",
-          "id": "30003",
-          "title": "Some other post",
-          "type": "discussion",
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <div>
+    <div>
+        <PostCard
+            post={
+                Object {
+                    "commenters": Array [],
+                    "commentersTotal": 0,
+                    "communities": Array [
+                      Object {
+                        "id": "1836",
+                        "name": "Wombats",
+                      },
+                    ],
+                    "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+                    "creator": Object {
+                      "id": "46816",
+                    },
+                    "details": "<p>With nothing of importance in it.</p>",
+                    "id": "30003",
+                    "title": "Some other post",
+                    "type": "discussion",
+                  }
+            }
+        />
+    </div>
+    <div>
+        <PostCard
+            post={
+                Object {
+                    "commenters": Array [
+                      Object {
+                        "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+                        "id": "46816",
+                        "name": "Rich Churcher",
+                      },
+                    ],
+                    "commentersTotal": 1,
+                    "communities": Array [
+                      Object {
+                        "id": "1836",
+                        "name": "Wombats",
+                      },
+                    ],
+                    "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+                    "creator": Object {
+                      "id": "46816",
+                    },
+                    "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+                <p></p>
+                <p></p>",
+                    "id": "30002",
+                    "title": "0123456789 0123456789 0123456789",
+                    "type": "discussion",
+                  }
+            }
+        />
+    </div>
+</div>,
+  "nodes": Array [
+    <div>
+      <div>
+            <PostCard
+                  post={
+                        Object {
+                              "commenters": Array [],
+                              "commentersTotal": 0,
+                              "communities": Array [
+                                Object {
+                                  "id": "1836",
+                                  "name": "Wombats",
+                                },
+                              ],
+                              "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+                              "creator": Object {
+                                "id": "46816",
+                              },
+                              "details": "<p>With nothing of importance in it.</p>",
+                              "id": "30003",
+                              "title": "Some other post",
+                              "type": "discussion",
+                            }
+                  }
+            />
+      </div>
+      <div>
+            <PostCard
+                  post={
+                        Object {
+                              "commenters": Array [
+                                Object {
+                                  "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+                                  "id": "46816",
+                                  "name": "Rich Churcher",
+                                },
+                              ],
+                              "commentersTotal": 1,
+                              "communities": Array [
+                                Object {
+                                  "id": "1836",
+                                  "name": "Wombats",
+                                },
+                              ],
+                              "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+                              "creator": Object {
+                                "id": "46816",
+                              },
+                              "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+                        <p></p>
+                        <p></p>",
+                              "id": "30002",
+                              "title": "0123456789 0123456789 0123456789",
+                              "type": "discussion",
+                            }
+                  }
+            />
+      </div>
+</div>,
+  ],
+  "options": Object {},
+  "renderer": ReactShallowRenderer {
+    "_instance":  {
+      "_calledComponentWillUnmount": false,
+      "_compositeType": 0,
+      "_context": Object {},
+      "_currentElement": <MemberPosts
+        posts={
+                Array [
+                        Object {
+                          "commenters": Array [],
+                          "commentersTotal": 0,
+                          "communities": Array [
+                            Object {
+                              "id": "1836",
+                              "name": "Wombats",
+                            },
+                          ],
+                          "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+                          "creator": Object {
+                            "id": "46816",
+                          },
+                          "details": "<p>With nothing of importance in it.</p>",
+                          "id": "30003",
+                          "title": "Some other post",
+                          "type": "discussion",
+                        },
+                        Object {
+                          "commenters": Array [
+                            Object {
+                              "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+                              "id": "46816",
+                              "name": "Rich Churcher",
+                            },
+                          ],
+                          "commentersTotal": 1,
+                          "communities": Array [
+                            Object {
+                              "id": "1836",
+                              "name": "Wombats",
+                            },
+                          ],
+                          "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+                          "creator": Object {
+                            "id": "46816",
+                          },
+                          "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+                <p></p>
+                <p></p>",
+                          "id": "30002",
+                          "title": "0123456789 0123456789 0123456789",
+                          "type": "discussion",
+                        },
+                      ]
         }
-      }
-    />
-  </div>
-  <div>
-    <PostCard
-      post={
-        Object {
-          "commenters": Array [
+/>,
+      "_debugID": 1,
+      "_hostContainerInfo": null,
+      "_hostParent": null,
+      "_instance": MemberPosts {
+        "_reactInternalInstance": [Circular],
+        "context": Object {},
+        "props": Object {
+          "posts": Array [
             Object {
-              "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
-              "id": "46816",
-              "name": "Rich Churcher",
+              "commenters": Array [],
+              "commentersTotal": 0,
+              "communities": Array [
+                Object {
+                  "id": "1836",
+                  "name": "Wombats",
+                },
+              ],
+              "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+              "creator": Object {
+                "id": "46816",
+              },
+              "details": "<p>With nothing of importance in it.</p>",
+              "id": "30003",
+              "title": "Some other post",
+              "type": "discussion",
+            },
+            Object {
+              "commenters": Array [
+                Object {
+                  "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+                  "id": "46816",
+                  "name": "Rich Churcher",
+                },
+              ],
+              "commentersTotal": 1,
+              "communities": Array [
+                Object {
+                  "id": "1836",
+                  "name": "Wombats",
+                },
+              ],
+              "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+              "creator": Object {
+                "id": "46816",
+              },
+              "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+<p></p>
+<p></p>",
+              "id": "30002",
+              "title": "0123456789 0123456789 0123456789",
+              "type": "discussion",
             },
           ],
-          "commentersTotal": 1,
-          "communities": Array [
+        },
+        "refs": Object {},
+        "state": null,
+        "updater": Object {
+          "enqueueCallback": [Function],
+          "enqueueCallbackInternal": [Function],
+          "enqueueElementInternal": [Function],
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+          "validateCallback": [Function],
+        },
+      },
+      "_mountOrder": 1,
+      "_pendingCallbacks": null,
+      "_pendingElement": null,
+      "_pendingForceUpdate": false,
+      "_pendingReplaceState": false,
+      "_pendingStateQueue": null,
+      "_renderedComponent": NoopInternalComponent {
+        "_currentElement": <div>
+          <div>
+                    <PostCard
+                              post={
+                                        Object {
+                                                  "commenters": Array [],
+                                                  "commentersTotal": 0,
+                                                  "communities": Array [
+                                                    Object {
+                                                      "id": "1836",
+                                                      "name": "Wombats",
+                                                    },
+                                                  ],
+                                                  "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+                                                  "creator": Object {
+                                                    "id": "46816",
+                                                  },
+                                                  "details": "<p>With nothing of importance in it.</p>",
+                                                  "id": "30003",
+                                                  "title": "Some other post",
+                                                  "type": "discussion",
+                                                }
+                              }
+                    />
+          </div>
+          <div>
+                    <PostCard
+                              post={
+                                        Object {
+                                                  "commenters": Array [
+                                                    Object {
+                                                      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+                                                      "id": "46816",
+                                                      "name": "Rich Churcher",
+                                                    },
+                                                  ],
+                                                  "commentersTotal": 1,
+                                                  "communities": Array [
+                                                    Object {
+                                                      "id": "1836",
+                                                      "name": "Wombats",
+                                                    },
+                                                  ],
+                                                  "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+                                                  "creator": Object {
+                                                    "id": "46816",
+                                                  },
+                                                  "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+                                        <p></p>
+                                        <p></p>",
+                                                  "id": "30002",
+                                                  "title": "0123456789 0123456789 0123456789",
+                                                  "type": "discussion",
+                                                }
+                              }
+                    />
+          </div>
+</div>,
+        "_debugID": 2,
+        "_renderedOutput": <div>
+          <div>
+                    <PostCard
+                              post={
+                                        Object {
+                                                  "commenters": Array [],
+                                                  "commentersTotal": 0,
+                                                  "communities": Array [
+                                                    Object {
+                                                      "id": "1836",
+                                                      "name": "Wombats",
+                                                    },
+                                                  ],
+                                                  "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+                                                  "creator": Object {
+                                                    "id": "46816",
+                                                  },
+                                                  "details": "<p>With nothing of importance in it.</p>",
+                                                  "id": "30003",
+                                                  "title": "Some other post",
+                                                  "type": "discussion",
+                                                }
+                              }
+                    />
+          </div>
+          <div>
+                    <PostCard
+                              post={
+                                        Object {
+                                                  "commenters": Array [
+                                                    Object {
+                                                      "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+                                                      "id": "46816",
+                                                      "name": "Rich Churcher",
+                                                    },
+                                                  ],
+                                                  "commentersTotal": 1,
+                                                  "communities": Array [
+                                                    Object {
+                                                      "id": "1836",
+                                                      "name": "Wombats",
+                                                    },
+                                                  ],
+                                                  "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+                                                  "creator": Object {
+                                                    "id": "46816",
+                                                  },
+                                                  "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+                                        <p></p>
+                                        <p></p>",
+                                                  "id": "30002",
+                                                  "title": "0123456789 0123456789 0123456789",
+                                                  "type": "discussion",
+                                                }
+                              }
+                    />
+          </div>
+</div>,
+      },
+      "_renderedNodeType": 0,
+      "_rootNodeID": 0,
+      "_topLevelWrapper": null,
+      "_updateBatchNumber": null,
+      "_warnedAboutRefsInRender": false,
+    },
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <MemberPosts
+    posts={
+        Array [
             Object {
-              "id": "1836",
-              "name": "Wombats",
+              "commenters": Array [],
+              "commentersTotal": 0,
+              "communities": Array [
+                Object {
+                  "id": "1836",
+                  "name": "Wombats",
+                },
+              ],
+              "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+              "creator": Object {
+                "id": "46816",
+              },
+              "details": "<p>With nothing of importance in it.</p>",
+              "id": "30003",
+              "title": "Some other post",
+              "type": "discussion",
             },
-          ],
-          "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
-          "creator": Object {
-            "id": "46816",
-          },
-          "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
+            Object {
+              "commenters": Array [
+                Object {
+                  "avatarUrl": "https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140",
+                  "id": "46816",
+                  "name": "Rich Churcher",
+                },
+              ],
+              "commentersTotal": 1,
+              "communities": Array [
+                Object {
+                  "id": "1836",
+                  "name": "Wombats",
+                },
+              ],
+              "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+              "creator": Object {
+                "id": "46816",
+              },
+              "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
         <p></p>
         <p></p>",
-          "id": "30002",
-          "title": "0123456789 0123456789 0123456789",
-          "type": "discussion",
-        }
-      }
-    />
-  </div>
-</div>
+              "id": "30002",
+              "title": "0123456789 0123456789 0123456789",
+              "type": "discussion",
+            },
+          ]
+    }
+/>,
+}
 `;
