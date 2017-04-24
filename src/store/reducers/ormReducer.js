@@ -72,6 +72,7 @@ export default function ormReducer (state = {}, action) {
 
     case UPDATE_THREAD_READ_TIME:
       MessageThread.withId(meta.id).update({
+        unreadCount: 0,
         lastReadAt: new Date().toString()
       })
       break

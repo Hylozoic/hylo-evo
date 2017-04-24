@@ -53,8 +53,9 @@ function convertThreadToModelFormat (data) {
   return {
     id,
     createdAt: new Date(created_at).toString(),
-    updatetAt: new Date(updated_at).toString(),
+    updatedAt: new Date(updated_at).toString(),
     participants: people.map(({id, name, avatar_url}) => ({id, name, avatarUrl: avatar_url})),
-    messages: comments.map(c => convertMessageToModelFormat(c, id))
+    messages: comments.map(c => convertMessageToModelFormat(c, id)),
+    unreadCount: 1
   }
 }

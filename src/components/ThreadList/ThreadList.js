@@ -44,6 +44,8 @@ export default class ThreadList extends Component {
             latestMessage={t.messages[0]}
             unreadCount={t.unreadCount} />
         })}
+        {!threads.length && !threadSearch && <div styleName='no-conversations'>You have no active conversations</div>}
+        {!threads.length && threadSearch && <div styleName='no-conversations'>No conversations found</div>}
       </ul>
     </div>
   }

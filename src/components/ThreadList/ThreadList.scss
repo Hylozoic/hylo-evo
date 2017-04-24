@@ -45,6 +45,11 @@ $active-thread-border-width: 4px;
   overflow-y: auto;
 }
 
+.no-conversations {
+  composes: bdy-lt-lg from 'css/typography.scss';
+  margin: $thread-padding;
+}
+
 .list-item {
   position: relative;
   width: 100%;
