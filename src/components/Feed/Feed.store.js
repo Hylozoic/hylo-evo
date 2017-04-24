@@ -60,6 +60,7 @@ const communityQuery = `query (
           id
           name
           avatarUrl
+          tagline
         }
         createdAt
         updatedAt
