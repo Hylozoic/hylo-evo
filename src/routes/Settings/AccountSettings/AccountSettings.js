@@ -136,14 +136,8 @@ export function Control ({ label, value = '', onChange, type }) {
 }
 
 export class SocialControl extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {open: false}
-  }
-
   render () {
     const { label, onLink, onChange, value = '' } = this.props
-    const { open } = this.state
     const linked = !!value
     const unlinkClicked = () => onChange({target: {value: ''}})
     const linkClicked = onLink
@@ -153,9 +147,7 @@ export class SocialControl extends Component {
       {linked ? 'Unlink' : 'Link'}
     </span>
     return <div styleName='control'>
-      {open
-        ? <input styleName={cx('control-input', {linked})} type='text' value={value} onChange={onChange} />
-        : <div styleName={cx('social-control-label', {linked})}>{label}{linkButton}</div>}
+      <div styleName={cx('social-control-label', {linked})}>{label}{linkButton}</div>
     </div>
   }
 }
