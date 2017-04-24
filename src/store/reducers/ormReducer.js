@@ -1,8 +1,9 @@
 import {
+  ADD_MESSAGE_FROM_SOCKET,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
-  ADD_MESSAGE_FROM_SOCKET,
   CREATE_MESSAGE,
+  CREATE_MESSAGE_PENDING,
   EXTRACT_MODEL,
   UPDATE_THREAD_READ_TIME
 } from 'store/constants'
@@ -14,7 +15,7 @@ export default function ormReducer (state = {}, action) {
   const { payload, type, meta, error } = action
   if (error) return state
 
-  const { Comment, MessageThread } = session
+  const { Comment, Me, Message, MessageThread } = session
 
   switch (type) {
     case EXTRACT_MODEL:
@@ -30,14 +31,24 @@ export default function ormReducer (state = {}, action) {
         id: meta.tempId,
         post: meta.postId,
         text: meta.text,
-        creator: session.Me.first().id})
+        creator: Me.first().id})
       break
 
     case CREATE_COMMENT:
       Comment.withId(meta.tempId).delete()
       break
 
+    case CREATE_MESSAGE_PENDING:
+      Message.create({
+        id: meta.tempId,
+        messageThread: meta.messageThreadId,
+        text: meta.text,
+        createdAt: new Date().toString(),
+        creator: Me.first().id})
+      break
+
     case CREATE_MESSAGE:
+      Message.withId(meta.tempId).delete()
       const message = payload.data.createMessage
       MessageThread.withId(message.messageThread.id).update({
         updatedAt: new Date().toString()

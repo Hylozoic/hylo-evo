@@ -1,3 +1,4 @@
+import { uniqueId } from 'lodash/fp'
 import { createSelector } from 'reselect'
 import { CREATE_MESSAGE } from 'store/constants'
 
@@ -30,8 +31,11 @@ export function createMessage (messageThreadId, text, userId) {
       }
     },
     meta: {
+      optimistic: true,
       extractModel: 'Message',
-      messageThreadId
+      tempId: uniqueId(`messageThread${messageThreadId}_`),
+      messageThreadId,
+      text
     }
   }
 }
