@@ -6,13 +6,27 @@ import {
 export function addMessageFromSocket (message) {
   return {
     type: ADD_MESSAGE_FROM_SOCKET,
-    payload: message
+    payload: {
+      data: {
+        message
+      }
+    },
+    meta: {
+      extractModel: 'Message'
+    }
   }
 }
 
 export function addThreadFromSocket (thread) {
   return {
     type: ADD_THREAD_FROM_SOCKET,
-    payload: thread
+    payload: {
+      data: {
+        thread
+      }
+    },
+    meta: {
+      extractModel: 'MessageThread'
+    }
   }
 }

@@ -43,12 +43,8 @@ function convertMessageToModelFormat ({ id, created_at, text, user_id }, message
     id,
     createdAt: new Date(created_at).toString(),
     text,
-    creator: {
-      id: user_id
-    },
-    messageThread: {
-      id: messageThreadId
-    }
+    creator: user_id,
+    messageThread: messageThreadId
   }
 }
 
@@ -59,7 +55,6 @@ function convertThreadToModelFormat (data) {
     createdAt: new Date(created_at).toString(),
     updatetAt: new Date(updated_at).toString(),
     participants: people.map(({id, name, avatar_url}) => ({id, name, avatarUrl: avatar_url})),
-    messages: comments.map(c => convertMessageToModelFormat(c, id)),
-    messagesTotal: 1
+    messages: comments.map(c => convertMessageToModelFormat(c, id))
   }
 }
