@@ -50,10 +50,6 @@ export default class MessageSection extends React.Component {
     pending: bool,
     total: number,
     hasMore: bool,
-    onScroll: func,
-    onScrollToTop: func,
-    onHitBottom: func,
-    onLeftBottom: func,
     thread: object,
     updateThreadReadTime: func,
     fetchMessages: func
@@ -78,6 +74,7 @@ export default class MessageSection extends React.Component {
     const latestMessage = maxBy('createdAt', this.props.messages || [])
     const userSentLatest = get('creator.id', latestMessage) === get('id', currentUser)
     const { scrolledUp } = this.state
+    console.log(scrolledUp, userSentLatest)
     if (messagesLength !== oldMessagesLength && (!scrolledUp || userSentLatest)) this.scrollToBottom()
     if (thread && !lastSeenAtTimes[thread.id] && thread.unreadCount) {
       lastSeenAtTimes[thread.id] = new Date(thread.lastReadAt).getTime()
@@ -102,17 +99,14 @@ export default class MessageSection extends React.Component {
   }
 
   detectScrollExtremes = throttle(target => {
-    const { onLeftBottom, onHitBottom } = this.props
     const { scrolledUp } = this.state
     const { scrollTop, scrollHeight, offsetHeight } = target
     const onBottom = scrollTop > scrollHeight - offsetHeight
     if (!onBottom && !scrolledUp) {
       this.setState({ scrolledUp: true })
-      onLeftBottom()
     } else if (onBottom && scrolledUp) {
       this.setState({ scrolledUp: false })
       this.markAsRead()
-      onHitBottom()
     }
     if (scrollTop <= 50) this.fetchMore()
   }, 500, {trailing: true})
@@ -146,13 +140,6 @@ export default class MessageSection extends React.Component {
     const afterId = max(map('id', messages))
     fetchAfterMessages(afterId)
     .then(() => this.refs.messageSection.getWrappedInstance().scrollToBottom())
-
-    const loadMore = () => {
-      if (pending || messages.length >= thread.messagesTotal) return
-      const beforeId = min(map('id', messages))
-      fetchBeforeMessages(thread.id, beforeId)
-      .then(() => this.refs.messageSection.getWrappedInstance().scrollToMessage(beforeId))
-    }
     */
     return <div styleName='messages-section'
       ref={list => { this.list = list }}

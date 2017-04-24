@@ -14,20 +14,12 @@ export default class Thread extends React.Component {
     threadId: string.isRequired,
     currentUser: object,
     thread: object,
-    fetchThread: func,
-    onThreadPage: func,
-    offThreadPage: func
-  }
-
-  constructor (props) {
-    super(props)
-    this.state = {scrolledUp: false}
+    fetchThread: func
   }
 
   setupForThread () {
-    const { threadId, fetchThread, onThreadPage } = this.props
+    const { threadId, fetchThread } = this.props
     fetchThread(threadId)
-    onThreadPage(threadId)
     if (this.socket) {
       this.socket.post(socketUrl(`/noo/post/${threadId}/subscribe`)) // for people typing
 
@@ -50,10 +42,9 @@ export default class Thread extends React.Component {
   }
 
   disableSocket () {
-    if (this.socket) {
-      this.socket.off('reconnect', this.reconnectHandler)
-      this.socket.post(socketUrl(`/noo/post/${this.props.threadId}/unsubscribe`))
-    }
+    const { threadId } = this.props
+    this.socket.off('reconnect', this.reconnectHandler)
+    this.socket.post(socketUrl(`/noo/post/${threadId}/unsubscribe`))
   }
 
   componentWillReceiveProps (nextProps) {
@@ -69,8 +60,6 @@ export default class Thread extends React.Component {
   }
 
   componentWillUnmount () {
-    const { offThreadPage } = this.props
-    offThreadPage()
     this.disableSocket()
   }
 
@@ -78,10 +67,7 @@ export default class Thread extends React.Component {
     const { threadId, thread, currentUser } = this.props
     return <div styleName='thread'>
       <Header thread={thread} currentUser={currentUser} />
-      <MessageSection thread={thread} messageThreadId={threadId}
-        onLeftBottom={() => this.setState({scrolledUp: true})}
-        onHitBottom={() => this.setState({scrolledUp: false})}
-        ref='messageSection' />
+      <MessageSection thread={thread} messageThreadId={threadId} />
       <div styleName='message-form-bg' />
       <div styleName='message-form'>
         <MessageForm messageThreadId={threadId} ref='form' />
