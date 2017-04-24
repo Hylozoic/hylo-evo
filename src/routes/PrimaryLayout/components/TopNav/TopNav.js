@@ -6,12 +6,13 @@ import RoundImage from 'components/RoundImage'
 import './TopNav.scss'
 import Dropdown from 'components/Dropdown'
 import { get } from 'lodash/fp'
+import { hyloLogo } from 'routes/AllCommunitiesFeed'
 
 export default function TopNav ({ className, community, currentUser, logout, toggleCommunitiesDrawer }) {
   return <div styleName='topNavWrapper' className={className}>
     <div styleName='topNav'>
-      <CommunityImage {...{community, toggleCommunitiesDrawer}} />
-      <CommunityTitle community={community} />
+      <Logo {...{community, toggleCommunitiesDrawer}} />
+      <Title community={community} />
       <div styleName='navIcons'>
         <Link to='/' styleName='navIcon'><Icon name='Search' styleName='icon' /></Link>
         <Link to='/' styleName='navIcon'><Icon name='Messages' styleName='icon' /></Link>
@@ -29,19 +30,19 @@ export default function TopNav ({ className, community, currentUser, logout, tog
   </div>
 }
 
-function CommunityImage ({ community, toggleCommunitiesDrawer }) {
-  if (!community) return null
-  const imageStyle = bgImageStyle(get('avatarUrl', community))
+function Logo ({ community, toggleCommunitiesDrawer }) {
+  const imageStyle = bgImageStyle(get('avatarUrl', community) || hyloLogo)
   return <span styleName='image' style={imageStyle}
     onClick={toggleCommunitiesDrawer} />
 }
 
-function CommunityTitle ({ community }) {
-  if (!community) return null
+function Title ({ community }) {
+  const [ label, name ] = community
+    ? ['COMMUNITY', community.name]
+    : ['GLOBAL', 'All Communities']
+
   return <div styleName='title'>
-    <div className='tag' styleName='label'>COMMUNITY</div>
-    <div className='hdr-subheadline' styleName='communityName'>
-      {community.name}
-    </div>
+    <div styleName='label'>{label}</div>
+    <div styleName='communityName'>{name}</div>
   </div>
 }

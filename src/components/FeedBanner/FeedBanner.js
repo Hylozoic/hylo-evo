@@ -4,13 +4,14 @@ import { bgImageStyle } from 'util/index'
 import React from 'react'
 import './FeedBanner.scss'
 import cx from 'classnames'
+import { hyloLogo } from 'routes/AllCommunitiesFeed'
 
 export default function FeedBanner ({ all, community, currentUser }) {
   let bannerUrl, avatarUrl, name, location, subtitle
 
   if (all) {
     name = 'All Communities'
-    avatarUrl = '/hylo-merkaba.png'
+    avatarUrl = hyloLogo
     subtitle = currentUser && `${currentUser.memberships.count()} Communities`
   } else if (!community) {
     return null

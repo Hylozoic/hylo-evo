@@ -45,10 +45,11 @@
 }
 
 .label {
-  /* empty */
+  composes: tag from 'css/typography.scss';
 }
 
 .communityName {
+  composes: hdr-subheadline from 'css/typography.scss';
   font-size: 16px !important;
   position: relative;
   top: -2px;
