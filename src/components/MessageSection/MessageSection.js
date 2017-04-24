@@ -74,7 +74,6 @@ export default class MessageSection extends React.Component {
     const latestMessage = maxBy('createdAt', this.props.messages || [])
     const userSentLatest = get('creator.id', latestMessage) === get('id', currentUser)
     const { scrolledUp } = this.state
-    console.log(scrolledUp, userSentLatest)
     if (messagesLength !== oldMessagesLength && (!scrolledUp || userSentLatest)) this.scrollToBottom()
     if (thread && !lastSeenAtTimes[thread.id] && thread.unreadCount) {
       lastSeenAtTimes[thread.id] = new Date(thread.lastReadAt).getTime()
@@ -101,7 +100,7 @@ export default class MessageSection extends React.Component {
   detectScrollExtremes = throttle(target => {
     const { scrolledUp } = this.state
     const { scrollTop, scrollHeight, offsetHeight } = target
-    const onBottom = scrollTop > scrollHeight - offsetHeight
+    const onBottom = scrollTop >= scrollHeight - offsetHeight
     if (!onBottom && !scrolledUp) {
       this.setState({ scrolledUp: true })
     } else if (onBottom && scrolledUp) {
@@ -112,7 +111,6 @@ export default class MessageSection extends React.Component {
   }, 500, {trailing: true})
 
   handleScroll = event => {
-    if (this.props.onScroll) this.props.onScroll(event)
     this.detectScrollExtremes(event.target)
   }
 
@@ -123,7 +121,6 @@ export default class MessageSection extends React.Component {
     } else {
       this.visibility.once('show', this.markAsRead)
     }
-    this.props.onHitBottom()
     this.setState({ scrolledUp: false })
   }
 
