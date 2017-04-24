@@ -39,6 +39,10 @@ export default class MessageForm extends React.Component {
     this.resize()
   }
 
+  componentDidUpdate (prevProps) {
+    if (prevProps.text !== this.props.text) this.resize()
+  }
+
   focus () {
     this.refs.editor.focus()
   }
@@ -66,12 +70,10 @@ export default class MessageForm extends React.Component {
   }
 
   render () {
-    const { messageThreadId, text, onFocus, onBlur, className, currentUser, updateText } = this.props
+    const { messageThreadId, onFocus, onBlur, className, currentUser, pending, updateText } = this.props
+    const text = pending ? '' : this.props.text
     const placeholder = this.props.placeholder || 'Write something...'
-    const onChange = e => {
-      updateText(messageThreadId, e.target.value)
-      this.resize()
-    }
+    const onChange = e => updateText(messageThreadId, e.target.value)
     const handleKeyDown = e => {
       this.startTyping()
       onEnterNoShift(e => {
