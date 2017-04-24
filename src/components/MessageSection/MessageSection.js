@@ -32,10 +32,7 @@ function createMessageList (messages, lastSeenAt) {
     }
     let messageTime = new Date(m.createdAt).getTime()
     if (lastTimestamp && lastSeenAt && lastTimestamp < lastSeenAt && lastSeenAt < messageTime) {
-      acc.push(<div styleName='new-messages' key='new-messages'>
-        <div styleName='new-messages-text'>new messages</div>
-        <div styleName='new-messages-line' />
-      </div>)
+      acc.push(<NewMessages />)
     }
     lastTimestamp = messageTime
     acc.push(<Message message={m} key={`message-${m.id}`} isHeader={isHeader} />)
@@ -93,20 +90,18 @@ export default class MessageSection extends React.Component {
   }
 
   fetchMore = () => {
-    const { hasMore, pending, fetchMessages } = this.props
-    if (hasMore && !pending) fetchMessages()
+    const { hasMore, pending, fetchMessages, messages } = this.props
+    const cursor = messages[0].id
+    if (hasMore && !pending) {
+      fetchMessages().then(() => this.scrollToMessage(cursor))
+    }
   }
 
   scrollToMessage (id) {
     const message = document.querySelector(`[data-message-id="${id}"]`)
-
-    // FIXME: this won't work anymore
-    // the last portion of the offset varies because sometimes the message that
-    // is first in the list before pagination won't have a header after the
-    // pagination is done
+    const header = document.querySelector('#thread-header')
     const newtop = position(message, this.list)
-    //console.log(newtop)
-    this.list.scrollTop = newtop.y
+    this.list.scrollTop = newtop.y - header.offsetHeight
   }
 
   detectScrollExtremes = throttle(target => {
@@ -119,7 +114,7 @@ export default class MessageSection extends React.Component {
       this.setState({ scrolledUp: false })
       this.markAsRead()
     }
-    if (scrollTop <= 50) this.fetchMore()
+    if (scrollTop <= 150) this.fetchMore()
   }, 500, {trailing: true})
 
   handleScroll = event => {
@@ -142,13 +137,21 @@ export default class MessageSection extends React.Component {
   }
 
   render () {
-    const { messages, thread } = this.props
+    const { messages, pending, thread } = this.props
     return <div styleName='messages-section'
       ref={list => { this.list = list }}
       onScroll={this.handleScroll}>
       <div styleName='messages-section-inner'>
+        {pending && <div>TODO: Loading...</div>}
         {createMessageList(messages, lastSeenAtTimes[get('id', thread)])}
       </div>
     </div>
   }
+}
+
+function NewMessages () {
+  return <div styleName='new-messages' key='new-messages'>
+    <div styleName='new-messages-text'>new messages</div>
+    <div styleName='new-messages-line' />
+  </div>
 }
