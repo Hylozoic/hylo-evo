@@ -16,14 +16,14 @@ export default class Comment extends Component {
   render () {
     const { comment, slug } = this.props
     const { creator, createdAt, text } = comment
+    const profileUrl = personUrl(creator.id, slug)
 
     const presentedText = present(sanitize(text), {slug})
 
     return <div styleName='comment'>
       <div styleName='header'>
-        <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator)} styleName='avatar' />
-        <Link to={personUrl(creator)} styleName='userName'>{creator.name}</Link>
-        <span styleName='commented'>commented</span>
+        <Avatar avatarUrl={creator.avatarUrl} url={profileUrl} styleName='avatar' />
+        <Link to={profileUrl} styleName='userName'>{creator.name}</Link>
         <div styleName='upperRight'>
           <span styleName='timestamp'>
             {humanDate(createdAt)}

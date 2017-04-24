@@ -39,6 +39,7 @@ export default class PostCard extends React.Component {
 
   render () {
     const { post, className, expanded, showDetails } = this.props
+    const slug = get('0.slug', post.communities)
 
     return <div styleName={cx('card', {expanded})} className={className}
       onClick={showDetails}>
@@ -46,13 +47,14 @@ export default class PostCard extends React.Component {
         date={post.updatedAt || post.createdAt}
         type={post.type}
         context={post.context}
-        communities={post.communities} />
+        communities={post.communities}
+        slug={slug} />
       <PostImage imageUrl={post.imageUrl} />
       <PostBody title={post.title}
         id={post.id}
         details={post.details}
         linkPreview={post.linkPreview}
-        slug={get('0.slug', post.communities)} />
+        slug={slug} />
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
@@ -61,11 +63,11 @@ export default class PostCard extends React.Component {
   }
 }
 
-export const PostHeader = ({ creator, date, type, context, communities, close, className }) => {
+export const PostHeader = ({ creator, date, type, context, communities, close, className, slug }) => {
   return <div styleName='header' className={className}>
-    <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator)} styleName='avatar' />
+    <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
     <div styleName='headerText'>
-      <Link to={personUrl(creator)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
+      <Link to={personUrl(creator.id, slug)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
       {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
       <div>
         <span styleName='timestamp'>

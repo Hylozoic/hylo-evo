@@ -10,8 +10,8 @@ import './component.scss'
 
 const { string, bool } = React.PropTypes
 
-export default function RoundImage ({ url, small, medium, overlaps, className }) {
-  let styleName = cx('image', { overlaps, small, medium })
+export default function RoundImage ({ url, small, medium, overlaps, xlarge, className }) {
+  let styleName = cx('image', { overlaps, small, medium, xlarge })
   className = cx(className)
   return <div styleName={styleName}
     className={className}
@@ -21,6 +21,7 @@ RoundImage.propTypes = {
   url: string,
   small: bool,
   medium: bool,
+  large: bool,
   overlaps: bool,
   className: string
 }
