@@ -28,6 +28,7 @@ export default class Settings extends Component {
       communities,
       updateUserSettings,
       leaveCommunity,
+      loginWithService,
       history,
       goBack,
       push
@@ -45,7 +46,10 @@ export default class Settings extends Component {
         </div>
         <div styleName='center'>
           <Route path='/settings' exact render={() =>
-            <AccountSettings currentUser={currentUser} updateUserSettings={updateUserSettings} />} />
+            <AccountSettings
+              currentUser={currentUser}
+              updateUserSettings={updateUserSettings}
+              loginWithService={loginWithService} />} />
           <Route path='/settings/communities' exact render={() =>
             <CommunitySettings communities={communities} leaveCommunity={leaveCommunity} />} />
         </div>

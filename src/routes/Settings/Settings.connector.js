@@ -3,6 +3,7 @@ import { goBack, push } from 'react-router-redux'
 import { withRouter } from 'react-router-dom'
 import { getMe } from 'store/selectors/getMe'
 import { fetchUserSettings, updateUserSettings, leaveCommunity } from './Settings.store'
+import { loginWithService } from 'routes/Login/Login.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 
@@ -31,7 +32,8 @@ export const mapDispatchToProps = {
   push,
   fetchUserSettings,
   updateUserSettings,
-  leaveCommunity
+  leaveCommunity,
+  loginWithService
 }
 
 export default component => connect(mapStateToProps, mapDispatchToProps)(withRouter(component))

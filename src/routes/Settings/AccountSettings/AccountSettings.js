@@ -8,10 +8,13 @@ import cx from 'classnames'
 import { bannerUploadSettings, avatarUploadSettings, DEFAULT_BANNER } from 'store/models/Me'
 const { object, func } = PropTypes
 
+const twitterPrompt = () => window.prompt('Please enter your twitter name.')
+
 export default class AccountSettings extends Component {
   static propTypes = {
     currentUser: object,
-    updateUserSettings: func
+    updateUserSettings: func,
+    loginWithService: func
   }
   constructor (props) {
     super(props)
@@ -54,7 +57,7 @@ export default class AccountSettings extends Component {
   }
 
   render () {
-    const { currentUser, updateUserSettings } = this.props
+    const { currentUser, updateUserSettings, loginWithService } = this.props
     if (!currentUser) return <Loading />
 
     const { edits, changed } = this.state
@@ -101,9 +104,21 @@ export default class AccountSettings extends Component {
       <Control label='Email' onChange={updateSetting('email')} value={email} />
       <Control label='Website' onChange={updateSetting('url')} value={url} />
       <label styleName='social-label'>Social Accounts</label>
-      <SocialControl label='Facebook' onChange={updateSetting('facebookUrl')} value={facebookUrl} />
-      <SocialControl label='Twitter' onChange={updateSetting('twitterName')} value={twitterName} />
-      <SocialControl label='LinkedIn' onChange={updateSetting('linkedInUrl')} value={linkedInUrl} />
+      <SocialControl
+        label='Facebook'
+        onLink={() => loginWithService('facebook')}
+        onChange={updateSetting('facebookUrl')}
+        value={facebookUrl} />
+      <SocialControl
+        label='Twitter'
+        onLink={() => twitterPrompt()}
+        onChange={updateSetting('twitterName')}
+        value={twitterName} />
+      <SocialControl
+        label='LinkedIn'
+        onLink={() => loginWithService('linkedin')}
+        onChange={updateSetting('linkedInUrl')}
+        value={linkedInUrl} />
       <div styleName='button-row'>
         <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
       </div>
@@ -127,11 +142,11 @@ export class SocialControl extends Component {
   }
 
   render () {
-    const { label, onChange, value = '' } = this.props
+    const { label, onLink, onChange, value = '' } = this.props
     const { open } = this.state
     const linked = !!value
     const unlinkClicked = () => onChange({target: {value: ''}})
-    const linkClicked = () => this.setState({open: true})
+    const linkClicked = onLink
     const linkButton = <span
       styleName='link-button'
       onClick={linked ? unlinkClicked : linkClicked}>
