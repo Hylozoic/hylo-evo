@@ -86,7 +86,7 @@ export default class PrimaryLayout extends Component {
       <Route path='/messages' exact component={Messages} />
       <Route path='/messages/new' exact component={Messages} />
       <Route path='/t/:threadId' component={Messages} />
-      <SocketListener />
+      <SocketListener location={location} />
     </div>
   }
 }

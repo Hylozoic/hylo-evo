@@ -3,7 +3,7 @@ import {
   ADD_THREAD_FROM_SOCKET
 } from 'store/constants'
 
-export function addMessageFromSocket (message) {
+export function addMessageFromSocket (message, opts = {}) {
   return {
     type: ADD_MESSAGE_FROM_SOCKET,
     payload: {
@@ -12,7 +12,8 @@ export function addMessageFromSocket (message) {
       }
     },
     meta: {
-      extractModel: 'Message'
+      extractModel: 'Message',
+      bumpUnreadCount: opts.bumpUnreadCount
     }
   }
 }

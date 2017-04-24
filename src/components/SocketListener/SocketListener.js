@@ -6,24 +6,33 @@ const { func, object } = PropTypes
 export default class SocketListener extends Component {
   static propTypes = {
     currentUser: object,
+    location: object,
     addThreadFromSocket: func,
     addMessageFromSocket: func
   }
 
   componentDidMount () {
-    const { addMessageFromSocket, addThreadFromSocket } = this.props
     this.socket = getSocket()
     this.socket.post(socketUrl('/noo/threads/subscribe'))
-    this.socket.on('newThread', data => {
-      addThreadFromSocket(convertThreadToModelFormat(data))
-    })
-    this.socket.on('messageAdded', data => {
-      addMessageFromSocket(convertMessageToModelFormat(data.message, data.postId))
-    })
+    this.socket.on('newThread', this.addThreadFromSocket)
+    this.socket.on('messageAdded', this.addMessageFromSocket)
     this.reconnectHandler = () => {
       this.socket.post(socketUrl('/noo/threads/subscribe'))
     }
     this.socket.on('reconnect', this.reconnectHandler)
+  }
+
+  addThreadFromSocket = data => {
+    const { addThreadFromSocket } = this.props
+    addThreadFromSocket(convertThreadToModelFormat(data))
+  }
+
+  addMessageFromSocket = data => {
+    const { addMessageFromSocket, location } = this.props
+    const [_, namespace, id] = location.pathname.split('/')
+    const isActiveThread = namespace === 't' && data.postId === id
+    const opts = {bumpUnreadCount: !isActiveThread}
+    addMessageFromSocket(convertMessageToModelFormat(data.message, data.postId), opts)
   }
 
   componentWillUnmount () {

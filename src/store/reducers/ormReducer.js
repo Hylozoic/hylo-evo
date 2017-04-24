@@ -65,9 +65,13 @@ export default function ormReducer (state = {}, action) {
       break
 
     case ADD_MESSAGE_FROM_SOCKET:
-      MessageThread.withId(payload.data.message.messageThread).update({
+      const messageThread = MessageThread.withId(payload.data.message.messageThread)
+      messageThread.update({
         updatedAt: new Date().toString()
       })
+      if (meta.bumpUnreadCount) {
+        messageThread.bumpUnreadCount()
+      }
       break
 
     case UPDATE_THREAD_READ_TIME:
