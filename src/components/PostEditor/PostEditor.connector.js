@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { createPost } from 'PostEditor.store'
+import { createPost } from './PostEditor.store'
 import { getMe } from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
