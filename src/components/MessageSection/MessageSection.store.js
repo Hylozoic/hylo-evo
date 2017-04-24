@@ -15,7 +15,7 @@ export function fetchMessages (id, cursor) {
         query ($id: ID, $cursor: ID) {
           messageThread (id: $id) {
             id
-            messages(first: 40, cursor: $cursor, order: "desc") {
+            messages(first: 80, cursor: $cursor, order: "desc") {
               items {
                 id
                 createdAt
