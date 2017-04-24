@@ -3,12 +3,12 @@ import './CommunitySettings.scss'
 import { Link } from 'react-router-dom'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
-const { string } = PropTypes
+const { array } = PropTypes
 import { communityUrl } from 'util/index'
 
 export default class CommunitySettings extends Component {
   static propTypes = {
-    exampleProp: string
+    communities: array
   }
 
   render () {
