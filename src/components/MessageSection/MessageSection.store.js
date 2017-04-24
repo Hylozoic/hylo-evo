@@ -7,7 +7,7 @@ import {
 } from 'store/constants'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 
-export function fetchMessages (id, cursor) {
+export function fetchMessages (id, opts = {}) {
   return {
     type: FETCH_MESSAGES,
     graphql: {
@@ -32,10 +32,12 @@ export function fetchMessages (id, cursor) {
           }
         }
       `,
-      variables: cursor ? {id, cursor} : {id}
+      variables: opts.cursor ? {id, cursor: opts.cursor} : {id}
     },
     meta: {
-      extractModel: 'MessageThread'
+      extractModel: 'MessageThread',
+      reset: opts.reset,
+      id
     }
   }
 }
