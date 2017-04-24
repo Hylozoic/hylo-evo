@@ -36,6 +36,7 @@ export default class MessageForm extends React.Component {
 
   componentDidMount () {
     this.socket = getSocket()
+    this.resize()
   }
 
   focus () {
@@ -48,12 +49,10 @@ export default class MessageForm extends React.Component {
 
   sendIsTyping (isTyping) {
     const { messageThreadId } = this.props
-    if (this.socket) {
-      this.socket.post(socketUrl(`/noo/post/${messageThreadId}/typing`), {isTyping})
-    }
+    this.socket.post(socketUrl(`/noo/post/${messageThreadId}/typing`), {isTyping})
   }
 
-  // broadcast "I'm typing!" every 5 seconds starting when the user is typing.
+  // broadcast "I'm typing!" every 3 seconds starting when the user is typing.
   // We send repeated notifications to make sure that a user gets notified even
   // if they load a comment thread after someone else has already started
   // typing.
@@ -61,10 +60,18 @@ export default class MessageForm extends React.Component {
     this.sendIsTyping(true)
   }, STARTED_TYPING_INTERVAL)
 
+  resize = () => {
+    this.refs.editor.style.height = 0
+    this.refs.editor.style.height = this.refs.editor.scrollHeight + 'px'
+  }
+
   render () {
     const { messageThreadId, text, onFocus, onBlur, className, currentUser, updateText } = this.props
     const placeholder = this.props.placeholder || 'Write something...'
-
+    const onChange = e => {
+      updateText(messageThreadId, e.target.value)
+      this.resize()
+    }
     const handleKeyDown = e => {
       this.startTyping()
       onEnterNoShift(e => {
@@ -76,12 +83,10 @@ export default class MessageForm extends React.Component {
     return <form onSubmit={this.submit} styleName='message-form' className={className}>
       <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
       <textarea ref='editor' name='message' value={text} styleName='message-textarea'
-        rows='1'
         placeholder={placeholder}
         onFocus={onFocus}
-        onChange={e => updateText(messageThreadId, e.target.value)}
+        onChange={onChange}
         onBlur={onBlur}
-        onKeyUp={this.stopTyping}
         onKeyDown={handleKeyDown} />
     </form>
   }
