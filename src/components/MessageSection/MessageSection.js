@@ -131,13 +131,6 @@ export default class MessageSection extends React.Component {
 
   render () {
     const { messages, thread } = this.props
-
-    /*
-    const { messages, fetchAfterMessages } = this.props
-    const afterId = max(map('id', messages))
-    fetchAfterMessages(afterId)
-    .then(() => this.refs.messageSection.getWrappedInstance().scrollToBottom())
-    */
     return <div styleName='messages-section'
       ref={list => { this.list = list }}
       onScroll={this.handleScroll}>

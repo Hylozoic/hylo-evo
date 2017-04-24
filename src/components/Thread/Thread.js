@@ -20,19 +20,14 @@ export default class Thread extends React.Component {
   setupForThread () {
     const { threadId, fetchThread } = this.props
     fetchThread(threadId)
-    if (this.socket) {
-      this.socket.post(socketUrl(`/noo/post/${threadId}/subscribe`)) // for people typing
-
-      if (this.reconnectHandler) {
-        this.socket.off('reconnect', this.reconnectHandler)
-      }
-
-      this.reconnectHandler = () => {
-        this.socket.post(socketUrl(`/noo/post/${threadId}/subscribe`))
-      }
-      this.socket.on('reconnect', this.reconnectHandler)
+    this.socket.post(socketUrl(`/noo/post/${threadId}/subscribe`)) // for people typing
+    if (this.reconnectHandler) {
+      this.socket.off('reconnect', this.reconnectHandler)
     }
-
+    this.reconnectHandler = () => {
+      this.socket.post(socketUrl(`/noo/post/${threadId}/subscribe`))
+    }
+    this.socket.on('reconnect', this.reconnectHandler)
     this.refs.form.getWrappedInstance().focus()
   }
 
