@@ -15,7 +15,7 @@ import PostDetail from 'routes/PostDetail'
 import Members from 'routes/Members'
 import MessageMember from 'components/MessageMember'
 import './PrimaryLayout.scss'
-import { CENTER_COLUMN_ID } from 'util/scrolling'
+import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
 export default class PrimaryLayout extends Component {
   static propTypes = {
@@ -68,7 +68,7 @@ export default class PrimaryLayout extends Component {
           <Route path='/c/:slug' exact component={Sidebar} />
           <Route path='/c/:slug/m/:id' component={MessageMember} />
         </div>
-        <div styleName={cx('detail', {hidden: !hasDetail})}>
+        <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>
           {/*
             TODO: Display content of last detail page on '/' so that the
             animation transitions correctly.

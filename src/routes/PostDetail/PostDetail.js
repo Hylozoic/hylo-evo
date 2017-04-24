@@ -6,6 +6,7 @@ const { object, string, func } = PropTypes
 import { PostHeader, PostImage, PostBody, PostFooter } from 'components/PostCard'
 import Comments from './Comments'
 import { tagUrl, communityUrl } from 'util/index'
+import { DETAIL_COLUMN_ID } from 'util/scrolling'
 
 export default class PostDetail extends Component {
   static propTypes = {
@@ -29,6 +30,11 @@ export default class PostDetail extends Component {
     const { post, slug, navigate } = this.props
     if (!post) return null
 
+    const scrollToBottom = () => {
+      const detail = document.getElementById(DETAIL_COLUMN_ID)
+      detail.scrollTop = detail.scrollHeight
+    }
+
     return <div styleName='post'>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}
@@ -51,7 +57,7 @@ export default class PostDetail extends Component {
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
         votesTotal={post.votesTotal} />
-      <Comments postId={post.id} slug={slug} />
+      <Comments postId={post.id} slug={slug} scrollToBottom={scrollToBottom} />
     </div>
   }
 }

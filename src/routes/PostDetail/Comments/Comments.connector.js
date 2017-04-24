@@ -36,13 +36,18 @@ export const mapDispatchToProps = (dispatch, props) => {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  const { scrollToBottom } = ownProps
   const { comments } = stateProps
-  const { fetchCommentsMaker } = dispatchProps
+  const { fetchCommentsMaker, createComment } = dispatchProps
   const cursor = !isEmpty(comments) && comments[0].id
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
+    createComment: (postId, text) => {
+      createComment(postId, text)
+      .then(() => scrollToBottom())
+    },
     fetchComments: fetchCommentsMaker(cursor)
   }
 }
