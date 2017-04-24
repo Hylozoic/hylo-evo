@@ -136,11 +136,12 @@ export function Control ({ label, value = '', onChange, type }) {
 }
 
 export class SocialControl extends Component {
+  // SocialControl is a WIP, waiting on Facebook and Linked in Auth to be working
   render () {
     const { label, onLink, onChange, value = '' } = this.props
     const linked = !!value
     const unlinkClicked = () => onChange({target: {value: ''}})
-    const linkClicked = onLink
+    const linkClicked = () => onChange({target: {value: onLink()}})
     const linkButton = <span
       styleName='link-button'
       onClick={linked ? unlinkClicked : linkClicked}>
