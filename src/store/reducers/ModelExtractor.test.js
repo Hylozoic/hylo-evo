@@ -94,3 +94,41 @@ it('handles an array root', () => {
     }
   ])
 })
+
+it('handles a query set root', () => {
+  const extractor = new ModelExtractor(orm.session(orm.getEmptyState()))
+
+  extractor.walk({
+    items: [
+      {
+        id: '1',
+        name: 'Alice',
+        posts: {
+          hasMore: false,
+          items: [
+            {id: '1', title: 'Hi!'}
+          ]
+        }
+      },
+      {
+        id: '2',
+        name: 'Bob'
+      }
+    ]
+  }, 'Person')
+
+  expect(extractor.mergedNodes()).toEqual([
+    {
+      modelName: 'Post',
+      payload: {id: '1', title: 'Hi!', creator: '1'}
+    },
+    {
+      modelName: 'Person',
+      payload: {id: '1', name: 'Alice'}
+    },
+    {
+      modelName: 'Person',
+      payload: {id: '2', name: 'Bob'}
+    }
+  ])
+})

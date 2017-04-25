@@ -72,8 +72,7 @@ export default class HyloEditor extends Component {
   }
 
   handleMentionsSearch = ({ value }) => {
-    const findFunc = (v) => this.props.findMentions(v)
-    return setTimeout(findFunc, 2000, value)
+    return this.props.findMentions(value)
   }
 
   handleHashtagSearch = ({ value }) => {
