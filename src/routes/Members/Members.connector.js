@@ -11,15 +11,17 @@ export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
   const sortBy = getQueryParam('s', state, props) || defaultSortBy
   const search = getQueryParam('q', state, props)
+  const slug = get('slug', community)
 
   const extraProps = {
     ...props,
     search,
     sortBy,
-    slug: get('slug', community)
+    slug
   }
 
   return {
+    slug,
     canInvite: false, // TODO
     memberCount: get('memberCount', community),
     sortBy,
