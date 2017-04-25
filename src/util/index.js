@@ -35,10 +35,6 @@ export function getSlugInPath (pathname) {
   return match ? match[1] : null
 }
 
-export function removePostDetailFromPath (pathname) {
-  return pathname.replace(/\/p\/(.+)/, '')
-}
-
 export const findChildLink = element => {
   if (element.nodeName === 'A') return element
   if (element.hasChildNodes()) {

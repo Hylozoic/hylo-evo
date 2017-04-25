@@ -4,7 +4,6 @@ import { createSelector } from 'reselect'
 import getParam from 'store/selectors/getParam'
 import orm from 'store/models'
 import { push } from 'react-router-redux'
-import { removePostDetailFromPath } from 'util/index'
 
 export const getPost = createSelector(
   state => state,
@@ -33,6 +32,9 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = (dispatch, props) => {
   const { location } = props
+
+  const removePostDetailFromPath = pathname =>
+    pathname.replace(/\/p\/(.+)/, '')
 
   const closeLocation = {
     ...props.location,

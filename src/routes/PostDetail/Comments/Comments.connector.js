@@ -29,25 +29,23 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
+  const { postId, scrollToBottom } = props
   return {
-    fetchCommentsMaker: cursor => () => dispatch(fetchComments(props.postId, {cursor})),
-    createComment: (postId, text) => dispatch(createComment(postId, text))
+    fetchCommentsMaker: cursor => () => dispatch(fetchComments(postId, {cursor})),
+    createComment: (text) =>
+      dispatch(createComment(postId, text))
+      .then(() => scrollToBottom())
   }
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { scrollToBottom } = ownProps
   const { comments } = stateProps
-  const { fetchCommentsMaker, createComment } = dispatchProps
+  const { fetchCommentsMaker } = dispatchProps
   const cursor = !isEmpty(comments) && comments[0].id
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    createComment: (postId, text) => {
-      createComment(postId, text)
-      .then(() => scrollToBottom())
-    },
     fetchComments: fetchCommentsMaker(cursor)
   }
 }
