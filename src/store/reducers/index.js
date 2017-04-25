@@ -7,6 +7,7 @@ import orm from './ormReducer'
 import pending from './pending'
 // Local store
 // generator-marker-local-store-import
+import CommunitySidebar from 'routes/CommunitySidebar/CommunitySidebar.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import CommunitiesSelector from 'components/CommunitiesSelector/CommunitiesSelector.store'
 import Login from 'routes/Login/Login.store'
@@ -30,6 +31,7 @@ const combinedReducers = combineReducers({
 
   // Local store (Component)
   // generator-marker-local-store-reducer
+  CommunitySidebar,
   HyloEditor,
   CommunitiesSelector,
   Login,

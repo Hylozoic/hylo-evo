@@ -6,7 +6,7 @@ import Loading from 'components/Loading'
 import CommunitiesDrawer from './components/CommunitiesDrawer'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
-import Sidebar from './components/Sidebar'
+import CommunitySidebar from 'routes/CommunitySidebar'
 import CommunityFeed from 'routes/CommunityFeed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
@@ -65,7 +65,7 @@ export default class PrimaryLayout extends Component {
           <Route path='/c/:slug/members' component={Members} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
-          <Route path='/c/:slug' exact component={Sidebar} />
+          <Route path='/c/:slug' exact component={CommunitySidebar} />
           <Route path='/c/:slug/m/:id' component={MessageMember} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})}>
