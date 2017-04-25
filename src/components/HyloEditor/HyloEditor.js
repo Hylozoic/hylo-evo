@@ -5,7 +5,7 @@ import createMentionPlugin from 'draft-js-mention-plugin'
 import createHashtagPlugin from './hashtagPlugin'
 import createLinkifyPlugin from 'draft-js-linkify-plugin'
 import { EditorState, ContentState, convertToRaw } from 'draft-js'
-import { convertToHTML } from 'draft-convert'
+import convertToHTML from './HyloEditorContentToHTML'
 import 'draft-js/dist/Draft.css'
 import 'draft-js-mention-plugin/lib/plugin.css'
 import './HyloEditor.scss'
@@ -58,19 +58,7 @@ export default class HyloEditor extends Component {
 
   getContentHTML = () => {
     const { editorState } = this.state
-    const htmlConverter = convertToHTML({
-      entityToHTML: (entity, originalText) => {
-        if (entity.type === 'mention') {
-          const data = entity.data.mention
-          return `<a data-entity-type='mention' data-person-id='${data.get('id')}'>mention:${originalText}</a>`
-        }
-        if (entity.type === 'HASHTAG') {
-          return `<a>HASHTAG:${originalText}</a>`
-        }
-        return originalText
-      }
-    })
-    return htmlConverter(editorState.getCurrentContent())
+    return convertToHTML(editorState.getCurrentContent())
   }
 
   getContentRaw = () => {

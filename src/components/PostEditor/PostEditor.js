@@ -106,7 +106,6 @@ export default class PostEditor extends React.Component {
     const { title, postType, selectedCommunities } = this.state
     const description = this.editor.getContentHTML()
     const selectedCommunityIds = selectedCommunities.map(c => c.id)
-    console.log(description)
     createPost(title, description, selectedCommunityIds, postType)
       .then(this.reset)
   }
