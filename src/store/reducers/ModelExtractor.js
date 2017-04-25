@@ -24,7 +24,6 @@ export default class ModelExtractor {
   }
 
   walk (node, modelName, atRoot = true) {
-
     if (atRoot) {
       if (node.hasOwnProperty(QUERY_SET_ITEMS_KEY) || Array.isArray(node)) {
         return this._walkMany(node, modelName)
