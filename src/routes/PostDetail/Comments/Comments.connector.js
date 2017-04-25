@@ -29,9 +29,12 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
+  const { postId, scrollToBottom } = props
   return {
-    fetchCommentsMaker: cursor => () => dispatch(fetchComments(props.postId, {cursor})),
-    createComment: (postId, text) => dispatch(createComment(postId, text))
+    fetchCommentsMaker: cursor => () => dispatch(fetchComments(postId, {cursor})),
+    createComment: (text) =>
+      dispatch(createComment(postId, text))
+      .then(() => scrollToBottom())
   }
 }
 

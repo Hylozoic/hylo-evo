@@ -26,14 +26,24 @@ export const getPost = createSelector(
 export function mapStateToProps (state, props) {
   return {
     post: getPost(state, props),
-    slug: 'hylo'
+    slug: getParam('slug', state, props)
   }
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
+  const { location } = props
+
+  const removePostDetailFromPath = pathname =>
+    pathname.replace(/\/p\/(.+)/, '')
+
+  const closeLocation = {
+    ...props.location,
+    pathname: removePostDetailFromPath(location.pathname)
+  }
+
   return {
     fetchPost: () => dispatch(fetchPost(getParam('postId', {}, props))),
-    navigate: to => dispatch(push(to))
+    onClose: () => dispatch(push(closeLocation))
   }
 }
 

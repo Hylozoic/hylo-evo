@@ -5,7 +5,8 @@ import './PostDetail.scss'
 const { object, string, func } = PropTypes
 import { PostHeader, PostImage, PostBody, PostFooter } from 'components/PostCard'
 import Comments from './Comments'
-import { tagUrl, communityUrl } from 'util/index'
+import { tagUrl } from 'util/index'
+import { DETAIL_COLUMN_ID } from 'util/scrolling'
 
 export default class PostDetail extends Component {
   static propTypes = {
@@ -26,8 +27,13 @@ export default class PostDetail extends Component {
   }
 
   render () {
-    const { post, slug, navigate } = this.props
+    const { post, slug, onClose } = this.props
     if (!post) return null
+
+    const scrollToBottom = () => {
+      const detail = document.getElementById(DETAIL_COLUMN_ID)
+      detail.scrollTop = detail.scrollHeight
+    }
 
     return <div styleName='post'>
       <PostHeader creator={post.creator}
@@ -35,7 +41,7 @@ export default class PostDetail extends Component {
         type={post.type}
         context={post.context}
         communities={post.communities}
-        close={() => navigate(communityUrl(slug))}
+        close={onClose}
         styleName='header' />
       <PostImage imageUrl={post.imageUrl} styleName='image' />
       <PostTags tags={post.tags} />
@@ -51,7 +57,7 @@ export default class PostDetail extends Component {
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
         votesTotal={post.votesTotal} />
-      <Comments postId={post.id} slug={slug} />
+      <Comments postId={post.id} slug={slug} scrollToBottom={scrollToBottom} />
     </div>
   }
 }
