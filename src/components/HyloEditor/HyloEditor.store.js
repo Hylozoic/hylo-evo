@@ -18,12 +18,12 @@ const CLEAR_HASHTAGS = `${MODULE_NAME}/CLEAR_HASHTAGS`
 
 // Action Creators
 
-export function findMentions (searchText) {
+export function findMentions (mentionSearchTerm) {
   return {
     type: FIND_MENTIONS,
     graphql: {
-      query: `query ($searchText: String) {
-        people(autocomplete: $searchText, first: 5) {
+      query: `query ($mentionSearchTerm: String) {
+        people(autocomplete: $mentionSearchTerm, first: 5) {
           items {
             id
             name
@@ -32,7 +32,7 @@ export function findMentions (searchText) {
         }
       }`,
       variables: {
-        searchText
+        mentionSearchTerm
       }
     },
     meta: { extractModel: 'Person' }
@@ -57,7 +57,8 @@ export function clearHashtags (searchText) {
 // Reducer
 
 const defaultState = {
-  hashtagResults: sampleHashtags
+  hashtagResults: sampleHashtags,
+  mentionSearchTerm: null
 }
 
 export default function reducer (state = defaultState, action) {
@@ -66,7 +67,7 @@ export default function reducer (state = defaultState, action) {
 
   switch (type) {
     case FIND_MENTIONS_PENDING:
-      return {...state, mentionSearchTerm: action.meta.graphql.variables.searchText}
+      return {...state, mentionSearchTerm: action.meta.graphql.variables.mentionSearchTerm}
     case CLEAR_MENTIONS:
       return {...state, mentionSearchTerm: ''}
     case FIND_HASHTAGS:
@@ -87,23 +88,25 @@ export const moduleSelector = (state) => {
 export const getMentionResults = ormCreateSelector(
   orm,
   state => state.orm,
-  state => moduleSelector(state).mentionSearchTerm,
-  (session, searchText) => {
+  moduleSelector,
+  (session, moduleNode) => {
+    const { mentionSearchTerm } = moduleNode
+    if (!mentionSearchTerm) return fromJS([])
     const people = session.Person.all()
-    .filter(person => {
-      return includes(
-        person.name && person.name.toLowerCase(),
-        searchText && searchText.toLowerCase()
-      )
-    })
-    .toRefArray()
-    .map(person => {
-      return mapKeys(person, (value, key) => {
-        return {
-          avatarUrl: 'avatar'
-        }[key] || key
+      .filter(person => {
+        return includes(
+          person.name && person.name.toLowerCase(),
+          mentionSearchTerm.toLowerCase()
+        )
       })
-    })
+      .toRefArray()
+      .map(person => {
+        return mapKeys(person, (value, key) => {
+          return {
+            avatarUrl: 'avatar'
+          }[key] || key
+        })
+      })
     return fromJS(people)
   }
 )
