@@ -1,13 +1,11 @@
 import { createSelector } from 'reselect'
+import { mapKeys } from 'lodash'
 import { fromJS } from 'immutable'
-import sampleMentions from './sampleMentions'
 import sampleHashtags from './sampleHashtags'
-import * as mentionPlugin from 'draft-js-mention-plugin'
 import * as hashtagPlugin from './hashtagPlugin'
 
 export const MODULE_NAME = 'HyloEditor'
 
-const defaultMentionsSuggestionFilter = mentionPlugin.defaultSuggestionsFilter
 const defaultHashtagSuggestionFilter = hashtagPlugin.defaultSuggestionsFilter
 
 const FIND_MENTIONS = `${MODULE_NAME}/FIND_MENTIONS`
@@ -20,7 +18,20 @@ const CLEAR_HASHTAGS = `${MODULE_NAME}/CLEAR_HASHTAGS`
 export function findMentions (searchText) {
   return {
     type: FIND_MENTIONS,
-    payload: { searchText }
+    graphql: {
+      query: `query ($searchText: String) {
+        people(autocomplete: $searchText, first: 5) {
+          items {
+            id
+            name
+            avatarUrl
+          }
+        }
+      }`,
+      variables: {
+        searchText
+      }
+    }
   }
 }
 
@@ -52,7 +63,14 @@ export default function reducer (state = defaultState, action) {
 
   switch (type) {
     case FIND_MENTIONS:
-      return {...state, mentionResults: defaultMentionsSuggestionFilter(payload.searchText, sampleMentions)}
+      const people = payload.data.people.items.map((person) =>
+        mapKeys(person, (value, key) => {
+          return {
+            avatarUrl: 'avatar'
+          }[key] || key
+        }
+      ))
+      return {...state, mentionResults: fromJS(people)}
     case CLEAR_MENTIONS:
       return {...state, mentionResults: fromJS([])}
     case FIND_HASHTAGS:
