@@ -4,6 +4,7 @@ import { createSelector } from 'reselect'
 import getParam from 'store/selectors/getParam'
 import orm from 'store/models'
 import { push } from 'react-router-redux'
+import { removePostDetailFromPath } from 'util/index'
 
 export const getPost = createSelector(
   state => state,
@@ -26,14 +27,21 @@ export const getPost = createSelector(
 export function mapStateToProps (state, props) {
   return {
     post: getPost(state, props),
-    slug: 'hylo'
+    slug: getParam('slug', state, props)
   }
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
+  const { location } = props
+
+  const closeLocation = {
+    ...props.location,
+    pathname: removePostDetailFromPath(location.pathname)
+  }
+
   return {
     fetchPost: () => dispatch(fetchPost(getParam('postId', {}, props))),
-    navigate: to => dispatch(push(to))
+    onClose: () => dispatch(push(closeLocation))
   }
 }
 
