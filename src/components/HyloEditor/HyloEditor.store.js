@@ -69,7 +69,7 @@ export default function reducer (state = defaultState, action) {
     case FIND_MENTIONS_PENDING:
       return {...state, mentionSearchTerm: action.meta.graphql.variables.mentionSearchTerm}
     case CLEAR_MENTIONS:
-      return {...state, mentionSearchTerm: ''}
+      return {...state, mentionSearchTerm: null}
     case FIND_HASHTAGS:
       return {...state, hashtagResults: defaultHashtagSuggestionFilter(payload.searchText, sampleHashtags)}
     case CLEAR_HASHTAGS:

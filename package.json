@@ -68,6 +68,7 @@
     "css-modules-require-hook": "^4.0.6",
     "dotenv-safe": "^4.0.3",
     "dotenv-webpack": "^1.4.3",
+    "draft-convert": "^1.4.5",
     "draft-js": "^0.10.0",
     "draft-js-autocomplete-plugin-creator": "^0.2.0",
     "draft-js-export-html": "^0.5.2",
@@ -112,8 +113,7 @@
     "standard-loader": "^6.0.1",
     "tether": "^1.4.0",
     "trunc-html": "^1.1.2",
-    "velocity-react": "^1.2.1",
-    "watchman": "^0.1.8"
+    "velocity-react": "^1.2.1"
   },
   "engines": {
     "node": "~7.7"
