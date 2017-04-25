@@ -1,1 +1,40 @@
-.about { /* !empty */ }
+$about-height: 116px;
+
+// CommunitySidebar
+
+.community-sidebar {
+  padding-top: $space-6x;
+}
+
+// AboutSection
+
+.about-section {
+  margin-top: $space-3x;
+}
+
+.about-header {
+  composes: bdy-drk-lg from 'css/typography.scss';
+  margin-bottom: $space-4x;
+}
+
+.about {
+  composes: caption-lt-lg from 'css/typography.scss';
+  max-height: $about-height;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.gradient {
+  position: absolute;
+  background-image: linear-gradient(0, white, transparent 50%, transparent);
+  height: $about-height;
+  width: 100%;
+}
+
+.expanded {
+  max-height: none;
+}
+
+.expand-button {
+  composes: text-button from 'css/typography.scss';
+}

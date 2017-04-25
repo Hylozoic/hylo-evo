@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
 import {
-  fetchExample,
-  getExample
+  fetchExample
 } from './CommunitySidebar.store'
-// import { getMe } from 'store/selectors/getMe'
+import { SAMPLE_COMMUNITY } from 'routes/CommunityFeed/sampleData'
 
 export function mapStateToProps (state, props) {
   return {
-    example: getExample(state, props)
-//  currentUser: getMe(state, props)
+    community: {
+      ...SAMPLE_COMMUNITY
+    }
   }
 }
 
