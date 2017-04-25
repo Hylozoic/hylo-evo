@@ -21,7 +21,6 @@ describe('Comments', () => {
     expect(comment.prop('comment')).toEqual(props.comments[0])
     expect(comment.prop('slug')).toEqual(props.slug)
     expect(wrapper.find('Connect(CommentForm)').length).toEqual(1)
-    expect(wrapper.find('Connect(CommentForm)').prop('postId')).toEqual(props.postId)
   })
 })
 
