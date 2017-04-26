@@ -6,7 +6,7 @@ import RoundImage from 'components/RoundImage'
 import './TopNav.scss'
 import Dropdown from 'components/Dropdown'
 import { get } from 'lodash/fp'
-import { hyloLogo } from 'routes/AllCommunitiesFeed'
+import { hyloLogo } from 'util/assets'
 
 export default function TopNav ({ className, community, currentUser, logout, toggleCommunitiesDrawer }) {
   return <div styleName='topNavWrapper' className={className}>

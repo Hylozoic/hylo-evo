@@ -4,7 +4,7 @@ import { bgImageStyle } from 'util/index'
 import React from 'react'
 import './FeedBanner.scss'
 import cx from 'classnames'
-import { hyloLogo } from 'routes/AllCommunitiesFeed'
+import { hyloLogo } from 'util/assets'
 
 export default function FeedBanner ({ all, community, currentUser }) {
   let bannerUrl, avatarUrl, name, location, subtitle

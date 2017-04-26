@@ -2,7 +2,7 @@ import AllCommunitiesFeed from './AllCommunitiesFeed'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-it('does something', () => {
-  const wrapper = shallow(<AllCommunitiesFeed />)
-  // expect(wrapper.find('element')).toBeTruthy()
+it('renders as expected', () => {
+  const wrapper = shallow(<AllCommunitiesFeed filter='request' />)
+  expect(wrapper).toMatchSnapshot()
 })
