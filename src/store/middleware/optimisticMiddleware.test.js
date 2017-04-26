@@ -21,15 +21,20 @@ describe('optimisticMiddleware', () => {
 
   describe('with a promise payload and meta.optimistic', () => {
     it('dispatches SET_STATE on error', () => {
+      const error = new Error('promise failed')
       const action = {
         type: 'FOO',
-        payload: Promise.reject(new Error('promise failed')),
+        payload: Promise.reject(error),
         meta: {optimistic: true}
       }
       return middleware(next)(action)
       .then(() => {
         expect(next).toHaveBeenCalled()
-        expect(store.dispatch).toBeCalledWith({type: SET_STATE, payload: initialState})
+        expect(store.dispatch).toBeCalledWith({
+          type: SET_STATE,
+          payload: initialState,
+          meta: {error}
+        })
       })
     })
   })

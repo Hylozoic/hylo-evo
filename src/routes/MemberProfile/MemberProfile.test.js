@@ -10,7 +10,7 @@ describe('MemberProfile', () => {
   it('renders the same as the last snapshot', () => {
     const match = { params: { id: '1' } }
     const wrapper = shallow(
-      <MemberProfile match={match} person={person} ready={true} />
+      <MemberProfile match={match} person={person} ready />
     )
     expect(wrapper).toMatchSnapshot()
   })
@@ -20,7 +20,7 @@ describe('MemberProfile', () => {
       error: 'WOMBAT-TYPE INVALID',
       person
     }
-    const wrapper = shallow(<MemberProfile { ...props } />)
+    const wrapper = shallow(<MemberProfile {...props} />)
     expect(wrapper.contains(props.error)).toBe(true)
   })
 })

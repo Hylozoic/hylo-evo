@@ -31,7 +31,7 @@ export function fetchCurrentUser () {
   }
 }
 
-export function toggleCommunitiesDrawer () {
+export function toggleDrawer () {
   return {
     type: TOGGLE_COMMUNITIES_DRAWER
   }

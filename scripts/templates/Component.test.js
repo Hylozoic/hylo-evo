@@ -4,5 +4,5 @@ import React from 'react'
 
 it('does something', () => {
   const wrapper = shallow(<Component />)
-  // expect(wrapper.find('element')).toBeTruthy()
+  expect(wrapper).toMatchSnapshot()
 })

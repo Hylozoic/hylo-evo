@@ -1,0 +1,93 @@
+
+.header {
+  padding: 0px 15px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.authorName {
+  /* !empty */
+}
+
+.avatar {
+  margin-right: 10px;
+}
+
+.headerText {
+  display: inline-block;
+  position: relative;
+  top: 1px;
+  line-height: 15px;
+}
+
+.userName {
+  // TODO: Extract typography?
+  @include font-bold;
+  color: $color-rhino-80;
+  font-size: 14px;
+  &:hover {
+    color: $color-rhino;
+    text-decoration: none;
+  }
+}
+
+.userTitle {
+  // TODO: Extract typography? this one is very close to bdy-drk-sm
+  @include font-regular;
+  color: $color-rhino-80;
+  font-size: 14px;
+}
+
+.date {
+  line-height: 12px;
+}
+
+.spacer {
+  margin: 0 7px;
+  font-size: 8px;
+  position: relative;
+  top: -2px;
+}
+
+.timestamp {
+  composes: timestamp from 'css/typography.scss';
+}
+
+.context {
+  // TODO: Extract typography?
+  @include font-regular;
+  color: $color-caribbean-green;
+  font-size: 12px;
+  &:hover {
+    color: $color-gossamer;
+    text-decoration: none;
+  }
+}
+
+.upperRight {
+  margin-left: auto;
+}
+
+.label {
+  margin-right: 20px;
+  // TODO: remove this positioning. Only necessary because of Dropdown breaking layout
+  position: relative;
+  top: -3px;
+}
+
+.menuLink:hover {
+  text-decoration: none;
+}
+
+.menuLink:hover > span {
+  color: $color-rhino-80;
+}
+
+.close {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+}

@@ -9,7 +9,7 @@ export default function Navigation ({ className, collapsed, location }) {
   const slug = getSlugInPath(location.pathname)
 
   const links = [
-    {label: 'Home', icon: 'Home', to: `/c/${slug}`, badge: 3, exact: true},
+    {label: 'Home', icon: 'Home', to: slug ? `/c/${slug}` : '/all', badge: 3, exact: true},
     {label: 'Events', icon: 'Events', to: `/c/${slug}/events`, badge: 3},
     {label: 'Members', icon: 'Members', to: `/c/${slug}/members`},
     {label: 'UI Kit', icon: 'Projects', to: '/ui-kit'}

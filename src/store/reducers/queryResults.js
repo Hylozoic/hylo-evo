@@ -15,6 +15,7 @@ import { get, isNull, omitBy, pick, uniq } from 'lodash/fp'
 export default function (state = {}, action) {
   const { type, payload, error, meta } = action
   if (error) return state
+  let root
 
   // If this starts to feel too coupled to specific actions, we could move the
   // parameters below into the action's metadata, write a piece of middleware to
@@ -25,7 +26,8 @@ export default function (state = {}, action) {
       return appendIds(state, type, meta.graphql.variables, payload.data.community.members)
 
     case FETCH_POSTS:
-      return appendIds(state, type, meta.graphql.variables, payload.data.community.posts)
+      root = payload.data.posts || payload.data.community.posts
+      return appendIds(state, type, meta.graphql.variables, root)
 
     case FETCH_POST:
     case FETCH_COMMENTS:
