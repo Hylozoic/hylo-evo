@@ -10,6 +10,7 @@ export default function AllCommunitiesFeed (props) {
   const feedProps = {
     subject: 'all-communities',
     id: ALL_COMMUNITIES_ID,
+    showCommunities: true,
     ...pick([
       'filter',
       'sortBy',

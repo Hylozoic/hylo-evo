@@ -1,7 +1,8 @@
 import PostDetail, { PostTags } from './PostDetail'
 import { shallow } from 'enzyme'
 import React from 'react'
-import { PostHeader, PostImage, PostBody, PostFooter } from 'components/PostCard'
+import { PostImage, PostBody, PostFooter } from 'components/PostCard'
+import PostHeader from 'components/PostCard/PostHeader'
 import { getPost } from './PostDetail.connector'
 import orm from 'store/models'
 
