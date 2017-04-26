@@ -1,14 +1,11 @@
 /* eslint-disable camelcase */
 import React from 'react'
-import { Link } from 'react-router-dom'
-import Avatar from 'components/Avatar'
-import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
-import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
-import { personUrl, bgImageStyle } from 'util/index'
-import { sanitize, present, textLength, truncate, appendInP, humanDate } from 'hylo-utils/text'
+import { bgImageStyle } from 'util/index'
+import { sanitize, present, textLength, truncate, appendInP } from 'hylo-utils/text'
 import { parse } from 'url'
+import PostHeader from './PostHeader'
 import './PostCard.scss'
 import samplePost from './samplePost'
 import { get } from 'lodash/fp'
@@ -61,35 +58,6 @@ export default class PostCard extends React.Component {
         votesTotal={post.votesTotal} />
     </div>
   }
-}
-
-export const PostHeader = ({ creator, date, type, context, communities, close, className, slug }) => {
-  return <div styleName='header' className={className}>
-    <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
-    <div styleName='headerText'>
-      <Link to={personUrl(creator.id, slug)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
-      {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
-      <div>
-        <span styleName='timestamp'>
-          {humanDate(date)}{context && <span styleName='spacer'>•</span>}
-        </span>
-        {context && <Link to='/' styleName='context'>
-          {context}
-        </Link>}
-      </div>
-    </div>
-    <div styleName='upperRight'>
-      {type && <PostLabel type={type} styleName='label' />}
-      <Dropdown toggleChildren={<Icon name='More' />} triangle items={[
-        {icon: 'Pin', label: 'Pin', onClick: () => console.log('Pin')},
-        {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')},
-        {icon: 'Trash', label: 'Delete', onClick: () => console.log('Delete')},
-        {label: 'Other'},
-        {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
-      ]} />
-      {close && <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
-    </div>
-  </div>
 }
 
 export const PostImage = ({ imageUrl, className }) => {
