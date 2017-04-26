@@ -40,14 +40,9 @@ export default class CommunitiesDrawer extends Component {
   render () {
     const { currentCommunity, communities, communityNotifications } = this.props
     const communitiesSorted = sortBy('name', communities)
-    const imageStyle = bgImageStyle(currentCommunity.avatarUrl)
     return <div styleName='drawer'>
       <Icon name='Ex' styleName='closeDrawer' />
-      <Link styleName='currentCommunity' to={`/c/${currentCommunity.slug}`}>
-        <div styleName='avatar' style={imageStyle} />
-        <div styleName='name' className='drawer-inv-bd'>{currentCommunity.name}</div>
-        <div className='drawer-inv-sm'>{currentCommunity.location}</div>
-      </Link>
+      <Logo community={currentCommunity} />
       <ul styleName='communitiesList'>
         <li>
           <Link styleName='allCommunities' to='/all'>
@@ -70,4 +65,14 @@ export default class CommunitiesDrawer extends Component {
       <Button styleName='newCommunity' label={<NewCommunity />} />
     </div>
   }
+}
+
+function Logo ({ community }) {
+  if (!community) return null
+  const { slug, name, location, avatarUrl } = community
+  return <Link styleName='currentCommunity' to={`/c/${slug}`}>
+    <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
+    <div styleName='name' className='drawer-inv-bd'>{name}</div>
+    <div className='drawer-inv-sm'>{location}</div>
+  </Link>
 }

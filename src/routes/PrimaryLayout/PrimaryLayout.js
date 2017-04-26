@@ -24,7 +24,7 @@ export default class PrimaryLayout extends Component {
     community: PropTypes.object,
     currentUser: PropTypes.object,
     location: PropTypes.object,
-    communitiesDrawerOpen: PropTypes.bool,
+    isDrawerOpen: PropTypes.bool,
     toggleCommunitiesDrawer: PropTypes.func
   }
 
@@ -37,19 +37,19 @@ export default class PrimaryLayout extends Component {
     const {
       community,
       currentUser,
-      communitiesDrawerOpen,
+      isDrawerOpen,
       location,
       toggleCommunitiesDrawer
     } = this.props
 
-    const closeDrawer = () => communitiesDrawerOpen && toggleCommunitiesDrawer()
+    const closeDrawer = () => isDrawerOpen && toggleCommunitiesDrawer()
     const hasDetail = some(
       ({ path }) => matchPath(location.pathname, {path}),
       detailRoutes
     )
 
     return <div styleName='container' onClick={closeDrawer}>
-      {communitiesDrawerOpen && <CommunitiesDrawer />}
+      {isDrawerOpen && <CommunitiesDrawer currentCommunity={community} />}
       <TopNav {...{community, currentUser}} styleName='top' />
       <div styleName='main'>
         <Navigation collapsed={hasDetail} styleName='left' />
