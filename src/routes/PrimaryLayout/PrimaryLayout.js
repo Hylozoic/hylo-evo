@@ -6,7 +6,7 @@ import Loading from 'components/Loading'
 import Drawer from './components/Drawer'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
-import Sidebar from './components/Sidebar'
+import CommunitySidebar from 'routes/CommunitySidebar'
 import CommunityFeed from 'routes/CommunityFeed'
 import AllCommunitiesFeed from 'routes/AllCommunitiesFeed'
 import Events from 'routes/Events'
@@ -63,7 +63,7 @@ export default class PrimaryLayout extends Component {
           <Route path='/settings' component={Settings} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
-          <Route path='/c/:slug' exact component={Sidebar} />
+          <Route path='/c/:slug' exact component={CommunitySidebar} />
           <Route path='/c/:slug/m/:id' component={MessageMember} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>

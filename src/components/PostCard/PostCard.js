@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react'
 import Icon from 'components/Icon'
-import RoundImage from 'components/RoundImage'
+import RoundImageRow from 'components/RoundImageRow'
 import { bgImageStyle } from 'util/index'
 import { sanitize, present, textLength, truncate, appendInP } from 'hylo-utils/text'
 import { parse } from 'url'
@@ -122,14 +122,8 @@ export const commentCaption = (commenters, commentersTotal) => {
 
 export const PostFooter = ({ id, commenters, commentersTotal, votesTotal }) => {
   return <div styleName='footer'>
-    <PeopleImages imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
+    <RoundImageRow imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
     <span styleName='caption'>{commentCaption(commenters, commentersTotal)}</span>
     <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{votesTotal}</a></div>
   </div>
-}
-
-export function PeopleImages ({ imageUrls, className }) {
-  const images = imageUrls.map((url, i) =>
-    <RoundImage url={url} key={i} medium overlaps />)
-  return <div className={className}>{images}</div>
 }
