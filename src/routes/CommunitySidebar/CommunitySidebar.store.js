@@ -22,9 +22,11 @@ export function fetchCommunity (slug) {
             }
           }
           moderators {
-            id
-            name
-            avatarUrl
+            items {
+              id
+              name
+              avatarUrl
+            }
           }
         }
       }`,
