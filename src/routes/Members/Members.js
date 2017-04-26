@@ -13,6 +13,7 @@ import { queryParamWhitelist } from 'store/reducers/queryResults'
 
 export default class Members extends Component {
   static propTypes = {
+    slug: string,
     canInvite: bool,
     sortBy: string,
     members: arrayOf(shape({
@@ -58,7 +59,7 @@ export default class Members extends Component {
 
   render () {
     const {
-      canInvite, memberCount, members, sortBy, changeSort, search
+      canInvite, memberCount, members, sortBy, changeSort, search, slug
     } = this.props
     return <div>
       <div styleName='header'>
@@ -86,7 +87,7 @@ export default class Members extends Component {
           onChange={e => this.search(e.target.value)} />
         <div styleName='members'>
           {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
-            {pair.map(m => <Member member={m} key={m.id} />)}
+            {pair.map(m => <Member member={m} key={m.id} slug={slug} />)}
             {pair.length === 1 && <div />}
           </div>)}
         </div>

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders as expected 1`] = `
+<div>
+  <FeedBanner
+    all={true}
+  />
+  <Connect(Feed)
+    filter="request"
+    id="all-communities"
+    showCommunities={true}
+    subject="all-communities"
+  />
+</div>
+`;

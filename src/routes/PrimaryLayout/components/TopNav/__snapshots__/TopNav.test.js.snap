@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders as expected with no community 1`] = `
+<div>
+  <div>
+    <Logo />
+    <Title />
+    <div>
+      <Link
+        replace={false}
+        to="/"
+      >
+        <Icon
+          name="Search"
+        />
+      </Link>
+      <Link
+        replace={false}
+        to="/"
+      >
+        <Icon
+          name="Messages"
+        />
+      </Link>
+      <Link
+        replace={false}
+        to="/"
+      >
+        <Icon
+          name="Notifications"
+        />
+      </Link>
+      <Dropdown
+        alignRight={true}
+        toggleChildren={
+          <RoundImage
+            small={true}
+          />
+        }
+        triangle={true}
+      >
+        <li>
+          <Link
+            replace={false}
+            to="/"
+          >
+            Profile
+          </Link>
+        </li>
+        <li>
+          <Link
+            replace={false}
+            to="/settings"
+          >
+            Settings
+          </Link>
+        </li>
+        <li>
+          <a>
+            Log out
+          </a>
+        </li>
+      </Dropdown>
+    </div>
+  </div>
+</div>
+`;
