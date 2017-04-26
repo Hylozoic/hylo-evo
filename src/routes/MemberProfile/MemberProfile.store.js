@@ -21,6 +21,7 @@ const fetchPersonQuery =
     linkedinUrl
     facebookUrl
     url
+    tagline
     location
     memberships {
       id

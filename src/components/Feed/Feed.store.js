@@ -50,6 +50,7 @@ const postsQueryFragment = `
         id
         name
         avatarUrl
+        tagline
       }
       createdAt
       updatedAt
