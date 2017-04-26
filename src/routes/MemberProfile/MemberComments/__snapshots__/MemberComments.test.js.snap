@@ -2,7 +2,9 @@
 
 exports[`MemberComments renders the same as the last snapshot 1`] = `
 <div>
-  <div>
+  <div
+    data-styleName="activity-item"
+  >
     <CommentCard
       comment={
         Object {
@@ -20,7 +22,9 @@ exports[`MemberComments renders the same as the last snapshot 1`] = `
       }
     />
   </div>
-  <div>
+  <div
+    data-styleName="activity-item"
+  >
     <CommentCard
       comment={
         Object {

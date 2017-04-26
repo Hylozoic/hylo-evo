@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MemberProfile renders the same as the last snapshot 1`] = `
-<div>
+<div
+  data-styleName="member-profile"
+>
   <ProfileBanner
     bannerUrl="http://www.axolotl.org/images/tiger/tiger_larva.jpg"
   >
@@ -11,7 +13,9 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       name="Rich Churcher"
     />
   </ProfileBanner>
-  <div>
+  <div
+    data-styleName="content"
+  >
     <ProfileControls
       selectTab={[Function]}
     >
