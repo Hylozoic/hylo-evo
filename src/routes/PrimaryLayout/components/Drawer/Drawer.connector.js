@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
-import { toggleCommunitiesDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
+import { toggleDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
 
 export const getCommunities = ormCreateSelector(
   orm,
@@ -13,13 +13,12 @@ export const getCommunities = ormCreateSelector(
 
 export function mapStateToProps (state, props) {
   return {
-    communities: getCommunities(state),
-    communityNotifications: []
+    communities: getCommunities(state)
   }
 }
 
 export const mapDispatchToProps = {
-  toggleCommunitiesDrawer
+  toggleDrawer
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)

@@ -6,7 +6,7 @@ import Badge from 'components/Badge'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import AllFeedsIcon from 'components/AllFeedsIcon'
-import './component.scss'
+import './Drawer.scss'
 const { string, number, arrayOf, shape } = PropTypes
 
 function NewCommunity () {
@@ -16,7 +16,11 @@ function NewCommunity () {
   </div>
 }
 
-export default class CommunitiesDrawer extends Component {
+export default class Drawer extends Component {
+  static defaultProps = {
+    communityNotifications: []
+  }
+
   static propTypes = {
     currentCommunity: shape({
       id: string,

@@ -3,7 +3,7 @@ import { matchPath, Redirect, Route } from 'react-router-dom'
 import cx from 'classnames'
 import { some } from 'lodash/fp'
 import Loading from 'components/Loading'
-import CommunitiesDrawer from './components/CommunitiesDrawer'
+import Drawer from './components/Drawer'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
 import Sidebar from './components/Sidebar'
@@ -25,7 +25,7 @@ export default class PrimaryLayout extends Component {
     currentUser: PropTypes.object,
     location: PropTypes.object,
     isDrawerOpen: PropTypes.bool,
-    toggleCommunitiesDrawer: PropTypes.func
+    toggleDrawer: PropTypes.func
   }
 
   componentDidMount () {
@@ -39,17 +39,17 @@ export default class PrimaryLayout extends Component {
       currentUser,
       isDrawerOpen,
       location,
-      toggleCommunitiesDrawer
+      toggleDrawer
     } = this.props
 
-    const closeDrawer = () => isDrawerOpen && toggleCommunitiesDrawer()
+    const closeDrawer = () => isDrawerOpen && toggleDrawer()
     const hasDetail = some(
       ({ path }) => matchPath(location.pathname, {path}),
       detailRoutes
     )
 
     return <div styleName='container' onClick={closeDrawer}>
-      {isDrawerOpen && <CommunitiesDrawer currentCommunity={community} />}
+      {isDrawerOpen && <Drawer currentCommunity={community} />}
       <TopNav {...{community, currentUser}} styleName='top' />
       <div styleName='main'>
         <Navigation collapsed={hasDetail} styleName='left' />

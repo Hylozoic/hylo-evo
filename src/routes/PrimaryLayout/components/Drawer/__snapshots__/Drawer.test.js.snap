@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with a current community 1`] = `
+<div>
+  <Icon
+    name="Ex"
+  />
+  <Logo
+    community={
+      Object {
+        "avatarUrl": "/foo.png",
+        "id": "1",
+        "name": "Foomunity",
+        "slug": "foo",
+      }
+    }
+  />
+  <ul>
+    <li>
+      <Link
+        replace={false}
+        to="/all"
+      >
+        <AllFeedsIcon />
+        <span
+          className="drawer-inv-lg"
+        >
+          All Communities
+        </span>
+      </Link>
+    </li>
+    <li>
+      <Link
+        replace={false}
+        title="Barmunity"
+        to="/c/bar"
+      >
+        <div
+          style={
+            Object {
+              "backgroundImage": "url(/bar.png)",
+            }
+          }
+        />
+        <span
+          className="drawer-inv-li"
+        >
+          Barmunity
+        </span>
+      </Link>
+    </li>
+    <li>
+      <Link
+        replace={false}
+        title="Foomunity"
+        to="/c/foo"
+      >
+        <div
+          style={
+            Object {
+              "backgroundImage": "url(/foo.png)",
+            }
+          }
+        />
+        <span
+          className="drawer-inv-li"
+        >
+          Foomunity
+        </span>
+      </Link>
+    </li>
+  </ul>
+  <Button
+    label={<NewCommunity />}
+  />
+</div>
+`;
+
+exports[`renders without a current community 1`] = `
+<div>
+  <Icon
+    name="Ex"
+  />
+  <Logo />
+  <ul>
+    <li>
+      <Link
+        replace={false}
+        to="/all"
+      >
+        <AllFeedsIcon />
+        <span
+          className="drawer-inv-lg"
+        >
+          All Communities
+        </span>
+      </Link>
+    </li>
+    <li>
+      <Link
+        replace={false}
+        title="Barmunity"
+        to="/c/bar"
+      >
+        <div
+          style={
+            Object {
+              "backgroundImage": "url(/bar.png)",
+            }
+          }
+        />
+        <span
+          className="drawer-inv-li"
+        >
+          Barmunity
+        </span>
+      </Link>
+    </li>
+    <li>
+      <Link
+        replace={false}
+        title="Foomunity"
+        to="/c/foo"
+      >
+        <div
+          style={
+            Object {
+              "backgroundImage": "url(/foo.png)",
+            }
+          }
+        />
+        <span
+          className="drawer-inv-li"
+        >
+          Foomunity
+        </span>
+      </Link>
+    </li>
+  </ul>
+  <Button
+    label={<NewCommunity />}
+  />
+</div>
+`;

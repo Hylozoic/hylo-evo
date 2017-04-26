@@ -8,10 +8,10 @@ import Dropdown from 'components/Dropdown'
 import { get } from 'lodash/fp'
 import { hyloLogo } from 'util/assets'
 
-export default function TopNav ({ className, community, currentUser, logout, toggleCommunitiesDrawer }) {
+export default function TopNav ({ className, community, currentUser, logout, toggleDrawer }) {
   return <div styleName='topNavWrapper' className={className}>
     <div styleName='topNav'>
-      <Logo {...{community, toggleCommunitiesDrawer}} />
+      <Logo {...{community, toggleDrawer}} />
       <Title community={community} />
       <div styleName='navIcons'>
         <Link to='/' styleName='navIcon'><Icon name='Search' styleName='icon' /></Link>
@@ -30,10 +30,10 @@ export default function TopNav ({ className, community, currentUser, logout, tog
   </div>
 }
 
-function Logo ({ community, toggleCommunitiesDrawer }) {
+function Logo ({ community, toggleDrawer }) {
   const imageStyle = bgImageStyle(get('avatarUrl', community) || hyloLogo)
   return <span styleName='image' style={imageStyle}
-    onClick={toggleCommunitiesDrawer} />
+    onClick={toggleDrawer} />
 }
 
 function Title ({ community }) {
