@@ -18,7 +18,7 @@ $about-height: 116px;
   margin-bottom: $space-1x;
 }
 
-.about {
+.description {
   composes: caption-lt-lg from 'css/typography.scss';
   max-height: $about-height;
   overflow: hidden;

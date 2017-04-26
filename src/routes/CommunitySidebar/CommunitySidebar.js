@@ -12,7 +12,8 @@ export default class CommunitySidebar extends Component {
   static propTypes = {
     commmunity: object,
     members: array,
-    membersTotal: number
+    membersTotal: number,
+    leaders: array
   }
 
   render () {
@@ -48,7 +49,7 @@ export class AboutSection extends Component {
       <div styleName='header'>
         About {name}
       </div>
-      <div styleName={cx('about', {expanded})}>
+      <div styleName={cx('description', {expanded})}>
         {!expanded && <div styleName='gradient' />}
         {description}
       </div>
@@ -62,7 +63,7 @@ export class AboutSection extends Component {
 export function MemberSection ({ members, membersTotal }) {
   const formatTotal = total => {
     if (total < 1000) return `+${total}`
-    return `+${Number(total / 1000).toFixed(1)}`
+    return `+${Number(total / 1000).toFixed(1)}k`
   }
 
   const showTotal = membersTotal - members.length > 0

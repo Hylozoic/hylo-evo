@@ -4,7 +4,7 @@ import './RoundImageRow.scss'
 
 const { array, string } = React.PropTypes
 
-export default function RoundImageRow ({ imageUrls, className }) {
+export default function RoundImageRow ({ imageUrls = [], className }) {
   const images = imageUrls.map((url, i) =>
     <RoundImage url={url} key={i} medium overlaps />)
   return <div className={className}>{images}</div>
