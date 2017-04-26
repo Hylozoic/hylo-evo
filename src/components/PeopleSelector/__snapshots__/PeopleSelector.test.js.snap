@@ -1,3 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches the last snapshot 1`] = `<div />`;
+exports[`matches the last snapshot 1`] = `
+<div>
+  <SelectorMatchedItem
+    deleteMatch={[Function]}
+    name="Wombat"
+  />
+  <SelectorMatchedItem
+    deleteMatch={[Function]}
+    name="Aardvark"
+  />
+</div>
+`;

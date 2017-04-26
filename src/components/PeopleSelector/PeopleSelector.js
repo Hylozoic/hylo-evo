@@ -1,16 +1,19 @@
 import React from 'react'
+
+import SelectorMatchedItem from 'components/SelectorMatchedItem'
 import './PeopleSelector.scss'
 
-const { any, arrayOf, func, string } = React.PropTypes
+const { any, arrayOf, func, shape, string } = React.PropTypes
 
-const personType = {
+const personType = shape({
   id: any,
   name: string
-}
+})
 
 export default class PeopleSelector extends React.Component {
   static propTypes = {
     fetchPeople: func,
+    deleteMatch: func,
     matches: arrayOf(personType),
     setAutocomplete: func
   }
@@ -18,7 +21,10 @@ export default class PeopleSelector extends React.Component {
   render () {
     const { matches } = this.props
     return <div>{matches && matches.map(match => 
-      match.name
+      <SelectorMatchedItem
+        key={match.id}
+        name={match.name}
+        deleteMatch={() => deleteMatch(match.id)} />
     )}</div>
   }
 }

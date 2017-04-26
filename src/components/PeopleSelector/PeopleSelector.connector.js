@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { fetchPeople, setAutocomplete } from './PeopleSelector.store'
+import { deleteMatch, fetchPeople, setAutocomplete } from './PeopleSelector.store'
 
 export function mapStateToProps (_, { matches }) {
   return {
@@ -10,6 +10,7 @@ export function mapStateToProps (_, { matches }) {
 
 export function mapDispatchToProps (dispatch) {
   return {
+    deleteMatch: (id) => dispatch(deleteMatch(id)),
     fetchPeople: (autocomplete, query, first) =>
       dispatch(fetchPeople(autocomplete, query, first)),
     setAutocomplete: (autocomplete) => dispatch(setAutocomplete(autocomplete)
