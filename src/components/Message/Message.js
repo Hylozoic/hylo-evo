@@ -15,7 +15,7 @@ export default function Message ({ message, isHeader }) {
   return <div styleName={sName}
     data-message-id={message.id}>
     <div styleName='avatar'>
-      {isHeader && <Avatar url={personUrl(person)} avatarUrl={person.avatarUrl} />}
+      {isHeader && <Avatar url={personUrl(person.id)} avatarUrl={person.avatarUrl} />}
     </div>
     <div styleName='content'>
       {isHeader && <div>

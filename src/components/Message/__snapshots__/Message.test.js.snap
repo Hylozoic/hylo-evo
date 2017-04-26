@@ -1,14 +1,78 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches the last snapshot 1`] = `
-<div>
+exports[`to display sending... when message is still in optimistic state 1`] = `
+<div
+  data-message-id="messageThread12_1"
+>
+  <div>
+    <Avatar
+      avatarUrl="http://avatar.com/i.png"
+      url="/m/1"
+    />
+  </div>
+  <div>
+    <div>
+      <span>
+        Good Person
+      </span>
+      <span>
+        sending...
+      </span>
+    </div>
+    <div>
+      <span
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "test",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`to match the latest non-header snapshot 1`] = `
+<div
+  data-message-id="1"
+>
   <div />
   <div>
     <div>
       <span
         dangerouslySetInnerHTML={
           Object {
-            "__html": "",
+            "__html": "test",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`to match the latest snapshot 1`] = `
+<div
+  data-message-id="1"
+>
+  <div>
+    <Avatar
+      avatarUrl="http://avatar.com/i.png"
+      url="/m/1"
+    />
+  </div>
+  <div>
+    <div>
+      <span>
+        Good Person
+      </span>
+      <span />
+    </div>
+    <div>
+      <span
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "test",
           }
         }
       />
