@@ -13,7 +13,7 @@ export function mapDispatchToProps (dispatch) {
     deleteMatch: (id) => dispatch(deleteMatch(id)),
     fetchPeople: (autocomplete, query, first) =>
       dispatch(fetchPeople(autocomplete, query, first)),
-    setAutocomplete: (autocomplete) => dispatch(setAutocomplete(autocomplete)
+    setAutocomplete: (autocomplete) => dispatch(setAutocomplete(autocomplete))
   }
 }
 
