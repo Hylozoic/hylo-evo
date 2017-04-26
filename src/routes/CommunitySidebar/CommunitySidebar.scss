@@ -10,17 +10,19 @@ $about-height: 116px;
 
 .about-section {
   margin-top: $space-3x;
+  margin-bottom: $space-7x;
 }
 
-.about-header {
+.header {
   composes: bdy-drk-lg from 'css/typography.scss';
-  margin-bottom: $space-4x;
+  margin-bottom: $space-1x;
 }
 
 .about {
   composes: caption-lt-lg from 'css/typography.scss';
   max-height: $about-height;
   overflow: hidden;
+  margin-top: $space-3x;
   margin-bottom: 5px;
 }
 
@@ -37,4 +39,58 @@ $about-height: 116px;
 
 .expand-button {
   composes: text-button from 'css/typography.scss';
+}
+
+// MemberSection
+
+.member-section {
+  margin-bottom: $space-10x;
+}
+
+.images-and-count {
+  display: flex;
+  align-items: center;
+}
+
+.image-row {
+  display: inline-block;
+  margin-right: $space-2x;
+}
+
+.members-total {
+  composes: text-button from 'css/typography.scss';
+  &:hover {
+    cursor: default;
+  }
+}
+
+// CommunityLeaderSection
+
+.leader-section {
+  /* empty */
+}
+
+.leader-header {
+  margin-bottom: $space-2x;
+}
+
+// CommunityLeader
+
+.leader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.leader-image {
+  margin-right: $space-4x;
+}
+
+.leader-name {
+  composes: bdy-lt-sm from 'css/typography.scss';
+  font-size: 16px;
+  &:hover {
+    color: $color-rhino-80;
+    text-decoration: none;
+  }
 }
