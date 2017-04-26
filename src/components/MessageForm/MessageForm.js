@@ -2,7 +2,7 @@ import React from 'react'
 import { throttle } from 'lodash'
 import { get } from 'lodash/fp'
 import { onEnterNoShift } from 'util/textInput'
-import { getSocket, socketUrl } from 'client/websockets'
+import { socketUrl } from 'client/websockets'
 import RoundImage from 'components/RoundImage'
 var { func, object, string, bool } = React.PropTypes
 import './MessageForm.scss'
@@ -12,6 +12,8 @@ export const STARTED_TYPING_INTERVAL = 3000
 
 export default class MessageForm extends React.Component {
   static propTypes = {
+    socket: object,
+    text: string,
     className: string,
     currentUser: object,
     messageThreadId: string,
@@ -25,8 +27,8 @@ export default class MessageForm extends React.Component {
 
   submit = event => {
     if (event) event.preventDefault()
-    const { text, messageThreadId, createMessage, currentUser } = this.props
-    if (!text) return false
+    const { text, messageThreadId, createMessage, currentUser, pending } = this.props
+    if (!text || pending) return false
     const userId = get('id', currentUser)
     createMessage(messageThreadId, text, userId)
     this.startTyping.cancel()
@@ -35,7 +37,6 @@ export default class MessageForm extends React.Component {
   }
 
   componentDidMount () {
-    this.socket = getSocket()
     this.resize()
   }
 
@@ -52,8 +53,8 @@ export default class MessageForm extends React.Component {
   }
 
   sendIsTyping (isTyping) {
-    const { messageThreadId } = this.props
-    this.socket.post(socketUrl(`/noo/post/${messageThreadId}/typing`), {isTyping})
+    const { messageThreadId, socket } = this.props
+    socket.post(socketUrl(`/noo/post/${messageThreadId}/typing`), {isTyping})
   }
 
   // broadcast "I'm typing!" every 3 seconds starting when the user is typing.
@@ -84,7 +85,7 @@ export default class MessageForm extends React.Component {
 
     return <form onSubmit={this.submit} styleName='message-form' className={className}>
       <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
-      <textarea ref='editor' name='message' value={text} styleName='message-textarea'
+      <textarea ref='editor' value={text} styleName='message-textarea'
         placeholder={placeholder}
         onFocus={onFocus}
         onChange={onChange}

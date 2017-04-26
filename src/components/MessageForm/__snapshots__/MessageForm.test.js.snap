@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`to match the latest snapshot 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <RoundImage
+    medium={true}
+    url="http://image.com/p.png"
+  />
+  <textarea
+    onChange={[Function]}
+    onKeyDown={[Function]}
+    placeholder="Write something..."
+    value="hey you"
+  />
+</form>
+`;

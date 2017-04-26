@@ -65,7 +65,7 @@ export default class Thread extends React.Component {
       <MessageSection thread={thread} messageThreadId={threadId} />
       <div styleName='message-form-bg' />
       <div styleName='message-form'>
-        <MessageForm messageThreadId={threadId} ref='form' />
+        <MessageForm messageThreadId={threadId} ref='form' socket={this.socket} />
       </div>
       <PeopleTyping styleName='people-typing' />
     </div>
