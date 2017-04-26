@@ -10,6 +10,7 @@ import './PostCard.scss'
 import samplePost from './samplePost'
 import { get } from 'lodash/fp'
 import cx from 'classnames'
+import { decode } from 'ent'
 
 const { shape, any, object, string, func, array, bool } = React.PropTypes
 
@@ -73,7 +74,8 @@ export const PostImage = ({ imageUrl, className }) => {
 const maxDetailsLength = 144
 
 export const PostBody = ({ id, title, details, imageUrl, linkPreview, slug, expanded, className }) => {
-  // TODO: Present details as HTML and sanitize
+  const decodedTitle = decode(title)
+
   let presentedDetails = present(sanitize(details), {slug})
   const shouldTruncate = !expanded && textLength(presentedDetails) > maxDetailsLength
   if (shouldTruncate) {
@@ -82,7 +84,7 @@ export const PostBody = ({ id, title, details, imageUrl, linkPreview, slug, expa
   if (presentedDetails) presentedDetails = appendInP(presentedDetails, '&nbsp;')
 
   return <div styleName='body' className={className}>
-    <div styleName='title' className='hdr-headline'>{title}</div>
+    <div styleName='title' className='hdr-headline'>{decodedTitle}</div>
     {presentedDetails && <div styleName='description' dangerouslySetInnerHTML={{__html: presentedDetails}} />}
     {linkPreview && <LinkPreview {...linkPreview} />}
   </div>
