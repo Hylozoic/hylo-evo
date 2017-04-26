@@ -1,23 +1,37 @@
 import { connect } from 'react-redux'
 import {
-  fetchExample
+  fetchCommunity
 } from './CommunitySidebar.store'
-import { SAMPLE_COMMUNITY } from 'routes/CommunityFeed/sampleData'
-import { fakePerson } from 'components/PostCard/samplePost'
+import getParam from 'store/selectors/getParam'
+import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 
 export function mapStateToProps (state, props) {
+  const community = getCommunityForCurrentRoute(state, props)
+  const members = community ? community.members.toModelArray() : []
+  const leaders = community ? community.moderators.toModelArray() : []
   return {
-    community: {
-      ...SAMPLE_COMMUNITY
-    },
-    members: fakePerson(8),
-    membersTotal: 5600,
-    leaders: fakePerson(5)
+    community: community ? community.ref : null,
+    members,
+    leaders,
+    slug: getParam('slug', state, props)
   }
 }
 
-export const mapDispatchToProps = {
-  fetchExample
+export function mapDispatchToProps (dispatch, props) {
+  return {
+    fetchCommunityMaker: slug => () => dispatch(fetchCommunity(slug))
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  const { slug } = stateProps
+  const { fetchCommunityMaker } = dispatchProps
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    fetchCommunity: slug ? fetchCommunityMaker(slug) : () => {}
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)

@@ -1,49 +1,37 @@
-// import { combineReducers } from 'redux'
-import { createSelector } from 'reselect'
-import { createSelector as ormCreateSelector } from 'redux-orm'
-import orm from 'store/models'
-
-export const MODULE_NAME = 'CommunitySidebar'
-
 // Constants
-export const FETCH_EXAMPLE = 'FETCH_EXAMPLE'
+export const FETCH_COMMUNITY = 'FETCH_COMMUNITY'
 
 // Action Creators
-export function fetchExample () {
+export function fetchCommunity (slug) {
   return {
-    type: FETCH_EXAMPLE
+    type: FETCH_COMMUNITY,
+    graphql: {
+      query: `query ($slug: String) {
+        community (slug: $slug) {
+          id
+          name
+          slug
+          description
+          avatarUrl
+          memberCount
+          members (first: 8, sortBy: "id", order: "desc") {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+          moderators {
+            id
+            name
+            avatarUrl
+          }
+        }
+      }`,
+      variables: {slug}
+    },
+    meta: {
+      extractModel: 'Community'
+    }
   }
 }
-
-// Reducer
-const defaultState = {
-  example: 'example value'
-}
-
-export default function reducer (state = defaultState, action) {
-  const { error, type } = action
-  if (error) return state
-
-  switch (type) {
-    case FETCH_EXAMPLE:
-      return {example: 'fetched example'}
-    default:
-      return state
-  }
-}
-
-// Selectors
-export const moduleSelector = (state) => state[MODULE_NAME]
-
-/* export const getSomethingFromOrm = ormCreateSelector(
-  orm,
-  state => state.orm,
-  session => {
-    return session.Me.first()
-  }
-) */
-
-export const getExample = createSelector(
-  moduleSelector,
-  (state, props) => state.example
-)

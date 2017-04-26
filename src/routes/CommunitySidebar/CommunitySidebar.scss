@@ -20,7 +20,7 @@ $about-height: 116px;
 
 .description {
   composes: caption-lt-lg from 'css/typography.scss';
-  max-height: $about-height;
+  height: $about-height;
   overflow: hidden;
   margin-top: $space-3x;
   margin-bottom: 5px;
@@ -34,7 +34,7 @@ $about-height: 116px;
 }
 
 .expanded {
-  max-height: none;
+  height: auto;
 }
 
 .expand-button {
