@@ -4,10 +4,7 @@ exports[`matches the last snapshot 1`] = `
 <div>
   <Header />
   <Connect(MessageSection)
-    messages={Array []}
-    onHitBottom={[Function]}
-    onLeftBottom={[Function]}
-    onScrollToTop={[Function]}
+    messageThreadId="1"
   />
   <div />
   <div>

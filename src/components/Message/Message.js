@@ -7,7 +7,7 @@ import './Message.scss'
 
 const { bool, object } = React.PropTypes
 
-export default function Message ({ message, message: { fromTemp, image }, isHeader }) {
+export default function Message ({ message, isHeader }) {
   const person = message.creator
   const pending = message.id.slice(0, 13) === 'messageThread'
   let text = present(sanitize(message.text).replace(/\n/g, '<br />'), {noP: true})

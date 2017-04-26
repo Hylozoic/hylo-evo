@@ -21,6 +21,10 @@ exports[`matches the last snapshot 1`] = `
       placeholder="Search for people..."
     />
   </div>
-  <ul />
+  <ul>
+    <div>
+      You have no active conversations
+    </div>
+  </ul>
 </div>
 `;
