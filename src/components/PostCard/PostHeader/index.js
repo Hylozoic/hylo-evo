@@ -4,7 +4,7 @@ import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import PostLabel from 'components/PostLabel'
 import Icon from 'components/Icon'
-import { personUrl } from 'util/index'
+import { communityUrl, personUrl } from 'util/index'
 import { humanDate } from 'hylo-utils/text'
 import './PostHeader.scss'
 
@@ -12,12 +12,22 @@ export default function PostHeader ({
   creator,
   date,
   type,
-  context,
   communities,
   close,
   className,
-  slug
+  slug,
+  showCommunity
 }) {
+  let context
+
+  if (showCommunity) {
+    const { name, slug } = communities[0]
+    context = {
+      label: name,
+      url: communityUrl(slug)
+    }
+  }
+
   return <div styleName='header' className={className}>
     <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
     <div styleName='headerText'>
@@ -27,8 +37,8 @@ export default function PostHeader ({
         <span styleName='timestamp'>
           {humanDate(date)}{context && <span styleName='spacer'>•</span>}
         </span>
-        {context && <Link to='/' styleName='context'>
-          {context}
+        {context && <Link to={context.url} styleName='context'>
+          {context.label}
         </Link>}
       </div>
     </div>

@@ -27,7 +27,8 @@ export default class PostCard extends React.Component {
     }),
     fetchPost: func,
     expanded: bool,
-    showDetails: func
+    showDetails: func,
+    showCommunity: bool
   }
 
   static defaultProps = {
@@ -35,7 +36,7 @@ export default class PostCard extends React.Component {
   }
 
   render () {
-    const { post, className, expanded, showDetails } = this.props
+    const { post, className, expanded, showDetails, showCommunity } = this.props
     const slug = get('0.slug', post.communities)
 
     return <div styleName={cx('card', {expanded})} className={className}
@@ -43,7 +44,7 @@ export default class PostCard extends React.Component {
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}
         type={post.type}
-        context={post.context}
+        showCommunity={showCommunity}
         communities={post.communities}
         slug={slug} />
       <PostImage imageUrl={post.imageUrl} />

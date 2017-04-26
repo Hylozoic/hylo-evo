@@ -8,6 +8,7 @@ exports[`renders as expected 1`] = `
   <Connect(Feed)
     filter="request"
     id="all-communities"
+    showCommunities={true}
     subject="all-communities"
   />
 </div>
