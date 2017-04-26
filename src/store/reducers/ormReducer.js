@@ -51,9 +51,7 @@ export default function ormReducer (state = {}, action) {
     case CREATE_MESSAGE:
       Message.withId(meta.tempId).delete()
       const message = payload.data.createMessage
-      MessageThread.withId(message.messageThread.id).update({
-        updatedAt: new Date().toString()
-      })
+      MessageThread.withId(message.messageThread.id).newMessageReceived()
       break
 
     case FETCH_MESSAGES_PENDING:
@@ -65,20 +63,11 @@ export default function ormReducer (state = {}, action) {
       break
 
     case ADD_MESSAGE_FROM_SOCKET:
-      const messageThread = MessageThread.withId(payload.data.message.messageThread)
-      messageThread.update({
-        updatedAt: new Date().toString()
-      })
-      if (meta.bumpUnreadCount) {
-        messageThread.bumpUnreadCount()
-      }
+      MessageThread.withId(payload.data.message.messageThread).newMessageReceived(meta.bumpUnreadCount)
       break
 
     case UPDATE_THREAD_READ_TIME:
-      MessageThread.withId(meta.id).update({
-        unreadCount: 0,
-        lastReadAt: new Date().toString()
-      })
+      MessageThread.withId(meta.id).markAsRead()
       break
   }
 
