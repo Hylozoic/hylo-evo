@@ -3,9 +3,7 @@ import PostCard from 'components/PostCard'
 import PostEditor from 'components/PostEditor'
 import { omit } from 'lodash/fp'
 import './component.scss'
-import samplePost, { fakePerson } from 'components/PostCard/samplePost'
-
-const SAMPLE_IMAGE_URL = 'https://d3ngex8q79bk55.cloudfront.net/community/1944/banner/1489687099172_ggbridge.jpg'
+import samplePost, { fakePerson, SAMPLE_IMAGE_URL } from 'components/PostCard/samplePost'
 
 const SAMPLE_POST = {
   ...samplePost(),

@@ -1,0 +1,97 @@
+// AccountSettings
+.name {
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 4px;
+  margin-bottom: 25px;
+  composes: hdr-display from 'css/typography.scss';
+  background-color: $color-catskill-white;
+  border: none;
+  width: 100%;
+}
+
+.banner {
+  width: 100%;
+  height: 165px;
+  border-radius: 4px;
+  background-position: center;
+  background-size: cover;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+.change-banner-button {
+  /* empty */
+}
+
+.avatar {
+  display: flex;
+  align-items: flex-end;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  margin: -70px auto $space-8x auto;
+}
+
+.change-avatar-button {
+  margin: 0 auto;
+  width: 30px;
+}
+
+.control-label {
+  display: block;
+  composes: tag from 'css/typography.scss';
+  color: $color-rhino-30;
+  margin-bottom: $space-1x;
+}
+
+.social-label {
+  composes: control-label;
+  margin-top: $space-9x;
+}
+
+.button-row {
+  display: flex;
+  width: 100%;
+  margin-top: $space-9x;
+}
+
+.save-button {
+  margin: 0 auto;
+}
+
+// Control
+.control {
+  margin-bottom: $space-4x;
+}
+
+.control-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid $color-ghost;
+  composes: bdy-drk-sm from 'css/typography.scss';
+  font-size: 16px;
+  padding-bottom: $space-2x;
+  resize: none;
+  &:focus {
+    outline: none;
+  }
+}
+
+// SocialControl
+.linked {
+  border-bottom: 1px solid $color-caribbean-green;
+}
+
+.social-control-label {
+  composes: control-input;
+  display: flex;
+}
+
+.link-button {
+  margin-left: auto;
+  composes: text-button from 'css/typography.scss';
+}

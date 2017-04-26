@@ -21,7 +21,7 @@ export default function TopNav ({ className, community, currentUser, logout, tog
             <RoundImage url={get('avatarUrl', currentUser)} small />
           }>
           <li><Link to='/'>Profile</Link></li>
-          <li><Link to='/'>Settings</Link></li>
+          <li><Link to='/settings'>Settings</Link></li>
           <li><a onClick={logout}>Log out</a></li>
         </Dropdown>
       </div>

@@ -28,6 +28,8 @@ export default function samplePost () {
   }
 }
 
+export const SAMPLE_IMAGE_URL = 'https://d3ngex8q79bk55.cloudfront.net/community/1944/banner/1489687099172_ggbridge.jpg'
+
 export function sampleComment () {
   return {
     id: 'FAKE_' + Math.round(Math.random() * 10000),
