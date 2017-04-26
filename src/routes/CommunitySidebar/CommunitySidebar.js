@@ -7,6 +7,7 @@ import './CommunitySidebar.scss'
 const { object, string, array, func } = PropTypes
 import cx from 'classnames'
 import { personUrl } from 'util/index'
+import { isEmpty } from 'lodash/fp'
 
 export default class CommunitySidebar extends Component {
   static propTypes = {
@@ -29,7 +30,7 @@ export default class CommunitySidebar extends Component {
 
   render () {
     const { community, members, leaders } = this.props
-    if (!community) return <Loading />
+    if (!community || isEmpty(members)) return <Loading />
     const { name, description, slug, memberCount } = community
     return <div styleName='community-sidebar'>
       <AboutSection name={name} description={description} />
