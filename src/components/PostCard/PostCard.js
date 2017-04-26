@@ -39,8 +39,12 @@ export default class PostCard extends React.Component {
     const { post, className, expanded, showDetails, showCommunity } = this.props
     const slug = get('0.slug', post.communities)
 
+    const onClick = event => {
+      if (event.target.tagName !== 'A') showDetails()
+    }
+
     return <div styleName={cx('card', {expanded})} className={className}
-      onClick={showDetails}>
+      onClick={onClick}>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}
         type={post.type}
