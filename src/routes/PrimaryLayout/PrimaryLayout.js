@@ -1,13 +1,14 @@
 import React, { PropTypes, Component } from 'react'
 import { matchPath, Redirect, Route } from 'react-router-dom'
 import cx from 'classnames'
-import { flow, map, some, identity } from 'lodash/fp'
+import { some } from 'lodash/fp'
 import Loading from 'components/Loading'
 import CommunitiesDrawer from './components/CommunitiesDrawer'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
 import Sidebar from './components/Sidebar'
 import CommunityFeed from 'routes/CommunityFeed'
+import AllCommunitiesFeed from 'routes/AllCommunitiesFeed'
 import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 import MemberProfile from 'routes/MemberProfile'
@@ -41,16 +42,11 @@ export default class PrimaryLayout extends Component {
       toggleCommunitiesDrawer
     } = this.props
 
-    const hasDetail = flow(
-      map(path => matchPath(location.pathname, {path: path})),
-      some(identity)
-    )([
-      '/events/:eventId',
-      '/p/:postId',
-      '/c/:slug/p/:postId'
-    ])
-
     const closeDrawer = () => communitiesDrawerOpen && toggleCommunitiesDrawer()
+    const hasDetail = some(
+      ({ path }) => matchPath(location.pathname, {path}),
+      detailRoutes
+    )
 
     return <div styleName='container' onClick={closeDrawer}>
       {communitiesDrawerOpen && <CommunitiesDrawer />}
@@ -59,8 +55,8 @@ export default class PrimaryLayout extends Component {
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToCommunity currentUser={currentUser} />
-          <Route path='/c/:slug/' exact component={CommunityFeed} />
-          <Route path='/c/:slug/p/:postId' component={CommunityFeed} />
+          <Route path='/all' component={AllCommunitiesFeed} />
+          <Route path='/c/:slug' component={CommunityFeed} />
           <Route path='/c/:slug/m/:id' component={MemberProfile} />
           <Route path='/events' component={Events} />
           <Route path='/c/:slug/members' component={Members} />
@@ -77,14 +73,19 @@ export default class PrimaryLayout extends Component {
             Best guess is to replace these routes with a render function
             defined above, and store the previous detail component in state
           */}
-          <Route path='/events/:eventId' exact component={EventDetail} />
-          <Route path='/p/:postId' exact component={PostDetail} />
-          <Route path='/c/:slug/p/:postId' exact component={PostDetail} />
+          {detailRoutes.map(({ path, component }) =>
+            <Route key={path} exact {...{path, component}} />)}
         </div>
       </div>
     </div>
   }
 }
+
+const detailRoutes = [
+  {path: '/events/:eventId', component: EventDetail},
+  {path: '/all/p/:postId', component: PostDetail},
+  {path: '/c/:slug/p/:postId', component: PostDetail}
+]
 
 function RedirectToCommunity ({ currentUser }) {
   return <Route path='/' exact render={() => {

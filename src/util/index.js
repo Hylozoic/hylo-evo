@@ -22,7 +22,7 @@ export function postUrl (id, slug) {
   if (slug) {
     return `/c/${slug}/p/${id}`
   } else {
-    return `/p/${id}`
+    return `/all/p/${id}`
   }
 }
 

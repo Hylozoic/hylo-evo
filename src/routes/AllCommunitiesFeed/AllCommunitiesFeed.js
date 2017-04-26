@@ -1,14 +1,15 @@
 import React from 'react'
-import './CommunityFeed.scss'
+import './AllCommunitiesFeed.scss'
 import Feed from 'components/Feed'
 import FeedBanner from 'components/FeedBanner'
-import { get, pick } from 'lodash/fp'
+import { pick } from 'lodash/fp'
+import { ALL_COMMUNITIES_ID } from 'components/Feed/Feed.store'
 
-export default function CommunityFeed (props) {
-  const { community, currentUser } = props
+export default function AllCommunitiesFeed (props) {
+  const { currentUser } = props
   const feedProps = {
-    subject: 'community',
-    id: get('slug', community),
+    subject: 'all-communities',
+    id: ALL_COMMUNITIES_ID,
     ...pick([
       'filter',
       'sortBy',
@@ -20,7 +21,7 @@ export default function CommunityFeed (props) {
   }
 
   return <div styleName='container'>
-    <FeedBanner community={community} currentUser={currentUser} />
+    <FeedBanner all currentUser={currentUser} />
     <Feed {...feedProps} />
   </div>
 }
