@@ -1,4 +1,11 @@
-import { attr, many, Model } from 'redux-orm'
+import { attr, many, Model, fk } from 'redux-orm'
+
+export const CommunityModerator = Model.createClass({})
+CommunityModerator.modelName = 'CommunityModerator'
+CommunityModerator.fields = {
+  community: fk('Community', 'communitymoderators'),
+  moderator: fk('Person', 'communitymoderators')
+}
 
 const Community = Model.createClass({
   toString () {
@@ -14,6 +21,12 @@ Community.fields = {
   id: attr(),
   name: attr(),
   members: many('Person'),
+  moderators: many({
+    to: 'Person',
+    relatedName: 'communityModerated',
+    through: 'CommunityModerator',
+    throughFields: [ 'community', 'moderator' ]
+  }),
   feedItems: many('FeedItem'),
   posts: many('Post'),
   postCount: attr(),

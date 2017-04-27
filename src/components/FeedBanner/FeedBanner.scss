@@ -1,0 +1,122 @@
+.banner {
+  margin-bottom: $space-15x;
+  position: relative;
+  z-index: 2;
+}
+
+.imageShape {
+  width: 100%;
+  height: 160px;
+  border-radius: 4px;
+}
+
+.image {
+  composes: imageShape;
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.fade {
+  // TODO: replace these with pseudo elements
+  composes: imageShape;
+  position: relative;
+  background-image: linear-gradient(180deg, $color-cod-gray-0, $color-cod-gray-0 30%, $color-cod-gray-dark);
+}
+
+.fade2 {
+  composes: imageShape;
+  background-color: $color-rhino-30;
+}
+
+.header {
+  position: relative;
+  top: -100px;
+  left: 24px;
+}
+
+.logo {
+  @include image(64px);
+  border-radius: 4px;
+  margin-right: $space-5x;
+}
+
+.header-text {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.header-name {
+  // TODO: extract typography?
+  @include font-medium;
+  color: $color-white;
+  font-size: 32px;
+  letter-spacing: -0.47px;
+}
+
+.header-subtitle {
+  position: relative;
+  top: -3px;
+  @include font-regular;
+  color: $color-white;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.header-icon {
+  position: relative;
+  top: 1px;
+  margin-right: 5px;
+  font-size: 16px;
+  color: $color-white;
+}
+
+// PostPrompt
+
+// TODO: find other places where 56px and 28px are used.
+.postPromptShape {
+  border-radius: 4px;
+  height: 56px;
+  position: absolute;
+  bottom: -1 * $space-8x;
+  left: $space-4x;
+  right: $space-4x;
+}
+
+.postPrompt {
+  composes: postPromptShape;
+  background-color: $color-white;
+  line-height: 56px;
+  margin: 0 auto;
+  cursor: pointer;
+  @include font-regular;
+  font-size: 16px;
+  color: $color-rhino-30;
+}
+
+.prompt-image {
+  margin-right: 10px;
+  margin-left: 20px;
+  position: relative;
+  top: 14px;
+}
+
+.shadow {
+  composes: postPromptShape;
+  background-color: transparent;
+  box-shadow: 0px 4px 42px 0px $color-seashell;
+  z-index: -10;
+}
+
+.all-communities {
+  background-color: $color-athens-gray;
+  .header-name, .header-subtitle {
+    color: $color-rhino;
+  }
+  .fade {
+    background-image: none;
+  }
+  .fade2 {
+    display: none;
+  }
+}

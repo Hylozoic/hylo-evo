@@ -1,7 +1,7 @@
 import { ORM } from 'redux-orm'
 import './Model.extension'
 import Comment from './Comment'
-import Community from './Community'
+import Community, { CommunityModerator } from './Community'
 import FeedItem from './FeedItem'
 import Me from './Me'
 import Membership from './Membership'
@@ -13,6 +13,7 @@ export const orm = new ORM()
 orm.register(
   Comment,
   Community,
+  CommunityModerator,
   FeedItem,
   Me,
   Membership,

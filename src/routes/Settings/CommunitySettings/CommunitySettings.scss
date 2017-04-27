@@ -1,0 +1,25 @@
+// CommunityControl
+.community-control {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  border-bottom: 1px solid $color-ghost;
+}
+
+.avatar {
+  margin-right: $space-4x;
+}
+
+.name {
+  composes: bdy-drk-sm from 'css/typography.scss';
+  font-size: 16px;
+  &:hover {
+    color: $color-rhino;
+    text-decoration: none;
+  }
+}
+
+.leave-button {
+  margin-left: auto;
+  composes: text-button from 'css/typography.scss'
+}

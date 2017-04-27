@@ -1,0 +1,176 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with a current community 1`] = `
+<div
+  data-styleName="drawer"
+>
+  <Icon
+    data-styleName="closeDrawer"
+    name="Ex"
+  />
+  <Logo
+    community={
+      Object {
+        "avatarUrl": "/foo.png",
+        "id": "1",
+        "name": "Foomunity",
+        "slug": "foo",
+      }
+    }
+  />
+  <ul
+    data-styleName="communitiesList"
+  >
+    <li>
+      <Link
+        data-styleName="allCommunities"
+        replace={false}
+        to="/all"
+      >
+        <AllFeedsIcon />
+        <span
+          className="drawer-inv-lg"
+          data-styleName="allCommunitiesText"
+        >
+          All Communities
+        </span>
+      </Link>
+    </li>
+    <li
+      data-styleName="community"
+    >
+      <Link
+        replace={false}
+        title="Barmunity"
+        to="/c/bar"
+      >
+        <div
+          data-styleName="avatar"
+          style={
+            Object {
+              "backgroundImage": "url(/bar.png)",
+            }
+          }
+        />
+        <span
+          className="drawer-inv-li"
+          data-styleName="name"
+        >
+          Barmunity
+        </span>
+      </Link>
+    </li>
+    <li
+      data-styleName="community"
+    >
+      <Link
+        replace={false}
+        title="Foomunity"
+        to="/c/foo"
+      >
+        <div
+          data-styleName="avatar"
+          style={
+            Object {
+              "backgroundImage": "url(/foo.png)",
+            }
+          }
+        />
+        <span
+          className="drawer-inv-li"
+          data-styleName="name"
+        >
+          Foomunity
+        </span>
+      </Link>
+    </li>
+  </ul>
+  <Button
+    data-styleName="newCommunity"
+    label={<NewCommunity />}
+  />
+</div>
+`;
+
+exports[`renders without a current community 1`] = `
+<div
+  data-styleName="drawer"
+>
+  <Icon
+    data-styleName="closeDrawer"
+    name="Ex"
+  />
+  <Logo />
+  <ul
+    data-styleName="communitiesList"
+  >
+    <li>
+      <Link
+        data-styleName="allCommunities"
+        replace={false}
+        to="/all"
+      >
+        <AllFeedsIcon />
+        <span
+          className="drawer-inv-lg"
+          data-styleName="allCommunitiesText"
+        >
+          All Communities
+        </span>
+      </Link>
+    </li>
+    <li
+      data-styleName="community"
+    >
+      <Link
+        replace={false}
+        title="Barmunity"
+        to="/c/bar"
+      >
+        <div
+          data-styleName="avatar"
+          style={
+            Object {
+              "backgroundImage": "url(/bar.png)",
+            }
+          }
+        />
+        <span
+          className="drawer-inv-li"
+          data-styleName="name"
+        >
+          Barmunity
+        </span>
+      </Link>
+    </li>
+    <li
+      data-styleName="community"
+    >
+      <Link
+        replace={false}
+        title="Foomunity"
+        to="/c/foo"
+      >
+        <div
+          data-styleName="avatar"
+          style={
+            Object {
+              "backgroundImage": "url(/foo.png)",
+            }
+          }
+        />
+        <span
+          className="drawer-inv-li"
+          data-styleName="name"
+        >
+          Foomunity
+        </span>
+      </Link>
+    </li>
+  </ul>
+  <Button
+    data-styleName="newCommunity"
+    label={<NewCommunity />}
+  />
+</div>
+`;

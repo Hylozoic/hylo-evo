@@ -1,5 +1,5 @@
 import orm from 'store/models'
-import { mapStateToProps } from './CommunityFeed.connector'
+import { mapStateToProps, mapDispatchToProps } from './CommunityFeed.connector'
 
 describe('mapStateToProps', () => {
   let state, props
@@ -31,5 +31,25 @@ describe('mapStateToProps', () => {
       sortBy: 'votes',
       community: expect.objectContaining({id: '1', slug: 'foo'})
     })
+  })
+})
+
+describe('mapDispatchToProps', () => {
+  it('sets expected values', () => {
+    const dispatch = jest.fn(x => x)
+    const props = {
+      location: {
+        search: '?s=votes&t=offer',
+        pathname: '/c/foo'
+      },
+      match: {
+        params: {slug: 'foo'}
+      }
+    }
+
+    const dispatchProps = mapDispatchToProps(dispatch, props)
+    expect(dispatchProps.showPostDetails('5')).toMatchSnapshot()
+    expect(dispatchProps.changeTab('request')).toMatchSnapshot()
+    expect(dispatchProps.changeSort('updated')).toMatchSnapshot()
   })
 })

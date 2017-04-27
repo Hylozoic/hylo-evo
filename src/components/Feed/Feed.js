@@ -43,7 +43,8 @@ export default class Feed extends React.Component {
       selectedPostId,
       changeTab,
       changeSort,
-      posts
+      posts,
+      showCommunities
     } = this.props
 
     return <div>
@@ -56,6 +57,7 @@ export default class Feed extends React.Component {
           const expanded = post.id === selectedPostId
           return <PostCard
             post={post}
+            showCommunity={showCommunities}
             styleName={cx('feedItem', {expanded})}
             expanded={expanded}
             showDetails={() => showPostDetails(post.id)}

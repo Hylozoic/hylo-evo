@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapDispatchToProps sets expected values 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/c/foo/p/5?s=votes&t=offer",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`mapDispatchToProps sets expected values 2`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/c/foo?s=votes&t=request",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`mapDispatchToProps sets expected values 3`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/c/foo?s=updated&t=offer",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
