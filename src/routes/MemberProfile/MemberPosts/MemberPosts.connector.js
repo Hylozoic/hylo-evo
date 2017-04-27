@@ -4,7 +4,8 @@ import { memberPostsSelector, fetchMemberPosts } from './MemberPosts.store'
 
 export function mapStateToProps (state, props) {
   return {
-    posts: memberPostsSelector(state, props)
+    posts: memberPostsSelector(state, props),
+    showDetails: (id, slug) => props.navigate(`/c/${slug}/p/${id}`)
   }
 }
 
