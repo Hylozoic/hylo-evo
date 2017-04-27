@@ -12,7 +12,8 @@ Me.modelName = 'Me'
 Me.fields = {
   name: attr(),
   posts: many('Post'),
-  memberships: many('Membership')
+  memberships: many('Membership'),
+  messageThreads: many('MessageThread')
 }
 
 export const avatarUploadSettings = person => ({

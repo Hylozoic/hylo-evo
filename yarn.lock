@@ -7272,6 +7272,12 @@ viewport-dimensions@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/viewport-dimensions/-/viewport-dimensions-0.2.0.tgz#de740747db5387fd1725f5175e91bac76afdf36c"
 
+visibility@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/visibility/-/visibility-0.0.0.tgz#e8ee5f845726b78457bef59b34965d49461068de"
+  dependencies:
+    inherits "~2.0.1"
+
 vm-browserify@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-0.0.4.tgz#5d7ea45bbef9e4a6ff65f95438e0a87c357d5a73"

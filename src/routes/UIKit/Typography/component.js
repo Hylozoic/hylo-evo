@@ -79,6 +79,9 @@ export default function Typography (props) {
               <StyleCard styleClassName='timestamp' name='Timestamp'
                 description='Circular Book / 13pt, 0 ch, 16 line / Color: 2C4059 60%'
                 sample='6 days ago' />
+              <StyleCard styleClassName='is-typing' name='Typing Indicators'
+                description='Circular Book / 14pt, 0 ch, 18 line / Color: 2C4059 30%'
+                sample='Someone is typing...' />
             </div>
           </div>
         </div>

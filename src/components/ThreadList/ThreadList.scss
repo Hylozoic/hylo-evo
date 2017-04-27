@@ -1,0 +1,161 @@
+$thread-list-width: 392px;
+$search-vertical-padding: 11px;
+$search-horizontal-padding: 24px;
+$thread-height: 105px;
+$thread-padding: 16px;
+$thread-avatars-width: 56px;
+$names-margin-bottom: 4px;
+$thread-text-width: 200px;
+$counteract-badge-styling: 13px;
+$active-thread-border-width: 4px;
+
+.thread-list {
+  width: $thread-list-width;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.header {
+  height: $messages-header-height;
+  padding: $messages-header-vertical-padding $messages-header-horizontal-padding;
+  border-bottom: $light-border;
+}
+
+.header-text {
+  composes: hdr-headline from 'css/typography.scss';
+  padding: 6px 0;
+}
+
+.new-message {
+  float: right;
+}
+
+.search {
+  padding: $search-vertical-padding $search-horizontal-padding;
+  border-bottom: $light-border;
+}
+
+.list {
+  flex: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.no-conversations {
+  composes: bdy-lt-lg from 'css/typography.scss';
+  margin: $thread-padding;
+}
+
+.list-item {
+  position: relative;
+  width: 100%;
+  height: $thread-height;
+  margin: 0;
+  border-bottom: $light-border;
+
+  a {
+    display: flex;
+    padding: $thread-padding;
+    height: 100%;
+
+    &:hover, &:active, &:focus, &:visited {
+      text-decoration: none;
+    }
+  }
+}
+
+.active-thread {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-left: $active-thread-border-width solid $color-caribbean-green;
+}
+
+.thread-avatars {
+  position: relative;
+  width: $thread-avatars-width;
+  text-align: center;
+}
+
+.avatar-2 {
+  position: absolute;
+  top: $space-7x;
+  right: 0;
+}
+
+.avatar-3:nth-child(2) {
+  position: absolute;
+  top: $space-7x;
+  left: 0;
+}
+.avatar-3:nth-child(3) {
+  position: absolute;
+  top: $space-7x;
+  right: 0;
+}
+
+.avatar-more {
+  position: absolute;
+}
+.avatar-more:nth-child(1) {
+  top: 0;
+  left: 0;
+}
+.avatar-more:nth-child(2) {
+  top: 0;
+  right: 0;
+}
+.avatar-more:nth-child(3) {
+  top: $space-9x;
+  left: 0;
+}
+.avatar-more:nth-child(4) {
+  top: $space-9x;
+  right: 0;
+}
+.plus-count {
+  text-align: center;
+  width: $space-9x;
+  height: $space-9x;
+  border: 3px solid $color-white;
+  border-radius: $space-9x / 2;
+  background: $color-caribbean-green;
+  color: $color-white;
+  padding-top: 1px;
+}
+
+.li-center-content {
+  width: $thread-text-width;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0 $space-2x;
+}
+
+.thread-names {
+  composes: cards from 'css/typography.scss';
+  margin-bottom: $names-margin-bottom;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.thread-message-text {
+  composes: bdy-lt-sm from 'css/typography.scss';
+  @include word-wrap;
+}
+
+.li-right-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.message-time {
+  composes: timestamp from 'css/typography.scss'
+}

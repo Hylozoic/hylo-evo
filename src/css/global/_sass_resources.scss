@@ -38,6 +38,9 @@ $content-width: 80rem;
 $center-column-width: 49%;
 $detail-column-width: 43%;
 $layout-spacing: 70px;
+$messages-header-height: 80px;
+$messages-header-vertical-padding: 20px;
+$messages-header-horizontal-padding: 24px;
 
 // Colors
 // For now standardized on using "Name that Color" naming:
@@ -74,6 +77,7 @@ $color-seashell: #F1F1F1;
 $color-catskill-white: #F9FAFC;
 
 $color-caribbean-green: #0DC39F;
+$color-caribbean-green-50: rgba($color-caribbean-green, 0.5);
 $color-medium-purple: #9883E5;
 $color-fuchsia-pink: #BB60A8;
 $color-picton-blue: #40A1DD;
@@ -117,3 +121,14 @@ $color-gossamer: #0A9682;
   width: $width;
   height: $height or $width;
 }
+
+/* handling long lines */
+@mixin word-wrap {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-word-break: break-all;
+  hyphens: auto;
+}
+
+$light-border: 1px solid $color-cape-cod-10;

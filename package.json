@@ -113,7 +113,8 @@
     "standard-loader": "^6.0.1",
     "tether": "^1.4.0",
     "trunc-html": "^1.1.2",
-    "velocity-react": "^1.2.1"
+    "velocity-react": "^1.2.1",
+    "visibility": "^0.0.0"
   },
   "engines": {
     "node": "~7.7"
