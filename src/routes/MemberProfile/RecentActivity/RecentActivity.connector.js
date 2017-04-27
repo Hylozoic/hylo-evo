@@ -4,15 +4,9 @@ import { activitySelector, fetchRecentActivity } from './RecentActivity.store'
 
 export function mapStateToProps (state, props) {
   return {
-    activityItems: activitySelector(state, props)
+    activityItems: activitySelector(state, props),
+    showDetails: (id, slug) => props.navigate(`/c/${slug}/p/${id}`)
   }
 }
 
-export function mapDispatchToProps (dispatch, { navigate }) {
-  return {
-    fetchRecentActivity: id => dispatch(fetchRecentActivity(id)),
-    showDetails: (id, slug) => navigate(`/c/${slug}/p/${id}`)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)
+export default connect(mapStateToProps, { fetchRecentActivity })
