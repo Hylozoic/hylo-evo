@@ -80,9 +80,6 @@ export default function reducer (state = {}, action) {
   switch (type) {
     case EXTRACT_MODEL:
       return { ...state, ready: meta.modelName === 'Person' }
-
-    case FETCH_PERSON:
-      return { ...state, ready: false }
   }
 
   return state

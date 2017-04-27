@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router-dom'
 import { isEmpty, get } from 'lodash/fp'
 import './PostDetail.scss'
-const { object, string, func } = PropTypes
+const { bool, func, object, string } = PropTypes
 import { PostImage, PostBody, PostFooter } from 'components/PostCard'
 import PostHeader from 'components/PostCard/PostHeader'
 import Comments from './Comments'
@@ -14,7 +14,7 @@ export default class PostDetail extends Component {
     post: object,
     slug: string,
     fetchPost: func,
-    navigate: func
+    showCommunity: bool
   }
 
   componentDidMount () {
@@ -28,7 +28,7 @@ export default class PostDetail extends Component {
   }
 
   render () {
-    const { post, slug, onClose } = this.props
+    const { post, slug, onClose, showCommunity } = this.props
     if (!post) return null
 
     const scrollToBottom = () => {
@@ -40,9 +40,10 @@ export default class PostDetail extends Component {
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}
         type={post.type}
-        context={post.context}
         communities={post.communities}
+        showCommunity={showCommunity}
         close={onClose}
+        slug={slug}
         styleName='header' />
       <PostImage imageUrl={post.imageUrl} styleName='image' />
       <PostTags tags={post.tags} />
