@@ -12,6 +12,6 @@ exports[`matches the last snapshot 1`] = `
       messageThreadId="1"
     />
   </div>
-  <PeopleTyping />
+  <Connect(PeopleTyping) />
 </div>
 `;

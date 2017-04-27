@@ -1,3 +1,3 @@
 import PeopleTyping from './PeopleTyping'
-
-export default PeopleTyping
+import connector from './PeopleTyping.connector'
+export default connector(PeopleTyping)

@@ -1,14 +1,21 @@
 import { PropTypes, Component } from 'react'
+import { each, keys } from 'lodash/fp'
 import { getSocket, socketUrl } from 'client/websockets'
+import { STARTED_TYPING_INTERVAL } from 'components/MessageForm/MessageForm'
 import './SocketListener.scss'
 const { func, object } = PropTypes
+
+const MS_CLEAR_TYPING = STARTED_TYPING_INTERVAL + 1000
 
 export default class SocketListener extends Component {
   static propTypes = {
     currentUser: object,
     location: object,
+    peopleTyping: object,
     addThreadFromSocket: func,
-    addMessageFromSocket: func
+    addMessageFromSocket: func,
+    addUserTyping: func,
+    clearUserTyping: func
   }
 
   componentDidMount () {
@@ -20,6 +27,17 @@ export default class SocketListener extends Component {
       this.socket.post(socketUrl('/noo/threads/subscribe'))
     }
     this.socket.on('reconnect', this.reconnectHandler)
+    this.socket.on('userTyping', this.userTyping.bind(this))
+    this.clearTypingInterval = window && window.setInterval(this.clearTyping.bind(this), 1000)
+  }
+
+  componentWillUnmount () {
+    this.socket.post(socketUrl('/noo/threads/unsubscribe'))
+    this.socket.off('newThread')
+    this.socket.off('messageAdded')
+    this.socket.off('reconnect', this.reconnectHandler)
+    this.socket.off('userTyping')
+    window && window.clearInterval(this.clearTypingInterval)
   }
 
   addThreadFromSocket = data => {
@@ -35,11 +53,24 @@ export default class SocketListener extends Component {
     addMessageFromSocket(convertMessageToModelFormat(data.message, data.postId), opts)
   }
 
-  componentWillUnmount () {
-    this.socket.post(socketUrl('/noo/threads/unsubscribe'))
-    this.socket.off('newThread')
-    this.socket.off('messageAdded')
-    this.socket.off('reconnect', this.reconnectHandler)
+  clearTyping () {
+    const { peopleTyping, clearUserTyping } = this.props
+    const now = Date.now()
+    const stale = user => now - user.timestamp > MS_CLEAR_TYPING
+    each(userId => {
+      if (stale(peopleTyping[userId])) {
+        clearUserTyping(userId)
+      }
+    }, keys(peopleTyping))
+  }
+
+  userTyping ({userId, userName, isTyping}) {
+    const { addUserTyping, clearUserTyping } = this.props
+    if (isTyping) {
+      addUserTyping(userId, userName)
+    } else {
+      clearUserTyping(userId)
+    }
   }
 
   render () {
