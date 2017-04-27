@@ -5,7 +5,6 @@ import { get, maxBy } from 'lodash/fp'
 const { array, bool, func, number, object, string } = React.PropTypes
 import Message from 'components/Message'
 import { position } from 'util/scrolling'
-import { getSocket } from 'client/websockets'
 import './MessageSection.scss'
 
 // the maximum amount of time in minutes that can pass between messages to still
@@ -50,6 +49,7 @@ export default class MessageSection extends React.Component {
     total: number,
     hasMore: bool,
     thread: object,
+    socket: object,
     updateThreadReadTime: func,
     fetchMessages: func,
     reconnectFetchMessages: func
@@ -63,18 +63,18 @@ export default class MessageSection extends React.Component {
   }
 
   componentDidMount () {
-    const { reconnectFetchMessages } = this.props
+    const { socket, reconnectFetchMessages } = this.props
     this.visibility = visibility()
     this.scrollToBottom()
-    this.socket = getSocket()
     this.reconnectHandler = () => {
       reconnectFetchMessages()
     }
-    this.socket.on('reconnect', this.reconnectHandler)
+    socket.on('reconnect', this.reconnectHandler)
   }
 
   componentWillUnmount () {
-    this.socket.off('reconnect', this.reconnectHandler)
+    const { socket } = this.props
+    socket.off('reconnect', this.reconnectHandler)
   }
 
   componentDidUpdate (prevProps) {
