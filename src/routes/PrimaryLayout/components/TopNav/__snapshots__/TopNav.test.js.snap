@@ -16,7 +16,7 @@ exports[`renders as expected with no community 1`] = `
       </Link>
       <Link
         replace={false}
-        to="/"
+        to="/messages"
       >
         <Icon
           name="Messages"
