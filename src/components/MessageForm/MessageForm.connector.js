@@ -3,7 +3,7 @@ import { getMe } from 'store/selectors/getMe'
 import {
   getTextForMessageThread,
   createMessage,
-  updateText
+  updateMessageText
 } from './MessageForm.store'
 import { CREATE_MESSAGE } from 'store/constants'
 
@@ -17,6 +17,6 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = {
   createMessage,
-  updateText
+  updateMessageText
 }
 export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})

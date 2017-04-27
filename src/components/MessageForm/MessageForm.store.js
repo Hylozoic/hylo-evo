@@ -8,7 +8,7 @@ export const MODULE_NAME = 'MessageForm'
 export const UPDATE_MESSAGE_TEXT = 'UPDATE_MESSAGE_TEXT'
 
 // Action Creators
-export function createMessage (messageThreadId, text, userId) {
+export function createMessage (messageThreadId, text) {
   return {
     type: CREATE_MESSAGE,
     graphql: {
@@ -40,7 +40,7 @@ export function createMessage (messageThreadId, text, userId) {
   }
 }
 
-export function updateText (messageThreadId, text) {
+export function updateMessageText (messageThreadId, text) {
   return {
     type: UPDATE_MESSAGE_TEXT,
     meta: {

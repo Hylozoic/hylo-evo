@@ -22,7 +22,7 @@ export default class MessageForm extends React.Component {
     onBlur: func,
     pending: bool,
     createMessage: func,
-    updateText: func
+    updateMessageText: func
   }
 
   submit = event => {
@@ -71,10 +71,10 @@ export default class MessageForm extends React.Component {
   }
 
   render () {
-    const { messageThreadId, onFocus, onBlur, className, currentUser, pending, updateText } = this.props
+    const { messageThreadId, onFocus, onBlur, className, currentUser, pending, updateMessageText } = this.props
     const text = pending ? '' : this.props.text
     const placeholder = this.props.placeholder || 'Write something...'
-    const onChange = e => updateText(messageThreadId, e.target.value)
+    const onChange = e => updateMessageText(messageThreadId, e.target.value)
     const handleKeyDown = e => {
       this.startTyping()
       onEnterNoShift(e => {
