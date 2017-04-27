@@ -43,6 +43,7 @@ export default class PostDetail extends Component {
         context={post.context}
         communities={post.communities}
         close={onClose}
+        slug={slug}
         styleName='header' />
       <PostImage imageUrl={post.imageUrl} styleName='image' />
       <PostTags tags={post.tags} />
