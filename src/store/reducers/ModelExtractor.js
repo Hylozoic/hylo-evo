@@ -23,9 +23,11 @@ export default class ModelExtractor {
     })
   }
 
-  walk (node, modelName) {
-    if (Array.isArray(node)) {
-      return node.forEach(x => this.walk(x, modelName))
+  walk (node, modelName, atRoot = true) {
+    if (atRoot) {
+      if (node.hasOwnProperty(QUERY_SET_ITEMS_KEY) || Array.isArray(node)) {
+        return this._walkMany(node, modelName)
+      }
     }
 
     const model = this.session[modelName]
@@ -38,11 +40,11 @@ export default class ModelExtractor {
       }
 
       if (type instanceof ForeignKey) {
-        return this._walkOne(value, type)
+        return this._walkOne(value, type.toModelName)
       }
 
       if (type instanceof ManyToMany) {
-        return this._walkMany(value, type)
+        return this._walkMany(value, type.toModelName)
       }
 
       if (!type && key in model.prototype) {
@@ -52,7 +54,7 @@ export default class ModelExtractor {
         if (type instanceof ForeignKey) {
           // each of the related values needs to have a foreign key back to
           // the current value...
-          this._walkMany(value, type, {[type.relatedName]: node.id})
+          this._walkMany(value, type.toModelName, {[type.relatedName]: node.id})
 
           // ...and because the related values store the foreign key, the
           // current value does not need to record anything about the relation,
@@ -61,7 +63,7 @@ export default class ModelExtractor {
         }
 
         if (type instanceof ManyToMany) {
-          return this._walkMany(value, type)
+          return this._walkMany(value, type.toModelName)
         }
       }
 
@@ -81,16 +83,17 @@ export default class ModelExtractor {
     return mergeDuplicates(this.accumulator)
   }
 
-  _walkOne (value, type) {
+  _walkOne (value, modelName) {
     if (typeof value !== 'object') return value
-    this.walk(value, type.toModelName)
+    this.walk(value, modelName, false)
     return value.id
   }
 
-  _walkMany (value, type, extraProps) {
+  _walkMany (value, modelName, extraProps) {
     const items = Array.isArray(value) ? value : value[QUERY_SET_ITEMS_KEY]
     return items.map(x => {
-      this.walk(extraProps ? Object.assign(x, extraProps) : x, type.toModelName)
+      const node = extraProps ? Object.assign(x, extraProps) : x
+      this.walk(node, modelName, false)
       return x.id
     })
   }

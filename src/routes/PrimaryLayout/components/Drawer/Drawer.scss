@@ -64,7 +64,6 @@ $new-community-spacing: 16px;
   .avatar {
     @include image($current-avatar-size);
     margin: 0 auto;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
     border-radius: $current-avatar-border-radius;
   }
 
@@ -117,6 +116,7 @@ $new-community-spacing: 16px;
 
   .allCommunitiesText {
     margin-left: $li-spacing;
+    vertical-align: middle;
   }
 }
 

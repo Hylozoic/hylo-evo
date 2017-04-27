@@ -20,13 +20,15 @@ export default function samplePost () {
     details: 'Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!',
     votesTotal: Math.round(Math.random() * 1000),
     tags: ['activism', 'petition'],
-    communities: [{id: '1', slug: 'great'}],
+    communities: [{id: '1', slug: 'great', name: 'Great Cause'}],
     commenters: fakePerson(3),
     commentersTotal: Math.round(Math.random() * 100),
     creator: fakePerson(),
     updatedAt: faker.date.recent().toString()
   }
 }
+
+export const SAMPLE_IMAGE_URL = 'https://d3ngex8q79bk55.cloudfront.net/community/1944/banner/1489687099172_ggbridge.jpg'
 
 export function sampleComment () {
   return {

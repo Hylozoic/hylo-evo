@@ -6,10 +6,12 @@ import {
   CREATE_MESSAGE_PENDING,
   EXTRACT_MODEL,
   FETCH_MESSAGES_PENDING,
+  LEAVE_COMMUNITY,
   UPDATE_THREAD_READ_TIME
 } from 'store/constants'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
+import { find } from 'lodash/fp'
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
@@ -68,6 +70,12 @@ export default function ormReducer (state = {}, action) {
 
     case UPDATE_THREAD_READ_TIME:
       MessageThread.withId(meta.id).markAsRead()
+      break
+
+    case LEAVE_COMMUNITY:
+      const me = Me.first()
+      const membership = find(m => m.community.id === meta.id, me.memberships.toModelArray())
+      membership && membership.delete()
       break
   }
 

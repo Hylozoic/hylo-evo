@@ -127,6 +127,10 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ],
+    "coverageReporters": [
+      "json",
+      "lcov"
+    ],
     "moduleDirectories": [
       "node_modules",
       "src"
