@@ -1,8 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders with a current community 1`] = `
-<div>
+<div
+  data-styleName="drawer"
+>
   <Icon
+    data-styleName="closeDrawer"
     name="Ex"
   />
   <Logo
@@ -15,27 +18,34 @@ exports[`renders with a current community 1`] = `
       }
     }
   />
-  <ul>
+  <ul
+    data-styleName="communitiesList"
+  >
     <li>
       <Link
+        data-styleName="allCommunities"
         replace={false}
         to="/all"
       >
         <AllFeedsIcon />
         <span
           className="drawer-inv-lg"
+          data-styleName="allCommunitiesText"
         >
           All Communities
         </span>
       </Link>
     </li>
-    <li>
+    <li
+      data-styleName="community"
+    >
       <Link
         replace={false}
         title="Barmunity"
         to="/c/bar"
       >
         <div
+          data-styleName="avatar"
           style={
             Object {
               "backgroundImage": "url(/bar.png)",
@@ -44,18 +54,22 @@ exports[`renders with a current community 1`] = `
         />
         <span
           className="drawer-inv-li"
+          data-styleName="name"
         >
           Barmunity
         </span>
       </Link>
     </li>
-    <li>
+    <li
+      data-styleName="community"
+    >
       <Link
         replace={false}
         title="Foomunity"
         to="/c/foo"
       >
         <div
+          data-styleName="avatar"
           style={
             Object {
               "backgroundImage": "url(/foo.png)",
@@ -64,6 +78,7 @@ exports[`renders with a current community 1`] = `
         />
         <span
           className="drawer-inv-li"
+          data-styleName="name"
         >
           Foomunity
         </span>
@@ -71,38 +86,49 @@ exports[`renders with a current community 1`] = `
     </li>
   </ul>
   <Button
+    data-styleName="newCommunity"
     label={<NewCommunity />}
   />
 </div>
 `;
 
 exports[`renders without a current community 1`] = `
-<div>
+<div
+  data-styleName="drawer"
+>
   <Icon
+    data-styleName="closeDrawer"
     name="Ex"
   />
   <Logo />
-  <ul>
+  <ul
+    data-styleName="communitiesList"
+  >
     <li>
       <Link
+        data-styleName="allCommunities"
         replace={false}
         to="/all"
       >
         <AllFeedsIcon />
         <span
           className="drawer-inv-lg"
+          data-styleName="allCommunitiesText"
         >
           All Communities
         </span>
       </Link>
     </li>
-    <li>
+    <li
+      data-styleName="community"
+    >
       <Link
         replace={false}
         title="Barmunity"
         to="/c/bar"
       >
         <div
+          data-styleName="avatar"
           style={
             Object {
               "backgroundImage": "url(/bar.png)",
@@ -111,18 +137,22 @@ exports[`renders without a current community 1`] = `
         />
         <span
           className="drawer-inv-li"
+          data-styleName="name"
         >
           Barmunity
         </span>
       </Link>
     </li>
-    <li>
+    <li
+      data-styleName="community"
+    >
       <Link
         replace={false}
         title="Foomunity"
         to="/c/foo"
       >
         <div
+          data-styleName="avatar"
           style={
             Object {
               "backgroundImage": "url(/foo.png)",
@@ -131,6 +161,7 @@ exports[`renders without a current community 1`] = `
         />
         <span
           className="drawer-inv-li"
+          data-styleName="name"
         >
           Foomunity
         </span>
@@ -138,6 +169,7 @@ exports[`renders without a current community 1`] = `
     </li>
   </ul>
   <Button
+    data-styleName="newCommunity"
     label={<NewCommunity />}
   />
 </div>

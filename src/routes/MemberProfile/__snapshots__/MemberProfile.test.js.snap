@@ -19,7 +19,9 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
     <ProfileControls
       selectTab={[Function]}
     >
-      <span />
+      <span
+        data-styleName="tagline"
+      />
       <SocialButtons
         facebookUrl="https://www.facebook.com/rich.churcher"
         linkedinUrl="https://www.linkedin.com/in/richchurcher/"
