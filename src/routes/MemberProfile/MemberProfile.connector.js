@@ -10,10 +10,12 @@ const messages = {
 export function mapStateToProps (state, props) {
   const error = Number.isSafeInteger(Number(props.match.params.id)) ? null : messages.invalid
   const person = personSelector(state, props)
+  const { history } = props
 
   return {
     currentTab: 'Overview',
     error,
+    navigate: route => history.push(route),
     person,
     ready: state.MemberProfile ? state.MemberProfile.ready : false
   }

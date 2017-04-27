@@ -13,13 +13,14 @@ import MemberPosts from './MemberPosts'
 import MemberComments from './MemberComments'
 import MemberVotes from './MemberVotes'
 
-const { any, arrayOf, bool, object, string, shape } = React.PropTypes
+const { any, arrayOf, bool, func, object, string, shape } = React.PropTypes
 
 export default class MemberProfile extends React.Component {
   static propTypes = {
     currentTab: string,
     error: any,
     ready: bool,
+    navigate: func,
     person: shape({
       id: any,
       avatarUrl: string,
@@ -91,6 +92,7 @@ export default class MemberProfile extends React.Component {
         <TabContentSwitcher
           bio={bio}
           currentTab={this.state.currentTab}
+          navigate={this.props.navigate}
           personId={id}
           slug={slug} />
       </div>
@@ -156,22 +158,22 @@ export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
   </div>
 }
 
-export function TabContentSwitcher ({ bio, currentTab, personId, slug }) {
+export function TabContentSwitcher ({ bio, currentTab, navigate, personId, slug }) {
   switch (currentTab) {
     case 'Overview':
       return <div>
         <h2 styleName='subhead'>About Me</h2>
         <div styleName='bio'>{bio}</div>
-        <RecentActivity personId={personId} slug={slug} />
+        <RecentActivity navigate={navigate} personId={personId} slug={slug} />
       </div>
 
     case 'Posts':
-      return <MemberPosts personId={personId} slug={slug} />
+      return <MemberPosts navigate={navigate} personId={personId} slug={slug} />
 
     case 'Comments':
       return <MemberComments personId={personId} slug={slug} />
 
     case 'Upvotes':
-      return <MemberVotes personId={personId} slug={slug} />
+      return <MemberVotes navigate={navigate} personId={personId} slug={slug} />
   }
 }

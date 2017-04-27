@@ -8,4 +8,11 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export default connect(mapStateToProps, { fetchRecentActivity })
+export function mapDispatchToProps (dispatch, { navigate }) {
+  return {
+    fetchRecentActivity: id => dispatch(fetchRecentActivity(id)),
+    showDetails: (id, slug) => navigate(`/c/${slug}/p/${id}`)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)
