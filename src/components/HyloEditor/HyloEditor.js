@@ -5,7 +5,8 @@ import createMentionPlugin from 'draft-js-mention-plugin'
 import createHashtagPlugin from './hashtagPlugin'
 import createLinkifyPlugin from 'draft-js-linkify-plugin'
 import { EditorState, ContentState, convertToRaw } from 'draft-js'
-import convertToHTML from './HyloEditorContentToHTML'
+import convertToHTML from './convertToHTML'
+import convertFromHTML from './convertFromHTML'
 import 'draft-js/dist/Draft.css'
 import 'draft-js-mention-plugin/lib/plugin.css'
 import './HyloEditor.scss'
@@ -14,9 +15,11 @@ const mentionPlugin = createMentionPlugin({
   // TODO: Map to local CSS Modules stylesheet (copy from plugin)
   // theme: styles
 })
+
 const hashtagPlugin = createHashtagPlugin({
   entityMutability: 'IMMUTABLE'
 })
+
 const linkifyPlugin = createLinkifyPlugin()
 
 const { MentionSuggestions } = mentionPlugin
@@ -30,26 +33,27 @@ const plugins = [
 
 export default class HyloEditor extends Component {
   static propTypes = {
+    contentHTML: PropTypes.string,
     mentionResults: PropTypes.instanceOf(Immutable.List),
     hashtagResults: PropTypes.instanceOf(Immutable.List),
     placeholder: PropTypes.string,
-    className: PropTypes.string,
-    debug: PropTypes.bool
+    className: PropTypes.string
+  }
+
+  static defaultProps = {
+    contentHTML: ''
   }
 
   constructor (props) {
     super(props)
-    this.submitOnReturnEnabled = true
-    this.state = {editorState: EditorState.createEmpty()}
+    const editorState = EditorState.createWithContent(convertFromHTML(props.contentHTML))
+    this.state = {editorState, submitOnReturnEnabled: true}
   }
 
   reset = () => {
     // https://github.com/draft-js-plugins/draft-js-plugins/blob/master/FAQ.md
     this.setState({
-      editorState: EditorState.push(
-        this.state.editorState,
-        ContentState.createFromText('')
-      )
+      editorState: EditorState.push(this.state.editorState, ContentState.createFromText(''))
     })
   }
 
@@ -81,7 +85,7 @@ export default class HyloEditor extends Component {
 
   handleReturn = (event) => {
     const { submitOnReturnHandler } = this.props
-    if (submitOnReturnHandler && this.submitOnReturnEnabled) {
+    if (submitOnReturnHandler && this.state.submitOnReturnEnabled) {
       if (!event.shiftKey) {
         submitOnReturnHandler(this.getContent())
         this.setState({
@@ -94,11 +98,11 @@ export default class HyloEditor extends Component {
   }
 
   enableSubmitOnReturn = () => {
-    this.submitOnReturnEnabled = true
+    this.setState({submitOnReturnEnabled: true})
   }
 
   disableSubmitOnReturn = () => {
-    this.submitOnReturnEnabled = false
+    this.setState({submitOnReturnEnabled: false})
   }
 
   handleMentionsClose = () => {

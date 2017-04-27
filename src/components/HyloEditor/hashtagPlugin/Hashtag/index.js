@@ -33,7 +33,7 @@ export default function Hashtag (props) {
   } = props
 
   const combinedClassName = unionClassNames(theme.hashtag, className)
-  const hashtag = contentState.getEntity(entityKey).getData()['HASHTAG']
+  const hashtag = contentState.getEntity(entityKey).getData()['hashtag']
 
   const Component = (
     hashtagComponent || (hashtag.has('link') ? HashtagLink : HashtagText)

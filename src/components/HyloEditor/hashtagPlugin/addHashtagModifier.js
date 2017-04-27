@@ -3,8 +3,9 @@ import { Modifier, EditorState } from 'draft-js'
 import getSearchText from './utils/getSearchText'
 
 export default (editorState, hashtag) => {
+  console.log(hashtag)
   const contentStateWithEntity = editorState.getCurrentContent().createEntity(
-    'HASHTAG',
+    'hashtag',
     'IMMUTABLE',
     { hashtag }
   )
@@ -41,7 +42,7 @@ export default (editorState, hashtag) => {
   const newEditorState = EditorState.push(
     editorState,
     hashtagReplacedContent,
-    'insert-HASHTAG'
+    'insert-hashtag'
   )
   return EditorState.forceSelection(newEditorState, hashtagReplacedContent.getSelectionAfter())
 }

@@ -5,6 +5,6 @@ export default function (contentBlock, callback, contentState) {
   // }
   return contentBlock.findEntityRanges((character) => {
     const entityKey = character.getEntity()
-    return (entityKey !== null && contentState.getEntity(entityKey).getType() === 'HASHTAG')
+    return (entityKey !== null && contentState.getEntity(entityKey).getType() === 'hashtag')
   }, callback)
 }
