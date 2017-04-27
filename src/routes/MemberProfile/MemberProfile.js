@@ -156,7 +156,7 @@ export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
   </div>
 }
 
-export function TabContentSwitcher ({ bio, currentTab, personId, slug }) {
+export function TabContentSwitcher ({ bio, currentTab, navigate, personId, slug }) {
   switch (currentTab) {
     case 'Overview':
       return <div>

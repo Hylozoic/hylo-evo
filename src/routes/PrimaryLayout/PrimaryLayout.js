@@ -56,7 +56,8 @@ export default class PrimaryLayout extends Component {
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToCommunity currentUser={currentUser} />
           <Route path='/all' component={AllCommunitiesFeed} />
-          <Route path='/c/:slug' component={CommunityFeed} />
+          <Route path='/c/:slug' exact component={CommunityFeed} />
+          <Route path='/c/:slug/p/:postId' component={CommunityFeed} />
           <Route path='/c/:slug/m/:id' component={MemberProfile} />
           <Route path='/events' component={Events} />
           <Route path='/c/:slug/members' component={Members} />

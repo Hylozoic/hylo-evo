@@ -3,7 +3,7 @@ import React from 'react'
 import PostCard from 'components/PostCard'
 import './MemberVotes.scss'
 
-const { any, arrayOf, number, shape, string } = React.PropTypes
+const { any, arrayOf, func, number, shape, string } = React.PropTypes
 
 const personShape = shape({
   id: any,
@@ -18,6 +18,7 @@ const communityShape = shape({
 
 export default class MemberVotes extends React.Component {
   static propTypes = {
+    showDetails: func,
     votes: arrayOf(shape({
       id: any,
       commenters: arrayOf(personShape),
@@ -37,11 +38,13 @@ export default class MemberVotes extends React.Component {
   }
 
   render () {
-    const { votes } = this.props
+    const { showDetails, votes } = this.props
     return <div>
       {votes && votes.map(post =>
         <div styleName='activity-item' key={post.id}>
-          <PostCard post={post} />
+          <PostCard
+            post={post}
+            showDetails={() => showDetails(post.id, post.communities[0].slug)} />
         </div>
       )}
     </div>

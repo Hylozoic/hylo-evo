@@ -3,7 +3,7 @@ import React from 'react'
 import PostCard from 'components/PostCard'
 import './MemberPosts.scss'
 
-const { any, arrayOf, number, shape, string } = React.PropTypes
+const { any, arrayOf, func, number, shape, string } = React.PropTypes
 
 const personShape = shape({
   id: any,
@@ -29,7 +29,8 @@ export default class MemberPosts extends React.Component {
       followers: arrayOf(personShape),
       title: string,
       type: string
-    }))
+    })),
+    showDetails: func
   }
 
   componentDidMount () {
@@ -37,11 +38,13 @@ export default class MemberPosts extends React.Component {
   }
 
   render () {
-    const { posts } = this.props
+    const { posts, showDetails } = this.props
     return <div>
       {posts && posts.map(post =>
         <div styleName='activity-item' key={post.id}>
-          <PostCard post={post} />
+          <PostCard
+            post={post}
+            showDetails={() => showDetails(post.id, post.communities[0].slug)} />
         </div>
       )}
     </div>
