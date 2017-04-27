@@ -13,23 +13,26 @@ const community = {
   id: 1,
   name: 'A Great Cause',
   slug: 'great-cause',
-  description: 'the description'
+  description: 'the description, which is long enough to add a "Read More" button, ' +
+    'the description, which is long enough to add a "Read More" button, ' +
+    'the description, which is long enough to add a "Read More" button, ' +
+    'the description, which is long enough to add a "Read More" button, ' +
+    'the description, which is long enough to add a "Read More" button, '
 }
 
 describe('CommunitySidebar', () => {
   it('renders correctly', () => {
     const members = [{id: 1}, {id: 2}, {id: 3}]
     const leaders = [{id: 4}, {id: 5}, {id: 6}]
-    const membersTotal = 56
+    const memberCount = 56
     const wrapper = shallow(
       <CommunitySidebar
-        community={community}
+        community={{...community, memberCount}}
         members={members}
-        membersTotal={membersTotal}
         leaders={leaders} />)
     expect(wrapper.find('AboutSection').prop('description')).toEqual(community.description)
     expect(wrapper.find('MemberSection').prop('members')).toEqual(members)
-    expect(wrapper.find('MemberSection').prop('membersTotal')).toEqual(membersTotal)
+    expect(wrapper.find('MemberSection').prop('memberCount')).toEqual(memberCount)
     expect(wrapper.find('CommunityLeaderSection').prop('leaders')).toEqual(leaders)
     expect(wrapper.find('CommunityLeaderSection').prop('slug')).toEqual(community.slug)
   })
@@ -54,13 +57,13 @@ describe('MemberSection', () => {
   const members = fakePerson(n)
 
   it("Doesn't show total if it's < 1", () => {
-    const wrapper = shallow(<MemberSection members={members} membersTotal={n} />)
+    const wrapper = shallow(<MemberSection members={members} memberCount={n} />)
     expect(wrapper.find('RoundImageRow').length).toEqual(1)
     expect(wrapper.find('span').length).toEqual(0)
   })
 
   it("Formats total correctly if it's > 999", () => {
-    const wrapper = shallow(<MemberSection members={members} membersTotal={5600} />)
+    const wrapper = shallow(<MemberSection members={members} memberCount={5600} />)
     expect(wrapper.find('RoundImageRow').length).toEqual(1)
     expect(wrapper.find('span').text()).toEqual('+5.6k')
   })
