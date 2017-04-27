@@ -13,7 +13,7 @@ import MemberPosts from './MemberPosts'
 import MemberComments from './MemberComments'
 import MemberVotes from './MemberVotes'
 
-const { any, arrayOf, bool, func, object, string, shape } = React.PropTypes
+const { any, arrayOf, bool, object, string, shape } = React.PropTypes
 
 export default class MemberProfile extends React.Component {
   static propTypes = {

@@ -53,8 +53,8 @@ export default class RecentActivity extends React.Component {
         return <div styleName='activity-item' key={i}>
           {item.hasOwnProperty('title')
             ? <PostCard
-                post={item}
-                showDetails={() => showDetails(item.id, item.communities[0].slug)} />
+              post={item}
+              showDetails={() => showDetails(item.id, item.communities[0].slug)} />
             : <CommentCard key={i} comment={item} />}
         </div>
       })}
