@@ -20,7 +20,6 @@ export default class MemberProfile extends React.Component {
     currentTab: string,
     error: any,
     ready: bool,
-    navigate: func,
     person: shape({
       id: any,
       avatarUrl: string,
@@ -92,7 +91,6 @@ export default class MemberProfile extends React.Component {
         <TabContentSwitcher
           bio={bio}
           currentTab={this.state.currentTab}
-          navigate={this.props.navigate}
           personId={id}
           slug={slug} />
       </div>
@@ -164,16 +162,16 @@ export function TabContentSwitcher ({ bio, currentTab, navigate, personId, slug 
       return <div>
         <h2 styleName='subhead'>About Me</h2>
         <div styleName='bio'>{bio}</div>
-        <RecentActivity navigate={navigate} personId={personId} slug={slug} />
+        <RecentActivity personId={personId} slug={slug} />
       </div>
 
     case 'Posts':
-      return <MemberPosts navigate={navigate} personId={personId} slug={slug} />
+      return <MemberPosts personId={personId} slug={slug} />
 
     case 'Comments':
       return <MemberComments personId={personId} slug={slug} />
 
     case 'Upvotes':
-      return <MemberVotes navigate={navigate} personId={personId} slug={slug} />
+      return <MemberVotes personId={personId} slug={slug} />
   }
 }
