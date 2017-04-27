@@ -59,6 +59,7 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
             Object {
               "id": "1836",
               "name": "Wombats",
+              "slug": "wombats",
             },
           ],
           "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
@@ -71,6 +72,7 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
           "type": "discussion",
         }
       }
+      showDetails={[Function]}
     />
   </div>
   <div
@@ -91,6 +93,7 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
             Object {
               "id": "1836",
               "name": "Wombats",
+              "slug": "slug",
             },
           ],
           "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
@@ -105,6 +108,7 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
           "type": "discussion",
         }
       }
+      showDetails={[Function]}
     />
   </div>
 </div>
