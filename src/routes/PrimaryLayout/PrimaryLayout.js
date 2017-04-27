@@ -3,6 +3,8 @@ import { matchPath, Redirect, Route } from 'react-router-dom'
 import cx from 'classnames'
 import { some } from 'lodash/fp'
 import Loading from 'components/Loading'
+import Messages from 'routes/Messages'
+import SocketListener from 'components/SocketListener'
 import Drawer from './components/Drawer'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
@@ -10,6 +12,7 @@ import CommunitySidebar from 'routes/CommunitySidebar'
 import CommunityFeed from 'routes/CommunityFeed'
 import AllCommunitiesFeed from 'routes/AllCommunitiesFeed'
 import Events from 'routes/Events'
+
 import EventDetail from 'routes/Events/EventDetail'
 import MemberProfile from 'routes/MemberProfile'
 import PostDetail from 'routes/PostDetail'
@@ -81,6 +84,10 @@ export default class PrimaryLayout extends Component {
             <Route key={path} exact {...{path, component}} />)}
         </div>
       </div>
+      <Route path='/messages' exact component={Messages} />
+      <Route path='/messages/new' exact component={Messages} />
+      <Route path='/t/:threadId' component={Messages} />
+      <SocketListener location={location} />
     </div>
   }
 }

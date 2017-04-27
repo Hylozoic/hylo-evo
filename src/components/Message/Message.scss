@@ -1,0 +1,31 @@
+.message {
+  padding-right: 22px;
+  display: flex;
+
+  &.messageHeader {
+    padding-top: 8px;
+  }
+}
+
+.avatar {
+  width: $space-11x;
+}
+
+.content {
+  padding-left: 20px;
+  flex: 1;
+}
+
+.name {
+  composes: cards from 'css/typography.scss';
+}
+
+.date {
+  composes: timestamp from 'css/typography.scss';
+  margin-left: $space-2x;
+}
+
+.text {
+  composes: bdy-drk-sm from 'css/typography.scss';
+  @include word-wrap;
+}

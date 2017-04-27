@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches the last snapshot 1`] = `
+<div>
+  <div>
+    <Link
+      replace={false}
+      to="/messages/new"
+    >
+      <Button
+        label="New Message"
+      />
+    </Link>
+    <div>
+      Messages
+    </div>
+  </div>
+  <div>
+    <TextInput
+      onChange={[Function]}
+      placeholder="Search for people..."
+    />
+  </div>
+  <ul>
+    <div>
+      You have no active conversations
+    </div>
+  </ul>
+</div>
+`;

@@ -8,11 +8,14 @@ import pending from './pending'
 // Local store
 // generator-marker-local-store-import
 import NewMessageThread from 'components/NewMessageThread/NewMessageThread.store'
+import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
+import MessageForm from 'components/MessageForm/MessageForm.store'
 import CommunitiesSelector from 'components/CommunitiesSelector/CommunitiesSelector.store'
 import Login from 'routes/Login/Login.store'
 import MemberProfile from 'routes/MemberProfile/MemberProfile.store'
 import Members from 'routes/Members/Members.store'
+import ThreadList from 'components/ThreadList/ThreadList.store'
 import queryResults from './queryResults'
 import { handleSetState, composeReducers } from './util'
 
@@ -32,9 +35,12 @@ const combinedReducers = combineReducers({
   // Local store (Component)
   // generator-marker-local-store-reducer
   NewMessageThread,
+  MessageForm,
+  PeopleTyping,
   HyloEditor,
   CommunitiesSelector,
   Login,
+  ThreadList,
   MemberProfile,
   Members
 })
