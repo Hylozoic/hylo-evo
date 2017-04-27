@@ -66,8 +66,6 @@ export default class PrimaryLayout extends Component {
           <Route path='/events' component={Events} />
           <Route path='/c/:slug/members' component={Members} />
           <Route path='/settings' component={Settings} />
-          {/* temporary! */}
-          <Route path='/messages/new' component={NewMessageThread} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/c/:slug' exact component={CommunitySidebar} />
@@ -84,8 +82,7 @@ export default class PrimaryLayout extends Component {
             <Route key={path} exact {...{path, component}} />)}
         </div>
       </div>
-      <Route path='/messages' exact component={Messages} />
-      <Route path='/messages/new' exact component={Messages} />
+      <Route path='/messages' component={Messages} />
       <Route path='/t/:threadId' component={Messages} />
       <SocketListener location={location} />
     </div>
