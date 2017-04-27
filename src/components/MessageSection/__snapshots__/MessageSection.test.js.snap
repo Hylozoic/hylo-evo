@@ -2,8 +2,11 @@
 
 exports[`does something 1`] = `
 <div
+  data-styleName="messages-section"
   onScroll={[Function]}
 >
-  <div />
+  <div
+    data-styleName="messages-section-inner"
+  />
 </div>
 `;

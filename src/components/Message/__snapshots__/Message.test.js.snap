@@ -3,23 +3,34 @@
 exports[`to display sending... when message is still in optimistic state 1`] = `
 <div
   data-message-id="messageThread12_1"
+  data-styleName="message messageHeader"
 >
-  <div>
+  <div
+    data-styleName="avatar"
+  >
     <Avatar
       avatarUrl="http://avatar.com/i.png"
       url="/m/1"
     />
   </div>
-  <div>
+  <div
+    data-styleName="content"
+  >
     <div>
-      <span>
+      <span
+        data-styleName="name"
+      >
         Good Person
       </span>
-      <span>
+      <span
+        data-styleName="date"
+      >
         sending...
       </span>
     </div>
-    <div>
+    <div
+      data-styleName="text"
+    >
       <span
         dangerouslySetInnerHTML={
           Object {
@@ -35,10 +46,17 @@ exports[`to display sending... when message is still in optimistic state 1`] = `
 exports[`to match the latest non-header snapshot 1`] = `
 <div
   data-message-id="1"
+  data-styleName="message"
 >
-  <div />
-  <div>
-    <div>
+  <div
+    data-styleName="avatar"
+  />
+  <div
+    data-styleName="content"
+  >
+    <div
+      data-styleName="text"
+    >
       <span
         dangerouslySetInnerHTML={
           Object {
@@ -54,21 +72,32 @@ exports[`to match the latest non-header snapshot 1`] = `
 exports[`to match the latest snapshot 1`] = `
 <div
   data-message-id="1"
+  data-styleName="message messageHeader"
 >
-  <div>
+  <div
+    data-styleName="avatar"
+  >
     <Avatar
       avatarUrl="http://avatar.com/i.png"
       url="/m/1"
     />
   </div>
-  <div>
+  <div
+    data-styleName="content"
+  >
     <div>
-      <span>
+      <span
+        data-styleName="name"
+      >
         Good Person
       </span>
-      <span />
+      <span
+        data-styleName="date"
+      />
     </div>
-    <div>
+    <div
+      data-styleName="text"
+    >
       <span
         dangerouslySetInnerHTML={
           Object {

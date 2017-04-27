@@ -1,28 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`matches the last snapshot 1`] = `
-<div>
-  <div>
+<div
+  data-styleName="thread-list"
+>
+  <div
+    data-styleName="header"
+  >
     <Link
       replace={false}
       to="/messages/new"
     >
       <Button
+        data-styleName="new-message"
         label="New Message"
       />
     </Link>
-    <div>
+    <div
+      data-styleName="header-text"
+    >
       Messages
     </div>
   </div>
-  <div>
+  <div
+    data-styleName="search"
+  >
     <TextInput
       onChange={[Function]}
       placeholder="Search for people..."
     />
   </div>
-  <ul>
-    <div>
+  <ul
+    data-styleName="list"
+  >
+    <div
+      data-styleName="no-conversations"
+    >
       You have no active conversations
     </div>
   </ul>
