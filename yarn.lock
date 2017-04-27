@@ -529,6 +529,10 @@ babel-plugin-check-es2015-constants@^6.3.13:
   dependencies:
     babel-runtime "^6.22.0"
 
+babel-plugin-data-stylename@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-data-stylename/-/babel-plugin-data-stylename-0.1.0.tgz#c3883afdd519b7e6513a7c094aca9f3d0f3411c4"
+
 babel-plugin-istanbul@^4.0.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-istanbul/-/babel-plugin-istanbul-4.1.1.tgz#c12de0fc6fe42adfb16be56f1ad11e4a9782eca9"
@@ -558,10 +562,6 @@ babel-plugin-react-css-modules@levity/babel-plugin-react-css-modules#ab83008:
     postcss-modules-scope "^1.0.2"
     postcss-modules-values "^1.2.2"
     postcss-nested "^1.0.0"
-
-babel-plugin-remove-stylename@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-remove-stylename/-/babel-plugin-remove-stylename-0.1.0.tgz#46a8d6d38e857d65759c0ea2553e9ee2fbec8c20"
 
 babel-plugin-syntax-async-functions@^6.8.0:
   version "6.13.0"

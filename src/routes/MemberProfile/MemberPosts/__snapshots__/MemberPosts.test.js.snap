@@ -2,7 +2,9 @@
 
 exports[`MemberPosts renders the same as the last snapshot 1`] = `
 <div>
-  <div>
+  <div
+    data-styleName="activity-item"
+  >
     <PostCard
       post={
         Object {
@@ -26,7 +28,9 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
       }
     />
   </div>
-  <div>
+  <div
+    data-styleName="activity-item"
+  >
     <PostCard
       post={
         Object {

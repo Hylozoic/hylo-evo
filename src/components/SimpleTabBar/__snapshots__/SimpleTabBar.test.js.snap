@@ -1,18 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders the same as the last snapshot 1`] = `
-<ul>
+<ul
+  data-styleName="tab-bar"
+>
   <li
+    data-styleName="tab-active"
     onClick={[Function]}
   >
     Wombats
   </li>
   <li
+    data-styleName="tab"
     onClick={[Function]}
   >
     Aardvarks
   </li>
   <li
+    data-styleName="tab"
     onClick={[Function]}
   >
     Ocelots
