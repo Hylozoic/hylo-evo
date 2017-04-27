@@ -1,11 +1,15 @@
 import React from 'react'
+
+import PeopleSelector from 'components/PeopleSelector'
 import './NewMessageThread.scss'
 
-const { string } = React.PropTypes
+export default class NewMessageThread extends React.Component {
+  static propTypes = {
+  }
 
-export default function NewMessageThread ({ example }) {
-  return <div styleName='exampleName'>{example}</div>
-}
-NewMessageThread.propTypes = {
-  example: string
+  render () {
+    return <div>
+      <PeopleSelector />
+    </div>
+  }
 }

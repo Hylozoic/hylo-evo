@@ -10,5 +10,11 @@ exports[`matches the last snapshot 1`] = `
     deleteMatch={[Function]}
     name="Aardvark"
   />
+  <input
+    onChange={[Function]}
+    onKeyDown={[Function]}
+    spellCheck={false}
+    type="text"
+  />
 </div>
 `;

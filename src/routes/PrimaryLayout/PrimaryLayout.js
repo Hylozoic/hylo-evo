@@ -16,6 +16,7 @@ import PostDetail from 'routes/PostDetail'
 import Members from 'routes/Members'
 import Settings from 'routes/Settings'
 import MessageMember from 'components/MessageMember'
+import NewMessageThread from 'components/NewMessageThread'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
@@ -61,6 +62,8 @@ export default class PrimaryLayout extends Component {
           <Route path='/events' component={Events} />
           <Route path='/c/:slug/members' component={Members} />
           <Route path='/settings' component={Settings} />
+          {/* temporary! */}
+          <Route path='/messages/new' component={NewMessageThread} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/c/:slug' exact component={CommunitySidebar} />
