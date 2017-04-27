@@ -6,40 +6,40 @@ import Icon from 'components/Icon'
 import MessageSection from 'components/MessageSection'
 import MessageForm from 'components/MessageForm'
 import PeopleTyping from 'components/PeopleTyping'
-import { getSocket, socketUrl } from 'client/websockets'
+import { socketUrl } from 'client/websockets'
 import './Thread.scss'
 
 export default class Thread extends React.Component {
   static propTypes = {
     threadId: string.isRequired,
+    socket: object,
     currentUser: object,
     thread: object,
     fetchThread: func
   }
 
   setupForThread () {
-    const { threadId, fetchThread } = this.props
+    const { socket, threadId, fetchThread } = this.props
     fetchThread(threadId)
-    this.socket.post(socketUrl(`/noo/post/${threadId}/subscribe`)) // for people typing
+    socket.post(socketUrl(`/noo/post/${threadId}/subscribe`)) // for people typing
     if (this.reconnectHandler) {
-      this.socket.off('reconnect', this.reconnectHandler)
+      socket.off('reconnect', this.reconnectHandler)
     }
     this.reconnectHandler = () => {
-      this.socket.post(socketUrl(`/noo/post/${threadId}/subscribe`))
+      socket.post(socketUrl(`/noo/post/${threadId}/subscribe`))
     }
-    this.socket.on('reconnect', this.reconnectHandler)
+    socket.on('reconnect', this.reconnectHandler)
     this.refs.form.getWrappedInstance().focus()
   }
 
   componentDidMount () {
-    this.socket = getSocket()
     this.setupForThread()
   }
 
   disableSocket () {
-    const { threadId } = this.props
-    this.socket.off('reconnect', this.reconnectHandler)
-    this.socket.post(socketUrl(`/noo/post/${threadId}/unsubscribe`))
+    const { socket, threadId } = this.props
+    socket.off('reconnect', this.reconnectHandler)
+    socket.post(socketUrl(`/noo/post/${threadId}/unsubscribe`))
   }
 
   componentWillReceiveProps (nextProps) {
@@ -59,13 +59,13 @@ export default class Thread extends React.Component {
   }
 
   render () {
-    const { threadId, thread, currentUser } = this.props
+    const { socket, threadId, thread, currentUser } = this.props
     return <div styleName='thread'>
       <Header thread={thread} currentUser={currentUser} />
-      <MessageSection thread={thread} messageThreadId={threadId} />
+      <MessageSection thread={thread} messageThreadId={threadId} socket={socket} />
       <div styleName='message-form-bg' />
       <div styleName='message-form'>
-        <MessageForm messageThreadId={threadId} ref='form' socket={this.socket} />
+        <MessageForm messageThreadId={threadId} ref='form' socket={socket} />
       </div>
       <PeopleTyping styleName='people-typing' />
     </div>

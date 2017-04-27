@@ -5,7 +5,7 @@ import NewMessageThread from 'components/NewMessageThread'
 import ThreadList from 'components/ThreadList'
 import Thread from 'components/Thread'
 import './Messages.scss'
-
+import { getSocket } from 'client/websockets'
 const { object } = PropTypes
 
 export default class Messages extends Component {
