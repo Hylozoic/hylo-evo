@@ -47,7 +47,7 @@ export default class SocketListener extends Component {
 
   addMessageFromSocket = data => {
     const { addMessageFromSocket, location } = this.props
-    const [_, namespace, id] = location.pathname.split('/')
+    const [_, namespace, id] = location.pathname.split('/') // eslint-disable-line no-unused-vars
     const isActiveThread = namespace === 't' && data.postId === id
     const opts = {bumpUnreadCount: !isActiveThread}
     addMessageFromSocket(convertMessageToModelFormat(data.message, data.postId), opts)
