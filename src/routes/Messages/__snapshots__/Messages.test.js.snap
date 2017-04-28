@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches the last snapshot 1`] = `
+<div
+  data-styleName="modal"
+>
+  <div
+    data-styleName="content"
+  >
+    <Connect(ThreadList)
+      activeId="1"
+    />
+    <Connect(Thread)
+      socket={
+        SailsSocket {
+          "_isConnecting": false,
+          "_mightBeAboutToAutoConnect": true,
+          "eventQueue": Object {
+            "sails:parseError": Array [
+              [Function],
+            ],
+          },
+          "headers": undefined,
+        }
+      }
+      threadId="1"
+    />
+  </div>
+</div>
+`;

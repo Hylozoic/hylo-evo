@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches the last snapshot 1`] = `
+<div
+  data-styleName="thread"
+>
+  <Header />
+  <Connect(MessageSection)
+    messageThreadId="1"
+  />
+  <div
+    data-styleName="message-form-bg"
+  />
+  <div
+    data-styleName="message-form"
+  >
+    <Connect(MessageForm)
+      messageThreadId="1"
+    />
+  </div>
+  <Connect(PeopleTyping)
+    data-styleName="people-typing"
+  />
+</div>
+`;

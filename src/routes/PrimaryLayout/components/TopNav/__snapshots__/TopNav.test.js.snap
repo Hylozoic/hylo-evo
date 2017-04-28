@@ -25,7 +25,7 @@ exports[`renders as expected with no community 1`] = `
       <Link
         data-styleName="navIcon"
         replace={false}
-        to="/"
+        to="/messages"
       >
         <Icon
           data-styleName="icon"

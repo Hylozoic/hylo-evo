@@ -1,0 +1,69 @@
+$message-form-bg-height: 165px;
+$messages-inner-padding: 30px;
+
+.thread {
+  height: 100vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  height: $messages-header-height;
+  padding: $messages-header-vertical-padding $messages-header-horizontal-padding;
+  border-bottom: $light-border;
+  border-left: $light-border;
+  border-right: $light-border;
+}
+
+.header-text {
+  composes: bdy-drk-lg from 'css/typography.scss';
+  padding: $space-2x $space-2x $space-2x 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.close-messages {
+  cursor: pointer;
+  padding: $space-2x 0;
+
+  &:hover {
+    text-decoration: none;
+
+    .close-messages-icon {
+      color: $color-rhino-60;
+    }
+  }
+}
+
+.more-icon {
+  padding: $space-1x 0;
+}
+
+.message-form-bg {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  height: $message-form-bg-height;
+  opacity: 0.8;
+  background-image: linear-gradient(-180deg, rgba(255,255,255,0.00) 0%, #FAFBFC 48%);
+}
+
+.message-form {
+  position: absolute;
+  bottom: 40px;
+  padding: 0 $messages-inner-padding;
+  width: 100%;
+}
+
+.people-typing {
+  position: absolute;
+  bottom: 15px;
+  height: 18px;
+  left: $messages-inner-padding;
+  background: $color-white;
+}
