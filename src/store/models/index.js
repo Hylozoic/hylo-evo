@@ -6,6 +6,8 @@ import FeedItem from './FeedItem'
 import Me from './Me'
 import Membership from './Membership'
 import Person from './Person'
+import Message from './Message'
+import MessageThread from './MessageThread'
 import Post, { PostFollower, PostCommenter } from './Post'
 import Vote from './Vote'
 
@@ -17,6 +19,8 @@ orm.register(
   FeedItem,
   Me,
   Membership,
+  Message,
+  MessageThread,
   Person,
   Post,
   PostFollower,

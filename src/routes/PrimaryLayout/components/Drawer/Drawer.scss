@@ -19,7 +19,6 @@ $li-padding: 4px;
 $li-spacing: 22px;
 $li-height: 40px;
 $li-avatar-size: 32px;
-$counteract-badge-styling: 13px;
 
 $badge-width: 20px;
 
@@ -133,10 +132,7 @@ li.community {
     display: inline-block;
   }
 
-  .badge {
-    position: relative;
-    top: $counteract-badge-styling;
-  }
+  .badge {}
 }
 
 .newCommunity {

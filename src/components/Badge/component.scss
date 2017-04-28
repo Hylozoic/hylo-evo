@@ -19,7 +19,6 @@
   line-height: normal;
   text-align: center;
   position: relative;
-  top: -13px;
   left: -1px;
   transition: 0.15s;
 }
@@ -33,7 +32,6 @@
   width: 7px;
   height: 7px;
   position: relative;
-  top: -13px;
   left: 5px;
 }
 
@@ -53,7 +51,6 @@
 .badgeNumber-collapsed {
   composes: badgeNumber;
   font-size: 0px;
-  top: -13px;
 }
 
 // parent is imported by parent composes to add as a className so that the badge can
