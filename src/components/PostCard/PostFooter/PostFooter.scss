@@ -45,6 +45,7 @@ $footer-height: 56px;
   line-height: $footer-height;
   text-align: center;
   border-left: 1px solid $color-cape-cod-10;
+  width: 85px;
 }
 
 .votes-total {
@@ -53,4 +54,8 @@ $footer-height: 56px;
     text-decoration: none;
     color: $color-gossamer;
   }
+}
+
+.voted {
+  @include font-bold;
 }

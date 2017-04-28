@@ -2,6 +2,7 @@ import React from 'react'
 import './PostFooter.scss'
 import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
+import cx from 'classnames'
 
 const { string, array, number, func } = React.PropTypes
 
@@ -9,7 +10,7 @@ export default function PostFooter ({ id, commenters, commentersTotal, votesTota
   return <div styleName='footer'>
     <RoundImageRow imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
     <span styleName='caption'>{commentCaption(commenters, commentersTotal)}</span>
-    <div styleName='votes'><span onClick={vote} styleName='votes-total'><Icon name='ArrowUp' styleName='arrowIcon' />{votesTotal}</span></div>
+    <div styleName='votes'><span onClick={vote} styleName={cx('votes-total', {voted: myVote})}><Icon name='ArrowUp' styleName='arrowIcon' />{votesTotal}</span></div>
   </div>
 }
 PostFooter.propTypes = {
