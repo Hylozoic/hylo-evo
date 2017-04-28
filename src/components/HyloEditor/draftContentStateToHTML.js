@@ -1,13 +1,12 @@
-import React, { createElement } from 'react'
+import { createElement } from 'react'
 import { convertToHTML } from 'draft-convert'
 
 export function mentionToLink (originalText, mention) {
-  console.log(mention, mention.get('id'))
   return createElement(
     'a',
     {
       'data-entity-type': 'mention',
-      'data-id': mention.get('id')
+      'data-user-id': mention.get('id')
     },
     originalText
   )

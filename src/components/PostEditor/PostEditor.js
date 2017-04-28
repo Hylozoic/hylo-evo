@@ -11,6 +11,7 @@ export default class PostEditor extends React.Component {
     titlePlaceholder: PropTypes.string,
     bodyPlaceholder: PropTypes.string,
     postType: PropTypes.string,
+    post: PropTypes.object,
     currentUser: PropTypes.object,
     createPost: PropTypes.func
   }
@@ -21,7 +22,10 @@ export default class PostEditor extends React.Component {
       default: 'What’s on your mind?'
     },
     bodyPlaceholder: 'Add a description',
-    postType: 'discussion'
+    postType: 'discussion',
+    post: {
+      description: `This is a test <a href="/u/1" data-user-id="99" data-entity-type="mention">Loren Johnson</a> and the remaining text <a data-entity-type="hashtag">#test</a> text betweeen hastags <a data-entity-type="hashtag">#test2</a>`
+    }
   }
 
   defaultState = ({ postType }) => {
@@ -105,13 +109,13 @@ export default class PostEditor extends React.Component {
     const { createPost } = this.props
     const { title, postType, selectedCommunities } = this.state
     const description = this.editor.getContentHTML()
+    console.log('save description in PostEditor', description)
     const selectedCommunityIds = selectedCommunities.map(c => c.id)
-    console.log(description)
     createPost(title, description, selectedCommunityIds, postType).then(this.reset)
   }
 
   render () {
-    const { bodyPlaceholder, communities } = this.props
+    const { bodyPlaceholder, communities, post } = this.props
     const { titlePlaceholder, title, valid } = this.state
 
     return <div styleName='wrapper'>
@@ -144,6 +148,7 @@ export default class PostEditor extends React.Component {
             styleName='editor'
             placeholder={bodyPlaceholder}
             onChange={this.setValid}
+            contentHTML={post.description}
             ref={component => { this.editor = component && component.getWrappedInstance() }}
           />
         </div>

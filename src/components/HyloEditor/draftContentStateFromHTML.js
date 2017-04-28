@@ -1,5 +1,4 @@
 import { Map } from 'immutable'
-import { Entity } from 'draft-js'
 import { convertFromHTML } from 'draft-convert'
 
 // NOTE: Legacy mention links are in this format:
@@ -32,7 +31,7 @@ export function createHashtagFromLink (contentState, node) {
   return contentStateWithEntity.getLastCreatedEntityKey()
 }
 
-export default function (contentState) {
+export default function (contentState, html) {
   return convertFromHTML({
     htmlToEntity: (nodeName, node) => {
       if (nodeName === 'a' && node.dataset.entityType === 'mention') {
@@ -42,5 +41,5 @@ export default function (contentState) {
         return createHashtagFromLink(contentState, node)
       }
     }
-  })(contentState)
+  })(html)
 }

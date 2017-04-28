@@ -1,6 +1,5 @@
-import React from 'react'
-import { shallow } from 'enzyme'
-import PostEditor from './PostEditor'
+import { ContentState } from 'draft-js'
+import draftContentStateFromHTML from './draftContentStateFromHTML'
 
 // titlePlaceholder: PropTypes.string,
 // bodyPlaceholder: PropTypes.string,
@@ -14,13 +13,20 @@ const sampleText = `This is a test <a href="/u/1" data-id="99" data-entity-type=
 
 describe('convertFromHTML', () => {
   it('converts <a class="mention" /> to a DraftJS Entity', () => {
+    const mentionHTML = '<a href="/u/99" data-id="99" data-entity-type="mention">Hylo Tester</a>'
+    const baseContentState = ContentState.createFromText('')
+    const contentState = draftContentStateFromHTML(baseContentState, sampleText)
+    // console.log('contentState:', contentState)
+    // const contentState = ContentState.createFromText('')
+    // EditorState.createWithContent()
     // <Editor
     //   editorState={this.state.editorState}
     //   onChange={this.handleChange}
     //   placeholder={this.props.placeholder}
     //   handleReturn={this.handleReturn}
     //   plugins={plugins} />
-    const wrapper = shallow(<PostEditor contentHTML={sampleText} />)
-    expect(wrapper.find('HyloEditor')).toBeTruthy()
+    // const wrapper = shallow(<HyloEditor contentHTML={sampleText} />)
+    // console.log(wrapper.debug())
+    // expect(wrapper.find('HyloEditor')).toBeTruthy()
   })
 })

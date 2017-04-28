@@ -68,7 +68,7 @@
     "css-modules-require-hook": "^4.0.6",
     "dotenv-safe": "^4.0.3",
     "dotenv-webpack": "^1.4.3",
-    "draft-convert": "^1.4.5",
+    "draft-convert": "^1.4.6",
     "draft-js": "^0.10.0",
     "draft-js-autocomplete-plugin-creator": "^0.2.0",
     "draft-js-export-html": "^0.5.2",
