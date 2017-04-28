@@ -5,7 +5,7 @@ import RoundImageRow from 'components/RoundImageRow'
 
 const { string, array, number, func } = React.PropTypes
 
-export default function PostFooter ({ id, commenters, commentersTotal, votesTotal, vote }) {
+export default function PostFooter ({ id, commenters, commentersTotal, votesTotal, myVote, vote }) {
   return <div styleName='footer'>
     <RoundImageRow imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
     <span styleName='caption'>{commentCaption(commenters, commentersTotal)}</span>

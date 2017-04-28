@@ -61,7 +61,8 @@ export default class PostCard extends React.Component {
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
-        votesTotal={post.votesTotal} />
+        votesTotal={post.votesTotal}
+        myVote={post.myVote} />
     </div>
   }
 }

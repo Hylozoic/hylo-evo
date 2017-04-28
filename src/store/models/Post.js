@@ -48,5 +48,6 @@ Post.fields = {
   startsAt: attr(),
   endsAt: attr(),
   fulfilledAt: attr(),
-  votesTotal: attr()
+  votesTotal: attr(),
+  myVote: attr()
 }

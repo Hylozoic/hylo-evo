@@ -57,7 +57,8 @@ export default class PostDetail extends Component {
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
-        votesTotal={post.votesTotal} />
+        votesTotal={post.votesTotal}
+        myVote={post.myVote} />
       <Comments postId={post.id} slug={slug} scrollToBottom={scrollToBottom} />
     </div>
   }
