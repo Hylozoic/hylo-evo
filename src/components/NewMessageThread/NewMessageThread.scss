@@ -1,1 +1,22 @@
-.exampleName { /* !empty */ }
+.new-message-thread {
+  flex-grow: 2;
+  display: flex;
+}
+
+.close-button {
+}
+
+.thread-header {
+  display: flex;
+  flex-grow: 2;
+  height: $space-20x;
+  padding: $space-6x;
+  border: 1px $color-rhino-30 solid;
+
+  &:focus, &:hover {
+    outline: none;
+    -webkit-box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
+    -moz-box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
+    box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
+  }
+}

@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Icon from 'components/Icon'
 import PeopleSelector from 'components/PeopleSelector'
 import './NewMessageThread.scss'
 
@@ -8,8 +9,11 @@ export default class NewMessageThread extends React.Component {
   }
 
   render () {
-    return <div>
-      <PeopleSelector />
+    return <div styleName='new-message-thread'>
+      <div styleName='thread-header' tabIndex='0'>
+        <PeopleSelector />
+        <Icon name='Ex' styleName='close-button' />
+      </div>
     </div>
   }
 }

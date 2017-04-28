@@ -48,19 +48,20 @@ export default class PeopleSelector extends React.Component {
 
   render () {
     const { deleteMatch, matches } = this.props
-    return <div>
+    return <div styleName='people-selector'>
       {matches && matches.map(match =>
         <SelectorMatchedItem
           key={match.id}
           name={match.name}
           deleteMatch={() => deleteMatch(match.id)} />
       )}
-      <input
+      <input styleName='autocomplete'
         ref={i => this.autocomplete = i} // eslint-disable-line no-return-assign
         type='text'
         spellCheck={false}
         onChange={evt => this.onChange(evt)}
-        onKeyDown={evt => this.onKeyDown(evt)} />
+        onKeyDown={evt => this.onKeyDown(evt)}
+        placeholder='Type in the names of people to message' />
     </div>
   }
 }

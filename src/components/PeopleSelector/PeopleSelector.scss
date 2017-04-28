@@ -1,0 +1,54 @@
+.people-selector {
+  display: flex;
+  flex-grow: 2;
+  border-bottom: 1px $color-rhino-30 solid;
+  height: $space-10x;
+  margin: 0 $space-3x;
+}
+
+.autocomplete {
+  flex-grow: 2;
+  border: none;
+  outline: none;
+
+  // Yep, believe it or not this is necessary... can't group the selectors!
+  &::-webkit-input-placeholder {
+    @include font-regular;
+    color: $color-rhino-30;
+    font-size: 14px;
+    letter-spacing: 0.4;
+    line-height: 18px;
+  }
+
+  &::-moz-placeholder {
+    @include font-regular;
+    color: $color-rhino-30;
+    font-size: 14px;
+    letter-spacing: 0.4;
+    line-height: 18px;
+  }
+
+  &:-ms-input-placeholder {
+    @include font-regular;
+    color: $color-rhino-30;
+    font-size: 14px;
+    letter-spacing: 0.4;
+    line-height: 18px;
+  }
+
+  &:-moz-placeholder {
+    @include font-regular;
+    color: $color-rhino-30;
+    font-size: 14px;
+    letter-spacing: 0.4;
+    line-height: 18px;
+  }
+
+  &::placeholder {
+    @include font-regular;
+    color: $color-rhino-30;
+    font-size: 16px;
+    letter-spacing: 0.4;
+    line-height: 20px;
+  }
+}
