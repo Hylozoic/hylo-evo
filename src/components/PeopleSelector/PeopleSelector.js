@@ -14,7 +14,7 @@ const personType = shape({
 
 // TODO: This _grossly_ underestimates the problem! See:
 // https://www.w3.org/International/questions/qa-personal-names
-const invalidPersonName = /[^a-z'-]+/gi
+const invalidPersonName = /[^a-z '-]+/gi
 
 export default class PeopleSelector extends React.Component {
   static propTypes = {
@@ -27,7 +27,7 @@ export default class PeopleSelector extends React.Component {
   autocompleteSearch = throttle(1000, this.props.fetchPeople)
 
   onChange = debounce(200, evt => {
-    const { value } = this.autocomplete
+    const { value } = evt.target
     if (!invalidPersonName.exec(value)) {
       return this.props.setAutocomplete(value)
     }
