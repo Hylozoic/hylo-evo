@@ -1,4 +1,4 @@
-import { fetchPeople } from './PeopleSelector.store'
+import { deleteMatch, fetchPeople, setAutocomplete } from './PeopleSelector.store'
 import { mapStateToProps } from './PeopleSelector.connector'
 
 describe('fetchPeople', () => {
@@ -20,5 +20,24 @@ describe('fetchPeople', () => {
   })
 })
 
-describe('mapStateToProps', () => {
+describe('deleteMatch', () => {
+  it('returns the correct action', () => {
+    const expected = {
+      type: 'PEOPLE_SELECTOR_DELETE_MATCH',
+      payload: '1'
+    }
+    const actual = deleteMatch('1')
+    expect(actual).toEqual(expected)
+  })
+})
+
+describe('setAutocomplete', () => {
+  it('returns the correct action', () => {
+    const expected = {
+      type: 'PEOPLE_SELECTOR_SET_AUTOCOMPLETE',
+      payload: 'Tchaikovs'
+    }
+    const actual = setAutocomplete('Tchaikovs')
+    expect(actual).toEqual(expected)
+  })
 })
