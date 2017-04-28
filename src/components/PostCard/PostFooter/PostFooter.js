@@ -9,7 +9,7 @@ export default function PostFooter ({ id, commenters, commentersTotal, votesTota
   return <div styleName='footer'>
     <RoundImageRow imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
     <span styleName='caption'>{commentCaption(commenters, commentersTotal)}</span>
-    <div styleName='votes'><a onClick={vote} styleName='votes-total'><Icon name='ArrowUp' styleName='arrowIcon' />{votesTotal}</a></div>
+    <div styleName='votes'><span onClick={vote} styleName='votes-total'><Icon name='ArrowUp' styleName='arrowIcon' />{votesTotal}</span></div>
   </div>
 }
 PostFooter.propTypes = {
