@@ -7,6 +7,7 @@ import UIKit from '../routes/UIKit'
 import AuthRoute from './AuthRoute'
 import NonAuthRoute from './NonAuthRoute'
 import Login from 'routes/Login'
+import LoginCheck from 'routes/Login/LoginCheck'
 import '../css/global/index.scss'
 
 export function clientRouter (history) {
@@ -23,9 +24,11 @@ export function serverRouter (req, context) {
 }
 
 function rootRoutes () {
-  return <Switch>
-    <Route path='/ui-kit' component={UIKit} />
-    <NonAuthRoute path='/login' component={Login} />
-    <AuthRoute path='/' component={PrimaryLayout} />
-  </Switch>
+  return <LoginCheck>
+    <Switch>
+      <Route path='/ui-kit' component={UIKit} />
+      <NonAuthRoute path='/login' component={Login} />
+      <AuthRoute path='/' component={PrimaryLayout} />
+    </Switch>
+  </LoginCheck>
 }

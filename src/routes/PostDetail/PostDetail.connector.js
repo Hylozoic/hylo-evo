@@ -28,7 +28,7 @@ export function mapStateToProps (state, props) {
   return {
     post: getPost(state, props),
     slug,
-    showCommunity: !slug 
+    showCommunity: !slug
   }
 }
 

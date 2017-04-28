@@ -1,9 +1,19 @@
-.loading {
-  width: 100%;
-  height: 100%;
+.flex {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.loading-fullscreen {
+  composes: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.loading {
+  composes: flex;
+  width: 100%;
+  height: 100%;
 }
 
 .loading-top {
