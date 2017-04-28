@@ -1,5 +1,5 @@
 import React from 'react'
-import { debounce } from 'lodash/fp'
+import { debounce, throttle } from 'lodash/fp'
 
 import { getKeyCode, keyMap } from 'util/textInput'
 import SelectorMatchedItem from 'components/SelectorMatchedItem'
@@ -24,19 +24,24 @@ export default class PeopleSelector extends React.Component {
     setAutocomplete: func
   }
 
-  onChange (target) {
+  autocompleteSearch = throttle(1000, this.props.fetchPeople)
+
+  onChange = debounce(200, evt => {
     const { value } = this.autocomplete
     if (!invalidPersonName.exec(value)) {
       return this.props.setAutocomplete(value)
     }
-    target.value = value.replace(invalidPersonName, '')
-  }
+    evt.target.value = value.replace(invalidPersonName, '')
+  })
 
-  handleKeys (evt) {
+  onKeyDown (evt) {
     const keyCode = getKeyCode(evt)
+    if (keyCode !== keyMap.BACKSPACE) {
+      this.autocompleteSearch(this.autocomplete.value)
+    }
     if (keyCode === keyMap.COMMA || keyCode === keyMap.ENTER) {
       evt.preventDefault()
-      evt.target.value = null
+      this.autocomplete.value = null
       return this.props.setAutocomplete(null)
     }
   }
@@ -54,8 +59,8 @@ export default class PeopleSelector extends React.Component {
         ref={i => this.autocomplete = i} // eslint-disable-line no-return-assign
         type='text'
         spellCheck={false}
-        onChange={evt => this.onChange(evt.target)}
-        onKeyDown={evt => this.handleKeys(evt)} />
+        onChange={evt => this.onChange(evt)}
+        onKeyDown={evt => this.onKeyDown(evt)} />
     </div>
   }
 }
