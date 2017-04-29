@@ -1,16 +1,7 @@
 import {
   ADD_MESSAGE_FROM_SOCKET,
-  ADD_THREAD_FROM_SOCKET,
-  ADD_USER_TYPING
+  ADD_THREAD_FROM_SOCKET
 } from 'store/constants'
-
-export function mapEventsToActions () {
-  return {
-    newThread: addThreadFromSocket,
-    messageAdded: addMessageFromSocket,
-    userTyping: addUserTyping
-  }
-}
 
 export function addMessageFromSocket (message, opts = {}) {
   return {
