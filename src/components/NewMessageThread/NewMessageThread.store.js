@@ -4,6 +4,7 @@ import { pick } from 'lodash/fp'
 
 import orm from 'store/models'
 import {
+  PEOPLE_SELECTOR_ADD_MATCH,
   PEOPLE_SELECTOR_DELETE_MATCH,
   PEOPLE_SELECTOR_SET_AUTOCOMPLETE
 } from 'components/PeopleSelector/PeopleSelector.store'
@@ -29,6 +30,12 @@ export default function reducer (state = defaultState, action) {
   switch (type) {
     case PEOPLE_SELECTOR_SET_AUTOCOMPLETE:
       return { ...state, autocomplete: payload }
+
+    case PEOPLE_SELECTOR_ADD_MATCH:
+      return {
+        ...state,
+        participants: [ ...state.participants, payload ]
+      }
 
     case PEOPLE_SELECTOR_DELETE_MATCH:
       return {
