@@ -37,7 +37,7 @@ export default class TopicNavigation extends Component {
         {topics.map(topic => <li key={topic.name}>
           <Link styleName='s.topic' className={badgeHoverStyles.parent} to='/'>
             <span styleName='s.name'>#{topic.name}</span>
-            {topic.badge && <Badge number={topic.badge} styleName='s.badge' />}
+            {topic.badge > 0 && <Badge number={topic.badge} styleName='s.badge' />}
           </Link>
         </li>)}
       </ul>
