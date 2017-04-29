@@ -71,7 +71,15 @@ export default class MessageForm extends React.Component {
   }
 
   render () {
-    const { messageThreadId, onFocus, onBlur, className, currentUser, pending, updateMessageText } = this.props
+    const {
+      messageThreadId,
+      onFocus,
+      onBlur,
+      className,
+      currentUser,
+      pending,
+      updateMessageText
+    } = this.props
     const text = pending ? '' : this.props.text
     const placeholder = this.props.placeholder || 'Write something...'
     const onChange = e => updateMessageText(messageThreadId, e.target.value)
@@ -83,8 +91,10 @@ export default class MessageForm extends React.Component {
       }, e)
     }
 
-    return <form onSubmit={this.submit} styleName='message-form' className={className}>
-      <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
+    return <form onSubmit={this.submit} styleName='message-form'
+      className={className}>
+      <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image'
+        medium />
       <textarea ref='editor' value={text} styleName='message-textarea'
         placeholder={placeholder}
         onFocus={onFocus}

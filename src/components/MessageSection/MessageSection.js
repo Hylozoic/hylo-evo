@@ -1,5 +1,4 @@
 import React from 'react'
-import visibility from 'visibility'
 import { throttle } from 'lodash'
 import { get, maxBy } from 'lodash/fp'
 const { array, bool, func, number, object, string } = React.PropTypes
@@ -58,18 +57,20 @@ export default class MessageSection extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      scrolledUp: false
+      scrolledUp: false,
+      visible: true,
+      onNextVisible: null
     }
   }
 
   componentDidMount () {
     const { socket, reconnectFetchMessages } = this.props
-    this.visibility = visibility()
     this.scrollToBottom()
     this.reconnectHandler = () => {
       reconnectFetchMessages()
     }
     socket.on('reconnect', this.reconnectHandler)
+    document && document.addEventListener('visibilitychange', this.handleVisibilityChange)
   }
 
   componentWillUnmount () {
@@ -91,10 +92,20 @@ export default class MessageSection extends React.Component {
     } */
   }
 
+  handleVisibilityChange = () => {
+    const { onNextVisible } = this.state
+    if (document && document.hidden) {
+      this.setState({visible: false})
+    } else {
+      if (onNextVisible) onNextVisible()
+      this.setState({visible: true, onNextVisible: null})
+    }
+  }
+
   fetchMore = () => {
     const { hasMore, pending, fetchMessages, messages } = this.props
-    const cursor = messages[0].id
-    if (hasMore && !pending) {
+    const cursor = get('id', messages[0])
+    if (cursor && hasMore && !pending) {
       fetchMessages().then(() => this.scrollToMessage(cursor))
     }
   }
@@ -124,11 +135,12 @@ export default class MessageSection extends React.Component {
   }
 
   scrollToBottom = () => {
+    const { visible } = this.state
     this.list.scrollTop = this.list.scrollHeight
-    if (this.visibility.visible()) {
+    if (visible) {
       this.markAsRead()
     } else {
-      this.visibility.once('show', this.markAsRead)
+      this.setState({onNextVisible: this.markAsRead})
     }
     this.setState({ scrolledUp: false })
   }
