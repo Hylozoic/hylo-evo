@@ -1,6 +1,5 @@
 .new-message-thread {
   flex-grow: 2;
-  display: flex;
 }
 
 .close-button {
@@ -9,9 +8,11 @@
 .thread-header {
   display: flex;
   flex-grow: 2;
+  align-items: flex-end;
   height: $space-20x;
-  padding: $space-6x;
   border: 1px $color-rhino-30 solid;
+  padding: $space-3x $space-7x;
+  padding-top: 0;
 
   &:focus, &:hover {
     outline: none;

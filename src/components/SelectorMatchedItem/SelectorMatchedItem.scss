@@ -1,3 +1,25 @@
 .selector-matched-item { 
-  /* empty */
+  display: flex;
+  align-items: center;
+  margin-right: $space-2x;
+  padding: $space-1x;
+  height: $space-10x;
+  border: 1px $color-rhino-30 solid;
+  border-radius: 4px;
+}
+
+.avatar {
+  margin-right: $space-1x;
+}
+
+.name {
+  composes: caption-drk-lg from 'css/typography.scss';
+  @include font-bold;
+}
+
+.delete-match {
+  font-size: 18px;
+  color: $color-rhino-30;
+  margin: 0 $space-2x;
+  cursor: pointer;
 }
