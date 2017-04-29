@@ -1,19 +1,12 @@
 import { connect } from 'react-redux'
-import { getMe } from 'store/selectors/getMe'
-import getPeopleTyping from 'store/selectors/getPeopleTyping'
 import {
   addMessageFromSocket,
-  addThreadFromSocket,
+  addThreadFromSocket
+} from './SocketListener.store'
+import {
   addUserTyping,
   clearUserTyping
-} from './SocketListener.store'
-
-export function mapStateToProps (state, props) {
-  return {
-    currentUser: getMe(state, props),
-    peopleTyping: getPeopleTyping(state)
-  }
-}
+} from 'components/PeopleTyping/PeopleTyping.store'
 
 export const mapDispatchToProps = {
   addMessageFromSocket,
@@ -22,4 +15,4 @@ export const mapDispatchToProps = {
   clearUserTyping
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export default connect(null, mapDispatchToProps)

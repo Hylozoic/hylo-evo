@@ -1,17 +1,11 @@
 import { PropTypes, Component } from 'react'
-import { each, keys } from 'lodash/fp'
 import { getSocket, socketUrl } from 'client/websockets'
-import { STARTED_TYPING_INTERVAL } from 'components/MessageForm/MessageForm'
 import './SocketListener.scss'
 const { func, object } = PropTypes
 
-const MS_CLEAR_TYPING = STARTED_TYPING_INTERVAL + 1000
-
 export default class SocketListener extends Component {
   static propTypes = {
-    currentUser: object,
     location: object,
-    peopleTyping: object,
     addThreadFromSocket: func,
     addMessageFromSocket: func,
     addUserTyping: func,
@@ -28,7 +22,6 @@ export default class SocketListener extends Component {
     }
     this.socket.on('reconnect', this.reconnectHandler)
     this.socket.on('userTyping', this.userTyping.bind(this))
-    this.clearTypingInterval = window && window.setInterval(this.clearTyping.bind(this), 1000)
   }
 
   componentWillUnmount () {
@@ -37,7 +30,6 @@ export default class SocketListener extends Component {
     this.socket.off('messageAdded')
     this.socket.off('reconnect', this.reconnectHandler)
     this.socket.off('userTyping')
-    window && window.clearInterval(this.clearTypingInterval)
   }
 
   addThreadFromSocket = data => {
@@ -47,21 +39,8 @@ export default class SocketListener extends Component {
 
   addMessageFromSocket = data => {
     const { addMessageFromSocket, location } = this.props
-    const [_, namespace, id] = location.pathname.split('/')
-    const isActiveThread = namespace === 't' && data.postId === id
-    const opts = {bumpUnreadCount: !isActiveThread}
+    const opts = {bumpUnreadCount: !isActiveThread(location, data)}
     addMessageFromSocket(convertMessageToModelFormat(data.message, data.postId), opts)
-  }
-
-  clearTyping () {
-    const { peopleTyping, clearUserTyping } = this.props
-    const now = Date.now()
-    const stale = user => now - user.timestamp > MS_CLEAR_TYPING
-    each(userId => {
-      if (stale(peopleTyping[userId])) {
-        clearUserTyping(userId)
-      }
-    }, keys(peopleTyping))
   }
 
   userTyping ({userId, userName, isTyping}) {
@@ -76,6 +55,11 @@ export default class SocketListener extends Component {
   render () {
     return null
   }
+}
+
+function isActiveThread (location, data) {
+  const [ namespace, id ] = location.pathname.split('/').slice(1, 3)
+  return namespace === 't' && data.postId === id
 }
 
 function convertMessageToModelFormat ({ id, created_at, text, user_id }, messageThreadId) {

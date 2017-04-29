@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import getPeopleTyping from 'store/selectors/getPeopleTyping'
+import { clearUserTyping, getPeopleTyping } from './PeopleTyping.store'
 
 export function mapStateToProps (state, props) {
   return {
@@ -7,6 +7,6 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = {}
+export const mapDispatchToProps = {clearUserTyping}
 
 export default connect(mapStateToProps, mapDispatchToProps)
