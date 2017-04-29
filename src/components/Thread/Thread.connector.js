@@ -14,15 +14,17 @@ export function mapStateToProps (state, props) {
 }
 
 function mapDispatchToProps (dispatch, props) {
+  const { threadId } = props
+
   return {
-    fetchThread: () => dispatch(fetchThread(props.threadId)),
+    fetchThread: () => dispatch(fetchThread(threadId)),
 
     subscribe: function (oldHandler) {
       const socket = getSocket()
       if (oldHandler) socket.off('reconnect', oldHandler)
 
       const newHandler = () => {
-        socket.post(socketUrl(`/noo/post/${props.threadId}/subscribe`))
+        socket.post(socketUrl(`/noo/post/${threadId}/subscribe`))
       }
 
       socket.on('reconnect', newHandler)
@@ -33,7 +35,7 @@ function mapDispatchToProps (dispatch, props) {
       return newHandler
     },
 
-    unsubscribe: function (oldHandler, threadId = props.threadId) {
+    unsubscribe: function (oldHandler) {
       const socket = getSocket()
       socket.off('reconnect', oldHandler)
       socket.post(socketUrl(`/noo/post/${threadId}/unsubscribe`))
