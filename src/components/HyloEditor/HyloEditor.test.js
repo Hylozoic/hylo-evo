@@ -22,16 +22,16 @@ function renderComponent (renderFunc, props = {}) {
 describe('HyloEditor', () => {
   it('renders correctly (with min props)', () => {
     const wrapper = renderComponent(shallow)
-    expect(wrapper.find('PluginEditor').length).toEqual(1)
-    expect(wrapper.find('Decorated(MentionSuggestions)').length).toEqual(1)
-    expect(wrapper.find('Decorated(CompletionSuggestions)').length).toEqual(1)
+    expect(wrapper.find('PluginEditor')).toHaveLength(1)
+    expect(wrapper.find('Decorated(MentionSuggestions)')).toHaveLength(1)
+    expect(wrapper.find('Decorated(CompletionSuggestions)')).toHaveLength(1)
   })
 
   it('#setContentState creates expected result through #getContentRaw', () => {
     const wrapper = renderComponent(mount)
     const testContent = 'test content <h1>test</h1>'
     wrapper.get(0).setContentState(ContentState.createFromText(testContent))
-    expect(wrapper.get(0).getContentRaw().blocks.length).toEqual(1)
+    expect(wrapper.get(0).getContentRaw().blocks).toHaveLength(1)
     expect(wrapper.get(0).getContentRaw().blocks[0].text).toEqual(testContent)
   })
 
@@ -62,7 +62,7 @@ describe('HyloEditor', () => {
       const submitOnReturnHandler = jest.fn()
       const wrapper = renderComponent(mount, { submitOnReturnHandler })
       const result = wrapper.get(0).handleReturn({shiftKey: false})
-      expect(submitOnReturnHandler.mock.calls.length).toBe(1)
+      expect(submitOnReturnHandler.mock.calls).toHaveLength(1)
       expect(result).toEqual('handled')
     })
 
@@ -70,7 +70,7 @@ describe('HyloEditor', () => {
       const submitOnReturnHandler = jest.fn()
       const wrapper = renderComponent(mount, { submitOnReturnHandler })
       const result = wrapper.get(0).handleReturn({shiftKey: true})
-      expect(submitOnReturnHandler.mock.calls.length).toBe(0)
+      expect(submitOnReturnHandler.mock.calls).toHaveLength(0)
       expect(result).toEqual('not-handled')
     })
   })
