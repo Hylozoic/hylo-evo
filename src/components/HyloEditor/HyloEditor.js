@@ -45,10 +45,13 @@ export default class HyloEditor extends Component {
   }
 
   static defaultProps = {
-    contentHTML: ''
+    contentHTML: '',
+    mentionResults: Immutable.List(),
+    hashtagResults: Immutable.List()
   }
 
   defaultState = ({ contentHTML }) => {
+    console.log(contentHTML)
     const contentState = contentStateFromHTML(ContentState.createFromText(''), contentHTML)
     const editorState = EditorState.createWithContent(contentState)
     return {
