@@ -5,8 +5,8 @@ import createMentionPlugin from 'draft-js-mention-plugin'
 import createHashtagPlugin from './hashtagPlugin'
 import createLinkifyPlugin from 'draft-js-linkify-plugin'
 import { EditorState, ContentState, convertToRaw } from 'draft-js'
-import contentStateToHTML from './draftContentStateToHTML'
-import contentStateFromHTML from './draftContentStateFromHTML'
+import contentStateToHTML from './contentStateToHTML'
+import contentStateFromHTML from './contentStateFromHTML'
 import 'draft-js/dist/Draft.css'
 import 'draft-js-mention-plugin/lib/plugin.css'
 import './HyloEditor.scss'
@@ -34,21 +34,32 @@ const plugins = [
 export default class HyloEditor extends Component {
   static propTypes = {
     contentHTML: PropTypes.string,
-    mentionResults: PropTypes.instanceOf(Immutable.List),
-    hashtagResults: PropTypes.instanceOf(Immutable.List),
     placeholder: PropTypes.string,
-    className: PropTypes.string
+    className: PropTypes.string,
+    findMentions: PropTypes.func.isRequired,
+    clearMentions: PropTypes.func.isRequired,
+    findHashtags: PropTypes.func.isRequired,
+    clearHashtags: PropTypes.func.isRequired,
+    mentionResults: PropTypes.instanceOf(Immutable.List),
+    hashtagResults: PropTypes.instanceOf(Immutable.List)
   }
 
   static defaultProps = {
     contentHTML: ''
   }
 
+  defaultState = ({ contentHTML }) => {
+    const contentState = contentStateFromHTML(ContentState.createFromText(''), contentHTML)
+    const editorState = EditorState.createWithContent(contentState)
+    return {
+      editorState,
+      submitOnReturnEnabled: true
+    }
+  }
+
   constructor (props) {
     super(props)
-    const contentState = contentStateFromHTML(ContentState.createFromText(''), props.contentHTML)
-    const editorState = EditorState.createWithContent(contentState)
-    this.state = {editorState, submitOnReturnEnabled: true}
+    this.state = this.defaultState(props)
   }
 
   reset = () => {
@@ -69,6 +80,10 @@ export default class HyloEditor extends Component {
   getContentRaw = () => {
     const { editorState } = this.state
     return convertToRaw(editorState.getCurrentContent())
+  }
+
+  setContentState = (contentState) => {
+    this.setState({editorState: EditorState.push(this.state.editorState, contentState)})
   }
 
   handleChange = (editorState) => {

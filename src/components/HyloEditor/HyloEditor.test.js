@@ -2,27 +2,24 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import HyloEditor from './HyloEditor'
 
-// titlePlaceholder: PropTypes.string,
-// bodyPlaceholder: PropTypes.string,
-// postType: PropTypes.string,
-// currentUser: PropTypes.object,
-// createPost: PropTypes.func
+const emptyFunc = () => {}
+
+const defaultMinProps = {
+  findMentions: emptyFunc,
+  clearMentions: emptyFunc,
+  findHashtags: emptyFunc,
+  clearHashtags: emptyFunc
+}
+
+function targetComponent (props) {
+  return <HyloEditor {...Object.assign({}, props, defaultMinProps)} />
+}
 
 describe('HyloEditor', () => {
-  describe('#getContentHTML', () => {
-    it('saves mentions', () => {
-      const wrapper = shallow(<HyloEditor />)
-      // expect(wrapper.find('HyloEditor')).toBeTruthy()
-    })
-
-    it('saves hashtag links', () => {
-      const wrapper = shallow(<HyloEditor />)
-      // expect(wrapper.find('HyloEditor')).toBeTruthy()
-    })
-
-    it('saves links', () => {
-      const wrapper = shallow(<HyloEditor />)
-      // expect(wrapper.find('HyloEditor')).toBeTruthy()
-    })
+  it('renders correctly (with min props)', () => {
+    const wrapper = shallow(targetComponent())
+    expect(wrapper.find('PluginEditor').length).toEqual(1)
+    expect(wrapper.find('Decorated(MentionSuggestions)').length).toEqual(1)
+    expect(wrapper.find('Decorated(CompletionSuggestions)').length).toEqual(1)
   })
 })
