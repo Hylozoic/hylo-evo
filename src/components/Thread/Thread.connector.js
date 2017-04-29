@@ -21,12 +21,13 @@ function mapDispatchToProps (dispatch, props) {
 
     subscribe: function (oldHandler) {
       const socket = getSocket()
-      if (oldHandler) {
-        socket.off('reconnect', oldHandler)
-      }
+      if (oldHandler) socket.off('reconnect', oldHandler)
+
       const newHandler = () => {
         socket.post(socketUrl(`/noo/post/${threadId}/subscribe`))
       }
+
+      socket.on('reconnect', newHandler)
       newHandler()
 
       // return the handler so it can be assigned to a component-local variable
