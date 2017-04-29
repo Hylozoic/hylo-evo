@@ -2,7 +2,7 @@ import NewMessageThread from './NewMessageThread'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-it('does something', () => {
+it('matches the last snapshot', () => {
   const wrapper = shallow(<NewMessageThread />)
-  // expect(wrapper.find('element')).toBeTruthy()
+  expect(wrapper).toMatchSnapshot()
 })
