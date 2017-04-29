@@ -13,11 +13,6 @@ export default class Messages extends Component {
     match: object
   }
 
-  componentDidMount () {
-    // FIXME this doesn't belong here
-    this.props.fetchCurrentUser()
-  }
-
   render () {
     const { match: { params: { threadId } } } = this.props
     return <div styleName='modal'>

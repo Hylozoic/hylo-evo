@@ -9,6 +9,7 @@ import {
   updateThreadReadTime
 } from './MessageSection.store'
 import { FETCH_MESSAGES } from 'store/constants'
+import { getSocket } from 'client/websockets'
 
 export function mapStateToProps (state, props) {
   return {
@@ -16,7 +17,8 @@ export function mapStateToProps (state, props) {
     pending: !!state.pending[FETCH_MESSAGES],
     total: getTotalMessages(state, {id: props.messageThreadId}),
     hasMore: getHasMoreMessages(state, {id: props.messageThreadId}),
-    currentUser: getMe(state)
+    currentUser: getMe(state),
+    socket: getSocket()
   }
 }
 
