@@ -22,7 +22,7 @@ export default function Navigation ({ className, collapsed, location }) {
         {links.map(link =>
           <NavLink key={link.label} {...link} collapsed={collapsed} />)}
       </ul>
-      <TopicNavigation />
+      <TopicNavigation slug={slug} />
     </div>
   </div>
 }
