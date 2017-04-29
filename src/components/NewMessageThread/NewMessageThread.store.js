@@ -10,7 +10,9 @@ export function fetchExample () {
 }
 
 const defaultState = {
-  example: 'example value'
+  participants: [
+    { id: '1', name: 'Felix Huffenflarberson', avatarUrl: 'http://st2.depositphotos.com/2703645/11099/v/170/depositphotos_110992516-stock-illustration-female-cartoon-avatar-icon.jpg', community: 'FlorpleDorfers' }
+  ]
 }
 
 export default function reducer (state = defaultState, action) {

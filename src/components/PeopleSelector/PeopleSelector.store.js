@@ -10,6 +10,7 @@ const fetchPeopleQuery =
     items {
       id
       name
+      avatarUrl
       memberships {
         id
         community {

@@ -11,7 +11,7 @@ export default class NewMessageThread extends React.Component {
   render () {
     return <div styleName='new-message-thread'>
       <div styleName='thread-header' tabIndex='0'>
-        <PeopleSelector />
+        <PeopleSelector matches={this.props.participants} />
         <Icon name='Ex' styleName='close-button' />
       </div>
     </div>

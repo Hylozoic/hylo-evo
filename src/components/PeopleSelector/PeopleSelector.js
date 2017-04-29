@@ -9,7 +9,8 @@ const { any, arrayOf, func, shape, string } = React.PropTypes
 
 const personType = shape({
   id: any,
-  name: string
+  name: string,
+  avatarUrl: string
 })
 
 // TODO: This _grossly_ underestimates the problem! See:
@@ -51,6 +52,7 @@ export default class PeopleSelector extends React.Component {
     return <div styleName='people-selector'>
       {matches && matches.map(match =>
         <SelectorMatchedItem
+          avatarUrl={match.avatarUrl}
           key={match.id}
           name={match.name}
           deleteMatch={() => deleteMatch(match.id)} />
@@ -61,7 +63,7 @@ export default class PeopleSelector extends React.Component {
         spellCheck={false}
         onChange={evt => this.onChange(evt)}
         onKeyDown={evt => this.onKeyDown(evt)}
-        placeholder='Type in the names of people to message' />
+        placeholder={matches.length ? '' : 'Type in the names of people to message'} />
     </div>
   }
 }
