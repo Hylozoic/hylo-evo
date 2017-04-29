@@ -19,7 +19,7 @@ export const participantsSelector = createSelector(
   ))
 )
 
-const defaultState = {
+export const defaultState = {
   participants: []
 }
 
