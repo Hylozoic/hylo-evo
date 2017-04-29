@@ -1,3 +1,3 @@
 import PeopleSelectorMatches from './PeopleSelectorMatches'
-
-export default PeopleSelectorMatches
+import connector from './PeopleSelectorMatches.connector'
+export default connector(PeopleSelectorMatches)

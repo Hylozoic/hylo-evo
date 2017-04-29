@@ -2,6 +2,7 @@ import React from 'react'
 
 import Icon from 'components/Icon'
 import PeopleSelector from 'components/PeopleSelector'
+import PeopleSelectorMatches from 'components/PeopleSelectorMatches'
 import './NewMessageThread.scss'
 
 export default class NewMessageThread extends React.Component {
@@ -13,6 +14,9 @@ export default class NewMessageThread extends React.Component {
       <div styleName='thread-header' tabIndex='0'>
         <PeopleSelector matches={this.props.participants} />
         <Icon name='Ex' styleName='close-button' />
+      </div>
+      <div>
+        <PeopleSelectorMatches />
       </div>
     </div>
   }

@@ -28,7 +28,7 @@ export default class PeopleSelector extends React.Component {
   autocompleteSearch = throttle(1000, this.props.fetchPeople)
 
   onChange = debounce(200, evt => {
-    const { value } = evt.target
+    const { value } = this.autocomplete
     if (!invalidPersonName.exec(value)) {
       return this.props.setAutocomplete(value)
     }
