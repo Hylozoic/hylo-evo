@@ -6,12 +6,14 @@ import {
   updateMessageText
 } from './MessageForm.store'
 import { CREATE_MESSAGE } from 'store/constants'
+import { getSocket } from 'client/websockets'
 
 export function mapStateToProps (state, props) {
   return {
     text: getTextForMessageThread(state, props),
     pending: !!state.pending[CREATE_MESSAGE],
-    currentUser: getMe(state)
+    currentUser: getMe(state),
+    socket: getSocket()
   }
 }
 
