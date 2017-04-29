@@ -39,7 +39,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, { slug }) {
   return {
-    fetchCommunity: slug ? () => {console.log('feching for nav'); dispatch(fetchCommunity(slug))} : () => {}
+    fetchCommunity: slug ? () => dispatch(fetchCommunity(slug)) : () => {}
   }
 }
 
