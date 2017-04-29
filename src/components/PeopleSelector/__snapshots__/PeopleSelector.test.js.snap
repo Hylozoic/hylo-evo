@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`matches the last snapshot 1`] = `
-<div>
+<div
+  data-styleName="people-selector"
+>
   <SelectorMatchedItem
     deleteMatch={[Function]}
     name="Wombat"
@@ -11,8 +13,10 @@ exports[`matches the last snapshot 1`] = `
     name="Aardvark"
   />
   <input
+    data-styleName="autocomplete"
     onChange={[Function]}
     onKeyDown={[Function]}
+    placeholder=""
     spellCheck={false}
     type="text"
   />
