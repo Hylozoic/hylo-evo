@@ -1,8 +1,10 @@
 import { connect } from 'react-redux'
 
-export function mapStateToProps ({ NewMessageThread }) {
+import { participantsSelector } from './NewMessageThread.store'
+
+export function mapStateToProps (state) {
   return {
-    participants: NewMessageThread.participants
+    participants: participantsSelector(state)
   }
 }
 

@@ -1,18 +1,25 @@
 export const MODULE_NAME = 'NewMessageThread'
+import { createSelector } from 'redux-orm'
+import { pick } from 'lodash/fp'
 
-export const FETCH_EXAMPLE = 'FETCH_EXAMPLE'
-import { PEOPLE_SELECTOR_SET_AUTOCOMPLETE } from 'components/PeopleSelector/PeopleSelector.store'
+import orm from 'store/models'
+import {
+  PEOPLE_SELECTOR_DELETE_MATCH,
+  PEOPLE_SELECTOR_SET_AUTOCOMPLETE
+} from 'components/PeopleSelector/PeopleSelector.store'
 
-export function fetchExample () {
-  return {
-    type: FETCH_EXAMPLE
-  }
-}
+export const participantsSelector = createSelector(
+  orm,
+  state => state.orm,
+  ({ NewMessageThread }) => NewMessageThread.participants,
+  (session, participants) => participants.map(id => pick(
+    [ 'id', 'name', 'avatarUrl' ],
+    session.Person.withId(id).ref
+  ))
+)
 
 const defaultState = {
-  participants: [
-    { id: '1', name: 'Felix Huffenflarberson', avatarUrl: 'http://st2.depositphotos.com/2703645/11099/v/170/depositphotos_110992516-stock-illustration-female-cartoon-avatar-icon.jpg', community: 'FlorpleDorfers' }
-  ]
+  participants: []
 }
 
 export default function reducer (state = defaultState, action) {
@@ -22,6 +29,12 @@ export default function reducer (state = defaultState, action) {
   switch (type) {
     case PEOPLE_SELECTOR_SET_AUTOCOMPLETE:
       return { ...state, autocomplete: payload }
+
+    case PEOPLE_SELECTOR_DELETE_MATCH:
+      return {
+        ...state,
+        participants: state.participants.filter(p => p !== payload)
+      }
 
     default:
       return state
