@@ -36,6 +36,7 @@ export default class HyloEditor extends Component {
     contentHTML: PropTypes.string,
     placeholder: PropTypes.string,
     className: PropTypes.string,
+    submitOnReturnHandler: PropTypes.func,
     findMentions: PropTypes.func.isRequired,
     clearMentions: PropTypes.func.isRequired,
     findHashtags: PropTypes.func.isRequired,
@@ -106,7 +107,7 @@ export default class HyloEditor extends Component {
     const { submitOnReturnHandler } = this.props
     if (submitOnReturnHandler && this.state.submitOnReturnEnabled) {
       if (!event.shiftKey) {
-        submitOnReturnHandler(this.getContent())
+        submitOnReturnHandler(this.getContentHTML())
         this.setState({
           editorState: EditorState.moveFocusToEnd(EditorState.createEmpty())
         })

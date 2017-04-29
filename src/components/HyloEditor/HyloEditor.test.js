@@ -43,13 +43,35 @@ describe('HyloEditor', () => {
         .toEqual('mention')
     })
 
-    it('converts hashtags into contentState entity, ', () => {
+    it('converts hashtag into contentState entity, ', () => {
       const contentHTML = '<a data-entity-type="hashtag">#testhashtag</a>'
       const wrapper = renderComponent(mount, { contentHTML })
       expect(wrapper.get(0).getContentRaw().entityMap[0].type)
         .toEqual('hashtag')
     })
   })
-})
 
-// calls onEnter when callback provided
+  describe('#handleReturn', () => {
+    it('does nothing if props.submitOnReturnHandler is not provided', () => {
+      const wrapper = renderComponent(mount)
+      const result = wrapper.get(0).handleReturn({shiftKey: false})
+      expect(result).toEqual(undefined)
+    })
+
+    it('runs props.submitOnReturnHandler if provided', () => {
+      const submitOnReturnHandler = jest.fn()
+      const wrapper = renderComponent(mount, { submitOnReturnHandler })
+      const result = wrapper.get(0).handleReturn({shiftKey: false})
+      expect(submitOnReturnHandler.mock.calls.length).toBe(1)
+      expect(result).toEqual('handled')
+    })
+
+    it('will not run props.submitOnReturnHandler if provided but shiftKey+returnKey is entered', () => {
+      const submitOnReturnHandler = jest.fn()
+      const wrapper = renderComponent(mount, { submitOnReturnHandler })
+      const result = wrapper.get(0).handleReturn({shiftKey: true})
+      expect(submitOnReturnHandler.mock.calls.length).toBe(0)
+      expect(result).toEqual('not-handled')
+    })
+  })
+})

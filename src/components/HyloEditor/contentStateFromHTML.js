@@ -1,9 +1,9 @@
 import { Map } from 'immutable'
 import { convertFromHTML } from 'draft-convert'
 
-// NOTE: Legacy mention links are in this format:
+// NOTE: Legacy mention links are in this format --
 // <a href="/u/99" data-user-id="99">Hylo User</a>
-// "<p><a>#opensource</a>&nbsp;these&nbsp;<a>#offer</a>&nbsp;<a href="/u/21927" data-user-id="21927">Ade</a>&nbsp;</p>"
+//
 export function createMentionFromLink (contentState, node) {
   const mention = Map({
     id: node.getAttribute('data-user-id'),
@@ -19,6 +19,9 @@ export function createMentionFromLink (contentState, node) {
   return contentStateWithEntity.getLastCreatedEntityKey()
 }
 
+// NOTE: Legacy Hashtags are in this format --
+// <a>#topic</a>
+//
 export function createHashtagFromLink (contentState, node) {
   const hashtag = Map({
     name: node.getAttribute('topic') || node.text.substring(1)
@@ -37,7 +40,7 @@ export default function (contentState, html) {
       if (nodeName === 'a' && node.getAttribute('data-entity-type') === 'mention') {
         return createMentionFromLink(contentState, node)
       // get from plugin config? node.text[0] === '#'
-    } else if (nodeName === 'a' && (node.getAttribute('data-entity-type') === 'hashtag' || node.text[0] === '#')) {
+      } else if (nodeName === 'a' && (node.getAttribute('data-entity-type') === 'hashtag' || node.text[0] === '#')) {
         return createHashtagFromLink(contentState, node)
       }
     }
