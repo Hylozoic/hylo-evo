@@ -43,25 +43,33 @@ describe('setAutocomplete', () => {
   })
 
   it('updates if user input contains valid characters', () => {
-    const value = 'Poor Yorick'
+    const expected = 'Poor Yorick'
     const setAutocomplete = jest.fn()
     const wrapper = mount(
       <PeopleSelector fetchPeople={() => {}} matches={[]} setAutocomplete={setAutocomplete} />
     )
-    wrapper.find('input').first().simulate('change', { target: { value } })
+    const input = wrapper.find('input').first()
+    input.node.value = expected
+    input.simulate('change')
     jest.runAllTimers()
+
     const actual = setAutocomplete.mock.calls[0][0]
-    expect(actual).toBe(value)
+    expect(actual).toBe(expected)
   })
 
   it('does not update if user input contains invalid characters', () => {
-    const value = 'Poor Yorick9238183$@#$$@!'
+    const invalid = 'Poor Yorick9238183$@#$$@!'
+    const expected = 'Poor Yorick'
     const setAutocomplete = jest.fn()
     const wrapper = mount(
       <PeopleSelector fetchPeople={() => {}} matches={[]} setAutocomplete={setAutocomplete} />
     )
-    wrapper.find('input').first().simulate('change', { target: { value } })
+    const input = wrapper.find('input').first()
+    input.node.value = invalid
+    input.simulate('change')
+
     jest.runAllTimers()
     expect(setAutocomplete).not.toHaveBeenCalled()
+    expect(input.node.value).toBe(expected)
   })
 })

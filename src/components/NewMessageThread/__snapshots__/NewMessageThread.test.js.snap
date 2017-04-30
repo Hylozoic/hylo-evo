@@ -14,5 +14,8 @@ exports[`matches the last snapshot 1`] = `
       name="Ex"
     />
   </div>
+  <div>
+    <Connect(PeopleSelectorMatches) />
+  </div>
 </div>
 `;

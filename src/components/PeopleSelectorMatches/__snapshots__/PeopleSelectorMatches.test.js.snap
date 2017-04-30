@@ -3,5 +3,7 @@
 exports[`does something 1`] = `
 <div
   data-styleName="people-selector-matches"
-/>
+>
+  <ul />
+</div>
 `;
