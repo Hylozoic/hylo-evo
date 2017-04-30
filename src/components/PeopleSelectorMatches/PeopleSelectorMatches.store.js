@@ -10,10 +10,10 @@ export const matchesSelector = createSelector(
   state => state.NewMessageThread,
   (session, thread) => {
     if (thread.autocomplete) {
+      const term = thread.autocomplete.toLowerCase()
       return session.Person
         .all()
-        // TODO: hah! tidy this up
-        .filter(p => p.name.toLowerCase().includes(thread.autocomplete.toLowerCase()))
+        .filter(p => p.name.toLowerCase().includes(term))
         .toRefArray()
     }
     return null
