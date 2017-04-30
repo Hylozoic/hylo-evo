@@ -45,7 +45,11 @@ export default function PostTypes (props) {
     <div className='sheet'>
       <div className='sheet-title'>Post Editor</div>
       <div styleName='postCards'>
-        <PostEditor />
+        <PostEditor
+          postType='offer'
+          title='This is a Post title'
+          description='This is a test <a href="/u/1" data-user-id="99" data-entity-type="mention">Loren Johnson</a> and the remaining text <a data-entity-type="hashtag">#test</a> text betweeen hastags <a data-entity-type="hashtag">#test2</a>'
+        />
       </div>
       <div className='sheet-title'>Post Types</div>
       <div styleName='postCards'>

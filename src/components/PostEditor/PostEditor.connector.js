@@ -4,11 +4,10 @@ import { getMe } from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
-  const communities = currentUser &&
+  const communityOptions = currentUser &&
     currentUser.memberships.toModelArray().map(m => m.community)
   return {
-    currentUser,
-    communities
+    communityOptions
   }
 }
 

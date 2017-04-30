@@ -5,11 +5,15 @@ import styles from './CommunitiesSelector.scss'
 
 export default class CommunitiesSelector extends Component {
   static propTypes = {
+    placeholder: PropTypes.string,
+    selected: PropTypes.array,
     options: PropTypes.array.isRequired,
     onChange: PropTypes.func
   }
 
   static defaultProps = {
+    placeholder: 'Begin typing...',
+    selected: [],
     options: []
   }
 
@@ -18,6 +22,9 @@ export default class CommunitiesSelector extends Component {
     this.state = {
       selected: [],
       suggestions: []
+    }
+    if (props.selected.length > 0) {
+      this.selected.forEach(community => this.handleAddition(community))
     }
   }
 
@@ -63,11 +70,12 @@ export default class CommunitiesSelector extends Component {
   }
 
   render () {
+    const { placeholder } = this.props
     const { selected, suggestions } = this.state
 
     return (
       <TagInput
-        placeholder='Begin typing...'
+        placeholder={placeholder}
         tags={selected}
         suggestions={suggestions}
         handleInputChange={this.handleInputChange}
