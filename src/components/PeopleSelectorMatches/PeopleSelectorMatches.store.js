@@ -12,6 +12,7 @@ export const matchesSelector = createSelector(
       return session.Person
         .all()
         .filter(p => p.name.toLowerCase().includes(term))
+        .orderBy('name')
         .toRefArray()
     }
     return null
