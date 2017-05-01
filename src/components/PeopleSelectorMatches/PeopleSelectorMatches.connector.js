@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 
+import { addMatch } from 'components/PeopleSelector/PeopleSelector.store'
 import { matchesSelector } from './PeopleSelectorMatches.store'
 
 export function mapStateToProps (state) {
@@ -8,4 +9,4 @@ export function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)
+export default connect(mapStateToProps, { addMatch })

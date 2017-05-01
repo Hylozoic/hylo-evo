@@ -1,11 +1,23 @@
 import React from 'react'
+import cx from 'classnames'
+
 import './PersonListItem.scss'
 
-const { string } = React.PropTypes
+const { any, bool, func, shape, string } = React.PropTypes
 
-export default function PersonListItem ({ example }) {
-  return <div styleName='exampleName'>{example}</div>
+const personType = shape({
+  active: bool,
+  id: any,
+  name: string,
+  avatarUrl: string,
+  community: string
+})
+
+export default function PersonListItem ({ addMatch, person }) {
+  return <li styleName={cx('person-list-item', { active: person.active })}>{person.name}</li>
 }
+
 PersonListItem.propTypes = {
-  example: string
+  addMatch: func,
+  person: personType
 }
