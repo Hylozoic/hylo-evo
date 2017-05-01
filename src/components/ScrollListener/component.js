@@ -17,7 +17,7 @@ export default class ScrollListener extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      hitTop: false,
+      hitTop: true,
       hitBottom: false
     }
   }

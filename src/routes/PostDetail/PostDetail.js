@@ -11,6 +11,7 @@ import { tagUrl } from 'util/index'
 import { DETAIL_COLUMN_ID } from 'util/scrolling'
 
 const STICKY_HEADER_ID = 'header-sticky'
+const STICKY_ACTIVITY_ID = 'activity-sticky'
 
 export default class PostDetail extends Component {
   static propTypes = {
@@ -38,7 +39,7 @@ export default class PostDetail extends Component {
     }
   }
 
-  createHeader (sticky) {
+  createHeader () {
     const { post, slug, onClose, showCommunity } = this.props
     return <PostHeader creator={post.creator}
       date={post.updatedAt || post.createdAt}
@@ -51,10 +52,22 @@ export default class PostDetail extends Component {
   }
 
   handleScroll = event => {
-    const { atTop } = this.state
+    const { atTop, atActivity } = this.state
+    const header = document.getElementById(STICKY_HEADER_ID)
     if (!atTop) {
-      const header = document.getElementById(STICKY_HEADER_ID)
-      if (header) header.style.top = event.target.scrollTop + 'px'
+      header.style.top = event.target.scrollTop + 'px'
+    }
+    const activityBreakpoint = this.refs.activity.offsetTop - header.offsetHeight
+    if (event.target.scrollTop >= activityBreakpoint && !atActivity) {
+      this.setState({atActivity: true})
+      const activity = document.getElementById(STICKY_ACTIVITY_ID)
+      if (activity) activity.style.top = event.target.scrollTop + header.offsetHeight + 'px'
+    } else if (event.target.scrollTop < activityBreakpoint && atActivity) {
+      this.setState({atActivity: false})
+    }
+    if (atActivity) {
+      const activity = document.getElementById(STICKY_ACTIVITY_ID)
+      if (activity) activity.style.top = event.target.scrollTop + header.offsetHeight + 'px'
     }
   }
 
@@ -68,16 +81,16 @@ export default class PostDetail extends Component {
       detail.scrollTop = detail.scrollHeight
     }
 
+    const header = this.createHeader()
+
     return <div styleName='post'>
       <ScrollListener elementId={DETAIL_COLUMN_ID}
         onScroll={this.handleScroll}
         onBottom={() => {}}
         onTop={() => this.setState({atTop: true})}
         leftTop={() => this.setState({atTop: false})} />
-      {this.createHeader()}
-      {!atTop && <div id={STICKY_HEADER_ID} styleName='header-sticky'>
-        {this.createHeader(true)}
-      </div>}
+      {header}
+      {!atTop && <div id={STICKY_HEADER_ID} styleName='header-sticky'>{header}</div>}
       <PostImage imageUrl={post.imageUrl} styleName='image' />
       <PostTags tags={post.tags} />
       <PostBody title={post.title}
@@ -87,11 +100,18 @@ export default class PostDetail extends Component {
         slug={slug}
         expanded
         styleName='body' />
-      <div styleName='activity-header'>Activity</div>
+      <div styleName='activity-header' ref='activity'>Activity</div>
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
         votesTotal={post.votesTotal} />
+      {atActivity && <div id={STICKY_ACTIVITY_ID} styleName='activity-sticky'>
+        <div styleName='activity-header'>Activity</div>
+        <PostFooter id={post.id}
+          commenters={post.commenters}
+          commentersTotal={post.commentersTotal}
+          votesTotal={post.votesTotal} />
+      </div>}
       <Comments postId={post.id} slug={slug} scrollToBottom={scrollToBottom} />
     </div>
   }
