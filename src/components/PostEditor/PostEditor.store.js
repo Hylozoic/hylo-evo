@@ -2,12 +2,6 @@ export const MODULE_NAME = 'PostEditor'
 
 const CREATE_POST = `${MODULE_NAME}/CREATE_POST`
 
-// title,
-// details,
-// communityIds,
-// startsAt,
-// endsAt,
-// parentPostId
 export function createPost (title, details, communityIds, postType) {
   return {
     type: CREATE_POST,
