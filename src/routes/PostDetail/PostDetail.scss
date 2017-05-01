@@ -7,6 +7,15 @@
   margin-bottom: 10px;
 }
 
+.header-sticky {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background-image: linear-gradient(0deg, rgba(255,255,255,0.00) 0%, $color-white 30%);
+  padding: $space-6x 0;
+  z-index: 1;
+}
+
 .image {
   margin-bottom: 10px;
 }
