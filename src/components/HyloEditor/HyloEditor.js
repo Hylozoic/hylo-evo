@@ -52,7 +52,6 @@ export default class HyloEditor extends Component {
   }
 
   defaultState = ({ contentHTML }) => {
-    console.log(contentHTML)
     const contentState = contentStateFromHTML(ContentState.createFromText(''), contentHTML)
     const editorState = EditorState.createWithContent(contentState)
     return {
