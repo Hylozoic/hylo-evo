@@ -34,7 +34,9 @@ export default class ScrollListener extends React.Component {
     if (isNaN(padding)) padding = 250
 
     const isNowAtBottom = isAtBottom(padding, this.element())
-    const isNowAtTop = this.element().scrollTop === 0
+    const element = this.element()
+    const scrollTop = element.scrollTop || element.scrollY
+    const isNowAtTop = scrollTop === 0
     if (!hitBottom && isNowAtBottom) {
       onBottom && onBottom()
       this.setState({hitBottom: true})
