@@ -5,10 +5,10 @@ const { func, number, string } = React.PropTypes
 
 export default class ScrollListener extends React.Component {
   static propTypes = {
-    onBottom: func.isRequired,
-    leftBottom: func,
+    onBottom: func,
+    onLeaveBottom: func,
     onTop: func,
-    leftTop: func,
+    onLeaveTop: func,
     onScroll: func,
     elementId: string,
     padding: number
@@ -29,7 +29,7 @@ export default class ScrollListener extends React.Component {
 
   handleScrollEvents = throttle(100, event => {
     event.preventDefault()
-    let { onBottom, leftBottom, onTop, leftTop, padding } = this.props
+    let { onBottom, onLeaveBottom, onTop, onLeaveTop, padding } = this.props
     const { hitBottom, hitTop } = this.state
     if (isNaN(padding)) padding = 250
 
@@ -39,7 +39,7 @@ export default class ScrollListener extends React.Component {
       onBottom && onBottom()
       this.setState({hitBottom: true})
     } else if (hitBottom && !isNowAtBottom) {
-      leftBottom && leftBottom()
+      onLeaveBottom && onLeaveBottom()
       this.setState({hitBottom: false})
     }
 
@@ -47,7 +47,7 @@ export default class ScrollListener extends React.Component {
       onTop && onTop()
       this.setState({hitTop: true})
     } else if (hitTop && !isNowAtTop) {
-      leftTop && leftTop()
+      onLeaveTop && onLeaveTop()
       this.setState({hitTop: false})
     }
   })

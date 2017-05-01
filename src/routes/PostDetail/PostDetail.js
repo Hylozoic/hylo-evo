@@ -86,9 +86,8 @@ export default class PostDetail extends Component {
     return <div styleName='post'>
       <ScrollListener elementId={DETAIL_COLUMN_ID}
         onScroll={this.handleScroll}
-        onBottom={() => {}}
         onTop={() => this.setState({atTop: true})}
-        leftTop={() => this.setState({atTop: false})} />
+        onLeaveTop={() => this.setState({atTop: false})} />
       {header}
       {!atTop && <div id={STICKY_HEADER_ID} styleName='header-sticky'>{header}</div>}
       <PostImage imageUrl={post.imageUrl} styleName='image' />
