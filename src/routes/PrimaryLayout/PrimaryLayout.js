@@ -19,6 +19,7 @@ import PostDetail from 'routes/PostDetail'
 import Members from 'routes/Members'
 import Settings from 'routes/Settings'
 import MessageMember from 'components/MessageMember'
+import HyloModal from 'routes/HyloModal'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
@@ -31,9 +32,30 @@ export default class PrimaryLayout extends Component {
     toggleDrawer: PropTypes.func
   }
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      modalIsOpen: false
+    }
+  }
+
   componentDidMount () {
     // FIXME this doesn't belong here
     this.props.fetchCurrentUser()
+  }
+
+  openModal = () => {
+    console.log('here')
+    this.setState({modalIsOpen: true})
+  }
+
+  afterOpenModal = () => {
+    // references are now sync'd and can be accessed.
+    this.subtitle.style.color = '#f00'
+  }
+
+  closeModal = () => {
+    this.setState({modalIsOpen: false})
   }
 
   render () {
@@ -85,6 +107,7 @@ export default class PrimaryLayout extends Component {
       <Route path='/messages/new' exact component={Messages} />
       <Route path='/t/:threadId' component={Messages} />
       <SocketListener location={location} />
+      <Route path='/c/:slug/p/new' exact component={HyloModal} />
     </div>
   }
 }
