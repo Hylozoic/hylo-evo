@@ -65,7 +65,7 @@ export default class MessageForm extends React.Component {
     this.sendIsTyping(true)
   }, STARTED_TYPING_INTERVAL)
 
-  resize = (force) => {
+  resize = () => {
     const editor = this.refs.editor
     const cloned = editor.cloneNode()
     cloned.style.height = 0
