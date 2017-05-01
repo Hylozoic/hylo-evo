@@ -1,6 +1,9 @@
 .topicNavigation {
   padding: 32px 12.5px 0 12.5px;
   color: $color-rhino-50;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -14,6 +17,7 @@
   list-style: none;
   padding: 0 0 0 46px;
   line-height: 27px;
+  overflow: scroll;
   color: $color-rhino-50;
   a {
     color: $color-rhino-50;
