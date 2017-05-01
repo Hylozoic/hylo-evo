@@ -27,6 +27,7 @@ export default class MemberProfile extends React.Component {
       bio: string,
       facebookUrl: string,
       linkedinUrl: string,
+      tagline: string,
       memberships: arrayOf(object),
       name: string,
       role: string,
@@ -69,7 +70,8 @@ export default class MemberProfile extends React.Component {
       name,
       role,
       twitterName,
-      url
+      url,
+      tagline
     } = this.props.person
     const { id, slug } = this.props.match.params
 
@@ -79,6 +81,7 @@ export default class MemberProfile extends React.Component {
       </ProfileBanner>
       <div styleName='content'>
         <ProfileControls currentTab={this.state.currentTab} selectTab={this.selectTab}>
+          <span styleName='tagline'>{tagline}</span>
           <SocialButtons
             facebookUrl={facebookUrl}
             linkedinUrl={linkedinUrl}
@@ -121,7 +124,9 @@ export function ProfileNamePlate ({ avatarUrl, name, location, role }) {
 
 export function ProfileControls ({ children, currentTab, selectTab }) {
   return <div styleName='controls'>
-    {children}
+    <div styleName='controls-children'>
+      {children}
+    </div>
     <hr styleName='separator' />
     <SimpleTabBar
       currentTab={currentTab}
@@ -151,7 +156,7 @@ export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
   </div>
 }
 
-export function TabContentSwitcher ({ bio, currentTab, personId, slug }) {
+export function TabContentSwitcher ({ bio, currentTab, navigate, personId, slug }) {
   switch (currentTab) {
     case 'Overview':
       return <div>

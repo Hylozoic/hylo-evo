@@ -29,3 +29,4 @@ export const isAtBottom = (offset, element) =>
     : element.scrollTop >= element.scrollHeight - element.offsetHeight - offset
 
 export const CENTER_COLUMN_ID = 'center-column'
+export const DETAIL_COLUMN_ID = 'detail-column'

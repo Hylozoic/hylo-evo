@@ -4,7 +4,7 @@ import PostCard from 'components/PostCard'
 import CommentCard from 'components/CommentCard'
 import './RecentActivity.scss'
 
-const { any, arrayOf, number, shape, string } = React.PropTypes
+const { any, arrayOf, func, number, shape, string } = React.PropTypes
 
 const personShape = shape({
   id: any,
@@ -37,7 +37,8 @@ export default class RecentActivity extends React.Component {
       text: string,
       title: string,
       type: string
-    }))
+    })),
+    showDetails: func
   }
 
   componentDidMount () {
@@ -45,13 +46,15 @@ export default class RecentActivity extends React.Component {
   }
 
   render () {
-    const { activityItems } = this.props
+    const { activityItems, showDetails } = this.props
     return <div>
       <h2 styleName='subhead'>Recent Activity</h2>
       {activityItems && activityItems.map((item, i) => {
         return <div styleName='activity-item' key={i}>
           {item.hasOwnProperty('title')
-            ? <PostCard post={item} />
+            ? <PostCard
+              post={item}
+              showDetails={() => showDetails(item.id, item.communities[0].slug)} />
             : <CommentCard key={i} comment={item} />}
         </div>
       })}

@@ -91,6 +91,13 @@
   }
 }
 
+.tagline {
+  composes: bdy-lt-lg from 'css/typography.scss';
+  font-size: 18px;
+  position: relative;
+  top: 3px;
+}
+
 .subhead {
   composes: hdr-headline from 'css/typography.scss';
   margin: $space-8x 0 $space-6x 0;
@@ -103,12 +110,21 @@
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: $space-1x;
+  border: 1px solid black;
 }
 
 .controls {
   margin: $space-2x 0;
   flex-direction: row;
   justify-content: flex-start;
+}
+
+.controls-children {
+  display: flex;
+  align-items: center;
+  height: $space-11x;
+  position: relative;
+  top: 5px;
 }
 
 .separator {
@@ -120,8 +136,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin: $space-3x 0;
-  margin-top: $space-6x;
+  margin: $space-6x 0 $space-3x auto;
 }
 
 .bio {

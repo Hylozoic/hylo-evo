@@ -17,9 +17,9 @@
   background-color: white;
   box-shadow: 0px 4px 21px 2px $color-black-squeeze;
   cursor: pointer;
-  @include font-regular;
+  composes: bdy-lt-sm from 'css/typography.scss';
+  color: $color-rhino-80;
   font-size: 16px;
-  color: $color-rhino-30;
 }
 
 .image {

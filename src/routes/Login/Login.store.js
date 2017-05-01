@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 import { get, pick } from 'lodash/fp'
 import authWithService from './authWithService'
 
-const CHECK_LOGIN = 'CHECK_LOGIN'
+export const CHECK_LOGIN = 'CHECK_LOGIN'
 const LOGIN = 'LOGIN'
 const LOGOUT = 'LOGOUT'
 
@@ -42,7 +42,7 @@ export function logout () {
 }
 
 const reducer = combineReducers({
-  isLoggedIn: (state = false, { type, error, payload, meta }) => {
+  isLoggedIn: (state = null, { type, error, payload, meta }) => {
     if (error) return state
     switch (type) {
       case LOGIN: return true

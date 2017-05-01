@@ -7,7 +7,7 @@
 // shown when something has been typed into the search field.
 
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
-import { FETCH_POST, FETCH_POSTS, FETCH_COMMENTS } from 'store/constants'
+import { FETCH_POST, FETCH_POSTS, FETCH_COMMENTS, FETCH_THREAD, FETCH_MESSAGES } from 'store/constants'
 import { get, isNull, omitBy, pick, uniq } from 'lodash/fp'
 
 // reducer
@@ -15,6 +15,7 @@ import { get, isNull, omitBy, pick, uniq } from 'lodash/fp'
 export default function (state = {}, action) {
   const { type, payload, error, meta } = action
   if (error) return state
+  let root
 
   // If this starts to feel too coupled to specific actions, we could move the
   // parameters below into the action's metadata, write a piece of middleware to
@@ -25,7 +26,12 @@ export default function (state = {}, action) {
       return appendIds(state, type, meta.graphql.variables, payload.data.community.members)
 
     case FETCH_POSTS:
-      return appendIds(state, type, meta.graphql.variables, payload.data.community.posts)
+      root = payload.data.posts || payload.data.community.posts
+      return appendIds(state, type, meta.graphql.variables, root)
+
+    case FETCH_THREAD:
+    case FETCH_MESSAGES:
+      return appendIds(state, FETCH_MESSAGES, meta.graphql.variables, payload.data.messageThread.messages)
 
     case FETCH_POST:
     case FETCH_COMMENTS:

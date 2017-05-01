@@ -1,9 +1,17 @@
 import { FETCH_POSTS } from 'store/constants'
 
+export const ALL_COMMUNITIES_ID = 'all-communities'
+
 export function fetchPosts ({ subject, id, sortBy, offset, search, filter }) {
-  var query
+  var query, extractModel
+
   if (subject === 'community') {
     query = communityQuery
+    extractModel = 'Community'
+  } else if (subject === 'all-communities') {
+    query = allCommunitiesQuery
+    id = ALL_COMMUNITIES_ID // this is just for queryResults, not the API
+    extractModel = 'Post'
   } else {
     throw new Error(`FETCH_POSTS with subject=${subject} is not implemented`)
   }
@@ -21,11 +29,52 @@ export function fetchPosts ({ subject, id, sortBy, offset, search, filter }) {
         first: 20
       }
     },
-    meta: {
-      extractModel: 'Community'
-    }
+    meta: {extractModel}
   }
 }
+
+const postsQueryFragment = `
+posts(
+  first: $first,
+  offset: $offset,
+  sortBy: $sortBy,
+  search: $search,
+  filter: $filter,
+  order: "desc"
+) {
+  hasMore
+  items {
+    id
+    title
+    details
+    type
+    creator {
+      id
+      name
+      avatarUrl
+      tagline
+    }
+    createdAt
+    updatedAt
+    commenters(first: 2) {
+      id
+      name
+      avatarUrl
+    }
+    commentersTotal
+    linkPreview {
+      title
+      url
+      imageUrl
+    }
+    votesTotal
+    communities {
+      id
+      name
+      slug
+    }
+  }
+}`
 
 const communityQuery = `query (
   $id: String,
@@ -42,45 +91,16 @@ const communityQuery = `query (
     avatarUrl
     bannerUrl
     postCount
-    posts(
-      first: $first,
-      offset: $offset,
-      sortBy: $sortBy,
-      search: $search,
-      filter: $filter,
-      order: "desc"
-    ) {
-      hasMore
-      items {
-        id
-        title
-        details
-        type
-        creator {
-          id
-          name
-          avatarUrl
-        }
-        createdAt
-        updatedAt
-        commenters(first: 2) {
-          id
-          name
-          avatarUrl
-        }
-        commentersTotal
-        linkPreview {
-          title
-          url
-          imageUrl
-        }
-        votesTotal
-        communities {
-          id
-          name
-          slug
-        }
-      }
-    }
+    ${postsQueryFragment}
   }
+}`
+
+const allCommunitiesQuery = `query (
+  $sortBy: String,
+  $offset: Int,
+  $search: String,
+  $filter: String,
+  $first: Int
+) {
+  ${postsQueryFragment}
 }`

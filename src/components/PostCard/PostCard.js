@@ -1,18 +1,16 @@
 /* eslint-disable camelcase */
 import React from 'react'
-import { Link } from 'react-router-dom'
-import Avatar from 'components/Avatar'
-import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
-import PostLabel from 'components/PostLabel'
-import RoundImage from 'components/RoundImage'
-import { personUrl, bgImageStyle } from 'util/index'
-import { sanitize, present, textLength, truncate, appendInP, humanDate } from 'hylo-utils/text'
+import RoundImageRow from 'components/RoundImageRow'
+import { bgImageStyle } from 'util/index'
+import { sanitize, present, textLength, truncate, appendInP } from 'hylo-utils/text'
 import { parse } from 'url'
+import PostHeader from './PostHeader'
 import './PostCard.scss'
 import samplePost from './samplePost'
 import { get } from 'lodash/fp'
 import cx from 'classnames'
+import { decode } from 'ent'
 
 const { shape, any, object, string, func, array, bool } = React.PropTypes
 
@@ -30,7 +28,8 @@ export default class PostCard extends React.Component {
     }),
     fetchPost: func,
     expanded: bool,
-    showDetails: func
+    showDetails: func,
+    showCommunity: bool
   }
 
   static defaultProps = {
@@ -38,15 +37,19 @@ export default class PostCard extends React.Component {
   }
 
   render () {
-    const { post, className, expanded, showDetails } = this.props
+    const { post, className, expanded, showDetails, showCommunity } = this.props
     const slug = get('0.slug', post.communities)
 
+    const onClick = event => {
+      if (event.target.tagName !== 'A') showDetails()
+    }
+
     return <div styleName={cx('card', {expanded})} className={className}
-      onClick={showDetails}>
+      onClick={onClick}>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}
         type={post.type}
-        context={post.context}
+        showCommunity={showCommunity}
         communities={post.communities}
         slug={slug} />
       <PostImage imageUrl={post.imageUrl} />
@@ -63,35 +66,6 @@ export default class PostCard extends React.Component {
   }
 }
 
-export const PostHeader = ({ creator, date, type, context, communities, close, className, slug }) => {
-  return <div styleName='header' className={className}>
-    <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
-    <div styleName='headerText'>
-      <Link to={personUrl(creator.id, slug)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
-      {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
-      <div>
-        <span styleName='timestamp'>
-          {humanDate(date)}{context && <span styleName='spacer'>•</span>}
-        </span>
-        {context && <Link to='/' styleName='context'>
-          {context}
-        </Link>}
-      </div>
-    </div>
-    <div styleName='upperRight'>
-      {type && <PostLabel type={type} styleName='label' />}
-      <Dropdown toggleChildren={<Icon name='More' />} triangle items={[
-        {icon: 'Pin', label: 'Pin', onClick: () => console.log('Pin')},
-        {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')},
-        {icon: 'Trash', label: 'Delete', onClick: () => console.log('Delete')},
-        {label: 'Other'},
-        {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
-      ]} />
-      {close && <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
-    </div>
-  </div>
-}
-
 export const PostImage = ({ imageUrl, className }) => {
   if (!imageUrl) return null
   return <div style={bgImageStyle(imageUrl)} styleName='image' className={className} />
@@ -100,7 +74,8 @@ export const PostImage = ({ imageUrl, className }) => {
 const maxDetailsLength = 144
 
 export const PostBody = ({ id, title, details, imageUrl, linkPreview, slug, expanded, className }) => {
-  // TODO: Present details as HTML and sanitize
+  const decodedTitle = decode(title)
+
   let presentedDetails = present(sanitize(details), {slug})
   const shouldTruncate = !expanded && textLength(presentedDetails) > maxDetailsLength
   if (shouldTruncate) {
@@ -109,7 +84,7 @@ export const PostBody = ({ id, title, details, imageUrl, linkPreview, slug, expa
   if (presentedDetails) presentedDetails = appendInP(presentedDetails, '&nbsp;')
 
   return <div styleName='body' className={className}>
-    <div styleName='title' className='hdr-headline'>{title}</div>
+    <div styleName='title' className='hdr-headline'>{decodedTitle}</div>
     {presentedDetails && <div styleName='description' dangerouslySetInnerHTML={{__html: presentedDetails}} />}
     {linkPreview && <LinkPreview {...linkPreview} />}
   </div>
@@ -147,14 +122,8 @@ export const commentCaption = (commenters, commentersTotal) => {
 
 export const PostFooter = ({ id, commenters, commentersTotal, votesTotal }) => {
   return <div styleName='footer'>
-    <PeopleImages imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
+    <RoundImageRow imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
     <span styleName='caption'>{commentCaption(commenters, commentersTotal)}</span>
     <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{votesTotal}</a></div>
   </div>
-}
-
-export function PeopleImages ({ imageUrls, className }) {
-  const images = imageUrls.map((url, i) =>
-    <RoundImage url={url} key={i} medium overlaps />)
-  return <div className={className}>{images}</div>
 }

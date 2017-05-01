@@ -38,6 +38,9 @@ $content-width: 80rem;
 $center-column-width: 49%;
 $detail-column-width: 43%;
 $layout-spacing: 70px;
+$messages-header-height: 80px;
+$messages-header-vertical-padding: 20px;
+$messages-header-horizontal-padding: 24px;
 
 // Colors
 // For now standardized on using "Name that Color" naming:
@@ -59,8 +62,10 @@ $color-white-50: rgba($color-white, .5);
 $color-black: #000000;
 $color-black-10: rgba($color-black, .1);
 $color-athens-gray: #FAFBFC;
+$color-athens-gray-medium: #F1F2F4;
 $color-athens-gray-dark: #E1E5EA;
-$color-ghost-30: rgba(#CCD1D7, .3);
+$color-ghost: #CCD1D7;
+$color-ghost-30: rgba($color-ghost, .3);
 $color-cape-cod: #363D3C;
 $color-cape-cod-10: rgba($color-cape-cod, .1);
 $color-cape-cod-05: rgba($color-cape-cod, .05);
@@ -69,8 +74,10 @@ $color-black-squeeze: #E5EEF5;
 $color-cod-gray-0: rgba(#161616, 0);
 $color-cod-gray-dark: #1C1C1C;
 $color-seashell: #F1F1F1;
+$color-catskill-white: #F9FAFC;
 
 $color-caribbean-green: #0DC39F;
+$color-caribbean-green-50: rgba($color-caribbean-green, 0.5);
 $color-medium-purple: #9883E5;
 $color-fuchsia-pink: #BB60A8;
 $color-picton-blue: #40A1DD;
@@ -114,3 +121,14 @@ $color-gossamer: #0A9682;
   width: $width;
   height: $height or $width;
 }
+
+/* handling long lines */
+@mixin word-wrap {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-word-break: break-all;
+  hyphens: auto;
+}
+
+$light-border: 1px solid $color-cape-cod-10;

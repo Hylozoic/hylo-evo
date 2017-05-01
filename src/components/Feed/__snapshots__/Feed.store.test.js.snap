@@ -1,0 +1,148 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`works for a community 1`] = `
+Object {
+  "graphql": Object {
+    "query": "query (
+  $id: String,
+  $sortBy: String,
+  $offset: Int,
+  $search: String,
+  $filter: String,
+  $first: Int
+) {
+  community(slug: $id) {
+    id
+    slug
+    name
+    avatarUrl
+    bannerUrl
+    postCount
+    
+posts(
+  first: $first,
+  offset: $offset,
+  sortBy: $sortBy,
+  search: $search,
+  filter: $filter,
+  order: \\"desc\\"
+) {
+  hasMore
+  items {
+    id
+    title
+    details
+    type
+    creator {
+      id
+      name
+      avatarUrl
+      tagline
+    }
+    createdAt
+    updatedAt
+    commenters(first: 2) {
+      id
+      name
+      avatarUrl
+    }
+    commentersTotal
+    linkPreview {
+      title
+      url
+      imageUrl
+    }
+    votesTotal
+    communities {
+      id
+      name
+      slug
+    }
+  }
+}
+  }
+}",
+    "variables": Object {
+      "filter": "offer",
+      "first": 20,
+      "id": "foo",
+      "offset": 20,
+      "search": "gardening",
+      "sortBy": undefined,
+    },
+  },
+  "meta": Object {
+    "extractModel": "Community",
+  },
+  "type": "FETCH_POSTS",
+}
+`;
+
+exports[`works for all communities 1`] = `
+Object {
+  "graphql": Object {
+    "query": "query (
+  $sortBy: String,
+  $offset: Int,
+  $search: String,
+  $filter: String,
+  $first: Int
+) {
+  
+posts(
+  first: $first,
+  offset: $offset,
+  sortBy: $sortBy,
+  search: $search,
+  filter: $filter,
+  order: \\"desc\\"
+) {
+  hasMore
+  items {
+    id
+    title
+    details
+    type
+    creator {
+      id
+      name
+      avatarUrl
+      tagline
+    }
+    createdAt
+    updatedAt
+    commenters(first: 2) {
+      id
+      name
+      avatarUrl
+    }
+    commentersTotal
+    linkPreview {
+      title
+      url
+      imageUrl
+    }
+    votesTotal
+    communities {
+      id
+      name
+      slug
+    }
+  }
+}
+}",
+    "variables": Object {
+      "filter": "request",
+      "first": 20,
+      "id": "all-communities",
+      "offset": 20,
+      "search": "graphic design",
+      "sortBy": undefined,
+    },
+  },
+  "meta": Object {
+    "extractModel": "Post",
+  },
+  "type": "FETCH_POSTS",
+}
+`;

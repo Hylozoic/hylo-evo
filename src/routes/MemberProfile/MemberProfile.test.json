@@ -64,7 +64,8 @@
           "communities": [
             {
               "id": "1836",
-              "name": "Wombats"
+              "name": "Wombats",
+              "slug": "wombats"
             }
           ],
           "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)"
@@ -88,7 +89,8 @@
           "communities": [
             {
               "id": "1836",
-              "name": "Wombats"
+              "name": "Wombats",
+              "slug": "slug"
             }
           ],
           "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)"
@@ -117,7 +119,8 @@
             "communities": [
               {
                 "id": "1836",
-                "name": "Wombats"
+                "name": "Wombats",
+                "slug": "wombats"
               }
             ],
             "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)"
@@ -142,7 +145,8 @@
             "communities": [
               {
                 "id": "1836",
-                "name": "Wombats"
+                "name": "Wombats",
+                "slug": "wombats"
               }
             ],
             "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)"

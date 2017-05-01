@@ -1,13 +1,13 @@
 import PostDetail, { PostTags } from './PostDetail'
 import { shallow } from 'enzyme'
 import React from 'react'
-import { PostHeader, PostImage, PostBody, PostFooter } from 'components/PostCard'
+import { PostImage, PostBody, PostFooter } from 'components/PostCard'
+import PostHeader from 'components/PostCard/PostHeader'
 import { getPost } from './PostDetail.connector'
 import orm from 'store/models'
 
 describe('PostDetail', () => {
   it('renders correctly', () => {
-    const context = 'a project'
     const imageUrl = 'foo.jpg'
     const tags = ['singing', 'dancing']
     const details = 'the body of the post'
@@ -16,16 +16,15 @@ describe('PostDetail', () => {
 
     const post = {
       id: '91',
-      context,
       imageUrl,
       tags,
       details,
       votesTotal
     }
 
-    const wrapper = shallow(<PostDetail post={post} slug={slug} />)
+    const wrapper = shallow(<PostDetail post={post} slug={slug} showCommunity />)
     expect(wrapper.find(PostHeader).length).toEqual(1)
-    expect(wrapper.find(PostHeader).prop('context')).toEqual(context)
+    expect(wrapper.find(PostHeader).prop('showCommunity')).toBeTruthy()
     expect(wrapper.find(PostImage).length).toEqual(1)
     expect(wrapper.find(PostImage).prop('imageUrl')).toEqual(imageUrl)
     expect(wrapper.find(PostTags).length).toEqual(1)

@@ -1,0 +1,31 @@
+$min-height: 56px;
+
+.message-form {
+  border: $light-border;
+  border-radius: 4px;
+  width: 100%;
+  min-height: $min-height;
+  padding: $space-2x $space-4x;
+  display: flex;
+  background: $color-white;
+}
+
+.message-textarea {
+  composes: bdy-drk-lg from 'css/typography.scss';
+  width: 742px;
+  border: none;
+  resize: none;
+  outline: none;
+  padding: 0;
+  margin: $space-2x;
+  max-height: 183px;
+  font-size: 16px;
+
+  &::placeholder {
+    color: $color-rhino-50;
+  }
+}
+
+.user-image {
+
+}

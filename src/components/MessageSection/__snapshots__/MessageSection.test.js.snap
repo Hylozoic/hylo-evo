@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`does something 1`] = `
+<div
+  data-styleName="messages-section"
+  onScroll={[Function]}
+>
+  <div
+    data-styleName="messages-section-inner"
+  />
+</div>
+`;

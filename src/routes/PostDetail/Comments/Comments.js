@@ -16,7 +16,7 @@ export default class Comments extends Component {
   }
 
   render () {
-    const { comments, total, hasMore, fetchComments, currentUser, createComment, postId, slug } = this.props
+    const { comments, total, hasMore, fetchComments, currentUser, createComment, slug } = this.props
     return <div styleName='comments'>
       <ShowMore
         commentsLength={comments.length}
@@ -25,8 +25,7 @@ export default class Comments extends Component {
         fetchComments={fetchComments} />
       {comments.map(c => <Comment comment={c} key={c.id} slug={slug} />)}
       <div styleName='form-wrapper'>
-        <CommentForm currentUser={currentUser} createComment={createComment}
-          postId={postId} />
+        <CommentForm currentUser={currentUser} createComment={createComment} />
       </div>
     </div>
   }

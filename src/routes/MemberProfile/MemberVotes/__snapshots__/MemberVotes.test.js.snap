@@ -2,7 +2,9 @@
 
 exports[`MemberVotes renders the same as the last snapshot 1`] = `
 <div>
-  <div>
+  <div
+    data-styleName="activity-item"
+  >
     <PostCard
       post={
         Object {
@@ -21,6 +23,7 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
               Object {
                 "id": "1836",
                 "name": "Wombats",
+                "slug": "wombats",
               },
             ],
             "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
@@ -39,9 +42,12 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
           },
         }
       }
+      showDetails={[Function]}
     />
   </div>
-  <div>
+  <div
+    data-styleName="activity-item"
+  >
     <PostCard
       post={
         Object {
@@ -54,6 +60,7 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
               Object {
                 "id": "1836",
                 "name": "Wombats",
+                "slug": "wombats",
               },
             ],
             "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
@@ -70,6 +77,7 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
           },
         }
       }
+      showDetails={[Function]}
     />
   </div>
 </div>

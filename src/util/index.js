@@ -7,7 +7,7 @@ export function bgImageStyle (url) {
 }
 
 export function personUrl (id, slug) {
-  return `/c/${slug}/m/${id}`
+  return slug ? `/c/${slug}/m/${id}` : `/m/${id}`
 }
 
 export function tagUrl (tagName, slug) {
@@ -22,7 +22,7 @@ export function postUrl (id, slug) {
   if (slug) {
     return `/c/${slug}/p/${id}`
   } else {
-    return `/p/${id}`
+    return `/all/p/${id}`
   }
 }
 
