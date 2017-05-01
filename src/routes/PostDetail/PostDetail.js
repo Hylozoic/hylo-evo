@@ -39,18 +39,6 @@ export default class PostDetail extends Component {
     }
   }
 
-  createHeader () {
-    const { post, slug, onClose, showCommunity } = this.props
-    return <PostHeader creator={post.creator}
-      date={post.updatedAt || post.createdAt}
-      type={post.type}
-      communities={post.communities}
-      showCommunity={showCommunity}
-      close={onClose}
-      slug={slug}
-      styleName='header' />
-  }
-
   handleScroll = event => {
     const { atTop, atActivity } = this.state
     const header = document.getElementById(STICKY_HEADER_ID)
@@ -72,7 +60,7 @@ export default class PostDetail extends Component {
   }
 
   render () {
-    const { post, slug } = this.props
+    const { post, slug, onClose, showCommunity } = this.props
     const { atTop, atActivity } = this.state
     if (!post) return null
 
@@ -81,7 +69,14 @@ export default class PostDetail extends Component {
       detail.scrollTop = detail.scrollHeight
     }
 
-    const header = this.createHeader()
+    const header = <PostHeader creator={post.creator}
+      date={post.updatedAt || post.createdAt}
+      type={post.type}
+      communities={post.communities}
+      showCommunity={showCommunity}
+      close={onClose}
+      slug={slug}
+      styleName='header' />
 
     return <div styleName='post'>
       <ScrollListener elementId={DETAIL_COLUMN_ID}
