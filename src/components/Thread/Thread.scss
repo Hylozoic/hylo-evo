@@ -1,4 +1,3 @@
-$message-form-bg-height: 165px;
 $messages-inner-padding: 30px;
 
 .thread {
@@ -44,19 +43,8 @@ $messages-inner-padding: 30px;
   padding: $space-1x 0;
 }
 
-.message-form-bg {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  height: $message-form-bg-height;
-  opacity: 0.8;
-  background-image: linear-gradient(-180deg, rgba(255,255,255,0.00) 0%, #FAFBFC 48%);
-}
-
 .message-form {
-  position: absolute;
-  bottom: 40px;
-  padding: 0 $messages-inner-padding;
+  padding: 0 $messages-inner-padding $space-7x $messages-inner-padding;
   width: 100%;
 }
 
