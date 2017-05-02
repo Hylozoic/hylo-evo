@@ -66,8 +66,14 @@ export default class MessageForm extends React.Component {
   }, STARTED_TYPING_INTERVAL)
 
   resize = () => {
-    this.refs.editor.style.height = 0
-    this.refs.editor.style.height = this.refs.editor.scrollHeight + 'px'
+    const editor = this.refs.editor
+    const cloned = editor.cloneNode()
+    cloned.style.height = 0
+    editor.parentElement.appendChild(cloned)
+    if (editor.style.height !== cloned.scrollHeight + 'px') {
+      editor.style.height = cloned.scrollHeight + 'px'
+    }
+    editor.parentElement.removeChild(cloned)
   }
 
   render () {
