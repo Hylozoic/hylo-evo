@@ -40,13 +40,23 @@ export default class PostCard extends React.Component {
     const { post, className, expanded, showDetails, showCommunity } = this.props
     const slug = get('0.slug', post.communities)
 
-    const onClick = event => {
-      const { target } = event
-      console.log('has on lcik', target.hasAttribute('data-on-click'))
-      if (target.tagName !== 'A' && !target.hasAttribute('data-on-click')) showDetails()
+    const shouldShowDetails = element => {
+      if (element === this.refs.postCard) return true
+      if (element.tagName === 'A') return false
+
+      const parent = element.parentElement
+      if (parent) return shouldShowDetails(parent)
+
+      return true
     }
 
-    return <div styleName={cx('card', {expanded})} className={className}
+    const onClick = event => {
+      const { target } = event
+
+      if (shouldShowDetails(target)) showDetails()
+    }
+
+    return <div ref='postCard'styleName={cx('card', {expanded})} className={className}
       onClick={onClick}>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}
