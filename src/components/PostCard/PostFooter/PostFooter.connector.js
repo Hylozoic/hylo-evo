@@ -6,9 +6,9 @@ export function mapStateToProps (state, props) {
   return {}
 }
 
-export function mapDispatchToProps (dispatch, props) {
+export function mapDispatchToProps (dispatch, { id, myVote }) {
   return {
-    vote: () => dispatch(voteOnPost(props.id))
+    vote: () => dispatch(voteOnPost(id, !myVote))
   }
 }
 

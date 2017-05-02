@@ -41,7 +41,9 @@ export default class PostCard extends React.Component {
     const slug = get('0.slug', post.communities)
 
     const onClick = event => {
-      if (event.target.tagName !== 'A') showDetails()
+      const { target } = event
+      console.log('has on lcik', target.hasAttribute('data-on-click'))
+      if (target.tagName !== 'A' && !target.hasAttribute('data-on-click')) showDetails()
     }
 
     return <div styleName={cx('card', {expanded})} className={className}
