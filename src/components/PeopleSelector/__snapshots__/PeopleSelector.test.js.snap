@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches the last snapshot 1`] = `
+exports[`PeopleSelector matches the last snapshot 1`] = `
 <div
   data-styleName="people-selector"
 >
@@ -8,31 +8,23 @@ exports[`matches the last snapshot 1`] = `
     data-styleName="thread-header"
     tabIndex="0"
   >
-    <PeopleSelector />
+    <div
+      data-styleName="autocomplete-control"
+    >
+      <input
+        data-styleName="autocomplete"
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder="Type in the names of people to message"
+        spellCheck={false}
+        type="text"
+      />
+    </div>
     <Icon
       data-styleName="close-button"
       name="Ex"
     />
   </div>
-  <div
-    data-styleName="autocomplete-control"
-  >
-    <SelectorMatchedItem
-      deleteMatch={[Function]}
-      name="Wombat"
-    />
-    <SelectorMatchedItem
-      deleteMatch={[Function]}
-      name="Aardvark"
-    />
-    <input
-      data-styleName="autocomplete"
-      onChange={[Function]}
-      onKeyDown={[Function]}
-      placeholder=""
-      spellCheck={false}
-      type="text"
-    />
-  </div>
+  <PeopleSelectorMatches />
 </div>
 `;
