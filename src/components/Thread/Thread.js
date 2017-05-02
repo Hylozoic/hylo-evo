@@ -53,7 +53,6 @@ export default class Thread extends React.Component {
     return <div styleName='thread'>
       <Header thread={thread} currentUser={currentUser} />
       <MessageSection thread={thread} messageThreadId={threadId} />
-      <div styleName='message-form-bg' />
       <div styleName='message-form'>
         <MessageForm messageThreadId={threadId} ref='form' />
       </div>
