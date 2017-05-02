@@ -34,7 +34,7 @@ export default class CommunitySidebar extends Component {
     const { name, description, slug, memberCount } = community
     return <div styleName='community-sidebar'>
       <AboutSection name={name} description={description} />
-      <MemberSection members={members} memberCount={memberCount} />
+      <MemberSection members={members} memberCount={memberCount} slug={slug} />
       <CommunityLeaderSection leaders={leaders} slug={slug} />
     </div>
   }
@@ -78,7 +78,7 @@ export class AboutSection extends Component {
   }
 }
 
-export function MemberSection ({ members, memberCount }) {
+export function MemberSection ({ members, memberCount, slug }) {
   const formatTotal = total => {
     if (total < 1000) return `+${total}`
     return `+${Number(total / 1000).toFixed(1)}k`
@@ -87,13 +87,15 @@ export function MemberSection ({ members, memberCount }) {
   const showTotal = memberCount - members.length > 0
 
   return <div styleName='member-section'>
-    <div styleName='header'>Members</div>
-    <div styleName='images-and-count'>
-      <RoundImageRow imageUrls={members.map(m => m.avatarUrl)} styleName='image-row' />
-      {showTotal && <span styleName='members-total'>
-        {formatTotal(memberCount - members.length)}
-      </span>}
-    </div>
+    <Link to={`/c/${slug}/members`} styleName='members-link'>
+      <div styleName='header'>Members</div>
+      <div styleName='images-and-count'>
+        <RoundImageRow imageUrls={members.map(m => m.avatarUrl)} styleName='image-row' />
+        {showTotal && <span styleName='members-total'>
+          {formatTotal(memberCount - members.length)}
+        </span>}
+      </div>
+    </Link>
   </div>
 }
 
