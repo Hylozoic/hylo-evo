@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getTopicSubscriptions transforms topic subscriptions correctly 1`] = `
+Array [
+  Object {
+    "badge": 5,
+    "name": "fun",
+  },
+  Object {
+    "badge": 7,
+    "name": "loving",
+  },
+]
+`;
