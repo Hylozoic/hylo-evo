@@ -1,7 +1,9 @@
 import React from 'react'
 import { debounce, throttle } from 'lodash/fp'
 
+import Icon from 'components/Icon'
 import { getKeyCode, keyMap } from 'util/textInput'
+import PeopleSelectorMatches from 'components/PeopleSelectorMatches'
 import SelectorMatchedItem from 'components/SelectorMatchedItem'
 import './PeopleSelector.scss'
 
@@ -19,9 +21,10 @@ const invalidPersonName = /[^a-z '-]+/gi
 
 export default class PeopleSelector extends React.Component {
   static propTypes = {
+    autocomplete: string,
     fetchPeople: func,
-    deleteMatch: func,
-    matches: arrayOf(personType),
+    deleteParticipant: func,
+    participants: arrayOf(personType),
     setAutocomplete: func
   }
 
@@ -48,22 +51,28 @@ export default class PeopleSelector extends React.Component {
   }
 
   render () {
-    const { deleteMatch, matches } = this.props
+    const { deleteParticipant, matches, participants } = this.props
     return <div styleName='people-selector'>
-      {matches && matches.map(match =>
-        <SelectorMatchedItem
-          avatarUrl={match.avatarUrl}
-          key={match.id}
-          name={match.name}
-          deleteMatch={() => deleteMatch(match.id)} />
-      )}
-      <input styleName='autocomplete'
-        ref={i => this.autocomplete = i} // eslint-disable-line no-return-assign
-        type='text'
-        spellCheck={false}
-        onChange={evt => this.onChange(evt)}
-        onKeyDown={evt => this.onKeyDown(evt)}
-        placeholder={matches.length ? '' : 'Type in the names of people to message'} />
+      <div styleName='thread-header' tabIndex='0'>
+        <div styleName='autocomplete-control'>
+          {participants && participants.map(match =>
+            <SelectorMatchedItem
+              avatarUrl={match.avatarUrl}
+              key={match.id}
+              name={match.name}
+              deleteParticipant={() => deleteParticipant(match.id)} />
+          )}
+          <input styleName='autocomplete'
+            ref={i => this.autocomplete = i} // eslint-disable-line no-return-assign
+            type='text'
+            spellCheck={false}
+            onChange={evt => this.onChange(evt)}
+            onKeyDown={evt => this.onKeyDown(evt)}
+            placeholder={participants.length ? '' : 'Type in the names of people to message'} />
+        </div>
+        <Icon name='Ex' styleName='close-button' />
+      </div>
+      <PeopleSelectorMatches matches={matches} />
     </div>
   }
 }

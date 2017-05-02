@@ -1,4 +1,8 @@
 .people-selector {
+  flex-grow: 2;
+}
+
+.autocomplete-control {
   display: flex;
   flex-grow: 2;
   border-bottom: 1px $color-rhino-30 solid;
@@ -49,5 +53,28 @@
     font-size: 16px;
     letter-spacing: 0.4;
     line-height: 20px;
+  }
+}
+
+
+.close-button {
+  margin-bottom: $space-4x;
+  margin-left: $space-6x;
+}
+
+.thread-header {
+  display: flex;
+  flex-grow: 2;
+  align-items: flex-end;
+  height: $space-20x;
+  border: 1px $color-rhino-30 solid;
+  padding: $space-3x $space-7x;
+  padding-top: 0;
+
+  &:focus, &:hover {
+    outline: none;
+    -webkit-box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
+    -moz-box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
+    box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
   }
 }

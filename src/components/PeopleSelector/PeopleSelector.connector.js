@@ -1,5 +1,13 @@
 import { connect } from 'react-redux'
 
-import { deleteMatch, fetchPeople, setAutocomplete } from './PeopleSelector.store'
+import { addParticipant, removeParticipant, fetchPeople, matchesSelector, participantsSelector, setAutocomplete } from './PeopleSelector.store'
 
-export default connect(null, { deleteMatch, fetchPeople, setAutocomplete })
+export function mapStateToProps (state) {
+  return {
+    autocomplete: state.autocomplete,
+    matches: matchesSelector(state),
+    participants: participantsSelector(state)
+  }
+}
+
+export default connect(mapStateToProps, { addParticipant, removeParticipant, fetchPeople, setAutocomplete })

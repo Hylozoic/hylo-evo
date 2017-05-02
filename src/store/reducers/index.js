@@ -7,7 +7,7 @@ import orm from './ormReducer'
 import pending from './pending'
 // Local store
 // generator-marker-local-store-import
-import NewMessageThread from 'components/NewMessageThread/NewMessageThread.store'
+import PeopleSelector from 'components/PeopleSelector/PeopleSelector.store'
 import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import MessageForm from 'components/MessageForm/MessageForm.store'
@@ -34,7 +34,7 @@ const combinedReducers = combineReducers({
 
   // Local store (Component)
   // generator-marker-local-store-reducer
-  NewMessageThread,
+  PeopleSelector,
   MessageForm,
   PeopleTyping,
   HyloEditor,
