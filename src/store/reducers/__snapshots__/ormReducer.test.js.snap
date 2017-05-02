@@ -1,0 +1,549 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`on VOTE_ON_POST_PENDING when myVote is false does nothing if didVote is false 1`] = `
+Object {
+  "Comment": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Community": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityFeedItems": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityMembers": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityModerator": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityPosts": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "FeedItem": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Me": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MeMemberships": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MeMessageThreads": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MePosts": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Membership": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Message": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MessageThread": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MessageThreadParticipants": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Person": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "PersonMemberships": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Post": Object {
+    "items": Array [
+      "1",
+      "2",
+    ],
+    "itemsById": Object {
+      "1": Object {
+        "commenters": undefined,
+        "communities": undefined,
+        "followers": undefined,
+        "id": "1",
+        "myVote": false,
+        "votesTotal": 7,
+      },
+      "2": Object {
+        "commenters": undefined,
+        "communities": undefined,
+        "followers": undefined,
+        "id": "2",
+        "myVote": true,
+        "votesTotal": 4,
+      },
+    },
+    "meta": Object {
+      "maxId": 2,
+    },
+  },
+  "PostCommenter": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "PostCommunities": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "PostFollower": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Vote": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+}
+`;
+
+exports[`on VOTE_ON_POST_PENDING when myVote is false increments votesTotal and updates myVote if didVote is true 1`] = `
+Object {
+  "Comment": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Community": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityFeedItems": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityMembers": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityModerator": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityPosts": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "FeedItem": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Me": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MeMemberships": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MeMessageThreads": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MePosts": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Membership": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Message": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MessageThread": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MessageThreadParticipants": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Person": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "PersonMemberships": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Post": Object {
+    "items": Array [
+      "1",
+      "2",
+    ],
+    "itemsById": Object {
+      "1": Object {
+        "commenters": undefined,
+        "communities": undefined,
+        "followers": undefined,
+        "id": "1",
+        "myVote": true,
+        "votesTotal": 8,
+      },
+      "2": Object {
+        "commenters": undefined,
+        "communities": undefined,
+        "followers": undefined,
+        "id": "2",
+        "myVote": true,
+        "votesTotal": 4,
+      },
+    },
+    "meta": Object {
+      "maxId": 2,
+    },
+  },
+  "PostCommenter": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "PostCommunities": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "PostFollower": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Vote": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+}
+`;
+
+exports[`on VOTE_ON_POST_PENDING when myVote is true decrements votesTotal and updates myVote if didVote is false 1`] = `
+Object {
+  "Comment": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Community": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityFeedItems": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityMembers": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityModerator": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityPosts": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "FeedItem": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Me": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MeMemberships": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MeMessageThreads": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MePosts": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Membership": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Message": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MessageThread": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MessageThreadParticipants": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Person": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "PersonMemberships": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Post": Object {
+    "items": Array [
+      "1",
+      "2",
+    ],
+    "itemsById": Object {
+      "1": Object {
+        "commenters": undefined,
+        "communities": undefined,
+        "followers": undefined,
+        "id": "1",
+        "myVote": false,
+        "votesTotal": 7,
+      },
+      "2": Object {
+        "commenters": undefined,
+        "communities": undefined,
+        "followers": undefined,
+        "id": "2",
+        "myVote": true,
+        "votesTotal": 4,
+      },
+    },
+    "meta": Object {
+      "maxId": 2,
+    },
+  },
+  "PostCommenter": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "PostCommunities": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "PostFollower": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Vote": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+}
+`;
+
+exports[`on VOTE_ON_POST_PENDING when myVote is true does nothing if didVote is true 1`] = `
+Object {
+  "Comment": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Community": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityFeedItems": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityMembers": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityModerator": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "CommunityPosts": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "FeedItem": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Me": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MeMemberships": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MeMessageThreads": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MePosts": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Membership": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Message": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MessageThread": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "MessageThreadParticipants": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Person": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "PersonMemberships": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Post": Object {
+    "items": Array [
+      "1",
+      "2",
+    ],
+    "itemsById": Object {
+      "1": Object {
+        "commenters": undefined,
+        "communities": undefined,
+        "followers": undefined,
+        "id": "1",
+        "myVote": false,
+        "votesTotal": 7,
+      },
+      "2": Object {
+        "commenters": undefined,
+        "communities": undefined,
+        "followers": undefined,
+        "id": "2",
+        "myVote": false,
+        "votesTotal": 3,
+      },
+    },
+    "meta": Object {
+      "maxId": 2,
+    },
+  },
+  "PostCommenter": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "PostCommunities": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "PostFollower": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+  "Vote": Object {
+    "items": Array [],
+    "itemsById": Object {},
+    "meta": Object {},
+  },
+}
+`;
