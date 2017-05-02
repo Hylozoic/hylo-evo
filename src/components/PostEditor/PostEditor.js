@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import cx from 'classnames'
 import styles from './PostEditor.scss'
+import Icon from 'components/Icon'
 import Avatar from 'components/Avatar'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
@@ -9,6 +10,7 @@ import CommunitiesSelector from 'components/CommunitiesSelector'
 export default class PostEditor extends React.Component {
   static propTypes = {
     initialPrompt: PropTypes.string,
+    onClose: PropTypes.func,
     titlePlaceholder: PropTypes.string,
     descriptionPlaceholder: PropTypes.string,
     postType: PropTypes.string,
@@ -122,13 +124,27 @@ export default class PostEditor extends React.Component {
 
   render () {
     const {
-      initialPrompt, descriptionPlaceholder, description, communityOptions, communitiesSelected
+      initialPrompt,
+      onClose,
+      descriptionPlaceholder,
+      description,
+      communityOptions,
+      communitiesSelected
     } = this.props
-    const { titlePlaceholder, title, valid } = this.state
+    const {
+      titlePlaceholder,
+      title,
+      valid
+    } = this.state
 
     return <div styleName='wrapper'>
       <div styleName='header'>
-        <div styleName='initialPrompt'>{initialPrompt}</div>
+        <div styleName='initial'>
+          <div styleName='initial-prompt'>{initialPrompt}</div>
+          {onClose &&
+            <a styleName='initial-closeButton' onClick={onClose}><Icon name='Ex' /></a>
+          }
+        </div>
         <div styleName='postTypes'>
           <Button {...this.postTypeButtonProps('discussion')} />
           <Button {...this.postTypeButtonProps('request')} />

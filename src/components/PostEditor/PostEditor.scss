@@ -3,7 +3,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  width: 590px;
+  min-width: 590px;
   list-style: none;
   border: solid 1px rgb(0,0,0);
   border-radius: $space-1x;
@@ -16,9 +16,21 @@
   padding: $space-4x $space-4x 0 $space-4x;
 }
 
-.initialPrompt {
-  composes: bdy-lt-sm from 'css/typography.scss';
+.initial {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  line-height: normal;
   margin-bottom: $space-4x;
+}
+
+.initial-prompt {
+  composes: bdy-lt-sm from 'css/typography.scss';
+}
+
+.initial-closeButton {
+  cursor: pointer;
 }
 
 .postTypes {

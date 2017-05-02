@@ -20,6 +20,7 @@ import Members from 'routes/Members'
 import Settings from 'routes/Settings'
 import MessageMember from 'components/MessageMember'
 import HyloModal from 'routes/HyloModal'
+import PostEditor from 'components/PostEditor'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
@@ -32,30 +33,9 @@ export default class PrimaryLayout extends Component {
     toggleDrawer: PropTypes.func
   }
 
-  constructor (props) {
-    super(props)
-    this.state = {
-      modalIsOpen: false
-    }
-  }
-
   componentDidMount () {
     // FIXME this doesn't belong here
     this.props.fetchCurrentUser()
-  }
-
-  openModal = () => {
-    console.log('here')
-    this.setState({modalIsOpen: true})
-  }
-
-  afterOpenModal = () => {
-    // references are now sync'd and can be accessed.
-    this.subtitle.style.color = '#f00'
-  }
-
-  closeModal = () => {
-    this.setState({modalIsOpen: false})
   }
 
   render () {
@@ -89,6 +69,7 @@ export default class PrimaryLayout extends Component {
           <Route path='/settings' component={Settings} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
+          <PostEditor />
           <Route path='/c/:slug' exact component={CommunitySidebar} />
           <Route path='/c/:slug/m/:id' component={MessageMember} />
         </div>
@@ -100,22 +81,23 @@ export default class PrimaryLayout extends Component {
             defined above, and store the previous detail component in state
           */}
           {detailRoutes.map(({ path, component }) =>
-            <Route key={path} exact {...{path, component}} />)}
+            <Route key={path} {...{path, component}} />)}
+          {detailRoutes.map(({ path, editComponent }) =>
+            <Route key={`${path}/edit`} path={`${path}/edit`} component={editComponent} />)}
         </div>
       </div>
       <Route path='/messages' exact component={Messages} />
       <Route path='/messages/new' exact component={Messages} />
       <Route path='/t/:threadId' component={Messages} />
       <SocketListener location={location} />
-      <Route path='/c/:slug/p/new' exact component={HyloModal} />
     </div>
   }
 }
 
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
-  {path: '/all/p/:postId', component: PostDetail},
-  {path: '/c/:slug/p/:postId', component: PostDetail}
+  {path: '/all/p/:postId', component: PostDetail, editComponent: HyloModal},
+  {path: '/c/:slug/p/:postId', component: PostDetail, editComponent: HyloModal}
 ]
 
 function RedirectToCommunity ({ currentUser }) {
