@@ -7,6 +7,7 @@ import './CommunitySidebar.scss'
 const { object, string, array, func } = PropTypes
 import cx from 'classnames'
 import { personUrl } from 'util/index'
+import { markdown } from 'hylo-utils/text'
 import { isEmpty } from 'lodash/fp'
 
 export default class CommunitySidebar extends Component {
@@ -69,7 +70,7 @@ export class AboutSection extends Component {
       </div>
       <div styleName={cx('description', {expanded})}>
         {!expanded && <div styleName='gradient' />}
-        {description}
+        <span dangerouslySetInnerHTML={{__html: markdown(description)}} />
       </div>
       {showExpandButton && <span styleName='expand-button' onClick={onClick}>
         {expanded ? 'Show Less' : 'Read More'}
