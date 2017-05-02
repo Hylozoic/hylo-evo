@@ -39,6 +39,7 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
 .wrapper {
   position: absolute;
   right: 0;
+  z-index: 1;
 }
 
 .dropdown-menu {
