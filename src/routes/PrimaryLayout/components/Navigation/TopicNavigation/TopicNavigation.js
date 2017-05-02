@@ -11,17 +11,17 @@ import badgeHoverStyles from '../../../../../components/Badge/component.scss'
 export default class TopicNavigation extends Component {
   static propTypes = {
     topics: array,
-    fetchCommunity: func,
+    fetchSubscriptions: func,
     slug: string
   }
 
   componentDidMount () {
-    this.props.fetchCommunity()
+    this.props.fetchSubscriptions()
   }
 
   componentDidUpdate (prevProps) {
     if (get('slug', this.props) !== get('slug', prevProps)) {
-      this.props.fetchCommunity()
+      this.props.fetchSubscriptions()
     }
   }
 

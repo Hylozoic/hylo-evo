@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import {
-  fetchCommunity, getTopicSubscriptions
+  fetchCommunityTopicSubscriptions, getTopicSubscriptions
 } from './TopicNavigation.store'
 
 export function mapStateToProps (state, props) {
@@ -11,7 +11,9 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, { slug }) {
   return {
-    fetchCommunity: slug ? () => dispatch(fetchCommunity(slug)) : () => {}
+    fetchSubscriptions: slug
+      ? () => dispatch(fetchCommunityTopicSubscriptions(slug))
+      : () => {}
   }
 }
 

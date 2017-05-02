@@ -4,12 +4,12 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import { createSelector } from 'reselect'
 
 // Constants
-export const FETCH_COMMUNITY = 'FETCH_COMMUNITY'
+export const FETCH_COMMUNITY_TOPIC_SUBSCRIPTIONS = 'FETCH_COMMUNITY_TOPIC_SUBSCRIPTIONS'
 
 // Action Creators
-export function fetchCommunity (slug) {
+export function fetchCommunityTopicSubscriptions (slug) {
   return {
-    type: FETCH_COMMUNITY,
+    type: FETCH_COMMUNITY_TOPIC_SUBSCRIPTIONS,
     graphql: {
       query: `query ($slug: String) {
         community (slug: $slug) {
