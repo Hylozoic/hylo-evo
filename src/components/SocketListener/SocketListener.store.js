@@ -1,8 +1,6 @@
 import {
   ADD_MESSAGE_FROM_SOCKET,
-  ADD_THREAD_FROM_SOCKET,
-  ADD_USER_TYPING,
-  CLEAR_USER_TYPING
+  ADD_THREAD_FROM_SOCKET
 } from 'store/constants'
 
 export function addMessageFromSocket (message, opts = {}) {
@@ -31,22 +29,5 @@ export function addThreadFromSocket (thread) {
     meta: {
       extractModel: 'MessageThread'
     }
-  }
-}
-
-export function addUserTyping (userId, userName) {
-  return {
-    type: ADD_USER_TYPING,
-    meta: {
-      userId,
-      userName
-    }
-  }
-}
-
-export function clearUserTyping (userId) {
-  return {
-    type: CLEAR_USER_TYPING,
-    meta: {userId}
   }
 }

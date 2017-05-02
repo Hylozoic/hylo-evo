@@ -66,12 +66,26 @@ export default class MessageForm extends React.Component {
   }, STARTED_TYPING_INTERVAL)
 
   resize = () => {
-    this.refs.editor.style.height = 0
-    this.refs.editor.style.height = this.refs.editor.scrollHeight + 'px'
+    const editor = this.refs.editor
+    const cloned = editor.cloneNode()
+    cloned.style.height = 0
+    editor.parentElement.appendChild(cloned)
+    if (editor.style.height !== cloned.scrollHeight + 'px') {
+      editor.style.height = cloned.scrollHeight + 'px'
+    }
+    editor.parentElement.removeChild(cloned)
   }
 
   render () {
-    const { messageThreadId, onFocus, onBlur, className, currentUser, pending, updateMessageText } = this.props
+    const {
+      messageThreadId,
+      onFocus,
+      onBlur,
+      className,
+      currentUser,
+      pending,
+      updateMessageText
+    } = this.props
     const text = pending ? '' : this.props.text
     const placeholder = this.props.placeholder || 'Write something...'
     const onChange = e => updateMessageText(messageThreadId, e.target.value)
@@ -83,8 +97,10 @@ export default class MessageForm extends React.Component {
       }, e)
     }
 
-    return <form onSubmit={this.submit} styleName='message-form' className={className}>
-      <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
+    return <form onSubmit={this.submit} styleName='message-form'
+      className={className}>
+      <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image'
+        medium />
       <textarea ref='editor' value={text} styleName='message-textarea'
         placeholder={placeholder}
         onFocus={onFocus}

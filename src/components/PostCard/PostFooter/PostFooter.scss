@@ -1,4 +1,4 @@
-// PostFooter
+// Footer Height
 
 $footer-height: 56px;
 
@@ -9,6 +9,7 @@ $footer-height: 56px;
   align-items: center;
   height: $footer-height;
   border-top: 1px solid $color-cape-cod-10;
+  border-bottom: 1px solid $color-cape-cod-10;
 }
 
 .people {
@@ -45,17 +46,8 @@ $footer-height: 56px;
   line-height: $footer-height;
   text-align: center;
   border-left: 1px solid $color-cape-cod-10;
-  width: 85px;
-}
-
-.votes-total {
-  composes: text-button from 'css/typography.scss';
-  &:hover {
+  & > a:hover {
     text-decoration: none;
     color: $color-gossamer;
   }
-}
-
-.voted {
-  @include font-bold;
 }

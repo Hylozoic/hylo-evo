@@ -9,9 +9,6 @@ exports[`matches the last snapshot 1`] = `
     messageThreadId="1"
   />
   <div
-    data-styleName="message-form-bg"
-  />
-  <div
     data-styleName="message-form"
   >
     <Connect(MessageForm)

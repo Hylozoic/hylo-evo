@@ -12,12 +12,18 @@ $min-height: 56px;
 
 .message-textarea {
   composes: bdy-drk-lg from 'css/typography.scss';
-  flex: 1;
+  width: 742px;
   border: none;
   resize: none;
   outline: none;
-  padding: $space-2x;
+  padding: 0;
+  margin: $space-2x;
   max-height: 183px;
+  font-size: 16px;
+
+  &::placeholder {
+    color: $color-rhino-50;
+  }
 }
 
 .user-image {
