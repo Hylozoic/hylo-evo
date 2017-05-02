@@ -63,7 +63,7 @@ describe('on VOTE_ON_POST_PENDING', () => {
   describe('when myVote is false', () => {
     it('does nothing if didVote is false', () => {
       expect(ormReducer(state, {...action, meta: {postId: '1', didVote: false}}))
-      .toMatchSnapshot()
+      .toEqual(state)
     })
 
     it('increments votesTotal and updates myVote if didVote is true', () => {
@@ -74,12 +74,12 @@ describe('on VOTE_ON_POST_PENDING', () => {
 
   describe('when myVote is true', () => {
     it('does nothing if didVote is true', () => {
-      expect(ormReducer(state, {...action, meta: {postId: '2', didVote: false}}))
-      .toMatchSnapshot()
+      expect(ormReducer(state, {...action, meta: {postId: '2', didVote: true}}))
+      .toEqual(state)
     })
 
     it('decrements votesTotal and updates myVote if didVote is false', () => {
-      expect(ormReducer(state, {...action, meta: {postId: '2', didVote: true}}))
+      expect(ormReducer(state, {...action, meta: {postId: '2', didVote: false}}))
       .toMatchSnapshot()
     })
   })
