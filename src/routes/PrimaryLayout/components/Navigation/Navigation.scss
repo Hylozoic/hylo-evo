@@ -30,6 +30,9 @@
 
 .navigation {
   padding-top: $space-6x;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .links {

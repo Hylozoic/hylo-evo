@@ -5,7 +5,8 @@ import './Navigation.scss'
 import { getSlugInPath } from 'util/index'
 
 export default function Navigation ({ className, collapsed, location }) {
-  const style = collapsed ? {} : {position: 'fixed'}
+  // const style = collapsed ? {} : {position: 'fixed'}
+  const style = {}
   const slug = getSlugInPath(location.pathname)
 
   const links = [
