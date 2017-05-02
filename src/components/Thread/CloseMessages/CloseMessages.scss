@@ -1,0 +1,12 @@
+.close-messages {
+  cursor: pointer;
+  padding: $space-2x 0;
+
+  &:hover {
+    text-decoration: none;
+
+    .close-messages-icon {
+      color: $color-rhino-60;
+    }
+  }
+}
