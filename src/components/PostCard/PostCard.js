@@ -56,7 +56,7 @@ export default class PostCard extends React.Component {
       if (shouldShowDetails(target)) showDetails()
     }
 
-    return <div ref='postCard'styleName={cx('card', {expanded})} className={className}
+    return <div ref='postCard' styleName={cx('card', {expanded})} className={className}
       onClick={onClick}>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}

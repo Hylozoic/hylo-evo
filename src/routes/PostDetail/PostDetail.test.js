@@ -13,13 +13,15 @@ describe('PostDetail', () => {
     const details = 'the body of the post'
     const votesTotal = 7
     const slug = 'foo'
+    const myVote = true
 
     const post = {
       id: '91',
       imageUrl,
       tags,
       details,
-      votesTotal
+      votesTotal,
+      myVote
     }
 
     const wrapper = shallow(<PostDetail post={post} slug={slug} showCommunity />)
@@ -33,6 +35,7 @@ describe('PostDetail', () => {
     expect(wrapper.find(PostBody).prop('details')).toEqual(details)
     expect(wrapper.find(PostFooter).length).toEqual(1)
     expect(wrapper.find(PostFooter).prop('votesTotal')).toEqual(votesTotal)
+    expect(wrapper.find(PostFooter).prop('myVote')).toEqual(myVote)
     expect(wrapper.find('Connect(Comments)').length).toEqual(1)
     expect(wrapper.find('Connect(Comments)').prop('postId')).toEqual(post.id)
     expect(wrapper.find('Connect(Comments)').prop('slug')).toEqual(slug)
