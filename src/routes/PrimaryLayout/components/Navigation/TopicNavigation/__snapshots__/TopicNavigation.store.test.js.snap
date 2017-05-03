@@ -2,13 +2,19 @@
 
 exports[`getTopicSubscriptions transforms topic subscriptions correctly 1`] = `
 Array [
-  Object {
-    "badge": 5,
-    "name": "fun",
+  SessionBoundModel {
+    "_fields": Object {
+      "id": 0,
+      "newPostCount": 5,
+      "topic": "1",
+    },
   },
-  Object {
-    "badge": 7,
-    "name": "loving",
+  SessionBoundModel {
+    "_fields": Object {
+      "id": 1,
+      "newPostCount": 7,
+      "topic": "2",
+    },
   },
 ]
 `;

@@ -4,17 +4,17 @@ import { shallow } from 'enzyme'
 
 describe('TopicNavigation', () => {
   it('renders correctly', () => {
-    const topics = [
-      {name: 't1', badge: 3},
-      {name: 't2', badge: 0},
-      {name: 't3'},
-      {name: 't4', badge: 2}
+    const subscriptions = [
+      {topic: {name: 't1'}, newPostCount: 3},
+      {topic: {name: 't2'}, newPostCount: 0},
+      {topic: {name: 't3'}},
+      {topic: {name: 't4'}, newPostCount: 2}
     ]
 
-    const wrapper = shallow(<TopicNavigation topics={topics} />)
+    const wrapper = shallow(<TopicNavigation subscriptions={subscriptions} />)
     expect(wrapper.find('li').length).toEqual(4)
     expect(wrapper.find('Badge').length).toEqual(2)
-    expect(wrapper.find('li Link span').at(0).text()).toEqual(`#${topics[0].name}`)
-    expect(wrapper.find('li Link span').at(3).text()).toEqual(`#${topics[3].name}`)
+    expect(wrapper.find('li Link span').at(0).text()).toEqual(`#${subscriptions[0].topic.name}`)
+    expect(wrapper.find('li Link span').at(3).text()).toEqual(`#${subscriptions[3].topic.name}`)
   })
 })
