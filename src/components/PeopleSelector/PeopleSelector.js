@@ -4,6 +4,7 @@ import { debounce, get, throttle } from 'lodash/fp'
 import { fetchPerson } from 'routes/MemberProfile/MemberProfile.store'
 import Icon from 'components/Icon'
 import { getKeyCode, keyMap } from 'util/textInput'
+import MessageForm from 'components/MessageForm'
 import PeopleSelectorMatches from 'components/PeopleSelectorMatches'
 import SelectorMatchedItem from 'components/SelectorMatchedItem'
 import './PeopleSelector.scss'
@@ -86,7 +87,7 @@ export default class PeopleSelector extends React.Component {
 
   onKeyDown (evt) {
     switch (getKeyCode(evt)) {
-      case keyMap.BACKSPACE: return this.props.removeParticipant()
+      case keyMap.BACKSPACE: return this.state.currentMatch ? null : this.props.removeParticipant()
       case keyMap.UP: return this.arrow('up')
       case keyMap.DOWN: return this.arrow('down')
       case keyMap.COMMA:
@@ -124,10 +125,15 @@ export default class PeopleSelector extends React.Component {
         </div>
         <Icon name='Ex' styleName='close-button' />
       </div>
-      <PeopleSelectorMatches
+      {this.state.currentMatch && <PeopleSelectorMatches
         addParticipant={this.addParticipant.bind(this)}
         currentMatch={this.state.currentMatch}
-        matches={matches} />
+        matches={matches} />}
+      {!this.state.currentMatch && <div>Hi!</div>}
+      {participants && participants.length > 0 &&
+        <div styleName='message-form'>
+          <MessageForm ref='form' />
+        </div>}
     </div>
   }
 }

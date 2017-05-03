@@ -78,3 +78,10 @@
     box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
   }
 }
+
+$messages-inner-padding: 30px;
+
+.message-form {
+  padding: 0 $messages-inner-padding $space-7x $messages-inner-padding;
+  width: 100%;
+}
