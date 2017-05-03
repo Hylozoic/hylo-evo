@@ -58,7 +58,7 @@ export default class PeopleSelector extends React.Component {
     this.setState({ currentMatch: matches[0].id })
   }
 
-  addParticipant (id) {
+  addParticipant = (id) => {
     this.autocomplete.value = null
     this.props.addParticipant(id)
     this.autocomplete.focus()
@@ -105,6 +105,7 @@ export default class PeopleSelector extends React.Component {
 
   render () {
     const { removeParticipant, matches, participants } = this.props
+    const { currentMatch } = this.state
     return <div styleName='people-selector'>
       <div styleName='thread-header' tabIndex='0'>
         <div styleName='autocomplete-control'>
@@ -126,11 +127,11 @@ export default class PeopleSelector extends React.Component {
         </div>
         <CloseMessages />
       </div>
-      {this.state.currentMatch && <PeopleSelectorMatches
-        addParticipant={this.addParticipant.bind(this)}
-        currentMatch={this.state.currentMatch}
+      {currentMatch && <PeopleSelectorMatches
+        addParticipant={this.addParticipant}
+        currentMatch={currentMatch}
         matches={matches} />}
-      {!this.state.currentMatch && <div>Hi!</div>}
+      {!currentMatch && <div>Hi!</div>}
       {participants && participants.length > 0 &&
         <div styleName='message-form'>
           <MessageForm ref='form' />
