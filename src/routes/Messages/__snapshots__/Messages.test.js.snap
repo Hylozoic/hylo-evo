@@ -13,6 +13,10 @@ exports[`matches the last snapshot 1`] = `
     <Connect(Thread)
       threadId="1"
     />
+    <Route
+      component={[Function]}
+      path="/messages/new"
+    />
   </div>
 </div>
 `;

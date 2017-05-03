@@ -15,7 +15,7 @@ export default function TopNav ({ className, community, currentUser, logout, tog
       <Title community={community} />
       <div styleName='navIcons'>
         <Link to='/' styleName='navIcon'><Icon name='Search' styleName='icon' /></Link>
-        <Link to='/messages' styleName='navIcon'><Icon name='Messages' styleName='icon' /></Link>
+        <Link to='/messages/new' styleName='navIcon'><Icon name='Messages' styleName='icon' /></Link>
         <Link to='/' styleName='navIcon'><Icon name='Notifications' styleName='icon' /></Link>
         <Dropdown styleName='navIcon user-menu' triangle alignRight
           toggleChildren={

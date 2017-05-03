@@ -1,0 +1,25 @@
+.new-message-thread {
+  flex-grow: 2;
+}
+
+.close-button {
+  margin-bottom: $space-4x;
+  margin-left: $space-6x;
+}
+
+.thread-header {
+  display: flex;
+  flex-grow: 2;
+  align-items: flex-end;
+  height: $space-20x;
+  border: $light-border;
+  padding: $space-3x $space-7x;
+  padding-top: 0;
+
+  &:focus, &:hover {
+    outline: none;
+    -webkit-box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
+    -moz-box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
+    box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
+  }
+}
