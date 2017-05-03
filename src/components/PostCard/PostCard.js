@@ -1,16 +1,16 @@
 /* eslint-disable camelcase */
 import React from 'react'
-import Icon from 'components/Icon'
-import RoundImageRow from 'components/RoundImageRow'
 import { bgImageStyle } from 'util/index'
 import { sanitize, present, textLength, truncate, appendInP } from 'hylo-utils/text'
 import { parse } from 'url'
 import PostHeader from './PostHeader'
+import PostFooter from './PostFooter'
 import './PostCard.scss'
 import samplePost from './samplePost'
 import { get } from 'lodash/fp'
 import cx from 'classnames'
 import { decode } from 'ent'
+export { PostHeader, PostFooter }
 
 const { shape, any, object, string, func, array, bool } = React.PropTypes
 
@@ -40,11 +40,23 @@ export default class PostCard extends React.Component {
     const { post, className, expanded, showDetails, showCommunity } = this.props
     const slug = get('0.slug', post.communities)
 
-    const onClick = event => {
-      if (event.target.tagName !== 'A') showDetails()
+    const shouldShowDetails = element => {
+      if (element === this.refs.postCard) return true
+      if (element.tagName === 'A') return false
+
+      const parent = element.parentElement
+      if (parent) return shouldShowDetails(parent)
+
+      return true
     }
 
-    return <div styleName={cx('card', {expanded})} className={className}
+    const onClick = event => {
+      const { target } = event
+
+      if (shouldShowDetails(target)) showDetails()
+    }
+
+    return <div ref='postCard' styleName={cx('card', {expanded})} className={className}
       onClick={onClick}>
       <PostHeader creator={post.creator}
         date={post.updatedAt || post.createdAt}
@@ -61,7 +73,8 @@ export default class PostCard extends React.Component {
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
-        votesTotal={post.votesTotal} />
+        votesTotal={post.votesTotal}
+        myVote={post.myVote} />
     </div>
   }
 }
@@ -102,28 +115,5 @@ export const LinkPreview = ({ title, url, imageUrl }) => {
         </div>
       </a>
     </div>
-  </div>
-}
-
-export const commentCaption = (commenters, commentersTotal) => {
-  var names = ''
-  const firstName = person => person.name.split(' ')[0]
-  if (commentersTotal === 0) {
-    return 'Be the first to comment'
-  } else if (commentersTotal === 1) {
-    names = firstName(commenters[0])
-  } else if (commentersTotal === 2) {
-    names = `${firstName(commenters[0])} and ${firstName(commenters[1])}`
-  } else {
-    names = `${firstName(commenters[0])}, ${firstName(commenters[1])} and ${commentersTotal - 2} other${commentersTotal - 2 > 1 ? 's' : ''}`
-  }
-  return `${names} commented`
-}
-
-export const PostFooter = ({ id, commenters, commentersTotal, votesTotal }) => {
-  return <div styleName='footer'>
-    <RoundImageRow imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
-    <span styleName='caption'>{commentCaption(commenters, commentersTotal)}</span>
-    <div styleName='votes'><a href='' className='text-button'><Icon name='ArrowUp' styleName='arrowIcon' />{votesTotal}</a></div>
   </div>
 }

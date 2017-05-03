@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom'
 import { isEmpty, get } from 'lodash/fp'
 import './PostDetail.scss'
 const { bool, func, object, string } = PropTypes
-import { PostImage, PostBody, PostFooter } from 'components/PostCard'
-import PostHeader from 'components/PostCard/PostHeader'
+import { PostImage, PostBody, PostFooter, PostHeader } from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
 import Comments from './Comments'
 import { tagUrl } from 'util/index'
@@ -98,13 +97,15 @@ export default class PostDetail extends Component {
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
-        votesTotal={post.votesTotal} />
+        votesTotal={post.votesTotal}
+        myVote={post.myVote} />
       {atActivity && <div id={STICKY_ACTIVITY_ID} styleName='activity-sticky'>
         <div styleName='activity-header'>Activity</div>
         <PostFooter id={post.id}
           commenters={post.commenters}
           commentersTotal={post.commentersTotal}
-          votesTotal={post.votesTotal} />
+          votesTotal={post.votesTotal}
+          myVote={post.myVote} />
       </div>}
       <Comments postId={post.id} slug={slug} scrollToBottom={scrollToBottom} />
     </div>

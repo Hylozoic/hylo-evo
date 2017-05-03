@@ -1,0 +1,63 @@
+// Footer Height
+
+$footer-height: 56px;
+
+.footer {
+  composes: cardPadding from 'components/PostCard/PostCard.scss';
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: $footer-height;
+  border-top: 1px solid $color-cape-cod-10;
+  border-bottom: 1px solid $color-cape-cod-10;
+}
+
+.people {
+  margin-right: 20px;
+}
+
+.caption {
+  composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.share {
+  margin-left: auto;
+  width: $footer-height;
+  height: $footer-height;
+  line-height: $footer-height;
+  text-align: center;
+  border-left: 1px solid $color-cape-cod-10;
+}
+
+.arrowIcon {
+  position: relative;
+  top: 4px;
+  margin-right: 8px;
+  color: $color-caribbean-green;
+  &:hover {
+    color: $color-gossamer;
+  }
+}
+
+.votes {
+  margin-left: auto;
+  padding: 0 10px 0 20px;
+  height: $footer-height;
+  line-height: $footer-height;
+  text-align: center;
+  border-left: 1px solid $color-cape-cod-10;
+  width: 85px;
+}
+
+.votes-link {
+  composes: text-button from 'css/typography.scss';
+  color: $color-caribbean-green !important;
+  &:hover {
+    text-decoration: none;
+    color: $color-gossamer !important;;
+  }
+}
+
+.voted {
+  @include font-bold;
+}
