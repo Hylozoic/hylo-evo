@@ -7,6 +7,7 @@ import './TopNav.scss'
 import Dropdown from 'components/Dropdown'
 import { get } from 'lodash/fp'
 import { hyloLogo } from 'util/assets'
+import MessagesDropdown from './MessagesDropdown'
 
 export default function TopNav ({ className, community, currentUser, logout, toggleDrawer }) {
   return <div styleName='topNavWrapper' className={className}>
@@ -15,7 +16,7 @@ export default function TopNav ({ className, community, currentUser, logout, tog
       <Title community={community} />
       <div styleName='navIcons'>
         <Link to='/' styleName='navIcon'><Icon name='Search' styleName='icon' /></Link>
-        <Link to='/messages' styleName='navIcon'><Icon name='Messages' styleName='icon' /></Link>
+        <MessagesDropdown toggleChildren={<Icon name='Messages' styleName='icon' />} />
         <Link to='/' styleName='navIcon'><Icon name='Notifications' styleName='icon' /></Link>
         <Dropdown styleName='navIcon user-menu' triangle alignRight
           toggleChildren={
