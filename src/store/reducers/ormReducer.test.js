@@ -1,6 +1,7 @@
 import orm from 'store/models' // this initializes redux-orm
 import ormReducer from './ormReducer'
 import { EXTRACT_MODEL, VOTE_ON_POST_PENDING } from 'store/constants'
+import deep from 'deep-diff'
 
 it('responds to EXTRACT_MODEL', () => {
   const state = orm.getEmptyState()
@@ -67,8 +68,8 @@ describe('on VOTE_ON_POST_PENDING', () => {
     })
 
     it('increments votesTotal and updates myVote if didVote is true', () => {
-      expect(ormReducer(state, {...action, meta: {postId: '1', didVote: true}}))
-      .toMatchSnapshot()
+      const newState = ormReducer(state, {...action, meta: {postId: '1', didVote: true}})
+      expect(deep(state, newState)).toMatchSnapshot()
     })
   })
 
@@ -79,8 +80,8 @@ describe('on VOTE_ON_POST_PENDING', () => {
     })
 
     it('decrements votesTotal and updates myVote if didVote is false', () => {
-      expect(ormReducer(state, {...action, meta: {postId: '2', didVote: false}}))
-      .toMatchSnapshot()
+      const newState = ormReducer(state, {...action, meta: {postId: '2', didVote: false}})
+      expect(deep(state, newState)).toMatchSnapshot()
     })
   })
 })
