@@ -47,6 +47,7 @@ export default class PeopleSelector extends React.Component {
   addParticipant (id) {
     this.autocomplete.value = null
     this.props.addParticipant(id)
+    this.autocomplete.focus()
   }
 
   arrow (direction) {
@@ -73,7 +74,7 @@ export default class PeopleSelector extends React.Component {
 
   onKeyDown (evt) {
     switch (getKeyCode(evt)) {
-      case keyMap.BACKSPACE: return
+      case keyMap.BACKSPACE: return this.props.removeParticipant()
       case keyMap.UP: return this.arrow('up')
       case keyMap.DOWN: return this.arrow('down')
       case keyMap.COMMA:
@@ -89,18 +90,19 @@ export default class PeopleSelector extends React.Component {
   }
 
   render () {
-    const { addParticipant, removeParticipant, matches, participants } = this.props
+    const { removeParticipant, matches, participants } = this.props
     return <div styleName='people-selector'>
       <div styleName='thread-header' tabIndex='0'>
         <div styleName='autocomplete-control'>
-          {participants && participants.map(match =>
+          {participants && participants.map(participant =>
             <SelectorMatchedItem
-              avatarUrl={match.avatarUrl}
-              key={match.id}
-              name={match.name}
-              removeParticipant={() => removeParticipant(match.id)} />
+              avatarUrl={participant.avatarUrl}
+              key={participant.id}
+              name={participant.name}
+              removeParticipant={() => removeParticipant(participant.id)} />
           )}
           <input styleName='autocomplete'
+            autoFocus
             ref={i => this.autocomplete = i} // eslint-disable-line no-return-assign
             type='text'
             spellCheck={false}
