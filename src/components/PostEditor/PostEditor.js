@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { get } from 'lodash/fp'
 import cx from 'classnames'
 import styles from './PostEditor.scss'
 import Icon from 'components/Icon'
@@ -34,7 +35,7 @@ export default class PostEditor extends React.Component {
     detailsPlaceholder: 'Add a details',
     post: {
       type: 'discussion',
-      title: 'this',
+      title: '',
       details: '',
       communities: []
     }
@@ -55,7 +56,7 @@ export default class PostEditor extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.post.id !== prevProps.post.id) {
+    if (get('post.id', this.props) !== get('post.id', prevProps)) {
       this.setStateWithDefaults()
     }
   }
@@ -66,7 +67,8 @@ export default class PostEditor extends React.Component {
     this.setState(this.defaultState(this.props))
   }
 
-  handlePostTypeSelection = type => event => {
+  handlePostTypeSelection = event => {
+    const type = event.target.textContent.toLowerCase()
     this.setState({
       post: {...this.state.post, type},
       titlePlaceholder: this.titlePlaceholderForPostType(type),
@@ -83,7 +85,7 @@ export default class PostEditor extends React.Component {
     const { type } = this.state.post
     return {
       label: forPostType,
-      onClick: this.handlePostTypeSelection(forPostType),
+      onClick: this.handlePostTypeSelection,
       className: cx(
         styles['postType'],
         styles[`postType-${forPostType}`],
@@ -131,10 +133,10 @@ export default class PostEditor extends React.Component {
   }
 
   render () {
-    const { initialPrompt, detailsPlaceholder, communityOptions } = this.props
     const { titlePlaceholder, valid, post } = this.state
+    if (!post) return null
     const { title, details, communities } = post
-
+    const { initialPrompt, detailsPlaceholder, communityOptions } = this.props
     const postEditor = <div styleName='wrapper'>
       <div styleName='header'>
         <div styleName='initial'>

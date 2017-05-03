@@ -9,12 +9,7 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const communityOptions = currentUser &&
     currentUser.memberships.toModelArray().map(m => m.community)
-  const post = getPost(state, {match: {params: {postId: '107'}}})
-  // console.log('!!!', post)
-  // const post = getPost(state, props)
-  // const propsOut = props
-  // console.log('!!!', props)
-  // console.log(post)
+  const post = getPost(state, props)
   return {
     post,
     communityOptions

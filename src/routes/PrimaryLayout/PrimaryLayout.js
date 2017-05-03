@@ -68,7 +68,6 @@ export default class PrimaryLayout extends Component {
           <Route path='/settings' component={Settings} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
-          <PostEditor />
           <Route path='/c/:slug' exact component={CommunitySidebar} />
           <Route path='/c/:slug/m/:id' component={MessageMember} />
         </div>
@@ -81,8 +80,7 @@ export default class PrimaryLayout extends Component {
           */}
           {detailRoutes.map(({ path, component }) =>
             <Route key={path} {...{path, component}} />)}
-          {detailRoutes.map(({ path, editComponent }) =>
-            <Route key={`${path}/edit`} path={`${path}/edit`} component={editComponent} />)}
+          <Route key='/c/:slug/p/:postId/edit' path='/c/:slug/p/:postId/edit' exact component={PostEditor} />)
         </div>
       </div>
       <Route path='/messages' exact component={Messages} />
@@ -95,8 +93,8 @@ export default class PrimaryLayout extends Component {
 
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
-  {path: '/all/p/:postId', component: PostDetail, editComponent: PostEditor},
-  {path: '/c/:slug/p/:postId', component: PostDetail, editComponent: PostEditor}
+  {path: '/all/p/:postId', component: PostDetail},
+  {path: '/c/:slug/p/:postId', component: PostDetail}
 ]
 
 function RedirectToCommunity ({ currentUser }) {

@@ -17,22 +17,26 @@ export default class CommunitiesSelector extends Component {
     options: []
   }
 
-  constructor (props) {
-    super(props)
-    this.state = {
+  defaultState = () => {
+    return {
       selected: [],
       suggestions: []
     }
-    if (props.selected.length > 0) {
-      this.selected.forEach(community => this.handleAddition(community))
+  }
+
+  constructor (props) {
+    super(props)
+    this.state = this.defaultState()
+  }
+
+  componentDidUpdate (prevProps) {
+    if (this.props.selected.length > 0 && prevProps.selected.length < 1) {
+      this.props.selected.forEach(community => this.handleAddition(community))
     }
   }
 
   reset = () => {
-    this.setState({
-      selected: [],
-      suggestions: []
-    })
+    this.setState(this.defaultState())
   }
 
   findSuggestions = (searchText) => {

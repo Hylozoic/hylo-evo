@@ -65,6 +65,12 @@ export default class HyloEditor extends Component {
     this.state = this.defaultState(props)
   }
 
+  componentDidUpdate (prevProps) {
+    if (this.props.contentHTML !== prevProps.contentHTML) {
+      this.setState(this.defaultState(this.props))
+    }
+  }
+
   reset = () => {
     // https://github.com/draft-js-plugins/draft-js-plugins/blob/master/FAQ.md
     this.setState({
