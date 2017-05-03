@@ -35,7 +35,7 @@ export default class PeopleSelector extends React.Component {
 
   componentWillReceiveProps (props) {
     const { matches } = props
-    if (!matches) {
+    if (!matches || matches.length === 0) {
       this.setState({ currentMatch: null })
       return
     }
@@ -74,6 +74,7 @@ export default class PeopleSelector extends React.Component {
       case keyMap.COMMA:
       case keyMap.ENTER:
         evt.preventDefault()
+        this.props.addParticipant(this.state.currentMatch)
         this.autocomplete.value = null
         return this.props.setAutocomplete(null)
 
@@ -83,7 +84,7 @@ export default class PeopleSelector extends React.Component {
   }
 
   render () {
-    const { deleteParticipant, matches, participants } = this.props
+    const { addParticipant, removeParticipant, matches, participants } = this.props
     return <div styleName='people-selector'>
       <div styleName='thread-header' tabIndex='0'>
         <div styleName='autocomplete-control'>
@@ -92,7 +93,7 @@ export default class PeopleSelector extends React.Component {
               avatarUrl={match.avatarUrl}
               key={match.id}
               name={match.name}
-              deleteParticipant={() => deleteParticipant(match.id)} />
+              removeParticipant={() => removeParticipant(match.id)} />
           )}
           <input styleName='autocomplete'
             ref={i => this.autocomplete = i} // eslint-disable-line no-return-assign
@@ -104,7 +105,10 @@ export default class PeopleSelector extends React.Component {
         </div>
         <Icon name='Ex' styleName='close-button' />
       </div>
-      <PeopleSelectorMatches currentMatch={this.state.currentMatch} matches={matches} />
+      <PeopleSelectorMatches
+        addParticipant={addParticipant}
+        currentMatch={this.state.currentMatch}
+        matches={matches} />
     </div>
   }
 }

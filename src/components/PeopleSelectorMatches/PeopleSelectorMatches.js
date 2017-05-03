@@ -20,9 +20,14 @@ export default class PeopleSelectorMatches extends React.Component {
   }
 
   render () {
-    const { currentMatch, matches } = this.props
+    const { addParticipant, currentMatch, matches } = this.props
     return <ul styleName='people-selector-matches'>
-      {matches && matches.map(match => <PersonListItem key={match.id} active={match.id === currentMatch} person={match} />)}
+      {matches && matches.map(match =>
+        <PersonListItem
+          key={match.id}
+          active={match.id === currentMatch}
+          person={match}
+          onClick={() => addParticipant(match.id)} />)}
     </ul>
   }
 }
