@@ -1930,6 +1930,10 @@ deep-diff@0.3.4:
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/deep-diff/-/deep-diff-0.3.4.tgz#aac5c39952236abe5f037a2349060ba01b00ae48"
 
+deep-diff@^0.3.7:
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/deep-diff/-/deep-diff-0.3.7.tgz#a486ddaefa6ac5f2a61e6b8d934c28ab45c33074"
+
 deep-extend@~0.4.0:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.4.1.tgz#efe4113d08085f4e6f9687759810f807469e2253"

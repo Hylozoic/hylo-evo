@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getTopicSubscriptions transforms topic subscriptions correctly 1`] = `
+Array [
+  SessionBoundModel {
+    "_fields": Object {
+      "id": 0,
+      "newPostCount": 5,
+      "topic": "1",
+    },
+  },
+  SessionBoundModel {
+    "_fields": Object {
+      "id": 1,
+      "newPostCount": 7,
+      "topic": "2",
+    },
+  },
+]
+`;
