@@ -73,12 +73,14 @@ export const matchesSelector = createSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME].autocomplete,
-  (session, autocomplete) => {
+  state => state[MODULE_NAME].participants,
+  (session, autocomplete, participants) => {
     if (autocomplete) {
       const term = autocomplete.toLowerCase()
       const matches = session.Person
         .all()
         .filter(p => p.name.toLowerCase().includes(term))
+        .filter(p => !participants.includes(p.id))
         .orderBy('name')
       return matches.toModelArray().map(match => ({
         ...pick([ 'id', 'name', 'avatarUrl' ], match.ref),
