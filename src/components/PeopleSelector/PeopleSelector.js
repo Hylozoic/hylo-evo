@@ -41,7 +41,7 @@ export default class PeopleSelector extends React.Component {
     }
 
     if (matches.find(m => m.id === this.state.currentMatch)) return
-    this.setState({ currentMatch: matches[0].id }) 
+    this.setState({ currentMatch: matches[0].id })
   }
 
   arrow (direction) {
@@ -67,17 +67,19 @@ export default class PeopleSelector extends React.Component {
   })
 
   onKeyDown (evt) {
-    const keyCode = getKeyCode(evt)
-    if (keyCode !== keyMap.BACKSPACE) {
-      this.autocompleteSearch(this.autocomplete.value)
+    switch (getKeyCode(evt)) {
+      case keyMap.BACKSPACE: return
+      case keyMap.UP: return this.arrow('up')
+      case keyMap.DOWN: return this.arrow('down')
+      case keyMap.COMMA:
+      case keyMap.ENTER:
+        evt.preventDefault()
+        this.autocomplete.value = null
+        return this.props.setAutocomplete(null)
+
+      default:
+        this.autocompleteSearch(this.autocomplete.value)
     }
-    if (keyCode === keyMap.COMMA || keyCode === keyMap.ENTER) {
-      evt.preventDefault()
-      this.autocomplete.value = null
-      return this.props.setAutocomplete(null)
-    }
-    if (keyCode === keyMap.UP) return this.arrow('up')
-    if (keyCode === keyMap.DOWN) return this.arrow('down')
   }
 
   render () {
