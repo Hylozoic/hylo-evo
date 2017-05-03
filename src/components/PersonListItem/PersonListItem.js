@@ -7,15 +7,14 @@ import './PersonListItem.scss'
 const { any, bool, func, shape, string } = React.PropTypes
 
 const personType = shape({
-  active: bool,
   id: any,
   name: string,
   avatarUrl: string,
   community: string
 })
 
-export default function PersonListItem ({ addMatch, person }) {
-  return <li styleName={cx('person-list-item', { active: person.active })}>
+export default function PersonListItem ({ addParticipant, active, person }) {
+  return <li styleName={cx('person-list-item', { active })}>
     <RoundImage url={person.avatarUrl} styleName='avatar' />
     <span styleName='name'>{person.name}</span>
     <span styleName='community'>{person.community}</span>
@@ -23,6 +22,7 @@ export default function PersonListItem ({ addMatch, person }) {
 }
 
 PersonListItem.propTypes = {
-  addMatch: func,
+  active: bool,
+  addParticipant: func,
   person: personType
 }

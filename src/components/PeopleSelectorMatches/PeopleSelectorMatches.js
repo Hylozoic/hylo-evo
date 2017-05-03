@@ -15,13 +15,14 @@ const personType = shape({
 export default class PeopleSelectorMatches extends React.Component {
   static propTypes = {
     addParticipant: func,
+    currentMatch: any,
     matches: arrayOf(personType)
   }
 
   render () {
-    const { matches } = this.props
+    const { currentMatch, matches } = this.props
     return <ul styleName='people-selector-matches'>
-      {matches && matches.map(match => <PersonListItem key={match.id} person={match} />)}
+      {matches && matches.map(match => <PersonListItem key={match.id} active={match.id === currentMatch} person={match} />)}
     </ul>
   }
 }

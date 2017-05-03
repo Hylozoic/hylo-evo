@@ -28,6 +28,34 @@ export default class PeopleSelector extends React.Component {
     setAutocomplete: func
   }
 
+  constructor (props) {
+    super(props)
+    this.state = { currentMatch: null }
+  }
+
+  componentWillReceiveProps (props) {
+    const { matches } = props
+    if (!matches) {
+      this.setState({ currentMatch: null })
+      return
+    }
+
+    if (matches.find(m => m.id === this.state.currentMatch)) return
+    this.setState({ currentMatch: matches[0].id }) 
+  }
+
+  arrow (direction) {
+    let delta = 0
+    const idx = this.props.matches.findIndex(m => m.id === this.state.currentMatch)
+    if (direction === 'up') {
+      if (idx > 0) delta = -1
+    }
+    if (direction === 'down') {
+      if (idx < this.props.matches.length - 1) delta = 1
+    }
+    this.setState({ currentMatch: this.props.matches[idx + delta].id })
+  }
+
   autocompleteSearch = throttle(1000, this.props.fetchPeople)
 
   onChange = debounce(200, () => {
@@ -48,6 +76,8 @@ export default class PeopleSelector extends React.Component {
       this.autocomplete.value = null
       return this.props.setAutocomplete(null)
     }
+    if (keyCode === keyMap.UP) return this.arrow('up')
+    if (keyCode === keyMap.DOWN) return this.arrow('down')
   }
 
   render () {
@@ -72,7 +102,7 @@ export default class PeopleSelector extends React.Component {
         </div>
         <Icon name='Ex' styleName='close-button' />
       </div>
-      <PeopleSelectorMatches matches={matches} />
+      <PeopleSelectorMatches currentMatch={this.state.currentMatch} matches={matches} />
     </div>
   }
 }
