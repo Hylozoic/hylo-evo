@@ -1,6 +1,7 @@
 import React from 'react'
-import { debounce, throttle } from 'lodash/fp'
+import { debounce, get, throttle } from 'lodash/fp'
 
+import { fetchPerson } from 'routes/MemberProfile/MemberProfile.store'
 import Icon from 'components/Icon'
 import { getKeyCode, keyMap } from 'util/textInput'
 import PeopleSelectorMatches from 'components/PeopleSelectorMatches'
@@ -31,6 +32,17 @@ export default class PeopleSelector extends React.Component {
   constructor (props) {
     super(props)
     this.state = { currentMatch: null }
+  }
+
+  componentDidMount () {
+    const participantsFromParams = get('match.params.participants', this.props)
+    if (participantsFromParams) {
+      // TODO: sense-checking/validation
+      participantsFromParams
+        .split(',')
+        .filter(p => !this.props.participants.find(participant => p === participant.id))
+        .forEach(participant => fetchPerson(participant))
+    }
   }
 
   componentWillReceiveProps (props) {

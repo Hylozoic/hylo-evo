@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { filter, get, map } from 'lodash/fp'
-const { func, object, string } = React.PropTypes
+const { func, object } = React.PropTypes
 import Icon from 'components/Icon'
 import MessageSection from 'components/MessageSection'
 import MessageForm from 'components/MessageForm'
@@ -10,7 +10,6 @@ import './Thread.scss'
 
 export default class Thread extends React.Component {
   static propTypes = {
-    threadId: string.isRequired,
     currentUser: object,
     thread: object,
     fetchThread: func,
@@ -33,14 +32,14 @@ export default class Thread extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
-    const oldId = get('threadId', prevProps)
-    const newId = get('threadId', this.props)
+    const oldId = get('match.params.threadId', prevProps)
+    const newId = get('match.params.threadId', this.props)
     if (newId !== oldId && newId) this.setupForThread()
   }
 
   componentWillReceiveProps (nextProps) {
-    const oldId = get('threadId', this.props)
-    const newId = get('threadId', nextProps)
+    const oldId = get('match.params.threadId', this.props)
+    const newId = get('match.params.threadId', nextProps)
     if (newId !== oldId) this.teardownForThread()
   }
 
@@ -49,7 +48,8 @@ export default class Thread extends React.Component {
   }
 
   render () {
-    const { threadId, thread, currentUser } = this.props
+    const { thread, currentUser, match } = this.props
+    const { threadId } = match.params
     return <div styleName='thread'>
       <Header thread={thread} currentUser={currentUser} />
       <MessageSection thread={thread} messageThreadId={threadId} />

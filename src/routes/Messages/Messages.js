@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { Route } from 'react-router'
+import { Route, Switch } from 'react-router'
 
 import PeopleSelector from 'components/PeopleSelector'
 import ThreadList from 'components/ThreadList'
@@ -18,8 +18,10 @@ export default class Messages extends Component {
     return <div styleName='modal'>
       <div styleName='content'>
         <ThreadList activeId={threadId} />
-        {threadId ? <Thread threadId={threadId} /> : null}
-        <Route path='/messages/new' component={PeopleSelector} />
+        <Switch>
+          <Route path='/t/new' component={PeopleSelector} />
+          <Route path='/t/:threadId' component={Thread} />
+        </Switch>
       </div>
     </div>
   }
