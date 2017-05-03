@@ -5,7 +5,7 @@ import {
 
 export function mapStateToProps (state, props) {
   return {
-    topics: getTopicSubscriptions(state, props)
+    subscriptions: getTopicSubscriptions(state, props)
   }
 }
 

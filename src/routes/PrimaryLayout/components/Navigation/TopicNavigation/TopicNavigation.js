@@ -10,7 +10,7 @@ import badgeHoverStyles from '../../../../../components/Badge/component.scss'
 
 export default class TopicNavigation extends Component {
   static propTypes = {
-    topics: array,
+    subscriptions: array,
     fetchSubscriptions: func,
     slug: string
   }
@@ -26,7 +26,7 @@ export default class TopicNavigation extends Component {
   }
 
   render () {
-    const { topics } = this.props
+    const { subscriptions } = this.props
 
     return <div styleName='s.topicNavigation'>
       <div styleName='s.header'>
@@ -34,10 +34,10 @@ export default class TopicNavigation extends Component {
         All Topics
       </div>
       <ul styleName='s.topics'>
-        {topics.map(topic => <li key={topic.name}>
+        {subscriptions.map(sub => <li key={sub.topic.name}>
           <Link styleName='s.topic' className={badgeHoverStyles.parent} to='/'>
-            <span styleName='s.name'>#{topic.name}</span>
-            {topic.badge > 0 && <Badge number={topic.badge} styleName='s.badge' />}
+            <span styleName='s.name'>#{sub.topic.name}</span>
+            {sub.newPostCount > 0 && <Badge number={sub.newPostCount} styleName='s.badge' />}
           </Link>
         </li>)}
       </ul>

@@ -56,9 +56,5 @@ export const getTopicSubscriptions = createSelector(
   getCommunityFromSlug,
   community => community
     ? community.topicSubscriptions.toModelArray()
-      .map(ts => ({
-        badge: ts.newPostCount,
-        name: ts.topic.name
-      }))
     : []
 )
