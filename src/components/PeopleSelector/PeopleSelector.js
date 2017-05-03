@@ -44,6 +44,11 @@ export default class PeopleSelector extends React.Component {
     this.setState({ currentMatch: matches[0].id })
   }
 
+  addParticipant (id) {
+    this.autocomplete.value = null
+    this.props.addParticipant(id)
+  }
+
   arrow (direction) {
     let delta = 0
     const idx = this.props.matches.findIndex(m => m.id === this.state.currentMatch)
@@ -106,7 +111,7 @@ export default class PeopleSelector extends React.Component {
         <Icon name='Ex' styleName='close-button' />
       </div>
       <PeopleSelectorMatches
-        addParticipant={addParticipant}
+        addParticipant={this.addParticipant.bind(this)}
         currentMatch={this.state.currentMatch}
         matches={matches} />
     </div>
