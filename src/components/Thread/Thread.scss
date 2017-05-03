@@ -26,19 +26,6 @@ $messages-inner-padding: 30px;
   white-space: nowrap;
 }
 
-.close-messages {
-  cursor: pointer;
-  padding: $space-2x 0;
-
-  &:hover {
-    text-decoration: none;
-
-    .close-messages-icon {
-      color: $color-rhino-60;
-    }
-  }
-}
-
 .more-icon {
   padding: $space-1x 0;
 }

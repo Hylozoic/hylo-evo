@@ -1,11 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+
 import { filter, get, map } from 'lodash/fp'
 const { func, object } = React.PropTypes
 import Icon from 'components/Icon'
 import MessageSection from 'components/MessageSection'
 import MessageForm from 'components/MessageForm'
 import PeopleTyping from 'components/PeopleTyping'
+import CloseMessages from './CloseMessages'
 import './Thread.scss'
 
 export default class Thread extends React.Component {
@@ -72,8 +73,6 @@ function Header ({ thread, currentUser }) {
       You{others.length > 1 ? `, ${othersMinusLast.join(', ')}` : ''} and {others[others.length - 1]}
     </div>
     <Icon name='More' styleName='more-icon' />
-    <Link to='/' styleName='close-messages'>
-      <Icon name='Ex' styleName='close-messages-icon' />
-    </Link>
+    <CloseMessages />
   </div>
 }

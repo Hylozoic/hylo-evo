@@ -5,6 +5,7 @@ import { fetchPerson } from 'routes/MemberProfile/MemberProfile.store'
 import Icon from 'components/Icon'
 import { getKeyCode, keyMap } from 'util/textInput'
 import MessageForm from 'components/MessageForm'
+import CloseMessages from 'components/Thread/CloseMessages'
 import PeopleSelectorMatches from 'components/PeopleSelectorMatches'
 import SelectorMatchedItem from 'components/SelectorMatchedItem'
 import './PeopleSelector.scss'
@@ -123,7 +124,7 @@ export default class PeopleSelector extends React.Component {
             onKeyDown={evt => this.onKeyDown(evt)}
             placeholder={participants.length ? '' : 'Type in the names of people to message'} />
         </div>
-        <Icon name='Ex' styleName='close-button' />
+        <CloseMessages />
       </div>
       {this.state.currentMatch && <PeopleSelectorMatches
         addParticipant={this.addParticipant.bind(this)}
