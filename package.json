@@ -194,7 +194,8 @@
       "describe",
       "expect",
       "it",
-      "jest"
+      "jest",
+      "URLSearchParams"
     ]
   },
   "proxy": "http://localhost:3001"
