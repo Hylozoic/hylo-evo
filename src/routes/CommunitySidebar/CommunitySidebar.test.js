@@ -45,10 +45,9 @@ describe('AboutSection', () => {
         name={community.name}
         description={community.description} />)
     expect(wrapper.find('div').at(1).text()).toEqual(`About ${community.name}`)
-    expect(wrapper.find('div').at(2).text()).toEqual(community.description)
-    expect(wrapper.find('span').at(0).text()).toEqual('Read More')
+    expect(wrapper.find('span').at(1).text()).toEqual('Read More')
     wrapper.setState({expanded: true})
-    expect(wrapper.find('span').at(0).text()).toEqual('Show Less')
+    expect(wrapper.find('span').at(1).text()).toEqual('Show Less')
   })
 })
 
