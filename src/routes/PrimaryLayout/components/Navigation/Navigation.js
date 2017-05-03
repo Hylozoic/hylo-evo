@@ -5,7 +5,8 @@ import './Navigation.scss'
 import { getSlugInPath } from 'util/index'
 
 export default function Navigation ({ className, collapsed, location }) {
-  const style = collapsed ? {} : {position: 'fixed'}
+  // const style = collapsed ? {} : {position: 'fixed'}
+  const style = {}
   const slug = getSlugInPath(location.pathname)
 
   const links = [
@@ -22,7 +23,7 @@ export default function Navigation ({ className, collapsed, location }) {
         {links.map(link =>
           <NavLink key={link.label} {...link} collapsed={collapsed} />)}
       </ul>
-      <TopicNavigation />
+      <TopicNavigation slug={slug} />
     </div>
   </div>
 }
