@@ -13,13 +13,11 @@ const personType = shape({
   community: string
 })
 
-export default function PersonListItem ({ addParticipant, active, onClick, person }) {
-  return <li
-    styleName={cx('person-list-item', { active })}
-    onClick={onClick}>
-      <RoundImage url={person.avatarUrl} styleName='avatar' />
-      <span styleName='name'>{person.name}</span>
-      <span styleName='community'>{person.community}</span>
+export default function PersonListItem ({ active, onClick, person }) {
+  return <li styleName={cx('person-list-item', { active })} onClick={onClick}>
+    <RoundImage url={person.avatarUrl} styleName='avatar' />
+    <span styleName='name'>{person.name}</span>
+    <span styleName='community'>{person.community}</span>
   </li>
 }
 

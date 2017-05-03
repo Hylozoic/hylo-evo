@@ -6,11 +6,11 @@ import './SelectorMatchedItem.scss'
 
 const { func, string } = React.PropTypes
 
-export default function SelectorMatchedItem ({ avatarUrl, id, name, deleteMatch }) {
+export default function SelectorMatchedItem ({ avatarUrl, id, name, removeParticipant }) {
   return <div styleName='selector-matched-item'>
     <RoundImage url={avatarUrl} small styleName='avatar' />
     <span styleName='name'>{name}</span>
-    <span onClick={deleteMatch}>
+    <span onClick={removeParticipant}>
       <Icon name='Ex' styleName='delete-match' />
     </span>
   </div>

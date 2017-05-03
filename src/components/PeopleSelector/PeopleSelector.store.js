@@ -79,8 +79,8 @@ export const matchesSelector = createSelector(
       const term = autocomplete.toLowerCase()
       const matches = session.Person
         .all()
-        .filter(p => p.name.toLowerCase().includes(term))
         .filter(p => !participants.includes(p.id))
+        .filter(p => p.name.toLowerCase().includes(term))
         .orderBy('name')
       return matches.toModelArray().map(match => ({
         ...pick([ 'id', 'name', 'avatarUrl' ], match.ref),
@@ -114,9 +114,16 @@ export default function reducer (state = defaultState, action) {
       }
 
     case PEOPLE_SELECTOR_REMOVE_PARTICIPANT:
+      if (payload) {
+        return {
+          ...state,
+          participants: state.participants.filter(p => p !== payload)
+        }
+      }
+      // No payload? Remove the last element.
       return {
         ...state,
-        participants: state.participants.filter(p => p !== payload)
+        participants: state.participants.slice(0, state.participants.length - 1)
       }
   }
 
