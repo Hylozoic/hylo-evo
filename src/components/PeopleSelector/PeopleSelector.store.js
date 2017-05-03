@@ -1,5 +1,6 @@
 import { createSelector } from 'redux-orm'
 import { get, pick } from 'lodash/fp'
+import qs from 'querystring'
 
 import orm from 'store/models'
 
@@ -67,8 +68,8 @@ export function participantsFromStore (state) {
 // TODO: Could potentially take an array of participant IDs
 export function participantsFromParams (_, props) {
   const search = get('location.search', props)
-  const qs = new URLSearchParams(search)
-  const participants = qs.get('participants')
+  if (!search) return []
+  const participants = qs.parse(search.slice(1)).participants
   return participants ? [ participants ] : []
 }
 

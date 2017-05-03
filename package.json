@@ -89,7 +89,6 @@
     "postcss-scss": "^0.4.1",
     "pretty-date": "^0.2.0",
     "pushstate-server": "^3.0.0",
-    "querystring": "^0.2.0",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
@@ -194,8 +193,7 @@
       "describe",
       "expect",
       "it",
-      "jest",
-      "URLSearchParams"
+      "jest"
     ]
   },
   "proxy": "http://localhost:3001"
