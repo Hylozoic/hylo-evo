@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`on VOTE_ON_POST_PENDING when myVote is false increments votesTotal and updates myVote if didVote is true 1`] = `
+exports[`on VOTE_ON_POST_PENDING when myVote is false increments votesTotal and updates myVote if isUpvote is true 1`] = `
 Array [
   DiffEdit {
     "kind": "E",
@@ -27,7 +27,7 @@ Array [
 ]
 `;
 
-exports[`on VOTE_ON_POST_PENDING when myVote is true decrements votesTotal and updates myVote if didVote is false 1`] = `
+exports[`on VOTE_ON_POST_PENDING when myVote is true decrements votesTotal and updates myVote if isUpvote is false 1`] = `
 Array [
   DiffEdit {
     "kind": "E",

@@ -82,9 +82,9 @@ export default function ormReducer (state = {}, action) {
     case VOTE_ON_POST_PENDING:
       const post = session.Post.withId(meta.postId)
       if (post.myVote) {
-        !meta.didVote && post.update({myVote: false, votesTotal: (post.votesTotal || 1) - 1})
+        !meta.isUpvote && post.update({myVote: false, votesTotal: (post.votesTotal || 1) - 1})
       } else {
-        meta.didVote && post.update({myVote: true, votesTotal: (post.votesTotal || 0) + 1})
+        meta.isUpvote && post.update({myVote: true, votesTotal: (post.votesTotal || 0) + 1})
       }
       break
   }

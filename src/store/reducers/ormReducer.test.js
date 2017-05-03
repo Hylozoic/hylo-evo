@@ -62,25 +62,25 @@ describe('on VOTE_ON_POST_PENDING', () => {
   }
 
   describe('when myVote is false', () => {
-    it('does nothing if didVote is false', () => {
-      expect(ormReducer(state, {...action, meta: {postId: '1', didVote: false}}))
+    it('does nothing if isUpvote is false', () => {
+      expect(ormReducer(state, {...action, meta: {postId: '1', isUpvote: false}}))
       .toEqual(state)
     })
 
-    it('increments votesTotal and updates myVote if didVote is true', () => {
-      const newState = ormReducer(state, {...action, meta: {postId: '1', didVote: true}})
+    it('increments votesTotal and updates myVote if isUpvote is true', () => {
+      const newState = ormReducer(state, {...action, meta: {postId: '1', isUpvote: true}})
       expect(deep(state, newState)).toMatchSnapshot()
     })
   })
 
   describe('when myVote is true', () => {
-    it('does nothing if didVote is true', () => {
-      expect(ormReducer(state, {...action, meta: {postId: '2', didVote: true}}))
+    it('does nothing if isUpvote is true', () => {
+      expect(ormReducer(state, {...action, meta: {postId: '2', isUpvote: true}}))
       .toEqual(state)
     })
 
-    it('decrements votesTotal and updates myVote if didVote is false', () => {
-      const newState = ormReducer(state, {...action, meta: {postId: '2', didVote: false}})
+    it('decrements votesTotal and updates myVote if isUpvote is false', () => {
+      const newState = ormReducer(state, {...action, meta: {postId: '2', isUpvote: false}})
       expect(deep(state, newState)).toMatchSnapshot()
     })
   })

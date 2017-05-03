@@ -1,20 +1,20 @@
 import { VOTE_ON_POST } from 'store/constants'
 
-export function voteOnPost (postId, didVote) {
+export function voteOnPost (postId, isUpvote) {
   return {
     type: VOTE_ON_POST,
     graphql: {
-      query: `mutation($postId: ID, $didVote: Boolean) {
-        vote(postId: $postId, didVote: $didVote) {
+      query: `mutation($postId: ID, $isUpvote: Boolean) {
+        vote(postId: $postId, isUpvote: $isUpvote) {
           id
           votesTotal
         }
       }`,
-      variables: {postId, didVote}
+      variables: {postId, isUpvote}
     },
     meta: {
       postId,
-      didVote,
+      isUpvote,
       optimistic: true
     }
   }
