@@ -14,8 +14,7 @@ const personType = shape({
 
 export default class PeopleSelectorMatches extends React.Component {
   static propTypes = {
-    addMatch: func,
-    currentMatch: any,
+    addParticipant: func,
     matches: arrayOf(personType)
   }
 

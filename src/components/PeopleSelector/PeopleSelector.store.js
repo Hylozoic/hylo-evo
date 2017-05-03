@@ -80,11 +80,11 @@ export const matchesSelector = createSelector(
         .all()
         .filter(p => p.name.toLowerCase().includes(term))
         .orderBy('name')
-        .toRefArray()
-      if (matches.length > 0) {
-        matches[0].active = true
-      }
-      return matches
+      return matches.toModelArray().map(match => ({
+        ...pick([ 'id', 'name', 'avatarUrl' ], match.ref),
+        community: match.memberships.first()
+          ? match.memberships.first().community.name : null
+      }))
     }
     return null
   }

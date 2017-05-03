@@ -25,6 +25,8 @@ exports[`PeopleSelector matches the last snapshot 1`] = `
       name="Ex"
     />
   </div>
-  <PeopleSelectorMatches />
+  <PeopleSelectorMatches
+    matches={Array []}
+  />
 </div>
 `;

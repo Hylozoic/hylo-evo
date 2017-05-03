@@ -6,11 +6,10 @@ import { keyMap } from 'util/textInput'
 import PeopleSelector from './PeopleSelector'
 
 describe('PeopleSelector', () => {
-  const mockStore = configureStore([])
 
   it('matches the last snapshot', () => {
     const wrapper = shallow(
-      <PeopleSelector participants={[]} fetchPeople={() => {}} />
+      <PeopleSelector fetchPeople={() => {}} matches={[]} participants={[]} />
     )
     expect(wrapper).toMatchSnapshot()
   })
