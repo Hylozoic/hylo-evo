@@ -1,15 +1,10 @@
 import React, { PropTypes, Component } from 'react'
 import Modal from 'react-modal'
 import styles from './HyloModal.scss'
-import PostEditor from 'components/PostEditor'
 
 export default class HyloModal extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired
-  }
-
-  static defaultProps = {
-    children: <PostEditor />
   }
 
   constructor (props) {
@@ -40,8 +35,7 @@ export default class HyloModal extends Component {
       onAfterOpen={this.afterOpenModal}
       onRequestClose={this.closeModal}
       contentLabel='Example Modal'
-    >
-      <PostEditor onClose={this.closeModal} />
-    </Modal>
+      children={children}
+    />
   }
 }

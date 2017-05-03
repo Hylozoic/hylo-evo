@@ -6,43 +6,45 @@ import Avatar from 'components/Avatar'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
+import HyloModal from 'components/HyloModal'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
     initialPrompt: PropTypes.string,
     onClose: PropTypes.func,
     titlePlaceholder: PropTypes.string,
-    descriptionPlaceholder: PropTypes.string,
-    postType: PropTypes.string,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    communitiesSelected: PropTypes.array,
+    detailsPlaceholder: PropTypes.string,
     communityOptions: PropTypes.array,
+    post: PropTypes.shape({
+      id: PropTypes.string,
+      type: PropTypes.string,
+      title: PropTypes.string,
+      details: PropTypes.string,
+      communities: PropTypes.array
+    }),
     createPost: PropTypes.func.isRequired
   }
 
   static defaultProps = {
     initialPrompt: 'What are you looking to post?',
-    postType: 'discussion',
-    title: '',
     titlePlaceholderForPostType: {
       offer: 'What super powers can you offer?',
       default: 'What’s on your mind?'
     },
-    descriptionPlaceholder: 'Add a description',
-    description: '',
-    communitiesSelected: []
+    detailsPlaceholder: 'Add a details',
+    post: {
+      type: 'discussion',
+      title: 'this',
+      details: '',
+      communities: []
+    }
   }
 
-  defaultState = ({
-    postType, description, title, communitiesSelected
-  }) => {
+  defaultState = ({ post }) => {
+    const defaultedPost = post || PostEditor.defaultProps.post
     return {
-      postType,
-      titlePlaceholder: this.titlePlaceholderForPostType(postType),
-      title,
-      description,
-      communitiesSelected,
+      post: defaultedPost,
+      titlePlaceholder: this.titlePlaceholderForPostType(defaultedPost.type),
       valid: false
     }
   }
@@ -52,35 +54,41 @@ export default class PostEditor extends React.Component {
     this.state = this.defaultState(props)
   }
 
-  reset = () => {
+  componentDidUpdate (prevProps) {
+    if (this.props.post.id !== prevProps.post.id) {
+      this.setStateWithDefaults()
+    }
+  }
+
+  setStateWithDefaults = () => {
     this.editor.reset()
     this.communitiesSelector.reset()
     this.setState(this.defaultState(this.props))
   }
 
-  handlePostTypeSelection = postType => event => {
+  handlePostTypeSelection = type => event => {
     this.setState({
-      postType,
-      titlePlaceholder: this.titlePlaceholderForPostType(postType),
-      valid: this.isValid({ postType })
+      post: {...this.state.post, type},
+      titlePlaceholder: this.titlePlaceholderForPostType(type),
+      valid: this.isValid({ type })
     })
   }
 
-  titlePlaceholderForPostType (postType) {
+  titlePlaceholderForPostType (type) {
     const { titlePlaceholderForPostType } = this.props
-    return titlePlaceholderForPostType[postType] || titlePlaceholderForPostType['default']
+    return titlePlaceholderForPostType[type] || titlePlaceholderForPostType['default']
   }
 
-  postTypeButtonProps = type => {
-    const { postType } = this.state
+  postTypeButtonProps = (forPostType) => {
+    const { type } = this.state.post
     return {
-      label: type,
-      onClick: this.handlePostTypeSelection(type),
+      label: forPostType,
+      onClick: this.handlePostTypeSelection(forPostType),
       className: cx(
-        styles.postType,
-        styles[`postType-${type}`],
+        styles['postType'],
+        styles[`postType-${forPostType}`],
         {
-          [styles[`postType-${type}-active`]]: postType === type
+          [styles[`postType-${forPostType}-active`]]: type === forPostType
         }
       )
     }
@@ -89,26 +97,26 @@ export default class PostEditor extends React.Component {
   handleTitleChange = (event) => {
     const title = event.target.value
     this.setState({
-      title,
+      post: {...this.state.post, title},
       valid: this.isValid({ title })
     })
   }
 
-  setSelectedCommunities = communitiesSelected => {
+  setSelectedCommunities = communities => {
     this.setState({
-      communitiesSelected,
-      valid: this.isValid({ communitiesSelected })
+      post: {...this.state.post, communities},
+      valid: this.isValid({ communities })
     })
   }
 
-  isValid = (updates = {}) => {
-    const { communitiesSelected, postType, title } = Object.assign({}, this.state, updates)
+  isValid = (postUpdates = {}) => {
+    const { type, title, communities } = Object.assign({}, this.state.post, postUpdates)
     return !!(this.editor &&
-      communitiesSelected &&
-      postType.length > 0 &&
+      communities &&
+      type.length > 0 &&
       title.length > 0 &&
       !this.editor.isEmpty() &&
-      communitiesSelected.length > 0)
+      communities.length > 0)
   }
 
   setValid = () =>
@@ -116,34 +124,22 @@ export default class PostEditor extends React.Component {
 
   save = () => {
     const { createPost } = this.props
-    const { title, postType, communitiesSelected } = this.state
-    const description = this.editor.getContentHTML()
-    const selectedCommunityIds = communitiesSelected.map(c => c.id)
-    createPost(title, description, selectedCommunityIds, postType).then(this.reset)
+    const { type, title, communities } = this.state.post
+    const details = this.editor.getContentHTML()
+    const communityIds = communities.map(c => c.id)
+    createPost(type, title, details, communityIds).then(this.setStateWithDefaults())
   }
 
   render () {
-    const {
-      initialPrompt,
-      onClose,
-      descriptionPlaceholder,
-      description,
-      communityOptions,
-      communitiesSelected
-    } = this.props
-    const {
-      titlePlaceholder,
-      title,
-      valid
-    } = this.state
+    const { initialPrompt, detailsPlaceholder, communityOptions } = this.props
+    const { titlePlaceholder, valid, post } = this.state
+    const { title, details, communities } = post
 
-    return <div styleName='wrapper'>
+    const postEditor = <div styleName='wrapper'>
       <div styleName='header'>
         <div styleName='initial'>
           <div styleName='initial-prompt'>{initialPrompt}</div>
-          {onClose &&
-            <a styleName='initial-closeButton' onClick={onClose}><Icon name='Ex' /></a>
-          }
+          <a styleName='initial-closeButton' onClick={this.modal && this.modal.closeModal}><Icon name='Ex' /></a>
         </div>
         <div styleName='postTypes'>
           <Button {...this.postTypeButtonProps('discussion')} />
@@ -170,9 +166,9 @@ export default class PostEditor extends React.Component {
           />
           <HyloEditor
             styleName='editor'
-            placeholder={descriptionPlaceholder}
+            placeholder={detailsPlaceholder}
             onChange={this.setValid}
-            contentHTML={description}
+            contentHTML={details}
             ref={component => { this.editor = component && component.getWrappedInstance() }}
           />
         </div>
@@ -183,7 +179,7 @@ export default class PostEditor extends React.Component {
           <div styleName='postIn-communities'>
             <CommunitiesSelector
               options={communityOptions}
-              selected={communitiesSelected}
+              selected={communities}
               onChange={this.setSelectedCommunities}
               ref={component => { this.communitiesSelector = component }}
             />
@@ -200,5 +196,9 @@ export default class PostEditor extends React.Component {
         </div>
       </div>
     </div>
+
+    return <HyloModal ref={component => { this.modal = component }}>
+      {postEditor}
+    </HyloModal>
   }
 }

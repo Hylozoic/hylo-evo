@@ -21,7 +21,8 @@ export const getPost = createSelector(
     } catch (e) {
       return null
     }
-  })
+  }
+)
 
 export function mapStateToProps (state, props) {
   const slug = getParam('slug', state, props)

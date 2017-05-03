@@ -2,7 +2,7 @@ export const MODULE_NAME = 'PostEditor'
 
 const CREATE_POST = `${MODULE_NAME}/CREATE_POST`
 
-export function createPost (title, details, communityIds, postType) {
+export function createPost (type, title, details, communityIds) {
   return {
     type: CREATE_POST,
     graphql: {

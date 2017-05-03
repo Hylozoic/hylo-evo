@@ -19,7 +19,6 @@ import PostDetail from 'routes/PostDetail'
 import Members from 'routes/Members'
 import Settings from 'routes/Settings'
 import MessageMember from 'components/MessageMember'
-import HyloModal from 'routes/HyloModal'
 import PostEditor from 'components/PostEditor'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
@@ -96,8 +95,8 @@ export default class PrimaryLayout extends Component {
 
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
-  {path: '/all/p/:postId', component: PostDetail, editComponent: HyloModal},
-  {path: '/c/:slug/p/:postId', component: PostDetail, editComponent: HyloModal}
+  {path: '/all/p/:postId', component: PostDetail, editComponent: PostEditor},
+  {path: '/c/:slug/p/:postId', component: PostDetail, editComponent: PostEditor}
 ]
 
 function RedirectToCommunity ({ currentUser }) {

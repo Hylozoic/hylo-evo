@@ -23,14 +23,12 @@
   align-items: center;
   line-height: normal;
   margin-bottom: $space-4x;
-}
-
-.initial-prompt {
-  composes: bdy-lt-sm from 'css/typography.scss';
-}
-
-.initial-closeButton {
-  cursor: pointer;
+  &-prompt {
+    composes: bdy-lt-sm from 'css/typography.scss';
+  }
+  &-closeButton {
+    cursor: pointer;
+  }
 }
 
 .postTypes {
