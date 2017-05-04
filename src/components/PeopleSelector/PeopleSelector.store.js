@@ -7,9 +7,9 @@ import orm from 'store/models'
 export const MODULE_NAME = 'PeopleSelector'
 
 export const FETCH_PEOPLE = 'FETCH_PEOPLE'
-export const PEOPLE_SELECTOR_SET_AUTOCOMPLETE = 'PEOPLE_SELECTOR_SET_AUTOCOMPLETE'
-export const PEOPLE_SELECTOR_ADD_PARTICIPANT = 'PEOPLE_SELECTOR_ADD_PARTICIPANT'
-export const PEOPLE_SELECTOR_REMOVE_PARTICIPANT = 'PEOPLE_SELECTOR_REMOVE_PARTICIPANT'
+export const SET_AUTOCOMPLETE = 'PeopleSelector/SET_AUTOCOMPLETE'
+export const ADD_PARTICIPANT = 'PeopleSelector/ADD_PARTICIPANT'
+export const REMOVE_PARTICIPANT = 'PeopleSelector/REMOVE_PARTICIPANT'
 
 const fetchPeopleQuery =
 `query PersonAutocomplete ($autocomplete: String, $first: Int) {
@@ -42,21 +42,21 @@ export function fetchPeople (autocomplete, query = fetchPeopleQuery, first = 20)
 
 export function addParticipant (id) {
   return {
-    type: PEOPLE_SELECTOR_ADD_PARTICIPANT,
+    type: ADD_PARTICIPANT,
     payload: id
   }
 }
 
 export function removeParticipant (id) {
   return {
-    type: PEOPLE_SELECTOR_REMOVE_PARTICIPANT,
+    type: REMOVE_PARTICIPANT,
     payload: id
   }
 }
 
 export function setAutocomplete (autocomplete) {
   return {
-    type: PEOPLE_SELECTOR_SET_AUTOCOMPLETE,
+    type: SET_AUTOCOMPLETE,
     payload: autocomplete
   }
 }
@@ -114,19 +114,19 @@ export default function reducer (state = defaultState, action) {
   if (error) return state
 
   switch (type) {
-    case PEOPLE_SELECTOR_SET_AUTOCOMPLETE:
+    case SET_AUTOCOMPLETE:
       return {
         ...state,
         autocomplete: payload
       }
 
-    case PEOPLE_SELECTOR_ADD_PARTICIPANT:
+    case ADD_PARTICIPANT:
       return {
         ...state,
         participants: [ ...state.participants, payload ]
       }
 
-    case PEOPLE_SELECTOR_REMOVE_PARTICIPANT:
+    case REMOVE_PARTICIPANT:
       if (payload) {
         return {
           ...state,
