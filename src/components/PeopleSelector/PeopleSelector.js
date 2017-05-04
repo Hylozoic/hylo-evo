@@ -61,6 +61,7 @@ export default class PeopleSelector extends React.Component {
   addParticipant = (id) => {
     this.autocomplete.value = null
     this.props.addParticipant(id)
+    this.setState({ currentMatch: null })
     this.autocomplete.focus()
   }
 
