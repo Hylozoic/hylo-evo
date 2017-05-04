@@ -70,11 +70,7 @@ export default class HyloEditor extends Component {
   }
 
   reset = () => {
-    // https://github.com/draft-js-plugins/draft-js-plugins/blob/master/FAQ.md
-    // this.setState({
-    //   editorState: EditorState.push(this.state.editorState, ContentState.createFromText(''))
-    // })
-    this.getEditorStateFromHTML('')
+    this.setState({editorState: this.getEditorStateFromHTML('')})
   }
 
   isEmpty = () =>
@@ -84,6 +80,8 @@ export default class HyloEditor extends Component {
     const contentState = contentStateFromHTML(
       ContentState.createFromText(''), contentHTML
     )
+    // Don't push don't create new EditorState once one has already been created as per:
+    // https://github.com/draft-js-plugins/draft-js-plugins/blob/master/FAQ.md
     return this.state && this.state.editorState
       ? EditorState.push(this.state.editorState, contentState)
       : EditorState.createWithContent(contentState)

@@ -7,7 +7,6 @@ import Avatar from 'components/Avatar'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
-import HyloModal from 'components/HyloModal'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
@@ -24,7 +23,7 @@ export default class PostEditor extends React.Component {
       details: PropTypes.string,
       communities: PropTypes.array
     }),
-    createPost: PropTypes.func.isRequired
+    createPost: PropTypes.func
   }
 
   static defaultProps = {
@@ -70,6 +69,8 @@ export default class PostEditor extends React.Component {
     this.communitiesSelector.reset()
     this.setState(this.buildStateFromProps(props))
   }
+
+  focus = () => this.editor && this.editor.focus()
 
   handlePostTypeSelection = event => {
     const type = event.target.textContent.toLowerCase()
@@ -141,12 +142,13 @@ export default class PostEditor extends React.Component {
     const { titlePlaceholder, valid, post } = this.state
     if (!post) return null
     const { title, details, communities } = post
-    const { disabled, initialPrompt, detailsPlaceholder, communityOptions } = this.props
-    const postEditor = <div styleName='wrapper' ref={element => { this.wrapper = element }}>
+    const { disabled, onClose, initialPrompt, detailsPlaceholder, communityOptions } = this.props
+
+    return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
       <div styleName='header'>
         <div styleName='initial'>
           <div styleName='initial-prompt'>{initialPrompt}</div>
-          <a styleName='initial-closeButton' onClick={this.modal && this.modal.closeModal}><Icon name='Ex' /></a>
+          <a styleName='initial-closeButton' onClick={onClose}><Icon name='Ex' /></a>
         </div>
         <div styleName='postTypes'>
           <Button {...this.postTypeButtonProps('discussion')} />
@@ -203,13 +205,5 @@ export default class PostEditor extends React.Component {
         </div>
       </div>
     </div>
-
-    return <HyloModal
-      shouldCloseOnOverlayClick={false}
-      refocusOnElement={this.editor}
-      ref={component => { this.modal = component }}
-    >
-      {postEditor}
-    </HyloModal>
   }
 }

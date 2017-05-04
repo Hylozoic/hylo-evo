@@ -12,23 +12,16 @@ export default class HyloModal extends Component {
     this.state = { modalIsOpen: true }
   }
 
-  componentDidUpdate (prevProps) {
-    const { refocusOnElement } = this.props
-    if (this.props.refocusOnElement !== prevProps.refocusOnElement) {
-      console.log(refocusOnElement)
-      refocusOnElement && refocusOnElement.focus()
-    }
-  }
+  // componentDidUpdate (prevProps) {
+  //   const { refocusOnElement } = this.props
+  //   if (this.props.refocusOnElement !== prevProps.refocusOnElement) {
+  //     console.log(refocusOnElement)
+  //     refocusOnElement && refocusOnElement.focus()
+  //   }
+  // }
 
   openModal = () => {
     this.setState({modalIsOpen: true})
-  }
-
-  afterOpenModal = () => {
-    const { refocusOnElement } = this.props
-    if (refocusOnElement) {
-      refocusOnElement && refocusOnElement.focus()
-    }
   }
 
   closeModal = () => {
@@ -41,7 +34,6 @@ export default class HyloModal extends Component {
       className={styles['hyloModal']}
       overlayClassName={styles['hyloModal-overlay']}
       isOpen={this.state.modalIsOpen}
-      onAfterOpen={this.afterOpenModal}
       onRequestClose={this.closeModal}
       contentLabel='Example Modal'
       {...this.props}
