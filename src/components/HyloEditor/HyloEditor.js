@@ -11,26 +11,6 @@ import 'draft-js/dist/Draft.css'
 import 'draft-js-mention-plugin/lib/plugin.css'
 import './HyloEditor.scss'
 
-const mentionPlugin = createMentionPlugin({
-  // TODO: Map to local CSS Modules stylesheet (copy from plugin)
-  // theme: styles
-})
-
-const hashtagPlugin = createHashtagPlugin({
-  entityMutability: 'IMMUTABLE'
-})
-
-const linkifyPlugin = createLinkifyPlugin()
-
-const { MentionSuggestions } = mentionPlugin
-const { CompletionSuggestions: HashtagSuggestions } = hashtagPlugin
-
-const plugins = [
-  mentionPlugin,
-  hashtagPlugin,
-  linkifyPlugin
-]
-
 export default class HyloEditor extends Component {
   static propTypes = {
     contentHTML: PropTypes.string,
@@ -60,6 +40,15 @@ export default class HyloEditor extends Component {
 
   constructor (props) {
     super(props)
+    // https://github.com/draft-js-plugins/draft-js-plugins/issues/298
+    this._mentionPlugin = createMentionPlugin({
+      // TODO: Map to local CSS Modules stylesheet (copy from plugin)
+      // theme: styles
+    })
+    this._hashtagPlugin = createHashtagPlugin({
+      entityMutability: 'IMMUTABLE'
+    })
+    this._linkifyPlugin = createLinkifyPlugin()
     this.state = this.defaultState(props)
   }
 
@@ -145,6 +134,15 @@ export default class HyloEditor extends Component {
   focus = () => this.editor && this.editor.focus()
 
   render () {
+    const { MentionSuggestions } = this._mentionPlugin
+    const { CompletionSuggestions: HashtagSuggestions } = this._hashtagPlugin
+
+    const plugins = [
+      this._mentionPlugin,
+      this._hashtagPlugin,
+      this._linkifyPlugin
+    ]
+
     return <div styleName='wrapper' className={this.props.className}>
       <Editor
         editorState={this.state.editorState}
