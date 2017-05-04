@@ -15,6 +15,10 @@ $messages-inner-padding: 30px;
   border-bottom: $light-border;
   border-left: $light-border;
   border-right: $light-border;
+  outline: none;
+  -webkit-box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
+  -moz-box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
+  box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
 }
 
 .header-text {
