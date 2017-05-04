@@ -40,6 +40,26 @@ it('returns the correct action from removeParticipant', () => {
   expect(actual).toEqual(expected)
 })
 
+describe('participantsFromParams', () => {
+  it('returns an empty array if no search in URL', () => {
+    const expected = []
+    const actual = store.participantsFromParams()
+    expect(actual).toEqual(expected)
+  })
+
+  it('returns an empty array if participants missing from search', () => {
+    const expected = []
+    const actual = store.participantsFromParams(null, { location: { search: '?wombat=true' } })
+    expect(actual).toEqual(expected)
+  })
+
+  it('returns the correct id if participants in search', () => {
+    const expected = [ '123' ]
+    const actual = store.participantsFromParams(null, { location: { search: '?participants=123' } })
+    expect(actual).toEqual(expected)
+  })
+})
+
 describe('connector', () => {
   let session = null
   let state = null
@@ -74,22 +94,10 @@ describe('connector', () => {
     })
   })
 
-  describe('participantsFromParams', () => {
-    it('returns an empty array if no search in URL', () => {
-      const expected = []
-      const actual = store.participantsFromParams()
-      expect(actual).toEqual(expected)
-    })
-
-    it('returns an empty array if participants missing from search', () => {
-      const expected = []
-      const actual = store.participantsFromParams(null, { location: { search: '?wombat=true' } })
-      expect(actual).toEqual(expected)
-    })
-
-    it('returns the correct id if participants in search', () => {
-      const expected = [ '123' ]
-      const actual = store.participantsFromParams(null, { location: { search: '?participants=123' } })
+  describe('participantsFromStore', () => {
+    it('returns the participants array from store', () => {
+      const expected = state.PeopleSelector.participants
+      const actual = store.participantsFromStore(state)
       expect(actual).toEqual(expected)
     })
   })
