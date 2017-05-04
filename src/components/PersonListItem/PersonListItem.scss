@@ -5,14 +5,17 @@
   justify-content: center;
   max-width: 500px;
   margin: $space-1x 0;
+  padding: $space-2x;
+  border-radius: $space-1x;
 }
 
 .active {
-  background-color: $color-rhino-30;
+  background-color: $color-rhino-10;
 }
 
 .avatar {
   margin-right: $space-4x;
+  border: none;
 }
 
 .name {

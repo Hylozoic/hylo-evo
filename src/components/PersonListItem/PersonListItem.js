@@ -15,7 +15,7 @@ const personType = shape({
 
 export default function PersonListItem ({ active, onClick, onMouseOver, person }) {
   return <li styleName={cx('person-list-item', { active })} onClick={onClick} onMouseOver={onMouseOver}>
-    <RoundImage url={person.avatarUrl} styleName='avatar' />
+    <RoundImage url={person.avatarUrl} styleName='avatar' medium />
     <span styleName='name'>{person.name}</span>
     <span styleName='community'>{person.community}</span>
   </li>
