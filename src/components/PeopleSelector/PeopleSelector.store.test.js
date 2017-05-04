@@ -175,7 +175,14 @@ describe('reducer', () => {
   it('should remove the last participant if REMOVE_PARTICIPANT payload is undefined', () => {
     const state = { participants: [ '1', '3', '44444', '123454' ] }
     const expected = { participants: [ '1', '3', '44444' ] }
-    const actual = reducer(state, { type: store.REMOVE_PARTICIPANT, })
+    const actual = reducer(state, { type: store.REMOVE_PARTICIPANT })
+    expect(actual).toEqual(expected)
+  })
+
+  it('should handle PeopleSelector/SET_AUTOCOMPLETE', () => {
+    const state = {}
+    const expected = { autocomplete: 'flargleargle' }
+    const actual = reducer(state, { type: store.SET_AUTOCOMPLETE, payload: 'flargleargle' })
     expect(actual).toEqual(expected)
   })
 })
