@@ -8,11 +8,11 @@ it('matches last snapshot', () => {
   expect(wrapper).toMatchSnapshot()
 })
 
-it('calls deleteMatch when close button clicked', () => {
-  const deleteMatch = jest.fn()
+it('calls removeParticipant when close button clicked', () => {
+  const removeParticipant = jest.fn()
   const wrapper = mount(
-    <SelectorMatchedItem deleteMatch={deleteMatch} />
+    <SelectorMatchedItem removeParticipant={removeParticipant} />
   )
   wrapper.find('span').last().simulate('click')
-  expect(deleteMatch).toHaveBeenCalled()
+  expect(removeParticipant).toHaveBeenCalled()
 })
