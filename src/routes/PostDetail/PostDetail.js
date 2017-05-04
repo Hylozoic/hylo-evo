@@ -6,7 +6,7 @@ const { bool, func, object, string } = PropTypes
 import { PostImage, PostBody, PostFooter, PostHeader } from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
 import Comments from './Comments'
-import { tagUrl } from 'util/index'
+import { tagUrl, postUrl } from 'util/index'
 import { DETAIL_COLUMN_ID } from 'util/scrolling'
 
 const STICKY_HEADER_ID = 'header-sticky'
@@ -93,6 +93,7 @@ export default class PostDetail extends Component {
         slug={slug}
         expanded
         styleName='body' />
+      <Link to={postUrl(post.id, slug) + '/edit'}>Edit</Link>
       <div styleName='activity-header' ref='activity'>Activity</div>
       <PostFooter id={post.id}
         commenters={post.commenters}

@@ -53,7 +53,6 @@ export default class PostEditor extends React.Component {
 
   constructor (props) {
     super(props)
-    console.log(props)
     this.state = this.buildStateFromProps(props)
   }
 
