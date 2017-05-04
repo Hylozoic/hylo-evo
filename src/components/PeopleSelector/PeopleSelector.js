@@ -65,7 +65,8 @@ export default class PeopleSelector extends React.Component {
     this.autocomplete.focus()
   }
 
-  arrow (direction) {
+  arrow (direction, evt) {
+    evt.preventDefault()
     let delta = 0
     const idx = this.props.matches.findIndex(m => m.id === this.state.currentMatch)
     if (direction === 'up') {
@@ -90,8 +91,8 @@ export default class PeopleSelector extends React.Component {
   onKeyDown (evt) {
     switch (getKeyCode(evt)) {
       case keyMap.BACKSPACE: return this.state.currentMatch ? null : this.props.removeParticipant()
-      case keyMap.UP: return this.arrow('up')
-      case keyMap.DOWN: return this.arrow('down')
+      case keyMap.UP: return this.arrow('up', evt)
+      case keyMap.DOWN: return this.arrow('down', evt)
       case keyMap.COMMA:
       case keyMap.ENTER:
         evt.preventDefault()
