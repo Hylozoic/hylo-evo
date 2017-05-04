@@ -1,6 +1,5 @@
 import { createSelector } from 'redux-orm'
-import { get, pick } from 'lodash/fp'
-import qs from 'querystring'
+import { pick } from 'lodash/fp'
 
 import orm from 'store/models'
 

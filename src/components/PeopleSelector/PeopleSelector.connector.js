@@ -8,8 +8,6 @@ import {
   participantsSelector,
   setAutocomplete
 } from './PeopleSelector.store'
-// TODO: pull this out of MemberProfile?
-import { fetchPerson } from 'routes/MemberProfile/MemberProfile.store'
 import changeQueryParam from 'store/actions/changeQueryParam'
 
 export function mapStateToProps (state, props) {
@@ -25,7 +23,6 @@ export const mapDispatchToProps = {
   removeParticipant,
   changeQueryParam,
   fetchPeople,
-  fetchPerson,
   setAutocomplete
 }
 
