@@ -53,6 +53,7 @@ posts(
       imageUrl
     }
     votesTotal
+    myVote
     communities {
       id
       name
@@ -123,6 +124,7 @@ posts(
       imageUrl
     }
     votesTotal
+    myVote
     communities {
       id
       name

@@ -43,6 +43,7 @@ export function fetchPost (id, opts = {}) {
             imageUrl
           }
           votesTotal
+          myVote
           communities {
             id
             name

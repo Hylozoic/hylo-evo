@@ -9,6 +9,8 @@ import Person from './Person'
 import Message from './Message'
 import MessageThread from './MessageThread'
 import Post, { PostFollower, PostCommenter } from './Post'
+import Topic from './Topic'
+import TopicSubscription from './TopicSubscription'
 import Vote from './Vote'
 
 export const orm = new ORM()
@@ -25,6 +27,8 @@ orm.register(
   Post,
   PostFollower,
   PostCommenter,
+  Topic,
+  TopicSubscription,
   Vote
 )
 

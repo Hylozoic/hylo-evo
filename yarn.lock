@@ -1937,6 +1937,10 @@ deep-diff@0.3.4:
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/deep-diff/-/deep-diff-0.3.4.tgz#aac5c39952236abe5f037a2349060ba01b00ae48"
 
+deep-diff@^0.3.7:
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/deep-diff/-/deep-diff-0.3.7.tgz#a486ddaefa6ac5f2a61e6b8d934c28ab45c33074"
+
 deep-extend@~0.4.0:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.4.1.tgz#efe4113d08085f4e6f9687759810f807469e2253"
@@ -7309,12 +7313,6 @@ verror@1.3.6:
 viewport-dimensions@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/viewport-dimensions/-/viewport-dimensions-0.2.0.tgz#de740747db5387fd1725f5175e91bac76afdf36c"
-
-visibility@^0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/visibility/-/visibility-0.0.0.tgz#e8ee5f845726b78457bef59b34965d49461068de"
-  dependencies:
-    inherits "~2.0.1"
 
 vm-browserify@0.0.4:
   version "0.0.4"

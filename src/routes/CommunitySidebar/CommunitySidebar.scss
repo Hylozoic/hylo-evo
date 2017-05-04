@@ -47,6 +47,18 @@ $about-height: 116px;
   margin-bottom: $space-10x;
 }
 
+.members-link {
+  &:hover {
+    text-decoration: none;
+    .header {
+      color: $color-rhino;
+    }
+    .members-total {
+      color: $color-gossamer;
+    }
+  }  
+}
+
 .images-and-count {
   display: flex;
   align-items: center;
