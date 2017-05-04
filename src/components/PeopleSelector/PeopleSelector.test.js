@@ -1,5 +1,5 @@
 import { mount, shallow } from 'enzyme'
-import configureStore from 'redux-mock-store'
+import { MemoryRouter } from 'react-router'
 import React from 'react'
 
 import { keyMap } from 'util/textInput'
@@ -17,7 +17,9 @@ describe('PeopleSelector', () => {
   it('does not hit server when backspace is pressed', () => {
     const fetchPeople = jest.fn()
     const wrapper = mount(
-      <PeopleSelector participants={[]} fetchPeople={fetchPeople} />
+      <MemoryRouter>
+        <PeopleSelector participants={[]} fetchPeople={fetchPeople} removeParticipant={() => {}}/>
+      </MemoryRouter>
     )
     wrapper.find('input').first().simulate('keyDown', { keyCode: keyMap.BACKSPACE })
     expect(fetchPeople).not.toHaveBeenCalled()
@@ -26,7 +28,9 @@ describe('PeopleSelector', () => {
   it('hits server when keys other than backspace are pressed', () => {
     const fetchPeople = jest.fn()
     const wrapper = mount(
-      <PeopleSelector participants={[]} fetchPeople={fetchPeople} />
+      <MemoryRouter>
+        <PeopleSelector participants={[]} fetchPeople={fetchPeople} />
+      </MemoryRouter>
     )
     wrapper.find('input').first().simulate('keyDown', { keyCode: keyMap.SPACE })
     expect(fetchPeople).toHaveBeenCalled()
@@ -41,7 +45,9 @@ describe('PeopleSelector', () => {
       const expected = 'Poor Yorick'
       const setAutocomplete = jest.fn()
       const wrapper = mount(
-        <PeopleSelector fetchPeople={() => {}} participants={[]} setAutocomplete={setAutocomplete} />
+        <MemoryRouter>
+          <PeopleSelector fetchPeople={() => {}} participants={[]} setAutocomplete={setAutocomplete} />
+        </MemoryRouter>
       )
       const input = wrapper.find('input').first()
       input.node.value = expected
@@ -57,7 +63,9 @@ describe('PeopleSelector', () => {
       const expected = 'Poor Yorick'
       const setAutocomplete = jest.fn()
       const wrapper = mount(
-        <PeopleSelector fetchPeople={() => {}} participants={[]} setAutocomplete={setAutocomplete} />
+        <MemoryRouter>
+          <PeopleSelector fetchPeople={() => {}} participants={[]} setAutocomplete={setAutocomplete} />
+        </MemoryRouter>
       )
       const input = wrapper.find('input').first()
       input.node.value = invalid
