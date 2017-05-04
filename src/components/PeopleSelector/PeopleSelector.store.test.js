@@ -92,6 +92,25 @@ describe('connector', () => {
       const actual = store.participantsSelector(state)
       expect(actual).toEqual(expected)
     })
+
+    it('combines participant from URL search with those in store', () => {
+      state.PeopleSelector.participants = [ '72203' ]
+      const props = { location: { search: '?participants=72019' } }
+      const expected = [
+        {
+          "id": "72203",
+          "name": "Brooks Funk",
+          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg"
+        },
+        {
+          "id": "72019",
+          "name": "Vita Breitenberg",
+          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/markjenkins/128.jpg"
+        }
+      ]
+      const actual = store.participantsSelector(state, props)
+      expect(actual).toEqual(expected)
+    })
   })
 
   describe('participantsFromStore', () => {
