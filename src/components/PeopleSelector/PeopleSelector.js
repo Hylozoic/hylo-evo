@@ -5,7 +5,8 @@ import { fetchPerson } from 'routes/MemberProfile/MemberProfile.store'
 import { getKeyCode, keyMap } from 'util/textInput'
 import MessageForm from 'components/MessageForm'
 import CloseMessages from 'components/Thread/CloseMessages'
-import PeopleSelectorMatches from 'components/PeopleSelectorMatches'
+import PeopleSelectorMatches from './PeopleSelectorMatches'
+import PeopleSelectorContacts from './PeopleSelectorContacts'
 import SelectorMatchedItem from 'components/SelectorMatchedItem'
 import './PeopleSelector.scss'
 
@@ -140,7 +141,7 @@ export default class PeopleSelector extends React.Component {
         currentMatch={currentMatch}
         matches={matches}
         setCurrentMatch={this.setCurrentMatch} />}
-      {!currentMatch && <div>Hi!</div>}
+      {!currentMatch && <PeopleSelectorContacts />}
       {participants && participants.length > 0 &&
         <div styleName='message-form'>
           <MessageForm ref='form' />

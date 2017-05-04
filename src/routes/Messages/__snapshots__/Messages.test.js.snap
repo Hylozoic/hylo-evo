@@ -10,13 +10,16 @@ exports[`matches the last snapshot 1`] = `
     <Connect(ThreadList)
       activeId="1"
     />
-    <Connect(Thread)
-      threadId="1"
-    />
-    <Route
-      component={[Function]}
-      path="/messages/new"
-    />
+    <Switch>
+      <Route
+        component={[Function]}
+        path="/t/new"
+      />
+      <Route
+        component={[Function]}
+        path="/t/:threadId"
+      />
+    </Switch>
   </div>
 </div>
 `;

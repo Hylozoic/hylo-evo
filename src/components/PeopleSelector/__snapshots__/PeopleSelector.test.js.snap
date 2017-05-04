@@ -12,6 +12,7 @@ exports[`PeopleSelector matches the last snapshot 1`] = `
       data-styleName="autocomplete-control"
     >
       <input
+        autoFocus={true}
         data-styleName="autocomplete"
         onChange={[Function]}
         onKeyDown={[Function]}
@@ -20,14 +21,8 @@ exports[`PeopleSelector matches the last snapshot 1`] = `
         type="text"
       />
     </div>
-    <Icon
-      data-styleName="close-button"
-      name="Ex"
-    />
+    <CloseMessages />
   </div>
-  <PeopleSelectorMatches
-    currentMatch={null}
-    matches={Array []}
-  />
+  <PeopleSelectorContacts />
 </div>
 `;
