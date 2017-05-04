@@ -2,7 +2,6 @@ import React from 'react'
 import { debounce, get, throttle } from 'lodash/fp'
 
 import { fetchPerson } from 'routes/MemberProfile/MemberProfile.store'
-import Icon from 'components/Icon'
 import { getKeyCode, keyMap } from 'util/textInput'
 import MessageForm from 'components/MessageForm'
 import CloseMessages from 'components/Thread/CloseMessages'
