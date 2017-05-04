@@ -65,21 +65,12 @@ export function participantsFromStore (state) {
   return state[MODULE_NAME].participants
 }
 
-// TODO: Could potentially take an array of participant IDs
-export function participantsFromParams (_, props) {
-  const search = get('location.search', props)
-  if (!search) return []
-  const participants = qs.parse(search.slice(1)).participants
-  return participants ? [ participants ] : []
-}
-
 export const participantsSelector = createSelector(
   orm,
   state => state.orm,
   participantsFromStore,
-  participantsFromParams,
-  (session, fromStore, fromParams) => fromStore.concat(fromParams)
-    .map(id => pick([ 'id', 'name', 'avatarUrl' ], session.Person.withId(id).ref))
+  (session, fromStore) => fromStore.map(id =>
+    pick([ 'id', 'name', 'avatarUrl' ], session.Person.withId(id).ref))
 )
 
 export const matchesSelector = createSelector(

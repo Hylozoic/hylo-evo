@@ -40,26 +40,6 @@ it('returns the correct action from removeParticipant', () => {
   expect(actual).toEqual(expected)
 })
 
-describe('participantsFromParams', () => {
-  it('returns an empty array if no search in URL', () => {
-    const expected = []
-    const actual = store.participantsFromParams()
-    expect(actual).toEqual(expected)
-  })
-
-  it('returns an empty array if participants missing from search', () => {
-    const expected = []
-    const actual = store.participantsFromParams(null, { location: { search: '?wombat=true' } })
-    expect(actual).toEqual(expected)
-  })
-
-  it('returns the correct id if participants in search', () => {
-    const expected = [ '123' ]
-    const actual = store.participantsFromParams(null, { location: { search: '?participants=123' } })
-    expect(actual).toEqual(expected)
-  })
-})
-
 describe('connector', () => {
   let session = null
   let state = null
@@ -90,25 +70,6 @@ describe('connector', () => {
         avatarUrl: p.avatarUrl
       }))
       const actual = store.participantsSelector(state)
-      expect(actual).toEqual(expected)
-    })
-
-    it('combines participant from URL search with those in store', () => {
-      state.PeopleSelector.participants = [ '72203' ]
-      const props = { location: { search: '?participants=72019' } }
-      const expected = [
-        {
-          "id": "72203",
-          "name": "Brooks Funk",
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg"
-        },
-        {
-          "id": "72019",
-          "name": "Vita Breitenberg",
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/markjenkins/128.jpg"
-        }
-      ]
-      const actual = store.participantsSelector(state, props)
       expect(actual).toEqual(expected)
     })
   })

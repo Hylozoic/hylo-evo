@@ -1,7 +1,7 @@
+import qs from 'querystring'
 import React from 'react'
 import { debounce, get, throttle } from 'lodash/fp'
 
-import { fetchPerson } from 'routes/MemberProfile/MemberProfile.store'
 import { getKeyCode, keyMap } from 'util/textInput'
 import MessageForm from 'components/MessageForm'
 import CloseMessages from 'components/Thread/CloseMessages'
@@ -37,13 +37,14 @@ export default class PeopleSelector extends React.Component {
   }
 
   componentDidMount () {
-    const participantsFromParams = get('match.params.participants', this.props)
-    if (participantsFromParams) {
-      // TODO: sense-checking/validation
-      participantsFromParams
+    const search = get('location.search', this.props)
+    if (search) {
+      const participants = qs.parse(search.slice(1)).participants
+      participants
         .split(',')
         .filter(p => !this.props.participants.find(participant => p === participant.id))
-        .forEach(participant => fetchPerson(participant))
+        .forEach(p => this.props.addParticipant(p))
+      this.props.changeQueryParam(this.props, 'participants', null)
     }
   }
 
