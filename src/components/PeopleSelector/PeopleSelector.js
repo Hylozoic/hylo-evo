@@ -7,7 +7,7 @@ import MessageForm from 'components/MessageForm'
 import CloseMessages from 'components/Thread/CloseMessages'
 import PeopleSelectorMatches from './PeopleSelectorMatches'
 import PeopleSelectorContacts from './PeopleSelectorContacts'
-import SelectorMatchedItem from 'components/SelectorMatchedItem'
+import SelectorMatchedItem from './SelectorMatchedItem'
 import './PeopleSelector.scss'
 
 const { any, arrayOf, func, shape, string } = React.PropTypes
@@ -59,6 +59,7 @@ export default class PeopleSelector extends React.Component {
   }
 
   addParticipant = id => {
+    this.props.setAutocomplete(null)
     this.setState({ currentMatch: null })
     this.autocomplete.value = null
     this.props.addParticipant(id)
