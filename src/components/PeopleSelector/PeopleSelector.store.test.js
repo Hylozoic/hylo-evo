@@ -22,7 +22,7 @@ describe('fetchPeople', () => {
   })
 })
 
-it('addParticipant returns the correct action', () => {
+it('returns the correct action from addParticipant', () => {
   const expected = {
     type: store.ADD_PARTICIPANT,
     payload: '1'
@@ -31,7 +31,7 @@ it('addParticipant returns the correct action', () => {
   expect(actual).toEqual(expected)
 })
 
-it('removeParticipant returns the correct action', () => {
+it('returns the correct action from removeParticipant', () => {
   const expected = {
     type: store.REMOVE_PARTICIPANT,
     payload: '1'
