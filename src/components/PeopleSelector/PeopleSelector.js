@@ -105,10 +105,15 @@ export default class PeopleSelector extends React.Component {
     }
   }
 
+  removeParticipant (id) {
+    this.props.changeQueryParam(this.props, 'participants', null)
+    this.props.removeParticipant(id)
+  }
+
   setCurrentMatch = id => this.setState({ currentMatch: id })
 
   render () {
-    const { removeParticipant, matches, participants } = this.props
+    const { matches, participants } = this.props
     const { currentMatch } = this.state
     return <div styleName='people-selector'>
       <div styleName='thread-header' tabIndex='0'>
@@ -118,7 +123,7 @@ export default class PeopleSelector extends React.Component {
               avatarUrl={participant.avatarUrl}
               key={participant.id}
               name={participant.name}
-              removeParticipant={() => removeParticipant(participant.id)} />
+              removeParticipant={() => this.removeParticipant(participant.id)} />
           )}
           <input styleName='autocomplete'
             autoFocus
