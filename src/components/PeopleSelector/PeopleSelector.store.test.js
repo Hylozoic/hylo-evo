@@ -47,7 +47,17 @@ describe('connector', () => {
   beforeEach(() => {
     session = orm.mutableSession(orm.getEmptyState())
 
-    people.forEach(person => session.Person.create(person))
+    people.forEach(person => {
+      session.Person.create({
+        ...person,
+        memberships: person.memberships.map(m => m.id)
+      })
+      session.Membership.create({
+        ...person.memberships[0],
+        community: person.memberships[0].community.id
+      })
+      session.Community.create(person.memberships[0].community)
+    })
     state = { orm: session.state }
     state.PeopleSelector = { participants: people.map(p => p.id) }
   })
@@ -60,6 +70,49 @@ describe('connector', () => {
         avatarUrl: p.avatarUrl
       }))
       const actual = store.participantsSelector(state)
+      expect(actual).toEqual(expected)
+    })
+  })
+
+  describe('matchesSelector', () => {
+    it('returns null if autocomplete is missing', () => {
+      const actual = store.matchesSelector(state)
+      expect(actual).toBe(null)
+    })
+
+    it('returns the correct objects by matching autocomplete', () => {
+      state.PeopleSelector.participants = []
+      state.PeopleSelector.autocomplete = 'BR'
+      const expected = [
+        {
+          "id": "72203",
+          "name": "Brooks Funk",
+          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg",
+          "community": "Associate"
+        },
+        {
+          "id": "72019",
+          "name": "Vita Breitenberg",
+          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/markjenkins/128.jpg",
+          "community": "Associate"
+        }
+      ]
+      const actual = store.matchesSelector(state)
+      expect(actual).toEqual(expected)
+    })
+
+    it('does not return objects whose ids are already in participants', () => {
+      state.PeopleSelector.participants = [ '72019' ]
+      state.PeopleSelector.autocomplete = 'BR'
+      const expected = [
+        {
+          "id": "72203",
+          "name": "Brooks Funk",
+          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg",
+          "community": "Associate"
+        }
+      ]
+      const actual = store.matchesSelector(state)
       expect(actual).toEqual(expected)
     })
   })
@@ -88,6 +141,13 @@ describe('reducer', () => {
       type: store.REMOVE_PARTICIPANT,
       payload: '44444'
     })
+    expect(actual).toEqual(expected)
+  })
+
+  it('should remove the last participant if REMOVE_PARTICIPANT payload is undefined', () => {
+    const state = { participants: [ '1', '3', '44444', '123454' ] }
+    const expected = { participants: [ '1', '3', '44444' ] }
+    const actual = reducer(state, { type: store.REMOVE_PARTICIPANT, })
     expect(actual).toEqual(expected)
   })
 })
