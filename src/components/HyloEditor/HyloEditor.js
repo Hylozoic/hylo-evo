@@ -52,10 +52,8 @@ export default class HyloEditor extends Component {
   }
 
   defaultState = ({ contentHTML }) => {
-    const contentState = contentStateFromHTML(ContentState.createFromText(''), contentHTML)
-    const editorState = EditorState.createWithContent(contentState)
     return {
-      editorState,
+      editorState: this.getEditorStateFromHTML(contentHTML),
       submitOnReturnEnabled: true
     }
   }
@@ -73,13 +71,23 @@ export default class HyloEditor extends Component {
 
   reset = () => {
     // https://github.com/draft-js-plugins/draft-js-plugins/blob/master/FAQ.md
-    this.setState({
-      editorState: EditorState.push(this.state.editorState, ContentState.createFromText(''))
-    })
+    // this.setState({
+    //   editorState: EditorState.push(this.state.editorState, ContentState.createFromText(''))
+    // })
+    this.getEditorStateFromHTML('')
   }
 
   isEmpty = () =>
     !this.state.editorState.getCurrentContent().hasText()
+
+  getEditorStateFromHTML = (contentHTML) => {
+    const contentState = contentStateFromHTML(
+      ContentState.createFromText(''), contentHTML
+    )
+    return this.state && this.state.editorState
+      ? EditorState.push(this.state.editorState, contentState)
+      : EditorState.createWithContent(contentState)
+  }
 
   getContentHTML = () => {
     const { editorState } = this.state
@@ -91,7 +99,7 @@ export default class HyloEditor extends Component {
     return convertToRaw(editorState.getCurrentContent())
   }
 
-  setContentState = (contentState) => {
+  setEditorStateFromContentState = (contentState) => {
     this.setState({editorState: EditorState.push(this.state.editorState, contentState)})
   }
 
@@ -136,6 +144,8 @@ export default class HyloEditor extends Component {
     return true
   }
 
+  focus = () => this.editor && this.editor.focus()
+
   render () {
     return <div styleName='wrapper' className={this.props.className}>
       <Editor
@@ -143,7 +153,8 @@ export default class HyloEditor extends Component {
         onChange={this.handleChange}
         placeholder={this.props.placeholder}
         handleReturn={this.handleReturn}
-        plugins={plugins} />
+        plugins={plugins}
+        ref={component => { this.editor = component }} />
       <MentionSuggestions
         onSearchChange={this.handleMentionsSearch}
         suggestions={this.props.mentionResults}

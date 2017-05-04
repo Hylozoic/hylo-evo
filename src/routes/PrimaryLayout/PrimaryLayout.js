@@ -80,7 +80,8 @@ export default class PrimaryLayout extends Component {
           */}
           {detailRoutes.map(({ path, component }) =>
             <Route key={path} {...{path, component}} />)}
-          <Route key='/c/:slug/p/:postId/edit' path='/c/:slug/p/:postId/edit' exact component={PostEditor} />)
+          {detailRoutes.map(({ path, editComponent }) =>
+            <Route key={`${path}/edit`} path={`${path}/edit`} component={editComponent} />)}
         </div>
       </div>
       <Route path='/messages' exact component={Messages} />
@@ -93,8 +94,8 @@ export default class PrimaryLayout extends Component {
 
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
-  {path: '/all/p/:postId', component: PostDetail},
-  {path: '/c/:slug/p/:postId', component: PostDetail}
+  {path: '/all/p/:postId', component: PostDetail, editComponent: PostEditor},
+  {path: '/c/:slug/p/:postId', component: PostDetail, editComponent: PostEditor}
 ]
 
 function RedirectToCommunity ({ currentUser }) {

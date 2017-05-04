@@ -11,6 +11,7 @@ import HyloModal from 'components/HyloModal'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
+    disabled: PropTypes.bool,
     initialPrompt: PropTypes.string,
     onClose: PropTypes.func,
     titlePlaceholder: PropTypes.string,
@@ -27,6 +28,7 @@ export default class PostEditor extends React.Component {
   }
 
   static defaultProps = {
+    disabled: true,
     initialPrompt: 'What are you looking to post?',
     titlePlaceholderForPostType: {
       offer: 'What super powers can you offer?',
@@ -41,7 +43,7 @@ export default class PostEditor extends React.Component {
     }
   }
 
-  defaultState = ({ post }) => {
+  buildStateFromProps = ({ post }) => {
     const defaultedPost = post || PostEditor.defaultProps.post
     return {
       post: defaultedPost,
@@ -52,19 +54,21 @@ export default class PostEditor extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = this.defaultState(props)
+    console.log(props)
+    this.state = this.buildStateFromProps(props)
   }
 
   componentDidUpdate (prevProps) {
     if (get('post.id', this.props) !== get('post.id', prevProps)) {
-      this.setStateWithDefaults()
+      this.reset(this.props)
+      this.editor.focus()
     }
   }
 
-  setStateWithDefaults = () => {
+  reset = (props) => {
     this.editor.reset()
     this.communitiesSelector.reset()
-    this.setState(this.defaultState(this.props))
+    this.setState(this.buildStateFromProps(props))
   }
 
   handlePostTypeSelection = event => {
@@ -129,15 +133,16 @@ export default class PostEditor extends React.Component {
     const { type, title, communities } = this.state.post
     const details = this.editor.getContentHTML()
     const communityIds = communities.map(c => c.id)
-    createPost(type, title, details, communityIds).then(this.setStateWithDefaults())
+    createPost({ type, title, details, communityIds })
+      .then(this.reset(PostEditor.defaultProps))
   }
 
   render () {
     const { titlePlaceholder, valid, post } = this.state
     if (!post) return null
     const { title, details, communities } = post
-    const { initialPrompt, detailsPlaceholder, communityOptions } = this.props
-    const postEditor = <div styleName='wrapper'>
+    const { disabled, initialPrompt, detailsPlaceholder, communityOptions } = this.props
+    const postEditor = <div styleName='wrapper' ref={element => { this.wrapper = element }}>
       <div styleName='header'>
         <div styleName='initial'>
           <div styleName='initial-prompt'>{initialPrompt}</div>
@@ -199,7 +204,11 @@ export default class PostEditor extends React.Component {
       </div>
     </div>
 
-    return <HyloModal ref={component => { this.modal = component }}>
+    return <HyloModal
+      shouldCloseOnOverlayClick={false}
+      refocusOnElement={this.editor}
+      ref={component => { this.modal = component }}
+    >
       {postEditor}
     </HyloModal>
   }

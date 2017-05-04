@@ -27,10 +27,10 @@ describe('HyloEditor', () => {
     expect(wrapper.find('Decorated(CompletionSuggestions)')).toHaveLength(1)
   })
 
-  it('#setContentState creates expected result through #getContentRaw', () => {
+  it('#setEditorStateFromContentState creates expected result through #getContentRaw', () => {
     const wrapper = renderComponent(mount)
     const testContent = 'test content <h1>test</h1>'
-    wrapper.get(0).setContentState(ContentState.createFromText(testContent))
+    wrapper.get(0).setEditorStateFromContentState(ContentState.createFromText(testContent))
     expect(wrapper.get(0).getContentRaw().blocks).toHaveLength(1)
     expect(wrapper.get(0).getContentRaw().blocks[0].text).toEqual(testContent)
   })
