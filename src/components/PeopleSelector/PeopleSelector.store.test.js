@@ -74,6 +74,26 @@ describe('connector', () => {
     })
   })
 
+  describe('participantsFromParams', () => {
+    it('returns an empty array if no search in URL', () => {
+      const expected = []
+      const actual = store.participantsFromParams()
+      expect(actual).toEqual(expected)
+    })
+
+    it('returns an empty array if participants missing from search', () => {
+      const expected = []
+      const actual = store.participantsFromParams(null, { location: { search: '?wombat=true' } })
+      expect(actual).toEqual(expected)
+    })
+
+    it('returns the correct id if participants in search', () => {
+      const expected = [ '123' ]
+      const actual = store.participantsFromParams(null, { location: { search: '?participants=123' } })
+      expect(actual).toEqual(expected)
+    })
+  })
+
   describe('matchesSelector', () => {
     it('returns null if autocomplete is missing', () => {
       const actual = store.matchesSelector(state)
