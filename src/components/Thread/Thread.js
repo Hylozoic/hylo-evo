@@ -50,11 +50,12 @@ export default class Thread extends React.Component {
 
   render () {
     const { thread, currentUser } = this.props
+    const threadId = get('id', thread)
     return <div styleName='thread'>
       <Header thread={thread} currentUser={currentUser} />
-      <MessageSection thread={thread} messageThreadId={thread.id} />
+      <MessageSection thread={thread} messageThreadId={threadId} />
       <div styleName='message-form'>
-        <MessageForm messageThreadId={thread.id} ref='form' />
+        <MessageForm messageThreadId={threadId} ref='form' />
       </div>
       <PeopleTyping styleName='people-typing' />
     </div>
