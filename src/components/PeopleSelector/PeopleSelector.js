@@ -103,7 +103,6 @@ export default class PeopleSelector extends React.Component {
   }
 
   removeParticipant (id) {
-    this.props.changeQueryParam(this.props, 'participants', null)
     this.props.removeParticipant(id)
   }
 
