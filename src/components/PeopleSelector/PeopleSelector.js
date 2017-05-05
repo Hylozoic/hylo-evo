@@ -1,6 +1,5 @@
-import qs from 'querystring'
 import React from 'react'
-import { debounce, get, throttle } from 'lodash/fp'
+import { debounce, throttle } from 'lodash/fp'
 
 import { getKeyCode, keyMap } from 'util/textInput'
 import MessageForm from 'components/MessageForm'
@@ -37,13 +36,9 @@ export default class PeopleSelector extends React.Component {
   }
 
   componentDidMount () {
-    const search = get('location.search', this.props)
-    if (search) {
-      const participants = qs.parse(search.slice(1)).participants
-      participants
-        .split(',')
-        .filter(p => !this.props.participants.find(participant => p === participant.id))
-        .forEach(p => this.props.addParticipant(p))
+    const { participantSearch } = this.props
+    if (participantSearch) {
+      participantSearch.forEach(p => this.props.addParticipant(p))
       this.props.changeQueryParam(this.props, 'participants', null)
     }
   }

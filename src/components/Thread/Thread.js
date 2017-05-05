@@ -50,7 +50,7 @@ export default class Thread extends React.Component {
   }
 
   render () {
-    const { thread, threadId, currentUser, match } = this.props
+    const { thread, threadId, currentUser } = this.props
     return <div styleName='thread'>
       <Header thread={thread} currentUser={currentUser} />
       <MessageSection thread={thread} messageThreadId={threadId} />
