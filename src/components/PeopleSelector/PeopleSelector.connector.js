@@ -7,6 +7,7 @@ import {
   removeParticipant,
   fetchContacts,
   fetchPeople,
+  contactsSelector,
   matchesSelector,
   participantsSelector,
   setAutocomplete
@@ -28,6 +29,7 @@ export function mapStateToProps (state, props) {
   const participants = participantsSelector(state, props)
   return {
     autocomplete: state.autocomplete,
+    contacts: contactsSelector(state),
     matches: matchesSelector(state),
     participants,
     participantSearch: getParticipantSearch(props, participants)

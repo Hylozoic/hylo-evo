@@ -114,7 +114,7 @@ export default class PeopleSelector extends React.Component {
   setCurrentMatch = id => this.setState({ currentMatch: id })
 
   render () {
-    const { matches, participants } = this.props
+    const { contacts, matches, participants } = this.props
     const { currentMatch } = this.state
     return <div styleName='people-selector'>
       <div styleName='thread-header' tabIndex='0'>
@@ -143,7 +143,9 @@ export default class PeopleSelector extends React.Component {
           currentMatch={currentMatch}
           matches={matches}
           setCurrentMatch={this.setCurrentMatch} />
-        : <PeopleSelectorContacts />}
+        : <PeopleSelectorContacts
+          addParticipant={this.addParticipant}
+          contacts={contacts} />}
       {participants && participants.length > 0 &&
         <div styleName='message-form'>
           <MessageForm ref='form' />

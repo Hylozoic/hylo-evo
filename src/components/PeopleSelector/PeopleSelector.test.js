@@ -9,7 +9,11 @@ describe('PeopleSelector', () => {
 
   it('matches the last snapshot', () => {
     const wrapper = shallow(
-      <PeopleSelector fetchPeople={() => {}} matches={[]} participants={[]} />
+      <PeopleSelector
+        fetchContacts={() => {}}
+        fetchPeople={() => {}}
+        matches={[]}
+        participants={[]} />
     )
     expect(wrapper).toMatchSnapshot()
   })
@@ -18,7 +22,11 @@ describe('PeopleSelector', () => {
     const fetchPeople = jest.fn()
     const wrapper = mount(
       <MemoryRouter>
-        <PeopleSelector participants={[]} fetchPeople={fetchPeople} removeParticipant={() => {}}/>
+        <PeopleSelector
+          participants={[]}
+          fetchContacts={() => {}}
+          fetchPeople={fetchPeople}
+          removeParticipant={() => {}}/>
       </MemoryRouter>
     )
     wrapper.find('input').first().simulate('keyDown', { keyCode: keyMap.BACKSPACE })
@@ -29,7 +37,10 @@ describe('PeopleSelector', () => {
     const fetchPeople = jest.fn()
     const wrapper = mount(
       <MemoryRouter>
-        <PeopleSelector participants={[]} fetchPeople={fetchPeople} />
+        <PeopleSelector
+          participants={[]}
+          fetchContacts={() => {}}
+          fetchPeople={fetchPeople} />
       </MemoryRouter>
     )
     wrapper.find('input').first().simulate('keyDown', { keyCode: keyMap.SPACE })
@@ -46,7 +57,11 @@ describe('PeopleSelector', () => {
       const setAutocomplete = jest.fn()
       const wrapper = mount(
         <MemoryRouter>
-          <PeopleSelector fetchPeople={() => {}} participants={[]} setAutocomplete={setAutocomplete} />
+          <PeopleSelector
+            fetchContacts={() => {}}
+            fetchPeople={() => {}}
+            participants={[]}
+            setAutocomplete={setAutocomplete} />
         </MemoryRouter>
       )
       const input = wrapper.find('input').first()
@@ -64,7 +79,11 @@ describe('PeopleSelector', () => {
       const setAutocomplete = jest.fn()
       const wrapper = mount(
         <MemoryRouter>
-          <PeopleSelector fetchPeople={() => {}} participants={[]} setAutocomplete={setAutocomplete} />
+          <PeopleSelector
+            fetchContacts={() => {}}
+            fetchPeople={() => {}}
+            participants={[]}
+            setAutocomplete={setAutocomplete} />
         </MemoryRouter>
       )
       const input = wrapper.find('input').first()

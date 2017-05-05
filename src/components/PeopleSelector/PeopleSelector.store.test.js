@@ -83,9 +83,9 @@ describe('connector', () => {
   })
 
   describe('matchesSelector', () => {
-    it('returns null if autocomplete is missing', () => {
+    it('returns empty array if autocomplete is missing', () => {
       const actual = store.matchesSelector(state)
-      expect(actual).toBe(null)
+      expect(actual).toEqual([])
     })
 
     it('returns the correct objects by matching autocomplete', () => {
