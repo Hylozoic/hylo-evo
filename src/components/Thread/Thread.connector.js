@@ -8,13 +8,14 @@ import { getSocket, socketUrl } from 'client/websockets'
 
 export function mapStateToProps (state, props) {
   return {
+    threadId: props.match.params.threadId,
     currentUser: getMe(state),
     thread: getThread(state, props)
   }
 }
 
 function mapDispatchToProps (dispatch, props) {
-  const { threadId } = props
+  const { threadId } = props.match.params
 
   return {
     fetchThread: () => dispatch(fetchThread(threadId)),
