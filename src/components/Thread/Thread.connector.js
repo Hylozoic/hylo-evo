@@ -7,7 +7,7 @@ import { getMe } from 'store/selectors/getMe'
 import { getSocket, socketUrl } from 'client/websockets'
 
 export function mapStateToProps (state, props) {
-  const thread = getThread(state, props) || props.match.params.threadId
+  const thread = getThread(state, props) || { id: props.match.params.threadId }
   return {
     currentUser: getMe(state),
     thread
