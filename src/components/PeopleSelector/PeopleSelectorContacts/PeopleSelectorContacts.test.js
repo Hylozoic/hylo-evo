@@ -1,6 +1,7 @@
-import PeopleSelectorContacts from './PeopleSelectorContacts'
 import { shallow } from 'enzyme'
 import React from 'react'
+
+import PeopleSelectorContacts from './PeopleSelectorContacts'
 
 it('does something', () => {
   const contacts = [
