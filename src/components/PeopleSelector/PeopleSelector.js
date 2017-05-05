@@ -36,6 +36,7 @@ export default class PeopleSelector extends React.Component {
   }
 
   componentDidMount () {
+    this.props.fetchContacts()
     const { participantSearch } = this.props
     if (participantSearch) {
       participantSearch.forEach(p => this.props.addParticipant(p))
@@ -105,6 +106,9 @@ export default class PeopleSelector extends React.Component {
   removeParticipant (id) {
     this.props.changeQueryParam(this.props, 'participants', null)
     this.props.removeParticipant(id)
+    if (!this.autocomplete.value) {
+      this.setState({ currentMatch: null })
+    }
   }
 
   setCurrentMatch = id => this.setState({ currentMatch: id })

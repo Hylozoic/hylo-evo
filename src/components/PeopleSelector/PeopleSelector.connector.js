@@ -5,6 +5,7 @@ import { get } from 'lodash/fp'
 import {
   addParticipant,
   removeParticipant,
+  fetchContacts,
   fetchPeople,
   matchesSelector,
   participantsSelector,
@@ -37,6 +38,7 @@ export const mapDispatchToProps = {
   addParticipant,
   removeParticipant,
   changeQueryParam,
+  fetchContacts,
   fetchPeople,
   setAutocomplete
 }

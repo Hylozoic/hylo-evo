@@ -6,12 +6,13 @@ import orm from 'store/models'
 export const MODULE_NAME = 'PeopleSelector'
 
 export const FETCH_PEOPLE = 'FETCH_PEOPLE'
+export const FETCH_CONTACTS = 'FETCH_CONTACTS'
 export const SET_AUTOCOMPLETE = 'PeopleSelector/SET_AUTOCOMPLETE'
 export const ADD_PARTICIPANT = 'PeopleSelector/ADD_PARTICIPANT'
 export const REMOVE_PARTICIPANT = 'PeopleSelector/REMOVE_PARTICIPANT'
 
 const fetchPeopleQuery =
-`query PersonAutocomplete ($autocomplete: String, $first: Int) {
+`query PeopleAutocomplete ($autocomplete: String, $first: Int) {
   people (autocomplete: $autocomplete, first: $first) {
     items {
       id
@@ -39,6 +40,35 @@ export function fetchPeople (autocomplete, query = fetchPeopleQuery, first = 20)
   }
 }
 
+const fetchContactsQuery =
+`query PeopleContacts ($first: Int) {
+  people (first: $first) {
+    items {
+      id
+      name
+      avatarUrl
+      memberships {
+        id
+        community {
+          id
+          name
+        }
+      }
+    }
+  }
+}`
+
+export function fetchContacts (query = fetchContactsQuery, first = 50) {
+  return {
+    type: FETCH_CONTACTS,
+    graphql: {
+      query,
+      variables: { first }
+    },
+    meta: { extractModel: 'Person' }
+  }
+}
+
 export function addParticipant (id) {
   return {
     type: ADD_PARTICIPANT,
@@ -60,6 +90,40 @@ export function setAutocomplete (autocomplete) {
   }
 }
 
+export function personListItemSelector (session, participants, search = () => true) {
+  return session.Person
+    .all()
+    .filter(p => !participants.includes(p.id))
+    .filter(search)
+    .orderBy('name')
+    .toModelArray()
+    .map(contact => ({
+      ...pick([ 'id', 'name', 'avatarUrl' ], contact.ref),
+      community: contact.memberships.first()
+        ? contact.memberships.first().community.name : null
+    }))
+}
+
+export const contactsSelector = createSelector(
+  orm,
+  state => state.orm,
+  state => state[MODULE_NAME].participants,
+  personListItemSelector
+)
+
+export const matchesSelector = createSelector(
+  orm,
+  state => state.orm,
+  state => state[MODULE_NAME].participants,
+  state => p => {
+    const { autocomplete } = state[MODULE_NAME]
+    if (autocomplete) {
+      return p.name.toLowerCase().includes(autocomplete.toLowerCase())
+    }
+  },
+  personListItemSelector
+)
+
 export function participantsFromStore (state) {
   return state[MODULE_NAME].participants
 }
@@ -70,29 +134,6 @@ export const participantsSelector = createSelector(
   participantsFromStore,
   (session, fromStore) => fromStore.map(id =>
     pick([ 'id', 'name', 'avatarUrl' ], session.Person.withId(id).ref))
-)
-
-export const matchesSelector = createSelector(
-  orm,
-  state => state.orm,
-  state => state[MODULE_NAME].autocomplete,
-  state => state[MODULE_NAME].participants,
-  (session, autocomplete, participants) => {
-    if (autocomplete) {
-      const term = autocomplete.toLowerCase()
-      const matches = session.Person
-        .all()
-        .filter(p => !participants.includes(p.id))
-        .filter(p => p.name.toLowerCase().includes(term))
-        .orderBy('name')
-      return matches.toModelArray().map(match => ({
-        ...pick([ 'id', 'name', 'avatarUrl' ], match.ref),
-        community: match.memberships.first()
-          ? match.memberships.first().community.name : null
-      }))
-    }
-    return null
-  }
 )
 
 export const defaultState = {
