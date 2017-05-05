@@ -4,6 +4,52 @@ exports[`does something 1`] = `
 <div
   data-styleName="people-selector-contacts"
 >
-  PeopleSelectorContacts
+  <h2
+    data-styleName="contacts-header"
+  >
+    Recent
+  </h2>
+  <h2
+    data-styleName="contacts-header"
+  >
+    All Contacts
+  </h2>
+  <ul
+    data-styleName="contact-list"
+  >
+    <PersonListItem
+      onClick={[Function]}
+      person={
+        Object {
+          "avatarUrl": "https://flargle.com",
+          "community": "Wombats",
+          "id": "1",
+          "name": "Wombat",
+        }
+      }
+    />
+    <PersonListItem
+      onClick={[Function]}
+      person={
+        Object {
+          "avatarUrl": "https://argle.com",
+          "community": "Aardvarks",
+          "id": "2",
+          "name": "Aardvark",
+        }
+      }
+    />
+    <PersonListItem
+      onClick={[Function]}
+      person={
+        Object {
+          "avatarUrl": "https://wargle.com",
+          "community": "Ocelots",
+          "id": "3",
+          "name": "Ocelot",
+        }
+      }
+    />
+  </ul>
 </div>
 `;

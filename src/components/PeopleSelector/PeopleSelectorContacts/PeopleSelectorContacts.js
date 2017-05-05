@@ -6,8 +6,8 @@ import './PeopleSelectorContacts.scss'
 
 export default function PeopleSelectorContacts ({ addParticipant, contacts }) {
   return <div styleName='people-selector-contacts'>
-    <h2>Recent</h2>
-    <h2>All Contacts</h2>
+    <h2 styleName='contacts-header'>Recent</h2>
+    <h2 styleName='contacts-header'>All Contacts</h2>
     <ul styleName='contact-list'>
       {contacts && contacts.map(contact =>
         <PersonListItem

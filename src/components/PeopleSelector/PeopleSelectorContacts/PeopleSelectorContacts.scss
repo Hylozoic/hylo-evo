@@ -1,7 +1,12 @@
 .people-selector-contacts {
   composes: messages-section from 'components/MessageSection/MessageSection.scss';
   flex: 1;
-  padding-top: $space-5x;
+}
+
+.contacts-header {
+  composes: hdr-subheadline from 'css/typography.scss';
+  margin-top: $space-8x;
+  color: $color-rhino-80;
 }
 
 .contact-list {
