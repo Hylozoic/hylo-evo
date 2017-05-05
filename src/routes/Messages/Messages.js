@@ -6,7 +6,6 @@ const { object } = PropTypes
 
 export default class Messages extends Component {
   static propTypes = {
-    currentUser: object,
     match: object
   }
 
