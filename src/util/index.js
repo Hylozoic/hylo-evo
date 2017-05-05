@@ -30,6 +30,14 @@ export function communityUrl (slug) {
   return `/c/${slug}`
 }
 
+export function threadUrl (id) {
+  return `/t/${id}`
+}
+
+export function newMessageUrl () {
+  return `/messages/new`
+}
+
 export function getSlugInPath (pathname) {
   const match = pathname.match(/\/c\/([^/]+)/)
   return match ? match[1] : null

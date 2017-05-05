@@ -50,14 +50,15 @@ $dropdown-border-color: rgba(49, 72, 67, 0.11);
   }
 }
 
-.messages {
+.threads {
   height: 420px;
   overflow: scroll;
 }
 
-.message {
+.thread {
   display: flex;
   align-items: start;
+  cursor: pointer;
   &:first-child {
     margin-top: 25px;
   }

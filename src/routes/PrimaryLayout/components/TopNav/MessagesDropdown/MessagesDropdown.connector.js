@@ -1,25 +1,22 @@
 import { connect } from 'react-redux'
-// import { getMe } from 'store/selectors/getMe'
-import { fakePerson } from 'components/PostCard/samplePost'
-import { times } from 'lodash/fp'
-import faker from 'faker'
-
-faker.seed(345)
-
-const sampleMessages = times(i => ({
-  id: i,
-  text: "Yes that makes total sense. :) Let's connect tomorrow to chat about it.",
-  creator: fakePerson(),
-  createdAt: faker.date.recent().toString()
-}), 5)
+import { fetchThreads } from './MessagesDropdown.store.js'
+import { push } from 'react-router-redux'
+import { threadUrl } from 'util/index'
+import { getThreads } from 'components/ThreadList/ThreadList.store'
+import { getMe } from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
   return {
-    messages: sampleMessages
-//  currentUser: getMe(state, props)
+    currentUser: getMe(state, props),
+    threads: getThreads(state, props)
   }
 }
 
-export const mapDispatchToProps = {}
+export function mapDispatchToProps (dispatch, props) {
+  return {
+    fetchThreads: () => dispatch(fetchThreads()),
+    goToThread: id => () => dispatch(push(threadUrl(id)))
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)
