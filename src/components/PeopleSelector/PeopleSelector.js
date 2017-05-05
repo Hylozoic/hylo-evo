@@ -133,12 +133,13 @@ export default class PeopleSelector extends React.Component {
         </div>
         <CloseMessages />
       </div>
-      {currentMatch && <PeopleSelectorMatches
-        addParticipant={this.addParticipant}
-        currentMatch={currentMatch}
-        matches={matches}
-        setCurrentMatch={this.setCurrentMatch} />}
-      {!currentMatch && <PeopleSelectorContacts />}
+      {currentMatch
+        ? <PeopleSelectorMatches
+          addParticipant={this.addParticipant}
+          currentMatch={currentMatch}
+          matches={matches}
+          setCurrentMatch={this.setCurrentMatch} />
+        : <PeopleSelectorContacts />}
       {participants && participants.length > 0 &&
         <div styleName='message-form'>
           <MessageForm ref='form' />
