@@ -1,7 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`does something 1`] = `
-<div
-  data-styleName="exampleName"
-/>
+<Dropdown>
+  <li>
+    <span>
+      Open Messages
+    </span>
+    <Link
+      replace={false}
+      to="/messages"
+    >
+      New
+    </Link>
+  </li>
+</Dropdown>
 `;

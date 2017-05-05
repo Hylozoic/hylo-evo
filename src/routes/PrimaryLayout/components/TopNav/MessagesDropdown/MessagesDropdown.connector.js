@@ -4,7 +4,10 @@ import { fakePerson } from 'components/PostCard/samplePost'
 import { times } from 'lodash/fp'
 import faker from 'faker'
 
-const sampleMessages = times(() => ({
+faker.seed(345)
+
+const sampleMessages = times(i => ({
+  id: i,
   text: "Yes that makes total sense. :) Let's connect tomorrow to chat about it.",
   creator: fakePerson(),
   createdAt: faker.date.recent().toString()

@@ -44,7 +44,7 @@ export default function PostHeader ({
     </div>
     <div styleName='upperRight'>
       {type && <PostLabel type={type} styleName='label' />}
-      <Dropdown toggleChildren={<Icon name='More' />} triangle items={[
+      <Dropdown toggleChildren={<Icon name='More' />} items={[
         {icon: 'Pin', label: 'Pin', onClick: () => console.log('Pin')},
         {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')},
         {icon: 'Trash', label: 'Delete', onClick: () => console.log('Delete')},
