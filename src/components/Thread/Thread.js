@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { filter, get, map } from 'lodash/fp'
-const { func, object, string } = React.PropTypes
+const { func, object } = React.PropTypes
 import Icon from 'components/Icon'
 import MessageSection from 'components/MessageSection'
 import MessageForm from 'components/MessageForm'
@@ -11,7 +11,6 @@ import './Thread.scss'
 
 export default class Thread extends React.Component {
   static propTypes = {
-    threadId: string,
     currentUser: object,
     thread: object,
     fetchThread: func,
@@ -34,14 +33,14 @@ export default class Thread extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
-    const oldId = get('threadId', prevProps)
-    const newId = get('threadId', this.props)
+    const oldId = get('thread.id', prevProps)
+    const newId = get('thread.id', this.props)
     if (newId !== oldId && newId) this.setupForThread()
   }
 
   componentWillReceiveProps (nextProps) {
-    const oldId = get('threadId', this.props)
-    const newId = get('threadId', nextProps)
+    const oldId = get('thread.id', this.props)
+    const newId = get('thread.id', nextProps)
     if (newId !== oldId) this.teardownForThread()
   }
 
@@ -50,12 +49,12 @@ export default class Thread extends React.Component {
   }
 
   render () {
-    const { thread, threadId, currentUser } = this.props
+    const { thread, currentUser } = this.props
     return <div styleName='thread'>
       <Header thread={thread} currentUser={currentUser} />
-      <MessageSection thread={thread} messageThreadId={threadId} />
+      <MessageSection thread={thread} messageThreadId={thread.id} />
       <div styleName='message-form'>
-        <MessageForm messageThreadId={threadId} ref='form' />
+        <MessageForm messageThreadId={thread.id} ref='form' />
       </div>
       <PeopleTyping styleName='people-typing' />
     </div>
