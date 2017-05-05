@@ -17,7 +17,7 @@ export function getParticipantSearch (props, participantsFromStore) {
   if (participants) {
     return participants
       .split(',')
-      .filter(p => !participantsFromStore.find(participant => p === participant.id))
+      .filter(p => !participantsFromStore.find(participant => p === participant))
   }
   return null
 }
