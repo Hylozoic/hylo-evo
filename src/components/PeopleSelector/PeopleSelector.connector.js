@@ -1,6 +1,4 @@
-import qs from 'querystring'
 import { connect } from 'react-redux'
-import { get } from 'lodash/fp'
 
 import getQueryParam from 'store/selectors/getQueryParam'
 
