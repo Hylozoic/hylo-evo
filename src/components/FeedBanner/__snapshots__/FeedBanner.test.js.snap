@@ -1,0 +1,170 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders for all communities 1`] = `
+<FeedBanner
+  all={true}
+  currentUser={
+    Object {
+      "avatarUrl": "me.png",
+      "firstName": [Function],
+      "memberships": Object {
+        "count": [Function],
+      },
+    }
+  }
+>
+  <div
+    data-styleName="banner all-communities"
+  >
+    <div
+      data-styleName="image"
+      style={Object {}}
+    >
+      <div
+        data-styleName="fade"
+      >
+        <div
+          data-styleName="fade2"
+        />
+      </div>
+      <div
+        data-styleName="header"
+      >
+        <div
+          data-styleName="logo"
+          style={
+            Object {
+              "backgroundImage": "url(/hylo-merkaba.png)",
+            }
+          }
+        />
+        <div
+          data-styleName="header-text"
+        >
+          <span
+            data-styleName="header-name"
+          >
+            All Communities
+          </span>
+          <div
+            data-styleName="header-subtitle"
+          >
+            18 Communities
+          </div>
+        </div>
+      </div>
+    </div>
+    <PostPrompt
+      currentUser={
+        Object {
+          "avatarUrl": "me.png",
+          "firstName": [Function],
+          "memberships": Object {
+            "count": [Function],
+          },
+        }
+      }
+    >
+      <div
+        data-styleName="postPrompt"
+        onClick={[Function]}
+      >
+        <RoundImage
+          data-styleName="prompt-image"
+          small={true}
+          url="me.png"
+        >
+          <div
+            className=""
+            data-styleName="image small"
+            style={
+              Object {
+                "backgroundImage": "url(me.png)",
+              }
+            }
+          />
+        </RoundImage>
+        Hi 
+        Bob
+        , what's on your mind?
+      </div>
+    </PostPrompt>
+    <div
+      data-styleName="shadow"
+    />
+  </div>
+</FeedBanner>
+`;
+
+exports[`renders with a community 1`] = `
+<FeedBanner
+  community={
+    Object {
+      "avatarUrl": "avatar.png",
+      "bannerUrl": "banner.png",
+      "location": "space, duh",
+      "name": "Spacebase",
+    }
+  }
+>
+  <div
+    data-styleName="banner"
+  >
+    <div
+      data-styleName="image"
+      style={
+        Object {
+          "backgroundImage": "url(banner.png)",
+        }
+      }
+    >
+      <div
+        data-styleName="fade"
+      >
+        <div
+          data-styleName="fade2"
+        />
+      </div>
+      <div
+        data-styleName="header"
+      >
+        <div
+          data-styleName="logo"
+          style={
+            Object {
+              "backgroundImage": "url(avatar.png)",
+            }
+          }
+        />
+        <div
+          data-styleName="header-text"
+        >
+          <span
+            data-styleName="header-name"
+          >
+            Spacebase
+          </span>
+          <div
+            data-styleName="header-subtitle"
+          >
+            <Icon
+              data-styleName="header-icon"
+              name="Location"
+            >
+              <span
+                className="icon-Location"
+                data-styleName="icon"
+              />
+            </Icon>
+            space, duh
+          </div>
+        </div>
+      </div>
+    </div>
+    <PostPrompt />
+    <div
+      data-styleName="shadow"
+    />
+  </div>
+</FeedBanner>
+`;
