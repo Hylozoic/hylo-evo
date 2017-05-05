@@ -3,5 +3,45 @@
 exports[`does something 1`] = `
 <ul
   data-styleName="people-selector-matches"
-/>
+>
+  <PersonListItem
+    active={false}
+    onClick={[Function]}
+    onMouseOver={[Function]}
+    person={
+      Object {
+        "avatarUrl": "https://flargle.com",
+        "community": "Wombats",
+        "id": "1",
+        "name": "Wombat",
+      }
+    }
+  />
+  <PersonListItem
+    active={false}
+    onClick={[Function]}
+    onMouseOver={[Function]}
+    person={
+      Object {
+        "avatarUrl": "https://argle.com",
+        "community": "Aardvarks",
+        "id": "2",
+        "name": "Aardvark",
+      }
+    }
+  />
+  <PersonListItem
+    active={false}
+    onClick={[Function]}
+    onMouseOver={[Function]}
+    person={
+      Object {
+        "avatarUrl": "https://wargle.com",
+        "community": "Ocelots",
+        "id": "3",
+        "name": "Ocelot",
+      }
+    }
+  />
+</ul>
 `;
