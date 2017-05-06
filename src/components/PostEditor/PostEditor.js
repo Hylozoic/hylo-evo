@@ -10,10 +10,9 @@ import CommunitiesSelector from 'components/CommunitiesSelector'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
-    disabled: PropTypes.bool,
     initialPrompt: PropTypes.string,
     onClose: PropTypes.func,
-    titlePlaceholder: PropTypes.string,
+    titlePlaceholderForPostType: PropTypes.object,
     detailsPlaceholder: PropTypes.string,
     communityOptions: PropTypes.array,
     post: PropTypes.shape({
@@ -27,7 +26,6 @@ export default class PostEditor extends React.Component {
   }
 
   static defaultProps = {
-    disabled: true,
     initialPrompt: 'What are you looking to post?',
     titlePlaceholderForPostType: {
       offer: 'What super powers can you offer?',
@@ -141,7 +139,7 @@ export default class PostEditor extends React.Component {
     const { titlePlaceholder, valid, post } = this.state
     if (!post) return null
     const { title, details, communities } = post
-    const { disabled, onClose, initialPrompt, detailsPlaceholder, communityOptions } = this.props
+    const { onClose, initialPrompt, detailsPlaceholder, communityOptions } = this.props
 
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
       <div styleName='header'>

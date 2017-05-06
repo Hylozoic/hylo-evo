@@ -7,11 +7,13 @@ export default class PostEditorModal extends Component {
     return this.modal && this.modal.closeModal()
   }
 
+  afterOpenModal = () => this.postEditor && this.postEditor.focus
+
   render () {
     return <HyloModal
       ref={component => { this.modal = component }}
       shouldCloseOnOverlayClick={false}
-      afterOpenModal={this.postEditor && this.postEditor.focus}
+      afterOpenModal={this.afterOpenModal}
     >
       <PostEditor
         ref={component => { this.postEditor = component }}

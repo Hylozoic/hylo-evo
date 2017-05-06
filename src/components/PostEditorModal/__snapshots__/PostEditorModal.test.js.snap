@@ -2,8 +2,11 @@
 
 exports[`does something 1`] = `
 <HyloModal
+  afterOpenModal={[Function]}
   shouldCloseOnOverlayClick={false}
 >
-  <Connect(PostEditor) />
+  <Connect(PostEditor)
+    onClose={[Function]}
+  />
 </HyloModal>
 `;
