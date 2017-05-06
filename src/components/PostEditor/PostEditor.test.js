@@ -1,7 +1,8 @@
 /* eslint-env jest */
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import PostEditor from './PostEditor'
+import TestApp from 'util/testApp'
 
 describe('PostEditor', () => {
   it('renders with min props', () => {
@@ -84,7 +85,7 @@ describe('PostEditor', () => {
     })
   })
 
-  test('onClose is attached to the close button ', () => {
+  test('onClose is attached to the close button', () => {
     const props = {
       onClose: jest.fn()
     }
@@ -93,17 +94,23 @@ describe('PostEditor', () => {
       .toEqual(props.onClose)
   })
 
-
-  // it('sets all fields to disabled when disabled set')
-  // it('post button is enabled/disabled if valid/invalid', () => {})
-  // expect(validPostProps.createPost.mock.calls).toHaveLength(1)
+  it('will create a post', () => {
+    const props = {
+      post: {
+        type: 'offer',
+        title: 'valid title',
+        details: 'valid details',
+        communities: [
+          {id: '1', name: 'test community 1'},
+          {id: '2', name: 'test community 2'}
+        ]
+      },
+      createPost: jest.fn()
+    }
+    // const app = mount(<TestApp><PostEditor {...props} /></TestApp>)
+    // const wrapper = app.nodes[0].props.children
+    // console.log(wrapper)
+    // wrapper.find('[data-styleName="postButton"]').simulate('click')
+    // expect(props.createPost.mock.calls).toHaveLength(1)
+  })
 })
-
-// onClose, initialPrompt, detailsPlaceholder, communityOptions
-
-// expect(wrapper.find('Connect(HyloEditor)').props().contentHTML)
-//   .toEqual(editPost.post.details)
-// expect(wrapper.find('CommunitiesSelector').props().selected)
-//   .toEqual(editPost.post.communities)
-// expect(wrapper.find('[data-styleName="postTypes"]').props())
-//   .toEqual(editPost.post.details)
