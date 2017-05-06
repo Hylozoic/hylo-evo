@@ -1,4 +1,4 @@
-import { mount, shallow } from 'enzyme'
+import { mount, shallow, render } from 'enzyme'
 import { MemoryRouter } from 'react-router'
 import React from 'react'
 
