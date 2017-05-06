@@ -145,6 +145,26 @@ describe('connector', () => {
       expect(actual).toEqual(expected)
     })
   })
+
+  describe('mapStateToProps', () => {
+    it('returns the correct object', () => {
+      state.PeopleSelector.participants = [ '72203' ]
+      const expected = {
+        autocomplete: undefined,
+        matches: null,
+        participantSearch: null,
+        participants: [
+          {
+            "id": "72203",
+            "name": "Brooks Funk",
+            "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg"
+          }
+        ]
+      }
+      const actual = mapStateToProps(state, { location: { search: '' } })
+      expect(actual).toEqual(expected)
+    })
+  })
 })
 
 describe('reducer', () => {
