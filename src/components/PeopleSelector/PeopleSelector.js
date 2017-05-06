@@ -72,7 +72,7 @@ export default class PeopleSelector extends React.Component {
     if (direction === 'down') {
       if (idx < this.props.matches.length - 1) delta = 1
     }
-    this.setState({ currentMatch: this.props.matches[idx + delta].id })
+    this.setCurrentMatch(this.props.matches[idx + delta].id)
   }
 
   autocompleteSearch = throttle(1000, this.props.fetchPeople)

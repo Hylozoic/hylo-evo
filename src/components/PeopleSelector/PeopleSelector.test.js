@@ -4,9 +4,9 @@ import React from 'react'
 
 import { keyMap } from 'util/textInput'
 import PeopleSelector from './PeopleSelector'
+import PersonListItem from 'components/PersonListItem'
 
 describe('PeopleSelector', () => {
-
   it('matches the last snapshot', () => {
     const wrapper = shallow(
       <PeopleSelector fetchPeople={() => {}} matches={[]} participants={[]} />
@@ -14,46 +14,119 @@ describe('PeopleSelector', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('does not hit server when backspace is pressed', () => {
-    const fetchPeople = jest.fn()
-    const wrapper = mount(
-      <MemoryRouter>
-        <PeopleSelector participants={[]} fetchPeople={fetchPeople} removeParticipant={() => {}}/>
-      </MemoryRouter>
-    )
-    wrapper.find('input').first().simulate('keyDown', { keyCode: keyMap.BACKSPACE })
-    expect(fetchPeople).not.toHaveBeenCalled()
-  })
+  describe('onKeyDown', () => {
+    let fetchPeople
+    let removeParticipant
+    let input
+    let wrapper
 
-  it('hits server when keys other than backspace are pressed', () => {
-    const fetchPeople = jest.fn()
-    const wrapper = mount(
-      <MemoryRouter>
-        <PeopleSelector participants={[]} fetchPeople={fetchPeople} />
-      </MemoryRouter>
-    )
-    wrapper.find('input').first().simulate('keyDown', { keyCode: keyMap.SPACE })
-    expect(fetchPeople).toHaveBeenCalled()
+    beforeEach(() => {
+      fetchPeople = jest.fn()
+      removeParticipant = jest.fn()
+      const matches = [ { id: '1' }, { id: '2' } ]
+      wrapper = mount(
+        <MemoryRouter>
+          <PeopleSelector
+            matches={matches}
+            participants={[]}
+            fetchPeople={fetchPeople}
+            removeParticipant={removeParticipant} />
+        </MemoryRouter>
+      )
+      input = wrapper.find('input').first()
+    })
+
+    it('does not hit server when backspace is pressed', () => {
+      input.simulate('keyDown', { keyCode: keyMap.BACKSPACE })
+      expect(fetchPeople).not.toHaveBeenCalled()
+    })
+
+    it('hits server when keys other than backspace are pressed', () => {
+      input.simulate('keyDown', { keyCode: keyMap.SPACE })
+      expect(fetchPeople).toHaveBeenCalled()
+    })
+
+    it('removes participant if backspace pressed when currentMatch missing', () => {
+      input.simulate('keyDown', { keyCode: keyMap.BACKSPACE })
+      expect(removeParticipant).toHaveBeenCalled()
+    })
+
+    it('does not remove paraticipant if backspace pressed when currentMatch defined', () => {
+      wrapper.find(PeopleSelector).node.setState({ currentMatch: '1' })
+      input.simulate('keyDown', { keyCode: keyMap.BACKSPACE })
+      expect(removeParticipant).not.toHaveBeenCalled()
+    })
+
+    it('calls arrow with `up` if up arrow pressed', () => {
+      const arrow = PeopleSelector.prototype.arrow
+      PeopleSelector.prototype.arrow = jest.fn()
+      input.simulate('keyDown', { keyCode: keyMap.UP })
+      const calls = PeopleSelector.prototype.arrow.mock.calls
+      expect(calls[calls.length -1][0]).toBe('up')
+      PeopleSelector.prototype.arrow = arrow
+    })
+
+    it('calls arrow with `down` if down arrow pressed', () => {
+      const arrow = PeopleSelector.prototype.arrow
+      PeopleSelector.prototype.arrow = jest.fn()
+      input.simulate('keyDown', { keyCode: keyMap.DOWN })
+      const calls = PeopleSelector.prototype.arrow.mock.calls
+      expect(calls[calls.length -1][0]).toBe('down')
+      PeopleSelector.prototype.arrow = arrow
+    })
+
+    it('does not change active match if at top of list when up arrow pressed', () => {
+      wrapper.find(PeopleSelector).node.setState({ currentMatch: '1' })
+      input.simulate('keyDown', { keyCode: keyMap.UP })
+      const actual = wrapper.find(PersonListItem).first().prop('active')
+      expect(actual).toBe(true)
+    })
+
+    it('changes active match if not at top of list when up arrow pressed', () => {
+      wrapper.find(PeopleSelector).node.setState({ currentMatch: '2' })
+      input.simulate('keyDown', { keyCode: keyMap.UP })
+      const actual = wrapper.find(PersonListItem).last().prop('active')
+      expect(actual).toBe(false)
+    })
+
+    it('does not change active match if at bottom of list when down arrow pressed', () => {
+      wrapper.find(PeopleSelector).node.setState({ currentMatch: '2' })
+      input.simulate('keyDown', { keyCode: keyMap.DOWN })
+      const actual = wrapper.find(PersonListItem).last().prop('active')
+      expect(actual).toBe(true)
+    })
+
+    it('changes active match if not at bottom of list when down arrow pressed', () => {
+      wrapper.find(PeopleSelector).node.setState({ currentMatch: '1' })
+      input.simulate('keyDown', { keyCode: keyMap.DOWN })
+      const actual = wrapper.find(PersonListItem).first().prop('active')
+      expect(actual).toBe(false)
+    })
   })
 
   describe('setAutocomplete', () => {
+    let setAutocomplete
+    let wrapper
+
     beforeEach(() => {
       jest.useFakeTimers()
+      setAutocomplete = jest.fn()
+      wrapper = mount(
+        <MemoryRouter>
+          <PeopleSelector
+            fetchPeople={() => {}}
+            participants={[]}
+            setAutocomplete={setAutocomplete} />
+        </MemoryRouter>
+      )
     })
 
     it('updates if user input contains valid characters', () => {
       const expected = 'Poor Yorick'
-      const setAutocomplete = jest.fn()
-      const wrapper = mount(
-        <MemoryRouter>
-          <PeopleSelector fetchPeople={() => {}} participants={[]} setAutocomplete={setAutocomplete} />
-        </MemoryRouter>
-      )
       const input = wrapper.find('input').first()
       input.node.value = expected
       input.simulate('change')
       jest.runAllTimers()
-
       const actual = setAutocomplete.mock.calls[0][0]
       expect(actual).toBe(expected)
     })
@@ -61,16 +134,9 @@ describe('PeopleSelector', () => {
     it('does not update if user input contains invalid characters', () => {
       const invalid = 'Poor Yorick9238183$@#$$@!'
       const expected = 'Poor Yorick'
-      const setAutocomplete = jest.fn()
-      const wrapper = mount(
-        <MemoryRouter>
-          <PeopleSelector fetchPeople={() => {}} participants={[]} setAutocomplete={setAutocomplete} />
-        </MemoryRouter>
-      )
       const input = wrapper.find('input').first()
       input.node.value = invalid
       input.simulate('change')
-
       jest.runAllTimers()
       expect(setAutocomplete).not.toHaveBeenCalled()
       expect(input.node.value).toBe(expected)

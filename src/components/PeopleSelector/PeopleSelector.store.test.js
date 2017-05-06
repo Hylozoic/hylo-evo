@@ -40,6 +40,15 @@ it('returns the correct action from removeParticipant', () => {
   expect(actual).toEqual(expected)
 })
 
+it('returns the correct action from setAutocomplete', () => {
+  const expected = {
+    type: store.SET_AUTOCOMPLETE,
+    payload: 'flargle'
+  }
+  const actual = store.setAutocomplete('flargle')
+  expect(actual).toEqual(expected)
+})
+
 describe('getParticipantSearch', () => {
   it('returns the correct id', () => {
     const location = { search: '?participants=12345' }
