@@ -124,6 +124,41 @@ describe('PeopleSelector', () => {
     })
   })
 
+  describe('addParticipant', () => {
+    it('calls addParticipant with the correct id', () => {
+      const addParticipant = jest.fn()
+      const wrapper = mount(
+        <MemoryRouter>
+          <PeopleSelector
+            addParticipant={addParticipant}
+            participants={[]}
+            fetchPeople={() => {}}
+            setAutocomplete={() => {}} />
+        </MemoryRouter>
+      )
+      wrapper.find(PeopleSelector).node.addParticipant('1')
+      expect(addParticipant).toBeCalledWith('1')
+    })
+
+    it('resets values after adding a participant', () => {
+      const setAutocomplete = jest.fn()
+      const wrapper = mount(
+        <MemoryRouter>
+          <PeopleSelector
+            addParticipant={() => {}}
+            participants={[]}
+            fetchPeople={() => {}}
+            setAutocomplete={setAutocomplete} />
+        </MemoryRouter>
+      )
+      const input = wrapper.find('input').first()
+      input.node.value = 'flargle'
+      wrapper.find(PeopleSelector).node.addParticipant('1')
+      expect(input.node.value).toBe('')
+      expect(setAutocomplete).toBeCalledWith(null)
+    })
+  })
+
   describe('setAutocomplete', () => {
     let setAutocomplete
     let wrapper
