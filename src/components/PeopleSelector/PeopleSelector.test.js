@@ -15,24 +15,30 @@ describe('PeopleSelector', () => {
   })
 
   describe('onKeyDown', () => {
+    let addParticipant
     let fetchPeople
     let removeParticipant
     let input
+    let setAutocomplete
     let wrapper
 
     beforeEach(() => {
+      addParticipant = jest.fn()
       fetchPeople = jest.fn()
       removeParticipant = jest.fn()
-      const matches = [ { id: '1' }, { id: '2' } ]
+      setAutocomplete = jest.fn()
       wrapper = mount(
         <MemoryRouter>
           <PeopleSelector
-            matches={matches}
+            addParticipant={addParticipant}
+            matches={[ { id: '1' }, { id: '2' } ]}
             participants={[]}
             fetchPeople={fetchPeople}
-            removeParticipant={removeParticipant} />
+            removeParticipant={removeParticipant}
+            setAutocomplete={setAutocomplete} />
         </MemoryRouter>
       )
+      wrapper.find(PeopleSelector).node.setState({ currentMatch: '1' })
       input = wrapper.find('input').first()
     })
 
@@ -47,12 +53,12 @@ describe('PeopleSelector', () => {
     })
 
     it('removes participant if backspace pressed when currentMatch missing', () => {
+      wrapper.find(PeopleSelector).node.setState({ currentMatch: null })
       input.simulate('keyDown', { keyCode: keyMap.BACKSPACE })
       expect(removeParticipant).toHaveBeenCalled()
     })
 
     it('does not remove paraticipant if backspace pressed when currentMatch defined', () => {
-      wrapper.find(PeopleSelector).node.setState({ currentMatch: '1' })
       input.simulate('keyDown', { keyCode: keyMap.BACKSPACE })
       expect(removeParticipant).not.toHaveBeenCalled()
     })
@@ -76,7 +82,6 @@ describe('PeopleSelector', () => {
     })
 
     it('does not change active match if at top of list when up arrow pressed', () => {
-      wrapper.find(PeopleSelector).node.setState({ currentMatch: '1' })
       input.simulate('keyDown', { keyCode: keyMap.UP })
       const actual = wrapper.find(PersonListItem).first().prop('active')
       expect(actual).toBe(true)
@@ -97,10 +102,25 @@ describe('PeopleSelector', () => {
     })
 
     it('changes active match if not at bottom of list when down arrow pressed', () => {
-      wrapper.find(PeopleSelector).node.setState({ currentMatch: '1' })
       input.simulate('keyDown', { keyCode: keyMap.DOWN })
       const actual = wrapper.find(PersonListItem).first().prop('active')
       expect(actual).toBe(false)
+    })
+
+    it('calls addParticipant with currentMatch when enter pressed', () => {
+      input.simulate('keyDown', { keyCode: keyMap.ENTER })
+      expect(addParticipant).toBeCalledWith('1')
+    })
+
+    it('calls addParticipant with currentMatch when comma pressed', () => {
+      input.simulate('keyDown', { keyCode: keyMap.COMMA })
+      expect(addParticipant).toBeCalledWith('1')
+    })
+
+    it('resets values after adding participants', () => {
+      input.simulate('keyDown', { keyCode: keyMap.ENTER })
+      expect(setAutocomplete).toBeCalledWith(null)
+      expect(input.node.value).toBe('')
     })
   })
 
