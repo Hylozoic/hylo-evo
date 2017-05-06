@@ -159,6 +159,28 @@ describe('PeopleSelector', () => {
     })
   })
 
+  describe('componentDidMount', () => {
+    it('adds particpants in the search, then clears it', () => {
+      const addParticipant = jest.fn()
+      const changeQueryParam = jest.fn()
+      const wrapper = mount(
+        <MemoryRouter>
+          <PeopleSelector
+            addParticipant={addParticipant}
+            participants={[]}
+            participantSearch={[ '1', '2' ]}
+            fetchPeople={() => {}}
+            changeQueryParam={changeQueryParam} />
+        </MemoryRouter>
+      )
+      expect(addParticipant).toBeCalledWith('1')
+      expect(addParticipant).toBeCalledWith('2')
+      const [ _, param, value ] = changeQueryParam.mock.calls[0]
+      expect(param).toBe('participants')
+      expect(value).toBe(null)
+    })
+  })
+
   describe('setAutocomplete', () => {
     let setAutocomplete
     let wrapper
