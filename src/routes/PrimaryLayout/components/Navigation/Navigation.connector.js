@@ -1,3 +1,4 @@
+import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 
@@ -8,7 +9,7 @@ function mapStateToProps (state, props) {
   return {
     slug: community.slug,
     homePath: `/c/${community.slug}`,
-    homeBadge: community.memberships.first().newPostCount
+    homeBadge: get('newPostCount', community.memberships.first())
   }
 }
 
