@@ -1,0 +1,58 @@
+[
+  {
+    "id": "71862",
+    "name": "Ahmad Bernier",
+    "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/ecommerceil/128.jpg",
+    "memberships": [
+      {
+        "id": "6217",
+        "community": {
+          "id": "2619",
+          "name": "Associate"
+        }
+      }
+    ]
+  },
+  {
+    "id": "72203",
+    "name": "Brooks Funk",
+    "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg",
+    "memberships": [
+      {
+        "id": "6560",
+        "community": {
+          "id": "2619",
+          "name": "Associate"
+        }
+      }
+    ]
+  },
+  {
+    "id": "72655",
+    "name": "Leora Bahringer",
+    "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/akmalfikri/128.jpg",
+    "memberships": [
+      {
+        "id": "7010",
+        "community": {
+          "id": "2619",
+          "name": "Associate"
+        }
+      }
+    ]
+  },
+  {
+    "id": "72019",
+    "name": "Vita Breitenberg",
+    "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/markjenkins/128.jpg",
+    "memberships": [
+      {
+        "id": "6374",
+        "community": {
+          "id": "2619",
+          "name": "Associate"
+        }
+      }
+    ]
+  }
+]

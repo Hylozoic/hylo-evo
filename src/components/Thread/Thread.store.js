@@ -57,7 +57,7 @@ export const moduleSelector = (state) => state[MODULE_NAME]
 export const getThread = ormCreateSelector(
   orm,
   state => state.orm,
-  (_, props) => props.threadId,
+  (_, { match }) => match.params.threadId,
   (session, threadId) => {
     var thread
     try {

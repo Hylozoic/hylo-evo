@@ -28,7 +28,7 @@ export default class ThreadList extends Component {
     const onSearchChange = (event) => setThreadSearch(event.target.value)
     return <div styleName='thread-list'>
       <div styleName='header'>
-        <Link to='/messages/new'><Button label='New Message' styleName='new-message' /></Link>
+        <Link to='/t/new'><Button label='New Message' styleName='new-message' /></Link>
         <div styleName='header-text'>Messages</div>
       </div>
       <div styleName='search'>

@@ -14,7 +14,7 @@ export function mapStateToProps (state, props) {
 }
 
 function mapDispatchToProps (dispatch, props) {
-  const { threadId } = props
+  const { threadId } = props.match.params
 
   return {
     fetchThread: () => dispatch(fetchThread(threadId)),
