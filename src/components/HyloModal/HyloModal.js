@@ -9,7 +9,7 @@ export default class HyloModal extends Component {
 
   constructor (props) {
     super(props)
-    this.state = { modalIsOpen: true }
+    this.state = {modalIsOpen: true}
   }
 
   openModal = () => {
@@ -27,7 +27,6 @@ export default class HyloModal extends Component {
       overlayClassName={styles['hyloModal-overlay']}
       isOpen={this.state.modalIsOpen}
       onRequestClose={this.closeModal}
-      contentLabel='Example Modal'
       {...this.props}
     />
   }
