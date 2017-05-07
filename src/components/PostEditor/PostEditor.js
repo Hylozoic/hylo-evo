@@ -130,8 +130,7 @@ export default class PostEditor extends React.Component {
     const { createPost } = this.props
     const { type, title, communities } = this.state.post
     const details = this.editor.getContentHTML()
-    const communityIds = communities.map(c => c.id)
-    createPost({ type, title, details, communityIds })
+    createPost({ type, title, details, communities })
       .then(this.reset(PostEditor.defaultProps))
   }
 

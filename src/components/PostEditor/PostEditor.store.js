@@ -3,7 +3,8 @@ export const MODULE_NAME = 'PostEditor'
 const CREATE_POST = `${MODULE_NAME}/CREATE_POST`
 
 export function createPost (post) {
-  const { title, details, communityIds } = post
+  const { title, details, communities } = post
+  const communityIds = communities.map(c => c.id)
   return {
     type: CREATE_POST,
     graphql: {

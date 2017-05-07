@@ -1,8 +1,7 @@
 /* eslint-env jest */
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import PostEditor from './PostEditor'
-import TestApp from 'util/testApp'
 
 describe('PostEditor', () => {
   it('renders with min props', () => {
@@ -94,7 +93,7 @@ describe('PostEditor', () => {
       .toEqual(props.onClose)
   })
 
-  it('will create a post', () => {
+  test('saving a valid post will create a post', () => {
     const props = {
       post: {
         type: 'offer',
@@ -105,12 +104,24 @@ describe('PostEditor', () => {
           {id: '2', name: 'test community 2'}
         ]
       },
-      createPost: jest.fn()
+      createPost: jest.fn(() => new Promise(() => {}))
     }
-    // const app = mount(<TestApp><PostEditor {...props} /></TestApp>)
-    // const wrapper = app.nodes[0].props.children
+    const editorMock = {
+      getContentHTML: () => props.post.details,
+      reset: jest.fn()
+    }
+    const communitiesSelectorMock = {
+      reset: jest.fn()
+    }
+    const wrapper = shallow(<PostEditor {...props} />)
+    const testInstance = wrapper.instance()
+    testInstance.editor = editorMock
+    testInstance.communitiesSelector = communitiesSelectorMock
+    testInstance.save()
+    expect(props.createPost.mock.calls).toHaveLength(1)
+    expect(props.createPost).toHaveBeenCalledWith(props.post)
+    // const wrapper = app.nodes[0]
     // console.log(wrapper)
     // wrapper.find('[data-styleName="postButton"]').simulate('click')
-    // expect(props.createPost.mock.calls).toHaveLength(1)
   })
 })
