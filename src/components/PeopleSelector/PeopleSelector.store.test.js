@@ -162,10 +162,12 @@ describe('connector', () => {
       state.PeopleSelector.participants = [ '72203' ]
       const expected = {
         autocomplete: undefined,
-        contacts: people.map(p => ({
-          ...pick([ 'id', 'name', 'avatarUrl' ], p),
-          community: p.memberships[0].community.name
-        })),
+        contacts: people
+          .map(p => ({
+            ...pick([ 'id', 'name', 'avatarUrl' ], p),
+            community: p.memberships[0].community.name
+          }))
+          .filter(p => p.id !== '72203'),
         matches: [],
         participantSearch: null,
         participants: [
