@@ -4,21 +4,13 @@ import styles from './HyloModal.scss'
 
 export default class HyloModal extends Component {
   static propTypes = {
-    children: PropTypes.object.isRequired
+    children: PropTypes.any.isRequired
   }
 
   constructor (props) {
     super(props)
     this.state = { modalIsOpen: true }
   }
-
-  // componentDidUpdate (prevProps) {
-  //   const { refocusOnElement } = this.props
-  //   if (this.props.refocusOnElement !== prevProps.refocusOnElement) {
-  //     console.log(refocusOnElement)
-  //     refocusOnElement && refocusOnElement.focus()
-  //   }
-  // }
 
   openModal = () => {
     this.setState({modalIsOpen: true})

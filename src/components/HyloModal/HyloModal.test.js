@@ -2,7 +2,9 @@ import HyloModal from './HyloModal'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-it('does something', () => {
-  const wrapper = shallow(<HyloModal />)
-  // expect(wrapper.find('element')).toBeTruthy()
+it('renders with minimum props', () => {
+  const content = 'test'
+  const wrapper = shallow(<HyloModal>{content}</HyloModal>)
+  expect(wrapper.children().nodes[0]).toEqual(content)
+  expect(wrapper).toMatchSnapshot()
 })
