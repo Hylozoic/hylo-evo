@@ -1,3 +1,5 @@
+import { pick } from 'lodash/fp'
+
 import orm from 'store/models'
 import reducer, * as store from './PeopleSelector.store'
 import people from './PeopleSelector.test.json'
@@ -160,7 +162,11 @@ describe('connector', () => {
       state.PeopleSelector.participants = [ '72203' ]
       const expected = {
         autocomplete: undefined,
-        matches: null,
+        contacts: people.map(p => ({
+          ...pick([ 'id', 'name', 'avatarUrl' ], p),
+          community: p.memberships[0].community.name
+        })),
+        matches: [],
         participantSearch: null,
         participants: [
           {
