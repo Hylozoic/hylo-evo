@@ -11,5 +11,6 @@ export default Membership
 Membership.modelName = 'Membership'
 Membership.fields = {
   id: attr(),
-  community: fk('Community')
+  community: fk('Community', 'memberships'),
+  newPostCount: attr()
 }

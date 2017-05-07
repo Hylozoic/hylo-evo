@@ -1,3 +1,4 @@
 import component from './Navigation'
 import connector from './Navigation.connector'
-export default connector(component)
+import { withRouter } from 'react-router-dom'
+export default withRouter(connector(component))

@@ -3,6 +3,10 @@ import { attr, many, Model } from 'redux-orm'
 const Me = Model.createClass({
   toString () {
     return `Me: ${this.name}`
+  },
+
+  firstName () {
+    return this.name.split(' ')[0]
   }
 })
 

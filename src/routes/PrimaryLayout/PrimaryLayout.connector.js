@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import { fetchCurrentUser, toggleDrawer } from './PrimaryLayout.store'
+import fetchCurrentUser from 'store/actions/fetchCurrentUser'
+import { toggleDrawer } from './PrimaryLayout.store'
 import { getMe } from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 

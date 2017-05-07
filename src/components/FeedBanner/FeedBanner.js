@@ -45,6 +45,6 @@ function PostPrompt ({ currentUser }) {
   if (!currentUser) return null
   return <div styleName='postPrompt' onClick={() => console.log('Open Post Form')}>
     <RoundImage url={currentUser.avatarUrl} small styleName='prompt-image' />
-    Hi {currentUser.firstName}, what's on your mind?
+    Hi {currentUser.firstName()}, what's on your mind?
   </div>
 }

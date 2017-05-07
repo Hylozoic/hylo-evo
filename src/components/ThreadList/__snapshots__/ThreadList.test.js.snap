@@ -9,7 +9,7 @@ exports[`matches the last snapshot 1`] = `
   >
     <Link
       replace={false}
-      to="/messages/new"
+      to="/t/new"
     >
       <Button
         data-styleName="new-message"

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import fetchCurrentUser from 'routes/PrimaryLayout/PrimaryLayout.store'
+import fetchCurrentUser from 'store/actions/fetchCurrentUser'
 
 export const mapDispatchToProps = {
   fetchCurrentUser
