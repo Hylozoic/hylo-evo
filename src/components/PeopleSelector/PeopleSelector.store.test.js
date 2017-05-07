@@ -1,7 +1,7 @@
 import orm from 'store/models'
 import reducer, * as store from './PeopleSelector.store'
 import people from './PeopleSelector.test.json'
-import { mapStateToProps } from './PeopleSelector.connector'
+import { mapStateToProps, getParticipantSearch } from './PeopleSelector.connector'
 
 describe('fetchPeople', () => {
   it('returns the correct action', () => {
@@ -38,6 +38,36 @@ it('returns the correct action from removeParticipant', () => {
   }
   const actual = store.removeParticipant('1')
   expect(actual).toEqual(expected)
+})
+
+it('returns the correct action from setAutocomplete', () => {
+  const expected = {
+    type: store.SET_AUTOCOMPLETE,
+    payload: 'flargle'
+  }
+  const actual = store.setAutocomplete('flargle')
+  expect(actual).toEqual(expected)
+})
+
+describe('getParticipantSearch', () => {
+  it('returns the correct id', () => {
+    const location = { search: '?participants=12345' }
+    const expected = [ '12345' ]
+    const actual = getParticipantSearch({ location }, [])
+    expect(actual).toEqual(expected)
+  })
+
+  it('returns null if no search', () => {
+    const actual = getParticipantSearch({ location: { search: '' } })
+    expect(actual).toBe(null)
+  })
+
+  it('filters out ids from store', () => {
+    const location = { search: '?participants=1,2,3,4' }
+    const expected = [ '1', '2', '4' ]
+    const actual = getParticipantSearch({ location }, [ '3' ])
+    expect(actual).toEqual(expected)
+  })
 })
 
 describe('connector', () => {
@@ -121,6 +151,26 @@ describe('connector', () => {
         }
       ]
       const actual = store.matchesSelector(state)
+      expect(actual).toEqual(expected)
+    })
+  })
+
+  describe('mapStateToProps', () => {
+    it('returns the correct object', () => {
+      state.PeopleSelector.participants = [ '72203' ]
+      const expected = {
+        autocomplete: undefined,
+        matches: null,
+        participantSearch: null,
+        participants: [
+          {
+            "id": "72203",
+            "name": "Brooks Funk",
+            "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg"
+          }
+        ]
+      }
+      const actual = mapStateToProps(state, { location: { search: '' } })
       expect(actual).toEqual(expected)
     })
   })

@@ -1,6 +1,6 @@
-import qs from 'querystring'
 import { connect } from 'react-redux'
-import { get } from 'lodash/fp'
+
+import getQueryParam from 'store/selectors/getQueryParam'
 
 import {
   addParticipant,
@@ -15,12 +15,11 @@ import {
 import changeQueryParam from 'store/actions/changeQueryParam'
 
 export function getParticipantSearch (props, participantsFromStore) {
-  const search = get('location.search', props)
-  if (search) {
-    const participants = qs.parse(search.slice(1)).participants
+  const participants = getQueryParam('participants', null, props)
+  if (participants) {
     return participants
       .split(',')
-      .filter(p => !participantsFromStore.find(participant => p === participant.id))
+      .filter(p => !participantsFromStore.find(participant => p === participant))
   }
   return null
 }

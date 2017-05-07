@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`does something 1`] = `
+exports[`matches the last snapshot 1`] = `
 <ul
   data-styleName="people-selector-matches"
 >
   <PersonListItem
-    active={false}
+    active={true}
     onClick={[Function]}
     onMouseOver={[Function]}
     person={
       Object {
-        "avatarUrl": "https://flargle.com",
-        "community": "Wombats",
-        "id": "1",
-        "name": "Wombat",
+        "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/saarabpreet/128.jpg",
+        "community": "Associate",
+        "id": "72297",
+        "name": "Cristal Heller",
       }
     }
   />
@@ -23,10 +23,10 @@ exports[`does something 1`] = `
     onMouseOver={[Function]}
     person={
       Object {
-        "avatarUrl": "https://argle.com",
-        "community": "Aardvarks",
-        "id": "2",
-        "name": "Aardvark",
+        "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/orkuncaylar/128.jpg",
+        "community": "Associate",
+        "id": "72552",
+        "name": "Helga Cronin",
       }
     }
   />
@@ -36,10 +36,23 @@ exports[`does something 1`] = `
     onMouseOver={[Function]}
     person={
       Object {
-        "avatarUrl": "https://wargle.com",
-        "community": "Ocelots",
-        "id": "3",
-        "name": "Ocelot",
+        "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/larrygerard/128.jpg",
+        "community": "Associate",
+        "id": "72257",
+        "name": "Isadore Herzog",
+      }
+    }
+  />
+  <PersonListItem
+    active={false}
+    onClick={[Function]}
+    onMouseOver={[Function]}
+    person={
+      Object {
+        "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/antonyzotov/128.jpg",
+        "community": "Associate",
+        "id": "72041",
+        "name": "Oma Hettinger",
       }
     }
   />

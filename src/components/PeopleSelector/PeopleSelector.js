@@ -73,7 +73,7 @@ export default class PeopleSelector extends React.Component {
     if (direction === 'down') {
       if (idx < this.props.matches.length - 1) delta = 1
     }
-    this.setState({ currentMatch: this.props.matches[idx + delta].id })
+    this.setCurrentMatch(this.props.matches[idx + delta].id)
   }
 
   autocompleteSearch = throttle(1000, this.props.fetchPeople)
@@ -104,7 +104,6 @@ export default class PeopleSelector extends React.Component {
   }
 
   removeParticipant (id) {
-    this.props.changeQueryParam(this.props, 'participants', null)
     this.props.removeParticipant(id)
     if (!this.autocomplete.value) {
       this.setState({ currentMatch: null })
@@ -124,7 +123,7 @@ export default class PeopleSelector extends React.Component {
               avatarUrl={participant.avatarUrl}
               key={participant.id}
               name={participant.name}
-              removeParticipant={() => this.removeParticipant(participant.id)} />
+              removeParticipant={() => removeParticipant(participant.id)} />
           )}
           <input styleName='autocomplete'
             autoFocus
