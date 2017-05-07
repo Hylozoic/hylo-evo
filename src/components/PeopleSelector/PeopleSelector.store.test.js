@@ -2,6 +2,9 @@ import orm from 'store/models'
 import reducer, * as store from './PeopleSelector.store'
 import people from './PeopleSelector.test.json'
 import { mapStateToProps, getParticipantSearch } from './PeopleSelector.connector'
+import {
+  CREATE_MESSAGE
+} from 'store/constants'
 
 describe('fetchPeople', () => {
   it('returns the correct action', () => {
@@ -18,6 +21,24 @@ describe('fetchPeople', () => {
     }
     const { query, variables } = expected.graphql
     const actual = store.fetchPeople(variables.autocomplete, query, variables.first)
+    expect(actual).toEqual(expected)
+  })
+})
+
+describe('findOrCreateThread', () => {
+  it('returns the correct action', () => {
+    const expected = {
+      type: store.FIND_OR_CREATE_THREAD,
+      graphql: {
+        query: 'All the lonely people / Where do they all come from?',
+        variables: {
+          participantIds: ['1', '2', '3']
+        }
+      },
+      meta: { extractModel: 'MessageThread' }
+    }
+    const { query, variables } = expected.graphql
+    const actual = store.findOrCreateThread(variables.participantIds, query)
     expect(actual).toEqual(expected)
   })
 })
@@ -213,6 +234,22 @@ describe('reducer', () => {
     const state = {}
     const expected = { autocomplete: 'flargleargle' }
     const actual = reducer(state, { type: store.SET_AUTOCOMPLETE, payload: 'flargleargle' })
+    expect(actual).toEqual(expected)
+  })
+
+  it('should return to defaultState if CREATE_MESSAGE happens with forNewThread', () => {
+    const expected = store.defaultState
+    const initialState = {
+      particicipants: [ '1' ],
+      autocomplete: 'test'
+    }
+    const action = {
+      type: CREATE_MESSAGE,
+      meta: {
+        forNewThread: true
+      }
+    }
+    const actual = reducer(initialState, action)
     expect(actual).toEqual(expected)
   })
 })

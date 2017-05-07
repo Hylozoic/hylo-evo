@@ -37,7 +37,7 @@ export default class MessageForm extends React.Component {
     this.sendIsTyping(false)
   }
 
-  initiateNewThread () {
+  handleThreadThenMessage () {
     const { createMessage, findOrCreateThread, goToThread, text } = this.props
     findOrCreateThread().then(resp => {
       const messageThreadId = get('payload.data.findOrCreateThread.id', resp)
@@ -50,7 +50,7 @@ export default class MessageForm extends React.Component {
     const { text, pending, forNewThread } = this.props
     if (!text || pending) return false
     if (forNewThread) {
-      this.initiateNewThread()
+      this.handleThreadThenMessage()
     } else {
       this.sendForExisting()
     }

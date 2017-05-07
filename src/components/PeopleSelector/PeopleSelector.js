@@ -107,7 +107,6 @@ export default class PeopleSelector extends React.Component {
   render () {
     const { matches, participants, removeParticipant, findOrCreateThread } = this.props
     const { currentMatch } = this.state
-    const beginNewThread = () => findOrCreateThread(participants.map(p => p.id))
     return <div styleName='people-selector'>
       <div styleName='thread-header' tabIndex='0'>
         <div styleName='autocomplete-control'>
@@ -138,7 +137,9 @@ export default class PeopleSelector extends React.Component {
         : <PeopleSelectorContacts />}
       {participants && participants.length > 0 &&
         <div styleName='message-form'>
-          <MessageForm ref='form' forNewThread findOrCreateThread={beginNewThread} />
+          <MessageForm ref='form'
+            forNewThread
+            findOrCreateThread={() => findOrCreateThread(participants.map(p => p.id))} />
         </div>}
     </div>
   }

@@ -3,12 +3,12 @@ import { pick } from 'lodash/fp'
 
 import orm from 'store/models'
 import {
-  CREATE_MESSAGE,
-  FIND_OR_CREATE_THREAD
+  CREATE_MESSAGE
 } from 'store/constants'
 
 export const MODULE_NAME = 'PeopleSelector'
 
+export const FIND_OR_CREATE_THREAD = 'FIND_OR_CREATE_THREAD'
 export const FETCH_PEOPLE = 'FETCH_PEOPLE'
 export const SET_AUTOCOMPLETE = 'PeopleSelector/SET_AUTOCOMPLETE'
 export const ADD_PARTICIPANT = 'PeopleSelector/ADD_PARTICIPANT'
@@ -57,11 +57,11 @@ export function fetchPeople (autocomplete, query = fetchPeopleQuery, first = 20)
   }
 }
 
-export function findOrCreateThread (participantIds) {
+export function findOrCreateThread (participantIds, query = findOrCreateThreadQuery) {
   return {
     type: FIND_OR_CREATE_THREAD,
     graphql: {
-      query: findOrCreateThreadQuery,
+      query,
       variables: {participantIds}
     },
     meta: { extractModel: 'MessageThread' }
