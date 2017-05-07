@@ -9,6 +9,9 @@ exports[`does something 1`] = `
   >
     Recent
   </h2>
+  <ul
+    data-styleName="contact-list"
+  />
   <h2
     data-styleName="contacts-header"
   >
