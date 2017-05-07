@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 import React from 'react'
 
 it('matches the last snapshot', () => {
-  const wrapper = shallow(<ThreadList threads={[]} />)
+  const match = {params: {}}
+  const wrapper = shallow(<ThreadList threads={[]} match={match} />)
   expect(wrapper).toMatchSnapshot()
 })

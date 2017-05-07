@@ -7,8 +7,9 @@ exports[`matches the last snapshot 1`] = `
   <div
     data-styleName="content"
   >
-    <Connect(ThreadList)
-      activeId="1"
+    <Route
+      component={[Function]}
+      path="/t/:threadId?"
     />
     <Switch>
       <Route
