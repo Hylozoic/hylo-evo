@@ -4,7 +4,6 @@ exports[`renders with minimum props 1`] = `
 <Modal
   ariaHideApp={true}
   closeTimeoutMS={0}
-  contentLabel="Example Modal"
   isOpen={true}
   onRequestClose={[Function]}
   parentSelector={[Function]}
