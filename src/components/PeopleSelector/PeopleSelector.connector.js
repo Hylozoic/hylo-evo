@@ -6,6 +6,7 @@ import {
   addParticipant,
   removeParticipant,
   fetchPeople,
+  findOrCreateThread,
   matchesSelector,
   participantsSelector,
   setAutocomplete
@@ -37,7 +38,8 @@ export const mapDispatchToProps = {
   removeParticipant,
   changeQueryParam,
   fetchPeople,
-  setAutocomplete
+  setAutocomplete,
+  findOrCreateThread
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
