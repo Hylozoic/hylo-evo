@@ -1,17 +1,179 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`does something 1`] = `
-<Dropdown>
-  <li>
-    <span>
-      Open Messages
-    </span>
-    <Link
-      replace={false}
-      to="/messages"
+exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
+<div
+  data-styleName="messages-dropdown"
+>
+  <a
+    onClick={[Function]}
+  />
+  <div
+    data-styleName="wrapper active"
+  >
+    <ul
+      data-styleName="menu"
     >
-      New
-    </Link>
-  </li>
-</Dropdown>
+      <li
+        data-styleName="triangle"
+      />
+      <li
+        data-styleName="header"
+      >
+        <span>
+          Open Messages
+        </span>
+        <Link
+          data-styleName="new"
+          replace={false}
+          to="/messages/new"
+        >
+          New
+        </Link>
+      </li>
+      <div
+        data-styleName="threads"
+      >
+        <Thread
+          currentUserId={1}
+          thread={
+            Object {
+              "id": 2,
+              "messages": Array [
+                Object {
+                  "text": "hi",
+                },
+              ],
+              "participants": Array [
+                Object {
+                  "avatarUrl": "foo.png",
+                  "id": 1,
+                },
+                Object {
+                  "avatarUrl": "bar.png",
+                  "id": 2,
+                },
+                Object {
+                  "avatarUrl": "baz.png",
+                  "id": 3,
+                },
+              ],
+              "updatedAt": 2017-05-07T03:24:00.000Z,
+            }
+          }
+        />
+        <Thread
+          currentUserId={1}
+          thread={
+            Object {
+              "id": 1,
+              "messages": Array [
+                Object {
+                  "text": "there",
+                },
+              ],
+              "participants": Array [
+                Object {
+                  "avatarUrl": "foo.png",
+                  "id": 1,
+                },
+                Object {
+                  "avatarUrl": "bar.png",
+                  "id": 2,
+                },
+                Object {
+                  "avatarUrl": "baz.png",
+                  "id": 3,
+                },
+              ],
+              "updatedAt": 1995-12-17T03:23:00.000Z,
+            }
+          }
+        />
+      </div>
+    </ul>
+  </div>
+</div>
 `;
+
+exports[`MessagesDropdown renders correctly with an empty list 1`] = `
+<div
+  data-styleName="messages-dropdown"
+>
+  <a
+    onClick={[Function]}
+  />
+  <div
+    data-styleName="wrapper active"
+  >
+    <ul
+      data-styleName="menu"
+    >
+      <li
+        data-styleName="triangle"
+      />
+      <li
+        data-styleName="header"
+      >
+        <span>
+          Open Messages
+        </span>
+        <Link
+          data-styleName="new"
+          replace={false}
+          to="/messages/new"
+        >
+          New
+        </Link>
+      </li>
+      <div
+        data-styleName="threads"
+      />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Thread renders correctly with a message 1`] = `
+<li
+  data-styleName="thread"
+  onClick={[Function]}
+>
+  <div
+    data-styleName="image-wraper"
+  >
+    <RoundImageRow
+      ascending={true}
+      cap="2"
+      imageUrls={
+        Array [
+          "foo.png",
+          "bar.png",
+          "baz.png",
+        ]
+      }
+      vertical={true}
+    />
+  </div>
+  <div
+    data-styleName="message-content"
+  >
+    <div
+      data-styleName="name"
+    >
+      undefined, undefined and 1 other
+    </div>
+    <div
+      data-styleName="body"
+    >
+      hi
+    </div>
+    <div
+      data-styleName="date"
+    >
+      yesterday
+    </div>
+  </div>
+</li>
+`;
+
+exports[`Thread renders correctly with an empty thread 1`] = `null`;

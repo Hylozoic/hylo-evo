@@ -23,10 +23,6 @@ export function fetchThreads () {
                 id
                 createdAt
                 text
-                creator {
-                  id
-                  name
-                }
               }
             }
           }
