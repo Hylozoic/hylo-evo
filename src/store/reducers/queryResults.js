@@ -7,7 +7,15 @@
 // shown when something has been typed into the search field.
 
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
-import { FETCH_POST, FETCH_POSTS, FETCH_COMMENTS, FETCH_THREAD, FETCH_MESSAGES } from 'store/constants'
+import {
+  FETCH_POST,
+  FETCH_POSTS,
+  FETCH_COMMENTS,
+  FETCH_THREAD,
+  FETCH_MESSAGES,
+  FETCH_COMMUNITY_TOPICS,
+  FETCH_TOPICS
+} from 'store/constants'
 import { get, isNull, omitBy, pick, uniq } from 'lodash/fp'
 
 // reducer
@@ -22,6 +30,12 @@ export default function (state = {}, action) {
   // detect the metadata and produce a generic action, and have this reducer
   // handle only that action.
   switch (type) {
+    case FETCH_TOPICS:
+      return appendIds(state, type, meta.graphql.variables, payload.data.topics)
+
+    case FETCH_COMMUNITY_TOPICS:
+      return appendIds(state, type, meta.graphql.variables, payload.data.communityTopics)
+
     case FETCH_MEMBERS:
       return appendIds(state, type, meta.graphql.variables, payload.data.community.members)
 
@@ -74,4 +88,4 @@ export function buildKey (type, params) {
   })
 }
 
-export const queryParamWhitelist = ['id', 'slug', 'sortBy', 'search', 'filter']
+export const queryParamWhitelist = ['id', 'slug', 'sortBy', 'search', 'filter', 'topic', 'name', 'topicName', 'communitySlug', 'autocomplete']

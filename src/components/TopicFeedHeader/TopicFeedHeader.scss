@@ -1,0 +1,20 @@
+.topic-feed-header {
+  margin-bottom: $space-15x;
+}
+
+.back {
+  composes: bdy-dr-sm from 'css/typography.scss';
+}
+
+.topic-name {
+  composes: hdr-display from 'css/typography.scss';
+  margin: $space-2x 0;
+}
+
+.meta {
+  composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.subscribe {
+
+}

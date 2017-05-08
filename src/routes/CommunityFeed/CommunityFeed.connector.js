@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getCommunityTopicForCurrentRoute from 'store/selectors/getCommunityTopicForCurrentRoute'
 import getParam from 'store/selectors/getParam'
 import { getMe } from 'store/selectors/getMe'
 import changeQueryParam from 'store/actions/changeQueryParam'
@@ -10,14 +11,19 @@ import { push } from 'react-router-redux'
 import { postUrl } from 'util/index'
 import { makeUrl } from 'util/navigation'
 
+import { fetchCommunityTopics } from './CommunityFeed.store'
+
 export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
+  const communityTopic = getCommunityTopicForCurrentRoute(state, props)
   const filter = getQueryParam('t', state, props)
   const sortBy = getQueryParam('s', state, props)
 
   return {
     filter,
     sortBy,
+    communityTopic,
+    topicName: getParam('topicName', state, props),
     selectedPostId: getParam('postId', state, props),
     community,
     postCount: get('postCount', community),
@@ -35,7 +41,8 @@ export const mapDispatchToProps = function (dispatch, props) {
 
     // we need to preserve url parameters when opening the details for a post,
     // or the center column will revert to its default sort & filter settings
-    showPostDetails: id => dispatch(push(makeUrl(postUrl(id, slug), params)))
+    showPostDetails: id => dispatch(push(makeUrl(postUrl(id, slug), params))),
+    fetchCommunityTopic: (topicName, communitySlug) => dispatch(fetchCommunityTopics(topicName, communitySlug))
   }
 }
 
