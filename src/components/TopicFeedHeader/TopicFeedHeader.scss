@@ -1,9 +1,23 @@
 .topic-feed-header {
-  margin-bottom: $space-15x;
+  margin: 0  $space-4x $space-15x $space-4x;
 }
 
 .back {
   composes: bdy-dr-sm from 'css/typography.scss';
+  color: $color-rhino-60;
+
+  &:hover {
+    text-decoration: none;
+    color: $color-rhino-80;
+
+    .back-icon {
+      color: $color-rhino-80;
+    }
+  }
+}
+
+.back-icon {
+  font-size: 13px;
 }
 
 .topic-name {
