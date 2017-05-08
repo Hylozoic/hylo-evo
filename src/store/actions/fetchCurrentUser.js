@@ -12,6 +12,7 @@ export default function fetchCurrentUser () {
           memberships {
             id
             lastViewedAt
+            newPostCount
             community {
               id
               name
