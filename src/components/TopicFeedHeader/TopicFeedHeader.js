@@ -13,7 +13,7 @@ function TopicFeedHeader ({ communityTopic, community }) {
   return <div styleName='topic-feed-header'>
     <Link to={communityUrl(community.slug)} styleName='back'><Icon name='Back' styleName='back-icon' /> back to {community.name}</Link>
     <div styleName='topic-name'>#{topic.name}</div>
-    <div styleName='meta'>{pluralize(postsTotal, 'post')} • {pluralize(followersTotal, 'follower')}</div>
+    <div styleName='meta'>{pluralize(postsTotal, 'post')} &nbsp;•&nbsp; {pluralize(followersTotal, 'follower')}</div>
   </div>
 }
 TopicFeedHeader.propTypes = {

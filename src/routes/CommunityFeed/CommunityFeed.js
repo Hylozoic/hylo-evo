@@ -17,7 +17,7 @@ export default class CommunityFeed extends Component {
   }
 
   render () {
-    const { community, currentUser, communityTopic } = this.props
+    const { community, currentUser, communityTopic, topicName } = this.props
     const feedProps = {
       subject: 'community',
       id: get('slug', community),
@@ -31,11 +31,12 @@ export default class CommunityFeed extends Component {
         'selectedPostId'
       ], this.props)
     }
+    const readyToDisplayFeed = !topicName || (topicName && communityTopic)
 
     return <div styleName='container'>
-      {!communityTopic && <FeedBanner community={community} currentUser={currentUser} />}
+      {!topicName && <FeedBanner community={community} currentUser={currentUser} />}
       {communityTopic && <TopicFeedHeader communityTopic={communityTopic} community={community} />}
-      <Feed {...feedProps} />
+      {readyToDisplayFeed && <Feed {...feedProps} />}
     </div>
   }
 }
