@@ -4,9 +4,20 @@ exports[`matches the last snapshot 1`] = `
 <div
   data-styleName="thread"
 >
-  <Header />
+  <Header
+    thread={
+      Object {
+        "id": "1",
+      }
+    }
+  />
   <Connect(MessageSection)
     messageThreadId="1"
+    thread={
+      Object {
+        "id": "1",
+      }
+    }
   />
   <div
     data-styleName="message-form"

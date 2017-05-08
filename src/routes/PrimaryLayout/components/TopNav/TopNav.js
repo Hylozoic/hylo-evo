@@ -1,5 +1,5 @@
 import React from 'react'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle, personUrl } from 'util/index'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
@@ -24,7 +24,11 @@ export default function TopNav ({ className, community, currentUser, logout, tog
           toggleChildren={
             <RoundImage url={get('avatarUrl', currentUser)} small />
           }>
-          <li><Link to='/'>Profile</Link></li>
+          <li>
+            <Link to={personUrl(get('id', currentUser), get('slug', community))}>
+              Profile
+            </Link>
+          </li>
           <li><Link to='/settings'>Settings</Link></li>
           <li><a onClick={logout}>Log out</a></li>
         </Dropdown>

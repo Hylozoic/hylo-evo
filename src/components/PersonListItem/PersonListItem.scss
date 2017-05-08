@@ -1,0 +1,33 @@
+.person-list-item {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 500px;
+  margin: $space-1x 0;
+  padding: $space-2x;
+  border-radius: $space-1x;
+  cursor: pointer;
+}
+
+.active {
+  background-color: $color-rhino-10;
+}
+
+.avatar {
+  margin-right: $space-4x;
+  border: none;
+}
+
+.name {
+  composes: bdy-lt-sm from 'css/typography.scss';
+  flex: 1;
+  padding-right: $space-2x;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.community {
+  composes: faint-lt-sm from 'css/typography.scss';
+}

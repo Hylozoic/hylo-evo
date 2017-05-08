@@ -49,7 +49,7 @@ describe('component', () => {
 
   it('to createMessage when enter (no shift) is pressed', () => {
     wrapper.find('textarea').simulate('keydown', {which: keyMap.ENTER})
-    expect(createMessage.mock.calls[0]).toEqual([messageThreadId, 'hey you', currentUser.id])
+    expect(createMessage.mock.calls[0]).toEqual([messageThreadId, 'hey you'])
   })
 })
 

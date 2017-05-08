@@ -1,4 +1,4 @@
-$messages-inner-padding: 30px;
+$messages-inner-padding: $space-6x;
 
 .thread {
   height: 100vh;
@@ -15,6 +15,10 @@ $messages-inner-padding: 30px;
   border-bottom: $light-border;
   border-left: $light-border;
   border-right: $light-border;
+  outline: none;
+  -webkit-box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
+  -moz-box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
+  box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
 }
 
 .header-text {
@@ -26,32 +30,22 @@ $messages-inner-padding: 30px;
   white-space: nowrap;
 }
 
-.close-messages {
-  cursor: pointer;
-  padding: $space-2x 0;
-
-  &:hover {
-    text-decoration: none;
-
-    .close-messages-icon {
-      color: $color-rhino-60;
-    }
-  }
-}
-
 .more-icon {
   padding: $space-1x 0;
 }
 
 .message-form {
+  border-left: $light-border;
   padding: 0 $messages-inner-padding $space-7x $messages-inner-padding;
   width: 100%;
 }
 
 .people-typing {
   position: absolute;
-  bottom: 15px;
-  height: 18px;
+  bottom: 0;
+  height: $space-7x;
+  line-height: $space-7x;
+  vertical-align: middle;
   left: $messages-inner-padding;
   background: $color-white;
 }

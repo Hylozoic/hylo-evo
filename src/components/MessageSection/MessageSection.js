@@ -76,6 +76,7 @@ export default class MessageSection extends React.Component {
   componentWillUnmount () {
     const { socket } = this.props
     socket.off('reconnect', this.reconnectHandler)
+    document && document.removeEventListener('visibilitychange', this.handleVisibilityChange)
   }
 
   componentDidUpdate (prevProps) {

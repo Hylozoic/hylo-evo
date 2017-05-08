@@ -2,23 +2,23 @@ import React from 'react'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
 import './Navigation.scss'
-import { getSlugInPath } from 'util/index'
 
-export default function Navigation ({ className, collapsed, location }) {
-  // const style = collapsed ? {} : {position: 'fixed'}
-  const style = {}
-  const slug = getSlugInPath(location.pathname)
-
+export default function Navigation ({
+  className,
+  collapsed,
+  slug,
+  homePath,
+  homeBadge
+}) {
   const links = [
-    {label: 'Home', icon: 'Home', to: slug ? `/c/${slug}` : '/all', badge: 3, exact: true},
-    {label: 'Events', icon: 'Events', to: `/c/${slug}/events`, badge: 3},
+    {label: 'Home', icon: 'Home', to: homePath, badge: homeBadge, exact: true},
     {label: 'Members', icon: 'Members', to: `/c/${slug}/members`},
     {label: 'UI Kit', icon: 'Projects', to: '/ui-kit'}
   ]
 
   return <div styleName={collapsed ? 'collapser-collapsed' : 'collapser'}
     className={className}>
-    <div styleName='navigation' style={style}>
+    <div styleName='navigation'>
       <ul styleName='links'>
         {links.map(link =>
           <NavLink key={link.label} {...link} collapsed={collapsed} />)}

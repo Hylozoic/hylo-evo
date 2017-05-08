@@ -9,7 +9,7 @@ export function MessageMember ({ match, ready }) {
   if (!ready) return null
 
   return <div styleName='container'>
-    <Link to={`/messages/new/${match.params.id}`}>
+    <Link to={`/t/new?participants=${match.params.id}`}>
       <Button styleName='message-member'>Message</Button>
     </Link>
   </div>

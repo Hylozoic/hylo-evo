@@ -1,22 +1,19 @@
-import React, { PropTypes, Component } from 'react'
+import React from 'react'
+import { Route, Switch } from 'react-router'
+
+import PeopleSelector from 'components/PeopleSelector'
 import ThreadList from 'components/ThreadList'
 import Thread from 'components/Thread'
 import './Messages.scss'
-const { object } = PropTypes
 
-export default class Messages extends Component {
-  static propTypes = {
-    currentUser: object,
-    match: object
-  }
-
-  render () {
-    const { match: { params: { threadId } } } = this.props
-    return <div styleName='modal'>
-      <div styleName='content'>
-        <ThreadList activeId={threadId} />
-        {threadId ? <Thread threadId={threadId} /> : null}
-      </div>
+export default function Messages () {
+  return <div styleName='modal'>
+    <div styleName='content'>
+      <Route path='/t/:threadId?' component={ThreadList} />
+      <Switch>
+        <Route path='/t/new' component={PeopleSelector} />
+        <Route path='/t/:threadId' component={Thread} />
+      </Switch>
     </div>
-  }
+  </div>
 }

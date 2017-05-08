@@ -41,14 +41,14 @@ export default class AccountSettings extends Component {
 
     this.setState({
       edits: {
-        name,
-        avatarUrl,
+        name: name || '',
+        avatarUrl: avatarUrl || '',
         bannerUrl: bannerUrl || DEFAULT_BANNER,
-        tagline,
-        bio,
-        location,
-        email,
-        url,
+        tagline: tagline || '',
+        bio: bio || '',
+        location: location || '',
+        email: email || '',
+        url: url || '',
         facebookUrl,
         twitterName,
         linkedInUrl
@@ -62,7 +62,7 @@ export default class AccountSettings extends Component {
 
     const { edits, changed } = this.state
     const {
-      name = '', avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl
+      name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl
     } = edits
 
     const updateSetting = key => event => {
