@@ -4,8 +4,10 @@ import {
 } from './TopicNavigation.store'
 
 export function mapStateToProps (state, props) {
+  const subscriptions = getTopicSubscriptions(state, props)
+  console.log('subscriptions', subscriptions)
   return {
-    subscriptions: getTopicSubscriptions(state, props)
+    subscriptions: subscriptions
   }
 }
 
