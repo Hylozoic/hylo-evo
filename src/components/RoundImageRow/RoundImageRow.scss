@@ -1,4 +1,5 @@
 .plus {
+  position: relative;
   width: $space-9x;
   height: $space-9x;
   line-height: $space-7x;
@@ -9,4 +10,8 @@
   background: $color-caribbean-green;
   color: $color-white;
   text-align: center;
+}
+
+.image {
+  position: relative;
 }

@@ -4,7 +4,7 @@ import './RoundImageRow.scss'
 
 const { array, string, bool } = React.PropTypes
 
-export default function RoundImageRow ({ imageUrls = [], className, vertical, cap }) {
+export default function RoundImageRow ({ imageUrls = [], className, vertical, cap, ascending }) {
   var capped
   var extra
   if (cap && cap < imageUrls.length) {
@@ -12,10 +12,23 @@ export default function RoundImageRow ({ imageUrls = [], className, vertical, ca
     extra = imageUrls.length - cap
     imageUrls = imageUrls.slice(0, cap)
   }
-  const images = imageUrls.map((url, i) =>
-    <RoundImage url={url} key={i} medium overlaps={!vertical} overlapsVertical={vertical} />)
 
-  const plus = <div styleName='plus' key='plus'>+{extra}</div>
+  const zIndexStyle = i => ascending ? {zIndex: i} : {zIndex: imageUrls.length - i}
+
+  const images = imageUrls.map((url, i) =>
+    <RoundImage
+      url={url}
+      key={i}
+      medium
+      overlaps={!vertical}
+      overlapsVertical={vertical}
+      styleName='image'
+      style={zIndexStyle(i)} />)
+
+  const plus = <div styleName='plus' key='plus' style={zIndexStyle(imageUrls.length)} >
+    +{extra}
+  </div>
+
   return <div className={className}>
     {capped ? images.concat([plus]) : images}
   </div>

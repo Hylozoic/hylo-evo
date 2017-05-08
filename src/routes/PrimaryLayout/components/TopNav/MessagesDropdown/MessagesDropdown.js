@@ -76,7 +76,7 @@ export function Thread ({ thread, goToThread, currentUserId }) {
   return <li styleName='thread'
     onClick={goToThread(thread.id)}>
     <div styleName='image-wraper'>
-      <RoundImageRow imageUrls={participants.map(p => p.avatarUrl)} vertical cap='2' />
+      <RoundImageRow imageUrls={participants.map(p => p.avatarUrl)} vertical ascending cap='2' />
     </div>
     <div styleName='message-content'>
       <div styleName='name'>{participantNames(participants)}</div>
