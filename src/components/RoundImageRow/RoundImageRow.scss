@@ -1,1 +1,12 @@
-.exampleName { /* !empty */ }
+.plus {
+  width: $space-9x;
+  height: $space-9x;
+  line-height: $space-7x;
+  margin-top: -$space-4x;
+  border-radius: 50%;
+  border: 3px solid $color-white;
+  composes: caption-lt-lg from 'css/typography.scss';
+  background: $color-caribbean-green;
+  color: $color-white;
+  text-align: center;
+}
