@@ -2,7 +2,7 @@ import TopicFeedHeader from './TopicFeedHeader'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-it('does something', () => {
-  const wrapper = shallow(<TopicFeedHeader />)
+it('matches the latest snapshot', () => {
+  const wrapper = shallow(<TopicFeedHeader postsTotal={11} followersTotal={3} topicName={'petitions'} />)
   expect(wrapper).toMatchSnapshot()
 })

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`does something 1`] = `
+exports[`matches the latest snapshot 1`] = `
 <div
   data-styleName="topic-feed-header"
 >
@@ -20,13 +20,14 @@ exports[`does something 1`] = `
     data-styleName="topic-name"
   >
     #
+    petitions
   </div>
   <div
     data-styleName="meta"
   >
-    undefined posts
+    11 posts
       •  
-    undefined followers
+    3 followers
   </div>
 </div>
 `;
