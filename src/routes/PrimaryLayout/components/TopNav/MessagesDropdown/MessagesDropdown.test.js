@@ -9,13 +9,13 @@ const u3 = {id: 3, avatarUrl: 'baz.png'}
 const threads = [
   {
     id: 2,
-    messages: [{text: 'hi'}],
+    messages: [{text: 'hi', creator: {id: 2}}],
     participants: [u1, u2, u3],
     updatedAt: new Date('2017-05-07T03:24:00')
   },
   {
     id: 1,
-    messages: [{text: 'there'}],
+    messages: [{text: 'there', creator: {id: 3}}],
     participants: [u1, u2, u3],
     updatedAt: new Date('1995-12-17T03:23:00')
   }
@@ -45,7 +45,7 @@ describe('Thread', () => {
     const wrapper = shallow(
       <Thread thread={threads[0]} currentUser={u1} goToThread={goToThread} />)
     expect(wrapper).toMatchSnapshot()
-    // wrapper.simulate('clicks')
-    // expect(mockNavigate).toHaveBeenCalledWith(i)
+    wrapper.simulate('click')
+    expect(mockNavigate).toHaveBeenCalledWith(threads[0].id)
   })
 })

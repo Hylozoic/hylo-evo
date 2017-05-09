@@ -40,6 +40,9 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
               "id": 2,
               "messages": Array [
                 Object {
+                  "creator": Object {
+                    "id": 2,
+                  },
                   "text": "hi",
                 },
               ],
@@ -68,6 +71,9 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
               "id": 1,
               "messages": Array [
                 Object {
+                  "creator": Object {
+                    "id": 3,
+                  },
                   "text": "there",
                 },
               ],
