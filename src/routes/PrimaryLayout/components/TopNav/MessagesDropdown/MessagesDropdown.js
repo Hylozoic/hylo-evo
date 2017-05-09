@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import './MessagesDropdown.scss'
 const { object, array, string, func } = PropTypes
 import { Link } from 'react-router-dom'
-import { humanDate } from 'hylo-utils/text'
+import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import cx from 'classnames'
 import { newMessageUrl } from 'util/index'
 import RoundImageRow from 'components/RoundImageRow'
@@ -81,8 +81,10 @@ export function Thread ({ thread, goToThread, currentUserId }) {
     text = `You: ${text}`
   }
 
-  if (text.length > 145) {
-    text = `${text.substring(0, 142)}...`
+  const maxMessageLength = 145
+
+  if (textLength(text) > maxMessageLength) {
+    text = `${truncate(text, maxMessageLength)}...`
   }
 
   return <li styleName={cx('thread', {unread})}
