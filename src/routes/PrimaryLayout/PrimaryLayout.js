@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { matchPath, Redirect, Route } from 'react-router-dom'
+import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
 import cx from 'classnames'
 import { some } from 'lodash/fp'
 import Loading from 'components/Loading'
@@ -60,16 +60,23 @@ export default class PrimaryLayout extends Component {
           <RedirectToCommunity currentUser={currentUser} />
           <Route path='/all' component={AllCommunitiesFeed} />
           <Route path='/c/:slug' exact component={CommunityFeed} />
-          <Route path='/c/:slug/t/:topicName' component={CommunityFeed} />
-          <Route path='/c/:slug/t/:topicName/p/:postId' component={CommunityFeed} />
-          <Route path='/c/:slug/p/:postId' component={CommunityFeed} />
-          <Route path='/c/:slug/m/:id' component={MemberProfile} />
+          <Switch>
+            <Route path='/c/:slug/tag/:tagName' exact render={(props) => {
+              const { slug, tagName } = props.match.params
+              return <Redirect to={`/c/${slug}/${tagName}`} />
+            }} />
+            <Route path='/c/:slug/members' component={Members} />
+            <Route path='/c/:slug/m/:id' component={MemberProfile} />
+            <Route path='/c/:slug/p/:postId' component={CommunityFeed} />
+            <Route path='/c/:slug/:topicName/p/:postId' component={CommunityFeed} />
+            <Route path='/c/:slug/:topicName' component={CommunityFeed} />
+          </Switch>
           <Route path='/events' component={Events} />
-          <Route path='/c/:slug/members' component={Members} />
           <Route path='/settings' component={Settings} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/c/:slug' exact component={CommunitySidebar} />
+          <Route path='/c/:slug/:topicName' exact component={CommunitySidebar} />
           <Route path='/c/:slug/m/:id' component={MessageMember} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>
@@ -93,7 +100,7 @@ const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
   {path: '/all/p/:postId', component: PostDetail},
   {path: '/c/:slug/p/:postId', component: PostDetail},
-  {path: '/c/:slug/t/:topicName/p/:postId', component: PostDetail}
+  {path: '/c/:slug/:topicName/p/:postId', component: PostDetail}
 ]
 
 function RedirectToCommunity ({ currentUser }) {

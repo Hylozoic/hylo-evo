@@ -11,7 +11,7 @@ export default function CommentCard ({ comment }) {
   const { creator, post, slug } = comment
   const postTitle = present(sanitize(post.title), { maxlength: 25, noP: true })
   const commentText = present(sanitize(comment.text), { noP: true, slug })
-  return <Link to={postUrl(post.id, slug)}>
+  return <Link to={postUrl(post.id, slug, {memberId: creator.id})}>
     <div styleName='comment-card'>
       <div styleName='comment-header'>
         <RoundImage url={creator.avatarUrl} large />

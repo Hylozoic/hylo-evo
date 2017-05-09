@@ -12,18 +12,22 @@ export function personUrl (id, slug) {
 
 export function tagUrl (tagName, slug) {
   if (slug) {
-    return `/c/${slug}/tag/${tagName}`
+    return `/c/${slug}/${tagName}`
   } else {
-    return `/tag/${tagName}`
+    return `/all/${tagName}`
   }
 }
 
-export function postUrl (id, slug) {
+export function postUrl (id, slug, opts = {}) {
+  let base = ''
   if (slug) {
-    return `/c/${slug}/p/${id}`
+    base = `/c/${slug}`
+    if (opts.topicName) base = `${base}/${opts.topicName}`
+    else if (opts.memberId) base = `${base}/m/${opts.memberId}`
   } else {
-    return `/all/p/${id}`
+    base = `/all`
   }
+  return `${base}/p/${id}`
 }
 
 export function communityUrl (slug) {
