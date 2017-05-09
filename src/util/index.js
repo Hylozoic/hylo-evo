@@ -22,11 +22,11 @@ export function postUrl (id, slug, opts = {}) {
   let base = ''
   if (slug) {
     base = `/c/${slug}`
-    if (opts.topicName) base = `${base}/${opts.topicName}`
-    else if (opts.memberId) base = `${base}/m/${opts.memberId}`
+    if (opts.memberId) base = `${base}/m/${opts.memberId}`
   } else {
     base = `/all`
   }
+  if (opts.topicName) base = `${base}/${opts.topicName}`
   return `${base}/p/${id}`
 }
 

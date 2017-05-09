@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`does something 1`] = `
+<div
+  data-styleName="topic-feed-header"
+>
+  <Link
+    data-styleName="back"
+    replace={false}
+    to="/all"
+  >
+    <Icon
+      data-styleName="back-icon"
+      name="Back"
+    />
+     back to 
+    All Communities
+  </Link>
+  <div
+    data-styleName="topic-name"
+  >
+    #
+  </div>
+  <div
+    data-styleName="meta"
+  >
+    undefined posts
+      •  
+    undefined followers
+  </div>
+</div>
+`;

@@ -58,7 +58,8 @@ export default class PrimaryLayout extends Component {
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToCommunity currentUser={currentUser} />
-          <Route path='/all' component={AllCommunitiesFeed} />
+          <Route path='/all' exact component={AllCommunitiesFeed} />
+          <Route path='/all/:topicName' component={AllCommunitiesFeed} />
           <Route path='/c/:slug' exact component={CommunityFeed} />
           <Switch>
             <Route path='/c/:slug/tag/:tagName' exact render={(props) => {

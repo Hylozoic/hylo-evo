@@ -2,20 +2,14 @@ import { FETCH_TOPICS } from 'store/constants'
 
 const query =
 `query ($name: String, $autocomplete: String, $first: Int, $offset: Int) {
-  communityTopics(topicName: $topicName, communitySlug: $communitySlug, first: $first, offset: $offset, autocomplete: $autocomplete) {
+  topics(name: $name, autocomplete: $autocomplete, first: $first, offset: $offset) {
     total
     hasMore
     items {
       id
+      name
       postsTotal
       followersTotal
-      topic {
-        id
-        name
-      }
-      community {
-        id
-      }
     }
   }
 }`

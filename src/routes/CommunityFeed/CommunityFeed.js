@@ -11,8 +11,9 @@ export default class CommunityFeed extends Component {
     const communitySlug = get('slug', community)
     const prevCommunity = get('community', prevProps)
     const prevCommunitySlug = get('slug', prevCommunity)
-    if (!prevCommunitySlug && communitySlug) {
-      fetchCommunityTopic(topicName, communitySlug)
+    const prevTopicName = get('topicName', prevProps)
+    if (prevCommunitySlug !== communitySlug || topicName !== prevTopicName) {
+      fetchCommunityTopic()
     }
   }
 
@@ -35,7 +36,11 @@ export default class CommunityFeed extends Component {
 
     return <div styleName='container'>
       {!topicName && <FeedBanner community={community} currentUser={currentUser} />}
-      {communityTopic && <TopicFeedHeader communityTopic={communityTopic} community={community} />}
+      {communityTopic && <TopicFeedHeader
+        postsTotal={get('postsTotal', communityTopic)}
+        followersTotal={get('followersTotal', communityTopic)}
+        topic={get('topic', communityTopic)}
+        community={community} />}
       {readyToDisplayFeed && <Feed {...feedProps} />}
     </div>
   }
