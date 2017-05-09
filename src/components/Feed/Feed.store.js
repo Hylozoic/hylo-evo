@@ -85,7 +85,7 @@ const communityQuery = `query (
   $offset: Int,
   $search: String,
   $filter: String,
-  $topic: ID,
+  $topic: Int,
   $first: Int
 ) {
   community(slug: $id) {

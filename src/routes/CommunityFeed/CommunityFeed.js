@@ -37,6 +37,7 @@ export default class CommunityFeed extends Component {
     return <div styleName='container'>
       {!topicName && <FeedBanner community={community} currentUser={currentUser} />}
       {communityTopic && <TopicFeedHeader
+        topicName={topicName}
         postsTotal={get('postsTotal', communityTopic)}
         followersTotal={get('followersTotal', communityTopic)}
         topic={get('topic', communityTopic)}

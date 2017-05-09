@@ -11,10 +11,11 @@ const pluralize = (count, word) => `${count} ${word}${count === 1 ? '' : 's'}`
 function TopicFeedHeader ({ topicName, postsTotal, followersTotal, topic, community }) {
   const url = community ? communityUrl(community.slug) : '/all'
   const name = community ? community.name : 'All Communities'
+  const metaDefined = postsTotal && followersTotal ? true : null
   return <div styleName='topic-feed-header'>
     <Link to={url} styleName='back'><Icon name='Back' styleName='back-icon' /> back to {name}</Link>
     <div styleName='topic-name'>#{topicName}</div>
-    {(postsTotal && followersTotal) && <div styleName='meta'>{pluralize(postsTotal, 'post')} &nbsp;•&nbsp; {pluralize(followersTotal, 'follower')}</div>}
+    {metaDefined && <div styleName='meta'>{pluralize(postsTotal, 'post')} &nbsp;•&nbsp; {pluralize(followersTotal, 'follower')}</div>}
   </div>
 }
 TopicFeedHeader.propTypes = {

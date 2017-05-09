@@ -34,7 +34,7 @@ export default function (state = {}, action) {
       return appendIds(state, type, meta.graphql.variables, payload.data.topics)
 
     case FETCH_COMMUNITY_TOPICS:
-      return appendIds(state, type, meta.graphql.variables, payload.data.communityTopics)
+      return appendIds(state, type, meta.graphql.variables, payload.data.community.communityTopics)
 
     case FETCH_MEMBERS:
       return appendIds(state, type, meta.graphql.variables, payload.data.community.members)

@@ -50,7 +50,7 @@ export const mapDispatchToProps = function (dispatch, props) {
   const topicName = getParam('topicName', null, props)
   return {
     ...mapDispatchToPropsForFeed(dispatch, props),
-    fetchCommunityTopic: () => dispatch(fetchCommunityTopics(topicName, slug))
+    fetchCommunityTopic: () => dispatch(fetchCommunityTopics(topicName, slug, {first: 1}))
   }
 }
 
