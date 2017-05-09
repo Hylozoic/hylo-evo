@@ -7,5 +7,7 @@ Object {
   "pending": undefined,
   "selectedPostId": "7",
   "sortBy": undefined,
+  "topic": null,
+  "topicName": undefined,
 }
 `;
