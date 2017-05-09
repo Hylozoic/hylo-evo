@@ -7,7 +7,7 @@ export function fetchThreads () {
       query: `{
         me {
           id
-          messageThreads(first: 10, order: "desc") {
+          messageThreads(first: 10) {
             id
             unreadCount
             lastReadAt
@@ -23,6 +23,9 @@ export function fetchThreads () {
                 id
                 createdAt
                 text
+                creator {
+                  id
+                }
               }
             }
           }

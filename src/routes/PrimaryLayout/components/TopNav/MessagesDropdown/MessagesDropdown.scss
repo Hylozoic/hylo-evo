@@ -69,6 +69,10 @@ $dropdown-border-color: rgba(49, 72, 67, 0.11);
   }
 }
 
+.unread {
+  background-color: $color-saltpan;
+}
+
 .image-wraper {
   width: $space-10x;
   margin: 0 10px 0 15px;
@@ -78,8 +82,7 @@ $dropdown-border-color: rgba(49, 72, 67, 0.11);
   display: flex;
   flex-direction: column;
   align-items: start;
-  padding: 0 15px 15px 0;
-  margin-bottom: 20px;
+  padding: 20px 15px 15px 0;
   border-bottom: 1px solid $color-black-squeeze;
 }
 

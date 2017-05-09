@@ -73,14 +73,26 @@ export function Thread ({ thread, goToThread, currentUserId }) {
   const message = thread.messages[0]
   if (!message || !message.text) return null
   const participants = thread.participants.filter(p => p.id !== currentUserId)
-  return <li styleName='thread'
+
+  const unread = thread.lastReadAt < thread.updatedAt
+
+  var { text } = message
+  if (message.creator.id === currentUserId) {
+    text = `You: ${text}`
+  }
+
+  if (text.length > 145) {
+    text = `${text.substring(0, 142)}...`
+  }
+
+  return <li styleName={cx('thread', {unread})}
     onClick={goToThread(thread.id)}>
     <div styleName='image-wraper'>
       <RoundImageRow imageUrls={participants.map(p => p.avatarUrl)} vertical ascending cap='2' />
     </div>
     <div styleName='message-content'>
       <div styleName='name'>{participantNames(participants)}</div>
-      <div styleName='body'>{thread.messages[0].text}</div>
+      <div styleName='body'>{text}</div>
       <div styleName='date'>{humanDate(thread.updatedAt)}</div>
     </div>
   </li>
