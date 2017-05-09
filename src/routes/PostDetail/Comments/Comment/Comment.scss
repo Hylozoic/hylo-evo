@@ -13,7 +13,7 @@
 }
 
 .userName {
-  composes: userName from 'components/PostCard/PostCard.scss';
+  composes: userName from 'components/PostCard/PostHeader/PostHeader.scss';
   margin-right: 7px;
 }
 
