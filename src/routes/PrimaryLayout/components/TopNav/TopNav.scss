@@ -66,6 +66,7 @@
 .navIcon, .navIcon:hover {
   margin-right: 15px;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .icon {
@@ -78,8 +79,8 @@
 }
 
 .messages-dropdown {
+  composes: navIcon;
   top: -2px;
-  left: -7px;
 }
 
 .user-menu {

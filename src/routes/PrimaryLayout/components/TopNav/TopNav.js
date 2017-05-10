@@ -8,6 +8,7 @@ import Dropdown from 'components/Dropdown'
 import { get } from 'lodash/fp'
 import { hyloLogo } from 'util/assets'
 import MessagesDropdown from './MessagesDropdown'
+import NotificationsDropdown from './NotificationsDropdown'
 import { position } from 'util/scrolling'
 
 export default class TopNav extends Component {
@@ -31,7 +32,9 @@ export default class TopNav extends Component {
           <MessagesDropdown
             toggleChildren={<Icon name='Messages' styleName='icon' />}
             styleName='messages-dropdown' />
-          <Link to='/' styleName='navIcon'><Icon name='Notifications' styleName='icon' /></Link>
+          <NotificationsDropdown
+            toggleChildren={<Icon name='Notifications' styleName='icon' />}
+            styleName='navIcon' />
           <Dropdown styleName='navIcon user-menu' alignRight
             toggleChildren={
               <RoundImage url={get('avatarUrl', currentUser)} small />

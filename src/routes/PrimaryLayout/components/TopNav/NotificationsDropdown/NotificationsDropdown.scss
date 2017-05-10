@@ -1,0 +1,63 @@
+.header-content {
+  composes: header-content from '../TopNavDropdown/TopNavDropdown.scss';
+}
+
+.open {
+  composes: header-link from '../TopNavDropdown/TopNavDropdown.scss';
+}
+
+.new {
+  composes: header-link from '../TopNavDropdown/TopNavDropdown.scss';
+  margin-left: auto;
+}
+
+.threads {
+  composes: body from '../TopNavDropdown/TopNavDropdown.scss';
+}
+
+.thread {
+  display: flex;
+  align-items: start;
+  cursor: pointer;
+  &:first-child {
+    margin-top: 5px;
+  }
+  &:last-child {
+    .message-content {
+      border: none;
+    }
+  }
+}
+
+.unread {
+  background-color: $color-saltpan;
+}
+
+.image-wraper {
+  width: $space-10x;
+  margin: 0 10px 0 15px;
+  padding-top: 20px;
+}
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 20px 15px 15px 0;
+  border-bottom: 1px solid $color-black-squeeze;
+}
+
+.name {
+  composes: username-cards from 'css/typography.scss';
+  margin-bottom: 10px;
+}
+
+.body {
+  composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.date {
+  composes: caption-lt-lg from 'css/typography.scss';
+  color: $color-slate-gray-80;
+  font-size: 12px;
+}
