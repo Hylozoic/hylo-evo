@@ -113,7 +113,7 @@ export default class PeopleSelector extends React.Component {
   setCurrentMatch = id => this.setState({ currentMatch: id })
 
   render () {
-    const { contacts, matches, participants } = this.props
+    const { contacts, matches, participants, removeParticipant } = this.props
     const { currentMatch } = this.state
     return <div styleName='people-selector'>
       <div styleName='thread-header' tabIndex='0'>

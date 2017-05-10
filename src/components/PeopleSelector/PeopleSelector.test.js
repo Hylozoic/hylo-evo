@@ -37,6 +37,7 @@ describe('PeopleSelector', () => {
             addParticipant={addParticipant}
             matches={[ { id: '1' }, { id: '2' } ]}
             participants={[]}
+            fetchContacts={() => {}}
             fetchPeople={fetchPeople}
             removeParticipant={removeParticipant}
             setAutocomplete={setAutocomplete} />
@@ -138,6 +139,7 @@ describe('PeopleSelector', () => {
       wrapper = mount(
         <MemoryRouter>
           <PeopleSelector
+            fetchContacts={() => {}}
             fetchPeople={() => {}}
             participants={[]}
             setAutocomplete={setAutocomplete} />
@@ -171,15 +173,6 @@ describe('PeopleSelector', () => {
     it('does not update if user input contains invalid characters', () => {
       const invalid = 'Poor Yorick9238183$@#$$@!'
       const expected = 'Poor Yorick'
-      const input = wrapper.find('input').first()
-      input.node.value = invalid
-      input.simulate('change')
-      jest.runAllTimers()
-      expect(setAutocomplete).not.toHaveBeenCalled()
-      expect(input.node.value).toBe(expected)
-    })
-  })
-})
       const input = wrapper.find('input').first()
       input.node.value = invalid
       input.simulate('change')
