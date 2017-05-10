@@ -46,8 +46,10 @@ export default class MessagesDropdown extends Component {
         <ul styleName='menu'>
           <li styleName='triangle' />
           <li styleName='header'>
-            <Link to={messagesUrl()} styleName='open'>Open Messages</Link>
-            <Link to={newMessageUrl()} styleName='new'>New</Link>
+            <div styleName='header-content'>
+              <Link to={messagesUrl()} styleName='open'>Open Messages</Link>
+              <Link to={newMessageUrl()} styleName='new'>New</Link>
+            </div>
           </li>
           <div styleName='threads'>
             {threads.map(thread => <Thread
