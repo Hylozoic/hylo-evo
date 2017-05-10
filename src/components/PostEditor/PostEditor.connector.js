@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
-import { getPost } from 'store/selectors/getPost'
-import { fetchPost } from 'store/actions/fetchPost'
+import getPost from 'store/selectors/getPost'
+import fetchPost from 'store/actions/fetchPost'
 import { createPost } from './PostEditor.store'
 
 export function mapStateToProps (state, props) {
