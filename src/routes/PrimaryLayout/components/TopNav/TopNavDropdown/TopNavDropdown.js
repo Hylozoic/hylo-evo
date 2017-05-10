@@ -1,11 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import './TopNavDropdown.scss'
-const { object, array, string, func } = PropTypes
-import { Link } from 'react-router-dom'
-import { humanDate, textLength, truncate } from 'hylo-utils/text'
+const { object, string } = PropTypes
 import cx from 'classnames'
-import { newMessageUrl, messagesUrl } from 'util/index'
-import RoundImageRow from 'components/RoundImageRow'
 
 export default class TopNavDropdown extends Component {
   static propTypes = {
@@ -20,16 +16,12 @@ export default class TopNavDropdown extends Component {
     this.state = {active: true}
   }
 
-  componentDidMount () {
-    this.props.fetchThreads()
-  }
-
   toggle = () => {
     this.setState({active: !this.state.active})
   }
 
   render () {
-    const { toggleChildren, threads, className, goToThread, currentUser, topNavPosition } = this.props
+    const { toggleChildren, className, topNavPosition, header, body } = this.props
     const { active } = this.state
 
     const wrapperStyle = {
@@ -37,7 +29,9 @@ export default class TopNavDropdown extends Component {
       left: `${topNavPosition.rightX - 390}px`
     }
 
-    return <div className={className} styleName='messages-dropdown'>
+    console.log('wrapperStyle', wrapperStyle)
+
+    return <div className={className} styleName='top-nav-dropdown'>
       <a onClick={this.toggle}>
         {toggleChildren}
       </a>

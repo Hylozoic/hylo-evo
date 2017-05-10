@@ -6,6 +6,7 @@ import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import cx from 'classnames'
 import { newMessageUrl, messagesUrl } from 'util/index'
 import RoundImageRow from 'components/RoundImageRow'
+import TopNavDropdown from '../TopNavDropdown'
 
 export default class MessagesDropdown extends Component {
   static propTypes = {
@@ -16,51 +17,30 @@ export default class MessagesDropdown extends Component {
     goToThread: func
   }
 
-  constructor (props) {
-    super(props)
-    this.state = {active: false}
-  }
-
   componentDidMount () {
     this.props.fetchThreads()
   }
 
-  toggle = () => {
-    this.setState({active: !this.state.active})
-  }
-
   render () {
-    const { toggleChildren, threads, className, goToThread, currentUser, topNavPosition } = this.props
-    const { active } = this.state
+    const { toggleChildren, threads, className, goToThread, currentUser } = this.props
 
-    const wrapperStyle = {
-      top: `${topNavPosition.height + 24}px`,
-      left: `${topNavPosition.rightX - 390}px`
-    }
-
-    return <div className={className} styleName='messages-dropdown'>
-      <a onClick={this.toggle}>
-        {toggleChildren}
-      </a>
-      <div styleName={cx('wrapper', {active})} style={wrapperStyle}>
-        <ul styleName='menu'>
-          <li styleName='triangle' />
-          <li styleName='header'>
-            <div styleName='header-content'>
-              <Link to={messagesUrl()} styleName='open'>Open Messages</Link>
-              <Link to={newMessageUrl()} styleName='new'>New</Link>
-            </div>
-          </li>
-          <div styleName='threads'>
-            {threads.map(thread => <Thread
-              thread={thread}
-              goToThread={goToThread}
-              currentUserId={currentUser.id}
-              key={thread.id} />)}
-          </div>
-        </ul>
-      </div>
-    </div>
+    return <TopNavDropdown
+      className={className}
+      toggleChildren={toggleChildren}
+      header={
+        <div styleName='header-content'>
+          <Link to={messagesUrl()} styleName='open'>Open Messages</Link>
+          <Link to={newMessageUrl()} styleName='new'>New</Link>
+        </div>}
+      body={
+        <div styleName='threads'>
+          {threads.map(thread => <Thread
+            thread={thread}
+            goToThread={goToThread}
+            currentUserId={currentUser.id}
+            key={thread.id} />)}
+        </div>
+      } />
   }
 }
 
