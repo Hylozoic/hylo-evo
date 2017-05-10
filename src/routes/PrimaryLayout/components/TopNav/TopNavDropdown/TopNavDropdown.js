@@ -13,7 +13,7 @@ export default class TopNavDropdown extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {active: true}
+    this.state = {active: false}
   }
 
   toggle = () => {
@@ -28,8 +28,6 @@ export default class TopNavDropdown extends Component {
       top: `${topNavPosition.height + 24}px`,
       left: `${topNavPosition.rightX - 390}px`
     }
-
-    console.log('wrapperStyle', wrapperStyle)
 
     return <div className={className} styleName='top-nav-dropdown'>
       <a onClick={this.toggle}>

@@ -21,19 +21,14 @@ const threads = [
   }
 ]
 
-const topNavPosition = {
-  rightX: 1280,
-  height: 56
-}
-
 describe('MessagesDropdown', () => {
   it('renders correctly with an empty list', () => {
-    const wrapper = shallow(<MessagesDropdown threads={[]} currentUser={u1} topNavPosition={topNavPosition} />)
+    const wrapper = shallow(<MessagesDropdown threads={[]} currentUser={u1} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('renders correctly with a list of threads', () => {
-    const wrapper = shallow(<MessagesDropdown threads={threads} currentUser={u1} topNavPosition={topNavPosition} />)
+    const wrapper = shallow(<MessagesDropdown threads={threads} currentUser={u1} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
