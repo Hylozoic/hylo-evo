@@ -2,6 +2,9 @@ import React, { PropTypes, Component } from 'react'
 import './TopNavDropdown.scss'
 const { object, string } = PropTypes
 import cx from 'classnames'
+import { position } from 'util/scrolling'
+
+const DROPDOWN_WIDTH = 375
 
 export default class TopNavDropdown extends Component {
   static propTypes = {
@@ -26,16 +29,22 @@ export default class TopNavDropdown extends Component {
 
     const wrapperStyle = {
       top: `${topNavPosition.height + 24}px`,
-      left: `${topNavPosition.rightX - 390}px`
+      left: `${topNavPosition.rightX - (DROPDOWN_WIDTH + 15)}px`
+    }
+
+    const toggleX = position(this.refs.toggle).x
+
+    const triangleStyle = {
+      left: `${toggleX - 880}px`
     }
 
     return <div className={className} styleName='top-nav-dropdown'>
-      <a onClick={this.toggle}>
+      <a onClick={this.toggle} ref='toggle'>
         {toggleChildren}
       </a>
       <div styleName={cx('wrapper', {active})} style={wrapperStyle}>
         <ul styleName='menu'>
-          <li styleName='triangle' />
+          <li styleName='triangle' style={triangleStyle} />
           <li styleName='header'>
             {header}
           </li>
