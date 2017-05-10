@@ -21,10 +21,14 @@ export default class CommentForm extends Component {
 
     const firstName = currentUser.name.split(' ')[0]
     const placeholder = `Hi ${firstName}, what's on your mind?`
-    return <div styleName='commentForm' className={className}>
+    return <div styleName='commentForm' className={className} onClick={() => this.editor.getWrappedInstance().focus()}>
       <div styleName={'prompt'}>
         <RoundImage url={currentUser.avatarUrl} small styleName='image' />
-        <HyloEditor styleName='editor' placeholder={placeholder} submitOnReturnHandler={save} />
+        <HyloEditor
+          ref={x => { this.editor = x }}
+          styleName='editor'
+          placeholder={placeholder}
+          submitOnReturnHandler={save} />
       </div>
     </div>
   }
