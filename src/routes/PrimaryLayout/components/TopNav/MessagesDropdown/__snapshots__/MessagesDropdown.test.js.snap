@@ -19,13 +19,17 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
       <li
         data-styleName="header"
       >
-        <span>
+        <Link
+          data-styleName="open"
+          replace={false}
+          to="/t"
+        >
           Open Messages
-        </span>
+        </Link>
         <Link
           data-styleName="new"
           replace={false}
-          to="/messages/new"
+          to="/t/new"
         >
           New
         </Link>
@@ -50,14 +54,17 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
                 Object {
                   "avatarUrl": "foo.png",
                   "id": 1,
+                  "name": "Charles Darwin",
                 },
                 Object {
                   "avatarUrl": "bar.png",
                   "id": 2,
+                  "name": "Marie Curie",
                 },
                 Object {
                   "avatarUrl": "baz.png",
                   "id": 3,
+                  "name": "Arthur Fonzarelli",
                 },
               ],
               "updatedAt": 2017-05-07T03:24:00.000Z,
@@ -81,14 +88,17 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
                 Object {
                   "avatarUrl": "foo.png",
                   "id": 1,
+                  "name": "Charles Darwin",
                 },
                 Object {
                   "avatarUrl": "bar.png",
                   "id": 2,
+                  "name": "Marie Curie",
                 },
                 Object {
                   "avatarUrl": "baz.png",
                   "id": 3,
+                  "name": "Arthur Fonzarelli",
                 },
               ],
               "updatedAt": 1995-12-17T03:23:00.000Z,
@@ -120,13 +130,17 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
       <li
         data-styleName="header"
       >
-        <span>
+        <Link
+          data-styleName="open"
+          replace={false}
+          to="/t"
+        >
           Open Messages
-        </span>
+        </Link>
         <Link
           data-styleName="new"
           replace={false}
-          to="/messages/new"
+          to="/t/new"
         >
           New
         </Link>

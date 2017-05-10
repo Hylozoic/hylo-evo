@@ -2,9 +2,9 @@ import MessagesDropdown, { Thread } from './MessagesDropdown'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-const u1 = {id: 1, avatarUrl: 'foo.png'}
-const u2 = {id: 2, avatarUrl: 'bar.png'}
-const u3 = {id: 3, avatarUrl: 'baz.png'}
+const u1 = {id: 1, name: 'Charles Darwin', avatarUrl: 'foo.png'}
+const u2 = {id: 2, name: 'Marie Curie', avatarUrl: 'bar.png'}
+const u3 = {id: 3, name: 'Arthur Fonzarelli', avatarUrl: 'baz.png'}
 
 const threads = [
   {
@@ -43,8 +43,10 @@ describe('Thread', () => {
     const mockNavigate = jest.fn()
     const goToThread = i => () => mockNavigate(i)
     const wrapper = shallow(
-      <Thread thread={threads[0]} currentUser={u1} goToThread={goToThread} />)
-    expect(wrapper).toMatchSnapshot()
+      <Thread thread={threads[0]} currentUserId={u1.id} goToThread={goToThread} />)
+    expect(wrapper.find('RoundImageRow').prop('imageUrls')).toEqual(['bar.png', 'baz.png'])
+    expect(wrapper.find('div').at(2).text()).toEqual('Marie Curie and Arthur Fonzarelli')
+    expect(wrapper.find('div').at(3).text()).toEqual('hi')
     wrapper.simulate('click')
     expect(mockNavigate).toHaveBeenCalledWith(threads[0].id)
   })
