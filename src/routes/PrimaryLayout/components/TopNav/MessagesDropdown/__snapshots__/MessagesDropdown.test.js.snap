@@ -9,6 +9,12 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
   />
   <div
     data-styleName="wrapper active"
+    style={
+      Object {
+        "left": "890px",
+        "top": "80px",
+      }
+    }
   >
     <ul
       data-styleName="menu"
@@ -120,6 +126,12 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
   />
   <div
     data-styleName="wrapper active"
+    style={
+      Object {
+        "left": "890px",
+        "top": "80px",
+      }
+    }
   >
     <ul
       data-styleName="menu"

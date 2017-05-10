@@ -8,7 +8,8 @@ import { getMe } from 'store/selectors/getMe'
 export function mapStateToProps (state, props) {
   return {
     currentUser: getMe(state, props),
-    threads: getThreads(state, props)
+    threads: getThreads(state, props),
+    topNavPosition: state.TopNav
   }
 }
 

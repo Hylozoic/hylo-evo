@@ -30,14 +30,19 @@ export default class MessagesDropdown extends Component {
   }
 
   render () {
-    const { toggleChildren, threads, className, goToThread, currentUser } = this.props
+    const { toggleChildren, threads, className, goToThread, currentUser, topNavPosition } = this.props
     const { active } = this.state
+
+    const wrapperStyle = {
+      top: `${topNavPosition.height + 24}px`,
+      left: `${topNavPosition.rightX - 390}px`
+    }
 
     return <div className={className} styleName='messages-dropdown'>
       <a onClick={this.toggle}>
         {toggleChildren}
       </a>
-      <div styleName={cx('wrapper', {active})}>
+      <div styleName={cx('wrapper', {active})} style={wrapperStyle}>
         <ul styleName='menu'>
           <li styleName='triangle' />
           <li styleName='header'>
