@@ -41,7 +41,7 @@ export default class TopicNavigation extends Component {
           </Link>
         </li>)}
       </ul>
-      <div styleName='s.addTopic'><Link to='/'>+ add topic</Link></div>
+      <div styleName='s.addTopic'><Link to='/'>see all</Link></div>
     </div>
   }
 }

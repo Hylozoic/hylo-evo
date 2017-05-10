@@ -18,7 +18,7 @@ export default class MessagesDropdown extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {active: true}
+    this.state = {active: false}
   }
 
   componentDidMount () {
