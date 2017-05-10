@@ -181,4 +181,64 @@ describe('PeopleSelector', () => {
       expect(input.node.value).toBe(expected)
     })
   })
+
+  describe('addParticipant', () => {
+    it('calls addParticipant with the correct id', () => {
+      const addParticipant = jest.fn()
+      const wrapper = mount(
+        <MemoryRouter>
+          <PeopleSelector
+            addParticipant={addParticipant}
+            participants={[]}
+            fetchContacts={() => {}}
+            fetchPeople={() => {}}
+            setAutocomplete={() => {}} />
+        </MemoryRouter>
+      )
+      wrapper.find(PeopleSelector).node.addParticipant('1')
+      expect(addParticipant).toBeCalledWith('1')
+    })
+
+    it('resets values after adding a participant', () => {
+      const setAutocomplete = jest.fn()
+      const wrapper = mount(
+        <MemoryRouter>
+          <PeopleSelector
+            addParticipant={() => {}}
+            participants={[]}
+            fetchContacts={() => {}}
+            fetchPeople={() => {}}
+            setAutocomplete={setAutocomplete} />
+        </MemoryRouter>
+      )
+      const input = wrapper.find('input').first()
+      input.node.value = 'flargle'
+      wrapper.find(PeopleSelector).node.addParticipant('1')
+      expect(input.node.value).toBe('')
+      expect(setAutocomplete).toBeCalledWith(null)
+    })
+  })
+
+  describe('componentDidMount', () => {
+    it('adds particpants in the search, then clears it', () => {
+      const addParticipant = jest.fn()
+      const changeQueryParam = jest.fn()
+      const wrapper = mount(
+        <MemoryRouter>
+          <PeopleSelector
+            addParticipant={addParticipant}
+            participants={[]}
+            participantSearch={[ '1', '2' ]}
+            fetchContacts={() => {}}
+            fetchPeople={() => {}}
+            changeQueryParam={changeQueryParam} />
+        </MemoryRouter>
+      )
+      expect(addParticipant).toBeCalledWith('1')
+      expect(addParticipant).toBeCalledWith('2')
+      const [ _, param, value ] = changeQueryParam.mock.calls[0]
+      expect(param).toBe('participants')
+      expect(value).toBe(null)
+    })
+  })
 })
