@@ -147,19 +147,6 @@ describe('PeopleSelector', () => {
       )
     })
 
-    it('resets values after adding a participant', () => {
-      const setAutocomplete = jest.fn()
-      const wrapper = mount(
-        <MemoryRouter>
-          <PeopleSelector
-            fetchContacts={() => {}}
-            fetchPeople={() => {}}
-            participants={[]}
-            setAutocomplete={setAutocomplete} />
-        </MemoryRouter>
-      )
-    })
-
     it('updates if user input contains valid characters', () => {
       const expected = 'Poor Yorick'
       const input = wrapper.find('input').first()
