@@ -9,6 +9,9 @@ import Icons from './Icons'
 class UIKit extends Component {
   componentDidMount () {
     // FIXME this doesn't belong here
+    //
+    // It is currently here for CurrentUser to be loaded in the context
+    // of PostTypes > PostEditor for community selection...
     this.props.fetchCurrentUser()
   }
 

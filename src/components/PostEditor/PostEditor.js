@@ -31,7 +31,7 @@ export default class PostEditor extends React.Component {
       offer: 'What super powers can you offer?',
       default: 'What’s on your mind?'
     },
-    detailsPlaceholder: 'Add a details',
+    detailsPlaceholder: 'Add details...',
     post: {
       type: 'discussion',
       title: '',
