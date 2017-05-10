@@ -4,7 +4,7 @@ const { object, array, string, func } = PropTypes
 import { Link } from 'react-router-dom'
 import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import cx from 'classnames'
-import { newMessageUrl } from 'util/index'
+import { newMessageUrl, messagesUrl } from 'util/index'
 import RoundImageRow from 'components/RoundImageRow'
 
 export default class MessagesDropdown extends Component {
@@ -41,7 +41,7 @@ export default class MessagesDropdown extends Component {
         <ul styleName='menu'>
           <li styleName='triangle' />
           <li styleName='header'>
-            <span>Open Messages</span>
+            <Link to={messagesUrl()} styleName='open'>Open Messages</Link>
             <Link to={newMessageUrl()} styleName='new'>New</Link>
           </li>
           <div styleName='threads'>

@@ -35,7 +35,11 @@ export function threadUrl (id) {
 }
 
 export function newMessageUrl () {
-  return `/messages/new`
+  return `/t/new`
+}
+
+export function messagesUrl () {
+  return `/t`
 }
 
 // n.b.: use getParam instead of this where possible.
