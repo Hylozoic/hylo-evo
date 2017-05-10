@@ -32,7 +32,7 @@ export default class MessageForm extends React.Component {
 
   sendForExisting () {
     const { createMessage, messageThreadId, text } = this.props
-    createMessage(messageThreadId, text)
+    createMessage(messageThreadId, text).then(() => this.focus())
     this.startTyping.cancel()
     this.sendIsTyping(false)
   }
