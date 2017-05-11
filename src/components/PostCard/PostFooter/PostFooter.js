@@ -11,8 +11,8 @@ export default function PostFooter ({ id, commenters, commentersTotal, votesTota
     <RoundImageRow imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
     <span styleName='caption'>{commentCaption(commenters, commentersTotal)}</span>
     <div styleName='votes'>
-      <a onClick={vote} styleName={cx('votes-link', {voted: myVote})} data-on-click='true'>
-        <Icon name='ArrowUp' styleName='arrowIcon' data-on-click='true' />{votesTotal}
+      <a onClick={vote} styleName={cx('votes-link', {voted: myVote})}>
+        <Icon name='ArrowUp' styleName='arrowIcon' />{votesTotal}
       </a>
     </div>
   </div>
