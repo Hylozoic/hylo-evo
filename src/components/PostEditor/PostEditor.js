@@ -113,6 +113,7 @@ export default class PostEditor extends React.Component {
   }
 
   setSelectedCommunities = communities => {
+    console.log(communities)
     this.setState({
       post: {...this.state.post, communities},
       valid: this.isValid({ communities })
@@ -133,11 +134,12 @@ export default class PostEditor extends React.Component {
     this.setState({valid: this.isValid()})
 
   save = () => {
-    const { createPost } = this.props
+    const { createPost, onClose } = this.props
     const { type, title, communities } = this.state.post
     const details = this.editor.getContentHTML()
     createPost({ type, title, details, communities })
-      .then(this.reset(PostEditor.defaultProps))
+      .then(onClose)
+      // .then(this.reset(PostEditor.defaultProps))
   }
 
   render () {
