@@ -50,6 +50,12 @@ $footer-height: 56px;
   border-bottom-right-radius: 4px;
   width: 90px;
 
+  &:hover {
+    &, .arrowIcon {
+      color: $color-gossamer !important;
+    }
+  }
+
   &.voted {
     background-color: $color-caribbean-green;
     color: white;
