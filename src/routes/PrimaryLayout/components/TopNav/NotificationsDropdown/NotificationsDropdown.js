@@ -1,10 +1,8 @@
 import React, { PropTypes, Component } from 'react'
 import './NotificationsDropdown.scss'
 const { object, array, string, func } = PropTypes
-import { Link } from 'react-router-dom'
 import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import cx from 'classnames'
-import { newMessageUrl, messagesUrl } from 'util/index'
 import RoundImageRow from 'components/RoundImageRow'
 import TopNavDropdown from '../TopNavDropdown'
 
@@ -22,15 +20,21 @@ export default class NotificationsDropdown extends Component {
   }
 
   render () {
-    const { toggleChildren, threads, className, goToThread, currentUser } = this.props
+    const {
+      toggleChildren, threads, className, goToThread, currentUser, markAsRead
+    } = this.props
+
+    const showRecent = () => console.log('show recent')
+    const showUnread = () => console.log('show unread')
 
     return <TopNavDropdown
       className={className}
       toggleChildren={toggleChildren}
       header={
         <div styleName='header-content'>
-          <Link to={messagesUrl()} styleName='open'>Open Messages</Link>
-          <Link to={newMessageUrl()} styleName='new'>New</Link>
+          <span onClick={showRecent} styleName='tab'>Recent</span>
+          <span onClick={showUnread} styleName='tab'>Unread</span>
+          <span onClick={markAsRead} styleName='mark-read'>Mark all as read</span>
         </div>}
       body={
         <div styleName='threads'>

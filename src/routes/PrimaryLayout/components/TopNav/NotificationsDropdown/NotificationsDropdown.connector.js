@@ -16,7 +16,8 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     fetchThreads: () => dispatch(fetchThreads()),
-    goToThread: id => () => dispatch(push(threadUrl(id)))
+    goToThread: id => () => dispatch(push(threadUrl(id))),
+    markAsRead: () => console.log('mark as read')
   }
 }
 

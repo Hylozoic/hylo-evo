@@ -31,10 +31,10 @@ export default class TopNav extends Component {
           <Link to='/' styleName='navIcon'><Icon name='Search' styleName='icon' /></Link>
           <MessagesDropdown
             toggleChildren={<Icon name='Messages' styleName='icon' />}
-            styleName='messages-dropdown' />
+            styleName='top-nav-dropdown' />
           <NotificationsDropdown
             toggleChildren={<Icon name='Notifications' styleName='icon' />}
-            styleName='navIcon' />
+            styleName='top-nav-dropdown' />
           <Dropdown styleName='navIcon user-menu' alignRight
             toggleChildren={
               <RoundImage url={get('avatarUrl', currentUser)} small />

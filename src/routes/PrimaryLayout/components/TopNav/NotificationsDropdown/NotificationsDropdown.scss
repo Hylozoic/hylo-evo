@@ -2,11 +2,12 @@
   composes: header-content from '../TopNavDropdown/TopNavDropdown.scss';
 }
 
-.open {
+.tab {
   composes: header-link from '../TopNavDropdown/TopNavDropdown.scss';
+  margin-right: 15px;
 }
 
-.new {
+.mark-read {
   composes: header-link from '../TopNavDropdown/TopNavDropdown.scss';
   margin-left: auto;
 }
