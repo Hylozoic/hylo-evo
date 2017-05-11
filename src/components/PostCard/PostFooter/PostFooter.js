@@ -1,5 +1,5 @@
 import React from 'react'
-import { get, sortBy } from 'lodash/fp'
+import { find, get, sortBy } from 'lodash/fp'
 import './PostFooter.scss'
 import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
@@ -28,7 +28,9 @@ PostFooter.propTypes = {
 }
 
 export const commentCaption = (commenters, commentersTotal, meId) => {
-  commenters = sortBy(c => c.id !== meId, commenters)
+  commenters = find(c => c.id === meId, commenters) && commentersTotal === 2
+    ? sortBy(c => c.id !== meId, commenters) // me first
+    : sortBy(c => c.id === meId, commenters) // me last
   var names = ''
   const firstName = person => person.id === meId ? 'You' : person.name.split(' ')[0]
   if (commentersTotal === 0) {
