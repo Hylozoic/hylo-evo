@@ -15,6 +15,13 @@ export default class NotificationsDropdown extends Component {
     goToThread: func
   }
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      showingUnread: false
+    }
+  }
+
   componentDidMount () {
     this.props.fetchThreads()
   }
@@ -23,17 +30,22 @@ export default class NotificationsDropdown extends Component {
     const {
       toggleChildren, threads, className, goToThread, currentUser, markAsRead
     } = this.props
+    const { showingUnread } = this.state
 
-    const showRecent = () => console.log('show recent')
-    const showUnread = () => console.log('show unread')
+    const showRecent = () => this.setState({showingUnread: false})
+    const showUnread = () => this.setState({showingUnread: true})
 
     return <TopNavDropdown
       className={className}
       toggleChildren={toggleChildren}
       header={
         <div styleName='header-content'>
-          <span onClick={showRecent} styleName='tab'>Recent</span>
-          <span onClick={showUnread} styleName='tab'>Unread</span>
+          <span onClick={showRecent} styleName={cx('tab', {active: !showingUnread})}>
+            Recent
+          </span>
+          <span onClick={showUnread} styleName={cx('tab', {active: showingUnread})}>
+            Unread
+          </span>
           <span onClick={markAsRead} styleName='mark-read'>Mark all as read</span>
         </div>}
       body={

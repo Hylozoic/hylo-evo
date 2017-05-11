@@ -7,6 +7,11 @@
   margin-right: 15px;
 }
 
+.active {
+  color: $color-rhino;
+  border-bottom: 1px solid $color-rhino;
+}
+
 .mark-read {
   composes: header-link from '../TopNavDropdown/TopNavDropdown.scss';
   margin-left: auto;
