@@ -20,18 +20,14 @@ exports[`PostFooter does something 1`] = `
   >
     Joe, Sue and 2 others commented
   </span>
-  <div
-    data-styleName="votes"
+  <a
+    data-styleName="vote-button voted"
   >
-    <a
-      data-styleName="votes-link voted"
-    >
-      <Icon
-        data-styleName="arrowIcon"
-        name="ArrowUp"
-      />
-      3
-    </a>
-  </div>
+    <Icon
+      data-styleName="arrowIcon"
+      name="ArrowUp"
+    />
+    3
+  </a>
 </div>
 `;
