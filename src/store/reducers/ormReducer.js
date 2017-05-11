@@ -40,9 +40,7 @@ export default function ormReducer (state = {}, action) {
 
     case CREATE_COMMENT:
       Comment.withId(meta.tempId).delete()
-      try {
-        PostCommenter.get({post: meta.postId, commenter: Me.first().id})
-      } catch (e) {
+      if (!PostCommenter.safeGet({post: meta.postId, commenter: Me.first().id})) {
         PostCommenter.create({post: meta.postId, commenter: Me.first().id})
         // we can assume the following because the backend returns the results pre-sorted
         // with the currentUser at the beginning
