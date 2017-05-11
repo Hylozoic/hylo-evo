@@ -22,7 +22,8 @@ export default class PostEditor extends React.Component {
       details: PropTypes.string,
       communities: PropTypes.array
     }),
-    createPost: PropTypes.func
+    createPost: PropTypes.func,
+    readOnly: PropTypes.bool
   }
 
   static defaultProps = {
@@ -37,7 +38,8 @@ export default class PostEditor extends React.Component {
       title: '',
       details: '',
       communities: []
-    }
+    },
+    readOnly: false
   }
 
   buildStateFromProps = ({ post }) => {
@@ -84,15 +86,19 @@ export default class PostEditor extends React.Component {
   }
 
   postTypeButtonProps = (forPostType) => {
+    const { readOnly } = this.props
     const { type } = this.state.post
     return {
       label: forPostType,
       onClick: this.handlePostTypeSelection,
+      color: '',
+      disabled: readOnly,
       className: cx(
         styles['postType'],
         styles[`postType-${forPostType}`],
         {
-          [styles[`postType-${forPostType}-active`]]: type === forPostType
+          [styles[`postType-${forPostType}-active`]]: type === forPostType,
+          [styles[`selectable`]]: !readOnly
         }
       )
     }
@@ -138,7 +144,7 @@ export default class PostEditor extends React.Component {
     const { titlePlaceholder, valid, post } = this.state
     if (!post) return null
     const { title, details, communities } = post
-    const { onClose, initialPrompt, detailsPlaceholder, communityOptions } = this.props
+    const { onClose, initialPrompt, detailsPlaceholder, communityOptions, readOnly } = this.props
 
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
       <div styleName='header'>
@@ -168,12 +174,14 @@ export default class PostEditor extends React.Component {
             placeholder={titlePlaceholder}
             value={title}
             onChange={this.handleTitleChange}
+            disabled={readOnly}
           />
           <HyloEditor
             styleName='editor'
             placeholder={detailsPlaceholder}
             onChange={this.setValid}
             contentHTML={details}
+            readOnly={readOnly}
             ref={component => { this.editor = component && component.getWrappedInstance() }}
           />
         </div>
@@ -186,6 +194,7 @@ export default class PostEditor extends React.Component {
               options={communityOptions}
               selected={communities}
               onChange={this.setSelectedCommunities}
+              readOnly={readOnly}
               ref={component => { this.communitiesSelector = component }}
             />
           </div>
@@ -193,7 +202,7 @@ export default class PostEditor extends React.Component {
         <div styleName='actionsBar'>
           <Button
             onClick={this.save}
-            disabled={!valid}
+            disabled={!valid || readOnly}
             styleName='postButton'
             label='Post'
             color='green'

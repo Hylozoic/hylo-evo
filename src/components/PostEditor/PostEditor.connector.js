@@ -12,7 +12,8 @@ export function mapStateToProps (state, props) {
   const post = props.post || getPost(state, props)
   return {
     post,
-    communityOptions
+    communityOptions,
+    readOnly: true
   }
 }
 

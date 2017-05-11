@@ -59,19 +59,19 @@
     margin-left: 0;
   }
   &-discussion {
-    &:hover, &:active, &-active {
+    &.selectable:hover, &:active, &-active {
       color: $color-picton-blue;
       background-color: $color-link-water;
     }
   }
   &-request {
-    &:hover, &:active, &-active {
+    &.selectable:hover, &:active, &-active {
       color: $color-persimmon;
       background-color: $color-peach-schnapps;
     }
   }
   &-offer {
-    &:hover, &:active, &-active  {
+    &.selectable:hover, &:active, &-active  {
       color: $color-caribbean-green;
       background-color: $color-iceberg;
     }
@@ -103,6 +103,9 @@
   width: 100%;
   outline: none;
   border: none;
+  &:disabled {
+    color: $color-rhino-80;
+  }
 }
 
 .editor {

@@ -22,6 +22,7 @@ export default class TagInput extends Component {
     allowNewTags: bool,
     placeholder: string,
     filter: func,
+    readOnly: bool,
     className: string,
     theme: object
   }
@@ -37,7 +38,8 @@ export default class TagInput extends Component {
       searchInput: 'searchInput',
       suggestions: 'suggestions',
       suggestionsList: 'suggestionsList',
-      suggestion: 'suggestion'
+      suggestion: 'suggestion',
+      readOnly: 'readOnly'
     }
   }
 
@@ -95,7 +97,7 @@ export default class TagInput extends Component {
 
   render () {
     let { tags, placeholder } = this.props
-    const { suggestions, className, theme } = this.props
+    const { suggestions, className, theme, readOnly } = this.props
     if (!tags) tags = []
     if (!placeholder) placeholder = 'Type...'
 
@@ -107,7 +109,7 @@ export default class TagInput extends Component {
       </li>
     )
 
-    return <div className={cx(theme.root, className)} onClick={this.focus}>
+    return <div className={cx(theme.root, {[theme.readOnly]: readOnly}, className)} onClick={this.focus}>
       <ul className={theme.selected}>
         {selectedItems}
       </ul>
@@ -120,7 +122,8 @@ export default class TagInput extends Component {
             placeholder={placeholder}
             spellCheck={false}
             onChange={event => this.handleChange(event.target.value)}
-            onKeyDown={this.handleKeys} />
+            onKeyDown={this.handleKeys}
+            disabled={readOnly} />
         </div>
         {!isEmpty(suggestions) &&
           <div className={theme.suggestions}>
