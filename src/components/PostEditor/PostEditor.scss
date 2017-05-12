@@ -59,19 +59,19 @@
     margin-left: 0;
   }
   &-discussion {
-    &.selectable:hover, &:active, &-active {
+    &.selectable:hover, &:active, &.active {
       color: $color-picton-blue;
       background-color: $color-link-water;
     }
   }
   &-request {
-    &.selectable:hover, &:active, &-active {
+    &.selectable:hover, &:active, &.active {
       color: $color-persimmon;
       background-color: $color-peach-schnapps;
     }
   }
   &-offer {
-    &.selectable:hover, &:active, &-active  {
+    &.selectable:hover, &:active, &.active  {
       color: $color-caribbean-green;
       background-color: $color-iceberg;
     }

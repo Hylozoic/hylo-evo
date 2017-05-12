@@ -27,17 +27,23 @@ exports[`PostEditor editing a post 1`] = `
       data-styleName="postTypes"
     >
       <Button
-        className=""
+        className="undefined"
+        color=""
+        disabled={false}
         label="discussion"
         onClick={[Function]}
       />
       <Button
         className="undefined"
+        color=""
+        disabled={false}
         label="request"
         onClick={[Function]}
       />
       <Button
-        className=""
+        className="undefined"
+        color=""
+        disabled={false}
         label="offer"
         onClick={[Function]}
       />
@@ -61,6 +67,7 @@ exports[`PostEditor editing a post 1`] = `
     >
       <input
         data-styleName="titleInput"
+        disabled={false}
         onChange={[Function]}
         placeholder="What’s on your mind?"
         type="text"
@@ -70,7 +77,8 @@ exports[`PostEditor editing a post 1`] = `
         contentHTML="valid details"
         data-styleName="editor"
         onChange={[Function]}
-        placeholder="Add a details"
+        placeholder="Add details..."
+        readOnly={false}
       />
     </div>
   </div>
@@ -92,6 +100,7 @@ exports[`PostEditor editing a post 1`] = `
           onChange={[Function]}
           options={Array []}
           placeholder="Begin typing..."
+          readOnly={false}
           selected={
             Array [
               Object {
@@ -150,16 +159,22 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     >
       <Button
         className="undefined"
+        color=""
+        disabled={false}
         label="discussion"
         onClick={[Function]}
       />
       <Button
-        className=""
+        className="undefined"
+        color=""
+        disabled={false}
         label="request"
         onClick={[Function]}
       />
       <Button
-        className=""
+        className="undefined"
+        color=""
+        disabled={false}
         label="offer"
         onClick={[Function]}
       />
@@ -183,6 +198,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     >
       <input
         data-styleName="titleInput"
+        disabled={false}
         onChange={[Function]}
         placeholder="discussion placeholder"
         type="text"
@@ -190,7 +206,8 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       <Connect(HyloEditor)
         data-styleName="editor"
         onChange={[Function]}
-        placeholder="Add a details"
+        placeholder="Add details..."
+        readOnly={false}
       />
     </div>
   </div>
@@ -212,6 +229,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
           onChange={[Function]}
           options={Array []}
           placeholder="Begin typing..."
+          readOnly={false}
           selected={Array []}
         />
       </div>
@@ -258,17 +276,23 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       data-styleName="postTypes"
     >
       <Button
-        className=""
+        className="undefined"
+        color=""
+        disabled={false}
         label="discussion"
         onClick={[Function]}
       />
       <Button
-        className=""
+        className="undefined"
+        color=""
+        disabled={false}
         label="request"
         onClick={[Function]}
       />
       <Button
         className="undefined"
+        color=""
+        disabled={false}
         label="offer"
         onClick={[Function]}
       />
@@ -292,6 +316,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     >
       <input
         data-styleName="titleInput"
+        disabled={false}
         onChange={[Function]}
         placeholder="offer placeholder"
         type="text"
@@ -299,7 +324,8 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       <Connect(HyloEditor)
         data-styleName="editor"
         onChange={[Function]}
-        placeholder="Add a details"
+        placeholder="Add details..."
+        readOnly={false}
       />
     </div>
   </div>
@@ -321,6 +347,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
           onChange={[Function]}
           options={Array []}
           placeholder="Begin typing..."
+          readOnly={false}
           selected={Array []}
         />
       </div>
@@ -367,17 +394,23 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       data-styleName="postTypes"
     >
       <Button
-        className=""
+        className="undefined"
+        color=""
+        disabled={false}
         label="discussion"
         onClick={[Function]}
       />
       <Button
         className="undefined"
+        color=""
+        disabled={false}
         label="request"
         onClick={[Function]}
       />
       <Button
-        className=""
+        className="undefined"
+        color=""
+        disabled={false}
         label="offer"
         onClick={[Function]}
       />
@@ -401,6 +434,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     >
       <input
         data-styleName="titleInput"
+        disabled={false}
         onChange={[Function]}
         placeholder="request placeholder"
         type="text"
@@ -408,7 +442,8 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       <Connect(HyloEditor)
         data-styleName="editor"
         onChange={[Function]}
-        placeholder="Add a details"
+        placeholder="Add details..."
+        readOnly={false}
       />
     </div>
   </div>
@@ -430,6 +465,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
           onChange={[Function]}
           options={Array []}
           placeholder="Begin typing..."
+          readOnly={false}
           selected={Array []}
         />
       </div>
@@ -477,16 +513,22 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
     >
       <Button
         className="undefined"
+        color=""
+        disabled={false}
         label="discussion"
         onClick={[Function]}
       />
       <Button
-        className=""
+        className="undefined"
+        color=""
+        disabled={false}
         label="request"
         onClick={[Function]}
       />
       <Button
-        className=""
+        className="undefined"
+        color=""
+        disabled={false}
         label="offer"
         onClick={[Function]}
       />
@@ -510,6 +552,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
     >
       <input
         data-styleName="titleInput"
+        disabled={false}
         onChange={[Function]}
         placeholder="a test title placeholder"
         type="text"
@@ -520,6 +563,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         data-styleName="editor"
         onChange={[Function]}
         placeholder="details placeholder"
+        readOnly={false}
       />
     </div>
   </div>
@@ -541,7 +585,139 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
           onChange={[Function]}
           options={Array []}
           placeholder="Begin typing..."
+          readOnly={false}
           selected={Array []}
+        />
+      </div>
+    </div>
+    <div
+      data-styleName="actionsBar"
+    >
+      <Button
+        color="green"
+        data-styleName="postButton"
+        disabled={true}
+        label="Post"
+        onClick={[Function]}
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`PostEditor form in readOnly mode 1`] = `
+<div
+  data-styleName="wrapper"
+>
+  <div
+    data-styleName="header"
+  >
+    <div
+      data-styleName="initial"
+    >
+      <div
+        data-styleName="initial-prompt"
+      >
+        What are you looking to post?
+      </div>
+      <a
+        data-styleName="initial-closeButton"
+      >
+        <Icon
+          name="Ex"
+        />
+      </a>
+    </div>
+    <div
+      data-styleName="postTypes"
+    >
+      <Button
+        className=""
+        color=""
+        disabled={true}
+        label="discussion"
+        onClick={[Function]}
+      />
+      <Button
+        className=""
+        color=""
+        disabled={true}
+        label="request"
+        onClick={[Function]}
+      />
+      <Button
+        className=""
+        color=""
+        disabled={true}
+        label="offer"
+        onClick={[Function]}
+      />
+    </div>
+  </div>
+  <div
+    data-styleName="body"
+  >
+    <div
+      data-styleName="body-column"
+    >
+      <Avatar
+        avatarUrl="https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png"
+        data-styleName="titleAvatar"
+        medium={true}
+        url=""
+      />
+    </div>
+    <div
+      data-styleName="body-column"
+    >
+      <input
+        data-styleName="titleInput"
+        disabled={true}
+        onChange={[Function]}
+        placeholder="What’s on your mind?"
+        type="text"
+        value="valid title"
+      />
+      <Connect(HyloEditor)
+        contentHTML="valid details"
+        data-styleName="editor"
+        onChange={[Function]}
+        placeholder="Add details..."
+        readOnly={true}
+      />
+    </div>
+  </div>
+  <div
+    data-styleName="footer"
+  >
+    <div
+      data-styleName="postIn"
+    >
+      <div
+        data-styleName="postIn-label"
+      >
+        Post in
+      </div>
+      <div
+        data-styleName="postIn-communities"
+      >
+        <CommunitiesSelector
+          onChange={[Function]}
+          options={Array []}
+          placeholder="Begin typing..."
+          readOnly={true}
+          selected={
+            Array [
+              Object {
+                "id": "1",
+                "name": "test community 1",
+              },
+              Object {
+                "id": "2",
+                "name": "test community 2",
+              },
+            ]
+          }
         />
       </div>
     </div>
@@ -588,16 +764,22 @@ exports[`PostEditor renders with min props 1`] = `
     >
       <Button
         className="undefined"
+        color=""
+        disabled={false}
         label="discussion"
         onClick={[Function]}
       />
       <Button
-        className=""
+        className="undefined"
+        color=""
+        disabled={false}
         label="request"
         onClick={[Function]}
       />
       <Button
-        className=""
+        className="undefined"
+        color=""
+        disabled={false}
         label="offer"
         onClick={[Function]}
       />
@@ -621,6 +803,7 @@ exports[`PostEditor renders with min props 1`] = `
     >
       <input
         data-styleName="titleInput"
+        disabled={false}
         onChange={[Function]}
         placeholder="What’s on your mind?"
         type="text"
@@ -630,7 +813,8 @@ exports[`PostEditor renders with min props 1`] = `
         contentHTML=""
         data-styleName="editor"
         onChange={[Function]}
-        placeholder="Add a details"
+        placeholder="Add details..."
+        readOnly={false}
       />
     </div>
   </div>
@@ -652,6 +836,7 @@ exports[`PostEditor renders with min props 1`] = `
           onChange={[Function]}
           options={Array []}
           placeholder="Begin typing..."
+          readOnly={false}
           selected={Array []}
         />
       </div>

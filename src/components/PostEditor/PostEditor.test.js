@@ -56,6 +56,23 @@ describe('PostEditor', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
+  test('form in readOnly mode', () => {
+    const props = {
+      readOnly: true,
+      post: {
+        type: 'request',
+        title: 'valid title',
+        details: 'valid details',
+        communities: [
+          {id: '1', name: 'test community 1'},
+          {id: '2', name: 'test community 2'}
+        ]
+      }
+    }
+    const wrapper = shallow(<PostEditor {...props} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
   describe('valid', () => {
     it('is valid when all required values are supplied', () => {
       const props = {

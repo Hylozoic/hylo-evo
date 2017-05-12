@@ -88,19 +88,20 @@ export default class PostEditor extends React.Component {
   postTypeButtonProps = (forPostType) => {
     const { readOnly } = this.props
     const { type } = this.state.post
+    const className = cx(
+      styles['postType'],
+      styles[`postType-${forPostType}`],
+      {
+        [styles[`active`]]: type === forPostType,
+        [styles[`selectable`]]: !readOnly
+      }
+    )
     return {
       label: forPostType,
       onClick: this.handlePostTypeSelection,
-      color: '',
       disabled: readOnly,
-      className: cx(
-        styles['postType'],
-        styles[`postType-${forPostType}`],
-        {
-          [styles[`postType-${forPostType}-active`]]: type === forPostType,
-          [styles[`selectable`]]: !readOnly
-        }
-      )
+      color: '',
+      className
     }
   }
 
@@ -113,7 +114,6 @@ export default class PostEditor extends React.Component {
   }
 
   setSelectedCommunities = communities => {
-    console.log(communities)
     this.setState({
       post: {...this.state.post, communities},
       valid: this.isValid({ communities })

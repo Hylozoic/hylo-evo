@@ -26,6 +26,7 @@ export default class HyloModal extends Component {
       className={styles['hyloModal']}
       overlayClassName={styles['hyloModal-overlay']}
       isOpen={this.state.modalIsOpen}
+      contentLabel=''
       onRequestClose={this.closeModal}
       {...this.props}
     />
