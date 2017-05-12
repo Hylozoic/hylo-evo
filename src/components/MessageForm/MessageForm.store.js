@@ -1,6 +1,9 @@
 import { uniqueId } from 'lodash/fp'
 import { createSelector } from 'reselect'
 import { CREATE_MESSAGE, CREATE_MESSAGE_PENDING } from 'store/constants'
+import {
+  NEW_THREAD_ID
+} from './MessageForm'
 
 export const MODULE_NAME = 'MessageForm'
 
@@ -8,7 +11,7 @@ export const MODULE_NAME = 'MessageForm'
 export const UPDATE_MESSAGE_TEXT = 'UPDATE_MESSAGE_TEXT'
 
 // Action Creators
-export function createMessage (messageThreadId, text) {
+export function createMessage (messageThreadId, text, forNewThread) {
   return {
     type: CREATE_MESSAGE,
     graphql: {
@@ -35,7 +38,8 @@ export function createMessage (messageThreadId, text) {
       extractModel: 'Message',
       tempId: uniqueId(`messageThread${messageThreadId}_`),
       messageThreadId,
-      text
+      text,
+      forNewThread
     }
   }
 }
@@ -59,7 +63,8 @@ export default function reducer (state = defaultState, action) {
 
   switch (type) {
     case CREATE_MESSAGE_PENDING:
-      return {...state, [meta.messageThreadId]: ''}
+      const threadId = meta.forNewThread ? NEW_THREAD_ID : meta.messageThreadId
+      return {...state, [threadId]: ''}
     case UPDATE_MESSAGE_TEXT:
       return {...state, [meta.messageThreadId]: meta.text}
     default:
@@ -73,5 +78,6 @@ export const moduleSelector = (state) => state[MODULE_NAME]
 export const getTextForMessageThread = createSelector(
   moduleSelector,
   (_, props) => props.messageThreadId,
-  (state, messageThreadId) => state[messageThreadId] || ''
+  (_, props) => props.forNewThread,
+  (state, messageThreadId, forNewThread) => forNewThread ? state[NEW_THREAD_ID] : (state[messageThreadId] || '')
 )

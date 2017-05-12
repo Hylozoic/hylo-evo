@@ -113,7 +113,7 @@ export default class PeopleSelector extends React.Component {
   setCurrentMatch = id => this.setState({ currentMatch: id })
 
   render () {
-    const { contacts, matches, participants, removeParticipant } = this.props
+    const { contacts, matches, participants, removeParticipant, findOrCreateThread } = this.props
     const { currentMatch } = this.state
     return <div styleName='people-selector'>
       <div styleName='thread-header' tabIndex='0'>
@@ -147,7 +147,9 @@ export default class PeopleSelector extends React.Component {
           contacts={contacts} />}
       {participants && participants.length > 0 &&
         <div styleName='message-form'>
-          <MessageForm ref='form' />
+          <MessageForm ref='form'
+            forNewThread
+            findOrCreateThread={() => findOrCreateThread(participants.map(p => p.id))} />
         </div>}
     </div>
   }

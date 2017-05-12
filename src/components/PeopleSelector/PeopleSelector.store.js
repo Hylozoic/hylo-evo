@@ -2,14 +2,32 @@ import { createSelector } from 'redux-orm'
 import { pick } from 'lodash/fp'
 
 import orm from 'store/models'
+import {
+  CREATE_MESSAGE
+} from 'store/constants'
 
 export const MODULE_NAME = 'PeopleSelector'
 
+export const FIND_OR_CREATE_THREAD = 'FIND_OR_CREATE_THREAD'
 export const FETCH_PEOPLE = 'FETCH_PEOPLE'
 export const FETCH_CONTACTS = 'FETCH_CONTACTS'
 export const SET_AUTOCOMPLETE = 'PeopleSelector/SET_AUTOCOMPLETE'
 export const ADD_PARTICIPANT = 'PeopleSelector/ADD_PARTICIPANT'
 export const REMOVE_PARTICIPANT = 'PeopleSelector/REMOVE_PARTICIPANT'
+
+const findOrCreateThreadQuery =
+`mutation ($participantIds: [String]) {
+  findOrCreateThread(data: {participantIds: $participantIds}) {
+    id
+    createdAt
+    updatedAt
+    participants {
+      id
+      name
+      avatarUrl
+    }
+  }
+}`
 
 const fetchPeopleQuery =
 `query PeopleAutocomplete ($autocomplete: String, $first: Int) {
@@ -66,6 +84,17 @@ export function fetchContacts (query = fetchContactsQuery, first = 50) {
       variables: { first }
     },
     meta: { extractModel: 'Person' }
+  }
+}
+
+export function findOrCreateThread (participantIds, query = findOrCreateThreadQuery) {
+  return {
+    type: FIND_OR_CREATE_THREAD,
+    graphql: {
+      query,
+      variables: {participantIds}
+    },
+    meta: { extractModel: 'MessageThread' }
   }
 }
 
@@ -141,10 +170,16 @@ export const defaultState = {
 }
 
 export default function reducer (state = defaultState, action) {
-  const { error, payload, type } = action
+  const { error, payload, type, meta } = action
   if (error) return state
 
   switch (type) {
+    case CREATE_MESSAGE:
+      if (meta.forNewThread) {
+        return defaultState
+      }
+      break
+
     case SET_AUTOCOMPLETE:
       return {
         ...state,

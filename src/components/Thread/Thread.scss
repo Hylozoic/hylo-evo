@@ -1,6 +1,7 @@
-$messages-inner-padding: 30px;
+$messages-inner-padding: $space-6x;
 
 .thread {
+  width: $content-width - $thread-list-width;
   height: 100vh;
   flex: 1;
   display: flex;
@@ -35,14 +36,17 @@ $messages-inner-padding: 30px;
 }
 
 .message-form {
+  border-left: $light-border;
   padding: 0 $messages-inner-padding $space-7x $messages-inner-padding;
   width: 100%;
 }
 
 .people-typing {
   position: absolute;
-  bottom: 15px;
-  height: 18px;
+  bottom: 0;
+  height: $space-7x;
+  line-height: $space-7x;
+  vertical-align: middle;
   left: $messages-inner-padding;
   background: $color-white;
 }

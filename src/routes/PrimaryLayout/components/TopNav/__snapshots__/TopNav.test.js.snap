@@ -22,16 +22,15 @@ exports[`renders as expected with no community 1`] = `
           name="Search"
         />
       </Link>
-      <Link
-        data-styleName="navIcon"
-        replace={false}
-        to="/t"
-      >
-        <Icon
-          data-styleName="icon"
-          name="Messages"
-        />
-      </Link>
+      <Connect(MessagesDropdown)
+        data-styleName="messages-dropdown"
+        toggleChildren={
+          <Icon
+            data-styleName="icon"
+            name="Messages"
+          />
+        }
+      />
       <Link
         data-styleName="navIcon"
         replace={false}
@@ -50,7 +49,6 @@ exports[`renders as expected with no community 1`] = `
             small={true}
           />
         }
-        triangle={true}
       >
         <li>
           <Link

@@ -81,6 +81,11 @@
   }
 }
 
+textarea.control-input {
+  resize: vertical;
+  height: $space-20x;
+}
+
 // SocialControl
 .linked {
   border-bottom: 1px solid $color-caribbean-green;

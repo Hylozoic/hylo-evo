@@ -8,6 +8,7 @@ import {
   fetchContacts,
   fetchPeople,
   contactsSelector,
+  findOrCreateThread,
   matchesSelector,
   participantsSelector,
   setAutocomplete
@@ -41,7 +42,8 @@ export const mapDispatchToProps = {
   changeQueryParam,
   fetchContacts,
   fetchPeople,
-  setAutocomplete
+  setAutocomplete,
+  findOrCreateThread
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
