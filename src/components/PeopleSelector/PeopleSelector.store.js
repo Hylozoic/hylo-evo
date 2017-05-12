@@ -29,6 +29,17 @@ const findOrCreateThreadQuery =
   }
 }`
 
+export function findOrCreateThread (participantIds, query = findOrCreateThreadQuery) {
+  return {
+    type: FIND_OR_CREATE_THREAD,
+    graphql: {
+      query,
+      variables: {participantIds}
+    },
+    meta: { extractModel: 'MessageThread' }
+  }
+}
+
 const fetchPeopleQuery =
 `query PeopleAutocomplete ($autocomplete: String, $first: Int) {
   people (autocomplete: $autocomplete, first: $first) {
@@ -87,14 +98,36 @@ export function fetchContacts (query = fetchContactsQuery, first = 50) {
   }
 }
 
-export function findOrCreateThread (participantIds, query = findOrCreateThreadQuery) {
+const fetchRecentContactsQuery =
+`query RecentPersonConnections ($first: Int) {
+  connections (first: $first) {
+    items {
+      id
+      person {
+        name
+        avatarUrl
+        memberships {
+          id
+          community {
+            id
+            name
+          }
+        }
+      }
+      type
+      updatedAt
+    }
+  }
+}`
+
+export function fetchRecentContacts (query = fetchRecentContactsQuery, first = 20) {
   return {
-    type: FIND_OR_CREATE_THREAD,
+    type: FETCH_RECENT_CONTACTS,
     graphql: {
       query,
-      variables: {participantIds}
+      variables: { first }
     },
-    meta: { extractModel: 'MessageThread' }
+    meta: { extractModel: 'PersonConnection' }
   }
 }
 

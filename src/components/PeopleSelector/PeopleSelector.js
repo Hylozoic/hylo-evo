@@ -37,6 +37,7 @@ export default class PeopleSelector extends React.Component {
 
   componentDidMount () {
     this.props.fetchContacts()
+    this.props.fetchRecentContacts()
     const { participantSearch } = this.props
     if (participantSearch) {
       participantSearch.forEach(p => this.props.addParticipant(p))

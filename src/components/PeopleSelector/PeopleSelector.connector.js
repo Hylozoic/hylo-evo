@@ -6,6 +6,7 @@ import {
   addParticipant,
   removeParticipant,
   fetchContacts,
+  fetchRecentContacts,
   fetchPeople,
   contactsSelector,
   findOrCreateThread,
@@ -41,6 +42,7 @@ export const mapDispatchToProps = {
   removeParticipant,
   changeQueryParam,
   fetchContacts,
+  fetchRecentContacts,
   fetchPeople,
   setAutocomplete,
   findOrCreateThread
