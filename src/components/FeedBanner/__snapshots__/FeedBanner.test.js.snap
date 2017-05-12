@@ -75,7 +75,6 @@ exports[`renders for all communities 1`] = `
           url="me.png"
         >
           <div
-            className=""
             data-styleName="image small"
             style={
               Object {

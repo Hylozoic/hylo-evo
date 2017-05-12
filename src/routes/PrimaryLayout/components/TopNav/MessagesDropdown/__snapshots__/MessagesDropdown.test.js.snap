@@ -1,0 +1,156 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
+<div
+  data-styleName="messages-dropdown"
+>
+  <a
+    onClick={[Function]}
+  />
+  <div
+    data-styleName="wrapper"
+  >
+    <ul
+      data-styleName="menu"
+    >
+      <li
+        data-styleName="triangle"
+      />
+      <li
+        data-styleName="header"
+      >
+        <Link
+          data-styleName="open"
+          replace={false}
+          to="/t"
+        >
+          Open Messages
+        </Link>
+        <Link
+          data-styleName="new"
+          replace={false}
+          to="/t/new"
+        >
+          New
+        </Link>
+      </li>
+      <div
+        data-styleName="threads"
+      >
+        <Thread
+          currentUserId={1}
+          thread={
+            Object {
+              "id": 2,
+              "messages": Array [
+                Object {
+                  "creator": Object {
+                    "id": 2,
+                  },
+                  "text": "hi",
+                },
+              ],
+              "participants": Array [
+                Object {
+                  "avatarUrl": "foo.png",
+                  "id": 1,
+                  "name": "Charles Darwin",
+                },
+                Object {
+                  "avatarUrl": "bar.png",
+                  "id": 2,
+                  "name": "Marie Curie",
+                },
+                Object {
+                  "avatarUrl": "baz.png",
+                  "id": 3,
+                  "name": "Arthur Fonzarelli",
+                },
+              ],
+              "updatedAt": 2017-05-07T03:24:00.000Z,
+            }
+          }
+        />
+        <Thread
+          currentUserId={1}
+          thread={
+            Object {
+              "id": 1,
+              "messages": Array [
+                Object {
+                  "creator": Object {
+                    "id": 3,
+                  },
+                  "text": "there",
+                },
+              ],
+              "participants": Array [
+                Object {
+                  "avatarUrl": "foo.png",
+                  "id": 1,
+                  "name": "Charles Darwin",
+                },
+                Object {
+                  "avatarUrl": "bar.png",
+                  "id": 2,
+                  "name": "Marie Curie",
+                },
+                Object {
+                  "avatarUrl": "baz.png",
+                  "id": 3,
+                  "name": "Arthur Fonzarelli",
+                },
+              ],
+              "updatedAt": 1995-12-17T03:23:00.000Z,
+            }
+          }
+        />
+      </div>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`MessagesDropdown renders correctly with an empty list 1`] = `
+<div
+  data-styleName="messages-dropdown"
+>
+  <a
+    onClick={[Function]}
+  />
+  <div
+    data-styleName="wrapper"
+  >
+    <ul
+      data-styleName="menu"
+    >
+      <li
+        data-styleName="triangle"
+      />
+      <li
+        data-styleName="header"
+      >
+        <Link
+          data-styleName="open"
+          replace={false}
+          to="/t"
+        >
+          Open Messages
+        </Link>
+        <Link
+          data-styleName="new"
+          replace={false}
+          to="/t/new"
+        >
+          New
+        </Link>
+      </li>
+      <div
+        data-styleName="threads"
+      />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Thread renders correctly with an empty thread 1`] = `null`;
