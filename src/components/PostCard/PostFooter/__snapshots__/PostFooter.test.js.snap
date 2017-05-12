@@ -20,20 +20,14 @@ exports[`PostFooter matches the latest snapshot 1`] = `
   >
     Joe, Sue and 2 others commented
   </span>
-  <div
-    data-styleName="votes"
+  <a
+    data-styleName="vote-button voted"
   >
-    <a
-      data-on-click="true"
-      data-styleName="votes-link voted"
-    >
-      <Icon
-        data-on-click="true"
-        data-styleName="arrowIcon"
-        name="ArrowUp"
-      />
-      3
-    </a>
-  </div>
+    <Icon
+      data-styleName="arrowIcon"
+      name="ArrowUp"
+    />
+    3
+  </a>
 </div>
 `;

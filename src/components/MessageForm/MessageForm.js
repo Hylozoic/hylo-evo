@@ -10,6 +10,8 @@ import './MessageForm.scss'
 // should share with comment form
 export const STARTED_TYPING_INTERVAL = 3000
 
+export const NEW_THREAD_ID = 'new'
+
 export default class MessageForm extends React.Component {
   static propTypes = {
     socket: object,
@@ -21,18 +23,37 @@ export default class MessageForm extends React.Component {
     onFocus: func,
     onBlur: func,
     pending: bool,
+    forNewThread: bool,
     createMessage: func,
-    updateMessageText: func
+    updateMessageText: func,
+    findOrCreateThread: func,
+    goToThread: func
+  }
+
+  sendForExisting () {
+    const { createMessage, messageThreadId, text } = this.props
+    createMessage(messageThreadId, text).then(() => this.focus())
+    this.startTyping.cancel()
+    this.sendIsTyping(false)
+  }
+
+  handleThreadThenMessage () {
+    const { createMessage, findOrCreateThread, goToThread, text } = this.props
+    findOrCreateThread().then(resp => {
+      const messageThreadId = get('payload.data.findOrCreateThread.id', resp)
+      createMessage(messageThreadId, text, true).then(() => goToThread(messageThreadId))
+    })
   }
 
   submit = event => {
     if (event) event.preventDefault()
-    const { text, messageThreadId, createMessage, currentUser, pending } = this.props
+    const { text, pending, forNewThread } = this.props
     if (!text || pending) return false
-    const userId = get('id', currentUser)
-    createMessage(messageThreadId, text, userId)
-    this.startTyping.cancel()
-    this.sendIsTyping(false)
+    if (forNewThread) {
+      this.handleThreadThenMessage()
+    } else {
+      this.sendForExisting()
+    }
     return false
   }
 
@@ -78,6 +99,7 @@ export default class MessageForm extends React.Component {
 
   render () {
     const {
+      forNewThread,
       messageThreadId,
       onFocus,
       onBlur,
@@ -86,9 +108,10 @@ export default class MessageForm extends React.Component {
       pending,
       updateMessageText
     } = this.props
+    const threadId = forNewThread ? NEW_THREAD_ID : messageThreadId
     const text = pending ? '' : this.props.text
     const placeholder = this.props.placeholder || 'Write something...'
-    const onChange = e => updateMessageText(messageThreadId, e.target.value)
+    const onChange = e => updateMessageText(threadId, e.target.value)
     const handleKeyDown = e => {
       this.startTyping()
       onEnterNoShift(e => {
@@ -106,7 +129,8 @@ export default class MessageForm extends React.Component {
         onFocus={onFocus}
         onChange={onChange}
         onBlur={onBlur}
-        onKeyDown={handleKeyDown} />
+        onKeyDown={handleKeyDown}
+        disabled={pending} />
     </form>
   }
 }

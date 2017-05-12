@@ -4,12 +4,14 @@ $footer-height: 56px;
 
 .footer {
   composes: cardPadding from 'components/PostCard/PostCard.scss';
+  padding-right: 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   height: $footer-height;
   border-top: 1px solid $color-cape-cod-10;
   border-bottom: 1px solid $color-cape-cod-10;
+  overflow: hidden;
 }
 
 .people {
@@ -31,33 +33,34 @@ $footer-height: 56px;
 
 .arrowIcon {
   position: relative;
-  top: 4px;
+  top: 5px;
   margin-right: 8px;
+  margin-left: -3px;
   color: $color-caribbean-green;
-  &:hover {
-    color: $color-gossamer;
-  }
 }
 
-.votes {
+.vote-button {
+  composes: text-button from 'css/typography.scss';
+  color: $color-caribbean-green !important;
   margin-left: auto;
-  padding: 0 10px 0 20px;
   height: $footer-height;
   line-height: $footer-height;
   text-align: center;
   border-left: 1px solid $color-cape-cod-10;
-  width: 85px;
-}
+  border-bottom-right-radius: 4px;
+  width: 90px;
 
-.votes-link {
-  composes: text-button from 'css/typography.scss';
-  color: $color-caribbean-green !important;
   &:hover {
-    text-decoration: none;
-    color: $color-gossamer !important;;
+    &, .arrowIcon {
+      color: $color-gossamer !important;
+    }
   }
-}
 
-.voted {
-  @include font-bold;
+  &.voted {
+    background-color: $color-caribbean-green;
+    color: white;
+    &, .arrowIcon {
+      color: white !important;
+    }
+  }
 }

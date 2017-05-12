@@ -11,11 +11,10 @@ export default function PostFooter ({ id, currentUser, commenters, commentersTot
   return <div styleName='footer'>
     <RoundImageRow imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
     <span styleName='caption'>{commentCaption(commenters, commentersTotal, get('id', currentUser))}</span>
-    <div styleName='votes'>
-      <a onClick={vote} styleName={cx('votes-link', {voted: myVote})} data-on-click='true'>
-        <Icon name='ArrowUp' styleName='arrowIcon' data-on-click='true' />{votesTotal}
-      </a>
-    </div>
+    <a onClick={vote} styleName={cx('vote-button', {voted: myVote})}>
+      <Icon name='ArrowUp' styleName='arrowIcon' />
+      {votesTotal}
+    </a>
   </div>
 }
 PostFooter.propTypes = {

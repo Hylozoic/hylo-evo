@@ -83,9 +83,14 @@ export default class HyloEditor extends Component {
     this.mentionsOpen = false
   }
 
+  focus = () => {
+    this.editor.focus()
+  }
+
   render () {
     return <div styleName='wrapper' className={this.props.className}>
       <Editor
+        ref={x => { this.editor = x }}
         editorState={this.state.editorState}
         onChange={this.handleEditorChange}
         placeholder={this.props.placeholder}
