@@ -1,19 +1,15 @@
-import { createSelector } from 'reselect'
 import orm from 'store/models/index'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { includes, mapKeys } from 'lodash'
 import { fromJS } from 'immutable'
-import sampleTopics from './sampleTopics'
-import * as topicsPlugin from './topicsPlugin'
 
 export const MODULE_NAME = 'HyloEditor'
-
-const defaultTopicSuggestionFilter = topicsPlugin.defaultSuggestionsFilter
 
 export const FIND_MENTIONS = `${MODULE_NAME}/FIND_MENTIONS`
 export const FIND_MENTIONS_PENDING = `${MODULE_NAME}/FIND_MENTIONS_PENDING`
 export const CLEAR_MENTIONS = `${MODULE_NAME}/CLEAR_MENTIONS`
 export const FIND_TOPICS = `${MODULE_NAME}/FIND_TOPICS`
+export const FIND_TOPICS_PENDING = `${MODULE_NAME}/FIND_TOPICS_PENDING`
 export const CLEAR_TOPICS = `${MODULE_NAME}/CLEAR_TOPICS`
 
 // Action Creators
@@ -43,10 +39,34 @@ export function clearMentions (searchText) {
   return { type: CLEAR_MENTIONS }
 }
 
-export function findTopics (searchText) {
+export function findTopics (topicsSearchTerm) {
+  const collectTopics = results =>
+    results.community.communityTopics.items.map(item => item.topic)
   return {
     type: FIND_TOPICS,
-    payload: { searchText }
+    graphql: {
+      query: `query ($topicsSearchTerm: String) {
+        community(slug: "test1") {
+          communityTopics(autocomplete: $topicsSearchTerm, first: 1) {
+            items {
+              topic {
+                id
+                name
+              }
+            }
+          }
+        }
+      }`,
+      variables: {
+        topicsSearchTerm
+      }
+    },
+    meta: {
+      extractModel: {
+        getRoot: collectTopics,
+        modelName: 'Topic'
+      }
+    }
   }
 }
 
@@ -56,13 +76,13 @@ export function clearTopics (searchText) {
 
 // Reducer
 
-const defaultState = {
-  topicResults: sampleTopics,
+export const defaultState = {
+  topicResults: null,
   mentionSearchTerm: null
 }
 
 export default function reducer (state = defaultState, action) {
-  const { error, type, payload } = action
+  const { error, type } = action
   if (error) return state
 
   switch (type) {
@@ -70,10 +90,10 @@ export default function reducer (state = defaultState, action) {
       return {...state, mentionSearchTerm: action.meta.graphql.variables.mentionSearchTerm}
     case CLEAR_MENTIONS:
       return {...state, mentionSearchTerm: null}
-    case FIND_TOPICS:
-      return {...state, topicResults: defaultTopicSuggestionFilter(payload.searchText, sampleTopics)}
+    case FIND_TOPICS_PENDING:
+      return {...state, topicsSearchTerm: action.meta.graphql.variables.topicsSearchTerm}
     case CLEAR_TOPICS:
-      return {...state, topicResults: fromJS([])}
+      return {...state, topicsSearchTerm: null}
     default:
       return state
   }
@@ -111,7 +131,21 @@ export const getMentionResults = ormCreateSelector(
   }
 )
 
-export const getTopicResults = createSelector(
+export const getTopicResults = ormCreateSelector(
+  orm,
+  state => state.orm,
   moduleSelector,
-  (state, props) => state.topicResults
+  (session, moduleNode) => {
+    const { topicsSearchTerm } = moduleNode
+    if (!topicsSearchTerm) return fromJS([])
+    const topics = session.Topic.all()
+      .filter(topic => {
+        return includes(
+          topic.name && topic.name.toLowerCase(),
+          topicsSearchTerm.toLowerCase()
+        )
+      })
+      .toRefArray()
+    return fromJS(topics)
+  }
 )
