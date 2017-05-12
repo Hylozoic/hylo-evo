@@ -3,23 +3,23 @@ import {
   findMentions,
   clearMentions,
   getMentionResults,
-  findHashtags,
-  clearHashtags,
-  getHashtagResults
+  findTopics,
+  clearTopics,
+  getTopicResults
 } from './HyloEditor.store'
 
 export function mapStateToProps (state, props) {
   return {
     mentionResults: getMentionResults(state, props),
-    hashtagResults: getHashtagResults(state, props)
+    topicResults: getTopicResults(state, props)
   }
 }
 
 export const mapDispatchToProps = {
   findMentions,
   clearMentions,
-  findHashtags,
-  clearHashtags
+  findTopics,
+  clearTopics
 }
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})

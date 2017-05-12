@@ -1,4 +1,4 @@
-const hashtagSuggestionFilter = (searchValue, issues) => {
+const topicSuggestionFilter = (searchValue, issues) => {
   console.log(issues.get(0).get('name'))
   const lowerSearch = searchValue.toLowerCase()
   return issues
@@ -13,4 +13,4 @@ const hashtagSuggestionFilter = (searchValue, issues) => {
     .take(5)
 }
 
-export default hashtagSuggestionFilter
+export default topicSuggestionFilter

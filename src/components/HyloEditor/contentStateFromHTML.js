@@ -19,17 +19,17 @@ export function createMentionFromLink (contentState, node) {
   return contentStateWithEntity.getLastCreatedEntityKey()
 }
 
-// NOTE: Legacy Hashtags are in this format --
+// NOTE: Legacy Topics are in this format --
 // <a>#topic</a>
 //
-export function createHashtagFromLink (contentState, node) {
-  const hashtag = Map({
+export function createTopicFromLink (contentState, node) {
+  const topic = Map({
     name: node.getAttribute('topic') || node.text.substring(1)
   })
   const contentStateWithEntity = contentState.createEntity(
-    'hashtag',
+    'topic',
     'IMMUTABLE',
-    { hashtag }
+    { topic }
   )
   return contentStateWithEntity.getLastCreatedEntityKey()
 }
@@ -40,8 +40,8 @@ export default function (contentState, html) {
       if (nodeName === 'a' && node.getAttribute('data-entity-type') === 'mention') {
         return createMentionFromLink(contentState, node)
       // get from plugin config? node.text[0] === '#'
-      } else if (nodeName === 'a' && (node.getAttribute('data-entity-type') === 'hashtag' || node.text[0] === '#')) {
-        return createHashtagFromLink(contentState, node)
+      } else if (nodeName === 'a' && (node.getAttribute('data-entity-type') === 'topic' || node.text[0] === '#')) {
+        return createTopicFromLink(contentState, node)
       }
     }
   })(html)

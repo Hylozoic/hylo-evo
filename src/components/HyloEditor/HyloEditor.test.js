@@ -9,8 +9,8 @@ const emptyFunc = () => {}
 const defaultMinProps = {
   findMentions: emptyFunc,
   clearMentions: emptyFunc,
-  findHashtags: emptyFunc,
-  clearHashtags: emptyFunc
+  findTopics: emptyFunc,
+  clearTopics: emptyFunc
 }
 
 function renderComponent (renderFunc, props = {}) {
@@ -43,11 +43,11 @@ describe('HyloEditor', () => {
         .toEqual('mention')
     })
 
-    it('converts hashtag into contentState entity, ', () => {
-      const contentHTML = '<a data-entity-type="hashtag">#testhashtag</a>'
+    it('converts topic into contentState entity, ', () => {
+      const contentHTML = '<a data-entity-type="topic">#testtopic</a>'
       const wrapper = renderComponent(mount, { contentHTML })
       expect(wrapper.get(0).getContentRaw().entityMap[0].type)
-        .toEqual('hashtag')
+        .toEqual('topic')
     })
   })
 

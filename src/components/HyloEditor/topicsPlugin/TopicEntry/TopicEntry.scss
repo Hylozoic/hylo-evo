@@ -1,20 +1,20 @@
 :global {
-  .hashtagSuggestionsEntry {
+  .topicSuggestionsEntry {
     padding: 2px 0 0 2px;
     transition: background-color 0.4s cubic-bezier(0.27, 1.27, 0.48, 0.56);
     text-align: left;
   }
 
-  .hashtagSuggestionsEntry:active {
+  .topicSuggestionsEntry:active {
     background-color: $color-black-squeeze;
   }
 
-  .hashtagSuggestionsEntryFocused {
-    @extend .hashtagSuggestionsEntry;
+  .topicSuggestionsEntryFocused {
+    @extend .topicSuggestionsEntry;
     background-color: $color-caribbean-green;
   }
 
-  .hashtagSuggestionsEntryText {
+  .topicSuggestionsEntryText {
     display: inline-block;
     margin-left: 2px;
     max-width: 360px;

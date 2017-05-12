@@ -3,12 +3,12 @@ import orm from 'store/models/index'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { includes, mapKeys } from 'lodash'
 import { fromJS } from 'immutable'
-import sampleHashtags from './sampleHashtags'
-import * as hashtagPlugin from './hashtagPlugin'
+import sampleTopics from './sampleTopics'
+import * as topicsPlugin from './topicsPlugin'
 
 export const MODULE_NAME = 'HyloEditor'
 
-const defaultHashtagSuggestionFilter = hashtagPlugin.defaultSuggestionsFilter
+const defaultTopicSuggestionFilter = topicsPlugin.defaultSuggestionsFilter
 
 export const FIND_MENTIONS = `${MODULE_NAME}/FIND_MENTIONS`
 export const FIND_MENTIONS_PENDING = `${MODULE_NAME}/FIND_MENTIONS_PENDING`
@@ -43,21 +43,21 @@ export function clearMentions (searchText) {
   return { type: CLEAR_MENTIONS }
 }
 
-export function findHashtags (searchText) {
+export function findTopics (searchText) {
   return {
     type: FIND_HASHTAGS,
     payload: { searchText }
   }
 }
 
-export function clearHashtags (searchText) {
+export function clearTopics (searchText) {
   return { type: CLEAR_HASHTAGS }
 }
 
 // Reducer
 
 const defaultState = {
-  hashtagResults: sampleHashtags,
+  topicResults: sampleTopics,
   mentionSearchTerm: null
 }
 
@@ -71,9 +71,9 @@ export default function reducer (state = defaultState, action) {
     case CLEAR_MENTIONS:
       return {...state, mentionSearchTerm: null}
     case FIND_HASHTAGS:
-      return {...state, hashtagResults: defaultHashtagSuggestionFilter(payload.searchText, sampleHashtags)}
+      return {...state, topicResults: defaultTopicSuggestionFilter(payload.searchText, sampleTopics)}
     case CLEAR_HASHTAGS:
-      return {...state, hashtagResults: fromJS([])}
+      return {...state, topicResults: fromJS([])}
     default:
       return state
   }
@@ -111,7 +111,7 @@ export const getMentionResults = ormCreateSelector(
   }
 )
 
-export const getHashtagResults = createSelector(
+export const getTopicResults = createSelector(
   moduleSelector,
-  (state, props) => state.hashtagResults
+  (state, props) => state.topicResults
 )

@@ -2156,16 +2156,6 @@ draft-js-export-html@^0.5.2:
   dependencies:
     draft-js-utils "^0.1.5"
 
-draft-js-hashtag-plugin@2.0.0-beta10:
-  version "2.0.0-beta10"
-  resolved "https://registry.yarnpkg.com/draft-js-hashtag-plugin/-/draft-js-hashtag-plugin-2.0.0-beta10.tgz#b9276d4ec5be994b4c030ce9fd3355ecc0eb1726"
-  dependencies:
-    decorate-component-with-props "^1.0.2"
-    draft-js ">=0.9.1"
-    find-with-regex "^1.0.2"
-    immutable "~3.7.4"
-    union-class-names "^1.0.0"
-
 draft-js-linkify-plugin@^2.0.0-beta1:
   version "2.0.0-beta1"
   resolved "https://registry.yarnpkg.com/draft-js-linkify-plugin/-/draft-js-linkify-plugin-2.0.0-beta1.tgz#03098dce5744c66228f2851cd13777182ad24d61"

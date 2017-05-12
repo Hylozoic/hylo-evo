@@ -12,11 +12,11 @@ export function mentionToLink (originalText, mention) {
   )
 }
 
-export function hashtagToLink (originalText, hashtag) {
+export function topicToLink (originalText, topic) {
   return createElement(
     'a',
     {
-      'data-entity-type': 'hashtag'
+      'data-entity-type': 'topic'
     },
     originalText
   )
@@ -27,8 +27,8 @@ export default convertToHTML({
     switch (entity.type) {
       case 'mention':
         return mentionToLink(originalText, entity.data.mention)
-      case 'hashtag':
-        return hashtagToLink(originalText, entity.data.hashtag)
+      case 'topic':
+        return topicToLink(originalText, entity.data.topic)
       default:
         return originalText
     }

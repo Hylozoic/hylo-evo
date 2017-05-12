@@ -41,7 +41,7 @@ const SAMPLE_POST_WITH_PREVIEW = {
 const SAMPLE_POST_FOR_EDITOR = {
   type: 'offer',
   title: 'This is a Post title',
-  details: 'This is a test <a href="/u/1" data-user-id="99" data-entity-type="mention">Loren Johnson</a> and the remaining text <a data-entity-type="hashtag">#test</a> text betweeen hastags <a data-entity-type="hashtag">#test2</a>'
+  details: 'This is a test <a href="/u/1" data-user-id="99" data-entity-type="mention">Loren Johnson</a> and the remaining text <a data-entity-type="topic">#Environment</a> text betweeen hastags <a data-entity-type="topic">#OurTopic</a>'
 }
 
 export default function PostTypes (props) {

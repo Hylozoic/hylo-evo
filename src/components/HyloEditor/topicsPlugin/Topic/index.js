@@ -1,9 +1,9 @@
 import React from 'react'
 import unionClassNames from 'union-class-names'
 
-function HashtagLink ({ hashtag, children, className }) {
+function TopicLink ({ topic, children, className }) {
   return <a
-    href={hashtag.get('link')}
+    href={topic.get('link')}
     className={className}
     spellCheck={false}
   >
@@ -11,7 +11,7 @@ function HashtagLink ({ hashtag, children, className }) {
   </a>
 }
 
-function HashtagText ({ children, className }) {
+function TopicText ({ children, className }) {
   return <span
     className={className}
     spellCheck={false}
@@ -20,11 +20,11 @@ function HashtagText ({ children, className }) {
   </span>
 }
 
-export default function Hashtag (props) {
+export default function Topic (props) {
   const {
     entityKey,
     theme = {},
-    hashtagComponent,
+    topicComponent,
     children,
     decoratedText,
     className,
@@ -32,17 +32,17 @@ export default function Hashtag (props) {
     offsetKey
   } = props
 
-  const combinedClassName = unionClassNames(theme.hashtag, className)
-  const hashtag = contentState.getEntity(entityKey).getData()['hashtag']
+  const combinedClassName = unionClassNames(theme.topic, className)
+  const topic = contentState.getEntity(entityKey).getData()['topic']
 
   const Component = (
-    hashtagComponent || (hashtag.has('link') ? HashtagLink : HashtagText)
+    topicComponent || (topic.has('link') ? TopicLink : TopicText)
   )
 
   return (
     <Component
       entityKey={entityKey}
-      hashtag={hashtag}
+      topic={topic}
       theme={theme}
       className={combinedClassName}
       decoratedText={decoratedText}

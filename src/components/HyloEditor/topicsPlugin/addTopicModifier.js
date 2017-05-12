@@ -2,47 +2,47 @@ import { Modifier, EditorState } from 'draft-js'
 
 import getSearchText from './utils/getSearchText'
 
-export default (editorState, hashtag) => {
-  console.log(hashtag)
+export default (editorState, topic) => {
+  console.log(topic)
   const contentStateWithEntity = editorState.getCurrentContent().createEntity(
-    'hashtag',
+    'topic',
     'IMMUTABLE',
-    { hashtag }
+    { topic }
   )
   const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
 
   const currentSelectionState = editorState.getSelection()
   const { begin, end } = getSearchText(editorState, currentSelectionState)
 
-  // get selection of the hashtag search text
-  const hashtagTextSelection = currentSelectionState.merge({
+  // get selection of the topic search text
+  const topicTextSelection = currentSelectionState.merge({
     anchorOffset: begin,
     focusOffset: end
   })
-  let hashtagReplacedContent = Modifier.replaceText(
+  let topicReplacedContent = Modifier.replaceText(
     editorState.getCurrentContent(),
-    hashtagTextSelection,
-    `#${hashtag.get('name')}`,
+    topicTextSelection,
+    `#${topic.get('name')}`,
     null,
     entityKey
   )
 
-  // If the hashtag is inserted at the end, a space is appended right after for
+  // If the topic is inserted at the end, a space is appended right after for
   // a smooth writing experience.
-  const blockKey = hashtagTextSelection.getAnchorKey()
+  const blockKey = topicTextSelection.getAnchorKey()
   const blockSize = editorState.getCurrentContent().getBlockForKey(blockKey).getLength()
   if (blockSize === end) {
-    hashtagReplacedContent = Modifier.insertText(
-      hashtagReplacedContent,
-      hashtagReplacedContent.getSelectionAfter(),
+    topicReplacedContent = Modifier.insertText(
+      topicReplacedContent,
+      topicReplacedContent.getSelectionAfter(),
       ' '
     )
   }
 
   const newEditorState = EditorState.push(
     editorState,
-    hashtagReplacedContent,
-    'insert-hashtag'
+    topicReplacedContent,
+    'insert-topic'
   )
-  return EditorState.forceSelection(newEditorState, hashtagReplacedContent.getSelectionAfter())
+  return EditorState.forceSelection(newEditorState, topicReplacedContent.getSelectionAfter())
 }

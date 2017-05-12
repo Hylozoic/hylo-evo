@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import Immutable from 'immutable'
 import Editor from 'draft-js-plugins-editor'
 import createMentionPlugin from 'draft-js-mention-plugin'
-import createHashtagPlugin from './hashtagPlugin'
+import createTopicPlugin from './topicsPlugin'
 import createLinkifyPlugin from 'draft-js-linkify-plugin'
 import { EditorState, ContentState, convertToRaw } from 'draft-js'
 import cx from 'classnames'
@@ -21,17 +21,17 @@ export default class HyloEditor extends Component {
     readOnly: PropTypes.bool,
     findMentions: PropTypes.func.isRequired,
     clearMentions: PropTypes.func.isRequired,
-    findHashtags: PropTypes.func.isRequired,
-    clearHashtags: PropTypes.func.isRequired,
+    findTopics: PropTypes.func.isRequired,
+    clearTopics: PropTypes.func.isRequired,
     mentionResults: PropTypes.instanceOf(Immutable.List),
-    hashtagResults: PropTypes.instanceOf(Immutable.List)
+    topicResults: PropTypes.instanceOf(Immutable.List)
   }
 
   static defaultProps = {
     contentHTML: '',
     readOnly: false,
     mentionResults: Immutable.List(),
-    hashtagResults: Immutable.List()
+    topicResults: Immutable.List()
   }
 
   defaultState = ({ contentHTML }) => {
@@ -48,7 +48,7 @@ export default class HyloEditor extends Component {
       // TODO: Map to local CSS Modules stylesheet (copy from plugin)
       // theme: styles
     })
-    this._hashtagPlugin = createHashtagPlugin({
+    this._topicsPlugin = createTopicPlugin({
       entityMutability: 'IMMUTABLE'
     })
     this._linkifyPlugin = createLinkifyPlugin()
@@ -102,8 +102,8 @@ export default class HyloEditor extends Component {
     return this.props.findMentions(value)
   }
 
-  handleHashtagSearch = ({ value }) => {
-    return this.props.findHashtags(value)
+  handleTopicSearch = ({ value }) => {
+    return this.props.findTopics(value)
   }
 
   handleReturn = (event) => {
@@ -138,13 +138,13 @@ export default class HyloEditor extends Component {
 
   render () {
     const { MentionSuggestions } = this._mentionPlugin
-    const { CompletionSuggestions: HashtagSuggestions } = this._hashtagPlugin
+    const { CompletionSuggestions: TopicSuggestions } = this._topicsPlugin
     const plugins = [
       this._mentionPlugin,
-      this._hashtagPlugin,
+      this._topicsPlugin,
       this._linkifyPlugin
     ]
-    const { readOnly, placeholder, mentionResults, hashtagResults, className } = this.props
+    const { readOnly, placeholder, mentionResults, topicResults, className } = this.props
     const { editorState } = this.state
     const styleNames = cx('wrapper', { readOnly })
     return <div styleName={styleNames} className={className}>
@@ -161,9 +161,9 @@ export default class HyloEditor extends Component {
         suggestions={mentionResults}
         onOpen={this.disableSubmitOnReturn}
         onClose={this.handleMentionsClose} />
-      <HashtagSuggestions
-        onSearchChange={this.handleHashtagSearch}
-        suggestions={hashtagResults}
+      <TopicSuggestions
+        onSearchChange={this.handleTopicSearch}
+        suggestions={topicResults}
         onOpen={this.disableSubmitOnReturn}
         onClose={this.enableSubmitOnReturn} />
     </div>

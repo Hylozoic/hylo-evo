@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import Immutable from 'immutable'
 
-import './HashtagEntry.scss'
+import './TopicEntry.scss'
 
-export default class HashtagEntry extends Component {
+export default class TopicEntry extends Component {
   static propTypes = {
     completion: PropTypes.instanceOf(Immutable.Map).isRequired,
     index: PropTypes.number.isRequired,
@@ -40,7 +40,7 @@ export default class HashtagEntry extends Component {
   }
 
   render () {
-    const className = this.props.isFocused ? 'hashtagSuggestionsEntryFocused' : 'hashtagSuggestionsEntry'
+    const className = this.props.isFocused ? 'topicSuggestionsEntryFocused' : 'topicSuggestionsEntry'
     return (
       <div
         className={className}
@@ -49,7 +49,7 @@ export default class HashtagEntry extends Component {
         onMouseEnter={this.onMouseEnter}
         role='option'
       >
-        <span className='hashtagSuggestionsEntryText'>
+        <span className='topicSuggestionsEntryText'>
           <span className='bold'>#{this.props.completion.get('name')}</span>
         </span>
       </div>

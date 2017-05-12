@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable'
 
-const hashtags = fromJS([
+const topics = fromJS([
   {name: 'designer'},
   {name: 'developer'},
   {name: 'petitions'},
@@ -21,4 +21,4 @@ const hashtags = fromJS([
   {name: 'photos'}
 ])
 
-export default hashtags
+export default topics
