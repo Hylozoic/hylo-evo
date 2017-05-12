@@ -10,6 +10,7 @@ import contentStateToHTML from './contentStateToHTML'
 import contentStateFromHTML from './contentStateFromHTML'
 import 'draft-js/dist/Draft.css'
 import 'draft-js-mention-plugin/lib/plugin.css'
+// import mentionPluginsTheme from './mentionsPluginTheme.scss'
 import './HyloEditor.scss'
 
 export default class HyloEditor extends Component {
@@ -45,8 +46,7 @@ export default class HyloEditor extends Component {
     super(props)
     // https://github.com/draft-js-plugins/draft-js-plugins/issues/298
     this._mentionPlugin = createMentionPlugin({
-      // TODO: Map to local CSS Modules stylesheet (copy from plugin)
-      // theme: styles
+      // theme: mentionPluginsTheme
     })
     this._topicsPlugin = createTopicPlugin({
       entityMutability: 'IMMUTABLE'
@@ -144,7 +144,7 @@ export default class HyloEditor extends Component {
       this._topicsPlugin,
       this._linkifyPlugin
     ]
-    const { readOnly, placeholder, mentionResults, topicResults, className } = this.props
+    const { placeholder, mentionResults, topicResults, className, readOnly } = this.props
     const { editorState } = this.state
     const styleNames = cx('wrapper', { readOnly })
     return <div styleName={styleNames} className={className}>
