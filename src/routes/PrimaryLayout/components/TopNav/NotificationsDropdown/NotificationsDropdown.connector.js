@@ -1,22 +1,67 @@
 import { connect } from 'react-redux'
 import { fetchThreads } from './NotificationsDropdown.store.js'
-import { push } from 'react-router-redux'
-import { threadUrl } from 'util/index'
-import { getThreads } from 'components/ThreadList/ThreadList.store'
 import { getMe } from 'store/selectors/getMe'
+import faker from 'faker'
+import samplePost, { fakePerson } from 'components/PostCard/samplePost'
+
+faker.seed(1235)
+
+const NOTIFICATIONS = [
+  {
+    id: 1,
+    actor: fakePerson(),
+    action: 'comment',
+    meta: {},
+    post: {...samplePost(), title: 'Our Oceans'},
+    comment: {
+      text: "I live right next to there and can come help out. I've never done petitioning but I'm sure it's an absolute blast"
+    },
+    unread: true,
+    createdAt: faker.date.recent().toString()
+  },
+  {
+    id: 2,
+    actor: fakePerson(),
+    action: 'tag',
+    post: {...samplePost(), title: 'Our Oceans'},
+    meta: {reasons: ['tag: request']},
+    unread: true,
+    createdAt: faker.date.recent().toString()
+  },
+  {
+    id: 3,
+    actor: fakePerson(),
+    action: 'comment',
+    post: {...samplePost(), title: 'Our Oceans'},
+    meta: {},
+    comment: {
+      text: "I live right next to there and can come help out. I've never done petitioning but I'm sure it's an absolute blast"
+    },
+    unread: false,
+    createdAt: faker.date.recent().toString()
+  },
+  {
+    id: 4,
+    actor: fakePerson(),
+    action: 'tag',
+    post: {...samplePost(), title: 'Our Oceans'},
+    meta: {reasons: ['tag: request']},
+    unread: false,
+    createdAt: faker.date.recent().toString()
+  }
+]
 
 export function mapStateToProps (state, props) {
   return {
     currentUser: getMe(state, props),
-    threads: getThreads(state, props),
-    topNavPosition: state.TopNav
+    notifications: NOTIFICATIONS
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
   return {
     fetchThreads: () => dispatch(fetchThreads()),
-    goToThread: id => () => dispatch(push(threadUrl(id))),
+    goToNotification: notification => () => console.log('going to notification', notification),
     markAsRead: () => console.log('mark as read')
   }
 }

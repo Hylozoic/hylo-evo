@@ -3,14 +3,16 @@ import './NotificationsDropdown.scss'
 const { object, array, string, func } = PropTypes
 import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import cx from 'classnames'
-import RoundImageRow from 'components/RoundImageRow'
+import RoundImage from 'components/RoundImage'
+import { firstName } from 'store/models/Person'
 import TopNavDropdown from '../TopNavDropdown'
+import { get, find } from 'lodash/fp'
 
 export default class NotificationsDropdown extends Component {
   static propTypes = {
     fetchThreads: func,
     toggleChildren: object,
-    threads: array,
+    notifications: array,
     className: string,
     goToThread: func
   }
@@ -28,12 +30,17 @@ export default class NotificationsDropdown extends Component {
 
   render () {
     const {
-      toggleChildren, threads, className, goToThread, currentUser, markAsRead
+      toggleChildren, className, goToNotification, currentUser, markAsRead
     } = this.props
+    var { notifications } = this.props
     const { showingUnread } = this.state
 
     const showRecent = () => this.setState({showingUnread: false})
     const showUnread = () => this.setState({showingUnread: true})
+
+    if (showingUnread) {
+      notifications = notifications.filter(n => n.unread)
+    }
 
     return <TopNavDropdown
       className={className}
@@ -49,56 +56,70 @@ export default class NotificationsDropdown extends Component {
           <span onClick={markAsRead} styleName='mark-read'>Mark all as read</span>
         </div>}
       body={
-        <div styleName='threads'>
-          {threads.map(thread => <Thread
-            thread={thread}
-            goToThread={goToThread}
-            currentUserId={currentUser.id}
-            key={thread.id} />)}
+        <div styleName='notifications'>
+          {notifications.map(notification => <Notification
+            notification={notification}
+            onClick={goToNotification}
+            currentUserId={get('id', currentUser)}
+            key={notification.id} />)}
         </div>
       } />
   }
 }
 
-const participantNames = participants => {
-  const length = participants.length
-  if (length === 1) {
-    return participants[0].name
-  } else if (length === 2) {
-    return `${participants[0].name} and ${participants[1].name}`
-  } else if (length > 2) {
-    const n = length - 2
-    return `${participants[0].name}, ${participants[1].name} and ${n} other${n > 1 ? 's' : ''}`
-  }
-}
+export function Notification ({ notification, onClick, goToThread, currentUserId }) {
+  const { unread, actor } = notification
 
-export function Thread ({ thread, goToThread, currentUserId }) {
-  const message = thread.messages[0]
-  if (!message || !message.text) return null
-  const participants = thread.participants.filter(p => p.id !== currentUserId)
-
-  const unread = thread.lastReadAt < thread.updatedAt
-
-  var { text } = message
-  if (message.creator.id === currentUserId) {
-    text = `You: ${text}`
-  }
-
-  const maxMessageLength = 145
-
-  if (textLength(text) > maxMessageLength) {
-    text = `${truncate(text, maxMessageLength)}...`
-  }
-
-  return <li styleName={cx('thread', {unread})}
-    onClick={goToThread(thread.id)}>
+  return <li styleName={cx('notification', {unread})}
+    onClick={onClick(notification)}>
     <div styleName='image-wraper'>
-      <RoundImageRow imageUrls={participants.map(p => p.avatarUrl)} vertical ascending cap='2' />
+      <RoundImage url={actor.avatarUrl} />
     </div>
-    <div styleName='message-content'>
-      <div styleName='name'>{participantNames(participants)}</div>
-      <div styleName='body'>{text}</div>
-      <div styleName='date'>{humanDate(thread.updatedAt)}</div>
+    <div styleName='content'>
+      <NotificationHeader notification={notification} />
+      <NotificationBody notification={notification} />
+      <div styleName='date'>{humanDate(notification.createdAt)}</div>
     </div>
   </li>
+}
+
+export function NotificationHeader ({ notification }) {
+  const { action, post, meta: { reasons } } = notification
+  switch (action) {
+    case 'comment':
+      return <div styleName='header'>
+        New Comment on <span styleName='bold'>{post.title}</span>
+      </div>
+    case 'tag':
+      const tagReason = find(r => r.startsWith('tag: '), reasons)
+      const tag = tagReason.split(': ')[1]
+      return <div styleName='header'>
+        New Post in <span styleName='bold'>#{tag}</span>
+      </div>
+  }
+
+  return null
+}
+
+export function NotificationBody ({ notification }) {
+  const { action, actor, post, comment } = notification
+
+  const truncateForBody = text => textLength(text) > 76
+    ? truncate(text, 76)
+    : text
+
+  switch (action) {
+    case 'comment':
+      var text = truncateForBody(comment.text)
+      return <div styleName='body'>
+        <span styleName='bold'>{firstName(actor)}</span> Wrote: "{text}"
+      </div>
+    case 'tag':
+      text = truncateForBody(post.details)
+      return <div styleName='body'>
+        <span styleName='bold'>{firstName(actor)}</span> Wrote: "{text}"
+      </div>
+  }
+
+  return null
 }

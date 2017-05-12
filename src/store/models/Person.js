@@ -26,3 +26,5 @@ Person.fields = {
   postsTotal: attr(),
   votesTotal: attr()
 }
+
+export const firstName = person => person.name.split(' ')[0]
