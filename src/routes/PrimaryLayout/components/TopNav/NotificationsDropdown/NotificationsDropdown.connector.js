@@ -53,7 +53,7 @@ const NOTIFICATIONS = [
 
 export function mapStateToProps (state, props) {
   return {
-    currentUser: getMe(state, props),
+    // currentUser: getMe(state, props), ???
     notifications: NOTIFICATIONS
   }
 }

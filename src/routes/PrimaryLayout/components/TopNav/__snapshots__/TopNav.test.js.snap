@@ -23,7 +23,7 @@ exports[`renders as expected with no community 1`] = `
         />
       </Link>
       <Connect(MessagesDropdown)
-        data-styleName="messages-dropdown"
+        data-styleName="top-nav-dropdown"
         toggleChildren={
           <Icon
             data-styleName="icon"
@@ -31,16 +31,15 @@ exports[`renders as expected with no community 1`] = `
           />
         }
       />
-      <Link
-        data-styleName="navIcon"
-        replace={false}
-        to="/"
-      >
-        <Icon
-          data-styleName="icon"
-          name="Notifications"
-        />
-      </Link>
+      <Connect(NotificationsDropdown)
+        data-styleName="top-nav-dropdown"
+        toggleChildren={
+          <Icon
+            data-styleName="icon"
+            name="Notifications"
+          />
+        }
+      />
       <Dropdown
         alignRight={true}
         data-styleName="navIcon user-menu"

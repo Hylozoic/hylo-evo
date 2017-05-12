@@ -1,76 +1,293 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Notification renders correctly with a comment notification 1`] = `
+<li
+  data-styleName="notification unread"
+  onClick={[Function]}
+>
+  <div
+    data-styleName="image-wraper"
+  >
+    <RoundImage
+      url="bar.png"
+    />
+  </div>
+  <div
+    data-styleName="content"
+  >
+    <NotificationHeader
+      notification={
+        Object {
+          "action": "comment",
+          "actor": Object {
+            "avatarUrl": "bar.png",
+            "id": 2,
+            "name": "Marie Curie",
+          },
+          "comment": Object {
+            "text": "I live right next to there and can come help out. I've never done petitioning but I'm sure it's an absolute blast",
+          },
+          "createdAt": 1995-12-17T03:23:00.000Z,
+          "id": 1,
+          "meta": Object {},
+          "post": Object {
+            "title": "Our Oceans",
+          },
+          "unread": true,
+        }
+      }
+    />
+    <NotificationBody
+      notification={
+        Object {
+          "action": "comment",
+          "actor": Object {
+            "avatarUrl": "bar.png",
+            "id": 2,
+            "name": "Marie Curie",
+          },
+          "comment": Object {
+            "text": "I live right next to there and can come help out. I've never done petitioning but I'm sure it's an absolute blast",
+          },
+          "createdAt": 1995-12-17T03:23:00.000Z,
+          "id": 1,
+          "meta": Object {},
+          "post": Object {
+            "title": "Our Oceans",
+          },
+          "unread": true,
+        }
+      }
+    />
+    <div
+      data-styleName="date"
+    >
+      21 years ago
+    </div>
+  </div>
+</li>
+`;
+
+exports[`Notification renders correctly with a tag notification 1`] = `
+<li
+  data-styleName="notification unread"
+  onClick={[Function]}
+>
+  <div
+    data-styleName="image-wraper"
+  >
+    <RoundImage
+      url="baz.png"
+    />
+  </div>
+  <div
+    data-styleName="content"
+  >
+    <NotificationHeader
+      notification={
+        Object {
+          "action": "tag",
+          "actor": Object {
+            "avatarUrl": "baz.png",
+            "id": 3,
+            "name": "Arthur Fonzarelli",
+          },
+          "createdAt": 1995-12-17T03:23:00.000Z,
+          "id": 2,
+          "meta": Object {
+            "reasons": Array [
+              "tag: request",
+            ],
+          },
+          "post": Object {
+            "title": "I have so many things I need!",
+          },
+          "unread": true,
+        }
+      }
+    />
+    <NotificationBody
+      notification={
+        Object {
+          "action": "tag",
+          "actor": Object {
+            "avatarUrl": "baz.png",
+            "id": 3,
+            "name": "Arthur Fonzarelli",
+          },
+          "createdAt": 1995-12-17T03:23:00.000Z,
+          "id": 2,
+          "meta": Object {
+            "reasons": Array [
+              "tag: request",
+            ],
+          },
+          "post": Object {
+            "title": "I have so many things I need!",
+          },
+          "unread": true,
+        }
+      }
+    />
+    <div
+      data-styleName="date"
+    >
+      21 years ago
+    </div>
+  </div>
+</li>
+`;
+
+exports[`NotificationBody renders correctly with a comment notification 1`] = `
+<div
+  data-styleName="body"
+>
+  <span
+    data-styleName="bold"
+  >
+    Marie
+  </span>
+   Wrote: "
+  I live right next to there and can come help out. I've never done …
+  "
+</div>
+`;
+
+exports[`NotificationBody renders correctly with a tag notification 1`] = `
+<div
+  data-styleName="body"
+>
+  <span
+    data-styleName="bold"
+  >
+    Arthur
+  </span>
+   Wrote: "
+  I have so many things I need!
+  "
+</div>
+`;
+
+exports[`NotificationHeader renders correctly with a comment notification 1`] = `
+<div
+  data-styleName="header"
+>
+  New Comment on 
+  <span
+    data-styleName="bold"
+  >
+    Our Oceans
+  </span>
+</div>
+`;
+
+exports[`NotificationHeader renders correctly with a tag notification 1`] = `
+<div
+  data-styleName="header"
+>
+  New Post in 
+  <span
+    data-styleName="bold"
+  >
+    #
+    request
+  </span>
+</div>
+`;
+
 exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
 <Connect(TopNavDropdown)
   body={
     <div
-      data-styleName="threads"
+      data-styleName="notifications"
     >
-      <Thread
-        currentUserId={1}
-        thread={
+      <Notification
+        notification={
           Object {
-            "id": 2,
-            "messages": Array [
-              Object {
-                "creator": Object {
-                  "id": 2,
-                },
-                "text": "hi",
-              },
-            ],
-            "participants": Array [
-              Object {
-                "avatarUrl": "foo.png",
-                "id": 1,
-                "name": "Charles Darwin",
-              },
-              Object {
-                "avatarUrl": "bar.png",
-                "id": 2,
-                "name": "Marie Curie",
-              },
-              Object {
-                "avatarUrl": "baz.png",
-                "id": 3,
-                "name": "Arthur Fonzarelli",
-              },
-            ],
-            "updatedAt": 2017-05-07T03:24:00.000Z,
+            "action": "comment",
+            "actor": Object {
+              "avatarUrl": "bar.png",
+              "id": 2,
+              "name": "Marie Curie",
+            },
+            "comment": Object {
+              "text": "I live right next to there and can come help out. I've never done petitioning but I'm sure it's an absolute blast",
+            },
+            "createdAt": 1995-12-17T03:23:00.000Z,
+            "id": 1,
+            "meta": Object {},
+            "post": Object {
+              "title": "Our Oceans",
+            },
+            "unread": true,
           }
         }
       />
-      <Thread
-        currentUserId={1}
-        thread={
+      <Notification
+        notification={
           Object {
+            "action": "tag",
+            "actor": Object {
+              "avatarUrl": "baz.png",
+              "id": 3,
+              "name": "Arthur Fonzarelli",
+            },
+            "createdAt": 1995-12-17T03:23:00.000Z,
+            "id": 2,
+            "meta": Object {
+              "reasons": Array [
+                "tag: request",
+              ],
+            },
+            "post": Object {
+              "title": "I have so many things I need!",
+            },
+            "unread": true,
+          }
+        }
+      />
+      <Notification
+        notification={
+          Object {
+            "action": "comment",
+            "actor": Object {
+              "avatarUrl": "bar.png",
+              "id": 2,
+              "name": "Marie Curie",
+            },
+            "comment": Object {
+              "text": "I live right next to there and can come help out. I've never done petitioning but I'm sure it's an absolute blast",
+            },
+            "createdAt": 1995-12-17T03:23:00.000Z,
             "id": 1,
-            "messages": Array [
-              Object {
-                "creator": Object {
-                  "id": 3,
-                },
-                "text": "there",
-              },
-            ],
-            "participants": Array [
-              Object {
-                "avatarUrl": "foo.png",
-                "id": 1,
-                "name": "Charles Darwin",
-              },
-              Object {
-                "avatarUrl": "bar.png",
-                "id": 2,
-                "name": "Marie Curie",
-              },
-              Object {
-                "avatarUrl": "baz.png",
-                "id": 3,
-                "name": "Arthur Fonzarelli",
-              },
-            ],
-            "updatedAt": 1995-12-17T03:23:00.000Z,
+            "meta": Object {},
+            "post": Object {
+              "title": "Our Oceans",
+            },
+            "unread": false,
+          }
+        }
+      />
+      <Notification
+        notification={
+          Object {
+            "action": "tag",
+            "actor": Object {
+              "avatarUrl": "baz.png",
+              "id": 3,
+              "name": "Arthur Fonzarelli",
+            },
+            "createdAt": 1995-12-17T03:23:00.000Z,
+            "id": 2,
+            "meta": Object {
+              "reasons": Array [
+                "tag: request",
+              ],
+            },
+            "post": Object {
+              "title": "I have so many things I need!",
+            },
+            "unread": false,
           }
         }
       />
@@ -80,20 +297,23 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
     <div
       data-styleName="header-content"
     >
-      <Link
-        data-styleName="open"
-        replace={false}
-        to="/t"
+      <span
+        data-styleName="tab active"
+        onClick={[Function]}
       >
-        Open Messages
-      </Link>
-      <Link
-        data-styleName="new"
-        replace={false}
-        to="/t/new"
+        Recent
+      </span>
+      <span
+        data-styleName="tab"
+        onClick={[Function]}
       >
-        New
-      </Link>
+        Unread
+      </span>
+      <span
+        data-styleName="mark-read"
+      >
+        Mark all as read
+      </span>
     </div>
   }
 />
@@ -103,30 +323,31 @@ exports[`NotificationsDropdown renders correctly with an empty list 1`] = `
 <Connect(TopNavDropdown)
   body={
     <div
-      data-styleName="threads"
+      data-styleName="notifications"
     />
   }
   header={
     <div
       data-styleName="header-content"
     >
-      <Link
-        data-styleName="open"
-        replace={false}
-        to="/t"
+      <span
+        data-styleName="tab active"
+        onClick={[Function]}
       >
-        Open Messages
-      </Link>
-      <Link
-        data-styleName="new"
-        replace={false}
-        to="/t/new"
+        Recent
+      </span>
+      <span
+        data-styleName="tab"
+        onClick={[Function]}
       >
-        New
-      </Link>
+        Unread
+      </span>
+      <span
+        data-styleName="mark-read"
+      >
+        Mark all as read
+      </span>
     </div>
   }
 />
 `;
-
-exports[`Thread renders correctly with an empty thread 1`] = `null`;

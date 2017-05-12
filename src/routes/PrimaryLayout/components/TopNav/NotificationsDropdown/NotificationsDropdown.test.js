@@ -1,4 +1,4 @@
-import NotificationsDropdown, { Thread } from './NotificationsDropdown'
+import NotificationsDropdown, { Notification, NotificationHeader, NotificationBody } from './NotificationsDropdown'
 import { shallow } from 'enzyme'
 import React from 'react'
 
@@ -6,48 +6,80 @@ const u1 = {id: 1, name: 'Charles Darwin', avatarUrl: 'foo.png'}
 const u2 = {id: 2, name: 'Marie Curie', avatarUrl: 'bar.png'}
 const u3 = {id: 3, name: 'Arthur Fonzarelli', avatarUrl: 'baz.png'}
 
-const threads = [
-  {
-    id: 2,
-    messages: [{text: 'hi', creator: {id: 2}}],
-    participants: [u1, u2, u3],
-    updatedAt: new Date('2017-05-07T03:24:00')
+const commentNotification = {
+  id: 1,
+  actor: u2,
+  action: 'comment',
+  meta: {},
+  post: {title: 'Our Oceans'},
+  comment: {
+    text: "I live right next to there and can come help out. I've never done petitioning but I'm sure it's an absolute blast"
   },
-  {
-    id: 1,
-    messages: [{text: 'there', creator: {id: 3}}],
-    participants: [u1, u2, u3],
-    updatedAt: new Date('1995-12-17T03:23:00')
-  }
+  unread: true,
+  createdAt: new Date('1995-12-17T03:23:00')
+}
+
+const tagNotification = {
+  id: 2,
+  actor: u3,
+  action: 'tag',
+  post: {title: 'I have so many things I need!'},
+  meta: {reasons: ['tag: request']},
+  unread: true,
+  createdAt: new Date('1995-12-17T03:23:00')
+}
+
+const notifications = [
+  commentNotification,
+  tagNotification,
+  {...commentNotification, unread: false},
+  {...tagNotification, unread: false}
 ]
 
-describe.skip('NotificationsDropdown', () => {
+describe('NotificationsDropdown', () => {
   it('renders correctly with an empty list', () => {
-    const wrapper = shallow(<NotificationsDropdown threads={[]} currentUser={u1} />)
+    const wrapper = shallow(<NotificationsDropdown notifications={[]} currentUser={u1} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('renders correctly with a list of threads', () => {
-    const wrapper = shallow(<NotificationsDropdown threads={threads} currentUser={u1} />)
+    const wrapper = shallow(<NotificationsDropdown notifications={notifications} currentUser={u1} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
 
-describe.skip('Thread', () => {
-  it('renders correctly with an empty thread', () => {
-    const wrapper = shallow(<Thread thread={{messages: []}} />)
+describe('Notification', () => {
+  it('renders correctly with a comment notification', () => {
+    const wrapper = shallow(<Notification notification={commentNotification} />)
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('renders correctly with a message', () => {
-    const mockNavigate = jest.fn()
-    const goToThread = i => () => mockNavigate(i)
-    const wrapper = shallow(
-      <Thread thread={threads[0]} currentUserId={u1.id} goToThread={goToThread} />)
-    expect(wrapper.find('RoundImageRow').prop('imageUrls')).toEqual(['bar.png', 'baz.png'])
-    expect(wrapper.find('div').at(2).text()).toEqual('Marie Curie and Arthur Fonzarelli')
-    expect(wrapper.find('div').at(3).text()).toEqual('hi')
-    wrapper.simulate('click')
-    expect(mockNavigate).toHaveBeenCalledWith(threads[0].id)
+  it('renders correctly with a tag notification', () => {
+    const wrapper = shallow(<Notification notification={tagNotification} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+})
+
+describe('NotificationHeader', () => {
+  it('renders correctly with a comment notification', () => {
+    const wrapper = shallow(<NotificationHeader notification={commentNotification} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('renders correctly with a tag notification', () => {
+    const wrapper = shallow(<NotificationHeader notification={tagNotification} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+})
+
+describe('NotificationBody', () => {
+  it('renders correctly with a comment notification', () => {
+    const wrapper = shallow(<NotificationBody notification={commentNotification} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('renders correctly with a tag notification', () => {
+    const wrapper = shallow(<NotificationBody notification={tagNotification} />)
+    expect(wrapper).toMatchSnapshot()
   })
 })

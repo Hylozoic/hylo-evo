@@ -6,7 +6,7 @@ import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
 import { firstName } from 'store/models/Person'
 import TopNavDropdown from '../TopNavDropdown'
-import { get, find } from 'lodash/fp'
+import { find } from 'lodash/fp'
 
 export default class NotificationsDropdown extends Component {
   static propTypes = {
@@ -30,7 +30,7 @@ export default class NotificationsDropdown extends Component {
 
   render () {
     const {
-      toggleChildren, className, goToNotification, currentUser, markAsRead
+      toggleChildren, className, goToNotification, markAsRead
     } = this.props
     var { notifications } = this.props
     const { showingUnread } = this.state
@@ -60,18 +60,17 @@ export default class NotificationsDropdown extends Component {
           {notifications.map(notification => <Notification
             notification={notification}
             onClick={goToNotification}
-            currentUserId={get('id', currentUser)}
             key={notification.id} />)}
         </div>
       } />
   }
 }
 
-export function Notification ({ notification, onClick, goToThread, currentUserId }) {
+export function Notification ({ notification, onClick }) {
   const { unread, actor } = notification
 
   return <li styleName={cx('notification', {unread})}
-    onClick={onClick(notification)}>
+    onClick={() => onClick(notification)}>
     <div styleName='image-wraper'>
       <RoundImage url={actor.avatarUrl} />
     </div>
@@ -115,7 +114,7 @@ export function NotificationBody ({ notification }) {
         <span styleName='bold'>{firstName(actor)}</span> Wrote: "{text}"
       </div>
     case 'tag':
-      text = truncateForBody(post.details)
+      text = truncateForBody(post.title)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> Wrote: "{text}"
       </div>
