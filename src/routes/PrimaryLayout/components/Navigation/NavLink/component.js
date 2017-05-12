@@ -16,7 +16,7 @@ export default function NavLink (
         <Link to={to} styleName={cx('link', {collapsed: collapsed})}>
           <BadgedIcon name={icon} green={active} showBadge={collapsed && badge} styleName='icon' />
           <span styleName='label'>{label}</span>
-          {badge && <Badge number={badge} styleName='badge' expanded={!collapsed} />}
+          <Badge number={badge} styleName='badge' expanded={!collapsed} />
         </Link>
       </li>
     }} />

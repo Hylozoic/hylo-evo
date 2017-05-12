@@ -75,7 +75,6 @@ export default class Members extends Component {
       <div styleName='content'>
         <Dropdown styleName='sort-dropdown'
           toggleChildren={<SortLabel text={sortKeys[sortBy]} />}
-          triangle
           alignRight
           items={Object.keys(sortKeys).map(k => ({
             label: sortKeys[k],

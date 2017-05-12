@@ -38,6 +38,7 @@ $content-width: 80rem;
 $center-column-width: 49%;
 $detail-column-width: 43%;
 $layout-spacing: 70px;
+$thread-list-width: 24rem;
 $messages-header-height: 80px;
 $messages-header-vertical-padding: 20px;
 $messages-header-horizontal-padding: 24px;
@@ -76,6 +77,8 @@ $color-cod-gray-0: rgba(#161616, 0);
 $color-cod-gray-dark: #1C1C1C;
 $color-seashell: #F1F1F1;
 $color-catskill-white: #F9FAFC;
+$color-slate-gray-80: rgba(#67768A, .6);
+$color-saltpan: #FAFCFB;
 
 $color-caribbean-green: #0DC39F;
 $color-caribbean-green-50: rgba($color-caribbean-green, 0.5);
@@ -130,6 +133,24 @@ $color-gossamer: #0A9682;
   word-break: break-word;
   -ms-word-break: break-all;
   hyphens: auto;
+}
+
+@mixin is-top-triangle($color: $color-athens-gray, $border-color: $color-athens-gray, $side-length: 7px) {
+  display: block;
+  position: absolute;
+  left: 50%;
+  width: $side-length * 2 !important;
+  height: $side-length * 2 !important;
+  margin-left: -$side-length;
+  top: -$side-length;
+  border-top: 1px solid $border-color !important;
+  border-left: 1px solid $border-color !important;
+  border-bottom: 0 !important;
+  border-right: 0 !important;
+  background-color: $color;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
 }
 
 $light-border: 1px solid $color-cape-cod-10;

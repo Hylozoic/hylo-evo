@@ -21,7 +21,7 @@ describe('component', () => {
     post: jest.fn()
   }
   const messageThreadId = '1'
-  const createMessage = jest.fn()
+  const createMessage = jest.fn(() => Promise.resolve())
   const wrapper = mount(<MessageForm
     messageThreadId={messageThreadId}
     text='hey you'

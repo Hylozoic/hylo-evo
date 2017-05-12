@@ -34,7 +34,20 @@ export function communityUrl (slug) {
   return `/c/${slug}`
 }
 
+export function threadUrl (id) {
+  return `/t/${id}`
+}
+
+export function newMessageUrl () {
+  return `/t/new`
+}
+
+export function messagesUrl () {
+  return `/t`
+}
+
 // n.b.: use getParam instead of this where possible.
+
 export function getSlugInPath (pathname) {
   const match = pathname.match(/\/c\/([^/]+)/)
   return match ? match[1] : null

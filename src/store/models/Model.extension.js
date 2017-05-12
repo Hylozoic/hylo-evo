@@ -3,6 +3,16 @@ import { ManyToMany } from 'redux-orm/lib/fields'
 import { normalizeEntity } from 'redux-orm/lib/utils'
 import { mapValues, uniq } from 'lodash'
 
+Model.safeGet = function (matchObj) {
+  let result
+  try {
+    result = this.get(matchObj)
+  } catch (e) {
+    result = null
+  }
+  return result
+}
+
 Model.prototype.updateAppending = function (attrs) {
   return this.update(mapValues(attrs, (val, key) => {
     if (!val) return val

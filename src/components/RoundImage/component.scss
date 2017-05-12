@@ -27,6 +27,14 @@
   margin-left: 0px;
 }
 
+.overlaps-vertical {
+  margin-top: -$space-4x;
+}
+
+.overlaps-vertical:first-child {
+  margin-top: 0px;
+}
+
 .xlarge {
   width: $space-20x;
   height: $space-20x;

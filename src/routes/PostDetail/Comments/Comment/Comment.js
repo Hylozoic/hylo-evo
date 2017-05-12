@@ -28,7 +28,7 @@ export default class Comment extends Component {
           <span styleName='timestamp'>
             {humanDate(createdAt)}
           </span>
-          <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} triangle items={[
+          <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={[
             {icon: 'Trash', label: 'Delete', onClick: () => console.log('Delete')}
           ]} />
         </div>
