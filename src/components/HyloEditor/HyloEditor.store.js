@@ -13,8 +13,8 @@ const defaultTopicSuggestionFilter = topicsPlugin.defaultSuggestionsFilter
 export const FIND_MENTIONS = `${MODULE_NAME}/FIND_MENTIONS`
 export const FIND_MENTIONS_PENDING = `${MODULE_NAME}/FIND_MENTIONS_PENDING`
 export const CLEAR_MENTIONS = `${MODULE_NAME}/CLEAR_MENTIONS`
-export const FIND_HASHTAGS = `${MODULE_NAME}/FIND_HASHTAGS`
-export const CLEAR_HASHTAGS = `${MODULE_NAME}/CLEAR_HASHTAGS`
+export const FIND_TOPICS = `${MODULE_NAME}/FIND_TOPICS`
+export const CLEAR_TOPICS = `${MODULE_NAME}/CLEAR_TOPICS`
 
 // Action Creators
 
@@ -45,13 +45,13 @@ export function clearMentions (searchText) {
 
 export function findTopics (searchText) {
   return {
-    type: FIND_HASHTAGS,
+    type: FIND_TOPICS,
     payload: { searchText }
   }
 }
 
 export function clearTopics (searchText) {
-  return { type: CLEAR_HASHTAGS }
+  return { type: CLEAR_TOPICS }
 }
 
 // Reducer
@@ -70,9 +70,9 @@ export default function reducer (state = defaultState, action) {
       return {...state, mentionSearchTerm: action.meta.graphql.variables.mentionSearchTerm}
     case CLEAR_MENTIONS:
       return {...state, mentionSearchTerm: null}
-    case FIND_HASHTAGS:
+    case FIND_TOPICS:
       return {...state, topicResults: defaultTopicSuggestionFilter(payload.searchText, sampleTopics)}
-    case CLEAR_HASHTAGS:
+    case CLEAR_TOPICS:
       return {...state, topicResults: fromJS([])}
     default:
       return state
