@@ -88,12 +88,13 @@ export default class PostEditor extends React.Component {
   postTypeButtonProps = (forPostType) => {
     const { readOnly } = this.props
     const { type } = this.state.post
+    const active = type === forPostType
     const className = cx(
       styles['postType'],
       styles[`postType-${forPostType}`],
       {
-        [styles[`active`]]: type === forPostType,
-        [styles[`selectable`]]: !readOnly
+        [styles[`active`]]: active,
+        [styles[`selectable`]]: !readOnly && !active
       }
     )
     return {
