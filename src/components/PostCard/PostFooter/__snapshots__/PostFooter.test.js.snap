@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PostFooter does something 1`] = `
+exports[`PostFooter matches the latest snapshot 1`] = `
 <div
   data-styleName="footer"
 >
