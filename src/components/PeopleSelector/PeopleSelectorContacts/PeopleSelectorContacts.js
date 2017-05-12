@@ -34,5 +34,6 @@ const personType = shape({
 
 PeopleSelectorContacts.propTypes = {
   addParticipant: func,
-  contacts: arrayOf(personType)
+  contacts: arrayOf(personType),
+  recentContacts: arrayOf(personType)
 }

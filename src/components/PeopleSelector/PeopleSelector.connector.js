@@ -12,6 +12,7 @@ import {
   findOrCreateThread,
   matchesSelector,
   participantsSelector,
+  recentContactsSelector,
   setAutocomplete
 } from './PeopleSelector.store'
 import changeQueryParam from 'store/actions/changeQueryParam'
@@ -33,7 +34,8 @@ export function mapStateToProps (state, props) {
     contacts: contactsSelector(state),
     matches: matchesSelector(state),
     participants,
-    participantSearch: getParticipantSearch(props, participants)
+    participantSearch: getParticipantSearch(props, participants),
+    recentContacts: recentContactsSelector(state)
   }
 }
 

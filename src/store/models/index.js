@@ -6,6 +6,7 @@ import FeedItem from './FeedItem'
 import Me from './Me'
 import Membership from './Membership'
 import Person from './Person'
+import PersonConnection from './PersonConnection'
 import Message from './Message'
 import MessageThread from './MessageThread'
 import Post, { PostFollower, PostCommenter } from './Post'
@@ -24,6 +25,7 @@ orm.register(
   Message,
   MessageThread,
   Person,
+  PersonConnection,
   Post,
   PostFollower,
   PostCommenter,

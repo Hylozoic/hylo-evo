@@ -11,6 +11,7 @@ export const MODULE_NAME = 'PeopleSelector'
 export const FIND_OR_CREATE_THREAD = 'FIND_OR_CREATE_THREAD'
 export const FETCH_PEOPLE = 'FETCH_PEOPLE'
 export const FETCH_CONTACTS = 'FETCH_CONTACTS'
+export const FETCH_RECENT_CONTACTS = 'FETCH_RECENT_CONTACTS'
 export const SET_AUTOCOMPLETE = 'PeopleSelector/SET_AUTOCOMPLETE'
 export const ADD_PARTICIPANT = 'PeopleSelector/ADD_PARTICIPANT'
 export const REMOVE_PARTICIPANT = 'PeopleSelector/REMOVE_PARTICIPANT'
@@ -104,6 +105,7 @@ const fetchRecentContactsQuery =
     items {
       id
       person {
+        id
         name
         avatarUrl
         memberships {
@@ -152,6 +154,14 @@ export function setAutocomplete (autocomplete) {
   }
 }
 
+export function pickPersonListItem (person) {
+  return {
+    ...pick([ 'id', 'name', 'avatarUrl' ], person.ref),
+    community: person.memberships.first()
+      ? person.memberships.first().community.name : null
+  }
+}
+
 export function personListItemSelector (session, participants, search = () => true) {
   return session.Person
     .all()
@@ -159,11 +169,7 @@ export function personListItemSelector (session, participants, search = () => tr
     .filter(search)
     .orderBy('name')
     .toModelArray()
-    .map(contact => ({
-      ...pick([ 'id', 'name', 'avatarUrl' ], contact.ref),
-      community: contact.memberships.first()
-        ? contact.memberships.first().community.name : null
-    }))
+    .map(pickPersonListItem)
 }
 
 export const contactsSelector = createSelector(
@@ -184,6 +190,22 @@ export const matchesSelector = createSelector(
     }
   },
   personListItemSelector
+)
+
+export function personConnectionListItemSelector (session, participants) {
+  return session.PersonConnection
+    .all()
+    .orderBy('name')
+    .toModelArray()
+    .map(connection => pickPersonListItem(connection.person))
+    .filter(connection => !participants.includes(connection.id))
+}
+
+export const recentContactsSelector = createSelector(
+  orm,
+  state => state.orm,
+  state => state[MODULE_NAME].participants,
+  personConnectionListItemSelector
 )
 
 export function participantsFromStore (state) {
