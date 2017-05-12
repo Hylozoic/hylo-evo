@@ -138,20 +138,7 @@ exports[`Notification renders correctly with a tag notification 1`] = `
 </li>
 `;
 
-exports[`NotificationBody renders correctly with a comment notification 1`] = `
-<div
-  data-styleName="body"
->
-  <span
-    data-styleName="bold"
-  >
-    Marie
-  </span>
-   Wrote: "
-  I live right next to there and can come help out. I've never done …
-  "
-</div>
-`;
+exports[`NotificationBody renders correctly with a comment notification 1`] = `null`;
 
 exports[`NotificationBody renders correctly with a tag notification 1`] = `
 <div
@@ -168,18 +155,7 @@ exports[`NotificationBody renders correctly with a tag notification 1`] = `
 </div>
 `;
 
-exports[`NotificationHeader renders correctly with a comment notification 1`] = `
-<div
-  data-styleName="header"
->
-  New Comment on 
-  <span
-    data-styleName="bold"
-  >
-    Our Oceans
-  </span>
-</div>
-`;
+exports[`NotificationHeader renders correctly with a comment notification 1`] = `null`;
 
 exports[`NotificationHeader renders correctly with a tag notification 1`] = `
 <div

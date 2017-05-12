@@ -10,7 +10,7 @@ const NOTIFICATIONS = [
   {
     id: 1,
     actor: fakePerson(),
-    action: 'comment',
+    action: 'newComment',
     meta: {},
     post: {...samplePost(), title: 'Our Oceans'},
     comment: {
@@ -31,7 +31,7 @@ const NOTIFICATIONS = [
   {
     id: 3,
     actor: fakePerson(),
-    action: 'comment',
+    action: 'newComment',
     post: {...samplePost(), title: 'Our Oceans'},
     meta: {},
     comment: {

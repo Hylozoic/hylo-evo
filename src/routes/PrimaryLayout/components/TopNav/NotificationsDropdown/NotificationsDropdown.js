@@ -85,7 +85,7 @@ export function Notification ({ notification, onClick }) {
 export function NotificationHeader ({ notification }) {
   const { action, post, meta: { reasons } } = notification
   switch (action) {
-    case 'comment':
+    case 'newComment':
       return <div styleName='header'>
         New Comment on <span styleName='bold'>{post.title}</span>
       </div>
@@ -108,7 +108,7 @@ export function NotificationBody ({ notification }) {
     : text
 
   switch (action) {
-    case 'comment':
+    case 'newComment':
       var text = truncateForBody(comment.text)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> Wrote: "{text}"
