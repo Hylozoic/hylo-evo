@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
+import PeopleTyping from 'components/PeopleTyping'
 import './Comments.scss'
 const { array, func, object, number, string } = PropTypes
 
@@ -26,6 +27,7 @@ export default class Comments extends Component {
       {comments.map(c => <Comment comment={c} key={c.id} slug={slug} />)}
       <div styleName='form-wrapper'>
         <CommentForm currentUser={currentUser} createComment={createComment} />
+        <PeopleTyping styleName='people-typing' />
       </div>
     </div>
   }
