@@ -119,7 +119,7 @@
     "node": "~7.7"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "node --preserve-symlinks scripts/start.js",
     "build": "node scripts/build.js && scripts/build-es5.sh",
     "test": "node scripts/test.js --env=jsdom"
   },
