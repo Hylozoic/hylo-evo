@@ -1,5 +1,6 @@
 .topic-feed-header {
   margin: 0  $space-4x $space-15x $space-4x;
+  position: relative;
 }
 
 .back {
@@ -30,5 +31,7 @@
 }
 
 .subscribe {
-
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }

@@ -7,6 +7,7 @@ import {
   EXTRACT_MODEL,
   FETCH_MESSAGES_PENDING,
   LEAVE_COMMUNITY,
+  TOGGLE_TOPIC_SUBSCRIBE,
   UPDATE_THREAD_READ_TIME,
   VOTE_ON_POST_PENDING
 } from 'store/constants'
@@ -19,7 +20,17 @@ export default function ormReducer (state = {}, action) {
   const { payload, type, meta, error } = action
   if (error) return state
 
-  const { Comment, Me, Message, MessageThread, Post, PostCommenter } = session
+  const {
+    Comment,
+    Community,
+    CommunityTopic,
+    Me,
+    Message,
+    MessageThread,
+    Post,
+    PostCommenter,
+    TopicSubscription
+  } = session
 
   switch (type) {
     case EXTRACT_MODEL:
@@ -84,6 +95,19 @@ export default function ormReducer (state = {}, action) {
       const me = Me.first()
       const membership = find(m => m.community.id === meta.id, me.memberships.toModelArray())
       membership && membership.delete()
+      break
+
+    case TOGGLE_TOPIC_SUBSCRIBE:
+      const subscription = payload.data.subscribe
+      if (subscription) {
+        Community.withId(subscription.community.id).updateAppending({
+          topicSubscriptions: [payload.data.subscribe.id]
+        })
+      } else {
+        TopicSubscription.withId(meta.existingSubscriptionId).delete()
+      }
+      const ct = CommunityTopic.get({topic: meta.topicId, community: meta.communityId})
+      ct.update({followersTotal: ct.followersTotal + (subscription ? 1 : -1)})
       break
 
     case VOTE_ON_POST_PENDING:

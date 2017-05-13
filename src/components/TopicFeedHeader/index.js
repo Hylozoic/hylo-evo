@@ -1,2 +1,3 @@
 import TopicFeedHeader from './TopicFeedHeader'
-export default TopicFeedHeader
+import connector from './TopicFeedHeader.connector'
+export default connector(TopicFeedHeader)
