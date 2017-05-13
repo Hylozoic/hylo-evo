@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import Immutable from 'immutable'
 import Editor from 'draft-js-plugins-editor'
 import createMentionPlugin from 'draft-js-mention-plugin'
-import createTopicPlugin from './topicsPlugin'
 import createLinkifyPlugin from 'draft-js-linkify-plugin'
 import { EditorState, ContentState, convertToRaw } from 'draft-js'
 import cx from 'classnames'
@@ -11,6 +10,7 @@ import contentStateFromHTML from './contentStateFromHTML'
 import 'draft-js/dist/Draft.css'
 import 'draft-js-mention-plugin/lib/plugin.css'
 // import mentionPluginsTheme from './mentionsPluginTheme.scss'
+// import topicsPluginTheme from './topicsPluginTheme.scss'
 import './HyloEditor.scss'
 
 export default class HyloEditor extends Component {
@@ -45,11 +45,13 @@ export default class HyloEditor extends Component {
   constructor (props) {
     super(props)
     // https://github.com/draft-js-plugins/draft-js-plugins/issues/298
-    this._mentionPlugin = createMentionPlugin({
+    this._mentionsPlugin = createMentionPlugin({
       // theme: mentionPluginsTheme
     })
-    this._topicsPlugin = createTopicPlugin({
-      entityMutability: 'IMMUTABLE'
+    this._topicsPlugin = createMentionPlugin({
+      mentionTrigger: '#',
+      mentionPrefix: '#'
+      // theme: topicsPluginTheme
     })
     this._linkifyPlugin = createLinkifyPlugin()
     this.state = this.defaultState(props)
@@ -137,10 +139,10 @@ export default class HyloEditor extends Component {
   focus = () => this.editor && this.editor.focus()
 
   render () {
-    const { MentionSuggestions } = this._mentionPlugin
-    const { CompletionSuggestions: TopicSuggestions } = this._topicsPlugin
+    const { MentionSuggestions } = this._mentionsPlugin
+    const { MentionSuggestions: TopicSuggestions } = this._topicsPlugin
     const plugins = [
-      this._mentionPlugin,
+      this._mentionsPlugin,
       this._topicsPlugin,
       this._linkifyPlugin
     ]

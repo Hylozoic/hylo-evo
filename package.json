@@ -70,7 +70,6 @@
     "dotenv-webpack": "^1.4.3",
     "draft-convert": "^1.4.6",
     "draft-js": "^0.10.0",
-    "draft-js-autocomplete-plugin-creator": "^0.2.0",
     "draft-js-export-html": "^0.5.2",
     "draft-js-linkify-plugin": "^2.0.0-beta1",
     "draft-js-mention-plugin": "2.0.0-beta10",
