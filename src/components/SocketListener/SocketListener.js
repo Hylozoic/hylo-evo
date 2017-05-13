@@ -3,7 +3,7 @@ import { getSocket, socketUrl } from 'client/websockets'
 import './SocketListener.scss'
 const { func, object } = PropTypes
 
-const handledEvents = [
+export const handledEvents = [
   'newThread',
   'messageAdded',
   'commentAdded',
@@ -54,7 +54,6 @@ export default class SocketListener extends Component {
   }
 
   commentAdded = data => {
-    console.log(data)
     this.props.receiveComment(data)
   }
 
