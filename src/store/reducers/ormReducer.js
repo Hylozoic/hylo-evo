@@ -1,5 +1,5 @@
 import {
-  ADD_MESSAGE_FROM_SOCKET,
+  RECEIVE_MESSAGE,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
   CREATE_MESSAGE,
@@ -72,7 +72,7 @@ export default function ormReducer (state = {}, action) {
       }
       break
 
-    case ADD_MESSAGE_FROM_SOCKET:
+    case RECEIVE_MESSAGE:
       MessageThread.withId(payload.data.message.messageThread).newMessageReceived(meta.bumpUnreadCount)
       break
 

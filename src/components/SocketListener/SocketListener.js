@@ -2,51 +2,60 @@ import { PropTypes, Component } from 'react'
 import { getSocket, socketUrl } from 'client/websockets'
 import './SocketListener.scss'
 const { func, object } = PropTypes
-import { each } from 'lodash'
+
+const handledEvents = [
+  'newThread',
+  'messageAdded',
+  'commentAdded',
+  'userTyping',
+  'reconnect'
+]
 
 export default class SocketListener extends Component {
   static propTypes = {
     location: object,
-    addThreadFromSocket: func,
-    addMessageFromSocket: func,
+    receiveThread: func,
+    receiveMessage: func,
+    receiveComment: func,
     addUserTyping: func,
     clearUserTyping: func
-  }
-
-  constructor (props) {
-    super(props)
-
-    this.handlers = {
-      newThread: this.addThreadFromSocket,
-      messageAdded: this.addMessageFromSocket,
-      reconnect: this.reconnect,
-      userTyping: this.userTyping
-    }
   }
 
   componentDidMount () {
     this.socket = getSocket()
     this.reconnect()
-    each(this.handlers, (handler, key) =>
-      this.socket.on(key, handler))
+    handledEvents.forEach(name =>
+      this.socket.on(name, this[name]))
   }
 
   componentWillUnmount () {
     this.socket.post(socketUrl('/noo/threads/unsubscribe'))
-    each(this.handlers, (handler, key) =>
-      this.socket.off(key, handler))
+    handledEvents.forEach(name =>
+      this.socket.off(name, this[name]))
   }
+
+  render () {
+    return null
+  }
+
+  // the methods below are websocket event handlers and are named for the event
+  // they handle.
 
   reconnect = () => {
     this.socket.post(socketUrl('/noo/threads/subscribe'))
   }
 
-  addThreadFromSocket = data => {
-    this.props.addThreadFromSocket(data)
+  newThread = data => {
+    this.props.receiveThread(data)
   }
 
-  addMessageFromSocket = data => {
-    this.props.addMessageFromSocket(data)
+  messageAdded = data => {
+    this.props.receiveMessage(data)
+  }
+
+  commentAdded = data => {
+    console.log(data)
+    this.props.receiveComment(data)
   }
 
   userTyping = ({userId, userName, isTyping}) => {
@@ -56,9 +65,5 @@ export default class SocketListener extends Component {
     } else {
       clearUserTyping(userId)
     }
-  }
-
-  render () {
-    return null
   }
 }

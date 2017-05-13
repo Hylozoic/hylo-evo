@@ -32,7 +32,8 @@ export default class HyloEditor extends Component {
     hashtagResults: PropTypes.instanceOf(Immutable.List),
     placeholder: PropTypes.string,
     className: PropTypes.string,
-    debug: PropTypes.bool
+    debug: PropTypes.bool,
+    onChange: PropTypes.func
   }
 
   constructor (props) {
@@ -50,6 +51,7 @@ export default class HyloEditor extends Component {
   handleEditorChange = (editorState) => {
     if (this.props.debug) console.log(this.getContent())
     this.setState({ editorState })
+    if (this.props.onChange) this.props.onChange(editorState)
   }
 
   handleMentionsSearch = ({ value }) => {

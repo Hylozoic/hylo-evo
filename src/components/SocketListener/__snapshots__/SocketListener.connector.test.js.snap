@@ -2,9 +2,96 @@
 
 exports[`returns the expected value 1`] = `
 Object {
-  "addMessageFromSocket": [Function],
-  "addThreadFromSocket": [Function],
   "addUserTyping": [Function],
   "clearUserTyping": [Function],
+  "receiveComment": [Function],
+  "receiveMessage": [Function],
+  "receiveThread": [Function],
+}
+`;
+
+exports[`returns the expected value 2`] = `
+Object {
+  "meta": Object {
+    "extractModel": "Comment",
+  },
+  "payload": Object {
+    "data": Object {
+      "comment": Object {
+        "createdAt": "Fri May 12 2017 18:21:14 GMT-0700 (PDT)",
+        "creator": "13249",
+        "id": "24738",
+        "post": "22498",
+        "text": "<p>clunk</p>",
+      },
+    },
+  },
+  "type": "RECEIVE_COMMENT",
+}
+`;
+
+exports[`returns the expected value 3`] = `
+Object {
+  "meta": Object {
+    "bumpUnreadCount": true,
+    "extractModel": "Message",
+  },
+  "payload": Object {
+    "data": Object {
+      "message": Object {
+        "createdAt": "Fri May 12 2017 18:21:14 GMT-0700 (PDT)",
+        "creator": "5557",
+        "id": "5",
+        "messageThread": "8",
+        "text": "hello!",
+      },
+    },
+  },
+  "type": "RECEIVE_MESSAGE",
+}
+`;
+
+exports[`returns the expected value 4`] = `
+Object {
+  "meta": Object {
+    "extractModel": "MessageThread",
+  },
+  "payload": Object {
+    "data": Object {
+      "thread": Object {
+        "createdAt": "Fri May 12 2017 18:01:14 GMT-0700 (PDT)",
+        "id": "89",
+        "messages": Array [
+          Object {
+            "createdAt": "Fri May 12 2017 18:21:14 GMT-0700 (PDT)",
+            "creator": "13249",
+            "id": "24738",
+            "messageThread": "89",
+            "text": "<p>clunk</p>",
+          },
+        ],
+        "participants": Array [
+          Object {
+            "avatarUrl": "foo.png",
+            "id": "1",
+            "name": "Foo",
+          },
+          Object {
+            "avatarUrl": "bar.png",
+            "id": "2",
+            "name": "Bar",
+          },
+          Object {
+            "avatarUrl": "zot.png",
+            "id": "3",
+            "name": "Zot",
+          },
+        ],
+        "unreadCount": 1,
+        "updatedAt": "Fri May 12 2017 18:01:14 GMT-0700 (PDT)",
+      },
+    },
+  },
+  "type": "RECEIVE_THREAD",
 }
 `;
