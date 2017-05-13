@@ -1,4 +1,5 @@
 import { mapDispatchToProps } from './SocketListener.connector'
+import timezoneMock from 'timezone-mock'
 
 const legacyCommentData = {
   comment: {
@@ -33,6 +34,14 @@ const legacyThreadData = {
     legacyCommentData.comment
   ]
 }
+
+beforeEach(() => {
+  timezoneMock.register('US/Pacific')
+})
+
+afterEach(() => {
+  timezoneMock.unregister()
+})
 
 // just a placeholder for a real test
 it('returns the expected value', () => {

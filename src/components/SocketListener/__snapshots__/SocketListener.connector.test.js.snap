@@ -18,7 +18,7 @@ Object {
   "payload": Object {
     "data": Object {
       "comment": Object {
-        "createdAt": "Fri May 12 2017 18:21:14 GMT-0700 (PDT)",
+        "createdAt": "Mockday 2017-05-13T01:21:14.202Z GMT-0700 (MockDate)",
         "creator": "13249",
         "id": "24738",
         "post": "22498",
@@ -39,7 +39,7 @@ Object {
   "payload": Object {
     "data": Object {
       "message": Object {
-        "createdAt": "Fri May 12 2017 18:21:14 GMT-0700 (PDT)",
+        "createdAt": "Mockday 2017-05-13T01:21:14.202Z GMT-0700 (MockDate)",
         "creator": "5557",
         "id": "5",
         "messageThread": "8",
@@ -59,11 +59,11 @@ Object {
   "payload": Object {
     "data": Object {
       "thread": Object {
-        "createdAt": "Fri May 12 2017 18:01:14 GMT-0700 (PDT)",
+        "createdAt": "Mockday 2017-05-13T01:01:14.202Z GMT-0700 (MockDate)",
         "id": "89",
         "messages": Array [
           Object {
-            "createdAt": "Fri May 12 2017 18:21:14 GMT-0700 (PDT)",
+            "createdAt": "Mockday 2017-05-13T01:21:14.202Z GMT-0700 (MockDate)",
             "creator": "13249",
             "id": "24738",
             "messageThread": "89",
@@ -88,7 +88,7 @@ Object {
           },
         ],
         "unreadCount": 1,
-        "updatedAt": "Fri May 12 2017 18:01:14 GMT-0700 (PDT)",
+        "updatedAt": "Mockday 2017-05-13T01:01:14.202Z GMT-0700 (MockDate)",
       },
     },
   },
