@@ -23,7 +23,7 @@ export default function toggleTopicSubscribe (topicId, communityId, existingSub)
       variables: {
         topicId,
         communityId,
-        isSubscribing: existingSub ? false : true
+        isSubscribing: existingSub ? false : true // eslint-disable-line no-unneeded-ternary
       }
     },
     meta: {
