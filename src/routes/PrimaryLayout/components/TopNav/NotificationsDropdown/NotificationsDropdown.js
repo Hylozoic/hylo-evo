@@ -25,7 +25,7 @@ export default class NotificationsDropdown extends Component {
   }
 
   componentDidMount () {
-    this.props.fetchThreads()
+    this.props.fetchNotifications()
   }
 
   render () {

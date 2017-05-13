@@ -3,6 +3,7 @@ import './TopNavDropdown.scss'
 const { object, string } = PropTypes
 import cx from 'classnames'
 import { position } from 'util/scrolling'
+import { isEmpty } from 'lodash/fp'
 
 const DROPDOWN_WIDTH = 375
 
@@ -26,6 +27,10 @@ export default class TopNavDropdown extends Component {
   render () {
     const { toggleChildren, className, topNavPosition, header, body } = this.props
     const { active } = this.state
+
+    console.log('topNavPosition', topNavPosition)
+
+    if (isEmpty(topNavPosition)) return null
 
     const wrapperStyle = {
       top: `${topNavPosition.height + 24}px`,

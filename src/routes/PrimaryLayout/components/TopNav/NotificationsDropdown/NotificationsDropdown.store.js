@@ -1,35 +1,40 @@
-import { FETCH_THREADS } from 'store/constants'
+import { FETCH_NOTIFICATIONS } from 'store/constants'
 
-export function fetchThreads () {
+export function fetchNotifications () {
   return {
-    type: FETCH_THREADS,
+    type: FETCH_NOTIFICATIONS,
     graphql: {
       query: `{
         me {
-          id
-          messageThreads(first: 10) {
+        name
+        notifications (first: 10, order: "desc") {
+          total
+          hasMore
+          items {
             id
-            unreadCount
-            lastReadAt
-            createdAt
-            updatedAt
-            participants {
+            activity {
               id
-              name
-              avatarUrl
-            }
-            messages(first: 1, order: "desc") {
-              items {
+              actor {
                 id
-                createdAt
-                text
-                creator {
-                  id
-                }
+                name
+                avatarUrl
               }
+              comment {
+                id
+                text
+              }
+              post {
+                id
+                title
+              }
+              meta {
+                reasons
+              }
+              action
             }
           }
         }
+      }
       }`
     },
     meta: {

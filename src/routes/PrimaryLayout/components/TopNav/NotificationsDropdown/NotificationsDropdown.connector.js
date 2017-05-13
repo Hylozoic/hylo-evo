@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { fetchThreads } from './NotificationsDropdown.store.js'
+import { fetchNotifications } from './NotificationsDropdown.store.js'
 import { getMe } from 'store/selectors/getMe'
 import faker from 'faker'
 import samplePost, { fakePerson } from 'components/PostCard/samplePost'
@@ -60,7 +60,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    fetchThreads: () => dispatch(fetchThreads()),
+    fetchNotifications: () => dispatch(fetchNotifications()),
     goToNotification: notification => () => console.log('going to notification', notification),
     markAsRead: () => console.log('mark as read')
   }
