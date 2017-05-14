@@ -37,8 +37,7 @@ describe('PeopleSelector', () => {
             addParticipant={addParticipant}
             matches={[ { id: '1' }, { id: '2' } ]}
             participants={[]}
-            fetchContacts={() => {}}
-            fetchPeople={fetchPeople}
+            fetchContacts={() => {}} fetchPeople={fetchPeople} fetchRecentContacts={() => {}}
             removeParticipant={removeParticipant}
             setAutocomplete={setAutocomplete} />
         </MemoryRouter>
@@ -139,8 +138,7 @@ describe('PeopleSelector', () => {
       wrapper = mount(
         <MemoryRouter>
           <PeopleSelector
-            fetchContacts={() => {}}
-            fetchPeople={() => {}}
+            fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
             participants={[]}
             setAutocomplete={setAutocomplete} />
         </MemoryRouter>
@@ -177,8 +175,7 @@ describe('PeopleSelector', () => {
           <PeopleSelector
             addParticipant={addParticipant}
             participants={[]}
-            fetchContacts={() => {}}
-            fetchPeople={() => {}}
+            fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
             setAutocomplete={() => {}} />
         </MemoryRouter>
       )
@@ -193,8 +190,7 @@ describe('PeopleSelector', () => {
           <PeopleSelector
             addParticipant={() => {}}
             participants={[]}
-            fetchContacts={() => {}}
-            fetchPeople={() => {}}
+            fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
             setAutocomplete={setAutocomplete} />
         </MemoryRouter>
       )
@@ -216,8 +212,7 @@ describe('PeopleSelector', () => {
             addParticipant={addParticipant}
             participants={[]}
             participantSearch={[ '1', '2' ]}
-            fetchContacts={() => {}}
-            fetchPeople={() => {}}
+            fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
             changeQueryParam={changeQueryParam} />
         </MemoryRouter>
       )
