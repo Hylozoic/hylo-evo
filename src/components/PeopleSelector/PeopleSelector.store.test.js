@@ -10,38 +10,30 @@ import {
 
 describe('fetchPeople', () => {
   it('returns the correct action', () => {
-    const expected = {
-      type: store.FETCH_PEOPLE,
-      graphql: {
-        query: 'All the lonely people / Where do they all come from?',
-        variables: {
-          autocomplete: 'Tchaikovs',
-          first: 100
-        }
-      },
-      meta: { extractModel: 'Person' }
+    const graphql = {
+      query: 'All the lonely people / Where do they all come from?',
+      variables: {
+        autocomplete: 'Tchaikovs',
+        first: 100
+      }
     }
-    const { query, variables } = expected.graphql
+    const { query, variables } = graphql
     const actual = store.fetchPeople(variables.autocomplete, query, variables.first)
-    expect(actual).toEqual(expected)
+    expect(actual).toMatchSnapshot()
   })
 })
 
 describe('findOrCreateThread', () => {
   it('returns the correct action', () => {
-    const expected = {
-      type: store.FIND_OR_CREATE_THREAD,
-      graphql: {
-        query: 'All the lonely people / Where do they all come from?',
-        variables: {
-          participantIds: ['1', '2', '3']
-        }
-      },
-      meta: { extractModel: 'MessageThread' }
+    const graphql = {
+      query: 'All the lonely people / Where do they all come from?',
+      variables: {
+        participantIds: ['1', '2', '3']
+      }
     }
-    const { query, variables } = expected.graphql
+    const { query, variables } = graphql
     const actual = store.findOrCreateThread(variables.participantIds, query)
-    expect(actual).toEqual(expected)
+    expect(actual).toMatchSnapshot()
   })
 })
 
@@ -181,26 +173,8 @@ describe('connector', () => {
   describe('mapStateToProps', () => {
     it('returns the correct object', () => {
       state.PeopleSelector.participants = [ '72203' ]
-      const expected = {
-        autocomplete: undefined,
-        contacts: people
-          .map(p => ({
-            ...pick([ 'id', 'name', 'avatarUrl' ], p),
-            community: p.memberships[0].community.name
-          }))
-          .filter(p => p.id !== '72203'),
-        matches: [],
-        participantSearch: null,
-        participants: [
-          {
-            "id": "72203",
-            "name": "Brooks Funk",
-            "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg"
-          }
-        ]
-      }
       const actual = mapStateToProps(state, { location: { search: '' } })
-      expect(actual).toEqual(expected)
+      expect(actual).toMatchSnapshot()
     })
   })
 })
