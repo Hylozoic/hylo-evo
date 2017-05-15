@@ -1,5 +1,5 @@
 import {
-  ADD_MESSAGE_FROM_SOCKET,
+  RECEIVE_MESSAGE,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
   CREATE_MESSAGE,
@@ -19,7 +19,7 @@ export default function ormReducer (state = {}, action) {
   const { payload, type, meta, error } = action
   if (error) return state
 
-  const { Comment, Me, Message, MessageThread } = session
+  const { Comment, Me, Message, MessageThread, Post, PostCommenter } = session
 
   switch (type) {
     case EXTRACT_MODEL:
@@ -40,6 +40,13 @@ export default function ormReducer (state = {}, action) {
 
     case CREATE_COMMENT:
       Comment.withId(meta.tempId).delete()
+      if (!PostCommenter.safeGet({post: meta.postId, commenter: Me.first().id})) {
+        PostCommenter.create({post: meta.postId, commenter: Me.first().id})
+        // we can assume the following because the backend returns the results pre-sorted
+        // with the currentUser at the beginning
+        const p = Post.withId(meta.postId)
+        p.update({commentersTotal: p.commentersTotal + 1})
+      }
       break
 
     case CREATE_MESSAGE_PENDING:
@@ -65,7 +72,7 @@ export default function ormReducer (state = {}, action) {
       }
       break
 
-    case ADD_MESSAGE_FROM_SOCKET:
+    case RECEIVE_MESSAGE:
       MessageThread.withId(payload.data.message.messageThread).newMessageReceived(meta.bumpUnreadCount)
       break
 

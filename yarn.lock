@@ -7002,6 +7002,10 @@ timers-browserify@^2.0.2:
   dependencies:
     setimmediate "^1.0.4"
 
+timezone-mock@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/timezone-mock/-/timezone-mock-0.0.0.tgz#895370ea10a61fe9839ef3c40e4d0831064a4e38"
+
 tlds@1.132.0:
   version "1.132.0"
   resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.132.0.tgz#85b8edba2e664531ccf6a69989be790c16777305"
