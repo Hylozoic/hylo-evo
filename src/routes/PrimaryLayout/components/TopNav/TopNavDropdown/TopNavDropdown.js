@@ -20,7 +20,7 @@ export default class TopNavDropdown extends Component {
     this.state = {active: true}
   }
 
-  toggle = (newState) => {
+  toggle = newState => {
     this.setState({active: newState || !this.state.active})
   }
 
@@ -43,7 +43,7 @@ export default class TopNavDropdown extends Component {
 
     return <div className={className} styleName='top-nav-dropdown'>
       {active && <div styleName='backdrop' onClick={() => this.toggle(false)} />}
-      <a onClick={this.toggle} ref='toggle'>
+      <a onClick={() => this.toggle()} ref='toggle'>
         {toggleChildren}
       </a>
       <div styleName={cx('wrapper', {active})} style={wrapperStyle}>
