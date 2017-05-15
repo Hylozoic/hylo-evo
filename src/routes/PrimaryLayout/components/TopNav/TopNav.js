@@ -2,6 +2,7 @@ import React from 'react'
 import { bgImageStyle, personUrl } from 'util/index'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
+import BadgedIcon from 'components/BadgedIcon'
 import RoundImage from 'components/RoundImage'
 import './TopNav.scss'
 import Dropdown from 'components/Dropdown'
@@ -14,25 +15,7 @@ export default function TopNav ({ className, community, currentUser, logout, tog
     <div styleName='topNav'>
       <Logo {...{community, toggleDrawer}} />
       <Title community={community} />
-      <div styleName='navIcons'>
-        <Link to='/' styleName='navIcon'><Icon name='Search' styleName='icon' /></Link>
-        <MessagesDropdown
-          toggleChildren={<Icon name='Messages' styleName='icon' />}
-          styleName='messages-dropdown' />
-        <Link to='/' styleName='navIcon'><Icon name='Notifications' styleName='icon' /></Link>
-        <Dropdown styleName='navIcon user-menu' alignRight
-          toggleChildren={
-            <RoundImage url={get('avatarUrl', currentUser)} small />
-          }>
-          <li>
-            <Link to={personUrl(get('id', currentUser), get('slug', community))}>
-              Profile
-            </Link>
-          </li>
-          <li><Link to='/settings'>Settings</Link></li>
-          <li><a onClick={logout}>Log out</a></li>
-        </Dropdown>
-      </div>
+      <RightSideIcons {...{currentUser, community, logout}} />
     </div>
   </div>
 }
@@ -51,5 +34,35 @@ function Title ({ community }) {
   return <div styleName='title'>
     <div styleName='label'>{label}</div>
     <div styleName='communityName'>{name}</div>
+  </div>
+}
+
+function RightSideIcons ({ currentUser, community, logout }) {
+  const profileUrl = personUrl(get('id', currentUser), get('slug', community))
+
+  return <div styleName='navIcons'>
+    <Link to='/'>
+      <Icon name='Search' styleName='icon' />
+    </Link>
+    <MessagesDropdown
+      toggleChildren={
+        <BadgedIcon name='Messages' styleName='icon' />
+      }
+      styleName='messages-dropdown' />
+    <Link to='/'>
+      <Icon name='Notifications' styleName='icon' />
+    </Link>
+    <Dropdown styleName='user-menu' alignRight
+      toggleChildren={
+        <RoundImage url={get('avatarUrl', currentUser)} small />
+      }>
+      <li>
+        <Link to={profileUrl}>
+          Profile
+        </Link>
+      </li>
+      <li><Link to='/settings'>Settings</Link></li>
+      <li><a onClick={logout}>Log out</a></li>
+    </Dropdown>
   </div>
 }
