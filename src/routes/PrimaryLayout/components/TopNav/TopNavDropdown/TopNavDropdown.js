@@ -17,7 +17,7 @@ export default class TopNavDropdown extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {active: true}
+    this.state = {active: false}
   }
 
   toggle = newState => {

@@ -7,7 +7,7 @@ const topNavPosition = {
   height: 56
 }
 
-describe('MessagesDropdown', () => {
+describe('TopNavDropdown', () => {
   it('renders correctly', () => {
     const toggleChildren = <div>toggle</div>
     const header = <div>header</div>
@@ -23,6 +23,6 @@ describe('MessagesDropdown', () => {
     expect(wrapper).toMatchSnapshot()
     expect(wrapper.find('div').at(2).prop('data-styleName')).toEqual('wrapper')
     wrapper.find('a').simulate('click')
-    expect(wrapper.find('div').at(2).prop('data-styleName')).toEqual('wrapper active')
+    expect(wrapper.find('div').at(3).prop('data-styleName')).toEqual('wrapper active')
   })
 })

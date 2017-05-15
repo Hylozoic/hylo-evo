@@ -8,6 +8,7 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
     >
       <Thread
         currentUserId={1}
+        onClick={[Function]}
         thread={
           Object {
             "id": 2,
@@ -42,6 +43,7 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
       />
       <Thread
         currentUserId={1}
+        onClick={[Function]}
         thread={
           Object {
             "id": 1,

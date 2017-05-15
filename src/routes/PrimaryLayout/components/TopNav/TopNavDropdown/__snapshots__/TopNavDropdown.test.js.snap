@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MessagesDropdown renders correctly 1`] = `
+exports[`TopNavDropdown renders correctly 1`] = `
 <div
   data-styleName="top-nav-dropdown"
 >
@@ -25,6 +25,11 @@ exports[`MessagesDropdown renders correctly 1`] = `
     >
       <li
         data-styleName="triangle"
+        style={
+          Object {
+            "left": "-880px",
+          }
+        }
       />
       <li
         data-styleName="header"

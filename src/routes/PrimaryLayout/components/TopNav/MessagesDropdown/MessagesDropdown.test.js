@@ -41,9 +41,9 @@ describe('Thread', () => {
 
   it('renders correctly with a message', () => {
     const mockNavigate = jest.fn()
-    const goToThread = i => () => mockNavigate(i)
+    const goToThread = i => mockNavigate(i)
     const wrapper = shallow(
-      <Thread thread={threads[0]} currentUserId={u1.id} goToThread={goToThread} />)
+      <Thread thread={threads[0]} currentUserId={u1.id} onClick={() => goToThread(threads[0].id)} />)
     expect(wrapper.find('RoundImageRow').prop('imageUrls')).toEqual(['bar.png', 'baz.png'])
     expect(wrapper.find('div').at(2).text()).toEqual('Marie Curie and Arthur Fonzarelli')
     expect(wrapper.find('div').at(3).text()).toEqual('hi')
