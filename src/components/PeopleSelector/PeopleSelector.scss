@@ -6,6 +6,7 @@
 
 .autocomplete-control {
   display: flex;
+  flex-wrap: wrap;
   flex: 1;
   border-bottom: 1px $color-rhino-30 solid;
   padding-bottom: $space-2x;
@@ -67,6 +68,7 @@
 .thread-header {
   composes: header from 'components/Thread/Thread.scss';
   padding-bottom: $space-3x;
+  height: unset;
 }
 
 .message-form {
