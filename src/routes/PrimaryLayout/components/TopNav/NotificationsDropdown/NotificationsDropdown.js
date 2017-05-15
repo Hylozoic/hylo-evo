@@ -52,7 +52,12 @@ export default class NotificationsDropdown extends Component {
       notifications = notifications.filter(n => n.activity.unread)
     }
 
-    return <TopNavDropdown
+    const onClick = notification => {
+      goToNotification(notification)
+      this.refs.dropdown.getWrappedInstance().toggle(false)
+    }
+
+    return <TopNavDropdown ref='dropdown'
       className={className}
       toggleChildren={toggleChildren}
       header={
@@ -69,7 +74,7 @@ export default class NotificationsDropdown extends Component {
         <div styleName='notifications'>
           {notifications.map(notification => <Notification
             notification={notification}
-            onClick={goToNotification}
+            onClick={onClick}
             key={notification.id} />)}
         </div>
       } />

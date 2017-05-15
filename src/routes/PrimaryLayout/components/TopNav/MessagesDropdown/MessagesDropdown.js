@@ -24,7 +24,13 @@ export default class MessagesDropdown extends Component {
   render () {
     const { toggleChildren, threads, className, goToThread, currentUser } = this.props
 
+    const onClick = thread => {
+      goToThread(thread)
+      this.refs.dropdown.getWrappedInstance().toggle(false)
+    }
+
     return <TopNavDropdown
+      ref='dropdown'
       className={className}
       toggleChildren={toggleChildren}
       header={
@@ -36,7 +42,7 @@ export default class MessagesDropdown extends Component {
         <div styleName='threads'>
           {threads.map(thread => <Thread
             thread={thread}
-            goToThread={goToThread}
+            onClick={onClick}
             currentUserId={currentUser.id}
             key={thread.id} />)}
         </div>
@@ -56,7 +62,7 @@ const participantNames = participants => {
   }
 }
 
-export function Thread ({ thread, goToThread, currentUserId }) {
+export function Thread ({ thread, onClick, currentUserId }) {
   const message = thread.messages[0]
   if (!message || !message.text) return null
   const participants = thread.participants.filter(p => p.id !== currentUserId)
@@ -75,7 +81,7 @@ export function Thread ({ thread, goToThread, currentUserId }) {
   }
 
   return <li styleName={cx('thread', {unread})}
-    onClick={goToThread(thread.id)}>
+    onClick={() => onClick(thread.id)}>
     <div styleName='image-wraper'>
       <RoundImageRow imageUrls={participants.map(p => p.avatarUrl)} vertical ascending cap='2' />
     </div>

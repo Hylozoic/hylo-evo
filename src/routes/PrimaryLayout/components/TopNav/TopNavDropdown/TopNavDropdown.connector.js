@@ -8,4 +8,4 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = {}
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})
