@@ -145,5 +145,15 @@
         }
       }
     }
+  },
+
+  "FETCH_ACTIVITY": {
+    "data": {
+      "activity": {
+        "id": "1",
+        "action": "tag",
+        "comment": null
+      }
+    }
   }
 }
