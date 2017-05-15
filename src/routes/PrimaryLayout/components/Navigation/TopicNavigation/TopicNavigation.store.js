@@ -1,7 +1,6 @@
 import { get } from 'lodash/fp'
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { createSelector } from 'reselect'
 
 // Constants
 export const FETCH_COMMUNITY_TOPIC_SUBSCRIPTIONS = 'FETCH_COMMUNITY_TOPIC_SUBSCRIPTIONS'
@@ -50,13 +49,6 @@ export const getCommunityFromSlug = ormCreateSelector(
       return null
     }
   }
-)
-
-export const getTopicSubscriptionsOld = createSelector(
-  getCommunityFromSlug,
-  community => community
-      ? community.topicSubscriptions.toModelArray()
-      : []
 )
 
 export const getTopicSubscriptions = ormCreateSelector(
