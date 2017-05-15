@@ -16,3 +16,6 @@ Notification.fields = {
   activity: fk('Activity'),
   meta: attr()
 }
+
+export const ACTION_NEW_COMMENT = 'newComment'
+export const ACTION_TAG = 'tag'

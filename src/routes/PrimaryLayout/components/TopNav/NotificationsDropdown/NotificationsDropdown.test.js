@@ -1,6 +1,7 @@
 import NotificationsDropdown, { Notification, NotificationHeader, NotificationBody } from './NotificationsDropdown'
 import { shallow } from 'enzyme'
 import React from 'react'
+import { ACTION_NEW_COMMENT, ACTION_TAG } from 'store/models/Notification'
 
 const u1 = {id: 1, name: 'Charles Darwin', avatarUrl: 'foo.png'}
 const u2 = {id: 2, name: 'Marie Curie', avatarUrl: 'bar.png'}
@@ -9,7 +10,7 @@ const u3 = {id: 3, name: 'Arthur Fonzarelli', avatarUrl: 'baz.png'}
 const commentNotification = {
   id: 1,
   actor: u2,
-  action: 'comment',
+  action: ACTION_NEW_COMMENT,
   meta: {},
   post: {title: 'Our Oceans'},
   comment: {
@@ -22,7 +23,7 @@ const commentNotification = {
 const tagNotification = {
   id: 2,
   actor: u3,
-  action: 'tag',
+  action: ACTION_TAG,
   post: {title: 'I have so many things I need!'},
   meta: {reasons: ['tag: request']},
   unread: true,

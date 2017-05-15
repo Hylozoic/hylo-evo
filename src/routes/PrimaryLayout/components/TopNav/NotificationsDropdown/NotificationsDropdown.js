@@ -7,6 +7,7 @@ import RoundImage from 'components/RoundImage'
 import { firstName } from 'store/models/Person'
 import TopNavDropdown from '../TopNavDropdown'
 import { find } from 'lodash/fp'
+import { ACTION_NEW_COMMENT, ACTION_TAG } from 'store/models/Notification'
 
 export default class NotificationsDropdown extends Component {
   static propTypes = {
@@ -85,11 +86,11 @@ export function Notification ({ notification, onClick }) {
 export function NotificationHeader ({ notification }) {
   const { action, post, meta: { reasons } } = notification
   switch (action) {
-    case 'newComment':
+    case ACTION_NEW_COMMENT:
       return <div styleName='header'>
         New Comment on <span styleName='bold'>{post.title}</span>
       </div>
-    case 'tag':
+    case ACTION_TAG:
       const tagReason = find(r => r.startsWith('tag: '), reasons)
       const tag = tagReason.split(': ')[1]
       return <div styleName='header'>
@@ -108,12 +109,12 @@ export function NotificationBody ({ notification }) {
     : text
 
   switch (action) {
-    case 'newComment':
+    case ACTION_NEW_COMMENT:
       var text = truncateForBody(comment.text)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> Wrote: "{text}"
       </div>
-    case 'tag':
+    case ACTION_TAG:
       text = truncateForBody(post.title)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> Wrote: "{text}"
