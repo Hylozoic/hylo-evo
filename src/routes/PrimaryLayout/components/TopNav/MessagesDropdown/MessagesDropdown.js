@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import './MessagesDropdown.scss'
 const { object, array, string, func } = PropTypes
+import BadgedIcon from 'components/BadgedIcon'
 import { Link } from 'react-router-dom'
 import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import cx from 'classnames'
@@ -30,12 +31,12 @@ export default class MessagesDropdown extends Component {
   }
 
   render () {
-    const { toggleChildren, threads, className, goToThread, currentUser } = this.props
+    const { threads, className, goToThread, currentUser } = this.props
     const { active } = this.state
 
-    return <div className={className} styleName='messages-dropdown'>
+    return <div styleName='messages-dropdown'>
       <a onClick={this.toggle}>
-        {toggleChildren}
+        <BadgedIcon name='Messages' className={className} />
       </a>
       <div styleName={cx('wrapper', {active})}>
         <ul styleName='menu'>
@@ -89,7 +90,7 @@ export function Thread ({ thread, goToThread, currentUserId }) {
 
   return <li styleName={cx('thread', {unread})}
     onClick={goToThread(thread.id)}>
-    <div styleName='image-wraper'>
+    <div styleName='image-wrapper'>
       <RoundImageRow imageUrls={participants.map(p => p.avatarUrl)} vertical ascending cap='2' />
     </div>
     <div styleName='message-content'>

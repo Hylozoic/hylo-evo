@@ -62,6 +62,11 @@
   > * {
     vertical-align: middle;
     margin-right: 15px;
+    display: inline-block;
+    height: 28px;
+    > * {
+      vertical-align: middle;
+    }
   }
 
   > a:hover {
@@ -71,15 +76,10 @@
 
 .icon {
   font-size: 22px;
-  top: 3px;
 }
 
 .icon:hover {
   color: $color-rhino;
-}
-
-.messages-dropdown {
-  top: -2px;
 }
 
 .user-menu {

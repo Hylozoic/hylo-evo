@@ -22,7 +22,7 @@ export function fetchThreads () {
       query: `{
         me {
           id
-          messageThreads {
+          messageThreads(sortBy: "updatedAt", order: "desc") {
             id
             unreadCount
             lastReadAt
@@ -85,7 +85,6 @@ export const getThreads = ormCreateSelector(
   getThreadSearch,
   (session, threadSearch) => {
     return session.MessageThread.all()
-    .orderBy(x => -1 * new Date(x.updatedAt).getTime())
     .toModelArray()
     .map(thread => ({
       ...thread.ref,

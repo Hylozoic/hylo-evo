@@ -2,7 +2,6 @@ import React from 'react'
 import { bgImageStyle, personUrl } from 'util/index'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
-import BadgedIcon from 'components/BadgedIcon'
 import RoundImage from 'components/RoundImage'
 import './TopNav.scss'
 import Dropdown from 'components/Dropdown'
@@ -44,11 +43,7 @@ function RightSideIcons ({ currentUser, community, logout }) {
     <Link to='/'>
       <Icon name='Search' styleName='icon' />
     </Link>
-    <MessagesDropdown
-      toggleChildren={
-        <BadgedIcon name='Messages' styleName='icon' />
-      }
-      styleName='messages-dropdown' />
+    <MessagesDropdown styleName='icon' />
     <Link to='/'>
       <Icon name='Notifications' styleName='icon' />
     </Link>

@@ -7,7 +7,7 @@ export function fetchThreads () {
       query: `{
         me {
           id
-          messageThreads(first: 10) {
+          messageThreads(first: 10, sortBy: "updatedAt", order: "desc") {
             id
             unreadCount
             lastReadAt
