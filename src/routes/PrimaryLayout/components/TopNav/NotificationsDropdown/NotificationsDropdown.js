@@ -115,11 +115,14 @@ export function NotificationHeader ({ notification }) {
       </div>
     case ACTION_MENTION:
       return <div styleName='header'>
-        <span styleName='bold'>{actor.name}</span> mentioned you
+        <span styleName='bold'>{actor.name} </span>
+        mentioned you
       </div>
     case ACTION_COMMENT_MENTION:
       return <div styleName='header'>
-        <span styleName='bold'>{actor.name}</span> mentioned you in a comment
+        <span styleName='bold'>{actor.name} </span>
+        mentioned you in a comment on
+        <span styleName='bold'> {post.title}</span>
       </div>
   }
 
