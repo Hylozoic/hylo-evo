@@ -6,35 +6,35 @@ export function fetchNotifications () {
     graphql: {
       query: `{
         me {
-        name
-        notifications (first: 10, order: "desc") {
-          total
-          hasMore
-          items {
-            id
-            activity {
+          name
+          notifications (first: 10, order: "desc") {
+            total
+            hasMore
+            items {
               id
-              actor {
+              activity {
                 id
-                name
-                avatarUrl
+                actor {
+                  id
+                  name
+                  avatarUrl
+                }
+                comment {
+                  id
+                  text
+                }
+                post {
+                  id
+                  title
+                }
+                meta {
+                  reasons
+                }
+                action
               }
-              comment {
-                id
-                text
-              }
-              post {
-                id
-                title
-              }
-              meta {
-                reasons
-              }
-              action
             }
           }
         }
-      }
       }`
     },
     meta: {

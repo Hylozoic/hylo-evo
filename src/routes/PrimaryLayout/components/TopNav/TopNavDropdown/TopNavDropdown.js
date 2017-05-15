@@ -28,8 +28,6 @@ export default class TopNavDropdown extends Component {
     const { toggleChildren, className, topNavPosition, header, body } = this.props
     const { active } = this.state
 
-    console.log('topNavPosition', topNavPosition)
-
     if (isEmpty(topNavPosition)) return null
 
     const wrapperStyle = {

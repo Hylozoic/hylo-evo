@@ -24,10 +24,6 @@ export default class ModelExtractor {
   }
 
   walk (node, modelName, atRoot = true) {
-    console.log('walk')
-    console.log('node', node)
-    console.log('modelName', modelName)
-    console.log('atRoot', atRoot)
     if (atRoot) {
       if (node.hasOwnProperty(QUERY_SET_ITEMS_KEY) || Array.isArray(node)) {
         return this._walkMany(node, modelName)
@@ -44,7 +40,6 @@ export default class ModelExtractor {
       }
 
       if (type instanceof ForeignKey) {
-        console.log('entering _walkOne')
         return this._walkOne(value, type.toModelName)
       }
 
@@ -89,10 +84,7 @@ export default class ModelExtractor {
   }
 
   _walkOne (value, modelName) {
-    console.log('walkOne')
-    console.log('value', value)
-    console.log('modelName', modelName)
-    if (typeof value !== 'object') return value
+    if (typeof value !== 'object' || !value) return value
     this.walk(value, modelName, false)
     return value.id
   }
