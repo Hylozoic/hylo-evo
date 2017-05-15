@@ -110,6 +110,7 @@
     "socket.io-client": "1.4.8",
     "standard": "^9.0.1",
     "standard-loader": "^6.0.1",
+    "striptags": "^3.0.1",
     "tether": "^1.4.0",
     "trunc-html": "^1.1.2",
     "velocity-react": "^1.2.1"

@@ -7,7 +7,16 @@ import RoundImage from 'components/RoundImage'
 import { firstName } from 'store/models/Person'
 import TopNavDropdown from '../TopNavDropdown'
 import { find } from 'lodash/fp'
-import { ACTION_NEW_COMMENT, ACTION_TAG } from 'store/models/Notification'
+import {
+  ACTION_NEW_COMMENT,
+  ACTION_TAG,
+  ACTION_JOIN_REQUEST,
+  ACTION_APPROVED_JOIN_REQUEST,
+  ACTION_MENTION,
+  ACTION_COMMENT_MENTION
+} from 'store/models/Notification'
+import striptags from 'striptags'
+import { decode } from 'ent'
 
 export default class NotificationsDropdown extends Component {
   static propTypes = {
@@ -40,7 +49,7 @@ export default class NotificationsDropdown extends Component {
     const showUnread = () => this.setState({showingUnread: true})
 
     if (showingUnread) {
-      notifications = notifications.filter(n => n.unread)
+      notifications = notifications.filter(n => n.activity.unread)
     }
 
     return <TopNavDropdown
@@ -68,7 +77,7 @@ export default class NotificationsDropdown extends Component {
 }
 
 export function Notification ({ notification, onClick }) {
-  const { unread, actor } = notification
+  const { activity: { unread, actor } } = notification
 
   return <li styleName={cx('notification', {unread})}
     onClick={() => onClick(notification)}>
@@ -84,7 +93,7 @@ export function Notification ({ notification, onClick }) {
 }
 
 export function NotificationHeader ({ notification }) {
-  const { action, post, meta: { reasons } } = notification
+  const { activity: { action, actor, post, meta: { reasons } } } = notification
   switch (action) {
     case ACTION_NEW_COMMENT:
       return <div styleName='header'>
@@ -96,13 +105,29 @@ export function NotificationHeader ({ notification }) {
       return <div styleName='header'>
         New Post in <span styleName='bold'>#{tag}</span>
       </div>
+    case ACTION_JOIN_REQUEST:
+      return <div styleName='header'>
+        New Join Request
+      </div>
+    case ACTION_APPROVED_JOIN_REQUEST:
+      return <div styleName='header'>
+        Join Request Approved
+      </div>
+    case ACTION_MENTION:
+      return <div styleName='header'>
+        <span styleName='bold'>{actor.name}</span> mentioned you
+      </div>
+    case ACTION_COMMENT_MENTION:
+      return <div styleName='header'>
+        <span styleName='bold'>{actor.name}</span> mentioned you in a comment
+      </div>
   }
 
   return null
 }
 
 export function NotificationBody ({ notification }) {
-  const { action, actor, post, comment } = notification
+  const { activity: { action, actor, post, comment, community } } = notification
 
   const truncateForBody = text => textLength(text) > 76
     ? truncate(text, 76)
@@ -110,14 +135,28 @@ export function NotificationBody ({ notification }) {
 
   switch (action) {
     case ACTION_NEW_COMMENT:
-      var text = truncateForBody(comment.text)
+    case ACTION_COMMENT_MENTION:
+      var text = decode(striptags(truncateForBody(comment.text)))
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> Wrote: "{text}"
       </div>
     case ACTION_TAG:
+    case ACTION_MENTION:
       text = truncateForBody(post.title)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> Wrote: "{text}"
+      </div>
+    case ACTION_JOIN_REQUEST:
+      return <div styleName='body'>
+        <span styleName='bold'>{actor.name} </span>
+        asked to join
+        <span styleName='bold'> {community.name}</span>
+      </div>
+    case ACTION_APPROVED_JOIN_REQUEST:
+      return <div styleName='body'>
+        <span styleName='bold'>{actor.name} </span>
+        approved your request to join
+        <span styleName='bold'> {community.name}</span>
       </div>
   }
 

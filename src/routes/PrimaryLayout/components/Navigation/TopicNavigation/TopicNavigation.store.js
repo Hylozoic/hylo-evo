@@ -52,9 +52,15 @@ export const getCommunityFromSlug = ormCreateSelector(
   }
 )
 
-export const getTopicSubscriptions = createSelector(
-  getCommunityFromSlug,
-  community => community
-    ? community.topicSubscriptions.toModelArray()
-    : []
+export const getTopicSubscriptions = ormCreateSelector(
+  orm,
+  state => state.orm,
+  (state, props) => get('slug', props),
+  (session, slug) => {
+    try {
+      return session.Community.get({slug}).topicSubscriptions.toModelArray()
+    } catch (e) {
+      return []
+    }
+  }
 )

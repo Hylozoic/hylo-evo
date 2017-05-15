@@ -1,4 +1,6 @@
 import { FETCH_NOTIFICATIONS } from 'store/constants'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import orm from 'store/models'
 
 export function fetchNotifications () {
   return {
@@ -12,6 +14,7 @@ export function fetchNotifications () {
             hasMore
             items {
               id
+              createdAt
               activity {
                 id
                 actor {
@@ -27,10 +30,16 @@ export function fetchNotifications () {
                   id
                   title
                 }
+                community {
+                  id
+                  name
+                  slug
+                }
                 meta {
                   reasons
                 }
                 action
+                unread
               }
             }
           }
@@ -42,3 +51,11 @@ export function fetchNotifications () {
     }
   }
 }
+
+export const getNotifications = ormCreateSelector(
+  orm,
+  state => state.orm,
+  (session) => {
+    return session.Notification.all().toModelArray()
+  }
+)
