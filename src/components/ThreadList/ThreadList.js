@@ -40,8 +40,8 @@ export default class ThreadList extends Component {
             key={`thread-li-${t.id}`}
             currentUser={currentUser}
             active={t.id === threadId}
-            participants={t.participants}
-            latestMessage={t.messages[0]}
+            participants={t.participants.toRefArray()}
+            latestMessage={t.messages.orderBy('createdAt', 'desc').first()}
             unreadCount={t.unreadCount} />
         })}
         {!threads.length && !threadSearch && <div styleName='no-conversations'>You have no active conversations</div>}

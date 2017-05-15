@@ -6,7 +6,7 @@ $dropdown-border-color: rgba(49, 72, 67, 0.11);
 
   > a {
     display: inline-block;
-    span {
+    > span {
       top: 2px;
     }
   }

@@ -28,13 +28,7 @@ exports[`renders as expected with no community 2`] = `
     />
   </Link>
   <Connect(MessagesDropdown)
-    data-styleName="messages-dropdown"
-    toggleChildren={
-      <BadgedIcon
-        data-styleName="icon"
-        name="Messages"
-      />
-    }
+    data-styleName="icon"
   />
   <Link
     replace={false}
