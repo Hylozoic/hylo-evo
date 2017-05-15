@@ -62,7 +62,7 @@ describe('PeopleSelector', () => {
       expect(removeParticipant).toHaveBeenCalled()
     })
 
-    it('does not remove paraticipant if backspace pressed when currentMatch defined', () => {
+    it('does not remove participant if backspace pressed when currentMatch defined', () => {
       input.simulate('keyDown', { keyCode: keyMap.BACKSPACE })
       expect(removeParticipant).not.toHaveBeenCalled()
     })
@@ -199,6 +199,50 @@ describe('PeopleSelector', () => {
       wrapper.find(PeopleSelector).node.addParticipant('1')
       expect(input.node.value).toBe('')
       expect(setAutocomplete).toBeCalledWith(null)
+    })
+  })
+
+  describe('removeParticipant', () => {
+    it('calls props.removeParticipant', () => {
+      const removeParticipant = jest.fn()
+      const wrapper = shallow(
+        <PeopleSelector
+          fetchPeople={() => {}}
+          participants={[]}
+          removeParticipant={removeParticipant} />
+      )
+      const ps = wrapper.instance()
+      ps.autocomplete = { value: '' }
+      ps.removeParticipant('1')
+      expect(removeParticipant).toBeCalledWith('1')
+    })
+
+    it('sets currentMatch to null if nothing being typed', () => {
+      const wrapper = shallow(
+        <PeopleSelector
+          fetchPeople={() => {}}
+          participants={[]}
+          removeParticipant={() => {}} />
+      )
+      const ps = wrapper.instance()
+      ps.autocomplete = { value: '' }
+      ps.state = { currentMatch: 'abc' }
+      ps.removeParticipant('1')
+      expect(ps.state.currentMatch).toBe(null)
+    })
+
+    it('does not set currentMatch to null if autocomplete in use', () => {
+      const wrapper = shallow(
+        <PeopleSelector
+          fetchPeople={() => {}}
+          participants={[]}
+          removeParticipant={() => {}} />
+      )
+      const ps = wrapper.instance()
+      ps.autocomplete = { value: 'abc' }
+      ps.state = { currentMatch: 'abc' }
+      ps.removeParticipant('1')
+      expect(ps.state.currentMatch).toBe('abc')
     })
   })
 
