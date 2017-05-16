@@ -43,17 +43,6 @@ export function updateUserSettings (settings) {
       query: `mutation ($settings: MeInput) {
         updateMe(changes: $settings) {
           id
-          name
-          email
-          avatarUrl
-          bannerUrl
-          bio
-          twitterName
-          linkedinUrl
-          facebookUrl
-          url
-          location
-          tagline
         }
       }`,
       variables: {
