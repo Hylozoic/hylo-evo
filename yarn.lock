@@ -2128,6 +2128,13 @@ dotenv@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
 
+draft-convert@^1.4.6:
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/draft-convert/-/draft-convert-1.4.6.tgz#0f8308399db4388bea9f7b99f420c28c787f03ee"
+  dependencies:
+    immutable "~3.7.4"
+    invariant "^2.2.1"
+
 draft-js-autocomplete-plugin-creator@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/draft-js-autocomplete-plugin-creator/-/draft-js-autocomplete-plugin-creator-0.2.0.tgz#fe017ca88475bc56f8518598740e20cdd9a80020"
