@@ -37,7 +37,7 @@ export function createTopicFromLink (contentState, node) {
 export default function (contentState, html) {
   return convertFromHTML({
     htmlToEntity: (nodeName, node) => {
-      if (nodeName === 'a' && node.getAttribute('data-entity-type') === MENTION_ENTITY_TYPE) {
+      if (nodeName === 'a' && (node.getAttribute('data-entity-type') === MENTION_ENTITY_TYPE || node.getAttribute('data-user-id'))) {
         return createMentionFromLink(contentState, node)
       } else if (nodeName === 'a' && (node.getAttribute('data-entity-type') === TOPIC_ENTITY_TYPE || node.text[0] === '#')) {
         return createTopicFromLink(contentState, node)
