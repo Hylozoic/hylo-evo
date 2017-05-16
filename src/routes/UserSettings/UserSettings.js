@@ -1,10 +1,9 @@
 import React, { PropTypes, Component } from 'react'
-import styles from './UserSettings.scss'
-import { NavLink, Route } from 'react-router-dom'
-import Icon from 'components/Icon'
+import './UserSettings.scss'
 import AccountSettings from './AccountSettings/AccountSettings'
 import CommunitySettings from './CommunitySettings/CommunitySettings'
 const { object, func } = PropTypes
+import FullPageModal from 'routes/FullPageModal'
 
 export default class UserSettings extends Component {
   static propTypes = {
@@ -28,41 +27,26 @@ export default class UserSettings extends Component {
       communities,
       updateUserSettings,
       leaveCommunity,
-      loginWithService,
-      history,
-      goBack,
-      push
+      loginWithService
     } = this.props
 
-    const onClose = history.length > 2
-      ? () => goBack()
-      : () => push('/')
-
-    return <div styleName='modal'>
-      <div styleName='content'>
-        <div styleName='left-sidebar'>
-          <NavLink to='/settings' exact replace activeClassName={styles.active} styleName='nav-link'>Account</NavLink>
-          <NavLink to='/settings/communities' exact replace activeClassName={styles.active} styleName='nav-link'>Communities</NavLink>
-        </div>
-        <div styleName='center'>
-          <Route path='/settings' exact render={() =>
-            <AccountSettings
-              currentUser={currentUser}
-              updateUserSettings={updateUserSettings}
-              loginWithService={loginWithService} />} />
-          <Route path='/settings/communities' exact render={() =>
-            <CommunitySettings communities={communities} leaveCommunity={leaveCommunity} />} />
-        </div>
-        <div styleName='right-sidebar'>
-          <CloseButton onClose={onClose} />
-        </div>
-      </div>
-    </div>
+    return <FullPageModal
+      content={[
+        {
+          name: 'Account',
+          path: '/settings',
+          component: <AccountSettings
+            currentUser={currentUser}
+            updateUserSettings={updateUserSettings}
+            loginWithService={loginWithService} />
+        },
+        {
+          name: 'Communities',
+          path: '/settings/communities',
+          component: <CommunitySettings
+            communities={communities}
+            leaveCommunity={leaveCommunity} />
+        }
+      ]} />
   }
-}
-
-export function CloseButton ({ onClose }) {
-  return <div styleName='close-button' onClick={onClose}>
-    <Icon name='Ex' styleName='icon' />
-  </div>
 }
