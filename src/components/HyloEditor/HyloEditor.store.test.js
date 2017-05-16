@@ -1,6 +1,3 @@
-// import orm from 'store/models'
-// import payload from '../MemberProfile.test.json'
-// import sampleMentions from './sampleMentions'
 import orm from 'store/models'
 import {
   findMentions,
