@@ -1,0 +1,84 @@
+// From draft-js-plugins topics docs
+// topic: '', // topic text.
+// topicSuggestions: '', // suggestions component.
+// topicSuggestionsEntry: '', // an entry in the suggestions component.
+// topicSuggestionsEntryFocused: '', // the focused entry in the suggestions component.
+// topicSuggestionsEntryText: '', // an entry’s text in the suggestions component.
+// topicSuggestionsEntryAvatar: '' // an entry’s avatar image in the suggestions component.
+
+.topic, .topic:visited {
+  color: #575f67;
+  cursor: pointer;
+  display: inline-block;
+  background: #e6f3ff;
+  padding-left: 2px;
+  padding-right: 2px;
+  border-radius: 2px;
+  text-decoration: none;
+}
+
+.topic:hover, .topic:focus {
+  color: #677584;
+  background: #edf5fd;
+  outline: 0; /* reset for :focus */
+}
+
+.topic:active {
+  color: #222;
+  background: #455261;
+}
+
+.topicSuggestionsEntry,
+.topicSuggestionsEntryFocused {
+  padding: 7px 10px 3px 10px;
+}
+
+.topicSuggestionsEntry {
+  transition: background-color 0.4s cubic-bezier(.27,1.27,.48,.56);
+}
+
+.topicSuggestionsEntry:active {
+  background-color: #cce7ff;
+}
+
+.topicSuggestionsEntryFocused {
+  background-color: $color-black-squeeze;
+}
+
+.topicSuggestionsEntryText {
+  display: inline-block;
+  margin-left: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 368px;
+  font-size: 0.9em;
+  margin-bottom: 0.2em;
+}
+
+.topicSuggestionsEntryAvatar {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+}
+
+.topicSuggestions {
+  border: 1px solid #eee;
+  margin-top: 1.75em;
+  position: absolute;
+  min-width: 220px;
+  max-width: 440px;
+  background: $color-white;
+  border-radius: 2px;
+  box-shadow: 0px 4px 30px 0px rgba(220,220,220,1);
+  cursor: pointer;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  z-index: 2;
+  display: -webkit-box;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  transform: scale(0);
+}

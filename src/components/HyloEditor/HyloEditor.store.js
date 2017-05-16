@@ -1,26 +1,37 @@
-import { createSelector } from 'reselect'
+import orm from 'store/models/index'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import { includes, mapKeys } from 'lodash'
 import { fromJS } from 'immutable'
-import sampleMentions from './sampleMentions'
-import sampleHashtags from './sampleHashtags'
-import * as mentionPlugin from 'draft-js-mention-plugin'
-import * as hashtagPlugin from './hashtagPlugin'
-
-export const MODULE_NAME = 'HyloEditor'
-
-const defaultMentionsSuggestionFilter = mentionPlugin.defaultSuggestionsFilter
-const defaultHashtagSuggestionFilter = hashtagPlugin.defaultSuggestionsFilter
-
-const FIND_MENTIONS = 'hyloEditor/FIND_MENTIONS'
-const CLEAR_MENTIONS = 'hyloEditor/CLEAR_MENTIONS'
-const FIND_HASHTAGS = 'hyloEditor/FIND_HASHTAGS'
-const CLEAR_HASHTAGS = 'hyloEditor/CLEAR_HASHTAGS'
+import {
+  MODULE_NAME,
+  FIND_MENTIONS,
+  FIND_MENTIONS_PENDING,
+  CLEAR_MENTIONS,
+  FIND_TOPICS,
+  FIND_TOPICS_PENDING,
+  CLEAR_TOPICS
+} from './HyloEditor.constants'
 
 // Action Creators
 
-export function findMentions (searchText) {
+export function findMentions (mentionSearchTerm) {
   return {
     type: FIND_MENTIONS,
-    payload: { searchText }
+    graphql: {
+      query: `query ($mentionSearchTerm: String) {
+        people(autocomplete: $mentionSearchTerm, first: 5) {
+          items {
+            id
+            name
+            avatarUrl
+          }
+        }
+      }`,
+      variables: {
+        mentionSearchTerm
+      }
+    },
+    meta: { extractModel: 'Person' }
   }
 }
 
@@ -28,37 +39,61 @@ export function clearMentions (searchText) {
   return { type: CLEAR_MENTIONS }
 }
 
-export function findHashtags (searchText) {
+export function findTopics (topicsSearchTerm) {
+  const collectTopics = results =>
+    results.community.communityTopics.items.map(item => item.topic)
   return {
-    type: FIND_HASHTAGS,
-    payload: { searchText }
+    type: FIND_TOPICS,
+    graphql: {
+      query: `query ($topicsSearchTerm: String) {
+        community(slug: "test1") {
+          communityTopics(autocomplete: $topicsSearchTerm, first: 1) {
+            items {
+              topic {
+                id
+                name
+              }
+            }
+          }
+        }
+      }`,
+      variables: {
+        topicsSearchTerm
+      }
+    },
+    meta: {
+      extractModel: {
+        getRoot: collectTopics,
+        modelName: 'Topic'
+      }
+    }
   }
 }
 
-export function clearHashtags (searchText) {
-  return { type: CLEAR_HASHTAGS }
+export function clearTopics (searchText) {
+  return { type: CLEAR_TOPICS }
 }
 
 // Reducer
 
-const defaultState = {
-  mentionResults: fromJS([]),
-  hashtagResults: sampleHashtags
+export const defaultState = {
+  topicResults: null,
+  mentionSearchTerm: null
 }
 
 export default function reducer (state = defaultState, action) {
-  const { error, type, payload } = action
+  const { error, type } = action
   if (error) return state
 
   switch (type) {
-    case FIND_MENTIONS:
-      return {...state, mentionResults: defaultMentionsSuggestionFilter(payload.searchText, sampleMentions)}
+    case FIND_MENTIONS_PENDING:
+      return {...state, mentionSearchTerm: action.meta.graphql.variables.mentionSearchTerm}
     case CLEAR_MENTIONS:
-      return {...state, mentionResults: fromJS([])}
-    case FIND_HASHTAGS:
-      return {...state, hashtagResults: defaultHashtagSuggestionFilter(payload.searchText, sampleHashtags)}
-    case CLEAR_HASHTAGS:
-      return {...state, hashtagResults: fromJS([])}
+      return {...state, mentionSearchTerm: null}
+    case FIND_TOPICS_PENDING:
+      return {...state, topicsSearchTerm: action.meta.graphql.variables.topicsSearchTerm}
+    case CLEAR_TOPICS:
+      return {...state, topicsSearchTerm: null}
     default:
       return state
   }
@@ -70,12 +105,47 @@ export const moduleSelector = (state) => {
   return state[MODULE_NAME]
 }
 
-export const getMentionResults = createSelector(
+export const getMentionResults = ormCreateSelector(
+  orm,
+  state => state.orm,
   moduleSelector,
-  (state, props) => state.mentionResults
+  (session, moduleNode) => {
+    const { mentionSearchTerm } = moduleNode
+    if (!mentionSearchTerm) return fromJS([])
+    const people = session.Person.all()
+      .filter(person => {
+        return includes(
+          person.name && person.name.toLowerCase(),
+          mentionSearchTerm.toLowerCase()
+        )
+      })
+      .toRefArray()
+      .map(person => {
+        return mapKeys(person, (value, key) => {
+          return {
+            avatarUrl: 'avatar'
+          }[key] || key
+        })
+      })
+    return fromJS(people)
+  }
 )
 
-export const getHashtagResults = createSelector(
+export const getTopicResults = ormCreateSelector(
+  orm,
+  state => state.orm,
   moduleSelector,
-  (state, props) => state.hashtagResults
+  (session, moduleNode) => {
+    const { topicsSearchTerm } = moduleNode
+    if (!topicsSearchTerm) return fromJS([])
+    const topics = session.Topic.all()
+      .filter(topic => {
+        return includes(
+          topic.name && topic.name.toLowerCase(),
+          topicsSearchTerm.toLowerCase()
+        )
+      })
+      .toRefArray()
+    return fromJS(topics)
+  }
 )
