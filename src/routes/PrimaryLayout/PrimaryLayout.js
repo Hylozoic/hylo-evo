@@ -19,6 +19,7 @@ import PostDetail from 'routes/PostDetail'
 import Members from 'routes/Members'
 import Settings from 'routes/Settings'
 import MessageMember from 'components/MessageMember'
+import PostEditorModal from 'components/PostEditorModal'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
@@ -78,7 +79,9 @@ export default class PrimaryLayout extends Component {
             defined above, and store the previous detail component in state
           */}
           {detailRoutes.map(({ path, component }) =>
-            <Route key={path} exact {...{path, component}} />)}
+            <Route key={path} {...{path, component}} />)}
+          {detailRoutes.map(({ path, editComponent }) =>
+            <Route key={`${path}/edit`} path={`${path}/edit`} component={editComponent} />)}
         </div>
       </div>
       <Route path='/t' component={Messages} />
@@ -89,8 +92,8 @@ export default class PrimaryLayout extends Component {
 
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
-  {path: '/all/p/:postId', component: PostDetail},
-  {path: '/c/:slug/p/:postId', component: PostDetail}
+  {path: '/all/p/:postId', component: PostDetail, editComponent: PostEditorModal},
+  {path: '/c/:slug/p/:postId', component: PostDetail, editComponent: PostEditorModal}
 ]
 
 function RedirectToCommunity ({ currentUser }) {

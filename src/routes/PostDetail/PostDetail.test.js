@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import React from 'react'
 import { PostImage, PostBody, PostFooter } from 'components/PostCard'
 import PostHeader from 'components/PostCard/PostHeader'
-import { getPost } from './PostDetail.connector'
+import getPost from 'store/selectors/getPost'
 import orm from 'store/models'
 
 describe('PostDetail', () => {

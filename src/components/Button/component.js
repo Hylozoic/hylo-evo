@@ -1,12 +1,23 @@
 import React, { PropTypes } from 'react'
 import cx from 'classnames'
-import './component.scss'
+import './Button.scss'
 
 const { string, bool, func, object, oneOfType } = PropTypes
 
-export default function Button ({ label, color = 'green', hover, active, narrow, small, children, onClick, className }) {
-  let styleName = cx('button', color, {hover, active, narrow, small})
-  return <div styleName={styleName} className={className} onClick={onClick}>
+export default function Button ({
+  label,
+  color = 'green',
+  hover,
+  active,
+  narrow,
+  small,
+  disabled = false,
+  children,
+  onClick,
+  className
+}) {
+  let styleName = cx('button', color, {hover, active, narrow, small, disabled})
+  return <div styleName={styleName} className={className} onClick={!disabled && onClick}>
     {label || children}
   </div>
 }
@@ -15,12 +26,13 @@ Button.propTypes = {
     string,
     object
   ]),
-  children: string,
-  onClick: func,
   color: string,
-  className: string,
   hover: bool,
+  active: bool,
   narrow: bool,
   small: bool,
-  active: bool
+  children: string,
+  onClick: func,
+  disabled: bool,
+  className: string
 }
