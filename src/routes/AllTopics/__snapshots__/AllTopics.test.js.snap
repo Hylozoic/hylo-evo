@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`does something 1`] = `
-<Connect(withRouter(FullPageModal))
+<withRouter(Connect(FullPageModal))
   content={
     <div
       data-styleName="exampleName"

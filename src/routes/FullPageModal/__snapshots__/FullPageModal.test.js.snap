@@ -20,9 +20,7 @@ exports[`FullPageModal renders correctly with a single component 1`] = `
     <div
       data-styleName="right-sidebar"
     >
-      <CloseButton
-        onClose={[Function]}
-      />
+      <CloseButton />
     </div>
   </div>
 </div>
@@ -74,9 +72,7 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
     <div
       data-styleName="right-sidebar"
     >
-      <CloseButton
-        onClose={[Function]}
-      />
+      <CloseButton />
     </div>
   </div>
 </div>
