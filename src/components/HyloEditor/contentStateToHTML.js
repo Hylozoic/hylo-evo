@@ -1,5 +1,6 @@
 import { createElement } from 'react'
 import { convertToHTML } from 'draft-convert'
+import { fromJS } from 'immutable'
 import {
   MENTION_ENTITY_TYPE,
   TOPIC_ENTITY_TYPE
@@ -10,7 +11,7 @@ export function mentionToLink (originalText, mention) {
     'a',
     {
       'data-entity-type': MENTION_ENTITY_TYPE,
-      'data-user-id': mention.id
+      'data-user-id': mention.get('id')
     },
     originalText
   )
@@ -30,9 +31,9 @@ export default convertToHTML({
   entityToHTML: (entity, originalText) => {
     switch (entity.type) {
       case MENTION_ENTITY_TYPE:
-        return mentionToLink(originalText, entity.data.mention)
+        return mentionToLink(originalText, fromJS(entity.data.mention))
       case TOPIC_ENTITY_TYPE:
-        return topicToLink(originalText, entity.data.mention)
+        return topicToLink(originalText, fromJS(entity.data.mention))
       default:
         return originalText
     }
