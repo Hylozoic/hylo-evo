@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserSettings renders correctly 1`] = `
+<Connect(withRouter(FullPageModal))
+  content={
+    Array [
+      Object {
+        "component": <AccountSettings />,
+        "name": "Account",
+        "path": "/settings",
+      },
+      Object {
+        "component": <CommunitySettings />,
+        "name": "Communities",
+        "path": "/settings/communities",
+      },
+    ]
+  }
+/>
+`;

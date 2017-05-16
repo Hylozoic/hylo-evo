@@ -2,16 +2,33 @@ import FullPageModal from './FullPageModal'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-describe.skip('FullPageModal', () => {
-  it('renders correctly', () => {
+describe('FullPageModal', () => {
+  it('renders correctly with a single component', () => {
     const history = {length: 2}
-    const wrapper = shallow(<FullPageModal history={history} />)
-    expect(wrapper.find('NavLink').length).toEqual(2)
-    expect(wrapper.find('NavLink').at(0).prop('to')).toEqual('/settings')
-    expect(wrapper.find('NavLink').at(1).prop('to')).toEqual('/settings/communities')
-    expect(wrapper.find('Route').length).toEqual(2)
-    expect(wrapper.find('Route').at(0).prop('path')).toEqual('/settings')
-    expect(wrapper.find('Route').at(1).prop('path')).toEqual('/settings/communities')
-    expect(wrapper.find('CloseButton').length).toEqual(1)
+    const content = <div>The Content</div>
+    const wrapper = shallow(<FullPageModal
+      history={history}
+      content={content} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('renders correctly with multiple tabs', () => {
+    const history = {length: 2}
+    const content = [
+      {
+        name: 'Account',
+        path: '/settings',
+        component: <div>Account Page</div>
+      },
+      {
+        name: 'Communities',
+        path: '/settings/communities',
+        component: <div>Communities Page</div>
+      }
+    ]
+    const wrapper = shallow(<FullPageModal
+      history={history}
+      content={content} />)
+    expect(wrapper).toMatchSnapshot()
   })
 })
