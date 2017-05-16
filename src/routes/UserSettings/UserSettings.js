@@ -1,12 +1,12 @@
 import React, { PropTypes, Component } from 'react'
-import styles from './Settings.scss'
+import styles from './UserSettings.scss'
 import { NavLink, Route } from 'react-router-dom'
 import Icon from 'components/Icon'
 import AccountSettings from './AccountSettings/AccountSettings'
 import CommunitySettings from './CommunitySettings/CommunitySettings'
 const { object, func } = PropTypes
 
-export default class Settings extends Component {
+export default class UserSettings extends Component {
   static propTypes = {
     currentUser: object,
     onClose: func

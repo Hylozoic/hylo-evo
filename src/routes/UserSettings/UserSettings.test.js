@@ -1,11 +1,11 @@
-import Settings from './Settings'
+import UserSettings from './UserSettings'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-describe('Settings', () => {
+describe('UserSettings', () => {
   it('renders correctly', () => {
     const history = {length: 2}
-    const wrapper = shallow(<Settings history={history} />)
+    const wrapper = shallow(<UserSettings history={history} />)
     expect(wrapper.find('NavLink').length).toEqual(2)
     expect(wrapper.find('NavLink').at(0).prop('to')).toEqual('/settings')
     expect(wrapper.find('NavLink').at(1).prop('to')).toEqual('/settings/communities')
