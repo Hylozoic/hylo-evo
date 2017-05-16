@@ -7,4 +7,20 @@ export const mapDispatchToProps = {
   push
 }
 
-export default component => connect(null, mapDispatchToProps)(withRouter(component))
+export const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  const { goBack, push } = dispatchProps
+  const { history } = ownProps
+
+  const onClose = history.length > 2
+    ? () => goBack()
+    : () => push('/')
+
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    onClose
+  }
+}
+
+export default component => withRouter(connect(null, mapDispatchToProps, mergeProps)(component))

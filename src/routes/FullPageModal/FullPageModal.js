@@ -12,13 +12,9 @@ export default class FullPageModal extends Component {
   }
 
   render () {
-    const { goBack, push, content, history } = this.props
+    const { onClose, content } = this.props
 
     const multipleTabs = Array.isArray(content)
-
-    const onClose = history.length > 2
-      ? () => goBack()
-      : () => push('/')
 
     return <div styleName='modal'>
       <div styleName='content'>
