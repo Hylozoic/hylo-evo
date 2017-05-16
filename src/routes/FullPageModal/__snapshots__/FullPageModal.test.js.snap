@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FullPageModal renders correctly with a single component 1`] = `
+<div
+  data-styleName="modal"
+>
+  <div
+    data-styleName="content"
+  >
+    <div
+      data-styleName="left-sidebar"
+    />
+    <div
+      data-styleName="center"
+    >
+      <div>
+        The Content
+      </div>
+    </div>
+    <div
+      data-styleName="right-sidebar"
+    >
+      <CloseButton />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FullPageModal renders correctly with multiple tabs 1`] = `
+<div
+  data-styleName="modal"
+>
+  <div
+    data-styleName="content"
+  >
+    <div
+      data-styleName="left-sidebar border"
+    >
+      <NavLink
+        activeClassName="active"
+        data-styleName="nav-link"
+        exact={true}
+        replace={true}
+        to="/settings"
+      >
+        Account
+      </NavLink>
+      <NavLink
+        activeClassName="active"
+        data-styleName="nav-link"
+        exact={true}
+        replace={true}
+        to="/settings/communities"
+      >
+        Communities
+      </NavLink>
+    </div>
+    <div
+      data-styleName="center"
+    >
+      <Route
+        exact={true}
+        path="/settings"
+        render={[Function]}
+      />
+      <Route
+        exact={true}
+        path="/settings/communities"
+        render={[Function]}
+      />
+    </div>
+    <div
+      data-styleName="right-sidebar"
+    >
+      <CloseButton />
+    </div>
+  </div>
+</div>
+`;

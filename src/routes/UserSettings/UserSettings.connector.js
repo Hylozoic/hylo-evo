@@ -1,8 +1,6 @@
 import { connect } from 'react-redux'
-import { goBack, push } from 'react-router-redux'
-import { withRouter } from 'react-router-dom'
 import { getMe } from 'store/selectors/getMe'
-import { fetchUserSettings, updateUserSettings, leaveCommunity } from './Settings.store'
+import { fetchUserSettings, updateUserSettings, leaveCommunity } from './UserSettings.store'
 import { loginWithService } from 'routes/Login/Login.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
@@ -28,12 +26,10 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = {
-  goBack,
-  push,
   fetchUserSettings,
   updateUserSettings,
   leaveCommunity,
   loginWithService
 }
 
-export default component => connect(mapStateToProps, mapDispatchToProps)(withRouter(component))
+export default component => connect(mapStateToProps, mapDispatchToProps)(component)
