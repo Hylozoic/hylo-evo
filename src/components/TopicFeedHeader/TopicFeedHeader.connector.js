@@ -13,7 +13,7 @@ export function mapDispatchToProps (dispatch, props) {
   const topicId = topic && topic.id
   const communityId = community && community.id
   return {
-    toggleTopicSubscribeMaker: topicId && communityId ? subscription => () => dispatch(toggleTopicSubscribe(topicId, communityId, subscription)) : () => {}
+    toggleTopicSubscribeMaker: subscription => topicId && communityId ? () => dispatch(toggleTopicSubscribe(topicId, communityId, subscription)) : () => {}
   }
 }
 
