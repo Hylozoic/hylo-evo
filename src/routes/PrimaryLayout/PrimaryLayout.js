@@ -19,6 +19,7 @@ import PostDetail from 'routes/PostDetail'
 import Members from 'routes/Members'
 import UserSettings from 'routes/UserSettings'
 import MessageMember from 'components/MessageMember'
+import AllTopics from 'routes/AllTopics'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
@@ -65,6 +66,7 @@ export default class PrimaryLayout extends Component {
           <Route path='/events' component={Events} />
           <Route path='/c/:slug/members' component={Members} />
           <Route path='/settings' component={UserSettings} />
+          <Route path='/c/:slug/topics' component={AllTopics} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/c/:slug' exact component={CommunitySidebar} />

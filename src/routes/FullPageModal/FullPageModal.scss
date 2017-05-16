@@ -25,11 +25,13 @@ $size-sidebar-width: 10rem;
   width: $size-sidebar-width;
   padding-top: 220px;
   padding-right: 32px;
-  border-right: 1px solid $color-cape-cod-10;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
+  &.border {
+    border-right: 1px solid $color-cape-cod-10;
+  }
 }
 
 .nav-link {

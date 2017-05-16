@@ -3,6 +3,7 @@ import styles from './FullPageModal.scss'
 import { NavLink, Route } from 'react-router-dom'
 import Icon from 'components/Icon'
 const { object, func, array, oneOfType } = PropTypes
+import cx from 'classnames'
 
 export default class FullPageModal extends Component {
   static propTypes = {
@@ -21,8 +22,8 @@ export default class FullPageModal extends Component {
 
     return <div styleName='modal'>
       <div styleName='content'>
-        {multipleTabs && <div styleName='left-sidebar'>
-          {content.map(tab =>
+        <div styleName={cx('left-sidebar', {border: multipleTabs})}>
+          {multipleTabs && content.map(tab =>
             <NavLink to={tab.path}
               exact
               replace
@@ -31,7 +32,7 @@ export default class FullPageModal extends Component {
               key={tab.path}>
               {tab.name}
             </NavLink>)}
-        </div>}
+        </div>
         {multipleTabs && <div styleName='center'>
           {content.map(tab =>
             <Route path={tab.path}
