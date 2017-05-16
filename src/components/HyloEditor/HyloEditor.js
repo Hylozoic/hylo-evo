@@ -7,11 +7,8 @@ import { EditorState, ContentState, convertToRaw } from 'draft-js'
 import cx from 'classnames'
 import contentStateToHTML from './contentStateToHTML'
 import contentStateFromHTML from './contentStateFromHTML'
-import 'draft-js/dist/Draft.css'
-import 'draft-js-mention-plugin/lib/plugin.css'
-// import mentionPluginsTheme from './mentionsPluginTheme.scss'
-// import topicsPluginTheme from './topicsPluginTheme.scss'
-import './HyloEditor.scss'
+import '../../../node_modules/draft-js/dist/Draft.css'
+import styles from './HyloEditor.scss'
 
 export default class HyloEditor extends Component {
   static propTypes = {
@@ -46,12 +43,26 @@ export default class HyloEditor extends Component {
     super(props)
     // https://github.com/draft-js-plugins/draft-js-plugins/issues/298
     this._mentionsPlugin = createMentionPlugin({
-      // theme: mentionPluginsTheme
+      theme: {
+        mention: styles.mention,
+        mentionSuggestions: styles.mentionSuggestions,
+        mentionSuggestionsEntry: styles.mentionSuggestionsEntry,
+        mentionSuggestionsEntryFocused: styles.mentionSuggestionsEntryFocused,
+        mentionSuggestionsEntryText: styles.mentionSuggestionsEntryText,
+        mentionSuggestionsEntryAvatar: styles.mentionSuggestionsEntryAvatar
+      }
     })
     this._topicsPlugin = createMentionPlugin({
       mentionTrigger: '#',
-      mentionPrefix: '#'
-      // theme: topicsPluginTheme
+      mentionPrefix: '#',
+      theme: {
+        mention: styles.topic,
+        mentionSuggestions: styles.topicSuggestions,
+        mentionSuggestionsEntry: styles.topicSuggestionsEntry,
+        mentionSuggestionsEntryFocused: styles.topicSuggestionsEntryFocused,
+        mentionSuggestionsEntryText: styles.topicSuggestionsEntryText,
+        mentionSuggestionsEntryAvatar: styles.topicSuggestionsEntryAvatar
+      }
     })
     this._linkifyPlugin = createLinkifyPlugin()
     this.state = this.defaultState(props)
@@ -74,7 +85,7 @@ export default class HyloEditor extends Component {
     const contentState = contentStateFromHTML(
       ContentState.createFromText(''), contentHTML
     )
-    // Don't push don't create new EditorState once one has already been created as per:
+    // Don't create new EditorState once one has already been created as per:
     // https://github.com/draft-js-plugins/draft-js-plugins/blob/master/FAQ.md
     return this.state && this.state.editorState
       ? EditorState.push(this.state.editorState, contentState)
@@ -97,7 +108,9 @@ export default class HyloEditor extends Component {
 
   handleChange = (editorState) => {
     this.setState({ editorState })
-    if (this.props.onChange) this.props.onChange(editorState)
+    const contentStateChanged =
+      this.state.editorState.getCurrentContent() === editorState.getCurrentContent()
+    if (this.props.onChange) this.props.onChange(editorState, contentStateChanged)
   }
 
   handleMentionsSearch = ({ value }) => {

@@ -1,7 +1,14 @@
-:global(.public-DraftEditor-content) {
-  max-height: 200px;
-  overflow: auto;
+:global {
+  .public-DraftEditor-content {
+    max-height: 200px;
+    overflow: auto;
+  }
 }
+
+// @import 'node_modules/draft-js-mention-plugin/lib/plugin.css';
+@import './mentionsPluginTheme.scss';
+@import './topicsPluginTheme.scss';
+
 
 .wrapper {
   /*!blank*/

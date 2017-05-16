@@ -5,9 +5,11 @@ import orm from 'store/models'
 import {
   findMentions,
   getMentionResults,
+} from './HyloEditor.store'
+import {
   FIND_MENTIONS,
   MODULE_NAME
-} from './HyloEditor.store'
+} from './HyloEditor.constants.js'
 
 const people = [
   {id: 0, name: 'Test User', avatarUrl: 'avatarURL0'},

@@ -2,15 +2,15 @@ import orm from 'store/models/index'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { includes, mapKeys } from 'lodash'
 import { fromJS } from 'immutable'
-
-export const MODULE_NAME = 'HyloEditor'
-
-export const FIND_MENTIONS = `${MODULE_NAME}/FIND_MENTIONS`
-export const FIND_MENTIONS_PENDING = `${MODULE_NAME}/FIND_MENTIONS_PENDING`
-export const CLEAR_MENTIONS = `${MODULE_NAME}/CLEAR_MENTIONS`
-export const FIND_TOPICS = `${MODULE_NAME}/FIND_TOPICS`
-export const FIND_TOPICS_PENDING = `${MODULE_NAME}/FIND_TOPICS_PENDING`
-export const CLEAR_TOPICS = `${MODULE_NAME}/CLEAR_TOPICS`
+import {
+  MODULE_NAME,
+  FIND_MENTIONS,
+  FIND_MENTIONS_PENDING,
+  CLEAR_MENTIONS,
+  FIND_TOPICS,
+  FIND_TOPICS_PENDING,
+  CLEAR_TOPICS
+} from './HyloEditor.constants'
 
 // Action Creators
 

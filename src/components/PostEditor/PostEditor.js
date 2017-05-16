@@ -140,7 +140,6 @@ export default class PostEditor extends React.Component {
     const details = this.editor.getContentHTML()
     createPost({ type, title, details, communities })
       .then(onClose)
-      // .then(this.reset(PostEditor.defaultProps))
   }
 
   render () {

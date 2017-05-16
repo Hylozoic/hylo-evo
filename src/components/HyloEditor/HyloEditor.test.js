@@ -3,6 +3,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { ContentState } from 'draft-js'
 import HyloEditor from './HyloEditor'
+import { MENTION_ENTITY_TYPE, TOPIC_ENTITY_TYPE } from './HyloEditor.constants'
 
 const emptyFunc = () => {}
 
@@ -36,17 +37,17 @@ describe('HyloEditor', () => {
 
   describe('#contentHTML', () => {
     it('converts mention into contentState entity, ', () => {
-      const contentHTML = '<a data-entity-id="test" data-entity-type="mention" href="/u/test">Test User</a>'
+      const contentHTML = `<a data-user-id="test" data-entity-type="${MENTION_ENTITY_TYPE}" href="/u/test">Test User</a>`
       const wrapper = renderComponent(mount, { contentHTML })
       expect(wrapper.get(0).getContentRaw().entityMap[0].type)
-        .toEqual('mention')
+        .toEqual(MENTION_ENTITY_TYPE)
     })
 
     it('converts topic into contentState entity, ', () => {
-      const contentHTML = '<a data-entity-type="topic">#testtopic</a>'
+      const contentHTML = `<a data-entity-type="${TOPIC_ENTITY_TYPE}">#testtopic</a>`
       const wrapper = renderComponent(mount, { contentHTML })
       expect(wrapper.get(0).getContentRaw().entityMap[0].type)
-        .toEqual('topic')
+        .toEqual(TOPIC_ENTITY_TYPE)
     })
   })
 
