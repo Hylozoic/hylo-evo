@@ -6,12 +6,20 @@ import {
 } from './HyloEditor.constants'
 
 const mentionHTML = `This is a test <a href="/u/99" data-user-id="99" data-entity-type="${MENTION_ENTITY_TYPE}">Hylo Tester</a>`
+const mentionLegacyHTML = `This is a test <a href="/u/99" data-user-id="99">Hylo Legacy Tester</a>`
 const topicHTML = `Text before <a data-entity-type="${TOPIC_ENTITY_TYPE}">test2</a> test after`
 const legacyTopicHTML = `Text before <a>#test2</a> test after`
 
 describe('convertFromHTML', () => {
   it(`converts Mentions to DraftJS Entities`, () => {
     const contentState = contentStateFromHTML(ContentState.createFromText(''), mentionHTML)
+    const entityKey = contentState.getLastCreatedEntityKey()
+    expect(contentState.getEntity(entityKey).type)
+      .toEqual(MENTION_ENTITY_TYPE)
+  })
+
+  it(`converts Mentions (legacy) to DraftJS Entities`, () => {
+    const contentState = contentStateFromHTML(ContentState.createFromText(''), mentionLegacyHTML)
     const entityKey = contentState.getLastCreatedEntityKey()
     expect(contentState.getEntity(entityKey).type)
       .toEqual(MENTION_ENTITY_TYPE)
