@@ -149,6 +149,12 @@ export default class HyloEditor extends Component {
     return true
   }
 
+  handleTopicsClose = () => {
+    this.props.clearTopics()
+    this.enableSubmitOnReturn()
+    return true
+  }
+
   focus = () => this.editor && this.editor.focus()
 
   render () {
@@ -180,7 +186,7 @@ export default class HyloEditor extends Component {
         onSearchChange={this.handleTopicSearch}
         suggestions={topicResults}
         onOpen={this.disableSubmitOnReturn}
-        onClose={this.enableSubmitOnReturn} />
+        onClose={this.handleTopicsClose} />
     </div>
   }
 }
