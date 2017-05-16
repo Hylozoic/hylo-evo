@@ -10,7 +10,4 @@ it('renders as expected with no community', () => {
   expect(logo.props().style).toEqual({
     backgroundImage: 'url(/hylo-merkaba.png)'
   })
-
-  const rightSide = wrapper.find('RightSideIcons').dive()
-  expect(rightSide).toMatchSnapshot()
 })

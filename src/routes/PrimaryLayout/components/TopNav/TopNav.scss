@@ -64,17 +64,19 @@
     margin-right: 15px;
     display: inline-block;
     height: 28px;
-    > * {
-      vertical-align: middle;
-    }
-  }
-
-  > a:hover {
+    margin-right: 15px;
     text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 }
 
 .icon {
+  position: relative;
+  top: 3px;
   font-size: 22px;
 }
 

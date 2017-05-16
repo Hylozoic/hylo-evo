@@ -9,66 +9,56 @@ exports[`renders as expected with no community 1`] = `
   >
     <Logo />
     <Title />
-    <RightSideIcons />
-  </div>
-</div>
-`;
-
-exports[`renders as expected with no community 2`] = `
-<div
-  data-styleName="navIcons"
->
-  <Link
-    replace={false}
-    to="/"
-  >
-    <Icon
-      data-styleName="icon"
-      name="Search"
-    />
-  </Link>
-  <Connect(MessagesDropdown)
-    data-styleName="icon"
-  />
-  <Link
-    replace={false}
-    to="/"
-  >
-    <Icon
-      data-styleName="icon"
-      name="Notifications"
-    />
-  </Link>
-  <Dropdown
-    alignRight={true}
-    data-styleName="user-menu"
-    toggleChildren={
-      <RoundImage
-        small={true}
-      />
-    }
-  >
-    <li>
+    <div
+      data-styleName="navIcons"
+    >
       <Link
         replace={false}
         to="/"
       >
-        Profile
+        <Icon
+          data-styleName="icon"
+          name="Search"
+        />
       </Link>
-    </li>
-    <li>
-      <Link
-        replace={false}
-        to="/settings"
+      <Connect(MessagesDropdown)
+        renderToggleChildren={[Function]}
+      />
+      <Connect(NotificationsDropdown)
+        renderToggleChildren={[Function]}
+      />
+      <Dropdown
+        alignRight={true}
+        data-styleName="user-menu"
+        toggleChildren={
+          <RoundImage
+            small={true}
+          />
+        }
       >
-        Settings
-      </Link>
-    </li>
-    <li>
-      <a>
-        Log out
-      </a>
-    </li>
-  </Dropdown>
+        <li>
+          <Link
+            replace={false}
+            to="/"
+          >
+            Profile
+          </Link>
+        </li>
+        <li>
+          <Link
+            replace={false}
+            to="/settings"
+          >
+            Settings
+          </Link>
+        </li>
+        <li>
+          <a>
+            Log out
+          </a>
+        </li>
+      </Dropdown>
+    </div>
+  </div>
 </div>
 `;
