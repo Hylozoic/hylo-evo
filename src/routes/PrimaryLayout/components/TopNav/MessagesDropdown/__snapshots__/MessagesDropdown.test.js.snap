@@ -1,120 +1,100 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
-<div
-  data-styleName="messages-dropdown"
->
-  <a
-    onClick={[Function]}
-  >
-    <BadgedIcon
-      name="Messages"
-      showBadge={false}
-    />
-  </a>
-  <div
-    data-styleName="wrapper"
-  >
-    <ul
-      data-styleName="menu"
+<Connect(TopNavDropdown)
+  body={
+    <div
+      data-styleName="threads"
     >
-      <li
-        data-styleName="triangle"
+      <MessagesDropdownItem
+        currentUserId="1"
+        onClick={[Function]}
+        thread={
+          SessionBoundModel {
+            "_fields": Object {
+              "id": 2,
+              "updatedAt": 2017-05-07T03:24:00.000Z,
+            },
+          }
+        }
       />
-      <li
-        data-styleName="header"
-      >
-        <Link
-          data-styleName="open"
-          replace={false}
-          to="/t"
-        >
-          Open Messages
-        </Link>
-        <Link
-          data-styleName="new"
-          replace={false}
-          to="/t/new"
-        >
-          New
-        </Link>
-      </li>
-      <div
-        data-styleName="threads"
-      >
-        <MessagesDropdownItem
-          currentUserId="1"
-          thread={
-            SessionBoundModel {
-              "_fields": Object {
-                "id": 2,
-                "updatedAt": 2017-05-07T03:24:00.000Z,
-              },
-            }
+      <MessagesDropdownItem
+        currentUserId="1"
+        onClick={[Function]}
+        thread={
+          SessionBoundModel {
+            "_fields": Object {
+              "id": 1,
+              "updatedAt": 1995-12-17T03:23:00.000Z,
+            },
           }
-        />
-        <MessagesDropdownItem
-          currentUserId="1"
-          thread={
-            SessionBoundModel {
-              "_fields": Object {
-                "id": 1,
-                "updatedAt": 1995-12-17T03:23:00.000Z,
-              },
-            }
-          }
-        />
-      </div>
-    </ul>
-  </div>
-</div>
+        }
+      />
+    </div>
+  }
+  header={
+    <div
+      data-styleName="header-content"
+    >
+      <Link
+        data-styleName="open"
+        replace={false}
+        to="/t"
+      >
+        Open Messages
+      </Link>
+      <Link
+        data-styleName="new"
+        replace={false}
+        to="/t/new"
+      >
+        New
+      </Link>
+    </div>
+  }
+  onToggle={[Function]}
+  toggleChildren={
+    <span>
+      click me
+    </span>
+  }
+/>
 `;
 
 exports[`MessagesDropdown renders correctly with an empty list 1`] = `
-<div
-  data-styleName="messages-dropdown"
->
-  <a
-    onClick={[Function]}
-  >
-    <BadgedIcon
-      name="Messages"
-      showBadge={false}
+<Connect(TopNavDropdown)
+  body={
+    <div
+      data-styleName="threads"
     />
-  </a>
-  <div
-    data-styleName="wrapper"
-  >
-    <ul
-      data-styleName="menu"
+  }
+  header={
+    <div
+      data-styleName="header-content"
     >
-      <li
-        data-styleName="triangle"
-      />
-      <li
-        data-styleName="header"
+      <Link
+        data-styleName="open"
+        replace={false}
+        to="/t"
       >
-        <Link
-          data-styleName="open"
-          replace={false}
-          to="/t"
-        >
-          Open Messages
-        </Link>
-        <Link
-          data-styleName="new"
-          replace={false}
-          to="/t/new"
-        >
-          New
-        </Link>
-      </li>
-      <div
-        data-styleName="threads"
-      />
-    </ul>
-  </div>
-</div>
+        Open Messages
+      </Link>
+      <Link
+        data-styleName="new"
+        replace={false}
+        to="/t/new"
+      >
+        New
+      </Link>
+    </div>
+  }
+  onToggle={[Function]}
+  toggleChildren={
+    <span>
+      click me
+    </span>
+  }
+/>
 `;
 
 exports[`MessagesDropdownItem renders correctly with an empty thread 1`] = `null`;

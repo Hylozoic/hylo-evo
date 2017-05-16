@@ -1,5 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`handles null children 1`] = `
+Array [
+  Object {
+    "modelName": "Activity",
+    "payload": Object {
+      "action": "tag",
+      "comment": null,
+      "id": "1",
+    },
+  },
+]
+`;
+
 exports[`produces a flat list from a "nested-totals-style" response 1`] = `
 Array [
   Object {

@@ -1,21 +1,37 @@
+// NotificationsDropdown
+
 .header-content {
   composes: header-content from '../TopNavDropdown/TopNavDropdown.scss';
 }
 
-.open {
+.tab {
   composes: header-link from '../TopNavDropdown/TopNavDropdown.scss';
+  margin-right: 15px;
 }
 
-.new {
+.active {
+  color: $color-rhino;
+  border-bottom: 2px solid $color-rhino;
+  position: relative;
+  top: 4px;
+  padding: 0 4px 7px 4px;
+  margin: 0 11px 0 -4px;
+  &:hover {
+    color: $color-rhino-80;
+    border-bottom: 2px solid $color-rhino-80;
+  }
+}
+
+.mark-read {
   composes: header-link from '../TopNavDropdown/TopNavDropdown.scss';
   margin-left: auto;
 }
 
-.threads {
+.notifications {
   composes: body from '../TopNavDropdown/TopNavDropdown.scss';
 }
 
-.thread {
+.notification {
   display: flex;
   align-items: start;
   cursor: pointer;
@@ -33,32 +49,40 @@
   background-color: $color-saltpan;
 }
 
-.image-wrapper {
-  width: $space-10x;
+.image-wraper {
   margin: 0 10px 0 15px;
   padding-top: 20px;
-}
-
-.message-content {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  align-items: start;
-  padding: 20px 15px 15px 0;
-  border-bottom: 1px solid $color-black-squeeze;
-}
-
-.name {
-  composes: username-cards from 'css/typography.scss';
-  margin-bottom: $space-1x;
-}
-
-.body {
-  composes: caption-lt-lg from 'css/typography.scss';
 }
 
 .date {
   composes: caption-lt-lg from 'css/typography.scss';
   color: $color-slate-gray-80;
   font-size: 12px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 20px 15px 15px 0;
+  border-bottom: 1px solid $color-black-squeeze;
+}
+
+// NotificationHeader
+
+.header {
+  composes: caption-lt-lg from 'css/typography.scss';
+  margin-bottom: 5px;
+  color: $color-rhino;
+}
+
+.bold {
+  @include font-bold;
+}
+
+// NotificationBody
+
+.body {
+  composes: caption-lt-lg from 'css/typography.scss';
+  color: $color-rhino-60;
 }

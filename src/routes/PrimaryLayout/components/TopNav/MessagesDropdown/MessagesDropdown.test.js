@@ -32,12 +32,18 @@ const threads = [
 
 describe('MessagesDropdown', () => {
   it('renders correctly with an empty list', () => {
-    const wrapper = shallow(<MessagesDropdown threads={[]} currentUser={u1} />)
+    const wrapper = shallow(<MessagesDropdown
+      renderToggleChildren={() => <span>click me</span>}
+      threads={[]}
+      currentUser={u1} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('renders correctly with a list of threads', () => {
-    const wrapper = shallow(<MessagesDropdown threads={threads} currentUser={u1} />)
+    const wrapper = shallow(<MessagesDropdown
+      renderToggleChildren={() => <span>click me</span>}
+      threads={threads}
+      currentUser={u1} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
@@ -51,10 +57,10 @@ describe('MessagesDropdownItem', () => {
 
   it('renders correctly with a message', () => {
     const mockNavigate = jest.fn()
-    const goToThread = i => () => mockNavigate(i)
+    const goToThread = i => mockNavigate(i)
 
     const wrapper = shallow(<MessagesDropdownItem
-      thread={threads[0]} currentUserId={u1.id} goToThread={goToThread} />)
+      thread={threads[0]} currentUserId={u1.id} onClick={() => goToThread(threads[0].id)} />)
     expect(wrapper.find('RoundImageRow').prop('imageUrls')).toEqual(['bar.png', 'baz.png'])
     expect(wrapper.find('div').at(2).text()).toEqual('Marie Curie and Arthur Fonzarelli')
     expect(wrapper.find('div').at(3).text()).toEqual('hi')
