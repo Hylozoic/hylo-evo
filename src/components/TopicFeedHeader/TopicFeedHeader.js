@@ -27,6 +27,10 @@ TopicFeedHeader.propTypes = {
   topicName: string,
   postsTotal: number,
   followersTotal: number,
+  topic: shape({
+    id: number,
+    name: string
+  }),
   community: shape({
     id: string,
     name: string,
