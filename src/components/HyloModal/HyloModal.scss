@@ -1,0 +1,26 @@
+:global .ReactModal__Body--open {
+    overflow: hidden;
+}
+
+.hyloModal {
+  position: relative;
+  margin: 0 auto;
+  margin-top: 5%;
+  max-width: 590px;
+  background: #fff;
+  // overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  outline: none;
+  z-index: 100;
+}
+
+.hyloModal-overlay {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.75);
+  z-index: 100;
+}

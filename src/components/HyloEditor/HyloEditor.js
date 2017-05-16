@@ -2,71 +2,130 @@ import React, { Component, PropTypes } from 'react'
 import Immutable from 'immutable'
 import Editor from 'draft-js-plugins-editor'
 import createMentionPlugin from 'draft-js-mention-plugin'
-import createHashtagPlugin from './hashtagPlugin'
 import createLinkifyPlugin from 'draft-js-linkify-plugin'
-import { EditorState } from 'draft-js'
-import { stateToHTML } from 'draft-js-export-html'
+import { EditorState, ContentState, convertToRaw } from 'draft-js'
+import cx from 'classnames'
+import contentStateToHTML from './contentStateToHTML'
+import contentStateFromHTML from './contentStateFromHTML'
 import 'draft-js/dist/Draft.css'
-import 'draft-js-mention-plugin/lib/plugin.css'
-import './HyloEditor.scss'
-
-const mentionPlugin = createMentionPlugin({
-  // TODO: Map to local CSS Modules stylesheet (copy from plugin)
-  // theme: styles
-})
-const hashtagPlugin = createHashtagPlugin()
-const linkifyPlugin = createLinkifyPlugin()
-
-const { MentionSuggestions } = mentionPlugin
-const { CompletionSuggestions: HashtagSuggestions } = hashtagPlugin
-
-const plugins = [
-  mentionPlugin,
-  hashtagPlugin,
-  linkifyPlugin
-]
+import styles from './HyloEditor.scss'
 
 export default class HyloEditor extends Component {
   static propTypes = {
-    mentionResults: PropTypes.instanceOf(Immutable.List),
-    hashtagResults: PropTypes.instanceOf(Immutable.List),
+    contentHTML: PropTypes.string,
     placeholder: PropTypes.string,
     className: PropTypes.string,
-    debug: PropTypes.bool,
-    onChange: PropTypes.func
+    submitOnReturnHandler: PropTypes.func,
+    readOnly: PropTypes.bool,
+    findMentions: PropTypes.func.isRequired,
+    clearMentions: PropTypes.func.isRequired,
+    findTopics: PropTypes.func.isRequired,
+    clearTopics: PropTypes.func.isRequired,
+    mentionResults: PropTypes.instanceOf(Immutable.List),
+    topicResults: PropTypes.instanceOf(Immutable.List)
+  }
+
+  static defaultProps = {
+    contentHTML: '',
+    readOnly: false,
+    mentionResults: Immutable.List(),
+    topicResults: Immutable.List()
+  }
+
+  defaultState = ({ contentHTML }) => {
+    return {
+      editorState: this.getEditorStateFromHTML(contentHTML),
+      submitOnReturnEnabled: true
+    }
   }
 
   constructor (props) {
     super(props)
-    this.state = {
-      editorState: EditorState.createEmpty()
+    // https://github.com/draft-js-plugins/draft-js-plugins/issues/298
+    this._mentionsPlugin = createMentionPlugin({
+      theme: {
+        mention: styles.mention,
+        mentionSuggestions: styles.mentionSuggestions,
+        mentionSuggestionsEntry: styles.mentionSuggestionsEntry,
+        mentionSuggestionsEntryFocused: styles.mentionSuggestionsEntryFocused,
+        mentionSuggestionsEntryText: styles.mentionSuggestionsEntryText,
+        mentionSuggestionsEntryAvatar: styles.mentionSuggestionsEntryAvatar
+      }
+    })
+    this._topicsPlugin = createMentionPlugin({
+      mentionTrigger: '#',
+      mentionPrefix: '#',
+      theme: {
+        mention: styles.topic,
+        mentionSuggestions: styles.topicSuggestions,
+        mentionSuggestionsEntry: styles.topicSuggestionsEntry,
+        mentionSuggestionsEntryFocused: styles.topicSuggestionsEntryFocused,
+        mentionSuggestionsEntryText: styles.topicSuggestionsEntryText,
+        mentionSuggestionsEntryAvatar: styles.topicSuggestionsEntryAvatar
+      }
+    })
+    this._linkifyPlugin = createLinkifyPlugin()
+    this.state = this.defaultState(props)
+  }
+
+  componentDidUpdate (prevProps) {
+    if (this.props.contentHTML !== prevProps.contentHTML) {
+      this.setState(this.defaultState(this.props))
     }
   }
 
-  getContent = () => {
-    const { editorState } = this.state
-    return stateToHTML(editorState.getCurrentContent())
+  reset = () => {
+    this.setState({editorState: this.getEditorStateFromHTML('')})
   }
 
-  handleEditorChange = (editorState) => {
-    if (this.props.debug) console.log(this.getContent())
+  isEmpty = () =>
+    !this.state.editorState.getCurrentContent().hasText()
+
+  getEditorStateFromHTML = (contentHTML) => {
+    const contentState = contentStateFromHTML(
+      ContentState.createFromText(''), contentHTML
+    )
+    // Don't create new EditorState once one has already been created as per:
+    // https://github.com/draft-js-plugins/draft-js-plugins/blob/master/FAQ.md
+    return this.state && this.state.editorState
+      ? EditorState.push(this.state.editorState, contentState)
+      : EditorState.createWithContent(contentState)
+  }
+
+  getContentHTML = () => {
+    const { editorState } = this.state
+    return contentStateToHTML(editorState.getCurrentContent())
+  }
+
+  getContentRaw = () => {
+    const { editorState } = this.state
+    return convertToRaw(editorState.getCurrentContent())
+  }
+
+  setEditorStateFromContentState = (contentState) => {
+    this.setState({editorState: EditorState.push(this.state.editorState, contentState)})
+  }
+
+  handleChange = (editorState) => {
     this.setState({ editorState })
-    if (this.props.onChange) this.props.onChange(editorState)
+    const contentStateChanged =
+      this.state.editorState.getCurrentContent() === editorState.getCurrentContent()
+    if (this.props.onChange) this.props.onChange(editorState, contentStateChanged)
   }
 
   handleMentionsSearch = ({ value }) => {
     return this.props.findMentions(value)
   }
 
-  handleHashtagSearch = ({ value }) => {
-    return this.props.findHashtags(value)
+  handleTopicSearch = ({ value }) => {
+    return this.props.findTopics(value)
   }
 
   handleReturn = (event) => {
     const { submitOnReturnHandler } = this.props
-    if (submitOnReturnHandler && !this.mentionsOpen) {
+    if (submitOnReturnHandler && this.state.submitOnReturnEnabled) {
       if (!event.shiftKey) {
-        submitOnReturnHandler(this.getContent())
+        submitOnReturnHandler(this.getContentHTML())
         this.setState({
           editorState: EditorState.moveFocusToEnd(EditorState.createEmpty())
         })
@@ -76,36 +135,52 @@ export default class HyloEditor extends Component {
     }
   }
 
-  handleMentionsOpen = () => {
-    this.mentionsOpen = true
+  enableSubmitOnReturn = () => {
+    this.setState({submitOnReturnEnabled: true})
+  }
+
+  disableSubmitOnReturn = () => {
+    this.setState({submitOnReturnEnabled: false})
   }
 
   handleMentionsClose = () => {
     this.props.clearMentions()
-    this.mentionsOpen = false
+    this.enableSubmitOnReturn()
+    return true
   }
 
-  focus = () => {
-    this.editor.focus()
-  }
+  focus = () => this.editor && this.editor.focus()
 
   render () {
-    return <div styleName='wrapper' className={this.props.className}>
+    const { MentionSuggestions } = this._mentionsPlugin
+    const { MentionSuggestions: TopicSuggestions } = this._topicsPlugin
+    const plugins = [
+      this._mentionsPlugin,
+      this._topicsPlugin,
+      this._linkifyPlugin
+    ]
+    const { placeholder, mentionResults, topicResults, className, readOnly } = this.props
+    const { editorState } = this.state
+    const styleNames = cx('wrapper', { readOnly })
+    return <div styleName={styleNames} className={className}>
       <Editor
-        ref={x => { this.editor = x }}
-        editorState={this.state.editorState}
-        onChange={this.handleEditorChange}
-        placeholder={this.props.placeholder}
+        editorState={editorState}
+        onChange={this.handleChange}
+        readOnly={readOnly}
+        placeholder={placeholder}
         handleReturn={this.handleReturn}
-        plugins={plugins} />
+        plugins={plugins}
+        ref={component => { this.editor = component }} />
       <MentionSuggestions
         onSearchChange={this.handleMentionsSearch}
-        suggestions={this.props.mentionResults}
-        onOpen={this.handleMentionsOpen}
+        suggestions={mentionResults}
+        onOpen={this.disableSubmitOnReturn}
         onClose={this.handleMentionsClose} />
-      <HashtagSuggestions
-        onSearchChange={this.handleHashtagSearch}
-        suggestions={this.props.hashtagResults} />
+      <TopicSuggestions
+        onSearchChange={this.handleTopicSearch}
+        suggestions={topicResults}
+        onOpen={this.disableSubmitOnReturn}
+        onClose={this.enableSubmitOnReturn} />
     </div>
   }
 }

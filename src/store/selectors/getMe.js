@@ -8,3 +8,5 @@ export const getMe = ormCreateSelector(
     return session.Me.first()
   }
 )
+
+export default getMe

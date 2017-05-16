@@ -1,6 +1,6 @@
 import { FETCH_POST } from 'store/constants'
 
-export function fetchPost (id, opts = {}) {
+export default function fetchPost (id, opts = {}) {
   return {
     type: FETCH_POST,
     graphql: {

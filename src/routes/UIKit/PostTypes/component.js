@@ -38,12 +38,18 @@ const SAMPLE_POST_WITH_PREVIEW = {
   }
 }
 
+const SAMPLE_POST_FOR_EDITOR = {
+  type: 'offer',
+  title: 'This is a Post title',
+  details: 'This is a test <a href="/u/1" data-user-id="99" data-entity-type="mention">Loren Johnson</a> and the remaining text <a data-entity-type="topic">#Environment</a> text betweeen hastags <a data-entity-type="#mention">#OurTopic</a>'
+}
+
 export default function PostTypes (props) {
   return <div>
     <div className='sheet'>
       <div className='sheet-title'>Post Editor</div>
       <div styleName='postCards'>
-        <PostEditor />
+        <PostEditor post={SAMPLE_POST_FOR_EDITOR} />
       </div>
       <div className='sheet-title'>Post Types</div>
       <div styleName='postCards'>

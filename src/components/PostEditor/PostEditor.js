@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react'
+import { get } from 'lodash/fp'
 import cx from 'classnames'
 import styles from './PostEditor.scss'
+import Icon from 'components/Icon'
 import Avatar from 'components/Avatar'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
@@ -8,84 +10,150 @@ import CommunitiesSelector from 'components/CommunitiesSelector'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
-    titlePlaceholder: PropTypes.string,
-    bodyPlaceholder: PropTypes.string,
-    postType: PropTypes.string
+    initialPrompt: PropTypes.string,
+    onClose: PropTypes.func,
+    titlePlaceholderForPostType: PropTypes.object,
+    detailsPlaceholder: PropTypes.string,
+    communityOptions: PropTypes.array,
+    post: PropTypes.shape({
+      id: PropTypes.string,
+      type: PropTypes.string,
+      title: PropTypes.string,
+      details: PropTypes.string,
+      communities: PropTypes.array
+    }),
+    createPost: PropTypes.func,
+    readOnly: PropTypes.bool
   }
 
   static defaultProps = {
-    titlePlaceholder: 'What’s on your mind?',
-    bodyPlaceholder: 'Add a description',
-    postType: 'discussion'
+    initialPrompt: 'What are you looking to post?',
+    titlePlaceholderForPostType: {
+      offer: 'What super powers can you offer?',
+      default: 'What’s on your mind?'
+    },
+    detailsPlaceholder: 'Add details...',
+    post: {
+      type: 'discussion',
+      title: '',
+      details: '',
+      communities: []
+    },
+    readOnly: false
+  }
+
+  buildStateFromProps = ({ post }) => {
+    const defaultedPost = post || PostEditor.defaultProps.post
+    return {
+      post: defaultedPost,
+      titlePlaceholder: this.titlePlaceholderForPostType(defaultedPost.type),
+      valid: false
+    }
   }
 
   constructor (props) {
     super(props)
-    this.state = {
-      postType: props.postType,
-      title: '',
-      titlePlaceholder: props.titlePlaceholder,
-      description: '',
-      selectedCommunities: []
+    this.state = this.buildStateFromProps(props)
+  }
+
+  componentDidUpdate (prevProps) {
+    if (get('post.id', this.props) !== get('post.id', prevProps)) {
+      this.reset(this.props)
+      this.editor.focus()
     }
   }
 
-  handlePostTypeSelection = postType => event => {
-    let { titlePlaceholder } = this.state
-    switch (postType) {
-      case 'discussions':
-      case 'request':
-      case 'offer':
-        titlePlaceholder = 'What super powers can you offer?'
-        break
-      default:
-    }
-    this.setState({ titlePlaceholder, postType })
+  reset = (props) => {
+    this.editor.reset()
+    this.communitiesSelector.reset()
+    this.setState(this.buildStateFromProps(props))
   }
 
-  postTypeButtonProps = type => {
-    const { postType } = this.state
+  focus = () => this.editor && this.editor.focus()
+
+  handlePostTypeSelection = event => {
+    const type = event.target.textContent.toLowerCase()
+    this.setState({
+      post: {...this.state.post, type},
+      titlePlaceholder: this.titlePlaceholderForPostType(type),
+      valid: this.isValid({ type })
+    })
+  }
+
+  titlePlaceholderForPostType (type) {
+    const { titlePlaceholderForPostType } = this.props
+    return titlePlaceholderForPostType[type] || titlePlaceholderForPostType['default']
+  }
+
+  postTypeButtonProps = (forPostType) => {
+    const { readOnly } = this.props
+    const { type } = this.state.post
+    const active = type === forPostType
+    const className = cx(
+      styles['postType'],
+      styles[`postType-${forPostType}`],
+      {
+        [styles[`active`]]: active,
+        [styles[`selectable`]]: !readOnly && !active
+      }
+    )
     return {
-      label: type,
-      onClick: this.handlePostTypeSelection(type),
-      className: cx(
-        styles.postType,
-        styles[`postType-${type}`],
-        {
-          [styles[`postType-${type}-active`]]: postType === type
-        }
-      )
+      label: forPostType,
+      onClick: this.handlePostTypeSelection,
+      disabled: readOnly,
+      color: '',
+      className
     }
   }
 
-  handleTitleChange = (event) => this.setState({title: event.target.value})
+  handleTitleChange = (event) => {
+    const title = event.target.value
+    this.setState({
+      post: {...this.state.post, title},
+      valid: this.isValid({ title })
+    })
+  }
 
-  setSelectedCommunities = selectedCommunities => this.setState({ selectedCommunities })
+  setSelectedCommunities = communities => {
+    this.setState({
+      post: {...this.state.post, communities},
+      valid: this.isValid({ communities })
+    })
+  }
 
-  save = (description) => {
-    const {
-      postType,
-      selectedCommunities,
-      title
-    } = this.state
+  isValid = (postUpdates = {}) => {
+    const { type, title, communities } = Object.assign({}, this.state.post, postUpdates)
+    return !!(this.editor &&
+      communities &&
+      type.length > 0 &&
+      title.length > 0 &&
+      !this.editor.isEmpty() &&
+      communities.length > 0)
+  }
 
-    console.log('getContent', this.editor.getWrappedInstance().getContent())
-    const results = {
-      postType,
-      selectedCommunities,
-      title,
-      description
-    }
-    console.log(results)
+  setValid = () =>
+    this.setState({valid: this.isValid()})
+
+  save = () => {
+    const { createPost, onClose } = this.props
+    const { type, title, communities } = this.state.post
+    const details = this.editor.getContentHTML()
+    createPost({ type, title, details, communities })
+      .then(onClose)
   }
 
   render () {
-    const { bodyPlaceholder } = this.props
-    const { titlePlaceholder, title } = this.state
+    const { titlePlaceholder, valid, post } = this.state
+    if (!post) return null
+    const { title, details, communities } = post
+    const { onClose, initialPrompt, detailsPlaceholder, communityOptions, readOnly } = this.props
 
-    return <div styleName='wrapper'>
+    return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
       <div styleName='header'>
-        <div styleName='initialPrompt'>What are you looking to post?</div>
+        <div styleName='initial'>
+          <div styleName='initial-prompt'>{initialPrompt}</div>
+          <a styleName='initial-closeButton' onClick={onClose}><Icon name='Ex' /></a>
+        </div>
         <div styleName='postTypes'>
           <Button {...this.postTypeButtonProps('discussion')} />
           <Button {...this.postTypeButtonProps('request')} />
@@ -98,7 +166,8 @@ export default class PostEditor extends React.Component {
             medium
             styleName='titleAvatar'
             url=''
-            avatarUrl='https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png' />
+            avatarUrl='https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+          />
         </div>
         <div styleName='body-column'>
           <input
@@ -106,23 +175,40 @@ export default class PostEditor extends React.Component {
             styleName='titleInput'
             placeholder={titlePlaceholder}
             value={title}
-            onChange={this.handleTitleChange} />
+            onChange={this.handleTitleChange}
+            disabled={readOnly}
+          />
           <HyloEditor
             styleName='editor'
-            submitOnReturnHandler={this.save}
-            placeholder={bodyPlaceholder}
-            ref={e => { this.editor = e }} />
+            placeholder={detailsPlaceholder}
+            onChange={this.setValid}
+            contentHTML={details}
+            readOnly={readOnly}
+            ref={component => { this.editor = component && component.getWrappedInstance() }}
+          />
         </div>
       </div>
       <div styleName='footer'>
         <div styleName='postIn'>
           <div styleName='postIn-label'>Post in</div>
           <div styleName='postIn-communities'>
-            <CommunitiesSelector onChange={this.setSelectedCommunities} />
+            <CommunitiesSelector
+              options={communityOptions}
+              selected={communities}
+              onChange={this.setSelectedCommunities}
+              readOnly={readOnly}
+              ref={component => { this.communitiesSelector = component }}
+            />
           </div>
         </div>
         <div styleName='actionsBar'>
-          <Button onClick={this.save} styleName='postButton' label='Post' color='green' />
+          <Button
+            onClick={this.save}
+            disabled={!valid || readOnly}
+            styleName='postButton'
+            label='Post'
+            color='green'
+          />
         </div>
       </div>
     </div>
