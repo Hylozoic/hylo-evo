@@ -105,12 +105,18 @@ const notifications = [
 
 describe('NotificationsDropdown', () => {
   it('renders correctly with an empty list', () => {
-    const wrapper = shallow(<NotificationsDropdown notifications={[]} currentUser={u1} />)
+    const wrapper = shallow(<NotificationsDropdown
+      renderToggleChildren={() => <span>click me</span>}
+      notifications={[]}
+      currentUser={u1} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('renders correctly with a list of threads', () => {
-    const wrapper = shallow(<NotificationsDropdown notifications={notifications} currentUser={u1} />)
+    const wrapper = shallow(<NotificationsDropdown
+      renderToggleChildren={() => <span>click me</span>}
+      notifications={notifications}
+      currentUser={u1} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

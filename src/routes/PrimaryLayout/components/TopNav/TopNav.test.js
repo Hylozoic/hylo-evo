@@ -5,6 +5,7 @@ import React from 'react'
 it('renders as expected with no community', () => {
   const wrapper = shallow(<TopNav />)
   expect(wrapper).toMatchSnapshot()
+
   const logo = wrapper.find('Logo').dive()
   expect(logo.props().style).toEqual({
     backgroundImage: 'url(/hylo-merkaba.png)'

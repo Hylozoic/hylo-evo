@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import './NotificationsDropdown.scss'
-const { object, array, string, func } = PropTypes
+const { array, string, func } = PropTypes
 import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
@@ -21,10 +21,9 @@ import { decode } from 'ent'
 export default class NotificationsDropdown extends Component {
   static propTypes = {
     fetchThreads: func,
-    toggleChildren: object,
+    renderToggleChildren: func,
     notifications: array,
-    className: string,
-    goToThread: func
+    className: string
   }
 
   constructor (props) {
@@ -40,7 +39,7 @@ export default class NotificationsDropdown extends Component {
 
   render () {
     const {
-      toggleChildren, className, goToNotification, markAsRead
+      renderToggleChildren, className, goToNotification, markAsRead
     } = this.props
     var { notifications } = this.props
     const { showingUnread } = this.state
@@ -59,7 +58,7 @@ export default class NotificationsDropdown extends Component {
 
     return <TopNavDropdown ref='dropdown'
       className={className}
-      toggleChildren={toggleChildren}
+      toggleChildren={renderToggleChildren()}
       header={
         <div styleName='header-content'>
           <span onClick={showRecent} styleName={cx('tab', {active: !showingUnread})}>

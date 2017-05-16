@@ -6,73 +6,27 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
     <div
       data-styleName="threads"
     >
-      <Thread
-        currentUserId={1}
+      <MessagesDropdownItem
+        currentUserId="1"
         onClick={[Function]}
         thread={
-          Object {
-            "id": 2,
-            "messages": Array [
-              Object {
-                "creator": Object {
-                  "id": 2,
-                },
-                "text": "hi",
-              },
-            ],
-            "participants": Array [
-              Object {
-                "avatarUrl": "foo.png",
-                "id": 1,
-                "name": "Charles Darwin",
-              },
-              Object {
-                "avatarUrl": "bar.png",
-                "id": 2,
-                "name": "Marie Curie",
-              },
-              Object {
-                "avatarUrl": "baz.png",
-                "id": 3,
-                "name": "Arthur Fonzarelli",
-              },
-            ],
-            "updatedAt": 2017-05-07T03:24:00.000Z,
+          SessionBoundModel {
+            "_fields": Object {
+              "id": 2,
+              "updatedAt": 2017-05-07T03:24:00.000Z,
+            },
           }
         }
       />
-      <Thread
-        currentUserId={1}
+      <MessagesDropdownItem
+        currentUserId="1"
         onClick={[Function]}
         thread={
-          Object {
-            "id": 1,
-            "messages": Array [
-              Object {
-                "creator": Object {
-                  "id": 3,
-                },
-                "text": "there",
-              },
-            ],
-            "participants": Array [
-              Object {
-                "avatarUrl": "foo.png",
-                "id": 1,
-                "name": "Charles Darwin",
-              },
-              Object {
-                "avatarUrl": "bar.png",
-                "id": 2,
-                "name": "Marie Curie",
-              },
-              Object {
-                "avatarUrl": "baz.png",
-                "id": 3,
-                "name": "Arthur Fonzarelli",
-              },
-            ],
-            "updatedAt": 1995-12-17T03:23:00.000Z,
+          SessionBoundModel {
+            "_fields": Object {
+              "id": 1,
+              "updatedAt": 1995-12-17T03:23:00.000Z,
+            },
           }
         }
       />
@@ -97,6 +51,12 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
         New
       </Link>
     </div>
+  }
+  onToggle={[Function]}
+  toggleChildren={
+    <span>
+      click me
+    </span>
   }
 />
 `;
@@ -128,7 +88,13 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
       </Link>
     </div>
   }
+  onToggle={[Function]}
+  toggleChildren={
+    <span>
+      click me
+    </span>
+  }
 />
 `;
 
-exports[`Thread renders correctly with an empty thread 1`] = `null`;
+exports[`MessagesDropdownItem renders correctly with an empty thread 1`] = `null`;

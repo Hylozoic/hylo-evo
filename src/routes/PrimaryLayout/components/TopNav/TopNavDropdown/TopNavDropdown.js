@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import './TopNavDropdown.scss'
-const { object, string } = PropTypes
+const { func, object, string } = PropTypes
 import cx from 'classnames'
 import { position } from 'util/scrolling'
 import { isEmpty } from 'lodash/fp'
@@ -12,7 +12,8 @@ export default class TopNavDropdown extends Component {
     toggleChildren: object,
     className: string,
     header: object,
-    items: object
+    items: object,
+    onToggle: func
   }
 
   constructor (props) {
@@ -21,7 +22,9 @@ export default class TopNavDropdown extends Component {
   }
 
   toggle = newState => {
-    this.setState({active: newState || !this.state.active})
+    const active = newState || !this.state.active
+    this.setState({active})
+    if (this.props.onToggle) this.props.onToggle(active)
   }
 
   render () {
@@ -41,7 +44,7 @@ export default class TopNavDropdown extends Component {
       left: `${toggleX - 880}px`
     }
 
-    return <div className={className} styleName='top-nav-dropdown'>
+    return <div className={className}>
       {active && <div styleName='backdrop' onClick={() => this.toggle(false)} />}
       <a onClick={() => this.toggle()} ref='toggle'>
         {toggleChildren}

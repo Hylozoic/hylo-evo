@@ -33,7 +33,7 @@
   background-color: $color-saltpan;
 }
 
-.image-wraper {
+.image-wrapper {
   width: $space-10x;
   margin: 0 10px 0 15px;
   padding-top: 20px;
@@ -42,6 +42,7 @@
 .message-content {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   align-items: start;
   padding: 20px 15px 15px 0;
   border-bottom: 1px solid $color-black-squeeze;
@@ -49,7 +50,7 @@
 
 .name {
   composes: username-cards from 'css/typography.scss';
-  margin-bottom: 10px;
+  margin-bottom: $space-1x;
 }
 
 .body {

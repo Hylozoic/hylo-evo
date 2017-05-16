@@ -1,5 +1,4 @@
 import {
-  RECEIVE_MESSAGE,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
   CREATE_MESSAGE,
@@ -10,6 +9,7 @@ import {
   UPDATE_THREAD_READ_TIME,
   VOTE_ON_POST_PENDING
 } from 'store/constants'
+import { RECEIVE_MESSAGE } from 'components/SocketListener/SocketListener.store'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
 import { find } from 'lodash/fp'

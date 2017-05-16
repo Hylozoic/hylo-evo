@@ -819,6 +819,11 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
       </span>
     </div>
   }
+  toggleChildren={
+    <span>
+      click me
+    </span>
+  }
 />
 `;
 
@@ -851,6 +856,11 @@ exports[`NotificationsDropdown renders correctly with an empty list 1`] = `
         Mark all as read
       </span>
     </div>
+  }
+  toggleChildren={
+    <span>
+      click me
+    </span>
   }
 />
 `;

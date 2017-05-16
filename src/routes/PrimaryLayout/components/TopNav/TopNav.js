@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bgImageStyle, personUrl } from 'util/index'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
+import BadgedIcon from 'components/BadgedIcon'
 import RoundImage from 'components/RoundImage'
 import './TopNav.scss'
 import Dropdown from 'components/Dropdown'
@@ -22,25 +23,26 @@ export default class TopNav extends Component {
 
   render () {
     const { className, community, currentUser, logout, toggleDrawer } = this.props
+    const profileUrl = personUrl(get('id', currentUser), get('slug', community))
 
     return <div styleName='topNavWrapper' className={className}>
       <div styleName='topNav' ref='topNav'>
         <Logo {...{community, toggleDrawer}} />
         <Title community={community} />
         <div styleName='navIcons'>
-          <Link to='/' styleName='navIcon'><Icon name='Search' styleName='icon' /></Link>
-          <MessagesDropdown
-            toggleChildren={<Icon name='Messages' styleName='icon' />}
-            styleName='top-nav-dropdown' />
-          <NotificationsDropdown
-            toggleChildren={<Icon name='Notifications' styleName='icon' />}
-            styleName='top-nav-dropdown' />
-          <Dropdown styleName='navIcon user-menu' alignRight
+          <Link to='/'><Icon name='Search' styleName='icon' /></Link>
+          <MessagesDropdown renderToggleChildren={showBadge =>
+            <BadgedIcon name='Messages' styleName='icon'
+              showBadge={showBadge} />} />
+          <NotificationsDropdown renderToggleChildren={showBadge =>
+            <BadgedIcon name='Notifications' styleName='icon'
+              showBadge={showBadge} />} />
+          <Dropdown styleName='user-menu' alignRight
             toggleChildren={
               <RoundImage url={get('avatarUrl', currentUser)} small />
             }>
             <li>
-              <Link to={personUrl(get('id', currentUser), get('slug', community))}>
+              <Link to={profileUrl}>
                 Profile
               </Link>
             </li>

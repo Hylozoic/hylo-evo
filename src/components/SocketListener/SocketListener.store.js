@@ -1,5 +1,5 @@
+export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE'
 const RECEIVE_COMMENT = 'RECEIVE_COMMENT'
-const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE'
 const RECEIVE_THREAD = 'RECEIVE_THREAD'
 
 export function receiveMessage (message, opts = {}) {
