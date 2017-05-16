@@ -1,11 +1,10 @@
-import {
-  ADD_MESSAGE_FROM_SOCKET,
-  ADD_THREAD_FROM_SOCKET
-} from 'store/constants'
+export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE'
+const RECEIVE_COMMENT = 'RECEIVE_COMMENT'
+const RECEIVE_THREAD = 'RECEIVE_THREAD'
 
-export function addMessageFromSocket (message, opts = {}) {
+export function receiveMessage (message, opts = {}) {
   return {
-    type: ADD_MESSAGE_FROM_SOCKET,
+    type: RECEIVE_MESSAGE,
     payload: {
       data: {
         message
@@ -18,9 +17,23 @@ export function addMessageFromSocket (message, opts = {}) {
   }
 }
 
-export function addThreadFromSocket (thread) {
+export function receiveComment (comment, opts = {}) {
   return {
-    type: ADD_THREAD_FROM_SOCKET,
+    type: RECEIVE_COMMENT,
+    payload: {
+      data: {
+        comment
+      }
+    },
+    meta: {
+      extractModel: 'Comment'
+    }
+  }
+}
+
+export function receiveThread (thread) {
+  return {
+    type: RECEIVE_THREAD,
     payload: {
       data: {
         thread

@@ -17,7 +17,7 @@ export default function fetchPost (id, opts = {}) {
           }
           createdAt
           updatedAt
-          commenters(first: 2) {
+          commenters(first: 3) {
             id
             name
             avatarUrl

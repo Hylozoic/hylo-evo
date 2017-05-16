@@ -7,7 +7,7 @@ import { EditorState, ContentState, convertToRaw } from 'draft-js'
 import cx from 'classnames'
 import contentStateToHTML from './contentStateToHTML'
 import contentStateFromHTML from './contentStateFromHTML'
-import '../../../node_modules/draft-js/dist/Draft.css'
+import 'draft-js/dist/Draft.css'
 import styles from './HyloEditor.scss'
 
 export default class HyloEditor extends Component {

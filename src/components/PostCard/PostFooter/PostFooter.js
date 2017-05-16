@@ -1,15 +1,16 @@
 import React from 'react'
+import { find, get, sortBy } from 'lodash/fp'
 import './PostFooter.scss'
 import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
 import cx from 'classnames'
 
-const { string, array, number, func } = React.PropTypes
+const { string, array, number, func, object } = React.PropTypes
 
-export default function PostFooter ({ id, commenters, commentersTotal, votesTotal, myVote, vote }) {
+export default function PostFooter ({ id, currentUser, commenters, commentersTotal, votesTotal, myVote, vote }) {
   return <div styleName='footer'>
     <RoundImageRow imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
-    <span styleName='caption'>{commentCaption(commenters, commentersTotal)}</span>
+    <span styleName='caption'>{commentCaption(commenters, commentersTotal, get('id', currentUser))}</span>
     <a onClick={vote} styleName={cx('vote-button', {voted: myVote})}>
       <Icon name='ArrowUp' styleName='arrowIcon' />
       {votesTotal}
@@ -21,12 +22,16 @@ PostFooter.propTypes = {
   commenters: array,
   commentersTotal: number,
   votesTotal: number,
-  vote: func
+  vote: func,
+  currentUser: object
 }
 
-export const commentCaption = (commenters, commentersTotal) => {
+export const commentCaption = (commenters, commentersTotal, meId) => {
+  commenters = find(c => c.id === meId, commenters) && commentersTotal === 2
+    ? sortBy(c => c.id !== meId, commenters) // me first
+    : sortBy(c => c.id === meId, commenters) // me last
   var names = ''
-  const firstName = person => person.name.split(' ')[0]
+  const firstName = person => person.id === meId ? 'You' : person.name.split(' ')[0]
   if (commentersTotal === 0) {
     return 'Be the first to comment'
   } else if (commentersTotal === 1) {

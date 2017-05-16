@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router-dom'
-import { isEmpty, get } from 'lodash/fp'
+import { isEmpty } from 'lodash/fp'
 import './PostDetail.scss'
 const { bool, func, object, string } = PropTypes
 import { PostImage, PostBody, PostFooter, PostHeader } from 'components/PostCard'
@@ -8,6 +8,7 @@ import ScrollListener from 'components/ScrollListener'
 import Comments from './Comments'
 import { tagUrl, postUrl } from 'util/index'
 import { DETAIL_COLUMN_ID } from 'util/scrolling'
+import WebsocketSubscriber from 'components/WebsocketSubscriber'
 
 const STICKY_HEADER_ID = 'header-sticky'
 const STICKY_ACTIVITY_ID = 'activity-sticky'
@@ -15,6 +16,7 @@ const STICKY_ACTIVITY_ID = 'activity-sticky'
 export default class PostDetail extends Component {
   static propTypes = {
     post: object,
+    id: string,
     slug: string,
     fetchPost: func,
     showCommunity: bool
@@ -29,13 +31,17 @@ export default class PostDetail extends Component {
   }
 
   componentDidMount () {
-    this.props.fetchPost()
+    this.onPostIdChange()
   }
 
   componentDidUpdate (prevProps) {
-    if (get('post.id', this.props) !== get('post.id', prevProps)) {
-      this.props.fetchPost()
+    if (this.props.id && this.props.id !== prevProps.id) {
+      this.onPostIdChange()
     }
+  }
+
+  onPostIdChange = () => {
+    this.props.fetchPost()
   }
 
   handleScroll = event => {
@@ -109,6 +115,7 @@ export default class PostDetail extends Component {
           myVote={post.myVote} />
       </div>}
       <Comments postId={post.id} slug={slug} scrollToBottom={scrollToBottom} />
+      <WebsocketSubscriber id={post.id} />
     </div>
   }
 }

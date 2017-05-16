@@ -138,7 +138,7 @@ $active-thread-border-width: 4px;
 }
 
 .thread-names {
-  composes: cards from 'css/typography.scss';
+  composes: username-cards from 'css/typography.scss';
   margin-bottom: $names-margin-bottom;
   overflow: hidden;
   text-overflow: ellipsis;

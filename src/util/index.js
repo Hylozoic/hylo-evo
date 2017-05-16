@@ -26,8 +26,16 @@ export function postUrl (id, slug) {
   }
 }
 
+export function commentUrl (postId, commentId, slug) {
+  return `${postUrl(postId, slug)}#comment_${commentId}`
+}
+
 export function communityUrl (slug) {
   return `/c/${slug}`
+}
+
+export function communitySettingsUrl (slug) {
+  return `/c/${slug}/settings`
 }
 
 export function threadUrl (id) {

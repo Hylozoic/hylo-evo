@@ -1,66 +1,18 @@
-$dropdown-border-color: rgba(49, 72, 67, 0.11);
-
-.messages-dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.wrapper {
-  display: none;
-  position: fixed;
-  right: 15px;
-  top: 80px;
-  background-color: $color-white;
-  border: 1px solid $dropdown-border-color;
-  border-radius: 4px;
-  width: 375px;
-  box-shadow: 11px 12px 26px 0px rgba(#dcdcdc, 0.6);
-  &.active {
-    display: block;
-  }
-}
-
-.menu {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.triangle {
-  min-width: 0 !important;
-  @include is-top-triangle(#fff, $dropdown-border-color, 14px);
-  left: 77%;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  height: 38px;
-  padding: 0 15px;
-  composes: bdy-lt-sm from 'css/typography.scss';
-  box-shadow: 0px 4px 16px 0px rgba(#dcdcdc, 0.6);
-}
-
-.header-link {
-  composes: bdy-lt-sm from 'css/typography.scss';
-  &:hover {
-    color: $color-rhino-80;
-    text-decoration: none;
-  }
+.header-content {
+  composes: header-content from '../TopNavDropdown/TopNavDropdown.scss';
 }
 
 .open {
-  composes: header-link;
+  composes: header-link from '../TopNavDropdown/TopNavDropdown.scss';
 }
 
 .new {
-  composes: header-link;
+  composes: header-link from '../TopNavDropdown/TopNavDropdown.scss';
   margin-left: auto;
 }
 
 .threads {
-  height: 420px;
-  overflow: scroll;
+  composes: body from '../TopNavDropdown/TopNavDropdown.scss';
 }
 
 .thread {
@@ -81,7 +33,7 @@ $dropdown-border-color: rgba(49, 72, 67, 0.11);
   background-color: $color-saltpan;
 }
 
-.image-wraper {
+.image-wrapper {
   width: $space-10x;
   margin: 0 10px 0 15px;
   padding-top: 20px;
@@ -90,6 +42,7 @@ $dropdown-border-color: rgba(49, 72, 67, 0.11);
 .message-content {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   align-items: start;
   padding: 20px 15px 15px 0;
   border-bottom: 1px solid $color-black-squeeze;
@@ -97,7 +50,7 @@ $dropdown-border-color: rgba(49, 72, 67, 0.11);
 
 .name {
   composes: username-cards from 'css/typography.scss';
-  margin-bottom: 10px;
+  margin-bottom: $space-1x;
 }
 
 .body {

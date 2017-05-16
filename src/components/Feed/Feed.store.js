@@ -56,7 +56,7 @@ posts(
     }
     createdAt
     updatedAt
-    commenters(first: 2) {
+    commenters(first: 3) {
       id
       name
       avatarUrl

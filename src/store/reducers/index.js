@@ -7,6 +7,7 @@ import orm from './ormReducer'
 import pending from './pending'
 // Local store
 // generator-marker-local-store-import
+import TopNav from 'routes/PrimaryLayout/components/TopNav/TopNav.store'
 import PeopleSelector from 'components/PeopleSelector/PeopleSelector.store'
 import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
@@ -33,6 +34,7 @@ const combinedReducers = combineReducers({
 
   // Local store (Component)
   // generator-marker-local-store-reducer
+  TopNav,
   PeopleSelector,
   MessageForm,
   PeopleTyping,

@@ -25,20 +25,7 @@ describe('PostDetail', () => {
     }
 
     const wrapper = shallow(<PostDetail post={post} slug={slug} showCommunity />)
-    expect(wrapper.find(PostHeader).length).toEqual(1)
-    expect(wrapper.find(PostHeader).prop('showCommunity')).toBeTruthy()
-    expect(wrapper.find(PostImage).length).toEqual(1)
-    expect(wrapper.find(PostImage).prop('imageUrl')).toEqual(imageUrl)
-    expect(wrapper.find(PostTags).length).toEqual(1)
-    expect(wrapper.find(PostTags).prop('tags')).toEqual(tags)
-    expect(wrapper.find(PostBody).length).toEqual(1)
-    expect(wrapper.find(PostBody).prop('details')).toEqual(details)
-    expect(wrapper.find(PostFooter).length).toEqual(1)
-    expect(wrapper.find(PostFooter).prop('votesTotal')).toEqual(votesTotal)
-    expect(wrapper.find(PostFooter).prop('myVote')).toEqual(myVote)
-    expect(wrapper.find('Connect(Comments)').length).toEqual(1)
-    expect(wrapper.find('Connect(Comments)').prop('postId')).toEqual(post.id)
-    expect(wrapper.find('Connect(Comments)').prop('slug')).toEqual(slug)
+    expect(wrapper).toMatchSnapshot()
   })
 })
 
@@ -76,12 +63,7 @@ describe('getPost', () => {
       model: Post, attrs: {id: '2', commenters: ['2'], creator: '1', communities: ['2', '3']}
     }].forEach(spec => spec.model.create(spec.attrs))
 
-    const result = (getPost({orm: session.state}, {match: {params: {postId: '1'}}}))
-    expect(result.title).toEqual('Hay')
-    expect(result.creator.name).toEqual('Sue')
-    expect(result.commenters.length).toEqual(1)
-    expect(result.commenters[0].name).toEqual('Jack')
-    expect(result.communities.length).toEqual(2)
-    expect(result.communities.map(c => c.slug)).toEqual(['foo', 'bar'])
+    const result = getPost({orm: session.state}, {match: {params: {postId: '1'}}})
+    expect(result).toMatchSnapshot()
   })
 })

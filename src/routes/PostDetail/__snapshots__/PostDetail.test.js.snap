@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostDetail renders correctly 1`] = `
+<div
+  data-styleName="post"
+>
+  <ScrollListener
+    elementId="detail-column"
+    onLeaveTop={[Function]}
+    onScroll={[Function]}
+    onTop={[Function]}
+  />
+  <PostHeader
+    data-styleName="header"
+    showCommunity={true}
+    slug="foo"
+  />
+  <Component
+    data-styleName="image"
+    imageUrl="foo.jpg"
+  />
+  <PostTags
+    tags={
+      Array [
+        "singing",
+        "dancing",
+      ]
+    }
+  />
+  <Component
+    data-styleName="body"
+    details="the body of the post"
+    expanded={true}
+    id="91"
+    slug="foo"
+  />
+  <Link
+    replace={false}
+    to="/c/foo/p/91/edit"
+  >
+    Edit
+  </Link>
+  <div
+    data-styleName="activity-header"
+  >
+    Activity
+  </div>
+  <Connect(PostFooter)
+    id="91"
+    myVote={true}
+    votesTotal={7}
+  />
+  <Connect(Comments)
+    postId="91"
+    scrollToBottom={[Function]}
+    slug="foo"
+  />
+  <Connect(WebsocketSubscriber)
+    id="91"
+  />
+</div>
+`;
+
+exports[`getPost returns the post with creator, commenters and communities 1`] = `
+Object {
+  "commenters": Array [
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "1",
+        "memberships": undefined,
+        "name": "Jack",
+      },
+    },
+  ],
+  "communities": Array [
+    SessionBoundModel {
+      "_fields": Object {
+        "feedItems": undefined,
+        "id": "1",
+        "members": undefined,
+        "moderators": undefined,
+        "posts": undefined,
+        "slug": "foo",
+        "topicSubscriptions": undefined,
+      },
+      "slug": "foo",
+    },
+    SessionBoundModel {
+      "_fields": Object {
+        "feedItems": undefined,
+        "id": "2",
+        "members": undefined,
+        "moderators": undefined,
+        "posts": undefined,
+        "slug": "bar",
+        "topicSubscriptions": undefined,
+      },
+      "slug": "bar",
+    },
+  ],
+  "creator": SessionBoundModel {
+    "_fields": Object {
+      "id": "3",
+      "memberships": undefined,
+      "name": "Sue",
+    },
+  },
+  "followers": undefined,
+  "id": "1",
+  "title": "Hay",
+}
+`;

@@ -8,6 +8,7 @@ export function mapStateToProps (state, props) {
   const slug = getParam('slug', state, props)
   return {
     post: getPost(state, props),
+    id: getParam('postId', state, props),
     slug,
     showCommunity: !slug
   }

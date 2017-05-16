@@ -1,3 +1,5 @@
+import curry from 'lodash/curry'
+
 const environment = process.env.NODE_ENV || 'development'
 const socketHost = process.env.SOCKET_HOST
 const isClient = typeof window !== 'undefined' && !window.isMock
@@ -20,3 +22,11 @@ if (isClient) {
 export const socketUrl = path => `${socketHost}/${path.replace(/^\//, '')}`
 
 export const getSocket = () => socket
+
+// for testing
+export const setSocket = mock => { socket = mock }
+
+export const sendIsTyping = curry((postId, isTyping) => {
+  const url = socketUrl(`/noo/post/${postId}/typing`)
+  getSocket().post(url, {isTyping})
+})
