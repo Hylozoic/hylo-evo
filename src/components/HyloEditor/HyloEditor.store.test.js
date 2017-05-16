@@ -4,7 +4,7 @@
 import orm from 'store/models'
 import {
   findMentions,
-  getMentionResults,
+  getMentionResults
 } from './HyloEditor.store'
 import {
   FIND_MENTIONS,

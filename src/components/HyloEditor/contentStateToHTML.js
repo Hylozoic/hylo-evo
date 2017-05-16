@@ -1,13 +1,16 @@
 import { createElement } from 'react'
 import { convertToHTML } from 'draft-convert'
-import { MENTION_ENTITY_TYPE, TOPIC_ENTITY_TYPE } from './HyloEditor.constants'
+import {
+  MENTION_ENTITY_TYPE,
+  TOPIC_ENTITY_TYPE
+} from './HyloEditor.constants'
 
 export function mentionToLink (originalText, mention) {
   return createElement(
     'a',
     {
       'data-entity-type': MENTION_ENTITY_TYPE,
-      'data-user-id': mention.get('id')
+      'data-user-id': mention.id
     },
     originalText
   )
