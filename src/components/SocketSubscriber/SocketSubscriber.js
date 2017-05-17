@@ -1,7 +1,7 @@
 import React from 'react'
 const { func } = React.PropTypes
 
-export default class WebsocketSubscriber extends React.Component {
+export default class SocketSubscriber extends React.Component {
   static propTypes = {
     subscribe: func,
     unsubscribe: func

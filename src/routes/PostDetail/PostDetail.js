@@ -8,7 +8,7 @@ import ScrollListener from 'components/ScrollListener'
 import Comments from './Comments'
 import { tagUrl } from 'util/index'
 import { DETAIL_COLUMN_ID } from 'util/scrolling'
-import WebsocketSubscriber from 'components/WebsocketSubscriber'
+import SocketSubscriber from 'components/SocketSubscriber'
 
 const STICKY_HEADER_ID = 'header-sticky'
 const STICKY_ACTIVITY_ID = 'activity-sticky'
@@ -114,7 +114,7 @@ export default class PostDetail extends Component {
           myVote={post.myVote} />
       </div>}
       <Comments postId={post.id} slug={slug} scrollToBottom={scrollToBottom} />
-      <WebsocketSubscriber id={post.id} />
+      <SocketSubscriber id={post.id} />
     </div>
   }
 }

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { getSocket, socketUrl } from 'client/websockets'
 
 function mapDispatchToProps (dispatch, props) {
-  const { id } = props
+  const { id, type } = props
 
   if (!id) {
     return {
@@ -17,7 +17,7 @@ function mapDispatchToProps (dispatch, props) {
       if (oldHandler) socket.off('reconnect', oldHandler)
 
       const newHandler = () => {
-        socket.post(socketUrl(`/noo/post/${id}/subscribe`))
+        socket.post(socketUrl(`/noo/${type}/${id}/subscribe`))
       }
 
       socket.on('reconnect', newHandler)
@@ -31,7 +31,7 @@ function mapDispatchToProps (dispatch, props) {
     unsubscribe: function (oldHandler) {
       const socket = getSocket()
       socket.off('reconnect', oldHandler)
-      socket.post(socketUrl(`/noo/post/${id}/unsubscribe`))
+      socket.post(socketUrl(`/noo/${type}/${id}/unsubscribe`))
     }
   }
 }
