@@ -6,6 +6,8 @@ import {
   EXTRACT_MODEL,
   FETCH_MESSAGES_PENDING,
   LEAVE_COMMUNITY,
+  MARK_ACTIVITY_READ_PENDING,
+  MARK_ALL_ACTIVITIES_READ_PENDING,
   UPDATE_THREAD_READ_TIME,
   VOTE_ON_POST_PENDING
 } from 'store/constants'
@@ -19,7 +21,15 @@ export default function ormReducer (state = {}, action) {
   const { payload, type, meta, error } = action
   if (error) return state
 
-  const { Comment, Me, Message, MessageThread, Post, PostCommenter } = session
+  const {
+    Activity,
+    Comment,
+    Me,
+    Message,
+    MessageThread,
+    Post,
+    PostCommenter
+  } = session
 
   switch (type) {
     case EXTRACT_MODEL:
@@ -93,6 +103,14 @@ export default function ormReducer (state = {}, action) {
       } else {
         meta.isUpvote && post.update({myVote: true, votesTotal: (post.votesTotal || 0) + 1})
       }
+      break
+
+    case MARK_ACTIVITY_READ_PENDING:
+      Activity.withId(meta.id).update({unread: false})
+      break
+
+    case MARK_ALL_ACTIVITIES_READ_PENDING:
+      Activity.all().update({unread: false})
       break
   }
 

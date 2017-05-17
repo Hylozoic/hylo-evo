@@ -1,5 +1,4 @@
 import { FETCH_NOTIFICATIONS, MARK_ACTIVITY_READ, MARK_ALL_ACTIVITIES_READ } from 'store/constants'
-import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 import { push } from 'react-router-redux'
 import {
@@ -120,10 +119,9 @@ export function goToNotification (notification) {
   return push(urlForNotification(notification))
 }
 
-export const getNotifications = ormCreateSelector(
-  orm,
-  state => state.orm,
-  (session) => {
-    return session.Notification.all().toModelArray()
-  }
-)
+// not using a selector here because of memoization issues, specifically updating
+// the child activities does not cause the value to be recalculated
+export const getNotifications = (state, props) => {
+  const session = orm.session(state.orm)
+  return session.Notification.all().toModelArray()
+}
