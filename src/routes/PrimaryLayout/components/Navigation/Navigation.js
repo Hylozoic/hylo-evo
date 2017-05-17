@@ -8,12 +8,28 @@ export default function Navigation ({
   collapsed,
   slug,
   homePath,
-  homeBadge
+  homeBadge,
+  resetNewPostCount
 }) {
   const links = [
-    {label: 'Home', icon: 'Home', to: homePath, badge: homeBadge, exact: true},
-    {label: 'Members', icon: 'Members', to: `/c/${slug}/members`},
-    {label: 'UI Kit', icon: 'Projects', to: '/ui-kit'}
+    {
+      label: 'Home',
+      icon: 'Home',
+      to: homePath,
+      badge: homeBadge,
+      exact: true,
+      onClick: () => !!homeBadge && resetNewPostCount(slug)
+    },
+    {
+      label: 'Members',
+      icon: 'Members',
+      to: `/c/${slug}/members`
+    },
+    {
+      label: 'UI Kit',
+      icon: 'Projects',
+      to: '/ui-kit'
+    }
   ]
 
   return <div styleName={collapsed ? 'collapser-collapsed' : 'collapser'}
@@ -21,7 +37,8 @@ export default function Navigation ({
     <div styleName='navigation'>
       <ul styleName='links'>
         {links.map(link =>
-          <NavLink key={link.label} {...link} collapsed={collapsed} />)}
+          <NavLink key={link.label} {...link} collapsed={collapsed}
+            onClick={link.onClick} />)}
       </ul>
       <TopicNavigation slug={slug} />
     </div>

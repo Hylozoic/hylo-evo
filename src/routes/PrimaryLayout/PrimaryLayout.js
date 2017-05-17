@@ -1,10 +1,11 @@
 import React, { PropTypes, Component } from 'react'
 import { matchPath, Redirect, Route } from 'react-router-dom'
 import cx from 'classnames'
-import { some } from 'lodash/fp'
+import { get, some } from 'lodash/fp'
 import Loading from 'components/Loading'
 import Messages from 'routes/Messages'
 import SocketListener from 'components/SocketListener'
+import SocketSubscriber from 'components/SocketSubscriber'
 import Drawer from './components/Drawer'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
@@ -85,6 +86,7 @@ export default class PrimaryLayout extends Component {
       </div>
       <Route path='/t' component={Messages} />
       <SocketListener location={location} />
+      <SocketSubscriber type='community' id={get('slug', community)} />
     </div>
   }
 }

@@ -6,6 +6,7 @@ import {
   EXTRACT_MODEL,
   FETCH_MESSAGES_PENDING,
   LEAVE_COMMUNITY,
+  RESET_NEW_POST_COUNT_PENDING,
   UPDATE_THREAD_READ_TIME,
   VOTE_ON_POST_PENDING
 } from 'store/constants'
@@ -19,7 +20,8 @@ export default function ormReducer (state = {}, action) {
   const { payload, type, meta, error } = action
   if (error) return state
 
-  const { Comment, Me, Message, MessageThread, Post, PostCommenter } = session
+  const { Comment, Community, Me, Message, MessageThread, Post, PostCommenter } = session
+  let membership
 
   switch (type) {
     case EXTRACT_MODEL:
@@ -82,8 +84,8 @@ export default function ormReducer (state = {}, action) {
 
     case LEAVE_COMMUNITY:
       const me = Me.first()
-      const membership = find(m => m.community.id === meta.id, me.memberships.toModelArray())
-      membership && membership.delete()
+      membership = find(m => m.community.id === meta.id, me.memberships.toModelArray())
+      if (membership) membership.delete()
       break
 
     case VOTE_ON_POST_PENDING:
@@ -93,6 +95,11 @@ export default function ormReducer (state = {}, action) {
       } else {
         meta.isUpvote && post.update({myVote: true, votesTotal: (post.votesTotal || 0) + 1})
       }
+      break
+
+    case RESET_NEW_POST_COUNT_PENDING:
+      membership = Community.get({slug: meta.id}).memberships.first()
+      membership.update({newPostCount: 0})
       break
   }
 

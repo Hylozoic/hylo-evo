@@ -7,13 +7,7 @@ const getCommunityForCurrentRoute = ormCreateSelector(
   orm,
   state => state.orm,
   (state, props) => getParam('slug', state, props) || tryLocation(props),
-  (session, slug) => {
-    try {
-      return session.Community.get({slug})
-    } catch (e) {
-      return null
-    }
-  }
+  (session, slug) => session.Community.safeGet({slug})
 )
 
 export default getCommunityForCurrentRoute
