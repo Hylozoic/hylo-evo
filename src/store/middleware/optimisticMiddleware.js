@@ -11,6 +11,7 @@ export default function optimisticMiddleware (store) {
         result => result,
         error => {
           store.dispatch({type: SET_STATE, payload: prevState, meta: {error}})
+          return Promise.reject(error)
         }
       )
     }
