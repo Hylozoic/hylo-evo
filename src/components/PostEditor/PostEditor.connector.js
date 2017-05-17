@@ -10,9 +10,13 @@ export function mapStateToProps (state, props) {
   const communityOptions = currentUser &&
     currentUser.memberships.toModelArray().map(m => m.community)
   const post = props.post || getPost(state, props)
+  const editing = !!getParam('postId', state, props)
+  const loading = editing && !post
   return {
     post,
-    communityOptions
+    communityOptions,
+    loading,
+    editing
   }
 }
 

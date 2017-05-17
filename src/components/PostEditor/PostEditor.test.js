@@ -56,9 +56,26 @@ describe('PostEditor', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  test('form in readOnly mode', () => {
+  test('post is being loaded to be edited', () => {
     const props = {
-      readOnly: true,
+      loading: true,
+      post: {
+        type: 'request',
+        title: 'valid title',
+        details: 'valid details',
+        communities: [
+          {id: '1', name: 'test community 1'},
+          {id: '2', name: 'test community 2'}
+        ]
+      }
+    }
+    const wrapper = shallow(<PostEditor {...props} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  test('form in editing mode', () => {
+    const props = {
+      editing: true,
       post: {
         type: 'request',
         title: 'valid title',
