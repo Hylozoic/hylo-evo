@@ -27,6 +27,7 @@ export default function ormReducer (state = {}, action) {
     Me,
     Message,
     MessageThread,
+    Notification,
     Post,
     PostCommenter
   } = session
@@ -107,10 +108,14 @@ export default function ormReducer (state = {}, action) {
 
     case MARK_ACTIVITY_READ_PENDING:
       Activity.withId(meta.id).update({unread: false})
+      // invalidating selector memoization
+      Notification.all().update({time: Date.now()})
       break
 
     case MARK_ALL_ACTIVITIES_READ_PENDING:
       Activity.all().update({unread: false})
+      // invalidating selector memoization
+      Notification.all().update({time: Date.now()})
       break
   }
 

@@ -4,7 +4,8 @@ import {
   markActivityRead,
   markAllActivitiesRead,
   getNotifications,
-  goToNotification } from './NotificationsDropdown.store.js'
+  goToNotification
+} from './NotificationsDropdown.store.js'
 
 export function mapStateToProps (state, props) {
   const notifications = getNotifications(state, props)
