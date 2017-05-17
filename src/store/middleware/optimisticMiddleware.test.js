@@ -27,6 +27,9 @@ describe('optimisticMiddleware', () => {
         payload: Promise.reject(error),
         meta: {optimistic: true}
       }
+
+      expect.assertions(3)
+
       return middleware(next)(action)
       .then(() => {
         expect(next).toHaveBeenCalled()
@@ -34,6 +37,10 @@ describe('optimisticMiddleware', () => {
           type: SET_STATE,
           payload: initialState,
           meta: {error}
+        })
+
+        return action.payload.catch(err => {
+          expect(err).toEqual(error)
         })
       })
     })
