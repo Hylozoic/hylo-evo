@@ -27,7 +27,7 @@ export const mapDispatchToProps = function (dispatch, props) {
   const name = getParam('topicName', null, props)
   return {
     ...mapDispatchToPropsForFeed(dispatch, props),
-    fetchTopic: () => dispatch(fetchTopics({name, first: 1}))
+    fetchTopic: () => name && dispatch(fetchTopics({name, first: 1}))
   }
 }
 
