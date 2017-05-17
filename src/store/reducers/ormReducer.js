@@ -98,8 +98,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case RESET_NEW_POST_COUNT_PENDING:
-      membership = Community.get({slug: meta.id}).memberships.first()
-      membership.update({newPostCount: 0})
+      session[meta.type].withId(meta.id).update({newPostCount: 0})
       break
   }
 

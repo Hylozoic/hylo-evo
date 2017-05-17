@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import { RESET_NEW_POST_COUNT } from 'store/constants'
+import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 import { get } from 'lodash/fp'
@@ -14,35 +14,22 @@ export function mapStateToProps (state, props) {
   // the community doesn't change, which will mask changes to the membership's
   // newPostCount.
   const membership = getMembership(state, community.id)
+  const homeBadge = get('newPostCount', membership)
+  return { community, membership, homeBadge }
+}
 
+function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { homeBadge, community, membership } = stateProps
   return {
-    slug: community.slug,
-    homePath: `/c/${community.slug}`,
-    homeBadge: get('newPostCount', membership)
+    community,
+    homeBadge,
+    clearBadge: homeBadge
+      ? () => dispatchProps.resetNewPostCount(membership.id, 'Membership')
+      : () => {}
   }
 }
 
-export default connect(mapStateToProps, {resetNewPostCount})
-
-function resetNewPostCount (slug) {
-  return {
-    type: RESET_NEW_POST_COUNT,
-    graphql: {
-      query: `mutation($slug: String, $data: MembershipInput) {
-        updateMembership(slug: $slug, data: $data) {
-          newPostCount
-        }
-      }`,
-      variables: {
-        slug,
-        data: {
-          newPostCount: 0
-        }
-      }
-    },
-    meta: {id: slug, type: 'community', optimistic: true}
-  }
-}
+export default connect(mapStateToProps, {resetNewPostCount}, mergeProps)
 
 const getMembership = ormCreateSelector(
   orm,
