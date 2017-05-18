@@ -130,6 +130,11 @@ export default class TagInput extends Component {
             <KeyControlledItemList
               items={suggestions}
               onChange={this.select}
+              theme={{
+                items: theme.suggestions,
+                item: theme.suggestion,
+                'item-active': theme['suggestion-active']
+              }}
               ref={component => { this.list = component }} />
           </div>
         }
