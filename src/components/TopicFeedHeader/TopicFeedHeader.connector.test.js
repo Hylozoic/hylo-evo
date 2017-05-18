@@ -61,7 +61,7 @@ describe('mapDispatchToProps', () => {
 })
 
 describe('mergeProps', () => {
-  it('should use toggleTopicSubscribeMaker from dispatchProps to make a toggleTopicsubscribe function', () => {
+  it('should use toggleSubscribeMaker from dispatchProps to make a toggleSubscribe function', () => {
     const ownProps = {
       topic: {id: '1'},
       community: {id: '10'}
