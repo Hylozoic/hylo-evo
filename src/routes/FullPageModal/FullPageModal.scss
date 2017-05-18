@@ -1,0 +1,84 @@
+$size-sidebar-width: 10rem;
+
+// Duplicated (with modifications) from routes/Messages/Messages.scss
+.modal {
+  position: fixed;
+  background: $color-white;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 25;
+  height: 100vh;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  width: $content-width;
+  margin: 0 auto;
+  display: flex;
+  height: 100vh;
+}
+
+.left-sidebar {
+  width: $size-sidebar-width;
+  padding-top: 220px;
+  padding-right: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  &.border {
+    border-right: 1px solid $color-cape-cod-10;
+  }
+}
+
+.nav-link {
+  margin-bottom: 8px;
+  @include font-regular;
+  font-size: 17px;
+  color: $color-rhino-30;
+  text-decoration: none;
+  &:hover, &:visited {
+    color: $color-rhino;
+  }
+  &:hover, &:visited, &:active, &:link {
+    text-decoration: none;
+  }
+}
+
+.active {
+  color: $color-rhino;
+}
+
+.center {
+  width: $center-column-width;
+  padding: 72px 94px;
+  overflow-y: auto;
+}
+
+.right-sidebar {
+  width: $size-sidebar-width;
+}
+
+// CloseButton
+.close-button {
+  width: 56px;
+  height: 56px;
+  line-height: 56px;
+  text-align: center;
+  border-radius: 50%;
+  position: relative;
+  top: 15px;
+  left: 254px;
+  background-color: $color-athens-gray-medium;
+  cursor: pointer;
+}
+
+.icon {
+  font-size: 30px;
+  position: relative;
+  top: 7px;
+  color: $color-rhino;
+}

@@ -7,7 +7,7 @@ import MessageSection from 'components/MessageSection'
 import MessageForm from 'components/MessageForm'
 import PeopleTyping from 'components/PeopleTyping'
 import CloseMessages from './CloseMessages'
-import WebsocketSubscriber from 'components/WebsocketSubscriber'
+import SocketSubscriber from 'components/SocketSubscriber'
 import './Thread.scss'
 
 export default class Thread extends React.Component {
@@ -41,7 +41,7 @@ export default class Thread extends React.Component {
         <MessageForm messageThreadId={id} ref='form' />
       </div>
       <PeopleTyping styleName='people-typing' />
-      <WebsocketSubscriber id={id} />
+      <SocketSubscriber id={id} />
     </div>
   }
 }

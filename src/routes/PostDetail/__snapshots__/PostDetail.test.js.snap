@@ -55,7 +55,7 @@ exports[`PostDetail renders correctly 1`] = `
     scrollToBottom={[Function]}
     slug="foo"
   />
-  <Connect(WebsocketSubscriber)
+  <Connect(SocketSubscriber)
     id="91"
   />
 </div>

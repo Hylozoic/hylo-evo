@@ -29,7 +29,7 @@ exports[`matches the last snapshot 1`] = `
   <Connect(PeopleTyping)
     data-styleName="people-typing"
   />
-  <Connect(WebsocketSubscriber)
+  <Connect(SocketSubscriber)
     id="1"
   />
 </div>
