@@ -46,7 +46,6 @@ export function mapDispatchToProps (dispatch, props) {
 
 function mergeProps (stateProps, dispatchProps) {
   const communityId = get('id', stateProps.community)
-  console.log(`SocketListener has communityId ${communityId}`)
   return {
     ...stateProps,
     ...dispatchProps,
