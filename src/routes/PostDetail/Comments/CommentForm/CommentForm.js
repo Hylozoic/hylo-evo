@@ -3,21 +3,33 @@ import './CommentForm.scss'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 const { object, func, string } = PropTypes
+import { throttle } from 'lodash'
+
+export const STARTED_TYPING_INTERVAL = 3000
 
 export default class CommentForm extends Component {
   static propTypes = {
     currentUser: object,
     createComment: func,
-    className: string
+    className: string,
+    placeholderText: string
+  }
+
+  startTyping = throttle((editorState) => {
+    if (editorState.getLastChangeType() === 'insert-characters') {
+      this.props.sendIsTyping(true)
+    }
+  }, STARTED_TYPING_INTERVAL)
+
+  save = text => {
+    this.startTyping.cancel()
+    this.props.sendIsTyping(false)
+    this.props.createComment(text)
   }
 
   render () {
-    const { currentUser, className, createComment } = this.props
+    const { currentUser, className } = this.props
     if (!currentUser) return null
-
-    const save = text => {
-      createComment(text)
-    }
 
     const placeholder = `Hi ${currentUser.firstName()}, what's on your mind?`
     return <div styleName='commentForm' className={className}
@@ -27,8 +39,9 @@ export default class CommentForm extends Component {
         <HyloEditor
           ref={x => { this.editor = x }}
           styleName='editor'
+          onChange={this.startTyping}
           placeholder={placeholder}
-          submitOnReturnHandler={save} />
+          submitOnReturnHandler={this.save} />
       </div>
     </div>
   }

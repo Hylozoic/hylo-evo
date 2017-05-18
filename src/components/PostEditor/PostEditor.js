@@ -109,7 +109,6 @@ export default class PostEditor extends React.Component {
             onChange={this.handleTitleChange} />
           <HyloEditor
             styleName='editor'
-            submitOnReturnHandler={this.save}
             placeholder={bodyPlaceholder}
             ref={e => { this.editor = e }} />
         </div>

@@ -1,5 +1,4 @@
 import {
-  ADD_MESSAGE_FROM_SOCKET,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
   CREATE_MESSAGE,
@@ -11,6 +10,7 @@ import {
   UPDATE_THREAD_READ_TIME,
   VOTE_ON_POST_PENDING
 } from 'store/constants'
+import { RECEIVE_MESSAGE } from 'components/SocketListener/SocketListener.store'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
 import { find } from 'lodash/fp'
@@ -83,7 +83,7 @@ export default function ormReducer (state = {}, action) {
       }
       break
 
-    case ADD_MESSAGE_FROM_SOCKET:
+    case RECEIVE_MESSAGE:
       MessageThread.withId(payload.data.message.messageThread).newMessageReceived(meta.bumpUnreadCount)
       break
 

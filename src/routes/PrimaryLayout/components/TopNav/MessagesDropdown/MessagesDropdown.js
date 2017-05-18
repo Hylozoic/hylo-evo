@@ -1,16 +1,18 @@
 import React, { PropTypes, Component } from 'react'
 import './MessagesDropdown.scss'
-const { object, array, string, func } = PropTypes
+const { array, string, func } = PropTypes
 import { Link } from 'react-router-dom'
 import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import cx from 'classnames'
 import { newMessageUrl, messagesUrl } from 'util/index'
 import RoundImageRow from 'components/RoundImageRow'
+import TopNavDropdown from '../TopNavDropdown'
+import { get, some } from 'lodash/fp'
 
 export default class MessagesDropdown extends Component {
   static propTypes = {
     fetchThreads: func,
-    toggleChildren: object,
+    renderToggleChildren: func,
     threads: array,
     className: string,
     goToThread: func
@@ -18,42 +20,55 @@ export default class MessagesDropdown extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {active: false}
+    this.state = {}
   }
 
   componentDidMount () {
     this.props.fetchThreads()
   }
 
-  toggle = () => {
-    this.setState({active: !this.state.active})
+  onToggle = nowActive => {
+    // TODO this is not quite sufficient -- this value should also be bumped
+    // if the current user is in the messages UI, receiving new messages.
+    if (nowActive) this.setState({lastOpenedAt: new Date()})
+  }
+
+  hasUnread () {
+    const { lastOpenedAt } = this.state
+    const isUnread = t =>
+      t.isUnread() && (!lastOpenedAt || t.isUpdatedSince(lastOpenedAt))
+    return some(isUnread, this.props.threads)
   }
 
   render () {
-    const { toggleChildren, threads, className, goToThread, currentUser } = this.props
-    const { active } = this.state
+    const {
+      renderToggleChildren, threads, className, goToThread, currentUser
+    } = this.props
 
-    return <div className={className} styleName='messages-dropdown'>
-      <a onClick={this.toggle}>
-        {toggleChildren}
-      </a>
-      <div styleName={cx('wrapper', {active})}>
-        <ul styleName='menu'>
-          <li styleName='triangle' />
-          <li styleName='header'>
-            <Link to={messagesUrl()} styleName='open'>Open Messages</Link>
-            <Link to={newMessageUrl()} styleName='new'>New</Link>
-          </li>
-          <div styleName='threads'>
-            {threads.map(thread => <Thread
-              thread={thread}
-              goToThread={goToThread}
-              currentUserId={currentUser.id}
-              key={thread.id} />)}
-          </div>
-        </ul>
-      </div>
-    </div>
+    const onClick = id => {
+      goToThread(id)
+      this.refs.dropdown.getWrappedInstance().toggle(false)
+    }
+
+    return <TopNavDropdown
+      ref='dropdown'
+      className={className}
+      onToggle={this.onToggle}
+      toggleChildren={renderToggleChildren(this.hasUnread())}
+      header={
+        <div styleName='header-content'>
+          <Link to={messagesUrl()} styleName='open'>Open Messages</Link>
+          <Link to={newMessageUrl()} styleName='new'>New</Link>
+        </div>}
+      body={
+        <div styleName='threads'>
+          {threads.map(thread => <MessagesDropdownItem
+            thread={thread}
+            onClick={() => onClick(thread.id)}
+            currentUserId={get('id', currentUser)}
+            key={thread.id} />)}
+        </div>
+      } />
   }
 }
 
@@ -69,12 +84,11 @@ const participantNames = participants => {
   }
 }
 
-export function Thread ({ thread, goToThread, currentUserId }) {
-  const message = thread.messages[0]
+export function MessagesDropdownItem ({ thread, onClick, currentUserId }) {
+  const message = thread.messages.orderBy('createdAt', 'desc').first()
   if (!message || !message.text) return null
-  const participants = thread.participants.filter(p => p.id !== currentUserId)
-
-  const unread = thread.lastReadAt < thread.updatedAt
+  const participants = thread.participants.toRefArray()
+  .filter(p => p.id !== currentUserId)
 
   var { text } = message
   if (message.creator.id === currentUserId) {
@@ -87,9 +101,9 @@ export function Thread ({ thread, goToThread, currentUserId }) {
     text = `${truncate(text, maxMessageLength)}...`
   }
 
-  return <li styleName={cx('thread', {unread})}
-    onClick={goToThread(thread.id)}>
-    <div styleName='image-wraper'>
+  return <li styleName={cx('thread', {unread: thread.isUnread()})}
+    onClick={onClick}>
+    <div styleName='image-wrapper'>
       <RoundImageRow imageUrls={participants.map(p => p.avatarUrl)} vertical ascending cap='2' />
     </div>
     <div styleName='message-content'>

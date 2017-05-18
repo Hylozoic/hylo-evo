@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`does something 1`] = `
+<withRouter(Connect(FullPageModal))
+  content={
+    <div
+      data-styleName="exampleName"
+    >
+      Topic List goes here.
+    </div>
+  }
+/>
+`;

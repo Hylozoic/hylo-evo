@@ -29,5 +29,8 @@ exports[`matches the last snapshot 1`] = `
   <Connect(PeopleTyping)
     data-styleName="people-typing"
   />
+  <Connect(SocketSubscriber)
+    id="1"
+  />
 </div>
 `;

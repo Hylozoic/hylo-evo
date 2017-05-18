@@ -132,3 +132,9 @@ it('handles a query set root', () => {
     }
   ])
 })
+
+it('handles null children', () => {
+  const extractor = new ModelExtractor(orm.session(orm.getEmptyState()))
+  extractor.walk(testPayloads['FETCH_ACTIVITY'].data.activity, 'Activity')
+  expect(extractor.mergedNodes()).toMatchSnapshot()
+})

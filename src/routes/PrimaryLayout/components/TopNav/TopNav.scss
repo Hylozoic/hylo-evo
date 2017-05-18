@@ -58,28 +58,30 @@
 .navIcons {
   margin-left: auto;
   display: inline-block;
+
   > * {
     vertical-align: middle;
+    margin-right: 15px;
+    display: inline-block;
+    height: 28px;
+    margin-right: 15px;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 }
 
-.navIcon, .navIcon:hover {
-  margin-right: 15px;
-  text-decoration: none;
-}
-
 .icon {
-  font-size: 22px;
+  position: relative;
   top: 3px;
+  font-size: 22px;
 }
 
 .icon:hover {
   color: $color-rhino;
-}
-
-.messages-dropdown {
-  top: -2px;
-  left: -7px;
 }
 
 .user-menu {

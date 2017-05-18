@@ -1,0 +1,47 @@
+{
+  "entityMap": {
+    "0": {
+      "type": "mention",
+      "mutability": "SEGMENTED",
+      "data": {
+        "mention": {
+          "id": "8",
+          "name": "Loho",
+          "avatar": "https://www.gravatar.com/avatar/fdf459c34e261c5b6e60c09e65bd91c0?d=mm&s=140"
+        }
+      }
+    },
+    "1": {
+      "type": "#mention",
+      "mutability": "SEGMENTED",
+      "data": {
+        "mention": {
+          "id": "2",
+          "name": "request"
+        }
+      }
+    }
+  },
+  "blocks": [
+    {
+      "key": "ha1f",
+      "text": "This is a test of a mention Loho and a topic #request ",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [
+        {
+          "offset": 28,
+          "length": 4,
+          "key": 0
+        },
+        {
+          "offset": 45,
+          "length": 8,
+          "key": 1
+        }
+      ],
+      "data": {}
+    }
+  ]
+}

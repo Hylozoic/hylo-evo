@@ -7,57 +7,41 @@ import MessageSection from 'components/MessageSection'
 import MessageForm from 'components/MessageForm'
 import PeopleTyping from 'components/PeopleTyping'
 import CloseMessages from './CloseMessages'
+import SocketSubscriber from 'components/SocketSubscriber'
 import './Thread.scss'
 
 export default class Thread extends React.Component {
   static propTypes = {
     currentUser: object,
     thread: object,
-    fetchThread: func,
-    subscribe: func,
-    unsubscribe: func
-  }
-
-  setupForThread () {
-    this.props.fetchThread()
-    this.reconnect = this.props.subscribe()
-    this.refs.form.getWrappedInstance().focus()
-  }
-
-  teardownForThread () {
-    this.props.unsubscribe(this.reconnect)
+    fetchThread: func
   }
 
   componentDidMount () {
-    this.setupForThread()
+    this.onThreadIdChange()
   }
 
   componentDidUpdate (prevProps) {
-    const oldId = get('thread.id', prevProps)
-    const newId = get('thread.id', this.props)
-    if (newId !== oldId && newId) this.setupForThread()
+    if (this.props.id && this.props.id !== prevProps.id) {
+      this.onThreadIdChange()
+    }
   }
 
-  componentWillReceiveProps (nextProps) {
-    const oldId = get('thread.id', this.props)
-    const newId = get('thread.id', nextProps)
-    if (newId !== oldId) this.teardownForThread()
-  }
-
-  componentWillUnmount () {
-    this.teardownForThread()
+  onThreadIdChange = () => {
+    this.props.fetchThread()
+    this.refs.form.getWrappedInstance().focus()
   }
 
   render () {
-    const { thread, currentUser } = this.props
-    const threadId = get('id', thread)
+    const { thread, currentUser, id } = this.props
     return <div styleName='thread'>
       <Header thread={thread} currentUser={currentUser} />
-      <MessageSection thread={thread} messageThreadId={threadId} />
+      <MessageSection thread={thread} messageThreadId={id} />
       <div styleName='message-form'>
-        <MessageForm messageThreadId={threadId} ref='form' />
+        <MessageForm messageThreadId={id} ref='form' />
       </div>
       <PeopleTyping styleName='people-typing' />
+      <SocketSubscriber id={id} />
     </div>
   }
 }

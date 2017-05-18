@@ -22,7 +22,7 @@ export function fetchThreads () {
       query: `{
         me {
           id
-          messageThreads {
+          messageThreads(sortBy: "updatedAt", order: "desc") {
             id
             unreadCount
             lastReadAt
@@ -85,15 +85,7 @@ export const getThreads = ormCreateSelector(
   getThreadSearch,
   (session, threadSearch) => {
     return session.MessageThread.all()
-    .orderBy(x => -1 * new Date(x.updatedAt).getTime())
     .toModelArray()
-    .map(thread => ({
-      ...thread.ref,
-      messages: thread.messages
-        .orderBy(x => -1 * new Date(x.createdAt).getTime())
-        .toModelArray(),
-      participants: thread.participants.toModelArray()
-    }))
     .filter(filterThreadsByParticipant(threadSearch))
   }
 )
@@ -103,6 +95,6 @@ export function filterThreadsByParticipant (threadSearch) {
   const threadSearchTlc = tlc(threadSearch)
   return (thread) => {
     if (threadSearch === '') return true
-    return some(p => some(name => tlc(name).startsWith(threadSearchTlc), p.name.split(' ')), thread.participants)
+    return some(p => some(name => tlc(name).startsWith(threadSearchTlc), p.name.split(' ')), thread.participants.toRefArray())
   }
 }

@@ -85,7 +85,7 @@ export default class ModelExtractor {
   }
 
   _walkOne (value, modelName) {
-    if (typeof value !== 'object') return value
+    if (typeof value !== 'object' || !value) return value
     this.walk(value, modelName, false)
     return value.id
   }

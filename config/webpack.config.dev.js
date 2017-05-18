@@ -10,6 +10,7 @@ var sharedConfig = require('./webpack.config.shared')
 var publicPath = '/'
 var publicUrl = ''
 var env = getClientEnvironment(publicUrl)
+var path = require('path')
 
 module.exports = {
   devtool: 'cheap-module-source-map',
@@ -26,8 +27,14 @@ module.exports = {
     publicPath: publicPath
   },
   resolve: {
-    // LEJ: Allow /src to operate as it's own absolute root
-    modules: [paths.appSrc, 'node_modules'].concat(paths.nodePaths),
+    // NOTE: fixes issue with yarn link and peerDependencies
+    // https://github.com/webpack/webpack/issues/985#issuecomment-261497772
+    symlinks: false,
+    modules: [
+      paths.appSrc,
+      path.resolve(__dirname, '..', 'node_modules'),
+      'node_modules'
+    ].concat(paths.nodePaths),
     extensions: ['.js', '.json', '.jsx'],
     alias: {
       'react-native': 'react-native-web'

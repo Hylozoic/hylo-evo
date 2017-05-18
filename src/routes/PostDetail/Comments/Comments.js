@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
+import PeopleTyping from 'components/PeopleTyping'
 import './Comments.scss'
 const { array, func, object, number, string } = PropTypes
 
@@ -16,7 +17,16 @@ export default class Comments extends Component {
   }
 
   render () {
-    const { comments, total, hasMore, fetchComments, currentUser, createComment, slug } = this.props
+    const {
+      comments,
+      total,
+      hasMore,
+      fetchComments,
+      currentUser,
+      createComment,
+      slug,
+      postId
+    } = this.props
     return <div styleName='comments'>
       <ShowMore
         commentsLength={comments.length}
@@ -25,7 +35,9 @@ export default class Comments extends Component {
         fetchComments={fetchComments} />
       {comments.map(c => <Comment comment={c} key={c.id} slug={slug} />)}
       <div styleName='form-wrapper'>
-        <CommentForm currentUser={currentUser} createComment={createComment} />
+        <CommentForm currentUser={currentUser}
+          createComment={createComment} postId={postId} />
+        <PeopleTyping styleName='people-typing' />
       </div>
     </div>
   }

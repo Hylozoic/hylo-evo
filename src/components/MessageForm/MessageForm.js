@@ -2,7 +2,6 @@ import React from 'react'
 import { throttle } from 'lodash'
 import { get } from 'lodash/fp'
 import { onEnterNoShift } from 'util/textInput'
-import { socketUrl } from 'client/websockets'
 import RoundImage from 'components/RoundImage'
 var { func, object, string, bool } = React.PropTypes
 import './MessageForm.scss'
@@ -14,7 +13,6 @@ export const NEW_THREAD_ID = 'new'
 
 export default class MessageForm extends React.Component {
   static propTypes = {
-    socket: object,
     text: string,
     className: string,
     currentUser: object,
@@ -34,7 +32,7 @@ export default class MessageForm extends React.Component {
     const { createMessage, messageThreadId, text } = this.props
     createMessage(messageThreadId, text).then(() => this.focus())
     this.startTyping.cancel()
-    this.sendIsTyping(false)
+    this.props.sendIsTyping(false)
   }
 
   handleThreadThenMessage () {
@@ -73,17 +71,12 @@ export default class MessageForm extends React.Component {
     return this.refs.editor === document.activeElement
   }
 
-  sendIsTyping (isTyping) {
-    const { messageThreadId, socket } = this.props
-    socket.post(socketUrl(`/noo/post/${messageThreadId}/typing`), {isTyping})
-  }
-
   // broadcast "I'm typing!" every 3 seconds starting when the user is typing.
   // We send repeated notifications to make sure that a user gets notified even
   // if they load a comment thread after someone else has already started
   // typing.
   startTyping = throttle(() => {
-    this.sendIsTyping(true)
+    this.props.sendIsTyping(true)
   }, STARTED_TYPING_INTERVAL)
 
   resize = () => {

@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TopNavDropdown renders correctly 1`] = `
+<div>
+  <a
+    onClick={[Function]}
+  >
+    <div>
+      toggle
+    </div>
+  </a>
+  <div
+    data-styleName="wrapper"
+    style={
+      Object {
+        "left": "890px",
+        "top": "80px",
+      }
+    }
+  >
+    <ul
+      data-styleName="menu"
+    >
+      <li
+        data-styleName="triangle"
+        style={
+          Object {
+            "left": "-880px",
+          }
+        }
+      />
+      <li
+        data-styleName="header"
+      >
+        <div>
+          header
+        </div>
+      </li>
+      <div>
+        body
+      </div>
+    </ul>
+  </div>
+</div>
+`;
