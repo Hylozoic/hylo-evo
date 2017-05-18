@@ -13,18 +13,20 @@ export function mapDispatchToProps (dispatch, props) {
   const topicId = topic && topic.id
   const communityId = community && community.id
   return {
-    toggleTopicSubscribeMaker: subscription => topicId && communityId ? () => dispatch(toggleTopicSubscribe(topicId, communityId, subscription)) : () => {}
+    toggleSubscribeMaker: subscription => topicId && communityId
+      ? () => dispatch(toggleTopicSubscribe(topicId, communityId, subscription))
+      : () => {}
   }
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { subscription } = stateProps
-  const { toggleTopicSubscribeMaker } = dispatchProps
+  const { toggleSubscribeMaker } = dispatchProps
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    toggleTopicSubscribe: toggleTopicSubscribeMaker(subscription)
+    toggleSubscribe: toggleSubscribeMaker(subscription)
   }
 }
 

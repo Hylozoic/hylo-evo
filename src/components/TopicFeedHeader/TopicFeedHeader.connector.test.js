@@ -23,8 +23,8 @@ describe('mapDispatchToProps', () => {
       community: {id: '10'}
     }
     const existingSubscription = {id: '100'}
-    const toggleTopicSubscribe = mapDispatchToProps(dispatch, props).toggleTopicSubscribeMaker(existingSubscription)
-    toggleTopicSubscribe()
+    const toggleSubscribe = mapDispatchToProps(dispatch, props).toggleSubscribeMaker(existingSubscription)
+    toggleSubscribe()
     expect(dispatch).toHaveBeenCalled()
   })
 
@@ -34,8 +34,8 @@ describe('mapDispatchToProps', () => {
       topic: {id: '1'}
     }
     const existingSubscription = {id: '100'}
-    const toggleTopicSubscribe = mapDispatchToProps(dispatch, props).toggleTopicSubscribeMaker(existingSubscription)
-    toggleTopicSubscribe()
+    const toggleSubscribe = mapDispatchToProps(dispatch, props).toggleSubscribeMaker(existingSubscription)
+    toggleSubscribe()
     expect(dispatch).not.toHaveBeenCalled()
   })
 
@@ -45,8 +45,8 @@ describe('mapDispatchToProps', () => {
       community: {id: '1'}
     }
     const existingSubscription = {id: '100'}
-    const toggleTopicSubscribe = mapDispatchToProps(dispatch, props).toggleTopicSubscribeMaker(existingSubscription)
-    toggleTopicSubscribe()
+    const toggleSubscribe = mapDispatchToProps(dispatch, props).toggleSubscribeMaker(existingSubscription)
+    toggleSubscribe()
     expect(dispatch).not.toHaveBeenCalled()
   })
 
@@ -54,8 +54,8 @@ describe('mapDispatchToProps', () => {
     const dispatch = jest.fn()
     const props = {}
     const existingSubscription = {id: '100'}
-    const toggleTopicSubscribe = mapDispatchToProps(dispatch, props).toggleTopicSubscribeMaker(existingSubscription)
-    toggleTopicSubscribe()
+    const toggleSubscribe = mapDispatchToProps(dispatch, props).toggleSubscribeMaker(existingSubscription)
+    toggleSubscribe()
     expect(dispatch).not.toHaveBeenCalled()
   })
 })
@@ -72,7 +72,7 @@ describe('mergeProps', () => {
     const dispatch = jest.fn()
     const dispatchProps = mapDispatchToProps(dispatch, ownProps)
     const mergedProps = mergeProps(stateProps, dispatchProps, ownProps)
-    mergedProps.toggleTopicSubscribe()
+    mergedProps.toggleSubscribe()
     expect(dispatch).toHaveBeenCalled()
   })
 })

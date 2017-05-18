@@ -9,7 +9,7 @@ const { string, number, object, shape, func } = React.PropTypes
 
 const pluralize = (count, word) => `${count} ${word}${count === 1 ? '' : 's'}`
 
-function TopicFeedHeader ({ subscription, topicName, postsTotal, followersTotal, community, toggleTopicSubscribe }) {
+export default function TopicFeedHeader ({ subscription, topicName, postsTotal, followersTotal, community, toggleSubscribe }) {
   const url = community ? communityUrl(community.slug) : '/all'
   const name = community ? community.name : 'All Communities'
   postsTotal = postsTotal || 0
@@ -18,12 +18,12 @@ function TopicFeedHeader ({ subscription, topicName, postsTotal, followersTotal,
     <Link to={url} styleName='back'><Icon name='Back' styleName='back-icon' /> back to {name}</Link>
     <div styleName='topic-name'>#{topicName}</div>
     <div styleName='meta'>{pluralize(postsTotal, 'post')} • {pluralize(followersTotal, 'follower')}</div>
-    {community && <Button styleName='subscribe' onClick={toggleTopicSubscribe}>{subscription ? 'Unsubscribe' : 'Subscribe'}</Button>}
+    {community && <Button styleName='subscribe' onClick={toggleSubscribe}>{subscription ? 'Unsubscribe' : 'Subscribe'}</Button>}
   </div>
 }
 TopicFeedHeader.propTypes = {
   subscription: object,
-  toggleTopicSubscribe: func,
+  toggleSubscribe: func,
   topicName: string,
   postsTotal: number,
   followersTotal: number,
@@ -37,5 +37,3 @@ TopicFeedHeader.propTypes = {
     slug: string
   })
 }
-
-export default TopicFeedHeader

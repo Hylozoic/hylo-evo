@@ -114,13 +114,13 @@ describe('subscribe', () => {
     expect(wrapper.find('[data-styleName="subscribe"]').render().text()).toEqual('Unsubscribe')
   })
 
-  it('calls toggleTopicSubscribe when sub/unsub button is clicked', () => {
+  it('calls toggleSubscribe when sub/unsub button is clicked', () => {
     const props = {
       community: {},
-      toggleTopicSubscribe: jest.fn()
+      toggleSubscribe: jest.fn()
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     wrapper.find('[data-styleName="subscribe"]').simulate('click')
-    expect(props.toggleTopicSubscribe.mock.calls).toHaveLength(1)
+    expect(props.toggleSubscribe.mock.calls).toHaveLength(1)
   })
 })
