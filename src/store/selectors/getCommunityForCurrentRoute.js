@@ -6,7 +6,7 @@ import { getSlugInPath } from 'util/index'
 const getCommunityForCurrentRoute = ormCreateSelector(
   orm,
   state => state.orm,
-  (state, props) => getParam('slug', state, props) || tryLocation(props),
+  (state, props) => getParam('slug', state, props, false) || tryLocation(props),
   (session, slug) => session.Community.safeGet({slug})
 )
 

@@ -1,14 +1,23 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { get } from 'lodash/fp'
 import {
   receiveComment,
   receiveMessage,
+  receivePost,
   receiveThread
 } from './SocketListener.store'
 import {
   addUserTyping,
   clearUserTyping
 } from 'components/PeopleTyping/PeopleTyping.store'
+import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+
+function mapStateToProps (state, props) {
+  return {
+    community: getCommunityForCurrentRoute(state, props)
+  }
+}
 
 export function mapDispatchToProps (dispatch, props) {
   return {
@@ -29,12 +38,23 @@ export function mapDispatchToProps (dispatch, props) {
 
     ...bindActionCreators({
       addUserTyping,
-      clearUserTyping
+      clearUserTyping,
+      receivePost
     }, dispatch)
   }
 }
 
-export default connect(null, mapDispatchToProps)
+function mergeProps (stateProps, dispatchProps) {
+  const communityId = get('id', stateProps.community)
+  console.log(`SocketListener has communityId ${communityId}`)
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    receivePost: data => dispatchProps.receivePost(data, communityId)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
 function convertToThread (data) {
   const { id, created_at, updated_at, people, comments } = data
