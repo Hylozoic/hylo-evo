@@ -9,8 +9,7 @@ import Drawer from './components/Drawer'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
 import CommunitySidebar from 'routes/CommunitySidebar'
-import CommunityFeed from 'routes/CommunityFeed'
-import AllCommunitiesFeed from 'routes/AllCommunitiesFeed'
+import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 
 import EventDetail from 'routes/Events/EventDetail'
@@ -58,22 +57,19 @@ export default class PrimaryLayout extends Component {
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToCommunity currentUser={currentUser} />
-          <Route path='/all' exact component={AllCommunitiesFeed} />
-          <Route path='/all/:topicName' component={AllCommunitiesFeed} />
-          <Route path='/c/:slug' exact component={CommunityFeed} />
           <Switch>
-            <Route path='/c/:slug/tag/:tagName' exact render={(props) => {
-              const { slug, tagName } = props.match.params
-              return <Redirect to={`/c/${slug}/${tagName}`} />
-            }} />
+            <Route path='/all' exact component={Feed} />
+            <Route path='/all/:topicName' exact component={Feed} />
+            <Route path='/all/p/:postId' exact component={Feed} />
+            <Route path='/c/:slug' exact component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
             <Route path='/c/:slug/m/:id' component={MemberProfile} />
-            <Route path='/c/:slug/p/:postId' component={CommunityFeed} />
-            <Route path='/c/:slug/:topicName/p/:postId' component={CommunityFeed} />
-            <Route path='/c/:slug/:topicName' component={CommunityFeed} />
+            <Route path='/c/:slug/p/:postId' component={Feed} />
+            <Route path='/c/:slug/:topicName/p/:postId' component={Feed} />
+            <Route path='/c/:slug/:topicName' component={Feed} />
+            <Route path='/events' component={Events} />
+            <Route path='/settings' component={Settings} />
           </Switch>
-          <Route path='/events' component={Events} />
-          <Route path='/settings' component={Settings} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/c/:slug' exact component={CommunitySidebar} />

@@ -1,13 +1,13 @@
-.feed-container {
+.FeedList-container {
   position: relative;
 }
 
-.feedItems {
+.FeedListItems {
   margin: 0 auto;
   overflow: auto; // prevent margin collapse
 }
 
-.feedItem {
+.FeedListItem {
   margin: 0 $space-4x $space-6x;
 }
 

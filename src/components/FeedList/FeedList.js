@@ -4,7 +4,7 @@ import PostCard from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 import cx from 'classnames'
-import './Feed.scss'
+import './FeedList.scss'
 import { isEmpty, some } from 'lodash/fp'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
 
@@ -12,7 +12,7 @@ const STICKY_TABBAR_ID = 'tabbar-sticky'
 
 const tabbarOffset = 244
 
-export default class Feed extends React.Component {
+export default class FeedList extends React.Component {
   static defaultProps = {
     posts: []
   }
@@ -80,7 +80,7 @@ export default class Feed extends React.Component {
     } = this.props
     const { atTabBar } = this.state
 
-    return <div styleName='feed-container'>
+    return <div styleName='FeedList-container'>
       <ScrollListener
         elementId={CENTER_COLUMN_ID}
         onScroll={this.handleScrollEvents} />
@@ -97,13 +97,13 @@ export default class Feed extends React.Component {
           onChangeSort={changeSort}
           selectedSort={sortBy} />
       </div>}
-      <div styleName='feedItems'>
+      <div styleName='FeedListItems'>
         {posts.map(post => {
           const expanded = post.id === selectedPostId
           return <PostCard
             post={post}
             showCommunity={showCommunities}
-            styleName={cx('feedItem', {expanded})}
+            styleName={cx('FeedListItem', {expanded})}
             expanded={expanded}
             showDetails={() => showPostDetails(post.id)}
             key={post.id} />

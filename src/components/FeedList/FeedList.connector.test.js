@@ -1,5 +1,5 @@
 import orm from 'store/models'
-import { mapStateToProps } from './Feed.connector'
+import { mapStateToProps } from './FeedList.connector'
 import { buildKey } from 'store/reducers/queryResults'
 import { FETCH_POSTS } from 'store/constants'
 import { times } from 'lodash/fp'
