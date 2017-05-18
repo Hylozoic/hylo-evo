@@ -13,14 +13,15 @@ export function mapStateToProps (state, props) {
   // call `community.memberships.first()` because that will be cached so long as
   // the community doesn't change, which will mask changes to the membership's
   // newPostCount.
-  const membership = getMembership(state, community.id)
+  const membership = getMembership(state, {communityId: community.id})
   const homeBadge = get('newPostCount', membership)
   return { community, membership, homeBadge }
 }
 
-function mergeProps (stateProps, dispatchProps, ownProps) {
+export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { homeBadge, community, membership } = stateProps
   return {
+    ...ownProps,
     community,
     homeBadge,
     clearBadge: homeBadge
@@ -34,6 +35,6 @@ export default connect(mapStateToProps, {resetNewPostCount}, mergeProps)
 const getMembership = ormCreateSelector(
   orm,
   state => state.orm,
-  (state, communityId) => communityId,
+  (state, { communityId }) => communityId,
   (session, id) => session.Membership.safeGet({community: id})
 )

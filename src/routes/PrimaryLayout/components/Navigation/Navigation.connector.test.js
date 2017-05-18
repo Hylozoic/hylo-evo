@@ -1,4 +1,4 @@
-import { mapStateToProps } from './Navigation.connector'
+import { mapStateToProps, mergeProps } from './Navigation.connector'
 import orm from 'store/models'
 
 describe('mapStateToProps', () => {
@@ -22,5 +22,18 @@ describe('mapStateToProps', () => {
 
     const stateProps2 = mapStateToProps({orm: s2.state}, props)
     expect(stateProps2.homeBadge).toEqual(0)
+  })
+})
+
+describe('mergeProps', () => {
+  it('merges all the right props', () => {
+    const stateProps = {homeBadge: 1, community: 2, membership: {id: 77}}
+    const ownProps = {foo: 1, bar: 2}
+    const resetNewPostCount = jest.fn()
+    const dispatchProps = {resetNewPostCount}
+    const mergedProps = mergeProps(stateProps, dispatchProps, ownProps)
+    expect(mergedProps).toMatchSnapshot()
+    mergedProps.clearBadge()
+    expect(resetNewPostCount).toHaveBeenCalledWith(77, 'Membership')
   })
 })
