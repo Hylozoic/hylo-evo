@@ -6,6 +6,8 @@ import {
   EXTRACT_MODEL,
   FETCH_MESSAGES_PENDING,
   LEAVE_COMMUNITY,
+  MARK_ACTIVITY_READ_PENDING,
+  MARK_ALL_ACTIVITIES_READ_PENDING,
   RESET_NEW_POST_COUNT_PENDING,
   UPDATE_THREAD_READ_TIME,
   VOTE_ON_POST_PENDING
@@ -24,15 +26,23 @@ export default function ormReducer (state = {}, action) {
   if (error) return state
 
   const {
+    Activity,
     Comment,
     Me,
     Membership,
     Message,
     MessageThread,
+    Notification,
     Post,
     PostCommenter,
     TopicSubscription
   } = session
+
+  const invalidateNotifications = () => {
+    const first = Notification.first()
+    first && first.update({time: Date.now()})
+  }
+
   let membership
 
   switch (type) {
@@ -120,6 +130,17 @@ export default function ormReducer (state = {}, action) {
       })
       membership = Membership.safeGet({community: payload.communityId})
       membership.update({newPostCount: membership.newPostCount + 1})
+
+    case MARK_ACTIVITY_READ_PENDING:
+      Activity.withId(meta.id).update({unread: false})
+      // invalidating selector memoization
+      invalidateNotifications()
+      break
+
+    case MARK_ALL_ACTIVITIES_READ_PENDING:
+      Activity.all().update({unread: false})
+      // invalidating selector memoization
+      invalidateNotifications()
       break
   }
 

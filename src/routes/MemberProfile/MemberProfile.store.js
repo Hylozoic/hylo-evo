@@ -1,6 +1,4 @@
 import { createSelector } from 'redux-orm'
-
-import { EXTRACT_MODEL } from 'store/constants'
 import orm from 'store/models'
 
 export const FETCH_PERSON = 'FETCH_PERSON'
@@ -74,13 +72,3 @@ export const personSelector = createSelector(
     return null
   }
 )
-
-export default function reducer (state = {}, action) {
-  const { meta, type } = action
-  switch (type) {
-    case EXTRACT_MODEL:
-      return { ...state, ready: meta.modelName === 'Person' }
-  }
-
-  return state
-}

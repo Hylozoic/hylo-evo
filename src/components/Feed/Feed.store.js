@@ -33,7 +33,7 @@ export function fetchPosts ({ subject, id, sortBy, offset, search, filter }) {
   }
 }
 
-const postsQueryFragment = `
+export const postsQueryFragment = `
 posts(
   first: $first,
   offset: $offset,
