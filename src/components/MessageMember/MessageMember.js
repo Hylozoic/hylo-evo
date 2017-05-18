@@ -5,11 +5,17 @@ import { Link } from 'react-router-dom'
 import Button from 'components/Button'
 import './MessageMember.scss'
 
-export function MessageMember ({ match, ready }) {
+export function MessageMember ({ member, ready, messageThreadId }) {
   if (!ready) return null
 
+  console.log('member', member)
+
+  const path = messageThreadId
+    ? `/t/${messageThreadId}`
+    : `/t/new?participants=${member.id}`
+
   return <div styleName='container'>
-    <Link to={`/t/new?participants=${match.params.id}`}>
+    <Link to={path}>
       <Button styleName='message-member'>Message</Button>
     </Link>
   </div>
