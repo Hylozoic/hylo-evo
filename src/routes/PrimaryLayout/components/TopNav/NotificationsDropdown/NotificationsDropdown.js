@@ -21,6 +21,8 @@ import { decode } from 'ent'
 export default class NotificationsDropdown extends Component {
   static propTypes = {
     fetchThreads: func,
+    markActivityRead: func,
+    markAllActivitiesRead: func,
     renderToggleChildren: func,
     notifications: array,
     className: string
@@ -39,7 +41,11 @@ export default class NotificationsDropdown extends Component {
 
   render () {
     const {
-      renderToggleChildren, className, goToNotification, markAsRead
+      renderToggleChildren,
+      className,
+      goToNotification,
+      markActivityRead,
+      markAllActivitiesRead
     } = this.props
     var { notifications } = this.props
     const { showingUnread } = this.state
@@ -52,6 +58,7 @@ export default class NotificationsDropdown extends Component {
     }
 
     const onClick = notification => {
+      if (notification.activity.unread) markActivityRead(notification.activity.id)
       goToNotification(notification)
       this.refs.dropdown.getWrappedInstance().toggle(false)
     }
@@ -67,7 +74,7 @@ export default class NotificationsDropdown extends Component {
           <span onClick={showUnread} styleName={cx('tab', {active: showingUnread})}>
             Unread
           </span>
-          <span onClick={markAsRead} styleName='mark-read'>Mark all as read</span>
+          <span onClick={markAllActivitiesRead} styleName='mark-read'>Mark all as read</span>
         </div>}
       body={
         <div styleName='notifications'>
