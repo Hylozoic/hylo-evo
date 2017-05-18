@@ -13,5 +13,6 @@ TopicSubscription.modelName = 'TopicSubscription'
 TopicSubscription.fields = {
   id: attr(),
   topic: fk('Topic', 'topicSubscriptions'),
+  community: fk('Community', 'topicSubscriptions'),
   newPostCount: attr()
 }

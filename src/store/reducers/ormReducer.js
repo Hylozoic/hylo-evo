@@ -99,11 +99,7 @@ export default function ormReducer (state = {}, action) {
 
     case TOGGLE_TOPIC_SUBSCRIBE:
       const subscription = payload.data.subscribe
-      if (subscription) {
-        Community.withId(subscription.community.id).updateAppending({
-          topicSubscriptions: [payload.data.subscribe.id]
-        })
-      } else {
+      if (!subscription) {
         TopicSubscription.withId(meta.existingSubscriptionId).delete()
       }
       const ct = CommunityTopic.get({topic: meta.topicId, community: meta.communityId})
