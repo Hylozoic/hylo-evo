@@ -14,8 +14,7 @@ export function mapStateToProps (state, props) {
   return {
     currentTab: 'Overview',
     error,
-    person,
-    ready: state.MemberProfile ? state.MemberProfile.ready : false
+    person
   }
 }
 

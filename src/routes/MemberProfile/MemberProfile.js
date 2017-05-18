@@ -13,13 +13,12 @@ import MemberPosts from './MemberPosts'
 import MemberComments from './MemberComments'
 import MemberVotes from './MemberVotes'
 
-const { any, arrayOf, bool, object, string, shape } = React.PropTypes
+const { any, arrayOf, object, string, shape } = React.PropTypes
 
 export default class MemberProfile extends React.Component {
   static propTypes = {
     currentTab: string,
     error: any,
-    ready: bool,
     person: shape({
       id: any,
       avatarUrl: string,
@@ -58,7 +57,7 @@ export default class MemberProfile extends React.Component {
 
   render () {
     if (this.props.error) return this.displayError(this.props.error)
-    if (!this.props.ready) return <Loading />
+    if (!this.props.person) return <Loading />
 
     const {
       avatarUrl,
