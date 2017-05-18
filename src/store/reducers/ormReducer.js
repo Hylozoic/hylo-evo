@@ -130,6 +130,7 @@ export default function ormReducer (state = {}, action) {
       })
       membership = Membership.safeGet({community: payload.communityId})
       membership.update({newPostCount: membership.newPostCount + 1})
+      break
 
     case MARK_ACTIVITY_READ_PENDING:
       Activity.withId(meta.id).update({unread: false})
