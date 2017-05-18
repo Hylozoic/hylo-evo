@@ -18,6 +18,10 @@
   padding: 0px 25px;
 }
 
+.disabled {
+  background-color: #cccccc;
+}
+
 .green {
   background-color: $color-caribbean-green;
   color: $color-white;
@@ -26,6 +30,9 @@
   }
   &:active, &.active {
     background-color: darken($color-caribbean-green, 2%);
+  }
+  &.disabled {
+    background-color: lighten(desaturate($color-caribbean-green, 40%), 35%);
   }
 }
 

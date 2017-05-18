@@ -12,4 +12,9 @@ function mapStateToProps (state, props) {
   }
 }
 
-export default connect(mapStateToProps, {fetchCurrentUser, toggleDrawer})
+export const mapDispatchToProps = {
+  fetchCurrentUser,
+  toggleDrawer
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)

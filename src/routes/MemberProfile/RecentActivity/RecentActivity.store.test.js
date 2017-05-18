@@ -1,5 +1,5 @@
 import orm from 'store/models'
-import payload from '../MemberProfile.test.json'
+import payload from '../MemberProfile.test.json' // eslint-disable-line
 import normalized from '../MemberProfile.normalized.test.json'
 import { fetchRecentActivity, activitySelector } from './RecentActivity.store'
 import { mapStateToProps } from './RecentActivity.connector'
