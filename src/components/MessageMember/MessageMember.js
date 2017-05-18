@@ -1,14 +1,12 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-
+import Loading from 'components/Loading'
 import Button from 'components/Button'
 import './MessageMember.scss'
 
-export function MessageMember ({ member, ready, messageThreadId }) {
-  if (!ready) return null
-
-  console.log('member', member)
+export default function MessageMember ({ member }) {
+  if (!member) return <Loading />
+  const { messageThreadId } = member
 
   const path = messageThreadId
     ? `/t/${messageThreadId}`
@@ -20,11 +18,3 @@ export function MessageMember ({ member, ready, messageThreadId }) {
     </Link>
   </div>
 }
-
-export function mapStateToProps ({ MemberProfile }) {
-  return {
-    ready: MemberProfile.ready
-  }
-}
-
-export default connect(mapStateToProps)(MessageMember)
