@@ -1,4 +1,4 @@
-import { FETCH_NOTIFICATIONS } from 'store/constants'
+import { FETCH_NOTIFICATIONS, MARK_ACTIVITY_READ, MARK_ALL_ACTIVITIES_READ } from 'store/constants'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 import { push } from 'react-router-redux'
@@ -67,14 +67,48 @@ export function fetchNotifications () {
   }
 }
 
-export function urlForNotification ({ activity: { action, post, comment, community } }) {
+export function markActivityRead (id) {
+  return {
+    type: MARK_ACTIVITY_READ,
+    graphql: {
+      query: `mutation ($id: ID) {
+        markActivityRead(id: $id) {
+          id
+        }
+      }`,
+      variables: {id}
+    },
+    meta: {
+      id,
+      optimistic: true
+    }
+  }
+}
+
+export function markAllActivitiesRead () {
+  return {
+    type: MARK_ALL_ACTIVITIES_READ,
+    graphql: {
+      query: `mutation {
+        markAllActivitiesRead {
+          success
+        }
+      }`
+    },
+    meta: {
+      optimistic: true
+    }
+  }
+}
+
+export function urlForNotification ({ activity, activity: { action, post, comment, community } }) {
   switch (action) {
     case ACTION_NEW_COMMENT:
     case ACTION_COMMENT_MENTION:
       return commentUrl(post.id, comment.id)
     case ACTION_TAG:
     case ACTION_MENTION:
-      return postUrl(post.id, comment.id)
+      return postUrl(post.id)
     case ACTION_JOIN_REQUEST:
       return communitySettingsUrl(community.slug)
     case ACTION_APPROVED_JOIN_REQUEST:

@@ -1,6 +1,11 @@
 import orm from 'store/models' // this initializes redux-orm
 import ormReducer from './ormReducer'
-import { EXTRACT_MODEL, VOTE_ON_POST_PENDING } from 'store/constants'
+import {
+  EXTRACT_MODEL,
+  VOTE_ON_POST_PENDING,
+  MARK_ACTIVITY_READ_PENDING,
+  MARK_ALL_ACTIVITIES_READ_PENDING
+} from 'store/constants'
 import deep from 'deep-diff'
 
 it('responds to EXTRACT_MODEL', () => {
@@ -83,5 +88,41 @@ describe('on VOTE_ON_POST_PENDING', () => {
       const newState = ormReducer(state, {...action, meta: {postId: '2', isUpvote: false}})
       expect(deep(state, newState)).toMatchSnapshot()
     })
+  })
+})
+
+const makeActivityState = () => {
+  const session = orm.session(orm.getEmptyState())
+
+  session.Activity.create({id: '1', unread: true})
+  session.Activity.create({id: '2', unread: true})
+
+  return session.state
+}
+
+describe('on MARK_ACTIVITY_READ_PENDING', () => {
+  it('marks the activity read', () => {
+    const state = makeActivityState()
+    const action = {
+      type: MARK_ACTIVITY_READ_PENDING,
+      meta: {
+        id: '2'
+      }
+    }
+
+    const newState = ormReducer(state, action)
+    expect(deep(state, newState)).toMatchSnapshot()
+  })
+})
+
+describe('on MARK_ALL_ACTIVITIES_READ_PENDING', () => {
+  it('marks the activity read', () => {
+    const state = makeActivityState()
+    const action = {
+      type: MARK_ALL_ACTIVITIES_READ_PENDING
+    }
+
+    const newState = ormReducer(state, action)
+    expect(deep(state, newState)).toMatchSnapshot()
   })
 })
