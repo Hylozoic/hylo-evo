@@ -7,14 +7,16 @@ import cx from 'classnames'
 import './component.scss'
 
 export default function NavLink (
-  { to, exact, label, icon, badge, collapsed = false }
+  { to, exact, label, icon, badge, onClick, collapsed = false }
 ) {
   return <Route path={to} exact={exact}
     children={({ location, match }) => {
       const active = !!match
       return <li styleName={cx('item', {active})}>
-        <Link to={to} styleName={cx('link', {collapsed: collapsed})}>
-          <BadgedIcon name={icon} green={active} showBadge={collapsed && badge} styleName='icon' />
+        <Link to={to} styleName={cx('link', {collapsed: collapsed})}
+          onClick={onClick}>
+          <BadgedIcon name={icon} green={active} showBadge={collapsed && badge}
+            styleName='icon' />
           <span styleName='label'>{label}</span>
           <Badge number={badge} styleName='badge' expanded={!collapsed} />
         </Link>

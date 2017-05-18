@@ -8,7 +8,8 @@ export const handledEvents = [
   'messageAdded',
   'commentAdded',
   'userTyping',
-  'reconnect'
+  'reconnect',
+  'newPost'
 ]
 
 export default class SocketListener extends Component {
@@ -17,6 +18,7 @@ export default class SocketListener extends Component {
     receiveThread: func,
     receiveMessage: func,
     receiveComment: func,
+    receivePost: func,
     addUserTyping: func,
     clearUserTyping: func
   }
@@ -64,5 +66,9 @@ export default class SocketListener extends Component {
     } else {
       clearUserTyping(userId)
     }
+  }
+
+  newPost = data => {
+    this.props.receivePost(data)
   }
 }

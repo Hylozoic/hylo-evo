@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`works for Membership 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation($id: ID, $data: MembershipInput) {
+        updateMembership(id: $id, data: $data) {
+          id
+          newPostCount
+        }
+      }",
+    "variables": Object {
+      "data": Object {
+        "newPostCount": 0,
+      },
+      "id": 5,
+    },
+  },
+  "meta": Object {
+    "id": 5,
+    "optimistic": true,
+    "type": "Membership",
+  },
+  "type": "RESET_NEW_POST_COUNT",
+}
+`;
+
+exports[`works for TopicSubscription 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation($id: ID, $data: TopicSubscriptionInput) {
+        updateTopicSubscription(id: $id, data: $data) {
+          id
+          newPostCount
+        }
+      }",
+    "variables": Object {
+      "data": Object {
+        "newPostCount": 0,
+      },
+      "id": 5,
+    },
+  },
+  "meta": Object {
+    "id": 5,
+    "optimistic": true,
+    "type": "TopicSubscription",
+  },
+  "type": "RESET_NEW_POST_COUNT",
+}
+`;

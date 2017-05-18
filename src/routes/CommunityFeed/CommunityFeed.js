@@ -3,9 +3,12 @@ import './CommunityFeed.scss'
 import Feed from 'components/Feed'
 import FeedBanner from 'components/FeedBanner'
 import { get, pick } from 'lodash/fp'
+import Loading from 'components/Loading'
 
 export default function CommunityFeed (props) {
   const { community, currentUser } = props
+  if (!community) return <Loading />
+
   const feedProps = {
     subject: 'community',
     id: get('slug', community),

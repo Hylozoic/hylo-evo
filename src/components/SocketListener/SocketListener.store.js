@@ -1,5 +1,6 @@
 export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE'
 const RECEIVE_COMMENT = 'RECEIVE_COMMENT'
+export const RECEIVE_POST = 'RECEIVE_POST'
 const RECEIVE_THREAD = 'RECEIVE_THREAD'
 
 export function receiveMessage (message, opts = {}) {
@@ -42,5 +43,12 @@ export function receiveThread (thread) {
     meta: {
       extractModel: 'MessageThread'
     }
+  }
+}
+
+export function receivePost (data, communityId) {
+  return {
+    type: RECEIVE_POST,
+    payload: {topics: data.tags, communityId}
   }
 }
