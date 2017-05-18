@@ -14,6 +14,7 @@ export default function MessageMember ({ member }) {
 
   return <div styleName='container'>
     <Link to={path}>
+
       <Button styleName='message-member'>Message</Button>
     </Link>
   </div>

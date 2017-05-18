@@ -6,10 +6,16 @@ import {
   EXTRACT_MODEL,
   FETCH_MESSAGES_PENDING,
   LEAVE_COMMUNITY,
+  MARK_ACTIVITY_READ_PENDING,
+  MARK_ALL_ACTIVITIES_READ_PENDING,
+  RESET_NEW_POST_COUNT_PENDING,
   UPDATE_THREAD_READ_TIME,
   VOTE_ON_POST_PENDING
 } from 'store/constants'
-import { RECEIVE_MESSAGE } from 'components/SocketListener/SocketListener.store'
+import {
+  RECEIVE_MESSAGE,
+  RECEIVE_POST
+ } from 'components/SocketListener/SocketListener.store'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
 import { find } from 'lodash/fp'
@@ -19,7 +25,25 @@ export default function ormReducer (state = {}, action) {
   const { payload, type, meta, error } = action
   if (error) return state
 
-  const { Comment, Me, Message, MessageThread, Post, PostCommenter } = session
+  const {
+    Activity,
+    Comment,
+    Me,
+    Membership,
+    Message,
+    MessageThread,
+    Notification,
+    Post,
+    PostCommenter,
+    TopicSubscription
+  } = session
+
+  const invalidateNotifications = () => {
+    const first = Notification.first()
+    first && first.update({time: Date.now()})
+  }
+
+  let membership
 
   switch (type) {
     case EXTRACT_MODEL:
@@ -82,8 +106,8 @@ export default function ormReducer (state = {}, action) {
 
     case LEAVE_COMMUNITY:
       const me = Me.first()
-      const membership = find(m => m.community.id === meta.id, me.memberships.toModelArray())
-      membership && membership.delete()
+      membership = find(m => m.community.id === meta.id, me.memberships.toModelArray())
+      if (membership) membership.delete()
       break
 
     case VOTE_ON_POST_PENDING:
@@ -93,6 +117,31 @@ export default function ormReducer (state = {}, action) {
       } else {
         meta.isUpvote && post.update({myVote: true, votesTotal: (post.votesTotal || 0) + 1})
       }
+      break
+
+    case RESET_NEW_POST_COUNT_PENDING:
+      session[meta.type].withId(meta.id).update({newPostCount: 0})
+      break
+
+    case RECEIVE_POST:
+      payload.topics.forEach(topicId => {
+        const sub = TopicSubscription.safeGet({topic: topicId})
+        if (sub) sub.update({newPostCount: sub.newPostCount + 1})
+      })
+      membership = Membership.safeGet({community: payload.communityId})
+      membership.update({newPostCount: membership.newPostCount + 1})
+      break
+
+    case MARK_ACTIVITY_READ_PENDING:
+      Activity.withId(meta.id).update({unread: false})
+      // invalidating selector memoization
+      invalidateNotifications()
+      break
+
+    case MARK_ALL_ACTIVITIES_READ_PENDING:
+      Activity.all().update({unread: false})
+      // invalidating selector memoization
+      invalidateNotifications()
       break
   }
 

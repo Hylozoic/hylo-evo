@@ -1,5 +1,11 @@
 import { connect } from 'react-redux'
-import { fetchNotifications, getNotifications, goToNotification } from './NotificationsDropdown.store.js'
+import {
+  fetchNotifications,
+  markActivityRead,
+  markAllActivitiesRead,
+  getNotifications,
+  goToNotification
+} from './NotificationsDropdown.store.js'
 
 export function mapStateToProps (state, props) {
   const notifications = getNotifications(state, props)
@@ -12,7 +18,8 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchNotifications: () => dispatch(fetchNotifications()),
     goToNotification: notification => dispatch(goToNotification(notification)),
-    markAsRead: () => console.log('mark as read')
+    markActivityRead: id => dispatch(markActivityRead(id)),
+    markAllActivitiesRead: () => dispatch(markAllActivitiesRead())
   }
 }
 

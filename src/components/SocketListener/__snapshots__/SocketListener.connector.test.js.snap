@@ -6,6 +6,7 @@ Object {
   "clearUserTyping": [Function],
   "receiveComment": [Function],
   "receiveMessage": [Function],
+  "receivePost": [Function],
   "receiveThread": [Function],
 }
 `;

@@ -1,14 +1,22 @@
 import { createSelector } from 'redux-orm'
-
 import orm from 'store/models'
+import { postsQueryFragment } from 'components/Feed/Feed.store'
 
 export const FETCH_RECENT_ACTIVITY = 'FETCH_RECENT_ACTIVITY'
 
 const recentActivityQuery =
-`query RecentActivity ($id: ID, $order: String, $limit: Int) {
+`query RecentActivity (
+  $id: ID,
+  $order: String,
+  $sortBy: String,
+  $offset: Int,
+  $search: String,
+  $filter: String,
+  $first: Int
+) {
   person (id: $id) {
     id
-    comments (first: $limit, order: $order) {
+    comments (first: $first, order: $order) {
       id
       text
       creator {
@@ -20,36 +28,16 @@ const recentActivityQuery =
       }
       createdAt
     }
-    posts (first: $limit, order: $order) {
-      id
-      title
-      details
-      type
-      creator {
-        id
-      }
-      commenters {
-        id,
-        name,
-        avatarUrl
-      }
-      commentersTotal
-      communities {
-        id
-        name
-        slug
-      }
-      createdAt
-    }
+    ${postsQueryFragment}
   }
 }`
 
-export function fetchRecentActivity (id, order = 'desc', limit = 20, query = recentActivityQuery) {
+export function fetchRecentActivity (id, first = 20, query = recentActivityQuery) {
   return {
     type: FETCH_RECENT_ACTIVITY,
     graphql: {
       query,
-      variables: { id, limit, order }
+      variables: {id, first, order: 'desc'}
     },
     meta: { extractModel: 'Person' }
   }

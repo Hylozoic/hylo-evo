@@ -18,9 +18,6 @@ export function fetchCommunityTopicSubscriptions (slug) {
             items {
               id
               newPostCount
-              community {
-                id
-              }
               topic {
                 id
                 name

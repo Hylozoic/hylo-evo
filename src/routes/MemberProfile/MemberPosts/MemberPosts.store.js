@@ -1,44 +1,31 @@
 import { createSelector } from 'redux-orm'
-
 import orm from 'store/models'
 import { FETCH_MEMBER_POSTS } from '../MemberProfile.store'
+import { postsQueryFragment } from 'components/Feed/Feed.store'
 
 const memberPostsQuery =
-`query MemberPosts ($id: ID, $order: String, $limit: Int) {
+`query MemberPosts (
+  $id: ID,
+  $sortBy: String,
+  $offset: Int,
+  $search: String,
+  $filter: String,
+  $first: Int
+) {
   person (id: $id) {
     id
-    posts (first: $limit, order: $order) {
-      id
-      title
-      details
-      type
-      creator {
-        id
-      }
-      commenters {
-        id,
-        name,
-        avatarUrl
-      }
-      commentersTotal
-      communities {
-        id
-        name
-        slug
-      }
-      createdAt
-    }
+    ${postsQueryFragment}
   }
 }`
 
-export function fetchMemberPosts (id, order = 'desc', limit = 20, query = memberPostsQuery) {
+export function fetchMemberPosts (id, first = 20, query = memberPostsQuery) {
   return {
     type: FETCH_MEMBER_POSTS,
     graphql: {
       query,
-      variables: { id, limit, order }
+      variables: {id, first}
     },
-    meta: { extractModel: 'Person' }
+    meta: {extractModel: 'Person'}
   }
 }
 
