@@ -1,5 +1,4 @@
 import orm from 'store/models'
-import payload from '../MemberProfile.test.json'
 import normalized from '../MemberProfile.normalized.test.json'
 import { fetchRecentActivity, activitySelector } from './RecentActivity.store'
 import { mapStateToProps } from './RecentActivity.connector'
@@ -12,14 +11,14 @@ describe('fetchRecentActivity', () => {
         query: 'Give me all the recent activity, please.',
         variables: {
           id: '12345',
-          limit: 10,
+          first: 10,
           order: 'desc'
         }
       },
       meta: { extractModel: 'Person' }
     }
     const { query, variables } = expected.graphql
-    const actual = fetchRecentActivity(variables.id, 'desc', 10, query)
+    const actual = fetchRecentActivity(variables.id, 10, query)
     expect(actual).toEqual(expected)
   })
 })
