@@ -6,6 +6,7 @@ import Badge from 'components/Badge'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import AllFeedsIcon from 'components/AllFeedsIcon'
+import { allCommunitiesUrl } from 'util/index'
 import './Drawer.scss'
 const { string, number, arrayOf, shape } = PropTypes
 
@@ -49,7 +50,7 @@ export default class Drawer extends Component {
       <Logo community={currentCommunity} />
       <ul styleName='communitiesList'>
         <li>
-          <Link styleName='allCommunities' to='/all'>
+          <Link styleName='allCommunities' to={allCommunitiesUrl()}>
             <AllFeedsIcon />
             <span styleName='allCommunitiesText' className='drawer-inv-lg'>All Communities</span>
           </Link>

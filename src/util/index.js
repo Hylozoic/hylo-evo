@@ -14,7 +14,7 @@ export function tagUrl (tagName, slug) {
   if (slug) {
     return `/c/${slug}/${tagName}`
   } else {
-    return `/all/${tagName}`
+    return `${allCommunitiesUrl()}/${tagName}`
   }
 }
 
@@ -24,7 +24,7 @@ export function postUrl (id, slug, opts = {}) {
     base = `/c/${slug}`
     if (opts.memberId) base = `${base}/m/${opts.memberId}`
   } else {
-    base = `/all`
+    base = allCommunitiesUrl()
   }
   if (opts.topicName) base = `${base}/${opts.topicName}`
   return `${base}/p/${id}`
@@ -52,6 +52,10 @@ export function newMessageUrl () {
 
 export function messagesUrl () {
   return `/t`
+}
+
+export function allCommunitiesUrl () {
+  return '/all'
 }
 
 // n.b.: use getParam instead of this where possible.

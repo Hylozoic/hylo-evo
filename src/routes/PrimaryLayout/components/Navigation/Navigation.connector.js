@@ -2,12 +2,13 @@ import { connect } from 'react-redux'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
+import { allCommunitiesUrl } from 'util/index'
 import orm from 'store/models'
 import { get } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
-  if (!community) return {homePath: '/all'}
+  if (!community) return {homePath: allCommunitiesUrl()}
 
   // we have to select the membership from the ORM separately. we can't just
   // call `community.memberships.first()` because that will be cached so long as
