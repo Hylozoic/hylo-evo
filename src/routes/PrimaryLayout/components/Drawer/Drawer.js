@@ -1,12 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router-dom'
 import { sortBy } from 'lodash/fp'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle, allCommunitiesUrl } from 'util/index'
 import Badge from 'components/Badge'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import AllFeedsIcon from 'components/AllFeedsIcon'
-import { allCommunitiesUrl } from 'util/index'
 import './Drawer.scss'
 const { string, number, arrayOf, shape } = PropTypes
 
