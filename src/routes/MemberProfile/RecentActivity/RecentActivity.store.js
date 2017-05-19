@@ -12,7 +12,8 @@ const recentActivityQuery =
   $offset: Int,
   $search: String,
   $filter: String,
-  $first: Int
+  $first: Int,
+  $topic: Int
 ) {
   person (id: $id) {
     id

@@ -101,6 +101,7 @@ const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
   {path: '/all/p/:postId', component: PostDetail},
   {path: '/c/:slug/p/:postId', component: PostDetail},
+  {path: '/c/:slug/m/:id/p/:postId', component: PostDetail},
   {path: '/c/:slug/:topicName/p/:postId', component: PostDetail}
 ]
 
