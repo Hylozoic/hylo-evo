@@ -1,4 +1,4 @@
-import { fetchPosts } from './Feed.store'
+import { fetchPosts } from './FeedList.store'
 
 it('works for a community', () => {
   expect(fetchPosts({

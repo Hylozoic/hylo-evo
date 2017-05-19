@@ -1,5 +1,5 @@
 import orm from 'store/models'
-import { mapStateToProps, mapDispatchToProps } from './CommunityFeed.connector'
+import { mapStateToProps, mapDispatchToProps } from './Feed.connector'
 
 describe('mapStateToProps', () => {
   let state, props

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router-dom'
 import { sortBy } from 'lodash/fp'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle, allCommunitiesUrl } from 'util/index'
 import Badge from 'components/Badge'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
@@ -49,7 +49,7 @@ export default class Drawer extends Component {
       <Logo community={currentCommunity} />
       <ul styleName='communitiesList'>
         <li>
-          <Link styleName='allCommunities' to='/all'>
+          <Link styleName='allCommunities' to={allCommunitiesUrl()}>
             <AllFeedsIcon />
             <span styleName='allCommunitiesText' className='drawer-inv-lg'>All Communities</span>
           </Link>

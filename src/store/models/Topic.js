@@ -12,5 +12,7 @@ Topic.modelName = 'Topic'
 
 Topic.fields = {
   id: attr(),
-  name: attr()
+  name: attr(),
+  postsTotal: attr(),
+  followersTotal: attr()
 }

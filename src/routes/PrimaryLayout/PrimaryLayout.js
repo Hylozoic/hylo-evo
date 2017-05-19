@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { matchPath, Redirect, Route } from 'react-router-dom'
+import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
 import cx from 'classnames'
 import { get, some } from 'lodash/fp'
 import Loading from 'components/Loading'
@@ -10,8 +10,7 @@ import Drawer from './components/Drawer'
 import Navigation from './components/Navigation'
 import TopNav from './components/TopNav'
 import CommunitySidebar from 'routes/CommunitySidebar'
-import CommunityFeed from 'routes/CommunityFeed'
-import AllCommunitiesFeed from 'routes/AllCommunitiesFeed'
+import Feed from 'routes/Feed'
 import Events from 'routes/Events'
 
 import EventDetail from 'routes/Events/EventDetail'
@@ -60,17 +59,24 @@ export default class PrimaryLayout extends Component {
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToCommunity currentUser={currentUser} />
-          <Route path='/all' component={AllCommunitiesFeed} />
-          <Route path='/c/:slug' exact component={CommunityFeed} />
-          <Route path='/c/:slug/p/:postId' component={CommunityFeed} />
-          <Route path='/c/:slug/m/:id' component={MemberProfile} />
-          <Route path='/events' component={Events} />
-          <Route path='/c/:slug/members' component={Members} />
-          <Route path='/settings' component={UserSettings} />
-          <Route path='/c/:slug/topics' component={AllTopics} />
+          <Switch>
+            <Route path='/all' exact component={Feed} />
+            <Route path='/all/:topicName' exact component={Feed} />
+            <Route path='/all/p/:postId' exact component={Feed} />
+            <Route path='/c/:slug' exact component={Feed} />
+            <Route path='/c/:slug/members' component={Members} />
+            <Route path='/c/:slug/m/:id' component={MemberProfile} />
+            <Route path='/c/:slug/p/:postId' component={Feed} />
+            <Route path='/c/:slug/topics' component={AllTopics} />
+            <Route path='/c/:slug/:topicName/p/:postId' component={Feed} />
+            <Route path='/c/:slug/:topicName' component={Feed} />
+            <Route path='/events' component={Events} />
+            <Route path='/settings' component={UserSettings} />
+          </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/c/:slug' exact component={CommunitySidebar} />
+          <Route path='/c/:slug/:topicName' exact component={CommunitySidebar} />
           <Route path='/c/:slug/m/:id' component={MessageMember} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>
@@ -94,7 +100,9 @@ export default class PrimaryLayout extends Component {
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
   {path: '/all/p/:postId', component: PostDetail},
-  {path: '/c/:slug/p/:postId', component: PostDetail}
+  {path: '/c/:slug/p/:postId', component: PostDetail},
+  {path: '/c/:slug/m/:id/p/:postId', component: PostDetail},
+  {path: '/c/:slug/:topicName/p/:postId', component: PostDetail}
 ]
 
 function RedirectToCommunity ({ currentUser }) {

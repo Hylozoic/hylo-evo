@@ -1,0 +1,37 @@
+.topic-feed-header {
+  margin: 0  $space-4x $space-15x $space-4x;
+  position: relative;
+}
+
+.back {
+  composes: bdy-dr-sm from 'css/typography.scss';
+  color: $color-rhino-60;
+
+  &:hover {
+    text-decoration: none;
+    color: $color-rhino-80;
+
+    .back-icon {
+      color: $color-rhino-80;
+    }
+  }
+}
+
+.back-icon {
+  font-size: 13px;
+}
+
+.topic-name {
+  composes: hdr-display from 'css/typography.scss';
+  margin: $space-2x 0;
+}
+
+.meta {
+  composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.subscribe {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}

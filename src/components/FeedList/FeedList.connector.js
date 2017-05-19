@@ -4,7 +4,7 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import { get, includes, isEmpty } from 'lodash/fp'
 import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
-import { fetchPosts } from './Feed.store.js'
+import { fetchPosts } from './FeedList.store.js'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 
 export function mapStateToProps (state, props) {
@@ -16,11 +16,11 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = function (dispatch, props) {
-  const { id, sortBy, filter, subject } = props
+  const { id, sortBy, filter, subject, topic } = props
   const search = null // placeholder; no need for this yet
   return {
     fetchPosts: function (offset) {
-      return dispatch(fetchPosts({subject, id, sortBy, offset, search, filter}))
+      return dispatch(fetchPosts({subject, id, sortBy, offset, search, filter, topic}))
     }
   }
 }

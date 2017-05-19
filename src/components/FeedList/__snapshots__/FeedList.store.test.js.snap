@@ -9,6 +9,7 @@ Object {
   $offset: Int,
   $search: String,
   $filter: String,
+  $topic: Int,
   $first: Int
 ) {
   community(slug: $id) {
@@ -25,6 +26,7 @@ posts(
   sortBy: $sortBy,
   search: $search,
   filter: $filter,
+  topic: $topic,
   order: \\"desc\\"
 ) {
   hasMore
@@ -70,6 +72,7 @@ posts(
       "offset": 20,
       "search": "gardening",
       "sortBy": undefined,
+      "topic": undefined,
     },
   },
   "meta": Object {
@@ -87,6 +90,7 @@ Object {
   $offset: Int,
   $search: String,
   $filter: String,
+  $topic: ID,
   $first: Int
 ) {
   
@@ -96,6 +100,7 @@ posts(
   sortBy: $sortBy,
   search: $search,
   filter: $filter,
+  topic: $topic,
   order: \\"desc\\"
 ) {
   hasMore
@@ -140,6 +145,7 @@ posts(
       "offset": 20,
       "search": "graphic design",
       "sortBy": undefined,
+      "topic": undefined,
     },
   },
   "meta": Object {

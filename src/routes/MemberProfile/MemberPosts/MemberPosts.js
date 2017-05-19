@@ -18,6 +18,7 @@ const communityShape = shape({
 
 export default class MemberPosts extends React.Component {
   static propTypes = {
+    personId: string,
     posts: arrayOf(shape({
       id: any,
       commenters: arrayOf(personShape),
@@ -38,13 +39,13 @@ export default class MemberPosts extends React.Component {
   }
 
   render () {
-    const { posts, showDetails } = this.props
+    const { personId, posts, showDetails } = this.props
     return <div>
       {posts && posts.map(post =>
         <div styleName='activity-item' key={post.id}>
           <PostCard
             post={post}
-            showDetails={() => showDetails(post.id, post.communities[0].slug)} />
+            showDetails={() => showDetails(post.id, post.communities[0].slug, personId)} />
         </div>
       )}
     </div>

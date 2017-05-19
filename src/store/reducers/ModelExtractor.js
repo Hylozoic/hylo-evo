@@ -4,6 +4,7 @@ import { isUndefined, omitBy } from 'lodash/fp'
 
 export default class ModelExtractor {
   static addAll ({ session, root, modelName }) {
+    if (!root) return
     const extractor = new ModelExtractor(session)
     extractor.walk(root, modelName)
     extractor.addAll()

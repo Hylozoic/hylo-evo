@@ -9,6 +9,7 @@ import {
   MARK_ACTIVITY_READ_PENDING,
   MARK_ALL_ACTIVITIES_READ_PENDING,
   RESET_NEW_POST_COUNT_PENDING,
+  TOGGLE_TOPIC_SUBSCRIBE,
   UPDATE_THREAD_READ_TIME,
   VOTE_ON_POST_PENDING
 } from 'store/constants'
@@ -28,6 +29,7 @@ export default function ormReducer (state = {}, action) {
   const {
     Activity,
     Comment,
+    CommunityTopic,
     Me,
     Membership,
     Message,
@@ -108,6 +110,15 @@ export default function ormReducer (state = {}, action) {
       const me = Me.first()
       membership = find(m => m.community.id === meta.id, me.memberships.toModelArray())
       if (membership) membership.delete()
+      break
+
+    case TOGGLE_TOPIC_SUBSCRIBE:
+      const subscription = payload.data.subscribe
+      if (!subscription) {
+        TopicSubscription.withId(meta.existingSubscriptionId).delete()
+      }
+      const ct = CommunityTopic.get({topic: meta.topicId, community: meta.communityId})
+      ct.update({followersTotal: ct.followersTotal + (subscription ? 1 : -1)})
       break
 
     case VOTE_ON_POST_PENDING:

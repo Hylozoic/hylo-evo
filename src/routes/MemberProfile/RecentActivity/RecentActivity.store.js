@@ -1,6 +1,6 @@
 import { createSelector } from 'redux-orm'
 import orm from 'store/models'
-import { postsQueryFragment } from 'components/Feed/Feed.store'
+import { postsQueryFragment } from 'components/FeedList/FeedList.store'
 
 export const FETCH_RECENT_ACTIVITY = 'FETCH_RECENT_ACTIVITY'
 
@@ -12,7 +12,8 @@ const recentActivityQuery =
   $offset: Int,
   $search: String,
   $filter: String,
-  $first: Int
+  $first: Int,
+  $topic: Int
 ) {
   person (id: $id) {
     id

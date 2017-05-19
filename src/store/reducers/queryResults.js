@@ -7,7 +7,13 @@
 // shown when something has been typed into the search field.
 
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
-import { FETCH_POST, FETCH_POSTS, FETCH_COMMENTS, FETCH_THREAD, FETCH_MESSAGES } from 'store/constants'
+import {
+  FETCH_POST,
+  FETCH_POSTS,
+  FETCH_COMMENTS,
+  FETCH_THREAD,
+  FETCH_MESSAGES
+} from 'store/constants'
 import { get, isNull, omitBy, pick, uniq } from 'lodash/fp'
 
 // reducer
@@ -74,4 +80,11 @@ export function buildKey (type, params) {
   })
 }
 
-export const queryParamWhitelist = ['id', 'slug', 'sortBy', 'search', 'filter']
+export const queryParamWhitelist = [
+  'id',
+  'slug',
+  'sortBy',
+  'search',
+  'filter',
+  'topic'
+]

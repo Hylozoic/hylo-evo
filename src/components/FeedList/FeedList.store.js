@@ -2,7 +2,7 @@ import { FETCH_POSTS } from 'store/constants'
 
 export const ALL_COMMUNITIES_ID = 'all-communities'
 
-export function fetchPosts ({ subject, id, sortBy, offset, search, filter }) {
+export function fetchPosts ({ subject, id, sortBy, offset, search, filter, topic }) {
   var query, extractModel
 
   if (subject === 'community') {
@@ -26,7 +26,8 @@ export function fetchPosts ({ subject, id, sortBy, offset, search, filter }) {
         offset,
         search,
         filter,
-        first: 20
+        first: 20,
+        topic
       }
     },
     meta: {extractModel}
@@ -40,6 +41,7 @@ posts(
   sortBy: $sortBy,
   search: $search,
   filter: $filter,
+  topic: $topic,
   order: "desc"
 ) {
   hasMore
@@ -83,6 +85,7 @@ const communityQuery = `query (
   $offset: Int,
   $search: String,
   $filter: String,
+  $topic: Int,
   $first: Int
 ) {
   community(slug: $id) {
@@ -101,6 +104,7 @@ const allCommunitiesQuery = `query (
   $offset: Int,
   $search: String,
   $filter: String,
+  $topic: ID,
   $first: Int
 ) {
   ${postsQueryFragment}

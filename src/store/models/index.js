@@ -3,6 +3,7 @@ import './Model.extension'
 import Activity from './Activity'
 import Comment from './Comment'
 import Community, { CommunityModerator } from './Community'
+import CommunityTopic from './CommunityTopic'
 import FeedItem from './FeedItem'
 import Me from './Me'
 import Membership from './Membership'
@@ -21,6 +22,7 @@ orm.register(
   Comment,
   Community,
   CommunityModerator,
+  CommunityTopic,
   FeedItem,
   Me,
   Membership,

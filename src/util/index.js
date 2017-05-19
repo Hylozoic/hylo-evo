@@ -12,18 +12,24 @@ export function personUrl (id, slug) {
 
 export function tagUrl (tagName, slug) {
   if (slug) {
-    return `/c/${slug}/tag/${tagName}`
+    return `/c/${slug}/${tagName}`
   } else {
-    return `/tag/${tagName}`
+    return `${allCommunitiesUrl()}/${tagName}`
   }
 }
 
-export function postUrl (id, slug) {
-  if (slug) {
-    return `/c/${slug}/p/${id}`
+export function postUrl (id, slug, opts = {}) {
+  let base = ''
+  if (opts.memberId) {
+    base = personUrl(opts.memberId, slug)
+  } else if (opts.topicName) {
+    base = tagUrl(opts.topicName, slug)
+  } else if (slug) {
+    base = communityUrl(slug)
   } else {
-    return `/all/p/${id}`
+    base = allCommunitiesUrl()
   }
+  return `${base}/p/${id}`
 }
 
 export function commentUrl (postId, commentId, slug) {
@@ -48,6 +54,10 @@ export function newMessageUrl () {
 
 export function messagesUrl () {
   return `/t`
+}
+
+export function allCommunitiesUrl () {
+  return '/all'
 }
 
 // n.b.: use getParam instead of this where possible.
