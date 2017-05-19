@@ -80,4 +80,11 @@ export function buildKey (type, params) {
   })
 }
 
-export const queryParamWhitelist = ['id', 'slug', 'sortBy', 'search', 'filter', 'topic', 'name', 'topicName', 'communitySlug', 'autocomplete']
+export const queryParamWhitelist = [
+  'id',
+  'slug',
+  'sortBy',
+  'search',
+  'filter',
+  'topic'
+]
