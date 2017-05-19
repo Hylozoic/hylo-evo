@@ -27,7 +27,6 @@ Community.fields = {
     through: 'CommunityModerator',
     throughFields: [ 'community', 'moderator' ]
   }),
-  feedItems: many('FeedItem'),
   posts: many('Post'),
   postCount: attr(),
   feedOrder: attr()
