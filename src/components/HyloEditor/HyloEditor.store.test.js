@@ -25,7 +25,7 @@ describe('findMentions', () => {
           mentionSearchTerm
         }
       },
-      meta: { extractModel: 'Person' }
+      meta: {extractModel: 'Person'}
     }
     const actual = findMentions(mentionSearchTerm)
     expect(actual.type).toEqual(expected.type)

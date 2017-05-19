@@ -23,7 +23,8 @@ export function createPost (post) {
         details,
         communityIds
       }
-    }
+    },
+    meta: {extractModel: 'Post'}
   }
 }
 
@@ -39,6 +40,11 @@ export function updatePost (post) {
           type
           title
           details
+          communities {
+            id
+            name
+            slug
+          }
         }
       }`,
       variables: {
@@ -48,6 +54,7 @@ export function updatePost (post) {
         details,
         communityIds
       }
-    }
+    },
+    meta: {extractModel: 'Post'}
   }
 }
