@@ -8,11 +8,15 @@ import {
   LEAVE_COMMUNITY,
   MARK_ACTIVITY_READ_PENDING,
   MARK_ALL_ACTIVITIES_READ_PENDING,
+  RESET_NEW_POST_COUNT_PENDING,
   TOGGLE_TOPIC_SUBSCRIBE,
   UPDATE_THREAD_READ_TIME,
   VOTE_ON_POST_PENDING
 } from 'store/constants'
-import { RECEIVE_MESSAGE } from 'components/SocketListener/SocketListener.store'
+import {
+  RECEIVE_MESSAGE,
+  RECEIVE_POST
+ } from 'components/SocketListener/SocketListener.store'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
 import { find } from 'lodash/fp'
@@ -25,9 +29,9 @@ export default function ormReducer (state = {}, action) {
   const {
     Activity,
     Comment,
-    Community,
     CommunityTopic,
     Me,
+    Membership,
     Message,
     MessageThread,
     Notification,
@@ -40,6 +44,8 @@ export default function ormReducer (state = {}, action) {
     const first = Notification.first()
     first && first.update({time: Date.now()})
   }
+
+  let membership
 
   switch (type) {
     case EXTRACT_MODEL:
@@ -102,8 +108,8 @@ export default function ormReducer (state = {}, action) {
 
     case LEAVE_COMMUNITY:
       const me = Me.first()
-      const membership = find(m => m.community.id === meta.id, me.memberships.toModelArray())
-      membership && membership.delete()
+      membership = find(m => m.community.id === meta.id, me.memberships.toModelArray())
+      if (membership) membership.delete()
       break
 
     case TOGGLE_TOPIC_SUBSCRIBE:
@@ -122,6 +128,19 @@ export default function ormReducer (state = {}, action) {
       } else {
         meta.isUpvote && post.update({myVote: true, votesTotal: (post.votesTotal || 0) + 1})
       }
+      break
+
+    case RESET_NEW_POST_COUNT_PENDING:
+      session[meta.type].withId(meta.id).update({newPostCount: 0})
+      break
+
+    case RECEIVE_POST:
+      payload.topics.forEach(topicId => {
+        const sub = TopicSubscription.safeGet({topic: topicId})
+        if (sub) sub.update({newPostCount: sub.newPostCount + 1})
+      })
+      membership = Membership.safeGet({community: payload.communityId})
+      membership.update({newPostCount: membership.newPostCount + 1})
       break
 
     case MARK_ACTIVITY_READ_PENDING:

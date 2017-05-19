@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import {
   fetchCommunityTopicSubscriptions, getTopicSubscriptions
 } from './TopicNavigation.store'
+import resetNewPostCount from 'store/actions/resetNewPostCount'
 
 export function mapStateToProps (state, props) {
   return {
@@ -13,7 +14,10 @@ export function mapDispatchToProps (dispatch, { slug }) {
   return {
     fetchSubscriptions: slug
       ? () => dispatch(fetchCommunityTopicSubscriptions(slug))
-      : () => {}
+      : () => {},
+
+    clearBadge: id =>
+      dispatch(resetNewPostCount(id, 'TopicSubscription'))
   }
 }
 

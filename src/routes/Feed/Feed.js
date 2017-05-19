@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import './Feed.scss'
 import FeedList from 'components/FeedList'
-import { ALL_COMMUNITIES_ID } from 'components/FeedList/FeedList.store'
+import Loading from 'components/Loading'
 import FeedBanner from 'components/FeedBanner'
 import TopicFeedHeader from 'components/TopicFeedHeader'
+import { ALL_COMMUNITIES_ID } from 'components/FeedList/FeedList.store'
 import { get, pick } from 'lodash/fp'
 
 export default class Feed extends Component {
@@ -47,7 +48,9 @@ export default class Feed extends Component {
   }
 
   render () {
-    const { topic, community, currentUser, topicName, postsTotal, followersTotal } = this.props
+    const { topic, communitySlug, community, currentUser, topicName, postsTotal, followersTotal } = this.props
+    if (communitySlug && !community) return <Loading />
+
     return <div styleName='container'>
       {!topicName && <FeedBanner community={community} currentUser={currentUser} all={!community} />}
       {topicName && <TopicFeedHeader

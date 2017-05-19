@@ -51,6 +51,7 @@ exports[`PostDetail renders correctly 1`] = `
   />
   <Connect(SocketSubscriber)
     id="91"
+    type="post"
   />
 </div>
 `;
@@ -75,7 +76,6 @@ Object {
         "moderators": undefined,
         "posts": undefined,
         "slug": "foo",
-        "topicSubscriptions": undefined,
       },
       "slug": "foo",
     },
@@ -87,7 +87,6 @@ Object {
         "moderators": undefined,
         "posts": undefined,
         "slug": "bar",
-        "topicSubscriptions": undefined,
       },
       "slug": "bar",
     },
