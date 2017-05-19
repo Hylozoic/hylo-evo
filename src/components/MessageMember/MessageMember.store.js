@@ -5,9 +5,5 @@ export const getPerson = ormCreateSelector(
   orm,
   state => state.orm,
   (state, { personId }) => personId,
-  (session, id) => {
-    if (!session.Person.hasId(id)) return null
-    const person = session.Person.withId(id)
-    return person
-  }
+  ({ Person }, id) => Person.hasId(id) ? Person.withId(id) : null
 )
