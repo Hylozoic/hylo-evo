@@ -114,7 +114,7 @@ export default class PostDetail extends Component {
           myVote={post.myVote} />
       </div>}
       <Comments postId={post.id} slug={slug} scrollToBottom={scrollToBottom} />
-      <SocketSubscriber id={post.id} />
+      <SocketSubscriber type='post' id={post.id} />
     </div>
   }
 }

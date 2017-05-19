@@ -51,6 +51,7 @@ exports[`PostDetail renders correctly 1`] = `
   />
   <Connect(SocketSubscriber)
     id="91"
+    type="post"
   />
 </div>
 `;

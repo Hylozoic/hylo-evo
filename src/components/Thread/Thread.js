@@ -41,7 +41,7 @@ export default class Thread extends React.Component {
         <MessageForm messageThreadId={id} ref='form' />
       </div>
       <PeopleTyping styleName='people-typing' />
-      <SocketSubscriber id={id} />
+      <SocketSubscriber type='post' id={id} />
     </div>
   }
 }
