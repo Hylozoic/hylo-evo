@@ -162,7 +162,12 @@ export class SocialControl extends Component {
     } else {
       linkClicked = () =>
         onLink()
+        .then(res => {
+          console.log('code 1', res)
+          return res
+        })
         .then(({ error }) => {
+          console.log('code 2')
           if (error) return onChange(false)
           return onChange(true)
         })
