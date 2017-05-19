@@ -32,7 +32,7 @@ const recentActivityQuery =
   }
 }`
 
-export function fetchRecentActivity (id, first = 20, query = recentActivityQuery) {
+export function fetchRecentActivity (id, first = 3, query = recentActivityQuery) {
   return {
     type: FETCH_RECENT_ACTIVITY,
     graphql: {
