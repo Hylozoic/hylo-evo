@@ -28,13 +28,13 @@ export function createPost (post) {
 }
 
 export function updatePost (post) {
-  const { type, title, details, communities } = post
+  const { id, type, title, details, communities } = post
   const communityIds = communities.map(c => c.id)
   return {
     type: UPDATE_POST,
     graphql: {
-      query: `mutation ($type: String, $title: String, $details: String, $communityIds: [String]) {
-        updatePost(data: {type: $type, title: $title, details: $details, communityIds: $communityIds}) {
+      query: `mutation ($id: ID, $type: String, $title: String, $details: String, $communityIds: [String]) {
+        updatePost(id: $id, data: {type: $type, title: $title, details: $details, communityIds: $communityIds}) {
           id
           type
           title
@@ -42,6 +42,7 @@ export function updatePost (post) {
         }
       }`,
       variables: {
+        id,
         type,
         title,
         details,
