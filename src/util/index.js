@@ -20,13 +20,15 @@ export function tagUrl (tagName, slug) {
 
 export function postUrl (id, slug, opts = {}) {
   let base = ''
-  if (slug) {
-    base = `/c/${slug}`
-    if (opts.memberId) base = `${base}/m/${opts.memberId}`
+  if (opts.memberId) {
+    base = personUrl(opts.memberId, slug)
+  } else if (opts.topicName) {
+    base = tagUrl(opts.topicName, slug)
+  } else if (slug) {
+    base = communityUrl(slug)
   } else {
     base = allCommunitiesUrl()
   }
-  if (opts.topicName) base = `${base}/${opts.topicName}`
   return `${base}/p/${id}`
 }
 
