@@ -38,22 +38,83 @@ describe('PostEditor', () => {
         expect(renderForType(postType)).toMatchSnapshot()
       })
     )
+
+    test('saving a post will create a post', () => {
+      const props = {
+        post: {
+          type: 'offer',
+          title: 'valid title',
+          details: 'valid details',
+          communities: [
+            {id: '1', name: 'test community 1'},
+            {id: '2', name: 'test community 2'}
+          ]
+        },
+        createPost: jest.fn(() => new Promise(() => {}))
+      }
+      const editorMock = {
+        getContentHTML: () => props.post.details,
+        reset: jest.fn()
+      }
+      const communitiesSelectorMock = {
+        reset: jest.fn()
+      }
+      const wrapper = shallow(<PostEditor {...props} />)
+      const testInstance = wrapper.instance()
+      testInstance.editor = editorMock
+      testInstance.communitiesSelector = communitiesSelectorMock
+      testInstance.save()
+      expect(props.createPost.mock.calls).toHaveLength(1)
+      expect(props.createPost).toHaveBeenCalledWith(props.post)
+    })
   })
 
-  test('editing a post', () => {
-    const props = {
-      post: {
-        type: 'request',
-        title: 'valid title',
-        details: 'valid details',
-        communities: [
-          {id: '1', name: 'test community 1'},
-          {id: '2', name: 'test community 2'}
-        ]
+  describe('editing a post', () => {
+    test('post is loaded into fields', () => {
+      const props = {
+        post: {
+          type: 'request',
+          title: 'valid title',
+          details: 'valid details',
+          communities: [
+            {id: '1', name: 'test community 1'},
+            {id: '2', name: 'test community 2'}
+          ]
+        }
       }
-    }
-    const wrapper = shallow(<PostEditor {...props} />)
-    expect(wrapper).toMatchSnapshot()
+      const wrapper = shallow(<PostEditor {...props} />)
+      expect(wrapper).toMatchSnapshot()
+    })
+
+    test('saving a post will update a post', () => {
+      const props = {
+        editing: true,
+        post: {
+          type: 'offer',
+          title: 'valid title',
+          details: 'valid details',
+          communities: [
+            {id: '1', name: 'test community 1'},
+            {id: '2', name: 'test community 2'}
+          ]
+        },
+        updatePost: jest.fn(() => new Promise(() => {}))
+      }
+      const editorMock = {
+        getContentHTML: () => props.post.details,
+        reset: jest.fn()
+      }
+      const communitiesSelectorMock = {
+        reset: jest.fn()
+      }
+      const wrapper = shallow(<PostEditor {...props} />)
+      const testInstance = wrapper.instance()
+      testInstance.editor = editorMock
+      testInstance.communitiesSelector = communitiesSelectorMock
+      testInstance.save()
+      expect(props.updatePost.mock.calls).toHaveLength(1)
+      expect(props.updatePost).toHaveBeenCalledWith(props.post)
+    })
   })
 
   test('post is being loaded to be edited', () => {
@@ -154,8 +215,5 @@ describe('PostEditor', () => {
     testInstance.save()
     expect(props.createPost.mock.calls).toHaveLength(1)
     expect(props.createPost).toHaveBeenCalledWith(props.post)
-    // const wrapper = app.nodes[0]
-    // console.log(wrapper)
-    // wrapper.find('[data-styleName="postButton"]').simulate('click')
   })
 })

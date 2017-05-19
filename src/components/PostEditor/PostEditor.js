@@ -23,6 +23,7 @@ export default class PostEditor extends React.Component {
       communities: PropTypes.array
     }),
     createPost: PropTypes.func,
+    updatePost: PropTypes.func,
     loading: PropTypes.bool,
     editing: PropTypes.bool
   }
@@ -137,11 +138,12 @@ export default class PostEditor extends React.Component {
     this.setState({valid: this.isValid()})
 
   save = () => {
-    const { createPost, onClose } = this.props
+    const { editing, createPost, updatePost, onClose } = this.props
     const { type, title, communities } = this.state.post
     const details = this.editor.getContentHTML()
-    createPost({ type, title, details, communities })
-      .then(onClose)
+    const postToSave = { type, title, details, communities }
+    const saveFun = editing ? updatePost : createPost
+    saveFun(postToSave).then(onClose)
   }
 
   render () {

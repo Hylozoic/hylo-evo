@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PostEditor editing a post 1`] = `
+exports[`PostEditor editing a post post is loaded into fields 1`] = `
 <div
   data-styleName="wrapper"
 >

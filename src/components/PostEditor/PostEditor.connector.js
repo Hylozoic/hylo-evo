@@ -3,7 +3,10 @@ import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getPost from 'store/selectors/getPost'
 import fetchPost from 'store/actions/fetchPost'
-import { createPost } from './PostEditor.store'
+import {
+  createPost,
+  updatePost
+} from './PostEditor.store'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
@@ -23,7 +26,8 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = (dispatch, props) => {
   return {
     fetchPost: () => dispatch(fetchPost(getParam('postId', {}, props))),
-    createPost: (postParams) => dispatch(createPost(postParams))
+    createPost: (postParams) => dispatch(createPost(postParams)),
+    updatePost: (postParams) => dispatch(updatePost(postParams))
   }
 }
 
