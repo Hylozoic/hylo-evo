@@ -21,9 +21,11 @@ export function mapStateToProps (state, props) {
   if (communitySlug) {
     community = getCommunityForCurrentRoute(state, props)
     communityTopic = getCommunityTopicForCurrentRoute(state, props)
+    communityTopic = communityTopic && communityTopic.ref
   }
   if (topicName) {
     topic = getTopicForCurrentRoute(state, props)
+    topic = topic && topic.ref
   }
   const filter = getQueryParam('t', state, props)
   const sortBy = getQueryParam('s', state, props)
@@ -49,14 +51,17 @@ export const mapDispatchToProps = function (dispatch, props) {
   const slug = getParam('slug', null, props)
   const topicName = getParam('topicName', null, props)
   const params = getQueryParam(['s', 't'], null, props)
+
   return {
     changeTab: tab => dispatch(changeQueryParam(props, 't', tab, 'all')),
     changeSort: sort => dispatch(changeQueryParam(props, 's', sort, 'all')),
     // we need to preserve url parameters when opening the details for a post,
     // or the center column will revert to its default sort & filter settings
     showPostDetails: id => dispatch(push(makeUrl(postUrl(id, slug, {topicName}), params))),
-    fetchCommunityTopic: () => slug && topicName && dispatch(fetchCommunityTopic(topicName, slug)),
-    fetchTopic: () => topicName && dispatch(fetchTopic(topicName))
+    fetchTopic: () => {
+      if (slug && topicName) dispatch(fetchCommunityTopic(topicName, slug))
+      else if (topicName) dispatch(fetchTopic(topicName))
+    }
   }
 }
 

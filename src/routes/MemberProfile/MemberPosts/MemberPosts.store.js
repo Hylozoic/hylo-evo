@@ -1,7 +1,7 @@
 import { createSelector } from 'redux-orm'
 import orm from 'store/models'
 import { FETCH_MEMBER_POSTS } from '../MemberProfile.store'
-import { postsQueryFragment } from 'components/Feed/Feed.store'
+import { postsQueryFragment } from 'components/FeedList/FeedList.store'
 
 const memberPostsQuery =
 `query MemberPosts (

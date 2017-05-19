@@ -12,9 +12,7 @@ import {
   FETCH_POSTS,
   FETCH_COMMENTS,
   FETCH_THREAD,
-  FETCH_MESSAGES,
-  FETCH_COMMUNITY_TOPICS,
-  FETCH_TOPICS
+  FETCH_MESSAGES
 } from 'store/constants'
 import { get, isNull, omitBy, pick, uniq } from 'lodash/fp'
 
@@ -30,12 +28,6 @@ export default function (state = {}, action) {
   // detect the metadata and produce a generic action, and have this reducer
   // handle only that action.
   switch (type) {
-    case FETCH_TOPICS:
-      return appendIds(state, type, meta.graphql.variables, payload.data.topics)
-
-    case FETCH_COMMUNITY_TOPICS:
-      return appendIds(state, type, meta.graphql.variables, payload.data.community.communityTopics)
-
     case FETCH_MEMBERS:
       return appendIds(state, type, meta.graphql.variables, payload.data.community.members)
 

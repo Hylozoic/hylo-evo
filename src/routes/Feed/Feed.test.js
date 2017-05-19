@@ -6,6 +6,7 @@ describe('Feed', () => {
   it('renders a Feed with correct props', () => {
     const wrapper = shallow(<Feed communitySlug={'foo'}
       filter='request'
+      community={{}}
       selectedPostId='5'
       sortBy='votes' />)
 

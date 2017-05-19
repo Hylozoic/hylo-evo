@@ -13,18 +13,16 @@ export default class Feed extends Component {
   }
 
   componentDidMount () {
-    const { communitySlug, topicName, fetchTopic, fetchCommunityTopic } = this.props
-    if (communitySlug && topicName) fetchCommunityTopic()
-    else if (topicName) fetchTopic()
+    const { topicName, fetchTopic } = this.props
+    if (topicName) fetchTopic()
   }
 
   componentDidUpdate (prevProps) {
-    const { communitySlug, topicName, fetchCommunityTopic, fetchTopic } = this.props
+    const { communitySlug, topicName, fetchTopic } = this.props
     const prevTopicName = get('topicName', prevProps)
-    if (communitySlug && topicName &&
-        (topicName !== prevTopicName || get('communitySlug', prevProps) !== communitySlug)) {
-      fetchCommunityTopic()
-    } else if (topicName && topicName !== prevTopicName) {
+    if ((communitySlug && topicName &&
+        (topicName !== prevTopicName || get('communitySlug', prevProps) !== communitySlug)) ||
+        (topicName && topicName !== prevTopicName)) {
       fetchTopic()
     }
   }

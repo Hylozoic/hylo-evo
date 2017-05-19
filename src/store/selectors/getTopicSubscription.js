@@ -10,12 +10,8 @@ const getTopicSubscription = ormCreateSelector(
   (session, topicName, communityId) => {
     try {
       const community = session.Community.withId(communityId)
-      const topicSubscription = community.topicSubscriptions.toModelArray().find(ts => ts.topic.name === topicName)
-      return {
-        ...topicSubscription.ref,
-        community: topicSubscription.community.ref,
-        topic: topicSubscription.topic.ref
-      }
+      const topic = session.Topic.get({name: topicName})
+      return community.topicSubscriptions.filter({topic: topic.id}).first()
     } catch (e) {
       return null
     }
