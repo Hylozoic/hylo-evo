@@ -15,7 +15,7 @@ export const getComments = createSelector(
     } catch (e) {
       return []
     }
-    return post.comments.orderBy(c => c.id).toModelArray()
+    return post.comments.orderBy(c => Number(c.id)).toModelArray()
   })
 
 export function mapStateToProps (state, props) {
