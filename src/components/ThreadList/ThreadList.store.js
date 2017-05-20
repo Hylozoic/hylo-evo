@@ -91,10 +91,12 @@ export const getThreads = ormCreateSelector(
 )
 
 export function filterThreadsByParticipant (threadSearch) {
-  const tlc = s => s.toLowerCase()
-  const threadSearchTlc = tlc(threadSearch)
-  return (thread) => {
-    if (threadSearch === '') return true
-    return some(p => some(name => tlc(name).startsWith(threadSearchTlc), p.name.split(' ')), thread.participants.toRefArray())
+  if (!threadSearch) return () => true
+
+  const threadSearchLC = threadSearch.toLowerCase()
+  return thread => {
+    const participants = thread.participants.toRefArray()
+    const match = name => name.toLowerCase().startsWith(threadSearchLC)
+    return some(p => some(match, p.name.split(' ')), participants)
   }
 }

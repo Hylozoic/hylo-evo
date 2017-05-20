@@ -1,5 +1,4 @@
 import MessageForm from './MessageForm'
-import { socketUrl } from 'client/websockets'
 import { keyMap } from 'util/textInput'
 import { shallow, mount } from 'enzyme'
 import React from 'react'
@@ -12,41 +11,69 @@ import reducer, {
   UPDATE_MESSAGE_TEXT
 } from './MessageForm.store'
 
+const mockCreateMessage = jest.fn(() => Promise.resolve())
+const sendIsTyping = jest.fn()
+
 describe('component', () => {
   const currentUser = {
     id: '1',
     avatarUrl: 'http://image.com/p.png'
   }
   const messageThreadId = '1'
-  const createMessage = jest.fn(() => Promise.resolve())
-  const sendIsTyping = jest.fn()
   const wrapper = mount(<MessageForm
     messageThreadId={messageThreadId}
     text='hey you'
     currentUser={currentUser}
-    createMessage={createMessage}
+    createMessage={mockCreateMessage}
     sendIsTyping={sendIsTyping} />)
 
-  it('to match the latest snapshot', () => {
+  it('matches the latest snapshot', () => {
     const wrapper = shallow(<MessageForm messageThreadId='1' text='hey you' currentUser={currentUser} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('calls startTyping when typing happens', () => {
     wrapper.find('textarea').simulate('keydown')
-    const expectedSocketUrl = socketUrl(`/noo/post/1/typing`)
-    const expectedTypingValue = { isTyping: true }
     expect(sendIsTyping).toHaveBeenCalledWith(true)
   })
 
-  it('to not createMessage when enter with shift is pressed', () => {
+  it('does not createMessage when shift-enter is pressed', () => {
     wrapper.find('textarea').simulate('keydown', {which: keyMap.ENTER, shiftKey: true})
-    expect(createMessage).not.toHaveBeenCalled()
+    expect(mockCreateMessage).not.toHaveBeenCalled()
   })
 
-  it('to createMessage when enter (no shift) is pressed', () => {
+  it('does createMessage when enter is pressed', () => {
     wrapper.find('textarea').simulate('keydown', {which: keyMap.ENTER})
-    expect(createMessage.mock.calls[0]).toEqual([messageThreadId, 'hey you'])
+    expect(mockCreateMessage.mock.calls[0]).toEqual([messageThreadId, 'hey you'])
+  })
+})
+
+describe('for a new thread', () => {
+  const mockFindOrCreateThread = jest.fn(() => Promise.resolve({
+    payload: {data: {findOrCreateThread: {id: 5}}}
+  }))
+
+  const mockGoToThread = jest.fn()
+  const mockCreateMessage = jest.fn(() => Promise.resolve())
+
+  const wrapper = mount(<MessageForm forNewThread
+    findOrCreateThread={mockFindOrCreateThread}
+    goToThread={mockGoToThread}
+    text='hey you'
+    createMessage={mockCreateMessage}
+    sendIsTyping={sendIsTyping} />)
+
+  it('finds or creates a thread', () => {
+    wrapper.find('textarea').simulate('keydown', {which: keyMap.ENTER})
+    expect.assertions(3)
+    return new Promise(resolve => {
+      setTimeout(() => {
+        expect(mockFindOrCreateThread).toHaveBeenCalled()
+        expect(mockCreateMessage).toHaveBeenCalled()
+        expect(mockGoToThread).toHaveBeenCalledWith(5)
+        resolve()
+      }, 100)
+    })
   })
 })
 

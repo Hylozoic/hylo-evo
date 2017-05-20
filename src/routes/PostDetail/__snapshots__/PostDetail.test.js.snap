@@ -70,7 +70,6 @@ Object {
   "communities": Array [
     SessionBoundModel {
       "_fields": Object {
-        "feedItems": undefined,
         "id": "1",
         "members": undefined,
         "moderators": undefined,
@@ -81,7 +80,6 @@ Object {
     },
     SessionBoundModel {
       "_fields": Object {
-        "feedItems": undefined,
         "id": "2",
         "members": undefined,
         "moderators": undefined,

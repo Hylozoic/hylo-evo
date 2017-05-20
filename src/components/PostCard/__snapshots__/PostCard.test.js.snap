@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders as expected 1`] = `
+<div
+  data-styleName="card"
+  onClick={[Function]}
+>
+  <PostHeader
+    communities={
+      Array [
+        Object {
+          "id": "1",
+          "name": "Great Cause",
+          "slug": "great",
+        },
+      ]
+    }
+    creator={
+      Object {
+        "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/claudioguglieri/128.jpg?82483",
+        "id": 82690,
+        "name": "Frederic Crona",
+        "tagline": "Legacy Marketing Executive",
+      }
+    }
+    date="Thu Jan 16 2014 16:00:00 GMT-0800 (PST)"
+    slug="great"
+    type="offer"
+  />
+  <Component />
+  <Component
+    details="Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!"
+    id="FAKE_29222"
+    slug="great"
+    title="We put this together as a PDF for hand-out at your next event or university class"
+  />
+  <Connect(PostFooter)
+    commenters={
+      Array [
+        Object {
+          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/manigm/128.jpg?1184",
+          "id": 98730,
+          "name": "Van Hudson",
+          "tagline": "Direct Research Consultant",
+        },
+        Object {
+          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/aleinadsays/128.jpg?75497",
+          "id": 66803,
+          "name": "Ms. Dawn Beahan",
+          "tagline": "National Accounts Architect",
+        },
+        Object {
+          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/ultragex/128.jpg?72463",
+          "id": 81915,
+          "name": "Ms. Coleman Krajcik",
+          "tagline": "Dynamic Response Specialist",
+        },
+      ]
+    }
+    commentersTotal={76572}
+    id="FAKE_29222"
+    votesTotal={11519}
+  />
+</div>
+`;
+
+exports[`renders as expected 2`] = `
+"<div data-styleName=\\"header\\" className={[undefined]}>
+<Avatar avatarUrl=\\"https://s3.amazonaws.com/uifaces/faces/twitter/claudioguglieri/128.jpg?82483\\" url=\\"/c/great/m/82690\\" data-styleName=\\"avatar\\" />
+<div data-styleName=\\"headerText\\">
+<Link to=\\"/c/great/m/82690\\" data-styleName=\\"userName\\" replace={false}>
+Frederic Crona
+, 
+</Link>
+<span data-styleName=\\"userTitle\\">
+Legacy Marketing Executive
+</span>
+<div>
+<span data-styleName=\\"timestamp\\">
+
+</span>
+</div>
+</div>
+<div data-styleName=\\"upperRight\\">
+<PostLabel type=\\"offer\\" data-styleName=\\"label\\" />
+<Dropdown toggleChildren={{...}} items={{...}} />
+</div>
+</div>"
+`;

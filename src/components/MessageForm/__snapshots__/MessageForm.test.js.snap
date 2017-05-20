@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`component to match the latest snapshot 1`] = `
+exports[`component matches the latest snapshot 1`] = `
 <form
   data-styleName="message-form"
   onSubmit={[Function]}
