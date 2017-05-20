@@ -16,7 +16,8 @@ export default function PostHeader ({
   close,
   className,
   slug,
-  showCommunity
+  showCommunity,
+  editPost
 }) {
   let context
 
@@ -47,6 +48,7 @@ export default function PostHeader ({
       <Dropdown toggleChildren={<Icon name='More' />} items={[
         {icon: 'Pin', label: 'Pin', onClick: () => console.log('Pin')},
         {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')},
+        {icon: 'AddImage', label: 'Edit', onClick: () => editPost()},
         {icon: 'Trash', label: 'Delete', onClick: () => console.log('Delete')},
         {label: 'Other'},
         {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
