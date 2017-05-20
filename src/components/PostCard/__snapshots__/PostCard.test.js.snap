@@ -23,7 +23,7 @@ exports[`renders as expected 1`] = `
         "tagline": "Legacy Marketing Executive",
       }
     }
-    date="Thu Jan 16 2014 16:00:00 GMT-0800 (PST)"
+    date="2014-01-17T00:00:00.000Z"
     slug="great"
     type="offer"
   />
