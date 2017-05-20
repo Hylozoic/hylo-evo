@@ -15,6 +15,11 @@ export function createPost (post) {
           type
           title
           details
+          communities {
+            id
+            name
+            slug
+          }
         }
       }`,
       variables: {

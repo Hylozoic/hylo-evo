@@ -4,7 +4,7 @@ exports[`renders as expected 1`] = `
 <div
   data-styleName="container"
 >
-  <FeedBanner
+  <Connect(FeedBanner)
     all={true}
   />
   <Connect(Feed)

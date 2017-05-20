@@ -62,6 +62,7 @@ export default class PrimaryLayout extends Component {
           <RedirectToCommunity currentUser={currentUser} />
           <Route path='/all' component={AllCommunitiesFeed} />
           <Route path='/c/:slug' exact component={CommunityFeed} />
+          <Route path='/c/:slug/p/new' component={PostEditorModal} />
           <Route path='/c/:slug/p/:postId' component={CommunityFeed} />
           <Route path='/c/:slug/m/:id' component={MemberProfile} />
           <Route path='/events' component={Events} />
@@ -94,7 +95,9 @@ export default class PrimaryLayout extends Component {
 
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
+  {path: '/all/p/new', component: PostEditorModal},
   {path: '/all/p/:postId', component: PostDetail, editComponent: PostEditorModal},
+  {path: '/c/:slug/p/new', component: PostEditorModal},
   {path: '/c/:slug/p/:postId', component: PostDetail, editComponent: PostEditorModal}
 ]
 

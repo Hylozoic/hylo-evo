@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+import { postUrl } from 'util/index'
 import fetchPost from 'store/actions/fetchPost'
 import getParam from 'store/selectors/getParam'
 import getPost from 'store/selectors/getPost'
@@ -25,9 +26,12 @@ export const mapDispatchToProps = (dispatch, props) => {
     pathname: removePostDetailFromPath(location.pathname)
   }
 
+  const postId = getParam('postId', {}, props)
+
   return {
     fetchPost: () => dispatch(fetchPost(getParam('postId', {}, props))),
-    onClose: () => dispatch(push(closeLocation))
+    onClose: () => dispatch(push(closeLocation)),
+    editPost: () => dispatch(push(postUrl(postId) + '/edit'))
   }
 }
 

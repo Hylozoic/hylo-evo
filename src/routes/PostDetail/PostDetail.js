@@ -6,7 +6,7 @@ const { bool, func, object, string } = PropTypes
 import { PostImage, PostBody, PostFooter, PostHeader } from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
 import Comments from './Comments'
-import { tagUrl, postUrl } from 'util/index'
+import { tagUrl } from 'util/index'
 import { DETAIL_COLUMN_ID } from 'util/scrolling'
 import SocketSubscriber from 'components/SocketSubscriber'
 
@@ -19,7 +19,9 @@ export default class PostDetail extends Component {
     id: string,
     slug: string,
     fetchPost: func,
-    showCommunity: bool
+    showCommunity: bool,
+    newPost: func,
+    editPost: func
   }
 
   constructor (props) {
@@ -65,7 +67,7 @@ export default class PostDetail extends Component {
   }
 
   render () {
-    const { post, slug, onClose, showCommunity } = this.props
+    const { post, slug, onClose, showCommunity, editPost } = this.props
     const { atTop, atActivity } = this.state
     if (!post) return null
 
@@ -79,6 +81,7 @@ export default class PostDetail extends Component {
       type={post.type}
       communities={post.communities}
       showCommunity={showCommunity}
+      editPost={editPost}
       close={onClose}
       slug={slug}
       styleName='header' />
@@ -99,7 +102,6 @@ export default class PostDetail extends Component {
         slug={slug}
         expanded
         styleName='body' />
-      <Link to={postUrl(post.id, slug) + '/edit'}>Edit</Link>
       <div styleName='activity-header' ref='activity'>Activity</div>
       <PostFooter id={post.id}
         commenters={post.commenters}

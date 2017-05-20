@@ -34,12 +34,6 @@ exports[`PostDetail renders correctly 1`] = `
     id="91"
     slug="foo"
   />
-  <Link
-    replace={false}
-    to="/c/foo/p/91/edit"
-  >
-    Edit
-  </Link>
   <div
     data-styleName="activity-header"
   >

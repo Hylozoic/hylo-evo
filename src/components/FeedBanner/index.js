@@ -1,2 +1,4 @@
 import component from './FeedBanner'
-export default component
+import connector from './FeedBanner.connector'
+
+export default connector(component)
