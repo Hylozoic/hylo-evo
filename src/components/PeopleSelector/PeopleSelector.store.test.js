@@ -1,3 +1,5 @@
+import { pick } from 'lodash/fp'
+
 import orm from 'store/models'
 import reducer, * as store from './PeopleSelector.store'
 import people from './PeopleSelector.test.json'
@@ -6,41 +8,49 @@ import {
   CREATE_MESSAGE
 } from 'store/constants'
 
-describe('fetchPeople', () => {
-  it('returns the correct action', () => {
-    const expected = {
-      type: store.FETCH_PEOPLE,
-      graphql: {
-        query: 'All the lonely people / Where do they all come from?',
-        variables: {
-          autocomplete: 'Tchaikovs',
-          first: 100
-        }
-      },
-      meta: { extractModel: 'Person' }
+it('matches the last snapshot for fetchPeople', () => {
+  const graphql = {
+    query: 'All the lonely people / Where do they all come from?',
+    variables: {
+      autocomplete: 'Tchaikovs',
+      first: 100
     }
-    const { query, variables } = expected.graphql
-    const actual = store.fetchPeople(variables.autocomplete, query, variables.first)
-    expect(actual).toEqual(expected)
-  })
+  }
+  const { query, variables } = graphql
+  const actual = store.fetchPeople(variables.autocomplete, query, variables.first)
+  expect(actual).toMatchSnapshot()
 })
 
-describe('findOrCreateThread', () => {
-  it('returns the correct action', () => {
-    const expected = {
-      type: store.FIND_OR_CREATE_THREAD,
-      graphql: {
-        query: 'All the lonely people / Where do they all come from?',
-        variables: {
-          participantIds: ['1', '2', '3']
-        }
-      },
-      meta: { extractModel: 'MessageThread' }
+it('matches the last snapshot for findOrCreateThread', () => {
+  const graphql = {
+    query: 'All the lonely people / Where do they all come from?',
+    variables: {
+      participantIds: ['1', '2', '3']
     }
-    const { query, variables } = expected.graphql
-    const actual = store.findOrCreateThread(variables.participantIds, query)
-    expect(actual).toEqual(expected)
-  })
+  }
+  const { query, variables } = graphql
+  const actual = store.findOrCreateThread(variables.participantIds, query)
+  expect(actual).toMatchSnapshot()
+})
+
+it('matches the last snapshot for fetchContacts', () => {
+  const graphql = {
+    query: 'I see trees of green',
+    variables: { first: 20 }
+  }
+  const { query, variables } = graphql
+  const actual = store.fetchContacts(variables.first, query)
+  expect(actual).toMatchSnapshot()
+})
+
+it('matches the last snapshot for fetchRecentContacts', () => {
+  const graphql = {
+    query: 'I see them bloom',
+    variables: { first: 20 }
+  }
+  const { query, variables } = graphql
+  const actual = store.fetchRecentContacts(variables.first, query)
+  expect(actual).toMatchSnapshot()
 })
 
 it('returns the correct action from addParticipant', () => {
@@ -134,9 +144,9 @@ describe('connector', () => {
   })
 
   describe('matchesSelector', () => {
-    it('returns null if autocomplete is missing', () => {
+    it('returns empty array if autocomplete is missing', () => {
       const actual = store.matchesSelector(state)
-      expect(actual).toBe(null)
+      expect(actual).toEqual([])
     })
 
     it('returns the correct objects by matching autocomplete', () => {
@@ -174,25 +184,44 @@ describe('connector', () => {
       const actual = store.matchesSelector(state)
       expect(actual).toEqual(expected)
     })
+
+    describe('pickPersonListItem', () => {
+      it('picks the correct properties', () => {
+        const person = session.Person.withId('72203')
+        const expected = {
+          "id": "72203",
+          "name": "Brooks Funk",
+          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg",
+          "community": "Associate"
+        }
+        const actual = store.pickPersonListItem(person)
+        expect(actual).toEqual(expected)
+      })
+    })
+
+    describe('personConnectionListItemSelector', () => {
+      let id = 1
+      it('filters connections by participants', () => {
+        [ '72203', '72019' ].forEach(person =>
+          session.PersonConnection.create({
+            id: '' + id++,
+            person,
+            type: 'message'
+          }))
+        const participants = [ '72203' ]
+        const expected = [ '72019' ]
+        const actual = store.personConnectionListItemSelector(session, participants)
+          .map(person => person.id)
+        expect(actual).toEqual(expected)
+      })
+    })
   })
 
   describe('mapStateToProps', () => {
     it('returns the correct object', () => {
       state.PeopleSelector.participants = [ '72203' ]
-      const expected = {
-        autocomplete: undefined,
-        matches: null,
-        participantSearch: null,
-        participants: [
-          {
-            "id": "72203",
-            "name": "Brooks Funk",
-            "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg"
-          }
-        ]
-      }
       const actual = mapStateToProps(state, { location: { search: '' } })
-      expect(actual).toEqual(expected)
+      expect(actual).toMatchSnapshot()
     })
   })
 })

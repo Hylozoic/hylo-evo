@@ -23,6 +23,8 @@ exports[`PeopleSelector matches the last snapshot 1`] = `
     </div>
     <CloseMessages />
   </div>
-  <PeopleSelectorContacts />
+  <PeopleSelectorContacts
+    addParticipant={[Function]}
+  />
 </div>
 `;

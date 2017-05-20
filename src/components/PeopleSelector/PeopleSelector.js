@@ -36,6 +36,8 @@ export default class PeopleSelector extends React.Component {
   }
 
   componentDidMount () {
+    this.props.fetchContacts()
+    this.props.fetchRecentContacts()
     const { participantSearch } = this.props
     if (participantSearch) {
       participantSearch.forEach(p => this.props.addParticipant(p))
@@ -102,10 +104,17 @@ export default class PeopleSelector extends React.Component {
     }
   }
 
+  removeParticipant (id) {
+    this.props.removeParticipant(id)
+    if (!this.autocomplete.value) {
+      this.setState({ currentMatch: null })
+    }
+  }
+
   setCurrentMatch = id => this.setState({ currentMatch: id })
 
   render () {
-    const { matches, participants, removeParticipant, findOrCreateThread } = this.props
+    const { contacts, matches, participants, recentContacts, removeParticipant, findOrCreateThread } = this.props
     const { currentMatch } = this.state
     return <div styleName='people-selector'>
       <div styleName='thread-header' tabIndex='0'>
@@ -134,7 +143,10 @@ export default class PeopleSelector extends React.Component {
           currentMatch={currentMatch}
           matches={matches}
           setCurrentMatch={this.setCurrentMatch} />
-        : <PeopleSelectorContacts />}
+        : <PeopleSelectorContacts
+          addParticipant={this.addParticipant}
+          contacts={contacts}
+          recentContacts={recentContacts} />}
       {participants && participants.length > 0 &&
         <div styleName='message-form'>
           <MessageForm ref='form'

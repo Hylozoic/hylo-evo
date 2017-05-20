@@ -9,7 +9,11 @@ import PersonListItem from 'components/PersonListItem'
 describe('PeopleSelector', () => {
   it('matches the last snapshot', () => {
     const wrapper = shallow(
-      <PeopleSelector fetchPeople={() => {}} matches={[]} participants={[]} />
+      <PeopleSelector
+        fetchContacts={() => {}}
+        fetchPeople={() => {}}
+        matches={[]}
+        participants={[]} />
     )
     expect(wrapper).toMatchSnapshot()
   })
@@ -33,7 +37,7 @@ describe('PeopleSelector', () => {
             addParticipant={addParticipant}
             matches={[ { id: '1' }, { id: '2' } ]}
             participants={[]}
-            fetchPeople={fetchPeople}
+            fetchContacts={() => {}} fetchPeople={fetchPeople} fetchRecentContacts={() => {}}
             removeParticipant={removeParticipant}
             setAutocomplete={setAutocomplete} />
         </MemoryRouter>
@@ -58,7 +62,7 @@ describe('PeopleSelector', () => {
       expect(removeParticipant).toHaveBeenCalled()
     })
 
-    it('does not remove paraticipant if backspace pressed when currentMatch defined', () => {
+    it('does not remove participant if backspace pressed when currentMatch defined', () => {
       input.simulate('keyDown', { keyCode: keyMap.BACKSPACE })
       expect(removeParticipant).not.toHaveBeenCalled()
     })
@@ -124,63 +128,6 @@ describe('PeopleSelector', () => {
     })
   })
 
-  describe('addParticipant', () => {
-    it('calls addParticipant with the correct id', () => {
-      const addParticipant = jest.fn()
-      const wrapper = mount(
-        <MemoryRouter>
-          <PeopleSelector
-            addParticipant={addParticipant}
-            participants={[]}
-            fetchPeople={() => {}}
-            setAutocomplete={() => {}} />
-        </MemoryRouter>
-      )
-      wrapper.find(PeopleSelector).node.addParticipant('1')
-      expect(addParticipant).toBeCalledWith('1')
-    })
-
-    it('resets values after adding a participant', () => {
-      const setAutocomplete = jest.fn()
-      const wrapper = mount(
-        <MemoryRouter>
-          <PeopleSelector
-            addParticipant={() => {}}
-            participants={[]}
-            fetchPeople={() => {}}
-            setAutocomplete={setAutocomplete} />
-        </MemoryRouter>
-      )
-      const input = wrapper.find('input').first()
-      input.node.value = 'flargle'
-      wrapper.find(PeopleSelector).node.addParticipant('1')
-      expect(input.node.value).toBe('')
-      expect(setAutocomplete).toBeCalledWith(null)
-    })
-  })
-
-  describe('componentDidMount', () => {
-    it('adds particpants in the search, then clears it', () => {
-      const addParticipant = jest.fn()
-      const changeQueryParam = jest.fn()
-      const wrapper = mount(
-        <MemoryRouter>
-          <PeopleSelector
-            addParticipant={addParticipant}
-            participants={[]}
-            participantSearch={[ '1', '2' ]}
-            fetchPeople={() => {}}
-            changeQueryParam={changeQueryParam} />
-        </MemoryRouter>
-      )
-      expect(addParticipant).toBeCalledWith('1')
-      expect(addParticipant).toBeCalledWith('2')
-      const [ _, param, value ] = changeQueryParam.mock.calls[0]
-      expect(param).toBe('participants')
-      expect(value).toBe(null)
-    })
-  })
-
   describe('setAutocomplete', () => {
     let setAutocomplete
     let wrapper
@@ -191,7 +138,7 @@ describe('PeopleSelector', () => {
       wrapper = mount(
         <MemoryRouter>
           <PeopleSelector
-            fetchPeople={() => {}}
+            fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
             participants={[]}
             setAutocomplete={setAutocomplete} />
         </MemoryRouter>
@@ -217,6 +164,107 @@ describe('PeopleSelector', () => {
       jest.runAllTimers()
       expect(setAutocomplete).not.toHaveBeenCalled()
       expect(input.node.value).toBe(expected)
+    })
+  })
+
+  describe('addParticipant', () => {
+    it('calls addParticipant with the correct id', () => {
+      const addParticipant = jest.fn()
+      const wrapper = mount(
+        <MemoryRouter>
+          <PeopleSelector
+            addParticipant={addParticipant}
+            participants={[]}
+            fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
+            setAutocomplete={() => {}} />
+        </MemoryRouter>
+      )
+      wrapper.find(PeopleSelector).node.addParticipant('1')
+      expect(addParticipant).toBeCalledWith('1')
+    })
+
+    it('resets values after adding a participant', () => {
+      const setAutocomplete = jest.fn()
+      const wrapper = mount(
+        <MemoryRouter>
+          <PeopleSelector
+            addParticipant={() => {}}
+            participants={[]}
+            fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
+            setAutocomplete={setAutocomplete} />
+        </MemoryRouter>
+      )
+      const input = wrapper.find('input').first()
+      input.node.value = 'flargle'
+      wrapper.find(PeopleSelector).node.addParticipant('1')
+      expect(input.node.value).toBe('')
+      expect(setAutocomplete).toBeCalledWith(null)
+    })
+  })
+
+  describe('removeParticipant', () => {
+    it('calls props.removeParticipant', () => {
+      const removeParticipant = jest.fn()
+      const wrapper = shallow(
+        <PeopleSelector
+          fetchPeople={() => {}}
+          participants={[]}
+          removeParticipant={removeParticipant} />
+      )
+      const ps = wrapper.instance()
+      ps.autocomplete = { value: '' }
+      ps.removeParticipant('1')
+      expect(removeParticipant).toBeCalledWith('1')
+    })
+
+    it('sets currentMatch to null if nothing being typed', () => {
+      const wrapper = shallow(
+        <PeopleSelector
+          fetchPeople={() => {}}
+          participants={[]}
+          removeParticipant={() => {}} />
+      )
+      const ps = wrapper.instance()
+      ps.autocomplete = { value: '' }
+      ps.state = { currentMatch: 'abc' }
+      ps.removeParticipant('1')
+      expect(ps.state.currentMatch).toBe(null)
+    })
+
+    it('does not set currentMatch to null if autocomplete in use', () => {
+      const wrapper = shallow(
+        <PeopleSelector
+          fetchPeople={() => {}}
+          participants={[]}
+          removeParticipant={() => {}} />
+      )
+      const ps = wrapper.instance()
+      ps.autocomplete = { value: 'abc' }
+      ps.state = { currentMatch: 'abc' }
+      ps.removeParticipant('1')
+      expect(ps.state.currentMatch).toBe('abc')
+    })
+  })
+
+  describe('componentDidMount', () => {
+    it('adds particpants in the search, then clears it', () => {
+      const addParticipant = jest.fn()
+      const changeQueryParam = jest.fn()
+      const wrapper = mount(
+        <MemoryRouter>
+          <PeopleSelector
+            addParticipant={addParticipant}
+            participants={[]}
+            participantSearch={[ '1', '2' ]}
+            fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
+            changeQueryParam={changeQueryParam} />
+        </MemoryRouter>
+      )
+      expect(addParticipant).toBeCalledWith('1')
+      expect(addParticipant).toBeCalledWith('2')
+      const [ _, param, value ] = changeQueryParam.mock.calls[0]
+      expect(param).toBe('participants')
+      expect(value).toBe(null)
     })
   })
 })

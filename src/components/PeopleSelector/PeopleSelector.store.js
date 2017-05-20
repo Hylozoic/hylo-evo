@@ -10,6 +10,8 @@ export const MODULE_NAME = 'PeopleSelector'
 
 export const FIND_OR_CREATE_THREAD = 'FIND_OR_CREATE_THREAD'
 export const FETCH_PEOPLE = 'FETCH_PEOPLE'
+export const FETCH_CONTACTS = 'FETCH_CONTACTS'
+export const FETCH_RECENT_CONTACTS = 'FETCH_RECENT_CONTACTS'
 export const SET_AUTOCOMPLETE = 'PeopleSelector/SET_AUTOCOMPLETE'
 export const ADD_PARTICIPANT = 'PeopleSelector/ADD_PARTICIPANT'
 export const REMOVE_PARTICIPANT = 'PeopleSelector/REMOVE_PARTICIPANT'
@@ -28,8 +30,19 @@ const findOrCreateThreadQuery =
   }
 }`
 
+export function findOrCreateThread (participantIds, query = findOrCreateThreadQuery) {
+  return {
+    type: FIND_OR_CREATE_THREAD,
+    graphql: {
+      query,
+      variables: {participantIds}
+    },
+    meta: { extractModel: 'MessageThread' }
+  }
+}
+
 const fetchPeopleQuery =
-`query PersonAutocomplete ($autocomplete: String, $first: Int) {
+`query PeopleAutocomplete ($autocomplete: String, $first: Int) {
   people (autocomplete: $autocomplete, first: $first) {
     items {
       id
@@ -57,14 +70,66 @@ export function fetchPeople (autocomplete, query = fetchPeopleQuery, first = 20)
   }
 }
 
-export function findOrCreateThread (participantIds, query = findOrCreateThreadQuery) {
+const fetchContactsQuery =
+`query PeopleContacts ($first: Int) {
+  people (first: $first) {
+    items {
+      id
+      name
+      avatarUrl
+      memberships (first: 1) {
+        id
+        community {
+          id
+          name
+        }
+      }
+    }
+  }
+}`
+
+export function fetchContacts (query = fetchContactsQuery, first = 50) {
   return {
-    type: FIND_OR_CREATE_THREAD,
+    type: FETCH_CONTACTS,
     graphql: {
       query,
-      variables: {participantIds}
+      variables: { first }
     },
-    meta: { extractModel: 'MessageThread' }
+    meta: { extractModel: 'Person' }
+  }
+}
+
+const fetchRecentContactsQuery =
+`query RecentPersonConnections ($first: Int) {
+  connections (first: $first) {
+    items {
+      id
+      person {
+        id
+        name
+        avatarUrl
+        memberships (first: 1) {
+          id
+          community {
+            id
+            name
+          }
+        }
+      }
+      type
+      updatedAt
+    }
+  }
+}`
+
+export function fetchRecentContacts (query = fetchRecentContactsQuery, first = 20) {
+  return {
+    type: FETCH_RECENT_CONTACTS,
+    graphql: {
+      query,
+      variables: { first }
+    },
+    meta: { extractModel: 'PersonConnection' }
   }
 }
 
@@ -89,6 +154,60 @@ export function setAutocomplete (autocomplete) {
   }
 }
 
+export function pickPersonListItem (person) {
+  return {
+    ...pick([ 'id', 'name', 'avatarUrl' ], person.ref),
+    community: person.memberships.first()
+      ? person.memberships.first().community.name : null
+  }
+}
+
+export function personListItemSelector (session, participants, search = () => true) {
+  return session.Person
+    .all()
+    .filter(p => !participants.includes(p.id))
+    .filter(search)
+    .orderBy('name')
+    .toModelArray()
+    .map(pickPersonListItem)
+}
+
+export const contactsSelector = createSelector(
+  orm,
+  state => state.orm,
+  state => state[MODULE_NAME].participants,
+  personListItemSelector
+)
+
+export const matchesSelector = createSelector(
+  orm,
+  state => state.orm,
+  state => state[MODULE_NAME].participants,
+  state => p => {
+    const { autocomplete } = state[MODULE_NAME]
+    if (autocomplete) {
+      return p.name.toLowerCase().includes(autocomplete.toLowerCase())
+    }
+  },
+  personListItemSelector
+)
+
+export function personConnectionListItemSelector (session, participants) {
+  return session.PersonConnection
+    .all()
+    .orderBy('name')
+    .toModelArray()
+    .map(connection => pickPersonListItem(connection.person))
+    .filter(connection => !participants.includes(connection.id))
+}
+
+export const recentContactsSelector = createSelector(
+  orm,
+  state => state.orm,
+  state => state[MODULE_NAME].participants,
+  personConnectionListItemSelector
+)
+
 export function participantsFromStore (state) {
   return state[MODULE_NAME].participants
 }
@@ -99,29 +218,6 @@ export const participantsSelector = createSelector(
   participantsFromStore,
   (session, fromStore) => fromStore.map(id =>
     pick([ 'id', 'name', 'avatarUrl' ], session.Person.withId(id).ref))
-)
-
-export const matchesSelector = createSelector(
-  orm,
-  state => state.orm,
-  state => state[MODULE_NAME].autocomplete,
-  state => state[MODULE_NAME].participants,
-  (session, autocomplete, participants) => {
-    if (autocomplete) {
-      const term = autocomplete.toLowerCase()
-      const matches = session.Person
-        .all()
-        .filter(p => !participants.includes(p.id))
-        .filter(p => p.name.toLowerCase().includes(term))
-        .orderBy('name')
-      return matches.toModelArray().map(match => ({
-        ...pick([ 'id', 'name', 'avatarUrl' ], match.ref),
-        community: match.memberships.first()
-          ? match.memberships.first().community.name : null
-      }))
-    }
-    return null
-  }
 )
 
 export const defaultState = {

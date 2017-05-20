@@ -7,6 +7,7 @@ import CommunityTopic from './CommunityTopic'
 import Me from './Me'
 import Membership from './Membership'
 import Person from './Person'
+import PersonConnection from './PersonConnection'
 import Message from './Message'
 import MessageThread from './MessageThread'
 import Notification from './Notification'
@@ -28,6 +29,7 @@ orm.register(
   MessageThread,
   Notification,
   Person,
+  PersonConnection,
   Post,
   PostFollower,
   PostCommenter,
