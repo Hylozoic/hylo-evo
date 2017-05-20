@@ -77,7 +77,7 @@ const fetchContactsQuery =
       id
       name
       avatarUrl
-      memberships {
+      memberships (first: 1) {
         id
         community {
           id
@@ -108,7 +108,7 @@ const fetchRecentContactsQuery =
         id
         name
         avatarUrl
-        memberships {
+        memberships (first: 1) {
           id
           community {
             id
