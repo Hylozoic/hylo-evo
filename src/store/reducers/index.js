@@ -12,7 +12,6 @@ import PeopleSelector from 'components/PeopleSelector/PeopleSelector.store'
 import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import MessageForm from 'components/MessageForm/MessageForm.store'
-import CommunitiesSelector from 'components/CommunitiesSelector/CommunitiesSelector.store'
 import Login from 'routes/Login/Login.store'
 import Members from 'routes/Members/Members.store'
 import ThreadList from 'components/ThreadList/ThreadList.store'
@@ -39,7 +38,6 @@ const combinedReducers = combineReducers({
   MessageForm,
   PeopleTyping,
   HyloEditor,
-  CommunitiesSelector,
   Login,
   ThreadList,
   Members
