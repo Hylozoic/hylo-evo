@@ -6,7 +6,7 @@ import './FeedBanner.scss'
 import cx from 'classnames'
 import { hyloLogo } from 'util/assets'
 
-export default function FeedBanner ({ all, community, currentUser }) {
+export default function FeedBanner ({ all, community, currentUser, newPost }) {
   let bannerUrl, avatarUrl, name, location, subtitle
 
   if (all) {
@@ -36,15 +36,15 @@ export default function FeedBanner ({ all, community, currentUser }) {
         </div>
       </div>
     </div>
-    <PostPrompt currentUser={currentUser} />
+    <PostPrompt currentUser={currentUser} newPost={newPost} />
     <div styleName='shadow' />
   </div>
 }
 
-function PostPrompt ({ currentUser }) {
+function PostPrompt ({ currentUser, newPost }) {
   if (!currentUser) return null
-  return <div styleName='postPrompt' onClick={() => console.log('Open Post Form')}>
+  return <div styleName='postPrompt' onClick={newPost}>
     <RoundImage url={currentUser.avatarUrl} small styleName='prompt-image' />
-    Hi {currentUser.firstName()}, what's on your mind?
+      Hi {currentUser.firstName()}, what's on your mind?
   </div>
 }

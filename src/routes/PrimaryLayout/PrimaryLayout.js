@@ -19,6 +19,7 @@ import PostDetail from 'routes/PostDetail'
 import Members from 'routes/Members'
 import UserSettings from 'routes/UserSettings'
 import MessageMember from 'components/MessageMember'
+import PostEditorModal from 'components/PostEditorModal'
 import AllTopics from 'routes/AllTopics'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
@@ -66,6 +67,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/c/:slug' exact component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
             <Route path='/c/:slug/m/:id' component={MemberProfile} />
+            <Route path='/c/:slug/p/new' component={PostEditorModal} />
             <Route path='/c/:slug/p/:postId' component={Feed} />
             <Route path='/c/:slug/topics' component={AllTopics} />
             <Route path='/c/:slug/:topicName/p/:postId' component={Feed} />
@@ -87,7 +89,7 @@ export default class PrimaryLayout extends Component {
             defined above, and store the previous detail component in state
           */}
           {detailRoutes.map(({ path, component }) =>
-            <Route key={path} exact {...{path, component}} />)}
+            <Route key={path} {...{path, component}} />)}
         </div>
       </div>
       <Route path='/t' component={Messages} />
@@ -99,10 +101,18 @@ export default class PrimaryLayout extends Component {
 
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
+  {path: '/all/p/new', component: PostEditorModal},
   {path: '/all/p/:postId', component: PostDetail},
-  {path: '/c/:slug/p/:postId', component: PostDetail},
+  {path: '/all/p/:postId/edit', component: PostEditorModal},
+  {path: '/c/:slug/p/new', component: PostEditorModal},
+  {path: '/c/:slug/p/:postId', component: PostEditorModal},
+  {path: '/c/:slug/p/:postId/edit', component: PostEditorModal},
+  {path: '/c/:slug/m/:id/p/new', component: PostEditorModal},
   {path: '/c/:slug/m/:id/p/:postId', component: PostDetail},
-  {path: '/c/:slug/:topicName/p/:postId', component: PostDetail}
+  {path: '/c/:slug/m/:id/p/:postId/edit', component: PostEditorModal},
+  {path: '/c/:slug/:topicName/p/new', component: PostEditorModal},
+  {path: '/c/:slug/:topicName/p/:postId', component: PostDetail},
+  {path: '/c/:slug/:topicName/p/:postId/edit', component: PostEditorModal}
 ]
 
 function RedirectToCommunity ({ currentUser }) {

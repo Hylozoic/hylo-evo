@@ -19,7 +19,8 @@ export default class PostDetail extends Component {
     id: string,
     slug: string,
     fetchPost: func,
-    showCommunity: bool
+    showCommunity: bool,
+    editPost: func
   }
 
   constructor (props) {
@@ -65,7 +66,7 @@ export default class PostDetail extends Component {
   }
 
   render () {
-    const { post, slug, onClose, showCommunity } = this.props
+    const { post, slug, onClose, showCommunity, editPost } = this.props
     const { atTop, atActivity } = this.state
     if (!post) return null
 
@@ -79,6 +80,7 @@ export default class PostDetail extends Component {
       type={post.type}
       communities={post.communities}
       showCommunity={showCommunity}
+      editPost={editPost}
       close={onClose}
       slug={slug}
       styleName='header' />
