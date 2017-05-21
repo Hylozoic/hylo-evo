@@ -3,7 +3,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  width: 590px;
+  min-width: 590px;
   list-style: none;
   border: solid 1px rgb(0,0,0);
   border-radius: $space-1x;
@@ -16,9 +16,19 @@
   padding: $space-4x $space-4x 0 $space-4x;
 }
 
-.initialPrompt {
-  composes: bdy-lt-sm from 'css/typography.scss';
+.initial {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  line-height: normal;
   margin-bottom: $space-4x;
+  &-prompt {
+    composes: bdy-lt-sm from 'css/typography.scss';
+  }
+  &-closeButton {
+    cursor: pointer;
+  }
 }
 
 .postTypes {
@@ -41,7 +51,6 @@
   border-radius: $space-1x;
   color: $color-rhino-30;
   background-color: $color-athens-gray-dark;
-  cursor: pointer;
   &:last-child {
     margin-right: 0;
   }
@@ -49,19 +58,19 @@
     margin-left: 0;
   }
   &-discussion {
-    &:hover, &:active, &-active {
+    &.selectable:hover, &:active, &.active {
       color: $color-picton-blue;
       background-color: $color-link-water;
     }
   }
   &-request {
-    &:hover, &:active, &-active {
+    &.selectable:hover, &:active, &.active {
       color: $color-persimmon;
       background-color: $color-peach-schnapps;
     }
   }
   &-offer {
-    &:hover, &:active, &-active  {
+    &.selectable:hover, &:active, &.active  {
       color: $color-caribbean-green;
       background-color: $color-iceberg;
     }
@@ -93,6 +102,9 @@
   width: 100%;
   outline: none;
   border: none;
+  &:disabled {
+    color: $color-rhino-80;
+  }
 }
 
 .editor {
@@ -127,8 +139,7 @@
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
-  justify-content: space-between;
-  height: 3.75rem;
+  justify-content: flex-end;
   padding: $space-3x;
   background-color: $color-athens-gray-dark;
 }
