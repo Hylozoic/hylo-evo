@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match latest snapshot 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation($topicId: ID, $communityId: ID, $isSubscribing: Boolean) {
+  subscribe(topicId: $topicId, communityId: $communityId, isSubscribing: $isSubscribing) {
+    id
+    newPostCount
+    community {
+      id
+    }
+    topic {
+      id
+      name
+    }
+  }
+}",
+    "variables": Object {
+      "communityId": "4",
+      "isSubscribing": false,
+      "topicId": "3",
+    },
+  },
+  "meta": Object {
+    "communityId": "4",
+    "existingSubscriptionId": "5",
+    "extractModel": "TopicSubscription",
+    "topicId": "3",
+  },
+  "type": "TOGGLE_TOPIC_SUBSCRIBE",
+}
+`;
