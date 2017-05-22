@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { getMe } from 'store/selectors/getMe'
-import { fetchUserSettings, updateUserSettings, leaveCommunity } from './UserSettings.store'
+import { fetchUserSettings, updateUserSettings, leaveCommunity, unlinkAccount } from './UserSettings.store'
 import { loginWithService } from 'routes/Login/Login.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
@@ -29,7 +29,8 @@ export const mapDispatchToProps = {
   fetchUserSettings,
   updateUserSettings,
   leaveCommunity,
-  loginWithService
+  loginWithService,
+  unlinkAccount
 }
 
 export default component => connect(mapStateToProps, mapDispatchToProps)(component)
