@@ -57,7 +57,7 @@ export default class AccountSettings extends Component {
   }
 
   render () {
-    const { currentUser, updateUserSettings, loginWithService } = this.props
+    const { currentUser, updateUserSettings, loginWithService, unlinkAccount } = this.props
     if (!currentUser) return <Loading />
 
     const { edits, changed } = this.state
@@ -65,10 +65,10 @@ export default class AccountSettings extends Component {
       name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl
     } = edits
 
-    const updateSetting = key => event => {
-      const { edits } = this.state
+    const updateSetting = (key, setChanged = true) => event => {
+      const { edits, changed } = this.state
       this.setState({
-        changed: true,
+        changed: setChanged ? true : changed,
         edits: {
           ...edits,
           [key]: event.target.value
@@ -76,8 +76,8 @@ export default class AccountSettings extends Component {
       })
     }
 
-    const updateSettingDirectly = key => value =>
-      updateSetting(key)({target: {value}})
+    const updateSettingDirectly = (key, changed) => value =>
+      updateSetting(key, changed)({target: {value}})
 
     const save = () => {
       this.setState({changed: false})
@@ -107,17 +107,24 @@ export default class AccountSettings extends Component {
       <SocialControl
         label='Facebook'
         onLink={() => loginWithService('facebook')}
-        onChange={updateSetting('facebookUrl')}
+        onChange={updateSettingDirectly('facebookUrl', false)}
+        unlinkAccount={unlinkAccount}
+        provider='facebook'
         value={facebookUrl} />
       <SocialControl
         label='Twitter'
         onLink={() => twitterPrompt()}
-        onChange={updateSetting('twitterName')}
-        value={twitterName} />
+        onChange={updateSettingDirectly('twitterName', false)}
+        unlinkAccount={unlinkAccount}
+        provider='twitter'
+        value={twitterName}
+        updateUserSettings={updateUserSettings} />
       <SocialControl
         label='LinkedIn'
         onLink={() => loginWithService('linkedin')}
-        onChange={updateSetting('linkedInUrl')}
+        unlinkAccount={unlinkAccount}
+        onChange={updateSettingDirectly('linkedInUrl', false)}
+        provider='linkedin'
         value={linkedInUrl} />
       <div styleName='button-row'>
         <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
@@ -135,16 +142,39 @@ export function Control ({ label, value = '', onChange, type }) {
   </div>
 }
 
+export const socialLinkClicked = provider => {}
+
 export class SocialControl extends Component {
-  // SocialControl is a WIP, waiting on Facebook and Linked in Auth to be working
+  linkClicked () {
+    const { provider, onLink, updateUserSettings, onChange } = this.props
+
+    if (provider === 'twitter') {
+      const twitterName = onLink()
+      if (twitterName === null) return onChange(false)
+      updateUserSettings({twitterName})
+      return onChange(true)
+    } else {
+      return onLink()
+      .then(({ error }) => {
+        if (error) return onChange(false)
+        return onChange(true)
+      })
+    }
+  }
+
+  unlinkClicked () {
+    const { provider, unlinkAccount, onChange } = this.props
+    unlinkAccount(provider)
+    return onChange(false)
+  }
+
   render () {
-    const { label, onLink, onChange, value = '' } = this.props
+    const { label, value = '' } = this.props
     const linked = !!value
-    const unlinkClicked = () => onChange({target: {value: ''}})
-    const linkClicked = () => onChange({target: {value: onLink()}})
+
     const linkButton = <span
       styleName='link-button'
-      onClick={linked ? unlinkClicked : linkClicked}>
+      onClick={linked ? () => this.unlinkClicked() : () => this.linkClicked()}>
       {linked ? 'Unlink' : 'Link'}
     </span>
     return <div styleName='control'>

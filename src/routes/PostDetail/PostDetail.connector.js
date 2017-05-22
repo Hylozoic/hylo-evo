@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { postUrl } from 'util/index'
 import fetchPost from 'store/actions/fetchPost'
 import getParam from 'store/selectors/getParam'
 import getPost from 'store/selectors/getPost'
