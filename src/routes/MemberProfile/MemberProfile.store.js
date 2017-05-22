@@ -21,6 +21,7 @@ const fetchPersonQuery =
     url
     tagline
     location
+    messageThreadId
     memberships {
       id
       role
