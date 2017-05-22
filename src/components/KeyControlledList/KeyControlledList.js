@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { indexOf, isEmpty, omit } from 'lodash/fp'
+import cx from 'classnames'
 import { getKeyCode, keyMap } from 'util/textInput'
 
 const { array, func, object, bool, number, string } = PropTypes
@@ -13,12 +14,18 @@ export default class KeyControlledList extends React.Component {
     selectedIndex: number,
     tabChooses: bool,
     spaceChooses: bool,
-    className: string
+    theme: object
   }
 
   static defaultProps = {
     selectedIndex: 0,
-    tabChooses: false
+    tabChooses: false,
+    theme: {
+      items: null,
+      item: null,
+      'item-active': null
+    }
+
   }
 
   constructor (props) {
@@ -97,18 +104,20 @@ export default class KeyControlledList extends React.Component {
   // provide an API for configuring them
   render () {
     const { selectedIndex } = this.state
-    const { children, ...props } = this.props
+    const { theme, children, ...props } = this.props
 
     this.childrenWithRefs = React.Children.map(children,
       (element, i) => {
-        const className = selectedIndex === i
-          ? element.props.className + ' active'
-          : element.props.className
+        const active = selectedIndex === i
+        const className = cx(
+          theme.item,
+          {[theme['item-active']]: active}
+        )
         return element && element.props
           ? React.cloneElement(element, {ref: i, className})
           : element
       })
-    return <ul {...omit(propsToOmit, props)}>
+    return <ul {...omit(propsToOmit, props)} className={theme.items}>
       {this.childrenWithRefs}
     </ul>
   }
@@ -126,8 +135,9 @@ export class KeyControlledItemList extends React.Component {
 
   static defaultProps = {
     theme: {
-      suggestionsList: null,
-      suggestion: null
+      items: null,
+      item: null,
+      'item-active': null
     }
   }
 
@@ -149,15 +159,15 @@ export class KeyControlledItemList extends React.Component {
   // FIXME use more standard props e.g. {label, value} instead of {id, name}, or
   // provide an API for configuring them
   render () {
-    const { items, selected, className, theme } = this.props
+    const { items, selected, theme } = this.props
     const selectedIndex = indexOf(selected, items)
     const listItems = items.map((c, i) =>
-      <li className={theme.suggestion} key={c.id || 'blank'}>
+      <li className={theme.item} key={c.id || 'blank'}>
         <a onClick={event => this.change(c, event)}>{c.name}</a>
       </li>
     )
     return <KeyControlledList
-      className={theme.suggestionsList || className}
+      theme={theme}
       children={listItems}
       ref='kcl'
       tabChooses

@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`does something 1`] = `
+<HyloModal
+  afterOpenModal={[Function]}
+  shouldCloseOnOverlayClick={false}
+>
+  <Connect(PostEditor)
+    onClose={[Function]}
+  />
+</HyloModal>
+`;
