@@ -29,9 +29,9 @@ export const mapDispatchToProps = (dispatch, props) => {
   const postId = getParam('postId', {}, props)
 
   return {
-    fetchPost: () => dispatch(fetchPost(getParam('postId', {}, props))),
+    fetchPost: () => dispatch(fetchPost(postId)),
     onClose: () => dispatch(push(closeLocation)),
-    editPost: () => dispatch(push(postUrl(postId) + '/edit'))
+    editPost: () => dispatch(push(`${postId}/edit`))
   }
 }
 
