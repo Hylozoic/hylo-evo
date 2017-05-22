@@ -1,8 +1,6 @@
 import AccountSettings, { Control, SocialControl } from './AccountSettings'
 import { shallow } from 'enzyme'
 import React from 'react'
-import Promise from 'bluebird'
-
 
 describe('AccountSettings', () => {
   it('renders correctly', () => {
@@ -25,12 +23,6 @@ describe('Control', () => {
 })
 
 describe('SocialControl', () => {
-
-  global.Promise = Promise
-
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
-
-
   it('renders correctly without a value', () => {
     const wrapper = shallow(<SocialControl label='A Social Control' />)
     expect(wrapper.text()).toEqual('A Social ControlLink')
@@ -41,24 +33,107 @@ describe('SocialControl', () => {
     expect(wrapper.text()).toEqual('A Social ControlUnlink')
   })
 
-  it('calls onChange with true when link is clicked and onLink gives no error', done => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
+  it('calls linkClicked when link is clicked', () => {
+    const wrapper = shallow(<SocialControl label='A Social Control' />)
+    wrapper.instance().linkClicked = jest.fn()
+    wrapper.find('[data-styleName="link-button"]').simulate('click')
+    expect(wrapper.instance().linkClicked).toHaveBeenCalled()
+  })
+
+  it('calls unlinkClicked when unlink is clicked', () => {
+    const wrapper = shallow(<SocialControl label='A Social Control' value='someurl.com' />)
+    wrapper.instance().unlinkClicked = jest.fn()
+    wrapper.find('[data-styleName="link-button"]').simulate('click')
+    expect(wrapper.instance().unlinkClicked).toHaveBeenCalled()
+  })
+
+  describe('linkClicked', () => {
+    it('calls the right things when provider is twitter', () => {
+      const provider = 'twitter'
+      const onLink = () => 'thetwittername'
+      const updateUserSettings = jest.fn()
+      const onChange = jest.fn()
+      const wrapper = shallow(<SocialControl
+        label='A Social Control'
+        provider={provider}
+        onLink={onLink}
+        updateUserSettings={updateUserSettings}
+        onChange={onChange} />)
+
+      wrapper.instance().linkClicked()
+      expect(updateUserSettings).toHaveBeenCalledWith({twitterName: 'thetwittername'})
+      expect(onChange).toHaveBeenCalledWith(true)
+    })
+
+    it('calls exits if onLink returns null when provider is twitter', () => {
+      const provider = 'twitter'
+      const onLink = () => null
+      const updateUserSettings = jest.fn()
+      const onChange = jest.fn()
+      const wrapper = shallow(<SocialControl
+        label='A Social Control'
+        provider={provider}
+        onLink={onLink}
+        updateUserSettings={updateUserSettings}
+        onChange={onChange} />)
+
+      wrapper.instance().linkClicked()
+      expect(updateUserSettings).not.toHaveBeenCalledWith()
+      expect(onChange).toHaveBeenCalledWith(false)
+    })
+
+    it('calls the right things when provider is not twitter', done => {
+      const provider = 'facebook'
+      const onLink = () => Promise.resolve({error: false})
+      const updateUserSettings = jest.fn()
+      const onChange = jest.fn()
+      const wrapper = shallow(<SocialControl
+        label='A Social Control'
+        provider={provider}
+        onLink={onLink}
+        updateUserSettings={updateUserSettings}
+        onChange={onChange} />)
+
+      wrapper.instance().linkClicked()
+      expect(updateUserSettings).not.toHaveBeenCalledWith()
+      setTimeout(() => {
+        expect(onChange).toHaveBeenCalledWith(true)
+        done()
+      }, 10)
+    })
+
+    it('calls onChange with false on error when provider is not twitter', done => {
+      const provider = 'facebook'
+      const onLink = () => Promise.resolve({error: true})
+      const updateUserSettings = jest.fn()
+      const onChange = jest.fn()
+      const wrapper = shallow(<SocialControl
+        label='A Social Control'
+        provider={provider}
+        onLink={onLink}
+        updateUserSettings={updateUserSettings}
+        onChange={onChange} />)
+
+      wrapper.instance().linkClicked()
+      expect(updateUserSettings).not.toHaveBeenCalledWith()
+      setTimeout(() => {
+        expect(onChange).toHaveBeenCalledWith(false)
+        done()
+      }, 10)
+    })
+  })
+
+  describe('unlinkClicked', () => {
+    const provider = 'linkedin'
+    const unlinkAccount = jest.fn()
     const onChange = jest.fn()
-    const onLink = jest.fn().mockImplementation(() => Promise.resolve({}))
     const wrapper = shallow(<SocialControl
-      label='A Social Control' onChange={onChange} onLink={onLink} />)
-    console.log(wrapper.debug())
-    console.log('test 1')
-    wrapper.find('span').simulate('click')
-    console.log('test 2')
-    expect(onLink).toHaveBeenCalled()
-    console.log('test 3')
-    setTimeout(() => {
-      expect(onChange).toHaveBeenCalledWith('banana')
-      console.log('test 5')
-      done()
-      console.log('test 6')
-    }, 50)
-    console.log('test 4')
-  }, 10000)
+      label='A Social Control'
+      provider={provider}
+      unlinkAccount={unlinkAccount}
+      onChange={onChange} />)
+    wrapper.instance().unlinkClicked()
+    expect(unlinkAccount).toHaveBeenCalledWith(provider)
+    expect(onChange).toHaveBeenCalledWith(false)
+  })
 })

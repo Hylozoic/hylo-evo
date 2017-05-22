@@ -142,40 +142,39 @@ export function Control ({ label, value = '', onChange, type }) {
   </div>
 }
 
-export class SocialControl extends Component {
-  render () {
-    const { provider, label, onLink, unlinkAccount, updateUserSettings, onChange, value = '' } = this.props
-    const linked = !!value
+export const socialLinkClicked = provider => {}
 
-    const unlinkClicked = () => {
-      unlinkAccount(provider)
-      onChange(false)
-    }
-    var linkClicked
+export class SocialControl extends Component {
+  linkClicked () {
+    const { provider, onLink, updateUserSettings, onChange } = this.props
+
     if (provider === 'twitter') {
-      linkClicked = () => {
-        const twitterName = onLink()
-        if (twitterName === null) return
-        updateUserSettings({twitterName})
-        onChange(true)
-      }
+      const twitterName = onLink()
+      if (twitterName === null) return onChange(false)
+      updateUserSettings({twitterName})
+      return onChange(true)
     } else {
-      linkClicked = () =>
-        onLink()
-        .then(res => {
-          console.log('code 1', res)
-          return res
-        })
-        .then(({ error }) => {
-          console.log('code 2')
-          if (error) return onChange(false)
-          return onChange(true)
-        })
+      return onLink()
+      .then(({ error }) => {
+        if (error) return onChange(false)
+        return onChange(true)
+      })
     }
+  }
+
+  unlinkClicked () {
+    const { provider, unlinkAccount, onChange } = this.props
+    unlinkAccount(provider)
+    return onChange(false)
+  }
+
+  render () {
+    const { label, value = '' } = this.props
+    const linked = !!value
 
     const linkButton = <span
       styleName='link-button'
-      onClick={linked ? unlinkClicked : linkClicked}>
+      onClick={linked ? () => this.unlinkClicked() : () => this.linkClicked()}>
       {linked ? 'Unlink' : 'Link'}
     </span>
     return <div styleName='control'>
