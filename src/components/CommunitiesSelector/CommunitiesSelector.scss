@@ -104,31 +104,27 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-.suggestions ul li a {
+.suggestion {
+  /* !empty */
+}
+
+.suggestion a {
   color: $color-caribbean-green;
   border-bottom: 1px solid #ddd;
   padding: 6px 8px;
   display: block;
 }
 
-.suggestions ul li:hover {
+.suggestion:hover {
   cursor: pointer;
   background: #eee;
 }
 
-.suggestions ul li.is-active {
+.suggestion-active {
   background: #b7cfe0;
 }
 
-.suggestions ul li.is-disabled {
+.suggestion .disabled {
   opacity: 0.5;
   cursor: auto;
-}
-
-.suggestion {
-  /* !empty */
-}
-
-.suggestionDisabled {
-  /* !empty */
 }
