@@ -1,4 +1,9 @@
-import { FETCH_USER_SETTINGS, UPDATE_USER_SETTINGS, LEAVE_COMMUNITY } from 'store/constants'
+import {
+  FETCH_USER_SETTINGS,
+  UPDATE_USER_SETTINGS,
+  LEAVE_COMMUNITY,
+  UNLINK_ACCOUNT
+} from 'store/constants'
 
 export function fetchUserSettings () {
   return {
@@ -64,6 +69,20 @@ export function leaveCommunity (id) {
     meta: {
       id,
       optimistic: true
+    }
+  }
+}
+
+export function unlinkAccount (provider) {
+  return {
+    type: UNLINK_ACCOUNT,
+    graphql: {
+      query: `mutation ($provider: String) {
+        unlinkAccount(provider: $provider) {
+          success
+        }
+      }`,
+      variables: {provider}
     }
   }
 }
