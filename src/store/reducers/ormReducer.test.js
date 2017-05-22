@@ -1,5 +1,6 @@
 import orm from 'store/models' // this initializes redux-orm
 import ormReducer from './ormReducer'
+import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
 import {
   EXTRACT_MODEL,
   VOTE_ON_POST_PENDING,
@@ -122,6 +123,39 @@ describe('on MARK_ALL_ACTIVITIES_READ_PENDING', () => {
       type: MARK_ALL_ACTIVITIES_READ_PENDING
     }
 
+    const newState = ormReducer(state, action)
+    expect(deep(state, newState)).toMatchSnapshot()
+  })
+})
+
+describe('on TOGGLE_TOPIC_SUBSCRIBE', () => {
+  it('will remove an existing topic subscription and decrement the followersTotal', () => {
+    const session = orm.session(orm.getEmptyState())
+    session.CommunityTopic.create({
+      id: '1',
+      community: '1',
+      topic: '1',
+      followersTotal: 10
+    })
+    session.TopicSubscription.create({
+      id: '3'
+    })
+    const state = session.state
+    const action = toggleTopicSubscribe('1', '1', {id: '3'})
+    const newState = ormReducer(state, action)
+    expect(deep(state, newState)).toMatchSnapshot()
+  })
+
+  it('will increment the communityTopic followersTotal appropriately', () => {
+    const session = orm.session(orm.getEmptyState())
+    session.CommunityTopic.create({
+      id: '1',
+      community: '3',
+      topic: '2',
+      followersTotal: 10
+    })
+    const state = session.state
+    const action = toggleTopicSubscribe('2', '3')
     const newState = ormReducer(state, action)
     expect(deep(state, newState)).toMatchSnapshot()
   })
