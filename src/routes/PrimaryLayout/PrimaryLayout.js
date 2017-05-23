@@ -63,20 +63,10 @@ export default class PrimaryLayout extends Component {
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToCommunity currentUser={currentUser} />
           <Switch>
-            <Route path='/all/p/new' component={Feed} />
-            <Route path={`/all/p/${POST_ID_PARAM_MATCHER}`} component={Feed} />
-            <Route path='/all/:topicName' component={Feed} />
             <Route path='/all' component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
-            <Route path='/c/:slug/m/:id/p/new' component={MemberProfile} />
             <Route path='/c/:slug/m/:id' component={MemberProfile} />
-            <Route path='/c/:slug/p/new' component={Feed} />
-            <Route path={`/c/:slug/p/${POST_ID_PARAM_MATCHER}`} component={Feed} />
             <Route path='/c/:slug/topics' component={AllTopics} />
-            <Route path='/c/:slug/:topicName/p/new' component={Feed} />
-            <Route path={`/c/:slug/:topicName/p/${POST_ID_PARAM_MATCHER}`} component={Feed} />
-            <Route path='/c/:slug/:topicName' component={Feed} />
-            <Route path='/c/:slug' component={Feed} />
             <Route path='/c' component={Feed} />
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
@@ -98,7 +88,7 @@ export default class PrimaryLayout extends Component {
             Best guess is to replace these routes with a render function
             defined above, and store the previous detail component in state
           */}
-          {detailRoutes.map((props) => <Route key={props.path} {...props} />)}
+          {detailRoutes.map((props) => <Route key={props.path} exact={true} {...props} />)}
         </div>
       </div>
       <Route path='/t' component={Messages} />
@@ -110,14 +100,14 @@ export default class PrimaryLayout extends Component {
 
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
-  {path: `/all/p/${POST_ID_PARAM_MATCHER}`, component: PostDetail},
-  {path: `/all/p/${POST_ID_PARAM_MATCHER}/edit`, component: PostEditorModal},
-  {path: `/c/:slug/p/${POST_ID_PARAM_MATCHER}`, component: PostDetail},
-  {path: `/c/:slug/p/${POST_ID_PARAM_MATCHER}/edit`, component: PostEditorModal},
-  {path: `/c/:slug/m/:id/p/${POST_ID_PARAM_MATCHER}`, component: PostDetail},
-  {path: `/c/:slug/m/:id/p/${POST_ID_PARAM_MATCHER}/edit`, component: PostEditorModal},
-  {path: `/c/:slug/:topicName/p/${POST_ID_PARAM_MATCHER}`, component: PostDetail},
-  {path: `/c/:slug/:topicName/p/${POST_ID_PARAM_MATCHER}/edit`, component: PostEditorModal}
+  {path: `/all/p/:postId`, component: PostDetail},
+  {path: `/all/p/:postId/edit`, component: PostEditorModal},
+  {path: `/c/:slug/p/:postId`, component: PostDetail},
+  {path: `/c/:slug/p/:postId/edit`, component: PostEditorModal},
+  {path: `/c/:slug/m/:id/p/:postId`, component: PostDetail},
+  {path: `/c/:slug/m/:id/p/:postId/edit`, component: PostEditorModal},
+  {path: `/c/:slug/:topicName/p/:postId`, component: PostDetail},
+  {path: `/c/:slug/:topicName/p/:postId/edit`, component: PostEditorModal}
 ]
 
 function RedirectToCommunity ({ currentUser }) {

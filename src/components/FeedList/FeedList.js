@@ -76,7 +76,8 @@ export default class FeedList extends React.Component {
       changeTab,
       changeSort,
       posts,
-      showCommunities
+      showCommunities,
+      editPost
     } = this.props
     const { atTabBar } = this.state
 
@@ -106,7 +107,8 @@ export default class FeedList extends React.Component {
             styleName={cx('FeedListItem', {expanded})}
             expanded={expanded}
             showDetails={() => showPostDetails(post.id)}
-            key={post.id} />
+            key={post.id}
+            editPost={() => editPost(post.id)} />
         })}
       </div>
       <ScrollListener onBottom={() => this.fetchMorePosts()}
