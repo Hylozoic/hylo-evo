@@ -35,7 +35,7 @@ describe('Feed', () => {
       topicName: 'petitions'
     }
     const wrapper = shallow(<Feed {...props} />)
-    expect(wrapper.find('FeedBanner')).toHaveLength(0)
+    expect(wrapper.find('Connect(FeedBanner)')).toHaveLength(0)
     expect(wrapper.find('Connect(TopicFeedHeader)')).toHaveLength(1)
   })
 })
