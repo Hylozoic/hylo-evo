@@ -1,18 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mapDispatchToProps sets expected values 1`] = `
-Object {
-  "payload": Object {
-    "args": Array [
-      "/c/foo/p/5?s=votes&t=offer",
-    ],
-    "method": "push",
-  },
-  "type": "@@router/CALL_HISTORY_METHOD",
-}
-`;
-
-exports[`mapDispatchToProps sets expected values 2`] = `
+exports[`mapDispatchToProps correctly sets up changeTab and changeSort 1`] = `
 Object {
   "payload": Object {
     "args": Array [
@@ -24,7 +12,7 @@ Object {
 }
 `;
 
-exports[`mapDispatchToProps sets expected values 3`] = `
+exports[`mapDispatchToProps correctly sets up changeTab and changeSort 2`] = `
 Object {
   "payload": Object {
     "args": Array [
@@ -33,5 +21,69 @@ Object {
     "method": "push",
   },
   "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`mapDispatchToProps correctly sets up showPostDetails 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/c/foo/p/5?s=votes&t=offer",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`mapDispatchToProps fetchTopic will call fetchCommunityTopic if communitySlug and topicName are in the url 1`] = `
+Object {
+  "graphql": Object {
+    "query": "query ($communitySlug: String, $topicName: String) {
+  communityTopic(communitySlug: $communitySlug, topicName: $topicName) {
+    id
+    postsTotal
+    followersTotal
+    topic {
+      id
+      name
+    }
+    community {
+      id
+    }
+  }
+}",
+    "variables": Object {
+      "communitySlug": "foo",
+      "topicName": "petitions",
+    },
+  },
+  "meta": Object {
+    "extractModel": "CommunityTopic",
+  },
+  "type": "FETCH_COMMUNITY_TOPIC",
+}
+`;
+
+exports[`mapDispatchToProps fetchTopic will call fetchTopic if only topicName is in the url 1`] = `
+Object {
+  "graphql": Object {
+    "query": "query ($name: String, $id: ID) {
+  topic(name: $name, id: $id) {
+    id
+    name
+    postsTotal
+    followersTotal
+  }
+}",
+    "variables": Object {
+      "id": undefined,
+      "name": "petitions",
+    },
+  },
+  "meta": Object {
+    "extractModel": "Topic",
+  },
+  "type": "FETCH_TOPIC",
 }
 `;
