@@ -1,5 +1,3 @@
-import { filter } from 'lodash/fp'
-
 export function bgImageStyle (url) {
   if (!url) return {}
   const escaped = url.replace(/([\(\)])/g, (match, $1) => '\\' + $1) // eslint-disable-line
@@ -65,18 +63,6 @@ export function allCommunitiesUrl () {
 export function getSlugInPath (pathname) {
   const match = pathname.match(/\/c\/([^/]+)/)
   return match ? match[1] : null
-}
-
-export const findChildLink = element => {
-  if (element.nodeName === 'A') return element
-  if (element.hasChildNodes()) {
-    const mappedNodes = []
-    for (var i = 0; i < element.childNodes.length; i++) {
-      mappedNodes.push(findChildLink(element.childNodes[i]))
-    }
-    return filter(id => id, mappedNodes)[0]
-  }
-  return false
 }
 
 export const dispatchEvent = (el, etype) => {

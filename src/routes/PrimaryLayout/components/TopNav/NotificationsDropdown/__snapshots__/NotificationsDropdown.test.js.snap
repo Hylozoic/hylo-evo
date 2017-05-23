@@ -425,7 +425,7 @@ exports[`NotificationBody renders correctly with a comment mention notification 
   >
     Marie
   </span>
-   Wrote: "
+   wrote: "
   I live right next to there and can come help out. I've never done …
   "
 </div>
@@ -440,7 +440,7 @@ exports[`NotificationBody renders correctly with a comment notification 1`] = `
   >
     Marie
   </span>
-   Wrote: "
+   wrote: "
   I live right next to there and can come help out. I've never done …
   "
 </div>
@@ -475,7 +475,7 @@ exports[`NotificationBody renders correctly with a mention notification 1`] = `
   >
     Marie
   </span>
-   Wrote: "
+   wrote: "
   Heads up
   "
 </div>
@@ -490,7 +490,7 @@ exports[`NotificationBody renders correctly with a tag notification 1`] = `
   >
     Arthur
   </span>
-   Wrote: "
+   wrote: "
   I have so many things I need!
   "
 </div>
