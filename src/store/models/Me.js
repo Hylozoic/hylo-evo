@@ -36,3 +36,9 @@ export const bannerUploadSettings = person => ({
 })
 
 export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_user_banner.jpg'
+
+export function canModerate (currentUser, communityId) {
+  console.log('canModerate, currentUser', currentUser)
+  console.log('communityId', communityId)
+  return true
+}

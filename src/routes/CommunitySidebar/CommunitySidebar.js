@@ -9,6 +9,7 @@ import cx from 'classnames'
 import { personUrl } from 'util/index'
 import { markdown } from 'hylo-utils/text'
 import { isEmpty } from 'lodash/fp'
+import { canModerate } from 'store/models/Me'
 
 export default class CommunitySidebar extends Component {
   static propTypes = {
@@ -30,11 +31,12 @@ export default class CommunitySidebar extends Component {
   }
 
   render () {
-    const { community, members, leaders } = this.props
+    const { community, members, leaders, currentUser } = this.props
     if (!community || isEmpty(members)) return <Loading />
     const { name, description, slug, memberCount } = community
     return <div styleName='community-sidebar'>
       <AboutSection name={name} description={description} />
+      <SettingsLink currentUser={currentUser} community={community} />
       <MemberSection members={members} memberCount={memberCount} slug={slug} />
       <CommunityLeaderSection leaders={leaders} slug={slug} />
     </div>
@@ -77,6 +79,13 @@ export class AboutSection extends Component {
       </span>}
     </div>
   }
+}
+
+export function SettingsLink ({ currentUser, community }) {
+  if (!canModerate(currentUser, community)) return null
+  return <div styleName='settings-link'>
+    SETTINGS LINKS
+  </div>
 }
 
 export function MemberSection ({ members, memberCount, slug }) {
