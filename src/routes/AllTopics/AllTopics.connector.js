@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-// import { getMe } from 'store/selectors/getMe'
+import getParam from 'store/selectors/getParam'
 
 const sampleTopics = [
   {
@@ -36,12 +36,63 @@ const sampleTopics = [
     followersTotal: 671,
     postsTotal: 2171,
     subscribed: true
+  },
+  {
+    id: '6',
+    name: 'organics',
+    followersTotal: 671,
+    postsTotal: 2171,
+    subscribed: true
+  },
+  {
+    id: '7',
+    name: 'organics',
+    followersTotal: 671,
+    postsTotal: 2171,
+    subscribed: true
+  },
+  {
+    id: '8',
+    name: 'organics',
+    followersTotal: 671,
+    postsTotal: 2171,
+    subscribed: true
+  },
+  {
+    id: '9',
+    name: 'organics',
+    followersTotal: 671,
+    postsTotal: 2171,
+    subscribed: true
+  },
+  {
+    id: '10',
+    name: 'organics',
+    followersTotal: 671,
+    postsTotal: 2171,
+    subscribed: true
+  },
+  {
+    id: '11',
+    name: 'organics',
+    followersTotal: 671,
+    postsTotal: 2171,
+    subscribed: true
+  },
+  {
+    id: '12',
+    name: 'organics',
+    followersTotal: 671,
+    postsTotal: 2171,
+    subscribed: true
   }
 ]
 
 export function mapStateToProps (state, props) {
   return {
-    topics: sampleTopics
+    topics: sampleTopics,
+    slug: getParam('slug', state, props),
+    totalTopics: 25
   }
 }
 

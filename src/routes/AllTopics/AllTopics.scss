@@ -1,5 +1,9 @@
 // AllTopics
-.all-topics { /* !empty */ }
+.all-topics {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
 .title {
   text-align: center;
@@ -10,30 +14,44 @@
   text-align: center;
   composes: caption-lt-lg from 'css/typography.scss';
   margin-bottom: $space-16x;
+  margin-top: $space-1x;
 }
 
-
 // SearchBar
-.search-bar { /* !empty */ }
+.search-bar {
+  margin-bottom: 32px;
+  display: flex;
+}
 
-.search-input { /* !empty */ }
+.search-input {
+  border: $light-border;
+  border-radius: 2px;
+  padding: 8px 15px;
+  flex: 1;
+  margin-right: $space-4x;
+}
 
 .search-order { /* !empty */ }
 
 .topic-list {
-  /* !empty */
+  flex: 1;
+  overflow-y: auto;
 }
 
 // TopicListItem
 .topic {
   display: flex;
   justify-content: space-between;
-  border-bottom: $light-border;
+  border-top: $light-border;
   padding: 11px 0;
-  align-content: center;
+  align-items: center;
 }
 
-.topic-details { /* !empty */ }
+.topic-details {
+  &:hover, &:active, &:visited, &:link {
+    text-decoration: none;
+  }
+}
 
 .topic-name {
   composes: hdr-headline from 'css/typography.scss';
@@ -41,6 +59,7 @@
 
 .topic-stats {
   composes: caption-drk-lg from 'css/typography.scss';
+  margin-top: $space-1x;
 }
 
 .topic-subscribe {
