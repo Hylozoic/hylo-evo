@@ -2,12 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
-import { communityUrl, allCommunitiesUrl } from 'util/index'
+import { pluralize, communityUrl, allCommunitiesUrl } from 'util/index'
 import './TopicFeedHeader.scss'
 
 const { string, number, object, shape, func } = React.PropTypes
-
-const pluralize = (count, word) => `${count} ${word}${count === 1 ? '' : 's'}`
 
 export default function TopicFeedHeader ({ subscription, topicName, postsTotal, followersTotal, community, toggleSubscribe }) {
   const url = community ? communityUrl(community.slug) : allCommunitiesUrl()
