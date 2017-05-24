@@ -39,8 +39,8 @@ export function TopicListItem ({ topic, toggleSubscribe }) {
       <div styleName='topic-name'>#{name}</div>
       <div styleName='topic-stats'>{pluralize(postsTotal, 'post')} • {pluralize(followersTotal, 'follower')}</div>
     </div>
-    <a onClick={toggleSubscribe} styleName='topic-subscribe'>
+    <span onClick={toggleSubscribe} styleName='topic-subscribe'>
       {subscribed ? 'Unsubscribe' : 'Subscribe'}
-    </a>
+    </span>
   </div>
 }

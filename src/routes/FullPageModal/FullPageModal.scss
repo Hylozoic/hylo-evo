@@ -54,8 +54,14 @@ $size-sidebar-width: 10rem;
 
 .center {
   width: $center-column-width;
-  padding: 72px 94px;
   overflow-y: auto;
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+.with-sidebar {
+  padding-left: 94px;
+  padding-right: 94px;
 }
 
 .right-sidebar {
