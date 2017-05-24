@@ -13,6 +13,7 @@ export default function fetchCurrentUser () {
             id
             lastViewedAt
             newPostCount
+            hasModeratorRole
             community {
               id
               name

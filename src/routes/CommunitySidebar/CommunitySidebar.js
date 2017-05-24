@@ -6,7 +6,7 @@ import RoundImageRow from 'components/RoundImageRow'
 import './CommunitySidebar.scss'
 const { object, string, array, func } = PropTypes
 import cx from 'classnames'
-import { personUrl } from 'util/index'
+import { personUrl, communitySettingsUrl } from 'util/index'
 import { markdown } from 'hylo-utils/text'
 import { isEmpty } from 'lodash/fp'
 import { canModerate } from 'store/models/Me'
@@ -83,9 +83,9 @@ export class AboutSection extends Component {
 
 export function SettingsLink ({ currentUser, community }) {
   if (!canModerate(currentUser, community)) return null
-  return <div styleName='settings-link'>
-    SETTINGS LINKS
-  </div>
+  return <Link styleName='settings-link' to={communitySettingsUrl(community.slug)}>
+    Settings
+  </Link>
 }
 
 export function MemberSection ({ members, memberCount, slug }) {

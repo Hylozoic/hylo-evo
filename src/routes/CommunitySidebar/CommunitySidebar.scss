@@ -44,7 +44,12 @@ $about-height: 116px;
 // SettingsLink
 
 .settings-link {
-  background-color: green;
+  display: block;
+  margin-bottom: 20px;
+  composes: text-button from 'css/typography.scss';
+  &:hover{
+    text-decoration: none;
+  }
 }
 
 // MemberSection
