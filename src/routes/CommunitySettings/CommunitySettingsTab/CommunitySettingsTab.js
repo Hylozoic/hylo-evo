@@ -31,20 +31,20 @@ export default class CommunitySettingsTab extends Component {
 
   setEditState () {
     const { community } = this.props
+
     if (!community) return
 
     const {
-      name, avatarUrl, bannerUrl, tagline, bio, location
+      name, description, location, avatarUrl, bannerUrl
     } = community
 
     this.setState({
       edits: {
         name: name || '',
+        description: description || '',
+        location: location || '',
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
-        bannerUrl: bannerUrl || DEFAULT_BANNER,
-        tagline: tagline || '',
-        bio: bio || '',
-        location: location || ''
+        bannerUrl: bannerUrl || DEFAULT_BANNER
       }
     })
   }
@@ -55,7 +55,7 @@ export default class CommunitySettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      name, avatarUrl, bannerUrl, tagline, bio, location
+      name, description, location, avatarUrl, bannerUrl
     } = edits
 
     const updateSetting = (key, setChanged = true) => event => {
@@ -91,8 +91,7 @@ export default class CommunitySettingsTab extends Component {
           uploadSettings={avatarUploadSettings(community)}
           styleName='change-avatar-button' />
       </div>
-      <Control label='Tagline' onChange={updateSetting('tagline')} value={tagline} />
-      <Control label='About Me' onChange={updateSetting('bio')} value={bio} type='textarea' />
+      <Control label='Description' onChange={updateSetting('description')} value={description} type='textarea' />
       <Control label='Location' onChange={updateSetting('location')} value={location} />
       <div styleName='button-row'>
         <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
