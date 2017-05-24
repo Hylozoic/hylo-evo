@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
-import { getMe } from 'store/selectors/getMe'
+import getMe from 'store/selectors/getMe'
 import { isEmpty } from 'lodash/fp'
 import orm from 'store/models'
 import { fetchComments, createComment, getHasMoreComments, getTotalComments } from './Comments.store'
