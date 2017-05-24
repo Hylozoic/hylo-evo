@@ -17,7 +17,7 @@ export default class AllTopics extends Component {
         <div styleName='title'>Topics</div>
         <div styleName='subtitle'>7 Total Topics</div>
         <SearchBar />
-        {topics.map(topic => <TopicListItem topic={topic} />)}
+        {topics.map(topic => <TopicListItem key={topic.id} topic={topic} />)}
       </div>} />
   }
 }

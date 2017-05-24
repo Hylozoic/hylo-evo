@@ -59,6 +59,10 @@ export function allCommunitiesUrl () {
   return '/all'
 }
 
+export function topicsUrl (slug) {
+  return communityUrl(slug) + '/topics'
+}
+
 // n.b.: use getParam instead of this where possible.
 
 export function getSlugInPath (pathname) {
