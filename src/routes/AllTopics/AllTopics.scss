@@ -1,9 +1,16 @@
 // AllTopics
 .all-topics { /* !empty */ }
 
-.title { /* !empty */ }
+.title {
+  text-align: center;
+  composes: hdr-display from 'css/typography.scss';
+}
 
-.subtitle { /* !empty */ }
+.subtitle {
+  text-align: center;
+  composes: caption-lt-lg from 'css/typography.scss';
+  margin-bottom: $space-16x;
+}
 
 
 // SearchBar
@@ -13,13 +20,30 @@
 
 .search-order { /* !empty */ }
 
+.topic-list {
+  /* !empty */
+}
+
 // TopicListItem
-.topic { /* !empty */ }
+.topic {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: $light-border;
+  padding: 11px 0;
+  align-content: center;
+}
 
 .topic-details { /* !empty */ }
 
-.topic-name { /* !empty */ }
+.topic-name {
+  composes: hdr-headline from 'css/typography.scss';
+}
 
-.topic-stats { /* !empty */ }
+.topic-stats {
+  composes: caption-drk-lg from 'css/typography.scss';
+}
 
-.topic-subscribe { /* !empty */ }
+.topic-subscribe {
+  composes: text-button from 'css/typography.scss';
+  font-size: 16px;
+}
