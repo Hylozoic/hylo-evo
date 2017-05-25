@@ -113,12 +113,11 @@ export default function ormReducer (state = {}, action) {
       break
 
     case TOGGLE_TOPIC_SUBSCRIBE:
-      const subscription = payload.data.subscribe
-      if (!subscription) {
+      if (meta.existingSubscriptionId) {
         TopicSubscription.withId(meta.existingSubscriptionId).delete()
       }
       const ct = CommunityTopic.get({topic: meta.topicId, community: meta.communityId})
-      ct.update({followersTotal: ct.followersTotal + (subscription ? 1 : -1)})
+      ct.update({followersTotal: ct.followersTotal + (meta.existingSubscriptionId ? -1 : 1)})
       break
 
     case VOTE_ON_POST_PENDING:

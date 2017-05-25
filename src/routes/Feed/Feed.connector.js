@@ -59,8 +59,11 @@ export const mapDispatchToProps = function (dispatch, props) {
     // or the center column will revert to its default sort & filter settings
     showPostDetails: id => dispatch(push(makeUrl(postUrl(id, slug, {topicName}), params))),
     fetchTopic: () => {
-      if (slug && topicName) dispatch(fetchCommunityTopic(topicName, slug))
-      else if (topicName) dispatch(fetchTopic(topicName))
+      if (slug && topicName) {
+        return dispatch(fetchCommunityTopic(topicName, slug))
+      } else if (topicName) {
+        return dispatch(fetchTopic(topicName))
+      }
     }
   }
 }
