@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import './Feed.scss'
 import FeedList from 'components/FeedList'
 import Loading from 'components/Loading'
@@ -9,7 +9,7 @@ import { get, pick } from 'lodash/fp'
 
 export default class Feed extends Component {
   static propTypes = {
-
+    newPost: PropTypes.func
   }
 
   componentDidMount () {
@@ -43,11 +43,19 @@ export default class Feed extends Component {
   }
 
   render () {
-    const { topic, communitySlug, community, currentUser, topicName, postsTotal, followersTotal } = this.props
+    const {
+      topic, communitySlug, community, currentUser,
+      topicName, postsTotal, followersTotal, newPost
+    } = this.props
+
     if (communitySlug && !community) return <Loading />
 
     return <div styleName='container'>
-      {!topicName && <FeedBanner community={community} currentUser={currentUser} all={!community} />}
+      {!topicName && <FeedBanner
+        community={community}
+        currentUser={currentUser}
+        newPost={newPost}
+        all={!community} />}
       {topicName && <TopicFeedHeader
         topicName={topicName}
         postsTotal={postsTotal}
