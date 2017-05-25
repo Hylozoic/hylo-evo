@@ -25,17 +25,21 @@ exports[`AllTopics matches the latest snapshot 1`] = `
       <div
         data-styleName="topic-list"
       >
-        <TopicListItem
-          slug="goteam"
-          topic={
+        <CommunityTopicListItem
+          item={
             Object {
               "followersTotal": 52,
               "id": "1",
-              "name": "petitions",
+              "isSubscribed": false,
               "postsTotal": 24,
-              "subscribed": false,
+              "topic": Object {
+                "id": "2",
+                "name": "petitions",
+              },
             }
           }
+          slug="goteam"
+          toggleSubscribe={[Function]}
         />
       </div>
     </div>
