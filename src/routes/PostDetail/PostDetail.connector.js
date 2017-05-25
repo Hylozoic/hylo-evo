@@ -25,9 +25,12 @@ export const mapDispatchToProps = (dispatch, props) => {
     pathname: removePostDetailFromPath(location.pathname)
   }
 
+  const postId = getParam('postId', {}, props)
+
   return {
-    fetchPost: () => dispatch(fetchPost(getParam('postId', {}, props))),
-    onClose: () => dispatch(push(closeLocation))
+    fetchPost: () => dispatch(fetchPost(postId)),
+    onClose: () => dispatch(push(closeLocation)),
+    editPost: () => dispatch(push(`${postId}/edit`))
   }
 }
 
