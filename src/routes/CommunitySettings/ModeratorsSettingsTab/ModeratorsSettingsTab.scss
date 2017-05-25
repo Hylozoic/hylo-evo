@@ -1,0 +1,54 @@
+// ModeratorControl
+.moderator-control {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  border-bottom: 1px solid $color-ghost;
+}
+
+.avatar {
+  margin-right: $space-4x;
+}
+
+.name {
+  composes: bdy-drk-sm from 'css/typography.scss';
+  font-size: 16px;
+  &:hover {
+    color: $color-rhino;
+    text-decoration: none;
+  }
+}
+
+.remove-button {
+  margin-left: auto;
+  composes: text-button from 'css/typography.scss'
+}
+
+// AddModerator
+.add-moderator {
+  margin-top: 15px;
+}
+
+.adding {
+  width: 100%;
+}
+
+.cancel-button {
+  composes: text-button from 'css/typography.scss';
+  color: $color-rhino-60;
+  &:hover {
+    color: $color-rhino-80;
+  }
+}
+
+.add-button {
+  composes: text-button from 'css/typography.scss';
+}
+
+.add-new {
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border: 1px dashed $color-ghost;
+  composes: text-button from 'css/typography.scss'
+}
