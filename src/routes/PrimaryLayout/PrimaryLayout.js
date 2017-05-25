@@ -74,10 +74,18 @@ export default class PrimaryLayout extends Component {
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
           </Switch>
+          <Route path='/all/p/new' exact component={PostEditorModal} />
+          <Route path='/all/p/:postId/edit' exact component={PostEditorModal} />
+          <Route path='/c/:slug/p/new' exact component={PostEditorModal} />
+          <Route path='/c/:slug/p/:postId/edit' exact component={PostEditorModal} />
+          <Route path='/c/:slug/:topicName/p/new' exact component={PostEditorModal} />
+          <Route path='/c/:slug/:topicName/p/:postId/edit' exact component={PostEditorModal} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/c/:slug' exact component={CommunitySidebar} />
+          <Route path='/c/:slug/p/new' exact component={CommunitySidebar} />
           <Route path='/c/:slug/:topicName' exact component={CommunitySidebar} />
+          <Route path='/c/:slug/:topicName/p/new' exact component={CommunitySidebar} />
           <Route path='/c/:slug/m/:id' component={MessageMember} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>
@@ -89,10 +97,6 @@ export default class PrimaryLayout extends Component {
           */}
           {detailRoutes.map(({ path, component }) =>
             <Route key={path} exact {...{path, component}} />)}
-          <Route path='/all/p/:postId/edit' exact component={PostEditorModal} />
-          <Route path='/c/:slug/p/:postId/edit' exact component={PostEditorModal} />
-          <Route path='/c/:slug/m/:id/p/:postId/edit' exact component={PostEditorModal} />
-          <Route path='/c/:slug/:topicName/p/:postId/edit' exact component={PostEditorModal} />
         </div>
       </div>
       <Route path='/t' component={Messages} />
@@ -104,10 +108,10 @@ export default class PrimaryLayout extends Component {
 
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
-  {path: '/all/p/:postId', component: PostDetail},
-  {path: '/c/:slug/p/:postId', component: PostDetail},
-  {path: '/c/:slug/m/:id/p/:postId', component: PostDetail},
-  {path: '/c/:slug/:topicName/p/:postId', component: PostDetail}
+  {path: '/all/p/:postId(!^(new)$)', component: PostDetail},
+  {path: '/c/:slug/p/:postId(!^(new)$)', component: PostDetail},
+  {path: '/c/:slug/m/:id/p/:postId(!^(new)$)', component: PostDetail},
+  {path: '/c/:slug/:topicName/p/:postId(!^(new)$)', component: PostDetail}
 ]
 
 function RedirectToCommunity ({ currentUser }) {
