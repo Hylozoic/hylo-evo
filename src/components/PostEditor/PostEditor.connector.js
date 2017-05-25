@@ -10,8 +10,8 @@ import {
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
-  const communityOptions = currentUser &&
-    currentUser.memberships.toModelArray().map(m => m.community)
+  const communityOptions = props.communityOptions || (currentUser &&
+    currentUser.memberships.toModelArray().map(m => m.community))
   const post = props.post || getPost(state, props)
   const editing = !!getParam('postId', state, props)
   const loading = editing && !post
