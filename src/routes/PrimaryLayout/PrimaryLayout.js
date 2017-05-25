@@ -43,8 +43,13 @@ export default class PrimaryLayout extends Component {
       currentUser,
       isDrawerOpen,
       location,
-      toggleDrawer
+      toggleDrawer,
+      isCommunityRoute
     } = this.props
+
+    if (isCommunityRoute && !community) {
+      return <Loading type='fullscreen' />
+    }
 
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
     const hasDetail = some(
