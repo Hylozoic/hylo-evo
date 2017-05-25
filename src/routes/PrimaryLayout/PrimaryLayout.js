@@ -24,6 +24,8 @@ import AllTopics from 'routes/AllTopics'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
+export const POST_ID_MATCH_REGEX = '\\d+'
+
 export default class PrimaryLayout extends Component {
   static propTypes = {
     community: PropTypes.object,
@@ -82,10 +84,10 @@ export default class PrimaryLayout extends Component {
           <Route path='/c/:slug/:topicName/p/:postId/edit' exact component={PostEditorModal} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
-          <Route path='/c/:slug' exact component={CommunitySidebar} />
           <Route path='/c/:slug/p/new' exact component={CommunitySidebar} />
-          <Route path='/c/:slug/:topicName' exact component={CommunitySidebar} />
+          <Route path='/c/:slug' exact component={CommunitySidebar} />
           <Route path='/c/:slug/:topicName/p/new' exact component={CommunitySidebar} />
+          <Route path='/c/:slug/:topicName' exact component={CommunitySidebar} />
           <Route path='/c/:slug/m/:id' component={MessageMember} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>
@@ -96,7 +98,7 @@ export default class PrimaryLayout extends Component {
             defined above, and store the previous detail component in state
           */}
           {detailRoutes.map(({ path, component }) =>
-            <Route key={path} exact {...{path, component}} />)}
+            <Route key={path} {...{path, component}} />)}
         </div>
       </div>
       <Route path='/t' component={Messages} />
@@ -108,10 +110,10 @@ export default class PrimaryLayout extends Component {
 
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
-  {path: '/all/p/:postId(!^(new)$)', component: PostDetail},
-  {path: '/c/:slug/p/:postId(!^(new)$)', component: PostDetail},
-  {path: '/c/:slug/m/:id/p/:postId(!^(new)$)', component: PostDetail},
-  {path: '/c/:slug/:topicName/p/:postId(!^(new)$)', component: PostDetail}
+  {path: `/all/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/c/:slug/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/c/:slug/m/:id/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/c/:slug/:topicName/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail}
 ]
 
 function RedirectToCommunity ({ currentUser }) {
