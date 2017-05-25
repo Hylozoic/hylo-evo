@@ -5,7 +5,7 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import getCommunityTopicForCurrentRoute from 'store/selectors/getCommunityTopicForCurrentRoute'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getParam from 'store/selectors/getParam'
-import { getMe } from 'store/selectors/getMe'
+import getMe from 'store/selectors/getMe'
 import changeQueryParam from 'store/actions/changeQueryParam'
 import getQueryParam from 'store/selectors/getQueryParam'
 import { push } from 'react-router-redux'

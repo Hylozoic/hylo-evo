@@ -3,7 +3,7 @@ import { fetchThreads } from './MessagesDropdown.store.js'
 import { push } from 'react-router-redux'
 import { threadUrl } from 'util/index'
 import { getThreads } from 'components/ThreadList/ThreadList.store'
-import { getMe } from 'store/selectors/getMe'
+import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
   return {

@@ -1,5 +1,5 @@
 import orm from '../models'
-import { getMe } from './getMe'
+import getMe from './getMe'
 import getCommunityTopicForCurrentRoute from './getCommunityTopicForCurrentRoute'
 import getTopicForCurrentRoute from './getTopicForCurrentRoute'
 import getTopicSubscription from './getTopicSubscription'
