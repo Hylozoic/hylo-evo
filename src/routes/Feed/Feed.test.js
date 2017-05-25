@@ -26,7 +26,7 @@ describe('Feed', () => {
   it('displays the regular FeedBanner if on the main feed', () => {
     const props = {}
     const wrapper = shallow(<Feed {...props} />)
-    expect(wrapper.find('Connect(FeedBanner)')).toHaveLength(1)
+    expect(wrapper.find('FeedBanner')).toHaveLength(1)
     expect(wrapper.find('Connect(TopicFeedHeader)')).toHaveLength(0)
   })
 
@@ -35,7 +35,7 @@ describe('Feed', () => {
       topicName: 'petitions'
     }
     const wrapper = shallow(<Feed {...props} />)
-    expect(wrapper.find('Connect(FeedBanner)')).toHaveLength(0)
+    expect(wrapper.find('FeedBanner')).toHaveLength(0)
     expect(wrapper.find('Connect(TopicFeedHeader)')).toHaveLength(1)
   })
 })
