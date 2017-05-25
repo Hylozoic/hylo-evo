@@ -3,7 +3,15 @@ import { Link } from 'react-router-dom'
 import './AllTopics.scss'
 const { boolean, arrayOf, func, number, shape, string } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
+import Dropdown from 'components/Dropdown'
+import Icon from 'components/Icon'
+import TextInput from 'components/TextInput'
 import { pluralize, tagUrl } from 'util/index'
+
+const sortOptions = [
+  {id: 'followers', label: 'Popular'},
+  {id: 'recent', label: 'Recent'}
+]
 
 export default class AllTopics extends Component {
   static propTypes = {
@@ -16,17 +24,44 @@ export default class AllTopics extends Component {
       toggleSubscribe: func
     })),
     totalTopics: number,
-    slug: string
+    slug: string,
+    selectedSort: string,
+    onChangeSort: func,
+    search: string,
+    onChangeSearch: func
+  }
+
+  static defaultProps = {
+    selectedSort: sortOptions[0].id,
+    onChangeSort: () => {}
+  }
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      search: ''
+    }
   }
 
   render () {
-    const { totalTopics, topics, slug } = this.props
+    const {
+      totalTopics,
+      topics,
+      slug,
+      selectedSort,
+      onChangeSort
+    } = this.props
+    const { search } = this.state
 
     return <FullPageModal
       content={<div styleName='all-topics'>
         <div styleName='title'>Topics</div>
         <div styleName='subtitle'>{totalTopics} Total Topics</div>
-        <SearchBar />
+        <SearchBar
+          search={search}
+          onChangeSearch={search => this.setState({search})}
+          selectedSort={selectedSort}
+          onChangeSort={onChangeSort} />
         <div styleName='topic-list'>
           {topics.map(topic => <TopicListItem key={topic.id} topic={topic} slug={slug} />)}
         </div>
@@ -34,13 +69,22 @@ export default class AllTopics extends Component {
   }
 }
 
-export function SearchBar () {
+export function SearchBar ({search, onChangeSearch, selectedSort, onChangeSort}) {
   return <div styleName='search-bar'>
-    <input styleName='search-input' type='text' placeholder='Search here' />
-    <select styleName='search-order'>
-      <option>Popular</option>
-      <option>Recent</option>
-    </select>
+    <TextInput styleName='search-input'
+      value={search}
+      placeholder='Search topics'
+      onChange={event => onChangeSearch(event.target.value)} />
+    <Dropdown styleName='search-order'
+      toggleChildren={<span styleName='search-sorter-label'>
+        {sortOptions.find(o => o.id === selectedSort).label}
+        <Icon name='ArrowDown' />
+      </span>}
+      items={sortOptions.map(({ id, label }) => ({
+        label,
+        onClick: () => onChangeSort(id)
+      }))}
+      alignRight />
   </div>
 }
 
