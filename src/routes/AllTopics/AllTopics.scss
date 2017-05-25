@@ -21,17 +21,25 @@
 .search-bar {
   margin-bottom: 32px;
   display: flex;
+  align-items: center;
 }
 
 .search-input {
-  border: $light-border;
-  border-radius: 2px;
-  padding: 8px 15px;
   flex: 1;
   margin-right: $space-4x;
 }
 
 .search-order { /* !empty */ }
+
+.search-sorter-label {
+  font-size: 15px;
+  line-height: 28px;
+  composes: caption-lt-lg from 'css/typography.scss';
+  > span {
+    vertical-align: middle;
+    margin-left: $space-1x;
+  }
+}
 
 .topic-list {
   flex: 1;
