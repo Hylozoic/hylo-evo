@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
 import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { get, includes, isEmpty } from 'lodash/fp'
@@ -22,8 +21,7 @@ export const mapDispatchToProps = function (dispatch, props) {
   return {
     fetchPosts: function (offset) {
       return dispatch(fetchPosts({subject, id, sortBy, offset, search, filter, topic}))
-    },
-    editPost: (postId) => dispatch(push(`p/${postId}/edit`))
+    }
   }
 }
 
