@@ -16,15 +16,13 @@ import Events from 'routes/Events'
 import EventDetail from 'routes/Events/EventDetail'
 import MemberProfile from 'routes/MemberProfile'
 import PostDetail from 'routes/PostDetail'
+import PostEditorModal from 'components/PostEditorModal'
 import Members from 'routes/Members'
 import UserSettings from 'routes/UserSettings'
 import MessageMember from 'components/MessageMember'
-import PostEditorModal from 'components/PostEditorModal'
 import AllTopics from 'routes/AllTopics'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
-
-export const POST_ID_PARAM_MATCHER = ':postId(^[0-9]+$)'
 
 export default class PrimaryLayout extends Component {
   static propTypes = {
@@ -63,18 +61,19 @@ export default class PrimaryLayout extends Component {
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToCommunity currentUser={currentUser} />
           <Switch>
-            <Route path='/all' component={Feed} />
+            <Route path='/all' exact component={Feed} />
+            <Route path='/all/:topicName' exact component={Feed} />
+            <Route path='/all/p/:postId' exact component={Feed} />
+            <Route path='/c/:slug' exact component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
             <Route path='/c/:slug/m/:id' component={MemberProfile} />
+            <Route path='/c/:slug/p/:postId' component={Feed} />
             <Route path='/c/:slug/topics' component={AllTopics} />
-            <Route path='/c' component={Feed} />
+            <Route path='/c/:slug/:topicName/p/:postId' component={Feed} />
+            <Route path='/c/:slug/:topicName' component={Feed} />
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
           </Switch>
-          <Route path='/all/p/new' exact component={PostEditorModal} />
-          <Route path='/c/:slug/m/:id/p/new' exact component={PostEditorModal} />
-          <Route path='/c/:slug/p/new' exact component={PostEditorModal} />
-          <Route path='/c/:slug/:topicName/p/new' exact component={PostEditorModal} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/c/:slug' exact component={CommunitySidebar} />
@@ -88,7 +87,12 @@ export default class PrimaryLayout extends Component {
             Best guess is to replace these routes with a render function
             defined above, and store the previous detail component in state
           */}
-          {detailRoutes.map((props) => <Route key={props.path} exact={true} {...props} />)}
+          {detailRoutes.map(({ path, component }) =>
+            <Route key={path} exact {...{path, component}} />)}
+          <Route path='/all/p/:postId/edit' exact component={PostEditorModal} />
+          <Route path='/c/:slug/p/:postId/edit' exact component={PostEditorModal} />
+          <Route path='/c/:slug/m/:id/p/:postId/edit' exact component={PostEditorModal} />
+          <Route path='/c/:slug/:topicName/p/:postId/edit' exact component={PostEditorModal} />
         </div>
       </div>
       <Route path='/t' component={Messages} />
@@ -100,14 +104,10 @@ export default class PrimaryLayout extends Component {
 
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
-  {path: `/all/p/:postId`, component: PostDetail},
-  {path: `/all/p/:postId/edit`, component: PostEditorModal},
-  {path: `/c/:slug/p/:postId`, component: PostDetail},
-  {path: `/c/:slug/p/:postId/edit`, component: PostEditorModal},
-  {path: `/c/:slug/m/:id/p/:postId`, component: PostDetail},
-  {path: `/c/:slug/m/:id/p/:postId/edit`, component: PostEditorModal},
-  {path: `/c/:slug/:topicName/p/:postId`, component: PostDetail},
-  {path: `/c/:slug/:topicName/p/:postId/edit`, component: PostEditorModal}
+  {path: '/all/p/:postId', component: PostDetail},
+  {path: '/c/:slug/p/:postId', component: PostDetail},
+  {path: '/c/:slug/m/:id/p/:postId', component: PostDetail},
+  {path: '/c/:slug/:topicName/p/:postId', component: PostDetail}
 ]
 
 function RedirectToCommunity ({ currentUser }) {
