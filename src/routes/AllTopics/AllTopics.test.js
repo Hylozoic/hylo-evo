@@ -1,20 +1,23 @@
-import AllTopics, { SearchBar, TopicListItem } from './AllTopics'
+import AllTopics, { SearchBar, CommunityTopicListItem } from './AllTopics'
 import { shallow } from 'enzyme'
 import React from 'react'
 
 describe('AllTopics', () => {
   it('matches the latest snapshot', () => {
-    const topics = [
+    const ct = [
       {
         id: '1',
-        name: 'petitions',
+        topic: {
+          id: '2',
+          name: 'petitions'
+        },
         postsTotal: 24,
         followersTotal: 52,
-        subscribed: false
+        isSubscribed: false
       }
     ]
     const wrapper = shallow(<AllTopics
-      topics={topics}
+      communityTopics={ct}
       slug='goteam'
       topicsTotal='10' />)
     expect(wrapper).toMatchSnapshot()
@@ -36,16 +39,16 @@ describe('SearchBar', () => {
 
 describe('TopicListItem', () => {
   it('matches the latest snapshot', () => {
-    const topic = {
+    const ct = {
       id: '1',
-      name: 'petitions',
+      topic: {
+        name: 'petitions'
+      },
       postsTotal: 24,
       followersTotal: 52,
       subscribed: false
     }
-    const wrapper = shallow(<TopicListItem
-      topic={topic}
-      slug='goteam' />)
+    const wrapper = shallow(<CommunityTopicListItem item={ct} slug='goteam' />)
     expect(wrapper).toMatchSnapshot()
   })
 })

@@ -15,20 +15,22 @@ const sortOptions = [
 
 export default class AllTopics extends Component {
   static propTypes = {
-    topics: arrayOf(shape({
-      name: string,
+    communityTopics: arrayOf(shape({
+      topic: shape({
+        id: string.isRequired,
+        name: string.isRequired
+      }),
       id: string,
       postsTotal: number,
       followersTotal: number,
-      subscribed: boolean,
-      toggleSubscribe: func
+      isSubscribed: boolean
     })),
     totalTopics: number,
-    slug: string,
     selectedSort: string,
     onChangeSort: func,
     search: string,
-    onChangeSearch: func
+    onChangeSearch: func,
+    toggleSubscribe: func.isRequired
   }
 
   static defaultProps = {
@@ -43,13 +45,18 @@ export default class AllTopics extends Component {
     }
   }
 
+  componentDidMount () {
+    this.props.fetchCommunityTopics()
+  }
+
   render () {
     const {
       totalTopics,
-      topics,
+      communityTopics,
       slug,
       selectedSort,
-      onChangeSort
+      onChangeSort,
+      toggleSubscribe
     } = this.props
     const { search } = this.state
 
@@ -63,7 +70,10 @@ export default class AllTopics extends Component {
           selectedSort={selectedSort}
           onChangeSort={onChangeSort} />
         <div styleName='topic-list'>
-          {topics.map(topic => <TopicListItem key={topic.id} topic={topic} slug={slug} />)}
+          {communityTopics.map(ct =>
+            <CommunityTopicListItem key={ct.id} item={ct} slug={slug}
+              toggleSubscribe={() =>
+                toggleSubscribe(ct.topic.id, !ct.isSubscribed)} />)}
         </div>
       </div>} />
   }
@@ -88,15 +98,15 @@ export function SearchBar ({search, onChangeSearch, selectedSort, onChangeSort})
   </div>
 }
 
-export function TopicListItem ({ topic, slug }) {
-  const { name, postsTotal, followersTotal, subscribed, toggleSubscribe } = topic
+export function CommunityTopicListItem ({ item, slug, toggleSubscribe }) {
+  const { topic: { name }, postsTotal, followersTotal, isSubscribed } = item
   return <div styleName='topic'>
     <Link styleName='topic-details' to={tagUrl(name, slug)}>
       <div styleName='topic-name'>#{name}</div>
       <div styleName='topic-stats'>{pluralize(postsTotal, 'post')} • {pluralize(followersTotal, 'follower')}</div>
     </Link>
     <span onClick={toggleSubscribe} styleName='topic-subscribe'>
-      {subscribed ? 'Unsubscribe' : 'Subscribe'}
+      {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
     </span>
   </div>
 }
