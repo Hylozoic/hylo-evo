@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import TabBar from './TabBar'
 import PostCard from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
@@ -13,6 +13,10 @@ const STICKY_TABBAR_ID = 'tabbar-sticky'
 const tabbarOffset = 244
 
 export default class FeedList extends React.Component {
+  static propTypes = {
+    editPost: PropTypes.func
+  }
+
   static defaultProps = {
     posts: []
   }

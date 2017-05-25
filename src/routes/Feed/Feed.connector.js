@@ -59,6 +59,7 @@ export const mapDispatchToProps = function (dispatch, props) {
     // or the center column will revert to its default sort & filter settings
     showPostDetails: id => dispatch(push(makeUrl(postUrl(id, slug, {topicName}), params))),
     newPost: () => dispatch(push(`${slug}/p/new`)),
+    editPost: (postId) => dispatch(push(`${slug}/p/${postId}/edit`)),
     fetchTopic: () => {
       if (slug && topicName) {
         return dispatch(fetchCommunityTopic(topicName, slug))
