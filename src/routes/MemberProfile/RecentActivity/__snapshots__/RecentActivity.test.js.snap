@@ -51,6 +51,7 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
     data-styleName="activity-item"
   >
     <PostCard
+      editPost={[Function]}
       post={
         Object {
           "commenters": Array [],
@@ -79,6 +80,7 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
     data-styleName="activity-item"
   >
     <PostCard
+      editPost={[Function]}
       post={
         Object {
           "commenters": Array [
