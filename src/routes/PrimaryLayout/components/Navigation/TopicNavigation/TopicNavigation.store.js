@@ -8,8 +8,8 @@ export const getSubscribedCommunityTopics = ormCreateSelector(
   state => state.orm,
   getCommunityForCurrentRoute,
   (session, community) => {
-    const ct = community.communityTopics
-    .filter({isSubscribed: true})
+    const ct = session.CommunityTopic
+    .filter({community: community.id, isSubscribed: true})
     .toModelArray()
 
     return sortBy(ct, ({ topic: { name } }) => name.toLowerCase())
