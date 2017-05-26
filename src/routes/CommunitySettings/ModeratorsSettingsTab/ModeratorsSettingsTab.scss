@@ -52,3 +52,24 @@
   border: 1px dashed $color-ghost;
   composes: text-button from 'css/typography.scss'
 }
+
+// KeyControlledListTheme
+
+ .suggestionsList {
+   list-style: none;
+   border: 1px solid $color-ghost;
+   li {
+     border-top: 1px solid $color-ghost;
+     &:first-child {
+       border: none;
+     }
+   }
+ }
+
+.suggestion {
+ /* empty */
+}
+
+.active {
+  background-color: $color-ghost;
+}

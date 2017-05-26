@@ -1,7 +1,6 @@
 import {
   FETCH_COMMUNITY_SETTINGS,
-  UPDATE_COMMUNITY_SETTINGS,
-  FIND_MODERATORS
+  UPDATE_COMMUNITY_SETTINGS
 } from 'store/constants'
 
 export function fetchCommunitySettings (slug) {
@@ -22,33 +21,6 @@ export function fetchCommunitySettings (slug) {
       }`,
       variables: {
         slug
-      }
-    },
-    meta: {
-      extractModel: 'Community'
-    }
-  }
-}
-
-export function findModerators (slug, autocomplete) {
-  return {
-    type: FIND_MODERATORS,
-    graphql: {
-      query: `query ($slug: String, $autocomplete: String) {
-        community (slug: $slug) {
-          id
-          members (first: 10, autocomplete: $autocomplete) {
-            hasMore
-            items {
-              id
-              name
-              avatarUrl
-            }
-          }
-        }
-      }`,
-      variables: {
-        slug, autocomplete
       }
     },
     meta: {

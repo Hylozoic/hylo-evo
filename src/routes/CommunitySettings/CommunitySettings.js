@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import './CommunitySettings.scss'
-import CommunitySettingsTab from './CommunitySettingsTab/CommunitySettingsTab'
-import ModeratorsSettingsTab from './ModeratorsSettingsTab/ModeratorsSettingsTab'
+import CommunitySettingsTab from './CommunitySettingsTab'
+import ModeratorsSettingsTab from './ModeratorsSettingsTab'
 import Loading from 'components/Loading'
 const { object, func } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
@@ -11,7 +11,6 @@ export default class CommunitySettings extends Component {
   static propTypes = {
     community: object,
     fetchCommunitySettings: func,
-    findModerators: func
   }
 
   componentDidMount () {
@@ -27,11 +26,7 @@ export default class CommunitySettings extends Component {
   render () {
     const {
       community,
-      updateCommunitySettings,
-      moderators,
-      removeModerator,
-      addModerator,
-      findModerators
+      updateCommunitySettings
     } = this.props
 
     if (!community) return <Loading />
@@ -51,12 +46,7 @@ export default class CommunitySettings extends Component {
         {
           name: 'Moderators',
           path: `/c/${slug}/settings/moderators`,
-          component: <ModeratorsSettingsTab
-            moderators={moderators}
-            addModerator={addModerator}
-            removeModerator={removeModerator}
-            findModerators={findModerators}
-          />
+          component: <ModeratorsSettingsTab slug={slug} />
         }
       ]} />
   }

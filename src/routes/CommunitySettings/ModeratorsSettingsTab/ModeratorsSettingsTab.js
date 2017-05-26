@@ -1,10 +1,12 @@
 import React, { PropTypes, Component } from 'react'
-import './ModeratorsSettingsTab.scss'
+import styles from './ModeratorsSettingsTab.scss'
 import { Link } from 'react-router-dom'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
+import { KeyControlledItemList } from 'components/KeyControlledList'
 const { array, func, string } = PropTypes
 import { personUrl } from 'util/index'
+import { isEmpty } from 'lodash/fp'
 
 export default class ModeratorsSettingsTab extends Component {
   static propTypes = {
@@ -14,18 +16,34 @@ export default class ModeratorsSettingsTab extends Component {
     slug: string
   }
 
-  render () {
-    const { moderators, removeModerator, findModerators, addModerator } = this.props
-    if (!moderators) return <Loading />
+  componentWillUnmount () {
+    this.props.clearModeratorSuggestions()
+  }
 
-    console.log('in render, findModerators', findModerators)
+  render () {
+    const {
+      moderators,
+      removeModerator,
+      fetchModeratorSuggestions,
+      addModerator,
+      moderatorSuggestions,
+      clearModeratorSuggestions
+    } = this.props
+
+    console.log('moderators', moderators)
+
+    if (!moderators) return <Loading />
 
     return <div>
       <div>
         {moderators.map(m =>
           <ModeratorControl moderator={m} removeModerator={removeModerator} key={m.id} />)}
       </div>
-      <AddModerator findModerators={findModerators} addModerator={addModerator} />
+      <AddModerator
+        fetchModeratorSuggestions={fetchModeratorSuggestions}
+        addModerator={addModerator}
+        moderatorSuggestions={moderatorSuggestions}
+        clearModeratorSuggestions={clearModeratorSuggestions} />
     </div>
   }
 }
@@ -48,7 +66,7 @@ export function ModeratorControl ({ moderator, slug, removeModerator }) {
 export class AddModerator extends Component {
   static propTypes = {
     addModerator: func,
-    findModerators: func
+    fetchModeratorSuggestions: func
   }
 
   constructor (props) {
@@ -59,7 +77,9 @@ export class AddModerator extends Component {
   }
 
   render () {
-    const { findModerators, addModerator } = this.props
+    const { fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions } = this.props
+
+    console.log('props', this.props)
 
     const { adding } = this.state
 
@@ -67,11 +87,23 @@ export class AddModerator extends Component {
       this.setState({adding: !adding})
     }
 
-    const onChange = e => findModerators(e.target.value)
+    const onChange = e => {
+      if (e.target.value.length === 0) return clearModeratorSuggestions()
+      return fetchModeratorSuggestions(e.target.value)
+    }
+
+    const onChoose = choice => console.log('chosen', choice)
+
+    const handleKeys = this.refs.list ? this.refs.list.handleKeys : () => {}
 
     if (adding) {
       return <div styleName='add-moderator adding'>
-        <input type='text' onChange={onChange} />
+        <input type='text' onChange={onChange} onKeyDown={handleKeys} />
+        {!isEmpty(moderatorSuggestions) && <KeyControlledItemList
+          ref='list'
+          items={moderatorSuggestions}
+          onChange={onChoose}
+          theme={styles} />}
         <span styleName='cancel-button' onClick={toggle}>Cancel</span>
         <span styleName='add-button' onClick={toggle}>Add</span>
       </div>

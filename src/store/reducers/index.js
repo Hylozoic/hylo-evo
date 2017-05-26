@@ -16,6 +16,7 @@ import CommunitiesSelector from 'components/CommunitiesSelector/CommunitiesSelec
 import Login from 'routes/Login/Login.store'
 import Members from 'routes/Members/Members.store'
 import ThreadList from 'components/ThreadList/ThreadList.store'
+import ModeratorsSettings from 'routes/CommunitySettings/ModeratorsSettingsTab/ModeratorsSettingsTab.store'
 import queryResults from './queryResults'
 import { handleSetState, composeReducers } from './util'
 
@@ -42,7 +43,8 @@ const combinedReducers = combineReducers({
   CommunitiesSelector,
   Login,
   ThreadList,
-  Members
+  Members,
+  ModeratorsSettings
 })
 
 export default composeReducers(combinedReducers, handleSetState)

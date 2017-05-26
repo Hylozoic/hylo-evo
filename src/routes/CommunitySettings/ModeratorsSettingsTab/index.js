@@ -1,3 +1,3 @@
 import ModeratorsSettingsTab from './ModeratorsSettingsTab'
-
-export default ModeratorsSettingsTab
+import connector from './ModeratorsSettingsTab.connector'
+export default connector(ModeratorsSettingsTab)
