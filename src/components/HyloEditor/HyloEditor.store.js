@@ -39,8 +39,8 @@ export function clearMentions (searchText) {
   return { type: CLEAR_MENTIONS }
 }
 
-// TODO: Still tied to a test community under the slug "test1"
-export function findTopics (topicsSearchTerm, communitySlug = 'test1') {
+// TODO: Still tied to a test community under the slug "hylo"
+export function findTopics (topicsSearchTerm, communitySlug = 'hylo') {
   const collectTopics = results =>
     results.community.communityTopics.items.map(item => item.topic)
   return {
