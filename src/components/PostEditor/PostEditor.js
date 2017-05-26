@@ -24,8 +24,8 @@ export default class PostEditor extends React.Component {
     }),
     createPost: PropTypes.func,
     updatePost: PropTypes.func,
-    loading: PropTypes.bool,
-    editing: PropTypes.bool
+    editing: PropTypes.bool,
+    loading: PropTypes.bool
   }
 
   static defaultProps = {
@@ -41,8 +41,8 @@ export default class PostEditor extends React.Component {
       details: '',
       communities: []
     },
-    loading: false,
-    editing: false
+    editing: false,
+    loading: false
   }
 
   buildStateFromProps = ({ post }) => {
@@ -150,7 +150,7 @@ export default class PostEditor extends React.Component {
     const { titlePlaceholder, valid, post } = this.state
     if (!post) return null
     const { title, details, communities } = post
-    const { onClose, initialPrompt, detailsPlaceholder, communityOptions, loading, editing } = this.props
+    const { onClose, initialPrompt, detailsPlaceholder, communityOptions, editing, loading } = this.props
     const submitButtonLabel = editing ? 'Save' : 'Post'
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
       <div styleName='header'>

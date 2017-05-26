@@ -65,7 +65,7 @@ export default class PrimaryLayout extends Component {
           <Switch>
             <Route path='/all' exact component={Feed} />
             <Route path='/all/:topicName' exact component={Feed} />
-            <Route path='/all/p/:anything' exact component={Feed} />
+            <Route path='/all/p/:anything' component={Feed} />
             <Route path='/c/:slug' exact component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
             <Route path='/c/:slug/m/:id' component={MemberProfile} />

@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getPost from 'store/selectors/getPost'
-import fetchPost from 'store/actions/fetchPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import {
   createPost,
@@ -17,21 +16,21 @@ export function mapStateToProps (state, props) {
   let post = props.post || getPost(state, props)
   const loading = editing && !post
   const currentCommunity = getCommunityForCurrentRoute(state, props)
-  if (!editing) post = {communities: [currentCommunity]}
+  if (!editing && currentCommunity) {
+    post = {communities: [currentCommunity]}
+  }
   return {
     post,
-    currentCommunity,
     communityOptions,
-    loading,
-    editing
+    editing,
+    loading
   }
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
   return {
-    fetchPost: () => dispatch(fetchPost(getParam('postId', {}, props))),
-    createPost: (postParams) => dispatch(createPost(postParams)),
-    updatePost: (postParams) => dispatch(updatePost(postParams))
+    updatePost: (postParams) => dispatch(updatePost(postParams)),
+    createPost: (postParams) => dispatch(createPost(postParams))
   }
 }
 

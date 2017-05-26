@@ -27,7 +27,8 @@ export function postUrl (id, slug, opts = {}) {
   } else {
     base = allCommunitiesUrl()
   }
-  return `${base}/p/${id}`
+  let result = `${base}/p/${id}`
+  return opts.action ? `${result}/${opts.action}` : result
 }
 
 export function commentUrl (postId, commentId, slug) {
