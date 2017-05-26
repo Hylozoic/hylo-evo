@@ -34,15 +34,15 @@ export function mapStateToProps (state, props) {
 
 const mapDispatchToProps = {fetchCommunityTopics, toggleTopicSubscribe}
 
-function mergeProps (sProps, dProps, ownProps) {
-  const { community } = sProps
+function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { community } = stateProps
   return {
-    ...omit(sProps, 'community'),
+    ...omit(stateProps, 'community'),
     ...ownProps,
     fetchCommunityTopics: offset =>
-      dProps.fetchCommunityTopics(community.id, false, offset),
+      dispatchProps.fetchCommunityTopics(community.id, false, offset),
     toggleSubscribe: (topicId, isSubscribing) =>
-      dProps.toggleTopicSubscribe(topicId, community.id, isSubscribing)
+      dispatchProps.toggleTopicSubscribe(topicId, community.id, isSubscribing)
   }
 }
 

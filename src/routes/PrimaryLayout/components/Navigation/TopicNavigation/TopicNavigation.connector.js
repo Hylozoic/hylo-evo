@@ -22,13 +22,14 @@ export function mapDispatchToProps (dispatch) {
   }
 }
 
-export function mergeProps (sProps, dProps, ownProps) {
-  const { community } = sProps
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { community } = stateProps
   return {
-    ...sProps,
-    ...dProps,
+    ...stateProps,
+    ...dispatchProps,
     ...ownProps,
-    fetchCommunityTopics: () => dProps.fetchCommunityTopics(community.id, true)
+    fetchCommunityTopics: () =>
+      dispatchProps.fetchCommunityTopics(community.id, true)
   }
 }
 
