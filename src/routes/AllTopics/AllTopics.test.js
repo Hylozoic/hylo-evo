@@ -19,7 +19,9 @@ describe('AllTopics', () => {
     const wrapper = shallow(<AllTopics
       communityTopics={ct}
       slug='goteam'
-      topicsTotal='10' />)
+      topicsTotal='10'
+      toggleSubscribe={() => {}} />)
+
     expect(wrapper).toMatchSnapshot()
   })
 })
