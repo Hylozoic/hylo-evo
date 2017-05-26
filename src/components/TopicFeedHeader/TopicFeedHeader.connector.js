@@ -1,33 +1,16 @@
 import { connect } from 'react-redux'
 import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
-import getTopicSubscription from 'store/selectors/getTopicSubscription'
 
-export function mapStateToProps (state, props) {
-  return {
-    subscription: getTopicSubscription(state, props)
-  }
-}
+const mapDispatchToProps = {toggleTopicSubscribe}
 
-export function mapDispatchToProps (dispatch, props) {
-  const { topic, community } = props
-  const topicId = topic && topic.id
-  const communityId = community && community.id
+export const mergeProps = (sProps, dProps, ownProps) => {
+  const { topic, community, communityTopic } = ownProps
   return {
-    toggleSubscribeMaker: subscription => topicId && communityId
-      ? () => dispatch(toggleTopicSubscribe(topicId, communityId, subscription))
-      : () => {}
-  }
-}
-
-export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { subscription } = stateProps
-  const { toggleSubscribeMaker } = dispatchProps
-  return {
-    ...stateProps,
-    ...dispatchProps,
+    ...dProps,
     ...ownProps,
-    toggleSubscribe: toggleSubscribeMaker(subscription)
+    toggleSubscribe: () =>
+      dProps.toggleTopicSubscribe(topic.id, community.id, !communityTopic.isSubscribed)
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
+export default connect(null, mapDispatchToProps, mergeProps)

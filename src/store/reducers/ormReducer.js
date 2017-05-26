@@ -36,8 +36,7 @@ export default function ormReducer (state = {}, action) {
     MessageThread,
     Notification,
     Post,
-    PostCommenter,
-    TopicSubscription
+    PostCommenter
   } = session
 
   const invalidateNotifications = () => {
@@ -135,7 +134,7 @@ export default function ormReducer (state = {}, action) {
 
     case RECEIVE_POST:
       payload.topics.forEach(topicId => {
-        const sub = TopicSubscription.safeGet({topic: topicId})
+        const sub = CommunityTopic.safeGet({topic: topicId, community: payload.communityId})
         if (sub) sub.update({newPostCount: sub.newPostCount + 1})
       })
       membership = Membership.safeGet({community: payload.communityId})

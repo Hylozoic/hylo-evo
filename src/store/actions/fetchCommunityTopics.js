@@ -1,19 +1,20 @@
 const FETCH_COMMUNITY_TOPICS = 'FETCH_COMMUNITY_TOPICS'
 
-export function fetchCommunityTopics (communityId, offset = 0) {
+export default function fetchCommunityTopics (communityId, subscribed, offset = 0) {
   return {
     type: FETCH_COMMUNITY_TOPICS,
     graphql: {
-      query: `query ($id: ID, $first: Int, $offset: Int) {
+      query: `query ($id: ID, $first: Int, $offset: Int, $subscribed: Boolean) {
         community (id: $id) {
           id
-          communityTopics(first: $first, offset: $offset) {
+          communityTopics(first: $first, offset: $offset, subscribed: $subscribed) {
             hasMore
             items {
               id
               postsTotal
               followersTotal
               isSubscribed
+              newPostCount
               topic {
                 id
                 name
@@ -25,7 +26,8 @@ export function fetchCommunityTopics (communityId, offset = 0) {
       variables: {
         id: communityId,
         first: 20,
-        offset
+        offset,
+        subscribed
       }
     },
     meta: {

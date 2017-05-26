@@ -5,7 +5,7 @@ import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { omit } from 'lodash'
 import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
-import { fetchCommunityTopics } from './AllTopics.store'
+import fetchCommunityTopics from 'store/actions/fetchCommunityTopics'
 
 // TODO: this selector will also have to depend upon sorting parameters for the
 // sorting dropdown to work.
@@ -17,7 +17,7 @@ const getCommunityTopics = ormCreateSelector(
     return community
       ? session.CommunityTopic
       .filter({community: community.id})
-      .orderBy(ct => -ct.followersTotal)
+      .orderBy(ct => -ct.postsTotal)
       .toModelArray()
       : []
   }
@@ -39,7 +39,8 @@ function mergeProps (sProps, dProps, ownProps) {
   return {
     ...omit(sProps, 'community'),
     ...ownProps,
-    fetchCommunityTopics: () => dProps.fetchCommunityTopics(community.id),
+    fetchCommunityTopics: offset =>
+      dProps.fetchCommunityTopics(community.id, false, offset),
     toggleSubscribe: (topicId, isSubscribing) =>
       dProps.toggleTopicSubscribe(topicId, community.id, isSubscribing)
   }
