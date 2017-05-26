@@ -13,10 +13,6 @@ const STICKY_TABBAR_ID = 'tabbar-sticky'
 const tabbarOffset = 244
 
 export default class FeedList extends React.Component {
-  static propTypes = {
-    editPost: PropTypes.func
-  }
-
   static defaultProps = {
     posts: []
   }
@@ -111,8 +107,7 @@ export default class FeedList extends React.Component {
             styleName={cx('FeedListItem', {expanded})}
             expanded={expanded}
             showDetails={() => showPostDetails(post.id)}
-            key={post.id}
-            editPost={() => editPost(post.id)} />
+            key={post.id} />
         })}
       </div>
       <ScrollListener onBottom={() => this.fetchMorePosts()}

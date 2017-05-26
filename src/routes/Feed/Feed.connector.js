@@ -60,8 +60,6 @@ export const mapDispatchToProps = function (dispatch, props) {
       dispatch(push(makeUrl(postUrl(postId, slug, {topicName}), params))),
     newPost: () =>
       dispatch(push(makeUrl(postUrl('new', slug, {topicName}), params))),
-    editPost: (postId) =>
-      dispatch(push(makeUrl(postUrl(postId, slug, {action: 'edit', topicName}), params))),
     fetchTopic: () => {
       if (slug && topicName) {
         return dispatch(fetchCommunityTopic(topicName, slug))

@@ -29,6 +29,20 @@ export default function PostHeader ({
     }
   }
 
+  let dropdownItems = [
+    {icon: 'Pin', label: 'Pin', onClick: () => console.log('Pin')},
+    {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')}
+  ]
+  if (editPost) {
+    dropdownItems = dropdownItems.concat(
+      {icon: 'AddImage', label: 'Edit', onClick: editPost})
+  }
+  dropdownItems = dropdownItems.concat([
+    {icon: 'Trash', label: 'Delete', onClick: () => console.log('Delete')},
+    {label: 'Other'},
+    {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
+  ])
+
   return <div styleName='header' className={className}>
     <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
     <div styleName='headerText'>
@@ -45,14 +59,7 @@ export default function PostHeader ({
     </div>
     <div styleName='upperRight'>
       {type && <PostLabel type={type} styleName='label' />}
-      <Dropdown toggleChildren={<Icon name='More' />} items={[
-        {icon: 'Pin', label: 'Pin', onClick: () => console.log('Pin')},
-        {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')},
-        {icon: 'AddImage', label: 'Edit', onClick: editPost},
-        {icon: 'Trash', label: 'Delete', onClick: () => console.log('Delete')},
-        {label: 'Other'},
-        {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
-      ]} />
+      <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} />
       {close && <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
     </div>
   </div>
