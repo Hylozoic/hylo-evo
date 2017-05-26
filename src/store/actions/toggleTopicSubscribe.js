@@ -3,19 +3,11 @@ import { TOGGLE_TOPIC_SUBSCRIBE } from 'store/constants'
 const query =
 `mutation($topicId: ID, $communityId: ID, $isSubscribing: Boolean) {
   subscribe(topicId: $topicId, communityId: $communityId, isSubscribing: $isSubscribing) {
-    id
-    newPostCount
-    community {
-      id
-    }
-    topic {
-      id
-      name
-    }
+    success
   }
 }`
 
-export default function toggleTopicSubscribe (topicId, communityId, existingSub) {
+export default function toggleTopicSubscribe (topicId, communityId, isSubscribing) {
   return {
     type: TOGGLE_TOPIC_SUBSCRIBE,
     graphql: {
@@ -23,12 +15,12 @@ export default function toggleTopicSubscribe (topicId, communityId, existingSub)
       variables: {
         topicId,
         communityId,
-        isSubscribing: existingSub ? false : true // eslint-disable-line no-unneeded-ternary
+        isSubscribing
       }
     },
     meta: {
-      extractModel: 'TopicSubscription',
-      existingSubscriptionId: existingSub && existingSub.id,
+      optimistic: true,
+      isSubscribing,
       topicId,
       communityId
     }
