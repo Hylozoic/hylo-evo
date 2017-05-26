@@ -3,13 +3,13 @@ import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
 
 const mapDispatchToProps = {toggleTopicSubscribe}
 
-export const mergeProps = (sProps, dProps, ownProps) => {
+export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { topic, community, communityTopic } = ownProps
   return {
-    ...dProps,
+    ...dispatchProps,
     ...ownProps,
     toggleSubscribe: () =>
-      dProps.toggleTopicSubscribe(topic.id, community.id, !communityTopic.isSubscribed)
+      dispatchProps.toggleTopicSubscribe(topic.id, community.id, !communityTopic.isSubscribed)
   }
 }
 
