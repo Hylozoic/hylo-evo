@@ -32,7 +32,8 @@ describe('Feed', () => {
 
   it('displays the TopicFeedHeader if on a topic feed', () => {
     const props = {
-      topicName: 'petitions'
+      topicName: 'petitions',
+      topic: {id: '5', name: 'petitions'}
     }
     const wrapper = shallow(<Feed {...props} />)
     expect(wrapper.find('FeedBanner')).toHaveLength(0)
