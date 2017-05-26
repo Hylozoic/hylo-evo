@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getMe } from 'store/selectors/getMe'
+import getMe from 'store/selectors/getMe'
 import { fetchThreads, setThreadSearch, getThreadSearch, getThreads } from './ThreadList.store'
 
 export function mapStateToProps (state, props) {

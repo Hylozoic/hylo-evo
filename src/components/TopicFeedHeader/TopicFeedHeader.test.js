@@ -3,13 +3,17 @@ import { MemoryRouter } from 'react-router'
 import { shallow, mount } from 'enzyme'
 import React from 'react'
 
+const topic = {name: 'cats'}
+
 it('matches the latest snapshot', () => {
-  const wrapper = shallow(<TopicFeedHeader postsTotal={11} followersTotal={3} topicName={'petitions'} />)
+  const wrapper = shallow(<TopicFeedHeader topic={topic} postsTotal={11} followersTotal={3} />)
   expect(wrapper).toMatchSnapshot()
 })
 
 it('links to the main community feed if community is passed in', () => {
   const props = {
+    topic,
+    communityTopic: {},
     community: {
       slug: 'monkeys',
       name: 'Monkey Gang'
@@ -20,13 +24,15 @@ it('links to the main community feed if community is passed in', () => {
 })
 
 it('links to the All Communities feed if no community is passed in', () => {
-  const props = {}
+  const props = {topic}
   const wrapper = shallow(<TopicFeedHeader {...props} />)
   expect(wrapper.find('Link').prop('to')).toEqual('/all')
 })
 
 it('uses the community name if community is passed in', () => {
   const props = {
+    topic,
+    communityTopic: {},
     community: {
       slug: 'monkeys',
       name: 'Monkey Gang'
@@ -38,7 +44,7 @@ it('uses the community name if community is passed in', () => {
 
 it('displays the topic name', () => {
   const props = {
-    topicName: 'Petitions'
+    topic: {name: 'Petitions'}
   }
   const wrapper = shallow(<TopicFeedHeader {...props} />)
   expect(wrapper.find('[data-styleName="topic-name"]').text()).toEqual('#Petitions')
@@ -46,13 +52,14 @@ it('displays the topic name', () => {
 
 describe('meta', () => {
   it('uses values of 0 if the meta info is not passed in', () => {
-    const props = {}
+    const props = {topic}
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-styleName="meta"]').text()).toEqual('0 posts • 0 followers')
   })
 
   it('correctly pluralizes meta counts when count is 0', () => {
     const props = {
+      topic,
       followersTotal: 0,
       postsTotal: 0
     }
@@ -62,6 +69,7 @@ describe('meta', () => {
 
   it('correctly pluralizes counts when count is 1', () => {
     const props = {
+      topic,
       followersTotal: 1,
       postsTotal: 1
     }
@@ -71,6 +79,7 @@ describe('meta', () => {
 
   it('correctly pluralizes counts when count is greater than 1', () => {
     const props = {
+      topic,
       followersTotal: 2,
       postsTotal: 10
     }
@@ -82,6 +91,8 @@ describe('meta', () => {
 describe('subscribe', () => {
   it('shows sub/unsub if community prop is present', () => {
     const props = {
+      topic,
+      communityTopic: {},
       community: {
         slug: 'monkeys',
         name: 'Monkey Gang'
@@ -92,23 +103,26 @@ describe('subscribe', () => {
   })
 
   it('does not show sub/unsub if community prop is not present', () => {
-    const props = {}
+    const props = {topic}
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-styleName="subscribe"]')).toHaveLength(0)
   })
 
-  it('should say Subscribe when no subscription is present', () => {
+  it('should say Subscribe when not subscribed', () => {
     const props = {
-      community: {}
+      topic,
+      community: {},
+      communityTopic: {isSubscribed: false}
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-styleName="subscribe"]').render().text()).toEqual('Subscribe')
   })
 
-  it('should say Unsubscribe when a subscription is present', () => {
+  it('should say Unsubscribe when subscribed', () => {
     const props = {
+      topic,
       community: {},
-      subscription: {}
+      communityTopic: {isSubscribed: true}
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-styleName="subscribe"]').render().text()).toEqual('Unsubscribe')
@@ -116,6 +130,8 @@ describe('subscribe', () => {
 
   it('calls toggleSubscribe when sub/unsub button is clicked', () => {
     const props = {
+      topic,
+      communityTopic: {},
       community: {},
       toggleSubscribe: jest.fn()
     }

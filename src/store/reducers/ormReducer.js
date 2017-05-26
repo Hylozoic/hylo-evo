@@ -11,7 +11,7 @@ import {
   MARK_ACTIVITY_READ_PENDING,
   MARK_ALL_ACTIVITIES_READ_PENDING,
   RESET_NEW_POST_COUNT_PENDING,
-  TOGGLE_TOPIC_SUBSCRIBE,
+  TOGGLE_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_THREAD_READ_TIME,
   VOTE_ON_POST_PENDING
 } from 'store/constants'
@@ -40,8 +40,7 @@ export default function ormReducer (state = {}, action) {
     Notification,
     Person,
     Post,
-    PostCommenter,
-    TopicSubscription
+    PostCommenter
   } = session
 
   const invalidateNotifications = () => {
@@ -116,13 +115,12 @@ export default function ormReducer (state = {}, action) {
       if (membership) membership.delete()
       break
 
-    case TOGGLE_TOPIC_SUBSCRIBE:
-      const subscription = payload.data.subscribe
-      if (!subscription) {
-        TopicSubscription.withId(meta.existingSubscriptionId).delete()
-      }
+    case TOGGLE_TOPIC_SUBSCRIBE_PENDING:
       const ct = CommunityTopic.get({topic: meta.topicId, community: meta.communityId})
-      ct.update({followersTotal: ct.followersTotal + (subscription ? 1 : -1)})
+      ct.update({
+        followersTotal: ct.followersTotal + (meta.isSubscribing ? 1 : -1),
+        isSubscribed: !!meta.isSubscribing
+      })
       break
 
     case VOTE_ON_POST_PENDING:
@@ -140,7 +138,7 @@ export default function ormReducer (state = {}, action) {
 
     case RECEIVE_POST:
       payload.topics.forEach(topicId => {
-        const sub = TopicSubscription.safeGet({topic: topicId})
+        const sub = CommunityTopic.safeGet({topic: topicId, community: payload.communityId})
         if (sub) sub.update({newPostCount: sub.newPostCount + 1})
       })
       membership = Membership.safeGet({community: payload.communityId})

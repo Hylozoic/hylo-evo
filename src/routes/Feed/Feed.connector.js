@@ -5,7 +5,7 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import getCommunityTopicForCurrentRoute from 'store/selectors/getCommunityTopicForCurrentRoute'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getParam from 'store/selectors/getParam'
-import { getMe } from 'store/selectors/getMe'
+import getMe from 'store/selectors/getMe'
 import changeQueryParam from 'store/actions/changeQueryParam'
 import getQueryParam from 'store/selectors/getQueryParam'
 import { push } from 'react-router-redux'
@@ -59,8 +59,11 @@ export const mapDispatchToProps = function (dispatch, props) {
     // or the center column will revert to its default sort & filter settings
     showPostDetails: id => dispatch(push(makeUrl(postUrl(id, slug, {topicName}), params))),
     fetchTopic: () => {
-      if (slug && topicName) dispatch(fetchCommunityTopic(topicName, slug))
-      else if (topicName) dispatch(fetchTopic(topicName))
+      if (slug && topicName) {
+        return dispatch(fetchCommunityTopic(topicName, slug))
+      } else if (topicName) {
+        return dispatch(fetchTopic(topicName))
+      }
     }
   }
 }

@@ -43,17 +43,25 @@ export default class Feed extends Component {
   }
 
   render () {
-    const { topic, communitySlug, community, currentUser, topicName, postsTotal, followersTotal } = this.props
-    if (communitySlug && !community) return <Loading />
+    const {
+      topic, community, currentUser, topicName, postsTotal, followersTotal,
+      communityTopic
+    } = this.props
+
+    if (topicName && !topic) return <Loading />
+    if (community && topicName && !communityTopic) return <Loading />
 
     return <div styleName='container'>
-      {!topicName && <FeedBanner community={community} currentUser={currentUser} all={!community} />}
-      {topicName && <TopicFeedHeader
-        topicName={topicName}
-        postsTotal={postsTotal}
-        followersTotal={followersTotal}
-        topic={topic}
-        community={community} />}
+      {topicName
+        ? <TopicFeedHeader
+          communityTopic={communityTopic}
+          topicName={topicName}
+          postsTotal={postsTotal}
+          followersTotal={followersTotal}
+          topic={topic}
+          community={community} />
+        : <FeedBanner community={community} currentUser={currentUser}
+          all={!community} />}
       <FeedList {...this.getFeedProps()} />
     </div>
   }

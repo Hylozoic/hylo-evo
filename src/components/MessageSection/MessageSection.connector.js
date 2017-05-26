@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
-import { getMe } from 'store/selectors/getMe'
+import getMe from 'store/selectors/getMe'
 import {
   fetchMessages,
   getMessages,

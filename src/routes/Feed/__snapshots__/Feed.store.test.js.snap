@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fetchCommunityTopic should match latest snapshot 1`] = `
+Object {
+  "graphql": Object {
+    "query": "query ($communitySlug: String, $topicName: String) {
+  communityTopic(communitySlug: $communitySlug, topicName: $topicName) {
+    id
+    postsTotal
+    followersTotal
+    topic {
+      id
+      name
+    }
+    community {
+      id
+    }
+  }
+}",
+    "variables": Object {
+      "communitySlug": "goteam",
+      "topicName": "petitions",
+    },
+  },
+  "meta": Object {
+    "extractModel": "CommunityTopic",
+  },
+  "type": "FETCH_COMMUNITY_TOPIC",
+}
+`;
+
+exports[`fetchTopic should match latest snapshot 1`] = `
+Object {
+  "graphql": Object {
+    "query": "query ($name: String, $id: ID) {
+  topic(name: $name, id: $id) {
+    id
+    name
+    postsTotal
+    followersTotal
+  }
+}",
+    "variables": Object {
+      "id": undefined,
+      "name": "petitions",
+    },
+  },
+  "meta": Object {
+    "extractModel": "Topic",
+  },
+  "type": "FETCH_TOPIC",
+}
+`;

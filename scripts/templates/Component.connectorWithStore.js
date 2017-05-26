@@ -3,7 +3,7 @@ import {
   fetchExample,
   getExample
 } from './Component.store'
-// import { getMe } from 'store/selectors/getMe'
+// import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
   return {

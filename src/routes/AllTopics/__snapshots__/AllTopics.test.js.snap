@@ -1,13 +1,118 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`does something 1`] = `
+exports[`AllTopics matches the latest snapshot 1`] = `
 <withRouter(Connect(FullPageModal))
   content={
     <div
-      data-styleName="exampleName"
+      data-styleName="all-topics"
     >
-      Topic List goes here.
+      <div
+        data-styleName="title"
+      >
+        Topics
+      </div>
+      <div
+        data-styleName="subtitle"
+      >
+         Total Topics
+      </div>
+      <SearchBar
+        onChangeSearch={[Function]}
+        onChangeSort={[Function]}
+        search=""
+        selectedSort="followers"
+      />
+      <div
+        data-styleName="topic-list"
+      >
+        <CommunityTopicListItem
+          item={
+            Object {
+              "followersTotal": 52,
+              "id": "1",
+              "isSubscribed": false,
+              "postsTotal": 24,
+              "topic": Object {
+                "id": "2",
+                "name": "petitions",
+              },
+            }
+          }
+          slug="goteam"
+          toggleSubscribe={[Function]}
+        />
+      </div>
     </div>
   }
 />
+`;
+
+exports[`SearchBar matches the latest snapshot 1`] = `
+<div
+  data-styleName="search-bar"
+>
+  <TextInput
+    data-styleName="search-input"
+    onChange={[Function]}
+    placeholder="Search topics"
+    value="test"
+  />
+  <Dropdown
+    alignRight={true}
+    data-styleName="search-order"
+    items={
+      Array [
+        Object {
+          "label": "Popular",
+          "onClick": [Function],
+        },
+        Object {
+          "label": "Recent",
+          "onClick": [Function],
+        },
+      ]
+    }
+    toggleChildren={
+      <span
+        data-styleName="search-sorter-label"
+      >
+        Popular
+        <Icon
+          name="ArrowDown"
+        />
+      </span>
+    }
+  />
+</div>
+`;
+
+exports[`TopicListItem matches the latest snapshot 1`] = `
+<div
+  data-styleName="topic"
+>
+  <Link
+    data-styleName="topic-details"
+    replace={false}
+    to="/c/goteam/petitions"
+  >
+    <div
+      data-styleName="topic-name"
+    >
+      #
+      petitions
+    </div>
+    <div
+      data-styleName="topic-stats"
+    >
+      24 posts
+       • 
+      52 followers
+    </div>
+  </Link>
+  <span
+    data-styleName="topic-subscribe"
+  >
+    Subscribe
+  </span>
+</div>
 `;

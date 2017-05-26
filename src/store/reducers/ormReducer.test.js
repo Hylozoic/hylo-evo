@@ -1,10 +1,13 @@
 import orm from 'store/models' // this initializes redux-orm
 import ormReducer from './ormReducer'
+import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
 import {
+  CREATE_MESSAGE,
   EXTRACT_MODEL,
   VOTE_ON_POST_PENDING,
   MARK_ACTIVITY_READ_PENDING,
-  MARK_ALL_ACTIVITIES_READ_PENDING
+  MARK_ALL_ACTIVITIES_READ_PENDING,
+  TOGGLE_TOPIC_SUBSCRIBE_PENDING
 } from 'store/constants'
 import deep from 'deep-diff'
 
@@ -124,5 +127,75 @@ describe('on MARK_ALL_ACTIVITIES_READ_PENDING', () => {
 
     const newState = ormReducer(state, action)
     expect(deep(state, newState)).toMatchSnapshot()
+  })
+})
+
+describe('on TOGGLE_TOPIC_SUBSCRIBE_PENDING', () => {
+  it('will set isSubscribed to false and decrement followersTotal', () => {
+    const session = orm.session(orm.getEmptyState())
+    session.CommunityTopic.create({
+      id: '1',
+      community: '1',
+      topic: '1',
+      followersTotal: 10,
+      isSubscribed: true
+    })
+    const state = session.state
+    const action = {
+      ...toggleTopicSubscribe('1', '1'),
+      type: TOGGLE_TOPIC_SUBSCRIBE_PENDING
+    }
+    const newState = ormReducer(state, action)
+    expect(deep(state, newState)).toMatchSnapshot()
+  })
+
+  it('will set isSubscribed to true and increment followersTotal', () => {
+    const session = orm.session(orm.getEmptyState())
+    session.CommunityTopic.create({
+      id: '1',
+      community: '3',
+      topic: '2',
+      followersTotal: 10
+    })
+    const state = session.state
+    const action = {
+      ...toggleTopicSubscribe('2', '3', true),
+      type: TOGGLE_TOPIC_SUBSCRIBE_PENDING
+    }
+    const newState = ormReducer(state, action)
+    expect(deep(state, newState)).toMatchSnapshot()
+  })
+})
+
+describe('on CREATE_MESSAGE', () => {
+  const session = orm.session(orm.getEmptyState())
+  session.Message.create({id: 'temp'})
+  session.MessageThread.create({id: '1'})
+
+  // this would be created by extractModelMiddleware
+  session.Message.create({id: '2'})
+
+  it('replaces the temporary message with a permanent one', () => {
+    const action = {
+      type: CREATE_MESSAGE,
+      payload: {
+        data: {
+          createMessage: {
+            messageThread: {
+              id: '1'
+            },
+            id: '2',
+            text: 'hi'
+          }
+        }
+      },
+      meta: {tempId: 'temp'}
+    }
+    const newState = ormReducer(session.state, action)
+    const newSession = orm.session(newState)
+    expect(newSession.Message.hasId('temp')).toBeFalsy()
+    expect(newSession.Message.hasId('2')).toBeTruthy()
+    const thread = newSession.MessageThread.withId('1')
+    expect(Date.now() - new Date(thread.updatedAt).getTime()).toBeLessThan(1000)
   })
 })

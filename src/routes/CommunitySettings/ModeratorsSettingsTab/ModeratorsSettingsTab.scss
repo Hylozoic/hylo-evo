@@ -76,7 +76,7 @@
 
 // KeyControlledListTheme
 
- .suggestionsList {
+ .items {
    list-style: none;
    border: 1px solid $color-ghost;
    padding: 0;
@@ -88,11 +88,11 @@
    }
  }
 
-.suggestion {
+.item {
   padding: 5px 5px 5px 11px;
   color: $color-caribbean-green;
 }
 
-.active {
+.item-active {
   background-color: $color-athens-gray-dark;
 }

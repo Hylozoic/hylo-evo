@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { voteOnPost } from './PostFooter.store.js'
-import { getMe } from 'store/selectors/getMe'
+import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
   return {

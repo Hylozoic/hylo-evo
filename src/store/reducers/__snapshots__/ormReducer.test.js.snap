@@ -43,6 +43,59 @@ Array [
 ]
 `;
 
+exports[`on TOGGLE_TOPIC_SUBSCRIBE_PENDING will set isSubscribed to false and decrement followersTotal 1`] = `
+Array [
+  DiffEdit {
+    "kind": "E",
+    "lhs": 10,
+    "path": Array [
+      "CommunityTopic",
+      "itemsById",
+      "1",
+      "followersTotal",
+    ],
+    "rhs": 9,
+  },
+  DiffEdit {
+    "kind": "E",
+    "lhs": true,
+    "path": Array [
+      "CommunityTopic",
+      "itemsById",
+      "1",
+      "isSubscribed",
+    ],
+    "rhs": false,
+  },
+]
+`;
+
+exports[`on TOGGLE_TOPIC_SUBSCRIBE_PENDING will set isSubscribed to true and increment followersTotal 1`] = `
+Array [
+  DiffEdit {
+    "kind": "E",
+    "lhs": 10,
+    "path": Array [
+      "CommunityTopic",
+      "itemsById",
+      "1",
+      "followersTotal",
+    ],
+    "rhs": 11,
+  },
+  DiffNew {
+    "kind": "N",
+    "path": Array [
+      "CommunityTopic",
+      "itemsById",
+      "1",
+      "isSubscribed",
+    ],
+    "rhs": true,
+  },
+]
+`;
+
 exports[`on VOTE_ON_POST_PENDING when myVote is false increments votesTotal and updates myVote if isUpvote is true 1`] = `
 Array [
   DiffEdit {

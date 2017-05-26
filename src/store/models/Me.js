@@ -7,7 +7,7 @@ const Me = Model.createClass({
   },
 
   firstName () {
-    return this.name.split(' ')[0]
+    return this.name ? this.name.split(' ')[0] : null
   }
 })
 

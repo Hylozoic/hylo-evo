@@ -1,22 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`getTopicSubscriptions transforms topic subscriptions correctly 1`] = `
+exports[`getSubscribedCommunityTopics returns the expected value 1`] = `
 Array [
   SessionBoundModel {
     "_fields": Object {
       "community": "1",
-      "id": 0,
-      "newPostCount": 5,
-      "topic": "1",
+      "id": 3,
+      "isSubscribed": true,
+      "newPostCount": 7,
+      "topic": "3",
     },
+    "isSubscribed": true,
+    "newPostCount": 7,
   },
   SessionBoundModel {
     "_fields": Object {
       "community": "1",
-      "id": 1,
-      "newPostCount": 7,
-      "topic": "2",
+      "id": 0,
+      "isSubscribed": true,
+      "newPostCount": 5,
+      "topic": "1",
     },
+    "isSubscribed": true,
+    "newPostCount": 5,
   },
 ]
 `;

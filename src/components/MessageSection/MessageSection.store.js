@@ -54,13 +54,13 @@ export const getMessages = createSelector(
   state => orm.session(state.orm),
   (state, props) => props.messageThreadId,
   (session, id) => {
-    var messageThread
+    let messageThread
     try {
       messageThread = session.MessageThread.get({id})
     } catch (e) {
       return []
     }
-    return messageThread.messages.orderBy(c => c.id).toModelArray()
+    return messageThread.messages.orderBy(c => Number(c.id)).toModelArray()
   })
 
 const getMessageResults = makeGetQueryResults(FETCH_MESSAGES)
