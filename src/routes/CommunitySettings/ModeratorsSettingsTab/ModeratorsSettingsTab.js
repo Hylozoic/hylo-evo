@@ -6,7 +6,7 @@ import RoundImage from 'components/RoundImage'
 import { KeyControlledItemList } from 'components/KeyControlledList'
 const { array, func, string } = PropTypes
 import { personUrl } from 'util/index'
-import { isEmpty } from 'lodash/fp'
+import { isEmpty, get } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
 
 export default class ModeratorsSettingsTab extends Component {
@@ -112,6 +112,8 @@ export class AddModerator extends Component {
       return this.refs.list.handleKeys(e)
     }
 
+    const listWidth = {width: get('refs.input.clientWidth', this, 0) + 4}
+
     if (adding) {
       return <div styleName='add-moderator adding'>
         <div styleName='help-text'>Search here for members to grant moderator powers</div>
@@ -120,15 +122,18 @@ export class AddModerator extends Component {
             placeholder='Type...'
             type='text'
             onChange={onInputChange}
-            onKeyDown={handleKeys} />
+            onKeyDown={handleKeys}
+            ref='input' />
           <span styleName='cancel-button' onClick={toggle}>Cancel</span>
           <span styleName='add-button' onClick={chooseCurrentItem}>Add</span>
         </div>
-        {!isEmpty(moderatorSuggestions) && <KeyControlledItemList
-          ref='list'
-          items={moderatorSuggestions}
-          onChange={onChoose}
-          theme={styles} />}
+        {!isEmpty(moderatorSuggestions) && <div style={listWidth}>
+          <KeyControlledItemList
+            ref='list'
+            items={moderatorSuggestions}
+            onChange={onChoose}
+            theme={styles} />
+        </div>}
       </div>
     } else {
       return <div styleName='add-moderator add-new' onClick={toggle}>
