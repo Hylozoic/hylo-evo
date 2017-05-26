@@ -46,7 +46,7 @@ describe('TopicListItem', () => {
       },
       postsTotal: 24,
       followersTotal: 52,
-      subscribed: false
+      isSubscribed: false
     }
     const wrapper = shallow(<CommunityTopicListItem item={ct} slug='goteam' />)
     expect(wrapper).toMatchSnapshot()
