@@ -3,6 +3,7 @@ import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getPost from 'store/selectors/getPost'
 import fetchPost from 'store/actions/fetchPost'
+import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import {
   createPost,
   updatePost
@@ -12,11 +13,14 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const communityOptions = props.communityOptions || (currentUser &&
     currentUser.memberships.toModelArray().map(m => m.community))
-  const post = props.post || getPost(state, props)
   const editing = !!getParam('postId', state, props)
+  let post = props.post || getPost(state, props)
   const loading = editing && !post
+  const currentCommunity = getCommunityForCurrentRoute(state, props)
+  if (!editing) post = {communities: [currentCommunity]}
   return {
     post,
+    currentCommunity,
     communityOptions,
     loading,
     editing

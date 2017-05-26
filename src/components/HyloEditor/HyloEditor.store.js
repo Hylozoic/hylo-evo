@@ -39,14 +39,15 @@ export function clearMentions (searchText) {
   return { type: CLEAR_MENTIONS }
 }
 
-export function findTopics (topicsSearchTerm) {
+// TODO: Still tied to a test community under the slug "test1"
+export function findTopics (topicsSearchTerm, communitySlug = 'test1') {
   const collectTopics = results =>
     results.community.communityTopics.items.map(item => item.topic)
   return {
     type: FIND_TOPICS,
     graphql: {
-      query: `query ($topicsSearchTerm: String) {
-        community(slug: "test1") {
+      query: `query ($topicsSearchTerm: String, $communitySlug: String) {
+        community(slug: $communitySlug) {
           communityTopics(autocomplete: $topicsSearchTerm, first: 1) {
             items {
               topic {
@@ -58,7 +59,8 @@ export function findTopics (topicsSearchTerm) {
         }
       }`,
       variables: {
-        topicsSearchTerm
+        topicsSearchTerm,
+        communitySlug
       }
     },
     meta: {
