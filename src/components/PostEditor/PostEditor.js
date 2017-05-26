@@ -46,7 +46,7 @@ export default class PostEditor extends React.Component {
   }
 
   buildStateFromProps = ({ post }) => {
-    const defaultedPost = post || PostEditor.defaultProps.post
+    const defaultedPost = Object.assign({}, PostEditor.defaultProps.post, post)
     return {
       post: defaultedPost,
       titlePlaceholder: this.titlePlaceholderForPostType(defaultedPost.type),
