@@ -1,9 +1,11 @@
 import {
   CLEAR_MODERATOR_SUGGESTIONS,
-  FETCH_COMMUNITY_SETTINGS,
-  UPDATE_COMMUNITY_SETTINGS,
-  FIND_MODERATORS
+  FETCH_MODERATOR_SUGGESTIONS,
+  ADD_MODERATOR,
+  REMOVE_MODERATOR
 } from 'store/constants'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import orm from 'store/models'
 
 export const MODULE_NAME = 'CommunitySettings'
 
@@ -14,7 +16,7 @@ export default function reducer (state = defaultState, action) {
   if (error) return state
 
   switch (type) {
-    case FIND_MODERATORS:
+    case FETCH_MODERATOR_SUGGESTIONS:
       return payload.data.community.members.items.map(m => m.id)
     case CLEAR_MODERATOR_SUGGESTIONS:
       return []
@@ -23,38 +25,12 @@ export default function reducer (state = defaultState, action) {
   }
 }
 
-export function fetchCommunitySettings (slug) {
+export function fetchModeratorSuggestions (id, autocomplete) {
   return {
-    type: FETCH_COMMUNITY_SETTINGS,
+    type: FETCH_MODERATOR_SUGGESTIONS,
     graphql: {
-      query: `query ($slug: String) {
-        community (slug: $slug) {
-          id
-          name
-          slug
-          avatarUrl
-          bannerUrl
-          description
-          location
-          settings
-        }
-      }`,
-      variables: {
-        slug
-      }
-    },
-    meta: {
-      extractModel: 'Community'
-    }
-  }
-}
-
-export function fetchModeratorSuggestions (slug, autocomplete) {
-  return {
-    type: FIND_MODERATORS,
-    graphql: {
-      query: `query ($slug: String, $autocomplete: String) {
-        community (slug: $slug) {
+      query: `query ($id: ID, $autocomplete: String) {
+        community (id: $id) {
           id
           members (first: 10, autocomplete: $autocomplete) {
             hasMore
@@ -67,7 +43,7 @@ export function fetchModeratorSuggestions (slug, autocomplete) {
         }
       }`,
       variables: {
-        slug, autocomplete
+        id, autocomplete
       }
     },
     meta: {
@@ -82,18 +58,66 @@ export function clearModeratorSuggestions () {
   }
 }
 
-export function updateCommunitySettings (id, changes) {
+export function addModerator (personId, communityId) {
   return {
-    type: UPDATE_COMMUNITY_SETTINGS,
+    type: ADD_MODERATOR,
     graphql: {
-      query: `mutation ($id: ID, $changes: CommunityInput) {
-        updateCommunitySettings(id: $id, changes: $changes) {
+      query: `mutation ($personId: ID, $communityId: ID) {
+        addModerator(personId: $personId, communityId: $communityId) {
           id
+          moderators (first: 100) {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
         }
       }`,
-      variables: {
-        id, changes
-      }
+      variables: {personId, communityId}
+    },
+    meta: {
+      personId,
+      communityId,
+      optimistic: true
     }
   }
 }
+
+export function removeModerator (personId, communityId) {
+  return {
+    type: REMOVE_MODERATOR,
+    graphql: {
+      query: `mutation ($personId: ID, $communityId: ID) {
+        removeModerator(personId: $personId, communityId: $communityId) {
+          id
+          moderators (first: 100) {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+        }
+      }`,
+      variables: {personId, communityId}
+    },
+    meta: {
+      personId,
+      communityId,
+      optimistic: true
+    }
+  }
+}
+
+// expects props to be of the form {communityId}
+export const getModerators = ormCreateSelector(
+  orm,
+  state => state.orm,
+  (state, props) => props.communityId,
+  ({ Community }, id) => {
+    const community = Community.safeGet({id})
+    if (!community) return []
+    return community.moderators.toModelArray()
+  }
+)

@@ -1,15 +1,20 @@
 import { connect } from 'react-redux'
 import {
-  fetchModeratorSuggestions, clearModeratorSuggestions
+  fetchModeratorSuggestions,
+  clearModeratorSuggestions,
+  getModerators,
+  addModerator,
+  removeModerator
 } from './ModeratorsSettingsTab.store'
 import getPerson from 'store/selectors/getPerson'
-import { fakePerson } from 'components/PostCard/samplePost'
-
-const moderators = fakePerson(7)
+import { includes } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
-  const moderatorSuggestions = state.ModeratorsSettings.map(personId =>
-    getPerson(state, {personId}))
+  const moderators = getModerators(state, props)
+  const moderatorIds = moderators.map(m => m.id)
+  const moderatorSuggestions = state.ModeratorsSettings
+    .filter(personId => !includes(personId, moderatorIds))
+    .map(personId => getPerson(state, {personId}))
 
   return {
     moderators,
@@ -18,32 +23,14 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
+  const { communityId } = props
+
   return {
-    removeModerator: id => console.log('removing moderator', id),
-    fetchModeratorSuggestionsMaker: slug => autocomplete => dispatch(fetchModeratorSuggestions(slug, autocomplete)),
+    addModerator: id => dispatch(addModerator(id, communityId)),
+    removeModerator: id => dispatch(removeModerator(id, communityId)),
+    fetchModeratorSuggestions: autocomplete => dispatch(fetchModeratorSuggestions(communityId, autocomplete)),
     clearModeratorSuggestions: () => dispatch(clearModeratorSuggestions())
   }
 }
 
-export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { slug } = ownProps
-  const {
-    fetchModeratorSuggestionsMaker
-   } = dispatchProps
-  var fetchModeratorSuggestions
-
-  if (slug) {
-    fetchModeratorSuggestions = fetchModeratorSuggestionsMaker(slug)
-  } else {
-    fetchModeratorSuggestions = () => {}
-  }
-
-  return {
-    ...stateProps,
-    ...dispatchProps,
-    ...ownProps,
-    fetchModeratorSuggestions
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
+export default connect(mapStateToProps, mapDispatchToProps)

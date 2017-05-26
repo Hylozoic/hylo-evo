@@ -17,6 +17,14 @@ export function fetchCommunitySettings (slug) {
           description
           location
           settings
+          moderators (first: 100) {
+            hasMore
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
         }
       }`,
       variables: {

@@ -10,7 +10,7 @@ import { get } from 'lodash/fp'
 export default class CommunitySettings extends Component {
   static propTypes = {
     community: object,
-    fetchCommunitySettings: func,
+    fetchCommunitySettings: func
   }
 
   componentDidMount () {
@@ -46,7 +46,7 @@ export default class CommunitySettings extends Component {
         {
           name: 'Moderators',
           path: `/c/${slug}/settings/moderators`,
-          component: <ModeratorsSettingsTab slug={slug} />
+          component: <ModeratorsSettingsTab communityId={community.id} />
         }
       ]} />
   }
