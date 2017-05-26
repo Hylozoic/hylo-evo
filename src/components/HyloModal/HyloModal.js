@@ -18,7 +18,7 @@ export default class HyloModal extends Component {
 
   closeModal = () => {
     this.setState({modalIsOpen: false})
-    window.history.back()
+    window.history.back() // TODO: Bring in as onClose func
   }
 
   render () {

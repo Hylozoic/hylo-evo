@@ -22,6 +22,7 @@ export function mapStateToProps (state, props) {
   return {
     post,
     communityOptions,
+    currentUser,
     editing,
     loading
   }

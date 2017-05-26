@@ -15,6 +15,7 @@ export default class PostEditor extends React.Component {
     titlePlaceholderForPostType: PropTypes.object,
     detailsPlaceholder: PropTypes.string,
     communityOptions: PropTypes.array,
+    currentUser: PropTypes.object,
     post: PropTypes.shape({
       id: PropTypes.string,
       type: PropTypes.string,
@@ -142,15 +143,18 @@ export default class PostEditor extends React.Component {
     const { id, type, title, communities } = this.state.post
     const details = this.editor.getContentHTML()
     const postToSave = { id, type, title, details, communities }
-    const saveFun = editing ? updatePost : createPost
-    saveFun(postToSave).then(onClose)
+    const saveFunc = editing ? updatePost : createPost
+    saveFunc(postToSave).then(onClose)
   }
 
   render () {
     const { titlePlaceholder, valid, post } = this.state
     if (!post) return null
     const { title, details, communities } = post
-    const { onClose, initialPrompt, detailsPlaceholder, communityOptions, editing, loading } = this.props
+    const {
+      onClose, initialPrompt, detailsPlaceholder,
+      currentUser, communityOptions, editing, loading
+    } = this.props
     const submitButtonLabel = editing ? 'Save' : 'Post'
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
       <div styleName='header'>
@@ -170,7 +174,7 @@ export default class PostEditor extends React.Component {
             medium
             styleName='titleAvatar'
             url=''
-            avatarUrl='https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+            avatarUrl={currentUser && currentUser.avatarUrl}
           />
         </div>
         <div styleName='body-column'>
