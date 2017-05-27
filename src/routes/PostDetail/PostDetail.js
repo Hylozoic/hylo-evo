@@ -17,6 +17,7 @@ export default class PostDetail extends Component {
   static propTypes = {
     post: object,
     id: string,
+    currentUser: object,
     slug: string,
     fetchPost: func,
     showCommunity: bool,
@@ -66,10 +67,10 @@ export default class PostDetail extends Component {
   }
 
   render () {
-    const { post, slug, onClose, showCommunity, editPost } = this.props
+    const { post, currentUser, slug, onClose, showCommunity, editPost } = this.props
     const { atTop, atActivity } = this.state
     if (!post) return null
-
+    const canEdit = currentUser && currentUser.id === post.creator.id
     const scrollToBottom = () => {
       const detail = document.getElementById(DETAIL_COLUMN_ID)
       detail.scrollTop = detail.scrollHeight
@@ -80,7 +81,7 @@ export default class PostDetail extends Component {
       type={post.type}
       communities={post.communities}
       showCommunity={showCommunity}
-      editPost={editPost}
+      editPost={canEdit && editPost}
       close={onClose}
       slug={slug}
       styleName='header' />

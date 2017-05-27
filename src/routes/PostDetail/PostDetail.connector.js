@@ -3,12 +3,14 @@ import { push } from 'react-router-redux'
 import fetchPost from 'store/actions/fetchPost'
 import getParam from 'store/selectors/getParam'
 import getPost from 'store/selectors/getPost'
+import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
   const slug = getParam('slug', state, props)
   return {
     post: getPost(state, props),
     id: getParam('postId', state, props),
+    currentUser: getMe(state),
     slug,
     showCommunity: !slug
   }

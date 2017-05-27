@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import TabBar from './TabBar'
 import PostCard from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
@@ -76,8 +76,7 @@ export default class FeedList extends React.Component {
       changeTab,
       changeSort,
       posts,
-      showCommunities,
-      editPost
+      showCommunities
     } = this.props
     const { atTabBar } = this.state
 

@@ -34,14 +34,17 @@ export default function PostHeader ({
     {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')}
   ]
   if (editPost) {
-    dropdownItems = dropdownItems.concat(
-      {icon: 'AddImage', label: 'Edit', onClick: editPost})
+    dropdownItems = [
+      ...dropdownItems,
+      {icon: 'AddImage', label: 'Edit', onClick: editPost}
+    ]
   }
-  dropdownItems = dropdownItems.concat([
+  dropdownItems = [
+    ...dropdownItems,
     {icon: 'Trash', label: 'Delete', onClick: () => console.log('Delete')},
     {label: 'Other'},
     {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
-  ])
+  ]
 
   return <div styleName='header' className={className}>
     <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
