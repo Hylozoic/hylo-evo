@@ -53,6 +53,7 @@
   padding-top: $space-2x;
   /* prevent autoresize overflowing the container */
   max-width: 100%;
+  line-height: 1;
 }
 
 @media screen and (min-width: 30em) {
