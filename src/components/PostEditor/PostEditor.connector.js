@@ -1,4 +1,6 @@
 import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
+import { postUrl } from 'util/index'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getPost from 'store/selectors/getPost'
@@ -29,9 +31,14 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
+  const slug = getParam('slug', null, props)
   return {
     updatePost: (postParams) => dispatch(updatePost(postParams)),
-    createPost: (postParams) => dispatch(createPost(postParams))
+    createPost: (postParams) => dispatch(createPost(postParams)),
+    goToPost: (createPostAction) => {
+      const id = createPostAction.payload.data.createPost.id
+      return dispatch(push(postUrl(id, slug)))
+    }
   }
 }
 

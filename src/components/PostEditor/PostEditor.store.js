@@ -1,7 +1,7 @@
 export const MODULE_NAME = 'PostEditor'
 
-const CREATE_POST = `${MODULE_NAME}/CREATE_POST`
-const UPDATE_POST = `${MODULE_NAME}/UPDATE_POST`
+export const CREATE_POST = `${MODULE_NAME}/CREATE_POST`
+export const UPDATE_POST = `${MODULE_NAME}/UPDATE_POST`
 
 export function createPost (post) {
   const { type, title, details, communities } = post
@@ -15,10 +15,14 @@ export function createPost (post) {
           type
           title
           details
+          commentersTotal
           communities {
             id
             name
             slug
+          }
+          creator {
+            id
           }
         }
       }`,
