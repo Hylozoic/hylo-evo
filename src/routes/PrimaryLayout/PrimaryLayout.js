@@ -112,7 +112,7 @@ const detailRoutes = [
 
 function RedirectToCommunity ({ currentUser }) {
   return <Route path='/' exact render={() => {
-    if (!currentUser) return <Loading type='top' />
+    if (!currentUser || currentUser.memberships.count() === 0) return <Loading type='top' />
 
     const mostRecentCommunity = currentUser.memberships
     .orderBy(m => new Date(m.lastViewedAt), 'desc')
