@@ -21,7 +21,7 @@ export default class TopicNavigation extends Component {
 
   componentDidUpdate (prevProps) {
     if (!this.props.community) return
-    if (this.props.community.id !== prevProps.community.id) {
+    if (!prevProps.community || this.props.community.id !== prevProps.community.id) {
       this.props.fetchCommunityTopics()
     }
   }

@@ -8,7 +8,7 @@ export const getSubscribedCommunityTopics = ormCreateSelector(
   state => state.orm,
   getCommunityForCurrentRoute,
   (session, community) => {
-    if (!community) return null
+    if (!community) return []
     const ct = session.CommunityTopic
     .filter({community: community.id, isSubscribed: true})
     .toModelArray()
