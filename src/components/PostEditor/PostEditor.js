@@ -3,7 +3,7 @@ import { get } from 'lodash/fp'
 import cx from 'classnames'
 import styles from './PostEditor.scss'
 import Icon from 'components/Icon'
-import Avatar from 'components/Avatar'
+import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
@@ -171,11 +171,10 @@ export default class PostEditor extends React.Component {
       </div>
       <div styleName='body'>
         <div styleName='body-column'>
-          <Avatar
+          <RoundImage
             medium
             styleName='titleAvatar'
-            url=''
-            avatarUrl={currentUser && currentUser.avatarUrl}
+            url={currentUser && currentUser.avatarUrl}
           />
         </div>
         <div styleName='body-column'>

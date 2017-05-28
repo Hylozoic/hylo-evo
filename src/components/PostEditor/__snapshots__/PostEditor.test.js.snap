@@ -55,11 +55,9 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
     <div
       data-styleName="body-column"
     >
-      <Avatar
-        avatarUrl="https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png"
+      <RoundImage
         data-styleName="titleAvatar"
         medium={true}
-        url=""
       />
     </div>
     <div
@@ -186,11 +184,9 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     <div
       data-styleName="body-column"
     >
-      <Avatar
-        avatarUrl="https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png"
+      <RoundImage
         data-styleName="titleAvatar"
         medium={true}
-        url=""
       />
     </div>
     <div
@@ -304,11 +300,9 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     <div
       data-styleName="body-column"
     >
-      <Avatar
-        avatarUrl="https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png"
+      <RoundImage
         data-styleName="titleAvatar"
         medium={true}
-        url=""
       />
     </div>
     <div
@@ -422,11 +416,9 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     <div
       data-styleName="body-column"
     >
-      <Avatar
-        avatarUrl="https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png"
+      <RoundImage
         data-styleName="titleAvatar"
         medium={true}
-        url=""
       />
     </div>
     <div
@@ -540,11 +532,9 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
     <div
       data-styleName="body-column"
     >
-      <Avatar
-        avatarUrl="https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png"
+      <RoundImage
         data-styleName="titleAvatar"
         medium={true}
-        url=""
       />
     </div>
     <div
@@ -660,11 +650,9 @@ exports[`PostEditor form in editing mode 1`] = `
     <div
       data-styleName="body-column"
     >
-      <Avatar
-        avatarUrl="https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png"
+      <RoundImage
         data-styleName="titleAvatar"
         medium={true}
-        url=""
       />
     </div>
     <div
@@ -791,11 +779,9 @@ exports[`PostEditor post is being loaded to be edited 1`] = `
     <div
       data-styleName="body-column"
     >
-      <Avatar
-        avatarUrl="https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png"
+      <RoundImage
         data-styleName="titleAvatar"
         medium={true}
-        url=""
       />
     </div>
     <div
@@ -922,11 +908,9 @@ exports[`PostEditor renders with min props 1`] = `
     <div
       data-styleName="body-column"
     >
-      <Avatar
-        avatarUrl="https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png"
+      <RoundImage
         data-styleName="titleAvatar"
         medium={true}
-        url=""
       />
     </div>
     <div
