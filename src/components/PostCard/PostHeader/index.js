@@ -36,7 +36,7 @@ export default function PostHeader ({
   if (editPost) {
     dropdownItems = [
       ...dropdownItems,
-      {icon: 'AddImage', label: 'Edit', onClick: editPost}
+      {icon: 'Edit', label: 'Edit', onClick: editPost}
     ]
   }
   dropdownItems = [
