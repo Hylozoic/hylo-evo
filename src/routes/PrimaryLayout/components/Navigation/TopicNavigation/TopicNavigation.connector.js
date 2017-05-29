@@ -28,8 +28,9 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    fetchCommunityTopics: () =>
-      dispatchProps.fetchCommunityTopics(community.id, true)
+    fetchCommunityTopics: () => community
+      ? dispatchProps.fetchCommunityTopics(community.id, true)
+      : null
   }
 }
 

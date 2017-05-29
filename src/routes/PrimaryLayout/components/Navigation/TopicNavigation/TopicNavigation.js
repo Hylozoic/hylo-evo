@@ -20,12 +20,14 @@ export default class TopicNavigation extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.community.id !== prevProps.community.id) {
+    if (!this.props.community) return
+    if (!prevProps.community || this.props.community.id !== prevProps.community.id) {
       this.props.fetchCommunityTopics()
     }
   }
 
   render () {
+    if (!this.props.community) return null
     const { communityTopics, clearBadge, community: { slug } } = this.props
 
     return <div styleName='s.topicNavigation'>
