@@ -2,6 +2,7 @@ import React from 'react'
 import { throttle } from 'lodash'
 import { get } from 'lodash/fp'
 const { array, bool, func, number, object, string } = React.PropTypes
+import Loading from 'components/Loading'
 import Message from 'components/Message'
 import './MessageSection.scss'
 
@@ -146,10 +147,10 @@ export default class MessageSection extends React.Component {
     }
   }
 
-  markAsRead = () => {
+  markAsRead = throttle(() => {
     const { thread, updateThreadReadTime } = this.props
     if (thread) updateThreadReadTime(thread.id)
-  }
+  }, 3000, {trailing: true})
 
   render () {
     const { messages, pending, thread } = this.props
@@ -157,7 +158,7 @@ export default class MessageSection extends React.Component {
       ref={list => this.list = list} // eslint-disable-line no-return-assign
       onScroll={this.handleScroll}>
       <div styleName='messages-section-inner'>
-        {pending && <div>TODO: Loading...</div>}
+        {pending && <Loading />}
         {createMessageList(messages, lastSeenAtTimes[get('id', thread)])}
       </div>
     </div>
