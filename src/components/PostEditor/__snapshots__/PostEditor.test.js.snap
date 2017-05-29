@@ -198,8 +198,10 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         onChange={[Function]}
         placeholder="discussion placeholder"
         type="text"
+        value=""
       />
       <Connect(HyloEditor)
+        contentHTML=""
         data-styleName="editor"
         onChange={[Function]}
         placeholder="Add details..."
@@ -314,8 +316,10 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         onChange={[Function]}
         placeholder="offer placeholder"
         type="text"
+        value=""
       />
       <Connect(HyloEditor)
+        contentHTML=""
         data-styleName="editor"
         onChange={[Function]}
         placeholder="Add details..."
@@ -430,8 +434,10 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         onChange={[Function]}
         placeholder="request placeholder"
         type="text"
+        value=""
       />
       <Connect(HyloEditor)
+        contentHTML=""
         data-styleName="editor"
         onChange={[Function]}
         placeholder="Add details..."
