@@ -15,8 +15,8 @@ export default class CommentForm extends Component {
     placeholderText: string
   }
 
-  startTyping = throttle((editorState) => {
-    if (editorState.getLastChangeType() === 'insert-characters') {
+  startTyping = throttle((editorState, stateChanged) => {
+    if (editorState.getLastChangeType() === 'insert-characters' && stateChanged) {
       this.props.sendIsTyping(true)
     }
   }, STARTED_TYPING_INTERVAL)
