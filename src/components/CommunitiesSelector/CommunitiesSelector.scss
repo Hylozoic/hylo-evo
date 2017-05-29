@@ -67,15 +67,20 @@
   background: none;
   /* prevent autoresize overflowing the container */
   max-width: 100%;
-  color: $color-dove-gray-50;
+  min-width: 180px;
   /* remove styles and layout from this element */
   margin: 0;
   padding: 0;
   border: 0;
   outline: none;
+  color: $color-rhino-80;
   /* match the font styles */
   font-size: inherit;
   line-height: inherit;
+}
+
+.search input::placeholder {
+  color: $color-dove-gray-50;
 }
 
 .search input::-ms-clear {

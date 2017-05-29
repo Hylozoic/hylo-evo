@@ -12,7 +12,7 @@ export default class CommunitiesSelector extends Component {
   }
 
   static defaultProps = {
-    placeholder: 'Begin typing...',
+    placeholder: 'Type community name...',
     selected: [],
     options: []
   }
