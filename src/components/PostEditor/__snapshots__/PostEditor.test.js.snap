@@ -67,7 +67,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         data-styleName="titleInput"
         disabled={false}
         onChange={[Function]}
-        placeholder="What’s on your mind?"
+        placeholder="What are you looking for help with?"
         type="text"
         value="valid title"
       />
@@ -668,7 +668,7 @@ exports[`PostEditor form in editing mode 1`] = `
         data-styleName="titleInput"
         disabled={false}
         onChange={[Function]}
-        placeholder="What’s on your mind?"
+        placeholder="What are you looking for help with?"
         type="text"
         value="valid title"
       />
@@ -797,7 +797,7 @@ exports[`PostEditor post is being loaded to be edited 1`] = `
         data-styleName="titleInput"
         disabled={true}
         onChange={[Function]}
-        placeholder="What’s on your mind?"
+        placeholder="What are you looking for help with?"
         type="text"
         value="valid title"
       />

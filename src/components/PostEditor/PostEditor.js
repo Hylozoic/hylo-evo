@@ -34,6 +34,7 @@ export default class PostEditor extends React.Component {
     initialPrompt: 'What are you looking to post?',
     titlePlaceholderForPostType: {
       offer: 'What super powers can you offer?',
+      request: 'What are you looking for help with?',
       default: 'What’s on your mind?'
     },
     detailsPlaceholder: 'Add details...',
