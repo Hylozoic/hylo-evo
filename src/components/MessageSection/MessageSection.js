@@ -128,9 +128,11 @@ export default class MessageSection extends React.Component {
 
   detectScrollExtremes = throttle(target => {
     if (this.props.pending) return
-    const { scrollTop, scrollHeight, offsetHeight } = target
+    const { offsetHeight, scrollHeight, scrollTop } = target
 
-    if (scrollTop < scrollHeight - offsetHeight) this.markAsRead()
+    // TODO: is this the correct behaviour? Just because we've read the
+    // bottom message doesn't mean we've read 'em all...
+    if (scrollHeight - scrollTop - offsetHeight < 1) this.markAsRead()
     if (scrollTop <= 150) this.fetchMore()
   }, 500, {trailing: true})
 
@@ -147,10 +149,10 @@ export default class MessageSection extends React.Component {
     }
   }
 
-  markAsRead = throttle(() => {
+  markAsRead () {
     const { thread, updateThreadReadTime } = this.props
     if (thread) updateThreadReadTime(thread.id)
-  }, 3000, {trailing: true})
+  }
 
   render () {
     const { messages, pending, thread } = this.props
