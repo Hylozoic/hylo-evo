@@ -1,5 +1,5 @@
 import orm from 'store/models'
-import { getSubscribedCommunityTopics } from './TopicNavigation.store'
+import { getSubscribedCommunityTopics, mergeCommunityTopics } from './TopicNavigation.store'
 
 describe('getSubscribedCommunityTopics', () => {
   const session = orm.session(orm.getEmptyState())
@@ -44,5 +44,28 @@ describe('getSubscribedCommunityTopics', () => {
   it('returns the expected value', () => {
     const communityTopics = getSubscribedCommunityTopics(state, {slug: 'foo'})
     expect(communityTopics).toMatchSnapshot()
+  })
+})
+
+describe('mergeCommunityTopics', () => {
+  const data = [
+    {community: '1', topic: {name: 'foo'}, newPostCount: 1, postsTotal: 2, followersTotal: 3},
+    {community: '2', topic: {name: 'foo'}, newPostCount: 1, postsTotal: 2, followersTotal: 3},
+    {community: '3', topic: {name: 'foo'}, newPostCount: 1, postsTotal: 2, followersTotal: 3},
+    {community: '1', topic: {name: 'bar'}, newPostCount: 1, postsTotal: 2, followersTotal: 3},
+    {community: '2', topic: {name: 'bar'}, newPostCount: 1, postsTotal: 2, followersTotal: 3},
+    {community: '3', topic: {name: 'baz'}, newPostCount: 1, postsTotal: 2, followersTotal: 3}
+  ]
+
+  it('works as expected', () => {
+    expect(mergeCommunityTopics(data)).toEqual([
+      {topic: {name: 'foo'}, newPostCount: 3, postsTotal: 6, followersTotal: 9},
+      {topic: {name: 'bar'}, newPostCount: 2, postsTotal: 4, followersTotal: 6},
+      {topic: {name: 'baz'}, newPostCount: 1, postsTotal: 2, followersTotal: 3}
+    ])
+  })
+
+  it('works on an empty list', () => {
+    expect(mergeCommunityTopics([])).toEqual([])
   })
 })
