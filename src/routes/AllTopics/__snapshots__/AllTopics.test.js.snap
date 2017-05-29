@@ -1,50 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AllTopics matches the latest snapshot 1`] = `
-<withRouter(Connect(FullPageModal))
-  content={
+<withRouter(Connect(FullPageModal))>
+  <div
+    data-styleName="all-topics"
+  >
     <div
-      data-styleName="all-topics"
+      data-styleName="title"
     >
-      <div
-        data-styleName="title"
-      >
-        Topics
-      </div>
-      <div
-        data-styleName="subtitle"
-      >
-         Total Topics
-      </div>
-      <SearchBar
-        onChangeSearch={[Function]}
-        onChangeSort={[Function]}
-        search=""
-        selectedSort="followers"
-      />
-      <div
-        data-styleName="topic-list"
-      >
-        <CommunityTopicListItem
-          item={
-            Object {
-              "followersTotal": 52,
-              "id": "1",
-              "isSubscribed": false,
-              "postsTotal": 24,
-              "topic": Object {
-                "id": "2",
-                "name": "petitions",
-              },
-            }
-          }
-          slug="goteam"
-          toggleSubscribe={[Function]}
-        />
-      </div>
+      Topics
     </div>
-  }
-/>
+    <div
+      data-styleName="subtitle"
+    >
+       Total Topics
+    </div>
+    <SearchBar
+      onChangeSearch={[Function]}
+      onChangeSort={[Function]}
+      search=""
+      selectedSort="followers"
+    />
+    <div
+      data-styleName="topic-list"
+    >
+      <CommunityTopicListItem
+        item={
+          Object {
+            "followersTotal": 52,
+            "id": "1",
+            "isSubscribed": false,
+            "postsTotal": 24,
+            "topic": Object {
+              "id": "2",
+              "name": "petitions",
+            },
+          }
+        }
+        slug="goteam"
+        toggleSubscribe={[Function]}
+      />
+    </div>
+  </div>
+</withRouter(Connect(FullPageModal))>
 `;
 
 exports[`SearchBar matches the latest snapshot 1`] = `
