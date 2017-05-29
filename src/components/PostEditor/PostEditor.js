@@ -37,7 +37,7 @@ export default class PostEditor extends React.Component {
       request: 'What are you looking for help with?',
       default: 'What’s on your mind?'
     },
-    detailsPlaceholder: 'Add details...',
+    detailsPlaceholder: 'Add a description',
     post: {
       type: 'discussion',
       title: '',

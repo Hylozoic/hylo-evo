@@ -105,11 +105,15 @@
   &:disabled {
     color: $color-rhino-80;
   }
+  &::placeholder {
+    color: $color-rhino-30;
+  }
 }
 
 .editor {
   height: 200px;
   margin-bottom: $space-6x;
+  color: $color-rhino-80;
 }
 
 // Footer area
@@ -141,7 +145,6 @@
   flex-direction: row;
   justify-content: flex-end;
   padding: $space-3x;
-  background-color: $color-athens-gray-dark;
 }
 
 .postButton {
