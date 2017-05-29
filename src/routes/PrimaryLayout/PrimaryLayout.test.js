@@ -1,6 +1,6 @@
 import { MemoryRouter, Redirect } from 'react-router'
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { shallow } from 'enzyme'
 
 import orm from 'store/models'
 import Navigation from './components/Navigation'
@@ -45,7 +45,7 @@ describe('RedirectToCommunity', () => {
     const user = session.Person.withId('1')
     user.set('memberships', [ '1' ])
 
-    const wrapper = mount(<MemoryRouter>
+    const wrapper = shallow(<MemoryRouter>
       {redirectIfCommunity(user)()}
     </MemoryRouter>)
 
