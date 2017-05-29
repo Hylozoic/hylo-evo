@@ -1,7 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`does something 1`] = `
-<div
-  data-styleName="exampleName"
+exports[`renders correctly with a community 1`] = `
+<withRouter(Connect(FullPageModal))
+  content={
+    Array [
+      Object {
+        "component": <CommunitySettingsTab
+          community={
+                Object {
+                      "id": 1,
+                      "name": "Foomunity",
+                      "slug": "foo",
+                    }
+          }
+    />,
+        "name": "Settings",
+        "path": "/c/foo/settings",
+      },
+      Object {
+        "component": <Connect(ModeratorsSettingsTab)
+          communityId={1}
+    />,
+        "name": "Moderators",
+        "path": "/c/foo/settings/moderators",
+      },
+    ]
+  }
 />
 `;
+
+exports[`renders correctly with no community 1`] = `<Loading />`;

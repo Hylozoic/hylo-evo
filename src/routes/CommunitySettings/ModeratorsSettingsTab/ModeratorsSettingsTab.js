@@ -71,7 +71,7 @@ export class AddModerator extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      adding: true
+      adding: false
     }
   }
 

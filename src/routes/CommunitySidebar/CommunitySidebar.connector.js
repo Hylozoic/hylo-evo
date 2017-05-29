@@ -4,7 +4,7 @@ import {
 } from './CommunitySidebar.store'
 import getParam from 'store/selectors/getParam'
 // TODO: make getMe correct
-import { getMe } from 'store/selectors/getMe'
+import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 
 export function mapStateToProps (state, props) {

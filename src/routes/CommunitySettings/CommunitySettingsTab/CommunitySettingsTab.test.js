@@ -2,12 +2,19 @@ import CommunitySettingsTab from './CommunitySettingsTab'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-describe.skip('CommunitySettingsTab', () => {
+describe('CommunitySettingsTab', () => {
   it('renders correctly', () => {
-    const wrapper = shallow(<CommunitySettingsTab currentUser={{}} />)
-    expect(wrapper.find('Connect(ChangeImageButton)').length).toEqual(2)
-    expect(wrapper.find('Control').length).toEqual(5)
-    expect(wrapper.find('SocialControl').length).toEqual(3)
+    const community = {
+      id: 1,
+      name: 'Foomunity',
+      slug: 'foo',
+      location: 'Fuji',
+      description: 'Great community',
+      avatarUrl: 'avatar.png',
+      bannerUrl: 'avatar.png'
+    }
+    const wrapper = shallow(<CommunitySettingsTab community={community} />)
+    expect(wrapper).toMatchSnapshot()
     expect(wrapper.find('Button').prop('color')).toEqual('gray')
     wrapper.setState({changed: true})
     expect(wrapper.find('Button').prop('color')).toEqual('green')
