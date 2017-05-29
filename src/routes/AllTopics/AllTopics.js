@@ -60,8 +60,8 @@ export default class AllTopics extends Component {
     } = this.props
     const { search } = this.state
 
-    return <FullPageModal
-      content={<div styleName='all-topics'>
+    return <FullPageModal>
+      <div styleName='all-topics'>
         <div styleName='title'>Topics</div>
         <div styleName='subtitle'>{totalTopics} Total Topics</div>
         <SearchBar
@@ -75,7 +75,8 @@ export default class AllTopics extends Component {
               toggleSubscribe={() =>
                 toggleSubscribe(ct.topic.id, !ct.isSubscribed)} />)}
         </div>
-      </div>} />
+      </div>
+    </FullPageModal>
   }
 }
 

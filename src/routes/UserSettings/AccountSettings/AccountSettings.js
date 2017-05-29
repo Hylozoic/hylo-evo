@@ -57,7 +57,13 @@ export default class AccountSettings extends Component {
   }
 
   render () {
-    const { currentUser, updateUserSettings, loginWithService, unlinkAccount } = this.props
+    const {
+      currentUser,
+      updateUserSettings,
+      loginWithService,
+      unlinkAccount,
+      setModified
+     } = this.props
     if (!currentUser) return <Loading />
 
     const { edits, changed } = this.state
@@ -67,6 +73,7 @@ export default class AccountSettings extends Component {
 
     const updateSetting = (key, setChanged = true) => event => {
       const { edits, changed } = this.state
+      setChanged && setModified(true)
       this.setState({
         changed: setChanged ? true : changed,
         edits: {
@@ -81,6 +88,7 @@ export default class AccountSettings extends Component {
 
     const save = () => {
       this.setState({changed: false})
+      setModified(false)
       updateUserSettings(edits)
     }
 

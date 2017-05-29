@@ -1,4 +1,30 @@
-import { FETCH_USER_SETTINGS, UPDATE_USER_SETTINGS, LEAVE_COMMUNITY } from 'store/constants'
+import {
+  FETCH_USER_SETTINGS,
+  UPDATE_USER_SETTINGS,
+  LEAVE_COMMUNITY,
+  SET_FULL_PAGE_MODAL_MODIFIED
+} from 'store/constants'
+
+const defaultState = false
+
+export default function reducer (state = defaultState, action) {
+  const { error, type, payload } = action
+  if (error) return state
+
+  switch (type) {
+    case SET_FULL_PAGE_MODAL_MODIFIED:
+      return payload
+    default:
+      return state
+  }
+}
+
+export function setFullPageModalModified (modified) {
+  return {
+    type: SET_FULL_PAGE_MODAL_MODIFIED,
+    payload: modified
+  }
+}
 
 export function fetchUserSettings () {
   return {

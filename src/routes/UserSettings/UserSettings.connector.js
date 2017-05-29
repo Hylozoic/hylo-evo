@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import { fetchUserSettings, updateUserSettings, leaveCommunity, unlinkAccount } from './UserSettings.store'
+import { setFullPageModalModified } from '../FullPageModal/FullPageModal.store'
 import { loginWithService } from 'routes/Login/Login.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
@@ -18,10 +19,12 @@ export const getCurrentUserCommunities = ormCreateSelector(
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const communities = getCurrentUserCommunities(state, props)
+  const modified = state.FullPageModalModified
 
   return {
     currentUser,
-    communities
+    communities,
+    modified
   }
 }
 
@@ -30,7 +33,23 @@ export const mapDispatchToProps = {
   updateUserSettings,
   leaveCommunity,
   loginWithService,
-  unlinkAccount
+  unlinkAccount,
+  setFullPageModalModified
 }
 
-export default component => connect(mapStateToProps, mapDispatchToProps)(component)
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { modified } = stateProps
+  const { setFullPageModalModified } = dispatchProps
+  const setModified = newState => {
+    if (newState === modified) return
+    return setFullPageModalModified(newState)
+  }
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    setModified
+  }
+}
+
+export default component => connect(mapStateToProps, mapDispatchToProps, mergeProps)(component)
