@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import { fetchUserSettings, updateUserSettings, leaveCommunity, unlinkAccount } from './UserSettings.store'
-import { setFullPageModalModified } from '../FullPageModal/FullPageModal.store'
+import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import { loginWithService } from 'routes/Login/Login.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
@@ -34,21 +34,21 @@ export const mapDispatchToProps = {
   leaveCommunity,
   loginWithService,
   unlinkAccount,
-  setFullPageModalModified
+  setConfirmBeforeClose
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { modified } = stateProps
-  const { setFullPageModalModified } = dispatchProps
-  const setModified = newState => {
+  const { setConfirmBeforeClose } = dispatchProps
+  const setConfirm = newState => {
     if (newState === modified) return
-    return setFullPageModalModified(newState)
+    return setConfirmBeforeClose(newState)
   }
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    setModified
+    setConfirm
   }
 }
 

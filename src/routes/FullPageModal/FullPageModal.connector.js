@@ -1,33 +1,33 @@
 import { connect } from 'react-redux'
 import { goBack, push } from 'react-router-redux'
 import { withRouter } from 'react-router-dom'
-import { setFullPageModalModified } from './FullPageModal.store'
+import { setConfirmBeforeClose } from './FullPageModal.store'
 
 export function mapStateToProps (state, props) {
   return {
-    modified: state.FullPageModalModified
+    confirmMessage: state.FullPageModalConfirm
   }
 }
 
 export const mapDispatchToProps = {
   goBack,
   push,
-  setFullPageModalModified
+  setConfirmBeforeClose
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { goBack, push, setFullPageModalModified } = dispatchProps
+  const { goBack, push, setConfirmBeforeClose } = dispatchProps
   const { history } = ownProps
-  const { modified } = stateProps
+  const { confirmMessage } = stateProps
 
   const navigate = history.length > 2
     ? () => goBack()
     : () => push('/')
 
-  const onClose = modified
+  const onClose = confirmMessage
     ? () => {
-      if (window.confirm('You have unsaved changes, are you sure you want to leave?')) {
-        setFullPageModalModified(false)
+      if (window.confirm(confirmMessage)) {
+        setConfirmBeforeClose(false)
         navigate()
       }
     }
