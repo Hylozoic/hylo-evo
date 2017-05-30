@@ -1,26 +1,26 @@
 import { mergeProps } from './UserSettings.connector'
 
 describe('mergeProps', () => {
-  it("setModified only fires if it's a change", () => {
-    const setFullPageModalModified = jest.fn()
+  it("setConfirm only fires if it's a change", () => {
+    const setConfirmBeforeClose = jest.fn()
 
     const dispatchProps = {
-      setFullPageModalModified
+      setConfirmBeforeClose
     }
 
-    var { setModified } = mergeProps({modified: false}, dispatchProps, {})
+    var { setConfirm } = mergeProps({modified: false}, dispatchProps, {})
 
-    setModified(false)
-    expect(setFullPageModalModified).not.toHaveBeenCalled()
-    setModified(true)
-    expect(setFullPageModalModified).toHaveBeenCalledWith(true)
+    setConfirm(false)
+    expect(setConfirmBeforeClose).not.toHaveBeenCalled()
+    setConfirm('message')
+    expect(setConfirmBeforeClose).toHaveBeenCalledWith('message')
 
-    setFullPageModalModified.mockClear()
-    setModified = mergeProps({modified: true}, dispatchProps, {}).setModified
+    setConfirmBeforeClose.mockClear()
+    setConfirm = mergeProps({modified: true}, dispatchProps, {}).setConfirm
 
-    setModified(true)
-    expect(setFullPageModalModified).not.toHaveBeenCalled()
-    setModified(false)
-    expect(setFullPageModalModified).toHaveBeenCalledWith(false)
+    setConfirm('message')
+    expect(setConfirmBeforeClose).not.toHaveBeenCalled()
+    setConfirm(false)
+    expect(setConfirmBeforeClose).toHaveBeenCalledWith(false)
   })
 })

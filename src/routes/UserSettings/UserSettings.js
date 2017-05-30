@@ -29,7 +29,7 @@ export default class UserSettings extends Component {
       leaveCommunity,
       loginWithService,
       unlinkAccount,
-      setModified
+      setConfirm
     } = this.props
 
     return <FullPageModal
@@ -42,7 +42,7 @@ export default class UserSettings extends Component {
             updateUserSettings={updateUserSettings}
             loginWithService={loginWithService}
             unlinkAccount={unlinkAccount}
-            setModified={setModified} />
+            setConfirm={setConfirm} />
         },
         {
           name: 'Communities',

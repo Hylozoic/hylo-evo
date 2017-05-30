@@ -2,7 +2,7 @@ import {
   FETCH_USER_SETTINGS,
   UPDATE_USER_SETTINGS,
   LEAVE_COMMUNITY,
-  SET_FULL_PAGE_MODAL_MODIFIED
+  SET_CONFIRM_BEFORE_CLOSE
 } from 'store/constants'
 
 const defaultState = false
@@ -12,16 +12,16 @@ export default function reducer (state = defaultState, action) {
   if (error) return state
 
   switch (type) {
-    case SET_FULL_PAGE_MODAL_MODIFIED:
+    case SET_CONFIRM_BEFORE_CLOSE:
       return payload
     default:
       return state
   }
 }
 
-export function setFullPageModalModified (modified) {
+export function setConfirmBeforeClose (modified) {
   return {
-    type: SET_FULL_PAGE_MODAL_MODIFIED,
+    type: SET_CONFIRM_BEFORE_CLOSE,
     payload: modified
   }
 }

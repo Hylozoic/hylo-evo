@@ -62,7 +62,7 @@ export default class AccountSettings extends Component {
       updateUserSettings,
       loginWithService,
       unlinkAccount,
-      setModified
+      setConfirm
      } = this.props
     if (!currentUser) return <Loading />
 
@@ -73,7 +73,7 @@ export default class AccountSettings extends Component {
 
     const updateSetting = (key, setChanged = true) => event => {
       const { edits, changed } = this.state
-      setChanged && setModified(true)
+      setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
       this.setState({
         changed: setChanged ? true : changed,
         edits: {
@@ -88,7 +88,7 @@ export default class AccountSettings extends Component {
 
     const save = () => {
       this.setState({changed: false})
-      setModified(false)
+      setConfirm(false)
       updateUserSettings(edits)
     }
 
