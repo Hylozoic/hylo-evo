@@ -104,6 +104,7 @@ export default class KeyControlledList extends React.Component {
   // provide an API for configuring them
   render () {
     const { selectedIndex } = this.state
+
     const { theme, children, ...props } = this.props
 
     this.childrenWithRefs = React.Children.map(children,
@@ -161,6 +162,7 @@ export class KeyControlledItemList extends React.Component {
   render () {
     const { items, selected, theme } = this.props
     const selectedIndex = indexOf(selected, items)
+
     const listItems = items.map((c, i) =>
       <li className={theme.item} key={c.id || 'blank'}>
         <a onClick={event => this.change(c, event)}>{c.name}</a>

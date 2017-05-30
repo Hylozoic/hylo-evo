@@ -6,7 +6,7 @@ import RoundImageRow from 'components/RoundImageRow'
 import './CommunitySidebar.scss'
 const { object, string, array, func } = PropTypes
 import cx from 'classnames'
-import { personUrl } from 'util/index'
+import { personUrl, communitySettingsUrl } from 'util/index'
 import { markdown } from 'hylo-utils/text'
 import { isEmpty } from 'lodash/fp'
 
@@ -30,11 +30,12 @@ export default class CommunitySidebar extends Component {
   }
 
   render () {
-    const { community, members, leaders } = this.props
+    const { community, members, leaders, currentUser } = this.props
     if (!community || isEmpty(members)) return <Loading />
     const { name, description, slug, memberCount } = community
     return <div styleName='community-sidebar'>
       <AboutSection name={name} description={description} />
+      <SettingsLink currentUser={currentUser} community={community} />
       <MemberSection members={members} memberCount={memberCount} slug={slug} />
       <CommunityLeaderSection leaders={leaders} slug={slug} />
     </div>
@@ -77,6 +78,13 @@ export class AboutSection extends Component {
       </span>}
     </div>
   }
+}
+
+export function SettingsLink ({ currentUser, community }) {
+  if (!currentUser.canModerate(community)) return null
+  return <Link styleName='settings-link' to={communitySettingsUrl(community.slug)}>
+    Settings
+  </Link>
 }
 
 export function MemberSection ({ members, memberCount, slug }) {

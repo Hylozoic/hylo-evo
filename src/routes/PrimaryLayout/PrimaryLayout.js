@@ -18,6 +18,7 @@ import MemberProfile from 'routes/MemberProfile'
 import PostDetail from 'routes/PostDetail'
 import Members from 'routes/Members'
 import UserSettings from 'routes/UserSettings'
+import CommunitySettings from 'routes/CommunitySettings'
 import MessageMember from 'components/MessageMember'
 import AllTopics from 'routes/AllTopics'
 import './PrimaryLayout.scss'
@@ -73,6 +74,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/c/:slug/m/:id' component={MemberProfile} />
             <Route path='/c/:slug/p/:postId' component={Feed} />
             <Route path='/c/:slug/topics' component={AllTopics} />
+            <Route path='/c/:slug/settings' component={CommunitySettings} />
             <Route path='/c/:slug/:topicName/p/:postId' component={Feed} />
             <Route path='/c/:slug/:topicName' component={Feed} />
             <Route path='/events' component={Events} />
