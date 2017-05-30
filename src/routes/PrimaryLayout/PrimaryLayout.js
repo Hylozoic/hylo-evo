@@ -103,13 +103,13 @@ export default class PrimaryLayout extends Component {
       <Route path='/t' component={Messages} />
       <SocketListener location={location} />
       <SocketSubscriber type='community' id={get('slug', community)} />
-      {postEditorRoutes.map(path =>
+      {postEditorRoutes.map(({path, forNew}) =>
         <Route
           key={path}
           path={path}
           exact
           children={({match}) => {
-            return <PostEditorModal match={match} />
+            return <PostEditorModal match={match} forNew={forNew} />
           }} />)}
       } />
     </div>
@@ -117,12 +117,12 @@ export default class PrimaryLayout extends Component {
 }
 
 const postEditorRoutes = [
-  '/all/p/new',
-  '/all/p/:postId/edit',
-  '/c/:slug/p/new',
-  '/c/:slug/p/:postId/edit',
-  '/c/:slug/:topicName/p/new',
-  '/c/:slug/:topicName/p/:postId/edit'
+  {path: '/all/p/new', forNew: true},
+  {path: '/all/p/:postId/edit'},
+  {path: '/c/:slug/p/new', forNew: true},
+  {path: '/c/:slug/p/:postId/edit'},
+  {path: '/c/:slug/:topicName/p/new', forNew: true},
+  {path: '/c/:slug/:topicName/p/:postId/edit'}
 ]
 
 const detailRoutes = [

@@ -5,7 +5,7 @@ import './PostEditorModal.scss'
 
 export default class PostEditorModal extends Component {
   render () {
-    const { match } = this.props
+    const { match, hidePostEditor } = this.props
     return <ReactCSSTransitionGroup
       transitionName='post-editor'
       transitionAppear
@@ -17,7 +17,7 @@ export default class PostEditorModal extends Component {
         key='post-editor-modal'>
         <div styleName='post-editor-background' className='post-editor-background' />
         <div styleName='post-editor-wrapper' className='post-editor-wrapper'>
-          <PostEditor onClose={this.onClose} {...this.props} />
+          <PostEditor onClose={hidePostEditor} {...this.props} />
         </div>
       </div>}
     </ReactCSSTransitionGroup>

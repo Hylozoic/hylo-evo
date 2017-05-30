@@ -1,2 +1,3 @@
 import PostEditorModal from './PostEditorModal'
-export default PostEditorModal
+import connector from './PostEditorModal.connector'
+export default connector(PostEditorModal)
