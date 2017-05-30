@@ -6,6 +6,7 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import { omit } from 'lodash'
 import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
 import fetchCommunityTopics from 'store/actions/fetchCommunityTopics'
+import { setSort } from './AllTopics.store'
 
 // TODO: this selector will also have to depend upon sorting parameters for the
 // sorting dropdown to work.
@@ -24,25 +25,30 @@ const getCommunityTopics = ormCreateSelector(
 )
 
 export function mapStateToProps (state, props) {
+  const selectedSort = state.AllTopics.sort
   return {
     community: getCommunityForCurrentRoute(state, props),
     communityTopics: getCommunityTopics(state, props),
     slug: getParam('slug', state, props),
-    totalTopics: 25
+    totalTopics: 25,
+    selectedSort
   }
 }
 
-const mapDispatchToProps = {fetchCommunityTopics, toggleTopicSubscribe}
+const mapDispatchToProps = {fetchCommunityTopics, toggleTopicSubscribe, setSort}
 
 function mergeProps (stateProps, dispatchProps, ownProps) {
   const { community } = stateProps
+  const { setSort, fetchCommunityTopics, toggleTopicSubscribe } = dispatchProps
+
   return {
     ...omit(stateProps, 'community'),
     ...ownProps,
+    setSort,
     fetchCommunityTopics: offset =>
-      dispatchProps.fetchCommunityTopics(community.id, false, offset),
+      fetchCommunityTopics(community.id, false, offset),
     toggleSubscribe: (topicId, isSubscribing) =>
-      dispatchProps.toggleTopicSubscribe(topicId, community.id, isSubscribing)
+      toggleTopicSubscribe(topicId, community.id, isSubscribing)
   }
 }
 

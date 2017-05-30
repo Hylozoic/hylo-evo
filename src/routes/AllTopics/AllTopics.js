@@ -7,6 +7,7 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
 import { pluralize, tagUrl } from 'util/index'
+import { find } from 'lodash/fp'
 
 const sortOptions = [
   {id: 'followers', label: 'Popular'},
@@ -28,6 +29,7 @@ export default class AllTopics extends Component {
     totalTopics: number,
     selectedSort: string,
     onChangeSort: func,
+    setSort: func,
     search: string,
     onChangeSearch: func,
     toggleSubscribe: func.isRequired
@@ -55,7 +57,7 @@ export default class AllTopics extends Component {
       communityTopics,
       slug,
       selectedSort,
-      onChangeSort,
+      setSort,
       toggleSubscribe
     } = this.props
     const { search } = this.state
@@ -68,7 +70,7 @@ export default class AllTopics extends Component {
           search={search}
           onChangeSearch={search => this.setState({search})}
           selectedSort={selectedSort}
-          onChangeSort={onChangeSort} />
+          onChangeSort={setSort} />
         <div styleName='topic-list'>
           {communityTopics.map(ct =>
             <CommunityTopicListItem key={ct.id} item={ct} slug={slug}
@@ -81,6 +83,18 @@ export default class AllTopics extends Component {
 }
 
 export function SearchBar ({search, onChangeSearch, selectedSort, onChangeSort}) {
+  const finder = o => {
+    console.log('finder')
+    console.log('o', o)
+    console.log('selectedSort', selectedSort)
+    console.log('filter?', o.id === selectedSort)
+    return o.id === selectedSort
+  }
+
+  const selected = find(finder, sortOptions)
+
+  console.log('selected', selected)
+
   return <div styleName='search-bar'>
     <TextInput styleName='search-input'
       value={search}
@@ -88,7 +102,7 @@ export function SearchBar ({search, onChangeSearch, selectedSort, onChangeSort})
       onChange={event => onChangeSearch(event.target.value)} />
     <Dropdown styleName='search-order'
       toggleChildren={<span styleName='search-sorter-label'>
-        {sortOptions.find(o => o.id === selectedSort).label}
+        {selected.label}
         <Icon name='ArrowDown' />
       </span>}
       items={sortOptions.map(({ id, label }) => ({

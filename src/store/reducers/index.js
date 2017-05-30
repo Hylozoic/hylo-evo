@@ -16,6 +16,7 @@ import Login from 'routes/Login/Login.store'
 import Members from 'routes/Members/Members.store'
 import ThreadList from 'components/ThreadList/ThreadList.store'
 import FullPageModal from 'routes/FullPageModal/FullPageModal.store'
+import AllTopics from 'routes/AllTopics/AllTopics.store'
 import queryResults from './queryResults'
 import { handleSetState, composeReducers } from './util'
 
@@ -42,7 +43,8 @@ const combinedReducers = combineReducers({
   Login,
   ThreadList,
   Members,
-  FullPageModal
+  FullPageModal,
+  AllTopics
 })
 
 export default composeReducers(combinedReducers, handleSetState)
