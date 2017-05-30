@@ -62,6 +62,10 @@ export default class PostEditor extends React.Component {
     this.state = this.buildStateFromProps(props)
   }
 
+  componentDidMount () {
+    this.titleInput.focus()
+  }
+
   componentDidUpdate (prevProps) {
     if (get('post.id', this.props) !== get('post.id', prevProps)) {
       this.reset(this.props)
@@ -186,6 +190,7 @@ export default class PostEditor extends React.Component {
             value={title}
             onChange={this.handleTitleChange}
             disabled={loading}
+            ref={x => { this.titleInput = x }}
           />
           <HyloEditor
             styleName='editor'

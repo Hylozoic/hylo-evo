@@ -3,11 +3,12 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  min-width: 590px;
+  min-width: $post-editor-width;
   list-style: none;
   border: solid 1px rgb(0,0,0);
   border-radius: $space-1x;
   border: 1px solid $color-cape-cod-10;
+  background: $color-white;
 }
 
 // Header area

@@ -81,12 +81,6 @@ export default class PrimaryLayout extends Component {
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
           </Switch>
-          <Route path='/all/p/new' exact component={PostEditorModal} />
-          <Route path='/all/p/:postId/edit' exact component={PostEditorModal} />
-          <Route path='/c/:slug/p/new' exact component={PostEditorModal} />
-          <Route path='/c/:slug/p/:postId/edit' exact component={PostEditorModal} />
-          <Route path='/c/:slug/:topicName/p/new' exact component={PostEditorModal} />
-          <Route path='/c/:slug/:topicName/p/:postId/edit' exact component={PostEditorModal} />
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/c/:slug/p/new' exact component={CommunitySidebar} />
@@ -109,9 +103,27 @@ export default class PrimaryLayout extends Component {
       <Route path='/t' component={Messages} />
       <SocketListener location={location} />
       <SocketSubscriber type='community' id={get('slug', community)} />
+      {postEditorRoutes.map(path =>
+        <Route
+          key={path}
+          path={path}
+          exact
+          children={({match}) => {
+            return <PostEditorModal match={match} />
+          }} />)}
+      } />
     </div>
   }
 }
+
+const postEditorRoutes = [
+  '/all/p/new',
+  '/all/p/:postId/edit',
+  '/c/:slug/p/new',
+  '/c/:slug/p/:postId/edit',
+  '/c/:slug/:topicName/p/new',
+  '/c/:slug/:topicName/p/:postId/edit'
+]
 
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
