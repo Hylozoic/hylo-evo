@@ -35,7 +35,7 @@ export function commentUrl (postId, commentId, slug) {
 }
 
 export function communityUrl (slug) {
-  return `/c/${slug}`
+  return slug ? `/c/${slug}` : allCommunitiesUrl()
 }
 
 export function communitySettingsUrl (slug) {
@@ -58,6 +58,10 @@ export function allCommunitiesUrl () {
   return '/all'
 }
 
+export function topicsUrl (slug) {
+  return communityUrl(slug) + '/topics'
+}
+
 // n.b.: use getParam instead of this where possible.
 
 export function getSlugInPath (pathname) {
@@ -74,3 +78,5 @@ export const dispatchEvent = (el, etype) => {
 export function isPromise (value) {
   return value && typeof value.then === 'function'
 }
+
+export const pluralize = (count, word) => `${count} ${word}${count === 1 ? '' : 's'}`

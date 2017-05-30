@@ -20,7 +20,7 @@ exports[`matches the latest snapshot 1`] = `
     data-styleName="topic-name"
   >
     #
-    petitions
+    cats
   </div>
   <div
     data-styleName="meta"

@@ -29,7 +29,7 @@ export default class FullPageModal extends Component {
               {tab.name}
             </NavLink>)}
         </div>
-        {multipleTabs && <div styleName='center'>
+        {multipleTabs && <div styleName='center with-sidebar'>
           {content.map(tab =>
             <Route path={tab.path}
               exact

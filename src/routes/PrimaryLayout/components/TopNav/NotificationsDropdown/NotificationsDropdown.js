@@ -35,17 +35,15 @@ export default class NotificationsDropdown extends Component {
     }
   }
 
-  componentDidMount () {
-    this.props.fetchNotifications()
-  }
-
   render () {
     const {
+      fetchNotifications,
       renderToggleChildren,
       className,
       goToNotification,
       markActivityRead,
-      markAllActivitiesRead
+      markAllActivitiesRead,
+      currentUser
     } = this.props
     var { notifications } = this.props
     const { showingUnread } = this.state
@@ -63,9 +61,12 @@ export default class NotificationsDropdown extends Component {
       this.refs.dropdown.getWrappedInstance().toggle(false)
     }
 
+    const showBadge = currentUser && currentUser.newNotificationCount > 0
+
     return <TopNavDropdown ref='dropdown'
       className={className}
-      toggleChildren={renderToggleChildren()}
+      onFirstOpen={fetchNotifications}
+      toggleChildren={renderToggleChildren(showBadge)}
       header={
         <div styleName='header-content'>
           <span onClick={showRecent} styleName={cx('tab', {active: !showingUnread})}>

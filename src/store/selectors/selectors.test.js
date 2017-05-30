@@ -1,8 +1,7 @@
 import orm from '../models'
-import { getMe } from './getMe'
+import getMe from './getMe'
 import getCommunityTopicForCurrentRoute from './getCommunityTopicForCurrentRoute'
 import getTopicForCurrentRoute from './getTopicForCurrentRoute'
-import getTopicSubscription from './getTopicSubscription'
 
 describe('getMe', () => {
   it('returns Me', () => {
@@ -93,44 +92,6 @@ describe('getTopicForCurrentRoute', () => {
       }
     }
     const result = getTopicForCurrentRoute({orm: session.state}, props)
-    expect(result).toBeNull()
-  })
-})
-
-describe('getTopicSubscription', () => {
-  it('returns TopicSubscription', () => {
-    const session = orm.session(orm.getEmptyState())
-    session.Community.create({id: '1', slug: 'goteam', postCount: 10})
-    session.Topic.create({
-      id: '2',
-      name: 'petitions'
-    })
-    session.TopicSubscription.create({
-      id: '3',
-      community: '1',
-      topic: '2',
-      newPostCount: '5'
-    })
-    const props = {
-      topicName: 'petitions',
-      community: {
-        id: '1'
-      }
-    }
-    const result = getTopicSubscription({orm: session.state}, props)
-    expect(result.newPostCount).toEqual('5')
-    expect(result.id).toEqual('3')
-  })
-
-  it('should return null if no match', () => {
-    const session = orm.session(orm.getEmptyState())
-    const props = {
-      topicName: 'petitions',
-      community: {
-        id: '1'
-      }
-    }
-    const result = getTopicSubscription({orm: session.state}, props)
     expect(result).toBeNull()
   })
 })

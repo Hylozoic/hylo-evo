@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { filter, get, map } from 'lodash/fp'
+import { filter, get, isEmpty, map } from 'lodash/fp'
 import { Link } from 'react-router-dom'
 import RoundImage from 'components/RoundImage'
 import Badge from 'components/Badge'
@@ -20,7 +20,7 @@ export default class ThreadList extends Component {
   }
 
   componentDidMount () {
-    this.props.fetchThreads()
+    if (isEmpty(this.props.threads)) this.props.fetchThreads()
   }
 
   render () {

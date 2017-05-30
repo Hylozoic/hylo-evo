@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapDispatchToProps returns expected values 1`] = `
+Object {
+  "fetchMessagesMaker": [Function],
+  "reconnectFetchMessages": [Function],
+  "updateThreadReadTime": [Function],
+}
+`;
+
+exports[`mapStateToProps returns expected values 1`] = `
+Object {
+  "currentUser": undefined,
+  "hasMore": true,
+  "messages": Array [
+    SessionBoundModel {
+      "_fields": Object {
+        "creator": "1",
+        "id": "4",
+        "messageThread": "11",
+        "text": "hi",
+      },
+    },
+    SessionBoundModel {
+      "_fields": Object {
+        "creator": "1",
+        "id": "5",
+        "messageThread": "11",
+        "text": "how are you",
+      },
+    },
+    SessionBoundModel {
+      "_fields": Object {
+        "creator": "2",
+        "id": "6",
+        "messageThread": "11",
+        "text": "fine thanks",
+      },
+    },
+    SessionBoundModel {
+      "_fields": Object {
+        "creator": "2",
+        "id": "7",
+        "messageThread": "11",
+        "text": "and you?",
+      },
+    },
+  ],
+  "pending": true,
+  "socket": SailsSocket {
+    "_isConnecting": false,
+    "_mightBeAboutToAutoConnect": true,
+    "eventQueue": Object {
+      "sails:parseError": Array [
+        [Function],
+      ],
+    },
+    "headers": undefined,
+  },
+  "total": 77,
+}
+`;
+
+exports[`mergeProps returns expected values 1`] = `
+Object {
+  "fetchMessages": [Function],
+  "fetchMessagesMaker": [Function],
+  "messageThreadId": "7",
+  "messages": Array [
+    Object {
+      "id": "1",
+      "text": "hi",
+    },
+  ],
+  "reconnectFetchMessages": [Function],
+  "updateThreadReadTime": [Function],
+}
+`;

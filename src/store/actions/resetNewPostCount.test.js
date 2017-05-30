@@ -1,7 +1,7 @@
 import resetNewPostCount from './resetNewPostCount'
 
-it('works for TopicSubscription', () => {
-  expect(resetNewPostCount(5, 'TopicSubscription')).toMatchSnapshot()
+it('works for CommunityTopic', () => {
+  expect(resetNewPostCount(5, 'CommunityTopic')).toMatchSnapshot()
 })
 
 it('works for Membership', () => {
