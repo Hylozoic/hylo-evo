@@ -13,18 +13,23 @@ export default class TopNavDropdown extends Component {
     className: string,
     header: object,
     items: object,
-    onToggle: func
+    onToggle: func,
+    onFirstOpen: func
   }
 
   constructor (props) {
     super(props)
-    this.state = {active: false}
+    this.state = {active: false, neverOpened: true}
   }
 
   toggle = newState => {
     const active = newState || !this.state.active
     this.setState({active})
     if (this.props.onToggle) this.props.onToggle(active)
+    if (this.state.neverOpened && active) {
+      this.setState({neverOpened: false})
+      if (this.props.onFirstOpen) this.props.onFirstOpen()
+    }
   }
 
   render () {

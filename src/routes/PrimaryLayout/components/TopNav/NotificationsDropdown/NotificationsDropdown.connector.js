@@ -5,12 +5,14 @@ import {
   markAllActivitiesRead,
   getNotifications,
   goToNotification
-} from './NotificationsDropdown.store.js'
+} from './NotificationsDropdown.store'
+import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
   const notifications = getNotifications(state, props)
   return {
-    notifications
+    notifications,
+    currentUser: getMe(state, props)
   }
 }
 

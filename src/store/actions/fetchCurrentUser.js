@@ -9,6 +9,7 @@ export default function fetchCurrentUser () {
           id
           name
           avatarUrl
+          newNotificationCount
           memberships {
             id
             lastViewedAt
