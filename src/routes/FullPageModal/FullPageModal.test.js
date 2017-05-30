@@ -12,6 +12,17 @@ describe('FullPageModal', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
+  it('renders correctly when passed children', () => {
+    const history = {length: 2}
+
+    const wrapper = shallow(
+      <FullPageModal history={history}>
+        <div>First Child</div>
+        <div>Second Child</div>
+      </FullPageModal>)
+    expect(wrapper).toMatchSnapshot()
+  })
+
   it('renders correctly with multiple tabs', () => {
     const history = {length: 2}
     const content = [

@@ -102,7 +102,15 @@ export default function ormReducer (state = {}, action) {
       break
 
     case RECEIVE_MESSAGE:
-      MessageThread.withId(payload.data.message.messageThread).newMessageReceived(meta.bumpUnreadCount)
+      const id = payload.data.message.messageThread
+      if (!MessageThread.hasId(id)) {
+        MessageThread.create({
+          id,
+          updatedAt: new Date().toString(),
+          lastReadAt: 0
+        })
+      }
+      MessageThread.withId(id).newMessageReceived(meta.bumpUnreadCount)
       break
 
     case UPDATE_THREAD_READ_TIME:

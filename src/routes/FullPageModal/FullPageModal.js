@@ -12,7 +12,7 @@ export default class FullPageModal extends Component {
   }
 
   render () {
-    const { onClose, content } = this.props
+    const { onClose, content, children } = this.props
 
     const multipleTabs = Array.isArray(content)
 
@@ -36,7 +36,7 @@ export default class FullPageModal extends Component {
               render={() => tab.component}
               key={tab.path} />)}
         </div>}
-        {!multipleTabs && <div styleName='center'>{content}</div>}
+        {!multipleTabs && <div styleName='center'>{content || children}</div>}
         <div styleName='right-sidebar'>
           <CloseButton onClose={onClose} />
         </div>

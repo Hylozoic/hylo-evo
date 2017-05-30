@@ -112,9 +112,13 @@ const detailRoutes = [
   {path: '/c/:slug/:topicName/p/:postId', component: PostDetail}
 ]
 
-function RedirectToCommunity ({ currentUser }) {
-  return <Route path='/' exact render={() => {
-    if (!currentUser) return <Loading type='top' />
+export function RedirectToCommunity ({ currentUser }) {
+  return <Route path='/' exact render={redirectIfCommunity(currentUser)} />
+}
+
+export function redirectIfCommunity (currentUser) {
+  return () => {
+    if (!currentUser || currentUser.memberships.count() === 0) return <Loading type='top' />
 
     const mostRecentCommunity = currentUser.memberships
     .orderBy(m => new Date(m.lastViewedAt), 'desc')
@@ -122,5 +126,5 @@ function RedirectToCommunity ({ currentUser }) {
     .community
 
     return <Redirect to={`/c/${mostRecentCommunity.slug}`} />
-  }} />
+  }
 }

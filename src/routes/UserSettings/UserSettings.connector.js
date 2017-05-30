@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import { fetchUserSettings, updateUserSettings, leaveCommunity, unlinkAccount } from './UserSettings.store'
+import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import { loginWithService } from 'routes/Login/Login.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
@@ -18,10 +19,12 @@ export const getCurrentUserCommunities = ormCreateSelector(
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const communities = getCurrentUserCommunities(state, props)
+  const confirm = state.FullPageModal.confirm
 
   return {
     currentUser,
-    communities
+    communities,
+    confirm
   }
 }
 
@@ -30,7 +33,23 @@ export const mapDispatchToProps = {
   updateUserSettings,
   leaveCommunity,
   loginWithService,
-  unlinkAccount
+  unlinkAccount,
+  setConfirmBeforeClose
 }
 
-export default component => connect(mapStateToProps, mapDispatchToProps)(component)
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { confirm } = stateProps
+  const { setConfirmBeforeClose } = dispatchProps
+  const setConfirm = newState => {
+    if (newState === confirm) return
+    return setConfirmBeforeClose(newState)
+  }
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    setConfirm
+  }
+}
+
+export default component => connect(mapStateToProps, mapDispatchToProps, mergeProps)(component)
