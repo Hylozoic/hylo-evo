@@ -1,5 +1,6 @@
-export const MODULE_NAME = 'PostEditor'
+import { get } from 'lodash/fp'
 
+export const MODULE_NAME = 'PostEditor'
 export const CREATE_POST = `${MODULE_NAME}/CREATE_POST`
 export const UPDATE_POST = `${MODULE_NAME}/UPDATE_POST`
 
@@ -64,6 +65,12 @@ export function updatePost (post) {
         communityIds
       }
     },
-    meta: {extractModel: 'Post'}
+    meta: {
+      extractModel: {
+        modelName: 'Post',
+        getRoot: get('updatePost'),
+        append: false
+      }
+    }
   }
 }

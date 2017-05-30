@@ -13,7 +13,7 @@ export default function extractModelMiddleware (store) {
     const { extractModel } = meta
     const keys = Object.keys(payload.data)
 
-    var modelName, newPayload
+    var modelName, newPayload, append
 
     if (typeof extractModel === 'string') {
       // shorthand syntax: payload.data must have exactly one child, and the
@@ -24,15 +24,20 @@ export default function extractModelMiddleware (store) {
 
       newPayload = payload.data[keys[0]]
       modelName = extractModel
+      append = true
     } else {
       newPayload = extractModel.getRoot(payload.data)
       modelName = extractModel.modelName
+      append = extractModel.append
     }
 
     store.dispatch({
       type: EXTRACT_MODEL,
       payload: newPayload,
-      meta: {modelName}
+      meta: {
+        modelName,
+        append
+      }
     })
 
     return next(action)

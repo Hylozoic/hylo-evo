@@ -66,7 +66,8 @@ export function findTopics (topicsSearchTerm, communitySlug = 'hylo') {
     meta: {
       extractModel: {
         getRoot: collectTopics,
-        modelName: 'Topic'
+        modelName: 'Topic',
+        append: true
       }
     }
   }

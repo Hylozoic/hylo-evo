@@ -49,7 +49,7 @@ it('transforms an action with a string meta.extractModel', () => {
   expect(store.dispatch).toBeCalledWith({
     type: EXTRACT_MODEL,
     payload: postData,
-    meta: {modelName: 'Post'}
+    meta: {modelName: 'Post', append: true}
   })
 })
 
@@ -65,7 +65,8 @@ it('transforms an action with an object meta.extractModel', () => {
     meta: {
       extractModel: {
         getRoot: get('flarg'),
-        modelName: 'Post'
+        modelName: 'Post',
+        append: false
       }
     }
   }
@@ -75,7 +76,7 @@ it('transforms an action with an object meta.extractModel', () => {
   expect(store.dispatch).toBeCalledWith({
     type: EXTRACT_MODEL,
     payload: postData,
-    meta: {modelName: 'Post'}
+    meta: {modelName: 'Post', append: false}
   })
 })
 

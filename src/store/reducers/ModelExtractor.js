@@ -3,23 +3,25 @@ import { compact, filter, mapValues } from 'lodash'
 import { isUndefined, omitBy } from 'lodash/fp'
 
 export default class ModelExtractor {
-  static addAll ({ session, root, modelName }) {
+  static addAll ({ session, root, modelName, ...opts }) {
     if (!root) return
-    const extractor = new ModelExtractor(session)
+    const extractor = new ModelExtractor(session, opts)
     extractor.walk(root, modelName)
     extractor.addAll()
   }
 
-  constructor (session) {
+  constructor (session, options = {}) {
     this.session = session
+    this.options = options
     this.accumulator = []
   }
 
   addAll () {
+    const method = this.options.append ? 'updateAppending' : 'update'
     this.mergedNodes().forEach(({ modelName, payload }) => {
       const model = this.session[modelName]
       model.hasId(payload.id)
-        ? model.withId(payload.id).updateAppending(payload)
+        ? model.withId(payload.id)[method](payload)
         : model.create(payload)
     })
   }
