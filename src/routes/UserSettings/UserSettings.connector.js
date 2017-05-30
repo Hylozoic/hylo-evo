@@ -19,12 +19,12 @@ export const getCurrentUserCommunities = ormCreateSelector(
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const communities = getCurrentUserCommunities(state, props)
-  const modified = state.FullPageModalModified
+  const confirm = state.FullPageModal.confirm
 
   return {
     currentUser,
     communities,
-    modified
+    confirm
   }
 }
 
@@ -38,10 +38,10 @@ export const mapDispatchToProps = {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { modified } = stateProps
+  const { confirm } = stateProps
   const { setConfirmBeforeClose } = dispatchProps
   const setConfirm = newState => {
-    if (newState === modified) return
+    if (newState === confirm) return
     return setConfirmBeforeClose(newState)
   }
   return {

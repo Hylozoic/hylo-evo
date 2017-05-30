@@ -8,7 +8,7 @@ describe('mergeProps', () => {
       setConfirmBeforeClose
     }
 
-    var { setConfirm } = mergeProps({modified: false}, dispatchProps, {})
+    var { setConfirm } = mergeProps({confirm: false}, dispatchProps, {})
 
     setConfirm(false)
     expect(setConfirmBeforeClose).not.toHaveBeenCalled()
@@ -16,7 +16,7 @@ describe('mergeProps', () => {
     expect(setConfirmBeforeClose).toHaveBeenCalledWith('message')
 
     setConfirmBeforeClose.mockClear()
-    setConfirm = mergeProps({modified: true}, dispatchProps, {}).setConfirm
+    setConfirm = mergeProps({confirm: 'message'}, dispatchProps, {}).setConfirm
 
     setConfirm('message')
     expect(setConfirmBeforeClose).not.toHaveBeenCalled()
