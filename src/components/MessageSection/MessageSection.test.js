@@ -2,6 +2,7 @@ import MessageSection from './MessageSection'
 import { mount, shallow } from 'enzyme'
 import React from 'react'
 import { mountWithMockRouter } from 'util/testing'
+import Loading from 'components/Loading'
 
 const person1 = {id: '1', name: 'City Bob'}
 const person2 = {id: '2', name: 'Country Alice'}
@@ -139,4 +140,17 @@ it('fetches more messages when scrolled to top', () => {
     target: {scrollTop: 0, scrollHeight: 1200, offsetHeight: 100}
   })
   expect(fetchMessages).toBeCalled()
+})
+
+it('shows Loading component when pending set', () => {
+  wrapper = shallow(<MessageSection messages={[]} pending />)
+  expect(wrapper.find(Loading).length).toBe(1)
+})
+
+it('sets visible to false in state when visibility changes', () => {
+  wrapper = shallow(<MessageSection messages={[]} pending />)
+  wrapper.setState({ visible: true })
+  // Note that document.hidden always returns true in jsdom
+  wrapper.instance().handleVisibilityChange()
+  expect(wrapper.state('visible')).toBe(false)
 })
