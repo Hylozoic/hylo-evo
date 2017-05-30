@@ -1,0 +1,98 @@
+// ModeratorControl
+.moderator-control {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  border-bottom: 1px solid $color-ghost;
+}
+
+.avatar {
+  margin-right: $space-4x;
+}
+
+.name {
+  composes: bdy-drk-sm from 'css/typography.scss';
+  font-size: 16px;
+  &:hover {
+    color: $color-rhino;
+    text-decoration: none;
+  }
+}
+
+.remove-button {
+  margin-left: auto;
+  composes: text-button from 'css/typography.scss'
+}
+
+// AddModerator
+.add-moderator {
+  margin-top: 15px;
+}
+
+.adding {
+  width: 100%;
+}
+
+.help-text {
+  composes: caption-lt-lg from 'css/typography.scss';
+  margin-bottom: 10px;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  flex: 1;
+  margin-right: 10px;
+  padding: 5px 10px;
+  color: $color-rhino;
+  &::placeholder {
+    color: $color-rhino-50;
+  }
+}
+
+.cancel-button {
+  composes: text-button from 'css/typography.scss';
+  color: $color-rhino-60;
+  &:hover {
+    color: $color-rhino-80;
+  }
+  margin-right: 10px;
+}
+
+.add-button {
+  composes: text-button from 'css/typography.scss';
+}
+
+.add-new {
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border: 1px dashed $color-ghost;
+  composes: text-button from 'css/typography.scss'
+}
+
+// KeyControlledListTheme
+
+ .items {
+   list-style: none;
+   border: 1px solid $color-ghost;
+   padding: 0;
+   li {
+     border-top: 1px solid $color-ghost;
+     &:first-child {
+       border: none;
+     }
+   }
+ }
+
+.item {
+  padding: 5px 5px 5px 11px;
+  color: $color-caribbean-green;
+}
+
+.item-active {
+  background-color: $color-athens-gray-dark;
+}

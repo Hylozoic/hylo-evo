@@ -4,10 +4,12 @@ import { getSubscribedCommunityTopics } from './TopicNavigation.store'
 import fetchCommunityTopics from 'store/actions/fetchCommunityTopics'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
+import { get } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
+  const community = getCommunityForCurrentRoute(state, props)
   return {
-    community: getCommunityForCurrentRoute(state, props),
+    community,
     communityTopics: getSubscribedCommunityTopics(state, props)
   }
 }
@@ -28,9 +30,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    fetchCommunityTopics: () => community
-      ? dispatchProps.fetchCommunityTopics(community.id, true)
-      : null
+    fetchCommunityTopics: () =>
+      dispatchProps.fetchCommunityTopics(get('id', community), true)
   }
 }
 

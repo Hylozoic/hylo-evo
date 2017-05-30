@@ -15,6 +15,7 @@ import MessageForm from 'components/MessageForm/MessageForm.store'
 import Login from 'routes/Login/Login.store'
 import Members from 'routes/Members/Members.store'
 import ThreadList from 'components/ThreadList/ThreadList.store'
+import ModeratorsSettings from 'routes/CommunitySettings/ModeratorsSettingsTab/ModeratorsSettingsTab.store'
 import FullPageModal from 'routes/FullPageModal/FullPageModal.store'
 import AllTopics from 'routes/AllTopics/AllTopics.store'
 import queryResults from './queryResults'
@@ -44,7 +45,8 @@ const combinedReducers = combineReducers({
   ThreadList,
   Members,
   FullPageModal,
-  AllTopics
+  AllTopics,
+  ModeratorsSettings
 })
 
 export default composeReducers(combinedReducers, handleSetState)

@@ -7,7 +7,7 @@ import cx from 'classnames'
 import { newMessageUrl, messagesUrl } from 'util/index'
 import RoundImageRow from 'components/RoundImageRow'
 import TopNavDropdown from '../TopNavDropdown'
-import { get, some } from 'lodash/fp'
+import { get, isEmpty, some } from 'lodash/fp'
 
 export default class MessagesDropdown extends Component {
   static propTypes = {
@@ -23,10 +23,6 @@ export default class MessagesDropdown extends Component {
     this.state = {}
   }
 
-  componentDidMount () {
-    this.props.fetchThreads()
-  }
-
   onToggle = nowActive => {
     // TODO this is not quite sufficient -- this value should also be bumped
     // if the current user is in the messages UI, receiving new messages.
@@ -34,6 +30,11 @@ export default class MessagesDropdown extends Component {
   }
 
   hasUnread () {
+    if (isEmpty(this.props.threads)) {
+      const { currentUser } = this.props
+      return currentUser && currentUser.unseenThreadCount > 0
+    }
+
     const { lastOpenedAt } = this.state
     const isUnread = t =>
       t.isUnread() && (!lastOpenedAt || t.isUpdatedSince(lastOpenedAt))
@@ -42,7 +43,12 @@ export default class MessagesDropdown extends Component {
 
   render () {
     const {
-      renderToggleChildren, threads, className, goToThread, currentUser
+      renderToggleChildren,
+      threads,
+      className,
+      goToThread,
+      currentUser,
+      fetchThreads
     } = this.props
 
     const onClick = id => {
@@ -55,6 +61,7 @@ export default class MessagesDropdown extends Component {
       className={className}
       onToggle={this.onToggle}
       toggleChildren={renderToggleChildren(this.hasUnread())}
+      onFirstOpen={fetchThreads}
       header={
         <div styleName='header-content'>
           <Link to={messagesUrl()} styleName='open'>Open Messages</Link>

@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommunitySettingsTab renders correctly 1`] = `
+<div>
+  <input
+    data-styleName="name"
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+  <div
+    data-styleName="banner"
+    style={Object {}}
+  >
+    <Connect(ChangeImageButton)
+      data-styleName="change-banner-button"
+      update={[Function]}
+      uploadSettings={
+        Object {
+          "convert": Object {
+            "fit": "max",
+            "format": "jpg",
+            "rotate": "exif",
+            "width": 1600,
+          },
+          "id": "foo",
+          "path": "community/1/banner",
+          "subject": "community-banner",
+        }
+      }
+    />
+  </div>
+  <div
+    data-styleName="avatar"
+    style={Object {}}
+  >
+    <Connect(ChangeImageButton)
+      data-styleName="change-avatar-button"
+      update={[Function]}
+      uploadSettings={
+        Object {
+          "convert": Object {
+            "fit": "crop",
+            "height": 160,
+            "rotate": "exif",
+            "width": 160,
+          },
+          "id": "foo",
+          "path": "community/1/avatar",
+          "subject": "community-avatar",
+        }
+      }
+    />
+  </div>
+  <Control
+    label="Description"
+    onChange={[Function]}
+    type="textarea"
+  />
+  <Control
+    label="Location"
+    onChange={[Function]}
+  />
+  <div
+    data-styleName="button-row"
+  >
+    <Button
+      color="gray"
+      data-styleName="save-button"
+      label="Save Changes"
+      onClick={null}
+    />
+  </div>
+</div>
+`;
