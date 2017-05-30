@@ -196,14 +196,19 @@ export const matchesSelector = createSelector(
   personListItemSelector
 )
 
+const nameSort = (a, b) => {
+  const aName = a.name.toUpperCase()
+  const bName = b.name.toUpperCase()
+  return aName > bName ? 1 : aName < bName ? -1 : 0
+}
+
 export function personConnectionListItemSelector (session, participants, currentUser) {
   return session.PersonConnection
     .all()
-    .orderBy('name')
     .toModelArray()
     .map(connection => pickPersonListItem(connection.person))
-    .filter(connection => !participants.includes(connection.id))
-    .filter(connection => currentUser ? currentUser.id !== connection.id : true)
+    .filter(person => !participants.includes(person.id))
+    .sort(nameSort)
 }
 
 export const recentContactsSelector = createSelector(
