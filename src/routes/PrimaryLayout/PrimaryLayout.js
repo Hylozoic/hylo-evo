@@ -118,10 +118,10 @@ export default class PrimaryLayout extends Component {
 
 const postEditorRoutes = [
   {path: '/all/p/new', forNew: true},
-  {path: '/all/p/:postId/edit'},
   {path: '/c/:slug/p/new', forNew: true},
+  {path: '/all/p/:postId/edit'},
   {path: '/c/:slug/p/:postId/edit'},
-  {path: '/c/:slug/:topicName/p/new', forNew: true},
+  {path: '/c/:slug/m/:id/p/:postId/edit'},
   {path: '/c/:slug/:topicName/p/:postId/edit'}
 ]
 
