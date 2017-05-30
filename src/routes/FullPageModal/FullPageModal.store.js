@@ -5,7 +5,9 @@ import {
   SET_CONFIRM_BEFORE_CLOSE
 } from 'store/constants'
 
-const defaultState = false
+const defaultState = {
+  confirm: false
+}
 
 export default function reducer (state = defaultState, action) {
   const { error, type, payload } = action
@@ -13,16 +15,19 @@ export default function reducer (state = defaultState, action) {
 
   switch (type) {
     case SET_CONFIRM_BEFORE_CLOSE:
-      return payload
+      return {
+        ...state,
+        confirm: payload
+      }
     default:
       return state
   }
 }
 
-export function setConfirmBeforeClose (modified) {
+export function setConfirmBeforeClose (confirm) {
   return {
     type: SET_CONFIRM_BEFORE_CLOSE,
-    payload: modified
+    payload: confirm
   }
 }
 

@@ -15,7 +15,7 @@ import MessageForm from 'components/MessageForm/MessageForm.store'
 import Login from 'routes/Login/Login.store'
 import Members from 'routes/Members/Members.store'
 import ThreadList from 'components/ThreadList/ThreadList.store'
-import FullPageModalConfirm from 'routes/FullPageModal/FullPageModal.store'
+import FullPageModal from 'routes/FullPageModal/FullPageModal.store'
 import queryResults from './queryResults'
 import { handleSetState, composeReducers } from './util'
 
@@ -42,7 +42,7 @@ const combinedReducers = combineReducers({
   Login,
   ThreadList,
   Members,
-  FullPageModalConfirm
+  FullPageModal
 })
 
 export default composeReducers(combinedReducers, handleSetState)

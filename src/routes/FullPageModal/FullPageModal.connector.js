@@ -5,7 +5,7 @@ import { setConfirmBeforeClose } from './FullPageModal.store'
 
 export function mapStateToProps (state, props) {
   return {
-    confirmMessage: state.FullPageModalConfirm
+    confirmMessage: state.FullPageModal.confirm
   }
 }
 
