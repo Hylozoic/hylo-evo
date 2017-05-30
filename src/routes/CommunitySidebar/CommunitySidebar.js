@@ -9,7 +9,6 @@ import cx from 'classnames'
 import { personUrl, communitySettingsUrl } from 'util/index'
 import { markdown } from 'hylo-utils/text'
 import { isEmpty } from 'lodash/fp'
-import { canModerate } from 'store/models/Me'
 
 export default class CommunitySidebar extends Component {
   static propTypes = {
@@ -82,7 +81,7 @@ export class AboutSection extends Component {
 }
 
 export function SettingsLink ({ currentUser, community }) {
-  if (!canModerate(currentUser, community)) return null
+  if (!currentUser.canModerate(community)) return null
   return <Link styleName='settings-link' to={communitySettingsUrl(community.slug)}>
     Settings
   </Link>

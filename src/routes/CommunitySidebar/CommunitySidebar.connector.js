@@ -3,7 +3,6 @@ import {
   fetchCommunity
 } from './CommunitySidebar.store'
 import getParam from 'store/selectors/getParam'
-// TODO: make getMe correct
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 
@@ -17,12 +16,7 @@ export function mapStateToProps (state, props) {
     members,
     leaders,
     slug: getParam('slug', state, props),
-    currentUser: currentUser
-      ? {
-        ...currentUser,
-        memberships: currentUser.memberships.toRefArray()
-      }
-      : null
+    currentUser
   }
 }
 

@@ -8,6 +8,15 @@ const Me = Model.createClass({
 
   firstName () {
     return this.name ? this.name.split(' ')[0] : null
+  },
+
+  canModerate (community) {
+    const memberships = this.memberships.toRefArray
+      ? this.memberships.toRefArray()
+      : this.memberships
+    const membership = find(m =>
+      m.community === get('id', community), memberships)
+    return get('hasModeratorRole', membership)
   }
 })
 
@@ -37,9 +46,3 @@ export const bannerUploadSettings = person => ({
 })
 
 export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_user_banner.jpg'
-
-export function canModerate (currentUser, community) {
-  const membership = find(m =>
-    m.community === get('id', community), get('memberships', currentUser))
-  return get('hasModeratorRole', membership)
-}
