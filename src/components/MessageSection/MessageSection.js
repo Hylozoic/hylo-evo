@@ -84,6 +84,10 @@ export default class MessageSection extends React.Component {
 
     const oldMessages = this.props.messages
     const deltaLength = Math.abs(messages.length - oldMessages.length)
+
+    // Note: we write directly to the object here rather than using setState.
+    // This avoids an automatic re-render on scroll, and any inconsistencies
+    // owing to the async nature of setState and/or setState batching.
     this.shouldScroll = false
 
     if (deltaLength) {
