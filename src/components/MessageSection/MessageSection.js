@@ -78,11 +78,11 @@ export default class MessageSection extends React.Component {
     document && document.removeEventListener('visibilitychange', this.handleVisibilityChange)
   }
 
-  componentWillUpdate (prevProps) {
-    const { currentUser, messages, pending } = this.props
+  componentWillUpdate (nextProps) {
+    const { currentUser, messages, pending } = nextProps
     if (pending) return
 
-    const oldMessages = prevProps.messages
+    const oldMessages = this.props.messages
     const deltaLength = Math.abs(messages.length - oldMessages.length)
     this.shouldScroll = false
 
