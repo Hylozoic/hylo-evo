@@ -4,9 +4,9 @@ import Avatar from 'components/Avatar'
 import Loading from 'components/Loading'
 import RoundImageRow from 'components/RoundImageRow'
 import './CommunitySidebar.scss'
-const { object, string, array, func } = PropTypes
+const { object, string, array } = PropTypes
 import cx from 'classnames'
-import { personUrl } from 'util/index'
+import { personUrl, communitySettingsUrl } from 'util/index'
 import { markdown } from 'hylo-utils/text'
 import { isEmpty } from 'lodash/fp'
 
@@ -15,26 +15,16 @@ export default class CommunitySidebar extends Component {
     slug: string,
     commmunity: object,
     members: array,
-    leaders: array,
-    fetchCommunity: func
-  }
-
-  componentDidMount () {
-    this.props.fetchCommunity()
-  }
-
-  componentDidUpdate (prevProps) {
-    if (prevProps.slug !== this.props.slug) {
-      this.props.fetchCommunity()
-    }
+    leaders: array
   }
 
   render () {
-    const { community, members, leaders } = this.props
+    const { community, members, leaders, currentUser } = this.props
     if (!community || isEmpty(members)) return <Loading />
     const { name, description, slug, memberCount } = community
     return <div styleName='community-sidebar'>
       <AboutSection name={name} description={description} />
+      <SettingsLink currentUser={currentUser} community={community} />
       <MemberSection members={members} memberCount={memberCount} slug={slug} />
       <CommunityLeaderSection leaders={leaders} slug={slug} />
     </div>
@@ -77,6 +67,13 @@ export class AboutSection extends Component {
       </span>}
     </div>
   }
+}
+
+export function SettingsLink ({ currentUser, community }) {
+  if (!currentUser.canModerate(community)) return null
+  return <Link styleName='settings-link' to={communitySettingsUrl(community.slug)}>
+    Settings
+  </Link>
 }
 
 export function MemberSection ({ members, memberCount, slug }) {

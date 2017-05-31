@@ -1,5 +1,6 @@
 import { EXTRACT_MODEL } from 'store/constants'
 import { isPromise } from 'util/index'
+import { castArray } from 'lodash'
 
 export default function extractModelMiddleware (store) {
   return next => action => {
@@ -12,8 +13,7 @@ export default function extractModelMiddleware (store) {
 
     const { extractModel } = meta
     const keys = Object.keys(payload.data)
-
-    var modelName, newPayload, append
+    const roots = []
 
     if (typeof extractModel === 'string') {
       // shorthand syntax: payload.data must have exactly one child, and the
@@ -22,23 +22,23 @@ export default function extractModelMiddleware (store) {
         throw new Error(`Bad data for ${action.type}: payload.data should have exactly one child`)
       }
 
-      newPayload = payload.data[keys[0]]
-      modelName = extractModel
-      append = true
+      roots.push({
+        payload: payload.data[keys[0]],
+        modelName: extractModel,
+        append: true
+      })
     } else {
-      newPayload = extractModel.getRoot(payload.data)
-      modelName = extractModel.modelName
-      append = extractModel.append
+      castArray(extractModel).forEach(config => {
+        roots.push({
+          payload: config.getRoot(payload.data),
+          modelName: config.modelName,
+          append: config.append
+        })
+      })
     }
 
-    store.dispatch({
-      type: EXTRACT_MODEL,
-      payload: newPayload,
-      meta: {
-        modelName,
-        append
-      }
-    })
+    roots.forEach(({ payload, modelName, append }) =>
+      store.dispatch({type: EXTRACT_MODEL, payload, meta: {modelName, append}}))
 
     return next(action)
   }

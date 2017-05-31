@@ -108,7 +108,7 @@ export default class HyloEditor extends Component {
 
   handleChange = (editorState) => {
     const contentStateChanged =
-      this.state.editorState.getCurrentContent() === editorState.getCurrentContent()
+      this.state.editorState.getCurrentContent() !== editorState.getCurrentContent()
     if (this.props.onChange) this.props.onChange(editorState, contentStateChanged)
     this.setState({ editorState })
   }

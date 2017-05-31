@@ -6,22 +6,28 @@ import './PeopleSelectorContacts.scss'
 
 export default function PeopleSelectorContacts ({ addParticipant, contacts, recentContacts }) {
   return <div styleName='people-selector-contacts'>
-    <h2 styleName='contacts-header'>Recent</h2>
-    <ul styleName='contact-list'>
-      {recentContacts && recentContacts.map(contact =>
-        <PersonListItem
-          key={contact.id}
-          person={contact}
-          onClick={() => addParticipant(contact.id)} />)}
-    </ul>
-    <h2 styleName='contacts-header'>All Contacts</h2>
-    <ul styleName='contact-list'>
-      {contacts && contacts.map(contact =>
-        <PersonListItem
-          key={contact.id}
-          person={contact}
-          onClick={() => addParticipant(contact.id)} />)}
-    </ul>
+    {recentContacts && recentContacts.length > 0 &&
+      <div>
+        <h2 styleName='contacts-header'>Recent</h2>
+        <ul styleName='contact-list'>
+          {recentContacts.map(contact =>
+            <PersonListItem
+              key={contact.id}
+              person={contact}
+              onClick={() => addParticipant(contact.id)} />)}
+        </ul>
+      </div>}
+    {contacts && contacts.length > 0 &&
+      <div>
+        <h2 styleName='contacts-header'>All Contacts</h2>
+        <ul styleName='contact-list'>
+          {contacts.map(contact =>
+            <PersonListItem
+              key={contact.id}
+              person={contact}
+              onClick={() => addParticipant(contact.id)} />)}
+        </ul>
+      </div>}
   </div>
 }
 

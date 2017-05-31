@@ -41,6 +41,17 @@ $about-height: 116px;
   composes: text-button from 'css/typography.scss';
 }
 
+// SettingsLink
+
+.settings-link {
+  display: block;
+  margin-bottom: 20px;
+  composes: text-button from 'css/typography.scss';
+  &:hover{
+    text-decoration: none;
+  }
+}
+
 // MemberSection
 
 .member-section {
@@ -56,7 +67,7 @@ $about-height: 116px;
     .members-total {
       color: $color-gossamer;
     }
-  }  
+  }
 }
 
 .images-and-count {

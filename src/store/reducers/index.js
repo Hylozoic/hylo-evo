@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
-import {
-  TOGGLE_COMMUNITIES_DRAWER
-} from 'store/constants'
 import orm from './ormReducer'
 import pending from './pending'
 // Local store
 // generator-marker-local-store-import
+import PrimaryLayout from 'routes/PrimaryLayout/PrimaryLayout.store'
 import TopNav from 'routes/PrimaryLayout/components/TopNav/TopNav.store'
 import PeopleSelector from 'components/PeopleSelector/PeopleSelector.store'
 import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
@@ -15,6 +13,8 @@ import MessageForm from 'components/MessageForm/MessageForm.store'
 import Login from 'routes/Login/Login.store'
 import Members from 'routes/Members/Members.store'
 import ThreadList from 'components/ThreadList/ThreadList.store'
+import ModeratorsSettings from 'routes/CommunitySettings/ModeratorsSettingsTab/ModeratorsSettingsTab.store'
+import FullPageModal from 'routes/FullPageModal/FullPageModal.store'
 import queryResults from './queryResults'
 import { handleSetState, composeReducers } from './util'
 
@@ -25,14 +25,9 @@ const combinedReducers = combineReducers({
   pending,
   queryResults,
 
-  // NOTE: Move local to PrimaryLayout?
-  communitiesDrawerOpen: (state = false, { type }) => {
-    if (type === TOGGLE_COMMUNITIES_DRAWER) return !state
-    return state
-  },
-
   // Local store (Component)
   // generator-marker-local-store-reducer
+  PrimaryLayout,
   TopNav,
   PeopleSelector,
   MessageForm,
@@ -40,7 +35,9 @@ const combinedReducers = combineReducers({
   HyloEditor,
   Login,
   ThreadList,
-  Members
+  Members,
+  ModeratorsSettings,
+  FullPageModal
 })
 
 export default composeReducers(combinedReducers, handleSetState)

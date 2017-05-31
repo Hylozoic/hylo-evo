@@ -1,4 +1,6 @@
 import {
+  ADD_MODERATOR_PENDING,
+  REMOVE_MODERATOR_PENDING,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
   CREATE_MESSAGE,
@@ -29,12 +31,14 @@ export default function ormReducer (state = {}, action) {
   const {
     Activity,
     Comment,
+    Community,
     CommunityTopic,
     Me,
     Membership,
     Message,
     MessageThread,
     Notification,
+    Person,
     Post,
     PostCommenter
   } = session
@@ -99,7 +103,15 @@ export default function ormReducer (state = {}, action) {
       break
 
     case RECEIVE_MESSAGE:
-      MessageThread.withId(payload.data.message.messageThread).newMessageReceived(meta.bumpUnreadCount)
+      const id = payload.data.message.messageThread
+      if (!MessageThread.hasId(id)) {
+        MessageThread.create({
+          id,
+          updatedAt: new Date().toString(),
+          lastReadAt: 0
+        })
+      }
+      MessageThread.withId(id).newMessageReceived(meta.bumpUnreadCount)
       break
 
     case UPDATE_THREAD_READ_TIME:
@@ -152,6 +164,19 @@ export default function ormReducer (state = {}, action) {
       Activity.all().update({unread: false})
       // invalidating selector memoization
       invalidateNotifications()
+      break
+
+    case ADD_MODERATOR_PENDING:
+      const person = Person.withId(meta.personId)
+      Community.withId(meta.communityId).updateAppending({moderators: [person]})
+      break
+
+    case REMOVE_MODERATOR_PENDING:
+      const community = Community.withId(meta.communityId)
+      const moderators = community.moderators.filter(m =>
+        m.id !== meta.personId)
+        .toModelArray()
+      community.update({moderators})
       break
   }
 

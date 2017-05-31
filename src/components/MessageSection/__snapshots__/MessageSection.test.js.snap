@@ -14,10 +14,10 @@ exports[`renders as expected 1`] = `
         Object {
           "createdAt": "2017-05-19T23:24:58Z",
           "creator": Object {
-            "id": 1,
+            "id": "1",
             "name": "City Bob",
           },
-          "id": 1,
+          "id": "1",
           "text": "hi!",
         }
       }
@@ -28,10 +28,10 @@ exports[`renders as expected 1`] = `
         Object {
           "createdAt": "2017-05-19T23:25:07Z",
           "creator": Object {
-            "id": 1,
+            "id": "1",
             "name": "City Bob",
           },
-          "id": 2,
+          "id": "2",
           "text": "how are you?",
         }
       }
@@ -42,10 +42,10 @@ exports[`renders as expected 1`] = `
         Object {
           "createdAt": "2017-05-19T23:33:58Z",
           "creator": Object {
-            "id": 1,
+            "id": "1",
             "name": "City Bob",
           },
-          "id": 3,
+          "id": "3",
           "text": "long time no see",
         }
       }
@@ -56,10 +56,10 @@ exports[`renders as expected 1`] = `
         Object {
           "createdAt": "2017-05-20T00:11:11Z",
           "creator": Object {
-            "id": 2,
+            "id": "2",
             "name": "Country Alice",
           },
-          "id": 4,
+          "id": "4",
           "text": "i am great",
         }
       }
@@ -70,10 +70,10 @@ exports[`renders as expected 1`] = `
         Object {
           "createdAt": "2017-05-20T00:12:12Z",
           "creator": Object {
-            "id": 2,
+            "id": "2",
             "name": "Country Alice",
           },
-          "id": 5,
+          "id": "5",
           "text": "things are great",
         }
       }
@@ -84,10 +84,10 @@ exports[`renders as expected 1`] = `
         Object {
           "createdAt": "2017-05-20T00:23:12Z",
           "creator": Object {
-            "id": 2,
+            "id": "2",
             "name": "Country Alice",
           },
-          "id": 6,
+          "id": "6",
           "text": "so great",
         }
       }
@@ -98,10 +98,10 @@ exports[`renders as expected 1`] = `
         Object {
           "createdAt": "2017-05-20T00:23:27Z",
           "creator": Object {
-            "id": 1,
+            "id": "1",
             "name": "City Bob",
           },
-          "id": 7,
+          "id": "7",
           "text": "great!",
         }
       }

@@ -1,5 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`FullPageModal renders correctly when passed children 1`] = `
+<div
+  data-styleName="modal"
+>
+  <div
+    data-styleName="content"
+  >
+    <div
+      data-styleName="left-sidebar"
+    />
+    <div
+      data-styleName="center"
+    >
+      <div>
+        First Child
+      </div>
+      <div>
+        Second Child
+      </div>
+    </div>
+    <div
+      data-styleName="right-sidebar"
+    >
+      <CloseButton />
+    </div>
+  </div>
+</div>
+`;
+
 exports[`FullPageModal renders correctly with a single component 1`] = `
 <div
   data-styleName="modal"

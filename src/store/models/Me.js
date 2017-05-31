@@ -1,4 +1,5 @@
 import { attr, many, Model } from 'redux-orm'
+import { find, get } from 'lodash/fp'
 
 const Me = Model.createClass({
   toString () {
@@ -7,6 +8,15 @@ const Me = Model.createClass({
 
   firstName () {
     return this.name ? this.name.split(' ')[0] : null
+  },
+
+  canModerate (community) {
+    const memberships = this.memberships.toRefArray
+      ? this.memberships.toRefArray()
+      : this.memberships
+    const membership = find(m =>
+      m.community === get('id', community), memberships)
+    return get('hasModeratorRole', membership)
   }
 })
 

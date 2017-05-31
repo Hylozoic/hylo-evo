@@ -12,13 +12,13 @@ import TopNav from './components/TopNav'
 import CommunitySidebar from 'routes/CommunitySidebar'
 import Feed from 'routes/Feed'
 import Events from 'routes/Events'
-
 import EventDetail from 'routes/Events/EventDetail'
 import MemberProfile from 'routes/MemberProfile'
 import PostDetail from 'routes/PostDetail'
 import PostEditorModal from 'components/PostEditorModal'
 import Members from 'routes/Members'
 import UserSettings from 'routes/UserSettings'
+import CommunitySettings from 'routes/CommunitySettings'
 import MessageMember from 'components/MessageMember'
 import AllTopics from 'routes/AllTopics'
 import './PrimaryLayout.scss'
@@ -36,8 +36,16 @@ export default class PrimaryLayout extends Component {
   }
 
   componentDidMount () {
-    // FIXME this doesn't belong here
-    this.props.fetchCurrentUser()
+    // avoid fetching topics for All Communities if we're just going to redirect
+    // to a single community
+    const skipTopics = this.props.location.pathname !== '/all'
+    this.props.fetchForCurrentUser(skipTopics)
+  }
+
+  componentDidUpdate (prevProps) {
+    if (get('community.id', this.props) !== get('community.id', prevProps)) {
+      this.props.fetchForCommunity()
+    }
   }
 
   render () {
@@ -76,7 +84,8 @@ export default class PrimaryLayout extends Component {
             <Route path='/c/:slug/m/:id' component={MemberProfile} />
             <Route path='/c/:slug/p/:anything' component={Feed} />
             <Route path='/c/:slug/topics' component={AllTopics} />
-            <Route path='/c/:slug/:topicName/p/:anything' component={Feed} />
+            <Route path='/c/:slug/settings' component={CommunitySettings} />
+            <Route path='/c/:slug/:topicName/p/:postId' component={Feed} />
             <Route path='/c/:slug/:topicName' component={Feed} />
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />

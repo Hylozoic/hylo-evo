@@ -36,7 +36,7 @@ export function commentUrl (postId, commentId, slug) {
 }
 
 export function communityUrl (slug) {
-  return `/c/${slug}`
+  return slug ? `/c/${slug}` : allCommunitiesUrl()
 }
 
 export function communitySettingsUrl (slug) {

@@ -119,6 +119,9 @@ describe('connector', () => {
       })
       session.Community.create(person.memberships[0].community)
     })
+    const me = { id: '999', name: 'Break Wind' }
+    session.Person.create(me)
+    session.Me.create(me)
     state = { orm: session.state }
     state.PeopleSelector = { participants: people.map(p => p.id) }
   })
@@ -140,6 +143,14 @@ describe('connector', () => {
       const expected = state.PeopleSelector.participants
       const actual = store.participantsFromStore(state)
       expect(actual).toEqual(expected)
+    })
+  })
+
+  describe('contactsSelector', () => {
+    it('filters out currentUser', () => {
+      state.PeopleSelector.participants = []
+      const actual = store.contactsSelector(state)
+      expect(actual.find(p => p.id === '999')).toBe(undefined)
     })
   })
 
@@ -185,6 +196,21 @@ describe('connector', () => {
       expect(actual).toEqual(expected)
     })
 
+    it('filters out currentUser', () => {
+      state.PeopleSelector.participants = []
+      state.PeopleSelector.autocomplete = 'BRE'
+      const expected = [
+        {
+          "id": "72019",
+          "name": "Vita Breitenberg",
+          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/markjenkins/128.jpg",
+          "community": "Associate"
+        }
+      ]
+      const actual = store.matchesSelector(state)
+      expect(actual).toEqual(expected)
+    })
+
     describe('pickPersonListItem', () => {
       it('picks the correct properties', () => {
         const person = session.Person.withId('72203')
@@ -201,6 +227,7 @@ describe('connector', () => {
 
     describe('personConnectionListItemSelector', () => {
       let id = 1
+
       it('filters connections by participants', () => {
         [ '72203', '72019' ].forEach(person =>
           session.PersonConnection.create({
