@@ -19,16 +19,20 @@ export function toggleDrawer () {
   }
 }
 
-export function fetchForCurrentUser (slug) {
+export function fetchForCurrentUser (slug, skipTopics) {
   const query = slug
     ? `query ($slug: String, $first: Int, $offset: Int, $subscribed: Boolean) {
       ${meQueryFragment}
       ${communityQueryFragment}
     }`
-    : `query ($first: Int, $offset: Int, $subscribed: Boolean) {
-      ${meQueryFragment}
-      ${communityTopicsQueryFragment}
-    }`
+    : (skipTopics
+      ? `{
+        ${meQueryFragment}
+      }`
+      : `query ($first: Int, $offset: Int, $subscribed: Boolean) {
+        ${meQueryFragment}
+        ${communityTopicsQueryFragment}
+      }`)
 
   return {
     type: FETCH_FOR_CURRENT_USER,

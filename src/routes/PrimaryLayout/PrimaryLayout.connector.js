@@ -19,7 +19,7 @@ function mapDispatchToProps (dispatch, props) {
   const slug = getSlugFromLocation(null, props)
 
   return {
-    fetchForCurrentUser: () => dispatch(fetchForCurrentUser(slug)),
+    fetchForCurrentUser: skipTopics => dispatch(fetchForCurrentUser(slug, skipTopics)),
     fetchForCommunity: () => dispatch(fetchForCommunity(slug)),
     toggleDrawer: () => dispatch(toggleDrawer())
   }

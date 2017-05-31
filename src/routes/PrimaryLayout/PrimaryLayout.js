@@ -33,7 +33,10 @@ export default class PrimaryLayout extends Component {
   }
 
   componentDidMount () {
-    this.props.fetchForCurrentUser()
+    // avoid fetching topics for All Communities if we're just going to redirect
+    // to a single community
+    const skipTopics = this.props.location.pathname !== '/all'
+    this.props.fetchForCurrentUser(skipTopics)
   }
 
   componentDidUpdate (prevProps) {
