@@ -31,7 +31,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...dispatchProps,
     ...ownProps,
     fetchCommunityTopics: () =>
-      dispatchProps.fetchCommunityTopics(get('id', community), true)
+      dispatchProps.fetchCommunityTopics(get('id', community), {subscribed: true})
   }
 }
 

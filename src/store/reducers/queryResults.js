@@ -7,6 +7,7 @@
 // shown when something has been typed into the search field.
 
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
+import { FETCH_COMMUNITY_TOPICS } from 'store/actions/fetchCommunityTopics'
 import {
   FETCH_POST,
   FETCH_POSTS,
@@ -42,6 +43,9 @@ export default function (state = {}, action) {
     case FETCH_POST:
     case FETCH_COMMENTS:
       return appendIds(state, FETCH_COMMENTS, meta.graphql.variables, payload.data.post.comments)
+
+    case FETCH_COMMUNITY_TOPICS:
+      return appendIds(state, FETCH_COMMUNITY_TOPICS, meta.graphql.variables, payload.data.community.communityTopics)
   }
 
   return state

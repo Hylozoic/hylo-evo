@@ -8,11 +8,14 @@ import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
 import { pluralize, tagUrl } from 'util/index'
 import { find } from 'lodash/fp'
+import ScrollListener from 'components/ScrollListener'
 
 const sortOptions = [
   {id: 'followers', label: 'Popular'},
-  {id: 'recent', label: 'Recent'}
+  {id: 'updated_at', label: 'Recent'}
 ]
+
+const TOPIC_LIST_ID = 'topic-list'
 
 export default class AllTopics extends Component {
   static propTypes = {
@@ -35,11 +38,6 @@ export default class AllTopics extends Component {
     toggleSubscribe: func.isRequired
   }
 
-  static defaultProps = {
-    selectedSort: sortOptions[0].id,
-    onChangeSort: () => {}
-  }
-
   constructor (props) {
     super(props)
     this.state = {
@@ -51,6 +49,12 @@ export default class AllTopics extends Component {
     this.props.fetchCommunityTopics()
   }
 
+  componentDidUpdate (prevProps) {
+    if (prevProps.selectedSort !== this.props.selectedSort) {
+      this.props.fetchCommunityTopics()
+    }
+  }
+
   render () {
     const {
       totalTopics,
@@ -58,7 +62,8 @@ export default class AllTopics extends Component {
       slug,
       selectedSort,
       setSort,
-      toggleSubscribe
+      toggleSubscribe,
+      fetchMoreCommunityTopics
     } = this.props
     const { search } = this.state
 
@@ -71,11 +76,13 @@ export default class AllTopics extends Component {
           onChangeSearch={search => this.setState({search})}
           selectedSort={selectedSort}
           onChangeSort={setSort} />
-        <div styleName='topic-list'>
+        <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {communityTopics.map(ct =>
             <CommunityTopicListItem key={ct.id} item={ct} slug={slug}
               toggleSubscribe={() =>
                 toggleSubscribe(ct.topic.id, !ct.isSubscribed)} />)}
+          <ScrollListener onBottom={() => fetchMoreCommunityTopics()}
+            elementId={TOPIC_LIST_ID} />
         </div>
       </div>
     </FullPageModal>
@@ -83,17 +90,7 @@ export default class AllTopics extends Component {
 }
 
 export function SearchBar ({search, onChangeSearch, selectedSort, onChangeSort}) {
-  const finder = o => {
-    console.log('finder')
-    console.log('o', o)
-    console.log('selectedSort', selectedSort)
-    console.log('filter?', o.id === selectedSort)
-    return o.id === selectedSort
-  }
-
-  const selected = find(finder, sortOptions)
-
-  console.log('selected', selected)
+  const selected = find(o => o.id === selectedSort, sortOptions)
 
   return <div styleName='search-bar'>
     <TextInput styleName='search-input'

@@ -1,7 +1,7 @@
-const FETCH_COMMUNITY_TOPICS = 'FETCH_COMMUNITY_TOPICS'
+export const FETCH_COMMUNITY_TOPICS = 'FETCH_COMMUNITY_TOPICS'
 
 const communityTopicsQueryFragment = `
-communityTopics(first: $first, offset: $offset, subscribed: $subscribed) {
+communityTopics(first: $first, offset: $offset, sortBy: $sortBy, order: $order, subscribed: $subscribed) {
   hasMore
   items {
     id
@@ -18,7 +18,7 @@ communityTopics(first: $first, offset: $offset, subscribed: $subscribed) {
 `
 
 const communityQuery = `
-query ($id: ID, $first: Int, $offset: Int, $subscribed: Boolean) {
+query ($id: ID, $first: Int, $offset: Int, $sortBy: String, $order: String, $subscribed: Boolean) {
   community (id: $id) {
     id
     ${communityTopicsQueryFragment}
@@ -32,7 +32,9 @@ query ($first: Int, $offset: Int, $subscribed: Boolean) {
 }
 `
 
-export default function fetchCommunityTopics (communityId, subscribed, offset = 0) {
+export default function fetchCommunityTopics (communityId, {
+  subscribed = false, first = 20, offset = 0, sortBy
+}) {
   const query = communityId ? communityQuery : rootQuery
   return {
     type: FETCH_COMMUNITY_TOPICS,
@@ -40,9 +42,11 @@ export default function fetchCommunityTopics (communityId, subscribed, offset = 
       query,
       variables: {
         id: communityId,
-        first: 20,
+        first,
         offset,
-        subscribed
+        subscribed,
+        sortBy,
+        order: 'desc'
       }
     },
     meta: {
