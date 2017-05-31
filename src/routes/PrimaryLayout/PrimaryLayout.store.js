@@ -83,6 +83,7 @@ me {
     id
     lastViewedAt
     newPostCount
+    hasModeratorRole
     community {
       id
       name
