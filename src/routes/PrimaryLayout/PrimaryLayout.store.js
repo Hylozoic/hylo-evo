@@ -70,7 +70,9 @@ export function fetchForCommunity (slug) {
   }
 }
 
-const queryVariables = slug => ({slug, first: 20, offset: 0, subscribed: true})
+// the value of `first` is high because we are receiving unaggregated data from
+// the API, so there could be many duplicates
+const queryVariables = slug => ({slug, first: 200, offset: 0, subscribed: true})
 
 const meQueryFragment = `
 me {
