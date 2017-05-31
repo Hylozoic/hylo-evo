@@ -6,24 +6,12 @@ import { Link } from 'react-router-dom'
 import { tagUrl, topicsUrl } from 'util/index'
 import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../../components/Badge/component.scss'
-import { get } from 'lodash/fp'
 
 export default class TopicNavigation extends Component {
   static propTypes = {
     communityTopics: array,
     community: object,
-    fetchCommunityTopics: func,
     clearBadge: func
-  }
-
-  componentDidMount () {
-    this.props.fetchCommunityTopics()
-  }
-
-  componentDidUpdate (prevProps) {
-    if (get('community.id', this.props) !== get('community.id', prevProps)) {
-      this.props.fetchCommunityTopics()
-    }
   }
 
   render () {

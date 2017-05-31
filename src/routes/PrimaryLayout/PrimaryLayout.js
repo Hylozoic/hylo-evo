@@ -12,7 +12,6 @@ import TopNav from './components/TopNav'
 import CommunitySidebar from 'routes/CommunitySidebar'
 import Feed from 'routes/Feed'
 import Events from 'routes/Events'
-
 import EventDetail from 'routes/Events/EventDetail'
 import MemberProfile from 'routes/MemberProfile'
 import PostDetail from 'routes/PostDetail'
@@ -34,8 +33,13 @@ export default class PrimaryLayout extends Component {
   }
 
   componentDidMount () {
-    // FIXME this doesn't belong here
-    this.props.fetchCurrentUser()
+    this.props.fetchForCurrentUser()
+  }
+
+  componentDidUpdate (prevProps) {
+    if (get('community.id', this.props) !== get('community.id', prevProps)) {
+      this.props.fetchForCommunity()
+    }
   }
 
   render () {
