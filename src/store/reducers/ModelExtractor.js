@@ -32,6 +32,9 @@ export default class ModelExtractor {
     }
 
     const model = this.session[modelName]
+    if (!model) {
+      throw new Error(`no model in session named "${modelName}"`)
+    }
 
     const normalized = omitBy(isUndefined, mapValues(node, (value, key) => {
       var type = model.fields[key]
