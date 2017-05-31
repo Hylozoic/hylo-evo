@@ -4,7 +4,7 @@ import Avatar from 'components/Avatar'
 import Loading from 'components/Loading'
 import RoundImageRow from 'components/RoundImageRow'
 import './CommunitySidebar.scss'
-const { object, string, array, func } = PropTypes
+const { object, string, array } = PropTypes
 import cx from 'classnames'
 import { personUrl, communitySettingsUrl } from 'util/index'
 import { markdown } from 'hylo-utils/text'
@@ -15,18 +15,7 @@ export default class CommunitySidebar extends Component {
     slug: string,
     commmunity: object,
     members: array,
-    leaders: array,
-    fetchCommunity: func
-  }
-
-  componentDidMount () {
-    this.props.fetchCommunity()
-  }
-
-  componentDidUpdate (prevProps) {
-    if (prevProps.slug !== this.props.slug) {
-      this.props.fetchCommunity()
-    }
+    leaders: array
   }
 
   render () {
