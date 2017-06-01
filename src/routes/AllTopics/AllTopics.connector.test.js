@@ -2,7 +2,6 @@ import { mergeProps } from './AllTopics.connector'
 
 describe('mergeProps', () => {
   it('populates fetchCommunityTopics and fetchMoreCommunityTopics', () => {
-
     const stateProps = {
       communityTopics: [1, 2, 3],
       selectedSort: 'followers',
