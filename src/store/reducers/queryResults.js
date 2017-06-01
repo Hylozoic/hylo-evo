@@ -6,6 +6,7 @@
 // to "Location". And both of these lists are different from what should be
 // shown when something has been typed into the search field.
 
+import { CREATE_POST } from 'components/PostEditor/PostEditor.store'
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
 import {
   FETCH_POST,
@@ -14,7 +15,7 @@ import {
   FETCH_THREAD,
   FETCH_MESSAGES
 } from 'store/constants'
-import { get, isNull, omitBy, pick, uniq } from 'lodash/fp'
+import { get, isNull, omitBy, pick, reduce, uniq } from 'lodash/fp'
 
 // reducer
 
@@ -28,6 +29,10 @@ export default function (state = {}, action) {
   // detect the metadata and produce a generic action, and have this reducer
   // handle only that action.
   switch (type) {
+    case CREATE_POST:
+      root = payload.data.createPost
+      return matchNewPostIntoQueryResults(state, root)
+
     case FETCH_MEMBERS:
       return appendIds(state, type, meta.graphql.variables, payload.data.community.members)
 
@@ -45,6 +50,39 @@ export default function (state = {}, action) {
   }
 
   return state
+}
+
+function matchNewPostIntoQueryResults (state, {id, type, communities}) {
+  /* about this:
+      we add the post id into queryResult sets that are based on time of
+      creation because we know that the post just created is the latest
+      so we can prepend it. we have to match the different variations which
+      can be implicit or explicit about sorting by 'updated'.
+  */
+  return reduce((memo, community) => {
+    const queriesToMatch = [
+      {id: community.slug},
+      {id: community.slug, filter: type},
+      {id: community.slug, sortBy: 'updated'},
+      {id: community.slug, sortBy: 'updated', filter: type}
+    ]
+    return reduce((innerMemo, params) => {
+      return prependIdForCreate(innerMemo, FETCH_POSTS, params, id)
+    }, memo, queriesToMatch)
+  }, state, communities)
+}
+
+function prependIdForCreate (state, type, params, id) {
+  const key = buildKey(type, params)
+  const existingIds = get('ids', state[key]) || []
+  return {
+    ...state,
+    [key]: {
+      ids: [id].concat(existingIds),
+      total: state[key] && state[key].total + 1,
+      hasMore: state[key] && state[key].hasMore
+    }
+  }
 }
 
 function appendIds (state, type, params, { items, total, hasMore }) {

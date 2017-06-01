@@ -33,7 +33,7 @@ describe('updateAppending', () => {
     times(4, i => session.Limb.create({id: i + 1}))
   })
 
-  it('appends ids for has-many relations', () => {
+  it('appends ids for many-to-many relations', () => {
     session.Dog.withId(1).updateAppending({legs: [3, 4]})
     expect(session.Dog.withId(1).legs.toRefArray().map(x => x.id))
     .toEqual([1, 2, 3, 4])

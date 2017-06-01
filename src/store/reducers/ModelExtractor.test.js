@@ -138,3 +138,42 @@ it('handles null children', () => {
   extractor.walk(testPayloads['FETCH_ACTIVITY'].data.activity, 'Activity')
   expect(extractor.mergedNodes()).toMatchSnapshot()
 })
+
+describe('append option', () => {
+  let session, root
+
+  beforeEach(() => {
+    session = orm.session(orm.getEmptyState())
+    session.Community.create({id: '1', name: 'One'})
+    session.Community.create({id: '2', name: 'Two'})
+    session.Community.create({id: '3', name: 'Three'})
+    session.Post.create({
+      id: '1',
+      communities: ['1', '2', '3']
+    })
+
+    root = {
+      id: '1',
+      title: 'well then!',
+      communities: [
+        {id: '3', name: 'Three'},
+        {id: '4', name: 'Four'},
+        {id: '5', name: 'Five'}
+      ]
+    }
+  })
+
+  it('appends data when set', () => {
+    ModelExtractor.addAll({session, root, modelName: 'Post', append: true})
+    const post = session.Post.withId('1')
+    expect(post.communities.toRefArray().map(c => c.id))
+    .toEqual(['1', '2', '3', '4', '5'])
+  })
+
+  it('does not append data when not set', () => {
+    ModelExtractor.addAll({session, root, modelName: 'Post', append: false})
+    const post = session.Post.withId('1')
+    expect(post.communities.toRefArray().map(c => c.id))
+    .toEqual(['3', '4', '5'])
+  })
+})

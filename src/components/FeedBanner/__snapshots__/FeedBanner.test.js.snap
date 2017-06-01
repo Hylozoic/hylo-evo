@@ -67,7 +67,6 @@ exports[`renders for all communities 1`] = `
     >
       <div
         data-styleName="postPrompt"
-        onClick={[Function]}
       >
         <RoundImage
           data-styleName="prompt-image"

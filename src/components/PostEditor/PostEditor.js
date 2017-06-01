@@ -3,7 +3,7 @@ import { get } from 'lodash/fp'
 import cx from 'classnames'
 import styles from './PostEditor.scss'
 import Icon from 'components/Icon'
-import Avatar from 'components/Avatar'
+import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
@@ -15,6 +15,7 @@ export default class PostEditor extends React.Component {
     titlePlaceholderForPostType: PropTypes.object,
     detailsPlaceholder: PropTypes.string,
     communityOptions: PropTypes.array,
+    currentUser: PropTypes.object,
     post: PropTypes.shape({
       id: PropTypes.string,
       type: PropTypes.string,
@@ -24,29 +25,31 @@ export default class PostEditor extends React.Component {
     }),
     createPost: PropTypes.func,
     updatePost: PropTypes.func,
-    loading: PropTypes.bool,
-    editing: PropTypes.bool
+    goToPost: PropTypes.func,
+    editing: PropTypes.bool,
+    loading: PropTypes.bool
   }
 
   static defaultProps = {
     initialPrompt: 'What are you looking to post?',
     titlePlaceholderForPostType: {
       offer: 'What super powers can you offer?',
+      request: 'What are you looking for help with?',
       default: 'What’s on your mind?'
     },
-    detailsPlaceholder: 'Add details...',
+    detailsPlaceholder: 'Add a description',
     post: {
       type: 'discussion',
       title: '',
       details: '',
       communities: []
     },
-    loading: false,
-    editing: false
+    editing: false,
+    loading: false
   }
 
   buildStateFromProps = ({ post }) => {
-    const defaultedPost = post || PostEditor.defaultProps.post
+    const defaultedPost = Object.assign({}, PostEditor.defaultProps.post, post)
     return {
       post: defaultedPost,
       titlePlaceholder: this.titlePlaceholderForPostType(defaultedPost.type),
@@ -57,6 +60,10 @@ export default class PostEditor extends React.Component {
   constructor (props) {
     super(props)
     this.state = this.buildStateFromProps(props)
+  }
+
+  componentDidMount () {
+    this.titleInput.focus()
   }
 
   componentDidUpdate (prevProps) {
@@ -138,19 +145,22 @@ export default class PostEditor extends React.Component {
     this.setState({valid: this.isValid()})
 
   save = () => {
-    const { editing, createPost, updatePost, onClose } = this.props
+    const { editing, createPost, updatePost, onClose, goToPost } = this.props
     const { id, type, title, communities } = this.state.post
     const details = this.editor.getContentHTML()
     const postToSave = { id, type, title, details, communities }
-    const saveFun = editing ? updatePost : createPost
-    saveFun(postToSave).then(onClose)
+    const saveFunc = editing ? updatePost : createPost
+    saveFunc(postToSave).then(editing ? onClose : goToPost)
   }
 
   render () {
     const { titlePlaceholder, valid, post } = this.state
     if (!post) return null
     const { title, details, communities } = post
-    const { onClose, initialPrompt, detailsPlaceholder, communityOptions, loading, editing } = this.props
+    const {
+      onClose, initialPrompt, detailsPlaceholder,
+      currentUser, communityOptions, editing, loading
+    } = this.props
     const submitButtonLabel = editing ? 'Save' : 'Post'
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
       <div styleName='header'>
@@ -166,11 +176,10 @@ export default class PostEditor extends React.Component {
       </div>
       <div styleName='body'>
         <div styleName='body-column'>
-          <Avatar
+          <RoundImage
             medium
             styleName='titleAvatar'
-            url=''
-            avatarUrl='https://d3ngex8q79bk55.cloudfront.net/user/13986/avatar/1444260480878_AxolotlPic.png'
+            url={currentUser && currentUser.avatarUrl}
           />
         </div>
         <div styleName='body-column'>
@@ -181,6 +190,7 @@ export default class PostEditor extends React.Component {
             value={title}
             onChange={this.handleTitleChange}
             disabled={loading}
+            ref={x => { this.titleInput = x }}
           />
           <HyloEditor
             styleName='editor'

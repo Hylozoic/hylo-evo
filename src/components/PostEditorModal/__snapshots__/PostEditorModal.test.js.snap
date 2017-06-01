@@ -1,12 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`does something 1`] = `
-<HyloModal
-  afterOpenModal={[Function]}
-  shouldCloseOnOverlayClick={false}
->
-  <Connect(PostEditor)
-    onClose={[Function]}
-  />
-</HyloModal>
+<ReactCSSTransitionGroup
+  transitionAppear={true}
+  transitionAppearTimeout={400}
+  transitionEnter={true}
+  transitionEnterTimeout={400}
+  transitionLeave={true}
+  transitionLeaveTimeout={300}
+  transitionName="post-editor"
+/>
 `;

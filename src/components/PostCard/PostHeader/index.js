@@ -16,7 +16,8 @@ export default function PostHeader ({
   close,
   className,
   slug,
-  showCommunity
+  showCommunity,
+  editPost
 }) {
   let context
 
@@ -27,6 +28,23 @@ export default function PostHeader ({
       url: communityUrl(slug)
     }
   }
+
+  let dropdownItems = [
+    {icon: 'Pin', label: 'Pin', onClick: () => console.log('Pin')},
+    {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')}
+  ]
+  if (editPost) {
+    dropdownItems = [
+      ...dropdownItems,
+      {icon: 'Edit', label: 'Edit', onClick: editPost}
+    ]
+  }
+  dropdownItems = [
+    ...dropdownItems,
+    {icon: 'Trash', label: 'Delete', onClick: () => console.log('Delete')},
+    {label: 'Other'},
+    {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
+  ]
 
   return <div styleName='header' className={className}>
     <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
@@ -44,13 +62,7 @@ export default function PostHeader ({
     </div>
     <div styleName='upperRight'>
       {type && <PostLabel type={type} styleName='label' />}
-      <Dropdown toggleChildren={<Icon name='More' />} items={[
-        {icon: 'Pin', label: 'Pin', onClick: () => console.log('Pin')},
-        {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')},
-        {icon: 'Trash', label: 'Delete', onClick: () => console.log('Delete')},
-        {label: 'Other'},
-        {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
-      ]} />
+      <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} />
       {close && <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
     </div>
   </div>

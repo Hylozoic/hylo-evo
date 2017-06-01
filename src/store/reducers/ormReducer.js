@@ -55,7 +55,8 @@ export default function ormReducer (state = {}, action) {
       ModelExtractor.addAll({
         session,
         root: payload,
-        modelName: meta.modelName
+        modelName: meta.modelName,
+        append: meta.append
       })
       break
 

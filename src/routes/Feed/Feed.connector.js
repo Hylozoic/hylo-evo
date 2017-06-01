@@ -51,13 +51,15 @@ export const mapDispatchToProps = function (dispatch, props) {
   const slug = getParam('slug', null, props)
   const topicName = getParam('topicName', null, props)
   const params = getQueryParam(['s', 't'], null, props)
-
   return {
     changeTab: tab => dispatch(changeQueryParam(props, 't', tab, 'all')),
     changeSort: sort => dispatch(changeQueryParam(props, 's', sort, 'all')),
     // we need to preserve url parameters when opening the details for a post,
     // or the center column will revert to its default sort & filter settings
-    showPostDetails: id => dispatch(push(makeUrl(postUrl(id, slug, {topicName}), params))),
+    showPostDetails: postId =>
+      dispatch(push(makeUrl(postUrl(postId, slug, {topicName}), params))),
+    newPost: () =>
+      dispatch(push(makeUrl(postUrl('new', slug, {topicName}), params))),
     fetchTopic: () => {
       if (slug && topicName) {
         return dispatch(fetchCommunityTopic(topicName, slug))

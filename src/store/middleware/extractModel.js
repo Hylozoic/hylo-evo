@@ -24,19 +24,21 @@ export default function extractModelMiddleware (store) {
 
       roots.push({
         payload: payload.data[keys[0]],
-        modelName: extractModel
+        modelName: extractModel,
+        append: true
       })
     } else {
       castArray(extractModel).forEach(config => {
         roots.push({
           payload: config.getRoot(payload.data),
-          modelName: config.modelName
+          modelName: config.modelName,
+          append: config.append
         })
       })
     }
 
-    roots.forEach(({ payload, modelName }) =>
-      store.dispatch({type: EXTRACT_MODEL, payload, meta: {modelName}}))
+    roots.forEach(({ payload, modelName, append }) =>
+      store.dispatch({type: EXTRACT_MODEL, payload, meta: {modelName, append}}))
 
     return next(action)
   }

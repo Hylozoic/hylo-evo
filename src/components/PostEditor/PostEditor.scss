@@ -3,11 +3,12 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  min-width: 590px;
+  min-width: $post-editor-width;
   list-style: none;
   border: solid 1px rgb(0,0,0);
   border-radius: $space-1x;
   border: 1px solid $color-cape-cod-10;
+  background: $color-white;
 }
 
 // Header area
@@ -105,11 +106,15 @@
   &:disabled {
     color: $color-rhino-80;
   }
+  &::placeholder {
+    color: $color-rhino-30;
+  }
 }
 
 .editor {
   height: 200px;
   margin-bottom: $space-6x;
+  color: $color-rhino-80;
 }
 
 // Footer area
@@ -141,7 +146,6 @@
   flex-direction: row;
   justify-content: flex-end;
   padding: $space-3x;
-  background-color: $color-athens-gray-dark;
 }
 
 .postButton {

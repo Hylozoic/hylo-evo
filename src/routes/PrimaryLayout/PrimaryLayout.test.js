@@ -3,7 +3,6 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import orm from 'store/models'
-import Navigation from './components/Navigation'
 import PrimaryLayout, { redirectIfCommunity, RedirectToCommunity } from './PrimaryLayout'
 
 it('shows nothing for a community route if the community is not loaded', () => {

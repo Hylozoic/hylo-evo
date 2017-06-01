@@ -12,43 +12,33 @@ export default class CommunitiesSelector extends Component {
   }
 
   static defaultProps = {
-    placeholder: 'Begin typing...',
+    placeholder: 'Type community name...',
     selected: [],
     options: []
   }
 
-  defaultState = () => {
-    return {
-      selected: [],
-      suggestions: []
-    }
+  static defaultState = {
+    suggestions: []
   }
 
   constructor (props) {
     super(props)
-    this.state = this.defaultState()
-  }
-
-  componentDidUpdate (prevProps) {
-    if (this.props.selected.length > 0 && prevProps.selected.length < 1) {
-      this.props.selected.forEach(community => this.handleAddition(community))
-    }
+    this.state = CommunitiesSelector.defaultState
   }
 
   reset = () => {
-    this.setState(this.defaultState())
+    this.setState(CommunitiesSelector.defaultState)
   }
 
   findSuggestions = (searchText) => {
-    const { options } = this.props
-    const { selected } = this.state
+    const { options, selected } = this.props
     const newSuggestions = differenceBy(options, selected, 'id')
       .filter(o => o.name.match(new RegExp(searchText, 'i')))
     this.setState({ suggestions: newSuggestions })
   }
 
   clearSuggestions = () =>
-    this.setState({suggestions: []})
+    this.setState({suggestions: CommunitiesSelector.defaultState.suggestions})
 
   handleInputChange = (input) => {
     if (input && input.length > 0) {
@@ -58,24 +48,20 @@ export default class CommunitiesSelector extends Component {
     }
   }
 
-  handleAddition = (community) => {
-    const { onChange } = this.props
-    let selected = this.state.selected.concat(community)
-    this.setState({ selected })
+  handleAddition = (communityOrCommunities) => {
+    const { onChange, selected } = this.props
     this.clearSuggestions()
-    onChange(selected)
+    onChange(selected.concat(communityOrCommunities))
   }
 
   handleDelete = (community) => {
-    const { onChange } = this.props
-    let selected = this.state.selected.filter(c => c.id !== community.id)
-    this.setState({ selected })
-    onChange(selected)
+    const { onChange, selected } = this.props
+    onChange(selected.filter(c => c.id !== community.id))
   }
 
   render () {
-    const { placeholder, readOnly } = this.props
-    const { selected, suggestions } = this.state
+    const { selected, placeholder, readOnly } = this.props
+    const { suggestions } = this.state
 
     return (
       <TagInput
