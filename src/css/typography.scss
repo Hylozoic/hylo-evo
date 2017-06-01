@@ -1,4 +1,10 @@
 // Global Typography
+
+/* override draft-js placeholder color */
+.public-DraftEditorPlaceholder-root {
+  color: $color-rhino-30;
+}
+
 .hdr-display {
   @include font-bold;
   font-size: 32px;

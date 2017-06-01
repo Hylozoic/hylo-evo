@@ -47,7 +47,7 @@ export default class RecentActivity extends React.Component {
   }
 
   render () {
-    const { activityItems, showDetails, personId } = this.props
+    const { activityItems, showDetails, editPost, personId } = this.props
     return <div>
       <h2 styleName='subhead'>Recent Activity</h2>
       {activityItems && activityItems.map((item, i) => {
@@ -55,7 +55,8 @@ export default class RecentActivity extends React.Component {
           {item.hasOwnProperty('title')
             ? <PostCard
               post={item}
-              showDetails={() => showDetails(item.id, item.communities[0].slug, personId)} />
+              showDetails={() => showDetails(item.id, item.communities[0].slug, personId)}
+              editPost={() => editPost(item.id, item.communities[0].slug, personId)} />
             : <CommentCard key={i} comment={item} />}
         </div>
       })}

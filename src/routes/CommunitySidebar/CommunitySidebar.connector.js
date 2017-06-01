@@ -1,7 +1,4 @@
 import { connect } from 'react-redux'
-import {
-  fetchCommunity
-} from './CommunitySidebar.store'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
@@ -20,21 +17,4 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export function mapDispatchToProps (dispatch, props) {
-  return {
-    fetchCommunityMaker: slug => () => dispatch(fetchCommunity(slug))
-  }
-}
-
-export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { slug } = stateProps
-  const { fetchCommunityMaker } = dispatchProps
-  return {
-    ...stateProps,
-    ...dispatchProps,
-    ...ownProps,
-    fetchCommunity: slug ? fetchCommunityMaker(slug) : () => {}
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
+export default connect(mapStateToProps)

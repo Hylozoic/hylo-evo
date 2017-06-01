@@ -36,4 +36,10 @@ describe('postUrl', () => {
     const actual = postUrl('123', null, {topicName: 'petitions'})
     expect(actual).toEqual(expected)
   })
+
+  it('should concatenate an action path parameter when action is passed in opts', () => {
+    const expected = '/all/p/123/action'
+    const actual = postUrl('123', null, {action: 'action'})
+    expect(actual).toEqual(expected)
+  })
 })

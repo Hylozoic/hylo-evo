@@ -1,6 +1,7 @@
 import { createSelector } from 'redux-orm'
 import { pick } from 'lodash/fp'
 
+import getMe from 'store/selectors/getMe'
 import orm from 'store/models'
 import {
   CREATE_MESSAGE
@@ -162,11 +163,12 @@ export function pickPersonListItem (person) {
   }
 }
 
-export function personListItemSelector (session, participants, search = () => true) {
+export function personListItemSelector (session, participants, currentUser, search = () => true) {
   return session.Person
     .all()
     .filter(p => !participants.includes(p.id))
     .filter(search)
+    .filter(p => currentUser ? currentUser.id !== p.id : true)
     .orderBy('name')
     .toModelArray()
     .map(pickPersonListItem)
@@ -176,6 +178,7 @@ export const contactsSelector = createSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME].participants,
+  getMe,
   personListItemSelector
 )
 
@@ -183,6 +186,7 @@ export const matchesSelector = createSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME].participants,
+  getMe,
   state => p => {
     const { autocomplete } = state[MODULE_NAME]
     if (autocomplete) {
@@ -192,19 +196,26 @@ export const matchesSelector = createSelector(
   personListItemSelector
 )
 
-export function personConnectionListItemSelector (session, participants) {
+const nameSort = (a, b) => {
+  const aName = a.name.toUpperCase()
+  const bName = b.name.toUpperCase()
+  return aName > bName ? 1 : aName < bName ? -1 : 0
+}
+
+export function personConnectionListItemSelector (session, participants, currentUser) {
   return session.PersonConnection
     .all()
-    .orderBy('name')
     .toModelArray()
     .map(connection => pickPersonListItem(connection.person))
-    .filter(connection => !participants.includes(connection.id))
+    .filter(person => !participants.includes(person.id))
+    .sort(nameSort)
 }
 
 export const recentContactsSelector = createSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME].participants,
+  getMe,
   personConnectionListItemSelector
 )
 

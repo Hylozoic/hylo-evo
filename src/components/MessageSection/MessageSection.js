@@ -1,9 +1,9 @@
 import React from 'react'
 import { throttle } from 'lodash'
-import { get, maxBy } from 'lodash/fp'
+import { get } from 'lodash/fp'
 const { array, bool, func, number, object, string } = React.PropTypes
+import Loading from 'components/Loading'
 import Message from 'components/Message'
-import { position } from 'util/scrolling'
 import './MessageSection.scss'
 
 // the maximum amount of time in minutes that can pass between messages to still
@@ -57,7 +57,6 @@ export default class MessageSection extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      scrolledUp: false,
       visible: true,
       onNextVisible: null
     }
@@ -79,14 +78,33 @@ export default class MessageSection extends React.Component {
     document && document.removeEventListener('visibilitychange', this.handleVisibilityChange)
   }
 
+  componentWillUpdate (nextProps) {
+    const { currentUser, messages, pending } = nextProps
+    if (pending) return
+
+    const oldMessages = this.props.messages
+    const deltaLength = Math.abs(messages.length - oldMessages.length)
+
+    // Note: we write directly to the object here rather than using setState.
+    // This avoids an automatic re-render on scroll, and any inconsistencies
+    // owing to the async nature of setState and/or setState batching.
+    this.shouldScroll = false
+
+    if (deltaLength) {
+      const latest = messages[messages.length - 1]
+      const oldLatest = oldMessages[oldMessages.length - 1]
+
+      // Are additional messages new (at the end of the sorted array)?
+      if (get('id', latest) !== get('id', oldLatest)) {
+        // If there's one new message and it's not from currentUser, don't scroll
+        if (deltaLength === 1 && get('creator.id', latest) !== currentUser.id) return
+        this.shouldScroll = true
+      }
+    }
+  }
+
   componentDidUpdate (prevProps) {
-    const messagesLength = this.props.messages.length
-    const oldMessagesLength = prevProps.messages.length
-    const { currentUser } = this.props
-    const latestMessage = maxBy('createdAt', this.props.messages || [])
-    const userSentLatest = get('creator.id', latestMessage) === get('id', currentUser)
-    const { scrolledUp } = this.state
-    if (messagesLength !== oldMessagesLength && (!scrolledUp || userSentLatest)) this.scrollToBottom()
+    if (this.shouldScroll) this.scrollToBottom()
     /* on hold
     if (thread && !lastSeenAtTimes[thread.id] && thread.unreadCount) {
       lastSeenAtTimes[thread.id] = new Date(thread.lastReadAt).getTime()
@@ -104,30 +122,21 @@ export default class MessageSection extends React.Component {
   }
 
   fetchMore = () => {
-    const { hasMore, pending, fetchMessages, messages } = this.props
+    if (this.props.pending) return
+    const { hasMore, fetchMessages, messages } = this.props
     const cursor = get('id', messages[0])
-    if (cursor && hasMore && !pending) {
-      fetchMessages().then(() => this.scrollToMessage(cursor))
+    if (cursor && hasMore) {
+      fetchMessages()
     }
-  }
-
-  scrollToMessage (id) {
-    const message = document.querySelector(`[data-message-id="${id}"]`)
-    const header = document.querySelector('#thread-header')
-    const newtop = position(message, this.list)
-    this.list.scrollTop = newtop.y - header.offsetHeight
   }
 
   detectScrollExtremes = throttle(target => {
-    const { scrolledUp } = this.state
-    const { scrollTop, scrollHeight, offsetHeight } = target
-    const onBottom = scrollTop >= scrollHeight - offsetHeight
-    if (!onBottom && !scrolledUp) {
-      this.setState({ scrolledUp: true })
-    } else if (onBottom && scrolledUp) {
-      this.setState({ scrolledUp: false })
-      this.markAsRead()
-    }
+    if (this.props.pending) return
+    const { offsetHeight, scrollHeight, scrollTop } = target
+
+    // TODO: is this the correct behaviour? Just because we've read the
+    // bottom message doesn't mean we've read 'em all...
+    if (scrollHeight - scrollTop - offsetHeight < 1) this.markAsRead()
     if (scrollTop <= 150) this.fetchMore()
   }, 500, {trailing: true})
 
@@ -136,17 +145,15 @@ export default class MessageSection extends React.Component {
   }
 
   scrollToBottom = () => {
-    const { visible } = this.state
     this.list.scrollTop = this.list.scrollHeight
-    if (visible) {
+    if (this.state.visible) {
       this.markAsRead()
     } else {
-      this.setState({onNextVisible: this.markAsRead})
+      this.setState({ onNextVisible: this.markAsRead })
     }
-    this.setState({ scrolledUp: false })
   }
 
-  markAsRead = () => {
+  markAsRead () {
     const { thread, updateThreadReadTime } = this.props
     if (thread) updateThreadReadTime(thread.id)
   }
@@ -154,10 +161,10 @@ export default class MessageSection extends React.Component {
   render () {
     const { messages, pending, thread } = this.props
     return <div styleName='messages-section'
-      ref={list => { this.list = list }}
+      ref={list => this.list = list} // eslint-disable-line no-return-assign
       onScroll={this.handleScroll}>
       <div styleName='messages-section-inner'>
-        {pending && <div>TODO: Loading...</div>}
+        {pending && <Loading />}
         {createMessageList(messages, lastSeenAtTimes[get('id', thread)])}
       </div>
     </div>

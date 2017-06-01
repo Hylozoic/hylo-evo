@@ -29,6 +29,7 @@ export default class PostCard extends React.Component {
     fetchPost: func,
     expanded: bool,
     showDetails: func,
+    editPost: func,
     showCommunity: bool
   }
 
@@ -37,12 +38,15 @@ export default class PostCard extends React.Component {
   }
 
   render () {
-    const { post, className, expanded, showDetails, showCommunity } = this.props
+    const {
+      post, className, expanded, showDetails, editPost, showCommunity
+    } = this.props
     const slug = get('0.slug', post.communities)
 
     const shouldShowDetails = element => {
+      console.log(element)
       if (element === this.refs.postCard) return true
-      if (element.tagName === 'A') return false
+      if (element.tagName === 'A' || element.tagName === 'LI') return false
 
       const parent = element.parentElement
       if (parent) return shouldShowDetails(parent)
@@ -62,6 +66,7 @@ export default class PostCard extends React.Component {
         date={post.updatedAt || post.createdAt}
         type={post.type}
         showCommunity={showCommunity}
+        editPost={editPost}
         communities={post.communities}
         slug={slug} />
       <PostImage imageUrl={post.imageUrl} />

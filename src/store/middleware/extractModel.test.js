@@ -49,7 +49,7 @@ it('transforms an action with a string meta.extractModel', () => {
   expect(store.dispatch).toBeCalledWith({
     type: EXTRACT_MODEL,
     payload: postData,
-    meta: {modelName: 'Post'}
+    meta: {modelName: 'Post', append: true}
   })
 })
 
@@ -65,7 +65,8 @@ it('transforms an action with an object meta.extractModel', () => {
     meta: {
       extractModel: {
         getRoot: get('flarg'),
-        modelName: 'Post'
+        modelName: 'Post',
+        append: false
       }
     }
   }
@@ -73,6 +74,45 @@ it('transforms an action with an object meta.extractModel', () => {
   middleware(action)
   expect(next).toBeCalledWith(action)
   expect(store.dispatch).toBeCalledWith({
+    type: EXTRACT_MODEL,
+    payload: postData,
+    meta: {modelName: 'Post', append: false}
+  })
+})
+
+it('transforms an action with an array meta.extractModel', () => {
+  const action = {
+    type: 'FOO',
+    payload: {
+      data: {
+        flarg: postData,
+        arg: personData
+      },
+      cruft: {wow: 1}
+    },
+    meta: {
+      extractModel: [
+        {
+          getRoot: get('arg'),
+          modelName: 'Person'
+        },
+        {
+          getRoot: get('flarg'),
+          modelName: 'Post'
+        }
+      ]
+    }
+  }
+
+  middleware(action)
+  expect(next).toBeCalledWith(action)
+  expect(store.dispatch.mock.calls.length).toEqual(2)
+  expect(store.dispatch.mock.calls[0][0]).toEqual({
+    type: EXTRACT_MODEL,
+    payload: personData,
+    meta: {modelName: 'Person'}
+  })
+  expect(store.dispatch.mock.calls[1][0]).toEqual({
     type: EXTRACT_MODEL,
     payload: postData,
     meta: {modelName: 'Post'}
@@ -92,4 +132,9 @@ const postData = {
     id: '2',
     name: 'Greg'
   }
+}
+
+const personData = {
+  id: '2',
+  name: 'Alice'
 }

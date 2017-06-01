@@ -1,6 +1,6 @@
 export const FETCH_COMMUNITY_TOPICS = 'FETCH_COMMUNITY_TOPICS'
 
-const communityTopicsQueryFragment = `
+export const communityTopicsQueryFragment = `
 communityTopics(first: $first, offset: $offset, sortBy: $sortBy, order: $order, subscribed: $subscribed) {
   hasMore
   items {
