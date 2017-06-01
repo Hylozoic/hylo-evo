@@ -13,7 +13,7 @@
   border-radius: 4px;
   width: 100%;
   min-height: 56px;
-  background-color: white;
+  background-color: $color-white;
   box-shadow: 0px 4px 21px 2px $color-black-squeeze;
   cursor: pointer;
   composes: bdy-lt-sm from 'css/typography.scss';

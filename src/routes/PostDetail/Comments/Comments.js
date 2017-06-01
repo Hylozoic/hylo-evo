@@ -16,6 +16,10 @@ export default class Comments extends Component {
     slug: string
   }
 
+  componentDidMount () {
+    this.width = this.comments.offsetWidth
+  }
+
   render () {
     const {
       comments,
@@ -27,15 +31,21 @@ export default class Comments extends Component {
       slug,
       postId
     } = this.props
-    return <div styleName='comments'>
+
+    const style = {
+      width: this.width + 'px'
+    }
+
+    return <div styleName='comments' ref={x => { this.comments = x }}>
       <ShowMore
         commentsLength={comments.length}
         total={total}
         hasMore={hasMore}
         fetchComments={fetchComments} />
       {comments.map(c => <Comment comment={c} key={c.id} slug={slug} />)}
-      <div styleName='form-wrapper'>
+      <div styleName='form-wrapper' style={style}>
         <CommentForm currentUser={currentUser}
+          width={this.width}
           createComment={createComment} postId={postId} />
         <PeopleTyping styleName='people-typing' />
       </div>
