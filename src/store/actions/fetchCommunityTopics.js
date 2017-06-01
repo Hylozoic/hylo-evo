@@ -10,6 +10,7 @@ communityTopics(
   autocomplete: $autocomplete
 ) {
   hasMore
+  total
   items {
     id
     postsTotal
