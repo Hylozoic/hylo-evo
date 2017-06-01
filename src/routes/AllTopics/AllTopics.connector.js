@@ -56,7 +56,7 @@ export function mapStateToProps (state, props) {
 
 const mapDispatchToProps = {fetchCommunityTopics, toggleTopicSubscribe, setSort, setSearch}
 
-function mergeProps (stateProps, dispatchProps, ownProps) {
+export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { community, communityTopics, selectedSort, search, hasMore } = stateProps
   const { setSort, setSearch, toggleTopicSubscribe } = dispatchProps
   const fetchCommunityTopicsRaw = dispatchProps.fetchCommunityTopics
