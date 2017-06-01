@@ -1,7 +1,14 @@
 export const FETCH_COMMUNITY_TOPICS = 'FETCH_COMMUNITY_TOPICS'
 
 export const communityTopicsQueryFragment = `
-communityTopics(first: $first, offset: $offset, sortBy: $sortBy, order: $order, subscribed: $subscribed) {
+communityTopics(
+  first: $first,
+  offset: $offset,
+  sortBy: $sortBy,
+  order: $order,
+  subscribed: $subscribed,
+  autocomplete: $autocomplete
+) {
   hasMore
   items {
     id
@@ -18,7 +25,15 @@ communityTopics(first: $first, offset: $offset, sortBy: $sortBy, order: $order, 
 `
 
 const communityQuery = `
-query ($id: ID, $first: Int, $offset: Int, $sortBy: String, $order: String, $subscribed: Boolean) {
+query (
+  $id: ID,
+  $first: Int,
+  $offset: Int,
+  $sortBy: String,
+  $order: String,
+  $subscribed: Boolean
+  $autocomplete: String
+) {
   community (id: $id) {
     id
     ${communityTopicsQueryFragment}
@@ -27,13 +42,13 @@ query ($id: ID, $first: Int, $offset: Int, $sortBy: String, $order: String, $sub
 `
 
 const rootQuery = `
-query ($first: Int, $offset: Int, $subscribed: Boolean) {
+query ($first: Int, $offset: Int, $subscribed: Boolean, $autocomplete: String) {
   ${communityTopicsQueryFragment}
 }
 `
 
 export default function fetchCommunityTopics (communityId, {
-  subscribed = false, first = 20, offset = 0, sortBy
+  subscribed = false, first = 20, offset = 0, sortBy, autocomplete = ''
 }) {
   const query = communityId ? communityQuery : rootQuery
   return {
@@ -45,6 +60,7 @@ export default function fetchCommunityTopics (communityId, {
         first,
         offset,
         subscribed,
+        autocomplete,
         sortBy,
         order: 'desc'
       }

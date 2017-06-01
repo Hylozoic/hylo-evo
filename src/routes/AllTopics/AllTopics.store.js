@@ -1,9 +1,11 @@
 export const MODULE_NAME = 'AllTopics'
 
 const SET_SORT = `${MODULE_NAME}/SET_SORT`
+const SET_SEARCH = `${MODULE_NAME}/SET_SEARCH`
 
 const defaultState = {
-  sort: 'followers'
+  sort: 'followers',
+  search: ''
 }
 
 export default function reducer (state = defaultState, action) {
@@ -11,6 +13,11 @@ export default function reducer (state = defaultState, action) {
   if (error) return state
 
   switch (type) {
+    case SET_SEARCH:
+      return {
+        ...state,
+        search: payload
+      }
     case SET_SORT:
       return {
         ...state,
@@ -26,4 +33,19 @@ export function setSort (sort) {
     type: SET_SORT,
     payload: sort
   }
+}
+
+export function setSearch (search) {
+  return {
+    type: SET_SEARCH,
+    payload: search
+  }
+}
+
+export function getSort(state) {
+  return state[MODULE_NAME].sort
+}
+
+export function getSearch(state) {
+  return state[MODULE_NAME].search
 }

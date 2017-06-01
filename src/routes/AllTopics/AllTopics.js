@@ -31,18 +31,10 @@ export default class AllTopics extends Component {
     })),
     totalTopics: number,
     selectedSort: string,
-    onChangeSort: func,
     setSort: func,
     search: string,
-    onChangeSearch: func,
+    setSearch: func,
     toggleSubscribe: func.isRequired
-  }
-
-  constructor (props) {
-    super(props)
-    this.state = {
-      search: ''
-    }
   }
 
   componentDidMount () {
@@ -60,22 +52,19 @@ export default class AllTopics extends Component {
       totalTopics,
       communityTopics,
       slug,
+      search,
+      setSearch,
       selectedSort,
       setSort,
       toggleSubscribe,
       fetchMoreCommunityTopics
     } = this.props
-    const { search } = this.state
 
     return <FullPageModal>
       <div styleName='all-topics'>
         <div styleName='title'>Topics</div>
         <div styleName='subtitle'>{totalTopics} Total Topics</div>
-        <SearchBar
-          search={search}
-          onChangeSearch={search => this.setState({search})}
-          selectedSort={selectedSort}
-          onChangeSort={setSort} />
+        <SearchBar {...{search, setSearch, selectedSort, setSort}} />
         <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {communityTopics.map(ct =>
             <CommunityTopicListItem key={ct.id} item={ct} slug={slug}
@@ -89,14 +78,14 @@ export default class AllTopics extends Component {
   }
 }
 
-export function SearchBar ({search, onChangeSearch, selectedSort, onChangeSort}) {
+export function SearchBar ({search, setSearch, selectedSort, setSort}) {
   const selected = find(o => o.id === selectedSort, sortOptions)
 
   return <div styleName='search-bar'>
     <TextInput styleName='search-input'
       value={search}
       placeholder='Search topics'
-      onChange={event => onChangeSearch(event.target.value)} />
+      onChange={event => setSearch(event.target.value)} />
     <Dropdown styleName='search-order'
       toggleChildren={<span styleName='search-sorter-label'>
         {selected.label}
@@ -104,7 +93,7 @@ export function SearchBar ({search, onChangeSearch, selectedSort, onChangeSort})
       </span>}
       items={sortOptions.map(({ id, label }) => ({
         label,
-        onClick: () => onChangeSort(id)
+        onClick: () => setSort(id)
       }))}
       alignRight />
   </div>
