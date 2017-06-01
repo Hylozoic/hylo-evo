@@ -42,7 +42,9 @@ export default class AllTopics extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (prevProps.selectedSort !== this.props.selectedSort) {
+    if (prevProps.selectedSort !== this.props.selectedSort ||
+      prevProps.search !== this.props.search) {
+      // TODO: Debounce this
       this.props.fetchCommunityTopics()
     }
   }

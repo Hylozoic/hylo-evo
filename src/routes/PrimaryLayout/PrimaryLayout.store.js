@@ -21,7 +21,7 @@ export function toggleDrawer () {
 
 export function fetchForCurrentUser (slug, skipTopics) {
   const query = slug
-    ? `query ($slug: String, $first: Int, $offset: Int, $subscribed: Boolean) {
+    ? `query ($slug: String, $first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean) {
       ${meQueryFragment}
       ${communityQueryFragment}
     }`
@@ -54,10 +54,10 @@ export function fetchForCurrentUser (slug, skipTopics) {
 
 export function fetchForCommunity (slug) {
   const query = slug
-    ? `query ($slug: String, $first: Int, $offset: Int, $subscribed: Boolean) {
+    ? `query ($slug: String, $first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean) {
       ${communityQueryFragment}
     }`
-    : `query ($first: Int, $offset: Int, $subscribed: Boolean) {
+    : `query ($first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean) {
       ${communityTopicsQueryFragment}
     }`
 

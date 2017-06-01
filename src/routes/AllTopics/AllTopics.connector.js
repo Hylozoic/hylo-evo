@@ -36,7 +36,8 @@ export function mapStateToProps (state, props) {
 
   const queryResultParams = {
     id: get('id', community),
-    sortBy: selectedSort
+    sortBy: selectedSort,
+    autocomplete: search
   }
   const communityTopics = getCommunityTopics(state, queryResultParams)
   const hasMore = getHasMoreCommunityTopics(state, queryResultParams)
