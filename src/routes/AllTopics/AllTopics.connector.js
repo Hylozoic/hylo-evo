@@ -5,7 +5,7 @@ import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { createSelector } from 'reselect'
 import { omit } from 'lodash'
-import { get, includes, isEmpty } from 'lodash/fp'
+import { get, includes, isEmpty, debounce } from 'lodash/fp'
 import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
 import fetchCommunityTopics, { FETCH_COMMUNITY_TOPICS } from 'store/actions/fetchCommunityTopics'
 import { setSort, setSearch, getSort, getSearch } from './AllTopics.store'
@@ -59,16 +59,16 @@ const mapDispatchToProps = {fetchCommunityTopics, toggleTopicSubscribe, setSort,
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { community, communityTopics, selectedSort, search, hasMore } = stateProps
   const { setSort, setSearch, toggleTopicSubscribe } = dispatchProps
-  const fetchCommunityTopicsRaw = dispatchProps.fetchCommunityTopics
+  const fetchCommunityTopicsDebounced = debounce(300, dispatchProps.fetchCommunityTopics)
 
   const offset = get('length', communityTopics, 0)
   const first = 10
 
   const fetchCommunityTopics = () =>
-    fetchCommunityTopicsRaw(community.id, {sortBy: selectedSort, autocomplete: search, first})
+    fetchCommunityTopicsDebounced(community.id, {sortBy: selectedSort, autocomplete: search, first})
 
   const fetchMoreCommunityTopics = hasMore
-    ? () => fetchCommunityTopicsRaw(community.id, {offset, sortBy: selectedSort, autocomplete: search, first})
+    ? () => fetchCommunityTopicsDebounced(community.id, {offset, sortBy: selectedSort, autocomplete: search, first})
     : () => {}
 
   return {
