@@ -2,7 +2,7 @@
 
 /* override draft-js placeholder color */
 .public-DraftEditorPlaceholder-root {
-  color: $color-rhino-30;
+  color: $color-rhino-30 !important;
 }
 
 .hdr-display {
