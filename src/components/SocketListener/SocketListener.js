@@ -15,13 +15,16 @@ export default class SocketListener extends Component {
     clearUserTyping: func
   }
 
-  static handlers = {
-    commentAdded: this.props.receiveComment,
-    messageAdded: this.props.receiveMessage,
-    newNotification: this.props.receiveNotification,
-    newPost: this.props.receivePost,
-    newThread: this.props.receiveThread,
-    userTyping: this.userTypingHandler
+  constructor (props) {
+    super(props)
+    this.handlers = {
+      commentAdded: props.receiveComment,
+      messageAdded: props.receiveMessage,
+      newNotification: props.receiveNotification,
+      newPost: props.receivePost,
+      newThread: props.receiveThread,
+      userTyping: this.userTypingHandler
+    }
   }
 
   componentDidMount () {
@@ -33,8 +36,8 @@ export default class SocketListener extends Component {
 
   componentWillUnmount () {
     this.socket.post(socketUrl('/noo/threads/unsubscribe'))
-    handledEvents.forEach(name =>
-      this.socket.off(name, this[name]))
+    Object.keys(this.handlers).forEach(socketEvent =>
+      this.socket.off(socketEvent, this.handlers[socketEvent]))
   }
 
   render () {
