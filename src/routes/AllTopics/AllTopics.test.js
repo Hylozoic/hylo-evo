@@ -27,42 +27,7 @@ describe('AllTopics', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  it.skip('caches totalTopics (using mount)', () => {
-    document.getElementById = () => ({
-      addEventListener: () => {},
-      removeEventListener: () => {}
-    })
-
-    const initialState = {
-      FullPageModal: {}
-    }
-    const store = {
-      getState: () => initialState,
-      dispatch: () => {},
-      subscribe: () => {}
-    }
-    const wrapper = mount(
-      <Provider store={store}>
-        <MemoryRouter>
-          <AllTopics
-            fetchCommunityTopics={() => {}}
-            toggleSubscribe={() => {}}
-            communityTopics={[]}
-            selectedSort='followers'
-          />
-        </MemoryRouter>
-      </Provider>)
-    const allTopics = wrapper.find('AllTopics')
-    console.log('allTopics', allTopics.debug())
-    expect(allTopics.state.totalTopicsCached).not.toBeDefined()
-    allTopics.setProps({totalTopics: 11})
-    expect(allTopics.state.totalTopicsCached).toEqual(11)
-    allTopics.setProps({totalTopics: 5})
-    expect(allTopics.state.totalTopicsCached).toEqual(5)
-  })
-})
-
-it('caches totalTopics (using shallow)', () => {
+it('caches totalTopics', () => {
   const wrapper = shallow(<AllTopics
     fetchCommunityTopics={() => {}}
     toggleSubscribe={() => {}}
