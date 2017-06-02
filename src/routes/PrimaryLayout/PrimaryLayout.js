@@ -120,7 +120,6 @@ export default class PrimaryLayout extends Component {
           children={({match}) => {
             return <PostEditorModal match={match} forNew={forNew} />
           }} />)}
-      } />
     </div>
   }
 }
