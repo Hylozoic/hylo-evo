@@ -10,6 +10,7 @@ import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
 import fetchCommunityTopics, { FETCH_COMMUNITY_TOPICS } from 'store/actions/fetchCommunityTopics'
 import { setSort, setSearch, getSort, getSearch } from './AllTopics.store'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
+import { bindActionCreators } from 'redux'
 
 const getCommunityTopicResults = makeGetQueryResults(FETCH_COMMUNITY_TOPICS)
 
@@ -54,12 +55,21 @@ export function mapStateToProps (state, props) {
   }
 }
 
-const mapDispatchToProps = {fetchCommunityTopics, toggleTopicSubscribe, setSort, setSearch}
+function mapDispatchToProps (dispatch, props) {
+  return {
+    fetchCommunityTopicsDebounced: debounce(300, (communityId, opts) => dispatch(fetchCommunityTopics(communityId, opts))),
+
+    ...bindActionCreators({
+      toggleTopicSubscribe,
+      setSort,
+      setSearch
+    }, dispatch)
+  }
+}
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { community, communityTopics, selectedSort, search, hasMore } = stateProps
-  const { setSort, setSearch, toggleTopicSubscribe } = dispatchProps
-  const fetchCommunityTopicsDebounced = debounce(300, dispatchProps.fetchCommunityTopics)
+  const { setSort, setSearch, toggleTopicSubscribe, fetchCommunityTopicsDebounced } = dispatchProps
 
   const offset = get('length', communityTopics, 0)
   const first = 10

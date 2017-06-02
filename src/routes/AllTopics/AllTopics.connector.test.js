@@ -10,27 +10,27 @@ describe('mergeProps', () => {
       hasMore: true
     }
 
-    const fetchCommunityTopics = jest.fn()
+    const fetchCommunityTopicsDebounced = jest.fn()
 
     const dispatchProps = {
-      fetchCommunityTopics
+      fetchCommunityTopicsDebounced
     }
 
     const merged = mergeProps(stateProps, dispatchProps, {})
 
-    expect(fetchCommunityTopics).not.toHaveBeenCalled()
+    expect(fetchCommunityTopicsDebounced).not.toHaveBeenCalled()
     merged.fetchCommunityTopics()
-    expect(fetchCommunityTopics).toHaveBeenCalledWith(
+    expect(fetchCommunityTopicsDebounced).toHaveBeenCalledWith(
       stateProps.community.id,
       {
         sortBy: stateProps.selectedSort,
         autocomplete: stateProps.search,
         first: 10
       })
-    fetchCommunityTopics.mockClear()
+    fetchCommunityTopicsDebounced.mockClear()
 
     merged.fetchMoreCommunityTopics()
-    expect(fetchCommunityTopics).toHaveBeenCalledWith(
+    expect(fetchCommunityTopicsDebounced).toHaveBeenCalledWith(
       stateProps.community.id,
       {
         sortBy: stateProps.selectedSort,
@@ -38,10 +38,10 @@ describe('mergeProps', () => {
         first: 10,
         offset: stateProps.communityTopics.length
       })
-    fetchCommunityTopics.mockClear()
+    fetchCommunityTopicsDebounced.mockClear()
 
     const merged2 = mergeProps({...stateProps, hasMore: false}, dispatchProps, {})
     merged2.fetchMoreCommunityTopics()
-    expect(fetchCommunityTopics).not.toHaveBeenCalled()
+    expect(fetchCommunityTopicsDebounced).not.toHaveBeenCalled()
   })
 })

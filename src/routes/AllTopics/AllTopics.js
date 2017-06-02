@@ -23,7 +23,7 @@ export default class AllTopics extends Component {
       topic: shape({
         id: string.isRequired,
         name: string.isRequired
-      }),
+      }).isRequired,
       id: string,
       postsTotal: number,
       followersTotal: number,
@@ -37,11 +37,22 @@ export default class AllTopics extends Component {
     toggleSubscribe: func.isRequired
   }
 
+  constructor (props) {
+    super(props)
+    this.state = {}
+  }
+
   componentDidMount () {
     this.props.fetchCommunityTopics()
+    // Caching totalTopics because the total returned in the queryset
+    // changes when there is a search term
+    this.setState({totalTopicsCached: this.props.totalTopics})
   }
 
   componentDidUpdate (prevProps) {
+    if (!this.state.totalTopicsCached && !prevProps.totalTopics && this.props.totalTopics) {
+      this.setState({totalTopicsCached: this.props.totalTopics})
+    }
     if (prevProps.selectedSort !== this.props.selectedSort ||
       prevProps.search !== this.props.search) {
       this.props.fetchCommunityTopics()
@@ -50,7 +61,6 @@ export default class AllTopics extends Component {
 
   render () {
     const {
-      totalTopics,
       communityTopics,
       slug,
       search,
@@ -61,10 +71,12 @@ export default class AllTopics extends Component {
       fetchMoreCommunityTopics
     } = this.props
 
+    const { totalTopicsCached } = this.state
+
     return <FullPageModal>
       <div styleName='all-topics'>
         <div styleName='title'>Topics</div>
-        <div styleName='subtitle'>{totalTopics} Total Topics</div>
+        <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
         <SearchBar {...{search, setSearch, selectedSort, setSort}} />
         <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {communityTopics.map(ct =>
@@ -81,6 +93,8 @@ export default class AllTopics extends Component {
 
 export function SearchBar ({search, setSearch, selectedSort, setSort}) {
   const selected = find(o => o.id === selectedSort, sortOptions)
+
+  if (!selected) throw new Error(`${selectedSort} is not a valid value for selectedSort`)
 
   return <div styleName='search-bar'>
     <TextInput styleName='search-input'
