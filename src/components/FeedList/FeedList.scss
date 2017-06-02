@@ -16,8 +16,8 @@
 }
 
 .tabbar-sticky {
-  position: absolute;
+  position: fixed;
+  top: $topnav-height;
   z-index: 22;
-  width: 100%;
   background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(255, 255, 255, 0.9) 55%, rgba(255, 255, 255, 0));
 }

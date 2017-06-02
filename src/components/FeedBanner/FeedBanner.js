@@ -4,6 +4,7 @@ import { bgImageStyle } from 'util/index'
 import React from 'react'
 import './FeedBanner.scss'
 import cx from 'classnames'
+import { FEED_HEADER_ID } from 'util/scrolling'
 import { hyloLogo } from 'util/assets'
 
 export default function FeedBanner ({ all, community, currentUser, newPost }) {
@@ -19,7 +20,7 @@ export default function FeedBanner ({ all, community, currentUser, newPost }) {
     ({ bannerUrl, avatarUrl, name, location } = community)
   }
 
-  return <div styleName={cx('banner', {'all-communities': all})}>
+  return <div styleName={cx('banner', {'all-communities': all})} id={FEED_HEADER_ID}>
     <div style={bgImageStyle(bannerUrl)} styleName='image'>
       <div styleName='fade'><div styleName='fade2' /></div>
       <div styleName='header'>
