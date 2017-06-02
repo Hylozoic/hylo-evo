@@ -3,31 +3,32 @@ import { getSocket, socketUrl } from 'client/websockets'
 import './SocketListener.scss'
 const { func, object } = PropTypes
 
-export const handledEvents = [
-  'newThread',
-  'messageAdded',
-  'commentAdded',
-  'userTyping',
-  'reconnect',
-  'newPost'
-]
-
 export default class SocketListener extends Component {
   static propTypes = {
     location: object,
     receiveThread: func,
     receiveMessage: func,
     receiveComment: func,
+    receiveNotification: func,
     receivePost: func,
     addUserTyping: func,
     clearUserTyping: func
   }
 
+  static handlers = {
+    commentAdded: this.props.receiveComment,
+    messageAdded: this.props.receiveMessage,
+    newNotification: this.props.receiveNotification,
+    newPost: this.props.receivePost,
+    newThread: this.props.receiveThread,
+    userTyping: this.userTypingHandler
+  }
+
   componentDidMount () {
     this.socket = getSocket()
     this.reconnect()
-    handledEvents.forEach(name =>
-      this.socket.on(name, this[name]))
+    Object.keys(this.handlers).forEach(socketEvent =>
+      this.socket.on(socketEvent, this.handlers[socketEvent]))
   }
 
   componentWillUnmount () {
@@ -40,35 +41,12 @@ export default class SocketListener extends Component {
     return null
   }
 
-  // the methods below are websocket event handlers and are named for the event
-  // they handle.
-
   reconnect = () => {
     this.socket.post(socketUrl('/noo/threads/subscribe'))
   }
 
-  newThread = data => {
-    this.props.receiveThread(data)
-  }
-
-  messageAdded = data => {
-    this.props.receiveMessage(data)
-  }
-
-  commentAdded = data => {
-    this.props.receiveComment(data)
-  }
-
-  userTyping = ({userId, userName, isTyping}) => {
+  userTypingHandler = ({userId, userName, isTyping}) => {
     const { addUserTyping, clearUserTyping } = this.props
-    if (isTyping) {
-      addUserTyping(userId, userName)
-    } else {
-      clearUserTyping(userId)
-    }
-  }
-
-  newPost = data => {
-    this.props.receivePost(data)
+    isTyping ? addUserTyping(userId, userName) : clearUserTyping(userId)
   }
 }
