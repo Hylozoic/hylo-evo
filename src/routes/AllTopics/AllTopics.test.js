@@ -1,7 +1,5 @@
 import AllTopics, { SearchBar, CommunityTopicListItem } from './AllTopics'
-import { shallow, mount } from 'enzyme'
-import { MemoryRouter } from 'react-router'
-import { Provider } from 'react-redux'
+import { shallow } from 'enzyme'
 import React from 'react'
 
 describe('AllTopics', () => {
@@ -27,25 +25,26 @@ describe('AllTopics', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-it('caches totalTopics', () => {
-  const wrapper = shallow(<AllTopics
-    fetchCommunityTopics={() => {}}
-    toggleSubscribe={() => {}}
-    communityTopics={[]}
-    selectedSort='followers'
-  />)
+  it('caches totalTopics', () => {
+    const wrapper = shallow(<AllTopics
+      fetchCommunityTopics={() => {}}
+      toggleSubscribe={() => {}}
+      communityTopics={[]}
+      selectedSort='followers'
+    />)
 
-  // calling lifecycle methods by hand here because they don't fire
-  // on a shallow rendered component
-  wrapper.instance().componentDidMount()
-  expect(wrapper.state().totalTopicsCached).not.toBeDefined()
-  var prevProps = wrapper.props
-  wrapper.setProps({totalTopics: 11})
-  wrapper.instance().componentDidUpdate(prevProps, wrapper.props())
-  expect(wrapper.state().totalTopicsCached).toEqual(11)
-  wrapper.setProps({totalTopics: 5})
-  wrapper.instance().componentDidUpdate(prevProps, wrapper.props())
-  expect(wrapper.state().totalTopicsCached).toEqual(11)
+    // calling lifecycle methods by hand here because they don't fire
+    // on a shallow rendered component
+    wrapper.instance().componentDidMount()
+    expect(wrapper.state().totalTopicsCached).not.toBeDefined()
+    var prevProps = wrapper.props
+    wrapper.setProps({totalTopics: 11})
+    wrapper.instance().componentDidUpdate(prevProps, wrapper.props())
+    expect(wrapper.state().totalTopicsCached).toEqual(11)
+    wrapper.setProps({totalTopics: 5})
+    wrapper.instance().componentDidUpdate(prevProps, wrapper.props())
+    expect(wrapper.state().totalTopicsCached).toEqual(11)
+  })
 })
 
 describe('SearchBar', () => {
