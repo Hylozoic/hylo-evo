@@ -3,7 +3,6 @@
 exports[`matches the latest snapshot 1`] = `
 <div
   data-styleName="topic-feed-header"
-  id="feed-header"
 >
   <Link
     data-styleName="back"

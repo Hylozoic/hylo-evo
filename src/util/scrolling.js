@@ -30,4 +30,3 @@ export const isAtBottom = (offset, element) =>
 
 export const CENTER_COLUMN_ID = 'center-column'
 export const DETAIL_COLUMN_ID = 'detail-column'
-export const FEED_HEADER_ID = 'feed-header'
