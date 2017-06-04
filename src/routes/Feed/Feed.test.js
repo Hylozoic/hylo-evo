@@ -13,6 +13,7 @@ describe('Feed', () => {
     const feed = wrapper.find('Connect(FeedList)')
     expect(feed).toHaveLength(1)
     expect(feed.props()).toEqual({
+      feedHeaderHeight: 0,
       subject: 'community',
       id: 'foo',
       filter: 'request',

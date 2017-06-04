@@ -15,6 +15,7 @@ exports[`renders for all communities 1`] = `
 >
   <div
     data-styleName="banner all-communities"
+    id="feed-header"
   >
     <div
       data-styleName="image"
@@ -107,6 +108,7 @@ exports[`renders with a community 1`] = `
 >
   <div
     data-styleName="banner"
+    id="feed-header"
   >
     <div
       data-styleName="image"
