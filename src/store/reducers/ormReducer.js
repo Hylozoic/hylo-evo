@@ -17,6 +17,7 @@ import {
 } from 'store/constants'
 import {
   RECEIVE_MESSAGE,
+  RECEIVE_NOTIFICATION,
   RECEIVE_POST
  } from 'components/SocketListener/SocketListener.store'
 import orm from 'store/models'
@@ -177,6 +178,10 @@ export default function ormReducer (state = {}, action) {
         m.id !== meta.personId)
         .toModelArray()
       community.update({moderators})
+      break
+
+    case RECEIVE_NOTIFICATION:
+      console.log(payload)
       break
   }
 
