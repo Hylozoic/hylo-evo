@@ -4,7 +4,7 @@ describe('mergeProps', () => {
   it('populates fetchCommunityTopics and fetchMoreCommunityTopics', () => {
     const stateProps = {
       communityTopics: [1, 2, 3],
-      selectedSort: 'followers',
+      selectedSort: 'num_followers',
       search: 're',
       community: {id: 99},
       hasMore: true

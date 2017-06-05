@@ -11,7 +11,7 @@ import { find } from 'lodash/fp'
 import ScrollListener from 'components/ScrollListener'
 
 const sortOptions = [
-  {id: 'followers', label: 'Popular'},
+  {id: 'num_followers', label: 'Popular'},
   {id: 'updated_at', label: 'Recent'}
 ]
 
