@@ -50,7 +50,11 @@ export default function (state = {}, action) {
       return appendIds(state, FETCH_COMMENTS, meta.graphql.variables, payload.data.post.comments)
 
     case FETCH_COMMUNITY_TOPICS:
-      return appendIds(state, FETCH_COMMUNITY_TOPICS, meta.graphql.variables, payload.data.community.communityTopics)
+      if (payload.data.community) {
+        return appendIds(state, FETCH_COMMUNITY_TOPICS, meta.graphql.variables, payload.data.community.communityTopics)
+      } else if (payload.data.communityTopics) {
+        return appendIds(state, FETCH_COMMUNITY_TOPICS, meta.graphql.variables, payload.data.communityTopics)
+      }
   }
 
   return state
@@ -127,7 +131,7 @@ export const queryParamWhitelist = [
   'slug',
   'sortBy',
   'search',
-  'autocomplete',  
+  'autocomplete',
   'filter',
   'topic'
 ]

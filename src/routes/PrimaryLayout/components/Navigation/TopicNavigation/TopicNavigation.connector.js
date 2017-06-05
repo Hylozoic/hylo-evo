@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import { getSubscribedCommunityTopics } from './TopicNavigation.store'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
-import { get } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
   return {
@@ -17,15 +16,4 @@ export function mapDispatchToProps (dispatch) {
   }
 }
 
-export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { community } = stateProps
-  return {
-    ...stateProps,
-    ...dispatchProps,
-    ...ownProps,
-    fetchCommunityTopics: () =>
-      dispatchProps.fetchCommunityTopics(get('id', community), {subscribed: true})
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
+export default connect(mapStateToProps, mapDispatchToProps)

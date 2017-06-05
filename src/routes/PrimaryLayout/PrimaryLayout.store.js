@@ -29,7 +29,7 @@ export function fetchForCurrentUser (slug, skipTopics) {
       ? `{
         ${meQueryFragment}
       }`
-      : `query ($first: Int, $offset: Int, $subscribed: Boolean) {
+      : `query ($first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean) {
         ${meQueryFragment}
         ${communityTopicsQueryFragment}
       }`)
