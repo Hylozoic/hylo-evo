@@ -84,7 +84,8 @@ export default class PostDetail extends Component {
       editPost={canEdit && editPost}
       close={onClose}
       slug={slug}
-      styleName='header' />
+      styleName='header'
+      id={post.id} />
 
     return <div styleName='post'>
       <ScrollListener elementId={DETAIL_COLUMN_ID}

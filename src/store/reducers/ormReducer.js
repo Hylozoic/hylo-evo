@@ -19,6 +19,9 @@ import {
   RECEIVE_MESSAGE,
   RECEIVE_POST
  } from 'components/SocketListener/SocketListener.store'
+import {
+   DELETE_POST_PENDING
+ } from 'components/PostCard/PostHeader/PostHeader.store'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
 import { find } from 'lodash/fp'
@@ -177,6 +180,10 @@ export default function ormReducer (state = {}, action) {
         m.id !== meta.personId)
         .toModelArray()
       community.update({moderators})
+      break
+
+    case DELETE_POST_PENDING:
+      Post.withId(meta.id).delete()
       break
   }
 

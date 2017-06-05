@@ -12,13 +12,13 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { postId } = ownProps
+  const { id } = ownProps
   const { deletePost } = dispatchProps
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    deletePost: () => deletePost(postId)
+    deletePost: () => deletePost(id)
   }
 }
 
