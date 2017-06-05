@@ -1,5 +1,6 @@
 .banner {
-  margin-bottom: $space-15x;
+  padding-top: $space-6x;
+  padding-bottom: $space-15x;
   position: relative;
   z-index: 2;
 }
@@ -78,7 +79,7 @@
   border-radius: 4px;
   height: 56px;
   position: absolute;
-  bottom: -1 * $space-8x;
+  bottom: $space-8x;
   left: $space-4x;
   right: $space-4x;
 }

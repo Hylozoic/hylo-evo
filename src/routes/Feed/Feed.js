@@ -51,7 +51,7 @@ export default class Feed extends Component {
     if (topicName && !topic) return <Loading />
     if (community && topicName && !communityTopic) return <Loading />
 
-    return <div styleName='container'>
+    return <div>
       {topicName
         ? <TopicFeedHeader
           communityTopic={communityTopic}

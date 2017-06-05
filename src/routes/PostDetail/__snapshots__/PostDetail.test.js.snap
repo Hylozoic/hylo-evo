@@ -6,12 +6,22 @@ exports[`PostDetail renders correctly 1`] = `
 >
   <ScrollListener
     elementId="detail-column"
-    onLeaveTop={[Function]}
     onScroll={[Function]}
-    onTop={[Function]}
   />
-  <PostHeader
-    data-styleName="header"
+  <WrappedPostHeader
+    post={
+      Object {
+        "details": "the body of the post",
+        "id": "91",
+        "imageUrl": "foo.jpg",
+        "myVote": true,
+        "tags": Array [
+          "singing",
+          "dancing",
+        ],
+        "votesTotal": 7,
+      }
+    }
     showCommunity={true}
     slug="foo"
   />

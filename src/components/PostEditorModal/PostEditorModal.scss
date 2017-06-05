@@ -66,5 +66,6 @@
   position: relative;
   z-index: 1;
   width: $post-editor-width;
-  margin: 200px auto 0;
+  margin: -($post-editor-height/2) auto 0;
+  top: 50%;
 }

@@ -10,7 +10,7 @@
   width: $content-width;
   margin-left: auto;
   margin-right: auto;
-  height: 56px; // Prevent collapsing
+  height: $topnav-height; // Prevent collapsing
   display: flex;
   justify-content: flex-start;
   background-color: white;
