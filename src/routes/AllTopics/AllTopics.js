@@ -92,9 +92,9 @@ export default class AllTopics extends Component {
 }
 
 export function SearchBar ({search, setSearch, selectedSort, setSort}) {
-  const selected = find(o => o.id === selectedSort, sortOptions)
+  var selected = find(o => o.id === selectedSort, sortOptions)
 
-  if (!selected) throw new Error(`${selectedSort} is not a valid value for selectedSort`)
+  if (!selected) selected = sortOptions[0]
 
   return <div styleName='search-bar'>
     <TextInput styleName='search-input'

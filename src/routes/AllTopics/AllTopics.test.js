@@ -58,18 +58,6 @@ describe('SearchBar', () => {
     const wrapper = shallow(<SearchBar {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
-
-  it('throws an error when given a bad selectedSort', () => {
-    const props = {
-      search: 'test',
-      onChangeSearch: () => {},
-      selectedSort: 'nogood',
-      onChangeSort: () => {}
-    }
-    expect(() => {
-      shallow(<SearchBar {...props} />)
-    }).toThrow(new Error('nogood is not a valid value for selectedSort'))
-  })
 })
 
 describe('TopicListItem', () => {
