@@ -2,6 +2,13 @@ import { deletePost } from './PostHeader.store'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { communityUrl, allCommunitiesUrl } from 'util/index'
+import getMe from 'store/selectors/getMe'
+
+export function mapStateToProps (state, props) {
+  return {
+    currentUser: getMe(state, props)
+  }
+}
 
 export function mapDispatchToProps (dispatch, props) {
   const { slug } = props
@@ -18,14 +25,16 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { id } = ownProps
+  const { currentUser } = stateProps
+  const { id, creator } = ownProps
   const { deletePost } = dispatchProps
+  const canDelete = currentUser.id === creator.id
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    deletePost: () => deletePost(id)
+    deletePost: canDelete ? () => deletePost(id) : null
   }
 }
 
-export default connect(null, mapDispatchToProps, mergeProps)
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)

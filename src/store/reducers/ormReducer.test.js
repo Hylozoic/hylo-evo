@@ -9,6 +9,9 @@ import {
   MARK_ALL_ACTIVITIES_READ_PENDING,
   TOGGLE_TOPIC_SUBSCRIBE_PENDING
 } from 'store/constants'
+import {
+   DELETE_POST_PENDING
+ } from 'components/PostCard/PostHeader/PostHeader.store'
 import deep from 'deep-diff'
 
 it('responds to EXTRACT_MODEL', () => {
@@ -197,5 +200,23 @@ describe('on CREATE_MESSAGE', () => {
     expect(newSession.Message.hasId('2')).toBeTruthy()
     const thread = newSession.MessageThread.withId('1')
     expect(Date.now() - new Date(thread.updatedAt).getTime()).toBeLessThan(1000)
+  })
+})
+
+describe('on DELETE_POST_PENDING', () => {
+  const session = orm.session(orm.getEmptyState())
+  session.Post.create({id: '1'})
+  session.Post.create({id: '2'})
+  session.Post.create({id: '3'})
+
+  it('removes the post', () => {
+    const action = {
+      type: DELETE_POST_PENDING,
+      meta: {id: '2'}
+    }
+    const newState = ormReducer(session.state, action)
+    const newSession = orm.session(newState)
+    expect(newSession.Post.hasId('2')).toBeFalsy()
+    expect(newSession.Post.hasId('1')).toBeTruthy()
   })
 })
