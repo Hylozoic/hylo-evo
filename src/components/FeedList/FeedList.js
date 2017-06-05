@@ -26,7 +26,7 @@ export default class FeedList extends React.Component {
   setStateFromDOM = tabBar => {
     const element = ReactDOM.findDOMNode(tabBar)
     const container = document.getElementById(CENTER_COLUMN_ID)
-    if (!(element || container)) return
+    if (!element || !container) return
     this.setState({
       tabBarWidth: element.offsetWidth,
       scrollOffset: position(element, container).y
