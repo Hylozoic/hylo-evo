@@ -5,7 +5,7 @@ exports[`renders as expected 1`] = `
   data-styleName="card"
   onClick={[Function]}
 >
-  <PostHeader
+  <Connect(PostHeader)
     communities={
       Array [
         Object {
@@ -24,6 +24,7 @@ exports[`renders as expected 1`] = `
       }
     }
     date="2014-01-17T00:00:00.000Z"
+    id="FAKE_29222"
     slug="great"
     type="offer"
   />
@@ -62,28 +63,4 @@ exports[`renders as expected 1`] = `
     votesTotal={11519}
   />
 </div>
-`;
-
-exports[`renders as expected 2`] = `
-"<div data-styleName=\\"header\\" className={[undefined]}>
-<Avatar avatarUrl=\\"https://s3.amazonaws.com/uifaces/faces/twitter/claudioguglieri/128.jpg?82483\\" url=\\"/c/great/m/82690\\" data-styleName=\\"avatar\\" />
-<div data-styleName=\\"headerText\\">
-<Link to=\\"/c/great/m/82690\\" data-styleName=\\"userName\\" replace={false}>
-Frederic Crona
-, 
-</Link>
-<span data-styleName=\\"userTitle\\">
-Legacy Marketing Executive
-</span>
-<div>
-<span data-styleName=\\"timestamp\\">
-
-</span>
-</div>
-</div>
-<div data-styleName=\\"upperRight\\">
-<PostLabel type=\\"offer\\" data-styleName=\\"label\\" />
-<Dropdown toggleChildren={{...}} items={{...}} />
-</div>
-</div>"
 `;
