@@ -1,10 +1,16 @@
 import { deletePost } from './PostHeader.store'
 import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
+import { communityUrl, allCommunitiesUrl } from 'util/index'
 
 export function mapDispatchToProps (dispatch, props) {
-  const deletePostWithConfirm = id =>
-    window.confirm('are you sure you want to delete this post?') &&
-    dispatch(deletePost(id))
+  const { slug } = props
+  const deletePostWithConfirm = id => {
+    if (window.confirm('are you sure you want to delete this post?')) {
+      dispatch(deletePost(id))
+      .then(() => dispatch(push(slug ? communityUrl(slug) : allCommunitiesUrl())))
+    }
+  }
 
   return {
     deletePost: deletePostWithConfirm
