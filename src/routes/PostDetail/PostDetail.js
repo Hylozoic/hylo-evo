@@ -1,17 +1,18 @@
 import React, { PropTypes, Component } from 'react'
+import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
-import { isEmpty } from 'lodash/fp'
+import { throttle, isEmpty } from 'lodash/fp'
 import './PostDetail.scss'
 const { bool, func, object, string } = PropTypes
 import { PostImage, PostBody, PostFooter, PostHeader } from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
 import Comments from './Comments'
 import { tagUrl } from 'util/index'
-import { DETAIL_COLUMN_ID } from 'util/scrolling'
+import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import SocketSubscriber from 'components/SocketSubscriber'
 
-const STICKY_HEADER_ID = 'header-sticky'
-const STICKY_ACTIVITY_ID = 'activity-sticky'
+// the height of the header plus the padding-top
+const STICKY_HEADER_SCROLL_OFFSET = 78
 
 export default class PostDetail extends Component {
   static propTypes = {
@@ -27,9 +28,32 @@ export default class PostDetail extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      atTop: true,
-      atActivity: false
+      atHeader: false,
+      headerWidth: 0,
+      headerScrollOffset: 0,
+      atActivity: false,
+      activityWidth: 0,
+      activityScrollOffset: 0
     }
+  }
+
+  setHeaderStateFromDOM = () => {
+    const container = document.getElementById(DETAIL_COLUMN_ID)
+    if (!container) return
+    this.setState({
+      headerWidth: container.offsetWidth
+    })
+  }
+
+  setActivityStateFromDOM = activity => {
+    const element = ReactDOM.findDOMNode(activity)
+    const container = document.getElementById(DETAIL_COLUMN_ID)
+    if (!element || !container) return
+    const offset = position(element, container).y - STICKY_HEADER_SCROLL_OFFSET
+    this.setState({
+      activityWidth: element.offsetWidth,
+      activityScrollOffset: offset
+    })
   }
 
   componentDidMount () {
@@ -46,29 +70,30 @@ export default class PostDetail extends Component {
     this.props.fetchPost()
   }
 
-  handleScroll = event => {
-    const { atTop, atActivity } = this.state
-    const header = document.getElementById(STICKY_HEADER_ID)
-    if (!atTop) {
-      header.style.top = event.target.scrollTop + 'px'
-    }
-    const activityBreakpoint = this.refs.activity.offsetTop - header.offsetHeight
-    if (event.target.scrollTop >= activityBreakpoint && !atActivity) {
+  handleScroll = throttle(100, event => {
+    const { scrollTop } = event.target
+    const {
+      atHeader,
+      atActivity,
+      headerScrollOffset,
+      activityScrollOffset
+    } = this.state
+    if (!atActivity && scrollTop >= activityScrollOffset) {
       this.setState({atActivity: true})
-      const activity = document.getElementById(STICKY_ACTIVITY_ID)
-      if (activity) activity.style.top = event.target.scrollTop + header.offsetHeight + 'px'
-    } else if (event.target.scrollTop < activityBreakpoint && atActivity) {
+    } else if (atActivity && scrollTop < activityScrollOffset) {
       this.setState({atActivity: false})
     }
-    if (atActivity) {
-      const activity = document.getElementById(STICKY_ACTIVITY_ID)
-      if (activity) activity.style.top = event.target.scrollTop + header.offsetHeight + 'px'
+
+    if (!atHeader && scrollTop > headerScrollOffset) {
+      this.setState({atHeader: true})
+    } else if (atHeader && scrollTop <= headerScrollOffset) {
+      this.setState({atHeader: false})
     }
-  }
+  })
 
   render () {
-    const { post, currentUser, slug, onClose, showCommunity, editPost } = this.props
-    const { atTop, atActivity } = this.state
+    const { post, currentUser, slug } = this.props
+    const { atHeader, atActivity, headerWidth, activityWidth } = this.state
     if (!post) return null
     const canEdit = currentUser && currentUser.id === post.creator.id
     const scrollToBottom = () => {
@@ -76,23 +101,21 @@ export default class PostDetail extends Component {
       detail.scrollTop = detail.scrollHeight
     }
 
-    const header = <PostHeader creator={post.creator}
-      date={post.updatedAt || post.createdAt}
-      type={post.type}
-      communities={post.communities}
-      showCommunity={showCommunity}
-      editPost={canEdit && editPost}
-      close={onClose}
-      slug={slug}
-      styleName='header' />
+    const headerStyle = {
+      width: headerWidth + 'px'
+    }
+    const activityStyle = {
+      width: activityWidth + 'px',
+      marginTop: STICKY_HEADER_SCROLL_OFFSET + 'px'
+    }
 
-    return <div styleName='post'>
+    return <div styleName='post' ref={this.setHeaderStateFromDOM}>
       <ScrollListener elementId={DETAIL_COLUMN_ID}
-        onScroll={this.handleScroll}
-        onTop={() => this.setState({atTop: true})}
-        onLeaveTop={() => this.setState({atTop: false})} />
-      {header}
-      {!atTop && <div id={STICKY_HEADER_ID} styleName='header-sticky'>{header}</div>}
+        onScroll={this.handleScroll} />
+      <WrappedPostHeader {...this.props} canEdit={canEdit} />
+      {atHeader && <div styleName='header-sticky' style={headerStyle}>
+        <WrappedPostHeader {...this.props} canEdit={canEdit} />
+      </div>}
       <PostImage imageUrl={post.imageUrl} styleName='image' />
       <PostTags tags={post.tags} />
       <PostBody title={post.title}
@@ -102,13 +125,13 @@ export default class PostDetail extends Component {
         slug={slug}
         expanded
         styleName='body' />
-      <div styleName='activity-header' ref='activity'>Activity</div>
+      <div styleName='activity-header' ref={this.setActivityStateFromDOM}>Activity</div>
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
         votesTotal={post.votesTotal}
         myVote={post.myVote} />
-      {atActivity && <div id={STICKY_ACTIVITY_ID} styleName='activity-sticky'>
+      {atActivity && <div styleName='activity-sticky' style={activityStyle}>
         <div styleName='activity-header'>Activity</div>
         <PostFooter id={post.id}
           commenters={post.commenters}
@@ -120,6 +143,18 @@ export default class PostDetail extends Component {
       <SocketSubscriber type='post' id={post.id} />
     </div>
   }
+}
+
+function WrappedPostHeader ({post, showCommunity, canEdit, editPost, onClose, slug}) {
+  return <PostHeader creator={post.creator}
+    date={post.updatedAt || post.createdAt}
+    type={post.type}
+    communities={post.communities}
+    showCommunity={showCommunity}
+    editPost={canEdit && editPost}
+    close={onClose}
+    slug={slug}
+    styleName='header' />
 }
 
 export function PostTags ({ tags, slug }) {
