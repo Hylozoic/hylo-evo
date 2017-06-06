@@ -101,17 +101,6 @@ export default class PostDetail extends Component {
       detail.scrollTop = detail.scrollHeight
     }
 
-    // const header = <PostHeader creator={post.creator}
-    //   date={post.updatedAt || post.createdAt}
-    //   type={post.type}
-    //   communities={post.communities}
-    //   showCommunity={showCommunity}
-    //   editPost={canEdit && editPost}
-    //   close={onClose}
-    //   slug={slug}
-    //   styleName='header'
-    //   id={post.id} />
-
     const headerStyle = {
       width: headerWidth + 'px'
     }
