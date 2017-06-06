@@ -3,46 +3,96 @@ import getParam from 'store/selectors/getParam'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
+import { createSelector } from 'reselect'
 import { omit } from 'lodash'
+import { get, includes, isEmpty } from 'lodash/fp'
 import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
-import fetchCommunityTopics from 'store/actions/fetchCommunityTopics'
+import fetchCommunityTopics, { FETCH_COMMUNITY_TOPICS } from 'store/actions/fetchCommunityTopics'
+import { setSort, setSearch, getSort, getSearch } from './AllTopics.store'
+import { makeGetQueryResults } from 'store/reducers/queryResults'
 
-// TODO: this selector will also have to depend upon sorting parameters for the
-// sorting dropdown to work.
-const getCommunityTopics = ormCreateSelector(
+const getCommunityTopicResults = makeGetQueryResults(FETCH_COMMUNITY_TOPICS)
+
+export const getCommunityTopics = ormCreateSelector(
   orm,
   state => state.orm,
-  getCommunityForCurrentRoute,
-  (session, community) => {
-    return community
-      ? session.CommunityTopic
-      .filter({community: community.id})
-      .orderBy(ct => -ct.postsTotal)
-      .toModelArray()
-      : []
+  getCommunityTopicResults,
+  (session, results) => {
+    if (isEmpty(results) || isEmpty(results.ids)) return []
+    return session.CommunityTopic.all()
+    .filter(x => includes(x.id, results.ids))
+    .orderBy(x => results.ids.indexOf(x.id))
+    .toModelArray()
   }
 )
 
+const getTotalCommunityTopics = createSelector(getCommunityTopicResults, get('total'))
+const getHasMoreCommunityTopics = createSelector(getCommunityTopicResults, get('hasMore'))
+
 export function mapStateToProps (state, props) {
+  const community = getCommunityForCurrentRoute(state, props)
+  const selectedSort = getSort(state)
+  const search = getSearch(state)
+  const fetchIsPending = state.pending[FETCH_COMMUNITY_TOPICS]
+
+  const queryResultParams = {
+    id: get('id', community),
+    sortBy: selectedSort,
+    autocomplete: search
+  }
+  const communityTopics = getCommunityTopics(state, queryResultParams)
+  const hasMore = getHasMoreCommunityTopics(state, queryResultParams)
+  const total = getTotalCommunityTopics(state, queryResultParams)
+
   return {
-    community: getCommunityForCurrentRoute(state, props),
-    communityTopics: getCommunityTopics(state, props),
+    community,
+    communityTopics,
     slug: getParam('slug', state, props),
-    totalTopics: 25
+    totalTopics: total,
+    selectedSort,
+    search,
+    hasMore,
+    fetchIsPending
   }
 }
 
-const mapDispatchToProps = {fetchCommunityTopics, toggleTopicSubscribe}
+export const mapDispatchToProps = {
+  fetchCommunityTopicsRaw: fetchCommunityTopics,
+  toggleTopicSubscribe,
+  setSort,
+  setSearch
+}
 
-function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { community } = stateProps
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const {
+    community, communityTopics, selectedSort, search, hasMore, fetchIsPending
+  } = stateProps
+  const {
+    setSort, setSearch, toggleTopicSubscribe, fetchCommunityTopicsRaw
+  } = dispatchProps
+
+  const offset = get('length', communityTopics, 0)
+  const first = 10
+
+  const fetchCommunityTopics = fetchIsPending
+   ? () => {}
+   : () => fetchCommunityTopicsRaw(community.id, {
+     sortBy: selectedSort, autocomplete: search, first
+   })
+
+  const fetchMoreCommunityTopics = fetchIsPending || !hasMore
+    ? () => {}
+    : () => fetchCommunityTopicsRaw(community.id, {offset, sortBy: selectedSort, autocomplete: search, first})
+
   return {
     ...omit(stateProps, 'community'),
     ...ownProps,
-    fetchCommunityTopics: offset =>
-      dispatchProps.fetchCommunityTopics(community.id, false, offset),
+    setSort,
+    setSearch,
+    fetchCommunityTopics,
+    fetchMoreCommunityTopics,
     toggleSubscribe: (topicId, isSubscribing) =>
-      dispatchProps.toggleTopicSubscribe(topicId, community.id, isSubscribing)
+      toggleTopicSubscribe(topicId, community.id, isSubscribing)
   }
 }
 

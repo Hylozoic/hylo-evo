@@ -29,7 +29,9 @@
   margin-right: $space-4x;
 }
 
-.search-order { /* !empty */ }
+.search-order {
+  min-width: 80px;
+}
 
 .search-sorter-label {
   font-size: 15px;
