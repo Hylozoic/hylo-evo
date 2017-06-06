@@ -22,10 +22,4 @@ it('renders as expected', () => {
   }
   const wrapper = shallow(<PostCard post={post} />)
   expect(wrapper).toMatchSnapshot()
-
-  const header = wrapper.find('PostHeader').dive()
-
-  // we have to avoid storing a relative timestamp label in the snapshot, since
-  // it would become incorrect as soon as some time passed
-  expect(header.debug().replace(/^.*ago/m, '')).toMatchSnapshot()
 })

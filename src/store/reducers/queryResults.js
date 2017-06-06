@@ -47,6 +47,7 @@ export default function (state = {}, action) {
 
     case FETCH_POST:
     case FETCH_COMMENTS:
+      if (!payload.data.post) break
       return appendIds(state, FETCH_COMMENTS, meta.graphql.variables, payload.data.post.comments)
 
     case FETCH_COMMUNITY_TOPICS:

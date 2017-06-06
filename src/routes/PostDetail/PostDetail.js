@@ -154,7 +154,8 @@ function WrappedPostHeader ({post, showCommunity, canEdit, editPost, onClose, sl
     editPost={canEdit && editPost}
     close={onClose}
     slug={slug}
-    styleName='header' />
+    styleName='header'
+    id={post.id} />
 }
 
 export function PostTags ({ tags, slug }) {
