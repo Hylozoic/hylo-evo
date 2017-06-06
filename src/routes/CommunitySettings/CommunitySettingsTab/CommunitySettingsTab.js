@@ -24,7 +24,7 @@ export default class CommunitySettingsTab extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (prevProps.currentUser !== this.props.currentUser) {
+    if (prevProps.community !== this.props.community) {
       this.setEditState()
     }
   }
