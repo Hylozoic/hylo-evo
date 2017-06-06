@@ -55,6 +55,7 @@ export default function (state = {}, action) {
       } else if (payload.data.communityTopics) {
         return appendIds(state, FETCH_COMMUNITY_TOPICS, meta.graphql.variables, payload.data.communityTopics)
       }
+      break
   }
 
   return state
