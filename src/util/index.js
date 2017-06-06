@@ -63,6 +63,10 @@ export function topicsUrl (slug) {
   return communityUrl(slug) + '/topics'
 }
 
+export function removePostFromUrl (url) {
+  return url.replace(/\/p\/[0-9]+/, '')
+}
+
 // n.b.: use getParam instead of this where possible.
 
 export function getSlugInPath (pathname) {
