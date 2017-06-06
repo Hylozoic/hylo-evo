@@ -41,11 +41,13 @@ export function fetchForCurrentUser (slug, skipTopics) {
       extractModel: [
         {
           getRoot: get('me'),
-          modelName: 'Me'
+          modelName: 'Me',
+          append: true
         },
         {
           getRoot: get(slug ? 'community' : 'communityTopics'),
-          modelName: slug ? 'Community' : 'CommunityTopic'
+          modelName: slug ? 'Community' : 'CommunityTopic',
+          append: true
         }
       ]
     }

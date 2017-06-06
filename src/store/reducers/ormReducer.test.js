@@ -7,7 +7,8 @@ import {
   VOTE_ON_POST_PENDING,
   MARK_ACTIVITY_READ_PENDING,
   MARK_ALL_ACTIVITIES_READ_PENDING,
-  TOGGLE_TOPIC_SUBSCRIBE_PENDING
+  TOGGLE_TOPIC_SUBSCRIBE_PENDING,
+  UPDATE_COMMUNITY_SETTINGS_PENDING
 } from 'store/constants'
 import {
    DELETE_POST_PENDING
@@ -218,5 +219,35 @@ describe('on DELETE_POST_PENDING', () => {
     const newSession = orm.session(newState)
     expect(newSession.Post.hasId('2')).toBeFalsy()
     expect(newSession.Post.hasId('1')).toBeTruthy()
+  })
+})
+
+describe('on UPDATE_COMMUNITY_SETTINGS_PENDING', () => {
+  const id = '1'
+  const session = orm.session(orm.getEmptyState())
+  session.Community.create({
+    id,
+    name: 'Old Name',
+    description: 'Old description'
+  })
+
+  it('updates the community settings', () => {
+    const name = 'New Name'
+    const description = 'New description'
+    const action = {
+      type: UPDATE_COMMUNITY_SETTINGS_PENDING,
+      meta: {
+        id,
+        changes: {
+          name,
+          description
+        }
+      }
+    }
+    const newState = ormReducer(session.state, action)
+    const newSession = orm.session(newState)
+    const community = newSession.Community.withId(id)
+    expect(community.name).toEqual(name)
+    expect(community.description).toEqual(description)
   })
 })

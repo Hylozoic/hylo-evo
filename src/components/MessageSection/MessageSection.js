@@ -1,5 +1,5 @@
 import React from 'react'
-import { throttle } from 'lodash'
+import { throttle, debounce } from 'lodash'
 import { get } from 'lodash/fp'
 const { array, bool, func, number, object, string } = React.PropTypes
 import Loading from 'components/Loading'
@@ -153,10 +153,10 @@ export default class MessageSection extends React.Component {
     }
   }
 
-  markAsRead () {
+  markAsRead = debounce(() => {
     const { thread, updateThreadReadTime } = this.props
     if (thread) updateThreadReadTime(thread.id)
-  }
+  }, 2000)
 
   render () {
     const { messages, pending, thread } = this.props

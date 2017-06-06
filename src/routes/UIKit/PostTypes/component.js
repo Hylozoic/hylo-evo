@@ -55,7 +55,7 @@ export default function PostTypes (props) {
             {id: '2', name: 'Bagel People'},
             {id: '3', name: 'Common Purpose'},
             {id: '4', name: 'Dancing Penpals'}
-          ]}/>
+          ]} />
       </div>
       <div className='sheet-title'>Post Types</div>
       <div styleName='postCards'>

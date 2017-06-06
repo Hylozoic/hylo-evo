@@ -20,3 +20,4 @@ npm-debug.log
 .flooignore
 
 yarn-error.log
+.idea

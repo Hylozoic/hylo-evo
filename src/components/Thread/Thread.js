@@ -2,7 +2,6 @@ import React from 'react'
 
 import { filter, get, map } from 'lodash/fp'
 const { func, object } = React.PropTypes
-import Icon from 'components/Icon'
 import MessageSection from 'components/MessageSection'
 import MessageForm from 'components/MessageForm'
 import PeopleTyping from 'components/PeopleTyping'
@@ -56,7 +55,6 @@ function Header ({ thread, currentUser }) {
     <div styleName='header-text'>
       You{others.length > 1 ? `, ${othersMinusLast.join(', ')}` : ''} and {others[others.length - 1]}
     </div>
-    <Icon name='More' styleName='more-icon' />
     <CloseMessages />
   </div>
 }

@@ -49,6 +49,12 @@ export function updateCommunitySettings (id, changes) {
       variables: {
         id, changes
       }
+    },
+    meta: {
+      id,
+      changes,
+      optimistic: true
     }
+
   }
 }

@@ -13,7 +13,8 @@ import {
   RESET_NEW_POST_COUNT_PENDING,
   TOGGLE_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_THREAD_READ_TIME,
-  VOTE_ON_POST_PENDING
+  VOTE_ON_POST_PENDING,
+  UPDATE_COMMUNITY_SETTINGS_PENDING
 } from 'store/constants'
 import {
   RECEIVE_MESSAGE,
@@ -175,7 +176,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case REMOVE_MODERATOR_PENDING:
-      const community = Community.withId(meta.communityId)
+      var community = Community.withId(meta.communityId)
       const moderators = community.moderators.filter(m =>
         m.id !== meta.personId)
         .toModelArray()
@@ -184,6 +185,11 @@ export default function ormReducer (state = {}, action) {
 
     case DELETE_POST_PENDING:
       Post.withId(meta.id).delete()
+      break
+
+    case UPDATE_COMMUNITY_SETTINGS_PENDING:
+      community = Community.withId(meta.id)
+      community.update(meta.changes)
       break
   }
 
