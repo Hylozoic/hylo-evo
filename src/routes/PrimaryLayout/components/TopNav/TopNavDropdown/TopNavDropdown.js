@@ -39,14 +39,14 @@ export default class TopNavDropdown extends Component {
     if (isEmpty(topNavPosition)) return null
 
     const wrapperStyle = {
-      top: `${topNavPosition.height + 24}px`,
-      left: `${topNavPosition.rightX - (DROPDOWN_WIDTH + 15)}px`
+      top: topNavPosition.height + 24,
+      left: topNavPosition.rightX - (DROPDOWN_WIDTH + 15)
     }
 
     const toggleX = position(this.refs.toggle).x
 
     const triangleStyle = {
-      left: `${toggleX - 880}px`
+      left: (toggleX - wrapperStyle.left) + 10
     }
 
     return <div className={className}>
