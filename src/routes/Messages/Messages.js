@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch } from 'react-router'
+import { Redirect, Route, Switch } from 'react-router'
 
 import PeopleSelector from 'components/PeopleSelector'
 import ThreadList from 'components/ThreadList'
@@ -13,6 +13,7 @@ export default function Messages () {
       <Switch>
         <Route path='/t/new' component={PeopleSelector} />
         <Route path='/t/:threadId' component={Thread} />
+        <Redirect to='/t/new' />
       </Switch>
     </div>
   </div>

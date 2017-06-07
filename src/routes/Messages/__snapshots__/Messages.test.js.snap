@@ -20,6 +20,10 @@ exports[`matches the last snapshot 1`] = `
         component={[Function]}
         path="/t/:threadId"
       />
+      <Redirect
+        push={false}
+        to="/t/new"
+      />
     </Switch>
   </div>
 </div>
