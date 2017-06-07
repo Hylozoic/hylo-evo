@@ -1,0 +1,78 @@
+// Search
+.all-topics {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  text-align: center;
+  composes: hdr-display from 'css/typography.scss';
+}
+
+.subtitle {
+  text-align: center;
+  composes: caption-lt-lg from 'css/typography.scss';
+  margin-bottom: $space-16x;
+  margin-top: $space-1x;
+}
+
+// SearchBar
+.search-bar {
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  margin-right: $space-4x;
+}
+
+.search-order {
+  min-width: 80px;
+}
+
+.search-sorter-label {
+  font-size: 15px;
+  line-height: 28px;
+  composes: caption-lt-lg from 'css/typography.scss';
+  > span {
+    vertical-align: middle;
+    margin-left: $space-1x;
+  }
+}
+
+.topic-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+// TopicListItem
+.topic {
+  display: flex;
+  justify-content: space-between;
+  border-top: $light-border;
+  padding: 11px 0;
+  align-items: center;
+}
+
+.topic-details {
+  &:hover, &:active, &:visited, &:link {
+    text-decoration: none;
+  }
+}
+
+.topic-name {
+  composes: hdr-headline from 'css/typography.scss';
+}
+
+.topic-stats {
+  composes: caption-drk-lg from 'css/typography.scss';
+  margin-top: $space-1x;
+}
+
+.topic-subscribe {
+  composes: text-button from 'css/typography.scss';
+  font-size: 16px;
+}
