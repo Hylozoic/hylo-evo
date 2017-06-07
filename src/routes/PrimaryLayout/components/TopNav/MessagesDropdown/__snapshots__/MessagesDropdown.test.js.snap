@@ -73,6 +73,13 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
       data-styleName="header-content"
     >
       <Link
+        data-styleName="open"
+        replace={false}
+        to="/t/new"
+      >
+        Open Messages
+      </Link>
+      <Link
         data-styleName="new"
         replace={false}
         to="/t/new"
