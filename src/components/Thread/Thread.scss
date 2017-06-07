@@ -11,7 +11,7 @@ $messages-inner-padding: $space-6x;
 .header {
   display: flex;
   height: $messages-header-height;
-  padding: $messages-header-vertical-padding $messages-header-horizontal-padding;
+  padding: $space-5x $space-6x;
   border-bottom: $light-border;
   border-left: $light-border;
   border-right: $light-border;
