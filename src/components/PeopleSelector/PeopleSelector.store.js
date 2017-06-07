@@ -207,6 +207,7 @@ export function personConnectionListItemSelector (session, participants) {
     .all()
     .toModelArray()
     .map(connection => pickPersonListItem(connection.person))
+    .filter(person => !participants.includes(person.id))
     .sort(nameSort)
 }
 
