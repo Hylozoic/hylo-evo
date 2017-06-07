@@ -19,3 +19,11 @@ it('renders correctly for All Communities', () => {
   const wrapper = shallow(<TopicNavigation communityTopics={communityTopics} />)
   expect(wrapper).toMatchSnapshot()
 })
+
+it('can be clicked to expand the left nav', () => {
+  const expand = jest.fn()
+  const wrapper = shallow(<TopicNavigation communityTopics={communityTopics}
+    collapsed expand={expand} />)
+  wrapper.find('> div').first().simulate('click')
+  expect(expand).toBeCalled()
+})
