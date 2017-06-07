@@ -7,4 +7,8 @@
   @import './bootstrap';
   @import './icons';
   @import '../typography';
+
+  body {
+    overflow-x: hidden;
+  }
 }
