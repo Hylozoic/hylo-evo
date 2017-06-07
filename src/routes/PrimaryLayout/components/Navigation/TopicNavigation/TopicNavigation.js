@@ -25,7 +25,7 @@ export default class TopicNavigation extends Component {
 
     return <div styleName='s.topicNavigation'>
       <div styleName={cx('s.header', {'s.header-link': collapsed})}
-        onClick={this.props.expand}>
+        onClick={expand}>
         <Icon name='Topics' styleName='s.icon' />
         Topics
       </div>
