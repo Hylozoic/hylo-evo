@@ -6,7 +6,8 @@ import BadgedIcon from 'components/BadgedIcon'
 import RoundImage from 'components/RoundImage'
 import './TopNav.scss'
 import Dropdown from 'components/Dropdown'
-import { get, throttle } from 'lodash/fp'
+import { get } from 'lodash/fp'
+import { throttle } from 'lodash'
 import { hyloLogo } from 'util/assets'
 import MessagesDropdown from './MessagesDropdown'
 import NotificationsDropdown from './NotificationsDropdown'
@@ -22,8 +23,7 @@ export default class TopNav extends Component {
       this.props.setTopNavPosition({height, rightX: x + width})
     }
     setTopNavPosition()
-    window.addEventListener('resize', throttle(300, setTopNavPosition))
-    // window.addEventListener('resize', setTopNavPosition)
+    window.addEventListener('resize', throttle(setTopNavPosition, 300, {trailing: true}))
   }
 
   render () {
