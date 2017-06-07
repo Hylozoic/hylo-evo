@@ -16,7 +16,8 @@ export default class ThreadList extends Component {
     threadSearch: string,
     threads: array,
     fetchThreads: func,
-    setThreadSearch: func
+    setThreadSearch: func,
+    className: string
   }
 
   componentDidMount () {
@@ -24,9 +25,16 @@ export default class ThreadList extends Component {
   }
 
   render () {
-    const { currentUser, threads, threadSearch, setThreadSearch, match: { params: { threadId } } } = this.props
+    const {
+      currentUser,
+      threads,
+      threadSearch,
+      setThreadSearch,
+      match: { params: { threadId } },
+      className
+    } = this.props
     const onSearchChange = (event) => setThreadSearch(event.target.value)
-    return <div styleName='thread-list'>
+    return <div styleName='thread-list' className={className}>
       <div styleName='header'>
         <Link to='/t/new'><Button label='New Message' styleName='new-message' /></Link>
         <div styleName='header-text'>Messages</div>

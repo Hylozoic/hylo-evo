@@ -4,4 +4,13 @@
 
 .content {
   composes: modal-content from 'css/layout.scss';
+  display: flex;
+}
+
+.left-column {
+  width: 30%;
+}
+
+.right-column {
+  width: 70%;
 }
