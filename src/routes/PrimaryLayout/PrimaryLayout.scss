@@ -4,6 +4,8 @@
   align-content: stretch;
   align-items: stretch;
   height: 100vh;
+  overflow-x: hidden;
+  width: $content-width;
 }
 
 .debug {
