@@ -42,10 +42,10 @@ export function setSearch (search) {
   }
 }
 
-export function getSort(state) {
+export function getSort (state) {
   return state[MODULE_NAME].sort
 }
 
-export function getSearch(state) {
+export function getSearch (state) {
   return state[MODULE_NAME].search
 }
