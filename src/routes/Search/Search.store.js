@@ -1,6 +1,6 @@
 export const MODULE_NAME = 'Search'
 
-export const SET_SEARCH = `${MODULE_NAME}/SET_SEARCH`
+export const SET_SEARCH_TERM = `${MODULE_NAME}/SET_SEARCH`
 export const FETCH_SEARCH = `${MODULE_NAME}/FETCH_SEARCH`
 
 const defaultState = {
@@ -12,28 +12,28 @@ export default function reducer (state = defaultState, action) {
   if (error) return state
 
   switch (type) {
-    case SET_SEARCH:
+    case SET_SEARCH_TERM:
       return {
         ...state,
-        search: payload
+        term: payload
       }
     default:
       return state
   }
 }
 
-export function setSearch (search) {
+export function setSearchTerm (term) {
   return {
-    type: SET_SEARCH,
-    payload: search
+    type: SET_SEARCH_TERM,
+    payload: term
   }
 }
 
-export function getSearch (state) {
-  return state[MODULE_NAME].search
+export function getSearchTerm (state) {
+  return state[MODULE_NAME].term
 }
 
-export function fetchSearch (term, offset) {
+export function fetchSearchResults (term, offset = 0) {
   return {
     type: FETCH_SEARCH,
     graphql: {
@@ -67,7 +67,8 @@ export function fetchSearch (term, offset) {
         }
       }`,
       variables: {
-        term, offset
+        term,
+        offset
       }
     },
     meta: {

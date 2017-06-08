@@ -1,4 +1,4 @@
-import { attr, fk, Model } from 'redux-orm'
+import { attr, Model } from 'redux-orm'
 
 const SearchResult = Model.createClass({
   toString () {
