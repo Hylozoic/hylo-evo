@@ -4,6 +4,8 @@ const { arrayOf, func, shape, string, object } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
+import PostCard from 'components/PostCard'
+import CommentCard from 'components/CommentCard'
 
 const SEARCH_RESULTS_ID = 'search-results'
 
@@ -55,7 +57,7 @@ export function SearchBar ({term, setSearchTerm}) {
   return <div styleName='search-bar'>
     <TextInput styleName='search-input'
       value={term}
-      placeholder='Search topics'
+      placeholder='Search'
       onChange={event => setSearchTerm(event.target.value)} />
   </div>
 }
@@ -63,19 +65,19 @@ export function SearchBar ({term, setSearchTerm}) {
 export function SearchResult ({ searchResult, term }) {
   const { id, type, content } = searchResult
 
-  var text
+  var component
   switch (type) {
     case 'Person':
-      text = content.name
+      component = content.name
       break
     case 'Post':
-      text = content.title
+      component = <PostCard post={content} />
       break
     case 'Comment':
-      text = content.text
+      component = <CommentCard comment={content} />
       break
   }
   return <div styleName='search-result'>
-    {type}: {text}
+    {component}
   </div>
 }

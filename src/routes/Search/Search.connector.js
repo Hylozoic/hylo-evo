@@ -10,6 +10,28 @@ import { makeGetQueryResults } from 'store/reducers/queryResults'
 
 const getSearchResultResults = makeGetQueryResults(FETCH_SEARCH)
 
+function presentSearchResult (searchResult, session) {
+  const contentRaw = searchResult.getContent(session)
+  const type = contentRaw.constructor.modelName
+
+  var content = contentRaw
+
+  if (type === 'Post') {
+    content = {
+      ...content.ref,
+      creator: content.creator,
+      commenters: content.commenters.toModelArray(),
+      communities: content.communities.toModelArray()
+    }
+  }
+
+  return {
+    ...searchResult.ref,
+    content,
+    type
+  }
+}
+
 export const getSearchResults = ormCreateSelector(
   orm,
   state => state.orm,
@@ -20,15 +42,7 @@ export const getSearchResults = ormCreateSelector(
     .filter(x => includes(x.id, results.ids))
     .orderBy(x => results.ids.indexOf(x.id))
     .toModelArray()
-    .map(searchResult => {
-      const content = searchResult.getContent(session)
-      const type = content.constructor.modelName
-      return {
-        ...searchResult.ref,
-        content,
-        type
-      }
-    })
+    .map(searchResults => presentSearchResult(searchResults, session))
   }
 )
 

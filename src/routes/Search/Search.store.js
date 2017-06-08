@@ -1,3 +1,5 @@
+import { postFieldsFragment } from 'store/actions/fetchPost'
+
 export const MODULE_NAME = 'Search'
 
 export const SET_SEARCH_TERM = `${MODULE_NAME}/SET_SEARCH`
@@ -51,15 +53,19 @@ export function fetchSearchResults (term, offset = 0) {
                 tagline
               }
               ... on Post {
-                id
-                title
-                type
+                ${postFieldsFragment}
               }
               ... on Comment {
                 id
                 text
                 creator {
+                  id
                   name
+                  avatarUrl
+                }
+                post {
+                  id
+                  title
                 }
               }
             }
