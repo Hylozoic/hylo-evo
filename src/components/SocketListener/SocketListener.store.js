@@ -62,6 +62,9 @@ export function receiveNotification (notification) {
       data: {
         notification
       }
+    },
+    meta: {
+      extractModel: 'Notification'
     }
   }
 }
