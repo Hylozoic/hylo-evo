@@ -23,9 +23,14 @@ afterEach(() => {
 })
 
 it('sets up event handlers and subscribes', () => {
-  mount(<SocketListener />)
-
-  handledEvents.forEach(name => {
+  const wrapper = mount(<SocketListener 
+    receiveComment={() => {}}
+    receiveMessage={() => {}}
+    receiveNotification={() => {}}
+    receivePost={() => {}}
+    receiveThread={() => {}} />)
+  const handlers = Object.keys(wrapper.instance().handlers)
+  handlers.forEach(name => {
     const listen = listens.find(x => x[0] === name)
     expect(listen).toBeTruthy()
     expect(typeof listen[1]).toEqual('function')
