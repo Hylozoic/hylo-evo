@@ -1,15 +1,16 @@
 .modal {
-  position: fixed;
-  background: $color-white;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 22;
+  composes: modal from 'css/layout.scss';
 }
 
 .content {
-  width: $content-width;
-  margin: 0 auto;
+  composes: modal-content from 'css/layout.scss';
   display: flex;
+}
+
+.left-column {
+  width: 30%;
+}
+
+.right-column {
+  width: 70%;
 }

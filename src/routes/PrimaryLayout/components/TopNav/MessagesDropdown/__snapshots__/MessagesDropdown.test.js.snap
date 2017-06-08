@@ -39,7 +39,7 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
       <Link
         data-styleName="open"
         replace={false}
-        to="/t"
+        to="/t/2"
       >
         Open Messages
       </Link>
@@ -75,7 +75,7 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
       <Link
         data-styleName="open"
         replace={false}
-        to="/t"
+        to="/t/new"
       >
         Open Messages
       </Link>

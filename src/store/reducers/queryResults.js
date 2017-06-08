@@ -8,6 +8,7 @@
 
 import { CREATE_POST } from 'components/PostEditor/PostEditor.store'
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
+import { FETCH_COMMUNITY_TOPICS } from 'store/actions/fetchCommunityTopics'
 import {
   FETCH_POST,
   FETCH_POSTS,
@@ -46,7 +47,16 @@ export default function (state = {}, action) {
 
     case FETCH_POST:
     case FETCH_COMMENTS:
+      if (!payload.data.post) break
       return appendIds(state, FETCH_COMMENTS, meta.graphql.variables, payload.data.post.comments)
+
+    case FETCH_COMMUNITY_TOPICS:
+      if (payload.data.community) {
+        return appendIds(state, FETCH_COMMUNITY_TOPICS, meta.graphql.variables, payload.data.community.communityTopics)
+      } else if (payload.data.communityTopics) {
+        return appendIds(state, FETCH_COMMUNITY_TOPICS, meta.graphql.variables, payload.data.communityTopics)
+      }
+      break
   }
 
   return state
@@ -123,6 +133,7 @@ export const queryParamWhitelist = [
   'slug',
   'sortBy',
   'search',
+  'autocomplete',
   'filter',
   'topic'
 ]

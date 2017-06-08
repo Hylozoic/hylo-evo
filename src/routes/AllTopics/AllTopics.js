@@ -7,11 +7,15 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
 import { pluralize, tagUrl } from 'util/index'
+import { find } from 'lodash/fp'
+import ScrollListener from 'components/ScrollListener'
 
 const sortOptions = [
-  {id: 'followers', label: 'Popular'},
-  {id: 'recent', label: 'Recent'}
+  {id: 'num_followers', label: 'Popular'},
+  {id: 'updated_at', label: 'Recent'}
 ]
+
+const TOPIC_LIST_ID = 'topic-list'
 
 export default class AllTopics extends Component {
   static propTypes = {
@@ -19,7 +23,7 @@ export default class AllTopics extends Component {
       topic: shape({
         id: string.isRequired,
         name: string.isRequired
-      }),
+      }).isRequired,
       id: string,
       postsTotal: number,
       followersTotal: number,
@@ -27,73 +31,84 @@ export default class AllTopics extends Component {
     })),
     totalTopics: number,
     selectedSort: string,
-    onChangeSort: func,
+    setSort: func,
     search: string,
-    onChangeSearch: func,
+    setSearch: func,
     toggleSubscribe: func.isRequired
-  }
-
-  static defaultProps = {
-    selectedSort: sortOptions[0].id,
-    onChangeSort: () => {}
   }
 
   constructor (props) {
     super(props)
-    this.state = {
-      search: ''
-    }
+    this.state = {}
   }
 
   componentDidMount () {
     this.props.fetchCommunityTopics()
+    // Caching totalTopics because the total returned in the queryset
+    // changes when there is a search term
+    this.setState({totalTopicsCached: this.props.totalTopics})
+  }
+
+  componentDidUpdate (prevProps) {
+    if (!this.state.totalTopicsCached && !prevProps.totalTopics && this.props.totalTopics) {
+      this.setState({totalTopicsCached: this.props.totalTopics})
+    }
+    if (prevProps.selectedSort !== this.props.selectedSort ||
+      prevProps.search !== this.props.search) {
+      this.props.fetchCommunityTopics()
+    }
   }
 
   render () {
     const {
-      totalTopics,
       communityTopics,
       slug,
+      search,
+      setSearch,
       selectedSort,
-      onChangeSort,
-      toggleSubscribe
+      setSort,
+      toggleSubscribe,
+      fetchMoreCommunityTopics
     } = this.props
-    const { search } = this.state
+
+    const { totalTopicsCached } = this.state
 
     return <FullPageModal>
       <div styleName='all-topics'>
         <div styleName='title'>Topics</div>
-        <div styleName='subtitle'>{totalTopics} Total Topics</div>
-        <SearchBar
-          search={search}
-          onChangeSearch={search => this.setState({search})}
-          selectedSort={selectedSort}
-          onChangeSort={onChangeSort} />
-        <div styleName='topic-list'>
+        <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
+        <SearchBar {...{search, setSearch, selectedSort, setSort}} />
+        <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {communityTopics.map(ct =>
             <CommunityTopicListItem key={ct.id} item={ct} slug={slug}
               toggleSubscribe={() =>
                 toggleSubscribe(ct.topic.id, !ct.isSubscribed)} />)}
+          <ScrollListener onBottom={() => fetchMoreCommunityTopics()}
+            elementId={TOPIC_LIST_ID} />
         </div>
       </div>
     </FullPageModal>
   }
 }
 
-export function SearchBar ({search, onChangeSearch, selectedSort, onChangeSort}) {
+export function SearchBar ({search, setSearch, selectedSort, setSort}) {
+  var selected = find(o => o.id === selectedSort, sortOptions)
+
+  if (!selected) selected = sortOptions[0]
+
   return <div styleName='search-bar'>
     <TextInput styleName='search-input'
       value={search}
       placeholder='Search topics'
-      onChange={event => onChangeSearch(event.target.value)} />
+      onChange={event => setSearch(event.target.value)} />
     <Dropdown styleName='search-order'
       toggleChildren={<span styleName='search-sorter-label'>
-        {sortOptions.find(o => o.id === selectedSort).label}
+        {selected.label}
         <Icon name='ArrowDown' />
       </span>}
       items={sortOptions.map(({ id, label }) => ({
         label,
-        onClick: () => onChangeSort(id)
+        onClick: () => setSort(id)
       }))}
       alignRight />
   </div>

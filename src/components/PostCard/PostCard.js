@@ -44,7 +44,6 @@ export default class PostCard extends React.Component {
     const slug = get('0.slug', post.communities)
 
     const shouldShowDetails = element => {
-      console.log(element)
       if (element === this.refs.postCard) return true
       if (element.tagName === 'A' || element.tagName === 'LI') return false
 
@@ -68,7 +67,8 @@ export default class PostCard extends React.Component {
         showCommunity={showCommunity}
         editPost={editPost}
         communities={post.communities}
-        slug={slug} />
+        slug={slug}
+        id={post.id} />
       <PostImage imageUrl={post.imageUrl} />
       <PostBody title={post.title}
         id={post.id}

@@ -1,16 +1,13 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import TabBar from './TabBar'
 import PostCard from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
-import { CENTER_COLUMN_ID } from 'util/scrolling'
+import { CENTER_COLUMN_ID, position } from 'util/scrolling'
 import cx from 'classnames'
 import './FeedList.scss'
-import { isEmpty, some } from 'lodash/fp'
+import { throttle, isEmpty, some } from 'lodash/fp'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
-
-const STICKY_TABBAR_ID = 'tabbar-sticky'
-
-const tabbarOffset = 244
 
 export default class FeedList extends React.Component {
   static defaultProps = {
@@ -20,30 +17,31 @@ export default class FeedList extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      atTabBar: false
+      atTabBar: false,
+      tabBarWidth: 0,
+      scrollOffset: 0
     }
   }
 
-  handleScrollEvents = event => {
+  setStateFromDOM = tabBar => {
+    const element = ReactDOM.findDOMNode(tabBar)
+    const container = document.getElementById(CENTER_COLUMN_ID)
+    if (!element || !container) return
+    this.setState({
+      tabBarWidth: element.offsetWidth,
+      scrollOffset: position(element, container).y
+    })
+  }
+
+  handleScrollEvents = throttle(100, event => {
     const { scrollTop } = event.target
-    const { atTabBar } = this.state
-
-    function setStickyPosition () {
-      const tabbar = document.getElementById(STICKY_TABBAR_ID)
-      if (tabbar) tabbar.style.top = (scrollTop - tabbarOffset) + 'px'
-    }
-
-    if (atTabBar && scrollTop < tabbarOffset) {
+    const { atTabBar, scrollOffset } = this.state
+    if (atTabBar && scrollTop < scrollOffset) {
       this.setState({atTabBar: false})
-    } else if (!atTabBar && scrollTop > tabbarOffset) {
+    } else if (!atTabBar && scrollTop > scrollOffset) {
       this.setState({atTabBar: true})
-      setStickyPosition()
     }
-
-    if (atTabBar) {
-      setStickyPosition()
-    }
-  }
+  })
 
   componentDidMount () {
     this.fetchOrShowCached()
@@ -78,20 +76,23 @@ export default class FeedList extends React.Component {
       posts,
       showCommunities
     } = this.props
-    const { atTabBar } = this.state
+    const { atTabBar, tabBarWidth } = this.state
+    const style = {
+      width: tabBarWidth + 'px'
+    }
 
     return <div styleName='FeedList-container'>
       <ScrollListener
         elementId={CENTER_COLUMN_ID}
         onScroll={this.handleScrollEvents} />
       <div>
-        <TabBar
+        <TabBar ref={this.setStateFromDOM}
           onChangeTab={changeTab}
           selectedTab={filter}
           onChangeSort={changeSort}
           selectedSort={sortBy} />
       </div>
-      {atTabBar && <div id={STICKY_TABBAR_ID} styleName='tabbar-sticky'>
+      {atTabBar && <div styleName='tabbar-sticky' style={style}>
         <TabBar onChangeTab={changeTab}
           selectedTab={filter}
           onChangeSort={changeSort}

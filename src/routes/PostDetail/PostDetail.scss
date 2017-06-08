@@ -8,21 +8,18 @@
 }
 
 .header-sticky {
-  position: absolute;
-  top: 0;
-  width: 100%;
+  position: fixed;
+  top: $topnav-height;
   background-image: linear-gradient(0deg, rgba(255,255,255,0.00) 0%, $color-white 25%);
   padding: $space-6x 0;
   z-index: 1;
 }
 
 .activity-sticky {
-  width: 100%;
   z-index: 1;
-  position: absolute;
+  position: fixed;
+  top: $topnav-height;
   background: $color-white;
-  padding-top: $space-6x;
-  margin-top: -$space-6x;
 }
 
 .image {

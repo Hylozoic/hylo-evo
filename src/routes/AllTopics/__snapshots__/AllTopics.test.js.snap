@@ -15,14 +15,10 @@ exports[`AllTopics matches the latest snapshot 1`] = `
     >
        Total Topics
     </div>
-    <SearchBar
-      onChangeSearch={[Function]}
-      onChangeSort={[Function]}
-      search=""
-      selectedSort="followers"
-    />
+    <SearchBar />
     <div
       data-styleName="topic-list"
+      id="topic-list"
     >
       <CommunityTopicListItem
         item={
@@ -39,6 +35,10 @@ exports[`AllTopics matches the latest snapshot 1`] = `
         }
         slug="goteam"
         toggleSubscribe={[Function]}
+      />
+      <ScrollListener
+        elementId="topic-list"
+        onBottom={[Function]}
       />
     </div>
   </div>

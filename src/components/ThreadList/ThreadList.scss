@@ -9,7 +9,6 @@ $counteract-badge-styling: 13px;
 $active-thread-border-width: 4px;
 
 .thread-list {
-  width: $thread-list-width;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -19,7 +18,7 @@ $active-thread-border-width: 4px;
 
 .header {
   height: $messages-header-height;
-  padding: $messages-header-vertical-padding $messages-header-horizontal-padding;
+  padding: $space-5x $space-6x;
   border-bottom: $light-border;
 }
 

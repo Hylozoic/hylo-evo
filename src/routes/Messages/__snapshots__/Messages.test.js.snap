@@ -7,20 +7,27 @@ exports[`matches the last snapshot 1`] = `
   <div
     data-styleName="content"
   >
-    <Route
-      component={[Function]}
-      path="/t/:threadId?"
+    <withRouter(Connect(ThreadList))
+      data-styleName="left-column"
     />
-    <Switch>
-      <Route
-        component={[Function]}
-        path="/t/new"
-      />
-      <Route
-        component={[Function]}
-        path="/t/:threadId"
-      />
-    </Switch>
+    <div
+      data-styleName="right-column"
+    >
+      <Switch>
+        <Route
+          component={[Function]}
+          path="/t/new"
+        />
+        <Route
+          component={[Function]}
+          path="/t/:threadId"
+        />
+        <Redirect
+          push={false}
+          to="/t/new"
+        />
+      </Switch>
+    </div>
   </div>
 </div>
 `;

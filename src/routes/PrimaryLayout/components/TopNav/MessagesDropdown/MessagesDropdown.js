@@ -4,7 +4,7 @@ const { array, string, func } = PropTypes
 import { Link } from 'react-router-dom'
 import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import cx from 'classnames'
-import { newMessageUrl, messagesUrl } from 'util/index'
+import { newMessageUrl, threadUrl } from 'util/index'
 import RoundImageRow from 'components/RoundImageRow'
 import TopNavDropdown from '../TopNavDropdown'
 import { get, isEmpty, some } from 'lodash/fp'
@@ -56,6 +56,10 @@ export default class MessagesDropdown extends Component {
       this.refs.dropdown.getWrappedInstance().toggle(false)
     }
 
+    const firstThreadUrl = !isEmpty(threads)
+      ? threadUrl(threads[0].id)
+      : newMessageUrl()
+
     return <TopNavDropdown
       ref='dropdown'
       className={className}
@@ -64,7 +68,9 @@ export default class MessagesDropdown extends Component {
       onFirstOpen={fetchThreads}
       header={
         <div styleName='header-content'>
-          <Link to={messagesUrl()} styleName='open'>Open Messages</Link>
+          <Link to={firstThreadUrl} styleName='open'>
+            Open Messages
+          </Link>
           <Link to={newMessageUrl()} styleName='new'>New</Link>
         </div>}
       body={

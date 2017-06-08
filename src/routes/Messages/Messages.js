@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch } from 'react-router'
+import { Redirect, Route, Switch } from 'react-router'
 
 import PeopleSelector from 'components/PeopleSelector'
 import ThreadList from 'components/ThreadList'
@@ -9,11 +9,14 @@ import './Messages.scss'
 export default function Messages () {
   return <div styleName='modal'>
     <div styleName='content'>
-      <Route path='/t/:threadId?' component={ThreadList} />
-      <Switch>
-        <Route path='/t/new' component={PeopleSelector} />
-        <Route path='/t/:threadId' component={Thread} />
-      </Switch>
+      <ThreadList styleName='left-column' />
+      <div styleName='right-column'>
+        <Switch>
+          <Route path='/t/new' component={PeopleSelector} />
+          <Route path='/t/:threadId' component={Thread} />
+          <Redirect to='/t/new' />
+        </Switch>
+      </div>
     </div>
   </div>
 }

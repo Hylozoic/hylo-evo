@@ -202,7 +202,7 @@ const nameSort = (a, b) => {
   return aName > bName ? 1 : aName < bName ? -1 : 0
 }
 
-export function personConnectionListItemSelector (session, participants, currentUser) {
+export function personConnectionListItemSelector (session, participants) {
   return session.PersonConnection
     .all()
     .toModelArray()
@@ -215,7 +215,6 @@ export const recentContactsSelector = createSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME].participants,
-  getMe,
   personConnectionListItemSelector
 )
 

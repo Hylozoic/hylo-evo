@@ -13,13 +13,17 @@ import {
   RESET_NEW_POST_COUNT_PENDING,
   TOGGLE_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_THREAD_READ_TIME,
-  VOTE_ON_POST_PENDING
+  VOTE_ON_POST_PENDING,
+  UPDATE_COMMUNITY_SETTINGS_PENDING
 } from 'store/constants'
 import {
   RECEIVE_MESSAGE,
   RECEIVE_NOTIFICATION,
   RECEIVE_POST
  } from 'components/SocketListener/SocketListener.store'
+import {
+   DELETE_POST_PENDING
+ } from 'components/PostCard/PostHeader/PostHeader.store'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
 import { find } from 'lodash/fp'
@@ -173,15 +177,20 @@ export default function ormReducer (state = {}, action) {
       break
 
     case REMOVE_MODERATOR_PENDING:
-      const community = Community.withId(meta.communityId)
+      var community = Community.withId(meta.communityId)
       const moderators = community.moderators.filter(m =>
         m.id !== meta.personId)
         .toModelArray()
       community.update({moderators})
       break
 
-    case RECEIVE_NOTIFICATION:
-      console.log(payload)
+    case DELETE_POST_PENDING:
+      Post.withId(meta.id).delete()
+      break
+
+    case UPDATE_COMMUNITY_SETTINGS_PENDING:
+      community = Community.withId(meta.id)
+      community.update(meta.changes)
       break
   }
 

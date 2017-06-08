@@ -40,7 +40,7 @@ export default function Navigation ({
           <NavLink key={link.label} {...link} collapsed={collapsed}
             onClick={link.onClick} />)}
       </ul>
-      <TopicNavigation slug={get('slug', community)} />
+      <TopicNavigation slug={get('slug', community)} collapsed={collapsed} />
     </div>
   </div>
 }
