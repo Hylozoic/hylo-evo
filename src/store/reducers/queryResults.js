@@ -8,6 +8,7 @@
 
 import { CREATE_POST } from 'components/PostEditor/PostEditor.store'
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
+import { FETCH_SEARCH } from 'routes/Search/Search.store'
 import { FETCH_COMMUNITY_TOPICS } from 'store/actions/fetchCommunityTopics'
 import {
   FETCH_POST,
@@ -57,6 +58,10 @@ export default function (state = {}, action) {
         return appendIds(state, FETCH_COMMUNITY_TOPICS, meta.graphql.variables, payload.data.communityTopics)
       }
       break
+
+    case FETCH_SEARCH:
+      if (!payload.data.search) break
+      return appendIds(state, FETCH_SEARCH, meta.graphql.variables, payload.data.search)
   }
 
   return state
