@@ -6,6 +6,8 @@ import { isEmpty, includes, get, debounce } from 'lodash/fp'
 import {
   fetchSearchResults, getSearchTerm, FETCH_SEARCH, setSearchTerm
 } from './Search.store'
+import changeQueryParam from 'store/actions/changeQueryParam'
+import getQueryParam from 'store/selectors/getQueryParam'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 
 const getSearchResultResults = makeGetQueryResults(FETCH_SEARCH)
@@ -49,40 +51,44 @@ export const getSearchResults = ormCreateSelector(
 const getHasMoreSearchResults = createSelector(getSearchResultResults, get('hasMore'))
 
 export function mapStateToProps (state, props) {
-  const term = getSearchTerm(state, props)
+  const termFromQueryString = getQueryParam('t', state, props)
+  const termForInput = getSearchTerm(state, props)
 
-  const queryResultProps = {term}
+  const queryResultProps = {term: termForInput}
 
   const searchResults = getSearchResults(state, queryResultProps)
   const hasMore = getHasMoreSearchResults(state, queryResultProps)
   return {
+    pending: !!state.pending[FETCH_SEARCH],
     searchResults,
-    term,
+    termForInput,
+    termFromQueryString,
     hasMore
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    fetchSearchResultsDebounced: debounce(300, (search, offset) =>
-      dispatch(fetchSearchResults(search, offset))),
-    setSearchTerm: search => dispatch(setSearchTerm(search))
+    updateQueryParam: debounce(500, search =>
+      dispatch(changeQueryParam(props, 't', search))),
+    setSearchTerm: search => dispatch(setSearchTerm(search)),
+    fetchSearchResultsDebounced: debounce(500, term =>
+      dispatch(fetchSearchResults(term)))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { term, searchResults, hasMore } = stateProps
+  const { termForInput, searchResults, hasMore } = stateProps
   const { fetchSearchResultsDebounced } = dispatchProps
 
   const offset = get('length', searchResults)
 
   const fetchSearchResults = () => {
-    console.log('mergeprops good')
-    return fetchSearchResultsDebounced(term)
+    return fetchSearchResultsDebounced(termForInput)
   }
 
   const fetchMoreSearchResults = () => hasMore
-    ? fetchSearchResultsDebounced(term, offset)
+    ? fetchSearchResultsDebounced(termForInput, offset)
     : () => {}
 
   return {

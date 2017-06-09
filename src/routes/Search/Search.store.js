@@ -6,7 +6,7 @@ export const SET_SEARCH_TERM = `${MODULE_NAME}/SET_SEARCH`
 export const FETCH_SEARCH = `${MODULE_NAME}/FETCH_SEARCH`
 
 const defaultState = {
-  search: ''
+  term: ''
 }
 
 export default function reducer (state = defaultState, action) {
