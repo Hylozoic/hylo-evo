@@ -35,7 +35,7 @@ export default class TopNav extends Component {
         <Logo {...{community, toggleDrawer}} />
         <Title community={community} />
         <div styleName='navIcons'>
-          <Link to='/'><Icon name='Search' styleName='icon' /></Link>
+          <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
           <MessagesDropdown renderToggleChildren={showBadge =>
             <BadgedIcon name='Messages' styleName='icon'
               showBadge={showBadge} />} />
