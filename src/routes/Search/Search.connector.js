@@ -9,6 +9,8 @@ import {
 import changeQueryParam from 'store/actions/changeQueryParam'
 import getQueryParam from 'store/selectors/getQueryParam'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
+import { push } from 'react-router-redux'
+import { postUrl } from 'util/index'
 
 const getSearchResultResults = makeGetQueryResults(FETCH_SEARCH)
 
@@ -73,7 +75,9 @@ export function mapDispatchToProps (dispatch, props) {
       dispatch(changeQueryParam(props, 't', search))),
     setSearchTerm: search => dispatch(setSearchTerm(search)),
     fetchSearchResultsDebounced: debounce(500, term =>
-      dispatch(fetchSearchResults(term)))
+      dispatch(fetchSearchResults(term))),
+    showPostDetails: postId =>
+      dispatch(push(postUrl(postId)))
   }
 }
 

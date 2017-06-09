@@ -17,16 +17,31 @@
   align-items: center;
 }
 
-.search-input {
+// TextInput Theme
+.wrapper {
   flex: 1;
-  margin-right: $space-4x;
+  border: none;
+  input {
+
+  }
+}
+
+.input {
+  color: $color-rhino;
+  font-size: 34px;
+  &::placeholder {
+    color: $color-rhino-30;
+  }
+}
+
+.clear {
+  font-size: 18px;
 }
 
 // SearchResult
 .search-result {
   display: flex;
   justify-content: space-between;
-  border-top: $light-border;
   padding: 11px 0;
   align-items: center;
 }

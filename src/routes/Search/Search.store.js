@@ -58,6 +58,7 @@ export function fetchSearchResults (term, offset = 0) {
               ... on Comment {
                 id
                 text
+                createdAt
                 creator {
                   id
                   name

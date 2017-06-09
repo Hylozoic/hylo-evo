@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import './Search.scss'
+import styles from './Search.scss'
 const { arrayOf, bool, func, shape, string, object } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
 import TextInput from 'components/TextInput'
@@ -44,7 +44,8 @@ export default class Search extends Component {
       termForInput,
       setSearchTerm,
       updateQueryParam,
-      fetchMoreSearchResults
+      fetchMoreSearchResults,
+      showPostDetails
     } = this.props
 
     return <FullPageModal>
@@ -55,7 +56,8 @@ export default class Search extends Component {
           {searchResults.map(sr =>
             <SearchResult key={sr.id}
               searchResult={sr}
-              search={termForInput} />)}
+              search={termForInput}
+              showPostDetails={showPostDetails} />)}
           <ScrollListener onBottom={() => fetchMoreSearchResults()}
             elementId={SEARCH_RESULTS_ID} />
         </div>
@@ -71,14 +73,14 @@ export function SearchBar ({termForInput, setSearchTerm, updateQueryParam}) {
     updateQueryParam(value) // debounced
   }
   return <div styleName='search-bar'>
-    <TextInput styleName='search-input'
+    <TextInput theme={styles}
       value={termForInput}
       placeholder='Search'
       onChange={onSearchChange} />
   </div>
 }
 
-export function SearchResult ({ searchResult, term }) {
+export function SearchResult ({ searchResult, term, showPostDetails }) {
   const { type, content } = searchResult
 
   var component
@@ -87,10 +89,12 @@ export function SearchResult ({ searchResult, term }) {
       component = content.name
       break
     case 'Post':
-      component = <PostCard post={content} />
+      component = <PostCard
+        post={content}
+        showDetails={() => showPostDetails(content.id)} />
       break
     case 'Comment':
-      component = <CommentCard comment={content} />
+      component = <CommentCard comment={content} showReply={false} />
       break
   }
   return <div styleName='search-result'>
