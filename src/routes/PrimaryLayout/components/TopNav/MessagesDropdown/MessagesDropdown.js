@@ -98,7 +98,7 @@ const participantNames = participants => {
 }
 
 export function MessagesDropdownItem ({ thread, onClick, currentUserId }) {
-  const message = thread.messages.orderBy('createdAt', 'desc').first()
+  const message = thread.messages.orderBy(m => Date.parse(m.createdAt), 'desc').first()
   if (!message || !message.text) return null
   const participants = thread.participants.toRefArray()
   .filter(p => p.id !== currentUserId)
