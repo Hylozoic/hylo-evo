@@ -68,7 +68,8 @@ export function fetchSearchResults ({term, offset = 0, filter}) {
               ... on Person {
                 id
                 name
-                tagline
+                location
+                avatarUrl
               }
               ... on Post {
                 ${postFieldsFragment}

@@ -6,6 +6,7 @@ import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
 import PostCard from 'components/PostCard'
 import CommentCard from 'components/CommentCard'
+import RoundImage from 'components/RoundImage'
 
 const SEARCH_RESULTS_ID = 'search-results'
 
@@ -112,18 +113,29 @@ export function SearchResult ({ searchResult, term, showPostDetails, showPerson 
   var component
   switch (type) {
     case 'Person':
-      component = content.name
+      component = <PersonCard person={content} showPerson={showPerson} highlight={term} />
       break
     case 'Post':
       component = <PostCard
         post={content}
-        showDetails={() => showPostDetails(content.id)} />
+        showDetails={() => showPostDetails(content.id)} highlight={term} />
       break
     case 'Comment':
-      component = <CommentCard comment={content} expanded={false} />
+      component = <CommentCard comment={content} expanded={false} highlight={term} />
       break
   }
   return <div styleName='search-result'>
     {component}
+  </div>
+}
+
+export function PersonCard ({ person, showPerson }) {
+  if (!person) return null
+  return <div styleName='person-card' onClick={() => showPerson(person.id)}>
+    <RoundImage url={person.avatarUrl} styleName='person-image' large />
+    <div styleName='person-details'>
+      <div styleName='person-name'>{person.name}</div>
+      <div styleName='person-location'>{person.location}</div>
+    </div>
   </div>
 }

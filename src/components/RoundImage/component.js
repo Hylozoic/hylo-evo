@@ -10,8 +10,8 @@ import './component.scss'
 
 const { string, bool } = React.PropTypes
 
-export default function RoundImage ({ url, small, medium, overlaps, overlapsVertical, xlarge, className }) {
-  let styleName = cx('image', { overlaps, small, medium, xlarge, 'overlaps-vertical': overlapsVertical })
+export default function RoundImage ({ url, small, medium, overlaps, overlapsVertical, large, xlarge, className }) {
+  let styleName = cx('image', { overlaps, small, medium, large, xlarge, 'overlaps-vertical': overlapsVertical })
   return <div styleName={styleName}
     className={className}
     style={bgImageStyle(url)} />

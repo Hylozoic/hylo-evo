@@ -64,3 +64,34 @@
   padding: 11px 0;
   align-items: center;
 }
+
+// PersonCard
+.person-card {
+  display: flex;
+  align-items: center;
+  border-bottom: $light-border;
+  padding: 8px 0;
+  width: 100%;
+  cursor: pointer;
+}
+
+.person-image {
+  margin-right: 10px;
+}
+
+.person-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.person-name {
+  composes: hdr-subheadline from 'css/typography.scss';
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.person-location {
+  composes: caption-lt-lg from 'css/typography.scss';
+  font-size: 14px;
+}
