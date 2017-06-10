@@ -7,7 +7,6 @@ import ScrollListener from 'components/ScrollListener'
 import PostCard from 'components/PostCard'
 import CommentCard from 'components/CommentCard'
 import RoundImage from 'components/RoundImage'
-import { sanitize } from 'hylo-utils/text'
 
 const SEARCH_RESULTS_ID = 'search-results'
 
@@ -38,29 +37,6 @@ export default class Search extends Component {
       prevProps.filter !== this.props.filter) {
       this.props.fetchSearchResults()
     }
-
-    if (prevProps.searchResults !== this.props.searchResults) {
-      this.highlightSearchTerm()
-    }
-  }
-
-  highlightSearchTerm () {
-    const { termForInput } = this.props
-    const { searchResultsDiv } = this
-    var tempInnerHTML = searchResultsDiv.innerHTML
-
-    const highlightText = (regex) => {
-      tempInnerHTML = tempInnerHTML.replace(regex, `>$1<span class="${styles.highlight}">$2</span>$3<`)
-    }
-
-    var searchTerms = sanitize(termForInput).split(' ')
-
-    for (var i in searchTerms) {
-      var regex = new RegExp(`>([^<]*)?(${searchTerms[i]})([^>]*)?<`, 'ig')
-      highlightText(regex)
-    }
-
-    searchResultsDiv.innerHTML = tempInnerHTML
   }
 
   render () {
