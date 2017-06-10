@@ -32,7 +32,8 @@ export default class Search extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (prevProps.termForInput !== this.props.termForInput) {
+    if (prevProps.termForInput !== this.props.termForInput ||
+      prevProps.filter !== this.props.filter) {
       this.props.fetchSearchResults()
     }
   }
@@ -45,19 +46,23 @@ export default class Search extends Component {
       setSearchTerm,
       updateQueryParam,
       fetchMoreSearchResults,
-      showPostDetails
+      showPostDetails,
+      setSearchFilter,
+      showPerson,
+      filter
     } = this.props
 
     return <FullPageModal>
       <div styleName='search'>
-        <SearchBar {...{termForInput, setSearchTerm, updateQueryParam}} />
+        <SearchBar {...{termForInput, setSearchTerm, updateQueryParam, setSearchFilter, filter}} />
         <div styleName='search-results' id={SEARCH_RESULTS_ID}>
           {pending && <div>Loading...</div>}
           {searchResults.map(sr =>
             <SearchResult key={sr.id}
               searchResult={sr}
               search={termForInput}
-              showPostDetails={showPostDetails} />)}
+              showPostDetails={showPostDetails}
+              showPerson={showPerson} />)}
           <ScrollListener onBottom={() => fetchMoreSearchResults()}
             elementId={SEARCH_RESULTS_ID} />
         </div>
@@ -66,7 +71,7 @@ export default class Search extends Component {
   }
 }
 
-export function SearchBar ({termForInput, setSearchTerm, updateQueryParam}) {
+export function SearchBar ({termForInput, setSearchTerm, updateQueryParam, setSearchFilter, filter}) {
   const onSearchChange = event => {
     const { value } = event.target
     setSearchTerm(value) // no debounce
@@ -77,10 +82,31 @@ export function SearchBar ({termForInput, setSearchTerm, updateQueryParam}) {
       value={termForInput}
       placeholder='Search'
       onChange={onSearchChange} />
+    <TabBar setSearchFilter={setSearchFilter} filter={filter} />
   </div>
 }
 
-export function SearchResult ({ searchResult, term, showPostDetails }) {
+const tabs = [
+  {id: 'all', label: 'All'},
+  {id: 'post', label: 'Discussions'},
+  {id: 'person', label: 'People'},
+  {id: 'comment', label: 'Comments'}
+]
+
+export function TabBar ({ filter, setSearchFilter }) {
+  console.log('filter', filter)
+
+  return <div styleName='tabs'>
+    {tabs.map(({ id, label }) => <span
+      key={id}
+      styleName={id === filter ? 'tab-active' : 'tab'}
+      onClick={() => setSearchFilter(id)}>
+      {label}
+    </span>)}
+  </div>
+}
+
+export function SearchResult ({ searchResult, term, showPostDetails, showPerson }) {
   const { type, content } = searchResult
 
   var component
@@ -94,7 +120,7 @@ export function SearchResult ({ searchResult, term, showPostDetails }) {
         showDetails={() => showPostDetails(content.id)} />
       break
     case 'Comment':
-      component = <CommentCard comment={content} showReply={false} />
+      component = <CommentCard comment={content} expanded={false} />
       break
   }
   return <div styleName='search-result'>

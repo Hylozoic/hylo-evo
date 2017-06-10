@@ -141,5 +141,6 @@ export const queryParamWhitelist = [
   'term',
   'autocomplete',
   'filter',
-  'topic'
+  'topic',
+  'type'
 ]

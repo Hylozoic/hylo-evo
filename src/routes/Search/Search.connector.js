@@ -4,13 +4,18 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import { createSelector } from 'reselect'
 import { isEmpty, includes, get, debounce } from 'lodash/fp'
 import {
-  fetchSearchResults, getSearchTerm, FETCH_SEARCH, setSearchTerm
+  fetchSearchResults,
+  getSearchTerm,
+  FETCH_SEARCH,
+  setSearchTerm,
+  setSearchFilter,
+  getSearchFilter
 } from './Search.store'
 import changeQueryParam from 'store/actions/changeQueryParam'
 import getQueryParam from 'store/selectors/getQueryParam'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 import { push } from 'react-router-redux'
-import { postUrl } from 'util/index'
+import { postUrl, personUrl } from 'util/index'
 
 const getSearchResultResults = makeGetQueryResults(FETCH_SEARCH)
 
@@ -55,8 +60,9 @@ const getHasMoreSearchResults = createSelector(getSearchResultResults, get('hasM
 export function mapStateToProps (state, props) {
   const termFromQueryString = getQueryParam('t', state, props)
   const termForInput = getSearchTerm(state, props)
+  const filter = getSearchFilter(state, props)
 
-  const queryResultProps = {term: termForInput}
+  const queryResultProps = {term: termForInput, type: filter}
 
   const searchResults = getSearchResults(state, queryResultProps)
   const hasMore = getHasMoreSearchResults(state, queryResultProps)
@@ -65,34 +71,38 @@ export function mapStateToProps (state, props) {
     searchResults,
     termForInput,
     termFromQueryString,
+    filter,
     hasMore
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    updateQueryParam: debounce(500, search =>
-      dispatch(changeQueryParam(props, 't', search))),
-    setSearchTerm: search => dispatch(setSearchTerm(search)),
-    fetchSearchResultsDebounced: debounce(500, term =>
-      dispatch(fetchSearchResults(term))),
+    updateQueryParam: debounce(500, term =>
+      dispatch(changeQueryParam(props, 't', term))),
+    setSearchTerm: term => dispatch(setSearchTerm(term)),
+    setSearchFilter: filter => dispatch(setSearchFilter(filter)),
+    fetchSearchResultsDebounced: debounce(500, opts =>
+      dispatch(fetchSearchResults(opts))),
     showPostDetails: postId =>
-      dispatch(push(postUrl(postId)))
+      dispatch(push(postUrl(postId))),
+    showPerson: personId =>
+      dispatch(push(personUrl(personId)))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { termForInput, searchResults, hasMore } = stateProps
+  const { termForInput, searchResults, hasMore, filter } = stateProps
   const { fetchSearchResultsDebounced } = dispatchProps
 
   const offset = get('length', searchResults)
 
   const fetchSearchResults = () => {
-    return fetchSearchResultsDebounced(termForInput)
+    return fetchSearchResultsDebounced({term: termForInput, filter})
   }
 
   const fetchMoreSearchResults = () => hasMore
-    ? fetchSearchResultsDebounced(termForInput, offset)
+    ? fetchSearchResultsDebounced({term: termForInput, filter, offset})
     : () => {}
 
   return {

@@ -21,6 +21,7 @@
   }
 
   .comment-body {
+    margin-top: 10px;
     padding-left: $padding-left;
   }
 
@@ -41,7 +42,7 @@
 }
 
 .comment-body {
-  composes: bdy-drk-lg from 'css/typography.scss';
+  composes: bdy-lt-sm from 'css/typography.scss';
 }
 
 .comment-meta {

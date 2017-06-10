@@ -8,12 +8,12 @@
 .search-results {
   flex: 1;
   overflow-y: auto;
+  padding: 16px 0 32px 0;
 }
 
 // SearchBar
 .search-bar {
-  margin-bottom: 32px;
-  display: flex;
+  margin-bottom: 16px;
   align-items: center;
 }
 
@@ -21,9 +21,7 @@
 .wrapper {
   flex: 1;
   border: none;
-  input {
-
-  }
+  padding: none;
 }
 
 .input {
@@ -36,6 +34,27 @@
 
 .clear {
   font-size: 18px;
+}
+
+// TabBar
+
+.tabs {
+  margin-top: 50px;
+}
+
+.tab {
+  composes: caption-lt-lg from 'css/typography.scss';
+  padding: 0 15px;
+  height: 28px;
+  line-height: 28px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tab-active {
+  composes: tab;
+  background-color: $color-cape-cod-05;
+  border-radius: 4px;
 }
 
 // SearchResult

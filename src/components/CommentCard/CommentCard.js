@@ -7,10 +7,16 @@ import { postUrl } from 'util/index'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import './CommentCard.scss'
 
-export default function CommentCard ({ comment, showReply = true }) {
+export default function CommentCard ({ comment, shouldShowReply, expanded = true }) {
   const { creator, post, slug } = comment
   const postTitle = present(sanitize(post.title), { maxlength: 25, noP: true })
-  const commentText = present(sanitize(comment.text), { noP: true, slug })
+  const commentPresentOpts = {
+    maxlength: expanded ? null : 144,
+    noP: true,
+    slug
+  }
+  const commentText = present(sanitize(comment.text), commentPresentOpts)
+
   return <Link to={postUrl(post.id, slug, {memberId: creator.id})} styleName='link'>
     <div styleName='comment-card'>
       <div styleName='comment-header'>
@@ -23,7 +29,7 @@ export default function CommentCard ({ comment, showReply = true }) {
       </div>
       <div styleName='comment-body' dangerouslySetInnerHTML={{__html: commentText}} />
       <div styleName='comment-footer'>
-        {showReply && <span><Icon styleName='reply-button' name='Reply' green /> Reply</span>}
+        {shouldShowReply && <span><Icon styleName='reply-button' name='Reply' green /> Reply</span>}
       </div>
     </div>
   </Link>
