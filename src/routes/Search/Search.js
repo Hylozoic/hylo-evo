@@ -7,6 +7,7 @@ import ScrollListener from 'components/ScrollListener'
 import PostCard from 'components/PostCard'
 import CommentCard from 'components/CommentCard'
 import RoundImage from 'components/RoundImage'
+import { sanitize } from 'hylo-utils/text'
 
 const SEARCH_RESULTS_ID = 'search-results'
 
@@ -37,6 +38,29 @@ export default class Search extends Component {
       prevProps.filter !== this.props.filter) {
       this.props.fetchSearchResults()
     }
+
+    if (prevProps.searchResults !== this.props.searchResults) {
+      this.highlightSearchTerm()
+    }
+  }
+
+  highlightSearchTerm () {
+    const { termForInput } = this.props
+    const { searchResultsDiv } = this
+    var tempInnerHTML = searchResultsDiv.innerHTML
+
+    const highlightText = (regex) => {
+      tempInnerHTML = tempInnerHTML.replace(regex, `>$1<span class="${styles.highlight}">$2</span>$3<`)
+    }
+
+    var searchTerms = sanitize(termForInput).split(' ')
+
+    for (var i in searchTerms) {
+      var regex = new RegExp(`>([^<]*)?(${searchTerms[i]})([^>]*)?<`, 'ig')
+      highlightText(regex)
+    }
+
+    searchResultsDiv.innerHTML = tempInnerHTML
   }
 
   render () {
@@ -56,7 +80,9 @@ export default class Search extends Component {
     return <FullPageModal>
       <div styleName='search'>
         <SearchBar {...{termForInput, setSearchTerm, updateQueryParam, setSearchFilter, filter}} />
-        <div styleName='search-results' id={SEARCH_RESULTS_ID}>
+        <div styleName='search-results'
+          id={SEARCH_RESULTS_ID}
+          ref={x => { this.searchResultsDiv = x }}>
           {pending && <div>Loading...</div>}
           {searchResults.map(sr =>
             <SearchResult key={sr.id}
@@ -95,8 +121,6 @@ const tabs = [
 ]
 
 export function TabBar ({ filter, setSearchFilter }) {
-  console.log('filter', filter)
-
   return <div styleName='tabs'>
     {tabs.map(({ id, label }) => <span
       key={id}
@@ -129,7 +153,7 @@ export function SearchResult ({ searchResult, term, showPostDetails, showPerson 
   </div>
 }
 
-export function PersonCard ({ person, showPerson }) {
+export function PersonCard ({ person, showPerson, highlight }) {
   if (!person) return null
   return <div styleName='person-card' onClick={() => showPerson(person.id)}>
     <RoundImage url={person.avatarUrl} styleName='person-image' large />
