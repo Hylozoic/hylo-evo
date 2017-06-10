@@ -79,7 +79,7 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     updateQueryParam: debounce(500, term =>
-      dispatch(changeQueryParam(props, 't', term))),
+      dispatch(changeQueryParam(props, 't', term, null, true))),
     setSearchTerm: term => dispatch(setSearchTerm(term)),
     setSearchFilter: filter => dispatch(setSearchFilter(filter)),
     fetchSearchResultsDebounced: debounce(500, opts =>
