@@ -7,6 +7,7 @@ import ScrollListener from 'components/ScrollListener'
 import PostCard from 'components/PostCard'
 import CommentCard from 'components/CommentCard'
 import RoundImage from 'components/RoundImage'
+import Highlight from 'components/Highlight'
 
 const SEARCH_RESULTS_ID = 'search-results'
 
@@ -63,7 +64,7 @@ export default class Search extends Component {
           {searchResults.map(sr =>
             <SearchResult key={sr.id}
               searchResult={sr}
-              search={termForInput}
+              term={termForInput}
               showPostDetails={showPostDetails}
               showPerson={showPerson} />)}
           <ScrollListener onBottom={() => fetchMoreSearchResults()}
@@ -107,21 +108,26 @@ export function TabBar ({ filter, setSearchFilter }) {
   </div>
 }
 
-export function SearchResult ({ searchResult, term, showPostDetails, showPerson }) {
+export function SearchResult ({ searchResult, term = '', showPostDetails, showPerson }) {
   const { type, content } = searchResult
+
+  const highlightProps = {
+    highlightTerms: term.split(' '),
+    highlightClassName: styles.highlight
+  }
 
   var component
   switch (type) {
     case 'Person':
-      component = <PersonCard person={content} showPerson={showPerson} highlight={term} />
+      component = <PersonCard person={content} showPerson={showPerson} highlightProps={highlightProps} />
       break
     case 'Post':
       component = <PostCard
         post={content}
-        showDetails={() => showPostDetails(content.id)} highlight={term} />
+        showDetails={() => showPostDetails(content.id)} highlightProps={highlightProps} />
       break
     case 'Comment':
-      component = <CommentCard comment={content} expanded={false} highlight={term} />
+      component = <CommentCard comment={content} expanded={false} highlightProps={highlightProps} />
       break
   }
   return <div styleName='search-result'>
@@ -129,13 +135,15 @@ export function SearchResult ({ searchResult, term, showPostDetails, showPerson 
   </div>
 }
 
-export function PersonCard ({ person, showPerson, highlight }) {
+export function PersonCard ({ person, showPerson, highlightProps }) {
   if (!person) return null
-  return <div styleName='person-card' onClick={() => showPerson(person.id)}>
-    <RoundImage url={person.avatarUrl} styleName='person-image' large />
-    <div styleName='person-details'>
-      <div styleName='person-name'>{person.name}</div>
-      <div styleName='person-location'>{person.location}</div>
+  return <Highlight {...highlightProps}>
+    <div styleName='person-card' onClick={() => showPerson(person.id)}>
+      <RoundImage url={person.avatarUrl} styleName='person-image' large />
+      <div styleName='person-details'>
+        <div styleName='person-name'>{person.name}</div>
+        <div styleName='person-location'>{person.location}</div>
+      </div>
     </div>
-  </div>
+  </Highlight>
 }

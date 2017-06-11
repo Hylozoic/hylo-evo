@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import PostLabel from 'components/PostLabel'
+import Highlight from 'components/Highlight'
 import Icon from 'components/Icon'
 import { communityUrl, personUrl } from 'util/index'
 import { humanDate } from 'hylo-utils/text'
@@ -18,7 +19,8 @@ export default function PostHeader ({
   slug,
   showCommunity,
   editPost,
-  deletePost
+  deletePost,
+  highlightProps
 }) {
   let context
 
@@ -56,25 +58,27 @@ export default function PostHeader ({
   //   {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
   // ]
 
-  return <div styleName='header' className={className}>
-    <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
-    <div styleName='headerText'>
-      <Link to={personUrl(creator.id, slug)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
-      {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
-      <div>
-        <span styleName='timestamp'>
-          {humanDate(date)}{context && <span styleName='spacer'>•</span>}
-        </span>
-        {context && <Link to={context.url} styleName='context'>
-          {context.label}
-        </Link>}
+  return <Highlight {...highlightProps}>
+    <div styleName='header' className={className}>
+      <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
+      <div styleName='headerText'>
+        <Link to={personUrl(creator.id, slug)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
+        {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
+        <div>
+          <span styleName='timestamp'>
+            {humanDate(date)}{context && <span styleName='spacer'>•</span>}
+          </span>
+          {context && <Link to={context.url} styleName='context'>
+            {context.label}
+          </Link>}
+        </div>
+      </div>
+      <div styleName='upperRight'>
+        {type && <PostLabel type={type} styleName='label' />}
+        {dropdownItems.length > 0 &&
+          <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} />}
+        {close && <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
       </div>
     </div>
-    <div styleName='upperRight'>
-      {type && <PostLabel type={type} styleName='label' />}
-      {dropdownItems.length > 0 &&
-        <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} />}
-      {close && <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
-    </div>
-  </div>
+  </Highlight>
 }
