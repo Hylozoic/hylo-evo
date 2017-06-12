@@ -21,7 +21,7 @@ export function toggleDrawer () {
 
 export function fetchForCurrentUser (slug, skipTopics) {
   const query = slug
-    ? `query ($slug: String, $first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean) {
+    ? `query ($slug: String, $first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean, $updateLastViewed: Boolean) {
       ${meQueryFragment}
       ${communityQueryFragment}
     }`
@@ -56,7 +56,7 @@ export function fetchForCurrentUser (slug, skipTopics) {
 
 export function fetchForCommunity (slug) {
   const query = slug
-    ? `query ($slug: String, $first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean) {
+    ? `query ($slug: String, $first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean, $updateLastViewed: Boolean) {
       ${communityQueryFragment}
     }`
     : `query ($first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean) {
@@ -74,7 +74,7 @@ export function fetchForCommunity (slug) {
 
 // the value of `first` is high because we are receiving unaggregated data from
 // the API, so there could be many duplicates
-const queryVariables = slug => ({slug, first: 200, offset: 0, subscribed: true})
+const queryVariables = slug => ({slug, first: 200, offset: 0, subscribed: true, updateLastViewed: true})
 
 const meQueryFragment = `
 me {
@@ -98,7 +98,7 @@ me {
 }`
 
 const communityQueryFragment = `
-community(slug: $slug) {
+community(slug: $slug, updateLastViewed: $updateLastViewed) {
   id
   name
   slug

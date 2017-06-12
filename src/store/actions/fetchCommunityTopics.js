@@ -32,7 +32,7 @@ query (
   $offset: Int,
   $sortBy: String,
   $order: String,
-  $subscribed: Boolean
+  $subscribed: Boolean,
   $autocomplete: String
 ) {
   community (id: $id) {
