@@ -97,7 +97,9 @@ export default class MessageSection extends React.Component {
       // Are additional messages new (at the end of the sorted array)?
       if (get('id', latest) !== get('id', oldLatest)) {
         // If there's one new message and it's not from currentUser, don't scroll
-        if (deltaLength === 1 && get('creator.id', latest) !== currentUser.id) return
+        if (deltaLength === 1 && get('creator.id', latest) !== currentUser.id) {
+          if (!this.atBottom(this.list)) return
+        }
         this.shouldScroll = true
       }
     }
@@ -110,6 +112,9 @@ export default class MessageSection extends React.Component {
       lastSeenAtTimes[thread.id] = new Date(thread.lastReadAt).getTime()
     } */
   }
+
+  atBottom = ({ offsetHeight, scrollHeight, scrollTop }) =>
+    scrollHeight - scrollTop - offsetHeight < 1
 
   handleVisibilityChange = () => {
     const { onNextVisible } = this.state
@@ -132,12 +137,11 @@ export default class MessageSection extends React.Component {
 
   detectScrollExtremes = throttle(target => {
     if (this.props.pending) return
-    const { offsetHeight, scrollHeight, scrollTop } = target
 
     // TODO: is this the correct behaviour? Just because we've read the
     // bottom message doesn't mean we've read 'em all...
-    if (scrollHeight - scrollTop - offsetHeight < 1) this.markAsRead()
-    if (scrollTop <= 150) this.fetchMore()
+    if (this.atBottom(target)) this.markAsRead()
+    if (target.scrollTop <= 150) this.fetchMore()
   }, 500, {trailing: true})
 
   handleScroll = event => {
