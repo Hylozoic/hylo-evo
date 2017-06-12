@@ -18,6 +18,7 @@ import {
 } from 'store/constants'
 import {
   RECEIVE_MESSAGE,
+  RECEIVE_NOTIFICATION,
   RECEIVE_POST
  } from 'components/SocketListener/SocketListener.store'
 import {

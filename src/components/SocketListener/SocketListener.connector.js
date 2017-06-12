@@ -4,6 +4,7 @@ import { get } from 'lodash/fp'
 import {
   receiveComment,
   receiveMessage,
+  receiveNotification,
   receivePost,
   receiveThread
 } from './SocketListener.store'
@@ -30,6 +31,8 @@ export function mapDispatchToProps (dispatch, props) {
         bumpUnreadCount: !isActiveThread(props.location, data)
       }))
     },
+
+    receiveNotification: data => dispatch(receiveNotification(data)),
 
     receiveComment: data => {
       const comment = convertToComment(data.comment, data.postId)

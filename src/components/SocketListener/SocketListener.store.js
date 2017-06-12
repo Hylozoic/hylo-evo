@@ -1,7 +1,9 @@
-export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE'
-const RECEIVE_COMMENT = 'RECEIVE_COMMENT'
-export const RECEIVE_POST = 'RECEIVE_POST'
-const RECEIVE_THREAD = 'RECEIVE_THREAD'
+const MODULE_NAME = 'SocketListener'
+export const RECEIVE_MESSAGE = `${MODULE_NAME}/RECEIVE_MESSAGE`
+export const RECEIVE_COMMENT = `${MODULE_NAME}/RECEIVE_COMMENT`
+export const RECEIVE_POST = `${MODULE_NAME}/RECEIVE_POST`
+export const RECEIVE_THREAD = `${MODULE_NAME}/RECEIVE_THREAD`
+export const RECEIVE_NOTIFICATION = `${MODULE_NAME}/RECEIVE_NOTIFICATION`
 
 export function receiveMessage (message, opts = {}) {
   return {
@@ -50,5 +52,19 @@ export function receivePost (data, communityId) {
   return {
     type: RECEIVE_POST,
     payload: {topics: data.tags, communityId}
+  }
+}
+
+export function receiveNotification (notification) {
+  return {
+    type: RECEIVE_NOTIFICATION,
+    payload: {
+      data: {
+        notification
+      }
+    },
+    meta: {
+      extractModel: 'Notification'
+    }
   }
 }
