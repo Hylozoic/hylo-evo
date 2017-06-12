@@ -1,47 +1,42 @@
 import { mergeProps } from './Search.connector'
 
-describe.skip('mergeProps', () => {
-  it('populates fetchCommunityTopics and fetchMoreCommunityTopics', () => {
+describe('mergeProps', () => {
+  it('populates fetchSearchResults and fetchMoreSearchResults', () => {
     const stateProps = {
-      communityTopics: [1, 2, 3],
-      selectedSort: 'num_followers',
-      search: 're',
-      community: {id: 99},
+      searchResults: [1, 2, 3],
+      filter: 'all',
+      termForInput: 're',
       hasMore: true
     }
 
-    const fetchCommunityTopicsRaw = jest.fn()
+    const fetchSearchResultsDebounced = jest.fn()
 
     const dispatchProps = {
-      fetchCommunityTopicsRaw
+      fetchSearchResultsDebounced
     }
 
     const merged = mergeProps(stateProps, dispatchProps, {})
 
-    expect(fetchCommunityTopicsRaw).not.toHaveBeenCalled()
-    merged.fetchCommunityTopics()
-    expect(fetchCommunityTopicsRaw).toHaveBeenCalledWith(
-      stateProps.community.id,
+    expect(fetchSearchResultsDebounced).not.toHaveBeenCalled()
+    merged.fetchSearchResults()
+    expect(fetchSearchResultsDebounced).toHaveBeenCalledWith(
       {
-        sortBy: stateProps.selectedSort,
-        autocomplete: stateProps.search,
-        first: 10
+        term: stateProps.termForInput,
+        filter: stateProps.filter
       })
-    fetchCommunityTopicsRaw.mockClear()
+    fetchSearchResultsDebounced.mockClear()
 
-    merged.fetchMoreCommunityTopics()
-    expect(fetchCommunityTopicsRaw).toHaveBeenCalledWith(
-      stateProps.community.id,
+    merged.fetchMoreSearchResults()
+    expect(fetchSearchResultsDebounced).toHaveBeenCalledWith(
       {
-        sortBy: stateProps.selectedSort,
-        autocomplete: stateProps.search,
-        first: 10,
-        offset: stateProps.communityTopics.length
+        term: stateProps.termForInput,
+        filter: stateProps.filter,
+        offset: stateProps.searchResults.length
       })
-    fetchCommunityTopicsRaw.mockClear()
+    fetchSearchResultsDebounced.mockClear()
 
     const merged2 = mergeProps({...stateProps, hasMore: false}, dispatchProps, {})
-    merged2.fetchMoreCommunityTopics()
-    expect(fetchCommunityTopicsRaw).not.toHaveBeenCalled()
+    merged2.fetchMoreSearchResults()
+    expect(fetchSearchResultsDebounced).not.toHaveBeenCalled()
   })
 })
