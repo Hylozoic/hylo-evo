@@ -13,7 +13,7 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
           SessionBoundModel {
             "_fields": Object {
               "id": 2,
-              "updatedAt": 2017-05-07T03:24:00.000Z,
+              "updatedAt": "2017-05-07T03:24:00",
             },
           }
         }
@@ -25,7 +25,7 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
           SessionBoundModel {
             "_fields": Object {
               "id": 1,
-              "updatedAt": 1995-12-17T03:23:00.000Z,
+              "updatedAt": "1995-12-17T03:23:00",
             },
           }
         }

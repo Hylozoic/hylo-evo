@@ -34,6 +34,7 @@ export default class ThreadList extends Component {
       className
     } = this.props
     const onSearchChange = (event) => setThreadSearch(event.target.value)
+
     return <div styleName='thread-list' className={className}>
       <div styleName='header'>
         <Link to='/t/new'><Button label='New Message' styleName='new-message' /></Link>
@@ -49,7 +50,7 @@ export default class ThreadList extends Component {
             currentUser={currentUser}
             active={t.id === threadId}
             participants={t.participants.toRefArray()}
-            latestMessage={t.messages.orderBy('createdAt', 'desc').first()}
+            latestMessage={t.messages.orderBy(m => Date.parse(m.createdAt), 'desc').first()}
             unreadCount={t.unreadCount} />
         })}
         {!threads.length && !threadSearch && <div styleName='no-conversations'>You have no active conversations</div>}
