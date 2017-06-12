@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Highlight from './Highlight'
-// import deep from 'deep-diff'
 
 describe('Highlight', () => {
   const highlightClassName = 'highlight-span'
@@ -57,5 +56,23 @@ describe('Highlight', () => {
     </div><span> ends with a <span class="highlight-span">dog</span></span>`
 
     expect(wrapper.find('.outer').prop('dangerouslySetInnerHTML').__html).toEqual(expected)
+  })
+
+  it('removes non word characters from search terms', () => {
+    const highlightTerms = ['$%&^<dog>.,/.>']
+
+    const markup = <div>just a solitary dog</div>
+
+    const expected = <span className={componentClassName}>
+      <div>just a solitary <span className={highlightClassName}>dog</span></div>
+    </span>
+
+    const wrapper = shallow(<Highlight
+      className={componentClassName}
+      highlightTerms={highlightTerms}
+      highlightClassName={highlightClassName}
+      >{markup}</Highlight>)
+
+    expect(wrapper.html()).toEqual(shallow(expected).html())
   })
 })

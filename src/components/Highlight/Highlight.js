@@ -15,8 +15,12 @@ export default class Highlight extends React.Component {
 
   parseCounter = 0
 
+  highlightTerms = []
+
   getMatches (string) {
-    const { highlightTerms } = this.props
+    const highlightTerms = this.props.highlightTerms.map(term =>
+      term.replace(/\W/g, ''))
+
     let matches = []
     for (var i in highlightTerms) {
       const regex = new RegExp(highlightTerms[i], 'ig')
@@ -29,6 +33,7 @@ export default class Highlight extends React.Component {
   }
 
   parseString (string) {
+    // takes a plain string and returns react elements
     let elements = []
     if (string === '') {
       return elements
@@ -66,13 +71,12 @@ export default class Highlight extends React.Component {
   }
 
   domParseHTMLString (html) {
+    // takes and returns a html string
     const domTree = cheerio.parseHTML(html)
 
     const parsedDomTree = domTree.map(el => this.domParseElement(el))
 
     const $ = cheerio.load(parsedDomTree)
-
-    console.log('newHTML', $.html())
 
     return $.html()
   }
@@ -80,7 +84,7 @@ export default class Highlight extends React.Component {
   domParseElement (el) {
     switch (el.type) {
       case 'text':
-        return this.domReplaceInString(el.data)
+        return this.domParseString(el.data)
       case 'tag':
         return {
           ...el,
@@ -90,7 +94,8 @@ export default class Highlight extends React.Component {
     return null
   }
 
-  domReplaceInString (string) {
+  domParseString (string) {
+    // takes a plain string and returns a DOM tree
     const { highlightClassName, component } = this.props
 
     const matches = this.getMatches(string)
@@ -116,36 +121,19 @@ export default class Highlight extends React.Component {
       elements.push(string.substring(lastIndex))
     }
 
-    // const matches =
-    //
-    // for (var i in highlightTerms) {
-    //   const regex = new RegExp(highlightTerms[i], 'ig')
-    //   const replacement =
-    //     `<${component} class='${highlightClassName}'>${highlightTerms[i]}</${component}>`
-    //
-    //   newString = newString.replace(regex, replacement)
-    // }
-
     const newString = elements.join('')
 
-    console.log('replaceInString', string)
-    console.log('newString', newString)
     const domTree = cheerio.parseHTML(newString)
 
-    var returnVal
-
     if (domTree.length === 1) {
-      returnVal = domTree[0]
+      return domTree[0]
     } else {
-      returnVal =  {
+      return {
         type: 'tag',
         name: 'span',
         children: domTree
       }
     }
-
-    console.log('returnVal', returnVal)
-    return returnVal
   }
 
   parse (children) {
@@ -177,6 +165,7 @@ export default class Highlight extends React.Component {
         return this.parse(child)
       })
     }
+
     return parsed
   }
 
