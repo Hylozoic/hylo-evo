@@ -151,6 +151,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case RECEIVE_POST:
+      console.log('!!!', payload, payload.creatorId)
       payload.topics.forEach(topicId => {
         const sub = CommunityTopic.safeGet({topic: topicId, community: payload.communityId})
         if (sub) sub.update({newPostCount: sub.newPostCount + 1})
