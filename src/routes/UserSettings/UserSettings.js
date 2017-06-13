@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import './UserSettings.scss'
 import AccountSettings from './AccountSettings/AccountSettings'
 import CommunitySettings from './CommunitySettings/CommunitySettings'
+import NotificationSettings from './NotificationSettings/NotificationSettings'
 const { object, func } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
 
@@ -50,6 +51,13 @@ export default class UserSettings extends Component {
           component: <CommunitySettings
             communities={communities}
             leaveCommunity={leaveCommunity} />
+        },
+        {
+          name: 'Notifications',
+          path: '/settings/notifications',
+          component: <NotificationSettings
+            currentUser={currentUser}
+            updateUserSettings={changes => console.log('updateUserSettings', changes)}/>
         }
       ]} />
   }
