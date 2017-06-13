@@ -51,7 +51,11 @@ export function receiveThread (thread) {
 export function receivePost (data, communityId, creatorId) {
   return {
     type: RECEIVE_POST,
-    payload: {topics: data.tags, communityId, creatorId}
+    payload: {
+      topics: data.tags,
+      creatorId: data.creatorId,
+      communityId
+    }
   }
 }
 
