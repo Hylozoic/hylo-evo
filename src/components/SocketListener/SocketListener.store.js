@@ -49,7 +49,6 @@ export function receiveThread (thread) {
 }
 
 export function receivePost (data, communityId, creatorId) {
-  console.log('!!!', 'receivePost socket event')
   return {
     type: RECEIVE_POST,
     payload: {topics: data.tags, communityId, creatorId}

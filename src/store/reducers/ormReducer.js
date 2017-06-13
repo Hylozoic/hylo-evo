@@ -150,13 +150,14 @@ export default function ormReducer (state = {}, action) {
       break
 
     case RECEIVE_POST:
-      console.log('!!!', payload, payload.creatorId)
-      payload.topics.forEach(topicId => {
-        const sub = CommunityTopic.safeGet({topic: topicId, community: payload.communityId})
-        if (sub) sub.update({newPostCount: sub.newPostCount + 1})
-      })
-      membership = Membership.safeGet({community: payload.communityId})
-      membership.update({newPostCount: membership.newPostCount + 1})
+      if (payload.creatorId !== Me.first().id) {
+        payload.topics.forEach(topicId => {
+          const sub = CommunityTopic.safeGet({topic: topicId, community: payload.communityId})
+          if (sub) sub.update({newPostCount: sub.newPostCount + 1})
+        })
+        membership = Membership.safeGet({community: payload.communityId})
+        membership.update({newPostCount: membership.newPostCount + 1})
+      }
       break
 
     case MARK_ACTIVITY_READ_PENDING:

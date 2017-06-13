@@ -51,13 +51,12 @@ export function mapDispatchToProps (dispatch, props) {
 
 function mergeProps (stateProps, dispatchProps) {
   const communityId = get('id', stateProps.community)
-  const currentUser = stateProps.currentUser
+  const currentUserId = get('id', stateProps.currentUser)
   return {
     ...stateProps,
     ...dispatchProps,
     receivePost: data => {
-      console.log('!!!', communityId, currentUser)
-      return dispatchProps.receivePost(data, communityId, currentUser)
+      return dispatchProps.receivePost(data, communityId, currentUserId)
     }
   }
 }
