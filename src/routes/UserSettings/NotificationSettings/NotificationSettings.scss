@@ -16,6 +16,20 @@
   margin-bottom: 20px;
 }
 
+.help {
+  padding-top: 40px;
+  composes: bdy-lt-sm from 'css/typography.scss';
+  a {
+    color: $color-rhino;
+  }
+  border-top: $light-border;
+}
+
+.help-paragraph {
+  margin-bottom: 20px;
+}
+
+
 // Select
 .select-wrapper {
   position: relative;
