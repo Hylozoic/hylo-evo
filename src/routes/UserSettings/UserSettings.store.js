@@ -25,6 +25,10 @@ export function fetchUserSettings () {
           tagline
           memberships {
             id
+            settings {
+              send_email
+              send_push_notifications
+            }
             community {
               id
               name

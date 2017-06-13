@@ -25,12 +25,13 @@ export default class UserSettings extends Component {
   render () {
     const {
       currentUser,
-      communities,
+      memberships,
       updateUserSettings,
       leaveCommunity,
       loginWithService,
       unlinkAccount,
-      setConfirm
+      setConfirm,
+      updateMembershipSetting
     } = this.props
 
     return <FullPageModal
@@ -49,15 +50,16 @@ export default class UserSettings extends Component {
           name: 'Communities',
           path: '/settings/communities',
           component: <CommunitySettings
-            communities={communities}
-            leaveCommunity={leaveCommunity} />
+            memberships={memberships}
+            leaveCommunity={leaveCommunity}
+            updateMembershipSetting={updateMembershipSetting} />
         },
         {
           name: 'Notifications',
           path: '/settings/notifications',
           component: <NotificationSettings
             currentUser={currentUser}
-            updateUserSettings={changes => console.log('updateUserSettings', changes)}/>
+            updateUserSettings={changes => console.log('updateUserSettings', changes)} />
         }
       ]} />
   }

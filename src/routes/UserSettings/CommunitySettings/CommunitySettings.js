@@ -3,36 +3,59 @@ import './CommunitySettings.scss'
 import { Link } from 'react-router-dom'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
-const { array } = PropTypes
+import CheckBox from 'components/CheckBox'
+const { array, func } = PropTypes
 import { communityUrl } from 'util/index'
 
 export default class CommunitySettings extends Component {
   static propTypes = {
-    communities: array
+    memberships: array,
+    updateMembershipSetting: func
   }
 
   render () {
-    const { communities, leaveCommunity } = this.props
-    if (!communities) return <Loading />
+    const { memberships, leaveCommunity, updateMembershipSetting } = this.props
+    if (!memberships) return <Loading />
 
     return <div>
-      {communities.map(c =>
-        <CommunityControl community={c} leaveCommunity={leaveCommunity} key={c.id} />)}
+      {memberships.map(m =>
+        <CommunityControl
+          membership={m}
+          leaveCommunity={leaveCommunity}
+          updateMembershipSetting={updateMembershipSetting}
+          key={m.id} />)}
     </div>
   }
 }
 
-export function CommunityControl ({ community, leaveCommunity }) {
+export function CommunityControl ({ membership, leaveCommunity, updateMembershipSetting }) {
   const leave = () => {
     if (window.confirm(`Are you sure you want to leave ${community.name}?`)) {
       leaveCommunity(community.id)
     }
   }
+
+  const { community, settings } = membership
+
+  const updateSetting = setting => value =>
+    updateMembershipSetting(community.id, {[setting]: value})
+
   return <div styleName='community-control'>
-    <Link to={communityUrl(community.slug)}>
-      <RoundImage url={community.avatarUrl} medium styleName='avatar' />
-    </Link>
-    <Link to={communityUrl(community.slug)} styleName='name'>{community.name}</Link>
-    <span onClick={leave} styleName='leave-button'>Leave</span>
+    <div styleName='row'>
+      <Link to={communityUrl(community.slug)}>
+        <RoundImage url={community.avatarUrl} medium styleName='avatar' />
+      </Link>
+      <Link to={communityUrl(community.slug)} styleName='name'>{community.name}</Link>
+      <span onClick={leave} styleName='leave-button'>Leave</span>
+    </div>
+    <div styleName='row'>
+      <span styleName='settings-label'>Receive Notifications:</span>
+      <span styleName='settings'>
+        <span styleName='checkbox-label'>Email</span>
+        <CheckBox checked={settings.send_email} onChange={updateSetting('send_email')} />
+        <span styleName='checkbox-label'>Mobile</span>
+        <CheckBox checked={settings.send_push_notifications} onChange={updateSetting('send_push_notifications')} />
+      </span>
+    </div>
   </div>
 }

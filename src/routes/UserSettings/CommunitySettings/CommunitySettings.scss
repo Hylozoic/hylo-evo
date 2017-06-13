@@ -1,9 +1,12 @@
 // CommunityControl
 .community-control {
-  display: flex;
-  align-items: center;
   min-height: 52px;
   border-bottom: 1px solid $color-ghost;
+}
+
+.row {
+  display: flex;
+  align-items: center;
 }
 
 .avatar {
@@ -22,4 +25,19 @@
 .leave-button {
   margin-left: auto;
   composes: text-button from 'css/typography.scss'
+}
+
+.settings-label {
+  composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.settings {
+  composes: caption-lt-lg from 'css/typography.scss';
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-label {
+  margin-right: 5px;
 }

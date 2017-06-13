@@ -1,0 +1,14 @@
+.checkbox {
+  visibility: hidden;
+}
+
+.label {
+  border: 1px solid $color-caribbean-green;
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+}
+
+.checked {
+  background-color: $color-caribbean-green;
+}
