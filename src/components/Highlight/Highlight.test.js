@@ -5,7 +5,7 @@ import Highlight from './Highlight'
 describe('Highlight', () => {
   const highlightClassName = 'highlight-span'
   const componentClassName = 'highlight-component'
-  const highlightTerms = ['cat', 'dog']
+  const terms = ['cat', 'dog']
 
   it('works with react tree', () => {
     const markup = <div className='cat'>
@@ -26,7 +26,7 @@ describe('Highlight', () => {
 
     const wrapper = shallow(<Highlight
       className={componentClassName}
-      highlightTerms={highlightTerms}
+      terms={terms}
       highlightClassName={highlightClassName}
       >{markup}</Highlight>)
 
@@ -43,7 +43,7 @@ describe('Highlight', () => {
 
     const wrapper = shallow(<Highlight
       className={componentClassName}
-      highlightTerms={highlightTerms}
+      terms={terms}
       highlightClassName={highlightClassName}>
       <div className='outer' dangerouslySetInnerHTML={{__html: html}} />
     </Highlight>)
@@ -59,7 +59,7 @@ describe('Highlight', () => {
   })
 
   it('removes non word characters from search terms', () => {
-    const highlightTerms = ['$%&^<dog>.,/.>']
+    const terms = ['$%&^<dog>.,/.>']
 
     const markup = <div>just a solitary dog</div>
 
@@ -69,7 +69,7 @@ describe('Highlight', () => {
 
     const wrapper = shallow(<Highlight
       className={componentClassName}
-      highlightTerms={highlightTerms}
+      terms={terms}
       highlightClassName={highlightClassName}
       >{markup}</Highlight>)
 

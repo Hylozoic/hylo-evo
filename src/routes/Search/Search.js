@@ -112,7 +112,7 @@ export function SearchResult ({ searchResult, term = '', showPostDetails, showPe
   const { type, content } = searchResult
 
   const highlightProps = {
-    highlightTerms: term.split(' '),
+    terms: term.split(' '),
     highlightClassName: styles.highlight
   }
 

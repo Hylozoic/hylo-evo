@@ -15,15 +15,13 @@ export default class Highlight extends React.Component {
 
   parseCounter = 0
 
-  highlightTerms = []
-
   getMatches (string) {
-    const highlightTerms = this.props.highlightTerms.map(term =>
+    const terms = this.props.terms.map(term =>
       term.replace(/\W/g, ''))
 
     let matches = []
-    for (var i in highlightTerms) {
-      const regex = new RegExp(highlightTerms[i], 'ig')
+    for (var i in terms) {
+      const regex = new RegExp(terms[i], 'ig')
       var match
       while ((match = regex.exec(string)) !== null) {
         matches.push(match)
@@ -170,11 +168,11 @@ export default class Highlight extends React.Component {
   }
 
   render () {
-    const { children, className, highlightTerms = [] } = this.props
+    const { children, className, terms = [] } = this.props
 
     var parsedChildren = children
 
-    if (highlightTerms.length > 0) {
+    if (terms.length > 0) {
       this.parseCounter = 0
       parsedChildren = this.parse(children)
     }
