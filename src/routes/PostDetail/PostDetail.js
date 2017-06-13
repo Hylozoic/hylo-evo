@@ -92,10 +92,9 @@ export default class PostDetail extends Component {
   })
 
   render () {
-    const { post, currentUser, slug } = this.props
+    const { post, slug, canEdit } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
     if (!post) return null
-    const canEdit = currentUser && currentUser.id === post.creator.id
     const scrollToBottom = () => {
       const detail = document.getElementById(DETAIL_COLUMN_ID)
       detail.scrollTop = detail.scrollHeight
