@@ -138,7 +138,6 @@ export const queryParamWhitelist = [
   'slug',
   'sortBy',
   'search',
-  'term',
   'autocomplete',
   'filter',
   'topic',

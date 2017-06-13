@@ -7,9 +7,9 @@ exports[`Search matches the latest snapshot 1`] = `
   >
     <SearchBar
       filter="person"
+      searchForInput="cat"
       setSearchFilter={[Function]}
       setSearchTerm={[Function]}
-      termForInput="cat"
       updateQueryParam={[Function]}
     />
     <div

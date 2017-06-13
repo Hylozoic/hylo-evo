@@ -5,7 +5,7 @@ import React from 'react'
 describe('Search', () => {
   it('matches the latest snapshot', () => {
     const props = {
-      termForInput: 'cat',
+      searchForInput: 'cat',
       fetchMoreSearchResults: () => {},
       showPostDetails: () => {},
       setSearchTerm: () => {},

@@ -7,7 +7,7 @@ export const SET_SEARCH_FILTER = `${MODULE_NAME}/SET_SEARCH_FILTER`
 export const FETCH_SEARCH = `${MODULE_NAME}/FETCH_SEARCH`
 
 const defaultState = {
-  term: '',
+  search: '',
   filter: 'all'
 }
 
@@ -19,7 +19,7 @@ export default function reducer (state = defaultState, action) {
     case SET_SEARCH_TERM:
       return {
         ...state,
-        term: payload
+        search: payload
       }
     case SET_SEARCH_FILTER:
       return {
@@ -31,10 +31,10 @@ export default function reducer (state = defaultState, action) {
   }
 }
 
-export function setSearchTerm (term) {
+export function setSearchTerm (search) {
   return {
     type: SET_SEARCH_TERM,
-    payload: term
+    payload: search
   }
 }
 
@@ -46,19 +46,19 @@ export function setSearchFilter (filter) {
 }
 
 export function getSearchTerm (state) {
-  return state[MODULE_NAME].term
+  return state[MODULE_NAME].search
 }
 
 export function getSearchFilter (state) {
   return state[MODULE_NAME].filter
 }
 
-export function fetchSearchResults ({term, offset = 0, filter}) {
+export function fetchSearchResults ({search, offset = 0, filter}) {
   return {
     type: FETCH_SEARCH,
     graphql: {
-      query: `query ($term: String, $type: String, $offset: Int) {
-        search(term: $term, first: 10, type: $type, offset: $offset) {
+      query: `query ($search: String, $type: String, $offset: Int) {
+        search(term: $search, first: 10, type: $type, offset: $offset) {
           total
           hasMore
           items {
@@ -93,7 +93,7 @@ export function fetchSearchResults ({term, offset = 0, filter}) {
         }
       }`,
       variables: {
-        term,
+        search,
         offset,
         type: filter
       }

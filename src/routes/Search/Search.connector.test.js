@@ -5,7 +5,7 @@ describe('mergeProps', () => {
     const stateProps = {
       searchResults: [1, 2, 3],
       filter: 'all',
-      termForInput: 're',
+      searchForInput: 're',
       hasMore: true
     }
 
@@ -21,7 +21,7 @@ describe('mergeProps', () => {
     merged.fetchSearchResults()
     expect(fetchSearchResultsDebounced).toHaveBeenCalledWith(
       {
-        term: stateProps.termForInput,
+        search: stateProps.searchForInput,
         filter: stateProps.filter
       })
     fetchSearchResultsDebounced.mockClear()
@@ -29,7 +29,7 @@ describe('mergeProps', () => {
     merged.fetchMoreSearchResults()
     expect(fetchSearchResultsDebounced).toHaveBeenCalledWith(
       {
-        term: stateProps.termForInput,
+        search: stateProps.searchForInput,
         filter: stateProps.filter,
         offset: stateProps.searchResults.length
       })

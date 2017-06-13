@@ -58,19 +58,19 @@ export const getSearchResults = ormCreateSelector(
 const getHasMoreSearchResults = createSelector(getSearchResultResults, get('hasMore'))
 
 export function mapStateToProps (state, props) {
-  const termFromQueryString = getQueryParam('t', state, props)
-  const termForInput = getSearchTerm(state, props)
+  const searchFromQueryString = getQueryParam('t', state, props)
+  const searchForInput = getSearchTerm(state, props)
   const filter = getSearchFilter(state, props)
 
-  const queryResultProps = {term: termForInput, type: filter}
+  const queryResultProps = {search: searchForInput, type: filter}
 
   const searchResults = getSearchResults(state, queryResultProps)
   const hasMore = getHasMoreSearchResults(state, queryResultProps)
   return {
     pending: !!state.pending[FETCH_SEARCH],
     searchResults,
-    termForInput,
-    termFromQueryString,
+    searchForInput,
+    searchFromQueryString,
     filter,
     hasMore
   }
@@ -78,9 +78,9 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    updateQueryParam: debounce(500, term =>
-      dispatch(changeQueryParam(props, 't', term, null, true))),
-    setSearchTerm: term => dispatch(setSearchTerm(term)),
+    updateQueryParam: debounce(500, search =>
+      dispatch(changeQueryParam(props, 't', search, null, true))),
+    setSearchTerm: search => dispatch(setSearchTerm(search)),
     setSearchFilter: filter => dispatch(setSearchFilter(filter)),
     fetchSearchResultsDebounced: debounce(500, opts =>
       dispatch(fetchSearchResults(opts))),
@@ -92,17 +92,17 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { termForInput, searchResults, hasMore, filter } = stateProps
+  const { searchForInput, searchResults, hasMore, filter } = stateProps
   const { fetchSearchResultsDebounced } = dispatchProps
 
   const offset = get('length', searchResults)
 
   const fetchSearchResults = () => {
-    return fetchSearchResultsDebounced({term: termForInput, filter})
+    return fetchSearchResultsDebounced({search: searchForInput, filter})
   }
 
   const fetchMoreSearchResults = () => hasMore
-    ? fetchSearchResultsDebounced({term: termForInput, filter, offset})
+    ? fetchSearchResultsDebounced({search: searchForInput, filter, offset})
     : () => {}
 
   return {

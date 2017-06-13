@@ -18,8 +18,8 @@ export default class Search extends Component {
       content: object
     })),
     pending: bool,
-    termForInput: string,
-    termFromQueryString: string,
+    searchForInput: string,
+    searchFromQueryString: string,
     setSearchTerm: func,
     updateQueryParam: func,
     fetchSearchResults: func,
@@ -27,14 +27,14 @@ export default class Search extends Component {
   }
 
   componentDidMount () {
-    const { termForInput, termFromQueryString, setSearchTerm } = this.props
-    if (!termForInput && termFromQueryString) {
-      setSearchTerm(termFromQueryString)
+    const { searchForInput, searchFromQueryString, setSearchTerm } = this.props
+    if (!searchForInput && searchFromQueryString) {
+      setSearchTerm(searchFromQueryString)
     }
   }
 
   componentDidUpdate (prevProps) {
-    if (prevProps.termForInput !== this.props.termForInput ||
+    if (prevProps.searchForInput !== this.props.searchForInput ||
       prevProps.filter !== this.props.filter) {
       this.props.fetchSearchResults()
     }
@@ -44,7 +44,7 @@ export default class Search extends Component {
     const {
       pending,
       searchResults,
-      termForInput,
+      searchForInput,
       setSearchTerm,
       updateQueryParam,
       fetchMoreSearchResults,
@@ -56,7 +56,7 @@ export default class Search extends Component {
 
     return <FullPageModal>
       <div styleName='search'>
-        <SearchBar {...{termForInput, setSearchTerm, updateQueryParam, setSearchFilter, filter}} />
+        <SearchBar {...{searchForInput, setSearchTerm, updateQueryParam, setSearchFilter, filter}} />
         <div styleName='search-results'
           id={SEARCH_RESULTS_ID}
           ref={x => { this.searchResultsDiv = x }}>
@@ -64,7 +64,7 @@ export default class Search extends Component {
           {searchResults.map(sr =>
             <SearchResult key={sr.id}
               searchResult={sr}
-              term={termForInput}
+              term={searchForInput}
               showPostDetails={showPostDetails}
               showPerson={showPerson} />)}
           <ScrollListener onBottom={() => fetchMoreSearchResults()}
@@ -75,7 +75,7 @@ export default class Search extends Component {
   }
 }
 
-export function SearchBar ({termForInput, setSearchTerm, updateQueryParam, setSearchFilter, filter}) {
+export function SearchBar ({searchForInput, setSearchTerm, updateQueryParam, setSearchFilter, filter}) {
   const onSearchChange = event => {
     const { value } = event.target
     setSearchTerm(value) // no debounce
@@ -83,7 +83,7 @@ export function SearchBar ({termForInput, setSearchTerm, updateQueryParam, setSe
   }
   return <div styleName='search-bar'>
     <TextInput theme={styles}
-      value={termForInput}
+      value={searchForInput}
       placeholder='Search'
       onChange={onSearchChange} />
     <TabBar setSearchFilter={setSearchFilter} filter={filter} />
