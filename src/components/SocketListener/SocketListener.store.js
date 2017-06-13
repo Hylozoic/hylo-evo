@@ -48,7 +48,7 @@ export function receiveThread (thread) {
   }
 }
 
-export function receivePost (data, communityId, creatorId) {
+export function receivePost (data, communityId) {
   return {
     type: RECEIVE_POST,
     payload: {
