@@ -3,6 +3,7 @@ import cheerio from 'cheerio'
 
 export default class Highlight extends React.Component {
   static propTypes = {
+    children: PropTypes.element,
     className: PropTypes.string,
     component: PropTypes.any,
     highlightClassName: PropTypes.string
@@ -172,10 +173,12 @@ export default class Highlight extends React.Component {
 
     var parsedChildren = children
 
-    if (terms.length > 0) {
-      this.parseCounter = 0
-      parsedChildren = this.parse(children)
+    if (terms.length === 0) {
+      return children
     }
+
+    this.parseCounter = 0
+    parsedChildren = this.parse(children)
 
     return <span className={className}>{parsedChildren}</span>
   }
