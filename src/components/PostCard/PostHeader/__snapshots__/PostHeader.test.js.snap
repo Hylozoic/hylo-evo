@@ -1,20 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`matches snapshot 1`] = `
-<Highlight
-  component="span"
-  highlightClassName="highlight"
+<div
+  data-styleName="header"
 >
+  <Avatar
+    avatarUrl="foo.png"
+    data-styleName="avatar"
+    url="/m/123"
+  />
   <div
-    data-styleName="header"
+    data-styleName="headerText"
   >
-    <Avatar
-      avatarUrl="foo.png"
-      data-styleName="avatar"
-      url="/m/123"
-    />
-    <div
-      data-styleName="headerText"
+    <Highlight
+      component="span"
+      highlightClassName="highlight"
     >
       <Link
         data-styleName="userName"
@@ -23,34 +23,34 @@ exports[`matches snapshot 1`] = `
       >
         JJ
       </Link>
-      <div>
-        <span
-          data-styleName="timestamp"
-        />
-      </div>
+    </Highlight>
+    <div>
+      <span
+        data-styleName="timestamp"
+      />
     </div>
-    <div
-      data-styleName="upperRight"
-    />
   </div>
-</Highlight>
+  <div
+    data-styleName="upperRight"
+  />
+</div>
 `;
 
 exports[`matches snapshot 2`] = `
-<Highlight
-  component="span"
-  highlightClassName="highlight"
+<div
+  data-styleName="header"
 >
+  <Avatar
+    avatarUrl="foo.png"
+    data-styleName="avatar"
+    url="/m/123"
+  />
   <div
-    data-styleName="header"
+    data-styleName="headerText"
   >
-    <Avatar
-      avatarUrl="foo.png"
-      data-styleName="avatar"
-      url="/m/123"
-    />
-    <div
-      data-styleName="headerText"
+    <Highlight
+      component="span"
+      highlightClassName="highlight"
     >
       <Link
         data-styleName="userName"
@@ -59,52 +59,52 @@ exports[`matches snapshot 2`] = `
       >
         JJ
       </Link>
-      <div>
+    </Highlight>
+    <div>
+      <span
+        data-styleName="timestamp"
+      >
         <span
-          data-styleName="timestamp"
+          data-styleName="spacer"
         >
-          <span
-            data-styleName="spacer"
-          >
-            •
-          </span>
+          •
         </span>
-        <Link
-          data-styleName="context"
-          replace={false}
-          to="/c/fooc"
-        >
-          FooC
-        </Link>
-      </div>
-    </div>
-    <div
-      data-styleName="upperRight"
-    >
-      <PostLabel
-        data-styleName="label"
-        type="request"
-      />
+      </span>
+      <Link
+        data-styleName="context"
+        replace={false}
+        to="/c/fooc"
+      >
+        FooC
+      </Link>
     </div>
   </div>
-</Highlight>
+  <div
+    data-styleName="upperRight"
+  >
+    <PostLabel
+      data-styleName="label"
+      type="request"
+    />
+  </div>
+</div>
 `;
 
 exports[`matches snapshot 3`] = `
-<Highlight
-  component="span"
-  highlightClassName="highlight"
+<div
+  data-styleName="header"
 >
+  <Avatar
+    avatarUrl="foo.png"
+    data-styleName="avatar"
+    url="/m/123"
+  />
   <div
-    data-styleName="header"
+    data-styleName="headerText"
   >
-    <Avatar
-      avatarUrl="foo.png"
-      data-styleName="avatar"
-      url="/m/123"
-    />
-    <div
-      data-styleName="headerText"
+    <Highlight
+      component="span"
+      highlightClassName="highlight"
     >
       <Link
         data-styleName="userName"
@@ -113,54 +113,54 @@ exports[`matches snapshot 3`] = `
       >
         JJ
       </Link>
-      <div>
+    </Highlight>
+    <div>
+      <span
+        data-styleName="timestamp"
+      >
         <span
-          data-styleName="timestamp"
+          data-styleName="spacer"
         >
-          <span
-            data-styleName="spacer"
-          >
-            •
-          </span>
+          •
         </span>
-        <Link
-          data-styleName="context"
-          replace={false}
-          to="/c/fooc"
-        >
-          FooC
-        </Link>
-      </div>
-    </div>
-    <div
-      data-styleName="upperRight"
-    >
-      <PostLabel
-        data-styleName="label"
-        type="request"
-      />
-      <Dropdown
-        items={
-          Array [
-            Object {
-              "icon": "Edit",
-              "label": "Edit",
-              "onClick": [Function],
-            },
-            Object {
-              "icon": "Trash",
-              "label": "Delete",
-              "onClick": [Function],
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
+      </span>
+      <Link
+        data-styleName="context"
+        replace={false}
+        to="/c/fooc"
+      >
+        FooC
+      </Link>
     </div>
   </div>
-</Highlight>
+  <div
+    data-styleName="upperRight"
+  >
+    <PostLabel
+      data-styleName="label"
+      type="request"
+    />
+    <Dropdown
+      items={
+        Array [
+          Object {
+            "icon": "Edit",
+            "label": "Edit",
+            "onClick": [Function],
+          },
+          Object {
+            "icon": "Trash",
+            "label": "Delete",
+            "onClick": [Function],
+          },
+        ]
+      }
+      toggleChildren={
+        <Icon
+          name="More"
+        />
+      }
+    />
+  </div>
+</div>
 `;

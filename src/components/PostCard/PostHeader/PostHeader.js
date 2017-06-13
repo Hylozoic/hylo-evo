@@ -58,27 +58,27 @@ export default function PostHeader ({
   //   {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
   // ]
 
-  return <Highlight {...highlightProps}>
-    <div styleName='header' className={className}>
-      <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
-      <div styleName='headerText'>
+  return <div styleName='header' className={className}>
+    <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
+    <div styleName='headerText'>
+      <Highlight {...highlightProps}>
         <Link to={personUrl(creator.id, slug)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
-        {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
-        <div>
-          <span styleName='timestamp'>
-            {humanDate(date)}{context && <span styleName='spacer'>•</span>}
-          </span>
-          {context && <Link to={context.url} styleName='context'>
-            {context.label}
-          </Link>}
-        </div>
-      </div>
-      <div styleName='upperRight'>
-        {type && <PostLabel type={type} styleName='label' />}
-        {dropdownItems.length > 0 &&
-          <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} />}
-        {close && <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
+      </Highlight>
+      {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
+      <div>
+        <span styleName='timestamp'>
+          {humanDate(date)}{context && <span styleName='spacer'>•</span>}
+        </span>
+        {context && <Link to={context.url} styleName='context'>
+          {context.label}
+        </Link>}
       </div>
     </div>
-  </Highlight>
+    <div styleName='upperRight'>
+      {type && <PostLabel type={type} styleName='label' />}
+      {dropdownItems.length > 0 &&
+        <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} />}
+      {close && <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
+    </div>
+  </div>
 }

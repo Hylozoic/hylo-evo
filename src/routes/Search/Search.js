@@ -137,13 +137,13 @@ export function SearchResult ({ searchResult, term = '', showPostDetails, showPe
 
 export function PersonCard ({ person, showPerson, highlightProps }) {
   if (!person) return null
-  return <Highlight {...highlightProps}>
-    <div styleName='person-card' onClick={() => showPerson(person.id)}>
-      <RoundImage url={person.avatarUrl} styleName='person-image' large />
-      <div styleName='person-details'>
+  return <div styleName='person-card' onClick={() => showPerson(person.id)}>
+    <RoundImage url={person.avatarUrl} styleName='person-image' large />
+    <div styleName='person-details'>
+      <Highlight {...highlightProps}>
         <div styleName='person-name'>{person.name}</div>
-        <div styleName='person-location'>{person.location}</div>
-      </div>
+      </Highlight>
+      <div styleName='person-location'>{person.location}</div>
     </div>
-  </Highlight>
+  </div>
 }

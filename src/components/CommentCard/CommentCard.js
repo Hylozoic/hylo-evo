@@ -19,21 +19,23 @@ export default function CommentCard ({ comment, shouldShowReply, expanded = true
   const commentText = present(sanitize(comment.text), commentPresentOpts)
 
   return <Link to={postUrl(post.id, slug, {memberId: creator.id})} styleName='link'>
-    <Highlight {...highlightProps}>
-      <div styleName='comment-card'>
-        <div styleName='comment-header'>
-          <RoundImage url={creator.avatarUrl} large />
+    <div styleName='comment-card'>
+      <div styleName='comment-header'>
+        <RoundImage url={creator.avatarUrl} large />
+        <Highlight {...highlightProps}>
           <div styleName='comment-meta'>
             <span styleName='person-name'>{creator.name}</span> commented on&nbsp;
             <span styleName='post-title'>{postTitle}</span>
           </div>
-          <span styleName='date'>{humanDate(comment.createdAt)}</span>
-        </div>
-        <div styleName='comment-body' dangerouslySetInnerHTML={{__html: commentText}} />
-        <div styleName='comment-footer'>
-          {shouldShowReply && <span><Icon styleName='reply-button' name='Reply' green /> Reply</span>}
-        </div>
+        </Highlight>
+        <span styleName='date'>{humanDate(comment.createdAt)}</span>
       </div>
-    </Highlight>
+      <Highlight {...highlightProps}>
+        <div styleName='comment-body' dangerouslySetInnerHTML={{__html: commentText}} />
+      </Highlight>
+      <div styleName='comment-footer'>
+        {shouldShowReply && <span><Icon styleName='reply-button' name='Reply' green /> Reply</span>}
+      </div>
+    </div>
   </Link>
 }
