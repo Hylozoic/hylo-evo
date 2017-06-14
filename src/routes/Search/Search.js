@@ -8,6 +8,7 @@ import PostCard from 'components/PostCard'
 import CommentCard from 'components/CommentCard'
 import RoundImage from 'components/RoundImage'
 import Highlight from 'components/Highlight'
+import Loading from 'components/Loading'
 
 const SEARCH_RESULTS_ID = 'search-results'
 
@@ -60,7 +61,7 @@ export default class Search extends Component {
         <div styleName='search-results'
           id={SEARCH_RESULTS_ID}
           ref={x => { this.searchResultsDiv = x }}>
-          {pending && <div>Loading...</div>}
+          {pending && <Loading type='top' />}
           {searchResults.map(sr =>
             <SearchResult key={sr.id}
               searchResult={sr}
@@ -83,6 +84,7 @@ export function SearchBar ({searchForInput, setSearchTerm, updateQueryParam, set
   }
   return <div styleName='search-bar'>
     <TextInput theme={styles}
+      inputRef={x => x && x.focus()}
       value={searchForInput}
       placeholder='Search'
       onChange={onSearchChange} />

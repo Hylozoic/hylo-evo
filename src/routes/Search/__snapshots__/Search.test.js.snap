@@ -16,9 +16,9 @@ exports[`Search matches the latest snapshot 1`] = `
       data-styleName="search-results"
       id="search-results"
     >
-      <div>
-        Loading...
-      </div>
+      <Loading
+        type="top"
+      />
       <SearchResult
         searchResult={
           Object {
