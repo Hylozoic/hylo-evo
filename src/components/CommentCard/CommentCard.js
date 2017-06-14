@@ -5,25 +5,36 @@ import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import { postUrl } from 'util/index'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
+import Highlight from 'components/Highlight'
 import './CommentCard.scss'
 
-export default function CommentCard ({ comment }) {
+export default function CommentCard ({ comment, shouldShowReply, expanded = true, highlightProps }) {
   const { creator, post, slug } = comment
   const postTitle = present(sanitize(post.title), { maxlength: 25, noP: true })
-  const commentText = present(sanitize(comment.text), { noP: true, slug })
-  return <Link to={postUrl(post.id, slug, {memberId: creator.id})}>
+  const commentPresentOpts = {
+    maxlength: expanded ? null : 144,
+    noP: true,
+    slug
+  }
+  const commentText = present(sanitize(comment.text), commentPresentOpts)
+
+  return <Link to={postUrl(post.id, slug, {memberId: creator.id})} styleName='link'>
     <div styleName='comment-card'>
       <div styleName='comment-header'>
         <RoundImage url={creator.avatarUrl} large />
-        <div styleName='comment-meta'>
-          <span styleName='person-name'>{creator.name}</span> commented on&nbsp;
-          <span styleName='post-title'>{postTitle}</span>
-        </div>
+        <Highlight {...highlightProps}>
+          <div styleName='comment-meta'>
+            <span styleName='person-name'>{creator.name}</span> commented on&nbsp;
+            <span styleName='post-title'>{postTitle}</span>
+          </div>
+        </Highlight>
         <span styleName='date'>{humanDate(comment.createdAt)}</span>
       </div>
-      <div styleName='comment-body' dangerouslySetInnerHTML={{__html: commentText}} />
+      <Highlight {...highlightProps}>
+        <div styleName='comment-body' dangerouslySetInnerHTML={{__html: commentText}} />
+      </Highlight>
       <div styleName='comment-footer'>
-        <Icon styleName='reply-button' name='Reply' green /> Reply
+        {shouldShowReply && <span><Icon styleName='reply-button' name='Reply' green /> Reply</span>}
       </div>
     </div>
   </Link>

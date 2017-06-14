@@ -1,0 +1,102 @@
+// Search
+.search {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-results {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 0 32px 0;
+}
+
+// Highlight
+.highlight {
+  background-color: $color-caribbean-green-20;
+}
+
+// SearchBar
+.search-bar {
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+// TextInput Theme
+.wrapper {
+  flex: 1;
+  border: none;
+  padding: none;
+}
+
+.input {
+  color: $color-rhino;
+  font-size: 34px;
+  &::placeholder {
+    color: $color-rhino-30;
+  }
+}
+
+.clear {
+  font-size: 18px;
+}
+
+// TabBar
+
+.tabs {
+  margin-top: 50px;
+}
+
+.tab {
+  composes: caption-lt-lg from 'css/typography.scss';
+  padding: 0 15px;
+  height: 28px;
+  line-height: 28px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tab-active {
+  composes: tab;
+  background-color: $color-cape-cod-05;
+  border-radius: 4px;
+}
+
+// SearchResult
+.search-result {
+  display: flex;
+  justify-content: space-between;
+  padding: 11px 0;
+  align-items: center;
+}
+
+// PersonCard
+.person-card {
+  display: flex;
+  align-items: center;
+  border-bottom: $light-border;
+  padding: 8px 0;
+  width: 100%;
+  cursor: pointer;
+}
+
+.person-image {
+  margin-right: 10px;
+}
+
+.person-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.person-name {
+  composes: hdr-subheadline from 'css/typography.scss';
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.person-location {
+  composes: caption-lt-lg from 'css/typography.scss';
+  font-size: 14px;
+}

@@ -155,5 +155,20 @@
         "comment": null
       }
     }
+  },
+
+  "FETCH_SEARCH": {
+    "data": {
+      "search": [
+        {
+          "id": "1",
+          "content": {
+            "__typename": "Post",
+            "id": "2",
+            "title": "Hey"
+          }
+        }
+      ]
+    }
   }
 }

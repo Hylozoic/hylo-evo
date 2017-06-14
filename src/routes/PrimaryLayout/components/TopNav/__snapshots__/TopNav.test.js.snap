@@ -14,7 +14,7 @@ exports[`renders as expected with no community 1`] = `
     >
       <Link
         replace={false}
-        to="/"
+        to="/search"
       >
         <Icon
           data-styleName="icon"

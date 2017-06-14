@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search matches the latest snapshot 1`] = `
+<withRouter(Connect(FullPageModal))>
+  <div
+    data-styleName="search"
+  >
+    <SearchBar
+      filter="person"
+      searchForInput="cat"
+      setSearchFilter={[Function]}
+      setSearchTerm={[Function]}
+      updateQueryParam={[Function]}
+    />
+    <div
+      data-styleName="search-results"
+      id="search-results"
+    >
+      <div>
+        Loading...
+      </div>
+      <SearchResult
+        searchResult={
+          Object {
+            "id": "1",
+          }
+        }
+        showPerson={[Function]}
+        showPostDetails={[Function]}
+        term="cat"
+      />
+      <ScrollListener
+        elementId="search-results"
+        onBottom={[Function]}
+      />
+    </div>
+  </div>
+</withRouter(Connect(FullPageModal))>
+`;

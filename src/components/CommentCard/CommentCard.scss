@@ -1,3 +1,7 @@
+.link:hover {
+  text-decoration: none;
+}
+
 .comment-card {
   composes: bdy-lt-sm from 'css/typography.scss';
   $padding-left: $space-14x;
@@ -17,6 +21,7 @@
   }
 
   .comment-body {
+    margin-top: 10px;
     padding-left: $padding-left;
   }
 
@@ -37,7 +42,7 @@
 }
 
 .comment-body {
-  composes: bdy-drk-lg from 'css/typography.scss';
+  composes: bdy-lt-sm from 'css/typography.scss';
 }
 
 .comment-meta {

@@ -21,6 +21,7 @@ import UserSettings from 'routes/UserSettings'
 import CommunitySettings from 'routes/CommunitySettings'
 import MessageMember from 'components/MessageMember'
 import AllTopics from 'routes/AllTopics'
+import Search from 'routes/Search'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
@@ -67,7 +68,7 @@ export default class PrimaryLayout extends Component {
       ({ path }) => matchPath(location.pathname, {path}),
       detailRoutes
     )
-
+    // TODO move FullPageModals
     return <div styleName='container' onClick={closeDrawer}>
       {isDrawerOpen && <Drawer currentCommunity={community} />}
       <TopNav {...{community, currentUser}} styleName='top' />
@@ -89,6 +90,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/c/:slug/:topicName' component={Feed} />
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
+            <Route path='/search' component={Search} />
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
