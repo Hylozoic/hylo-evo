@@ -3,6 +3,8 @@ import Icon from 'components/Icon'
 import './component.scss'
 
 const ICON_NAMES = [
+  'Checkmark',
+  'Empty',
   'Edit',
   'Back',
   'Clock',
