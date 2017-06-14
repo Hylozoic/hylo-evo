@@ -85,6 +85,7 @@ export const getThreads = ormCreateSelector(
   getThreadSearch,
   (session, threadSearch) => {
     return session.MessageThread.all()
+    .orderBy(t => new Date(t.updatedAt), 'desc')
     .toModelArray()
     .filter(filterThreadsByParticipant(threadSearch))
   }
