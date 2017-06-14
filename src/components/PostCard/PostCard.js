@@ -11,6 +11,7 @@ import { get } from 'lodash/fp'
 import cx from 'classnames'
 import { decode } from 'ent'
 export { PostHeader, PostFooter }
+import Highlight from 'components/Highlight'
 
 const { shape, any, object, string, func, array, bool } = React.PropTypes
 
@@ -39,7 +40,7 @@ export default class PostCard extends React.Component {
 
   render () {
     const {
-      post, className, expanded, showDetails, editPost, showCommunity
+      post, className, expanded, showDetails, editPost, showCommunity, highlightProps
     } = this.props
     const slug = get('0.slug', post.communities)
 
@@ -68,13 +69,15 @@ export default class PostCard extends React.Component {
         editPost={editPost}
         communities={post.communities}
         slug={slug}
-        id={post.id} />
+        id={post.id}
+        highlightProps={highlightProps} />
       <PostImage imageUrl={post.imageUrl} />
       <PostBody title={post.title}
         id={post.id}
         details={post.details}
         linkPreview={post.linkPreview}
-        slug={slug} />
+        slug={slug}
+        highlightProps={highlightProps} />
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
@@ -91,7 +94,9 @@ export const PostImage = ({ imageUrl, className }) => {
 
 const maxDetailsLength = 144
 
-export const PostBody = ({ id, title, details, imageUrl, linkPreview, slug, expanded, className }) => {
+export const PostBody = ({
+  id, title, details, imageUrl, linkPreview, slug, expanded, className, highlightProps
+}) => {
   const decodedTitle = decode(title)
 
   let presentedDetails = present(sanitize(details), {slug})
@@ -101,11 +106,13 @@ export const PostBody = ({ id, title, details, imageUrl, linkPreview, slug, expa
   }
   if (presentedDetails) presentedDetails = appendInP(presentedDetails, '&nbsp;')
 
-  return <div styleName='body' className={className}>
-    <div styleName='title' className='hdr-headline'>{decodedTitle}</div>
-    {presentedDetails && <div styleName='description' dangerouslySetInnerHTML={{__html: presentedDetails}} />}
-    {linkPreview && <LinkPreview {...linkPreview} />}
-  </div>
+  return <Highlight {...highlightProps}>
+    <div styleName='body' className={className}>
+      <div styleName='title' className='hdr-headline'>{decodedTitle}</div>
+      {presentedDetails && <div styleName='description' dangerouslySetInnerHTML={{__html: presentedDetails}} />}
+      {linkPreview && <LinkPreview {...linkPreview} />}
+    </div>
+  </Highlight>
 }
 
 export const LinkPreview = ({ title, url, imageUrl }) => {

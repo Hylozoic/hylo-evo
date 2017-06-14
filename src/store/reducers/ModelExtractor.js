@@ -41,6 +41,11 @@ export default class ModelExtractor {
     const normalized = omitBy(isUndefined, mapValues(node, (value, key) => {
       var type = model.fields[key]
 
+      if (value && value.__typename) {
+        const polymorphicChildId = this._walkOne(value, value.__typename)
+        return `${value.__typename}-${polymorphicChildId}`
+      }
+
       if (type instanceof Attribute) {
         return value
       }

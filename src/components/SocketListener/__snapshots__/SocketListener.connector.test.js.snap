@@ -6,6 +6,7 @@ Object {
   "clearUserTyping": [Function],
   "receiveComment": [Function],
   "receiveMessage": [Function],
+  "receiveNotification": [Function],
   "receivePost": [Function],
   "receiveThread": [Function],
 }
@@ -27,7 +28,7 @@ Object {
       },
     },
   },
-  "type": "RECEIVE_COMMENT",
+  "type": "SocketListener/RECEIVE_COMMENT",
 }
 `;
 
@@ -48,7 +49,7 @@ Object {
       },
     },
   },
-  "type": "RECEIVE_MESSAGE",
+  "type": "SocketListener/RECEIVE_MESSAGE",
 }
 `;
 
@@ -93,6 +94,6 @@ Object {
       },
     },
   },
-  "type": "RECEIVE_THREAD",
+  "type": "SocketListener/RECEIVE_THREAD",
 }
 `;

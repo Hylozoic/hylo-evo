@@ -1,5 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`creates a polymorphicChildId when __typename field is present 1`] = `
+Array [
+  Object {
+    "modelName": "Post",
+    "payload": Object {
+      "__typename": "Post",
+      "id": "2",
+      "title": "Hey",
+    },
+  },
+  Object {
+    "modelName": "SearchResult",
+    "payload": Object {
+      "content": "Post-2",
+      "id": "1",
+    },
+  },
+]
+`;
+
 exports[`handles null children 1`] = `
 Array [
   Object {

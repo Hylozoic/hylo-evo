@@ -93,7 +93,7 @@ export default class PostDetail extends Component {
   })
 
   render () {
-    const { post, currentUser, slug, pending } = this.props
+    const { post, slug, canEdit, pending } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
 
     if (!post && !pending) {
@@ -104,7 +104,6 @@ export default class PostDetail extends Component {
       return <Loading />
     }
 
-    const canEdit = currentUser && currentUser.id === post.creator.id
     const scrollToBottom = () => {
       const detail = document.getElementById(DETAIL_COLUMN_ID)
       detail.scrollTop = detail.scrollHeight

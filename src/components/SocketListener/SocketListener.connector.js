@@ -4,6 +4,7 @@ import { get } from 'lodash/fp'
 import {
   receiveComment,
   receiveMessage,
+  receiveNotification,
   receivePost,
   receiveThread
 } from './SocketListener.store'
@@ -11,11 +12,13 @@ import {
   addUserTyping,
   clearUserTyping
 } from 'components/PeopleTyping/PeopleTyping.store'
+import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 
 function mapStateToProps (state, props) {
   return {
-    community: getCommunityForCurrentRoute(state, props)
+    community: getCommunityForCurrentRoute(state, props),
+    currentUser: getMe(state)
   }
 }
 
@@ -30,6 +33,8 @@ export function mapDispatchToProps (dispatch, props) {
         bumpUnreadCount: !isActiveThread(props.location, data)
       }))
     },
+
+    receiveNotification: data => dispatch(receiveNotification(data)),
 
     receiveComment: data => {
       const comment = convertToComment(data.comment, data.postId)
@@ -49,7 +54,9 @@ function mergeProps (stateProps, dispatchProps) {
   return {
     ...stateProps,
     ...dispatchProps,
-    receivePost: data => dispatchProps.receivePost(data, communityId)
+    receivePost: data => {
+      return dispatchProps.receivePost(data, communityId)
+    }
   }
 }
 
