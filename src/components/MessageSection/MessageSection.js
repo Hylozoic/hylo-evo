@@ -94,14 +94,16 @@ export default class MessageSection extends React.Component {
       const latest = messages[messages.length - 1]
       const oldLatest = oldMessages[oldMessages.length - 1]
 
-      // Are additional messages new (at the end of the sorted array)?
-      if (get('id', latest) !== get('id', oldLatest)) {
-        // If there's one new message and it's not from currentUser, don't scroll
-        if (deltaLength === 1 && get('creator.id', latest) !== currentUser.id) {
-          if (!this.atBottom(this.list)) return
-        }
-        this.shouldScroll = true
-      }
+      // Are additional messages old (at the beginning of the sorted array)?
+      if (get('id', latest) === get('id', oldLatest)) return
+
+      // If there's one new message, it's not from currentUser,
+      // and we're not already at the bottom, don't scroll
+      if (deltaLength === 1 &&
+        get('creator.id', latest) !== currentUser.id &&
+        !this.atBottom(this.list)) return
+
+      this.shouldScroll = true
     }
   }
 
