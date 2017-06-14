@@ -10,6 +10,7 @@ import Comments from './Comments'
 import { tagUrl } from 'util/index'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import SocketSubscriber from 'components/SocketSubscriber'
+import Loading from 'components/Loading'
 
 // the height of the header plus the padding-top
 const STICKY_HEADER_SCROLL_OFFSET = 78
@@ -92,9 +93,17 @@ export default class PostDetail extends Component {
   })
 
   render () {
-    const { post, currentUser, slug } = this.props
+    const { post, currentUser, slug, pending } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
-    if (!post) return null
+
+    if (!post && !pending) {
+      return <div styleName='not-found'>Oops, we were unable to find that post</div>
+    }
+
+    if (pending) {
+      return <Loading />
+    }
+
     const canEdit = currentUser && currentUser.id === post.creator.id
     const scrollToBottom = () => {
       const detail = document.getElementById(DETAIL_COLUMN_ID)
