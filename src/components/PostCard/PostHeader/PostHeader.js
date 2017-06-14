@@ -22,6 +22,8 @@ export default function PostHeader ({
   deletePost,
   highlightProps
 }) {
+  if (!creator) return null
+
   let context
 
   if (showCommunity) {
