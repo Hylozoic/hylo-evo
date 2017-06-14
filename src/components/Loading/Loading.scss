@@ -22,3 +22,9 @@
   padding-top: 10%;
   height: 100%;
 }
+
+.loading-indicator {
+  svg path {
+    fill: #999999;
+  }
+}
