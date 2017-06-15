@@ -125,6 +125,7 @@ export function SearchResult ({ searchResult, term = '', showPostDetails, showPe
       break
     case 'Post':
       component = <PostCard
+        styleName='postcard-expand'
         post={content}
         showDetails={() => showPostDetails(content.id)} highlightProps={highlightProps} />
       break
