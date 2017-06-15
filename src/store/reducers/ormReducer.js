@@ -6,6 +6,7 @@ import {
   CREATE_MESSAGE,
   CREATE_MESSAGE_PENDING,
   EXTRACT_MODEL,
+  FETCH_NOTIFICATIONS,
   FETCH_MESSAGES_PENDING,
   LEAVE_COMMUNITY,
   MARK_ACTIVITY_READ_PENDING,
@@ -103,6 +104,12 @@ export default function ormReducer (state = {}, action) {
         // this is so that after websocket reconnect events, pagination
         // of messages works as expected
         Message.filter({messageThread: meta.id}).delete()
+      }
+      break
+
+    case FETCH_NOTIFICATIONS:
+      if (meta.resetCount) {
+        Me.first().update({newNotificationCount: 0})
       }
       break
 

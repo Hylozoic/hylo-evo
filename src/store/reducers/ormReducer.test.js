@@ -8,7 +8,8 @@ import {
   MARK_ACTIVITY_READ_PENDING,
   MARK_ALL_ACTIVITIES_READ_PENDING,
   TOGGLE_TOPIC_SUBSCRIBE_PENDING,
-  UPDATE_COMMUNITY_SETTINGS_PENDING
+  UPDATE_COMMUNITY_SETTINGS_PENDING,
+  FETCH_NOTIFICATIONS
 } from 'store/constants'
 import {
    DELETE_POST_PENDING
@@ -249,5 +250,25 @@ describe('on UPDATE_COMMUNITY_SETTINGS_PENDING', () => {
     const community = newSession.Community.withId(id)
     expect(community.name).toEqual(name)
     expect(community.description).toEqual(description)
+  })
+})
+
+describe('on FETCH_NOTIFICATIONS', () => {
+  const session = orm.session(orm.getEmptyState())
+
+  session.Me.create({newNotificationCount: 3})
+
+  const action = {
+    type: FETCH_NOTIFICATIONS,
+    meta: {
+      resetCount: true
+    }
+  }
+
+  it('resets new notification count', () => {
+    const newState = ormReducer(session.state, action)
+    const newSession = orm.session(newState)
+
+    expect(newSession.Me.first().newNotificationCount).toEqual(0)
   })
 })
