@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import PostLabel from 'components/PostLabel'
+import Highlight from 'components/Highlight'
 import Icon from 'components/Icon'
 import { communityUrl, personUrl } from 'util/index'
 import { humanDate } from 'hylo-utils/text'
@@ -18,8 +19,11 @@ export default function PostHeader ({
   slug,
   showCommunity,
   editPost,
-  deletePost
+  deletePost,
+  highlightProps
 }) {
+  if (!creator) return null
+
   let context
 
   if (showCommunity) {
@@ -59,7 +63,9 @@ export default function PostHeader ({
   return <div styleName='header' className={className}>
     <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
     <div styleName='headerText'>
-      <Link to={personUrl(creator.id, slug)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
+      <Highlight {...highlightProps}>
+        <Link to={personUrl(creator.id, slug)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
+      </Highlight>
       {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
       <div>
         <span styleName='timestamp'>

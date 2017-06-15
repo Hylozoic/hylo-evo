@@ -6,6 +6,7 @@ import {
   CREATE_MESSAGE,
   CREATE_MESSAGE_PENDING,
   EXTRACT_MODEL,
+  FETCH_NOTIFICATIONS,
   FETCH_MESSAGES_PENDING,
   LEAVE_COMMUNITY,
   MARK_ACTIVITY_READ_PENDING,
@@ -18,7 +19,6 @@ import {
 } from 'store/constants'
 import {
   RECEIVE_MESSAGE,
-  RECEIVE_NOTIFICATION,
   RECEIVE_POST
  } from 'components/SocketListener/SocketListener.store'
 import {
@@ -107,6 +107,12 @@ export default function ormReducer (state = {}, action) {
       }
       break
 
+    case FETCH_NOTIFICATIONS:
+      if (meta.resetCount) {
+        Me.first().update({newNotificationCount: 0})
+      }
+      break
+
     case RECEIVE_MESSAGE:
       const id = payload.data.message.messageThread
       if (!MessageThread.hasId(id)) {
@@ -151,12 +157,14 @@ export default function ormReducer (state = {}, action) {
       break
 
     case RECEIVE_POST:
-      payload.topics.forEach(topicId => {
-        const sub = CommunityTopic.safeGet({topic: topicId, community: payload.communityId})
-        if (sub) sub.update({newPostCount: sub.newPostCount + 1})
-      })
-      membership = Membership.safeGet({community: payload.communityId})
-      membership.update({newPostCount: membership.newPostCount + 1})
+      if (payload.creatorId !== Me.first().id) {
+        payload.topics.forEach(topicId => {
+          const sub = CommunityTopic.safeGet({topic: topicId, community: payload.communityId})
+          if (sub) sub.update({newPostCount: sub.newPostCount + 1})
+        })
+        membership = Membership.safeGet({community: payload.communityId})
+        membership.update({newPostCount: membership.newPostCount + 1})
+      }
       break
 
     case MARK_ACTIVITY_READ_PENDING:

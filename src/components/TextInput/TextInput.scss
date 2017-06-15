@@ -26,5 +26,8 @@ $text-input-height: 40px;
 
 .clear {
   composes: faint-lt-sm from 'css/typography.scss';
+  &:hover {
+    color: $color-rhino-50;
+  }
   cursor: pointer;
 }

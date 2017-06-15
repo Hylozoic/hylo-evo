@@ -12,11 +12,13 @@ import {
   addUserTyping,
   clearUserTyping
 } from 'components/PeopleTyping/PeopleTyping.store'
+import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 
 function mapStateToProps (state, props) {
   return {
-    community: getCommunityForCurrentRoute(state, props)
+    community: getCommunityForCurrentRoute(state, props),
+    currentUser: getMe(state)
   }
 }
 
@@ -52,7 +54,9 @@ function mergeProps (stateProps, dispatchProps) {
   return {
     ...stateProps,
     ...dispatchProps,
-    receivePost: data => dispatchProps.receivePost(data, communityId)
+    receivePost: data => {
+      return dispatchProps.receivePost(data, communityId)
+    }
   }
 }
 

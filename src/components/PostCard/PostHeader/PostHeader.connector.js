@@ -28,12 +28,13 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { currentUser } = stateProps
   const { id, creator } = ownProps
   const { deletePost } = dispatchProps
-  const canDelete = currentUser.id === creator.id
+  const canEdit = currentUser && creator && currentUser.id === creator.id
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    deletePost: canDelete ? () => deletePost(id) : null
+    deletePost: canEdit ? () => deletePost(id) : null,
+    canEdit
   }
 }
 

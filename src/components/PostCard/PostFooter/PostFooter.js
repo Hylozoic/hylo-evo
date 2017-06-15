@@ -27,16 +27,16 @@ PostFooter.propTypes = {
 }
 
 export const commentCaption = (commenters, commentersTotal, meId) => {
-  commenters = find(c => c.id === meId, commenters) && commentersTotal === 2
+  commenters = find(c => c.id === meId, commenters) && commenters.length === 2
     ? sortBy(c => c.id !== meId, commenters) // me first
     : sortBy(c => c.id === meId, commenters) // me last
   var names = ''
   const firstName = person => person.id === meId ? 'You' : person.name.split(' ')[0]
-  if (commentersTotal === 0) {
+  if (commenters.length === 0) {
     return 'Be the first to comment'
-  } else if (commentersTotal === 1) {
+  } else if (commenters.length === 1) {
     names = firstName(commenters[0])
-  } else if (commentersTotal === 2) {
+  } else if (commenters.length === 2) {
     names = `${firstName(commenters[0])} and ${firstName(commenters[1])}`
   } else {
     names = `${firstName(commenters[0])}, ${firstName(commenters[1])} and ${commentersTotal - 2} other${commentersTotal - 2 > 1 ? 's' : ''}`

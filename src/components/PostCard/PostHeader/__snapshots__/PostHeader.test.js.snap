@@ -12,13 +12,18 @@ exports[`matches snapshot 1`] = `
   <div
     data-styleName="headerText"
   >
-    <Link
-      data-styleName="userName"
-      replace={false}
-      to="/m/123"
+    <Highlight
+      component="span"
+      highlightClassName="highlight"
     >
-      JJ
-    </Link>
+      <Link
+        data-styleName="userName"
+        replace={false}
+        to="/m/123"
+      >
+        JJ
+      </Link>
+    </Highlight>
     <div>
       <span
         data-styleName="timestamp"
@@ -43,13 +48,18 @@ exports[`matches snapshot 2`] = `
   <div
     data-styleName="headerText"
   >
-    <Link
-      data-styleName="userName"
-      replace={false}
-      to="/m/123"
+    <Highlight
+      component="span"
+      highlightClassName="highlight"
     >
-      JJ
-    </Link>
+      <Link
+        data-styleName="userName"
+        replace={false}
+        to="/m/123"
+      >
+        JJ
+      </Link>
+    </Highlight>
     <div>
       <span
         data-styleName="timestamp"
@@ -92,13 +102,18 @@ exports[`matches snapshot 3`] = `
   <div
     data-styleName="headerText"
   >
-    <Link
-      data-styleName="userName"
-      replace={false}
-      to="/m/123"
+    <Highlight
+      component="span"
+      highlightClassName="highlight"
     >
-      JJ
-    </Link>
+      <Link
+        data-styleName="userName"
+        replace={false}
+        to="/m/123"
+      >
+        JJ
+      </Link>
+    </Highlight>
     <div>
       <span
         data-styleName="timestamp"

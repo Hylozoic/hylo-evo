@@ -8,6 +8,7 @@ import cx from 'classnames'
 import './FeedList.scss'
 import { throttle, isEmpty, some } from 'lodash/fp'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
+import Loading from 'components/Loading'
 
 export default class FeedList extends React.Component {
   static defaultProps = {
@@ -74,11 +75,16 @@ export default class FeedList extends React.Component {
       changeTab,
       changeSort,
       posts,
-      showCommunities
+      showCommunities,
+      pending
     } = this.props
     const { atTabBar, tabBarWidth } = this.state
     const style = {
       width: tabBarWidth + 'px'
+    }
+
+    if (pending) {
+      return <Loading />
     }
 
     return <div styleName='FeedList-container'>
