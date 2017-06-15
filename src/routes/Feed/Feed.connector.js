@@ -30,6 +30,8 @@ export function mapStateToProps (state, props) {
   const filter = getQueryParam('t', state, props)
   const sortBy = getQueryParam('s', state, props)
 
+  console.log(props.match)
+
   return {
     filter,
     sortBy,
