@@ -25,7 +25,8 @@ import {
   DELETE_POST_PENDING
  } from 'components/PostCard/PostHeader/PostHeader.store'
 import {
-  UPDATE_MEMBERSHIP_SETTINGS_PENDING
+  UPDATE_MEMBERSHIP_SETTINGS_PENDING,
+  UPDATE_USER_SETTINGS_PENDING
 } from 'routes/UserSettings/UserSettings.store'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
@@ -133,7 +134,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case LEAVE_COMMUNITY:
-      const me = Me.first()
+      var me = Me.first()
       membership = find(m => m.community.id === meta.id, me.memberships.toModelArray())
       if (membership) membership.delete()
       break
@@ -213,6 +214,18 @@ export default function ormReducer (state = {}, action) {
           ...meta.settings
         }
       })
+      break
+
+    case UPDATE_USER_SETTINGS_PENDING:
+      me = Me.first()
+      const newSettings = {
+        ...meta.settings,
+        settings: {
+          ...me.settings,
+          ...meta.settings.settings
+        }
+      }
+      me.update(newSettings)
       break
   }
 

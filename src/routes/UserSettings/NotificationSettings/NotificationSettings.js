@@ -20,13 +20,13 @@ export default class NotificationSettings extends Component {
 
     if (!currentUser) return <Loading />
 
-    // const { settings } = currentUser
+    const { settings } = currentUser
 
-    const settings = {
-      digest_frequency: 'weekly',
-      dm_notifications: 'push',
-      comment_notifications: 'both'
-    }
+    // const settings = {
+    //   digest_frequency: 'weekly',
+    //   dm_notifications: 'push',
+    //   comment_notifications: 'both'
+    // }
 
     const updateSetting = setting => value => {
       updateUserSettings({settings: {[setting]: value}})
@@ -83,8 +83,8 @@ export default class NotificationSettings extends Component {
 
 export function Select ({ options, selected, onChange }) {
   return <span styleName='select-wrapper'>
-    <select styleName='select' onChange={e => onChange(e.target.value)}>
-      {options.map(({id, label}) => <option value={id} selected={id === selected}>
+    <select styleName='select' onChange={e => onChange(e.target.value)} value={selected}>
+      {options.map(({id, label}) => <option value={id} key={id}>
         {label}
       </option>)}
     </select>

@@ -60,7 +60,7 @@ export default class UserSettings extends Component {
           path: '/settings/notifications',
           component: <NotificationSettings
             currentUser={currentUser}
-            updateUserSettings={changes => console.log('updateUserSettings', changes)} />
+            updateUserSettings={updateUserSettings} />
         }
       ]} />
   }

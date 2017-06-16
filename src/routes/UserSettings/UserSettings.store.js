@@ -1,12 +1,13 @@
 import {
   FETCH_USER_SETTINGS,
-  UPDATE_USER_SETTINGS,
   LEAVE_COMMUNITY,
   UNLINK_ACCOUNT
 } from 'store/constants'
 
 export const MODULE_NAME = 'UserSettings'
 
+export const UPDATE_USER_SETTINGS = `${MODULE_NAME}/UPDATE_USER_SETTINGS`
+export const UPDATE_USER_SETTINGS_PENDING = UPDATE_USER_SETTINGS + '_PENDING'
 export const UPDATE_MEMBERSHIP_SETTINGS = `${MODULE_NAME}/UPDATE_MEMBERSHIP_SETTINGS`
 export const UPDATE_MEMBERSHIP_SETTINGS_PENDING = UPDATE_MEMBERSHIP_SETTINGS + '_PENDING'
 
@@ -67,6 +68,10 @@ export function updateUserSettings (settings) {
       variables: {
         settings
       }
+    },
+    meta: {
+      optimistic: true,
+      settings
     }
   }
 }
