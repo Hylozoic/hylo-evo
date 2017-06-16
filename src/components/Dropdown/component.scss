@@ -25,7 +25,7 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
 }
 
 .dropdown-menu {
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   border-radius: 4px;
   list-style: none;

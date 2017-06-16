@@ -83,6 +83,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/c/:slug' exact component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
             <Route path='/c/:slug/m/:id' component={MemberProfile} />
+            <Route path='/m/:id' component={MemberProfile} />
             <Route path='/c/:slug/p/:postId' component={Feed} />
             <Route path='/c/:slug/topics' component={AllTopics} />
             <Route path='/c/:slug/settings' component={CommunitySettings} />
@@ -99,6 +100,7 @@ export default class PrimaryLayout extends Component {
           <Route path='/c/:slug/:topicName/p/new' exact component={CommunitySidebar} />
           <Route path='/c/:slug/:topicName' exact component={CommunitySidebar} />
           <Route path='/c/:slug/m/:id' component={MessageMember} />
+          <Route path='/m/:id' component={MessageMember} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>
           {/*
