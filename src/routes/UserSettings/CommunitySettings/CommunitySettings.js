@@ -10,11 +10,11 @@ import { communityUrl } from 'util/index'
 export default class CommunitySettings extends Component {
   static propTypes = {
     memberships: array,
-    updateMembershipSetting: func
+    updateMembershipSettings: func
   }
 
   render () {
-    const { memberships, leaveCommunity, updateMembershipSetting } = this.props
+    const { memberships, leaveCommunity, updateMembershipSettings } = this.props
     if (!memberships) return <Loading />
 
     return <div>
@@ -22,23 +22,23 @@ export default class CommunitySettings extends Component {
         <CommunityControl
           membership={m}
           leaveCommunity={leaveCommunity}
-          updateMembershipSetting={updateMembershipSetting}
+          updateMembershipSettings={updateMembershipSettings}
           key={m.id} />)}
     </div>
   }
 }
 
-export function CommunityControl ({ membership, leaveCommunity, updateMembershipSetting }) {
+export function CommunityControl ({ membership, leaveCommunity, updateMembershipSettings }) {
   const leave = () => {
     if (window.confirm(`Are you sure you want to leave ${community.name}?`)) {
       leaveCommunity(community.id)
     }
   }
 
-  const { community, settings } = membership
+  const { community, settings = {} } = membership
 
   const updateSetting = setting => value =>
-    updateMembershipSetting(community.id, {[setting]: value})
+    updateMembershipSettings(community.id, {[setting]: value})
 
   return <div styleName='community-control'>
     <div styleName='row'>

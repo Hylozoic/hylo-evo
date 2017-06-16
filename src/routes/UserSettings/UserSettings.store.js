@@ -5,6 +5,11 @@ import {
   UNLINK_ACCOUNT
 } from 'store/constants'
 
+export const MODULE_NAME = 'UserSettings'
+
+export const UPDATE_MEMBERSHIP_SETTINGS = `${MODULE_NAME}/UPDATE_MEMBERSHIP_SETTINGS`
+export const UPDATE_MEMBERSHIP_SETTINGS_PENDING = UPDATE_MEMBERSHIP_SETTINGS + '_PENDING'
+
 export function fetchUserSettings () {
   return {
     type: FETCH_USER_SETTINGS,
@@ -23,6 +28,11 @@ export function fetchUserSettings () {
           url
           location
           tagline
+          settings {
+            digest_frequency
+            dm_notifications
+            comment_notifications
+          }
           memberships {
             id
             settings {
@@ -87,6 +97,30 @@ export function unlinkAccount (provider) {
         }
       }`,
       variables: {provider}
+    }
+  }
+}
+
+export function updateMembershipSettings (communityId, settings) {
+  return {
+    type: UPDATE_MEMBERSHIP_SETTINGS,
+    graphql: {
+      query: `mutation ($id: ID, $data: MembershipInput) {
+        updateMembership(id: $id, data: $data) {
+          id
+        }
+      }`,
+      variables: {
+        data: {
+          settings
+        },
+        id: communityId
+      }
+    },
+    meta: {
+      communityId,
+      settings,
+      optimistic: true
     }
   }
 }

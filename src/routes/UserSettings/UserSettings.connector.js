@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
-import { fetchUserSettings, updateUserSettings, leaveCommunity, unlinkAccount } from './UserSettings.store'
+import { fetchUserSettings, updateUserSettings, leaveCommunity, unlinkAccount, updateMembershipSettings } from './UserSettings.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import { loginWithService } from 'routes/Login/Login.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
@@ -36,7 +36,7 @@ export const mapDispatchToProps = {
   loginWithService,
   unlinkAccount,
   setConfirmBeforeClose,
-  updateMembershipSetting: (communityId, setting) => console.log('updateMembershipSetting', communityId, setting)
+  updateMembershipSettings
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
