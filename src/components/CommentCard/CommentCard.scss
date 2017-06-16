@@ -1,5 +1,8 @@
-.link:hover {
-  text-decoration: none;
+.link {
+  width: 100%;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .comment-card {
