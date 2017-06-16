@@ -14,7 +14,7 @@ export function mapStateToProps (state, props) {
     currentUser: getMe(state),
     slug,
     showCommunity: !slug,
-    pending: state.pending[FETCH_POST],
+    pending: state.pending[FETCH_POST]
   }
 }
 
