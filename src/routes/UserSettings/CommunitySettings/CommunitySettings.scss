@@ -7,6 +7,12 @@
 .row {
   display: flex;
   align-items: center;
+  margin: 8px 0px;
+}
+
+.settings-row {
+  composes: row;
+  margin-bottom: 16px;
 }
 
 .avatar {
@@ -24,7 +30,12 @@
 
 .leave-button {
   margin-left: auto;
-  composes: text-button from 'css/typography.scss'
+  composes: text-button from 'css/typography.scss';
+  color: $color-amaranth;
+  @include font-regular;
+  &:hover {
+    color: $color-maroon-flush;
+  }
 }
 
 .settings-label {
@@ -34,6 +45,7 @@
 .settings {
   composes: caption-lt-lg from 'css/typography.scss';
   margin-left: auto;
+  margin-right: -12px;
   display: flex;
   align-items: center;
 }

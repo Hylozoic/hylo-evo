@@ -3,9 +3,13 @@
 }
 
 .label {
-  /* empty */
+  margin-bottom: 0;
+  cursor: pointer;
 }
 
 .icon {
   color: $color-caribbean-green;
+  &:hover {
+    color: $color-gossamer;
+  }
 }

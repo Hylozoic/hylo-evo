@@ -48,7 +48,7 @@ export function CommunityControl ({ membership, leaveCommunity, updateMembership
       <Link to={communityUrl(community.slug)} styleName='name'>{community.name}</Link>
       <span onClick={leave} styleName='leave-button'>Leave</span>
     </div>
-    <div styleName='row'>
+    <div styleName='settings-row'>
       <span styleName='settings-label'>Receive Notifications:</span>
       <span styleName='settings'>
         <span styleName='checkbox-label'>Email</span>
