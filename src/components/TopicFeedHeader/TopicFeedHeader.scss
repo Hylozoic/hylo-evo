@@ -4,7 +4,7 @@
 }
 
 .back {
-  composes: bdy-dr-sm from 'css/typography.scss';
+  composes: caption-drk-lg from 'css/typography.scss';
   color: $color-rhino-60;
 
   &:hover {
@@ -18,7 +18,7 @@
 }
 
 .back-icon {
-  font-size: 13px;
+  font-size: 10.5px;
 }
 
 .topic-name {

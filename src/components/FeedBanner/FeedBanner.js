@@ -40,7 +40,7 @@ export default function FeedBanner ({ all, community, currentUser, newPost }) {
     <div styleName='shadow' />
   </div>
 }
-
+// https://stackoverflow.com/questions/29981236/how-do-you-hover-in-reactjs-onmouseleave-not-registered-during-fast-hover-ove
 function PostPrompt ({ currentUser, newPost }) {
   if (!currentUser) return null
   return <div styleName='postPrompt' onClick={newPost}>
