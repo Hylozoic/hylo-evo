@@ -14,6 +14,11 @@ exports[`UserSettings renders correctly 1`] = `
         "name": "Communities",
         "path": "/settings/communities",
       },
+      Object {
+        "component": <NotificationSettings />,
+        "name": "Notifications",
+        "path": "/settings/notifications",
+      },
     ]
   }
 />
