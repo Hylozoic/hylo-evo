@@ -3,7 +3,6 @@ import './UserSettings.scss'
 import AccountSettings from './AccountSettings/AccountSettings'
 import CommunitySettings from './CommunitySettings/CommunitySettings'
 import NotificationSettings from './NotificationSettings/NotificationSettings'
-import { get } from 'lodash/fp'
 const { object, func } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
 
@@ -15,12 +14,6 @@ export default class UserSettings extends Component {
 
   componentDidMount () {
     this.props.fetchUserSettings()
-  }
-
-  componentDidUpdate (prevProps, prevState) {
-    if (get('currentUser.id', prevProps) !== get('currentUser.id', this.props)) {
-      this.props.fetchUserSettings()
-    }
   }
 
   render () {

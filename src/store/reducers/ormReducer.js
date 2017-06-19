@@ -218,14 +218,14 @@ export default function ormReducer (state = {}, action) {
 
     case UPDATE_USER_SETTINGS_PENDING:
       me = Me.first()
-      const newSettings = {
+      const changes = {
         ...meta.settings,
         settings: {
           ...me.settings,
-          ...meta.settings.settings
+          ...meta.changes.settings
         }
       }
-      me.update(newSettings)
+      me.update(changes)
       break
   }
 

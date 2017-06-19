@@ -57,22 +57,22 @@ export function fetchUserSettings () {
   }
 }
 
-export function updateUserSettings (settings) {
+export function updateUserSettings (changes) {
   return {
     type: UPDATE_USER_SETTINGS,
     graphql: {
-      query: `mutation ($settings: MeInput) {
-        updateMe(changes: $settings) {
+      query: `mutation ($changes: MeInput) {
+        updateMe(changes: $changes) {
           id
         }
       }`,
       variables: {
-        settings
+        changes
       }
     },
     meta: {
       optimistic: true,
-      settings
+      changes
     }
   }
 }
