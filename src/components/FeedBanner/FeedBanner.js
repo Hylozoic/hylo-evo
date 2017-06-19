@@ -41,7 +41,7 @@ export default function FeedBanner ({ all, community, currentUser, newPost }) {
 }
 
 class PostPrompt extends React.Component {
-  static defaultProps = {
+  static propTypes = {
     currentUser: PropTypes.object,
     newPost: PropTypes.object
   }
