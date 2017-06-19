@@ -11,6 +11,7 @@ import { tagUrl } from 'util/index'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
+import NotFound from 'components/NotFound'
 
 // the height of the header plus the padding-top
 const STICKY_HEADER_SCROLL_OFFSET = 78
@@ -97,7 +98,7 @@ export default class PostDetail extends Component {
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
 
     if (!post && !pending) {
-      return <div styleName='not-found'>Oops, we were unable to find that post</div>
+      return <NotFound />
     }
 
     if (pending) {

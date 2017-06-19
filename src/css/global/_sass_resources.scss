@@ -103,6 +103,8 @@ $color-polar: #F0FCF9;
 $color-ziggurat: #BDE0DC;
 $color-gossamer: #0A9682;
 
+$light-border: 1px solid $color-cape-cod-10;
+
 // Fonts
 @mixin font-regular {
   font-family: 'Circular Book', sans-serif;
@@ -154,4 +156,24 @@ $color-gossamer: #0A9682;
   -ms-transform: rotate(45deg);
 }
 
-$light-border: 1px solid $color-cape-cod-10;
+// set up a div whose height will always be $percent of its width
+// e.g. http://jsfiddle.net/B8FU8/2441/
+// via: http://stackoverflow.com/questions/5445491/height-equal-to-dynamic-width-css-fluid-layout
+@mixin fluid-height($percent) {
+  display: inline-block;
+  position: relative;
+
+  &:after {
+    content: '';
+    display: block;
+    margin-top: $percent;
+  }
+
+  > div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}

@@ -1,0 +1,28 @@
+
+.container {
+  padding-top: 10%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.go-back {
+  cursor: pointer;
+}
+
+.axolotl {
+  @include fluid-height(107%);
+  display: block;
+  background-image: url(/assets/puzzled-axolotl.jpg);
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 50%;
+  margin: $space-3x auto;
+}
+
+.footer {
+  font-size: smaller;
+  color: $color-rhino-50;
+}
