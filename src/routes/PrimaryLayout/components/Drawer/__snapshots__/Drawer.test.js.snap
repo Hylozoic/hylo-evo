@@ -2,7 +2,7 @@
 
 exports[`renders with a current community 1`] = `
 <div
-  data-styleName="drawer"
+  data-styleName="communityDrawer"
 >
   <Icon
     data-styleName="closeDrawer"
@@ -94,7 +94,7 @@ exports[`renders with a current community 1`] = `
 
 exports[`renders without a current community 1`] = `
 <div
-  data-styleName="drawer"
+  data-styleName="communityDrawer"
 >
   <Icon
     data-styleName="closeDrawer"
