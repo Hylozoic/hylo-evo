@@ -22,12 +22,6 @@ export default class NotificationSettings extends Component {
 
     const { settings } = currentUser
 
-    // const settings = {
-    //   digest_frequency: 'weekly',
-    //   dm_notifications: 'push',
-    //   comment_notifications: 'both'
-    // }
-
     const updateSetting = setting => value => {
       updateUserSettings({settings: {[setting]: value}})
     }
@@ -37,8 +31,8 @@ export default class NotificationSettings extends Component {
       <div styleName='prompt'>How often would you like to receive email digests
         for new posts in your communities?</div>
       <Select
-        onChange={updateSetting('digest_frequency')}
-        selected={settings['digest_frequency']}
+        onChange={updateSetting('digestFrequency')}
+        selected={settings['digestFrequency']}
         options={[
           {id: 'daily', label: 'Daily'},
           {id: 'weekly', label: 'Weekly'},
@@ -47,8 +41,8 @@ export default class NotificationSettings extends Component {
       <div styleName='prompt'>How would you like to receive notifications about
         new direct messages?</div>
       <Select
-        onChange={updateSetting('dm_notifications')}
-        selected={settings['dm_notifications']}
+        onChange={updateSetting('dmNotifications')}
+        selected={settings['dmNotifications']}
         options={[
           {id: 'none', label: 'None'},
           {id: 'email', label: 'Email'},
@@ -58,8 +52,8 @@ export default class NotificationSettings extends Component {
       <div styleName='prompt'>How would you like to receive notifications about
       new comments on posts you're following?</div>
       <Select
-        onChange={updateSetting('comment_notifications')}
-        selected={settings['comment_notifications']}
+        onChange={updateSetting('commentNotifications')}
+        selected={settings['commentNotifications']}
         options={[
           {id: 'none', label: 'None'},
           {id: 'email', label: 'Email'},

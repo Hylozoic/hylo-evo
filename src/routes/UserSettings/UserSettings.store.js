@@ -29,16 +29,17 @@ export function fetchUserSettings () {
           url
           location
           tagline
+          hasDevice
           settings {
-            digest_frequency
-            dm_notifications
-            comment_notifications
+            digestFrequency
+            dmNotifications
+            commentNotifications
           }
           memberships {
             id
             settings {
-              send_email
-              send_push_notifications
+              sendEmail
+              sendPushNotifications
             }
             community {
               id

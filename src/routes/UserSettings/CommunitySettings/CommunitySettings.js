@@ -52,9 +52,9 @@ export function CommunityControl ({ membership, leaveCommunity, updateMembership
       <span styleName='settings-label'>Receive Notifications:</span>
       <span styleName='settings'>
         <span styleName='checkbox-label'>Email</span>
-        <CheckBox checked={settings.send_email} onChange={updateSetting('send_email')} />
+        <CheckBox checked={settings.sendEmail} onChange={updateSetting('sendEmail')} />
         <span styleName='checkbox-label'>Mobile</span>
-        <CheckBox checked={settings.send_push_notifications} onChange={updateSetting('send_push_notifications')} />
+        <CheckBox checked={settings.sendPushNotifications} onChange={updateSetting('sendPushNotifications')} />
       </span>
     </div>
   </div>
