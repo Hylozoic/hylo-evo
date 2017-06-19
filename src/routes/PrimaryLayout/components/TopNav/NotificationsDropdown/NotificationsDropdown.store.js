@@ -22,7 +22,7 @@ export function fetchNotifications () {
     type: FETCH_NOTIFICATIONS,
     graphql: {
       query: `{
-        notifications (first: 10, order: "desc", resetCount: true) {
+        notifications (first: 20, order: "desc", resetCount: true) {
           total
           hasMore
           items {
