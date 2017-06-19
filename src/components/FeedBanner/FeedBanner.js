@@ -1,10 +1,10 @@
+import React, { PropTypes } from 'react'
+import cx from 'classnames'
+import { bgImageStyle } from 'util/index'
+import './FeedBanner.scss'
+import { hyloLogo } from 'util/assets'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
-import { bgImageStyle } from 'util/index'
-import React from 'react'
-import './FeedBanner.scss'
-import cx from 'classnames'
-import { hyloLogo } from 'util/assets'
 
 export default function FeedBanner ({ all, community, currentUser, newPost }) {
   let bannerUrl, avatarUrl, name, location, subtitle
@@ -37,14 +37,34 @@ export default function FeedBanner ({ all, community, currentUser, newPost }) {
       </div>
     </div>
     <PostPrompt currentUser={currentUser} newPost={newPost} />
-    <div styleName='shadow' />
   </div>
 }
-// https://stackoverflow.com/questions/29981236/how-do-you-hover-in-reactjs-onmouseleave-not-registered-during-fast-hover-ove
-function PostPrompt ({ currentUser, newPost }) {
-  if (!currentUser) return null
-  return <div styleName='postPrompt' onClick={newPost}>
-    <RoundImage url={currentUser.avatarUrl} small styleName='prompt-image' />
-      Hi {currentUser.firstName()}, what's on your mind?
-  </div>
+
+class PostPrompt extends React.Component {
+  static defaultProps = {
+    currentUser: PropTypes.object,
+    newPost: PropTypes.object
+  }
+
+  constructor (props) {
+    super(props)
+    this.state = {hover: false}
+  }
+
+  onMouseEnterHandler = () => this.setState({hover: true})
+
+  onMouseLeaveHandler = () => this.setState({hover: false})
+
+  render () {
+    const { currentUser, newPost } = this.props
+    const { hover } = this.state
+    if (!currentUser) return null
+    return <div onMouseEnter={this.onMouseEnterHandler} onMouseLeave={this.onMouseLeaveHandler}>
+      <div styleName='postPrompt' onClick={newPost}>
+        <RoundImage url={currentUser.avatarUrl} small styleName='prompt-image' />
+          Hi {currentUser.firstName()}, what's on your mind?
+      </div>
+      <div styleName={cx('shadow', { hover })} />
+    </div>
+  }
 }
