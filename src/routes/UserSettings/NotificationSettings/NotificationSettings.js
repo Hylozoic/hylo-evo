@@ -3,7 +3,7 @@ import './NotificationSettings.scss'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import { Link } from 'react-router-dom'
-// import cx from 'classnames'
+import { compact } from 'lodash/fp'
 const { object, func } = PropTypes
 
 const iOSAppURL = 'https://itunes.apple.com/app/appName/id1002185140'
@@ -20,11 +20,18 @@ export default class NotificationSettings extends Component {
 
     if (!currentUser) return <Loading />
 
-    const { settings } = currentUser
+    const { settings, hasDevice } = currentUser
 
     const updateSetting = setting => value => {
       updateUserSettings({settings: {[setting]: value}})
     }
+
+    var notificationOptions = compact([
+      {id: 'none', label: 'None'},
+      {id: 'email', label: 'Email'},
+      hasDevice && {id: 'push', label: 'Mobile App'},
+      hasDevice && {id: 'both', label: 'Both'}
+    ])
 
     return <div>
       <div styleName='title'>Notifications</div>
@@ -43,23 +50,13 @@ export default class NotificationSettings extends Component {
       <Select
         onChange={updateSetting('dmNotifications')}
         selected={settings['dmNotifications']}
-        options={[
-          {id: 'none', label: 'None'},
-          {id: 'email', label: 'Email'},
-          {id: 'push', label: 'Mobile App'},
-          {id: 'both', label: 'Both'}
-        ]} />
+        options={notificationOptions} />
       <div styleName='prompt'>How would you like to receive notifications about
       new comments on posts you're following?</div>
       <Select
         onChange={updateSetting('commentNotifications')}
         selected={settings['commentNotifications']}
-        options={[
-          {id: 'none', label: 'None'},
-          {id: 'email', label: 'Email'},
-          {id: 'push', label: 'Mobile App'},
-          {id: 'both', label: 'Both'}
-        ]} />
+        options={notificationOptions} />
       <div styleName='help'>
         <p styleName='help-paragraph'>
           Download our <a href={iOSAppURL} target='_blank'>iOS</a>&nbsp;
