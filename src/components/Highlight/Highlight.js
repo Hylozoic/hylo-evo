@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import cheerio from 'cheerio'
+import { flatten } from 'lodash/fp'
 
 export default class Highlight extends React.Component {
   static propTypes = {
@@ -73,7 +74,16 @@ export default class Highlight extends React.Component {
     // takes and returns a html string
     const domTree = cheerio.parseHTML(html)
 
-    const parsedDomTree = domTree.map(el => this.domParseElement(el))
+    var parsedDomTree = flatten(domTree.map(el => this.domParseElement(el)))
+
+    if (parsedDomTree.length > 1) {
+      // wrap an array of chilren in enclosing span
+      parsedDomTree = {
+        type: 'tag',
+        name: 'span',
+        children: parsedDomTree
+      }
+    }
 
     const $ = cheerio.load(parsedDomTree)
 
@@ -81,13 +91,16 @@ export default class Highlight extends React.Component {
   }
 
   domParseElement (el) {
+    // takes an element and returns an element or an array of elements
     switch (el.type) {
       case 'text':
-        return this.domParseString(el.data)
+        const parsed = this.domParseString(el.data)
+        return parsed
       case 'tag':
+        const children = flatten(el.children.map(child => this.domParseElement(child)))
         return {
           ...el,
-          children: el.children.map(child => this.domParseElement(child))
+          children
         }
     }
     return null
@@ -127,11 +140,7 @@ export default class Highlight extends React.Component {
     if (domTree.length === 1) {
       return domTree[0]
     } else {
-      return {
-        type: 'tag',
-        name: 'span',
-        children: domTree
-      }
+      return domTree
     }
   }
 

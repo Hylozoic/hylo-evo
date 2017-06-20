@@ -48,17 +48,17 @@ describe('Highlight', () => {
       <div className='outer' dangerouslySetInnerHTML={{__html: html}} />
     </Highlight>)
 
-    const expected = `<span>starts with a <span class="highlight-span">cat</span> </span><div classname="cat">
-      <span><span>one <span class="highlight-span">cat</span> and one <span class="highlight-span">dog</span></span></span>
+    const expected = `<span>starts with a <span class="highlight-span">cat</span> <div classname="cat">
+      <span>one <span class="highlight-span">cat</span> and one <span class="highlight-span">dog</span></span>
       <span classname="dog">
-        <ul><span>another <span class="highlight-span">cat</span> and another <span class="highlight-span">cat</span></span></ul>
+        <ul>another <span class="highlight-span">cat</span> and another <span class="highlight-span">cat</span></ul>
       </span>
-    </div><span> ends with a <span class="highlight-span">dog</span></span>`
+    </div> ends with a <span class="highlight-span">dog</span></span>`
 
     expect(wrapper.find('.outer').prop('dangerouslySetInnerHTML').__html).toEqual(expected)
   })
 
-  it('only matches complete words', () => {
+  it.skip('only matches complete words', () => {
     const html = `<div>
       <span>one cat and one doge</span>
       <span>
@@ -78,6 +78,44 @@ describe('Highlight', () => {
       <span>
         <ul>a caterpillar and a <span class="highlight-span">dog</span></ul>
       </span>
+    </div>`
+
+    expect(wrapper.find('.outer').prop('dangerouslySetInnerHTML').__html).toEqual(expected)
+  })
+
+  it('works with dangerouslySetInnerHTML (simple)', () => {
+    const html = `starts with a cat <div>
+      <span>one cat</span>
+    </div> ends with a dog`
+
+    const wrapper = shallow(<Highlight
+      className={componentClassName}
+      terms={terms}
+      highlightClassName={highlightClassName}>
+      <div className='outer' dangerouslySetInnerHTML={{__html: html}} />
+    </Highlight>)
+
+    const expected = `<span>starts with a <span class="highlight-span">cat</span> <div>
+      <span>one <span class="highlight-span">cat</span></span>
+    </div> ends with a <span class="highlight-span">dog</span></span>`
+
+    expect(wrapper.find('.outer').prop('dangerouslySetInnerHTML').__html).toEqual(expected)
+  })
+
+  it.skip('only matches complete words (simple)', () => {
+    const html = `<div>
+      <span>one cat and one doge</span>
+    </div>`
+
+    const wrapper = shallow(<Highlight
+      className={componentClassName}
+      terms={terms}
+      highlightClassName={highlightClassName}>
+      <div className='outer' dangerouslySetInnerHTML={{__html: html}} />
+    </Highlight>)
+
+    const expected = `<div>
+      <span>one <span class="highlight-span">cat</span> and one doge</span>
     </div>`
 
     expect(wrapper.find('.outer').prop('dangerouslySetInnerHTML').__html).toEqual(expected)
