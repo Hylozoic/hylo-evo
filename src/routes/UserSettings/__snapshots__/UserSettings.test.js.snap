@@ -5,17 +5,47 @@ exports[`UserSettings renders correctly 1`] = `
   content={
     Array [
       Object {
-        "component": <AccountSettings />,
+        "component": <AccountSettings
+          currentUser={
+                Object {
+                      "id": 1,
+                    }
+          }
+          loginWithService={[Function]}
+          setConfirm={[Function]}
+          unlinkAccount={[Function]}
+          updateUserSettings={[Function]}
+    />,
         "name": "Account",
         "path": "/settings",
       },
       Object {
-        "component": <CommunitySettings />,
+        "component": <CommunitySettings
+          leaveCommunity={[Function]}
+          memberships={
+                Array [
+                      Object {
+                        "id": 2,
+                      },
+                      Object {
+                        "id": 3,
+                      },
+                    ]
+          }
+          updateMembershipSettings={[Function]}
+    />,
         "name": "Communities",
         "path": "/settings/communities",
       },
       Object {
-        "component": <NotificationSettings />,
+        "component": <NotificationSettings
+          currentUser={
+                Object {
+                      "id": 1,
+                    }
+          }
+          updateUserSettings={[Function]}
+    />,
         "name": "Notifications",
         "path": "/settings/notifications",
       },

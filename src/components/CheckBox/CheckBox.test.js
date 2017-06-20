@@ -2,7 +2,10 @@ import CheckBox from './CheckBox'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-it('does something', () => {
-  const wrapper = shallow(<CheckBox />)
+it('renders correctly', () => {
+  const wrapper = shallow(<CheckBox
+    checked
+    onChange={() => {}}
+    className='box' />)
   expect(wrapper).toMatchSnapshot()
 })
