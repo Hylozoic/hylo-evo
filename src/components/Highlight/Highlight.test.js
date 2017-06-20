@@ -58,6 +58,31 @@ describe('Highlight', () => {
     expect(wrapper.find('.outer').prop('dangerouslySetInnerHTML').__html).toEqual(expected)
   })
 
+  it('only matches complete words', () => {
+    const html = `<div>
+      <span>one cat and one doge</span>
+      <span>
+        <ul>a caterpillar and a dog</ul>
+      </span>
+    </div>`
+
+    const wrapper = shallow(<Highlight
+      className={componentClassName}
+      terms={terms}
+      highlightClassName={highlightClassName}>
+      <div className='outer' dangerouslySetInnerHTML={{__html: html}} />
+    </Highlight>)
+
+    const expected = `<div>
+      <span>one <span class="highlight-span">cat</span> and one doge</span>
+      <span>
+        <ul>a caterpillar and a <span class="highlight-span">dog</span></ul>
+      </span>
+    </div>`
+
+    expect(wrapper.find('.outer').prop('dangerouslySetInnerHTML').__html).toEqual(expected)
+  })
+
   it('removes non word characters from search terms', () => {
     const terms = ['$%&^<dog>.,/.>']
 
