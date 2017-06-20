@@ -14,6 +14,10 @@ import {
 import {
    DELETE_POST_PENDING
  } from 'components/PostCard/PostHeader/PostHeader.store'
+import {
+  UPDATE_MEMBERSHIP_SETTINGS_PENDING,
+  UPDATE_USER_SETTINGS_PENDING
+} from 'routes/UserSettings/UserSettings.store'
 import deep from 'deep-diff'
 
 it('responds to EXTRACT_MODEL', () => {
@@ -270,5 +274,79 @@ describe('on FETCH_NOTIFICATIONS', () => {
     const newSession = orm.session(newState)
 
     expect(newSession.Me.first().newNotificationCount).toEqual(0)
+  })
+})
+
+describe(' on UPDATE_MEMBERSHIP_SETTINGS_PENDING', () => {
+  const session = orm.session(orm.getEmptyState())
+  const communityId = 3
+
+  session.Membership.create({
+    community: communityId,
+    settings: {
+      sendFoo: true,
+      sendEmail: false
+    }
+  })
+
+  const action = {
+    type: UPDATE_MEMBERSHIP_SETTINGS_PENDING,
+    meta: {
+      communityId,
+      settings: {
+        sendEmail: true,
+        sendPushNotifications: false
+      }
+    }
+  }
+
+  it('updates membership settings, keeping current settings where unchanged', () => {
+    const newState = ormReducer(session.state, action)
+    const newSession = orm.session(newState)
+    const membership = newSession.Membership.safeGet({community: communityId})
+    expect(membership.settings).toEqual({
+      sendFoo: true,
+      sendEmail: true,
+      sendPushNotifications: false
+    })
+  })
+})
+
+describe('on UPDATE_USER_SETTINGS_PENDING', () => {
+  const session = orm.session(orm.getEmptyState())
+
+  session.Me.create({
+    location: 'original location',
+    tagline: 'old tagline',
+    settings: {
+      digestFrequency: 'weekly',
+      dmNotifications: 'both'
+    }
+  })
+
+  const action = {
+    type: UPDATE_USER_SETTINGS_PENDING,
+    meta: {
+      changes: {
+        tagline: 'new tagline',
+        settings: {
+          digestFrequency: 'daily',
+          commentNotifications: 'email'
+        }
+      }
+    }
+  }
+
+  it('updates user, keeping current settings where unchanged', () => {
+    const newState = ormReducer(session.state, action)
+    const newSession = orm.session(newState)
+    const me = newSession.Me.first()
+    expect(me.location).toEqual('original location')
+    expect(me.tagline).toEqual('new tagline')
+    expect(me.settings).toEqual({
+      digestFrequency: 'daily',
+      dmNotifications: 'both',
+      commentNotifications: 'email'
+    })
   })
 })

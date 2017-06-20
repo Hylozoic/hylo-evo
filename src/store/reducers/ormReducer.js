@@ -22,8 +22,12 @@ import {
   RECEIVE_POST
  } from 'components/SocketListener/SocketListener.store'
 import {
-   DELETE_POST_PENDING
+  DELETE_POST_PENDING
  } from 'components/PostCard/PostHeader/PostHeader.store'
+import {
+  UPDATE_MEMBERSHIP_SETTINGS_PENDING,
+  UPDATE_USER_SETTINGS_PENDING
+} from 'routes/UserSettings/UserSettings.store'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
 import { find } from 'lodash/fp'
@@ -130,7 +134,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case LEAVE_COMMUNITY:
-      const me = Me.first()
+      var me = Me.first()
       membership = find(m => m.community.id === meta.id, me.memberships.toModelArray())
       if (membership) membership.delete()
       break
@@ -199,6 +203,29 @@ export default function ormReducer (state = {}, action) {
     case UPDATE_COMMUNITY_SETTINGS_PENDING:
       community = Community.withId(meta.id)
       community.update(meta.changes)
+      break
+
+    case UPDATE_MEMBERSHIP_SETTINGS_PENDING:
+      membership = Membership.safeGet({community: meta.communityId})
+      if (!membership) break
+      membership.update({
+        settings: {
+          ...membership.settings,
+          ...meta.settings
+        }
+      })
+      break
+
+    case UPDATE_USER_SETTINGS_PENDING:
+      me = Me.first()
+      const changes = {
+        ...meta.changes,
+        settings: {
+          ...me.settings,
+          ...meta.changes.settings
+        }
+      }
+      me.update(changes)
       break
   }
 
