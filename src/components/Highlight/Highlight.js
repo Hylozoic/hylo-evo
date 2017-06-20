@@ -23,7 +23,7 @@ export default class Highlight extends React.Component {
 
     let matches = []
     for (var i in terms) {
-      const regex = new RegExp(terms[i], 'ig')
+      const regex = new RegExp(`\\b${terms[i]}\\b`, 'ig')
       var match
       while ((match = regex.exec(string)) !== null) {
         matches.push(match)
