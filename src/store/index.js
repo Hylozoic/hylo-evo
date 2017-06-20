@@ -2,11 +2,20 @@ import { createStore } from 'redux'
 import createMiddleware from './middleware'
 import orm from './models'
 import reducers from './reducers'
+import { LOGOUT } from 'store/constants'
 
 const initialState = {
   orm: orm.getEmptyState()
 }
 
+const rootReducer = (state, action) => {
+  if (action.type === LOGOUT) {
+    state = initialState
+  }
+
+  return reducers(state, action)
+}
+
 export default function (history) {
-  return createStore(reducers, initialState, createMiddleware(history))
+  return createStore(rootReducer, initialState, createMiddleware(history))
 }
