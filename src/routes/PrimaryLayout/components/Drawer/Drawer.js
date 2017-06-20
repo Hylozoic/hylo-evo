@@ -42,9 +42,9 @@ export default class Drawer extends Component {
   }
 
   render () {
-    const { currentCommunity, communities, communityNotifications } = this.props
+    const { currentCommunity, communities, communityNotifications, className } = this.props
     const communitiesSorted = sortBy('name', communities)
-    return <div styleName='drawer'>
+    return <div className={className} styleName='communityDrawer'>
       <Icon name='Ex' styleName='closeDrawer' />
       <Logo community={currentCommunity} />
       <ul styleName='communitiesList'>

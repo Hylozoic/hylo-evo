@@ -39,6 +39,24 @@
   margin-right: auto;
 }
 
+$drawer-width: 367px;
+$drawer-height: 100vh;
+$drawer-z-index: 51;
+.drawer {
+  width: $drawer-width;
+  height: $drawer-height;
+  position: fixed;
+  left: 0px;
+  z-index: $drawer-z-index;
+  display: flex;
+  flex-direction: column;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  &.hidden {
+    left: -$drawer-width;
+  }
+}
+
 .left {
   /* empty */
 }

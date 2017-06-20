@@ -1,6 +1,6 @@
 .banner {
   padding-top: $space-6x;
-  padding-bottom: $space-15x;
+  padding-bottom: $space-8x;
   position: relative;
   z-index: 2;
 }
@@ -79,7 +79,7 @@
   border-radius: 4px;
   height: 56px;
   position: absolute;
-  bottom: $space-8x;
+  bottom: $space-3x;
   left: $space-4x;
   right: $space-4x;
 }
@@ -107,6 +107,9 @@
   background-color: transparent;
   box-shadow: 0px 4px 42px 0px $color-seashell;
   z-index: -10;
+  &.hover {
+    box-shadow: 0px 4px 42px 0px darken($color-seashell, 10%);
+  }
 }
 
 .all-communities {

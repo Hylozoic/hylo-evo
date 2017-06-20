@@ -32,7 +32,8 @@ export default class TopicNavigation extends Component {
       <ul styleName='s.topics'>
         {communityTopics.map(({ id, topic, newPostCount }) =>
           <li key={topic.name}>
-            <NavLink styleName='s.topic' className={badgeHoverStyles.parent}
+            <NavLink styleName='s.topic'
+              className={badgeHoverStyles.parent}
               to={tagUrl(topic.name, slug)}
               onClick={() => id && newPostCount > 0 && clearBadge(id)}
               activeClassName='active-topic-nav-link'>

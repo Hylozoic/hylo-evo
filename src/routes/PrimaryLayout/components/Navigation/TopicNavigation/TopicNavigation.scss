@@ -26,6 +26,7 @@
   overflow: auto;
   color: $color-rhino-50;
   a {
+    font-size: 14.5px;
     color: $color-rhino-50;
     text-decoration: none;
   }
@@ -64,6 +65,6 @@
 
 :global {
   .active-topic-nav-link {
-    color: $color-caribbean-green !important;
+    color: $color-cod-gray-dark !important;
   }
 }

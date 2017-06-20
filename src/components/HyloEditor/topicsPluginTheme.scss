@@ -7,10 +7,9 @@
 // topicSuggestionsEntryAvatar: '' // an entry’s avatar image in the suggestions component.
 
 .topic, .topic:visited {
-  color: #575f67;
+  color: $color-caribbean-green;
   cursor: pointer;
   display: inline-block;
-  background: #e6f3ff;
   padding-left: 2px;
   padding-right: 2px;
   border-radius: 2px;

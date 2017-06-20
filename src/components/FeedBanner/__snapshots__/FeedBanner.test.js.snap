@@ -66,30 +66,35 @@ exports[`renders for all communities 1`] = `
       }
     >
       <div
-        data-styleName="postPrompt"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
       >
-        <RoundImage
-          data-styleName="prompt-image"
-          small={true}
-          url="me.png"
+        <div
+          data-styleName="postPrompt"
         >
-          <div
-            data-styleName="image small"
-            style={
-              Object {
-                "backgroundImage": "url(me.png)",
+          <RoundImage
+            data-styleName="prompt-image"
+            small={true}
+            url="me.png"
+          >
+            <div
+              data-styleName="image small"
+              style={
+                Object {
+                  "backgroundImage": "url(me.png)",
+                }
               }
-            }
-          />
-        </RoundImage>
-        Hi 
-        Bob
-        , what's on your mind?
+            />
+          </RoundImage>
+          Hi 
+          Bob
+          , what's on your mind?
+        </div>
+        <div
+          data-styleName="shadow"
+        />
       </div>
     </PostPrompt>
-    <div
-      data-styleName="shadow"
-    />
   </div>
 </FeedBanner>
 `;
@@ -160,9 +165,6 @@ exports[`renders with a community 1`] = `
       </div>
     </div>
     <PostPrompt />
-    <div
-      data-styleName="shadow"
-    />
   </div>
 </FeedBanner>
 `;

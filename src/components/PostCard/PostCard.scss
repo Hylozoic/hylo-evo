@@ -9,7 +9,7 @@
   right: 0px;
   transition: 0.25s;
   &:hover {
-    box-shadow: 0px 2px 6px 0px $color-black-10;
+    box-shadow: 0px 0px 6px 0px $color-black-10;
   }
 }
 
@@ -36,7 +36,7 @@
 // PostBody
 
 :global {
-  .topic {
+  .hashtag, .mention {
     color: $color-caribbean-green;
     &:hover {
       text-decoration: none;
