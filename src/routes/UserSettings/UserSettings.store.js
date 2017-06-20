@@ -1,9 +1,15 @@
 import {
   FETCH_USER_SETTINGS,
-  UPDATE_USER_SETTINGS,
   LEAVE_COMMUNITY,
   UNLINK_ACCOUNT
 } from 'store/constants'
+
+export const MODULE_NAME = 'UserSettings'
+
+export const UPDATE_USER_SETTINGS = `${MODULE_NAME}/UPDATE_USER_SETTINGS`
+export const UPDATE_USER_SETTINGS_PENDING = UPDATE_USER_SETTINGS + '_PENDING'
+export const UPDATE_MEMBERSHIP_SETTINGS = `${MODULE_NAME}/UPDATE_MEMBERSHIP_SETTINGS`
+export const UPDATE_MEMBERSHIP_SETTINGS_PENDING = UPDATE_MEMBERSHIP_SETTINGS + '_PENDING'
 
 export function fetchUserSettings () {
   return {
@@ -23,8 +29,18 @@ export function fetchUserSettings () {
           url
           location
           tagline
+          hasDevice
+          settings {
+            digestFrequency
+            dmNotifications
+            commentNotifications
+          }
           memberships {
             id
+            settings {
+              sendEmail
+              sendPushNotifications
+            }
             community {
               id
               name
@@ -41,18 +57,22 @@ export function fetchUserSettings () {
   }
 }
 
-export function updateUserSettings (settings) {
+export function updateUserSettings (changes) {
   return {
     type: UPDATE_USER_SETTINGS,
     graphql: {
-      query: `mutation ($settings: MeInput) {
-        updateMe(changes: $settings) {
+      query: `mutation ($changes: MeInput) {
+        updateMe(changes: $changes) {
           id
         }
       }`,
       variables: {
-        settings
+        changes
       }
+    },
+    meta: {
+      optimistic: true,
+      changes
     }
   }
 }
@@ -83,6 +103,30 @@ export function unlinkAccount (provider) {
         }
       }`,
       variables: {provider}
+    }
+  }
+}
+
+export function updateMembershipSettings (communityId, settings) {
+  return {
+    type: UPDATE_MEMBERSHIP_SETTINGS,
+    graphql: {
+      query: `mutation ($id: ID, $data: MembershipInput) {
+        updateMembership(id: $id, data: $data) {
+          id
+        }
+      }`,
+      variables: {
+        data: {
+          settings
+        },
+        id: communityId
+      }
+    },
+    meta: {
+      communityId,
+      settings,
+      optimistic: true
     }
   }
 }

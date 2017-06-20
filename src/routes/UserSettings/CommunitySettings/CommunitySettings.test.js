@@ -4,24 +4,32 @@ import React from 'react'
 
 describe('CommunitySettings', () => {
   it('renders a list of CommunityControls', () => {
-    const communities = [
+    const memberships = [
       {id: 1},
       {id: 2},
       {id: 3},
       {id: 4}
     ]
-    const wrapper = shallow(<CommunitySettings communities={communities} />)
+    const wrapper = shallow(<CommunitySettings memberships={memberships} />)
     expect(wrapper.find('CommunityControl').length).toEqual(4)
+    expect(wrapper).toMatchSnapshot()
   })
 })
 
 describe('CommunityControl', () => {
   it('renders correctly', () => {
-    const community = {
-      name: 'Foomunity'
+    const membership = {
+      settings: {
+        sendEmail: false,
+        sendPushNotifications: true
+      },
+      community: {
+        name: 'Foomunity'
+      }
     }
-    const wrapper = shallow(<CommunityControl community={community} />)
+    const wrapper = shallow(<CommunityControl membership={membership} />)
     expect(wrapper.find('Link').length).toEqual(2)
-    expect(wrapper.find('Link').get(1).props.children).toEqual(community.name)
+    expect(wrapper.find('Link').get(1).props.children).toEqual(membership.community.name)
+    expect(wrapper).toMatchSnapshot()
   })
 })
