@@ -36,6 +36,11 @@ export function logout () {
     type: LOGOUT,
     payload: {
       api: {path: '/noo/session', method: 'DELETE'}
+    },
+    meta: {
+      then: () => {
+        window.location.href = '/login'
+      }
     }
   }
 }
@@ -46,18 +51,7 @@ const reducer = combineReducers({
     switch (type) {
       case LOGIN: return true
       case CHECK_LOGIN: return !!payload.signedIn
-      case LOGOUT: {
-        return false
-      }
     }
-    return state
-  },
-
-  logout: (state = null, {type}) => {
-    if (type === LOGOUT) {
-      setTimeout(() => { window.location.reload() }, 1)
-    }
-
     return state
   },
 
