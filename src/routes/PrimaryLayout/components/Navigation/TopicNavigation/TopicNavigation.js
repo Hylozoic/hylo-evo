@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 const { array, bool, func, object } = React.PropTypes
 import Icon from 'components/Icon'
 import Badge from 'components/Badge'
-import { Link, NavLink } from 'react-router-dom'
-import { tagUrl, topicsUrl } from 'util/index'
+import { Link, NavLink, matchPath } from 'react-router-dom'
+import { tagUrl, topicsUrl, communityUrl, allCommunitiesUrl } from 'util/index'
 import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../../components/Badge/component.scss'
 import cx from 'classnames'
@@ -19,9 +19,12 @@ export default class TopicNavigation extends Component {
 
   render () {
     const {
-      communityTopics, clearBadge, community, expand, collapsed
+      communityTopics, clearBadge, community, expand, collapsed, location
     } = this.props
     const slug = community ? community.slug : null
+    const url = community ? communityUrl(slug) : allCommunitiesUrl()
+    const currentTopic = (topicName, slug) =>
+      matchPath(location.pathname, {path: tagUrl(topicName, slug)})
 
     return <div styleName='s.topicNavigation'>
       <div styleName={cx('s.header', {'s.header-link': collapsed})}
@@ -40,6 +43,10 @@ export default class TopicNavigation extends Component {
               <span styleName='s.name'>#{topic.name}</span>
               {newPostCount > 0 &&
                 <Badge number={newPostCount} styleName='s.badge' />}
+              {currentTopic(topic.name, slug) &&
+                <Link to={url}>
+                  <Icon name='Ex' styleName='s.closeIcon' />
+                </Link>}
             </NavLink>
           </li>)}
       </ul>
