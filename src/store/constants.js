@@ -47,4 +47,3 @@ export const UPLOAD_IMAGE = 'UPLOAD_IMAGE'
 export const UNLINK_ACCOUNT = 'UNLINK_ACCOUNT'
 export const VOTE_ON_POST = 'VOTE_ON_POST'
 export const VOTE_ON_POST_PENDING = VOTE_ON_POST + _PENDING
-
