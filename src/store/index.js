@@ -9,7 +9,7 @@ const initialState = {
 }
 
 const rootReducer = (state, action) => {
-  if (action.type === LOGOUT) {
+  if (!action.error && action.type === LOGOUT) {
     state = initialState
   }
 
