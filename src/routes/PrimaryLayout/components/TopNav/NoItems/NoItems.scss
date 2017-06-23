@@ -1,0 +1,16 @@
+.no-items {
+  text-align: center;
+  height: $messages-body-height;
+
+  h3 {
+    color: $color-dove-gray-50;
+    font-size: 25px;
+    margin-top: 40px;
+    padding: 10px 30px;
+  }
+  .image {
+    background: no-repeat center;
+    height: $messages-body-height - 180px;
+    background-size: $messages-body-height/2;
+  }
+}

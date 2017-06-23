@@ -7,12 +7,14 @@ import {
   goToNotification
 } from './NotificationsDropdown.store'
 import getMe from 'store/selectors/getMe'
+import { FETCH_NOTIFICATIONS } from 'store/constants'
 
 export function mapStateToProps (state, props) {
   const notifications = getNotifications(state, props)
   return {
     notifications,
-    currentUser: getMe(state, props)
+    currentUser: getMe(state, props),
+    pending: state.pending[FETCH_NOTIFICATIONS]
   }
 }
 

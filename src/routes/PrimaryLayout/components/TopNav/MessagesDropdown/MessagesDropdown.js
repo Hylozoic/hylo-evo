@@ -4,10 +4,13 @@ const {array, string, func} = PropTypes
 import { Link } from 'react-router-dom'
 import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import cx from 'classnames'
-import { newMessageUrl, threadUrl, bgImageStyle } from 'util/index'
+import { newMessageUrl, threadUrl } from 'util/index'
 import RoundImageRow from 'components/RoundImageRow'
 import TopNavDropdown from '../TopNavDropdown'
 import { get, isEmpty, some } from 'lodash/fp'
+
+import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
+import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
 
 export default class MessagesDropdown extends Component {
   static propTypes = {
@@ -59,9 +62,9 @@ export default class MessagesDropdown extends Component {
 
     let body
     if (pending) {
-      body = <Loader />
+      body = <LoadingItems />
     } else if (isEmpty(threads)) {
-      body = <NoMessages />
+      body = <NoItems message="You don't have any conversations yet" />
     } else {
       body = <div styleName='threads'>
         {threads.map(thread => <MessagesDropdownItem
@@ -134,50 +137,4 @@ export function MessagesDropdownItem ({ thread, onClick, currentUserId }) {
       <div styleName='date'>{humanDate(thread.updatedAt)}</div>
     </div>
   </li>
-}
-
-function NoMessages () {
-  return (
-    <div styleName='no-messages'>
-      <h3>You don't have any conversations yet</h3>
-      <div styleName='image' style={bgImageStyle('/assets/hey-axolotl.png')} />
-    </div>
-  )
-}
-
-function Loader () {
-  return (
-    <div styleName='loader'>
-      <div styleName='loader-image'
-        style={bgImageStyle('/assets/thinking-axolotl.png')} />
-      <div styleName='loader-animation'>
-        <svg version='1.1' viewBox='0 0 100 100' enableBackground='new 0 0 0 0'>
-          <circle fill='#BBB' stroke='none' cx='6' cy='6' r='6'>
-            <animate
-              attributeName='opacity'
-              dur='1s'
-              values='0;1;0'
-              repeatCount='indefinite'
-              begin='0.1' />
-          </circle>
-          <circle fill='#BBB' stroke='none' cx='26' cy='6' r='6'>
-            <animate
-              attributeName='opacity'
-              dur='1s'
-              values='0;1;0'
-              repeatCount='indefinite'
-              begin='0.2' />
-          </circle>
-          <circle fill='#BBB' stroke='none' cx='46' cy='6' r='6'>
-            <animate
-              attributeName='opacity'
-              dur='1s'
-              values='0;1;0'
-              repeatCount='indefinite'
-              begin='0.3' />
-          </circle>
-        </svg>
-      </div>
-    </div>
-  )
 }
