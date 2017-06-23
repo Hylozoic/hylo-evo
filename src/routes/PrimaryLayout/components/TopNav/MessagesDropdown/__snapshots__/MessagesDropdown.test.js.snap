@@ -63,11 +63,7 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
 
 exports[`MessagesDropdown renders correctly with an empty list 1`] = `
 <Connect(TopNavDropdown)
-  body={
-    <div
-      data-styleName="threads"
-    />
-  }
+  body={<NoMessages />}
   header={
     <div
       data-styleName="header-content"
