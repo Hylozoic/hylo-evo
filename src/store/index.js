@@ -4,11 +4,11 @@ import orm from './models'
 import reducers from './reducers'
 import { LOGOUT } from 'store/constants'
 
-const initialState = {
+export const initialState = {
   orm: orm.getEmptyState()
 }
 
-const rootReducer = (state, action) => {
+export const rootReducer = (state, action) => {
   if (!action.error && action.type === LOGOUT) {
     state = initialState
   }
