@@ -1,12 +1,20 @@
 import React, { PropTypes } from 'react'
 import { get } from 'lodash/fp'
 import cx from 'classnames'
+import linkifyIt from 'linkify-it'
+import tlds from 'tlds'
+import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import styles from './PostEditor.scss'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
+import LinkPreview from './LinkPreview'
+
+// Needed for link preview
+const linkify = linkifyIt()
+linkify.tlds(tlds)
 
 export default class PostEditor extends React.Component {
   static propTypes = {
@@ -124,6 +132,22 @@ export default class PostEditor extends React.Component {
     })
   }
 
+  handleDetailsChange = (editorState, contentChanged) => {
+    this.setValid()
+    if (contentChanged) {
+      const contentStateHTML = contentStateToHTML(editorState.getCurrentContent())
+      let firstLink
+      if (linkify.test(contentStateHTML)) {
+        firstLink = linkify.match(contentStateHTML)[0].url
+        // Run fetchLink
+        this.setState({linkPreview: firstLink})
+      } else {
+        // Run fetchLink with null ?
+        this.setState({linkPreview: null})
+      }
+    }
+  }
+
   setSelectedCommunities = communities => {
     this.setState({
       post: {...this.state.post, communities},
@@ -154,7 +178,7 @@ export default class PostEditor extends React.Component {
   }
 
   render () {
-    const { titlePlaceholder, valid, post } = this.state
+    const { titlePlaceholder, valid, post, linkPreview } = this.state
     if (!post) return null
     const { title, details, communities } = post
     const {
@@ -195,11 +219,12 @@ export default class PostEditor extends React.Component {
           <HyloEditor
             styleName='editor'
             placeholder={detailsPlaceholder}
-            onChange={this.setValid}
+            onChange={this.handleDetailsChange}
             contentHTML={details}
             readOnly={loading}
             ref={component => { this.editor = component && component.getWrappedInstance() }}
           />
+          {linkPreview && <LinkPreview styleName='linkPreview' url={linkPreview} />}
         </div>
       </div>
       <div styleName='footer'>
