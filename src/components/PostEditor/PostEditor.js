@@ -143,7 +143,7 @@ export default class PostEditor extends React.Component {
         const urlMatch = linkify.match(contentStateHTML)[0].url
         if (!linkPreview || (linkPreview && linkPreview.url !== urlMatch)) {
           // Handle case of failed URL lookup...
-          // Handle queue'ing (websockets?)
+          // ? Handle queue'ing (websockets?)
           fetchLinkPreview(urlMatch)
         }
       } else {
