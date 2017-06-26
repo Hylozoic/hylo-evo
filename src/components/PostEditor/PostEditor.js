@@ -137,10 +137,15 @@ export default class PostEditor extends React.Component {
   handleDetailsChange = (editorState, contentChanged) => {
     this.setValid()
     if (contentChanged) {
-      const { fetchLinkPreview, clearLinkPreview } = this.props
+      const { linkPreview, fetchLinkPreview, clearLinkPreview } = this.props
       const contentStateHTML = contentStateToHTML(editorState.getCurrentContent())
       if (linkify.test(contentStateHTML)) {
-        fetchLinkPreview(linkify.match(contentStateHTML)[0].url)
+        const urlMatch = linkify.match(contentStateHTML)[0].url
+        if (!linkPreview || (linkPreview && linkPreview.url !== urlMatch)) {
+          // Handle case of failed URL lookup...
+          // Handle queue'ing (websockets?)
+          fetchLinkPreview(urlMatch)
+        }
       } else {
         clearLinkPreview()
       }
