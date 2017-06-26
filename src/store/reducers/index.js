@@ -9,6 +9,7 @@ import TopNav from 'routes/PrimaryLayout/components/TopNav/TopNav.store'
 import PeopleSelector from 'components/PeopleSelector/PeopleSelector.store'
 import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
+import PostEditor from 'components/PostEditor/PostEditor.store'
 import MessageForm from 'components/MessageForm/MessageForm.store'
 import Login from 'routes/Login/Login.store'
 import Members from 'routes/Members/Members.store'
@@ -35,6 +36,7 @@ const combinedReducers = combineReducers({
   MessageForm,
   PeopleTyping,
   HyloEditor,
+  PostEditor,
   Login,
   ThreadList,
   Members,

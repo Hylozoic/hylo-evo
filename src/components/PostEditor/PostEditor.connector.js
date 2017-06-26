@@ -7,13 +7,15 @@ import getPost from 'store/selectors/getPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import {
   createPost,
-  updatePost
+  updatePost,
+  fetchLinkPreview
 } from './PostEditor.store'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const communityOptions = props.communityOptions || (currentUser &&
     currentUser.memberships.toModelArray().map(m => m.community))
+  const linkPreview = state.PostEditor.linkPreview
   const editing = !!getParam('postId', state, props)
   let post = props.post || getPost(state, props)
   const loading = editing && !post
@@ -23,6 +25,7 @@ export function mapStateToProps (state, props) {
   }
   return {
     post,
+    linkPreview,
     communityOptions,
     currentUser,
     editing,
@@ -33,6 +36,7 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = (dispatch, props) => {
   const slug = getParam('slug', null, props)
   return {
+    fetchLinkPreview: (post) => dispatch(fetchLinkPreview(post)),
     updatePost: (postParams) => dispatch(updatePost(postParams)),
     createPost: (postParams) => dispatch(createPost(postParams)),
     goToPost: (createPostAction) => {

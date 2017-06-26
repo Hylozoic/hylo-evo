@@ -31,8 +31,10 @@ export default class PostEditor extends React.Component {
       details: PropTypes.string,
       communities: PropTypes.array
     }),
+    linkPreivew: PropTypes.func,
     createPost: PropTypes.func,
     updatePost: PropTypes.func,
+    fetchLinkPreview: PropTypes.func,
     goToPost: PropTypes.func,
     editing: PropTypes.bool,
     loading: PropTypes.bool
@@ -135,15 +137,12 @@ export default class PostEditor extends React.Component {
   handleDetailsChange = (editorState, contentChanged) => {
     this.setValid()
     if (contentChanged) {
+      const { fetchLinkPreview } = this.props
       const contentStateHTML = contentStateToHTML(editorState.getCurrentContent())
-      let firstLink
       if (linkify.test(contentStateHTML)) {
-        firstLink = linkify.match(contentStateHTML)[0].url
-        // Run fetchLink
-        this.setState({linkPreview: firstLink})
+        fetchLinkPreview(linkify.match(contentStateHTML)[0].url)
       } else {
-        // Run fetchLink with null ?
-        this.setState({linkPreview: null})
+        fetchLinkPreview(null)
       }
     }
   }
@@ -178,12 +177,13 @@ export default class PostEditor extends React.Component {
   }
 
   render () {
-    const { titlePlaceholder, valid, post, linkPreview } = this.state
+    const { titlePlaceholder, valid, post } = this.state
     if (!post) return null
     const { title, details, communities } = post
     const {
       onClose, initialPrompt, detailsPlaceholder,
-      currentUser, communityOptions, editing, loading
+      currentUser, communityOptions, editing, loading,
+      linkPreview
     } = this.props
     const submitButtonLabel = editing ? 'Save' : 'Post'
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
