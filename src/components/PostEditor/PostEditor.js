@@ -31,7 +31,7 @@ export default class PostEditor extends React.Component {
       details: PropTypes.string,
       communities: PropTypes.array
     }),
-    linkPreivew: PropTypes.func,
+    linkPreview: PropTypes.object,
     createPost: PropTypes.func,
     updatePost: PropTypes.func,
     fetchLinkPreview: PropTypes.func,
@@ -137,12 +137,12 @@ export default class PostEditor extends React.Component {
   handleDetailsChange = (editorState, contentChanged) => {
     this.setValid()
     if (contentChanged) {
-      const { fetchLinkPreview } = this.props
+      const { fetchLinkPreview, clearLinkPreview } = this.props
       const contentStateHTML = contentStateToHTML(editorState.getCurrentContent())
       if (linkify.test(contentStateHTML)) {
         fetchLinkPreview(linkify.match(contentStateHTML)[0].url)
       } else {
-        fetchLinkPreview(null)
+        clearLinkPreview()
       }
     }
   }
@@ -171,6 +171,7 @@ export default class PostEditor extends React.Component {
     const { editing, createPost, updatePost, onClose, goToPost } = this.props
     const { id, type, title, communities } = this.state.post
     const details = this.editor.getContentHTML()
+    // Add linkPreview.id to post update
     const postToSave = { id, type, title, details, communities }
     const saveFunc = editing ? updatePost : createPost
     saveFunc(postToSave).then(editing ? onClose : goToPost)
@@ -224,7 +225,8 @@ export default class PostEditor extends React.Component {
             readOnly={loading}
             ref={component => { this.editor = component && component.getWrappedInstance() }}
           />
-          {linkPreview && <LinkPreview styleName='linkPreview' url={linkPreview} />}
+          {linkPreview &&
+            <LinkPreview styleName='linkPreview' linkPreview={linkPreview} />}
         </div>
       </div>
       <div styleName='footer'>

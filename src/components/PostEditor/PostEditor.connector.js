@@ -8,7 +8,8 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import {
   createPost,
   updatePost,
-  fetchLinkPreview
+  fetchLinkPreview,
+  clearLinkPreview
 } from './PostEditor.store'
 
 export function mapStateToProps (state, props) {
@@ -37,6 +38,7 @@ export const mapDispatchToProps = (dispatch, props) => {
   const slug = getParam('slug', null, props)
   return {
     fetchLinkPreview: (post) => dispatch(fetchLinkPreview(post)),
+    clearLinkPreview: () => dispatch(clearLinkPreview()),
     updatePost: (postParams) => dispatch(updatePost(postParams)),
     createPost: (postParams) => dispatch(createPost(postParams)),
     goToPost: (createPostAction) => {
