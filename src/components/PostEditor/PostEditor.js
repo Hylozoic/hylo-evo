@@ -137,28 +137,29 @@ export default class PostEditor extends React.Component {
   handleDetailsChange = (editorState, contentChanged) => {
     this.setValid()
     if (contentChanged) {
-      const { linkPreview, fetchLinkPreview } = this.props
-
+      const { linkPreview } = this.props
       if (linkPreview) return
-
       const contentStateHTML = contentStateToHTML(editorState.getCurrentContent())
+      this.setLinkPreview(linkPreview, contentStateHTML)
+    }
+  }
 
-      const poll = (url, delay) => {
-        if (delay > 4) return // give up
-        fetchLinkPreview(url).then(value => {
-          // LEJ: It'd be better to handle this stuff in the store
-          if (!value) return
-          const { status } = value.meta.extractModel.getRoot(value.payload.data)
-          if (status !== 'loaded') {
-            setTimeout(() => poll(url, delay * 2), delay * 1000)
-          }
-        })
-      }
-
-      if (linkify.test(contentStateHTML)) {
-        const urlMatch = linkify.match(contentStateHTML)[0].url
-        poll(urlMatch, 0.5)
-      }
+  setLinkPreview = (linkPreview, contentStateHTML) => {
+    const { fetchLinkPreview } = this.props
+    const poll = (url, delay) => {
+      if (delay > 4) return
+      fetchLinkPreview(url).then(value => {
+        // LEJ: It'd be better to handle this stuff in the store
+        if (!value) return
+        const { status } = value.meta.extractModel.getRoot(value.payload.data)
+        if (status !== 'loaded') {
+          setTimeout(() => poll(url, delay * 2), delay * 1000)
+        }
+      })
+    }
+    if (linkify.test(contentStateHTML)) {
+      const urlMatch = linkify.match(contentStateHTML)[0].url
+      poll(urlMatch, 0.5)
     }
   }
 
@@ -167,6 +168,10 @@ export default class PostEditor extends React.Component {
       post: {...this.state.post, communities},
       valid: this.isValid({ communities })
     })
+  }
+
+  removeLinkPreview = () => {
+    this.props.clearLinkPreview()
   }
 
   isValid = (postUpdates = {}) => {
@@ -241,7 +246,7 @@ export default class PostEditor extends React.Component {
             ref={component => { this.editor = component && component.getWrappedInstance() }}
           />
           {linkPreview &&
-            <LinkPreview linkPreview={linkPreview} />}
+            <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
         </div>
       </div>
       <div styleName='footer'>

@@ -19,7 +19,7 @@ export function mapStateToProps (state, props) {
   const communityOptions = props.communityOptions || (currentUser &&
     currentUser.memberships.toModelArray().map(m => m.community))
   const linkPreview = getLinkPreview(state, props)
-  const linkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
+  const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
   const editing = !!getParam('postId', state, props)
   let post = props.post || getPost(state, props)
   const loading = editing && !post
@@ -35,7 +35,7 @@ export function mapStateToProps (state, props) {
     currentUser,
     editing,
     loading,
-    linkPreviewPending
+    fetchLinkPreviewPending
   }
 }
 
@@ -54,10 +54,10 @@ export const mapDispatchToProps = (dispatch, props) => {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { linkPreviewPending } = stateProps
+  const { fetchLinkPreviewPending } = stateProps
   const { fetchLinkPreviewRaw } = dispatchProps
 
-  const fetchLinkPreview = linkPreviewPending
+  const fetchLinkPreview = fetchLinkPreviewPending
     ? () => Promise.resolve()
     : url => fetchLinkPreviewRaw(url)
 

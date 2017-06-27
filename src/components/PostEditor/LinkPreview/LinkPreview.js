@@ -14,7 +14,7 @@ export default function LinkPreview ({ className, linkPreview, onClose }) {
       <div styleName='header'>
         <span styleName='title'>{title}</span>
         <span onClick={onClose} styleName='close'>
-          <Icon name='Ex' styleName='icon'/>          
+          <Icon name='Ex' styleName='icon' />
         </span>
       </div>
       <span styleName='description'>{description}</span>
