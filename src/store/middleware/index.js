@@ -6,7 +6,6 @@ import graphqlMiddleware from './graphql'
 import apiMiddleware from './apiMiddleware'
 import pendingMiddleware from './pendingMiddleware'
 import optimisticMiddleware from './optimisticMiddleware'
-import errorMiddleware from 'store/middleware/errorMiddleware'
 import { routerMiddleware } from 'react-router-redux'
 import extractModelMiddleware from './extractModel'
 
@@ -15,7 +14,6 @@ export default function createMiddleware (history) {
     routerMiddleware(history),
     graphqlMiddleware,
     apiMiddleware(),
-    errorMiddleware,
     extractModelMiddleware,
     optimisticMiddleware,
     pendingMiddleware,
