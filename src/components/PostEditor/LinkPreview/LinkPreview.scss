@@ -1,0 +1,42 @@
+.link-preview {
+  display: flex;
+  margin-bottom: 26px;
+}
+
+.image {
+  margin-right: 16px;
+  width: 96px;
+  height: 96px;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-right: 40px;
+}
+
+.header {
+  display: flex;
+}
+
+.title {
+  composes: hdr-subheadline from 'css/typography.scss';
+}
+
+.close {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.icon {
+  font-size: 18px;
+}
+
+.description {
+  composes: caption-lt-lg from 'css/typography.scss';
+
+}

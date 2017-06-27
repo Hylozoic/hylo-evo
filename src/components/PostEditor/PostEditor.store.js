@@ -88,8 +88,6 @@ export function fetchLinkPreview (url) {
           imageUrl
           title
           description
-          imageWidth
-          imageHeight
         }
       }`,
       variables: {

@@ -231,7 +231,7 @@ export default class PostEditor extends React.Component {
             ref={component => { this.editor = component && component.getWrappedInstance() }}
           />
           {linkPreview &&
-            <LinkPreview styleName='linkPreview' linkPreview={linkPreview} />}
+            <LinkPreview linkPreview={linkPreview} />}
         </div>
       </div>
       <div styleName='footer'>
