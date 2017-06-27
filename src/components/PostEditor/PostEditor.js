@@ -1,20 +1,15 @@
 import React, { PropTypes } from 'react'
 import { get } from 'lodash/fp'
 import cx from 'classnames'
-import linkifyIt from 'linkify-it'
-import tlds from 'tlds'
-import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
+import linkify from 'utils/linkify'
 import styles from './PostEditor.scss'
+import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 import LinkPreview from './LinkPreview'
-
-// Needed for link preview
-const linkify = linkifyIt()
-linkify.tlds(tlds)
 
 export default class PostEditor extends React.Component {
   static propTypes = {
