@@ -11,13 +11,13 @@ export const CLEAR_LINK_PREVIEW = `${MODULE_NAME}/CLEAR_LINK_PREVIEW`
 // Actions
 
 export function createPost (post) {
-  const { type, title, details, communities } = post
+  const { type, title, details, communities, linkPreview } = post
   const communityIds = communities.map(c => c.id)
   return {
     type: CREATE_POST,
     graphql: {
-      query: `mutation ($type: String, $title: String, $details: String, $communityIds: [String]) {
-        createPost(data: {type: $type, title: $title, details: $details, communityIds: $communityIds}) {
+      query: `mutation ($type: String, $title: String, $details: String, $linkPreviewId: String, $communityIds: [String]) {
+        createPost(data: {type: $type, title: $title, details: $details, linkPreviewId: $linkPreviewId, communityIds: $communityIds}) {
           id
           type
           title
@@ -31,12 +31,20 @@ export function createPost (post) {
           creator {
             id
           }
+          linkPreview {
+            id
+            url
+            imageUrl
+            title
+            description
+          }
         }
       }`,
       variables: {
         type,
         title,
         details,
+        linkPreviewId: linkPreview.id,
         communityIds
       }
     },
@@ -136,7 +144,6 @@ export default function reducer (state = defaultState, action) {
     case FETCH_LINK_PREVIEW:
       return {...state, linkPreviewId: meta.extractModel.getRoot(payload.data).id}
     case CLEAR_LINK_PREVIEW:
-      // Remove record from ORM store?
       return {...state, linkPreviewId: null}
     default:
       return state

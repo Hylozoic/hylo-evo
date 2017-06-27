@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { get } from 'lodash/fp'
 import cx from 'classnames'
-import linkify from 'utils/linkify'
+import linkMatcher from 'util/linkMatcher'
 import styles from './PostEditor.scss'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
@@ -146,14 +146,12 @@ export default class PostEditor extends React.Component {
       fetchLinkPreview(url).then(value => {
         // LEJ: It'd be better to handle this stuff in the store
         if (!value) return
-        const { status } = value.meta.extractModel.getRoot(value.payload.data)
-        if (status !== 'loaded') {
-          setTimeout(() => poll(url, delay * 2), delay * 1000)
-        }
+        const { title } = value.meta.extractModel.getRoot(value.payload.data)
+        if (title) setTimeout(() => poll(url, delay * 2), delay * 1000)
       })
     }
-    if (linkify.test(contentStateHTML)) {
-      const urlMatch = linkify.match(contentStateHTML)[0].url
+    if (linkMatcher.test(contentStateHTML)) {
+      const urlMatch = linkMatcher.match(contentStateHTML)[0].url
       poll(urlMatch, 0.5)
     }
   }
@@ -183,11 +181,10 @@ export default class PostEditor extends React.Component {
     this.setState({valid: this.isValid()})
 
   save = () => {
-    const { editing, createPost, updatePost, onClose, goToPost } = this.props
+    const { editing, linkPreview, createPost, updatePost, onClose, goToPost } = this.props
     const { id, type, title, communities } = this.state.post
     const details = this.editor.getContentHTML()
-    // Add linkPreview.id to post update
-    const postToSave = { id, type, title, details, communities }
+    const postToSave = { id, type, title, details, communities, linkPreview }
     const saveFunc = editing ? updatePost : createPost
     saveFunc(postToSave).then(editing ? onClose : goToPost)
   }

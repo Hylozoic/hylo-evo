@@ -18,11 +18,22 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const communityOptions = props.communityOptions || (currentUser &&
     currentUser.memberships.toModelArray().map(m => m.community))
-  const linkPreview = getLinkPreview(state, props)
-  const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
   const editing = !!getParam('postId', state, props)
   let post = props.post || getPost(state, props)
   const loading = editing && !post
+  const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
+  // Get linkPreview prop from post if edit or from ORM if new post
+  const linkPreview = editing
+    ? (!loading && post.linkPreview)
+    : getLinkPreview(state, props)
+  console.log(
+    '!!!! linkPreview:', linkPreview,
+    'editing:', editing,
+    'loading:', loading,
+    'props:', props,
+    'getLinkPreview(state, props):', getLinkPreview(state, props),
+    'post.linkPreview:', post && post.linkPreview
+  )
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   if (!editing && currentCommunity) {
     post = {communities: [currentCommunity]}

@@ -33,6 +33,7 @@ export const postFieldsFragment = `
     hasMore
   }
   linkPreview {
+    id
     title
     url
     imageUrl
