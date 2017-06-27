@@ -12,6 +12,7 @@ export const CLEAR_LINK_PREVIEW = `${MODULE_NAME}/CLEAR_LINK_PREVIEW`
 
 export function createPost (post) {
   const { type, title, details, communities, linkPreview } = post
+  const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
     type: CREATE_POST,
@@ -33,10 +34,6 @@ export function createPost (post) {
           }
           linkPreview {
             id
-            url
-            imageUrl
-            title
-            description
           }
         }
       }`,
@@ -44,7 +41,7 @@ export function createPost (post) {
         type,
         title,
         details,
-        linkPreviewId: linkPreview.id,
+        linkPreviewId,
         communityIds
       }
     },
@@ -53,17 +50,22 @@ export function createPost (post) {
 }
 
 export function updatePost (post) {
-  const { id, type, title, details, communities } = post
+  const { id, type, title, details, communities, linkPreview } = post
+  console.log('linkPreview in updatePost:', linkPreview)
+  const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
     type: UPDATE_POST,
     graphql: {
-      query: `mutation ($id: ID, $type: String, $title: String, $details: String, $communityIds: [String]) {
-        updatePost(id: $id, data: {type: $type, title: $title, details: $details, communityIds: $communityIds}) {
+      query: `mutation ($id: ID, $type: String, $title: String, $details: String, $linkPreviewId: String, $communityIds: [String]) {
+        updatePost(id: $id, data: {type: $type, title: $title, details: $details, linkPreviewId: $linkPreviewId, communityIds: $communityIds}) {
           id
           type
           title
           details
+          linkPreview {
+            id
+          }
           communities {
             id
             name
@@ -76,6 +78,7 @@ export function updatePost (post) {
         type,
         title,
         details,
+        linkPreviewId,
         communityIds
       }
     },
