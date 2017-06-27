@@ -1,10 +1,14 @@
 import { get } from 'lodash/fp'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import orm from 'store/models'
 
 export const MODULE_NAME = 'PostEditor'
 export const CREATE_POST = `${MODULE_NAME}/CREATE_POST`
 export const UPDATE_POST = `${MODULE_NAME}/UPDATE_POST`
 export const FETCH_LINK_PREVIEW = `${MODULE_NAME}/FETCH_LINK_PREVIEW`
 export const CLEAR_LINK_PREVIEW = `${MODULE_NAME}/CLEAR_LINK_PREVIEW`
+
+// Actions
 
 export function createPost (post) {
   const { type, title, details, communities } = post
@@ -88,19 +92,21 @@ export function fetchLinkPreview (url) {
           imageUrl
           title
           description
+          imageWidth
+          imageHeight
+          status
         }
       }`,
       variables: {
         url
       }
+    },
+    meta: {
+      extractModel: {
+        modelName: 'LinkPreview',
+        getRoot: get('findOrCreateLinkPreviewByUrl')
+      }
     }
-    // meta: {
-    //   extractModel: {
-    //     modelName: 'LinkPreview',
-    //     getRoot: get('updatePost'),
-    //     append: false
-    //   }
-    // }
   }
 }
 
@@ -108,17 +114,30 @@ export function clearLinkPreview () {
   return {type: CLEAR_LINK_PREVIEW}
 }
 
+// Selectors
+
+export const getLinkPreview = ormCreateSelector(
+  orm,
+  state => state.orm,
+  state => state[MODULE_NAME],
+  ({ LinkPreview }, { linkPreviewId }) =>
+    LinkPreview.hasId(linkPreviewId) ? LinkPreview.withId(linkPreviewId) : null
+)
+
+// Reducer
+
 const defaultState = {}
 
 export default function reducer (state = defaultState, action) {
-  const { error, type, payload } = action
+  const { error, type, payload, meta } = action
   if (error) return state
 
   switch (type) {
     case FETCH_LINK_PREVIEW:
-      return {...state, linkPreview: payload.data.findOrCreateLinkPreviewByUrl}
+      return {...state, linkPreviewId: meta.extractModel.getRoot(payload.data).id}
     case CLEAR_LINK_PREVIEW:
-      return {...state, linkPreview: null}
+      // Remove record from ORM store?
+      return {...state, linkPreviewId: null}
     default:
       return state
   }

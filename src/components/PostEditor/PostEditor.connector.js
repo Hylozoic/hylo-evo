@@ -8,15 +8,18 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import {
   createPost,
   updatePost,
+  FETCH_LINK_PREVIEW,
   fetchLinkPreview,
-  clearLinkPreview
+  clearLinkPreview,
+  getLinkPreview
 } from './PostEditor.store'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const communityOptions = props.communityOptions || (currentUser &&
     currentUser.memberships.toModelArray().map(m => m.community))
-  const linkPreview = state.PostEditor.linkPreview
+  const linkPreview = getLinkPreview(state, props)
+  const linkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
   const editing = !!getParam('postId', state, props)
   let post = props.post || getPost(state, props)
   const loading = editing && !post
@@ -24,20 +27,22 @@ export function mapStateToProps (state, props) {
   if (!editing && currentCommunity) {
     post = {communities: [currentCommunity]}
   }
+
   return {
     post,
     linkPreview,
     communityOptions,
     currentUser,
     editing,
-    loading
+    loading,
+    linkPreviewPending
   }
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
   const slug = getParam('slug', null, props)
   return {
-    fetchLinkPreview: (post) => dispatch(fetchLinkPreview(post)),
+    fetchLinkPreviewRaw: (url) => dispatch(fetchLinkPreview(url)),
     clearLinkPreview: () => dispatch(clearLinkPreview()),
     updatePost: (postParams) => dispatch(updatePost(postParams)),
     createPost: (postParams) => dispatch(createPost(postParams)),
@@ -48,4 +53,20 @@ export const mapDispatchToProps = (dispatch, props) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  const { linkPreviewPending } = stateProps
+  const { fetchLinkPreviewRaw } = dispatchProps
+
+  const fetchLinkPreview = linkPreviewPending
+    ? () => Promise.resolve()
+    : url => fetchLinkPreviewRaw(url)
+
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    fetchLinkPreview
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
