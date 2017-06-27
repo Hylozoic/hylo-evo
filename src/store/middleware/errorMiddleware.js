@@ -1,24 +1,26 @@
 import Rollbar from 'client/rollbar'
-import { get } from 'lodash'
 
-export default function errorMiddleware () {
-  return store => next => action => {
+const { ROLLBAR_CLIENT_TOKEN } = process.env
+
+export default function errorMiddleware (store) {
+  return next => action => {
     if (action.error) {
-      let errMsg = `Redux Action Error in '${action.type}': ${get(action, 'payload[0].message')}`
-      if (process.env.NODE_ENV === 'production') {
+      let errMsg = `action error for ${action.type}`
+
+      console.error(errMsg, action)
+
+      if (ROLLBAR_CLIENT_TOKEN) {
         Rollbar.error(errMsg, {
-          action: decycle(action),
-          state: decycle(store.getState())
+          action: safeStringify(action),
+          state: safeStringify(store.getState())
         })
-      } else {
-        console.error(errMsg, action)
       }
     }
     return next(action)
   }
 }
 
-const decycle = (obj) => {
+const safeStringify = (obj) => {
   let cache = []
 
   const stringified = JSON.stringify(obj, function (key, value) {

@@ -15,7 +15,7 @@ export default function createMiddleware (history) {
     routerMiddleware(history),
     graphqlMiddleware,
     apiMiddleware(),
-    errorMiddleware(),
+    errorMiddleware,
     extractModelMiddleware,
     optimisticMiddleware,
     pendingMiddleware,
