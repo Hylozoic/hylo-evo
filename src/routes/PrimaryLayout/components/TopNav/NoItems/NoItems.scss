@@ -5,12 +5,15 @@
   h3 {
     color: $color-dove-gray-50;
     font-size: 25px;
-    margin-top: 40px;
+    margin-top: 25px;
     padding: 10px 30px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
   }
   .image {
     background: no-repeat center;
-    height: $messages-body-height - 180px;
+    height: $messages-body-height;
     background-size: $messages-body-height/2;
   }
 }

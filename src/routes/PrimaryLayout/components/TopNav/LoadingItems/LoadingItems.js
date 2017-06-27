@@ -2,7 +2,7 @@ import React from 'react'
 import { bgImageStyle } from 'util/index'
 import './LoadingItems.scss'
 
-export default function LoadingItems() {
+export default function LoadingItems () {
   return (
     <div styleName='loader'>
       <div styleName='loader-image' style={bgImageStyle('/assets/thinking-axolotl.png')} />
