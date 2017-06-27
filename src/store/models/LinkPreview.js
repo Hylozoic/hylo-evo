@@ -13,5 +13,3 @@ LinkPreview.modelName = 'LinkPreview'
 LinkPreview.fields = {
   id: attr()
 }
-
-export const firstName = person => person.name.split(' ')[0]
