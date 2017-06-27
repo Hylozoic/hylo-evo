@@ -104,7 +104,6 @@
     "replacestream": "^4.0.2",
     "reselect": "^2.5.4",
     "resolve-url-loader": "^2.0.0",
-    "rollbar": "https://github.com/rollbar/rollbar.js.git#2.0.4",
     "root-path": "^0.2.0",
     "sails.io.js": "1.1.10",
     "sass-loader": "^6.0.2",

@@ -38,10 +38,6 @@ export const intercom = {
   appId: process.env.INTERCOM_APP_ID
 }
 
-export const rollbar = {
-  clientToken: process.env.ROLLBAR_CLIENT_TOKEN
-}
-
 export const featureFlags = () => {
   if (isServer) {
     return once(() =>
@@ -68,7 +64,6 @@ const config = {
   facebook,
   segment,
   featureFlags,
-  rollbar,
   intercom
 }
 
