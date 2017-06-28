@@ -121,8 +121,8 @@ export function fetchLinkPreview (url) {
   }
 }
 
-export function clearLinkPreview () {
-  return {type: CLEAR_LINK_PREVIEW}
+export function clearLinkPreview (postId) {
+  return {type: CLEAR_LINK_PREVIEW, payload: {postId}}
 }
 
 // Selectors

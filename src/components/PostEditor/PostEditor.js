@@ -78,6 +78,10 @@ export default class PostEditor extends React.Component {
     }
   }
 
+  componentWillUnmount () {
+    this.removeLinkPreview()
+  }
+
   reset = (props) => {
     this.editor.reset()
     this.communitiesSelector.reset()
