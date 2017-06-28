@@ -1,4 +1,5 @@
 import {
+  ASSIGN_LINK_PREVIEW_TO_POST,
   ADD_MODERATOR_PENDING,
   REMOVE_MODERATOR_PENDING,
   CREATE_COMMENT,
@@ -11,6 +12,7 @@ import {
   LEAVE_COMMUNITY,
   MARK_ACTIVITY_READ_PENDING,
   MARK_ALL_ACTIVITIES_READ_PENDING,
+  REMOVE_LINK_PREVIEW_FROM_POST,
   RESET_NEW_POST_COUNT_PENDING,
   TOGGLE_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_THREAD_READ_TIME,
@@ -63,6 +65,14 @@ export default function ormReducer (state = {}, action) {
         modelName: meta.modelName,
         append: meta.append
       })
+      break
+
+    case ASSIGN_LINK_PREVIEW_TO_POST:
+      Post.withId(payload.postId).linkPreview = payload.linkPreviewId
+      break
+
+    case REMOVE_LINK_PREVIEW_FROM_POST:
+      Post.withId(payload.postId).linkPreview = null
       break
 
     case CREATE_COMMENT_PENDING:

@@ -132,22 +132,21 @@ export default class PostEditor extends React.Component {
   handleDetailsChange = (editorState, contentChanged) => {
     this.setValid()
     if (contentChanged) {
-      const { linkPreview } = this.props
-      if (linkPreview) return
-      const contentStateHTML = contentStateToHTML(editorState.getCurrentContent())
-      this.setLinkPreview(linkPreview, contentStateHTML)
+      if (this.props.linkPreview) return
+      this.setLinkPreview(contentStateToHTML(editorState.getCurrentContent()))
     }
   }
 
-  setLinkPreview = (linkPreview, contentStateHTML) => {
+  setLinkPreview = (contentStateHTML) => {
     const { fetchLinkPreview } = this.props
+    // LEJ: I'd prefer to handle this stuff somewhere in the store...
     const poll = (url, delay) => {
       if (delay > 4) return
       fetchLinkPreview(url).then(value => {
-        // LEJ: It'd be better to handle this stuff in the store
         if (!value) return
+        // LEJ: Not needing to use status here so can be optionally removed from backend
         const { title } = value.meta.extractModel.getRoot(value.payload.data)
-        if (title) setTimeout(() => poll(url, delay * 2), delay * 1000)
+        if (!title) setTimeout(() => poll(url, delay * 2), delay * 1000)
       })
     }
     if (linkMatcher.test(contentStateHTML)) {

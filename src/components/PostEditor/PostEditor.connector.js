@@ -22,10 +22,15 @@ export function mapStateToProps (state, props) {
   let post = props.post || getPost(state, props)
   const loading = editing && !post
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
-  // Get linkPreview prop from post if edit or from ORM if new post
-  const linkPreview = editing && !loading && post.linkPreview
-    ? post.linkPreview
-    : getLinkPreview(state, props)
+
+  // // Get linkPreview prop from post if edit or from ORM if new post
+  // const linkPreview = editing && !loading && post.linkPreview
+  //   ? post.linkPreview
+  //   : getLinkPreview(state, props)
+
+  const linkPreview = getLinkPreview(state, props) ||
+    (editing && !loading && post.linkPreview)
+
   console.log(
     '!!!! linkPreview:', linkPreview,
     'editing:', editing,
