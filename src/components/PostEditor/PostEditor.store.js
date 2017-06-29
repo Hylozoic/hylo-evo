@@ -135,13 +135,13 @@ export const getLinkPreview = ormCreateSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME],
-  ({ LinkPreview }, { linkPreviewId }) =>
-    LinkPreview.hasId(linkPreviewId) ? LinkPreview.withId(linkPreviewId).ref : null
+  ({ LinkPreview }, { linkPreviewIdOrStatus }) =>
+    LinkPreview.hasId(linkPreviewIdOrStatus) ? LinkPreview.withId(linkPreviewIdOrStatus).ref : null
 )
 
 // Reducer
 
-const defaultState = {linkPreviewId: null}
+const defaultState = {linkPreviewIdOrStatus: null}
 
 export default function reducer (state = defaultState, action) {
   const { error, type, payload, meta } = action

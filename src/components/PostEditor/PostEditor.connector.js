@@ -21,7 +21,10 @@ export function mapStateToProps (state, props) {
   const communityOptions = props.communityOptions || (currentUser &&
     currentUser.memberships.toModelArray().map(m => m.community))
   const editing = !!getParam('postId', state, props)
-  let post = getPost(state, props)
+  let post = getPost(state, props) || {}
+  // LEJ: If there is an id or a status (currently rejected or removed)
+  // then the existing post.linkPreview is replaced with either the new
+  // LinkPreview or cleared with null (for statuses)
   const { linkPreviewIdOrStatus } = state[MODULE_NAME]
   if (linkPreviewIdOrStatus) {
     post.linkPreview = getLinkPreview(state, props)
