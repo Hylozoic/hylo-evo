@@ -24,9 +24,6 @@ import {
 import {
    DELETE_POST_PENDING
  } from 'components/PostCard/PostHeader/PostHeader.store'
-import {
-  CLEAR_LINK_PREVIEW
-} from 'components/PostEditor/PostEditor.store'
 
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
@@ -67,12 +64,6 @@ export default function ormReducer (state = {}, action) {
         modelName: meta.modelName,
         append: meta.append
       })
-      break
-
-    case CLEAR_LINK_PREVIEW:
-      if (Post.hasId(payload.postId)) {
-        Post.withId(payload.postId).linkPreview = null
-      }
       break
 
     case CREATE_COMMENT_PENDING:

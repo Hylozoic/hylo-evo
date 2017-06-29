@@ -6,40 +6,36 @@ import getMe from 'store/selectors/getMe'
 import getPost from 'store/selectors/getPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import {
+  MODULE_NAME,
+  FETCH_LINK_PREVIEW,
   createPost,
   updatePost,
-  FETCH_LINK_PREVIEW,
   fetchLinkPreview,
-  clearLinkPreview,
+  removeLinkPreview,
+  resetLinkPreview,
   getLinkPreview
 } from './PostEditor.store'
-import { get } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const communityOptions = props.communityOptions || (currentUser &&
     currentUser.memberships.toModelArray().map(m => m.community))
   const editing = !!getParam('postId', state, props)
-  let post = props.post || getPost(state, props)
+  let post = getPost(state, props)
+  // make getLinkPreviewId selector
+  const linkPreviewId = state[MODULE_NAME].linkPreviewId
+  if (linkPreviewId) {
+    post.linkPreview = getLinkPreview(state, props)
+  }
   const loading = editing && !post
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
-
-  // // Get linkPreview prop from post if edit or from ORM if new post
-  // const linkPreview = editing && !loading && post.linkPreview
-  //   ? post.linkPreview
-  //   : getLinkPreview(state, props)
-
-  const linkPreview = getLinkPreview(state, props) ||
-    (editing && !loading && post.linkPreview)
-
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   if (!editing && currentCommunity) {
     post = {communities: [currentCommunity]}
   }
-
   return {
     post,
-    linkPreview,
+    linkPreviewId,
     communityOptions,
     currentUser,
     editing,
@@ -52,7 +48,8 @@ export const mapDispatchToProps = (dispatch, props) => {
   const slug = getParam('slug', null, props)
   return {
     fetchLinkPreviewRaw: url => dispatch(fetchLinkPreview(url)),
-    clearLinkPreviewRaw: postId => dispatch(clearLinkPreview(postId)),
+    removeLinkPreview: () => dispatch(removeLinkPreview()),
+    resetLinkPreview: () => dispatch(resetLinkPreview()),
     updatePost: postParams => dispatch(updatePost(postParams)),
     createPost: postParams => dispatch(createPost(postParams)),
     goToPost: createPostAction => {
@@ -63,10 +60,8 @@ export const mapDispatchToProps = (dispatch, props) => {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { fetchLinkPreviewPending, post } = stateProps
-  const { fetchLinkPreviewRaw, clearLinkPreviewRaw } = dispatchProps
-
-  const clearLinkPreview = () => clearLinkPreviewRaw(post.id)
+  const { fetchLinkPreviewPending } = stateProps
+  const { fetchLinkPreviewRaw } = dispatchProps
 
   const fetchLinkPreview = fetchLinkPreviewPending
     ? () => Promise.resolve()
@@ -76,8 +71,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    fetchLinkPreview,
-    clearLinkPreview
+    fetchLinkPreview
   }
 }
 

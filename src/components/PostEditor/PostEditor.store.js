@@ -6,7 +6,8 @@ export const MODULE_NAME = 'PostEditor'
 export const CREATE_POST = `${MODULE_NAME}/CREATE_POST`
 export const UPDATE_POST = `${MODULE_NAME}/UPDATE_POST`
 export const FETCH_LINK_PREVIEW = `${MODULE_NAME}/FETCH_LINK_PREVIEW`
-export const CLEAR_LINK_PREVIEW = `${MODULE_NAME}/CLEAR_LINK_PREVIEW`
+export const REMOVE_LINK_PREVIEW = `${MODULE_NAME}/REMOVE_LINK_PREVIEW`
+export const RESET_LINK_PREVIEW = `${MODULE_NAME}/RESET_LINK_PREVIEW`
 
 // Actions
 
@@ -121,8 +122,12 @@ export function fetchLinkPreview (url) {
   }
 }
 
-export function clearLinkPreview (postId) {
-  return {type: CLEAR_LINK_PREVIEW, payload: {postId}}
+export function removeLinkPreview () {
+  return {type: REMOVE_LINK_PREVIEW}
+}
+
+export function resetLinkPreview () {
+  return {type: RESET_LINK_PREVIEW}
 }
 
 // Selectors
@@ -132,12 +137,12 @@ export const getLinkPreview = ormCreateSelector(
   state => state.orm,
   state => state[MODULE_NAME],
   ({ LinkPreview }, { linkPreviewId }) =>
-    LinkPreview.hasId(linkPreviewId) ? LinkPreview.withId(linkPreviewId) : null
+    LinkPreview.hasId(linkPreviewId) ? LinkPreview.withId(linkPreviewId).ref : null
 )
 
 // Reducer
 
-const defaultState = {}
+const defaultState = {linkPreviewId: null}
 
 export default function reducer (state = defaultState, action) {
   const { error, type, payload, meta } = action
@@ -146,8 +151,12 @@ export default function reducer (state = defaultState, action) {
   switch (type) {
     case FETCH_LINK_PREVIEW:
       return {...state, linkPreviewId: meta.extractModel.getRoot(payload.data).id}
-    case CLEAR_LINK_PREVIEW:
-      return {...state, linkPreviewId: null}
+    case REMOVE_LINK_PREVIEW:
+      return {...state, linkPreviewId: 'removed'}
+    case RESET_LINK_PREVIEW:
+      let { linkPreviewId } = state
+      if (linkPreviewId !== 'removed') return state
+      return {...state, linkPreviewId: 'reset'}
     default:
       return state
   }

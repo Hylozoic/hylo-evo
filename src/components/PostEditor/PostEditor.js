@@ -26,7 +26,6 @@ export default class PostEditor extends React.Component {
       details: PropTypes.string,
       communities: PropTypes.array
     }),
-    linkPreview: PropTypes.object,
     createPost: PropTypes.func,
     updatePost: PropTypes.func,
     fetchLinkPreview: PropTypes.func,
@@ -75,6 +74,9 @@ export default class PostEditor extends React.Component {
     if (get('post.id', this.props) !== get('post.id', prevProps)) {
       this.reset(this.props)
       this.editor.focus()
+    }
+    if (get('post.linkPreview', this.props) !== get('post.linkPreview', prevProps)) {
+      this.setState({ post: this.props.post })
     }
   }
 
@@ -136,21 +138,28 @@ export default class PostEditor extends React.Component {
   handleDetailsChange = (editorState, contentChanged) => {
     this.setValid()
     if (contentChanged) {
-      if (this.props.linkPreview) return
-      this.setLinkPreview(contentStateToHTML(editorState.getCurrentContent()))
+      const contentState = editorState.getCurrentContent()
+      const { resetLinkPreview } = this.props
+      if (!contentState.hasText()) resetLinkPreview()
+      this.setLinkPreview(contentState)
     }
   }
 
-  setLinkPreview = (contentStateHTML) => {
-    const { fetchLinkPreview } = this.props
+  setLinkPreview = (contentState) => {
+    const contentStateHTML = contentStateToHTML(contentState)
+    const { fetchLinkPreview, linkPreviewId } = this.props
+    const { linkPreview } = this.state.post
+    if (linkPreview) return
+    if (linkPreviewId === 'removed') return
     // LEJ: I'd prefer to handle this stuff somewhere in the store...
     const poll = (url, delay) => {
       if (delay > 4) return
       fetchLinkPreview(url).then(value => {
         if (!value) return
-        // LEJ: Not needing to use status here so can be optionally removed from backend
         const { title } = value.meta.extractModel.getRoot(value.payload.data)
-        if (!title) setTimeout(() => poll(url, delay * 2), delay * 1000)
+        if (!title) {
+          setTimeout(() => poll(url, delay * 2), delay * 1000)
+        }
       })
     }
     if (linkMatcher.test(contentStateHTML)) {
@@ -159,15 +168,18 @@ export default class PostEditor extends React.Component {
     }
   }
 
+  removeLinkPreview = () => {
+    this.props.removeLinkPreview()
+    this.setState({
+      post: {...this.state.post, linkPreview: null}
+    })
+  }
+
   setSelectedCommunities = communities => {
     this.setState({
       post: {...this.state.post, communities},
       valid: this.isValid({ communities })
     })
-  }
-
-  removeLinkPreview = () => {
-    this.props.clearLinkPreview()
   }
 
   isValid = (postUpdates = {}) => {
@@ -184,8 +196,8 @@ export default class PostEditor extends React.Component {
     this.setState({valid: this.isValid()})
 
   save = () => {
-    const { editing, linkPreview, createPost, updatePost, onClose, goToPost } = this.props
-    const { id, type, title, communities } = this.state.post
+    const { editing, createPost, updatePost, onClose, goToPost } = this.props
+    const { id, type, title, communities, linkPreview } = this.state.post
     const details = this.editor.getContentHTML()
     const postToSave = { id, type, title, details, communities, linkPreview }
     const saveFunc = editing ? updatePost : createPost
@@ -195,11 +207,10 @@ export default class PostEditor extends React.Component {
   render () {
     const { titlePlaceholder, valid, post } = this.state
     if (!post) return null
-    const { title, details, communities } = post
+    const { title, details, communities, linkPreview } = post
     const {
       onClose, initialPrompt, detailsPlaceholder,
-      currentUser, communityOptions, editing, loading,
-      linkPreview
+      currentUser, communityOptions, editing, loading
     } = this.props
     const submitButtonLabel = editing ? 'Save' : 'Post'
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
