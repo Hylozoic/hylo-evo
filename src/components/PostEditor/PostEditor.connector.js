@@ -35,6 +35,7 @@ export function mapStateToProps (state, props) {
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
   const { linkPreviewIdOrStatus } = state[MODULE_NAME]
   if (linkPreviewIdOrStatus) {
+    post = post || {}
     post.linkPreview = getLinkPreview(state, props)
   }
   return {
