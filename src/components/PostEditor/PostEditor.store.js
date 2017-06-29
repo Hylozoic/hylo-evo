@@ -52,7 +52,6 @@ export function createPost (post) {
 
 export function updatePost (post) {
   const { id, type, title, details, communities, linkPreview } = post
-  console.log('linkPreview in updatePost:', linkPreview)
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
@@ -150,13 +149,13 @@ export default function reducer (state = defaultState, action) {
 
   switch (type) {
     case FETCH_LINK_PREVIEW:
-      return {...state, linkPreviewId: meta.extractModel.getRoot(payload.data).id}
+      return {...state, linkPreviewIdOrStatus: meta.extractModel.getRoot(payload.data).id}
     case REMOVE_LINK_PREVIEW:
-      return {...state, linkPreviewId: 'removed'}
+      return {...state, linkPreviewIdOrStatus: 'removed'}
     case RESET_LINK_PREVIEW:
-      let { linkPreviewId } = state
-      if (linkPreviewId !== 'removed') return state
-      return {...state, linkPreviewId: 'reset'}
+      let { linkPreviewIdOrStatus } = state
+      if (linkPreviewIdOrStatus !== 'removed') return state
+      return {...state, linkPreviewIdOrStatus: 'reset'}
     default:
       return state
   }

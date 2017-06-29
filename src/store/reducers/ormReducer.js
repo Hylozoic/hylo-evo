@@ -24,7 +24,6 @@ import {
 import {
    DELETE_POST_PENDING
  } from 'components/PostCard/PostHeader/PostHeader.store'
-
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
 import { find } from 'lodash/fp'

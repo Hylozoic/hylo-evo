@@ -22,9 +22,8 @@ export function mapStateToProps (state, props) {
     currentUser.memberships.toModelArray().map(m => m.community))
   const editing = !!getParam('postId', state, props)
   let post = getPost(state, props)
-  // make getLinkPreviewId selector
-  const linkPreviewId = state[MODULE_NAME].linkPreviewId
-  if (linkPreviewId) {
+  const { linkPreviewIdOrStatus } = state[MODULE_NAME]
+  if (linkPreviewIdOrStatus) {
     post.linkPreview = getLinkPreview(state, props)
   }
   const loading = editing && !post
@@ -35,7 +34,7 @@ export function mapStateToProps (state, props) {
   }
   return {
     post,
-    linkPreviewId,
+    linkPreviewIdOrStatus,
     communityOptions,
     currentUser,
     editing,
