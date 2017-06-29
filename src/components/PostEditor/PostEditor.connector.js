@@ -20,29 +20,32 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const communityOptions = props.communityOptions || (currentUser &&
     currentUser.memberships.toModelArray().map(m => m.community))
-  const editing = !!getParam('postId', state, props)
-  let post = getPost(state, props) || {}
-  // LEJ: If there is an id or a status (currently rejected or removed)
-  // then the existing post.linkPreview is replaced with either the new
-  // LinkPreview or cleared with null (for statuses)
+  let post = props.post || getPost(state, props)
+  const editing = !!post
+  const loading = editing && !post.id
+  // LEJ: the defaultPost assembled here is merged with on top of
+  // defaultProps.post on the component
+  const currentCommunity = getCommunityForCurrentRoute(state, props)
+  const defaultPost = (!editing && currentCommunity)
+    ? {communities: [currentCommunity]}
+    : {}
+  // LEJ: linkPreviewIdOrStatus is an id or status (currently rejected
+  // or removed). The post.linkPreview is replaced with either the new
+  // LinkPreview or cleared with null for either status.
+  const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
   const { linkPreviewIdOrStatus } = state[MODULE_NAME]
   if (linkPreviewIdOrStatus) {
     post.linkPreview = getLinkPreview(state, props)
   }
-  const loading = editing && !post
-  const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
-  const currentCommunity = getCommunityForCurrentRoute(state, props)
-  if (!editing && currentCommunity) {
-    post = {communities: [currentCommunity]}
-  }
   return {
     post,
+    defaultPost,
+    fetchLinkPreviewPending,
     linkPreviewIdOrStatus,
     communityOptions,
     currentUser,
     editing,
-    loading,
-    fetchLinkPreviewPending
+    loading
   }
 }
 

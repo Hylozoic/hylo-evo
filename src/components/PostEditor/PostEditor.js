@@ -24,6 +24,7 @@ export default class PostEditor extends React.Component {
       type: PropTypes.string,
       title: PropTypes.string,
       details: PropTypes.string,
+      linkPreview: PropTypes.object,
       communities: PropTypes.array
     }),
     linkPreviewIdOrStatus: PropTypes.string,
@@ -55,11 +56,14 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ post }) => {
-    const defaultedPost = Object.assign({}, PostEditor.defaultProps.post, post)
+  buildStateFromProps = ({ editing, loading, defaultPost, post }) => {
+    const mergedDefaultPost = Object.assign({}, PostEditor.defaultProps.post, defaultPost)
+    let currentPost = editing && !loading
+      ? post
+      : mergedDefaultPost
     return {
-      post: defaultedPost,
-      titlePlaceholder: this.titlePlaceholderForPostType(defaultedPost.type),
+      post: currentPost,
+      titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
       valid: false
     }
   }
@@ -77,9 +81,10 @@ export default class PostEditor extends React.Component {
     if (get('post.id', this.props) !== get('post.id', prevProps)) {
       this.reset(this.props)
       this.editor.focus()
-    }
-    if (get('post.linkPreview', this.props) !== get('post.linkPreview', prevProps)) {
-      this.setState({ post: this.props.post })
+    } else if (get('post.linkPreview', this.props) !== get('post.linkPreview', prevProps)) {
+      this.setState({
+        post: {...this.state.post, linkPreview: this.props.post.linkPreview}
+      })
     }
   }
 
@@ -209,7 +214,6 @@ export default class PostEditor extends React.Component {
 
   render () {
     const { titlePlaceholder, valid, post } = this.state
-    if (!post) return null
     const { title, details, communities, linkPreview } = post
     const {
       onClose, initialPrompt, detailsPlaceholder,
@@ -241,7 +245,7 @@ export default class PostEditor extends React.Component {
             type='text'
             styleName='titleInput'
             placeholder={titlePlaceholder}
-            value={title}
+            value={title || ''}
             onChange={this.handleTitleChange}
             disabled={loading}
             ref={x => { this.titleInput = x }}
