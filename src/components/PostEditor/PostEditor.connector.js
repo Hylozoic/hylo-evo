@@ -29,12 +29,12 @@ export function mapStateToProps (state, props) {
   const defaultPost = (!editing && currentCommunity)
     ? {communities: [currentCommunity]}
     : {}
-  // LEJ: linkPreviewIdOrStatus is an id or status (currently rejected
-  // or removed). The post.linkPreview is replaced with either the new
-  // LinkPreview or cleared with null for either status.
+  // LEJ: The post.linkPreview is replaced with either the new
+  // LinkPreview or cleared with null in the case of
+  // either status (removed or reset)
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
-  const { linkPreviewIdOrStatus } = state[MODULE_NAME]
-  if (linkPreviewIdOrStatus) {
+  const { linkPreviewStatus, linkPreviewId } = state[MODULE_NAME]
+  if (linkPreviewId || linkPreviewStatus) {
     post = post || {}
     post.linkPreview = getLinkPreview(state, props)
   }
@@ -42,7 +42,7 @@ export function mapStateToProps (state, props) {
     post,
     defaultPost,
     fetchLinkPreviewPending,
-    linkPreviewIdOrStatus,
+    linkPreviewStatus,
     communityOptions,
     currentUser,
     editing,

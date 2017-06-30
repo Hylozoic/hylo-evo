@@ -27,7 +27,7 @@ export default class PostEditor extends React.Component {
       linkPreview: PropTypes.object,
       communities: PropTypes.array
     }),
-    linkPreviewIdOrStatus: PropTypes.string,
+    linkPreviewStatus: PropTypes.string,
     createPost: PropTypes.func,
     updatePost: PropTypes.func,
     fetchLinkPreview: PropTypes.func,
@@ -155,17 +155,17 @@ export default class PostEditor extends React.Component {
 
   setLinkPreview = (contentState) => {
     const contentStateHTML = contentStateToHTML(contentState)
-    const { fetchLinkPreview, linkPreviewIdOrStatus } = this.props
+    const { fetchLinkPreview, linkPreviewStatus } = this.props
     const { linkPreview } = this.state.post
     if (linkPreview) return
-    if (linkPreviewIdOrStatus === 'removed') return
+    if (linkPreviewStatus === 'removed' || linkPreviewStatus === 'invalid') return
     // LEJ: I'd prefer to handle this stuff somewhere in the store...
     const poll = (url, delay) => {
       if (delay > 4) return
       fetchLinkPreview(url).then(value => {
         if (!value) return
-        const { title } = value.meta.extractModel.getRoot(value.payload.data)
-        if (!title) {
+        const linkPreviewFound = value.meta.extractModel.getRoot(value.payload.data)
+        if (!linkPreviewFound) {
           setTimeout(() => poll(url, delay * 2), delay * 1000)
         }
       })

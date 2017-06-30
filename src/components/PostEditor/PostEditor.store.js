@@ -135,13 +135,13 @@ export const getLinkPreview = ormCreateSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME],
-  ({ LinkPreview }, { linkPreviewIdOrStatus }) =>
-    LinkPreview.hasId(linkPreviewIdOrStatus) ? LinkPreview.withId(linkPreviewIdOrStatus).ref : null
+  ({ LinkPreview }, { linkPreviewId }) =>
+    LinkPreview.hasId(linkPreviewId) ? LinkPreview.withId(linkPreviewId).ref : null
 )
 
 // Reducer
 
-const defaultState = {linkPreviewIdOrStatus: null}
+const defaultState = {linkPreviewId: null, linkPreviewStatus: null}
 
 export default function reducer (state = defaultState, action) {
   const { error, type, payload, meta } = action
@@ -149,13 +149,17 @@ export default function reducer (state = defaultState, action) {
 
   switch (type) {
     case FETCH_LINK_PREVIEW:
-      return {...state, linkPreviewIdOrStatus: meta.extractModel.getRoot(payload.data).id}
+      const linkPreview = (meta.extractModel.getRoot(payload.data))
+      if (linkPreview && !linkPreview.title) {
+        return {...state, linkPreviewId: null, linkPreviewStatus: 'invalid'}
+      }
+      return {...state, linkPreviewId: get('id')(linkPreview)}
     case REMOVE_LINK_PREVIEW:
-      return {...state, linkPreviewIdOrStatus: 'removed'}
+      return {...state, linkPreviewId: null, linkPreviewStatus: 'removed'}
     case RESET_LINK_PREVIEW:
-      let { linkPreviewIdOrStatus } = state
-      if (linkPreviewIdOrStatus !== 'removed') return state
-      return {...state, linkPreviewIdOrStatus: 'reset'}
+      let { linkPreviewStatus } = state
+      if (linkPreviewStatus !== 'removed' && linkPreviewStatus !== 'invalid') return state
+      return {...state, linkPreviewId: null, linkPreviewStatus: 'reset'}
     default:
       return state
   }
