@@ -1,8 +1,6 @@
 import { FETCH_POSTS } from 'store/constants'
 
-export const ALL_COMMUNITIES_ID = 'all-communities'
-
-export function fetchPosts ({ subject, id, sortBy, offset, search, filter, topic }) {
+export function fetchPosts ({ subject, slug, sortBy, offset, search, filter, topic }) {
   var query, extractModel
 
   if (subject === 'community') {
@@ -10,7 +8,6 @@ export function fetchPosts ({ subject, id, sortBy, offset, search, filter, topic
     extractModel = 'Community'
   } else if (subject === 'all-communities') {
     query = allCommunitiesQuery
-    id = ALL_COMMUNITIES_ID // this is just for queryResults, not the API
     extractModel = 'Post'
   } else {
     throw new Error(`FETCH_POSTS with subject=${subject} is not implemented`)
@@ -21,7 +18,7 @@ export function fetchPosts ({ subject, id, sortBy, offset, search, filter, topic
     graphql: {
       query,
       variables: {
-        id,
+        slug,
         sortBy,
         offset,
         search,
@@ -80,7 +77,7 @@ posts(
 }`
 
 const communityQuery = `query (
-  $id: String,
+  $slug: String,
   $sortBy: String,
   $offset: Int,
   $search: String,
@@ -88,7 +85,7 @@ const communityQuery = `query (
   $topic: Int,
   $first: Int
 ) {
-  community(slug: $id) {
+  community(slug: $slug) {
     id
     slug
     name

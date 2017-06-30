@@ -4,7 +4,7 @@ exports[`works for a community 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
-  $id: String,
+  $slug: String,
   $sortBy: String,
   $offset: Int,
   $search: String,
@@ -12,7 +12,7 @@ Object {
   $topic: Int,
   $first: Int
 ) {
-  community(slug: $id) {
+  community(slug: $slug) {
     id
     slug
     name
@@ -68,9 +68,9 @@ posts(
     "variables": Object {
       "filter": "offer",
       "first": 20,
-      "id": "foo",
       "offset": 20,
       "search": "gardening",
+      "slug": undefined,
       "sortBy": undefined,
       "topic": undefined,
     },
@@ -141,9 +141,9 @@ posts(
     "variables": Object {
       "filter": "request",
       "first": 20,
-      "id": "all-communities",
       "offset": 20,
       "search": "graphic design",
+      "slug": undefined,
       "sortBy": undefined,
       "topic": undefined,
     },

@@ -14,7 +14,7 @@ describe('Feed', () => {
     expect(feed).toHaveLength(1)
     expect(feed.props()).toEqual({
       subject: 'community',
-      id: 'foo',
+      slug: 'foo',
       filter: 'request',
       sortBy: 'votes',
       selectedPostId: '5',

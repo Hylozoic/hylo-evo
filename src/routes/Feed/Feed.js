@@ -4,7 +4,6 @@ import FeedList from 'components/FeedList'
 import Loading from 'components/Loading'
 import FeedBanner from 'components/FeedBanner'
 import TopicFeedHeader from 'components/TopicFeedHeader'
-import { ALL_COMMUNITIES_ID } from 'components/FeedList/FeedList.store'
 import { get, pick } from 'lodash/fp'
 
 export default class Feed extends Component {
@@ -28,7 +27,7 @@ export default class Feed extends Component {
     const { communitySlug, topic } = this.props
     return {
       subject: communitySlug ? 'community' : 'all-communities',
-      id: communitySlug || ALL_COMMUNITIES_ID,
+      slug: communitySlug,
       topic: get('id', topic),
       showCommunities: !communitySlug,
       ...pick([
