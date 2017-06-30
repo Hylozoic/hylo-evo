@@ -42,6 +42,7 @@
   right: 0.5px;
   top: -2px;
   transition: 0.15s;
+  color: $color-white;
 }
 
 .badgeNumber {
@@ -51,6 +52,7 @@
 .badgeNumber-collapsed {
   composes: badgeNumber;
   font-size: 0px;
+  color: transparent;
 }
 
 // parent is imported by parent composes to add as a className so that the badge can
