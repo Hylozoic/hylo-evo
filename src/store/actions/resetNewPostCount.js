@@ -27,7 +27,7 @@ const CommunityTopicQuery = `mutation($id: ID, $data: CommunityTopicInput) {
       }`
 
 const MembershipQuery = `mutation($id: ID, $data: MembershipInput) {
-        updateMembership(id: $id, data: $data) {
+        updateMembership(communityId: $id, data: $data) {
           id
         }
       }`
