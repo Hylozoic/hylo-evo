@@ -1,17 +1,25 @@
 import { get } from 'lodash/fp'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import orm from 'store/models'
 
 export const MODULE_NAME = 'PostEditor'
 export const CREATE_POST = `${MODULE_NAME}/CREATE_POST`
 export const UPDATE_POST = `${MODULE_NAME}/UPDATE_POST`
+export const FETCH_LINK_PREVIEW = `${MODULE_NAME}/FETCH_LINK_PREVIEW`
+export const REMOVE_LINK_PREVIEW = `${MODULE_NAME}/REMOVE_LINK_PREVIEW`
+export const RESET_LINK_PREVIEW = `${MODULE_NAME}/RESET_LINK_PREVIEW`
+
+// Actions
 
 export function createPost (post) {
-  const { type, title, details, communities } = post
+  const { type, title, details, communities, linkPreview } = post
+  const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
     type: CREATE_POST,
     graphql: {
-      query: `mutation ($type: String, $title: String, $details: String, $communityIds: [String]) {
-        createPost(data: {type: $type, title: $title, details: $details, communityIds: $communityIds}) {
+      query: `mutation ($type: String, $title: String, $details: String, $linkPreviewId: String, $communityIds: [String]) {
+        createPost(data: {type: $type, title: $title, details: $details, linkPreviewId: $linkPreviewId, communityIds: $communityIds}) {
           id
           type
           title
@@ -25,12 +33,16 @@ export function createPost (post) {
           creator {
             id
           }
+          linkPreview {
+            id
+          }
         }
       }`,
       variables: {
         type,
         title,
         details,
+        linkPreviewId,
         communityIds
       }
     },
@@ -39,17 +51,21 @@ export function createPost (post) {
 }
 
 export function updatePost (post) {
-  const { id, type, title, details, communities } = post
+  const { id, type, title, details, communities, linkPreview } = post
+  const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
     type: UPDATE_POST,
     graphql: {
-      query: `mutation ($id: ID, $type: String, $title: String, $details: String, $communityIds: [String]) {
-        updatePost(id: $id, data: {type: $type, title: $title, details: $details, communityIds: $communityIds}) {
+      query: `mutation ($id: ID, $type: String, $title: String, $details: String, $linkPreviewId: String, $communityIds: [String]) {
+        updatePost(id: $id, data: {type: $type, title: $title, details: $details, linkPreviewId: $linkPreviewId, communityIds: $communityIds}) {
           id
           type
           title
           details
+          linkPreview {
+            id
+          }
           communities {
             id
             name
@@ -62,6 +78,7 @@ export function updatePost (post) {
         type,
         title,
         details,
+        linkPreviewId,
         communityIds
       }
     },
@@ -72,5 +89,78 @@ export function updatePost (post) {
         append: false
       }
     }
+  }
+}
+
+export function fetchLinkPreview (url) {
+  return {
+    type: FETCH_LINK_PREVIEW,
+    graphql: {
+      query: `mutation ($url: String) {
+        findOrCreateLinkPreviewByUrl(data: {url: $url}) {
+          id
+          url
+          imageUrl
+          title
+          description
+          imageWidth
+          imageHeight
+          status
+        }
+      }`,
+      variables: {
+        url
+      }
+    },
+    meta: {
+      extractModel: {
+        modelName: 'LinkPreview',
+        getRoot: get('findOrCreateLinkPreviewByUrl')
+      }
+    }
+  }
+}
+
+export function removeLinkPreview () {
+  return {type: REMOVE_LINK_PREVIEW}
+}
+
+export function resetLinkPreview () {
+  return {type: RESET_LINK_PREVIEW}
+}
+
+// Selectors
+
+export const getLinkPreview = ormCreateSelector(
+  orm,
+  state => state.orm,
+  state => state[MODULE_NAME],
+  ({ LinkPreview }, { linkPreviewId }) =>
+    LinkPreview.hasId(linkPreviewId) ? LinkPreview.withId(linkPreviewId).ref : null
+)
+
+// Reducer
+
+const defaultState = {linkPreviewId: null, linkPreviewStatus: null}
+
+export default function reducer (state = defaultState, action) {
+  const { error, type, payload, meta } = action
+  if (error) return state
+
+  switch (type) {
+    case FETCH_LINK_PREVIEW:
+      const linkPreview = (meta.extractModel.getRoot(payload.data))
+      if (linkPreview && !linkPreview.title) {
+        return {...state, linkPreviewId: null, linkPreviewStatus: 'invalid'}
+      }
+      return {...state, linkPreviewId: get('id')(linkPreview)}
+    case REMOVE_LINK_PREVIEW:
+      return {...state, linkPreviewId: null, linkPreviewStatus: 'removed'}
+    case RESET_LINK_PREVIEW:
+      let { linkPreviewStatus } = state
+      if (linkPreviewStatus !== 'removed' && linkPreviewStatus !== 'invalid') return state
+      return {...state, linkPreviewId: null, linkPreviewStatus: 'reset'}
+    default:
+      return state
   }
 }

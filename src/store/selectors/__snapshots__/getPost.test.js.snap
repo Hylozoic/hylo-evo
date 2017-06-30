@@ -42,6 +42,7 @@ Object {
   },
   "followers": undefined,
   "id": "1",
+  "linkPreview": undefined,
   "title": "Hay",
 }
 `;

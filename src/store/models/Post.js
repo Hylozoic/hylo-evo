@@ -28,6 +28,7 @@ Post.fields = {
   title: attr(),
   type: attr(),
   details: attr(),
+  linkPreview: fk('LinkPreview', 'posts'),
   creator: fk('Person', 'posts'),
   followers: many({
     to: 'Person',

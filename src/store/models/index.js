@@ -4,6 +4,7 @@ import Activity from './Activity'
 import Comment from './Comment'
 import Community, { CommunityModerator } from './Community'
 import CommunityTopic from './CommunityTopic'
+import LinkPreview from './LinkPreview'
 import Me from './Me'
 import Membership from './Membership'
 import Person from './Person'
@@ -23,6 +24,7 @@ orm.register(
   Community,
   CommunityModerator,
   CommunityTopic,
+  LinkPreview,
   Me,
   Membership,
   Message,

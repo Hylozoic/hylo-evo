@@ -1,12 +1,15 @@
 import React, { PropTypes } from 'react'
 import { get } from 'lodash/fp'
 import cx from 'classnames'
+import linkMatcher from 'util/linkMatcher'
 import styles from './PostEditor.scss'
+import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
+import LinkPreview from './LinkPreview'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
@@ -21,10 +24,15 @@ export default class PostEditor extends React.Component {
       type: PropTypes.string,
       title: PropTypes.string,
       details: PropTypes.string,
+      linkPreview: PropTypes.object,
       communities: PropTypes.array
     }),
+    linkPreviewStatus: PropTypes.string,
     createPost: PropTypes.func,
     updatePost: PropTypes.func,
+    fetchLinkPreview: PropTypes.func,
+    removeLinkPreview: PropTypes.func,
+    resetLinkPreview: PropTypes.func,
     goToPost: PropTypes.func,
     editing: PropTypes.bool,
     loading: PropTypes.bool
@@ -48,11 +56,14 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ post }) => {
-    const defaultedPost = Object.assign({}, PostEditor.defaultProps.post, post)
+  buildStateFromProps = ({ editing, loading, defaultPost, post }) => {
+    const mergedDefaultPost = Object.assign({}, PostEditor.defaultProps.post, defaultPost)
+    let currentPost = editing && !loading
+      ? post
+      : mergedDefaultPost
     return {
-      post: defaultedPost,
-      titlePlaceholder: this.titlePlaceholderForPostType(defaultedPost.type),
+      post: currentPost,
+      titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
       valid: false
     }
   }
@@ -70,7 +81,15 @@ export default class PostEditor extends React.Component {
     if (get('post.id', this.props) !== get('post.id', prevProps)) {
       this.reset(this.props)
       this.editor.focus()
+    } else if (get('post.linkPreview', this.props) !== get('post.linkPreview', prevProps)) {
+      this.setState({
+        post: {...this.state.post, linkPreview: this.props.post.linkPreview}
+      })
     }
+  }
+
+  componentWillUnmount () {
+    this.removeLinkPreview()
   }
 
   reset = (props) => {
@@ -124,6 +143,46 @@ export default class PostEditor extends React.Component {
     })
   }
 
+  handleDetailsChange = (editorState, contentChanged) => {
+    this.setValid()
+    if (contentChanged) {
+      const contentState = editorState.getCurrentContent()
+      const { resetLinkPreview } = this.props
+      if (!contentState.hasText()) resetLinkPreview()
+      this.setLinkPreview(contentState)
+    }
+  }
+
+  setLinkPreview = (contentState) => {
+    const contentStateHTML = contentStateToHTML(contentState)
+    const { fetchLinkPreview, linkPreviewStatus } = this.props
+    const { linkPreview } = this.state.post
+    if (linkPreview) return
+    if (linkPreviewStatus === 'removed' || linkPreviewStatus === 'invalid') return
+    // LEJ: I'd prefer to handle this stuff somewhere in the store...
+    const poll = (url, delay) => {
+      if (delay > 4) return
+      fetchLinkPreview(url).then(value => {
+        if (!value) return
+        const linkPreviewFound = value.meta.extractModel.getRoot(value.payload.data)
+        if (!linkPreviewFound) {
+          setTimeout(() => poll(url, delay * 2), delay * 1000)
+        }
+      })
+    }
+    if (linkMatcher.test(contentStateHTML)) {
+      const urlMatch = linkMatcher.match(contentStateHTML)[0].url
+      poll(urlMatch, 0.5)
+    }
+  }
+
+  removeLinkPreview = () => {
+    this.props.removeLinkPreview()
+    this.setState({
+      post: {...this.state.post, linkPreview: null}
+    })
+  }
+
   setSelectedCommunities = communities => {
     this.setState({
       post: {...this.state.post, communities},
@@ -146,17 +205,16 @@ export default class PostEditor extends React.Component {
 
   save = () => {
     const { editing, createPost, updatePost, onClose, goToPost } = this.props
-    const { id, type, title, communities } = this.state.post
+    const { id, type, title, communities, linkPreview } = this.state.post
     const details = this.editor.getContentHTML()
-    const postToSave = { id, type, title, details, communities }
+    const postToSave = { id, type, title, details, communities, linkPreview }
     const saveFunc = editing ? updatePost : createPost
     saveFunc(postToSave).then(editing ? onClose : goToPost)
   }
 
   render () {
     const { titlePlaceholder, valid, post } = this.state
-    if (!post) return null
-    const { title, details, communities } = post
+    const { title, details, communities, linkPreview } = post
     const {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, editing, loading
@@ -187,7 +245,7 @@ export default class PostEditor extends React.Component {
             type='text'
             styleName='titleInput'
             placeholder={titlePlaceholder}
-            value={title}
+            value={title || ''}
             onChange={this.handleTitleChange}
             disabled={loading}
             ref={x => { this.titleInput = x }}
@@ -195,11 +253,13 @@ export default class PostEditor extends React.Component {
           <HyloEditor
             styleName='editor'
             placeholder={detailsPlaceholder}
-            onChange={this.setValid}
+            onChange={this.handleDetailsChange}
             contentHTML={details}
             readOnly={loading}
             ref={component => { this.editor = component && component.getWrappedInstance() }}
           />
+          {linkPreview &&
+            <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
         </div>
       </div>
       <div styleName='footer'>

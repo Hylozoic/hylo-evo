@@ -116,7 +116,7 @@ export const PostBody = ({
 }
 
 export const LinkPreview = ({ title, url, imageUrl }) => {
-  const domain = parse(url).hostname.replace('www.', '')
+  const domain = url && parse(url).hostname.replace('www.', '')
   return <div styleName='cardPadding'>
     <div styleName='linkPreview'>
       <a href={url} target='_blank'>
