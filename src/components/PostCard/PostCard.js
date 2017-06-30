@@ -30,7 +30,6 @@ export default class PostCard extends React.Component {
     fetchPost: func,
     expanded: bool,
     showDetails: func,
-    editPost: func,
     showCommunity: bool
   }
 
@@ -40,7 +39,7 @@ export default class PostCard extends React.Component {
 
   render () {
     const {
-      post, className, expanded, showDetails, editPost, showCommunity, highlightProps
+      post, className, expanded, showDetails, showCommunity, highlightProps
     } = this.props
     const slug = get('0.slug', post.communities)
 
@@ -66,7 +65,6 @@ export default class PostCard extends React.Component {
         date={post.updatedAt || post.createdAt}
         type={post.type}
         showCommunity={showCommunity}
-        editPost={editPost}
         communities={post.communities}
         slug={slug}
         id={post.id}
