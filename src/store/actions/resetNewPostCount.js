@@ -8,11 +8,7 @@ export default function resetNewPostCount (id, type) {
   return {
     type: RESET_NEW_POST_COUNT,
     graphql: {
-      query: `mutation($id: ID, $data: ${type}Input) {
-        update${type}(id: $id, data: $data) {
-          success
-        }
-      }`,
+      query: type === 'CommunityTopic' ? CommunityTopicQuery : MembershipQuery,
       variables: {
         id,
         data: {
@@ -23,3 +19,15 @@ export default function resetNewPostCount (id, type) {
     meta: {id, type, optimistic: true}
   }
 }
+
+const CommunityTopicQuery = `mutation($id: ID, $data: CommunityTopicInput) {
+        updateCommunityTopic(id: $id, data: $data) {
+          success
+        }
+      }`
+
+const MembershipQuery = `mutation($id: ID, $data: MembershipInput) {
+        updateMembership(id: $id, data: $data) {
+          id
+        }
+      }`

@@ -26,7 +26,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     community,
     homeBadge,
     clearBadge: homeBadge
-      ? () => dispatchProps.resetNewPostCount(membership.id, 'Membership')
+      ? () => dispatchProps.resetNewPostCount(community.id, 'Membership')
       : () => {}
   }
 }

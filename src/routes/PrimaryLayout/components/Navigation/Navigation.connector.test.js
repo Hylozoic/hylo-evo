@@ -27,13 +27,13 @@ describe('mapStateToProps', () => {
 
 describe('mergeProps', () => {
   it('merges all the right props', () => {
-    const stateProps = {homeBadge: 1, community: 2, membership: {id: 77}}
+    const stateProps = {homeBadge: 1, community: {id: 2}, membership: {id: 77}}
     const ownProps = {foo: 1, bar: 2}
     const resetNewPostCount = jest.fn()
     const dispatchProps = {resetNewPostCount}
     const mergedProps = mergeProps(stateProps, dispatchProps, ownProps)
     expect(mergedProps).toMatchSnapshot()
     mergedProps.clearBadge()
-    expect(resetNewPostCount).toHaveBeenCalledWith(77, 'Membership')
+    expect(resetNewPostCount).toHaveBeenCalledWith(2, 'Membership')
   })
 })

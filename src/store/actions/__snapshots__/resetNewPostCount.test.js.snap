@@ -29,7 +29,7 @@ Object {
   "graphql": Object {
     "query": "mutation($id: ID, $data: MembershipInput) {
         updateMembership(id: $id, data: $data) {
-          success
+          id
         }
       }",
     "variables": Object {
