@@ -9,13 +9,19 @@ const communityTopics = [
   {topic: {name: 't4'}, newPostCount: 2}
 ]
 
+const community = {
+  slug: 'foo'
+}
+
 const requiredProps = {
   communityTopics: communityTopics,
-  location: {pathname: '/'}
+  location: {pathname: '/'},
+  backUrl: '/return-here',
+  communitySlug: community.slug
 }
 
 it('renders correctly for a community', () => {
-  const wrapper = shallow(<TopicNavigation {...requiredProps} community={{slug: 'foo'}} />)
+  const wrapper = shallow(<TopicNavigation {...requiredProps} />)
   expect(wrapper).toMatchSnapshot()
 })
 

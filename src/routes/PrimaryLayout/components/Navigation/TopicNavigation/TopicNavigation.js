@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-const { array, bool, func, object } = React.PropTypes
+const { array, string, bool, func, object } = React.PropTypes
 import Icon from 'components/Icon'
 import Badge from 'components/Badge'
 import { Link, NavLink, matchPath } from 'react-router-dom'
-import { tagUrl, topicsUrl, communityUrl, allCommunitiesUrl } from 'util/index'
+import { tagUrl, topicsUrl } from 'util/index'
 import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../../components/Badge/component.scss'
 import cx from 'classnames'
@@ -11,7 +11,8 @@ import cx from 'classnames'
 export default class TopicNavigation extends Component {
   static propTypes = {
     communityTopics: array,
-    community: object,
+    communitySlug: string,
+    backUrl: string,
     clearBadge: func,
     collapsed: bool,
     expand: func
@@ -19,10 +20,9 @@ export default class TopicNavigation extends Component {
 
   render () {
     const {
-      communityTopics, clearBadge, community, expand, collapsed, location
+      communityTopics, backUrl, communitySlug,
+      clearBadge, expand, collapsed, location
     } = this.props
-    const slug = community ? community.slug : null
-    const url = community ? communityUrl(slug) : allCommunitiesUrl()
     const currentTopic = (topicName, slug) =>
       matchPath(location.pathname, {path: tagUrl(topicName, slug)})
 
@@ -37,21 +37,21 @@ export default class TopicNavigation extends Component {
           <li key={topic.name}>
             <NavLink styleName='s.topic'
               className={badgeHoverStyles.parent}
-              to={tagUrl(topic.name, slug)}
+              to={tagUrl(topic.name, communitySlug)}
               onClick={() => id && newPostCount > 0 && clearBadge(id)}
               activeClassName='active-topic-nav-link'>
               <span styleName='s.name'>#{topic.name}</span>
               {newPostCount > 0 &&
                 <Badge number={newPostCount} styleName='s.badge' />}
-              {currentTopic(topic.name, slug) &&
-                <Link to={url}>
+              {currentTopic(topic.name, communitySlug) &&
+                <Link to={backUrl}>
                   <Icon name='Ex' styleName='s.closeIcon' />
                 </Link>}
             </NavLink>
           </li>)}
       </ul>
-      {slug && <div styleName='s.addTopic'>
-        <Link to={topicsUrl(slug)}>see all</Link>
+      {communitySlug && <div styleName='s.addTopic'>
+        <Link to={topicsUrl(communitySlug)}>see all</Link>
       </div>}
     </div>
   }
