@@ -44,6 +44,13 @@ export default class FeedList extends React.Component {
     }
   })
 
+  componentWillReceiveProps (nextProps) {
+    if (isEmpty(nextProps.posts)) {
+      // Resets atTabBar when loading new posts since it jumps to top without a scrollEvent
+      this.setState({atTabBar: false})
+    }
+  }
+
   componentDidMount () {
     this.fetchOrShowCached()
   }
