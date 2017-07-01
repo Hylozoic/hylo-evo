@@ -27,7 +27,7 @@ describe('mapStateToProps', () => {
 
 describe('mergeProps', () => {
   it('merges all the right props', () => {
-    const stateProps = {homeBadge: 1, community: {id: 2}, membership: {id: 77}}
+    const stateProps = {homeBadge: 1, community: {id: 2}, membership: {id: 77, community: {id: 2}}}
     const ownProps = {foo: 1, bar: 2}
     const resetNewPostCount = jest.fn()
     const dispatchProps = {resetNewPostCount}

@@ -21,13 +21,13 @@ export default function resetNewPostCount (id, type) {
 }
 
 const CommunityTopicQuery = `mutation($id: ID, $data: CommunityTopicInput) {
-        updateCommunityTopic(id: $id, data: $data) {
-          success
-        }
-      }`
+    updateCommunityTopic(id: $id, data: $data) {
+      success
+    }
+  }`
 
 const MembershipQuery = `mutation($id: ID, $data: MembershipInput) {
-        updateMembership(communityId: $id, data: $data) {
-          id
-        }
-      }`
+    updateMembership(communityId: $id, data: $data) {
+      id
+    }
+  }`

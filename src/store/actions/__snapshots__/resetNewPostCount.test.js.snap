@@ -4,10 +4,10 @@ exports[`works for CommunityTopic 1`] = `
 Object {
   "graphql": Object {
     "query": "mutation($id: ID, $data: CommunityTopicInput) {
-        updateCommunityTopic(id: $id, data: $data) {
-          success
-        }
-      }",
+    updateCommunityTopic(id: $id, data: $data) {
+      success
+    }
+  }",
     "variables": Object {
       "data": Object {
         "newPostCount": 0,
@@ -28,10 +28,10 @@ exports[`works for Membership 1`] = `
 Object {
   "graphql": Object {
     "query": "mutation($id: ID, $data: MembershipInput) {
-        updateMembership(communityId: $id, data: $data) {
-          id
-        }
-      }",
+    updateMembership(communityId: $id, data: $data) {
+      id
+    }
+  }",
     "variables": Object {
       "data": Object {
         "newPostCount": 0,
