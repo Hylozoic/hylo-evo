@@ -111,8 +111,8 @@ export function updateMembershipSettings (communityId, settings) {
   return {
     type: UPDATE_MEMBERSHIP_SETTINGS,
     graphql: {
-      query: `mutation ($id: ID, $data: MembershipInput) {
-        updateMembership(id: $id, data: $data) {
+      query: `mutation ($communityId: ID, $data: MembershipInput) {
+        updateMembership(communityId: $communityId, data: $data) {
           id
         }
       }`,
@@ -120,7 +120,7 @@ export function updateMembershipSettings (communityId, settings) {
         data: {
           settings
         },
-        id: communityId
+        communityId: communityId
       }
     },
     meta: {
