@@ -42,6 +42,7 @@ export const getPosts = ormCreateSelector(
     .map(post => ({
       ...post.ref,
       creator: post.creator,
+      linkPreview: post.linkPreview,
       commenters: post.commenters.toModelArray(),
       communities: post.communities.toModelArray()
     }))
