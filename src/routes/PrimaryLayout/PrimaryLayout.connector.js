@@ -12,8 +12,6 @@ function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
   const showLogoBadge = some(m => m.newPostCount > 0, memberships)
 
-  console.log({showLogoBadge})
-
   return {
     isCommunityRoute: isCommunityRoute(state, props),
     community: getCommunityForCurrentRoute(state, props),
