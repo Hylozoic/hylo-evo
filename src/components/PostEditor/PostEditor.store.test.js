@@ -6,9 +6,7 @@ import reducer, {
   REMOVE_LINK_PREVIEW,
   RESET_LINK_PREVIEW,
   defaultState,
-  fetchLinkPreview,
-  removeLinkPreview,
-  resetLinkPreview
+  fetchLinkPreview
 } from './PostEditor.store'
 
 describe('PostEditor reducer', () => {
@@ -79,25 +77,3 @@ describe('PostEditor reducer', () => {
     })
   })
 })
-
-// export default function reducer (state = defaultState, action) {
-//   const { error, type, payload, meta } = action
-//   if (error) return state
-//
-//   switch (type) {
-//     case FETCH_LINK_PREVIEW:
-//       const linkPreview = (meta.extractModel.getRoot(payload.data))
-//       if (linkPreview && !linkPreview.title) {
-//         return {...state, linkPreviewId: null, linkPreviewStatus: 'invalid'}
-//       }
-//       return {...state, linkPreviewId: get('id')(linkPreview)}
-//     case REMOVE_LINK_PREVIEW:
-//       return {...state, linkPreviewId: null, linkPreviewStatus: 'removed'}
-//     case RESET_LINK_PREVIEW:
-//       let { linkPreviewStatus } = state
-//       if (linkPreviewStatus !== 'removed' && linkPreviewStatus !== 'invalid') return state
-//       return {...state, linkPreviewId: null, linkPreviewStatus: 'reset'}
-//     default:
-//       return state
-//   }
-// }
