@@ -43,11 +43,6 @@ a.topic {
   margin-right: 24px;
 }
 
-.closeIcon {
-  line-height: 1;
-  font-size: 14px;
-}
-
 .name {
   min-width: 104px;
 }
@@ -55,6 +50,11 @@ a.topic {
 .badge {
   position: relative;
   top: -6px;
+}
+
+.closeIcon {
+  line-height: 1;
+  font-size: 14px;
 }
 
 .addTopic {

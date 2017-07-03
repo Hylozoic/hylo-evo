@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-const { array, string, bool, func, object } = React.PropTypes
+const { array, string, bool, func } = React.PropTypes
 import Icon from 'components/Icon'
 import Badge from 'components/Badge'
 import { Link, NavLink, matchPath } from 'react-router-dom'
@@ -43,7 +43,7 @@ export default class TopicNavigation extends Component {
               <span styleName='s.name'>#{topic.name}</span>
               {newPostCount > 0 &&
                 <Badge number={newPostCount} styleName='s.badge' />}
-              {currentTopic(topic.name, communitySlug) &&
+              {newPostCount < 1 && currentTopic(topic.name, communitySlug) &&
                 <Link to={backUrl}>
                   <Icon name='Ex' styleName='s.closeIcon' />
                 </Link>}
