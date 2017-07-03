@@ -18,7 +18,7 @@ export default function NavLink (
           <BadgedIcon name={icon} green={active} showBadge={collapsed && badge}
             styleName='icon' />
           <span styleName='label'>{label}</span>
-          <Badge number={badge} styleName='badge' expanded={!collapsed} />
+          <Badge number={badge} expanded={!collapsed} />
         </Link>
       </li>
     }} />
