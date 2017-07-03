@@ -83,10 +83,6 @@ export default class FeedList extends React.Component {
       width: tabBarWidth + 'px'
     }
 
-    if (pending) {
-      return <Loading />
-    }
-
     return <div styleName='FeedList-container'>
       <ScrollListener
         elementId={CENTER_COLUMN_ID}
@@ -118,6 +114,7 @@ export default class FeedList extends React.Component {
       </div>
       <ScrollListener onBottom={() => this.fetchMorePosts()}
         elementId={CENTER_COLUMN_ID} />
+      {pending && <Loading />}
     </div>
   }
 }

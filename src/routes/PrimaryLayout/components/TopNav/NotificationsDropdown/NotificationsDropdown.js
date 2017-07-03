@@ -6,7 +6,7 @@ import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
 import { firstName } from 'store/models/Person'
 import TopNavDropdown from '../TopNavDropdown'
-import { find } from 'lodash/fp'
+import { find, isEmpty } from 'lodash/fp'
 import {
   ACTION_NEW_COMMENT,
   ACTION_TAG,
@@ -17,6 +17,8 @@ import {
 } from 'store/models/Notification'
 import striptags from 'striptags'
 import { decode } from 'ent'
+import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
+import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
 
 export default class NotificationsDropdown extends Component {
   static propTypes = {
@@ -43,7 +45,8 @@ export default class NotificationsDropdown extends Component {
       goToNotification,
       markActivityRead,
       markAllActivitiesRead,
-      currentUser
+      currentUser,
+      pending
     } = this.props
     var { notifications } = this.props
     const { showingUnread } = this.state
@@ -63,6 +66,20 @@ export default class NotificationsDropdown extends Component {
 
     const showBadge = currentUser && currentUser.newNotificationCount > 0
 
+    let body
+    if (pending) {
+      body = <LoadingItems />
+    } else if (isEmpty(notifications)) {
+      body = <NoItems message='No notifications' />
+    } else {
+      body = <div styleName='notifications'>
+        {notifications.map(notification => <Notification
+          notification={notification}
+          onClick={onClick}
+          key={notification.id} />)}
+      </div>
+    }
+
     return <TopNavDropdown ref='dropdown'
       className={className}
       onFirstOpen={fetchNotifications}
@@ -77,14 +94,8 @@ export default class NotificationsDropdown extends Component {
           </span>
           <span onClick={markAllActivitiesRead} styleName='mark-read'>Mark all as read</span>
         </div>}
-      body={
-        <div styleName='notifications'>
-          {notifications.map(notification => <Notification
-            notification={notification}
-            onClick={onClick}
-            key={notification.id} />)}
-        </div>
-      } />
+      body={body}
+    />
   }
 }
 

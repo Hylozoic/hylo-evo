@@ -25,20 +25,18 @@
   line-height: 27px;
   overflow: auto;
   color: $color-rhino-50;
-  a {
-    font-size: 14.5px;
-    color: $color-rhino-50;
-    text-decoration: none;
-  }
-  a:hover {
-    color: $color-rhino;
-    text-decoration: none;
-  }
 }
 
-.topic {
+a.topic {
   display: flex;
   align-items: center;
+  font-size: 14.5px;
+  color: $color-rhino-50;
+  text-decoration: none !important;
+  &:hover, &:active, {
+    color: $color-rhino;
+    text-decoration: none !important;
+  }
 }
 
 .icon {
@@ -52,6 +50,11 @@
 .badge {
   position: relative;
   top: -6px;
+}
+
+.closeIcon {
+  line-height: 1;
+  font-size: 14px;
 }
 
 .addTopic {

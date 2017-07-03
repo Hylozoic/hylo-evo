@@ -1,0 +1,16 @@
+.loader {
+  height: $messages-body-height;
+
+  .loader-image {
+    background: no-repeat center;
+    height: 352px;
+    background-size: 250px;
+  }
+  .loader-animation {
+    width: 39px;
+    height: 20px;
+    position: absolute;
+    top: 112px;
+    left: 177px;
+  }
+}

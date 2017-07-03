@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import './MessagesDropdown.scss'
-const { array, string, func } = PropTypes
+const {array, string, func} = PropTypes
 import { Link } from 'react-router-dom'
 import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import cx from 'classnames'
@@ -8,6 +8,9 @@ import { newMessageUrl, threadUrl } from 'util/index'
 import RoundImageRow from 'components/RoundImageRow'
 import TopNavDropdown from '../TopNavDropdown'
 import { get, isEmpty, some } from 'lodash/fp'
+
+import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
+import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
 
 export default class MessagesDropdown extends Component {
   static propTypes = {
@@ -48,12 +51,28 @@ export default class MessagesDropdown extends Component {
       className,
       goToThread,
       currentUser,
-      fetchThreads
+      fetchThreads,
+      pending
     } = this.props
 
     const onClick = id => {
       goToThread(id)
       this.refs.dropdown.getWrappedInstance().toggle(false)
+    }
+
+    let body
+    if (pending) {
+      body = <LoadingItems />
+    } else if (isEmpty(threads)) {
+      body = <NoItems message="You don't have any conversations yet" />
+    } else {
+      body = <div styleName='threads'>
+        {threads.map(thread => <MessagesDropdownItem
+          thread={thread}
+          onClick={() => onClick(thread.id)}
+          currentUserId={get('id', currentUser)}
+          key={thread.id} />)}
+      </div>
     }
 
     const firstThreadUrl = !isEmpty(threads)
@@ -73,15 +92,8 @@ export default class MessagesDropdown extends Component {
           </Link>
           <Link to={newMessageUrl()} styleName='new'>New</Link>
         </div>}
-      body={
-        <div styleName='threads'>
-          {threads.map(thread => <MessagesDropdownItem
-            thread={thread}
-            onClick={() => onClick(thread.id)}
-            currentUserId={get('id', currentUser)}
-            key={thread.id} />)}
-        </div>
-      } />
+      body={body}
+    />
   }
 }
 

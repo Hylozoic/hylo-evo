@@ -61,6 +61,6 @@ $dropdown-width: 375px;
 }
 
 .body {
-  height: 420px;
+  height: $messages-body-height;
   overflow: auto;
 }

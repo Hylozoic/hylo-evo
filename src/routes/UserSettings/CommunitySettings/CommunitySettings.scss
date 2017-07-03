@@ -1,9 +1,18 @@
 // CommunityControl
 .community-control {
-  display: flex;
-  align-items: center;
   min-height: 52px;
   border-bottom: 1px solid $color-ghost;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin: 8px 0px;
+}
+
+.settings-row {
+  composes: row;
+  margin-bottom: 16px;
 }
 
 .avatar {
@@ -21,5 +30,26 @@
 
 .leave-button {
   margin-left: auto;
-  composes: text-button from 'css/typography.scss'
+  composes: text-button from 'css/typography.scss';
+  color: $color-amaranth;
+  @include font-regular;
+  &:hover {
+    color: $color-maroon-flush;
+  }
+}
+
+.settings-label {
+  composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.settings {
+  composes: caption-lt-lg from 'css/typography.scss';
+  margin-left: auto;
+  margin-right: -12px;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-label {
+  margin-right: 5px;
 }

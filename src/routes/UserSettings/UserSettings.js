@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import './UserSettings.scss'
 import AccountSettings from './AccountSettings/AccountSettings'
 import CommunitySettings from './CommunitySettings/CommunitySettings'
+import NotificationSettings from './NotificationSettings/NotificationSettings'
 const { object, func } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
 
@@ -15,21 +16,16 @@ export default class UserSettings extends Component {
     this.props.fetchUserSettings()
   }
 
-  componentDidUpdate (prevProps, prevState) {
-    if (prevProps.currentUser !== this.props.currentUser) {
-      this.props.fetchUserSettings()
-    }
-  }
-
   render () {
     const {
       currentUser,
-      communities,
+      memberships,
       updateUserSettings,
       leaveCommunity,
       loginWithService,
       unlinkAccount,
-      setConfirm
+      setConfirm,
+      updateMembershipSettings
     } = this.props
 
     return <FullPageModal
@@ -48,8 +44,16 @@ export default class UserSettings extends Component {
           name: 'Communities',
           path: '/settings/communities',
           component: <CommunitySettings
-            communities={communities}
-            leaveCommunity={leaveCommunity} />
+            memberships={memberships}
+            leaveCommunity={leaveCommunity}
+            updateMembershipSettings={updateMembershipSettings} />
+        },
+        {
+          name: 'Notifications',
+          path: '/settings/notifications',
+          component: <NotificationSettings
+            currentUser={currentUser}
+            updateUserSettings={updateUserSettings} />
         }
       ]} />
   }

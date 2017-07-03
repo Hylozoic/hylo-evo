@@ -2,10 +2,9 @@ import { combineReducers } from 'redux'
 import { createSelector } from 'reselect'
 import { get, pick } from 'lodash/fp'
 import authWithService from './authWithService'
+import { LOGIN, LOGOUT } from 'store/constants'
 
 export const CHECK_LOGIN = 'CHECK_LOGIN'
-const LOGIN = 'LOGIN'
-const LOGOUT = 'LOGOUT'
 
 export function login (email, password) {
   return {
@@ -37,6 +36,11 @@ export function logout () {
     type: LOGOUT,
     payload: {
       api: {path: '/noo/session', method: 'DELETE'}
+    },
+    meta: {
+      then: () => {
+        window.location.href = '/login'
+      }
     }
   }
 }
@@ -47,7 +51,6 @@ const reducer = combineReducers({
     switch (type) {
       case LOGIN: return true
       case CHECK_LOGIN: return !!payload.signedIn
-      case LOGOUT: return false
     }
     return state
   },

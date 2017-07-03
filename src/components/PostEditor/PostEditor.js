@@ -26,6 +26,7 @@ export default class PostEditor extends React.Component {
       linkPreview: PropTypes.object,
       communities: PropTypes.array
     }),
+    linkPreviewStatus: PropTypes.string,
     createPost: PropTypes.func,
     updatePost: PropTypes.func,
     pollingFetchLinkPreview: PropTypes.func,
