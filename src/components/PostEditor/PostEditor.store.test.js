@@ -1,5 +1,4 @@
 /* eslint-env jest */
-import { get } from 'lodash/fp'
 import { merge } from 'lodash'
 import reducer, {
   FETCH_LINK_PREVIEW,
