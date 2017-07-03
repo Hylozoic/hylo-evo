@@ -1,83 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PostEditor reducer with PostEditor/FETCH_LINK_PREVIEW linkPreviewId is not set status is "invalid" if a record is not found 1`] = `
+exports[`PostEditor store reducer when PostEditor/FETCH_LINK_PREVIEW linkPreviewId is not set status is "invalid" if a record is not found 1`] = `
 Object {
   "linkPreviewId": null,
   "linkPreviewStatus": "invalid",
 }
 `;
 
-exports[`PostEditor reducer with PostEditor/FETCH_LINK_PREVIEW linkPreviewId is set if record is found 1`] = `
+exports[`PostEditor store reducer when PostEditor/FETCH_LINK_PREVIEW linkPreviewId is set if record is found 1`] = `
 Object {
   "linkPreviewId": "found",
   "linkPreviewStatus": null,
 }
 `;
 
-exports[`PostEditor reducer with PostEditor/FETCH_LINK_PREVIEW should not set a linkPreviewId and have status of "invalid" if a record is not found 1`] = `
-Object {
-  "linkPreviewId": null,
-  "linkPreviewStatus": "invalid",
-}
-`;
-
-exports[`PostEditor reducer with PostEditor/FETCH_LINK_PREVIEW should set linkPreviewId if record is found 1`] = `
-Object {
-  "linkPreviewId": "found",
-  "linkPreviewStatus": null,
-}
-`;
-
-exports[`PostEditor reducer with PostEditor/REMOVE_LINK_PREVIEW linkPreviewId is cleared and status set to "removed" 1`] = `
+exports[`PostEditor store reducer when PostEditor/REMOVE_LINK_PREVIEW linkPreviewId is cleared and status set to "removed" 1`] = `
 Object {
   "linkPreviewId": null,
   "linkPreviewStatus": "removed",
 }
 `;
 
-exports[`PostEditor reducer with PostEditor/REMOVE_LINK_PREVIEW should clear linkPreviewId and set to "removed" status 1`] = `
-Object {
-  "linkPreviewId": null,
-  "linkPreviewStatus": "removed",
-}
-`;
-
-exports[`PostEditor reducer with PostEditor/RESET_LINK_PREVIEW linkPreviewId is set to "reset" if transitioning from "removed" or "invalid 1`] = `
+exports[`PostEditor store reducer when PostEditor/RESET_LINK_PREVIEW linkPreviewId is set to "reset" if transitioning from invalid 1`] = `
 Object {
   "linkPreviewId": null,
   "linkPreviewStatus": "reset",
 }
 `;
 
-exports[`PostEditor reducer with PostEditor/RESET_LINK_PREVIEW linkPreviewId is set to "reset" if transitioning from "removed" or "invalid 2`] = `
+exports[`PostEditor store reducer when PostEditor/RESET_LINK_PREVIEW linkPreviewId is set to "reset" if transitioning from removed 1`] = `
 Object {
   "linkPreviewId": null,
   "linkPreviewStatus": "reset",
 }
 `;
 
-exports[`PostEditor reducer with PostEditor/RESET_LINK_PREVIEW linkPreviewId is set to "reset" if transitioning from invalid 1`] = `
-Object {
-  "linkPreviewId": null,
-  "linkPreviewStatus": "reset",
-}
-`;
-
-exports[`PostEditor reducer with PostEditor/RESET_LINK_PREVIEW linkPreviewId is set to "reset" if transitioning from removed 1`] = `
-Object {
-  "linkPreviewId": null,
-  "linkPreviewStatus": "reset",
-}
-`;
-
-exports[`PostEditor reducer with PostEditor/RESET_LINK_PREVIEW should clear linkPreviewId and set to "reset" if transitioning from "removed" statues 1`] = `
-Object {
-  "linkPreviewId": null,
-  "linkPreviewStatus": "reset",
-}
-`;
-
-exports[`PostEditor reducer with PostEditor/RESET_LINK_PREVIEW should not clear the linkPreviewId or set status to "reset" if a preview exists and wasn't removed 1`] = `
+exports[`PostEditor store reducer when PostEditor/RESET_LINK_PREVIEW should not clear the linkPreviewId or set status to "reset" if a preview exists and wasn't removed 1`] = `
 Object {
   "linkPreviewId": "valid-id",
   "linkPreviewStatus": null,
