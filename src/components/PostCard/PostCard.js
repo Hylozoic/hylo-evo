@@ -7,7 +7,6 @@ import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
 import './PostCard.scss'
 import samplePost from './samplePost'
-import { get } from 'lodash/fp'
 import cx from 'classnames'
 import { decode } from 'ent'
 export { PostHeader, PostFooter }
@@ -30,7 +29,6 @@ export default class PostCard extends React.Component {
     fetchPost: func,
     expanded: bool,
     showDetails: func,
-    editPost: func,
     showCommunity: bool
   }
 
@@ -40,9 +38,8 @@ export default class PostCard extends React.Component {
 
   render () {
     const {
-      post, className, expanded, showDetails, editPost, showCommunity, highlightProps
+      post, className, expanded, showDetails, showCommunity, highlightProps, slug
     } = this.props
-    const slug = get('0.slug', post.communities)
 
     const shouldShowDetails = element => {
       if (element === this.refs.postCard) return true
@@ -66,7 +63,6 @@ export default class PostCard extends React.Component {
         date={post.updatedAt || post.createdAt}
         type={post.type}
         showCommunity={showCommunity}
-        editPost={editPost}
         communities={post.communities}
         slug={slug}
         id={post.id}

@@ -1,7 +1,7 @@
 import { deletePost } from './PostHeader.store'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { removePostFromUrl } from 'util/index'
+import { removePostFromUrl, postUrl } from 'util/index'
 import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
@@ -19,21 +19,25 @@ export function mapDispatchToProps (dispatch, props) {
     }
   }
 
+  const editPost = (id, slug) => dispatch(push(postUrl(id, slug, {action: 'edit'})))
+
   return {
-    deletePost: deletePostWithConfirm
+    deletePost: deletePostWithConfirm,
+    editPost
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { currentUser } = stateProps
-  const { id, creator } = ownProps
-  const { deletePost } = dispatchProps
+  const { id, creator, slug } = ownProps
+  const { deletePost, editPost } = dispatchProps
   const canEdit = currentUser && creator && currentUser.id === creator.id
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
     deletePost: canEdit ? () => deletePost(id) : null,
+    editPost: canEdit ? () => editPost(id, slug) : null,
     canEdit
   }
 }

@@ -23,8 +23,7 @@ export default class PostDetail extends Component {
     currentUser: object,
     slug: string,
     fetchPost: func,
-    showCommunity: bool,
-    editPost: func
+    showCommunity: bool
   }
 
   constructor (props) {
@@ -94,7 +93,7 @@ export default class PostDetail extends Component {
   })
 
   render () {
-    const { post, slug, canEdit, pending } = this.props
+    const { post, slug, pending } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
 
     if (!post && !pending) {
@@ -121,9 +120,9 @@ export default class PostDetail extends Component {
     return <div styleName='post' ref={this.setHeaderStateFromDOM}>
       <ScrollListener elementId={DETAIL_COLUMN_ID}
         onScroll={this.handleScroll} />
-      <WrappedPostHeader {...this.props} canEdit={canEdit} />
+      <WrappedPostHeader {...this.props} />
       {atHeader && <div styleName='header-sticky' style={headerStyle}>
-        <WrappedPostHeader {...this.props} canEdit={canEdit} />
+        <WrappedPostHeader {...this.props} />
       </div>}
       <PostImage imageUrl={post.imageUrl} styleName='image' />
       <PostTags tags={post.tags} />
@@ -154,13 +153,12 @@ export default class PostDetail extends Component {
   }
 }
 
-function WrappedPostHeader ({post, showCommunity, canEdit, editPost, onClose, slug}) {
+function WrappedPostHeader ({post, showCommunity, onClose, slug}) {
   return <PostHeader creator={post.creator}
     date={post.updatedAt || post.createdAt}
     type={post.type}
     communities={post.communities}
     showCommunity={showCommunity}
-    editPost={canEdit && editPost}
     close={onClose}
     slug={slug}
     styleName='header'
