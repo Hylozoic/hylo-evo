@@ -157,7 +157,12 @@ export default function ormReducer (state = {}, action) {
       break
 
     case RESET_NEW_POST_COUNT_PENDING:
-      session[meta.type].withId(meta.id).update({newPostCount: 0})
+      if (meta.type === 'CommunityTopic') {
+        session.CommunityTopic.withId(meta.id).update({newPostCount: 0})
+      } else if (meta.type === 'Membership') {
+        const membership = session.Membership.safeGet({community: meta.id})
+        membership && membership.update({newPostCount: 0})
+      }
       break
 
     case RECEIVE_POST:
