@@ -124,8 +124,11 @@ li.community {
     white-space: nowrap;
     display: inline-block;
   }
+}
 
-  .badge {}
+.highlight {
+  @include font-bold;
+  color: $color-white;
 }
 
 .newCommunity {

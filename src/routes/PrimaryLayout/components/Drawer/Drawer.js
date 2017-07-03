@@ -64,11 +64,12 @@ export default class Drawer extends Component {
 export function CommunityRow ({ membership }) {
   const { community, newPostCount } = membership
   const imageStyle = bgImageStyle(community.avatarUrl)
+  const showBadge = newPostCount > 0
   return <li styleName='s.community' key={`community${community.id}`}>
     <Link to={`/c/${community.slug}`} title={community.name} className={badgeHoverStyles.parent}>
       <div styleName='s.avatar' style={imageStyle} />
-      <span styleName={cx('s.name')} className='drawer-inv-li'>{community.name}</span>
-      {newPostCount > 0 && <Badge number={newPostCount} styleName='s.badge' />}
+      <span styleName={cx('s.name', {'s.highlight': showBadge})} className='drawer-inv-li'>{community.name}</span>
+      {showBadge && <Badge number={newPostCount} />}
     </Link>
   </li>
 }
