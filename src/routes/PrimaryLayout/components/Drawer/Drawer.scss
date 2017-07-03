@@ -90,13 +90,13 @@ $new-community-spacing: 16px;
       margin-right: $li-spacing;
     }
   }
+}
 
-  a {
-    display: block;
-
-    &:hover {
-      text-decoration: none;
-    }
+.communityRow {
+  display: flex;
+  align-items: center;
+  &:hover {
+    text-decoration: none;
   }
 }
 
@@ -113,19 +113,20 @@ $new-community-spacing: 16px;
   }
 }
 
-li.community {
+.community-name {
+  composes: drawer-inv-li from 'css/typography.scss';
+  vertical-align: middle;
+  width: $calculated-name-width;
+  margin-right: $li-spacing;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
 
-  .name {
-    vertical-align: middle;
-    width: $calculated-name-width;
-    margin-right: $li-spacing;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: inline-block;
-  }
-
-  .badge {}
+.highlight {
+  @include font-bold;
+  color: $color-white;
 }
 
 .newCommunity {

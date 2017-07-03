@@ -1,16 +1,20 @@
 // we use mixins here to get around the class selector limitation of 'composes'
 
 .badgeWrapper {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  // border: 1px solid black;
+  // border: 1px solid red;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 21px;
+  height: 21px;
 }
 
 @mixin badge {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 21px;
+  height: 21px;
   border-radius: 50%;
   color: $color-white;
   background-color: $color-persimmon;
@@ -19,7 +23,6 @@
   line-height: normal;
   text-align: center;
   position: relative;
-  left: -1px;
   transition: 0.15s;
 }
 
@@ -31,17 +34,15 @@
   composes: badge;
   width: 7px;
   height: 7px;
-  position: relative;
-  left: 5px;
 }
 
 @mixin badgeNumber {
   display: inline;
   font-size: 12px;
-  position: relative;
-  right: 0.5px;
-  top: -2px;
   transition: 0.15s;
+  color: $color-white;
+  position: relative;
+  top: -1px
 }
 
 .badgeNumber {
@@ -51,6 +52,13 @@
 .badgeNumber-collapsed {
   composes: badgeNumber;
   font-size: 0px;
+  color: transparent;
+}
+
+.border {
+  width: 11px;
+  height: 11px;
+  border: 2px solid $color-white;
 }
 
 // parent is imported by parent composes to add as a className so that the badge can

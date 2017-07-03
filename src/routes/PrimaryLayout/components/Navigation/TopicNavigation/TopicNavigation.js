@@ -42,7 +42,7 @@ export default class TopicNavigation extends Component {
               activeClassName='active-topic-nav-link'>
               <span styleName='s.name'>#{topic.name}</span>
               {newPostCount > 0 && !currentTopic(topic.name, communitySlug) &&
-                <Badge number={newPostCount} styleName='s.badge' />}
+                <Badge number={newPostCount} />}
               {currentTopic(topic.name, communitySlug) &&
                 <Link to={backUrl}>
                   <Icon name='Ex' styleName='s.closeIcon' />
