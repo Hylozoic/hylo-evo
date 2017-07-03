@@ -67,7 +67,7 @@ export default function (state = {}, action) {
   return state
 }
 
-function matchNewPostIntoQueryResults (state, {id, type, communities}) {
+export function matchNewPostIntoQueryResults (state, {id, type, communities}) {
   /* about this:
       we add the post id into queryResult sets that are based on time of
       creation because we know that the post just created is the latest
@@ -76,10 +76,10 @@ function matchNewPostIntoQueryResults (state, {id, type, communities}) {
   */
   return reduce((memo, community) => {
     const queriesToMatch = [
-      {id: community.slug},
-      {id: community.slug, filter: type},
-      {id: community.slug, sortBy: 'updated'},
-      {id: community.slug, sortBy: 'updated', filter: type}
+      {slug: community.slug},
+      {slug: community.slug, filter: type},
+      {slug: community.slug, sortBy: 'updated'},
+      {slug: community.slug, sortBy: 'updated', filter: type}
     ]
     return reduce((innerMemo, params) => {
       return prependIdForCreate(innerMemo, FETCH_POSTS, params, id)
@@ -89,13 +89,13 @@ function matchNewPostIntoQueryResults (state, {id, type, communities}) {
 
 function prependIdForCreate (state, type, params, id) {
   const key = buildKey(type, params)
-  const existingIds = get('ids', state[key]) || []
+  if (!state[key]) return state
   return {
     ...state,
     [key]: {
-      ids: [id].concat(existingIds),
-      total: state[key] && state[key].total + 1,
-      hasMore: state[key] && state[key].hasMore
+      ids: [id].concat(state[key].ids),
+      total: state[key].total && state[key].total + 1,
+      hasMore: state[key].hasMore
     }
   }
 }

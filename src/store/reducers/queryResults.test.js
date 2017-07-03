@@ -1,4 +1,4 @@
-import queryResults, { buildKey } from './queryResults'
+import queryResults, { buildKey, matchNewPostIntoQueryResults } from './queryResults'
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
 
 const variables = {slug: 'foo', sortBy: 'name'}
@@ -79,5 +79,33 @@ describe('buildKey', () => {
   it('omits blank parameters', () => {
     expect(buildKey('actionType', {slug: 'foo', search: null}))
     .toEqual('{"type":"actionType","params":{"slug":"foo"}}')
+  })
+})
+
+describe('matchNewPostIntoQueryResults', () => {
+  it('prepends the post id to matching query result sets', () => {
+    const state = {
+      '{"type":"FETCH_POSTS","params":{"slug":"bar"}}': {
+        hasMore: true,
+        ids: ['18', '11']
+      },
+      '{"type":"FETCH_POSTS","params":{"slug":"bar","filter":"request"}}': {
+        hasMore: true,
+        ids: ['18', '11']
+      }
+    }
+    const communities = [{slug: 'foo'}, {slug: 'bar'}]
+    const post = {id: '17', type: 'request', communities}
+
+    expect(matchNewPostIntoQueryResults(state, post)).toEqual({
+      '{"type":"FETCH_POSTS","params":{"slug":"bar"}}': {
+        hasMore: true,
+        ids: ['17', '18', '11']
+      },
+      '{"type":"FETCH_POSTS","params":{"slug":"bar","filter":"request"}}': {
+        hasMore: true,
+        ids: ['17', '18', '11']
+      }
+    })
   })
 })
