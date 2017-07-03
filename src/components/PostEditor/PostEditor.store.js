@@ -122,7 +122,7 @@ export function fetchLinkPreview (url) {
   }
 }
 
-export function pollingLinkPreviewFetch (dispatch, htmlContent) {
+export function pollingFetchLinkPreview (dispatch, htmlContent) {
   const poll = (url, delay) => {
     if (delay > 4) return
     dispatch(fetchLinkPreview(url)).then(value => {
