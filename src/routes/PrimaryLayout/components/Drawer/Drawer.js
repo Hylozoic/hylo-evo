@@ -65,8 +65,8 @@ export function CommunityRow ({ membership }) {
   const { community, newPostCount } = membership
   const imageStyle = bgImageStyle(community.avatarUrl)
   const showBadge = newPostCount > 0
-  return <li key={`community${community.id}`}>
-    <Link to={`/c/${community.slug}`} title={community.name} className={badgeHoverStyles.parent}>
+  return <li key={`community${community.id}`} >
+    <Link to={`/c/${community.slug}`} styleName='s.communityRow' title={community.name} className={badgeHoverStyles.parent}>
       <div styleName='s.avatar' style={imageStyle} />
       <span styleName={cx('s.community-name', {'s.highlight': showBadge})}>{community.name}</span>
       {showBadge && <Badge number={newPostCount} />}

@@ -3,6 +3,7 @@
 exports[`CommunityRow renders with new posts 1`] = `
 <li>
   <Link
+    data-styleName="s.communityRow"
     replace={false}
     title="Barmunity"
     to="/c/bar"
@@ -30,6 +31,7 @@ exports[`CommunityRow renders with new posts 1`] = `
 exports[`CommunityRow renders with zero new posts 1`] = `
 <li>
   <Link
+    data-styleName="s.communityRow"
     replace={false}
     title="Foomunity"
     to="/c/foo"
