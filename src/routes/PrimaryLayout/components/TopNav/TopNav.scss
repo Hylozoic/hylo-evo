@@ -44,6 +44,12 @@
   display: inline-block;
 }
 
+.titleBadge {
+  position: absolute;
+  margin-top: -1px;
+  margin-left: 5px;
+}
+
 .label {
   composes: tag from 'css/typography.scss';
 }

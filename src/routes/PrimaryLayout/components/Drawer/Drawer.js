@@ -68,7 +68,7 @@ export function CommunityRow ({ membership }) {
   return <li styleName='s.community' key={`community${community.id}`}>
     <Link to={`/c/${community.slug}`} title={community.name} className={badgeHoverStyles.parent}>
       <div styleName='s.avatar' style={imageStyle} />
-      <span styleName={cx('s.name', {'s.highlight': showBadge})} className='drawer-inv-li'>{community.name}</span>
+      <span className='drawer-inv-li' styleName={cx('s.name', {'s.highlight': showBadge})}>{community.name}</span>
       {showBadge && <Badge number={newPostCount} />}
     </Link>
   </li>

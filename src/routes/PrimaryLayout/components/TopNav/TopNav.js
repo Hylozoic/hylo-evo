@@ -3,6 +3,7 @@ import { bgImageStyle, personUrl } from 'util/index'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
 import BadgedIcon from 'components/BadgedIcon'
+import Badge from 'components/Badge'
 import RoundImage from 'components/RoundImage'
 import './TopNav.scss'
 import Dropdown from 'components/Dropdown'
@@ -27,13 +28,13 @@ export default class TopNav extends Component {
   }
 
   render () {
-    const { className, community, currentUser, logout, toggleDrawer } = this.props
+    const { className, community, currentUser, logout, toggleDrawer, showTitleBadge } = this.props
     const profileUrl = personUrl(get('id', currentUser), get('slug', community))
 
     return <div styleName='topNavWrapper' className={className}>
       <div styleName='topNav' ref='topNav'>
         <Logo {...{community, toggleDrawer}} />
-        <Title community={community} />
+        <Title community={community} showTitleBadge={showTitleBadge} />
         <div styleName='navIcons'>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
           <MessagesDropdown renderToggleChildren={showBadge =>
@@ -66,13 +67,16 @@ function Logo ({ community, toggleDrawer }) {
     onClick={toggleDrawer} />
 }
 
-function Title ({ community }) {
+function Title ({ community, showTitleBadge }) {
   const [ label, name ] = community
     ? ['COMMUNITY', community.name]
     : ['GLOBAL', 'All Communities']
 
   return <div styleName='title'>
-    <div styleName='label'>{label}</div>
+    <div styleName='label'>
+      {label}
+      {showTitleBadge && <Badge number='1' styleName='titleBadge' />}
+    </div>
     <div styleName='communityName'>{name}</div>
   </div>
 }
