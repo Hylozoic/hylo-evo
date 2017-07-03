@@ -1,6 +1,7 @@
 import { get } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
+import linkMatcher from 'util/linkMatcher'
 
 export const MODULE_NAME = 'PostEditor'
 export const CREATE_POST = `${MODULE_NAME}/CREATE_POST`
@@ -121,6 +122,23 @@ export function fetchLinkPreview (url) {
   }
 }
 
+export function pollingLinkPreviewFetch (dispatch, htmlContent) {
+  const poll = (url, delay) => {
+    if (delay > 4) return
+    dispatch(fetchLinkPreview(url)).then(value => {
+      if (!value) return
+      const linkPreviewFound = value.meta.extractModel.getRoot(value.payload.data)
+      if (!linkPreviewFound) {
+        setTimeout(() => poll(url, delay * 2), delay * 1000)
+      }
+    })
+  }
+  if (linkMatcher.test(htmlContent)) {
+    const urlMatch = linkMatcher.match(htmlContent)[0].url
+    poll(urlMatch, 0.5)
+  }
+}
+
 export function removeLinkPreview () {
   return {type: REMOVE_LINK_PREVIEW}
 }
@@ -141,7 +159,7 @@ export const getLinkPreview = ormCreateSelector(
 
 // Reducer
 
-const defaultState = {linkPreviewId: null, linkPreviewStatus: null}
+export const defaultState = {linkPreviewId: null, linkPreviewStatus: null}
 
 export default function reducer (state = defaultState, action) {
   const { error, type, payload, meta } = action

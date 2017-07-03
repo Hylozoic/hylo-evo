@@ -98,7 +98,6 @@ export const PostBody = ({
   id, title, details, imageUrl, linkPreview, slug, expanded, className, highlightProps
 }) => {
   const decodedTitle = decode(title)
-
   let presentedDetails = present(sanitize(details), {slug})
   const shouldTruncate = !expanded && textLength(presentedDetails) > maxDetailsLength
   if (shouldTruncate) {

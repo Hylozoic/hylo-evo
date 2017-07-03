@@ -10,7 +10,7 @@ import {
   FETCH_LINK_PREVIEW,
   createPost,
   updatePost,
-  fetchLinkPreview,
+  pollingFetchLinkPreview,
   removeLinkPreview,
   resetLinkPreview,
   getLinkPreview
@@ -33,7 +33,7 @@ export function mapStateToProps (state, props) {
   // LinkPreview or cleared with null in the case of
   // either status (removed or reset)
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
-  const { linkPreviewStatus, linkPreviewId } = state[MODULE_NAME]
+  const { linkPreviewId, linkPreviewStatus } = state[MODULE_NAME]
   if (linkPreviewId || linkPreviewStatus) {
     post = post || {}
     post.linkPreview = getLinkPreview(state, props)
@@ -53,7 +53,7 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = (dispatch, props) => {
   const slug = getParam('slug', null, props)
   return {
-    fetchLinkPreviewRaw: url => dispatch(fetchLinkPreview(url)),
+    pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
     removeLinkPreview: () => dispatch(removeLinkPreview()),
     resetLinkPreview: () => dispatch(resetLinkPreview()),
     updatePost: postParams => dispatch(updatePost(postParams)),
@@ -66,18 +66,19 @@ export const mapDispatchToProps = (dispatch, props) => {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { fetchLinkPreviewPending } = stateProps
-  const { fetchLinkPreviewRaw } = dispatchProps
+  const { fetchLinkPreviewPending, linkPreviewStatus } = stateProps
+  const { pollingFetchLinkPreviewRaw } = dispatchProps
 
-  const fetchLinkPreview = fetchLinkPreviewPending
-    ? () => Promise.resolve()
-    : url => fetchLinkPreviewRaw(url)
+  const pollingFetchLinkPreview =
+    fetchLinkPreviewPending || linkPreviewStatus === 'removed' || linkPreviewStatus === 'invalid'
+      ? () => Promise.resolve()
+      : url => pollingFetchLinkPreviewRaw(url)
 
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    fetchLinkPreview
+    pollingFetchLinkPreview
   }
 }
 

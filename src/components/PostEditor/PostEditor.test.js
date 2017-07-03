@@ -82,6 +82,7 @@ describe('PostEditor', () => {
           type: 'request',
           title: 'valid title',
           details: 'valid details',
+          linkPreview: {id: '1', title: 'a link'},
           communities: [
             {id: '1', name: 'test community 1'},
             {id: '2', name: 'test community 2'}
@@ -100,6 +101,7 @@ describe('PostEditor', () => {
           type: 'offer',
           title: 'valid title',
           details: 'valid details',
+          linkPreview: {id: '1', title: 'a link'},
           communities: [
             {id: '1', name: 'test community 1'},
             {id: '2', name: 'test community 2'}
@@ -176,7 +178,7 @@ describe('PostEditor', () => {
       expect(testInstance.isValid(props.post, {})).toBeTruthy()
     })
 
-    it('is invalid when values are missing', () => {
+    it('is invalid when required values are missing', () => {
       const props = {
         post: {
           title: 'valid title'
@@ -204,6 +206,7 @@ describe('PostEditor', () => {
         type: 'offer',
         title: 'valid title',
         details: 'valid details',
+        linkPreview: {id: '1', title: 'a link'},
         communities: [
           {id: '1', name: 'test community 1'},
           {id: '2', name: 'test community 2'}

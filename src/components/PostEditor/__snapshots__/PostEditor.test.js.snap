@@ -78,6 +78,15 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         placeholder="Add a description"
         readOnly={false}
       />
+      <LinkPreview
+        linkPreview={
+          Object {
+            "id": "1",
+            "title": "a link",
+          }
+        }
+        onClose={[Function]}
+      />
     </div>
   </div>
   <div
