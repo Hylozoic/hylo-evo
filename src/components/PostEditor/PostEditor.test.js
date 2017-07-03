@@ -31,9 +31,9 @@ describe('PostEditor', () => {
     }
     const renderForType = (type) => {
       const props = {
-        post: { type },
+        defaultPost: { type },
         titlePlaceholderForPostType,
-        editing: true,
+        editing: false,
         loading: false
       }
       return shallow(<PostEditor {...props} />)
@@ -44,9 +44,9 @@ describe('PostEditor', () => {
       })
     )
 
-    test('saving a post will update a post', () => {
+    test('saving a post will create a new post', () => {
       const props = {
-        post: {
+        defaultPost: {
           type: 'offer',
           title: 'valid title',
           details: 'valid details',
@@ -55,11 +55,11 @@ describe('PostEditor', () => {
             {id: '2', name: 'test community 2'}
           ]
         },
-        editing: true,
-        updatePost: jest.fn(() => new Promise(() => {}))
+        editing: false,
+        createPost: jest.fn(() => new Promise(() => {}))
       }
       const editorMock = {
-        getContentHTML: () => props.post.details,
+        getContentHTML: () => props.defaultPost.details,
         reset: jest.fn()
       }
       const communitiesSelectorMock = {
@@ -70,45 +70,40 @@ describe('PostEditor', () => {
       testInstance.editor = editorMock
       testInstance.communitiesSelector = communitiesSelectorMock
       testInstance.save()
-      expect(props.updatePost.mock.calls).toHaveLength(1)
-      expect(props.updatePost).toHaveBeenCalledWith(props.post)
+      expect(props.createPost.mock.calls).toHaveLength(1)
+      expect(props.createPost).toHaveBeenCalledWith(props.defaultPost)
     })
   })
 
   describe('editing a post', () => {
+    const props = {
+      editing: true,
+      loading: false,
+      post: {
+        id: 'test',
+        type: 'request',
+        title: 'valid title',
+        details: 'valid details',
+        linkPreview: {id: '1', title: 'a link'},
+        communities: [
+          {id: '1', name: 'test community 1'},
+          {id: '2', name: 'test community 2'}
+        ]
+      },
+      updatePost: jest.fn(() => new Promise(() => {}))
+    }
+
+    test('form in editing mode', () => {
+      const wrapper = shallow(<PostEditor {...props} />)
+      expect(wrapper).toMatchSnapshot()
+    })
+
     test('post is loaded into fields', () => {
-      const props = {
-        post: {
-          type: 'request',
-          title: 'valid title',
-          details: 'valid details',
-          linkPreview: {id: '1', title: 'a link'},
-          communities: [
-            {id: '1', name: 'test community 1'},
-            {id: '2', name: 'test community 2'}
-          ]
-        },
-        editing: true
-      }
       const wrapper = shallow(<PostEditor {...props} />)
       expect(wrapper).toMatchSnapshot()
     })
 
     test('saving a post will update a post', () => {
-      const props = {
-        editing: true,
-        post: {
-          type: 'offer',
-          title: 'valid title',
-          details: 'valid details',
-          linkPreview: {id: '1', title: 'a link'},
-          communities: [
-            {id: '1', name: 'test community 1'},
-            {id: '2', name: 'test community 2'}
-          ]
-        },
-        updatePost: jest.fn(() => new Promise(() => {}))
-      }
       const editorMock = {
         getContentHTML: () => props.post.details,
         reset: jest.fn()
@@ -129,23 +124,6 @@ describe('PostEditor', () => {
   test('post is defaulted while loaded into editor', () => {
     const props = {
       loading: true,
-      editing: true,
-      post: {
-        type: 'request',
-        title: 'valid title',
-        details: 'valid details',
-        communities: [
-          {id: '1', name: 'test community 1'},
-          {id: '2', name: 'test community 2'}
-        ]
-      }
-    }
-    const wrapper = shallow(<PostEditor {...props} />)
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  test('form in editing mode', () => {
-    const props = {
       editing: true,
       post: {
         type: 'request',
@@ -203,6 +181,7 @@ describe('PostEditor', () => {
   test('saving a valid post will update a post', () => {
     const props = {
       post: {
+        id: 'test',
         type: 'offer',
         title: 'valid title',
         details: 'valid details',

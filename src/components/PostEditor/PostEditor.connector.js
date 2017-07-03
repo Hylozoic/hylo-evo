@@ -5,6 +5,7 @@ import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getPost from 'store/selectors/getPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import { FETCH_POST } from 'store/constants'
 import {
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
@@ -21,8 +22,8 @@ export function mapStateToProps (state, props) {
   const communityOptions = props.communityOptions || (currentUser &&
     currentUser.memberships.toModelArray().map(m => m.community))
   let post = props.post || getPost(state, props)
-  const editing = !!post
-  const loading = editing && !post.id
+  const loading = !!state.pending[FETCH_POST]
+  const editing = loading || !!post
   // LEJ: the defaultPost assembled here is merged with on top of
   // defaultProps.post on the component
   const currentCommunity = getCommunityForCurrentRoute(state, props)
@@ -31,7 +32,7 @@ export function mapStateToProps (state, props) {
     : {}
   // LEJ: The post.linkPreview is replaced with either the new
   // LinkPreview or cleared with null in the case of
-  // either status (removed or reset)
+  // any status (removed, reset or invalid)
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
   const { linkPreviewId, linkPreviewStatus } = state[MODULE_NAME]
   if (linkPreviewId || linkPreviewStatus) {

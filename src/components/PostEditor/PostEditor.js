@@ -57,9 +57,8 @@ export default class PostEditor extends React.Component {
 
   buildStateFromProps = ({ editing, loading, defaultPost, post }) => {
     const mergedDefaultPost = Object.assign({}, PostEditor.defaultProps.post, defaultPost)
-    let currentPost = editing && !loading
-      ? post
-      : mergedDefaultPost
+    // LEJ: Can't just check for null post as the linkPreview is attached to post
+    const currentPost = (get('id', post) && post) || mergedDefaultPost
     return {
       post: currentPost,
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
@@ -77,18 +76,19 @@ export default class PostEditor extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
+    const linkPreview = get('post.linkPreview', this.props)
     if (get('post.id', this.props) !== get('post.id', prevProps)) {
       this.reset(this.props)
       this.editor.focus()
-    } else if (get('post.linkPreview', this.props) !== get('post.linkPreview', prevProps)) {
+    } else if (linkPreview !== get('post.linkPreview', prevProps)) {
       this.setState({
-        post: {...this.state.post, linkPreview: this.props.post.linkPreview}
+        post: {...this.state.post, linkPreview}
       })
     }
   }
 
   componentWillUnmount () {
-    this.removeLinkPreview()
+    this.props.resetLinkPreview()
   }
 
   reset = (props) => {
@@ -148,7 +148,10 @@ export default class PostEditor extends React.Component {
       const contentState = editorState.getCurrentContent()
       const { pollingFetchLinkPreview, resetLinkPreview } = this.props
       const { linkPreview } = this.state.post
-      if (!contentState.hasText()) resetLinkPreview()
+      if (!contentState.hasText()) {
+        resetLinkPreview()
+        return
+      }
       if (linkPreview) return
       pollingFetchLinkPreview(contentStateToHTML(contentState))
     }

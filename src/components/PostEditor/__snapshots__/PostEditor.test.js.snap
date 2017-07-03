@@ -1,5 +1,143 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`PostEditor editing a post form in editing mode 1`] = `
+<div
+  data-styleName="wrapper"
+>
+  <div
+    data-styleName="header"
+  >
+    <div
+      data-styleName="initial"
+    >
+      <div
+        data-styleName="initial-prompt"
+      >
+        What are you looking to post?
+      </div>
+      <a
+        data-styleName="initial-closeButton"
+      >
+        <Icon
+          name="Ex"
+        />
+      </a>
+    </div>
+    <div
+      data-styleName="postTypes"
+    >
+      <Button
+        className="undefined"
+        color=""
+        disabled={false}
+        label="discussion"
+        onClick={[Function]}
+      />
+      <Button
+        className=""
+        color=""
+        disabled={false}
+        label="request"
+        onClick={[Function]}
+      />
+      <Button
+        className="undefined"
+        color=""
+        disabled={false}
+        label="offer"
+        onClick={[Function]}
+      />
+    </div>
+  </div>
+  <div
+    data-styleName="body"
+  >
+    <div
+      data-styleName="body-column"
+    >
+      <RoundImage
+        data-styleName="titleAvatar"
+        medium={true}
+      />
+    </div>
+    <div
+      data-styleName="body-column"
+    >
+      <input
+        data-styleName="titleInput"
+        disabled={false}
+        onChange={[Function]}
+        placeholder="What are you looking for help with?"
+        type="text"
+        value="valid title"
+      />
+      <Connect(HyloEditor)
+        contentHTML="valid details"
+        data-styleName="editor"
+        onChange={[Function]}
+        placeholder="Add a description"
+        readOnly={false}
+      />
+      <LinkPreview
+        linkPreview={
+          Object {
+            "id": "1",
+            "title": "a link",
+          }
+        }
+        onClose={[Function]}
+      />
+    </div>
+  </div>
+  <div
+    data-styleName="footer"
+  >
+    <div
+      data-styleName="postIn"
+    >
+      <div
+        data-styleName="postIn-label"
+      >
+        Post in
+      </div>
+      <div
+        data-styleName="postIn-communities"
+      >
+        <CommunitiesSelector
+          onChange={[Function]}
+          options={Array []}
+          placeholder="Type community name..."
+          readOnly={false}
+          selected={
+            Array [
+              Object {
+                "id": "1",
+                "name": "test community 1",
+              },
+              Object {
+                "id": "2",
+                "name": "test community 2",
+              },
+            ]
+          }
+        />
+      </div>
+    </div>
+    <div
+      data-styleName="actionsBar"
+    >
+      <Button
+        color="green"
+        data-styleName="postButton"
+        disabled={true}
+        label="Save"
+        onClick={[Function]}
+      />
+    </div>
+  </div>
+</div>
+`;
+
 exports[`PostEditor editing a post post is loaded into fields 1`] = `
 <div
   data-styleName="wrapper"
@@ -210,6 +348,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         value=""
       />
       <Connect(HyloEditor)
+        contentHTML=""
         data-styleName="editor"
         onChange={[Function]}
         placeholder="Add a description"
@@ -247,7 +386,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         color="green"
         data-styleName="postButton"
         disabled={true}
-        label="Save"
+        label="Post"
         onClick={[Function]}
       />
     </div>
@@ -327,6 +466,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         value=""
       />
       <Connect(HyloEditor)
+        contentHTML=""
         data-styleName="editor"
         onChange={[Function]}
         placeholder="Add a description"
@@ -364,7 +504,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         color="green"
         data-styleName="postButton"
         disabled={true}
-        label="Save"
+        label="Post"
         onClick={[Function]}
       />
     </div>
@@ -444,6 +584,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         value=""
       />
       <Connect(HyloEditor)
+        contentHTML=""
         data-styleName="editor"
         onChange={[Function]}
         placeholder="Add a description"
@@ -481,7 +622,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         color="green"
         data-styleName="postButton"
         disabled={true}
-        label="Save"
+        label="Post"
         onClick={[Function]}
       />
     </div>
@@ -600,135 +741,6 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         data-styleName="postButton"
         disabled={true}
         label="Post"
-        onClick={[Function]}
-      />
-    </div>
-  </div>
-</div>
-`;
-
-exports[`PostEditor form in editing mode 1`] = `
-<div
-  data-styleName="wrapper"
->
-  <div
-    data-styleName="header"
-  >
-    <div
-      data-styleName="initial"
-    >
-      <div
-        data-styleName="initial-prompt"
-      >
-        What are you looking to post?
-      </div>
-      <a
-        data-styleName="initial-closeButton"
-      >
-        <Icon
-          name="Ex"
-        />
-      </a>
-    </div>
-    <div
-      data-styleName="postTypes"
-    >
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="discussion"
-        onClick={[Function]}
-      />
-      <Button
-        className=""
-        color=""
-        disabled={false}
-        label="request"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="offer"
-        onClick={[Function]}
-      />
-    </div>
-  </div>
-  <div
-    data-styleName="body"
-  >
-    <div
-      data-styleName="body-column"
-    >
-      <RoundImage
-        data-styleName="titleAvatar"
-        medium={true}
-      />
-    </div>
-    <div
-      data-styleName="body-column"
-    >
-      <input
-        data-styleName="titleInput"
-        disabled={false}
-        onChange={[Function]}
-        placeholder="What are you looking for help with?"
-        type="text"
-        value="valid title"
-      />
-      <Connect(HyloEditor)
-        contentHTML="valid details"
-        data-styleName="editor"
-        onChange={[Function]}
-        placeholder="Add a description"
-        readOnly={false}
-      />
-    </div>
-  </div>
-  <div
-    data-styleName="footer"
-  >
-    <div
-      data-styleName="postIn"
-    >
-      <div
-        data-styleName="postIn-label"
-      >
-        Post in
-      </div>
-      <div
-        data-styleName="postIn-communities"
-      >
-        <CommunitiesSelector
-          onChange={[Function]}
-          options={Array []}
-          placeholder="Type community name..."
-          readOnly={false}
-          selected={
-            Array [
-              Object {
-                "id": "1",
-                "name": "test community 1",
-              },
-              Object {
-                "id": "2",
-                "name": "test community 2",
-              },
-            ]
-          }
-        />
-      </div>
-    </div>
-    <div
-      data-styleName="actionsBar"
-    >
-      <Button
-        color="green"
-        data-styleName="postButton"
-        disabled={true}
-        label="Save"
         onClick={[Function]}
       />
     </div>
