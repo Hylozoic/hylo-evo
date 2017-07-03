@@ -57,7 +57,7 @@ export default class PrimaryLayout extends Component {
       location,
       toggleDrawer,
       isCommunityRoute,
-      showTitleBadge
+      showLogoBadge
     } = this.props
 
     if (isCommunityRoute && !community) {
@@ -72,7 +72,7 @@ export default class PrimaryLayout extends Component {
     // TODO move FullPageModals
     return <div styleName='container' onClick={closeDrawer}>
       <Drawer currentCommunity={community} styleName={cx('drawer', {hidden: !isDrawerOpen})} />
-      <TopNav {...{community, currentUser, showTitleBadge}} styleName='top' />
+      <TopNav {...{community, currentUser, showLogoBadge}} styleName='top' />
       <div styleName='main'>
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>

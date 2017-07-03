@@ -28,13 +28,13 @@ export default class TopNav extends Component {
   }
 
   render () {
-    const { className, community, currentUser, logout, toggleDrawer, showTitleBadge } = this.props
+    const { className, community, currentUser, logout, toggleDrawer, showLogoBadge } = this.props
     const profileUrl = personUrl(get('id', currentUser), get('slug', community))
 
     return <div styleName='topNavWrapper' className={className}>
       <div styleName='topNav' ref='topNav'>
-        <Logo {...{community, toggleDrawer}} />
-        <Title community={community} showTitleBadge={showTitleBadge} />
+        <Logo {...{community, toggleDrawer, showLogoBadge}} />
+        <Title community={community} />
         <div styleName='navIcons'>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
           <MessagesDropdown renderToggleChildren={showBadge =>
@@ -61,13 +61,15 @@ export default class TopNav extends Component {
   }
 }
 
-function Logo ({ community, toggleDrawer }) {
+function Logo ({ community, toggleDrawer, showLogoBadge }) {
   const imageStyle = bgImageStyle(get('avatarUrl', community) || hyloLogo)
   return <span styleName='image' style={imageStyle}
-    onClick={toggleDrawer} />
+    onClick={toggleDrawer}>
+    {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
+  </span>
 }
 
-function Title ({ community, showTitleBadge }) {
+function Title ({ community }) {
   const [ label, name ] = community
     ? ['COMMUNITY', community.name]
     : ['GLOBAL', 'All Communities']
@@ -75,7 +77,6 @@ function Title ({ community, showTitleBadge }) {
   return <div styleName='title'>
     <div styleName='label'>
       {label}
-      {showTitleBadge && <Badge number='1' styleName='titleBadge' />}
     </div>
     <div styleName='communityName'>{name}</div>
   </div>

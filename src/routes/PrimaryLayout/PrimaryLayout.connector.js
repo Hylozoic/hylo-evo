@@ -12,7 +12,7 @@ function mapStateToProps (state, props) {
     community: getCommunityForCurrentRoute(state, props),
     currentUser: getMe(state),
     isDrawerOpen: state.PrimaryLayout.isDrawerOpen,
-    showTitleBadge: true
+    showLogoBadge: true
   }
 }
 

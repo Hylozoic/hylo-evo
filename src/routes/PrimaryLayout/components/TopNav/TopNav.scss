@@ -40,14 +40,14 @@
   }
 }
 
-.title {
-  display: inline-block;
+.logoBadge {
+  position: relative;
+  top: -14px;
+  right: -19px;
 }
 
-.titleBadge {
-  position: absolute;
-  margin-top: -1px;
-  margin-left: 5px;
+.title {
+  display: inline-block;
 }
 
 .label {

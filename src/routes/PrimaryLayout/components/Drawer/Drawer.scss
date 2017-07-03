@@ -113,17 +113,15 @@ $new-community-spacing: 16px;
   }
 }
 
-li.community {
-
-  .name {
-    vertical-align: middle;
-    width: $calculated-name-width;
-    margin-right: $li-spacing;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: inline-block;
-  }
+.community-name {
+  composes: drawer-inv-li from 'css/typography.scss';
+  vertical-align: middle;
+  width: $calculated-name-width;
+  margin-right: $li-spacing;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .highlight {

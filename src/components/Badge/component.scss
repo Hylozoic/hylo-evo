@@ -55,6 +55,12 @@
   color: transparent;
 }
 
+.border {
+  width: 11px;
+  height: 11px;
+  border: 2px solid $color-white;
+}
+
 // parent is imported by parent composes to add as a className so that the badge can
 // react to the parent being hovered.
 .parent {
