@@ -348,7 +348,6 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         value=""
       />
       <Connect(HyloEditor)
-        contentHTML=""
         data-styleName="editor"
         onChange={[Function]}
         placeholder="Add a description"
@@ -466,7 +465,6 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         value=""
       />
       <Connect(HyloEditor)
-        contentHTML=""
         data-styleName="editor"
         onChange={[Function]}
         placeholder="Add a description"
@@ -584,7 +582,6 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         value=""
       />
       <Connect(HyloEditor)
-        contentHTML=""
         data-styleName="editor"
         onChange={[Function]}
         placeholder="Add a description"

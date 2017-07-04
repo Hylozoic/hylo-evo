@@ -31,7 +31,7 @@ describe('PostEditor', () => {
     }
     const renderForType = (type) => {
       const props = {
-        defaultPost: { type },
+        post: { type },
         titlePlaceholderForPostType
       }
       return shallow(<PostEditor {...props} />)
@@ -44,7 +44,7 @@ describe('PostEditor', () => {
 
     test('saving a post will create a new post', () => {
       const props = {
-        defaultPost: {
+        post: {
           type: 'offer',
           title: 'valid title',
           details: 'valid details',
@@ -56,7 +56,7 @@ describe('PostEditor', () => {
         createPost: jest.fn(() => new Promise(() => {}))
       }
       const editorMock = {
-        getContentHTML: () => props.defaultPost.details,
+        getContentHTML: () => props.post.details,
         reset: jest.fn()
       }
       const communitiesSelectorMock = {
@@ -68,7 +68,7 @@ describe('PostEditor', () => {
       testInstance.communitiesSelector = communitiesSelectorMock
       testInstance.save()
       expect(props.createPost.mock.calls).toHaveLength(1)
-      expect(props.createPost).toHaveBeenCalledWith(props.defaultPost)
+      expect(props.createPost).toHaveBeenCalledWith(props.post)
     })
   })
 
@@ -120,16 +120,7 @@ describe('PostEditor', () => {
   test('post is defaulted while loaded into editor', () => {
     const props = {
       editing: true,
-      loading: true,
-      post: {
-        type: 'request',
-        title: 'valid title',
-        details: 'valid details',
-        communities: [
-          {id: '1', name: 'test community 1'},
-          {id: '2', name: 'test community 2'}
-        ]
-      }
+      loading: true
     }
     const wrapper = shallow(<PostEditor {...props} />)
     expect(wrapper).toMatchSnapshot()

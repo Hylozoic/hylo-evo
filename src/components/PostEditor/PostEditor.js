@@ -18,6 +18,7 @@ export default class PostEditor extends React.Component {
     detailsPlaceholder: PropTypes.string,
     communityOptions: PropTypes.array,
     currentUser: PropTypes.object,
+    currentCommunity: PropTypes.object,
     post: PropTypes.shape({
       id: PropTypes.string,
       type: PropTypes.string,
@@ -55,10 +56,11 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ editing, loading, defaultPost, post }) => {
-    const mergedDefaultPost = Object.assign({}, PostEditor.defaultProps.post, defaultPost)
-    // LEJ: Can't just check for null post as the linkPreview is attached to post
-    const currentPost = (get('id', post) && post) || mergedDefaultPost
+  buildStateFromProps = ({ editing, loading, currentCommunity, post }) => {
+    const defaultPost = Object.assign({}, PostEditor.defaultProps.post, {
+      communities: [currentCommunity]
+    })
+    const currentPost = post || defaultPost
     return {
       post: currentPost,
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),

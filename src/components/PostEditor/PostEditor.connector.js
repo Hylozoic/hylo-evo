@@ -20,26 +20,22 @@ import {
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
-  const communityOptions = props.communityOptions || (currentUser &&
-    currentUser.memberships.toModelArray().map(m => m.community))
+  const currentCommunity = getCommunityForCurrentRoute(state, props)
+  const communityOptions = props.communityOptions ||
+    (currentUser && currentUser.memberships.toModelArray().map(m => m.community))
   let post = props.post || getPost(state, props)
   const loading = !!state.pending[FETCH_POST]
-  const editing = loading || !!post
-  // LEJ: the defaultPost assembled here is merged with on top of
-  // defaultProps.post on the component
-  const currentCommunity = getCommunityForCurrentRoute(state, props)
-  const defaultPost = (!editing && currentCommunity)
-    ? {communities: [currentCommunity]} : {}
+  const editing = !!post || loading
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
   return {
     currentUser,
+    currentCommunity,
     communityOptions,
     post,
     loading,
     editing,
-    defaultPost,
     linkPreview,
     linkPreviewStatus,
     fetchLinkPreviewPending
