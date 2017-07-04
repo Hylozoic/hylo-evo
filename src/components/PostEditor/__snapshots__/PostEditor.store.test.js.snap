@@ -21,21 +21,7 @@ Object {
 }
 `;
 
-exports[`PostEditor store reducer when PostEditor/RESET_LINK_PREVIEW linkPreviewId and linkPreviewStatus should remain unchanged if a preview exists and wasn't removed 1`] = `
-Object {
-  "linkPreviewId": "valid-id",
-  "linkPreviewStatus": null,
-}
-`;
-
-exports[`PostEditor store reducer when PostEditor/RESET_LINK_PREVIEW linkPreviewId is set to "reset" if transitioning from invalid 1`] = `
-Object {
-  "linkPreviewId": null,
-  "linkPreviewStatus": "reset",
-}
-`;
-
-exports[`PostEditor store reducer when PostEditor/RESET_LINK_PREVIEW linkPreviewId is set to "reset" if transitioning from removed 1`] = `
+exports[`PostEditor store reducer when PostEditor/RESET_LINK_PREVIEW linkPreviewId is cleared and status set to "reset" 1`] = `
 Object {
   "linkPreviewId": null,
   "linkPreviewStatus": "reset",

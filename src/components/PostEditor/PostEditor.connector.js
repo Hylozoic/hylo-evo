@@ -1,3 +1,4 @@
+import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { postUrl } from 'util/index'
@@ -28,26 +29,20 @@ export function mapStateToProps (state, props) {
   // defaultProps.post on the component
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const defaultPost = (!editing && currentCommunity)
-    ? {communities: [currentCommunity]}
-    : {}
-  // LEJ: The post.linkPreview is replaced with either the new
-  // LinkPreview or cleared with null in the case of
-  // any status (removed, reset or invalid)
+    ? {communities: [currentCommunity]} : {}
+  const linkPreview = getLinkPreview(state, props)
+  const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
-  const { linkPreviewId, linkPreviewStatus } = state[MODULE_NAME]
-  if (linkPreviewId || linkPreviewStatus) {
-    post = post || {}
-    post.linkPreview = getLinkPreview(state, props)
-  }
   return {
-    post,
-    defaultPost,
-    fetchLinkPreviewPending,
-    linkPreviewStatus,
-    communityOptions,
     currentUser,
+    communityOptions,
+    post,
+    loading,
     editing,
-    loading
+    defaultPost,
+    linkPreview,
+    linkPreviewStatus,
+    fetchLinkPreviewPending
   }
 }
 

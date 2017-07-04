@@ -55,23 +55,10 @@ describe('PostEditor store', () => {
 
     describe(`when ${RESET_LINK_PREVIEW}`, () => {
       const action = {type: RESET_LINK_PREVIEW}
-      const statuses = ['removed', 'invalid']
-      statuses.forEach(status => {
-        return test(`linkPreviewId is set to "reset" if transitioning from ${status}`, () => {
-          const initialState = {linkPreviewId: null, linkPreviewStatus: status}
-          const finalState = reducer(initialState, action)
-          expect(finalState.linkPreviewId).toBeFalsy()
-          expect(finalState.linkPreviewStatus).toEqual('reset')
-          expect(finalState).toMatchSnapshot()
-        })
-      })
-
-      test('linkPreviewId and linkPreviewStatus should remain unchanged if a preview exists and wasn\'t removed', () => {
-        const linkPreviewId = 'valid-id'
-        const initialState = {linkPreviewId, linkPreviewStatus: null}
-        const finalState = reducer(initialState, action)
-        expect(finalState.linkPreviewId).toEqual('valid-id')
-        expect(finalState.linkPreviewStatus).toEqual(null)
+      test('linkPreviewId is cleared and status set to "reset"', () => {
+        const finalState = reducer(defaultState, action)
+        expect(finalState.linkPreviewId).toBeFalsy()
+        expect(finalState.linkPreviewStatus).toEqual('reset')
         expect(finalState).toMatchSnapshot()
       })
     })

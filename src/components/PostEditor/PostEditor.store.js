@@ -171,11 +171,10 @@ export default function reducer (state = defaultState, action) {
       if (linkPreview && !linkPreview.title) {
         return {...state, linkPreviewId: null, linkPreviewStatus: 'invalid'}
       }
-      return {...state, linkPreviewId: get('id')(linkPreview)}
+      return {...state, linkPreviewId: get('id')(linkPreview), linkPreviewStatus: null}
     case REMOVE_LINK_PREVIEW:
       return {...state, linkPreviewId: null, linkPreviewStatus: 'removed'}
     case RESET_LINK_PREVIEW:
-      if (!state.linkPreviewStatus) return state
       return {...state, linkPreviewId: null, linkPreviewStatus: 'reset'}
     default:
       return state
