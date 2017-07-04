@@ -32,9 +32,7 @@ describe('PostEditor', () => {
     const renderForType = (type) => {
       const props = {
         defaultPost: { type },
-        titlePlaceholderForPostType,
-        editing: false,
-        loading: false
+        titlePlaceholderForPostType
       }
       return shallow(<PostEditor {...props} />)
     }
@@ -55,7 +53,6 @@ describe('PostEditor', () => {
             {id: '2', name: 'test community 2'}
           ]
         },
-        editing: false,
         createPost: jest.fn(() => new Promise(() => {}))
       }
       const editorMock = {
@@ -78,7 +75,6 @@ describe('PostEditor', () => {
   describe('editing a post', () => {
     const props = {
       editing: true,
-      loading: false,
       post: {
         id: 'test',
         type: 'request',
@@ -123,8 +119,8 @@ describe('PostEditor', () => {
 
   test('post is defaulted while loaded into editor', () => {
     const props = {
-      loading: true,
       editing: true,
+      loading: true,
       post: {
         type: 'request',
         title: 'valid title',
@@ -142,14 +138,14 @@ describe('PostEditor', () => {
   describe('valid', () => {
     it('is valid when all required values are supplied', () => {
       const props = {
+        editing: true,
         post: {
           type: 'request',
           title: 'valid title',
           communities: [
             {id: '1', name: 'test community 1'}
           ]
-        },
-        editing: true
+        }
       }
       const testInstance = shallow(<PostEditor {...props} />).instance()
       testInstance.editor = {isEmpty: jest.fn(() => false)}
@@ -158,10 +154,10 @@ describe('PostEditor', () => {
 
     it('is invalid when required values are missing', () => {
       const props = {
+        editing: true,
         post: {
           title: 'valid title'
-        },
-        editing: true
+        }
       }
       const testInstance = shallow(<PostEditor {...props} />).instance()
       testInstance.editor = {isEmpty: jest.fn(() => false)}
@@ -180,6 +176,7 @@ describe('PostEditor', () => {
 
   test('saving a valid post will update a post', () => {
     const props = {
+      editing: true,
       post: {
         id: 'test',
         type: 'offer',
@@ -191,7 +188,6 @@ describe('PostEditor', () => {
           {id: '2', name: 'test community 2'}
         ]
       },
-      editing: true,
       updatePost: jest.fn(() => new Promise(() => {}))
     }
     const editorMock = {
