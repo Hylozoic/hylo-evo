@@ -146,15 +146,16 @@ export default class PostEditor extends React.Component {
 
   handleDetailsChange = (editorState, contentChanged) => {
     this.setValid()
-    if (contentChanged) {
-      const contentState = editorState.getCurrentContent()
-      const { pollingFetchLinkPreview, linkPreviewStatus, resetLinkPreview } = this.props
-      const { linkPreview } = this.state.post
-      if (!contentState.hasText() && linkPreviewStatus) return resetLinkPreview()
-      if (linkPreviewStatus === 'invalid' || linkPreviewStatus === 'removed') return
-      if (linkPreview) return
-      pollingFetchLinkPreview(contentStateToHTML(contentState))
-    }
+    if (contentChanged) this.setLinkPreview(editorState.getCurrentContent())
+  }
+
+  setLinkPreview = (contentState) => {
+    const { pollingFetchLinkPreview, linkPreviewStatus, resetLinkPreview } = this.props
+    const { linkPreview } = this.state.post
+    if (!contentState.hasText() && linkPreviewStatus) return resetLinkPreview()
+    if (linkPreviewStatus === 'invalid' || linkPreviewStatus === 'removed') return
+    if (linkPreview) return
+    pollingFetchLinkPreview(contentStateToHTML(contentState))
   }
 
   removeLinkPreview = () => {

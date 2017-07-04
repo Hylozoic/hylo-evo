@@ -1,5 +1,6 @@
 /* eslint-env jest */
 import React from 'react'
+import { merge } from 'lodash'
 import { shallow } from 'enzyme'
 import PostEditor from './PostEditor'
 
@@ -117,7 +118,7 @@ describe('PostEditor', () => {
     })
   })
 
-  test('post is defaulted while loaded into editor', () => {
+  test('post is defaulted while loading editor', () => {
     const props = {
       editing: true,
       loading: true
@@ -129,7 +130,6 @@ describe('PostEditor', () => {
   describe('valid', () => {
     it('is valid when all required values are supplied', () => {
       const props = {
-        editing: true,
         post: {
           type: 'request',
           title: 'valid title',
@@ -145,7 +145,6 @@ describe('PostEditor', () => {
 
     it('is invalid when required values are missing', () => {
       const props = {
-        editing: true,
         post: {
           title: 'valid title'
         }
@@ -195,5 +194,91 @@ describe('PostEditor', () => {
     testInstance.save()
     expect(props.updatePost.mock.calls).toHaveLength(1)
     expect(props.updatePost).toHaveBeenCalledWith(props.post)
+  })
+
+  describe('linkPreview handling', () => {
+    let baseProps, contentStateMock
+    beforeEach(() => {
+      baseProps = {
+        post: {},
+        pollingFetchLinkPreview: jest.fn(),
+        resetLinkPreview: jest.fn()
+      }
+      contentStateMock = {
+        getBlockMap: () => ([]),
+        hasText: () => true
+      }
+    })
+
+    it('should fetch for a linkPreview', () => {
+      const props = baseProps
+      const wrapper = shallow(<PostEditor {...props} />)
+      const testInstance = wrapper.instance()
+      testInstance.setLinkPreview(contentStateMock)
+      expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(1)
+    })
+
+    it('should not fetch for linkPreview when a post.linkPreview is present', () => {
+      const props = merge(baseProps, {
+        post: {
+          linkPreview: {}
+        }
+      })
+      const wrapper = shallow(<PostEditor {...props} />)
+      const testInstance = wrapper.instance()
+      testInstance.setLinkPreview(contentStateMock)
+      expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
+    })
+
+    it('should not fetch for linkPreview when linkStatus is "removed"', () => {
+      const props = merge(baseProps, {
+        linkPreviewStatus: 'removed'
+      })
+      const wrapper = shallow(<PostEditor {...props} />)
+      const testInstance = wrapper.instance()
+      testInstance.setLinkPreview(contentStateMock)
+      expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
+    })
+
+    it('should not fetch for linkPreview when linkStatus is "invalid"', () => {
+      const props = merge(baseProps, {
+        linkPreviewStatus: 'invalid'
+      })
+      const wrapper = shallow(<PostEditor {...props} />)
+      const testInstance = wrapper.instance()
+      testInstance.setLinkPreview(contentStateMock)
+      expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
+    })
+
+    it('should reset linkPreview when there is no text and any linkStatus is present', () => {
+      contentStateMock = {
+        hasText: () => false
+      }
+      const props = merge(baseProps, {
+        linkPreviewStatus: 'any'
+      })
+      const wrapper = shallow(<PostEditor {...props} />)
+      const testInstance = wrapper.instance()
+      testInstance.setLinkPreview(contentStateMock)
+      expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
+      expect(props.resetLinkPreview.mock.calls).toHaveLength(1)
+    })
+
+    it('should not reset linkPreview when there is no text but there is a linkPreview present', () => {
+      contentStateMock = {
+        hasText: () => false
+      }
+      const props = merge(baseProps, {
+        linkPreviewStatus: null,
+        post: {
+          linkPreview: {}
+        }
+      })
+      const wrapper = shallow(<PostEditor {...props} />)
+      const testInstance = wrapper.instance()
+      testInstance.setLinkPreview(contentStateMock)
+      expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
+      expect(props.resetLinkPreview.mock.calls).toHaveLength(0)
+    })
   })
 })
