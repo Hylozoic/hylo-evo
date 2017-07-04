@@ -21,6 +21,13 @@ Object {
 }
 `;
 
+exports[`PostEditor store reducer when PostEditor/RESET_LINK_PREVIEW linkPreviewId and linkPreviewStatus should remain unchanged if a preview exists and wasn't removed 1`] = `
+Object {
+  "linkPreviewId": "valid-id",
+  "linkPreviewStatus": null,
+}
+`;
+
 exports[`PostEditor store reducer when PostEditor/RESET_LINK_PREVIEW linkPreviewId is set to "reset" if transitioning from invalid 1`] = `
 Object {
   "linkPreviewId": null,
@@ -32,12 +39,5 @@ exports[`PostEditor store reducer when PostEditor/RESET_LINK_PREVIEW linkPreview
 Object {
   "linkPreviewId": null,
   "linkPreviewStatus": "reset",
-}
-`;
-
-exports[`PostEditor store reducer when PostEditor/RESET_LINK_PREVIEW should not clear the linkPreviewId or set status to "reset" if a preview exists and wasn't removed 1`] = `
-Object {
-  "linkPreviewId": "valid-id",
-  "linkPreviewStatus": null,
 }
 `;

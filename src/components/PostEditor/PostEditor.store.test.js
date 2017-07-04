@@ -66,7 +66,7 @@ describe('PostEditor store', () => {
         })
       })
 
-      it('should not clear the linkPreviewId or set status to "reset" if a preview exists and wasn\'t removed', () => {
+      test('linkPreviewId and linkPreviewStatus should remain unchanged if a preview exists and wasn\'t removed', () => {
         const linkPreviewId = 'valid-id'
         const initialState = {linkPreviewId, linkPreviewStatus: null}
         const finalState = reducer(initialState, action)
