@@ -62,11 +62,10 @@ export const mapDispatchToProps = (dispatch, props) => {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { fetchLinkPreviewPending, linkPreviewStatus } = stateProps
+  const { fetchLinkPreviewPending } = stateProps
   const { pollingFetchLinkPreviewRaw } = dispatchProps
 
-  const pollingFetchLinkPreview =
-    fetchLinkPreviewPending || linkPreviewStatus === 'removed' || linkPreviewStatus === 'invalid'
+  const pollingFetchLinkPreview = fetchLinkPreviewPending
       ? () => Promise.resolve()
       : url => pollingFetchLinkPreviewRaw(url)
 
