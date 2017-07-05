@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostEditor store reducer when PostEditor/FETCH_LINK_PREVIEW linkPreviewId is not set status is "invalid" if a record is not found 1`] = `
+Object {
+  "linkPreviewId": null,
+  "linkPreviewStatus": "invalid",
+}
+`;
+
+exports[`PostEditor store reducer when PostEditor/FETCH_LINK_PREVIEW linkPreviewId is set if record is found 1`] = `
+Object {
+  "linkPreviewId": "found",
+  "linkPreviewStatus": null,
+}
+`;
+
+exports[`PostEditor store reducer when PostEditor/REMOVE_LINK_PREVIEW linkPreviewId is cleared and status set to "removed" 1`] = `
+Object {
+  "linkPreviewId": null,
+  "linkPreviewStatus": "removed",
+}
+`;
+
+exports[`PostEditor store reducer when PostEditor/RESET_LINK_PREVIEW linkPreviewId is cleared and status set to "reset" 1`] = `
+Object {
+  "linkPreviewId": null,
+  "linkPreviewStatus": "reset",
+}
+`;

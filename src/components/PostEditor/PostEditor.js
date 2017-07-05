@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import { get } from 'lodash/fp'
 import cx from 'classnames'
-import linkMatcher from 'util/linkMatcher'
 import styles from './PostEditor.scss'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
@@ -19,6 +18,7 @@ export default class PostEditor extends React.Component {
     detailsPlaceholder: PropTypes.string,
     communityOptions: PropTypes.array,
     currentUser: PropTypes.object,
+    currentCommunity: PropTypes.object,
     post: PropTypes.shape({
       id: PropTypes.string,
       type: PropTypes.string,
@@ -30,7 +30,7 @@ export default class PostEditor extends React.Component {
     linkPreviewStatus: PropTypes.string,
     createPost: PropTypes.func,
     updatePost: PropTypes.func,
-    fetchLinkPreview: PropTypes.func,
+    pollingFetchLinkPreview: PropTypes.func,
     removeLinkPreview: PropTypes.func,
     resetLinkPreview: PropTypes.func,
     goToPost: PropTypes.func,
@@ -56,11 +56,11 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ editing, loading, defaultPost, post }) => {
-    const mergedDefaultPost = Object.assign({}, PostEditor.defaultProps.post, defaultPost)
-    let currentPost = editing && !loading
-      ? post
-      : mergedDefaultPost
+  buildStateFromProps = ({ editing, loading, currentCommunity, post }) => {
+    const defaultPost = Object.assign({}, PostEditor.defaultProps.post, {
+      communities: [currentCommunity]
+    })
+    const currentPost = post || defaultPost
     return {
       post: currentPost,
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
@@ -78,18 +78,19 @@ export default class PostEditor extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
+    const linkPreview = this.props.linkPreview
     if (get('post.id', this.props) !== get('post.id', prevProps)) {
       this.reset(this.props)
       this.editor.focus()
-    } else if (get('post.linkPreview', this.props) !== get('post.linkPreview', prevProps)) {
+    } else if (linkPreview !== prevProps.linkPreview) {
       this.setState({
-        post: {...this.state.post, linkPreview: this.props.post.linkPreview}
+        post: {...this.state.post, linkPreview}
       })
     }
   }
 
   componentWillUnmount () {
-    this.removeLinkPreview()
+    this.props.resetLinkPreview()
   }
 
   reset = (props) => {
@@ -145,35 +146,16 @@ export default class PostEditor extends React.Component {
 
   handleDetailsChange = (editorState, contentChanged) => {
     this.setValid()
-    if (contentChanged) {
-      const contentState = editorState.getCurrentContent()
-      const { resetLinkPreview } = this.props
-      if (!contentState.hasText()) resetLinkPreview()
-      this.setLinkPreview(contentState)
-    }
+    if (contentChanged) this.setLinkPreview(editorState.getCurrentContent())
   }
 
   setLinkPreview = (contentState) => {
-    const contentStateHTML = contentStateToHTML(contentState)
-    const { fetchLinkPreview, linkPreviewStatus } = this.props
+    const { pollingFetchLinkPreview, linkPreviewStatus, resetLinkPreview } = this.props
     const { linkPreview } = this.state.post
+    if (!contentState.hasText() && linkPreviewStatus) return resetLinkPreview()
+    if (linkPreviewStatus === 'invalid' || linkPreviewStatus === 'removed') return
     if (linkPreview) return
-    if (linkPreviewStatus === 'removed' || linkPreviewStatus === 'invalid') return
-    // LEJ: I'd prefer to handle this stuff somewhere in the store...
-    const poll = (url, delay) => {
-      if (delay > 4) return
-      fetchLinkPreview(url).then(value => {
-        if (!value) return
-        const linkPreviewFound = value.meta.extractModel.getRoot(value.payload.data)
-        if (!linkPreviewFound) {
-          setTimeout(() => poll(url, delay * 2), delay * 1000)
-        }
-      })
-    }
-    if (linkMatcher.test(contentStateHTML)) {
-      const urlMatch = linkMatcher.match(contentStateHTML)[0].url
-      poll(urlMatch, 0.5)
-    }
+    pollingFetchLinkPreview(contentStateToHTML(contentState))
   }
 
   removeLinkPreview = () => {

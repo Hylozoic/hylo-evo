@@ -1,3 +1,4 @@
+import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { postUrl } from 'util/index'
@@ -5,12 +6,13 @@ import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getPost from 'store/selectors/getPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import { FETCH_POST } from 'store/constants'
 import {
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
   createPost,
   updatePost,
-  fetchLinkPreview,
+  pollingFetchLinkPreview,
   removeLinkPreview,
   resetLinkPreview,
   getLinkPreview
@@ -18,42 +20,32 @@ import {
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
-  const communityOptions = props.communityOptions || (currentUser &&
-    currentUser.memberships.toModelArray().map(m => m.community))
-  let post = props.post || getPost(state, props)
-  const editing = !!post
-  const loading = editing && !post.id
-  // LEJ: the defaultPost assembled here is merged with on top of
-  // defaultProps.post on the component
   const currentCommunity = getCommunityForCurrentRoute(state, props)
-  const defaultPost = (!editing && currentCommunity)
-    ? {communities: [currentCommunity]}
-    : {}
-  // LEJ: The post.linkPreview is replaced with either the new
-  // LinkPreview or cleared with null in the case of
-  // either status (removed or reset)
+  const communityOptions = props.communityOptions ||
+    (currentUser && currentUser.memberships.toModelArray().map(m => m.community))
+  let post = props.post || getPost(state, props)
+  const loading = !!state.pending[FETCH_POST]
+  const editing = !!post || loading
+  const linkPreview = getLinkPreview(state, props)
+  const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
-  const { linkPreviewStatus, linkPreviewId } = state[MODULE_NAME]
-  if (linkPreviewId || linkPreviewStatus) {
-    post = post || {}
-    post.linkPreview = getLinkPreview(state, props)
-  }
   return {
-    post,
-    defaultPost,
-    fetchLinkPreviewPending,
-    linkPreviewStatus,
-    communityOptions,
     currentUser,
+    currentCommunity,
+    communityOptions,
+    post,
+    loading,
     editing,
-    loading
+    linkPreview,
+    linkPreviewStatus,
+    fetchLinkPreviewPending
   }
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
   const slug = getParam('slug', null, props)
   return {
-    fetchLinkPreviewRaw: url => dispatch(fetchLinkPreview(url)),
+    pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
     removeLinkPreview: () => dispatch(removeLinkPreview()),
     resetLinkPreview: () => dispatch(resetLinkPreview()),
     updatePost: postParams => dispatch(updatePost(postParams)),
@@ -67,17 +59,17 @@ export const mapDispatchToProps = (dispatch, props) => {
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { fetchLinkPreviewPending } = stateProps
-  const { fetchLinkPreviewRaw } = dispatchProps
+  const { pollingFetchLinkPreviewRaw } = dispatchProps
 
-  const fetchLinkPreview = fetchLinkPreviewPending
-    ? () => Promise.resolve()
-    : url => fetchLinkPreviewRaw(url)
+  const pollingFetchLinkPreview = fetchLinkPreviewPending
+      ? () => Promise.resolve()
+      : url => pollingFetchLinkPreviewRaw(url)
 
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    fetchLinkPreview
+    pollingFetchLinkPreview
   }
 }
 
