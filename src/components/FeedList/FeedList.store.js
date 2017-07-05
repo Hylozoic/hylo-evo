@@ -62,6 +62,7 @@ posts(
     }
     commentersTotal
     linkPreview {
+      id
       title
       url
       imageUrl
