@@ -28,6 +28,9 @@ import {
   UPDATE_MEMBERSHIP_SETTINGS_PENDING,
   UPDATE_USER_SETTINGS_PENDING
 } from 'routes/UserSettings/UserSettings.store'
+import {
+  FETCH_FOR_COMMUNITY_PENDING
+} from 'routes/PrimaryLayout/PrimaryLayout.store'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
 import { find } from 'lodash/fp'
@@ -232,6 +235,13 @@ export default function ormReducer (state = {}, action) {
       }
       me.update(changes)
       break
+
+    case FETCH_FOR_COMMUNITY_PENDING:
+      community = Community.safeGet({slug: meta.slug})
+      if (!community) break
+      membership = Membership.safeGet({community: community.id})
+      if (!membership) break
+      membership.update({newPostCount: 0})
   }
 
   return session.state

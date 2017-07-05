@@ -18,6 +18,9 @@ import {
   UPDATE_MEMBERSHIP_SETTINGS_PENDING,
   UPDATE_USER_SETTINGS_PENDING
 } from 'routes/UserSettings/UserSettings.store'
+import {
+  FETCH_FOR_COMMUNITY_PENDING
+} from 'routes/PrimaryLayout/PrimaryLayout.store'
 import deep from 'deep-diff'
 
 it('responds to EXTRACT_MODEL', () => {
@@ -348,5 +351,34 @@ describe('on UPDATE_USER_SETTINGS_PENDING', () => {
       dmNotifications: 'both',
       commentNotifications: 'email'
     })
+  })
+})
+
+describe('on FETCH_FOR_COMMUNITY_PENDING', () => {
+  const session = orm.session(orm.getEmptyState())
+
+  const community = session.Community.create({
+    id: '1',
+    slug: 'foo'
+  })
+
+  session.Membership.create({
+    id: '2',
+    newPostCount: 99,
+    community
+  })
+
+  const action = {
+    type: FETCH_FOR_COMMUNITY_PENDING,
+    meta: {
+      slug: community.slug
+    }
+  }
+
+  it('clears newPostCount', () => {
+    const newState = ormReducer(session.state, action)
+    const newSession = orm.session(newState)
+    const membership = newSession.Membership.withId('2')
+    expect(membership.newPostCount).toEqual(0)
   })
 })
