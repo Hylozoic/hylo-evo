@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react'
+import { pick } from 'lodash/fp'
 import { bgImageStyle } from 'util/index'
 import { sanitize, present, textLength, truncate, appendInP } from 'hylo-utils/text'
 import { parse } from 'url'
@@ -105,7 +106,7 @@ export const PostBody = ({
     <div styleName='body' className={className}>
       <div styleName='title' className='hdr-headline'>{decodedTitle}</div>
       {presentedDetails && <div styleName='description' dangerouslySetInnerHTML={{__html: presentedDetails}} />}
-      {linkPreview && <LinkPreview {...linkPreview} />}
+      {linkPreview && <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />}
     </div>
   </Highlight>
 }
