@@ -2,11 +2,11 @@ import React, { PropTypes, Component } from 'react'
 import './CommunitySettingsTab.scss'
 import Button from 'components/Button'
 import ChangeImageButton from 'components/ChangeImageButton'
+import SettingsControl from 'components/SettingsControl'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
 import { bannerUploadSettings, avatarUploadSettings, DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Community'
 const { object, func } = PropTypes
-import { Control } from 'routes/UserSettings/AccountSettings/AccountSettings'
 
 export default class CommunitySettingsTab extends Component {
   static propTypes = {
@@ -91,8 +91,8 @@ export default class CommunitySettingsTab extends Component {
           uploadSettings={avatarUploadSettings(community)}
           styleName='change-avatar-button' />
       </div>
-      <Control label='Description' onChange={updateSetting('description')} value={description} type='textarea' />
-      <Control label='Location' onChange={updateSetting('location')} value={location} />
+      <SettingsControl label='Description' onChange={updateSetting('description')} value={description} type='textarea' />
+      <SettingsControl label='Location' onChange={updateSetting('location')} value={location} />
       <div styleName='button-row'>
         <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
       </div>

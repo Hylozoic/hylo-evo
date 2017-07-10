@@ -4,10 +4,10 @@ import Loading from 'components/Loading'
 import Button from 'components/Button'
 import ChangeImageButton from 'components/ChangeImageButton'
 import ModeratorControl from 'components/ModeratorControl'
+import SettingsControl from 'components/SettingsControl'
 const { object, func } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
 import { bgImageStyle } from 'util/index'
-import { Control } from 'routes/UserSettings/AccountSettings/AccountSettings'
 import {
   bannerUploadSettings, avatarUploadSettings, DEFAULT_BANNER, DEFAULT_AVATAR
 } from 'store/models/Network'
@@ -98,7 +98,7 @@ export default class NetworkSettings extends Component {
             uploadSettings={avatarUploadSettings(network)}
             styleName='change-avatar-button' />
         </div>
-        <Control label='Description' onChange={updateSetting('description')} value={description} type='textarea' />
+        <SettingsControl label='Description' onChange={updateSetting('description')} value={description} type='textarea' />
         <div styleName='button-row'>
           <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
         </div>

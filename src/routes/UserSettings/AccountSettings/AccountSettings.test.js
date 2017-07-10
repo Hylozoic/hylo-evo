@@ -1,4 +1,4 @@
-import AccountSettings, { Control, SocialControl } from './AccountSettings'
+import AccountSettings, { SocialControl } from './AccountSettings'
 import { shallow } from 'enzyme'
 import React from 'react'
 
@@ -11,14 +11,6 @@ describe('AccountSettings', () => {
     expect(wrapper.find('Button').prop('color')).toEqual('gray')
     wrapper.setState({changed: true})
     expect(wrapper.find('Button').prop('color')).toEqual('green')
-  })
-})
-
-describe('Control', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<Control label='A Control' value='the value' />)
-    expect(wrapper.find('label').text()).toEqual('A Control')
-    expect(wrapper.find('input').prop('value')).toEqual('the value')
   })
 })
 

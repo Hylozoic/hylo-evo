@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import TextareaAutosize from 'react-textarea-autosize'
+import SettingsControl from 'components/SettingsControl'
 import './AccountSettings.scss'
 import Button from 'components/Button'
 import ChangeImageButton from 'components/ChangeImageButton'
@@ -107,11 +107,11 @@ export default class AccountSettings extends Component {
           uploadSettings={avatarUploadSettings(currentUser)}
           styleName='change-avatar-button' />
       </div>
-      <Control label='Tagline' onChange={updateSetting('tagline')} value={tagline} />
-      <Control label='About Me' onChange={updateSetting('bio')} value={bio} type='textarea' />
-      <Control label='Location' onChange={updateSetting('location')} value={location} />
-      <Control label='Email' onChange={updateSetting('email')} value={email} />
-      <Control label='Website' onChange={updateSetting('url')} value={url} />
+      <SettingsControl label='Tagline' onChange={updateSetting('tagline')} value={tagline} />
+      <SettingsControl label='About Me' onChange={updateSetting('bio')} value={bio} type='textarea' />
+      <SettingsControl label='Location' onChange={updateSetting('location')} value={location} />
+      <SettingsControl label='Email' onChange={updateSetting('email')} value={email} />
+      <SettingsControl label='Website' onChange={updateSetting('url')} value={url} />
       <label styleName='social-label'>Social Accounts</label>
       <SocialControl
         label='Facebook'
@@ -140,15 +140,6 @@ export default class AccountSettings extends Component {
       </div>
     </div>
   }
-}
-
-export function Control ({ label, value = '', onChange, type }) {
-  return <div styleName='control'>
-    <label styleName='control-label'>{label}</label>
-    {type === 'textarea'
-      ? <TextareaAutosize minRows={1} maxRows={3} styleName='control-input' value={value} onChange={onChange} />
-      : <input styleName='control-input' type='text' value={value} onChange={onChange} />}
-  </div>
 }
 
 export const socialLinkClicked = provider => {}

@@ -41,15 +41,8 @@
   width: 30px;
 }
 
-.control-label {
-  display: block;
-  composes: tag from 'css/typography.scss';
-  color: $color-rhino-30;
-  margin-bottom: $space-1x;
-}
-
 .social-label {
-  composes: control-label;
+  composes: control-label from 'components/SettingsControl/SettingsControl.scss';
   margin-top: $space-9x;
 }
 
@@ -63,36 +56,17 @@
   margin: 0 auto;
 }
 
-// Control
-.control {
-  margin-bottom: $space-4x;
-}
-
-.control-input {
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid $color-ghost;
-  composes: bdy-drk-sm from 'css/typography.scss';
-  font-size: 16px;
-  padding-bottom: $space-2x;
-  resize: none;
-  &:focus {
-    outline: none;
-  }
-}
-
-textarea.control-input {
-  resize: vertical;
-  height: $space-20x;
-}
-
 // SocialControl
+.control {
+  composes: control from 'components/SettingsControl/SettingsControl.scss';
+}
+
 .linked {
   border-bottom: 1px solid $color-caribbean-green;
 }
 
 .social-control-label {
-  composes: control-input;
+  composes: control-input from 'components/SettingsControl/SettingsControl.scss';
   display: flex;
 }
 
