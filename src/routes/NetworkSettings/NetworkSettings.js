@@ -3,6 +3,7 @@ import './NetworkSettings.scss'
 import Loading from 'components/Loading'
 import Button from 'components/Button'
 import ChangeImageButton from 'components/ChangeImageButton'
+import ModeratorControl from 'components/ModeratorControl'
 const { object, func } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
 import { bgImageStyle } from 'util/index'
@@ -24,13 +25,13 @@ export default class NetworkSettings extends Component {
   }
 
   componentDidMount () {
-    this.fetchNetworkSettings()
+    this.props.fetchNetworkSettings()
     this.setEditState()
   }
 
   componentDidUpdate (prevProps, prevState) {
     if (prevProps.network !== this.props.network) {
-      this.fetchNetworkSettings()
+      this.props.fetchNetworkSettings()
       this.setEditState()
     }
   }
@@ -55,7 +56,7 @@ export default class NetworkSettings extends Component {
   }
 
   render () {
-    const { network, updateNetworkSettings } = this.props
+    const { network, updateNetworkSettings, moderators, communities } = this.props
     if (!network) return <FullPageModal><Loading /></FullPageModal>
 
     const { edits, changed } = this.state
@@ -82,7 +83,7 @@ export default class NetworkSettings extends Component {
       updateNetworkSettings(edits)
     }
 
-    return <FullPageModal>
+    return <FullPageModal narrow>
       <div>
         <input type='text' styleName='name' onChange={updateSetting('name')} value={name || ''} />
         <div style={bgImageStyle(bannerUrl)} styleName='banner'>
@@ -101,7 +102,21 @@ export default class NetworkSettings extends Component {
         <div styleName='button-row'>
           <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
         </div>
+        <Moderators moderators={moderators} />
+        <Communities communities={communities} />
       </div>
     </FullPageModal>
   }
+}
+
+export function Moderators ({ moderators }) {
+  return <div styleName='moderators'>
+    <div styleName='section-label'>Moderators</div>
+    {moderators.map(m => <ModeratorControl moderator={m} key={m.id} />)}
+  </div>
+}
+
+export function Communities ({ communities }) {
+  return <div>
+  </div>
 }

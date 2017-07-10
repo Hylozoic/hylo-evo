@@ -6,7 +6,7 @@ import orm from 'store/models'
 export const MODULE_NAME = 'Component'
 
 // Constants
-export const FETCH_EXAMPLE = 'FETCH_EXAMPLE'
+export const FETCH_EXAMPLE = `${MODULE_NAME}/FETCH_EXAMPLE`
 
 // Action Creators
 export function fetchExample () {

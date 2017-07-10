@@ -1,4 +1,4 @@
-import ModeratorsSettingsTab, { ModeratorControl, AddModerator } from './ModeratorsSettingsTab'
+import ModeratorsSettingsTab, { AddModerator } from './ModeratorsSettingsTab'
 import { shallow } from 'enzyme'
 import React from 'react'
 import { keyMap } from 'util/textInput'
@@ -17,18 +17,6 @@ describe('ModeratorsSettingsTab', () => {
       {id: 4}
     ]
     const wrapper = shallow(<ModeratorsSettingsTab moderators={moderators} />)
-    expect(wrapper).toMatchSnapshot()
-  })
-})
-
-describe('ModeratorControl', () => {
-  it('renders correctly', () => {
-    const moderator = {
-      id: 7,
-      name: 'Zeus',
-      avatarUrl: 'zeus.png'
-    }
-    const wrapper = shallow(<ModeratorControl moderator={moderator} slug='foo' />)
     expect(wrapper).toMatchSnapshot()
   })
 })

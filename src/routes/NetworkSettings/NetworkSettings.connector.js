@@ -1,25 +1,58 @@
 import { connect } from 'react-redux'
 import {
-  fetchExample
+  fetchNetworkSettings,
+  updateNetworkSettings,
+  getNetwork
 } from './NetworkSettings.store'
-// import getMe from 'store/selectors/getMe'
-
-const network = {
-  name: 'Lawyers for Good Government',
-  description: 'An army of more than 120,000 lawyers, law students and activists' +
-    'that have risen up in the wake of the 2016 election fighting for equality, justice,' +
-    'and the future of our nation in defense of the values, principles, individuals,' +
-    'and communities that make America a truly great nation'
-}
+import getParam from 'store/selectors/getParam'
+import { get } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
+  const slug = getParam('slug', state, props)
+  const network = getNetwork(state, {slug})
+  const moderators = network && network.moderators.toModelArray()
+  const communities = network && network.communities.toModelArray()
   return {
-    network
+    slug,
+    network,
+    moderators,
+    communities
   }
 }
 
-export const mapDispatchToProps = {
-  fetchExample
+export function mapDispatchToProps (dispatch, props) {
+  return {
+    fetchNetworkSettingsMaker: slug => () => dispatch(fetchNetworkSettings(slug)),
+    updateNetworkSettingsMaker: id => changes => dispatch(updateNetworkSettings(id, changes))
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { network, slug } = stateProps
+  const {
+    fetchNetworkSettingsMaker, updateNetworkSettingsMaker
+   } = dispatchProps
+  var fetchNetworkSettings, updateNetworkSettings
+
+  if (slug) {
+    fetchNetworkSettings = fetchNetworkSettingsMaker(slug)
+  } else {
+    fetchNetworkSettings = () => {}
+  }
+
+  if (get('id', network)) {
+    updateNetworkSettings = updateNetworkSettingsMaker(network.id)
+  } else {
+    updateNetworkSettings = () => {}
+  }
+
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    fetchNetworkSettings,
+    updateNetworkSettings
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)

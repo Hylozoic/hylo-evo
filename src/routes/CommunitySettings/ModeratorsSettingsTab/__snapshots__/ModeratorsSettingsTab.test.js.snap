@@ -107,36 +107,6 @@ exports[`AddModerator renders correctly, and transitions from not adding to addi
 </div>
 `;
 
-exports[`ModeratorControl renders correctly 1`] = `
-<div
-  data-styleName="moderator-control"
->
-  <Link
-    replace={false}
-    to="/c/foo/m/7"
-  >
-    <RoundImage
-      data-styleName="avatar"
-      medium={true}
-      url="zeus.png"
-    />
-  </Link>
-  <Link
-    data-styleName="name"
-    replace={false}
-    to="/c/foo/m/7"
-  >
-    Zeus
-  </Link>
-  <span
-    data-styleName="remove-button"
-    onClick={[Function]}
-  >
-    Remove
-  </span>
-</div>
-`;
-
 exports[`ModeratorsSettingsTab renders a list of ModeratorControls and AddModerator 1`] = `
 <div>
   <div>

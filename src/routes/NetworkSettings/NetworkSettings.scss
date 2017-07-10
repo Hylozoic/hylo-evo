@@ -62,3 +62,13 @@
 .save-button {
   margin: 0 auto;
 }
+
+.section-label {
+  composes: tag from 'css/typography.scss';
+  color: $color-rhino-30;
+}
+
+// Moderators
+.moderators {
+  margin-top: 35px;
+}

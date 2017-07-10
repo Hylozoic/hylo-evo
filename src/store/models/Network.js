@@ -1,4 +1,4 @@
-import { attr, Model } from 'redux-orm'
+import { attr, many, Model } from 'redux-orm'
 
 const Network = Model.createClass({
   toString () {
@@ -15,7 +15,9 @@ Network.fields = {
   name: attr(),
   description: attr(),
   avatarUrl: attr(),
-  bannerUrl: attr()
+  bannerUrl: attr(),
+  moderators: many('Person'),
+  communities: many('Community')
 }
 
 export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg'
