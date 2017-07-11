@@ -107,32 +107,32 @@ exports[`AddModerator renders correctly, and transitions from not adding to addi
 </div>
 `;
 
-exports[`ModeratorsSettingsTab renders a list of ModeratorControls and AddModerator 1`] = `
+exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModerator 1`] = `
 <div>
   <div>
-    <ModeratorControl
-      moderator={
+    <RemovableListItem
+      item={
         Object {
           "id": 1,
         }
       }
     />
-    <ModeratorControl
-      moderator={
+    <RemovableListItem
+      item={
         Object {
           "id": 2,
         }
       }
     />
-    <ModeratorControl
-      moderator={
+    <RemovableListItem
+      item={
         Object {
           "id": 3,
         }
       }
     />
-    <ModeratorControl
-      moderator={
+    <RemovableListItem
+      item={
         Object {
           "id": 4,
         }

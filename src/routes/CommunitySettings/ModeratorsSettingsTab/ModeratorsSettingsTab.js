@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import styles from './ModeratorsSettingsTab.scss'
 import Loading from 'components/Loading'
 import { KeyControlledItemList } from 'components/KeyControlledList'
-import ModeratorControl from 'components/ModeratorControl'
+import RemovableListItem from 'components/RemovableListItem'
 const { array, func, string } = PropTypes
 import { isEmpty, get } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
@@ -34,7 +34,7 @@ export default class ModeratorsSettingsTab extends Component {
     return <div>
       <div>
         {moderators.map(m =>
-          <ModeratorControl moderator={m} removeModerator={removeModerator} key={m.id} />)}
+          <RemovableListItem item={m} removeModerator={removeModerator} key={m.id} />)}
       </div>
       <AddModerator
         fetchModeratorSuggestions={fetchModeratorSuggestions}

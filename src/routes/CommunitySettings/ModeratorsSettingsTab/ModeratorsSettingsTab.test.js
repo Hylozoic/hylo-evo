@@ -9,7 +9,7 @@ describe('ModeratorsSettingsTab', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('renders a list of ModeratorControls and AddModerator', () => {
+  it('renders a list of RemovableListItems and AddModerator', () => {
     const moderators = [
       {id: 1},
       {id: 2},

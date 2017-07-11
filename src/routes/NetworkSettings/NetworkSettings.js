@@ -3,7 +3,7 @@ import './NetworkSettings.scss'
 import Loading from 'components/Loading'
 import Button from 'components/Button'
 import ChangeImageButton from 'components/ChangeImageButton'
-import ModeratorControl from 'components/ModeratorControl'
+import RemovableListItem from 'components/RemovableListItem'
 import SettingsControl from 'components/SettingsControl'
 const { object, func } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
@@ -112,11 +112,13 @@ export default class NetworkSettings extends Component {
 export function Moderators ({ moderators }) {
   return <div styleName='moderators'>
     <div styleName='section-label'>Moderators</div>
-    {moderators.map(m => <ModeratorControl moderator={m} key={m.id} />)}
+    {moderators.map(m => <RemovableListItem item={m} key={m.id} />)}
   </div>
 }
 
 export function Communities ({ communities }) {
-  return <div>
+  return <div styleName='communities'>
+    <div styleName='section-label'>Communities</div>
+    {communities.map(c => <RemovableListItem item={c} key={c.id} square size='40' />)}
   </div>
 }

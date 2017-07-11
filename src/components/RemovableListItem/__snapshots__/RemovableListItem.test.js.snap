@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ModeratorControl renders correctly 1`] = `
+exports[`RemovableListItem renders correctly 1`] = `
 <div
-  data-styleName="moderator-control"
+  data-styleName="item"
 >
   <Link
     replace={false}

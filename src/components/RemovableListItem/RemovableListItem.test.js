@@ -1,15 +1,15 @@
-import ModeratorControl from './ModeratorControl'
+import RemovableListItem from './RemovableListItem'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-describe('ModeratorControl', () => {
+describe('RemovableListItem', () => {
   it('renders correctly', () => {
-    const moderator = {
+    const item = {
       id: 7,
       name: 'Zeus',
       avatarUrl: 'zeus.png'
     }
-    const wrapper = shallow(<ModeratorControl moderator={moderator} slug='foo' />)
+    const wrapper = shallow(<RemovableListItem item={item} slug='foo' />)
     expect(wrapper).toMatchSnapshot()
   })
 })
