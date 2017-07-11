@@ -16,7 +16,8 @@ export default class NetworkSettings extends Component {
   static propTypes = {
     network: object,
     updateNetworkSettings: func,
-    fetchNetworkSettings: func
+    fetchNetworkSettings: func,
+    setConfirm: func
   }
 
   constructor (props) {
@@ -56,7 +57,7 @@ export default class NetworkSettings extends Component {
   }
 
   render () {
-    const { network, updateNetworkSettings, moderators, communities } = this.props
+    const { network, updateNetworkSettings, moderators, communities, setConfirm } = this.props
     if (!network) return <FullPageModal><Loading /></FullPageModal>
 
     const { edits, changed } = this.state
@@ -66,6 +67,7 @@ export default class NetworkSettings extends Component {
 
     const updateSetting = (key, setChanged = true) => event => {
       const { edits, changed } = this.state
+      setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
       this.setState({
         changed: setChanged ? true : changed,
         edits: {
@@ -80,6 +82,7 @@ export default class NetworkSettings extends Component {
 
     const save = () => {
       this.setState({changed: false})
+      setConfirm(false)
       updateNetworkSettings(edits)
     }
 
@@ -119,6 +122,6 @@ export function Moderators ({ moderators }) {
 export function Communities ({ communities }) {
   return <div styleName='communities'>
     <div styleName='section-label'>Communities</div>
-    {communities.map(c => <RemovableListItem item={c} key={c.id} square size='40' />)}
+    {communities.map(c => <RemovableListItem item={c} key={c.id} square size={40} />)}
   </div>
 }

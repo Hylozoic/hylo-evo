@@ -6,6 +6,7 @@ export const MODULE_NAME = 'NetworkSettings'
 
 // Constants
 export const FETCH_NETWORK_SETTINGS = `${MODULE_NAME}/FETCH_NETWORK_SETTINGS`
+export const UPDATE_NETWORK_SETTINGS = `${MODULE_NAME}/UPDATE_NETWORK_SETTINGS`
 
 // Action Creators
 export function fetchNetworkSettings (slug) {
@@ -51,20 +52,24 @@ export function fetchNetworkSettings (slug) {
   }
 }
 
-// Reducer
-const defaultState = {
-  example: 'example value'
-}
-
-export default function reducer (state = defaultState, action) {
-  const { error, type } = action
-  if (error) return state
-
-  switch (type) {
-    case FETCH_NETWORK_SETTINGS:
-      return {example: 'fetched example'}
-    default:
-      return state
+export function updateNetworkSettings (id, data) {
+  return {
+    type: UPDATE_NETWORK_SETTINGS,
+    graphql: {
+      query: `mutation ($id: ID, $data: NetworkInput) {
+        updateNetwork(id: $id, data: $data) {
+          id
+        }
+      }`,
+      variables: {
+        id, data
+      }
+    },
+    meta: {
+      id,
+      data,
+      optimistic: true
+    }
   }
 }
 
