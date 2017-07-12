@@ -141,6 +141,9 @@ export const getTopicResults = ormCreateSelector(
   (session, moduleNode) => {
     const { topicsSearchTerm } = moduleNode
     if (!topicsSearchTerm) return fromJS([])
+
+    // FIXME: if the user has been browsing multiple communities, this will
+    // include results that don't belong to the current community
     const topics = session.Topic.all()
       .filter(topic => {
         return includes(

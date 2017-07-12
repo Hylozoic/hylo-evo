@@ -4,7 +4,7 @@ import { fromJS } from 'immutable'
 import {
   MENTION_ENTITY_TYPE,
   TOPIC_ENTITY_TYPE
-} from './HyloEditor.constants'
+} from 'hylo-utils/constants'
 
 export function mentionToLink (originalText, mention) {
   return createElement(

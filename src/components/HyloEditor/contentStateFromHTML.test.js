@@ -3,7 +3,7 @@ import contentStateFromHTML from './contentStateFromHTML'
 import {
   MENTION_ENTITY_TYPE,
   TOPIC_ENTITY_TYPE
-} from './HyloEditor.constants'
+} from 'hylo-utils/constants'
 
 const mentionHTML = `This is a test <a href="/u/99" data-user-id="99" data-entity-type="${MENTION_ENTITY_TYPE}">Hylo Tester</a>`
 const mentionLegacyHTML = `This is a test <a href="/u/99" data-user-id="99">Hylo Legacy Tester</a>`

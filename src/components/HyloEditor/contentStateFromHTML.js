@@ -1,6 +1,6 @@
 import { Map } from 'immutable'
 import { convertFromHTML } from 'draft-convert'
-import { MENTION_ENTITY_TYPE, TOPIC_ENTITY_TYPE } from './HyloEditor.constants'
+import { MENTION_ENTITY_TYPE, TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
 
 // NOTE: Legacy mention links are in this format --
 // <a href="/u/99" data-user-id="99">Hylo User</a>
