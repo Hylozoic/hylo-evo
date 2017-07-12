@@ -92,12 +92,12 @@ export function fetchNetworkSettings (slug) {
         }
       }`,
       variables: {
-        slug,
-        offset: 0
+        slug
       }
     },
     meta: {
-      extractModel: 'Network'
+      extractModel: 'Network',
+      page: 0
     }
   }
 }
@@ -123,7 +123,8 @@ export function updateNetworkSettings (id, data) {
   }
 }
 
-export function fetchModerators (slug, offset) {
+export function fetchModerators (slug, page) {
+  const offset = page * PAGE_SIZE
   return {
     type: FETCH_MODERATORS,
     graphql: {
@@ -147,12 +148,15 @@ export function fetchModerators (slug, offset) {
       }
     },
     meta: {
-      extractModel: 'Network'
+      extractModel: 'Network',
+      // we use page for the queryResults reducer
+      page
     }
   }
 }
 
-export function fetchCommunities (slug, offset) {
+export function fetchCommunities (slug, page) {
+  const offset = page * PAGE_SIZE
   return {
     type: FETCH_COMMUNITIES,
     graphql: {
@@ -176,7 +180,9 @@ export function fetchCommunities (slug, offset) {
       }
     },
     meta: {
-      extractModel: 'Network'
+      extractModel: 'Network',
+      // we use page for the queryResults reducer
+      page
     }
   }
 }

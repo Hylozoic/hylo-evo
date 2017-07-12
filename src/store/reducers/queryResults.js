@@ -28,16 +28,18 @@ export default function (state = {}, action) {
   let root
 
   const addNetworkModerators = state => {
+    const params = {...meta.graphql.variables, page: meta.page}
     if (payload.data.network.moderators) {
-      return appendIds(state, FETCH_MODERATORS, meta.graphql.variables, payload.data.network.moderators)
+      return appendIds(state, FETCH_MODERATORS, params, payload.data.network.moderators)
     } else {
       return state
     }
   }
 
   const addNetworkCommunities = state => {
+    const params = {...meta.graphql.variables, page: meta.page}
     if (payload.data.network.communities) {
-      return appendIds(state, FETCH_COMMUNITIES, meta.graphql.variables, payload.data.network.communities)
+      return appendIds(state, FETCH_COMMUNITIES, params, payload.data.network.communities)
     } else {
       return state
     }
@@ -168,5 +170,5 @@ export const queryParamWhitelist = [
   'filter',
   'topic',
   'type',
-  'offset'
+  'page'
 ]

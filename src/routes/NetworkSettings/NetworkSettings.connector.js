@@ -27,14 +27,14 @@ export function mapStateToProps (state, props) {
   const network = getNetwork(state, {slug})
 
   const moderatorsPage = getModeratorsPage(state, props)
-  const moderatorResultProps = {slug, offset: PAGE_SIZE * moderatorsPage}
+  const moderatorResultProps = {slug, page: moderatorsPage}
   const moderators = getModerators(state, moderatorResultProps)
   const moderatorsTotal = getModeratorsTotal(state, moderatorResultProps)
   const moderatorsPageCount = Math.ceil(moderatorsTotal / PAGE_SIZE)
   const moderatorsPending = state.pending[FETCH_MODERATORS]
 
   const communitiesPage = getCommunitiesPage(state, props)
-  const communitiesResultProps = {slug, offset: PAGE_SIZE * communitiesPage}
+  const communitiesResultProps = {slug, page: communitiesPage}
   const communities = getCommunities(state, communitiesResultProps)
   const communitiesTotal = getCommunitiesTotal(state, communitiesResultProps)
   const communitiesPageCount = Math.ceil(communitiesTotal / PAGE_SIZE)
@@ -61,8 +61,8 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchNetworkSettingsMaker: slug => () => dispatch(fetchNetworkSettings(slug)),
     updateNetworkSettingsMaker: id => changes => dispatch(updateNetworkSettings(id, changes)),
-    fetchModeratorsMaker: (slug, offset) => () => dispatch(fetchModerators(slug, offset)),
-    fetchCommunitiesMaker: (slug, offset) => () => dispatch(fetchCommunities(slug, offset)),
+    fetchModeratorsMaker: (slug, page) => () => dispatch(fetchModerators(slug, page)),
+    fetchCommunitiesMaker: (slug, page) => () => dispatch(fetchCommunities(slug, page)),
     ...bindActionCreators({
       setConfirmBeforeClose, setModeratorsPage, setCommunitiesPage
     }, dispatch)
@@ -82,8 +82,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
 
   if (slug) {
     fetchNetworkSettings = fetchNetworkSettingsMaker(slug)
-    fetchModerators = fetchModeratorsMaker(slug, moderatorsPage * PAGE_SIZE)
-    fetchCommunities = fetchCommunitiesMaker(slug, communitiesPage * PAGE_SIZE)
+    fetchModerators = fetchModeratorsMaker(slug, moderatorsPage)
+    fetchCommunities = fetchCommunitiesMaker(slug, communitiesPage)
   } else {
     fetchNetworkSettings = () => {}
   }

@@ -171,9 +171,64 @@ exports[`NetworkSettings renders correctly 1`] = `
 </withRouter(Connect(FullPageModal))>
 `;
 
+exports[`PaginatedList renders correctly 1`] = `
+<div
+  data-styleName="paginated-list"
+>
+  <div
+    data-styleName="section-label"
+  />
+  <RemovableListItem
+    item={
+      Object {
+        "id": 2,
+      }
+    }
+    size={40}
+    square={true}
+  />
+  <RemovableListItem
+    item={
+      Object {
+        "id": 3,
+      }
+    }
+    size={40}
+    square={true}
+  />
+  <PaginationLinks
+    page={3}
+    pageCount={5}
+    setPage={[Function]}
+  />
+</div>
+`;
+
 exports[`Pagination renders correctly 1`] = `
 <div
   data-styleName="pagination"
+>
+  <PageLink
+    i={0}
+  />
+  <PageLink
+    i={1}
+  />
+  <PageLink
+    i={2}
+  />
+  <PageLink
+    i={3}
+  />
+  <PageLink
+    i={4}
+  />
+</div>
+`;
+
+exports[`PaginationLinks renders correctly 1`] = `
+<div
+  data-styleName="pagination-links"
 >
   <PageLink
     i={0}

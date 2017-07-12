@@ -1,4 +1,4 @@
-import NetworkSettings, { Moderators, Communities, Pagination } from './NetworkSettings'
+import NetworkSettings, { PaginatedList, PaginationLinks } from './NetworkSettings'
 import { shallow } from 'enzyme'
 import React from 'react'
 
@@ -27,35 +27,23 @@ describe('NetworkSettings', () => {
   })
 })
 
-describe('Moderators', () => {
+describe('PaginatedList', () => {
   it('renders correctly', () => {
-    const moderators = [{id: 2}, {id: 3}]
+    const items = [{id: 2}, {id: 3}]
 
-    const wrapper = shallow(<Moderators
-      moderators={moderators}
+    const wrapper = shallow(<PaginatedList
+      items={items}
       page={3}
       pageCount={5}
-      setPage={() => {}} />)
+      setPage={() => {}}
+      itemProps={{square: true, size: 40}} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
 
-describe('Communities', () => {
+describe('PaginationLinks', () => {
   it('renders correctly', () => {
-    const communities = [{id: 2}, {id: 3}]
-
-    const wrapper = shallow(<Communities
-      communities={communities}
-      page={3}
-      pageCount={5}
-      setPage={() => {}} />)
-    expect(wrapper).toMatchSnapshot()
-  })
-})
-
-describe('Pagination', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<Pagination
+    const wrapper = shallow(<PaginationLinks
       page={3}
       pageCount={5}
       setPage={() => {}} />)
