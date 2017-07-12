@@ -1,11 +1,9 @@
 import React, { PropTypes, Component } from 'react'
 import styles from './ModeratorsSettingsTab.scss'
-import { Link } from 'react-router-dom'
 import Loading from 'components/Loading'
-import RoundImage from 'components/RoundImage'
 import { KeyControlledItemList } from 'components/KeyControlledList'
+import RemovableListItem from 'components/RemovableListItem'
 const { array, func, string } = PropTypes
-import { personUrl } from 'util/index'
 import { isEmpty, get } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
 
@@ -36,7 +34,11 @@ export default class ModeratorsSettingsTab extends Component {
     return <div>
       <div>
         {moderators.map(m =>
-          <ModeratorControl moderator={m} removeModerator={removeModerator} key={m.id} />)}
+          <RemovableListItem
+            item={m}
+            removeModerator={removeModerator}
+            confirmMessage={`Are you sure you want to remove ${m.name}'s moderator powers?`}
+            key={m.id} />)}
       </div>
       <AddModerator
         fetchModeratorSuggestions={fetchModeratorSuggestions}
@@ -45,21 +47,6 @@ export default class ModeratorsSettingsTab extends Component {
         clearModeratorSuggestions={clearModeratorSuggestions} />
     </div>
   }
-}
-
-export function ModeratorControl ({ moderator, slug, removeModerator }) {
-  const remove = () => {
-    if (window.confirm(`Are you sure you want to remove ${moderator.name}'s moderator powers?`)) {
-      removeModerator(moderator.id)
-    }
-  }
-  return <div styleName='moderator-control'>
-    <Link to={personUrl(moderator.id, slug)}>
-      <RoundImage url={moderator.avatarUrl} medium styleName='avatar' />
-    </Link>
-    <Link to={personUrl(moderator.id, slug)} styleName='name'>{moderator.name}</Link>
-    <span onClick={remove} styleName='remove-button'>Remove</span>
-  </div>
 }
 
 export class AddModerator extends Component {

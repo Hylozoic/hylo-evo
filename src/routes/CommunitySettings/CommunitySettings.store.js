@@ -55,6 +55,5 @@ export function updateCommunitySettings (id, changes) {
       changes,
       optimistic: true
     }
-
   }
 }

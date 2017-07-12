@@ -1,4 +1,4 @@
-// AccountSettings
+// CommunitySettingsTab
 .name {
   height: 60px;
   line-height: 60px;
@@ -41,8 +41,15 @@
   width: 30px;
 }
 
+.control-label {
+  display: block;
+  composes: tag from 'css/typography.scss';
+  color: $color-rhino-30;
+  margin-bottom: $space-1x;
+}
+
 .social-label {
-  composes: control-label from 'components/SettingsControl/SettingsControl.scss';
+  composes: control-label;
   margin-top: $space-9x;
 }
 
@@ -56,21 +63,40 @@
   margin: 0 auto;
 }
 
-// SocialControl
-.control {
-  composes: control from 'components/SettingsControl/SettingsControl.scss';
+.section-label {
+  composes: tag from 'css/typography.scss';
+  color: $color-rhino-30;
 }
 
-.linked {
-  border-bottom: 1px solid $color-caribbean-green;
+.communities {
+  margin-top: 15px;
 }
 
-.social-control-label {
-  composes: control-input from 'components/SettingsControl/SettingsControl.scss';
-  display: flex;
+
+// PaginatedList
+.paginated-list {
+  margin-top: 35px;
 }
 
-.link-button {
-  margin-left: auto;
+.loading {
+  opacity: 0.3;
+}
+
+// PaginationLinks
+.pagination-links {
+  margin-top: 10px;
+}
+
+.page-link {
   composes: text-button from 'css/typography.scss';
+  margin-right: 15px;
+}
+
+.page-current {
+  @include font-medium;
+  margin-right: 15px;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 20px;
+  color: $color-rhino;
 }
