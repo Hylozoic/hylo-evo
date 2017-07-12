@@ -21,5 +21,11 @@ exports[`RemovableListItem renders correctly 1`] = `
   >
     Zeus
   </Link>
+  <span
+    data-styleName="remove-button"
+    onClick={[Function]}
+  >
+    Remove
+  </span>
 </div>
 `;

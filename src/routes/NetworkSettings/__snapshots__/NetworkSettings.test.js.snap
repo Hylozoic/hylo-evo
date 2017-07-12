@@ -1,7 +1,194 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`does something 1`] = `
-<withRouter(Connect(FullPageModal))>
-  <Loading />
+exports[`Communities renders correctly 1`] = `
+<div
+  data-styleName="communities"
+>
+  <div
+    data-styleName="section-label"
+  >
+    Communities
+  </div>
+  <RemovableListItem
+    item={
+      Object {
+        "id": 2,
+      }
+    }
+    size={40}
+    square={true}
+  />
+  <RemovableListItem
+    item={
+      Object {
+        "id": 3,
+      }
+    }
+    size={40}
+    square={true}
+  />
+  <Pagination
+    page={3}
+    pageCount={5}
+    setPage={[Function]}
+  />
+</div>
+`;
+
+exports[`Moderators renders correctly 1`] = `
+<div
+  data-styleName="moderators"
+>
+  <div
+    data-styleName="section-label"
+  >
+    Moderators
+  </div>
+  <RemovableListItem
+    item={
+      Object {
+        "id": 2,
+      }
+    }
+  />
+  <RemovableListItem
+    item={
+      Object {
+        "id": 3,
+      }
+    }
+  />
+  <Pagination
+    page={3}
+    pageCount={5}
+    setPage={[Function]}
+  />
+</div>
+`;
+
+exports[`NetworkSettings renders correctly 1`] = `
+<withRouter(Connect(FullPageModal))
+  narrow={true}
+>
+  <div>
+    <input
+      data-styleName="name"
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+    <div
+      data-styleName="banner"
+      style={Object {}}
+    >
+      <Connect(ChangeImageButton)
+        data-styleName="change-banner-button"
+        update={[Function]}
+        uploadSettings={
+          Object {
+            "convert": Object {
+              "fit": "max",
+              "format": "jpg",
+              "rotate": "exif",
+              "width": 1600,
+            },
+            "id": undefined,
+            "path": "network/1/banner",
+            "subject": "network-banner",
+          }
+        }
+      />
+    </div>
+    <div
+      data-styleName="avatar"
+      style={Object {}}
+    >
+      <Connect(ChangeImageButton)
+        data-styleName="change-avatar-button"
+        update={[Function]}
+        uploadSettings={
+          Object {
+            "convert": Object {
+              "fit": "crop",
+              "height": 160,
+              "rotate": "exif",
+              "width": 160,
+            },
+            "id": undefined,
+            "path": "network/1/avatar",
+            "subject": "network-avatar",
+          }
+        }
+      />
+    </div>
+    <SettingsControl
+      label="Description"
+      onChange={[Function]}
+      type="textarea"
+    />
+    <div
+      data-styleName="button-row"
+    >
+      <Button
+        color="gray"
+        data-styleName="save-button"
+        label="Save Changes"
+        onClick={null}
+      />
+    </div>
+    <Moderators
+      moderators={
+        Array [
+          Object {
+            "id": 2,
+          },
+          Object {
+            "id": 3,
+          },
+        ]
+      }
+      page={2}
+      pageCount={7}
+      setPage={[Function]}
+    />
+    <Communities
+      communities={
+        Array [
+          Object {
+            "id": 4,
+          },
+          Object {
+            "id": 5,
+          },
+        ]
+      }
+      page={3}
+      pageCount={5}
+      pending={true}
+      setPage={[Function]}
+    />
+  </div>
 </withRouter(Connect(FullPageModal))>
+`;
+
+exports[`Pagination renders correctly 1`] = `
+<div
+  data-styleName="pagination"
+>
+  <Component
+    i={0}
+  />
+  <Component
+    i={1}
+  />
+  <Component
+    i={2}
+  />
+  <Component
+    i={3}
+  />
+  <Component
+    i={4}
+  />
+</div>
 `;

@@ -2,7 +2,7 @@ import React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import './SettingsControl.scss'
 
-export default function Control ({ label, value = '', onChange, type }) {
+export default function SettingsControl ({ label, value = '', onChange, type }) {
   return <div styleName='control'>
     <label styleName='control-label'>{label}</label>
     {type === 'textarea'
