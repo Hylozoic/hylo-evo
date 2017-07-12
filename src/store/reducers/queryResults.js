@@ -9,6 +9,7 @@
 import { CREATE_POST } from 'components/PostEditor/PostEditor.store'
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
 import { FETCH_SEARCH } from 'routes/Search/Search.store'
+import { FETCH_NETWORK_SETTINGS, FETCH_MODERATORS, FETCH_COMMUNITIES } from 'routes/NetworkSettings/NetworkSettings.store'
 import { FETCH_COMMUNITY_TOPICS } from 'store/actions/fetchCommunityTopics'
 import {
   FETCH_POST,
@@ -25,6 +26,22 @@ export default function (state = {}, action) {
   const { type, payload, error, meta } = action
   if (error) return state
   let root
+
+  const addNetworkModerators = state => {
+    if (payload.data.network.moderators) {
+      return appendIds(state, FETCH_MODERATORS, meta.graphql.variables, payload.data.network.moderators)
+    } else {
+      return state
+    }
+  }
+
+  const addNetworkCommunities = state => {
+    if (payload.data.network.communities) {
+      return appendIds(state, FETCH_COMMUNITIES, meta.graphql.variables, payload.data.network.communities)
+    } else {
+      return state
+    }
+  }
 
   // If this starts to feel too coupled to specific actions, we could move the
   // parameters below into the action's metadata, write a piece of middleware to
@@ -62,6 +79,15 @@ export default function (state = {}, action) {
     case FETCH_SEARCH:
       if (!payload.data.search) break
       return appendIds(state, FETCH_SEARCH, meta.graphql.variables, payload.data.search)
+
+    case FETCH_NETWORK_SETTINGS:
+      return addNetworkCommunities(addNetworkModerators(state))
+
+    case FETCH_MODERATORS:
+      return addNetworkModerators(state)
+
+    case FETCH_COMMUNITIES:
+      return addNetworkCommunities(state)
   }
 
   return state
@@ -141,5 +167,6 @@ export const queryParamWhitelist = [
   'autocomplete',
   'filter',
   'topic',
-  'type'
+  'type',
+  'offset'
 ]

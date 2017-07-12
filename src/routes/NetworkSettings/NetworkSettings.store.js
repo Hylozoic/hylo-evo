@@ -1,14 +1,63 @@
 // import { combineReducers } from 'redux'
 import { createSelector as ormCreateSelector } from 'redux-orm'
+import { createSelector } from 'reselect'
 import orm from 'store/models'
+import { makeGetQueryResults } from 'store/reducers/queryResults'
+import { get, includes, isEmpty } from 'lodash/fp'
 
 export const MODULE_NAME = 'NetworkSettings'
 
 // Constants
 export const FETCH_NETWORK_SETTINGS = `${MODULE_NAME}/FETCH_NETWORK_SETTINGS`
 export const UPDATE_NETWORK_SETTINGS = `${MODULE_NAME}/UPDATE_NETWORK_SETTINGS`
+export const FETCH_MODERATORS = `${MODULE_NAME}/FETCH_MODERATORS`
+export const FETCH_COMMUNITIES = `${MODULE_NAME}/FETCH_COMMUNITIES`
+export const SET_MODERATORS_PAGE = `${MODULE_NAME}/SET_MODERATORS_PAGE`
+export const SET_COMMUNITIES_PAGE = `${MODULE_NAME}/SET_COMMUNITIES_PAGE`
+
+export const PAGE_SIZE = 10
+
+const defaultState = {
+  moderatorsPage: 0,
+  communitiesPage: 0
+}
+
+export default function reducer (state = defaultState, action) {
+  const { error, type, payload } = action
+  if (error) return state
+
+  switch (type) {
+    case SET_MODERATORS_PAGE:
+      return {
+        ...state,
+        moderatorsPage: payload
+      }
+    case SET_COMMUNITIES_PAGE:
+      return {
+        ...state,
+        communitiesPage: payload
+      }
+    default:
+      return state
+  }
+}
 
 // Action Creators
+
+export function setModeratorsPage (page) {
+  return {
+    type: SET_MODERATORS_PAGE,
+    payload: page
+  }
+}
+
+export function setCommunitiesPage (page) {
+  return {
+    type: SET_COMMUNITIES_PAGE,
+    payload: page
+  }
+}
+
 export function fetchNetworkSettings (slug) {
   return {
     type: FETCH_NETWORK_SETTINGS,
@@ -22,7 +71,7 @@ export function fetchNetworkSettings (slug) {
           avatarUrl
           bannerUrl
           createdAt
-          communities (first: 20)  {
+          communities (first: ${PAGE_SIZE}, sortBy: "name")  {
             total
             hasMore
             items {
@@ -31,7 +80,7 @@ export function fetchNetworkSettings (slug) {
               avatarUrl
             }
           }
-          moderators (first: 20) {
+          moderators (first: ${PAGE_SIZE}, sortBy: "name") {
             total
             hasMore
             items {
@@ -43,7 +92,8 @@ export function fetchNetworkSettings (slug) {
         }
       }`,
       variables: {
-        slug
+        slug,
+        offset: 0
       }
     },
     meta: {
@@ -73,6 +123,35 @@ export function updateNetworkSettings (id, data) {
   }
 }
 
+export function fetchModerators (slug, offset) {
+  return {
+    type: FETCH_MODERATORS,
+    graphql: {
+      query: `query ($slug: String, $offset: Int) {
+        network (slug: $slug) {
+          id
+          moderators (first: ${PAGE_SIZE}, sortBy: "name", offset: $offset) {
+            total
+            hasMore
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+        }
+      }`,
+      variables: {
+        slug,
+        offset
+      }
+    },
+    meta: {
+      extractModel: 'Network'
+    }
+  }
+}
+
 // Selectors
 export const getNetwork = ormCreateSelector(
   orm,
@@ -80,3 +159,24 @@ export const getNetwork = ormCreateSelector(
   (state, { slug }) => slug,
   (session, slug) =>
     session.Network.safeGet({slug}))
+
+export const getModeratorResults = makeGetQueryResults(FETCH_MODERATORS)
+export const getModeratorsTotal = createSelector(
+  getModeratorResults,
+  get('total')
+)
+export const getModerators = ormCreateSelector(
+  orm,
+  state => state.orm,
+  getModeratorResults,
+  (session, results) => {
+    if (isEmpty(results) || isEmpty(results.ids)) return []
+    return session.Person.all()
+    .filter(x => includes(x.id, results.ids))
+    .orderBy(x => results.ids.indexOf(x.id))
+    .toModelArray()
+  }
+)
+
+export const getModeratorsPage = state => state[MODULE_NAME].moderatorsPage
+export const getCommunitiesPage = state => state[MODULE_NAME].communitiesPage

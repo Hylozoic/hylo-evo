@@ -11,6 +11,7 @@ import { bgImageStyle } from 'util/index'
 import {
   bannerUploadSettings, avatarUploadSettings, DEFAULT_BANNER, DEFAULT_AVATAR
 } from 'store/models/Network'
+import { times, isEmpty } from 'lodash/fp'
 
 export default class NetworkSettings extends Component {
   static propTypes = {
@@ -35,6 +36,14 @@ export default class NetworkSettings extends Component {
       this.props.fetchNetworkSettings()
       this.setEditState()
     }
+    if (prevProps.moderatorsPage !== this.props.moderatorsPage &&
+      isEmpty(this.props.moderators)) {
+      this.props.fetchModerators()
+    }
+    if (prevProps.communitiesPage !== this.props.communitiesPage &&
+      isEmpty(this.props.moderators)) {
+      this.props.fetchCommunities()
+    }
   }
 
   setEditState () {
@@ -57,7 +66,16 @@ export default class NetworkSettings extends Component {
   }
 
   render () {
-    const { network, updateNetworkSettings, moderators, communities, setConfirm } = this.props
+    const {
+      network,
+      updateNetworkSettings,
+      moderators,
+      communities,
+      setConfirm,
+      moderatorsPage,
+      moderatorsPageCount,
+      setModeratorsPage
+    } = this.props
     if (!network) return <FullPageModal><Loading /></FullPageModal>
 
     const { edits, changed } = this.state
@@ -105,23 +123,40 @@ export default class NetworkSettings extends Component {
         <div styleName='button-row'>
           <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
         </div>
-        <Moderators moderators={moderators} />
+        <Moderators
+          moderators={moderators}
+          page={moderatorsPage}
+          pageCount={moderatorsPageCount}
+          setPage={setModeratorsPage} />
         <Communities communities={communities} />
       </div>
     </FullPageModal>
   }
 }
 
-export function Moderators ({ moderators }) {
+export function Moderators ({ moderators, page, pageCount, setPage }) {
   return <div styleName='moderators'>
     <div styleName='section-label'>Moderators</div>
     {moderators.map(m => <RemovableListItem item={m} key={m.id} />)}
+    <Pagination page={page} pageCount={pageCount} setPage={setPage} />
   </div>
 }
 
-export function Communities ({ communities }) {
+export function Communities ({ communities, pageCount, setPage }) {
   return <div styleName='communities'>
     <div styleName='section-label'>Communities</div>
     {communities.map(c => <RemovableListItem item={c} key={c.id} square size={40} />)}
+    <Pagination pageCount={pageCount} setPage={setPage} />
+  </div>
+}
+
+export function Pagination ({ pageCount, setPage, page }) {
+  const PageLink = ({ i }) => {
+    const current = i === page
+    return <span styleName={current ? 'page-current' : 'page-link'} onClick={() => !current && setPage(i)}>{i + 1}</span>
+  }
+
+  return <div styleName='pagination'>
+    {times(i => <PageLink key={i} i={i} />, pageCount)}
   </div>
 }

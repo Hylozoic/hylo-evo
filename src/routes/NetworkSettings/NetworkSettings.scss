@@ -77,3 +77,22 @@
 .communities {
   margin-top: 50px;
 }
+
+// Pagination
+.pagination {
+  margin-top: 10px;
+}
+
+.page-link {
+  composes: text-button from 'css/typography.scss';
+  margin-right: 15px;
+}
+
+.page-current {
+  @include font-medium;
+  margin-right: 15px;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 20px;
+  color: $color-rhino;
+}
