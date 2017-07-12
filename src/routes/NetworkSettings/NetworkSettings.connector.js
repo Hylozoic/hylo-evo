@@ -13,7 +13,9 @@ import {
   getCommunities,
   getCommunitiesPage,
   getCommunitiesTotal,
-  PAGE_SIZE
+  PAGE_SIZE,
+  FETCH_COMMUNITIES,
+  FETCH_MODERATORS
 } from './NetworkSettings.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import getParam from 'store/selectors/getParam'
@@ -28,12 +30,14 @@ export function mapStateToProps (state, props) {
   const moderators = getModerators(state, moderatorResultProps)
   const moderatorsTotal = getModeratorsTotal(state, moderatorResultProps)
   const moderatorsPageCount = Math.ceil(moderatorsTotal / PAGE_SIZE)
+  const moderatorsPending = state.pending[FETCH_MODERATORS]
 
   const communitiesPage = getCommunitiesPage(state, props)
   const communitiesResultProps = {slug, offset: PAGE_SIZE * communitiesPage}
   const communities = getCommunities(state, communitiesResultProps)
   const communitiesTotal = getCommunitiesTotal(state, communitiesResultProps)
   const communitiesPageCount = Math.ceil(communitiesTotal / PAGE_SIZE)
+  const communitiesPending = state.pending[FETCH_COMMUNITIES]
 
   const confirm = state.FullPageModal.confirm
 
@@ -45,8 +49,10 @@ export function mapStateToProps (state, props) {
     confirm,
     moderatorsPageCount,
     moderatorsPage,
+    moderatorsPending,
     communitiesPageCount,
-    communitiesPage
+    communitiesPage,
+    communitiesPending
   }
 }
 

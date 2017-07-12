@@ -12,6 +12,7 @@ import {
   bannerUploadSettings, avatarUploadSettings, DEFAULT_BANNER, DEFAULT_AVATAR
 } from 'store/models/Network'
 import { times, isEmpty } from 'lodash/fp'
+import cx from 'classnames'
 
 export default class NetworkSettings extends Component {
   static propTypes = {
@@ -77,7 +78,9 @@ export default class NetworkSettings extends Component {
       setModeratorsPage,
       communitiesPage,
       communitiesPageCount,
-      setCommunitiesPage
+      setCommunitiesPage,
+      moderatorsPending,
+      communitiesPending
     } = this.props
     if (!network) return <FullPageModal><Loading /></FullPageModal>
 
@@ -130,31 +133,91 @@ export default class NetworkSettings extends Component {
           moderators={moderators}
           page={moderatorsPage}
           pageCount={moderatorsPageCount}
-          setPage={setModeratorsPage} />
+          setPage={setModeratorsPage}
+          pending={moderatorsPending} />
         <Communities
           communities={communities}
           page={communitiesPage}
           pageCount={communitiesPageCount}
-          setPage={setCommunitiesPage} />
+          setPage={setCommunitiesPage}
+          pending={communitiesPending} />
       </div>
     </FullPageModal>
   }
 }
 
-export function Moderators ({ moderators, page, pageCount, setPage }) {
-  return <div styleName='moderators'>
-    <div styleName='section-label'>Moderators</div>
-    {moderators.map(m => <RemovableListItem item={m} key={m.id} />)}
-    <Pagination page={page} pageCount={pageCount} setPage={setPage} />
-  </div>
+export class Moderators extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      prevModerators: []
+    }
+  }
+
+  updatePrevModerators () {
+    const { pending, moderators } = this.props
+    const { prevModerators } = this.state
+    if (pending || moderators === prevModerators || isEmpty(moderators)) return
+    this.setState({prevModerators: moderators})
+  }
+
+  componentDidMount () {
+    this.updatePrevModerators()
+  }
+
+  componentDidUpdate () {
+    this.updatePrevModerators()
+  }
+
+  render () {
+    const { moderators, page, pageCount, setPage, pending } = this.props
+    const { prevModerators } = this.state
+
+    const visibleModerators = pending ? prevModerators : moderators
+
+    return <div styleName={cx('moderators', {loading: pending})}>
+      <div styleName='section-label'>Moderators</div>
+      {visibleModerators.map(m => <RemovableListItem item={m} key={m.id} />)}
+      <Pagination page={page} pageCount={pageCount} setPage={setPage} />
+    </div>
+  }
 }
 
-export function Communities ({ communities, page, pageCount, setPage }) {
-  return <div styleName='communities'>
-    <div styleName='section-label'>Communities</div>
-    {communities.map(c => <RemovableListItem item={c} key={c.id} square size={40} />)}
-    <Pagination page={page} pageCount={pageCount} setPage={setPage} />
-  </div>
+export class Communities extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      prevCommunities: []
+    }
+  }
+
+  updatePrevCommunities () {
+    const { pending, communities } = this.props
+    const { prevCommunities } = this.state
+    if (pending || communities === prevCommunities || isEmpty(communities)) return
+    this.setState({prevCommunities: communities})
+  }
+
+  componentDidMount () {
+    this.updatePrevCommunities()
+  }
+
+  componentDidUpdate () {
+    this.updatePrevCommunities()
+  }
+
+  render () {
+    const { communities, page, pageCount, setPage, pending } = this.props
+    const { prevCommunities } = this.state
+
+    const visibleCommunities = pending ? prevCommunities : communities
+
+    return <div styleName={cx('communities', {loading: pending})}>
+      <div styleName='section-label'>Communities</div>
+      {visibleCommunities.map(c => <RemovableListItem item={c} key={c.id} square size={40} />)}
+      <Pagination page={page} pageCount={pageCount} setPage={setPage} />
+    </div>
+  }
 }
 
 export function Pagination ({ pageCount, setPage, page }) {
