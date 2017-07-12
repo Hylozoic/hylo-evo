@@ -68,8 +68,13 @@
   color: $color-rhino-30;
 }
 
-// Moderators
-.moderators {
+.communities {
+  margin-top: 15px;
+}
+
+
+// PaginatedList
+.paginated-list {
   margin-top: 35px;
 }
 
@@ -77,13 +82,8 @@
   opacity: 0.3;
 }
 
-// Communities
-.communities {
-  margin-top: 50px;
-}
-
-// Pagination
-.pagination {
+// PaginationLinks
+.pagination-links {
   margin-top: 10px;
 }
 

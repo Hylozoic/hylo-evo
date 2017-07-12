@@ -129,104 +129,73 @@ export default class NetworkSettings extends Component {
         <div styleName='button-row'>
           <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
         </div>
-        <Moderators
-          moderators={moderators}
+        <PaginatedList
+          label={'Moderators'}
+          items={moderators}
           page={moderatorsPage}
           pageCount={moderatorsPageCount}
           setPage={setModeratorsPage}
           pending={moderatorsPending} />
-        <Communities
-          communities={communities}
+        <PaginatedList
+          styleName='communities'
+          label={'Communities'}
+          items={communities}
           page={communitiesPage}
           pageCount={communitiesPageCount}
           setPage={setCommunitiesPage}
-          pending={communitiesPending} />
+          pending={communitiesPending}
+          itemProps={{square: true, size: 40}} />
       </div>
     </FullPageModal>
   }
 }
 
-export class Moderators extends Component {
+export class PaginatedList extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      prevModerators: []
+      prevItems: []
     }
   }
 
-  updatePrevModerators () {
-    const { pending, moderators } = this.props
-    const { prevModerators } = this.state
-    if (pending || moderators === prevModerators || isEmpty(moderators)) return
-    this.setState({prevModerators: moderators})
+  updatePrevItems () {
+    const { pending, items } = this.props
+    const { prevItems } = this.state
+    if (pending || items === prevItems || isEmpty(items)) return
+    this.setState({prevItems: items})
   }
 
   componentDidMount () {
-    this.updatePrevModerators()
+    this.updatePrevItems()
   }
 
   componentDidUpdate () {
-    this.updatePrevModerators()
+    this.updatePrevItems()
   }
 
   render () {
-    const { moderators, page, pageCount, setPage, pending } = this.props
-    const { prevModerators } = this.state
+    const {
+      items, page, pageCount, setPage, pending, label, itemProps, className
+    } = this.props
+    const { prevItems } = this.state
 
-    const visibleModerators = pending ? prevModerators : moderators
+    const visibleItems = pending ? prevItems : items
 
-    return <div styleName={cx('moderators', {loading: pending})}>
-      <div styleName='section-label'>Moderators</div>
-      {visibleModerators.map(m => <RemovableListItem item={m} key={m.id} />)}
-      <Pagination page={page} pageCount={pageCount} setPage={setPage} />
+    return <div styleName={cx('paginated-list', {loading: pending})} className={className}>
+      <div styleName='section-label'>{label}</div>
+      {visibleItems.map(m => <RemovableListItem item={m} key={m.id} {...itemProps} />)}
+      <PaginationLinks page={page} pageCount={pageCount} setPage={setPage} />
     </div>
   }
 }
 
-export class Communities extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      prevCommunities: []
-    }
-  }
-
-  updatePrevCommunities () {
-    const { pending, communities } = this.props
-    const { prevCommunities } = this.state
-    if (pending || communities === prevCommunities || isEmpty(communities)) return
-    this.setState({prevCommunities: communities})
-  }
-
-  componentDidMount () {
-    this.updatePrevCommunities()
-  }
-
-  componentDidUpdate () {
-    this.updatePrevCommunities()
-  }
-
-  render () {
-    const { communities, page, pageCount, setPage, pending } = this.props
-    const { prevCommunities } = this.state
-
-    const visibleCommunities = pending ? prevCommunities : communities
-
-    return <div styleName={cx('communities', {loading: pending})}>
-      <div styleName='section-label'>Communities</div>
-      {visibleCommunities.map(c => <RemovableListItem item={c} key={c.id} square size={40} />)}
-      <Pagination page={page} pageCount={pageCount} setPage={setPage} />
-    </div>
-  }
-}
-
-export function Pagination ({ pageCount, setPage, page }) {
+export function PaginationLinks ({ pageCount, setPage, page }) {
   function PageLink ({ i }) {
     const current = i === page
     return <span styleName={current ? 'page-current' : 'page-link'} onClick={() => !current && setPage(i)}>{i + 1}</span>
   }
 
-  return <div styleName='pagination'>
+  return <div styleName='pagination-links'>
     {times(i => <PageLink key={i} i={i} />, pageCount)}
   </div>
 }
