@@ -1,71 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Communities renders correctly 1`] = `
-<div
-  data-styleName="communities"
->
-  <div
-    data-styleName="section-label"
-  >
-    Communities
-  </div>
-  <RemovableListItem
-    item={
-      Object {
-        "id": 2,
-      }
-    }
-    size={40}
-    square={true}
-  />
-  <RemovableListItem
-    item={
-      Object {
-        "id": 3,
-      }
-    }
-    size={40}
-    square={true}
-  />
-  <Pagination
-    page={3}
-    pageCount={5}
-    setPage={[Function]}
-  />
-</div>
-`;
-
-exports[`Moderators renders correctly 1`] = `
-<div
-  data-styleName="moderators"
->
-  <div
-    data-styleName="section-label"
-  >
-    Moderators
-  </div>
-  <RemovableListItem
-    item={
-      Object {
-        "id": 2,
-      }
-    }
-  />
-  <RemovableListItem
-    item={
-      Object {
-        "id": 3,
-      }
-    }
-  />
-  <Pagination
-    page={3}
-    pageCount={5}
-    setPage={[Function]}
-  />
-</div>
-`;
-
 exports[`NetworkSettings renders correctly 1`] = `
 <withRouter(Connect(FullPageModal))
   narrow={true}
@@ -136,8 +70,8 @@ exports[`NetworkSettings renders correctly 1`] = `
         onClick={null}
       />
     </div>
-    <Moderators
-      moderators={
+    <PaginatedList
+      items={
         Array [
           Object {
             "id": 2,
@@ -147,12 +81,20 @@ exports[`NetworkSettings renders correctly 1`] = `
           },
         ]
       }
+      label="Moderators"
       page={2}
       pageCount={7}
       setPage={[Function]}
     />
-    <Communities
-      communities={
+    <PaginatedList
+      data-styleName="communities"
+      itemProps={
+        Object {
+          "size": 40,
+          "square": true,
+        }
+      }
+      items={
         Array [
           Object {
             "id": 4,
@@ -162,6 +104,7 @@ exports[`NetworkSettings renders correctly 1`] = `
           },
         ]
       }
+      label="Communities"
       page={3}
       pageCount={5}
       pending={true}
@@ -200,28 +143,6 @@ exports[`PaginatedList renders correctly 1`] = `
     page={3}
     pageCount={5}
     setPage={[Function]}
-  />
-</div>
-`;
-
-exports[`Pagination renders correctly 1`] = `
-<div
-  data-styleName="pagination"
->
-  <PageLink
-    i={0}
-  />
-  <PageLink
-    i={1}
-  />
-  <PageLink
-    i={2}
-  />
-  <PageLink
-    i={3}
-  />
-  <PageLink
-    i={4}
   />
 </div>
 `;

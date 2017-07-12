@@ -111,6 +111,7 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
 <div>
   <div>
     <RemovableListItem
+      confirmMessage="Are you sure you want to remove undefined's moderator powers?"
       item={
         Object {
           "id": 1,
@@ -118,6 +119,7 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
       }
     />
     <RemovableListItem
+      confirmMessage="Are you sure you want to remove undefined's moderator powers?"
       item={
         Object {
           "id": 2,
@@ -125,6 +127,7 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
       }
     />
     <RemovableListItem
+      confirmMessage="Are you sure you want to remove undefined's moderator powers?"
       item={
         Object {
           "id": 3,
@@ -132,6 +135,7 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
       }
     />
     <RemovableListItem
+      confirmMessage="Are you sure you want to remove undefined's moderator powers?"
       item={
         Object {
           "id": 4,

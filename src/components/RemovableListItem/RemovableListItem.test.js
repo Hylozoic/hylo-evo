@@ -9,7 +9,7 @@ describe('RemovableListItem', () => {
       name: 'Zeus',
       avatarUrl: 'zeus.png'
     }
-    const wrapper = shallow(<RemovableListItem item={item} slug='foo' removeModerator={() => {}} />)
+    const wrapper = shallow(<RemovableListItem item={item} slug='foo' removeItem={() => {}} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
