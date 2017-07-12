@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router-dom'
-import { sortBy } from 'lodash/fp'
 import { bgImageStyle, allCommunitiesUrl } from 'util/index'
 import Badge from 'components/Badge'
 import Button from 'components/Button'
@@ -40,21 +39,27 @@ export default class Drawer extends Component {
       id: string,
       name: string,
       avatarUrl: string,
-      communities: arrayOf(shape({
+      memberships: arrayOf(shape({
         id: string,
-        name: string,
-        slug: string,
-        avatarUrl: string
+        newPostCount: number,
+        community: shape({
+          name: string,
+          slug: string,
+          avatarUrl: string
+        })
       }))
     }))
   }
 
   render () {
-    const { currentCommunity, memberships, className } = this.props
-
+    const { currentCommunity, memberships, networks, className } = this.props
     return <div className={className} styleName='s.communityDrawer'>
       <Icon name='Ex' styleName='s.closeDrawer' />
       <Logo community={currentCommunity} />
+      <ul styleName='s.networkList'>
+        {networks.map(network =>
+          <NetworkRow network={network} key={network.id} />)}
+      </ul>
       <ul styleName='s.communitiesList'>
         <li>
           <Link styleName='s.allCommunities' to={allCommunitiesUrl()}>
@@ -83,7 +88,16 @@ export function CommunityRow ({ membership }) {
   </li>
 }
 
-export function NetworkRow () {
+export function NetworkRow ({ network }) {
+  const imageStyle = bgImageStyle(network.avatarUrl)
+  return <li key={`network${network.id}`} styleName='s.networkRow' className={badgeHoverStyles.parent}>
+    <div styleName='s.avatar' style={imageStyle} />
+    <span styleName='s.network-name'>{network.name}</span>
+    <ul styleName='s.networkCommunitiesList'>
+      {network.memberships.map(membership =>
+        <CommunityRow membership={membership} key={membership.id} />)}
+    </ul>
+  </li>
 }
 
 function Logo ({ community }) {

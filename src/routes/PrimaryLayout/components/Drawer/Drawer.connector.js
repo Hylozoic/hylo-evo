@@ -2,9 +2,9 @@ import { connect } from 'react-redux'
 import { toggleDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
 import getMemberships from 'store/selectors/getMemberships'
 
-function buildNetworkLookup (networks, { community, network }) {
-  if (!networks[network.name]) networks[network.name] = { ...network, communities: [] }
-  networks[network.name].communities.push(community)
+function buildNetworkLookup (networks, { id, community, newPostCount, network }) {
+  if (!networks[network.name]) networks[network.name] = { ...network, memberships: [] }
+  networks[network.name].memberships.push({ id, community, newPostCount })
   return networks
 }
 

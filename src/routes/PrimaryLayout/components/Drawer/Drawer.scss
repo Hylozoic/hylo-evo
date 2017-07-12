@@ -14,7 +14,7 @@ $current-padding-bottom: 32px;
 $current-name-margin-top: 13px;
 
 $ul-vertical-spacing: 32px;
-$ul-horizontal-spacing: 37px;
+$ul-horizontal-spacing: 10px;
 $li-padding: 4px;
 $li-spacing: 22px;
 $li-height: 40px;
@@ -65,7 +65,7 @@ $new-community-spacing: 16px;
   }
 }
 
-.communitiesList {
+.communitiesList, .networkList {
   padding: $ul-vertical-spacing $ul-horizontal-spacing;
   margin: 0;
   flex-grow: 1;
@@ -74,13 +74,8 @@ $new-community-spacing: 16px;
   border-bottom: $break-border;
 
   li {
-    height: $li-height;
     padding: $li-padding;
     border-radius: 4px;
-
-    &:hover {
-      background: $color-rhino;
-    }
 
     .avatar {
       @include image($li-avatar-size);
@@ -92,11 +87,43 @@ $new-community-spacing: 16px;
   }
 }
 
+.communitiesList, .networkCommunitiesList {
+  li {
+    height: $li-height;
+
+    &:hover {
+      background: $color-rhino;
+    }
+  }
+}
+
+.networkCommunitiesList {
+  padding-left: 20px;
+
+  .communityRow {
+    .community-name {
+      margin-right: 0;
+    }
+  }
+
+  .avatar {
+    @include image($li-avatar-size);
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 4px;
+    margin-right: $li-spacing;
+  }
+}
+
 .communityRow {
-  display: flex;
-  align-items: center;
   &:hover {
     text-decoration: none;
+  }
+}
+
+.networkRow {
+  li {
+    list-style: none;
   }
 }
 
@@ -113,7 +140,7 @@ $new-community-spacing: 16px;
   }
 }
 
-.community-name {
+.community-name, .network-name {
   composes: drawer-inv-li from 'css/typography.scss';
   vertical-align: middle;
   width: $calculated-name-width;
