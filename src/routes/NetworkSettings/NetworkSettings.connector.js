@@ -20,6 +20,7 @@ import {
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import getParam from 'store/selectors/getParam'
 import { get } from 'lodash/fp'
+import { bindActionCreators } from 'redux'
 
 export function mapStateToProps (state, props) {
   const slug = getParam('slug', state, props)
@@ -62,9 +63,9 @@ export function mapDispatchToProps (dispatch, props) {
     updateNetworkSettingsMaker: id => changes => dispatch(updateNetworkSettings(id, changes)),
     fetchModeratorsMaker: (slug, offset) => () => dispatch(fetchModerators(slug, offset)),
     fetchCommunitiesMaker: (slug, offset) => () => dispatch(fetchCommunities(slug, offset)),
-    setConfirmBeforeClose: confirm => dispatch(setConfirmBeforeClose(confirm)),
-    setModeratorsPage: page => dispatch(setModeratorsPage(page)),
-    setCommunitiesPage: page => dispatch(setCommunitiesPage(page))
+    ...bindActionCreators({
+      setConfirmBeforeClose, setModeratorsPage, setCommunitiesPage
+    }, dispatch)
   }
 }
 
