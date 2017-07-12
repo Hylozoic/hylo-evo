@@ -35,13 +35,22 @@ export default class Drawer extends Component {
         slug: string,
         avatarUrl: string
       })
+    })),
+    networks: arrayOf(shape({
+      id: string,
+      name: string,
+      avatarUrl: string,
+      communities: arrayOf(shape({
+        id: string,
+        name: string,
+        slug: string,
+        avatarUrl: string
+      }))
     }))
   }
 
   render () {
     const { currentCommunity, memberships, className } = this.props
-
-    const membershipsSorted = sortBy('community.name', memberships)
 
     return <div className={className} styleName='s.communityDrawer'>
       <Icon name='Ex' styleName='s.closeDrawer' />
@@ -53,7 +62,7 @@ export default class Drawer extends Component {
             <span styleName='s.allCommunitiesText' className='drawer-inv-lg'>All Communities</span>
           </Link>
         </li>
-        {membershipsSorted.map(membership =>
+        {memberships.map(membership =>
           <CommunityRow membership={membership} key={membership.id} />)}
       </ul>
       <Button styleName='s.newCommunity' label={<NewCommunity />} />
@@ -72,6 +81,9 @@ export function CommunityRow ({ membership }) {
       {showBadge && <Badge number={newPostCount} />}
     </Link>
   </li>
+}
+
+export function NetworkRow () {
 }
 
 function Logo ({ community }) {
