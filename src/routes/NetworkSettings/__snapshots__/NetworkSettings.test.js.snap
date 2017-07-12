@@ -175,19 +175,19 @@ exports[`Pagination renders correctly 1`] = `
 <div
   data-styleName="pagination"
 >
-  <Component
+  <PageLink
     i={0}
   />
-  <Component
+  <PageLink
     i={1}
   />
-  <Component
+  <PageLink
     i={2}
   />
-  <Component
+  <PageLink
     i={3}
   />
-  <Component
+  <PageLink
     i={4}
   />
 </div>

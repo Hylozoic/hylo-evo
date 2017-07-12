@@ -221,7 +221,7 @@ export class Communities extends Component {
 }
 
 export function Pagination ({ pageCount, setPage, page }) {
-  const PageLink = ({ i }) => {
+  function PageLink ({ i }) {
     const current = i === page
     return <span styleName={current ? 'page-current' : 'page-link'} onClick={() => !current && setPage(i)}>{i + 1}</span>
   }
