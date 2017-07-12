@@ -2,12 +2,17 @@ import { connect } from 'react-redux'
 import {
   fetchNetworkSettings,
   fetchModerators,
+  fetchCommunities,
   updateNetworkSettings,
-  setModeratorsPage,
   getNetwork,
+  setModeratorsPage,
   getModerators,
   getModeratorsPage,
   getModeratorsTotal,
+  setCommunitiesPage,
+  getCommunities,
+  getCommunitiesPage,
+  getCommunitiesTotal,
   PAGE_SIZE
 } from './NetworkSettings.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
@@ -24,7 +29,12 @@ export function mapStateToProps (state, props) {
   const moderatorsTotal = getModeratorsTotal(state, moderatorResultProps)
   const moderatorsPageCount = Math.ceil(moderatorsTotal / PAGE_SIZE)
 
-  const communities = network && network.communities.toModelArray()
+  const communitiesPage = getCommunitiesPage(state, props)
+  const communitiesResultProps = {slug, offset: PAGE_SIZE * communitiesPage}
+  const communities = getCommunities(state, communitiesResultProps)
+  const communitiesTotal = getCommunitiesTotal(state, communitiesResultProps)
+  const communitiesPageCount = Math.ceil(communitiesTotal / PAGE_SIZE)
+
   const confirm = state.FullPageModal.confirm
 
   return {
@@ -34,7 +44,9 @@ export function mapStateToProps (state, props) {
     communities,
     confirm,
     moderatorsPageCount,
-    moderatorsPage
+    moderatorsPage,
+    communitiesPageCount,
+    communitiesPage
   }
 }
 
@@ -43,21 +55,28 @@ export function mapDispatchToProps (dispatch, props) {
     fetchNetworkSettingsMaker: slug => () => dispatch(fetchNetworkSettings(slug)),
     updateNetworkSettingsMaker: id => changes => dispatch(updateNetworkSettings(id, changes)),
     fetchModeratorsMaker: (slug, offset) => () => dispatch(fetchModerators(slug, offset)),
+    fetchCommunitiesMaker: (slug, offset) => () => dispatch(fetchCommunities(slug, offset)),
     setConfirmBeforeClose: confirm => dispatch(setConfirmBeforeClose(confirm)),
-    setModeratorsPage: page => dispatch(setModeratorsPage(page))
+    setModeratorsPage: page => dispatch(setModeratorsPage(page)),
+    setCommunitiesPage: page => dispatch(setCommunitiesPage(page))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { network, slug, confirm, moderatorsPage } = stateProps
+  const { network, slug, confirm, moderatorsPage, communitiesPage } = stateProps
   const {
-    fetchNetworkSettingsMaker, updateNetworkSettingsMaker, setConfirmBeforeClose, fetchModeratorsMaker
+    fetchNetworkSettingsMaker,
+    updateNetworkSettingsMaker,
+    setConfirmBeforeClose,
+    fetchModeratorsMaker,
+    fetchCommunitiesMaker
    } = dispatchProps
-  var fetchNetworkSettings, updateNetworkSettings, fetchModerators
+  var fetchNetworkSettings, updateNetworkSettings, fetchModerators, fetchCommunities
 
   if (slug) {
     fetchNetworkSettings = fetchNetworkSettingsMaker(slug)
     fetchModerators = fetchModeratorsMaker(slug, moderatorsPage * PAGE_SIZE)
+    fetchCommunities = fetchCommunitiesMaker(slug, communitiesPage * PAGE_SIZE)
   } else {
     fetchNetworkSettings = () => {}
   }
@@ -80,7 +99,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     fetchNetworkSettings,
     updateNetworkSettings,
     setConfirm,
-    fetchModerators
+    fetchModerators,
+    fetchCommunities
   }
 }
 

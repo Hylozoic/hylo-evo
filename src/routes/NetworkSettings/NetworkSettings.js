@@ -41,7 +41,7 @@ export default class NetworkSettings extends Component {
       this.props.fetchModerators()
     }
     if (prevProps.communitiesPage !== this.props.communitiesPage &&
-      isEmpty(this.props.moderators)) {
+      isEmpty(this.props.communities)) {
       this.props.fetchCommunities()
     }
   }
@@ -74,7 +74,10 @@ export default class NetworkSettings extends Component {
       setConfirm,
       moderatorsPage,
       moderatorsPageCount,
-      setModeratorsPage
+      setModeratorsPage,
+      communitiesPage,
+      communitiesPageCount,
+      setCommunitiesPage
     } = this.props
     if (!network) return <FullPageModal><Loading /></FullPageModal>
 
@@ -128,7 +131,11 @@ export default class NetworkSettings extends Component {
           page={moderatorsPage}
           pageCount={moderatorsPageCount}
           setPage={setModeratorsPage} />
-        <Communities communities={communities} />
+        <Communities
+          communities={communities}
+          page={communitiesPage}
+          pageCount={communitiesPageCount}
+          setPage={setCommunitiesPage} />
       </div>
     </FullPageModal>
   }
@@ -142,11 +149,11 @@ export function Moderators ({ moderators, page, pageCount, setPage }) {
   </div>
 }
 
-export function Communities ({ communities, pageCount, setPage }) {
+export function Communities ({ communities, page, pageCount, setPage }) {
   return <div styleName='communities'>
     <div styleName='section-label'>Communities</div>
     {communities.map(c => <RemovableListItem item={c} key={c.id} square size={40} />)}
-    <Pagination pageCount={pageCount} setPage={setPage} />
+    <Pagination page={page} pageCount={pageCount} setPage={setPage} />
   </div>
 }
 

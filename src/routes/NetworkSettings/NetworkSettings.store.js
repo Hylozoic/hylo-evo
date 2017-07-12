@@ -152,6 +152,35 @@ export function fetchModerators (slug, offset) {
   }
 }
 
+export function fetchCommunities (slug, offset) {
+  return {
+    type: FETCH_COMMUNITIES,
+    graphql: {
+      query: `query ($slug: String, $offset: Int) {
+        network (slug: $slug) {
+          id
+          communities (first: ${PAGE_SIZE}, sortBy: "name", offset: $offset) {
+            total
+            hasMore
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+        }
+      }`,
+      variables: {
+        slug,
+        offset
+      }
+    },
+    meta: {
+      extractModel: 'Network'
+    }
+  }
+}
+
 // Selectors
 export const getNetwork = ormCreateSelector(
   orm,
@@ -172,6 +201,24 @@ export const getModerators = ormCreateSelector(
   (session, results) => {
     if (isEmpty(results) || isEmpty(results.ids)) return []
     return session.Person.all()
+    .filter(x => includes(x.id, results.ids))
+    .orderBy(x => results.ids.indexOf(x.id))
+    .toModelArray()
+  }
+)
+
+export const getCommunitiesResults = makeGetQueryResults(FETCH_COMMUNITIES)
+export const getCommunitiesTotal = createSelector(
+  getCommunitiesResults,
+  get('total')
+)
+export const getCommunities = ormCreateSelector(
+  orm,
+  state => state.orm,
+  getCommunitiesResults,
+  (session, results) => {
+    if (isEmpty(results) || isEmpty(results.ids)) return []
+    return session.Community.all()
     .filter(x => includes(x.id, results.ids))
     .orderBy(x => results.ids.indexOf(x.id))
     .toModelArray()
