@@ -34,7 +34,11 @@ export default class ModeratorsSettingsTab extends Component {
     return <div>
       <div>
         {moderators.map(m =>
-          <RemovableListItem item={m} removeModerator={removeModerator} key={m.id} />)}
+          <RemovableListItem
+            item={m}
+            removeModerator={removeModerator}
+            confirmMessage={`Are you sure you want to remove ${m.name}'s moderator powers?`}
+            key={m.id} />)}
       </div>
       <AddModerator
         fetchModeratorSuggestions={fetchModeratorSuggestions}
