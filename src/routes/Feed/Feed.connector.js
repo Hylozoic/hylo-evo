@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import getCommunityTopicForCurrentRoute from 'store/selectors/getCommunityTopicForCurrentRoute'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getParam from 'store/selectors/getParam'
@@ -11,13 +12,14 @@ import getQueryParam from 'store/selectors/getQueryParam'
 import { push } from 'react-router-redux'
 import { postUrl } from 'util/index'
 import { makeUrl } from 'util/navigation'
-
-import { fetchTopic, fetchCommunityTopic } from './Feed.store'
+import { fetchTopic, fetchCommunityTopic, fetchNetwork } from './Feed.store'
 
 export function mapStateToProps (state, props) {
-  let community, communityTopic, topic
+  let community, communityTopic, topic, network
   const communitySlug = getParam('slug', state, props)
   const topicName = getParam('topicName', state, props)
+  const networkSlug = getParam('networkSlug', state, props)
+
   if (communitySlug) {
     community = getCommunityForCurrentRoute(state, props)
     communityTopic = getCommunityTopicForCurrentRoute(state, props)
@@ -27,6 +29,10 @@ export function mapStateToProps (state, props) {
     topic = getTopicForCurrentRoute(state, props)
     topic = topic && topic.ref
   }
+  if (networkSlug) {
+    network = getNetworkForCurrentRoute(state, props)
+  }
+
   const filter = getQueryParam('t', state, props)
   const sortBy = getQueryParam('s', state, props)
   return {
@@ -42,7 +48,9 @@ export function mapStateToProps (state, props) {
     community,
     postCount: get('postCount', community),
     pending: state.pending[FETCH_POSTS],
-    currentUser: getMe(state, props)
+    currentUser: getMe(state, props),
+    networkSlug,
+    network
   }
 }
 
@@ -50,6 +58,8 @@ export const mapDispatchToProps = function (dispatch, props) {
   const slug = getParam('slug', null, props)
   const topicName = getParam('topicName', null, props)
   const params = getQueryParam(['s', 't'], null, props)
+  const networkSlug = getParam('networkSlug', null, props)
+
   return {
     changeTab: tab => dispatch(changeQueryParam(props, 't', tab, 'all')),
     changeSort: sort => dispatch(changeQueryParam(props, 's', sort, 'all')),
@@ -65,7 +75,8 @@ export const mapDispatchToProps = function (dispatch, props) {
       } else if (topicName) {
         return dispatch(fetchTopic(topicName))
       }
-    }
+    },
+    fetchNetwork: () => dispatch(fetchNetwork(networkSlug))
   }
 }
 

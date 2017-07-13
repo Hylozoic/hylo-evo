@@ -91,6 +91,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/c/:slug/settings' component={CommunitySettings} />
             <Route path='/c/:slug/:topicName/p/:postId' component={Feed} />
             <Route path='/c/:slug/:topicName' component={Feed} />
+            <Route path='/n/:networkSlug' component={Feed} />
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />

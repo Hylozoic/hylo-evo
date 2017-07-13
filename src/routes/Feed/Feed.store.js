@@ -1,5 +1,10 @@
 import { FETCH_TOPIC, FETCH_COMMUNITY_TOPIC } from 'store/constants'
 
+export const MODULE_NAME = 'NetworkSettings'
+
+// Constants
+export const FETCH_NETWORK = `${MODULE_NAME}/FETCH_NETWORK`
+
 const communityTopicQuery =
 `query ($communitySlug: String, $topicName: String) {
   communityTopic(communitySlug: $communitySlug, topicName: $topicName) {
@@ -54,6 +59,30 @@ export function fetchTopic (name, id) {
     },
     meta: {
       extractModel: 'Topic'
+    }
+  }
+}
+
+export function fetchNetwork (slug) {
+  return {
+    type: FETCH_NETWORK,
+    graphql: {
+      query: `query ($slug: String) {
+        network (slug: $slug) {
+          id
+          slug
+          name
+          description
+          avatarUrl
+          bannerUrl
+        }
+      }`,
+      variables: {
+        slug
+      }
+    },
+    meta: {
+      extractModel: 'Network'
     }
   }
 }

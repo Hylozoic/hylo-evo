@@ -17,7 +17,8 @@ Network.fields = {
   avatarUrl: attr(),
   bannerUrl: attr(),
   moderators: many('Person'),
-  communities: many('Community')
+  communities: many('Community'),
+  posts: many('Post')
 }
 
 export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg'
