@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RemovableListItem renders correctly 1`] = `
+<div
+  data-styleName="item"
+>
+  <Link
+    replace={false}
+    to="/c/foo/m/7"
+  >
+    <RoundImage
+      data-styleName="avatar"
+      medium={true}
+      url="zeus.png"
+    />
+  </Link>
+  <Link
+    data-styleName="name"
+    replace={false}
+    to="/c/foo/m/7"
+  >
+    Zeus
+  </Link>
+  <span
+    data-styleName="remove-button"
+    onClick={[Function]}
+  >
+    Remove
+  </span>
+</div>
+`;

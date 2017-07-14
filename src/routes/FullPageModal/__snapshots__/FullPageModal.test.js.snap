@@ -85,7 +85,7 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
       </NavLink>
     </div>
     <div
-      data-styleName="center with-sidebar"
+      data-styleName="center narrow"
     >
       <Route
         exact={true}
