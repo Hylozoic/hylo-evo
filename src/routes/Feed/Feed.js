@@ -18,10 +18,11 @@ export default class Feed extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    const { communitySlug, topicName, fetchTopic } = this.props
+    const { communitySlug, topicName, fetchTopic, networkSlug, fetchNetwork } = this.props
     const topicChanged = topicName && get('topicName', prevProps) !== topicName
     const slugChanged = communitySlug && get('communitySlug', prevProps) !== communitySlug
     if (topicChanged || (topicName && slugChanged)) fetchTopic()
+    if (networkSlug && networkSlug !== prevProps.networkSlug) fetchNetwork()
   }
 
   getFeedProps () {

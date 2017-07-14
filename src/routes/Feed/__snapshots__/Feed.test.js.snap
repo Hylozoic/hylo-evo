@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feed with a network it renders a Feed with correct props 1`] = `
+<div>
+  <FeedBanner
+    all={false}
+    community={
+      Object {
+        "id": 2,
+      }
+    }
+  />
+  <Connect(FeedList)
+    filter="request"
+    networkSlug="bar"
+    showCommunities={true}
+    sortBy="votes"
+    subject="network"
+  />
+</div>
+`;

@@ -23,6 +23,27 @@ describe('Feed', () => {
     })
   })
 
+  it('with a network it renders a Feed with correct props', () => {
+    const wrapper = shallow(<Feed
+      filter='request'
+      network={{id: 2}}
+      networkSlug='bar'
+      sortBy='votes' />)
+
+    expect(wrapper).toMatchSnapshot()
+
+    const feed = wrapper.find('Connect(FeedList)')
+    expect(feed).toHaveLength(1)
+    expect(feed.props()).toEqual({
+      subject: 'network',
+      networkSlug: 'bar',
+      filter: 'request',
+      sortBy: 'votes',
+      showCommunities: true,
+      topic: undefined
+    })
+  })
+
   it('displays the regular FeedBanner if on the main feed', () => {
     const props = {}
     const wrapper = shallow(<Feed {...props} />)
