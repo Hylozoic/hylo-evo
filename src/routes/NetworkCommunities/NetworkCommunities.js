@@ -8,9 +8,9 @@ import RoundImage from 'components/RoundImage'
 import { find } from 'lodash/fp'
 
 const sortOptions = [
-  {id: 'updated_at', label: 'Newest'},
   {id: 'name', label: 'Alphabetical'},
-  {id: 'member_count', label: 'Popular'}
+  {id: 'member_count', label: 'Popular'},
+  {id: 'updated_at', label: 'Newest'}
 ]
 
 export default class NetworkCommunities extends Component {
@@ -18,7 +18,9 @@ export default class NetworkCommunities extends Component {
     network: object,
     communities: array,
     search: string,
-    setSearch: func
+    setSearch: func,
+    sortOption: string,
+    setSort: func
   }
 
   render () {

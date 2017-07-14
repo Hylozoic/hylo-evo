@@ -1,7 +1,9 @@
 import { connect } from 'react-redux'
 import {
-  fetchExample,
-  getExample
+  setSearch,
+  setSort,
+  getSearch,
+  getSort
 } from './NetworkCommunities.store'
 // import getMe from 'store/selectors/getMe'
 
@@ -37,15 +39,19 @@ const communities = [
 ]
 
 export function mapStateToProps (state, props) {
+  const search = getSearch(state, props)
+  const sortOption = getSort(state, props)
   return {
     network,
-    communities
-//  currentUser: getMe(state, props)
+    communities,
+    search,
+    sortOption
   }
 }
 
 export const mapDispatchToProps = {
-  fetchExample
+  setSearch,
+  setSort
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
