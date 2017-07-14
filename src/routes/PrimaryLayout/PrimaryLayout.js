@@ -53,6 +53,7 @@ export default class PrimaryLayout extends Component {
   render () {
     const {
       community,
+      network,
       currentUser,
       isDrawerOpen,
       location,
@@ -73,7 +74,7 @@ export default class PrimaryLayout extends Component {
     // TODO move FullPageModals
     return <div styleName='container' onClick={closeDrawer}>
       <Drawer currentCommunity={community} styleName={cx('drawer', {hidden: !isDrawerOpen})} />
-      <TopNav {...{community, currentUser, showLogoBadge}} styleName='top' />
+      <TopNav {...{community, network, currentUser, showLogoBadge}} styleName='top' />
       <div styleName='main'>
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>

@@ -1,6 +1,6 @@
 import { FETCH_TOPIC, FETCH_COMMUNITY_TOPIC } from 'store/constants'
 
-export const MODULE_NAME = 'NetworkSettings'
+export const MODULE_NAME = 'Feed'
 
 // Constants
 export const FETCH_NETWORK = `${MODULE_NAME}/FETCH_NETWORK`
