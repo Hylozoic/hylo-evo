@@ -23,7 +23,7 @@ import { get } from 'lodash/fp'
 import { bindActionCreators } from 'redux'
 
 export function mapStateToProps (state, props) {
-  const slug = getParam('slug', state, props)
+  const slug = getParam('networkSlug', state, props)
   const network = getNetwork(state, {slug})
 
   const moderatorsPage = getModeratorsPage(state, props)
