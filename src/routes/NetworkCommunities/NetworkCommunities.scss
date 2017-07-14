@@ -1,0 +1,32 @@
+.container { /* !empty */ }
+
+// Banner
+.banner {
+  background-color: $color-athens-gray;
+  height: 120px;
+  width: 100%;
+  display: flex;
+}
+
+.banner-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+  justify-content: center;
+  margin-left: 25px;
+}
+
+.name {
+  composes: hdr-display from 'css/typography.scss';
+}
+
+.stats {
+  composes: caption-lt-gry from 'css/typography.scss';
+  font-size: 13px;
+}
+
+.icon {
+  margin-left: auto;
+  align-self: flex-start;
+}

@@ -155,15 +155,15 @@ export function fetchModerators (slug, page) {
   }
 }
 
-export function fetchCommunities (slug, page) {
-  const offset = page * PAGE_SIZE
+export function fetchCommunities ({slug, page, offset, pageSize = PAGE_SIZE}) {
+  offset = offset || page * pageSize
   return {
     type: FETCH_COMMUNITIES,
     graphql: {
       query: `query ($slug: String, $offset: Int) {
         network (slug: $slug) {
           id
-          communities (first: ${PAGE_SIZE}, sortBy: "name", offset: $offset) {
+          communities (first: ${pageSize}, sortBy: "name", offset: $offset) {
             total
             hasMore
             items {
