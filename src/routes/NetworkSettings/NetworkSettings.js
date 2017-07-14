@@ -190,6 +190,8 @@ export class PaginatedList extends Component {
 }
 
 export function PaginationLinks ({ pageCount, setPage, page }) {
+  if (pageCount < 2) return null
+
   function PageLink ({ i }) {
     const current = i === page
     return <span styleName={current ? 'page-current' : 'page-link'} onClick={() => !current && setPage(i)}>{i + 1}</span>
