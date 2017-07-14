@@ -13,13 +13,10 @@ function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
   const showLogoBadge = some(m => m.newPostCount > 0, memberships)
 
-  console.log('props', props)
-  const network = getNetworkForCurrentRoute(state, props)
-
   return {
     isCommunityRoute: isCommunityRoute(state, props),
     community: getCommunityForCurrentRoute(state, props),
-    network,
+    network: getNetworkForCurrentRoute(state, props),
     currentUser: getMe(state),
     isDrawerOpen: state.PrimaryLayout.isDrawerOpen,
     showLogoBadge
