@@ -74,6 +74,11 @@ export function getSlugInPath (pathname) {
   return match ? match[1] : null
 }
 
+export function getNetworkSlugInPath (pathname) {
+  const match = pathname.match(/\/n\/([^/]+)/)
+  return match ? match[1] : null
+}
+
 export const dispatchEvent = (el, etype) => {
   var evObj = document.createEvent('Events')
   evObj.initEvent(etype, true, false)

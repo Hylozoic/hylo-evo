@@ -49,4 +49,12 @@ describe('PaginationLinks', () => {
       setPage={() => {}} />)
     expect(wrapper).toMatchSnapshot()
   })
+
+  it('renders null with 1 page', () => {
+    const wrapper = shallow(<PaginationLinks
+      page={1}
+      pageCount={1}
+      setPage={() => {}} />)
+    expect(wrapper.html()).toEqual(null)
+  })
 })

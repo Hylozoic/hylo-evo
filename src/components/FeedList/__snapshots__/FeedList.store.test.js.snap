@@ -69,6 +69,7 @@ posts(
     "variables": Object {
       "filter": "offer",
       "first": 20,
+      "networkSlug": undefined,
       "offset": 20,
       "search": "gardening",
       "slug": undefined,
@@ -143,6 +144,7 @@ posts(
     "variables": Object {
       "filter": "request",
       "first": 20,
+      "networkSlug": undefined,
       "offset": 20,
       "search": "graphic design",
       "slug": undefined,
