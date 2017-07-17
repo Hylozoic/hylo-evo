@@ -97,13 +97,6 @@ export default function (state = {}, action) {
         ...state,
         [payload]: null
       }
-      /*
-      function dropQueryResults (...somesettings) {
-        return {
-          type: 'DROP_QUERY_RESULTS',
-          payload: buildKey(somesettings)
-        }
-       */
   }
 
   return state
