@@ -21,6 +21,7 @@ import AllTopics from 'routes/AllTopics/AllTopics.store'
 import Search from 'routes/Search/Search.store'
 import queryResults from './queryResults'
 import { handleSetState, composeReducers } from './util'
+import { STORE_CLEAR_FEED_LIST } from 'store/constants'
 
 const combinedReducers = combineReducers({
   // Global store
@@ -45,7 +46,14 @@ const combinedReducers = combineReducers({
   FullPageModal,
   AllTopics,
   ModeratorsSettings,
-  Search
+  Search,
+
+  clearFeedList: (state = null, action) => {
+    if (action.type === STORE_CLEAR_FEED_LIST) {
+      return action.payload
+    }
+    return state
+  }
 })
 
 export default composeReducers(combinedReducers, handleSetState)

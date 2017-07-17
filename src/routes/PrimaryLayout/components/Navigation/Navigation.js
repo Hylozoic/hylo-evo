@@ -9,7 +9,8 @@ export default function Navigation ({
   collapsed,
   community,
   homeBadge,
-  clearBadge
+  clearBadge,
+  clearFeedList
 }) {
   const links = compact([
     {

@@ -1,4 +1,4 @@
-import { FETCH_POSTS } from 'store/constants'
+import { FETCH_POSTS, STORE_CLEAR_FEED_LIST } from 'store/constants'
 
 export function fetchPosts ({ subject, slug, sortBy, offset, search, filter, topic }) {
   var query, extractModel
@@ -107,3 +107,10 @@ const allCommunitiesQuery = `query (
 ) {
   ${postsQueryFragment}
 }`
+
+export function storeClearFeedList (action) {
+  return {
+    type: STORE_CLEAR_FEED_LIST,
+    payload: action
+  }
+}

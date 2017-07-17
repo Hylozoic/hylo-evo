@@ -16,7 +16,8 @@ import {
   FETCH_POSTS,
   FETCH_COMMENTS,
   FETCH_THREAD,
-  FETCH_MESSAGES
+  FETCH_MESSAGES,
+  DROP_QUERY_RESULTS
 } from 'store/constants'
 import { get, isNull, omitBy, pick, reduce, uniq } from 'lodash/fp'
 
@@ -90,6 +91,19 @@ export default function (state = {}, action) {
 
     case FETCH_COMMUNITIES:
       return addNetworkCommunities(state)
+
+    case DROP_QUERY_RESULTS:
+      return {
+        ...state,
+        [payload]: null
+      }
+      /*
+      function dropQueryResults (...somesettings) {
+        return {
+          type: 'DROP_QUERY_RESULTS',
+          payload: buildKey(somesettings)
+        }
+       */
   }
 
   return state
@@ -151,6 +165,18 @@ export function makeGetQueryResults (actionType) {
     // cases?
     const key = buildKey(actionType, props)
     return state.queryResults[key]
+  }
+}
+
+// action factory
+
+export function makeDropQueryResults (actionType) {
+  return props => {
+    const key = buildKey(actionType, props)
+    return {
+      type: DROP_QUERY_RESULTS,
+      payload: key
+    }
   }
 }
 

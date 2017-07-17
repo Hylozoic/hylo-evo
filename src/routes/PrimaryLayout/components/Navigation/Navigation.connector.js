@@ -16,10 +16,23 @@ export function mapStateToProps (state, props) {
   // newPostCount.
   const membership = getMembership(state, {communityId: community.id})
   const homeBadge = get('newPostCount', membership)
-  return { community, membership, homeBadge }
+  return {
+    community,
+    membership,
+    homeBadge,
+    clearFeedList: state.clearFeedList
+  }
+}
+
+function mapDispatchToProps (dispatch, props) {
+  return {
+    resetNewPostCount: (id, type) => dispatch(resetNewPostCount(id, type)),
+    dispatch
+  }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
+  console.log(stateProps, ownProps)
   const { homeBadge, community, membership } = stateProps
   return {
     ...ownProps,
@@ -27,11 +40,12 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     homeBadge,
     clearBadge: homeBadge
       ? () => dispatchProps.resetNewPostCount(membership.community.id, 'Membership')
-      : () => {}
+      : () => {},
+    clearFeedList: () => dispatchProps.dispatch(stateProps.clearFeedList)
   }
 }
 
-export default connect(mapStateToProps, {resetNewPostCount}, mergeProps)
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
 const getMembership = ormCreateSelector(
   orm,
