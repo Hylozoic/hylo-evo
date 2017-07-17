@@ -10,13 +10,6 @@ import badgeHoverStyles from '../../../../components/Badge/component.scss'
 const { string, number, arrayOf, shape } = PropTypes
 import cx from 'classnames'
 
-function NewCommunity () {
-  return <div>
-    <Icon name='NewCommunity' styleName='s.newCommunityIcon' />
-    New community
-  </div>
-}
-
 export default class Drawer extends Component {
   static propTypes = {
     currentCommunity: shape({
@@ -57,20 +50,16 @@ export default class Drawer extends Component {
       <Icon name='Ex' styleName='s.closeDrawer' />
       <Logo community={currentCommunity} />
       <ul styleName='s.networkList'>
+        <li styleName='s.sectionTitle'>Networks</li>
         {networks.map(network =>
           <NetworkRow network={network} key={network.id} />)}
       </ul>
       <ul styleName='s.communitiesList'>
-        <li>
-          <Link styleName='s.allCommunities' to={allCommunitiesUrl()}>
-            <AllFeedsIcon />
-            <span styleName='s.allCommunitiesText' className='drawer-inv-lg'>All Communities</span>
-          </Link>
-        </li>
+        <li styleName='s.sectionTitle'>All Communities</li>
         {memberships.map(membership =>
           <CommunityRow membership={membership} key={membership.id} />)}
       </ul>
-      <Button styleName='s.newCommunity' label={<NewCommunity />} />
+      <Button color='white' styleName='s.newCommunity' label='Create a Network or Community' />
     </div>
   }
 }

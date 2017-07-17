@@ -13,10 +13,10 @@ $current-padding-top: 53px;
 $current-padding-bottom: 32px;
 $current-name-margin-top: 13px;
 
-$ul-vertical-spacing: 32px;
-$ul-horizontal-spacing: 10px;
+$ul-vertical-spacing: 10px;
+$ul-horizontal-spacing: 14px;
 $li-padding: 4px;
-$li-spacing: 22px;
+$li-spacing: 14px;
 $li-height: 40px;
 $li-avatar-size: 32px;
 
@@ -33,8 +33,11 @@ $break-border: 1px solid rgba(255,255,255,0.11);
 
 $new-community-width: 310px;
 $new-community-vertical-margin: 15px;
-$new-community-font-size: 18px;
+$new-community-font-size: 14px;
 $new-community-spacing: 16px;
+
+$community-list-avatar-size: 24px;
+$community-list-font-size: 14px;
 
 .communityDrawer {
   background-image: linear-gradient(0deg, $color-rhino 0%, $color-chambray 100%);
@@ -52,7 +55,6 @@ $new-community-spacing: 16px;
 .currentCommunity {
   padding: $current-padding-top 0 $current-padding-bottom;
   text-align: center;
-  border-bottom: $break-border;
 
   .avatar {
     @include image($current-avatar-size);
@@ -66,16 +68,26 @@ $new-community-spacing: 16px;
 }
 
 .communitiesList, .networkList {
+  height: unset;
   padding: $ul-vertical-spacing $ul-horizontal-spacing;
   margin: 0;
   flex-grow: 1;
   list-style: none;
   overflow-y: auto;
-  border-bottom: $break-border;
+  border-top: $break-border;
 
   li {
     padding: $li-padding;
     border-radius: 4px;
+
+    &.sectionTitle {
+      text-transform: uppercase;
+      font-size: 8pt;
+      font-weight: 300;
+      color: $color-white;
+      opacity: 0.5;
+      letter-spacing: 0.2px;
+    }
 
     .avatar {
       @include image($li-avatar-size);
@@ -89,29 +101,26 @@ $new-community-spacing: 16px;
 
 .communitiesList, .networkCommunitiesList {
   li {
-    height: $li-height;
-
     &:hover {
       background: $color-rhino;
+    }
+
+    .avatar {
+      @include image($community-list-avatar-size);
     }
   }
 }
 
 .networkCommunitiesList {
-  padding-left: 20px;
+  margin: $ul-vertical-spacing 0 0 $ul-horizontal-spacing;
+
+  padding-left: 25px;
+  white-space: nowrap;
 
   .communityRow {
     .community-name {
       margin-right: 0;
     }
-  }
-
-  .avatar {
-    @include image($li-avatar-size);
-    display: inline-block;
-    vertical-align: middle;
-    border-radius: 4px;
-    margin-right: $li-spacing;
   }
 }
 
@@ -151,6 +160,16 @@ $new-community-spacing: 16px;
   display: inline-block;
 }
 
+.network-name {
+  font-weight: 600;
+  opacity: unset;
+}
+
+.community-name {
+  font-size: $community-list-font-size;
+  opacity: 0.9;
+}
+
 .highlight {
   @include font-bold;
   color: $color-white;
@@ -160,11 +179,7 @@ $new-community-spacing: 16px;
   text-align: center;
   width: $new-community-width;
   margin: $new-community-vertical-margin auto;
-  box-shadow: 0 5px 15px 0 rgba(0,0,0,0.05);
-}
-
-.newCommunityIcon {
   font-size: $new-community-font-size;
-  color: $color-white;
-  margin-right: $new-community-spacing;
+  padding: 0;
+  box-shadow: 0 5px 15px 0 rgba(0,0,0,0.05);
 }
