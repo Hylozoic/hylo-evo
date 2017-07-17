@@ -12,22 +12,36 @@ export default class Feed extends Component {
   }
 
   componentDidMount () {
-    const { topicName, fetchTopic } = this.props
+    const { topicName, fetchTopic, networkSlug, fetchNetwork } = this.props
     if (topicName) fetchTopic()
+    if (networkSlug) fetchNetwork()
   }
 
   componentDidUpdate (prevProps) {
-    const { communitySlug, topicName, fetchTopic } = this.props
+    const { communitySlug, topicName, fetchTopic, networkSlug, fetchNetwork } = this.props
     const topicChanged = topicName && get('topicName', prevProps) !== topicName
     const slugChanged = communitySlug && get('communitySlug', prevProps) !== communitySlug
     if (topicChanged || (topicName && slugChanged)) fetchTopic()
+    if (networkSlug && networkSlug !== prevProps.networkSlug) fetchNetwork()
   }
 
   getFeedProps () {
-    const { communitySlug, topic } = this.props
+    const { communitySlug, topic, networkSlug } = this.props
+
+    var subject
+
+    if (communitySlug) {
+      subject = 'community'
+    } else if (networkSlug) {
+      subject = 'network'
+    } else {
+      subject = 'all-communities'
+    }
+
     return {
-      subject: communitySlug ? 'community' : 'all-communities',
+      subject,
       slug: communitySlug,
+      networkSlug,
       topic: get('id', topic),
       showCommunities: !communitySlug,
       ...pick([
@@ -44,7 +58,7 @@ export default class Feed extends Component {
   render () {
     const {
       topic, community, currentUser, topicName, postsTotal, followersTotal,
-      communityTopic, newPost
+      communityTopic, newPost, network, networkSlug
     } = this.props
 
     if (topicName && !topic) return <Loading />
@@ -59,8 +73,8 @@ export default class Feed extends Component {
           followersTotal={followersTotal}
           topic={topic}
           community={community} />
-        : <FeedBanner community={community} currentUser={currentUser}
-          all={!community} newPost={newPost} />}
+        : <FeedBanner community={community || network} currentUser={currentUser}
+          all={!community && !networkSlug} newPost={newPost} />}
       <FeedList {...this.getFeedProps()} />
     </div>
   }

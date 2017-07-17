@@ -59,7 +59,7 @@ export default function (state = {}, action) {
       return appendIds(state, type, meta.graphql.variables, payload.data.community.members)
 
     case FETCH_POSTS:
-      root = payload.data.posts || payload.data.community.posts
+      root = payload.data.posts || get('community.posts', payload.data) || get('network.posts', payload.data)
       return appendIds(state, type, meta.graphql.variables, root)
 
     case FETCH_THREAD:
@@ -163,6 +163,7 @@ export function makeGetQueryResults (actionType) {
     // URL, in which case they are in e.g. props.match.params.id; and sometimes
     // they are passed directly to a component. Should buildKey handle both
     // cases?
+
     const key = buildKey(actionType, props)
     return state.queryResults[key]
   }
@@ -190,6 +191,7 @@ export function buildKey (type, params) {
 export const queryParamWhitelist = [
   'id',
   'slug',
+  'networkSlug',
   'sortBy',
   'search',
   'autocomplete',

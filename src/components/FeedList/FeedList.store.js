@@ -1,11 +1,14 @@
 import { FETCH_POSTS, STORE_CLEAR_FEED_LIST } from 'store/constants'
 
-export function fetchPosts ({ subject, slug, sortBy, offset, search, filter, topic }) {
+export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search, filter, topic }) {
   var query, extractModel
 
   if (subject === 'community') {
     query = communityQuery
     extractModel = 'Community'
+  } else if (subject === 'network') {
+    query = networkQuery
+    extractModel = 'Network'
   } else if (subject === 'all-communities') {
     query = allCommunitiesQuery
     extractModel = 'Post'
@@ -19,6 +22,7 @@ export function fetchPosts ({ subject, slug, sortBy, offset, search, filter, top
       query,
       variables: {
         slug,
+        networkSlug,
         sortBy,
         offset,
         search,
@@ -93,6 +97,21 @@ const communityQuery = `query (
     avatarUrl
     bannerUrl
     postCount
+    ${postsQueryFragment}
+  }
+}`
+
+const networkQuery = `query (
+  $networkSlug: String,
+  $sortBy: String,
+  $offset: Int,
+  $search: String,
+  $filter: String,
+  $topic: Int,
+  $first: Int
+) {
+  network(slug: $networkSlug) {
+    id
     ${postsQueryFragment}
   }
 }`

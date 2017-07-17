@@ -4,6 +4,7 @@ import {
 } from './PrimaryLayout.store'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import getMemberships from 'store/selectors/getMemberships'
 import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommunityRoute'
 import { some } from 'lodash/fp'
@@ -15,6 +16,7 @@ function mapStateToProps (state, props) {
   return {
     isCommunityRoute: isCommunityRoute(state, props),
     community: getCommunityForCurrentRoute(state, props),
+    network: getNetworkForCurrentRoute(state, props),
     currentUser: getMe(state),
     isDrawerOpen: state.PrimaryLayout.isDrawerOpen,
     showLogoBadge

@@ -16,10 +16,10 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = function (dispatch, props) {
-  const { slug, sortBy, filter, subject, topic } = props
+  const { slug, networkSlug, sortBy, filter, subject, topic } = props
   const search = null // placeholder; no need for this yet
   function dispatchFetchPosts (offset) {
-    return dispatch(fetchPosts({subject, slug, sortBy, offset, search, filter, topic}))
+    return dispatch(fetchPosts({subject, slug, networkSlug, sortBy, offset, search, filter, topic}))
   }
   return {
     fetchPosts: dispatchFetchPosts,
