@@ -18,11 +18,19 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = function (dispatch, props) {
   const { slug, sortBy, filter, subject, topic } = props
   const search = null // placeholder; no need for this yet
+  function dispatchFetchPosts (offset) {
+    return dispatch(fetchPosts({subject, slug, sortBy, offset, search, filter, topic}))
+  }
   return {
-    fetchPosts: function (offset) {
-      return dispatch(fetchPosts({subject, slug, sortBy, offset, search, filter, topic}))
-    },
-    storeClearFeedList: fn => dispatch(storeClearFeedList(dropPostResults(props)))
+    fetchPosts: dispatchFetchPosts,
+    // We are putting a callback into appstate so components (ie Navigation,
+    // TopicNav) can drop the queryResults and refetch
+    storeClearFeedList: fn => {
+      dispatch(storeClearFeedList(() => {
+        dispatch(dropPostResults(props))
+        return dispatchFetchPosts()
+      }))
+    }
   }
 }
 

@@ -12,7 +12,8 @@ export function mapStateToProps (state, props) {
   return {
     communityTopics: getSubscribedCommunityTopics(state, props),
     communitySlug,
-    backUrl
+    backUrl,
+    clearFeedList: state.FeedList.clearFeedList
   }
 }
 

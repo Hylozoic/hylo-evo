@@ -12,13 +12,17 @@ export default function Navigation ({
   clearBadge,
   clearFeedList
 }) {
+  const homePath = community ? `/c/${community.slug}` : '/all'
+
+  const onClick = window.location.pathname === homePath ? clearFeedList : null
+
   const links = compact([
     {
       label: 'Home',
       icon: 'Home',
-      to: community ? `/c/${community.slug}` : '/all',
+      to: homePath,
       badge: homeBadge,
-      onClick: clearBadge,
+      onClick,
       exact: true
     },
     community && {

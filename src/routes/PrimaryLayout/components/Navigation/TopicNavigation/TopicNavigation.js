@@ -7,6 +7,7 @@ import { tagUrl, topicsUrl } from 'util/index'
 import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../../components/Badge/component.scss'
 import cx from 'classnames'
+import { push } from 'react-router-redux'
 
 export default class TopicNavigation extends Component {
   static propTypes = {
@@ -21,10 +22,10 @@ export default class TopicNavigation extends Component {
   render () {
     const {
       communityTopics, backUrl, communitySlug,
-      clearBadge, expand, collapsed, location
+      clearBadge, clearFeedList, expand, collapsed, location
     } = this.props
-    const currentTopic = (topicName, slug) =>
-      matchPath(location.pathname, {path: tagUrl(topicName, slug)})
+    const currentTopic = topicName =>
+      matchPath(location.pathname, {path: tagUrl(topicName, communitySlug)})
 
     return <div styleName='s.topicNavigation'>
       <div styleName={cx('s.header', {'s.header-link': collapsed})}
@@ -38,15 +39,15 @@ export default class TopicNavigation extends Component {
             <NavLink styleName='s.topic'
               className={badgeHoverStyles.parent}
               to={tagUrl(topic.name, communitySlug)}
-              onClick={() => id && newPostCount > 0 && clearBadge(id)}
+              onClick={() => id && currentTopic(topic.name) && clearFeedList()}
               activeClassName='active-topic-nav-link'>
               <span styleName='s.name'>#{topic.name}</span>
-              {newPostCount > 0 && !currentTopic(topic.name, communitySlug) &&
+              {newPostCount > 0 && !currentTopic(topic.name) &&
                 <Badge number={newPostCount} />}
-              {currentTopic(topic.name, communitySlug) &&
-                <Link to={backUrl}>
+              {currentTopic(topic.name) &&
+                <div onClick={() => push(backUrl)}>
                   <Icon name='Ex' styleName='s.closeIcon' />
-                </Link>}
+                </div>}
             </NavLink>
           </li>)}
       </ul>

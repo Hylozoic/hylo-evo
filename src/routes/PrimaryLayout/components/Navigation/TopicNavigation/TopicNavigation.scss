@@ -33,7 +33,7 @@ a.topic {
   font-size: 14.5px;
   color: $color-rhino-50;
   text-decoration: none !important;
-  &:hover, &:active, {
+  &:hover, &:active {
     color: $color-rhino;
     text-decoration: none !important;
   }
@@ -48,6 +48,7 @@ a.topic {
 }
 
 .closeIcon {
+  top: 1px;
   line-height: 1;
   font-size: 14px;
 }

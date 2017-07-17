@@ -20,28 +20,26 @@ export function mapStateToProps (state, props) {
     community,
     membership,
     homeBadge,
-    clearFeedList: state.clearFeedList
+    clearFeedList: state.FeedList.clearFeedList
   }
 }
 
 function mapDispatchToProps (dispatch, props) {
   return {
-    resetNewPostCount: (id, type) => dispatch(resetNewPostCount(id, type)),
-    dispatch
+    resetNewPostCount: (id, type) => dispatch(resetNewPostCount(id, type))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  console.log(stateProps, ownProps)
-  const { homeBadge, community, membership } = stateProps
+  const { homeBadge, community, membership, clearFeedList } = stateProps
   return {
     ...ownProps,
     community,
     homeBadge,
+    clearFeedList,
     clearBadge: homeBadge
       ? () => dispatchProps.resetNewPostCount(membership.community.id, 'Membership')
-      : () => {},
-    clearFeedList: () => dispatchProps.dispatch(stateProps.clearFeedList)
+      : () => {}
   }
 }
 

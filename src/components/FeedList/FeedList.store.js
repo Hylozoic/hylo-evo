@@ -114,3 +114,13 @@ export function storeClearFeedList (action) {
     payload: action
   }
 }
+
+export default function (state = {}, action) {
+  if (action.type === STORE_CLEAR_FEED_LIST) {
+    return {
+      ...state,
+      clearFeedList: action.payload
+    }
+  }
+  return state
+}
