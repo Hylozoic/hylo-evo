@@ -5,7 +5,7 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
 import RoundImage from 'components/RoundImage'
-import { find } from 'lodash/fp'
+import { find, get } from 'lodash/fp'
 
 const sortOptions = [
   {id: 'name', label: 'Alphabetical'},
@@ -64,7 +64,9 @@ export function Banner ({ network, communitiesTotal }) {
   return <div styleName='banner'>
     <div styleName='banner-text'>
       <div styleName='name'>Communities</div>
-      <div styleName='stats'>{communitiesTotal} Communities&nbsp;&nbsp;•&nbsp;&nbsp;27,106 Total Members</div>
+      <div styleName='stats'>
+        {communitiesTotal} Communities&nbsp;&nbsp;•&nbsp;&nbsp;{get('memberCount', network, 0)} Total Members
+      </div>
     </div>
     <Icon name='More' styleName='icon' />
   </div>

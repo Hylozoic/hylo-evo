@@ -166,10 +166,10 @@ export function fetchCommunities ({slug, page, offset, sortBy = 'name', order, s
   return {
     type: FETCH_COMMUNITIES,
     graphql: {
-      query: `query ($slug: String, $offset: Int, $sortBy: String, $order: String) {
+      query: `query ($slug: String, $offset: Int, $sortBy: String, $order: String, $search: String) {
         network (slug: $slug) {
           id
-          communities (first: ${pageSize}, sortBy: $sortBy, order: $order, offset: $offset) {
+          communities (first: ${pageSize}, sortBy: $sortBy, order: $order, offset: $offset, search: $search) {
             total
             hasMore
             items {

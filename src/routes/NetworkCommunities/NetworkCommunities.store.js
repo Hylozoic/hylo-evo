@@ -64,6 +64,7 @@ export function fetchNetwork (slug, sortBy) {
           avatarUrl
           bannerUrl
           createdAt
+          memberCount
           communities (first: 20, sortBy: $sortBy, order: $order)  {
             total
             hasMore
