@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router-dom'
-import { bgImageStyle, allCommunitiesUrl } from 'util/index'
+import { bgImageStyle } from 'util/index'
 import Badge from 'components/Badge'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
-import AllFeedsIcon from 'components/AllFeedsIcon'
 import s from './Drawer.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../components/Badge/component.scss'
 const { string, number, arrayOf, shape } = PropTypes
@@ -49,11 +48,11 @@ export default class Drawer extends Component {
     return <div className={className} styleName='s.communityDrawer'>
       <Icon name='Ex' styleName='s.closeDrawer' />
       <Logo community={currentCommunity} />
-      <ul styleName='s.networkList'>
+      {networks.length ? <ul styleName='s.networkList'>
         <li styleName='s.sectionTitle'>Networks</li>
         {networks.map(network =>
           <NetworkRow network={network} key={network.id} />)}
-      </ul>
+      </ul> : null}
       <ul styleName='s.communitiesList'>
         <li styleName='s.sectionTitle'>All Communities</li>
         {memberships.map(membership =>
