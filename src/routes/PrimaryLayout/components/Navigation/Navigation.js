@@ -2,28 +2,32 @@ import React from 'react'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
 import './Navigation.scss'
-import { compact, get } from 'lodash/fp'
+import { compact } from 'lodash/fp'
 
-export default function Navigation ({
-  className,
-  collapsed,
-  community,
-  homeBadge,
-  clearBadge
-}) {
+export default function Navigation (props) {
+  const {
+    className,
+    collapsed,
+    rootSlug,
+    rootPath,
+    membersPath,
+    badge,
+    clearBadge
+  } = props
+
   const links = compact([
-    {
+    rootPath && {
       label: 'Home',
       icon: 'Home',
-      to: community ? `/c/${community.slug}` : '/all',
-      badge: homeBadge,
+      to: rootPath,
+      badge: badge,
       onClick: clearBadge,
       exact: true
     },
-    community && {
+    membersPath && {
       label: 'Members',
       icon: 'Members',
-      to: `/c/${community.slug}/members`
+      to: membersPath
     },
     {
       label: 'UI Kit',
@@ -40,7 +44,7 @@ export default function Navigation ({
           <NavLink key={link.label} {...link} collapsed={collapsed}
             onClick={link.onClick} />)}
       </ul>
-      <TopicNavigation slug={get('slug', community)} collapsed={collapsed} />
+      <TopicNavigation backUrl={rootPath} communitySlug={rootSlug} collapsed={collapsed} />
     </div>
   </div>
 }

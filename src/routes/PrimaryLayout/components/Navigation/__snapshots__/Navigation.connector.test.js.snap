@@ -2,12 +2,12 @@
 
 exports[`mergeProps merges all the right props 1`] = `
 Object {
+  "badge": 1,
   "bar": 2,
   "clearBadge": [Function],
-  "community": Object {
-    "id": 2,
-  },
   "foo": 1,
-  "homeBadge": 1,
+  "membersPath": undefined,
+  "rootPath": undefined,
+  "rootSlug": undefined,
 }
 `;

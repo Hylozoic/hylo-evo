@@ -71,6 +71,7 @@ export default class PrimaryLayout extends Component {
       ({ path }) => matchPath(location.pathname, {path}),
       detailRoutes
     )
+
     // TODO move FullPageModals
     return <div styleName='container' onClick={closeDrawer}>
       <Drawer currentCommunity={community} styleName={cx('drawer', {hidden: !isDrawerOpen})} />
@@ -96,6 +97,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
             <Route path='/n/:networkSlug' exact component={Feed} />
+            <Route path='/n/:slug/members' component={Members} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
           </Switch>
         </div>

@@ -1,3 +1,6 @@
+import { get } from 'lodash/fp'
+import { matchPath } from 'react-router'
+
 export function bgImageStyle (url) {
   if (!url) return {}
   const escaped = url.replace(/([\(\)])/g, (match, $1) => '\\' + $1) // eslint-disable-line
@@ -43,6 +46,10 @@ export function communitySettingsUrl (slug) {
   return `/c/${slug}/settings`
 }
 
+export function networkUrl (slug) {
+  return slug ? `/n/${slug}` : ''
+}
+
 export function threadUrl (id) {
   return `/t/${id}`
 }
@@ -70,13 +77,17 @@ export function removePostFromUrl (url) {
 // n.b.: use getParam instead of this where possible.
 
 export function getSlugInPath (pathname) {
-  const match = pathname.match(/\/c\/([^/]+)/)
-  return match ? match[1] : null
+  const match = matchPath(pathname, {
+    path: '/c/:slug'
+  })
+  return get('params.slug', match)
 }
 
 export function getNetworkSlugInPath (pathname) {
-  const match = pathname.match(/\/n\/([^/]+)/)
-  return match ? match[1] : null
+  const match = matchPath(pathname, {
+    path: '/n/:slug'
+  })
+  return get('params.slug', match)
 }
 
 export const dispatchEvent = (el, etype) => {
