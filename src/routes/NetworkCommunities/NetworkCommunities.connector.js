@@ -1,57 +1,61 @@
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import getParam from 'store/selectors/getParam'
 import {
   setSearch,
   setSort,
   getSearch,
-  getSort
+  getSort,
+  getNetwork,
+  fetchNetwork
 } from './NetworkCommunities.store'
-// import getMe from 'store/selectors/getMe'
-
-const network = {
-  name: 'Lawyers For Good Government'
-}
-
-const communities = [
-  {
-    id: 1,
-    name: 'Climate Change',
-    memberCount: 4681,
-    avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/community/1944/avatar/1489438401225_face.png'
-  },
-  {
-    id: 2,
-    name: 'Save the Bees',
-    memberCount: 4681,
-    avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/community/1944/avatar/1489438401225_face.png'
-  },
-  {
-    id: 3,
-    name: 'Stop Big Oil',
-    memberCount: 4681,
-    avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/community/1944/avatar/1489438401225_face.png'
-  },
-  {
-    id: 4,
-    name: "Women's March",
-    memberCount: 4681,
-    avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/community/1944/avatar/1489438401225_face.png'
-  }
-]
+import {
+  fetchCommunities,
+  getCommunities,
+  getCommunitiesTotal
+} from 'routes/NetworkSettings/NetworkSettings.store'
 
 export function mapStateToProps (state, props) {
+  const slug = getParam('networkSlug', state, props)
   const search = getSearch(state, props)
-  const sortOption = getSort(state, props)
+  const sortBy = getSort(state, props)
+  const queryProps = {slug, sortBy, search}
   return {
-    network,
-    communities,
+    network: getNetwork(state, {slug}),
+    communities: getCommunities(state, queryProps),
+    communitiesTotal: getCommunitiesTotal(state, queryProps),
     search,
-    sortOption
+    sortBy,
+    slug
   }
 }
 
-export const mapDispatchToProps = {
-  setSearch,
-  setSort
+export function mapDispatchToProps (dispatch, props) {
+  return {
+    fetchNetwork: (slug, sortBy) => () => dispatch(fetchNetwork(slug, sortBy)),
+    fetchCommunities: (opts) => () =>
+      dispatch(fetchCommunities({...opts, pageSize: 20})),
+    ...bindActionCreators({
+      setSearch,
+      setSort
+    }, dispatch)
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { slug, communities, sortBy, search } = stateProps
+  const { fetchNetwork, fetchCommunities } = dispatchProps
+
+  const fetchMoreCommunities =
+    fetchCommunities({slug, offset: communities.length, sortBy, search})
+
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    fetchNetwork: fetchNetwork(slug, sortBy),
+    fetchMoreCommunities
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)

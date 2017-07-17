@@ -2,6 +2,7 @@
 import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
+import { FETCH_NETWORK_SETTINGS, orderFromSort } from 'routes/NetworkSettings/NetworkSettings.store'
 
 export const MODULE_NAME = 'NetworkCommunities'
 
@@ -11,7 +12,7 @@ export const SET_SORT = `${MODULE_NAME}/SET_SORT`
 
 // Reducer
 const defaultState = {
-  sort: 'num_followers',
+  sort: 'num_members',
   search: ''
 }
 
@@ -49,16 +50,56 @@ export function setSort (sort) {
   }
 }
 
+export function fetchNetwork (slug, sortBy) {
+  const order = orderFromSort(sortBy)
+  return {
+    type: FETCH_NETWORK_SETTINGS,
+    graphql: {
+      query: `query ($slug: String, $sortBy: String, $order: String) {
+        network (slug: $slug) {
+          id
+          slug
+          name
+          description
+          avatarUrl
+          bannerUrl
+          createdAt
+          communities (first: 20, sortBy: $sortBy, order: $order)  {
+            total
+            hasMore
+            items {
+              id
+              name
+              avatarUrl
+              numMembers
+            }
+          }
+        }
+      }`,
+      variables: {
+        slug,
+        sortBy,
+        search: '',
+        order
+      }
+    },
+    meta: {
+      extractModel: 'Network'
+    }
+  }
+}
+
 // Selectors
 export const moduleSelector = (state) => state[MODULE_NAME]
 
-/* export const getSomethingFromOrm = ormCreateSelector(
+export const getNetwork = ormCreateSelector(
   orm,
   state => state.orm,
-  session => {
-    return session.Me.first()
+  (state, { slug }) => slug,
+  (session, slug) => {
+    return session.Network.safeGet({slug})
   }
-) */
+)
 
 export const getSort = createSelector(
   moduleSelector,

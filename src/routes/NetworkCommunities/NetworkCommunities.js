@@ -9,8 +9,8 @@ import { find } from 'lodash/fp'
 
 const sortOptions = [
   {id: 'name', label: 'Alphabetical'},
-  {id: 'member_count', label: 'Popular'},
-  {id: 'updated_at', label: 'Newest'}
+  {id: 'num_members', label: 'Popular'},
+  {id: 'created_at', label: 'Newest'}
 ]
 
 export default class NetworkCommunities extends Component {
@@ -19,18 +19,39 @@ export default class NetworkCommunities extends Component {
     communities: array,
     search: string,
     setSearch: func,
-    sortOption: string,
+    sortBy: string,
     setSort: func
   }
 
+  constructor (props) {
+    super(props)
+    this.state = {}
+  }
+
+  componentDidMount () {
+    this.props.fetchNetwork()
+  }
+
+  componentDidUpdate (prevProps) {
+    const { search, sortBy, fetchMoreCommunities, communitiesTotal } = this.props
+    if (search !== prevProps.search || sortBy !== prevProps.sortBy) {
+      fetchMoreCommunities()
+    }
+
+    if (communitiesTotal && !this.state.communitiesTotal) {
+      this.setState({communitiesTotal})
+    }
+  }
+
   render () {
-    const { network, communities, search, setSearch, sortOption, setSort, fetchMoreCommunities } = this.props
+    const { network, communities, search, setSearch, sortBy, setSort, fetchMoreCommunities } = this.props
+    const { communitiesTotal } = this.state
     return <div styleName='container'>
-      <Banner network={network} />
+      <Banner network={network} communitiesTotal={communitiesTotal} />
       <SearchBar
         search={search}
         setSearch={setSearch}
-        sortOption={sortOption}
+        sortBy={sortBy}
         setSort={setSort} />
       <CommunityList
         communities={communities}
@@ -39,18 +60,18 @@ export default class NetworkCommunities extends Component {
   }
 }
 
-export function Banner ({ network }) {
+export function Banner ({ network, communitiesTotal }) {
   return <div styleName='banner'>
     <div styleName='banner-text'>
       <div styleName='name'>Communities</div>
-      <div styleName='stats'>436 Communities&nbsp;&nbsp;•&nbsp;&nbsp;27,106 Total Members</div>
+      <div styleName='stats'>{communitiesTotal} Communities&nbsp;&nbsp;•&nbsp;&nbsp;27,106 Total Members</div>
     </div>
     <Icon name='More' styleName='icon' />
   </div>
 }
 
-export function SearchBar ({ search, setSearch, sortOption, setSort }) {
-  var selected = find(o => o.id === sortOption, sortOptions)
+export function SearchBar ({ search, setSearch, sortBy, setSort }) {
+  var selected = find(o => o.id === sortBy, sortOptions)
 
   if (!selected) selected = sortOptions[0]
 
@@ -74,16 +95,16 @@ export function SearchBar ({ search, setSearch, sortOption, setSort }) {
 
 export function CommunityList ({ communities, fetchMoreCommunities }) {
   return <div styleName='community-list'>
-    {communities.map(c => <CommunityCard community={c} />)}
+    {communities.map(c => <CommunityCard community={c} key={c.id} />)}
   </div>
 }
 
 export function CommunityCard ({ community }) {
   return <div styleName='community-card'>
-    <RoundImage url={community.avatarUrl} styleName='community-image' size='50' square />
+    <RoundImage url={community.avatarUrl} styleName='community-image' size='50px' square />
     <div styleName='community-details'>
       <span styleName='community-name'>{community.name}</span>
-      <span styleName='community-stats'>{community.memberCount} Members</span>
+      <span styleName='community-stats'>{community.numMembers} Members</span>
     </div>
   </div>
 }
