@@ -27,13 +27,14 @@
   color: $color-rhino-50;
 }
 
-a.topic {
-  display: flex;
+.topic {
   align-items: center;
-  font-size: 14.5px;
-  color: $color-rhino-50;
-  text-decoration: none !important;
-  &:hover, &:active {
+  a {
+    font-size: 14.5px;
+    color: $color-rhino-50;
+    text-decoration: none !important;
+  }
+  a:hover, a:active {
     color: $color-rhino;
     text-decoration: none !important;
   }
@@ -45,6 +46,10 @@ a.topic {
 
 .name {
   min-width: 104px;
+}
+
+.topicCloseBtn {
+  float: right
 }
 
 .closeIcon {

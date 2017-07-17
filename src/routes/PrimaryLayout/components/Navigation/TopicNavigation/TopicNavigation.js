@@ -7,7 +7,6 @@ import { tagUrl, topicsUrl } from 'util/index'
 import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../../components/Badge/component.scss'
 import cx from 'classnames'
-import { push } from 'react-router-redux'
 
 export default class TopicNavigation extends Component {
   static propTypes = {
@@ -36,9 +35,8 @@ export default class TopicNavigation extends Component {
       </div>
       <ul styleName='s.topics'>
         {communityTopics.map(({ id, topic, newPostCount }) =>
-          <li key={topic.name}>
-            <NavLink styleName='s.topic'
-              className={badgeHoverStyles.parent}
+          <li key={topic.name} styleName='s.topic'>
+            <NavLink className={badgeHoverStyles.parent}
               to={tagUrl(topic.name, communitySlug)}
               onClick={() => {
                 if (id && currentTopic(topic.name)) {
@@ -50,11 +48,11 @@ export default class TopicNavigation extends Component {
               <span styleName='s.name'>#{topic.name}</span>
               {newPostCount > 0 && !currentTopic(topic.name) &&
                 <Badge number={newPostCount} />}
-              {currentTopic(topic.name) &&
-                <div onClick={() => push(backUrl)}>
-                  <Icon name='Ex' styleName='s.closeIcon' />
-                </div>}
             </NavLink>
+            {currentTopic(topic.name) &&
+            <Link to={backUrl} styleName='s.topicCloseBtn'>
+              <Icon name='Ex' styleName='s.closeIcon' />
+            </Link>}
           </li>)}
       </ul>
       {communitySlug && <div styleName='s.addTopic'>
