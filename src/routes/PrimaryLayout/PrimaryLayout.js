@@ -98,7 +98,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/search' component={Search} />
             <Route path='/n/:networkSlug' exact component={Feed} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
-            <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />            
+            <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
