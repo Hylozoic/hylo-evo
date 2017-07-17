@@ -4,6 +4,7 @@ exports[`mergeProps merges all the right props 1`] = `
 Object {
   "bar": 2,
   "clearBadge": [Function],
+  "clearFeedList": [Function],
   "community": Object {
     "id": 2,
   },

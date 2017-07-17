@@ -14,7 +14,12 @@ export default function Navigation ({
 }) {
   const homePath = community ? `/c/${community.slug}` : '/all'
 
-  const onClick = window.location.pathname === homePath ? clearFeedList : null
+  const homeOnClick = () => {
+    if (window.location.pathname === homePath) {
+      clearFeedList()
+      clearBadge()
+    }
+  }
 
   const links = compact([
     {
@@ -22,7 +27,7 @@ export default function Navigation ({
       icon: 'Home',
       to: homePath,
       badge: homeBadge,
-      onClick,
+      onClick: homeOnClick,
       exact: true
     },
     community && {

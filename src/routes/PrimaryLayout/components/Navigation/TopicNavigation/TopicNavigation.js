@@ -24,6 +24,7 @@ export default class TopicNavigation extends Component {
       communityTopics, backUrl, communitySlug,
       clearBadge, clearFeedList, expand, collapsed, location
     } = this.props
+
     const currentTopic = topicName =>
       matchPath(location.pathname, {path: tagUrl(topicName, communitySlug)})
 
@@ -39,7 +40,12 @@ export default class TopicNavigation extends Component {
             <NavLink styleName='s.topic'
               className={badgeHoverStyles.parent}
               to={tagUrl(topic.name, communitySlug)}
-              onClick={() => id && currentTopic(topic.name) && clearFeedList()}
+              onClick={() => {
+                if (id && currentTopic(topic.name)) {
+                  clearFeedList()
+                  newPostCount > 0 && clearBadge(id)
+                }
+              }}
               activeClassName='active-topic-nav-link'>
               <span styleName='s.name'>#{topic.name}</span>
               {newPostCount > 0 && !currentTopic(topic.name) &&

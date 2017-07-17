@@ -24,7 +24,7 @@ export const mapDispatchToProps = function (dispatch, props) {
   return {
     fetchPosts: dispatchFetchPosts,
     // We are putting a callback into appstate so components (ie Navigation,
-    // TopicNav) can drop the queryResults and refetch
+    // TopicNav) can drop the queryResults and re-fetch posts
     storeClearFeedList: fn => {
       dispatch(storeClearFeedList(() => {
         dispatch(dropPostResults(props))
