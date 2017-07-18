@@ -53,6 +53,10 @@ exports[`CommunityList renders correctly 1`] = `
       }
     }
   />
+  <ScrollListener
+    elementId="center-column"
+    onBottom={[Function]}
+  />
 </div>
 `;
 
