@@ -85,9 +85,9 @@ export function getSlugInPath (pathname) {
 
 export function getNetworkSlugInPath (pathname) {
   const match = matchPath(pathname, {
-    path: '/n/:slug'
+    path: '/n/:networkSlug'
   })
-  return get('params.slug', match)
+  return get('params.networkSlug', match)
 }
 
 export const dispatchEvent = (el, etype) => {

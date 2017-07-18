@@ -97,7 +97,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
             <Route path='/n/:networkSlug' exact component={Feed} />
-            <Route path='/n/:slug/members' component={Members} />
+            <Route path='/n/:networkSlug/members' component={Members} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
           </Switch>
         </div>

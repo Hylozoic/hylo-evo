@@ -29,7 +29,6 @@ export function mapStateToProps (state, props) {
     rootSlug = ''
     rootPath = communityUrl()
   }
-  console.log('communityMembership:', communityMembership)
   return {
     rootSlug,
     rootPath,
@@ -47,7 +46,6 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     badge,
     communityMembership
   } = stateProps
-  console.log('!!!', stateProps)
   return {
     ...ownProps,
     rootSlug,

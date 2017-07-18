@@ -3,27 +3,30 @@ import {
   FETCH_MEMBERS, fetchMembers, getMembers, getHasMoreMembers
 } from './Members.store'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import { get } from 'lodash/fp'
 import getQueryParam from 'store/selectors/getQueryParam'
 import changeQueryParam from 'store/actions/changeQueryParam'
 
 export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
+  const network = getNetworkForCurrentRoute(state, props)
+  const getSlug = get('slug')
+  const slug = getSlug(community || network)
   const sortBy = getQueryParam('s', state, props) || defaultSortBy
   const search = getQueryParam('q', state, props)
-  const slug = get('slug', community)
-
   const extraProps = {
     ...props,
+    network,
+    slug,
     search,
-    sortBy,
-    slug
+    sortBy
   }
-
   return {
     slug,
     canInvite: false, // TODO
-    memberCount: get('memberCount', community),
+    network,
+    memberCount: community ? get('memberCount', community) : 3,
     sortBy,
     search,
     members: getMembers(state, extraProps),
@@ -33,13 +36,12 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const { slug } = props.match.params
+  const { network, match: { params: { slug } } } = props
   const params = getQueryParam(['s', 'q'], null, props)
   var { s: sortBy = defaultSortBy, q: search } = params
-
   return {
     fetchMembers: (offset = 0) =>
-      dispatch(fetchMembers(slug, sortBy, offset, search)),
+      dispatch(fetchMembers({ subject: 'network', slug, sortBy, offset, search })),
     changeSearch: term => dispatch(changeQueryParam(props, 'q', term)),
     changeSort: sort => dispatch(changeQueryParam(props, 's', sort, 'name'))
   }
