@@ -56,7 +56,7 @@ export default function (state = {}, action) {
 
     case FETCH_MEMBERS:
       root = get('community.members', payload.data) || get('network.members', payload.data)
-      return appendIds(state, type, meta.graphql.variables, Object.assign({}, root, {total: 3}))
+      return appendIds(state, type, meta.graphql.variables, root)
 
     case FETCH_POSTS:
       root = payload.data.posts || get('community.posts', payload.data) || get('network.posts', payload.data)

@@ -26,7 +26,7 @@ export function mapStateToProps (state, props) {
     slug,
     canInvite: false, // TODO
     network,
-    memberCount: community ? get('memberCount', community) : 3,
+    memberCount: community ? get('memberCount', community) : get('memberCount', network),
     sortBy,
     search,
     members: getMembers(state, extraProps),
@@ -36,12 +36,14 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const { network, match: { params: { slug } } } = props
+  // const { network } = props
+  // console.log(props)
+  const { networkSlug } = props.match.params
   const params = getQueryParam(['s', 'q'], null, props)
   var { s: sortBy = defaultSortBy, q: search } = params
   return {
     fetchMembers: (offset = 0) =>
-      dispatch(fetchMembers({ subject: 'network', slug, sortBy, offset, search })),
+      dispatch(fetchMembers({ subject: 'network', slug: networkSlug, sortBy, offset, search })),
     changeSearch: term => dispatch(changeQueryParam(props, 'q', term)),
     changeSort: sort => dispatch(changeQueryParam(props, 's', sort, 'name'))
   }

@@ -6,7 +6,8 @@ import { makeGetQueryResults } from 'store/reducers/queryResults'
 
 export const FETCH_MEMBERS = 'FETCH_MEMBERS'
 
-export const communityMembersQuery = `query ($slug: String, $first: Int, $sortBy: String, $offset: Int) {
+export const communityMembersQuery = `
+query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: String) {
   community (slug: $slug) {
     id
     name
@@ -25,12 +26,13 @@ export const communityMembersQuery = `query ($slug: String, $first: Int, $sortBy
   }
 }`
 
-export const networkMembersQuery = `query ($slug: String, $first: Int, $sortBy: String, $offset: Int) {
+export const networkMembersQuery = `
+query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: String) {
   network (slug: $slug) {
     id
     name
     avatarUrl
-    members (first: $first, sortBy: $sortBy, offset: $offset) {
+    members (first: $first, sortBy: $sortBy, offset: $offset, search: $search) {
       items {
         id
         name
@@ -48,7 +50,7 @@ export function fetchNetworkMembers (slug, sortBy, offset, search) {
     type: FETCH_MEMBERS,
     graphql: {
       query: networkMembersQuery,
-      variables: {slug, first: 20, offset, sortBy}
+      variables: {slug, first: 20, offset, sortBy, search}
     },
     meta: {
       extractModel: 'Network'
