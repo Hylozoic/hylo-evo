@@ -39,10 +39,9 @@ export default class Members extends Component {
 
   componentDidUpdate (prevProps) {
     if (!prevProps) return
-    if (this.props.slug !== prevProps.slug) this.fetchOrShowCached()
-    // if (some(key => this.props[key] !== prevProps[key], queryParamWhitelist)) {
-    //   this.fetchOrShowCached()
-    // }
+    if (some(key => this.props[key] !== prevProps[key], queryParamWhitelist)) {
+      this.fetchOrShowCached()
+    }
   }
 
   fetchMore () {
