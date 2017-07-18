@@ -53,100 +53,6 @@ exports[`CommunityRow renders with zero new posts 1`] = `
 </li>
 `;
 
-exports[`Drawer renders a community list if networks are present 1`] = `
-<div
-  data-styleName="s.communityDrawer"
->
-  <Icon
-    data-styleName="s.closeDrawer"
-    name="Ex"
-  />
-  <Logo />
-  <ul
-    data-styleName="s.networkList"
-  >
-    <li
-      data-styleName="s.sectionTitle"
-    >
-      Networks
-    </li>
-    <NetworkRow
-      network={
-        Object {
-          "avatarUrl": "/wombat.png",
-          "id": "1",
-          "memberships": Array [
-            Object {
-              "community": Object {
-                "avatarUrl": "/foo.png",
-                "id": "11",
-                "name": "Foomunity",
-                "slug": "foo",
-              },
-              "id": "1",
-              "newPostCount": 0,
-            },
-            Object {
-              "community": Object {
-                "avatarUrl": "/bar.png",
-                "id": "22",
-                "name": "Barmunity",
-                "slug": "bar",
-              },
-              "id": "2",
-              "newPostCount": 7,
-            },
-          ],
-          "name": "Wombat Network",
-        }
-      }
-    />
-  </ul>
-  <ul
-    data-styleName="s.communitiesList"
-  >
-    <li
-      data-styleName="s.sectionTitle"
-    >
-      All Communities
-    </li>
-    <CommunityRow
-      membership={
-        Object {
-          "community": Object {
-            "avatarUrl": "/foo.png",
-            "id": "11",
-            "name": "Foomunity",
-            "slug": "foo",
-          },
-          "id": "1",
-          "newPostCount": 0,
-        }
-      }
-    />
-    <CommunityRow
-      membership={
-        Object {
-          "community": Object {
-            "avatarUrl": "/bar.png",
-            "id": "22",
-            "name": "Barmunity",
-            "slug": "bar",
-          },
-          "id": "2",
-          "newPostCount": 7,
-        }
-      }
-    />
-  </ul>
-  <Button
-    color="white"
-    data-styleName="s.newCommunity"
-    label="Create a Network or Community"
-  />
-</div>
-`;
-
 exports[`Drawer renders with a current community 1`] = `
 <div
   data-styleName="s.communityDrawer"
@@ -168,44 +74,25 @@ exports[`Drawer renders with a current community 1`] = `
   <ul
     data-styleName="s.communitiesList"
   >
-    <li
-      data-styleName="s.sectionTitle"
-    >
-      All Communities
+    <li>
+      <Link
+        data-styleName="s.allCommunities"
+        replace={false}
+        to="/all"
+      >
+        <AllFeedsIcon />
+        <span
+          className="drawer-inv-lg"
+          data-styleName="s.allCommunitiesText"
+        >
+          All Communities
+        </span>
+      </Link>
     </li>
-    <CommunityRow
-      membership={
-        Object {
-          "community": Object {
-            "avatarUrl": "/foo.png",
-            "id": "11",
-            "name": "Foomunity",
-            "slug": "foo",
-          },
-          "id": "1",
-          "newPostCount": 0,
-        }
-      }
-    />
-    <CommunityRow
-      membership={
-        Object {
-          "community": Object {
-            "avatarUrl": "/bar.png",
-            "id": "22",
-            "name": "Barmunity",
-            "slug": "bar",
-          },
-          "id": "2",
-          "newPostCount": 7,
-        }
-      }
-    />
   </ul>
   <Button
-    color="white"
     data-styleName="s.newCommunity"
-    label="Create a Network or Community"
+    label={<NewCommunity />}
   />
 </div>
 `;
@@ -222,44 +109,25 @@ exports[`Drawer renders without a current community 1`] = `
   <ul
     data-styleName="s.communitiesList"
   >
-    <li
-      data-styleName="s.sectionTitle"
-    >
-      All Communities
+    <li>
+      <Link
+        data-styleName="s.allCommunities"
+        replace={false}
+        to="/all"
+      >
+        <AllFeedsIcon />
+        <span
+          className="drawer-inv-lg"
+          data-styleName="s.allCommunitiesText"
+        >
+          All Communities
+        </span>
+      </Link>
     </li>
-    <CommunityRow
-      membership={
-        Object {
-          "community": Object {
-            "avatarUrl": "/foo.png",
-            "id": "11",
-            "name": "Foomunity",
-            "slug": "foo",
-          },
-          "id": "1",
-          "newPostCount": 0,
-        }
-      }
-    />
-    <CommunityRow
-      membership={
-        Object {
-          "community": Object {
-            "avatarUrl": "/bar.png",
-            "id": "22",
-            "name": "Barmunity",
-            "slug": "bar",
-          },
-          "id": "2",
-          "newPostCount": 7,
-        }
-      }
-    />
   </ul>
   <Button
-    color="white"
     data-styleName="s.newCommunity"
-    label="Create a Network or Community"
+    label={<NewCommunity />}
   />
 </div>
 `;
