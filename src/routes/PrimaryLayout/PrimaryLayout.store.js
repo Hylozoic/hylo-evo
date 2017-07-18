@@ -95,6 +95,17 @@ me {
       name
       slug
       avatarUrl
+      network {
+        id
+        slug
+        name
+        avatarUrl
+        communities {
+          items {
+            id
+          }
+        }
+      }
     }
   }
 }`
@@ -106,6 +117,17 @@ community(slug: $slug, updateLastViewed: $updateLastViewed) {
   slug
   description
   avatarUrl
+  network {
+    id
+    slug
+    name
+    avatarUrl
+    communities {
+      items {
+        id
+      }
+    }
+  }
   memberCount
   members(first: 8, sortBy: "id", order: "desc") {
     items {

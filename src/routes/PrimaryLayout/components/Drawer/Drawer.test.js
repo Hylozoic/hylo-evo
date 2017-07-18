@@ -15,15 +15,31 @@ const memberships = [
   }
 ]
 
+const networks = [
+  {
+    id: '1',
+    name: 'Wombat Network',
+    avatarUrl: '/wombat.png',
+    memberships
+  }
+]
+
 describe('Drawer', () => {
   it('renders with a current community', () => {
-    const wrapper = shallow(<Drawer currentCommunity={memberships[0].community}
-      communities={memberships} />)
+    const wrapper = shallow(<Drawer
+      currentCommunity={memberships[0].community}
+      memberships={memberships}
+      networks={[]} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('renders without a current community', () => {
-    const wrapper = shallow(<Drawer communities={memberships} />)
+    const wrapper = shallow(<Drawer memberships={memberships} networks={[]} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('renders a community list if networks are present', () => {
+    const wrapper = shallow(<Drawer memberships={memberships} networks={networks} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
