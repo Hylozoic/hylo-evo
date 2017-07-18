@@ -77,6 +77,30 @@ export function fetchMembers ({ subject, slug, sortBy, offset, search }) {
     : fetchCommunityMembers(slug, sortBy, offset, search)
 }
 
+// export function fetchNetwork (slug) {
+//   return {
+//     type: FETCH_NETWORK,
+//     graphql: {
+//       query: `query ($slug: String) {
+//         network (slug: $slug) {
+//           id
+//           slug
+//           name
+//           description
+//           avatarUrl
+//           bannerUrl
+//         }
+//       }`,
+//       variables: {
+//         slug
+//       }
+//     },
+//     meta: {
+//       extractModel: 'Network'
+//     }
+//   }
+// }
+
 export default function reducer (state = {}, action) {
   return state
 }
