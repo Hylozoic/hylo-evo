@@ -4,7 +4,7 @@ const SET_SORT = `${MODULE_NAME}/SET_SORT`
 const SET_SEARCH = `${MODULE_NAME}/SET_SEARCH`
 
 const defaultState = {
-  sort: 'num_followers',
+  sort: 'updated_at',
   search: ''
 }
 
