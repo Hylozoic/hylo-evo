@@ -33,8 +33,6 @@ export default class ScrollListener extends React.Component {
   })
 
   handleScrollEvents = event => {
-    console.log('handleScrollEvents for ', this.props.elementId)
-
     event.preventDefault()
     let { onBottom, onLeaveBottom, onTop, onLeaveTop, padding } = this.props
     const { hitBottom, hitTop } = this.state
