@@ -11,8 +11,7 @@ import changeQueryParam from 'store/actions/changeQueryParam'
 export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
   const network = getNetworkForCurrentRoute(state, props)
-  const getSlug = get('slug')
-  const slug = getSlug(community || network)
+  const slug = get(community, 'slug') || get('networkSlug', network)
   const sortBy = getQueryParam('s', state, props) || defaultSortBy
   const search = getQueryParam('q', state, props)
   const extraProps = {
