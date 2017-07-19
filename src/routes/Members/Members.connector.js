@@ -9,6 +9,8 @@ import getQueryParam from 'store/selectors/getQueryParam'
 import changeQueryParam from 'store/actions/changeQueryParam'
 import getParam from 'store/selectors/getParam'
 
+const defaultSortBy = 'name'
+
 export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
   const network = getNetworkForCurrentRoute(state, props)
@@ -51,10 +53,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const params = getQueryParam(['s', 'q'], null, ownProps)
   var { s: sortBy = defaultSortBy, q: search } = params
 
-  const fetchMembers = (offset = 0) => {
-    console.log('fetchMembers in mergeProps', ownProps)
-    return dispatchProps.fetchMembers({ subject, slug: slug, sortBy, offset, search })
-  }
+  const fetchMembers = (offset = 0) =>
+    dispatchProps.fetchMembers({ subject, slug, sortBy, offset, search })
 
   return {
     ...ownProps,
@@ -65,5 +65,3 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
-
-const defaultSortBy = 'name'
