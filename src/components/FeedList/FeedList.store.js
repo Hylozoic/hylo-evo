@@ -1,6 +1,6 @@
 import { FETCH_POSTS } from 'store/constants'
 
-export const MODULE_NAME = 'FEED_LIST'
+export const MODULE_NAME = 'FeedList'
 
 export const STORE_FEED_LIST_PROPS = `${MODULE_NAME}/STORE_FEED_LIST_PROPS`
 
@@ -131,10 +131,10 @@ const allCommunitiesQuery = `query (
   ${postsQueryFragment}
 }`
 
-export function storeFeedListProps (action) {
+export function storeFeedListProps (props) {
   return {
     type: STORE_FEED_LIST_PROPS,
-    payload: action
+    payload: props
   }
 }
 

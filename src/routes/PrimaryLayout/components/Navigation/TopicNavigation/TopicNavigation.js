@@ -14,6 +14,7 @@ export default class TopicNavigation extends Component {
     communitySlug: string,
     backUrl: string,
     clearBadge: func,
+    clearFeedList: func,
     collapsed: bool,
     expand: func
   }
@@ -47,7 +48,7 @@ export default class TopicNavigation extends Component {
               activeClassName='active-topic-nav-link'>
               <span styleName='s.name'>#{topic.name}</span>
               {newPostCount > 0 && !currentTopic(topic.name) &&
-                <Badge number={newPostCount} />}
+                <Badge number={newPostCount} styleName='s.badge' />}
             </NavLink>
             {currentTopic(topic.name) &&
             <Link to={backUrl} styleName='s.topicCloseBtn'>

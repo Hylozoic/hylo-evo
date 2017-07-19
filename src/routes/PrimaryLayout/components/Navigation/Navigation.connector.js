@@ -32,14 +32,12 @@ export function mapStateToProps (state, props) {
     rootPath = communityUrl()
   }
 
-  const feedListProps = state.FeedList.feedListProps
   return {
     rootSlug,
     rootPath,
     membersPath,
     badge,
-    feedListProps,
-    clearFeedList: state.FeedList.clearFeedList,
+    feedListProps: state.FeedList.feedListProps,
     communityMembership
   }
 }
