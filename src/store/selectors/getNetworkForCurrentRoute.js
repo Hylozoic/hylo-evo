@@ -4,10 +4,9 @@ import getParam from './getParam'
 import { getNetworkSlugInPath } from 'util/index'
 
 export function getNetworkSlugFromLocation (state, props) {
-  const result = getParam('networkSlug', state, props, false) ||
+  return getParam('networkSlug', state, props, false) ||
     tryLocation(props) ||
     props.networkSlug
-  return result
 }
 
 // this is a workaround for fetching the slug from the current path when you are
@@ -22,9 +21,7 @@ const getNetworkForCurrentRoute = ormCreateSelector(
   orm,
   state => state.orm,
   getNetworkSlugFromLocation,
-  (session, slug) => {
-    return session.Network.safeGet({slug})
-  }
+  (session, slug) => session.Network.safeGet({slug})
 )
 
 export default getNetworkForCurrentRoute

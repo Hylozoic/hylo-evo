@@ -16,7 +16,7 @@ export default function Navigation (props) {
   } = props
 
   const links = compact([
-    rootPath && {
+    {
       label: 'Home',
       icon: 'Home',
       to: rootPath,

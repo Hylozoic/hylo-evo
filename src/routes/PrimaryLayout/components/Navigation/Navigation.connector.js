@@ -20,7 +20,7 @@ export function mapStateToProps (state, props) {
     // the community doesn't change, which will mask changes to the Community Membership's
     // newPostCount.
     communityMembership = getCommunityMembership(state, {communityId: community.id})
-    badge = community ? get('newPostCount', communityMembership) : 0
+    badge = get('newPostCount', communityMembership)
   } else if (network) {
     rootSlug = get('slug', network)
     rootPath = networkUrl(rootSlug)
