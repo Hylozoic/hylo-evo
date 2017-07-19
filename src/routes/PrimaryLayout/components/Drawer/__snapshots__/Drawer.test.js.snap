@@ -142,7 +142,7 @@ exports[`Drawer renders a community list if networks are present 1`] = `
   <Button
     color="white"
     data-styleName="s.newCommunity"
-    label="Create a Network or Community"
+    label="Start a Community"
   />
 </div>
 `;
@@ -205,7 +205,7 @@ exports[`Drawer renders with a current community 1`] = `
   <Button
     color="white"
     data-styleName="s.newCommunity"
-    label="Create a Network or Community"
+    label="Start a Community"
   />
 </div>
 `;
@@ -259,7 +259,7 @@ exports[`Drawer renders without a current community 1`] = `
   <Button
     color="white"
     data-styleName="s.newCommunity"
-    label="Create a Network or Community"
+    label="Start a Community"
   />
 </div>
 `;
