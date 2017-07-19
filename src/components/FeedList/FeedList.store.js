@@ -1,4 +1,8 @@
-import { FETCH_POSTS, STORE_CLEAR_FEED_LIST } from 'store/constants'
+import { FETCH_POSTS } from 'store/constants'
+
+export const MODULE_NAME = 'FEED_LIST'
+
+export const STORE_FEED_LIST_PROPS = `${MODULE_NAME}/STORE_FEED_LIST_PROPS`
 
 export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search, filter, topic }) {
   var query, extractModel
@@ -127,18 +131,18 @@ const allCommunitiesQuery = `query (
   ${postsQueryFragment}
 }`
 
-export function storeClearFeedList (action) {
+export function storeFeedListProps (action) {
   return {
-    type: STORE_CLEAR_FEED_LIST,
+    type: STORE_FEED_LIST_PROPS,
     payload: action
   }
 }
 
 export default function (state = {}, action) {
-  if (action.type === STORE_CLEAR_FEED_LIST) {
+  if (action.type === STORE_FEED_LIST_PROPS) {
     return {
       ...state,
-      clearFeedList: action.payload
+      feedListProps: action.payload
     }
   }
   return state

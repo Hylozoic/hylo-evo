@@ -50,15 +50,16 @@ export default class FeedList extends React.Component {
 
   componentDidUpdate (prevProps) {
     if (!prevProps) return
-    if (some(key => this.props[key] !== prevProps[key], queryParamWhitelist)) {
+    if (some(key => this.props[key] !== prevProps[key], queryParamWhitelist) ||
+      (this.props.posts.length === 0 && prevProps.posts.length !== 0)) {
       this.fetchOrShowCached()
     }
   }
 
   fetchOrShowCached () {
-    const { hasMore, posts, fetchPosts, storeClearFeedList } = this.props
+    const { hasMore, posts, fetchPosts, storeFeedListProps } = this.props
     if (isEmpty(posts) && hasMore !== false) fetchPosts()
-    storeClearFeedList()
+    storeFeedListProps()
   }
 
   fetchMorePosts () {
