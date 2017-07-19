@@ -58,7 +58,7 @@ export default class PostEditor extends React.Component {
 
   buildStateFromProps = ({ editing, loading, currentCommunity, post }) => {
     const defaultPost = Object.assign({}, PostEditor.defaultProps.post, {
-      communities: [currentCommunity]
+      communities: currentCommunity ? [currentCommunity] : []
     })
     const currentPost = post || defaultPost
     return {
