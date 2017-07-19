@@ -55,7 +55,8 @@ export function fetchNetworkMembers (slug, sortBy, offset, search) {
       variables: {slug, first: 20, offset, sortBy, search}
     },
     meta: {
-      extractModel: 'Network'
+      extractModel: 'Network',
+      getRoot: get('network.members')
     }
   }
 }
@@ -68,7 +69,8 @@ export function fetchCommunityMembers (slug, sortBy, offset, search) {
       variables: {slug, first: 20, offset, sortBy, search}
     },
     meta: {
-      extractModel: 'Community'
+      extractModel: 'Community',
+      getRoot: get('community.members')
     }
   }
 }
@@ -78,30 +80,6 @@ export function fetchMembers ({ subject, slug, sortBy, offset, search }) {
     ? fetchNetworkMembers(slug, sortBy, offset, search)
     : fetchCommunityMembers(slug, sortBy, offset, search)
 }
-
-// export function fetchNetwork (slug) {
-//   return {
-//     type: FETCH_NETWORK,
-//     graphql: {
-//       query: `query ($slug: String) {
-//         network (slug: $slug) {
-//           id
-//           slug
-//           name
-//           description
-//           avatarUrl
-//           bannerUrl
-//         }
-//       }`,
-//       variables: {
-//         slug
-//       }
-//     },
-//     meta: {
-//       extractModel: 'Network'
-//     }
-//   }
-// }
 
 export default function reducer (state = {}, action) {
   return state

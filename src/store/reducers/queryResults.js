@@ -55,8 +55,7 @@ export default function (state = {}, action) {
       return matchNewPostIntoQueryResults(state, root)
 
     case FETCH_MEMBERS:
-      root = get('community.members', payload.data) || get('network.members', payload.data)
-      return appendIds(state, type, meta.graphql.variables, root)
+      return appendIds(state, type, meta.graphql.variables, meta.getRoot(payload.data))
 
     case FETCH_POSTS:
       root = payload.data.posts || get('community.posts', payload.data) || get('network.posts', payload.data)
