@@ -31,7 +31,9 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
   network (slug: $slug) {
     id
     name
+    slug
     avatarUrl
+    memberCount
     members (first: $first, sortBy: $sortBy, offset: $offset, search: $search) {
       items {
         id

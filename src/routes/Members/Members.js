@@ -57,7 +57,7 @@ export default class Members extends Component {
     return this.debouncedSearch(term)
   }
 
-  render () {
+  render () {    
     const {
       canInvite, memberCount, members, sortBy, changeSort, search, slug
     } = this.props
