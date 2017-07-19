@@ -6,6 +6,8 @@ import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
 import RoundImage from 'components/RoundImage'
 import { find, get } from 'lodash/fp'
+import ScrollListener from 'components/ScrollListener'
+import { CENTER_COLUMN_ID } from 'util/scrolling'
 
 const sortOptions = [
   {id: 'name', label: 'Alphabetical'},
@@ -96,8 +98,10 @@ export function SearchBar ({ search, setSearch, sortBy, setSort }) {
 }
 
 export function CommunityList ({ communities, fetchMoreCommunities }) {
-  return <div styleName='community-list'>
+  return <div styleName='community-list' >
     {communities.map(c => <CommunityCard community={c} key={c.id} />)}
+    <ScrollListener onBottom={() => fetchMoreCommunities()}
+      elementId={CENTER_COLUMN_ID} />
   </div>
 }
 

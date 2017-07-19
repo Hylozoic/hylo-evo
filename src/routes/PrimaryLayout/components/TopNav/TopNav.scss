@@ -28,6 +28,7 @@
   border-radius: 4px;
   margin-right: 10px;
   cursor: pointer;
+  position: relative;
 
   &:hover {
     background: $color-caribbean-green !important;
@@ -41,8 +42,8 @@
 }
 
 .logoBadge {
-  position: relative;
-  top: -18px;
+  position: absolute;
+  top: -10px;
   left: 19px;
 }
 
