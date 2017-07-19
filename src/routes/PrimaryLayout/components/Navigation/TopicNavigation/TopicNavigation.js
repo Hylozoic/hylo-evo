@@ -20,8 +20,13 @@ export default class TopicNavigation extends Component {
 
   render () {
     const {
-      communityTopics, backUrl, communitySlug,
-      clearBadge, expand, collapsed, location
+      communityTopics,
+      communitySlug,
+      backUrl,
+      clearBadge,
+      collapsed,
+      expand,
+      location
     } = this.props
     const currentTopic = (topicName, slug) =>
       matchPath(location.pathname, {path: tagUrl(topicName, slug)})

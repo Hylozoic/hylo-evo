@@ -6,34 +6,79 @@ import { makeGetQueryResults } from 'store/reducers/queryResults'
 
 export const FETCH_MEMBERS = 'FETCH_MEMBERS'
 
-export function fetchMembers (slug, sortBy, offset, search) {
+export const communityMembersQuery = `
+query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: String) {
+  community (slug: $slug) {
+    id
+    name
+    avatarUrl
+    memberCount
+    members (first: $first, sortBy: $sortBy, offset: $offset, search: $search) {
+      items {
+        id
+        name
+        avatarUrl
+        location
+        tagline
+      }
+      hasMore
+    }
+  }
+}`
+
+export const networkMembersQuery = `
+query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: String) {
+  network (slug: $slug) {
+    id
+    name
+    slug
+    avatarUrl
+    memberCount
+    members (first: $first, sortBy: $sortBy, offset: $offset, search: $search) {
+      items {
+        id
+        name
+        avatarUrl
+        location
+        tagline
+      }
+      hasMore
+    }
+  }
+}`
+
+export function fetchNetworkMembers (slug, sortBy, offset, search) {
   return {
     type: FETCH_MEMBERS,
     graphql: {
-      query: `query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: String) {
-        community (slug: $slug) {
-          id
-          name
-          avatarUrl
-          memberCount
-          members (first: $first, sortBy: $sortBy, offset: $offset, search: $search) {
-            items {
-              id
-              name
-              avatarUrl
-              location
-              tagline
-            }
-            hasMore
-          }
-        }
-      }`,
+      query: networkMembersQuery,
       variables: {slug, first: 20, offset, sortBy, search}
     },
     meta: {
-      extractModel: 'Community'
+      extractModel: 'Network',
+      getRoot: get('network.members')
     }
   }
+}
+
+export function fetchCommunityMembers (slug, sortBy, offset, search) {
+  return {
+    type: FETCH_MEMBERS,
+    graphql: {
+      query: communityMembersQuery,
+      variables: {slug, first: 20, offset, sortBy, search}
+    },
+    meta: {
+      extractModel: 'Community',
+      getRoot: get('community.members')
+    }
+  }
+}
+
+export function fetchMembers ({ subject, slug, sortBy, offset, search }) {
+  return subject === 'network'
+    ? fetchNetworkMembers(slug, sortBy, offset, search)
+    : fetchCommunityMembers(slug, sortBy, offset, search)
 }
 
 export default function reducer (state = {}, action) {

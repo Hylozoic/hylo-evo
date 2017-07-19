@@ -3,27 +3,35 @@ import {
   FETCH_MEMBERS, fetchMembers, getMembers, getHasMoreMembers
 } from './Members.store'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import { get } from 'lodash/fp'
 import getQueryParam from 'store/selectors/getQueryParam'
 import changeQueryParam from 'store/actions/changeQueryParam'
+import getParam from 'store/selectors/getParam'
+
+const defaultSortBy = 'name'
 
 export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
+  const network = getNetworkForCurrentRoute(state, props)
+  const communitySlug = getParam('slug', state, props)
+  const networkSlug = getParam('networkSlug', state, props)
+  const subject = networkSlug ? 'network' : 'community'
+  const slug = communitySlug || networkSlug
   const sortBy = getQueryParam('s', state, props) || defaultSortBy
   const search = getQueryParam('q', state, props)
-  const slug = get('slug', community)
-
   const extraProps = {
     ...props,
+    network,
+    slug,
     search,
-    sortBy,
-    slug
+    sortBy
   }
-
   return {
+    subject,
     slug,
     canInvite: false, // TODO
-    memberCount: get('memberCount', community),
+    memberCount: get('memberCount', community || network),
     sortBy,
     search,
     members: getMembers(state, extraProps),
@@ -33,18 +41,27 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const { slug } = props.match.params
-  const params = getQueryParam(['s', 'q'], null, props)
-  var { s: sortBy = defaultSortBy, q: search } = params
-
   return {
-    fetchMembers: (offset = 0) =>
-      dispatch(fetchMembers(slug, sortBy, offset, search)),
+    fetchMembers: params => dispatch(fetchMembers(params)),
     changeSearch: term => dispatch(changeQueryParam(props, 'q', term)),
     changeSort: sort => dispatch(changeQueryParam(props, 's', sort, 'name'))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { subject, slug } = stateProps
+  const params = getQueryParam(['s', 'q'], null, ownProps)
+  var { s: sortBy = defaultSortBy, q: search } = params
 
-const defaultSortBy = 'name'
+  const fetchMembers = (offset = 0) =>
+    dispatchProps.fetchMembers({ subject, slug, sortBy, offset, search })
+
+  return {
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
+    fetchMembers
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)

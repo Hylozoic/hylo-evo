@@ -24,7 +24,8 @@ it('adds data to empty state', () => {
       }
     },
     meta: {
-      graphql: {variables}
+      graphql: {variables},
+      getRoot: (data) => data.community.members
     }
   }
 
@@ -62,7 +63,8 @@ it('appends to existing data, ignoring duplicates', () => {
     meta: {
       graphql: {
         variables: {slug: 'foo', sortBy: 'name'}
-      }
+      },
+      getRoot: (data) => data.community.members
     }
   }
 

@@ -1,4 +1,11 @@
-import { attr, many, Model } from 'redux-orm'
+import { attr, many, Model, fk } from 'redux-orm'
+
+export const NetworkModerator = Model.createClass({})
+NetworkModerator.modelName = 'NetworkModerator'
+NetworkModerator.fields = {
+  network: fk('Network', 'networkmoderators'),
+  moderator: fk('Person', 'networkmoderators')
+}
 
 const Network = Model.createClass({
   toString () {
@@ -16,7 +23,13 @@ Network.fields = {
   description: attr(),
   avatarUrl: attr(),
   bannerUrl: attr(),
-  moderators: many('Person'),
+  members: many('Person'),
+  moderators: many({
+    to: 'Person',
+    relatedName: 'networkModerated',
+    through: 'NetworkModerator',
+    throughFields: [ 'network', 'moderator' ]
+  }),
   communities: many('Community'),
   posts: many('Post')
 }

@@ -1,18 +1,12 @@
 import { connect } from 'react-redux'
-import { getSubscribedCommunityTopics } from './TopicNavigation.store'
-import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { push } from 'react-router-redux'
-import { removePostFromUrl, communityUrl, allCommunitiesUrl } from 'util/index'
+import { getSubscribedCommunityTopics } from './TopicNavigation.store'
+import resetNewPostCount from 'store/actions/resetNewPostCount'
+import { removePostFromUrl } from 'util/index'
 
 export function mapStateToProps (state, props) {
-  const community = getCommunityForCurrentRoute(state, props)
-  const communitySlug = community ? community.slug : null
-  const backUrl = community ? communityUrl(communitySlug) : allCommunitiesUrl()
   return {
-    communityTopics: getSubscribedCommunityTopics(state, props),
-    communitySlug,
-    backUrl
+    communityTopics: getSubscribedCommunityTopics(state, props)
   }
 }
 

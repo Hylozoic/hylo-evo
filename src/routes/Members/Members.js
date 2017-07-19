@@ -59,8 +59,11 @@ export default class Members extends Component {
 
   render () {
     const {
-      canInvite, memberCount, members, sortBy, changeSort, search, slug
+      canInvite, memberCount, members, sortBy, changeSort, search, slug, subject
     } = this.props
+
+    const sortKeys = sortKeysFactory(subject)
+
     return <div>
       <div styleName='header'>
         {canInvite && <Button styleName='invite'
@@ -105,10 +108,13 @@ function SortLabel ({ text }) {
 }
 
 // these keys must match the values that hylo-node can handle
-const sortKeys = {
-  name: 'Name',
-  join: 'Newest',
-  location: 'Location'
+function sortKeysFactory (subject) {
+  const sortKeys = {
+    name: 'Name',
+    location: 'Location'
+  }
+  if (subject !== 'network') sortKeys['join'] = 'Newest'
+  return sortKeys
 }
 
 export function twoByTwo (list) {
