@@ -58,7 +58,7 @@ export default class Drawer extends Component {
         {memberships.map(membership =>
           <CommunityRow membership={membership} key={membership.id} />)}
       </ul>
-      <Button color='white' styleName='s.newCommunity' label='Create a Network or Community' />
+      <Button color='white' styleName='s.newCommunity' label='Start a Community' />
     </div>
   }
 }

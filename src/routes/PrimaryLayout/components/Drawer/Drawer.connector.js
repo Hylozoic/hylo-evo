@@ -3,6 +3,7 @@ import { toggleDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
 import getMemberships from 'store/selectors/getMemberships'
 
 function buildNetworkLookup (networks, { id, community, newPostCount, network }) {
+  if (!network) return networks
   if (!networks[network.name]) networks[network.name] = { ...network, memberships: [] }
   networks[network.name].memberships.push({ id, community, newPostCount })
   return networks

@@ -100,7 +100,7 @@ me {
         slug
         name
         avatarUrl
-        communities {
+        communities(first: 100) {
           items {
             id
           }
@@ -122,7 +122,7 @@ community(slug: $slug, updateLastViewed: $updateLastViewed) {
     slug
     name
     avatarUrl
-    communities {
+    communities(first: 100) {
       items {
         id
       }
