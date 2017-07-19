@@ -23,7 +23,7 @@ Community.fields = {
   members: many('Person'),
   moderators: many({
     to: 'Person',
-    relatedName: 'communityModerated',
+    relatedName: 'moderatedCommunities',
     through: 'CommunityModerator',
     throughFields: [ 'community', 'moderator' ]
   }),
