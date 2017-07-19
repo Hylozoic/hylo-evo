@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { allCommunitiesUrl } from 'util/index'
+import { communityUrl, networkUrl } from 'util/index'
 import orm from 'store/models'
 import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
@@ -10,27 +11,42 @@ import { makeDropQueryResults } from 'store/reducers/queryResults'
 
 export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
-  if (!community) return {homePath: allCommunitiesUrl()}
-  const feedListProps = state.FeedList.feedListProps
+  const network = getNetworkForCurrentRoute(state, props)
+  let rootSlug, rootPath, membersPath, communityMembership, badge
+  if (community) {
+    rootSlug = get('slug', community)
+    rootPath = communityUrl(rootSlug)
+    membersPath = `${rootPath}/members`
+    // we have to select the Community Membership from the ORM separately. we can't just
+    // call `community.Memberships.first()` because that will be cached so long as
+    // the community doesn't change, which will mask changes to the Community Membership's
+    // newPostCount.
+    communityMembership = getCommunityMembership(state, {communityId: community.id})
+    badge = community ? get('newPostCount', communityMembership) : 0
+  } else if (network) {
+    rootSlug = get('slug', network)
+    rootPath = networkUrl(rootSlug)
+    membersPath = `${rootPath}/members`
+  } else {
+    rootSlug = ''
+    rootPath = communityUrl()
+  }
 
-  // we have to select the membership from the ORM separately. we can't just
-  // call `community.memberships.first()` because that will be cached so long as
-  // the community doesn't change, which will mask changes to the membership's
-  // newPostCount.
-  const membership = getMembership(state, {communityId: community.id})
-  const homeBadge = get('newPostCount', membership)
+  const feedListProps = state.FeedList.feedListProps
   return {
+    rootSlug,
+    rootPath,
+    membersPath,
+    badge,
     feedListProps,
-    community,
-    membership,
-    homeBadge,
-    clearFeedList: state.FeedList.clearFeedList
+    clearFeedList: state.FeedList.clearFeedList,
+    communityMembership
   }
 }
 
 const dropPostResults = makeDropQueryResults(FETCH_POSTS)
 
-function mapDispatchToProps (dispatch, props) {
+export function mapDispatchToProps (dispatch, props) {
   return {
     resetNewPostCount: (id, type) => dispatch(resetNewPostCount(id, type)),
     dropPostResultsMaker: props => () => dispatch(dropPostResults(props))
@@ -38,22 +54,33 @@ function mapDispatchToProps (dispatch, props) {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { homeBadge, community, membership, feedListProps } = stateProps
+  const {
+    rootSlug,
+    rootPath,
+    membersPath,
+    badge,
+    feedListProps,
+    communityMembership
+  } = stateProps
+
   const { dropPostResultsMaker } = dispatchProps
+
   return {
     ...ownProps,
-    community,
-    homeBadge,
+    rootSlug,
+    rootPath,
+    membersPath,
+    badge,
     clearFeedList: dropPostResultsMaker(feedListProps),
-    clearBadge: homeBadge
-      ? () => dispatchProps.resetNewPostCount(membership.community.id, 'Membership')
+    clearBadge: badge
+      ? () => dispatchProps.resetNewPostCount(communityMembership.community.id, 'Membership')
       : () => {}
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
-const getMembership = ormCreateSelector(
+const getCommunityMembership = ormCreateSelector(
   orm,
   state => state.orm,
   (state, { communityId }) => communityId,

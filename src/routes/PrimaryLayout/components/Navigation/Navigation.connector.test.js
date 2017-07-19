@@ -13,24 +13,21 @@ describe('mapStateToProps', () => {
       }
     }
 
-    const FeedList = {clearFeedList: jest.fn()}
-
-    const stateProps = mapStateToProps({orm: s1.state, FeedList}, props)
-    expect(stateProps.homeBadge).toEqual(5)
+    const stateProps = mapStateToProps({orm: s1.state}, props)
+    expect(stateProps.badge).toEqual(5)
 
     const s2 = orm.session(s1.state)
 
     s2.Community.withId('1').memberships.first().update({newPostCount: 0})
 
-    const stateProps2 = mapStateToProps({orm: s2.state, FeedList}, props)
-    expect(stateProps2.homeBadge).toEqual(0)
+    const stateProps2 = mapStateToProps({orm: s2.state}, props)
+    expect(stateProps2.badge).toEqual(0)
   })
 })
 
 describe('mergeProps', () => {
   it('merges all the right props', () => {
-    const clearFeedList = jest.fn()
-    const stateProps = {homeBadge: 1, community: {id: 2}, membership: {id: 77, community: {id: 2}}, clearFeedList}
+    const stateProps = {badge: 1, communityMembership: {id: 77, community: {id: 2}}}
     const ownProps = {foo: 1, bar: 2}
     const resetNewPostCount = jest.fn()
     const dispatchProps = {resetNewPostCount}
