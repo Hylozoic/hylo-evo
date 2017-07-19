@@ -26,7 +26,7 @@ Network.fields = {
   members: many('Person'),
   moderators: many({
     to: 'Person',
-    relatedName: 'networkModerated',
+    relatedName: 'moderatedNetworks',
     through: 'NetworkModerator',
     throughFields: [ 'network', 'moderator' ]
   }),
