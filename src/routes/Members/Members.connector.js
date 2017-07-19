@@ -7,12 +7,15 @@ import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute
 import { get } from 'lodash/fp'
 import getQueryParam from 'store/selectors/getQueryParam'
 import changeQueryParam from 'store/actions/changeQueryParam'
+import getParam from 'store/selectors/getParam'
 
 export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
   const network = getNetworkForCurrentRoute(state, props)
-  const subject = community ? 'community' : 'network'
-  const slug = get('slug', community || network)
+  const communitySlug = getParam('slug', state, props)
+  const networkSlug = getParam('networkSlug', state, props)
+  const subject = networkSlug ? 'network' : 'community'
+  const slug = communitySlug || networkSlug
   const sortBy = getQueryParam('s', state, props) || defaultSortBy
   const search = getQueryParam('q', state, props)
   const extraProps = {
@@ -50,7 +53,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
 
   const fetchMembers = (offset = 0) => {
     console.log('fetchMembers in mergeProps', ownProps)
-    return dispatchProps.fetchMembers({ subject, slug: 'first-network', sortBy, offset, search })
+    return dispatchProps.fetchMembers({ subject, slug: slug, sortBy, offset, search })
   }
 
   return {
