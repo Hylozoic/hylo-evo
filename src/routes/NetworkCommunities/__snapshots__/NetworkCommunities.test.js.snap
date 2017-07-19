@@ -1,0 +1,168 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Banner renders correctly 1`] = `
+<div
+  data-styleName="banner"
+>
+  <div
+    data-styleName="banner-text"
+  >
+    <div
+      data-styleName="name"
+    >
+      Communities
+    </div>
+    <div
+      data-styleName="stats"
+    >
+      12
+       Communities  •  
+      123
+       Total Members
+    </div>
+  </div>
+  <Icon
+    data-styleName="icon"
+    name="More"
+  />
+</div>
+`;
+
+exports[`CommunityList renders correctly 1`] = `
+<div
+  data-styleName="community-list"
+>
+  <CommunityCard
+    community={
+      Object {
+        "id": 9,
+      }
+    }
+  />
+  <CommunityCard
+    community={
+      Object {
+        "id": 8,
+      }
+    }
+  />
+  <CommunityCard
+    community={
+      Object {
+        "id": 7,
+      }
+    }
+  />
+  <ScrollListener
+    elementId="center-column"
+    onBottom={[Function]}
+  />
+</div>
+`;
+
+exports[`CommunityList renders correctly 2`] = `
+<div
+  data-styleName="community-card"
+>
+  <RoundImage
+    data-styleName="community-image"
+    size="50px"
+    square={true}
+    url="foom.png"
+  />
+  <div
+    data-styleName="community-details"
+  >
+    <span
+      data-styleName="community-name"
+    >
+      Foom
+    </span>
+    <span
+      data-styleName="community-stats"
+    >
+      77
+       Members
+    </span>
+  </div>
+</div>
+`;
+
+exports[`NetworkCommunities renders correctly 1`] = `
+<div
+  data-styleName="container"
+>
+  <Banner
+    network={
+      Object {
+        "id": 78,
+      }
+    }
+  />
+  <SearchBar
+    search="fo"
+    setSearch={[Function]}
+    setSort={[Function]}
+    sortBy="name"
+  />
+  <CommunityList
+    communities={
+      Array [
+        Object {
+          "id": 9,
+        },
+        Object {
+          "id": 8,
+        },
+        Object {
+          "id": 7,
+        },
+      ]
+    }
+    fetchMoreCommunities={[Function]}
+  />
+</div>
+`;
+
+exports[`SearchBar renders correctly 1`] = `
+<div
+  data-styleName="search-bar"
+>
+  <TextInput
+    data-styleName="search-input"
+    onChange={[Function]}
+    placeholder="Search by name"
+    value="fo"
+  />
+  <Dropdown
+    alignRight={true}
+    data-styleName="search-order"
+    items={
+      Array [
+        Object {
+          "label": "Alphabetical",
+          "onClick": [Function],
+        },
+        Object {
+          "label": "Popular",
+          "onClick": [Function],
+        },
+        Object {
+          "label": "Newest",
+          "onClick": [Function],
+        },
+      ]
+    }
+    toggleChildren={
+      <span
+        data-styleName="search-sorter-label"
+      >
+        Alphabetical
+        <Icon
+          name="ArrowDown"
+        />
+      </span>
+    }
+  />
+</div>
+`;

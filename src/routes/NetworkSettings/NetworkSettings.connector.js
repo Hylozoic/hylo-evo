@@ -62,7 +62,7 @@ export function mapDispatchToProps (dispatch, props) {
     fetchNetworkSettingsMaker: slug => () => dispatch(fetchNetworkSettings(slug)),
     updateNetworkSettingsMaker: id => changes => dispatch(updateNetworkSettings(id, changes)),
     fetchModeratorsMaker: (slug, page) => () => dispatch(fetchModerators(slug, page)),
-    fetchCommunitiesMaker: (slug, page) => () => dispatch(fetchCommunities(slug, page)),
+    fetchCommunitiesMaker: (slug, page) => () => dispatch(fetchCommunities({slug, page})),
     ...bindActionCreators({
       setConfirmBeforeClose, setModeratorsPage, setCommunitiesPage
     }, dispatch)

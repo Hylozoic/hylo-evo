@@ -58,7 +58,7 @@ export function setCommunitiesPage (page) {
   }
 }
 
-export function fetchNetworkSettings (slug) {
+export function fetchNetworkSettings (slug, pageSize = PAGE_SIZE) {
   return {
     type: FETCH_NETWORK_SETTINGS,
     graphql: {
@@ -71,7 +71,7 @@ export function fetchNetworkSettings (slug) {
           avatarUrl
           bannerUrl
           createdAt
-          communities (first: ${PAGE_SIZE}, sortBy: "name")  {
+          communities (first: ${pageSize}, sortBy: "name")  {
             total
             hasMore
             items {
@@ -80,7 +80,7 @@ export function fetchNetworkSettings (slug) {
               avatarUrl
             }
           }
-          moderators (first: ${PAGE_SIZE}, sortBy: "name") {
+          moderators (first: ${pageSize}, sortBy: "name") {
             total
             hasMore
             items {
@@ -155,15 +155,21 @@ export function fetchModerators (slug, page) {
   }
 }
 
-export function fetchCommunities (slug, page) {
-  const offset = page * PAGE_SIZE
+export function orderFromSort (sortBy) {
+  if (sortBy === 'name') return 'asc'
+  return 'desc'
+}
+
+export function fetchCommunities ({slug, page, offset, sortBy = 'name', order, search, pageSize = PAGE_SIZE}) {
+  offset = offset || page * pageSize
+  order = order || orderFromSort(sortBy)
   return {
     type: FETCH_COMMUNITIES,
     graphql: {
-      query: `query ($slug: String, $offset: Int) {
+      query: `query ($slug: String, $offset: Int, $sortBy: String, $order: String, $search: String) {
         network (slug: $slug) {
           id
-          communities (first: ${PAGE_SIZE}, sortBy: "name", offset: $offset) {
+          communities (first: ${pageSize}, sortBy: $sortBy, order: $order, offset: $offset, search: $search) {
             total
             hasMore
             items {
@@ -176,7 +182,10 @@ export function fetchCommunities (slug, page) {
       }`,
       variables: {
         slug,
-        offset
+        offset,
+        sortBy,
+        order,
+        search
       }
     },
     meta: {
@@ -217,6 +226,10 @@ export const getCommunitiesResults = makeGetQueryResults(FETCH_COMMUNITIES)
 export const getCommunitiesTotal = createSelector(
   getCommunitiesResults,
   get('total')
+)
+export const getCommunitiesHasMore = createSelector(
+  getCommunitiesResults,
+  get('hasMore')
 )
 export const getCommunities = ormCreateSelector(
   orm,
