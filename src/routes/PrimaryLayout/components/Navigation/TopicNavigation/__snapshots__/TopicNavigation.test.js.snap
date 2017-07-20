@@ -31,6 +31,7 @@ exports[`renders correctly for All Communities 1`] = `
           t1
         </span>
         <Badge
+          data-styleName="s.badge"
           number={3}
         />
       </NavLink>
@@ -82,6 +83,7 @@ exports[`renders correctly for All Communities 1`] = `
           t4
         </span>
         <Badge
+          data-styleName="s.badge"
           number={2}
         />
       </NavLink>
@@ -131,6 +133,7 @@ exports[`renders correctly for a community 1`] = `
           t1
         </span>
         <Badge
+          data-styleName="s.badge"
           number={3}
         />
       </NavLink>
@@ -182,6 +185,7 @@ exports[`renders correctly for a community 1`] = `
           t4
         </span>
         <Badge
+          data-styleName="s.badge"
           number={2}
         />
       </NavLink>

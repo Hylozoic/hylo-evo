@@ -47,7 +47,7 @@ const dropPostResults = makeDropQueryResults(FETCH_POSTS)
 export function mapDispatchToProps (dispatch, props) {
   return {
     resetNewPostCount: (id, type) => dispatch(resetNewPostCount(id, type)),
-    dropPostResultsMaker: props => () => dispatch(dropPostResults(props))
+    dropPostResultsMaker: feedListProps => () => dispatch(dropPostResults(feedListProps))
   }
 }
 
@@ -61,15 +61,13 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     communityMembership
   } = stateProps
 
-  const { dropPostResultsMaker } = dispatchProps
-
   return {
     ...ownProps,
     rootSlug,
     rootPath,
     membersPath,
     badge,
-    clearFeedList: dropPostResultsMaker(feedListProps),
+    clearFeedList: dispatchProps.dropPostResultsMaker(feedListProps),
     clearBadge: badge
       ? () => dispatchProps.resetNewPostCount(communityMembership.community.id, 'Membership')
       : () => {}
