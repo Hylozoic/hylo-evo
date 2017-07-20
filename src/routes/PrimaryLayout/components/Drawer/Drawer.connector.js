@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { toggleDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
-import getMemberships from 'store/selectors/getMemberships'
+import getMemberships from './Drawer.store'
 
 function buildNetworkLookup (networks, { id, community, newPostCount, network }) {
   if (!network) return networks
