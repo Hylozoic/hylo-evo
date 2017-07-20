@@ -5,6 +5,7 @@ Object {
   "badge": 1,
   "bar": 2,
   "clearBadge": [Function],
+  "clearFeedList": undefined,
   "foo": 1,
   "membersPath": undefined,
   "rootPath": undefined,

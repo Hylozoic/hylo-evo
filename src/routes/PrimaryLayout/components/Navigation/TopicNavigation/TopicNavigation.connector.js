@@ -3,16 +3,22 @@ import { push } from 'react-router-redux'
 import { getSubscribedCommunityTopics } from './TopicNavigation.store'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { removePostFromUrl } from 'util/index'
+import { FETCH_POSTS } from 'store/constants'
+import { makeDropQueryResults } from 'store/reducers/queryResults'
 
 export function mapStateToProps (state, props) {
   return {
+    feedListProps: state.FeedList.feedListProps,
     communityTopics: getSubscribedCommunityTopics(state, props)
   }
 }
 
+const dropPostResults = makeDropQueryResults(FETCH_POSTS)
+
 export function mapDispatchToProps (dispatch, props) {
   return {
     clearBadge: id => dispatch(resetNewPostCount(id, 'CommunityTopic')),
+    dropPostResultsMaker: props => () => dispatch(dropPostResults(props)),
     expand: () => {
       if (props.collapsed) {
         return dispatch(push(removePostFromUrl(window.location.pathname)))
@@ -21,4 +27,16 @@ export function mapDispatchToProps (dispatch, props) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { feedListProps, communityTopics } = stateProps
+  const { clearBadge, expand, dropPostResultsMaker } = dispatchProps
+  return {
+    ...ownProps,
+    communityTopics,
+    clearBadge,
+    expand,
+    clearFeedList: dropPostResultsMaker(feedListProps)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)

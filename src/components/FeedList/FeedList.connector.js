@@ -4,7 +4,7 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import { get, includes, isEmpty } from 'lodash/fp'
 import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
-import { fetchPosts } from './FeedList.store.js'
+import { fetchPosts, storeFeedListProps } from './FeedList.store.js'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 
 export function mapStateToProps (state, props) {
@@ -19,13 +19,33 @@ export const mapDispatchToProps = function (dispatch, props) {
   const { slug, networkSlug, sortBy, filter, subject, topic } = props
   const search = null // placeholder; no need for this yet
   return {
-    fetchPosts: function (offset) {
-      return dispatch(fetchPosts({subject, slug, networkSlug, sortBy, offset, search, filter, topic}))
-    }
+    fetchPosts: offset => dispatch(fetchPosts({
+      subject,
+      slug,
+      networkSlug,
+      sortBy,
+      offset,
+      search,
+      filter,
+      topic
+    })),
+    // We are putting a the feedListProps into appstate so components (ie Navigation,
+    // TopicNav) can drop the queryResults and re-fetch posts
+    storeFeedListPropsMaker: props => () => dispatch(storeFeedListProps(props))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { storeFeedListPropsMaker } = dispatchProps
+  return {
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
+    storeFeedListProps: storeFeedListPropsMaker(ownProps)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
 const getPostResults = makeGetQueryResults(FETCH_POSTS)
 

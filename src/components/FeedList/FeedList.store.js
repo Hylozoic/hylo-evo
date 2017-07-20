@@ -1,5 +1,9 @@
 import { FETCH_POSTS } from 'store/constants'
 
+export const MODULE_NAME = 'FeedList'
+
+export const STORE_FEED_LIST_PROPS = `${MODULE_NAME}/STORE_FEED_LIST_PROPS`
+
 export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search, filter, topic }) {
   var query, extractModel
 
@@ -126,3 +130,20 @@ const allCommunitiesQuery = `query (
 ) {
   ${postsQueryFragment}
 }`
+
+export function storeFeedListProps (props) {
+  return {
+    type: STORE_FEED_LIST_PROPS,
+    payload: props
+  }
+}
+
+export default function (state = {}, action) {
+  if (action.type === STORE_FEED_LIST_PROPS) {
+    return {
+      ...state,
+      feedListProps: action.payload
+    }
+  }
+  return state
+}

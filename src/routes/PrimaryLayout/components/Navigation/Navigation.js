@@ -12,8 +12,16 @@ export default function Navigation (props) {
     rootPath,
     membersPath,
     badge,
-    clearBadge
+    clearBadge,
+    clearFeedList
   } = props
+
+  const homeOnClick = () => {
+    if (window.location.pathname === rootPath) {
+      clearFeedList()
+      clearBadge()
+    }
+  }
 
   const links = compact([
     rootPath && {
@@ -21,7 +29,7 @@ export default function Navigation (props) {
       icon: 'Home',
       to: rootPath,
       badge: badge,
-      onClick: clearBadge,
+      onClick: homeOnClick,
       exact: true
     },
     membersPath && {

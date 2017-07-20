@@ -21,6 +21,8 @@ import FullPageModal from 'routes/FullPageModal/FullPageModal.store'
 import AllTopics from 'routes/AllTopics/AllTopics.store'
 import Search from 'routes/Search/Search.store'
 import queryResults from './queryResults'
+import FeedList from 'components/FeedList/FeedList.store'
+
 import { handleSetState, composeReducers } from './util'
 
 const combinedReducers = combineReducers({
@@ -47,7 +49,8 @@ const combinedReducers = combineReducers({
   FullPageModal,
   AllTopics,
   ModeratorsSettings,
-  Search
+  Search,
+  FeedList
 })
 
 export default composeReducers(combinedReducers, handleSetState)

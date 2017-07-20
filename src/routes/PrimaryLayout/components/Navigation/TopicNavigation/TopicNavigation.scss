@@ -27,13 +27,14 @@
   color: $color-rhino-50;
 }
 
-a.topic {
-  display: flex;
+.topic {
   align-items: center;
-  font-size: 14.5px;
-  color: $color-rhino-50;
-  text-decoration: none !important;
-  &:hover, &:active, {
+  a {
+    font-size: 14.5px;
+    color: $color-rhino-50;
+    text-decoration: none !important;
+  }
+  a:hover, a:active {
     color: $color-rhino;
     text-decoration: none !important;
   }
@@ -47,7 +48,20 @@ a.topic {
   min-width: 104px;
 }
 
+.badge {
+  margin-right: 2px;
+  margin-top: 2px;
+  float: right;
+}
+
+.topicCloseBtn {
+  padding-right: 3px;
+  float: right;
+}
+
 .closeIcon {
+  top: 1px;
+  margin-right: 3px;
   line-height: 1;
   font-size: 14px;
 }

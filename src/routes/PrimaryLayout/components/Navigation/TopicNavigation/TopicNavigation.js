@@ -14,22 +14,19 @@ export default class TopicNavigation extends Component {
     communitySlug: string,
     backUrl: string,
     clearBadge: func,
+    clearFeedList: func,
     collapsed: bool,
     expand: func
   }
 
   render () {
     const {
-      communityTopics,
-      communitySlug,
-      backUrl,
-      clearBadge,
-      collapsed,
-      expand,
-      location
+      communityTopics, backUrl, communitySlug,
+      clearBadge, clearFeedList, expand, collapsed, location
     } = this.props
-    const currentTopic = (topicName, slug) =>
-      matchPath(location.pathname, {path: tagUrl(topicName, slug)})
+
+    const currentTopic = topicName =>
+      matchPath(location.pathname, {path: tagUrl(topicName, communitySlug)})
 
     return <div styleName='s.topicNavigation'>
       <div styleName={cx('s.header', {'s.header-link': collapsed})}
@@ -39,20 +36,24 @@ export default class TopicNavigation extends Component {
       </div>
       <ul styleName='s.topics'>
         {communityTopics.map(({ id, topic, newPostCount }) =>
-          <li key={topic.name}>
-            <NavLink styleName='s.topic'
-              className={badgeHoverStyles.parent}
+          <li key={topic.name} styleName='s.topic'>
+            <NavLink className={badgeHoverStyles.parent}
               to={tagUrl(topic.name, communitySlug)}
-              onClick={() => id && newPostCount > 0 && clearBadge(id)}
+              onClick={() => {
+                if (id && currentTopic(topic.name)) {
+                  clearFeedList()
+                  newPostCount > 0 && clearBadge(id)
+                }
+              }}
               activeClassName='active-topic-nav-link'>
               <span styleName='s.name'>#{topic.name}</span>
-              {newPostCount > 0 && !currentTopic(topic.name, communitySlug) &&
-                <Badge number={newPostCount} />}
-              {currentTopic(topic.name, communitySlug) &&
-                <Link to={backUrl}>
-                  <Icon name='Ex' styleName='s.closeIcon' />
-                </Link>}
+              {newPostCount > 0 && !currentTopic(topic.name) &&
+                <Badge number={newPostCount} styleName='s.badge' />}
             </NavLink>
+            {currentTopic(topic.name) &&
+            <Link to={backUrl} styleName='s.topicCloseBtn'>
+              <Icon name='Ex' styleName='s.closeIcon' />
+            </Link>}
           </li>)}
       </ul>
       {communitySlug && <div styleName='s.addTopic'>

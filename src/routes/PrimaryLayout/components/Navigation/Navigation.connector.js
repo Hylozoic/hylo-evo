@@ -6,6 +6,8 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import { communityUrl, networkUrl } from 'util/index'
 import orm from 'store/models'
 import { get } from 'lodash/fp'
+import { FETCH_POSTS } from 'store/constants'
+import { makeDropQueryResults } from 'store/reducers/queryResults'
 
 export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
@@ -29,12 +31,23 @@ export function mapStateToProps (state, props) {
     rootSlug = ''
     rootPath = communityUrl()
   }
+
   return {
     rootSlug,
     rootPath,
     membersPath,
     badge,
+    feedListProps: state.FeedList.feedListProps,
     communityMembership
+  }
+}
+
+const dropPostResults = makeDropQueryResults(FETCH_POSTS)
+
+export function mapDispatchToProps (dispatch, props) {
+  return {
+    resetNewPostCount: (id, type) => dispatch(resetNewPostCount(id, type)),
+    dropPostResultsMaker: feedListProps => () => dispatch(dropPostResults(feedListProps))
   }
 }
 
@@ -44,21 +57,24 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     rootPath,
     membersPath,
     badge,
+    feedListProps,
     communityMembership
   } = stateProps
+
   return {
     ...ownProps,
     rootSlug,
     rootPath,
     membersPath,
     badge,
+    clearFeedList: dispatchProps.dropPostResultsMaker(feedListProps),
     clearBadge: badge
       ? () => dispatchProps.resetNewPostCount(communityMembership.community.id, 'Membership')
       : () => {}
   }
 }
 
-export default connect(mapStateToProps, {resetNewPostCount}, mergeProps)
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
 const getCommunityMembership = ormCreateSelector(
   orm,
