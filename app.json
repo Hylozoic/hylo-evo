@@ -1,0 +1,29 @@
+{
+  "name": "hylo-evo",
+  "scripts": {
+  },
+  "env": {
+    "API_HOST": {
+      "required": true
+    },
+    "NODE_MODULES_CACHE": {
+      "required": true
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "required": true
+    },
+    "SOCKET_HOST": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/Hylozoic/heroku-buildpack-nodejs.git#run-webpack-build"
+    }
+  ]
+}
