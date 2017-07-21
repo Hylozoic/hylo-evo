@@ -7,7 +7,6 @@
 // shown when something has been typed into the search field.
 
 import { CREATE_POST } from 'components/PostEditor/PostEditor.store'
-import { FETCH_MEMBERS } from 'routes/Members/Members.store'
 import { FETCH_SEARCH } from 'routes/Search/Search.store'
 import { FETCH_NETWORK_SETTINGS, FETCH_MODERATORS, FETCH_COMMUNITIES } from 'routes/NetworkSettings/NetworkSettings.store'
 import { FETCH_COMMUNITY_TOPICS } from 'store/actions/fetchCommunityTopics'
@@ -46,29 +45,24 @@ export default function (state = {}, action) {
     }
   }
 
+  const { extractQueryResults } = meta || {}
+  if (extractQueryResults && payload) {
+    const { getItems, getParams, getType } = extractQueryResults
+    return appendIds(state,
+      getType ? getType(action) : action.type,
+      getParams ? getParams(action) : meta.graphql.variables,
+      getItems(action)
+    )
+  }
+
   // Purpose of this reducer:
   //   Ordering and subsets of ReduxORM data
   //
-  // meta.extractQueryResults.
-  //  (getItems, getParams, getTypes)
-  //  had defaults
-  //
-  // if (meta.getItems) {
-  //   data = meta.getItems(payload.data)
-  // }
 
-  // If this starts to feel too coupled to specific actions, we could move the
-  // parameters below into the action's metadata, write a piece of middleware to
-  // detect the metadata and produce a generic action, and have this reducer
-  // handle only that action.
   switch (type) {
     case CREATE_POST:
       root = payload.data.createPost
       return matchNewPostIntoQueryResults(state, root)
-
-    case FETCH_MEMBERS:
-      root = get('members', payload.data.community) || get('members', payload.data.network)
-      return appendIds(state, type, meta.graphql.variables, root)
 
     case FETCH_POSTS:
       root = payload.data.posts || get('community.posts', payload.data) || get('network.posts', payload.data)
