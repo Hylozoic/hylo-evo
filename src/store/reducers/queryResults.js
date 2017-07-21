@@ -64,10 +64,6 @@ export default function (state = {}, action) {
       root = payload.data.createPost
       return matchNewPostIntoQueryResults(state, root)
 
-    case FETCH_POSTS:
-      root = payload.data.posts || get('community.posts', payload.data) || get('network.posts', payload.data)
-      return appendIds(state, type, meta.graphql.variables, root)
-
     case FETCH_THREAD:
     case FETCH_MESSAGES:
       return appendIds(state, FETCH_MESSAGES, meta.graphql.variables, payload.data.messageThread.messages)

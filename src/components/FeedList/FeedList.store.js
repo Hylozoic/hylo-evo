@@ -1,21 +1,25 @@
 import { FETCH_POSTS } from 'store/constants'
+import { get } from 'lodash/fp'
 
 export const MODULE_NAME = 'FeedList'
 
 export const STORE_FEED_LIST_PROPS = `${MODULE_NAME}/STORE_FEED_LIST_PROPS`
 
 export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search, filter, topic }) {
-  var query, extractModel
+  var query, extractModel, getItems
 
   if (subject === 'community') {
     query = communityQuery
     extractModel = 'Community'
+    getItems = get('payload.data.community.posts')
   } else if (subject === 'network') {
     query = networkQuery
     extractModel = 'Network'
+    getItems = get('payload.data.network.posts')
   } else if (subject === 'all-communities') {
     query = allCommunitiesQuery
     extractModel = 'Post'
+    getItems = get('payload.data.posts')
   } else {
     throw new Error(`FETCH_POSTS with subject=${subject} is not implemented`)
   }
@@ -35,7 +39,12 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search
         topic
       }
     },
-    meta: {extractModel}
+    meta: {
+      extractModel,
+      extractQueryResults: {
+        getItems
+      }
+    }
   }
 }
 
