@@ -1,5 +1,3 @@
-import Rollbar from 'client/rollbar'
-
 const { ROLLBAR_CLIENT_TOKEN } = process.env
 
 export default function errorMiddleware (store) {
@@ -9,7 +7,8 @@ export default function errorMiddleware (store) {
 
       console.error(errMsg, action)
 
-      if (ROLLBAR_CLIENT_TOKEN) {
+      if (typeof window !== 'undefined' && ROLLBAR_CLIENT_TOKEN) {
+        let Rollbar = require('client/rollbar').default
         Rollbar.error(errMsg, {
           action: safeStringify(action),
           state: safeStringify(store.getState())
