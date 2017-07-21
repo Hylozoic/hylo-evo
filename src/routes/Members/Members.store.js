@@ -55,8 +55,7 @@ export function fetchNetworkMembers (slug, sortBy, offset, search) {
       variables: {slug, first: 20, offset, sortBy, search}
     },
     meta: {
-      extractModel: 'Network',
-      getRoot: get('network.members')
+      extractModel: 'Network'
     }
   }
 }
@@ -69,8 +68,7 @@ export function fetchCommunityMembers (slug, sortBy, offset, search) {
       variables: {slug, first: 20, offset, sortBy, search}
     },
     meta: {
-      extractModel: 'Community',
-      getRoot: get('community.members')
+      extractModel: 'Community'
     }
   }
 }
