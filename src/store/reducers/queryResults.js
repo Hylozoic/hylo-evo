@@ -46,6 +46,17 @@ export default function (state = {}, action) {
     }
   }
 
+  // Purpose of this reducer:
+  //   Ordering and subsets of ReduxORM data
+  //
+  // meta.extractQueryResults.
+  //  (getItems, getParams, getTypes)
+  //  had defaults
+  //
+  // if (meta.getItems) {
+  //   data = meta.getItems(payload.data)
+  // }
+
   // If this starts to feel too coupled to specific actions, we could move the
   // parameters below into the action's metadata, write a piece of middleware to
   // detect the metadata and produce a generic action, and have this reducer
