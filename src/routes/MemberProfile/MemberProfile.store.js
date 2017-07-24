@@ -32,6 +32,14 @@ const fetchPersonQuery =
         slug
       }
     }
+    skills (first: 100) {
+      total
+      hasMore
+      items {
+        id
+        name
+      }
+    }
   }
 }`
 

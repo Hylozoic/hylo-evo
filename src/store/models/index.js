@@ -15,6 +15,7 @@ import Network, { NetworkModerator } from './Network'
 import Notification from './Notification'
 import Post, { PostFollower, PostCommenter } from './Post'
 import SearchResult from './SearchResult'
+import Skill from './Skill'
 import Topic from './Topic'
 import Vote from './Vote'
 
@@ -39,6 +40,7 @@ orm.register(
   PostFollower,
   PostCommenter,
   SearchResult,
+  Skill,
   Topic,
   Vote
 )
