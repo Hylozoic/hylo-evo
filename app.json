@@ -14,8 +14,10 @@
     },
     "SOCKET_HOST": {
       "required": true
-    }
-  },
+    },
+    "ROLLBAR_CLIENT_TOKEN": {
+      "required": true
+    },
   "formation": {
   },
   "addons": [
