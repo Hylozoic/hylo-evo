@@ -3,6 +3,7 @@ $member-padding: 16px;
 $avatar-size: 120px;
 
 .member {
+  position: relative;
   display: block;
   padding: $member-padding;
   text-align: center;
@@ -17,6 +18,13 @@ $avatar-size: 120px;
 .avatar {
   @include image($avatar-size);
   border-radius: $avatar-size/2;
+}
+
+.dropdown {
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  padding: 10px;
 }
 
 .name {
