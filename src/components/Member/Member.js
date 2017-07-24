@@ -20,13 +20,14 @@ export default class Member extends React.Component {
       className,
       slug,
       member: {id, name, location, tagline, avatarUrl},
-      goToPerson
+      goToPerson,
+      canModerate
     } = this.props
 
     return <div styleName='member' className={className}>
-      <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={[
+      {canModerate && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={[
         {icon: 'Trash', label: 'Delete', onClick: (e) => this.deleteOnClick(e, id, name)}
-      ]} />
+      ]} />}
       <div onClick={goToPerson(id, slug)}>
         <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
         <div styleName='name'>{name}</div>

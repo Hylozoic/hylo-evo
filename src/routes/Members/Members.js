@@ -25,7 +25,8 @@ export default class Members extends Component {
     })),
     hasMore: bool,
     changeSort: func,
-    changeSearch: func
+    changeSearch: func,
+    canModerate: bool
   }
 
   fetchOrShowCached () {
@@ -59,7 +60,7 @@ export default class Members extends Component {
 
   render () {
     const {
-      canInvite, memberCount, members, sortBy, changeSort, search, slug, subject
+      canInvite, memberCount, members, sortBy, changeSort, search, slug, subject, canModerate
     } = this.props
 
     const sortKeys = sortKeysFactory(subject)
@@ -89,7 +90,7 @@ export default class Members extends Component {
           onChange={e => this.search(e.target.value)} />
         <div styleName='members'>
           {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
-            {pair.map(m => <Member member={m} key={m.id} slug={slug} />)}
+            {pair.map(m => <Member canModerate={canModerate} member={m} key={m.id} slug={slug} />)}
             {pair.length === 1 && <div />}
           </div>)}
         </div>

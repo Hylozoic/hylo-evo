@@ -8,6 +8,7 @@ import { get } from 'lodash/fp'
 import getQueryParam from 'store/selectors/getQueryParam'
 import changeQueryParam from 'store/actions/changeQueryParam'
 import getParam from 'store/selectors/getParam'
+import getMe from 'store/selectors/getMe'
 
 const defaultSortBy = 'name'
 
@@ -20,6 +21,7 @@ export function mapStateToProps (state, props) {
   const slug = communitySlug || networkSlug
   const sortBy = getQueryParam('s', state, props) || defaultSortBy
   const search = getQueryParam('q', state, props)
+  const canModerate = getMe(state, props).canModerate(community)
   const extraProps = {
     ...props,
     network,
@@ -34,6 +36,7 @@ export function mapStateToProps (state, props) {
     memberCount: get('memberCount', community || network),
     sortBy,
     search,
+    canModerate,
     members: getMembers(state, extraProps),
     hasMore: getHasMoreMembers(state, extraProps),
     pending: state.pending[FETCH_MEMBERS]
