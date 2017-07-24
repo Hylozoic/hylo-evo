@@ -17,7 +17,8 @@
     },
     "ROLLBAR_CLIENT_TOKEN": {
       "required": true
-    },
+    }
+  },
   "formation": {
   },
   "addons": [
