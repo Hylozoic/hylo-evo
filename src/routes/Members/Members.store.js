@@ -83,7 +83,8 @@ export function removeMember (personId, communityId) {
     graphql: {
       query: `mutation($personId: ID, $communityId: ID) {
         removeMember(personId: $personId, communityId: $communityId) {
-          success
+          id
+          memberCount
         }
       }`,
       variables: { personId, communityId }

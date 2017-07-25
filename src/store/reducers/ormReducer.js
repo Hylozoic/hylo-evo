@@ -61,7 +61,7 @@ export default function ormReducer (state = {}, action) {
     first && first.update({time: Date.now()})
   }
 
-  let membership
+  let membership, community
 
   switch (type) {
     case EXTRACT_MODEL:
@@ -198,10 +198,10 @@ export default function ormReducer (state = {}, action) {
       break
 
     case REMOVE_MEMBER_PENDING:
-      let community = Community.withId(meta.communityId)
+      community = Community.withId(meta.communityId)
       const members = community.members.filter(m => m.id !== meta.personId)
         .toModelArray()
-      community.update({members})
+      community.update({members, memberCount: community.memberCount - 1})
       break
 
     case REMOVE_MODERATOR_PENDING:
