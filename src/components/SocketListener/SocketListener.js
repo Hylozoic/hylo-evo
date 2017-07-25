@@ -1,6 +1,5 @@
 import { PropTypes, Component } from 'react'
 import { getSocket, socketUrl } from 'client/websockets'
-import './SocketListener.scss'
 const { func, object } = PropTypes
 
 export default class SocketListener extends Component {

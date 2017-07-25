@@ -40,8 +40,8 @@ export default class TopicNavigation extends Component {
             <NavLink className={badgeHoverStyles.parent}
               to={tagUrl(topic.name, communitySlug)}
               onClick={() => {
-                if (id && currentTopic(topic.name)) {
-                  clearFeedList()
+                if (id) {
+                  currentTopic(topic.name) && clearFeedList()
                   newPostCount > 0 && clearBadge(id)
                 }
               }}
