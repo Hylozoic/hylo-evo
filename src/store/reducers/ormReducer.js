@@ -17,6 +17,7 @@ import {
   VOTE_ON_POST_PENDING,
   UPDATE_COMMUNITY_SETTINGS_PENDING
 } from 'store/constants'
+import { REMOVE_MEMBER_PENDING } from 'routes/Members/Members.store'
 import {
   RECEIVE_MESSAGE,
   RECEIVE_POST
@@ -196,8 +197,15 @@ export default function ormReducer (state = {}, action) {
       Community.withId(meta.communityId).updateAppending({moderators: [person]})
       break
 
+    case REMOVE_MEMBER_PENDING:
+      let community = Community.withId(meta.communityId)
+      const members = community.members.filter(m => m.id !== meta.personId)
+        .toModelArray()
+      community.update({members})
+      break
+
     case REMOVE_MODERATOR_PENDING:
-      var community = Community.withId(meta.communityId)
+      community = Community.withId(meta.communityId)
       const moderators = community.moderators.filter(m =>
         m.id !== meta.personId)
         .toModelArray()

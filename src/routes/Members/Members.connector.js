@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import {
-  FETCH_MEMBERS, fetchMembers, getMembers, getHasMoreMembers
+  FETCH_MEMBERS, fetchMembers, getMembers, getHasMoreMembers, removeMember
 } from './Members.store'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
@@ -37,6 +37,7 @@ export function mapStateToProps (state, props) {
     sortBy,
     search,
     canModerate,
+    community,
     members: getMembers(state, extraProps),
     hasMore: getHasMoreMembers(state, extraProps),
     pending: state.pending[FETCH_MEMBERS]
@@ -47,7 +48,8 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchMembers: params => dispatch(fetchMembers(params)),
     changeSearch: term => dispatch(changeQueryParam(props, 'q', term)),
-    changeSort: sort => dispatch(changeQueryParam(props, 's', sort, 'name'))
+    changeSort: sort => dispatch(changeQueryParam(props, 's', sort, 'name')),
+    removeMember: (personId, communityId) => dispatch(removeMember(personId, communityId))
   }
 }
 
@@ -56,6 +58,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const params = getQueryParam(['s', 'q'], null, ownProps)
   var { s: sortBy = defaultSortBy, q: search } = params
 
+  const removeMember = (id) => dispatchProps.removeMember(id, stateProps.community.id)
   const fetchMembers = (offset = 0) =>
     dispatchProps.fetchMembers({ subject, slug, sortBy, offset, search })
 
@@ -63,6 +66,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
+    removeMember,
     fetchMembers
   }
 }

@@ -60,7 +60,7 @@ export default class Members extends Component {
 
   render () {
     const {
-      canInvite, memberCount, members, sortBy, changeSort, search, slug, subject, canModerate
+      canInvite, memberCount, members, sortBy, changeSort, search, slug, subject, canModerate, removeMember
     } = this.props
 
     const sortKeys = sortKeysFactory(subject)
@@ -90,7 +90,7 @@ export default class Members extends Component {
           onChange={e => this.search(e.target.value)} />
         <div styleName='members'>
           {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
-            {pair.map(m => <Member canModerate={canModerate} member={m} key={m.id} slug={slug} />)}
+            {pair.map(m => <Member canModerate={canModerate} removeMember={removeMember} member={m} key={m.id} slug={slug} />)}
             {pair.length === 1 && <div />}
           </div>)}
         </div>
