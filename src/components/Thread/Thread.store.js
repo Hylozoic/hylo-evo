@@ -1,7 +1,9 @@
+import { get } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 import {
-  FETCH_THREAD
+  FETCH_THREAD,
+  FETCH_MESSAGES
 } from 'store/constants'
 
 export const MODULE_NAME = 'Thread'
@@ -46,7 +48,11 @@ export function fetchThread (id) {
       }
     },
     meta: {
-      extractModel: 'MessageThread'
+      extractModel: 'MessageThread',
+      extractQueryResults: {
+        getType: () => FETCH_MESSAGES,
+        getItems: get('payload.data.messageThread.messages')
+      }
     }
   }
 }

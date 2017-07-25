@@ -1,3 +1,4 @@
+import { get } from 'lodash/fp'
 import queryResults, { buildKey, matchNewPostIntoQueryResults } from './queryResults'
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
 
@@ -25,7 +26,9 @@ it('adds data to empty state', () => {
     },
     meta: {
       graphql: {variables},
-      getRoot: (data) => data.community.members
+      extractQueryResults: {
+        getItems: get('payload.data.community.members')
+      }
     }
   }
 
@@ -64,7 +67,9 @@ it('appends to existing data, ignoring duplicates', () => {
       graphql: {
         variables: {slug: 'foo', sortBy: 'name'}
       },
-      getRoot: (data) => data.community.members
+      extractQueryResults: {
+        getItems: get('payload.data.community.members')
+      }
     }
   }
 
@@ -75,6 +80,34 @@ it('appends to existing data, ignoring duplicates', () => {
       hasMore: false
     }
   })
+})
+
+it('state is unchanged when extractQueryResults.getItems data not found', () => {
+  const state = {
+    emptyState: ''
+  }
+  const action = {
+    type: FETCH_MEMBERS,
+    payload: {
+      data: {
+        community: {
+          members: {
+            total: 22,
+            items: [{id: 7}, {id: 8}, {id: 9}],
+            hasMore: true
+          }
+        }
+      }
+    },
+    meta: {
+      graphql: {variables},
+      extractQueryResults: {
+        getItems: get('invalid-data-path')
+      }
+    }
+  }
+
+  expect(queryResults(state, action)).toEqual(state)
 })
 
 describe('buildKey', () => {
