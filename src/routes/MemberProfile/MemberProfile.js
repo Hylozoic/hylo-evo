@@ -28,7 +28,7 @@ export default class MemberProfile extends React.Component {
       linkedinUrl: string,
       tagline: string,
       memberships: arrayOf(object),
-      skills: arrayOf(string),
+      skills: arrayOf(object),
       name: string,
       role: string,
       twitterName: string,
@@ -71,12 +71,9 @@ export default class MemberProfile extends React.Component {
       role,
       twitterName,
       url,
-      tagline,
-      skills
+      tagline
     } = this.props.person
     const { id, slug } = this.props.match.params
-
-    console.log('!!!', this.props.person, skills)
 
     return <div styleName='member-profile'>
       <ProfileBanner bannerUrl={bannerUrl}>

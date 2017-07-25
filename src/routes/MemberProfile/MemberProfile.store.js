@@ -75,6 +75,7 @@ export const personSelector = createSelector(
 
       return {
         ...person.ref,
+        skills: person.skills && person.skills.toRefArray(),
         role: getRole(slug, memberships)
       }
     }
