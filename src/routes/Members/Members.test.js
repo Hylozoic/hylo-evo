@@ -8,7 +8,7 @@ it('does something', () => {
     {id: '2', name: 'Me'},
     {id: '3', name: 'Everyone'}
   ]} />)
-  expect(wrapper.find('Member')).toHaveLength(3)
+  expect(wrapper.find('Connect(Member)')).toHaveLength(3)
 })
 
 describe('twoByTwo', () => {

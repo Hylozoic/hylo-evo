@@ -3,8 +3,12 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 import { get, includes, isEmpty } from 'lodash/fp'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
+import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 
 export const FETCH_MEMBERS = 'FETCH_MEMBERS'
+
+export const REMOVE_MEMBER = 'REMOVE_MEMBER'
+export const REMOVE_MEMBER_PENDING = REMOVE_MEMBER + '_PENDING'
 
 export const communityMembersQuery = `
 query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: String) {
@@ -73,6 +77,25 @@ export function fetchCommunityMembers (slug, sortBy, offset, search) {
   }
 }
 
+export function removeMember (personId, communityId) {
+  return {
+    type: REMOVE_MEMBER,
+    graphql: {
+      query: `mutation($personId: ID, $communityId: ID) {
+        removeMember(personId: $personId, communityId: $communityId) {
+          id
+          memberCount
+        }
+      }`,
+      variables: { personId, communityId }
+    },
+    meta: {
+      communityId,
+      personId
+    }
+  }
+}
+
 export function fetchMembers ({ subject, slug, sortBy, offset, search }) {
   return subject === 'network'
     ? fetchNetworkMembers(slug, sortBy, offset, search)
@@ -89,9 +112,11 @@ export const getMembers = ormCreateSelector(
   orm,
   state => state.orm,
   getMemberResults,
-  (session, results) => {
+  getCommunityForCurrentRoute,
+  (session, results, community) => {
     if (isEmpty(results) || isEmpty(results.ids)) return []
-    return session.Person.all()
+
+    return session.Community.withId(community.id).members
     .filter(x => includes(x.id, results.ids))
     .orderBy(x => results.ids.indexOf(x.id))
     .toModelArray()
