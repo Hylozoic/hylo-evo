@@ -15,6 +15,7 @@ $current-name-margin-top: 13px;
 
 $ul-vertical-spacing: 10px;
 $ul-horizontal-spacing: 14px;
+$ul-network-community-indent: 25px;
 $li-padding: 4px;
 $li-spacing: 14px;
 $li-height: 40px;
@@ -22,12 +23,8 @@ $li-avatar-size: 32px;
 
 $badge-width: 20px;
 
-$calculated-name-width: $drawer-width -
-                        (2 * $ul-horizontal-spacing) -
-                        (2 * $li-padding) -
-                        $li-avatar-size -
-                        (2 * $li-spacing) -
-                        $badge-width;
+$community-list-avatar-size: 24px;
+$community-list-font-size: 14px;
 
 $break-border: 1px solid rgba(255,255,255,0.11);
 
@@ -35,9 +32,6 @@ $new-community-width: 310px;
 $new-community-vertical-margin: 15px;
 $new-community-font-size: 14px;
 $new-community-spacing: 16px;
-
-$community-list-avatar-size: 24px;
-$community-list-font-size: 14px;
 
 .communityDrawer {
   background-image: linear-gradient(0deg, $color-rhino 0%, $color-chambray 100%);
@@ -114,7 +108,7 @@ $community-list-font-size: 14px;
 .networkCommunitiesList {
   margin: $ul-vertical-spacing 0 0 $ul-horizontal-spacing;
 
-  padding-left: 25px;
+  padding-left: $ul-network-community-indent;
   white-space: nowrap;
 
   .communityRow {
@@ -125,6 +119,7 @@ $community-list-font-size: 14px;
 }
 
 .communityRow {
+  display: flex;
   &:hover {
     text-decoration: none;
   }
@@ -151,8 +146,8 @@ $community-list-font-size: 14px;
 
 .community-name, .network-name {
   composes: drawer-inv-li from 'css/typography.scss';
+  flex: 2;
   vertical-align: middle;
-  width: $calculated-name-width;
   margin-right: $li-spacing;
   overflow: hidden;
   text-overflow: ellipsis;

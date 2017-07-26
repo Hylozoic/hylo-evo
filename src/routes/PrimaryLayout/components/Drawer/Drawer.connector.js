@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { toggleDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
-import getMemberships from 'store/selectors/getMemberships'
+import getMembershipsForDrawer from './Drawer.store'
 
 function buildNetworkLookup (networks, { id, community, newPostCount, network }) {
   if (!network) return networks
@@ -10,7 +10,7 @@ function buildNetworkLookup (networks, { id, community, newPostCount, network })
 }
 
 export function mapStateToProps (state, props) {
-  const memberships = getMemberships(state)
+  const memberships = getMembershipsForDrawer(state)
   let networks = memberships.reduce(buildNetworkLookup, {})
   networks = Object.keys(networks).sort().map(network => networks[network])
   return {
