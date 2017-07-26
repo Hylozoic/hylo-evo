@@ -1,12 +1,13 @@
-import { some } from 'lodash/fp'
+import { some, get, isEmpty, includes } from 'lodash/fp'
 import orm from 'store/models'
 import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { FETCH_THREADS } from 'store/constants'
+import { makeGetQueryResults } from 'store/reducers/queryResults'
 
 export const MODULE_NAME = 'ThreadList'
 
-export const SET_THREAD_SEARCH = 'SET_THREAD_SEARCH'
+export const SET_THREAD_SEARCH = `${MODULE_NAME}/SET_THREAD_SEARCH`
 
 export function setThreadSearch (threadSearch) {
   return {
@@ -15,41 +16,52 @@ export function setThreadSearch (threadSearch) {
   }
 }
 
-export function fetchThreads () {
+export function fetchThreads (first = 10, offset = 0) {
   return {
     type: FETCH_THREADS,
     graphql: {
-      query: `{
+      query: `query ($first: Int, $offset: Int) {
         me {
           id
-          messageThreads(sortBy: "updatedAt", order: "desc") {
-            id
-            unreadCount
-            lastReadAt
-            createdAt
-            updatedAt
-            participants {
+          messageThreads(sortBy: "updatedAt", order: "desc", first: $first, offset: $offset) {
+            total
+            hasMore
+            items {
               id
-              name
-              avatarUrl
-            }
-            messages(first: 1, order: "desc") {
-              items {
+              unreadCount
+              lastReadAt
+              createdAt
+              updatedAt
+              participants {
                 id
-                createdAt
-                text
-                creator {
+                name
+                avatarUrl
+              }
+              messages(first: 1, order: "desc") {
+                items {
                   id
-                  name
+                  createdAt
+                  text
+                  creator {
+                    id
+                    name
+                  }
                 }
               }
             }
           }
         }
-      }`
+      }`,
+      variables: {
+        first,
+        offset
+      }
     },
     meta: {
-      extractModel: 'Me'
+      extractModel: 'Me',
+      extractQueryResults: {
+        getItems: get('payload.data.me.messageThreads')
+      }
     }
   }
 }
@@ -79,13 +91,20 @@ export const getThreadSearch = createSelector(
   (state, props) => state.threadSearch
 )
 
+export const getThreadResults = makeGetQueryResults(FETCH_THREADS)
+
+export const getThreadsHasMore = createSelector(getThreadResults, get('hasMore'))
+
 export const getThreads = ormCreateSelector(
   orm,
   state => state.orm,
   getThreadSearch,
-  (session, threadSearch) => {
+  getThreadResults,
+  (session, threadSearch, results) => {
+    if (isEmpty(results) || isEmpty(results.ids)) return []
     return session.MessageThread.all()
-    .orderBy(t => new Date(t.updatedAt), 'desc')
+    .filter(x => includes(x.id, results.ids))
+    .orderBy(x => results.ids.indexOf(x.id))
     .toModelArray()
     .filter(filterThreadsByParticipant(threadSearch))
   }
