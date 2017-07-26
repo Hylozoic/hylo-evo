@@ -1,0 +1,23 @@
+.container {
+  position: relative;
+}
+
+.pill {
+  border: 2px solid $color-ghost;
+  background: #FFF;
+  font-size: 15px;
+  color: $color-slate-gray-80;
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 10px 8px 0px 0px;
+  border-radius: 20px;
+
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      color: $color-caribbean-green;
+      border: 2px solid $color-caribbean-green;
+    }
+  }
+}
