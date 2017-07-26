@@ -7,10 +7,9 @@ export default function Pillbox ({ pills }) {
     {pills.map(pill => <Pill key={pill.id} {...pill} />)}
   </div>
 }
- 
-export function Pill ({id, label, onClick}) {
-  console.log(onClick, id, 'Onclick')
-  return <span styleName={cx('pill', {'clickable': onClick})}>
+
+export function Pill ({id, label, onClick, className, small}) {
+  return <span styleName={cx('pill', {'clickable': onClick, small})} className={className}>
     {label}
   </span>
 }
