@@ -32,6 +32,14 @@ const fetchPersonQuery =
         slug
       }
     }
+    skills (first: 100) {
+      total
+      hasMore
+      items {
+        id
+        name
+      }
+    }
   }
 }`
 
@@ -67,9 +75,79 @@ export const personSelector = createSelector(
 
       return {
         ...person.ref,
+        skills: person.skills && person.skills.toRefArray(),
         role: getRole(slug, memberships)
       }
     }
     return null
   }
 )
+
+// --------------------------------------------------------
+// TODO: Likely to be moved to a MemberProfileSidebar
+// component once full feature
+// export const FIND_SKILLS = 'FIND_SKILLS'
+export const ADD_SKILL = 'ADD_SKILL'
+export const REMOVE_SKILL = 'REMOVE_SKILL'
+
+// export const FIND_SKILLS = 'FIND_SKILLS'
+// export function findSkills (skillsSearchTerm) {
+//   return {
+//     type: FIND_SKILLS,
+//     graphql: {
+//       query: `query ($skillsSearchTerm: String) {
+//         skills(autocomplete: $skillsSearchTerm, first: 5) {
+//           items {
+//             id
+//             name
+//           }
+//         }
+//       }`,
+//       variables: {
+//         skillsSearchTerm
+//       }
+//     },
+//     meta: {
+//       extractModel: {
+//         getRoot: (results) => results.skills
+//       },
+//       modelName: 'Skill'
+//     }
+//   }
+// }
+
+export function addSkill (skillName) {
+  return {
+    type: ADD_SKILL,
+    graphql: {
+      query: `mutation ($name: String) {
+        addSkill(name: $name) {
+        }
+      }`,
+      variables: {
+        name: skillName
+      }
+    },
+    meta: {
+      optimistic: true
+    }
+  }
+}
+
+export function removeSkill (skillName) {
+  return {
+    type: REMOVE_SKILL,
+    graphql: {
+      query: `mutation ($name: String) {
+        removeSkill(name: $name) {
+        }
+      }`,
+      variables: {
+        name: skillName
+      }
+    },
+    meta: {
+      optimistic: true
+    }
+  }
+}
