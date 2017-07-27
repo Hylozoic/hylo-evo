@@ -71,6 +71,12 @@ export function fetchSearchResults ({search, offset = 0, filter}) {
                 name
                 location
                 avatarUrl
+                skills {
+                  items {
+                    id
+                    name
+                  }
+                }
               }
               ... on Post {
                 ${postFieldsFragment}

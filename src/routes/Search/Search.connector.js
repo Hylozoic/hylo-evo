@@ -34,6 +34,13 @@ function presentSearchResult (searchResult, session) {
     }
   }
 
+  if (type === 'Person') {
+    content = {
+      ...content.ref,
+      skills: content.skills.toModelArray()
+    }
+  }
+
   return {
     ...searchResult.ref,
     content,

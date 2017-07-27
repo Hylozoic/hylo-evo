@@ -1,4 +1,4 @@
-import Search from './Search'
+import Search, { PersonCard } from './Search'
 import { shallow } from 'enzyme'
 import React from 'react'
 
@@ -22,6 +22,37 @@ describe('Search', () => {
     }
 
     const wrapper = shallow(<Search {...props} />)
+
+    expect(wrapper).toMatchSnapshot()
+  })
+})
+
+describe('PersonCard', () => {
+  const props = {
+    person: {
+      id: 77,
+      name: 'Joe Person',
+      avatarUrl: 'me.png',
+      location: 'home',
+      skills: [{name: 'crawling'}, {name: 'walking'}]
+    },
+    highlightProps: {
+      terms: ['cat']
+    },
+    showPerson: () => {}
+  }
+
+  it('renders correctly', () => {
+    const wrapper = shallow(<PersonCard {...props} />)
+
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('renders a skill when the search terms match a skill', () => {
+    const highlightProps = {
+      terms: ['walking']
+    }
+    const wrapper = shallow(<PersonCard {...{...props, highlightProps}} />)
 
     expect(wrapper).toMatchSnapshot()
   })
