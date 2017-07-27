@@ -79,6 +79,9 @@ posts(
   },
   "meta": Object {
     "extractModel": "Community",
+    "extractQueryResults": Object {
+      "getItems": [Function],
+    },
   },
   "type": "FETCH_POSTS",
 }
@@ -154,6 +157,9 @@ posts(
   },
   "meta": Object {
     "extractModel": "Post",
+    "extractQueryResults": Object {
+      "getItems": [Function],
+    },
   },
   "type": "FETCH_POSTS",
 }

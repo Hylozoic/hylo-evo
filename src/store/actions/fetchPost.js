@@ -1,4 +1,8 @@
-import { FETCH_POST } from 'store/constants'
+import { get } from 'lodash/fp'
+import {
+  FETCH_POST,
+  FETCH_COMMENTS
+} from 'store/constants'
 
 export const postFieldsFragment = `
   id
@@ -60,7 +64,11 @@ export default function fetchPost (id, opts = {}) {
       }
     },
     meta: {
-      extractModel: 'Post'
+      extractModel: 'Post',
+      extractQueryResults: {
+        getType: () => FETCH_COMMENTS,
+        getItems: get('payload.data.post.comments')
+      }
     }
   }
 }

@@ -36,6 +36,9 @@ export function fetchMessages (id, opts = {}) {
     },
     meta: {
       extractModel: 'MessageThread',
+      extractQueryResults: {
+        getItems: get('payload.data.messageThread.messages')
+      },
       reset: opts.reset,
       id
     }

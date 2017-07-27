@@ -1,3 +1,4 @@
+import { get } from 'lodash/fp'
 import { postFieldsFragment } from 'store/actions/fetchPost'
 
 export const MODULE_NAME = 'Search'
@@ -99,7 +100,10 @@ export function fetchSearchResults ({search, offset = 0, filter}) {
       }
     },
     meta: {
-      extractModel: 'SearchResult'
+      extractModel: 'SearchResult',
+      extractQueryResults: {
+        getItems: get('payload.data.search')
+      }
     }
   }
 }
