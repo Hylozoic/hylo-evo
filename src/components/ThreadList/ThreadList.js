@@ -5,6 +5,7 @@ import RoundImage from 'components/RoundImage'
 import Badge from 'components/Badge'
 import Button from 'components/Button'
 import TextInput from 'components/TextInput'
+import ScrollListener from 'components/ScrollListener'
 import { humanDate } from 'hylo-utils/text'
 import './ThreadList.scss'
 const { array, func, object, string } = PropTypes
@@ -43,7 +44,7 @@ export default class ThreadList extends Component {
       <div styleName='search'>
         <TextInput placeholder='Search for people...' value={threadSearch} onChange={onSearchChange} />
       </div>
-      <ul styleName='list'>
+      <ul styleName='list' id={'thread-list-list'}>
         {threads.map(t => {
           return <ThreadListItem id={t.id}
             key={`thread-li-${t.id}`}
@@ -56,6 +57,9 @@ export default class ThreadList extends Component {
         {!threads.length && !threadSearch && <div styleName='no-conversations'>You have no active conversations</div>}
         {!threads.length && threadSearch && <div styleName='no-conversations'>No conversations found</div>}
       </ul>
+      <ScrollListener
+        elementId={'thread-list-list'}
+        onBottom={() => this.fetchMoreThreads()} />
     </div>
   }
 }
