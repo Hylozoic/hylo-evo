@@ -9,105 +9,164 @@ const key = JSON.stringify({
   params: variables
 })
 
-it('adds data to empty state', () => {
-  const state = {}
-  const action = {
-    type: FETCH_MEMBERS,
-    payload: {
-      data: {
-        community: {
-          members: {
-            total: 22,
-            items: [{id: 7}, {id: 8}, {id: 9}],
-            hasMore: true
+describe('using extractQueryResults', () => {
+  it('adds data to empty state', () => {
+    const state = {}
+    const action = {
+      type: FETCH_MEMBERS,
+      payload: {
+        data: {
+          community: {
+            members: {
+              total: 22,
+              items: [{id: 7}, {id: 8}, {id: 9}],
+              hasMore: true
+            }
           }
         }
-      }
-    },
-    meta: {
-      graphql: {variables},
-      extractQueryResults: {
-        getItems: get('payload.data.community.members')
-      }
-    }
-  }
-
-  expect(queryResults(state, action)).toEqual({
-    [key]: {
-      ids: [7, 8, 9],
-      total: 22,
-      hasMore: true
-    }
-  })
-})
-
-it('appends to existing data, ignoring duplicates', () => {
-  const state = {
-    [key]: {
-      ids: [4, 7, 5, 6],
-      total: 21,
-      hasMore: true
-    }
-  }
-
-  const action = {
-    type: FETCH_MEMBERS,
-    payload: {
-      data: {
-        community: {
-          members: {
-            total: 22,
-            items: [{id: 7}, {id: 8}, {id: 9}],
-            hasMore: false
-          }
-        }
-      }
-    },
-    meta: {
-      graphql: {
-        variables: {slug: 'foo', sortBy: 'name'}
       },
-      extractQueryResults: {
-        getItems: get('payload.data.community.members')
-      }
-    }
-  }
-
-  expect(queryResults(state, action)).toEqual({
-    [key]: {
-      ids: [4, 7, 5, 6, 8, 9],
-      total: 22,
-      hasMore: false
-    }
-  })
-})
-
-it('state is unchanged when extractQueryResults.getItems data not found', () => {
-  const state = {
-    emptyState: ''
-  }
-  const action = {
-    type: FETCH_MEMBERS,
-    payload: {
-      data: {
-        community: {
-          members: {
-            total: 22,
-            items: [{id: 7}, {id: 8}, {id: 9}],
-            hasMore: true
-          }
+      meta: {
+        graphql: {variables},
+        extractQueryResults: {
+          getItems: get('payload.data.community.members')
         }
       }
-    },
-    meta: {
-      graphql: {variables},
-      extractQueryResults: {
-        getItems: get('invalid-data-path')
+    }
+
+    expect(queryResults(state, action)).toEqual({
+      [key]: {
+        ids: [7, 8, 9],
+        total: 22,
+        hasMore: true
+      }
+    })
+  })
+
+  it('appends to existing data, ignoring duplicates', () => {
+    const state = {
+      [key]: {
+        ids: [4, 7, 5, 6],
+        total: 21,
+        hasMore: true
       }
     }
-  }
 
-  expect(queryResults(state, action)).toEqual(state)
+    const action = {
+      type: FETCH_MEMBERS,
+      payload: {
+        data: {
+          community: {
+            members: {
+              total: 22,
+              items: [{id: 7}, {id: 8}, {id: 9}],
+              hasMore: false
+            }
+          }
+        }
+      },
+      meta: {
+        graphql: {
+          variables: {slug: 'foo', sortBy: 'name'}
+        },
+        extractQueryResults: {
+          getItems: get('payload.data.community.members')
+        }
+      }
+    }
+
+    expect(queryResults(state, action)).toEqual({
+      [key]: {
+        ids: [4, 7, 5, 6, 8, 9],
+        total: 22,
+        hasMore: false
+      }
+    })
+  })
+
+  it('state is unchanged when extractQueryResults.getItems data not found', () => {
+    const state = {
+      emptyState: ''
+    }
+    const action = {
+      type: FETCH_MEMBERS,
+      payload: {
+        data: {
+          community: {
+            members: {
+              total: 22,
+              items: [{id: 7}, {id: 8}, {id: 9}],
+              hasMore: true
+            }
+          }
+        }
+      },
+      meta: {
+        graphql: {variables},
+        extractQueryResults: {
+          getItems: get('invalid-data-path')
+        }
+      }
+    }
+
+    expect(queryResults(state, action)).toEqual(state)
+  })
+
+  it('uses type returned by getType', () => {
+    const initialState = {}
+
+    const action = {
+      type: FETCH_MEMBERS,
+      payload: {data: {test: {items: []}}},
+      meta: {
+        graphql: {variables},
+        extractQueryResults: {
+          getItems: get('payload.data.test'),
+          getType: () => 'TEST_TYPE'
+        }
+      }
+    }
+
+    const expectedKey = JSON.stringify({
+      type: action.meta.extractQueryResults.getType(),
+      params: variables
+    })
+
+    expect(queryResults(initialState, action)).toEqual(
+      expect.objectContaining({
+        [expectedKey]: expect.any(Object)
+      })
+    )
+  })
+
+  it('uses params in key returned by getParams', () => {
+    const initialState = {}
+
+    const action = {
+      type: FETCH_MEMBERS,
+      payload: {data: {test: {items: []}}},
+      meta: {
+        graphql: {variables},
+        customVariables: {
+          id: 1
+        },
+        extractQueryResults: {
+          getItems: get('payload.data.test'),
+          getParams: get('meta.customVariables')
+        }
+      }
+    }
+
+    const expectedKey = JSON.stringify({
+      type: action.type,
+      params: action.meta.extractQueryResults.getParams(action)
+    })
+
+    expect(queryResults(initialState, action)).toEqual(
+      expect.objectContaining({
+        [expectedKey]: expect.any(Object)
+      })
+    )
+  })
 })
 
 describe('buildKey', () => {
