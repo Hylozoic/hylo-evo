@@ -9,6 +9,8 @@ import CommentCard from 'components/CommentCard'
 import RoundImage from 'components/RoundImage'
 import Highlight from 'components/Highlight'
 import Loading from 'components/Loading'
+import { Pill } from 'components/Pillbox/Pillbox'
+import { get, intersection } from 'lodash/fp'
 
 const SEARCH_RESULTS_ID = 'search-results'
 
@@ -140,6 +142,12 @@ export function SearchResult ({ searchResult, term = '', showPostDetails, showPe
 
 export function PersonCard ({ person, showPerson, highlightProps }) {
   if (!person) return null
+
+  const matchingSkill = get('0', intersection(
+    person.skills.map(s => s.name.toLowerCase()),
+    highlightProps.terms.map(t => t.toLowerCase())
+  ))
+
   return <div styleName='person-card' onClick={() => showPerson(person.id)}>
     <RoundImage url={person.avatarUrl} styleName='person-image' large />
     <div styleName='person-details'>
@@ -148,5 +156,6 @@ export function PersonCard ({ person, showPerson, highlightProps }) {
       </Highlight>
       <div styleName='person-location'>{person.location}</div>
     </div>
+    {matchingSkill && <Pill label={matchingSkill} styleName='person-skill' small />}
   </div>
 }

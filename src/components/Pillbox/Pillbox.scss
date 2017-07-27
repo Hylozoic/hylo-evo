@@ -13,6 +13,7 @@
   padding: 5px 10px;
   margin: 10px 8px 0px 0px;
   border-radius: 20px;
+  text-transform: uppercase;
 
   &.clickable {
     cursor: pointer;
@@ -22,4 +23,12 @@
       border: 2px solid $color-caribbean-green;
     }
   }
+}
+
+.small {
+  border-width: 1px;
+  padding: 0 8px;
+  height: 24px;
+  line-height: 24px;
+  font-size: 10px;
 }

@@ -32,7 +32,10 @@ export function fetchComments (id, opts = {}) {
       }
     },
     meta: {
-      extractModel: 'Post'
+      extractModel: 'Post',
+      extractQueryResults: {
+        getItems: get('payload.data.post.comments')
+      }
     }
   }
 }
