@@ -4,10 +4,10 @@ import './component.scss'
 
 const { string, bool } = React.PropTypes
 
-export default function SkillLabel ({ label, color = 'dark', active, className }) {
+export default function SkillLabel ({ children, label, color = 'dark', active, className }) {
   let styleName = cx('label', color, {active})
   return <div styleName={styleName} className={className}>
-    {label}
+    {label || children}
   </div>
 }
 SkillLabel.propTypes = {
