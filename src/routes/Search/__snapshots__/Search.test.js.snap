@@ -1,5 +1,84 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`PersonCard renders a skill when the search terms match a skill 1`] = `
+<div
+  data-styleName="person-card"
+  onClick={[Function]}
+>
+  <RoundImage
+    data-styleName="person-image"
+    large={true}
+    url="me.png"
+  />
+  <div
+    data-styleName="person-details"
+  >
+    <Highlight
+      component="span"
+      highlightClassName="highlight"
+      terms={
+        Array [
+          "walking",
+        ]
+      }
+    >
+      <div
+        data-styleName="person-name"
+      >
+        Joe Person
+      </div>
+    </Highlight>
+    <div
+      data-styleName="person-location"
+    >
+      home
+    </div>
+  </div>
+  <Pill
+    data-styleName="person-skill"
+    label="walking"
+    small={true}
+  />
+</div>
+`;
+
+exports[`PersonCard renders correctly 1`] = `
+<div
+  data-styleName="person-card"
+  onClick={[Function]}
+>
+  <RoundImage
+    data-styleName="person-image"
+    large={true}
+    url="me.png"
+  />
+  <div
+    data-styleName="person-details"
+  >
+    <Highlight
+      component="span"
+      highlightClassName="highlight"
+      terms={
+        Array [
+          "cat",
+        ]
+      }
+    >
+      <div
+        data-styleName="person-name"
+      >
+        Joe Person
+      </div>
+    </Highlight>
+    <div
+      data-styleName="person-location"
+    >
+      home
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Search matches the latest snapshot 1`] = `
 <withRouter(Connect(FullPageModal))>
   <div

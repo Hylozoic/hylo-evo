@@ -32,6 +32,7 @@ exports[`matches the last snapshot 1`] = `
   </div>
   <ul
     data-styleName="list"
+    id="thread-list-list"
   >
     <div
       data-styleName="no-conversations"
@@ -39,5 +40,9 @@ exports[`matches the last snapshot 1`] = `
       You have no active conversations
     </div>
   </ul>
+  <ScrollListener
+    elementId="thread-list-list"
+    onBottom={[Function]}
+  />
 </div>
 `;

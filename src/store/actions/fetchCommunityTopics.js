@@ -1,3 +1,4 @@
+import { get } from 'lodash/fp'
 export const FETCH_COMMUNITY_TOPICS = 'FETCH_COMMUNITY_TOPICS'
 
 export const communityTopicsQueryFragment = `
@@ -51,7 +52,16 @@ query ($first: Int, $offset: Int, $subscribed: Boolean, $autocomplete: String) {
 export default function fetchCommunityTopics (communityId, {
   subscribed = false, first = 20, offset = 0, sortBy, autocomplete = ''
 }) {
-  const query = communityId ? communityQuery : rootQuery
+  let query, extractModel, getItems
+  if (communityId) {
+    query = communityQuery
+    extractModel = 'Community'
+    getItems = get('community.communityTopics')
+  } else {
+    query = rootQuery
+    extractModel = 'CommunityTopic'
+    getItems = get('communityTopics')
+  }
   return {
     type: FETCH_COMMUNITY_TOPICS,
     graphql: {
@@ -67,7 +77,10 @@ export default function fetchCommunityTopics (communityId, {
       }
     },
     meta: {
-      extractModel: communityId ? 'Community' : 'CommunityTopic'
+      extractModel,
+      extractQueryResults: {
+        getItems
+      }
     }
   }
 }

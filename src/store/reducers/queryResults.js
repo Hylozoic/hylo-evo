@@ -5,21 +5,19 @@
 // to show when the sort order is set to "Name" separately from when it is set
 // to "Location". And both of these lists are different from what should be
 // shown when something has been typed into the search field.
-
-import { CREATE_POST } from 'components/PostEditor/PostEditor.store'
-import { FETCH_MEMBERS } from 'routes/Members/Members.store'
-import { FETCH_SEARCH } from 'routes/Search/Search.store'
-import { FETCH_NETWORK_SETTINGS, FETCH_MODERATORS, FETCH_COMMUNITIES } from 'routes/NetworkSettings/NetworkSettings.store'
-import { FETCH_COMMUNITY_TOPICS } from 'store/actions/fetchCommunityTopics'
+import { get, isNull, omitBy, pick, reduce, uniq } from 'lodash/fp'
 import {
-  FETCH_POST,
   FETCH_POSTS,
-  FETCH_COMMENTS,
-  FETCH_THREAD,
-  FETCH_MESSAGES,
   DROP_QUERY_RESULTS
 } from 'store/constants'
-import { get, isNull, omitBy, pick, reduce, uniq } from 'lodash/fp'
+import {
+  CREATE_POST
+} from 'components/PostEditor/PostEditor.store'
+import {
+  FETCH_NETWORK_SETTINGS,
+  FETCH_MODERATORS,
+  FETCH_COMMUNITIES
+} from 'routes/NetworkSettings/NetworkSettings.store'
 
 // reducer
 
@@ -46,43 +44,24 @@ export default function (state = {}, action) {
     }
   }
 
-  // If this starts to feel too coupled to specific actions, we could move the
-  // parameters below into the action's metadata, write a piece of middleware to
-  // detect the metadata and produce a generic action, and have this reducer
-  // handle only that action.
+  const { extractQueryResults } = meta || {}
+  if (extractQueryResults && payload) {
+    const { getItems, getParams, getType } = extractQueryResults
+    return appendIds(state,
+      getType ? getType(action) : action.type,
+      getParams ? getParams(action) : meta.graphql.variables,
+      getItems(action)
+    )
+  }
+
+  // Purpose of this reducer:
+  //   Ordering and subsets of ReduxORM data
+  //
+
   switch (type) {
     case CREATE_POST:
       root = payload.data.createPost
       return matchNewPostIntoQueryResults(state, root)
-
-    case FETCH_MEMBERS:
-      root = get('members', payload.data.community) || get('members', payload.data.network)
-      return appendIds(state, type, meta.graphql.variables, root)
-
-    case FETCH_POSTS:
-      root = payload.data.posts || get('community.posts', payload.data) || get('network.posts', payload.data)
-      return appendIds(state, type, meta.graphql.variables, root)
-
-    case FETCH_THREAD:
-    case FETCH_MESSAGES:
-      return appendIds(state, FETCH_MESSAGES, meta.graphql.variables, payload.data.messageThread.messages)
-
-    case FETCH_POST:
-    case FETCH_COMMENTS:
-      if (!payload.data.post) break
-      return appendIds(state, FETCH_COMMENTS, meta.graphql.variables, payload.data.post.comments)
-
-    case FETCH_COMMUNITY_TOPICS:
-      if (payload.data.community) {
-        return appendIds(state, FETCH_COMMUNITY_TOPICS, meta.graphql.variables, payload.data.community.communityTopics)
-      } else if (payload.data.communityTopics) {
-        return appendIds(state, FETCH_COMMUNITY_TOPICS, meta.graphql.variables, payload.data.communityTopics)
-      }
-      break
-
-    case FETCH_SEARCH:
-      if (!payload.data.search) break
-      return appendIds(state, FETCH_SEARCH, meta.graphql.variables, payload.data.search)
 
     case FETCH_NETWORK_SETTINGS:
       return addNetworkCommunities(addNetworkModerators(state))
@@ -136,7 +115,9 @@ function prependIdForCreate (state, type, params, id) {
   }
 }
 
-function appendIds (state, type, params, { items, total, hasMore }) {
+function appendIds (state, type, params, data) {
+  if (!data) return state
+  const { items, total, hasMore } = data
   const key = buildKey(type, params)
   const existingIds = get('ids', state[key]) || []
   return {

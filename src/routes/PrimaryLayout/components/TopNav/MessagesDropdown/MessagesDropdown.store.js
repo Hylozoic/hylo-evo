@@ -1,39 +1,53 @@
+import { get } from 'lodash/fp'
+
 import { FETCH_THREADS } from 'store/constants'
 
-export function fetchThreads () {
+export function fetchThreads (first = 10, offset = 0) {
   return {
     type: FETCH_THREADS,
     graphql: {
-      query: `{
+      query: `query ($first: Int, $offset: Int) {
         me {
           id
-          messageThreads(first: 10, sortBy: "updatedAt", order: "desc") {
-            id
-            unreadCount
-            lastReadAt
-            createdAt
-            updatedAt
-            participants {
+          messageThreads(sortBy: "updatedAt", order: "desc", first: $first, offset: $offset) {
+            total
+            hasMore
+            items {
               id
-              name
-              avatarUrl
-            }
-            messages(first: 1, order: "desc") {
-              items {
+              unreadCount
+              lastReadAt
+              createdAt
+              updatedAt
+              participants {
                 id
-                createdAt
-                text
-                creator {
+                name
+                avatarUrl
+              }
+              messages(first: 1, order: "desc") {
+                items {
                   id
+                  createdAt
+                  text
+                  creator {
+                    id
+                    name
+                  }
                 }
               }
             }
           }
         }
-      }`
+      }`,
+      variables: {
+        first,
+        offset
+      }
     },
     meta: {
-      extractModel: 'Me'
+      extractModel: 'Me',
+      extractQueryResults: {
+        getItems: get('payload.data.me.messageThreads')
+      }
     }
   }
 }

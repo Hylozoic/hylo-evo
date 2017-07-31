@@ -73,7 +73,10 @@ export function fetchNetworkMembers (slug, sortBy, offset, search) {
       variables: {slug, first: 20, offset, sortBy, search}
     },
     meta: {
-      extractModel: 'Network'
+      extractModel: 'Network',
+      extractQueryResults: {
+        getItems: get('payload.data.network.members')
+      }
     }
   }
 }
@@ -86,7 +89,10 @@ export function fetchCommunityMembers (slug, sortBy, offset, search) {
       variables: {slug, first: 20, offset, sortBy, search}
     },
     meta: {
-      extractModel: 'Community'
+      extractModel: 'Community',
+      extractQueryResults: {
+        getItems: get('payload.data.community.members')
+      }
     }
   }
 }
