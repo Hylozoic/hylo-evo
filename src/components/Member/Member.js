@@ -34,11 +34,11 @@ export default class Member extends React.Component {
         <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
         <div styleName='name'>{name}</div>
         <div styleName='location'>{location}</div>
-        <div styleName='skills'>
-          {skills && skills.map((skill, index) =>
+        {skills && <div styleName='skills'>
+          {skills.map((skill, index) =>
             <SkillLabel key={index} styleName='skill'>{skill.name}</SkillLabel>
           )}
-        </div>
+        </div>}
         <div styleName='tagline'>{tagline}</div>
       </div>
     </div>
