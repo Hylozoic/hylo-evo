@@ -42,5 +42,12 @@ $avatar-size: 120px;
 }
 
 .skills {
-  /* nothing */
+  margin-top: $member-padding;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.skill {
+  margin-right: 10px;
 }
