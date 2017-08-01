@@ -70,6 +70,7 @@ export default class SkillsSection extends Component {
               handleAddition={this.handleAddition}
               handleDelete={this.handleDelete}
               editable={isMe}
+              addLabel='Add a Skill'
               placeholder='What other skills do you have?'
               suggestions={suggestions}
             />

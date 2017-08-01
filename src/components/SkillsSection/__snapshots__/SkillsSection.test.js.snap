@@ -12,6 +12,7 @@ exports[`does something 1`] = `
       data-styleName="pill-container expanded"
     >
       <Pillbox
+        addLabel="Add a Skill"
         handleAddition={[Function]}
         handleDelete={[Function]}
         handleInputChange={[Function]}

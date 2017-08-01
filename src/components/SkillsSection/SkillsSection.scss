@@ -6,7 +6,6 @@ $pill-height: 216px;
 }
 
 .pill-container {
-  composes: caption-lt-lg from 'css/typography.scss';
   position: relative;
   max-height: $pill-height;
   margin-bottom: 5px;
