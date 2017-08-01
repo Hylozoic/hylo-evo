@@ -3,7 +3,6 @@ import './SkillsSection.scss'
 import Pillbox from 'components/Pillbox'
 import { isEmpty } from 'lodash'
 import cx from 'classnames'
-import Loading from 'components/Loading'
 
 export default class SkillsSection extends Component {
   static defaultState = {
@@ -23,6 +22,10 @@ export default class SkillsSection extends Component {
   componentDidUpdate (prevProps) {
     if (!isEmpty(this.props.autocomplete) && prevProps.autocomplete !== this.props.autocomplete) {
       this.props.fetchSkills()
+    }
+
+    if (prevProps.memberId !== this.props.memberId) {
+      this.props.fetchMemberSkills(this.props.memberId)
     }
   }
 
@@ -45,10 +48,12 @@ export default class SkillsSection extends Component {
   }
 
   render () {
-    const { suggestions, pending, isMe } = this.props
+    const { suggestions, isMe } = this.props
     let { expanded } = this.state
     let skills = this.props.skills
     if (!skills) skills = []
+
+    if (isEmpty(skills)) return <div />
 
     const showExpandButton = skills.length > 7
     const onClick = () => this.setState({expanded: !expanded})
@@ -62,25 +67,20 @@ export default class SkillsSection extends Component {
         <div styleName='header'>
           My Skills
         </div>
-        {pending && <Loading />}
-        {!pending && <div>
-          <div styleName={cx('pill-container', {expanded, collapsed: !expanded})}>
-            <Pillbox pills={(skills || []).map(skill => ({...skill, label: skill.name, onRemove: this.handleDelete}))}
-              handleInputChange={this.handleInputChange}
-              handleAddition={this.handleAddition}
-              handleDelete={this.handleDelete}
-              editable={isMe}
-              addLabel='Add a Skill'
-              placeholder='What other skills do you have?'
-              suggestions={suggestions}
-            />
-          </div>
-          {showExpandButton && <span styleName='expand-button' onClick={onClick}>
-            {expanded ? 'Show Less' : 'Show More Skills'}
-          </span>}
+        <div styleName={cx('pill-container', {expanded, collapsed: !expanded})}>
+          <Pillbox pills={(skills || []).map(skill => ({...skill, label: skill.name, onRemove: this.handleDelete}))}
+            handleInputChange={this.handleInputChange}
+            handleAddition={this.handleAddition}
+            handleDelete={this.handleDelete}
+            editable={isMe}
+            addLabel='Add a Skill'
+            placeholder='What other skills do you have?'
+            suggestions={suggestions}
+          />
         </div>
-        }
-
+        {showExpandButton && <span styleName='expand-button' onClick={onClick}>
+          {expanded ? 'Show Less' : 'Show More Skills'}
+        </span>}
       </div>
     )
   }
