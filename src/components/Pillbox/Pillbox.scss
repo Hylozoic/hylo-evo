@@ -1,34 +1,188 @@
-.container {
+.root {
+  position: relative;
+}
+
+.adding-root {
+  position: absolute;
+  z-index: 10;
+  background-color: white;
+  top: 0px;
+  visibility: hidden;
+}
+
+.adding {
+  visibility: visible;
+}
+
+$search-width: 266px;
+
+.search-wrapper {
+  width: 100%;
+
+  .search {
+    background: none;
+    max-width: 100%;
+    min-width: $search-width;
+    margin: 23px 0 0px 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    color: rgba(44, 64, 89, 0.8);
+    font-size: 15px;
+    border-bottom: 1px solid rgba(44, 64, 89, 0.3);
+    line-height: inherit;
+
+    &::placeholder {
+      color: $color-rhino-30;
+    }
+
+    &::-ms-clear {
+      display: none;
+    }
+  }
+
+  .close-icon {
+    border: 0;
+    background-color: rgba(0, 0, 0, 0);
+    display: inline-block;
+    vertical-align: middle;
+    outline: 0;
+    cursor: pointer;
+  }
+
+  .close-icon:after {
+    content: "X";
+    display: block;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    background-color: #EEE;
+    z-index: 1;
+    top: 20px;
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    font-weight: normal;
+    font-size: 12px;
+    box-shadow: 0 0 2px #EEE;
+    cursor: pointer;
+  }
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+}
+
+@media screen and (min-width: 30em) {
+  .suggestions {
+    width: $search-width;
+  }
+}
+
+.suggestions {
+  margin: -1px 0;
+  padding: 0;
+  list-style: none;
+  background: white;
+  border: 1px solid #D1D1D1;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.suggestion {
+  a {
+    color: $color-caribbean-green;
+    border-bottom: 1px solid #ddd;
+    padding: 6px 8px;
+    display: block;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background: #eee;
+  }
+
+  .disabled {
+    opacity: 0.5;
+    cursor: auto;
+  }
+}
+
+.suggestion-active {
+  background: #b7cfe0;
+}
+
+.add-btn {
+  background: #FFF;
+  font-size: 15px;
+  cursor: pointer;
+  border: 2px solid $color-caribbean-green;
+  color: $color-caribbean-green;
+  font-family: 'Circular Medium';
+  letter-spacing: 0.08em;
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 10px 8px 0px 0px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.pill-container {
   position: relative;
 }
 
 .pill {
-  border: 2px solid $color-ghost;
+  border: 2px solid #CCD1D7;
   background: #FFF;
   font-size: 15px;
   font-family: 'Circular Medium';
   letter-spacing: 0.08em;
-  color: $color-slate-gray-80;
   display: inline-block;
   padding: 5px 10px;
   margin: 10px 8px 0px 0px;
   border-radius: 20px;
   text-transform: uppercase;
 
-  &.clickable {
+  .displayLabel {
+    color: $color-slate-gray-80;
+  }
+
+  .removeLabel {
+    @include font-regular;
+    font-size: 1em;
+    content: '\2715';
+    cursor: pointer;
+    color: transparent;
+    margin-left: 2px;
+  }
+
+  &.removable {
+    padding: 5px 4px;
     cursor: pointer;
 
-    &:hover {
-      color: $color-caribbean-green;
-      border: 2px solid $color-caribbean-green;
+    .displayLabel {
+      margin-left: 12px;
     }
+
+    &:hover {
+      border: 2px solid $color-caribbean-green;
+
+      .removeLabel {
+        color: $color-caribbean-green;
+      }
+
+    }
+  }
+
+  .small {
+    border-width: 1px;
+    padding: 0 8px;
+    height: 24px;
+    line-height: 24px;
+    font-size: 10px;
   }
 }
 
-.small {
-  border-width: 1px;
-  padding: 0 8px;
-  height: 24px;
-  line-height: 24px;
-  font-size: 10px;
-}

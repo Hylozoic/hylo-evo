@@ -2,16 +2,20 @@
 
 exports[`does something 1`] = `
 <div
-  data-styleName="container"
+  data-styleName="styles.root"
 >
-  <Pill
-    id={1}
-    label="clickable"
-    onClick={[Function]}
-  />
-  <Pill
-    id={2}
-    label="unclickable"
-  />
+  <div
+    data-styleName="styles.pill-container"
+  >
+    <Pill
+      id={1}
+      label="clickable"
+      onClick={[Function]}
+    />
+    <Pill
+      id={2}
+      label="unclickable"
+    />
+  </div>
 </div>
 `;

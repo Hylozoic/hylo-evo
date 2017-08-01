@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`does something 1`] = `
+<div>
+  <div
+    data-styleName="header"
+  >
+    My Skills
+  </div>
+  <div>
+    <div
+      data-styleName="pill-container expanded"
+    >
+      <Pillbox
+        handleAddition={[Function]}
+        handleDelete={[Function]}
+        handleInputChange={[Function]}
+        pills={Array []}
+        placeholder="What other skills do you have?"
+      />
+    </div>
+  </div>
+</div>
+`;

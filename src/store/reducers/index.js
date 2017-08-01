@@ -4,6 +4,7 @@ import orm from './ormReducer'
 import pending from './pending'
 // Local store
 // generator-marker-local-store-import
+import SkillsSection from 'components/SkillsSection/SkillsSection.store'
 import NetworkCommunities from 'routes/NetworkCommunities/NetworkCommunities.store'
 import NetworkSettings from 'routes/NetworkSettings/NetworkSettings.store'
 import PrimaryLayout from 'routes/PrimaryLayout/PrimaryLayout.store'
@@ -34,6 +35,7 @@ const combinedReducers = combineReducers({
 
   // Local store (Component)
   // generator-marker-local-store-reducer
+  SkillsSection,
   NetworkCommunities,
   NetworkSettings,
   PrimaryLayout,
