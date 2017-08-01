@@ -24,6 +24,13 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
         avatarUrl
         location
         tagline
+        skills {
+          hasMore
+          items {
+            id
+            name
+          }
+        }
       }
       hasMore
     }
@@ -45,6 +52,13 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
         avatarUrl
         location
         tagline
+        skills {
+          hasMore
+          items {
+            id
+            name
+          }
+        }
       }
       hasMore
     }
@@ -126,6 +140,10 @@ export const getMembers = ormCreateSelector(
     .filter(x => includes(x.id, results.ids))
     .orderBy(x => results.ids.indexOf(x.id))
     .toModelArray()
+    .map(person => ({
+      ...person.ref,
+      skills: person.skills.toModelArray()
+    }))
   }
 )
 

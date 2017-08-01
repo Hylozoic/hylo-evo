@@ -40,3 +40,14 @@ $avatar-size: 120px;
   composes: bdy-lt-sm from 'css/typography.scss';
   margin-top: $member-padding;
 }
+
+.skills {
+  margin-top: $member-padding;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.skill {
+  margin-right: 10px;
+}

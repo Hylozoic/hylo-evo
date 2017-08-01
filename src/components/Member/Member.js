@@ -1,7 +1,8 @@
 import React from 'react'
+import { bgImageStyle } from 'util/index'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
-import { bgImageStyle } from 'util/index'
+import SkillLabel from 'components/SkillLabel'
 import './Member.scss'
 
 const { string, shape } = React.PropTypes
@@ -19,7 +20,7 @@ export default class Member extends React.Component {
     const {
       className,
       slug,
-      member: {id, name, location, tagline, avatarUrl},
+      member: {id, name, location, tagline, avatarUrl, skills},
       goToPerson,
       canModerate,
       removeMember
@@ -33,6 +34,11 @@ export default class Member extends React.Component {
         <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
         <div styleName='name'>{name}</div>
         <div styleName='location'>{location}</div>
+        {skills && <div styleName='skills'>
+          {skills.map((skill, index) =>
+            <SkillLabel key={index} styleName='skill'>{skill.name}</SkillLabel>
+          )}
+        </div>}
         <div styleName='tagline'>{tagline}</div>
       </div>
     </div>
