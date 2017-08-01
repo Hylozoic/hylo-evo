@@ -56,7 +56,7 @@ $search-width: 266px;
     width: 17px;
     height: 17px;
     position: absolute;
-    background-color: #EEE;
+    background-color: $color-slate-gray-80;
     z-index: 1;
     top: 20px;
     border-radius: 50%;
@@ -64,7 +64,7 @@ $search-width: 266px;
     color: #fff;
     font-weight: normal;
     font-size: 12px;
-    box-shadow: 0 0 2px #EEE;
+    box-shadow: 0 0 2px $color-slate-gray-80;
     cursor: pointer;
   }
 }
@@ -135,7 +135,7 @@ $search-width: 266px;
 }
 
 .pill {
-  border: 2px solid #CCD1D7;
+  border: 2px solid $color-slate-gray-80;
   background: #FFF;
   font-size: 15px;
   font-family: 'Circular Medium';
