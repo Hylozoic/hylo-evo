@@ -66,7 +66,7 @@ export default class Pillbox extends Component {
   }, 200)
 
   render () {
-    const { addLabel = 'Add', editable } = this.props
+    const { addLabel = 'Add', editable, handleDelete } = this.props
 
     let { pills, placeholder = 'type here', suggestions } = this.props
 
@@ -109,7 +109,7 @@ export default class Pillbox extends Component {
       }
       <div styleName='styles.pill-container'>
         {editable && <span styleName='styles.add-btn' onClick={addOnClick}>{addLabel}</span>}
-        {pills.map(pill => <Pill key={pill.id} {...pill} editable={editable} />)}
+        {pills.map(pill => <Pill key={pill.id} {...pill} editable={editable} onRemove={handleDelete} />)}
       </div>
     </div>
   }

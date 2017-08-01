@@ -48,10 +48,8 @@ export default class SkillsSection extends Component {
   }
 
   render () {
-    const { suggestions, isMe } = this.props
+    const { suggestions, isMe, skills } = this.props
     let { expanded } = this.state
-    let skills = this.props.skills
-    if (!skills) skills = []
 
     if (isEmpty(skills)) return <div />
 
@@ -68,7 +66,7 @@ export default class SkillsSection extends Component {
           My Skills
         </div>
         <div styleName={cx('pill-container', {expanded, collapsed: !expanded})}>
-          <Pillbox pills={(skills || []).map(skill => ({...skill, label: skill.name, onRemove: this.handleDelete}))}
+          <Pillbox pills={skills.map(skill => ({...skill, label: skill.name}))}
             handleInputChange={this.handleInputChange}
             handleAddition={this.handleAddition}
             handleDelete={this.handleDelete}
