@@ -143,7 +143,6 @@ export const getSkills = ormCreateSelector(
     const person = session.Person.withId(memberId)
     const alreadySelectedIds = map(person.skills.toRefArray(), 'id')
     const ids = difference(results.ids, alreadySelectedIds)
-    console.log(results.ids, alreadySelectedIds, ids, person.skills.toRefArray())
 
     return session.Skill.all()
       .filter(x => includes(x.id, ids))
