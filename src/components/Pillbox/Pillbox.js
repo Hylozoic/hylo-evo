@@ -57,11 +57,6 @@ export default class Pillbox extends Component {
     this.resetInput()
   }
 
-  remove = tag => event => {
-    this.props.handleDelete(tag)
-    event.preventDefault()
-  }
-
   focus = () => delay(() => {
     this.input.focus()
   }, 10)
@@ -121,14 +116,12 @@ export default class Pillbox extends Component {
 }
 
 /**
- *
- * @param id
- * @param label
+ * @param id unique ID
+ * @param label pill label
  * @param onRemove called when removing a pill.  Function is passed the ID and LABEL
- * @param className
- * @param small
- * @returns {XML}
- * @constructor
+ * @param className a custom classname to apply
+ * @param editable allow removing of pills
+ * @param small applies the small class
  */
 export function Pill ({id, label, onRemove, className, small, editable}) {
   return <div styleName={cx('styles.pill', {'styles.removable': (editable && onRemove), small})}

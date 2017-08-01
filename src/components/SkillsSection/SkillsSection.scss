@@ -8,12 +8,12 @@ $pill-height: 216px;
 .pill-container {
   composes: caption-lt-lg from 'css/typography.scss';
   position: relative;
-  overflow: hidden;
   max-height: $pill-height;
   margin-bottom: 5px;
 }
 
 .collapsed {
+  overflow: hidden;
 
   &:after {
     content  : "";
