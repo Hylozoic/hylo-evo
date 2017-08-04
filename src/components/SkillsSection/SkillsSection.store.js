@@ -26,7 +26,8 @@ export function addSkill (skillName) {
     graphql: {
       query: `mutation ($name: String) {
         addSkill(name: $name) {
-          success
+          id,
+          name
         }
       }`,
       variables: {
@@ -40,17 +41,17 @@ export function addSkill (skillName) {
   }
 }
 
-export function removeSkill (skillId, skillName) {
+export function removeSkill (skillId) {
   return {
     type: REMOVE_SKILL,
     graphql: {
-      query: `mutation ($name: String) {
-        removeSkill(name: $name) {
+      query: `mutation ($id: ID) {
+        removeSkill(id: $id) {
           success
         }
       }`,
       variables: {
-        name: skillName
+        id: skillId
       }
     },
     meta: {

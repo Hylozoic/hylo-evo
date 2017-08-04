@@ -1,3 +1,6 @@
+$pill-font-size: 14px;
+$search-width: 266px;
+
 .root {
   position: relative;
 }
@@ -15,7 +18,20 @@
   visibility: visible;
 }
 
-$search-width: 266px;
+.add-btn {
+  background: #FFF;
+  font-size: $pill-font-size;
+  cursor: pointer;
+  border: 2px solid $color-caribbean-green;
+  color: $color-caribbean-green;
+  font-family: 'Circular Bold';
+  letter-spacing: 0.08em;
+  display: inline-block;
+  padding: 3px 8px;
+  margin: 10px 8px 0px 0px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
 
 .search-wrapper {
   width: 100%;
@@ -34,7 +50,7 @@ $search-width: 266px;
     line-height: inherit;
 
     &::placeholder {
-      color: $color-rhino-30;
+      color: $color-ghost;
     }
 
     &::-ms-clear {
@@ -57,7 +73,7 @@ $search-width: 266px;
     width: 17px;
     height: 17px;
     position: absolute;
-    background-color: $color-slate-gray-80;
+    background-color: $color-ghost;
     z-index: 1;
     top: 20px;
     border-radius: 50%;
@@ -116,65 +132,68 @@ $search-width: 266px;
   background: #b7cfe0;
 }
 
-.add-btn {
-  background: #FFF;
-  font-size: 15px;
-  cursor: pointer;
-  border: 2px solid $color-caribbean-green;
-  color: $color-caribbean-green;
-  font-family: 'Circular Medium';
-  letter-spacing: 0.08em;
-  display: inline-block;
-  padding: 5px 10px;
-  margin: 10px 8px 0px 0px;
-  border-radius: 20px;
-  text-transform: uppercase;
-}
-
 .pill-container {
   position: relative;
 }
 
 .pill {
-  border: 2px solid $color-slate-gray-80;
+  // Prevent highlighting of text on click/doubleclick
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+
+  border: 2px solid $color-ghost;
   background: #FFF;
-  font-size: 15px;
-  font-family: 'Circular Medium';
+  font-size: $pill-font-size;
+  font-family: 'Circular Bold';
   letter-spacing: 0.08em;
   display: inline-block;
-  padding: 5px 10px;
+  padding: 2px 8px;
   margin: 10px 8px 0px 0px;
   border-radius: 20px;
   text-transform: uppercase;
 
-  .displayLabel {
+  .display-label {
     color: $color-slate-gray-80;
   }
+  // onclick bump word to left to make room for X
+  // click again to actually remove it
 
-  .removeLabel {
-    @include font-regular;
-    font-size: 1em;
+  .remove-label {
+    font-size: 12px;
     content: '\2715';
     cursor: pointer;
     color: transparent;
     margin-left: 2px;
+    vertical-align: top;
   }
 
   &.removable {
-    padding: 5px 4px;
+    padding: 3px 4px;
     cursor: pointer;
 
-    .displayLabel {
-      margin-left: 12px;
+    .display-label {
+      margin-left: 17px;
     }
 
     &:hover {
-      border: 2px solid $color-caribbean-green;
-
-      .removeLabel {
-        color: $color-caribbean-green;
+      .remove-label {
+        color: $color-slate-gray-80;
       }
+    }
+  }
 
+  &.removing {
+    .display-label {
+      color: #FFF;
+    }
+
+    border: 2px solid $color-amaranth;
+    background-color: $color-amaranth;
+    color: #FFF;
+
+    .remove-label {
+      color: #FFF !important;
     }
   }
 
@@ -187,3 +206,20 @@ $search-width: 266px;
   }
 }
 
+.enter {
+  opacity: 0.01;
+}
+
+.enter.enter-active {
+  opacity: 1;
+  transition: opacity 400ms ease-in;
+}
+
+.leave {
+  opacity: 1;
+}
+
+.leave.leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

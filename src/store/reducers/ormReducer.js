@@ -34,11 +34,11 @@ import {
 } from 'routes/PrimaryLayout/PrimaryLayout.store'
 import {
   REMOVE_SKILL_PENDING,
-  ADD_SKILL_PENDING
+  ADD_SKILL
 } from 'components/SkillsSection/SkillsSection.store'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
-import { find, uniqueId } from 'lodash/fp'
+import { find } from 'lodash/fp'
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
@@ -262,9 +262,10 @@ export default function ormReducer (state = {}, action) {
       person.skills.remove(meta.skillId)
       break
 
-    case ADD_SKILL_PENDING:
+    case ADD_SKILL:
+      const skill = payload.data.addSkill
       person = Person.withId(Me.first().id)
-      person.updateAppending({skills: [Skill.create({id: uniqueId('skill'), name: meta.skillName})]})
+      person.updateAppending({skills: [Skill.create(skill)]})
       break
   }
 

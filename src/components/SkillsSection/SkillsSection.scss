@@ -9,6 +9,7 @@ $pill-height: 216px;
   position: relative;
   max-height: $pill-height;
   margin-bottom: 5px;
+  transition: max-height 0.50s ease-out;
 }
 
 .collapsed {
@@ -30,9 +31,8 @@ $pill-height: 216px;
 }
 
 .expanded {
-  transition: max-height 0.50s;
   height: auto;
-  max-height: 1500px;
+  max-height: 1000px;
 }
 
 .expand-button {
