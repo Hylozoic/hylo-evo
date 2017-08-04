@@ -7,30 +7,32 @@ exports[`shows basic pills 1`] = `
   >
     My Skills
   </div>
-  <div
-    data-styleName="pill-container expanded"
-  >
-    <Pillbox
-      addLabel="Add a Skill"
-      handleAddition={[Function]}
-      handleDelete={[Function]}
-      handleInputChange={[Function]}
-      pills={
-        Array [
-          Object {
-            "id": 1,
-            "label": "test",
-            "name": "test",
-          },
-          Object {
-            "id": 2,
-            "label": "unclickable",
-            "name": "unclickable",
-          },
-        ]
-      }
-      placeholder="What other skills do you have?"
-    />
+  <div>
+    <div
+      data-styleName="pill-container expanded"
+    >
+      <Pillbox
+        addLabel="Add a Skill"
+        handleAddition={[Function]}
+        handleDelete={[Function]}
+        handleInputChange={[Function]}
+        pills={
+          Array [
+            Object {
+              "id": 1,
+              "label": "test",
+              "name": "test",
+            },
+            Object {
+              "id": 2,
+              "label": "unclickable",
+              "name": "unclickable",
+            },
+          ]
+        }
+        placeholder="What other skills do you have?"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -42,31 +44,33 @@ exports[`shows editable fields when isMe = true 1`] = `
   >
     My Skills
   </div>
-  <div
-    data-styleName="pill-container expanded"
-  >
-    <Pillbox
-      addLabel="Add a Skill"
-      editable={true}
-      handleAddition={[Function]}
-      handleDelete={[Function]}
-      handleInputChange={[Function]}
-      pills={
-        Array [
-          Object {
-            "id": 1,
-            "label": "test",
-            "name": "test",
-          },
-          Object {
-            "id": 2,
-            "label": "unclickable",
-            "name": "unclickable",
-          },
-        ]
-      }
-      placeholder="What other skills do you have?"
-    />
+  <div>
+    <div
+      data-styleName="pill-container expanded"
+    >
+      <Pillbox
+        addLabel="Add a Skill"
+        editable={true}
+        handleAddition={[Function]}
+        handleDelete={[Function]}
+        handleInputChange={[Function]}
+        pills={
+          Array [
+            Object {
+              "id": 1,
+              "label": "test",
+              "name": "test",
+            },
+            Object {
+              "id": 2,
+              "label": "unclickable",
+              "name": "unclickable",
+            },
+          ]
+        }
+        placeholder="What other skills do you have?"
+      />
+    </div>
   </div>
 </div>
 `;
