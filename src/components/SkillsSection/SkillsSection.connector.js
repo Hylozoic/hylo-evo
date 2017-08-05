@@ -11,10 +11,10 @@ export function mapStateToProps (state, props) {
   const autocomplete = getAutocomplete(state)
 
   return {
-    skills: getMemberSkills(state, props),
+    skills: getMemberSkills(state, {memberId: props.memberId}),
     isMe,
     currentUser,
-    suggestions: getSkills(state, { autocomplete, memberId: props.memberId }),
+    suggestions: getSkills(state, {autocomplete, memberId: props.memberId}),
     pending: !!state.pending[FETCH_MEMBER_SKILLS],
     autocomplete: getAutocomplete(state)
   }
@@ -37,6 +37,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
+    fetchMemberSkills: () => dispatchProps.fetchMemberSkills(ownProps.memberId),
     fetchSkills: () => dispatchProps.fetchSkills(autocomplete)
   }
 }

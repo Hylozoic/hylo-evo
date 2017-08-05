@@ -17,7 +17,7 @@ export default class SkillsSection extends Component {
   }
 
   componentDidMount () {
-    this.props.fetchMemberSkills(this.props.memberId)
+    this.props.fetchMemberSkills()
   }
 
   componentDidUpdate (prevProps) {
@@ -26,7 +26,7 @@ export default class SkillsSection extends Component {
     }
 
     if (prevProps.memberId !== this.props.memberId) {
-      this.props.fetchMemberSkills(this.props.memberId)
+      this.props.fetchMemberSkills()
     }
   }
 
