@@ -2,16 +2,47 @@
 
 exports[`does something 1`] = `
 <div
-  data-styleName="container"
+  data-styleName="styles.root"
 >
-  <Pill
-    id={1}
-    label="clickable"
-    onClick={[Function]}
-  />
-  <Pill
-    id={2}
-    label="unclickable"
+  <div
+    data-styleName="styles.pill-container"
+  >
+    <ReactCSSTransitionGroup
+      transitionAppear={false}
+      transitionEnter={true}
+      transitionEnterTimeout={400}
+      transitionLeave={true}
+      transitionLeaveTimeout={300}
+      transitionName={
+        Object {
+          "enter": undefined,
+          "enterActive": undefined,
+          "leave": undefined,
+          "leaveActive": undefined,
+        }
+      }
+    >
+      <Pill
+        id={1}
+        label="clickable"
+        onClick={[Function]}
+      />
+      <Pill
+        id={2}
+        label="unclickable"
+      />
+    </ReactCSSTransitionGroup>
+  </div>
+  <ReactTooltip
+    delayShow={500}
+    disable={true}
+    effect="solid"
+    id="pill-remove"
+    insecure={true}
+    place="top"
+    resizeHide={true}
+    type="dark"
+    wrapper="div"
   />
 </div>
 `;

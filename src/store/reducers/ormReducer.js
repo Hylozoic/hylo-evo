@@ -32,6 +32,10 @@ import {
 import {
   FETCH_FOR_COMMUNITY_PENDING
 } from 'routes/PrimaryLayout/PrimaryLayout.store'
+import {
+  REMOVE_SKILL_PENDING,
+  ADD_SKILL
+} from 'components/SkillsSection/SkillsSection.store'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
 import { find } from 'lodash/fp'
@@ -53,7 +57,8 @@ export default function ormReducer (state = {}, action) {
     Notification,
     Person,
     Post,
-    PostCommenter
+    PostCommenter,
+    Skill
   } = session
 
   const invalidateNotifications = () => {
@@ -61,7 +66,7 @@ export default function ormReducer (state = {}, action) {
     first && first.update({time: Date.now()})
   }
 
-  let membership, community
+  let membership, community, person
 
   switch (type) {
     case EXTRACT_MODEL:
@@ -193,7 +198,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case ADD_MODERATOR_PENDING:
-      const person = Person.withId(meta.personId)
+      person = Person.withId(meta.personId)
       Community.withId(meta.communityId).updateAppending({moderators: [person]})
       break
 
@@ -250,6 +255,18 @@ export default function ormReducer (state = {}, action) {
       membership = Membership.safeGet({community: community.id})
       if (!membership) break
       membership.update({newPostCount: 0})
+      break
+
+    case REMOVE_SKILL_PENDING:
+      person = Person.withId(Me.first().id)
+      person.skills.remove(meta.skillId)
+      break
+
+    case ADD_SKILL:
+      const skill = payload.data.addSkill
+      person = Person.withId(Me.first().id)
+      person.updateAppending({skills: [Skill.create(skill)]})
+      break
   }
 
   return session.state

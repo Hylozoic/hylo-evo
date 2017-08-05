@@ -1,34 +1,225 @@
-.container {
+$pill-font-size: 14px;
+$search-width: 266px;
+
+.root {
   position: relative;
 }
- 
+
+.adding-root {
+  position: absolute;
+  z-index: 10;
+  background-color: white;
+  top: 0px;
+  visibility: hidden;
+  width: 100%;
+}
+
+.adding {
+  visibility: visible;
+}
+
+.add-btn {
+  background: #FFF;
+  font-size: $pill-font-size;
+  cursor: pointer;
+  border: 2px solid $color-caribbean-green;
+  color: $color-caribbean-green;
+  font-family: 'Circular Bold';
+  letter-spacing: 0.08em;
+  display: inline-block;
+  padding: 3px 8px;
+  margin: 10px 8px 0px 0px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.search-wrapper {
+  width: 100%;
+
+  .search {
+    background: none;
+    max-width: 100%;
+    min-width: $search-width;
+    margin: 23px 0 0px 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    color: rgba(44, 64, 89, 0.8);
+    font-size: 15px;
+    border-bottom: 1px solid rgba(44, 64, 89, 0.3);
+    line-height: inherit;
+
+    &::placeholder {
+      color: $color-ghost;
+    }
+
+    &::-ms-clear {
+      display: none;
+    }
+  }
+
+  .close-icon {
+    border: 0;
+    background-color: rgba(0, 0, 0, 0);
+    display: inline-block;
+    vertical-align: middle;
+    outline: 0;
+    cursor: pointer;
+  }
+
+  .close-icon:after {
+    content: "X";
+    display: block;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    background-color: $color-ghost;
+    z-index: 1;
+    top: 20px;
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    font-weight: normal;
+    font-size: 12px;
+    box-shadow: 0 0 2px $color-slate-gray-80;
+    cursor: pointer;
+  }
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+}
+
+@media screen and (min-width: 30em) {
+  .suggestions {
+    width: $search-width;
+  }
+}
+
+.suggestions {
+  margin: -1px 0;
+  padding: 0;
+  list-style: none;
+  background: white;
+  border: 1px solid #D1D1D1;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.suggestion {
+  a {
+    color: $color-caribbean-green;
+    border-bottom: 1px solid #ddd;
+    padding: 6px 8px;
+    display: block;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background: #eee;
+  }
+
+  .disabled {
+    opacity: 0.5;
+    cursor: auto;
+  }
+}
+
+.suggestion-active {
+  background: #b7cfe0;
+}
+
+.pill-container {
+  position: relative;
+}
+
 .pill {
+  // Prevent highlighting of text on click/doubleclick
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+
   border: 2px solid $color-ghost;
   background: #FFF;
-  font-size: 15px;
-  font-family: 'Circular Medium';
+  font-size: $pill-font-size;
+  font-family: 'Circular Bold';
   letter-spacing: 0.08em;
-  color: $color-slate-gray-80;
   display: inline-block;
-  padding: 5px 10px;
+  padding: 2px 8px;
   margin: 10px 8px 0px 0px;
   border-radius: 20px;
   text-transform: uppercase;
 
-  &.clickable {
+  .display-label {
+    color: $color-slate-gray-80;
+  }
+  // onclick bump word to left to make room for X
+  // click again to actually remove it
+
+  .remove-label {
+    font-size: 12px;
+    content: '\2715';
+    cursor: pointer;
+    color: transparent;
+    margin-left: 2px;
+    vertical-align: top;
+  }
+
+  &.removable {
+    padding: 3px 4px;
     cursor: pointer;
 
-    &:hover {
-      color: $color-caribbean-green;
-      border: 2px solid $color-caribbean-green;
+    .display-label {
+      margin-left: 17px;
     }
+
+    &:hover {
+      .remove-label {
+        color: $color-slate-gray-80;
+      }
+    }
+  }
+
+  &.removing {
+    .display-label {
+      color: #FFF;
+    }
+
+    border: 2px solid $color-amaranth;
+    background-color: $color-amaranth;
+    color: #FFF;
+
+    .remove-label {
+      color: #FFF !important;
+    }
+  }
+
+  .small {
+    border-width: 1px;
+    padding: 0 8px;
+    height: 24px;
+    line-height: 24px;
+    font-size: 10px;
   }
 }
 
-.small {
-  border-width: 1px;
-  padding: 0 8px;
-  height: 24px;
-  line-height: 24px;
-  font-size: 10px;
+.enter {
+  opacity: 0.01;
+}
+
+.enter.enter-active {
+  opacity: 1;
+  transition: opacity 400ms ease-in;
+}
+
+.leave {
+  opacity: 1;
+}
+
+.leave.leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
 }

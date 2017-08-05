@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
+import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
-import getPerson from 'store/selectors/getPerson'
 
 export function mapStateToProps (state, props) {
-  const member = getPerson(state, {personId: props.id})
   const currentUser = getMe(state, props)
-  const isMe = currentUser && member && currentUser.id === member.id
+  const memberId = getParam('id', state, props)
+
   return {
-    isMe,
-    member
+    currentUser,
+    memberId
   }
 }
 
