@@ -53,10 +53,6 @@ export default class Login extends React.Component {
             <Icon name='Google' styleName='auth-icon' />
             Google
             </a>
-          <a styleName='linkedin' onClick={() => loginWithService('linkedin')}>
-            <Icon name='LinkedIn' styleName='auth-icon' />
-            LinkedIn
-          </a>
         </div>
       </div>
       <div styleName='below-container'>
@@ -76,9 +72,7 @@ function formatError (error) {
       'google': 'Google',
       'google-token': 'Google',
       'facebook': 'Facebook',
-      'facebook-token': 'Facebook',
-      'linkedin': 'LinkedIn',
-      'linkedin-token': 'LinkedIn'
+      'facebook-token': 'Facebook'
     }[option])))
 
     return <div styleName='error'>
