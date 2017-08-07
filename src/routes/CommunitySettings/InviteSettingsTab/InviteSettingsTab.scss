@@ -35,3 +35,16 @@
   composes: text-button from 'css/typography.scss';
   font-size: 13px;
 }
+
+.buttons {
+  margin-left: auto;
+}
+
+.button {
+  padding: 0 15px;
+}
+
+.reset-button {
+  composes: button;
+  margin-right: 10px;
+}

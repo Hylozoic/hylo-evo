@@ -19,8 +19,14 @@ export default function InviteSettingsTab ({ community }) {
         <div styleName='help'>Anyone with this link can join the community</div>
         <div styleName='invite-link'>{inviteLink}</div>
       </div>
-      <Button color='green-white-green-border' narrow small>Reset Link</Button>
-      <Button color='green-white-green-border' narrow small>Copy Link</Button>
+      <div styleName='buttons'>
+        <Button color='green-white-green-border' styleName='reset-button' narrow small>
+          Reset Link
+        </Button>
+        <Button color='green-white-green-border' styleName='button' narrow small>
+          Copy Link
+        </Button>
+      </div>
     </div>
   </div>
 }
