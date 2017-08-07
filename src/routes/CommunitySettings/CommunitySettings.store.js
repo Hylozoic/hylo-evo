@@ -17,6 +17,7 @@ export function fetchCommunitySettings (slug) {
           description
           location
           settings
+          betaAccessCode
           moderators (first: 100) {
             hasMore
             items {

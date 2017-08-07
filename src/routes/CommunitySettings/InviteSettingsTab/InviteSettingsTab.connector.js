@@ -1,10 +1,13 @@
 import { connect } from 'react-redux'
+import { communityJoinUrl } from 'util/index'
 // import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
+  const { community } = props
+  const inviteLink = communityJoinUrl(community)
+
   return {
-    example: 'example'
-//  currentUser: getMe(state, props)
+    inviteLink
   }
 }
 
