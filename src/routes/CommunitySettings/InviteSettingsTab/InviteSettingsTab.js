@@ -1,12 +1,16 @@
 import React from 'react'
 import './InviteSettingsTab.scss'
 import Button from 'components/Button'
+import CopyToClipboard from 'react-copy-to-clipboard'
 
 const { object } = React.PropTypes
 
 export default function InviteSettingsTab ({ community }) {
   const { name } = community
   const inviteLink = 'https://www.hylo.com/c/hylo/join/aelaknetiken'
+
+  const onCopy = () => console.log('copied')
+
   return <div>
     <div styleName='header'>
       <div styleName='title'>Invite People</div>
@@ -23,9 +27,11 @@ export default function InviteSettingsTab ({ community }) {
         <Button color='green-white-green-border' styleName='reset-button' narrow small>
           Reset Link
         </Button>
-        <Button color='green-white-green-border' styleName='button' narrow small>
-          Copy Link
-        </Button>
+        <CopyToClipboard text={inviteLink} onCopy={onCopy}>
+          <Button color='green-white-green-border' styleName='button' narrow small>
+            Copy Link
+          </Button>
+        </CopyToClipboard>
       </div>
     </div>
   </div>
