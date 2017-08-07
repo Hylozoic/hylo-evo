@@ -5,13 +5,12 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 
 const { object } = React.PropTypes
 
-export default function InviteSettingsTab ({ community, resetLink, inviteLink }) {
+export default function InviteSettingsTab ({ community, regenerateAccessCode, inviteLink }) {
   const { name } = community
-  // const inviteLink = 'https://www.hylo.com/c/hylo/join/aelaknetiken'
 
   const onReset = () => {
     if (window.confirm("Are you sure you want to create a new join link? The current link won't work anymore if you do.")) {
-      resetLink()
+      regenerateAccessCode()
     }
   }
   const onCopy = () => console.log('copied')

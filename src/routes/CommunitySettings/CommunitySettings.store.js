@@ -3,6 +3,9 @@ import {
   UPDATE_COMMUNITY_SETTINGS
 } from 'store/constants'
 
+const MODULE_NAME = 'CommunitySettings'
+const REGENERATE_ACCESS_CODE = `${MODULE_NAME}/REGENERATE_ACCESS_CODE`
+
 export function fetchCommunitySettings (slug) {
   return {
     type: FETCH_COMMUNITY_SETTINGS,
@@ -55,6 +58,26 @@ export function updateCommunitySettings (id, changes) {
       id,
       changes,
       optimistic: true
+    }
+  }
+}
+
+export function regenerateAccessCode (communityId) {
+  return {
+    type: REGENERATE_ACCESS_CODE,
+    graphql: {
+      query: `mutation ($communityId: ID) {
+        regenerateAccessCode(communityId: $communityId) {
+          id
+          betaAccessCode
+        }
+      }`,
+      variables: {
+        communityId
+      }
+    },
+    meta: {
+      extractModel: 'Community'
     }
   }
 }
