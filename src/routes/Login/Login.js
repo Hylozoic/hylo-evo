@@ -4,6 +4,7 @@ import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import { uniq } from 'lodash'
+import 'particles.js'
 
 export default class Login extends React.Component {
   constructor (props) {
@@ -17,12 +18,14 @@ export default class Login extends React.Component {
 
   componentDidMount () {
     this.email.focus()
+    window.particlesJS.load('particles-background', 'assets/particlesjs-config.json', o => console.log('!!! particles loaded', o))
   }
 
   render () {
     const setState = key => event => this.setState({[key]: event.target.value})
     const { loginWithService } = this.props
     return <div styleName='background'>
+      <div id='particles-background' />
       <div styleName='container'>
         <h1 styleName='title'>Log in to Hylo-Evo</h1>
         <p styleName='blurb'>Stay connected, organized, and engaged with your community.</p>
@@ -54,9 +57,6 @@ export default class Login extends React.Component {
             Google
             </a>
         </div>
-      </div>
-      <div styleName='below-container'>
-        <a onClick={() => this.props.navigate('/ui-kit')}>UI Kit</a>
       </div>
     </div>
   }

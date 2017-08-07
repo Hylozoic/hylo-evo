@@ -36,11 +36,6 @@ export default function Navigation (props) {
       label: 'Members',
       icon: 'Members',
       to: membersPath
-    },
-    {
-      label: 'UI Kit',
-      icon: 'Projects',
-      to: '/ui-kit'
     }
   ])
 

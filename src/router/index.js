@@ -1,9 +1,8 @@
 import React from 'react'
 import { StaticRouter } from 'react-router'
-import { Switch, Route } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 import PrimaryLayout from 'routes/PrimaryLayout'
-import UIKit from '../routes/UIKit'
 import AuthRoute from './AuthRoute'
 import NonAuthRoute from './NonAuthRoute'
 import Login from 'routes/Login'
@@ -26,7 +25,6 @@ export function serverRouter (req, context) {
 function rootRoutes () {
   return <LoginCheck>
     <Switch>
-      <Route path='/ui-kit' component={UIKit} />
       <NonAuthRoute path='/login' component={Login} />
       <AuthRoute path='/' component={PrimaryLayout} />
     </Switch>

@@ -85,6 +85,7 @@
     "lodash": "^4.17.4",
     "node-sass": "^4.5.0",
     "normalize.css": "^5.0.0",
+    "particles.js": "^2.0.0",
     "postcss-modules-resolve-path": "^1.0.0",
     "postcss-scss": "^0.4.1",
     "pretty-date": "^0.2.0",
