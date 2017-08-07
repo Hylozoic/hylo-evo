@@ -1,7 +1,7 @@
 $third-party-icon-size: 14px;
 
 :global {
-  #particles-background {
+  #particlesBackground {
     position: absolute;
     display: block;
     top: 0;
@@ -23,9 +23,6 @@ $third-party-icon-size: 14px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  // background: url(/william-white-34988-community.jpg);
-  // background-position: top left;
-  // background-size: cover;
 }
 
 .container {
@@ -39,12 +36,6 @@ $third-party-icon-size: 14px;
   composes: hdr-headline from 'css/typography.scss';
   color: $color-caribbean-green;
   text-align: center;
-}
-
-.blurb {
-  composes: bdy-lt-sm from 'css/typography.scss';
-  text-align: center;
-  margin-bottom: 30px;
 }
 
 .field {

@@ -18,17 +18,16 @@ export default class Login extends React.Component {
 
   componentDidMount () {
     this.email.focus()
-    window.particlesJS.load('particles-background', 'assets/particlesjs-config.json', o => console.log('!!! particles loaded', o))
+    window.particlesJS.load('particlesBackground', 'assets/particlesjs-config.json')
   }
 
   render () {
     const setState = key => event => this.setState({[key]: event.target.value})
     const { loginWithService } = this.props
     return <div styleName='background'>
-      <div id='particles-background' />
+      <div id='particlesBackground' />
       <div styleName='container'>
         <h1 styleName='title'>Log in to Hylo-Evo</h1>
-        <p styleName='blurb'>Stay connected, organized, and engaged with your community.</p>
 
         {this.props.error && formatError(this.props.error)}
 
