@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import './CommunitySettings.scss'
 import CommunitySettingsTab from './CommunitySettingsTab'
 import ModeratorsSettingsTab from './ModeratorsSettingsTab'
+import InviteSettingsTab from './InviteSettingsTab'
 import Loading from 'components/Loading'
 const { object, func } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
@@ -47,6 +48,11 @@ export default class CommunitySettings extends Component {
           name: 'Moderators',
           path: `/c/${slug}/settings/moderators`,
           component: <ModeratorsSettingsTab communityId={community.id} />
+        },
+        {
+          name: 'Invite',
+          path: `/c/${slug}/settings/invite`,
+          component: <InviteSettingsTab community={community} />
         }
       ]} />
   }
