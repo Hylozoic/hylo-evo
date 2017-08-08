@@ -23,6 +23,7 @@
 }
 
 .green {
+  border: 1px solid $color-caribbean-green;
   background-color: $color-caribbean-green;
   color: $color-white;
   &:hover, &.hover {
