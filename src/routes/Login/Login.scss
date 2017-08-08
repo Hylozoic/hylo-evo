@@ -25,10 +25,21 @@ $third-party-icon-size: 14px;
   align-items: center;
 }
 
-.logo {
+.topRow {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.signupButton {
+  /* !empty */
+}
+
+.logo {
+  /* !empty */
 }
 
 .container {
