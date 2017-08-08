@@ -25,6 +25,7 @@ export default class Login extends React.Component {
     const setState = key => event => this.setState({[key]: event.target.value})
     const { loginWithService } = this.props
     return <div styleName='background'>
+      <img styleName='logo' src='assets/hylo.svg' />
       <div id='particlesBackground' />
       <div styleName='container'>
         <h1 styleName='title'>Log in to Hylo-Evo</h1>
