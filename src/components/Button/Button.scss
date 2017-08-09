@@ -50,6 +50,7 @@
 
 .green-white {
   color: $color-caribbean-green;
+  background-color: $color-white;
   border: 1px solid $color-alto;
   &:hover, &.hover {
     background-color: $color-polar;

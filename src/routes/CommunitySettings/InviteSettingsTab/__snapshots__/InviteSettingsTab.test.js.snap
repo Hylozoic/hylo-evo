@@ -53,7 +53,7 @@ exports[`renders correctly 1`] = `
       >
         <Button
           color="green-white-green-border"
-          data-styleName="button"
+          data-styleName="copy-button"
           narrow={true}
           small={true}
         >

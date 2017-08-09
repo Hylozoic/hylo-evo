@@ -25,9 +25,11 @@ describe('CommunitySidebar', () => {
     const members = [{id: 1}, {id: 2}, {id: 3}]
     const leaders = [{id: 4}, {id: 5}, {id: 6}]
     const memberCount = 56
+    const currentUser = {canModerate: () => true}
     const wrapper = shallow(
       <CommunitySidebar
         community={{...community, memberCount}}
+        currentUser={currentUser}
         members={members}
         leaders={leaders} />)
     expect(wrapper.find('AboutSection').prop('description')).toEqual(community.description)
@@ -56,7 +58,7 @@ describe('MemberSection', () => {
   const members = fakePerson(n)
 
   it("Doesn't show total if it's < 1", () => {
-    const wrapper = shallow(<MemberSection members={members} memberCount={n} />)
+    const wrapper = shallow(<MemberSection members={members} memberCount={n} canModerate />)
     expect(wrapper.find('RoundImageRow').length).toEqual(1)
     expect(wrapper.find('span').length).toEqual(0)
   })

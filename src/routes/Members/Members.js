@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react'
+import { Link } from 'react-router-dom'
 import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
@@ -14,7 +15,6 @@ import { queryParamWhitelist } from 'store/reducers/queryResults'
 export default class Members extends Component {
   static propTypes = {
     slug: string,
-    canInvite: bool,
     sortBy: string,
     members: arrayOf(shape({
       id: string,
@@ -60,17 +60,19 @@ export default class Members extends Component {
 
   render () {
     const {
-      canInvite, memberCount, members, sortBy, changeSort, search, slug, subject, canModerate, removeMember
+      memberCount, members, sortBy, changeSort, search, slug, subject, canModerate, removeMember
     } = this.props
 
     const sortKeys = sortKeysFactory(subject)
 
     return <div>
       <div styleName='header'>
-        {canInvite && <Button styleName='invite'
-          label='Invite People'
-          color='green-white-green-border'
-          narrow />}
+        {canModerate && <Link to={`/c/${slug}/settings/invite`}>
+          <Button styleName='invite'
+            label='Invite People'
+            color='green-white-green-border'
+            narrow />
+        </Link>}
         <div styleName='title'>Members</div>
         <div styleName='total-members'>
           {memberCount} Total Members

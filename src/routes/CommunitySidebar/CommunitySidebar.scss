@@ -73,6 +73,7 @@ $about-height: 116px;
 .images-and-count {
   display: flex;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .image-row {
@@ -85,6 +86,10 @@ $about-height: 116px;
   &:hover {
     cursor: default;
   }
+}
+
+.invite-link {
+  /* empty */
 }
 
 // CommunityLeaderSection
