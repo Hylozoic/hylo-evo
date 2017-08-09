@@ -6,7 +6,7 @@ import Button from 'components/Button'
 import Icon from 'components/Icon'
 import './Login.scss'
 
-import particlesConfig from './particlesjs-config.json'
+import particlesjsConfig from './particlesjsConfig'
 
 export default class Login extends React.Component {
   constructor (props) {
@@ -34,7 +34,7 @@ export default class Login extends React.Component {
     }
     return <div styleName='background'>
       <div styleName='particlesBackgroundWrapper'>
-        <Particles params={particlesConfig} style={particlesStyle} />
+        <Particles params={particlesjsConfig} style={particlesStyle} />
       </div>
       <div styleName='topRow'>
         <img styleName='logo' src='assets/hylo.svg' />
