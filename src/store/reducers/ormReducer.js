@@ -14,8 +14,7 @@ import {
   RESET_NEW_POST_COUNT_PENDING,
   TOGGLE_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_THREAD_READ_TIME,
-  VOTE_ON_POST_PENDING,
-  UPDATE_COMMUNITY_SETTINGS_PENDING
+  VOTE_ON_POST_PENDING
 } from 'store/constants'
 import { REMOVE_MEMBER_PENDING } from 'routes/Members/Members.store'
 import {
@@ -36,6 +35,10 @@ import {
   REMOVE_SKILL_PENDING,
   ADD_SKILL
 } from 'components/SkillsSection/SkillsSection.store'
+import {
+  UPDATE_COMMUNITY_SETTINGS_PENDING
+} from 'routes/CommunitySettings/CommunitySettings.store'
+
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
 import { find } from 'lodash/fp'

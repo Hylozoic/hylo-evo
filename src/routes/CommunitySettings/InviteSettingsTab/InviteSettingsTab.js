@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './InviteSettingsTab.scss'
 import Button from 'components/Button'
+import Loading from 'components/Loading'
 import CopyToClipboard from 'react-copy-to-clipboard'
 const { object, func, string } = React.PropTypes
 
@@ -28,7 +29,7 @@ export default class InviteSettingsTab extends Component {
   }
 
   render () {
-    const { community, regenerateAccessCode, inviteLink } = this.props
+    const { community, regenerateAccessCode, inviteLink, pending } = this.props
     const { name } = community
     const { copied, reset } = this.state
 
@@ -49,10 +50,12 @@ export default class InviteSettingsTab extends Component {
           to {name} on Hylo
         </div>
       </div>
-      <div styleName='invite-link-settings'>
+      {pending && <Loading />}
+      {!pending && <div styleName='invite-link-settings'>
         <div styleName='invite-link-text'>
           <div styleName='help'>Anyone with this link can join the community</div>
-          <div styleName='invite-link'>{inviteLink}</div>
+          {inviteLink && <div styleName='invite-link'>{inviteLink}</div>}
+          {!inviteLink && <div styleName='help'>No link has been set yet</div>}
         </div>
         <div styleName='buttons'>
           <Button onClick={onReset}
@@ -60,15 +63,17 @@ export default class InviteSettingsTab extends Component {
             styleName='reset-button'
             narrow
             small>
-            {reset ? 'Reset' : 'Reset Link'}
+            {reset
+              ? 'Reset'
+              : (inviteLink ? 'Reset Link' : 'New Link')}
           </Button>
-          <CopyToClipboard text={inviteLink} onCopy={onCopy}>
+          {inviteLink && <CopyToClipboard text={inviteLink} onCopy={onCopy}>
             <Button color={buttonColor(copied)} styleName='copy-button' narrow small>
               {copied ? 'Copied' : 'Copy Link'}
             </Button>
-          </CopyToClipboard>
+          </CopyToClipboard>}
         </div>
-      </div>
+      </div>}
     </div>
   }
 }
