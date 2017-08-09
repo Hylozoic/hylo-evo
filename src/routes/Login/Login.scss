@@ -39,9 +39,11 @@ $third-party-icon-size: 14px;
 
 .container {
   background-color: white;
-  box-shadow: 5px 5px 5px #eee;
+  box-shadow: 15px 15px 52px -14px $color-ghost-30;
   padding: 50px 40px 40px;
   border-radius: 8px;
+  border-top: 1px solid $color-ghost-30;
+  border-left: 1px solid $color-ghost-30;
   width: 420px;
 }
 
