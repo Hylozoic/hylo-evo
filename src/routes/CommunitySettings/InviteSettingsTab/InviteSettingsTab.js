@@ -3,7 +3,6 @@ import './InviteSettingsTab.scss'
 import Button from 'components/Button'
 import CopyToClipboard from 'react-copy-to-clipboard'
 const { object, func, string } = React.PropTypes
-import { isEmpty } from 'lodash/fp'
 
 export default class InviteSettingsTab extends Component {
   static propTypes = {
@@ -21,9 +20,7 @@ export default class InviteSettingsTab extends Component {
   }
 
   setTemporatyState (key, value) {
-    console.log('sTs', key, value)
     const oldValue = this.state[key]
-    console.log('this', this)
     this.setState({[key]: value})
     setTimeout(() => {
       this.setState({[key]: oldValue})
@@ -66,7 +63,7 @@ export default class InviteSettingsTab extends Component {
             {reset ? 'Reset' : 'Reset Link'}
           </Button>
           <CopyToClipboard text={inviteLink} onCopy={onCopy}>
-            <Button color={buttonColor(copied)} styleName='button' narrow small>
+            <Button color={buttonColor(copied)} styleName='copy-button' narrow small>
               {copied ? 'Copied' : 'Copy Link'}
             </Button>
           </CopyToClipboard>
