@@ -1,10 +1,12 @@
 import React from 'react'
-import './Login.scss'
+import { uniq } from 'lodash'
+import Particles from 'react-particles-js'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
-import { uniq } from 'lodash'
-import 'particles.js'
+import './Login.scss'
+
+import particlesConfig from './particlesjs-config.json'
 
 export default class Login extends React.Component {
   constructor (props) {
@@ -18,14 +20,22 @@ export default class Login extends React.Component {
 
   componentDidMount () {
     this.email.focus()
-    window.particlesJS.load('particlesBackground', 'assets/particlesjs-config.json')
   }
 
   render () {
     const setState = key => event => this.setState({[key]: event.target.value})
     const { loginWithService } = this.props
+    const particlesStyle = {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%'
+    }
     return <div styleName='background'>
-      <div id='particlesBackground' />
+      <div styleName='particlesBackgroundWrapper'>
+        <Particles params={particlesConfig} style={particlesStyle} />
+      </div>
       <div styleName='topRow'>
         <img styleName='logo' src='assets/hylo.svg' />
         <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>

@@ -1,21 +1,5 @@
 $third-party-icon-size: 14px;
 
-:global {
-  #particlesBackground {
-    position: absolute;
-    display: block;
-    top: 0;
-    left: 0;
-    z-index: -1000;
-    width: 100%;
-    height: 100%;
-    background-image: url('');
-    background-size: cover;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-  }
-}
-
 .background {
   width: 100vw;
   height: 100vh;
@@ -23,6 +7,17 @@ $third-party-icon-size: 14px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.particlesBackgroundWrapper {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  z-index: -1000;
+  height: 100vh;
+  width: 100vw;
+  line-height: 100vh;
 }
 
 .topRow {
@@ -35,7 +30,7 @@ $third-party-icon-size: 14px;
 }
 
 .signupButton {
-  /* !empty */
+  background-color: $color-white;
 }
 
 .logo {
