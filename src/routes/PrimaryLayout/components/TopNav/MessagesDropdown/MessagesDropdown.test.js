@@ -16,12 +16,12 @@ const threads = [
   {
     id: 2,
     participants: [u1, u2, u3].map(u => u.id),
-    updatedAt: new Date(Date.UTC(1995, 4, 17, 3, 24, 0))
+    updatedAt: '2017-05-07T03:24:00'
   },
   {
     id: 1,
     participants: [u1, u2, u3].map(u => u.id),
-    updatedAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
+    updatedAt: '1995-12-17T03:23:00'
   }
 ].map(t => MessageThread.create(t))
 
