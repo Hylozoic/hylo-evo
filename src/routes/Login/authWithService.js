@@ -37,8 +37,7 @@ function openPopup (service) {
   const { clientWidth, clientHeight } = document.documentElement
   const [ width, height ] = {
     google: [420, 480],
-    facebook: [560, 520],
-    linkedin: [400, 584]
+    facebook: [560, 520]
   }[service]
 
   // n.b.: positioning of the popup will be off on Chrome on OSX, possibly

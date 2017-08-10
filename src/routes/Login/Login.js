@@ -1,9 +1,12 @@
 import React from 'react'
-import './Login.scss'
+import { uniq } from 'lodash'
+import Particles from 'react-particles-js'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
-import { uniq } from 'lodash'
+import './Login.scss'
+
+import particlesjsConfig from './particlesjsConfig'
 
 export default class Login extends React.Component {
   constructor (props) {
@@ -22,10 +25,23 @@ export default class Login extends React.Component {
   render () {
     const setState = key => event => this.setState({[key]: event.target.value})
     const { loginWithService } = this.props
+    const particlesStyle = {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%'
+    }
     return <div styleName='background'>
+      <div styleName='particlesBackgroundWrapper'>
+        <Particles params={particlesjsConfig} style={particlesStyle} />
+      </div>
+      <div styleName='topRow'>
+        <img styleName='logo' src='assets/hylo.svg' />
+        <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
+      </div>
       <div styleName='container'>
         <h1 styleName='title'>Log in to Hylo-Evo</h1>
-        <p styleName='blurb'>Stay connected, organized, and engaged with your community.</p>
 
         {this.props.error && formatError(this.props.error)}
 
@@ -53,14 +69,7 @@ export default class Login extends React.Component {
             <Icon name='Google' styleName='auth-icon' />
             Google
             </a>
-          <a styleName='linkedin' onClick={() => loginWithService('linkedin')}>
-            <Icon name='LinkedIn' styleName='auth-icon' />
-            LinkedIn
-          </a>
         </div>
-      </div>
-      <div styleName='below-container'>
-        <a onClick={() => this.props.navigate('/ui-kit')}>UI Kit</a>
       </div>
     </div>
   }
@@ -76,9 +85,7 @@ function formatError (error) {
       'google': 'Google',
       'google-token': 'Google',
       'facebook': 'Facebook',
-      'facebook-token': 'Facebook',
-      'linkedin': 'LinkedIn',
-      'linkedin-token': 'LinkedIn'
+      'facebook-token': 'Facebook'
     }[option])))
 
     return <div styleName='error'>
