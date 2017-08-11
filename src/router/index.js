@@ -7,6 +7,7 @@ import UIKit from '../routes/UIKit'
 import AuthRoute from './AuthRoute'
 import NonAuthRoute from './NonAuthRoute'
 import Login from 'routes/Login'
+import Signup from 'routes/Signup'
 import LoginCheck from 'routes/Login/LoginCheck'
 import '../css/global/index.scss'
 
@@ -28,6 +29,7 @@ function rootRoutes () {
     <Switch>
       <Route path='/ui-kit' component={UIKit} />
       <NonAuthRoute path='/login' component={Login} />
+      <NonAuthRoute path='/signup' component={Signup} />
       <AuthRoute path='/' component={PrimaryLayout} />
     </Switch>
   </LoginCheck>
