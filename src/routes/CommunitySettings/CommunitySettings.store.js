@@ -18,7 +18,7 @@ export function fetchCommunitySettings (slug) {
           description
           location
           settings
-          betaAccessCode
+          invitePath
           moderators (first: 100) {
             hasMore
             items {
@@ -67,7 +67,7 @@ export function regenerateAccessCode (communityId) {
       query: `mutation ($communityId: ID) {
         regenerateAccessCode(communityId: $communityId) {
           id
-          betaAccessCode
+          invitePath
         }
       }`,
       variables: {
