@@ -1,5 +1,9 @@
 import { get } from 'lodash/fp'
 import { matchPath } from 'react-router'
+import { host } from 'config'
+
+export const origin = () =>
+  typeof window !== 'undefined' ? window.location.origin : host
 
 export function bgImageStyle (url) {
   if (!url) return {}
@@ -69,6 +73,9 @@ export function allCommunitiesUrl () {
 export function topicsUrl (slug) {
   return communityUrl(slug) + '/topics'
 }
+
+export const communityJoinUrl = ({slug, betaAccessCode}) =>
+  slug && betaAccessCode && `${origin()}/c/${slug}/join/${betaAccessCode}`
 
 export function removePostFromUrl (url) {
   return url.replace(/\/p\/[0-9]+/, '')

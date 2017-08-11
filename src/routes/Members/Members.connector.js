@@ -32,7 +32,6 @@ export function mapStateToProps (state, props) {
   return {
     subject,
     slug,
-    canInvite: false, // TODO
     memberCount: get('memberCount', community || network),
     sortBy,
     search,
