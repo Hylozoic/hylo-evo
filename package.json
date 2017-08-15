@@ -81,6 +81,7 @@
     "faker": "^4.1.0",
     "hylo-utils": "https://github.com/Hylozoic/hylo-utils",
     "immutable": "^3.8.1",
+    "ismobilejs": "^0.4.1",
     "linkifyjs": "^2.1.4",
     "lodash": "^4.17.4",
     "node-sass": "^4.5.0",
