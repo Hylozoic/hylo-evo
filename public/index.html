@@ -14,8 +14,32 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Hylo Evo</title>
+    <script type="application/javascript">
+      function getMobileOperatingSystem() {
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        if( userAgent.match(/iPad/i) || userAgent.match(/iPhone/i) || userAgent.match(/iPod/i) ) {
+          return 'iOS';
+        }
+        else if(userAgent.match(/Android/i)) {
+          return 'Android';
+        }
+        else {
+          return 'unknown';
+        }
+      }
+
+      switch(getMobileOperatingSystem()) {
+        case 'iOS':
+          window.location = 'https://appsto.re/us/0gcV7.i';
+          break;
+        case 'Android':
+          window.location = 'https://play.google.com/store/apps/details?id=com.hylo.hyloandroid';
+          break;
+      }
+    </script>
   </head>
   <body>
+
     <div id="root"></div>
     <!--
       This HTML file is a template.
