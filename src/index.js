@@ -10,7 +10,11 @@ import './client/websockets'
 const history = createHistory()
 const store = createStore(history)
 
-mobileRedirect() || ReactDOM.render(
-  <Provider store={store}>{ clientRouter(history) }</Provider>,
-  document.getElementById('root')
-)
+const redirecting = process.env.REDIRECT_TO_APP_STORE && mobileRedirect()
+
+if (!redirecting) {
+  ReactDOM.render(
+    <Provider store={store}>{ clientRouter(history) }</Provider>,
+    document.getElementById('root')
+  )
+}

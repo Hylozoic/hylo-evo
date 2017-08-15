@@ -16,11 +16,7 @@ export default function mobileRedirect () {
       window.location = APP_STORE_APP_URL
     } else if (isMobile.android.device) {
       window.location = GOOGLE_PLAY_APP_URL
-    } else {
-      return false
     }
     return true
-  } else {
-    return false
   }
 }
