@@ -103,9 +103,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
-            <Route path='/signup/createCommunity' component={SignupCreateCommunity} />
-            {orderedSignupRoutes.map(({ path, component }) =>
-              <Route key={path} {...{path, component}} />)}
+            <Route path='/blah' exact component={SignupCreateCommunity} />
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
@@ -170,21 +168,22 @@ const orderedSignupRoutes = [
 
 ]
 export function RedirectToSignupFlow ({ currentUser }) {
-  // if (!currentUser || !currentUser.settings.signupInProgress) return null
-  // const destination = nextUrl(currentUser.settings.lastSignupUrl)
-  // return <Redirect to={destination} />
-  return null
+  if (!currentUser || !currentUser.settings.signupInProgress) return null
+  const destination = nextUrl(currentUser.settings.lastSignupUrl)
+  return <Redirect to={destination} />
+  // return null
 }
 
 export function nextUrl (lastUrl) {
   console.log('nextUrl', lastUrl)
-  if (lastUrl === '/signup') return orderedSignupRoutes[0].path
-
-  for (let x = 0; x < orderedSignupRoutes.length; x++) {
-    if (lastUrl === orderedSignupRoutes[x].path) {
-      return orderedSignupRoutes[x + 1].path
-    }
-  }
+  return '/blah'
+  // if (lastUrl === '/signup') return orderedSignupRoutes[0].path
+  //
+  // for (let x = 0; x < orderedSignupRoutes.length; x++) {
+  //   if (lastUrl === orderedSignupRoutes[x].path) {
+  //     return orderedSignupRoutes[x + 1].path
+  //   }
+  // }
 }
 
 export function RedirectToCommunity ({ currentUser }) {
@@ -194,7 +193,7 @@ export function RedirectToCommunity ({ currentUser }) {
 export function redirectIfCommunity (currentUser) {
   return () => {
     if (!currentUser || currentUser.memberships.count() === 0) return <Loading type='top' />
-
+    console.log('in if')
     const mostRecentCommunity = currentUser.memberships
     .orderBy(m => new Date(m.lastViewedAt), 'desc')
     .first()
