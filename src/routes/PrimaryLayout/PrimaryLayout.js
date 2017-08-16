@@ -24,7 +24,7 @@ import AllTopics from 'routes/AllTopics'
 import Search from 'routes/Search'
 import NetworkSettings from 'routes/NetworkSettings'
 import NetworkCommunities from 'routes/NetworkCommunities'
-import SignupCreateCommunity from 'routes/Signup/SignupCreateCommunity'
+import SignupCreateCommunity from 'components/Signup/SignupCreateCommunity'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
@@ -159,7 +159,7 @@ const detailRoutes = [
 ]
 
 const orderedSignupRoutes = [
-  {path: '/s/createCommunity', component: PostEditorModal}
+  {path: '/s/createCommunity', component: SignupCreateCommunity}
   // if there is already a community associated with the user, leave it to the component to redirect itself
   // {path: '/signup/photo', component: SignupPhoto},
   // {path: '/signup/verify-photo', component: SingupVerifyPhoto},
