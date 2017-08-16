@@ -103,7 +103,8 @@ export default class PrimaryLayout extends Component {
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
-            <Route path='/blah' exact component={SignupCreateCommunity} />
+            {orderedSignupRoutes.map(({ path, component }) =>
+              <Route key={path} exact {...{path, component}} />)}
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
@@ -158,7 +159,7 @@ const detailRoutes = [
 ]
 
 const orderedSignupRoutes = [
-  {path: '/signup/createCommunity', component: SignupCreateCommunity}
+  {path: '/s/createCommunity', component: PostEditorModal}
   // if there is already a community associated with the user, leave it to the component to redirect itself
   // {path: '/signup/photo', component: SignupPhoto},
   // {path: '/signup/verify-photo', component: SingupVerifyPhoto},
@@ -171,19 +172,16 @@ export function RedirectToSignupFlow ({ currentUser }) {
   if (!currentUser || !currentUser.settings.signupInProgress) return null
   const destination = nextUrl(currentUser.settings.lastSignupUrl)
   return <Redirect to={destination} />
-  // return null
 }
 
 export function nextUrl (lastUrl) {
-  console.log('nextUrl', lastUrl)
-  return '/blah'
-  // if (lastUrl === '/signup') return orderedSignupRoutes[0].path
-  //
-  // for (let x = 0; x < orderedSignupRoutes.length; x++) {
-  //   if (lastUrl === orderedSignupRoutes[x].path) {
-  //     return orderedSignupRoutes[x + 1].path
-  //   }
-  // }
+  if (lastUrl === '/signup') return orderedSignupRoutes[0].path
+
+  for (let x = 0; x < orderedSignupRoutes.length; x++) {
+    if (lastUrl === orderedSignupRoutes[x].path) {
+      return orderedSignupRoutes[x + 1].path
+    }
+  }
 }
 
 export function RedirectToCommunity ({ currentUser }) {

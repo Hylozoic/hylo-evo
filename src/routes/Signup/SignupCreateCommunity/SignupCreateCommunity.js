@@ -1,81 +1,25 @@
-// import component from './SignupModal'
-import component from './SignupCreateCommunity'
-import React from 'react'
-import '../Signup.scss'
-import TextInput from 'components/TextInput'
-import Button from 'components/Button'
-import Icon from 'components/Icon'
-import { uniq } from 'lodash'
+import React, { Component } from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import PostEditor from 'components/PostEditor'
+import './SignupModal.scss'
 
-export default class SignupCreateCommunity extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {}
-  }
-
-  submit = () => {
-    this.props.signup(this.state.fullName, this.state.email, this.state.password)
-  }
-
-  componentDidMount () {
-    this.email.focus()
-  }
-
+export default class SignupCreateCommunity extends Component {
   render () {
-    const setState = key => event => this.setState({[key]: event.target.value})
-    return <div styleName='background'>
-      <div styleName='container'>
-        <h1 styleName='title'>Welcome to Hylo</h1>
-        <p styleName='blurb'>Stay connected, organized, and engaged with your community.</p>
-
-        {this.props.error && formatError(this.props.error)}
-        <div styleName='field'>
-          <label styleName='field-label'>Full name</label>
-          <TextInput type='text' name='fullName' onChange={setState('fullName')}
-            inputRef={input => { this.fullName = input }} />
+    const { match, hidePostEditor } = this.props
+    return <ReactCSSTransitionGroup
+      transitionName='post-editor'
+      transitionAppear
+      transitionAppearTimeout={400}
+      transitionEnterTimeout={400}
+      transitionLeaveTimeout={300}>
+      {match && <div
+        styleName='post-editor-modal'
+        key='post-editor-modal'>
+        <div styleName='post-editor-background' className='post-editor-background' />
+        <div styleName='post-editor-wrapper' className='post-editor-wrapper'>
+          <PostEditor onClose={hidePostEditor} {...this.props} />
         </div>
-        <div styleName='field'>
-          <label styleName='field-label'>Your email address</label>
-          <TextInput type='text' name='email' onChange={setState('email')}
-            inputRef={input => { this.email = input }} />
-        </div>
-      </div>
-    </div>
+      </div>}
+    </ReactCSSTransitionGroup>
   }
-}
-
-function formatError (error) {
-  if (!error) return
-
-  const noPasswordMatch = error.match(/password account not found. available: \[(.*)\]/)
-  if (noPasswordMatch) {
-    var options = uniq(noPasswordMatch[1].split(',')
-    .map(option => ({
-      'google': 'Google',
-      'google-token': 'Google',
-      'facebook': 'Facebook',
-      'facebook-token': 'Facebook',
-      'linkedin': 'LinkedIn',
-      'linkedin-token': 'LinkedIn'
-    }[option])))
-
-    return <div styleName='error'>
-      Your account has no password set. <a href='/set-password'>Set your password here.</a>
-      {options[0] && <span><br />Or log in with {options.join(' or ')}.</span>}
-    </div>
-  }
-
-  var text
-  switch (error) {
-    case 'no user':
-      text = 'Signup was canceled or no user data was found.'
-      break
-    case 'no email':
-      text = 'The user data did not include an email address.'
-      break
-    default:
-      text = error
-  }
-
-  return <div styleName='error'>{text}</div>
 }
