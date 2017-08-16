@@ -85,6 +85,10 @@ me {
   avatarUrl
   newNotificationCount
   unseenThreadCount
+  settings {
+    signupInProgress
+    lastSignupUrl
+  }
   memberships {
     id
     lastViewedAt

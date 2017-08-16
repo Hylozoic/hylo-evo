@@ -1,11 +1,11 @@
 export const SIGNUP = `SIGNUP`
 
 export function signup (fullName, email, password) {
-  console.log('login', fullName, email, password)
+  console.log('signup', fullName, email, password)
   return {
     type: SIGNUP,
     payload: {
-      api: {method: 'post', path: '/noo/signup', params: {fullName, email, password}}
+      api: {method: 'post', path: '/noo/user', params: {fullName, email, password}}
     }
   }
 }

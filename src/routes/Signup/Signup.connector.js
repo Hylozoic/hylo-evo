@@ -2,11 +2,6 @@ import { connect } from 'react-redux'
 import { signup } from './Signup.store'
 import { push } from 'react-router-redux'
 
-export function mapStateToProps (state, props) {
-  return {
-    signup,
-    navigation: push
-  }
-}
+export const mapDispatchToProps = {signup, navigate: push}
 
-export default connect(mapStateToProps)
+export default connect(null, mapDispatchToProps)

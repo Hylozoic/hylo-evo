@@ -24,6 +24,7 @@ import AllTopics from 'routes/AllTopics'
 import Search from 'routes/Search'
 import NetworkSettings from 'routes/NetworkSettings'
 import NetworkCommunities from 'routes/NetworkCommunities'
+import SignupCreateCommunity from 'routes/Signup/SignupCreateCommunity'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
@@ -80,6 +81,7 @@ export default class PrimaryLayout extends Component {
       <div styleName='main'>
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
+          <RedirectToSignupFlow currentUser={currentUser} />
           <RedirectToCommunity currentUser={currentUser} />
           <Switch>
             <Route path='/all' exact component={Feed} />
@@ -101,6 +103,9 @@ export default class PrimaryLayout extends Component {
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
+            <Route path='/signup/createCommunity' component={SignupCreateCommunity} />
+            {orderedSignupRoutes.map(({ path, component }) =>
+              <Route key={path} {...{path, component}} />)}
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
@@ -153,6 +158,34 @@ const detailRoutes = [
   {path: `/c/:slug/m/:id/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/c/:slug/:topicName/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail}
 ]
+
+const orderedSignupRoutes = [
+  {path: '/signup/createCommunity', component: SignupCreateCommunity}
+  // if there is already a community associated with the user, leave it to the component to redirect itself
+  // {path: '/signup/photo', component: SignupPhoto},
+  // {path: '/signup/verify-photo', component: SingupVerifyPhoto},
+  // {path: '/signup/location', component: SingupLocation},
+  // {path: '/signup/skills', component: SingupSkills},
+  // {path: '/signup/verifyInfo', component: SingupVerifyInfo}
+
+]
+export function RedirectToSignupFlow ({ currentUser }) {
+  // if (!currentUser || !currentUser.settings.signupInProgress) return null
+  // const destination = nextUrl(currentUser.settings.lastSignupUrl)
+  // return <Redirect to={destination} />
+  return null
+}
+
+export function nextUrl (lastUrl) {
+  console.log('nextUrl', lastUrl)
+  if (lastUrl === '/signup') return orderedSignupRoutes[0].path
+
+  for (let x = 0; x < orderedSignupRoutes.length; x++) {
+    if (lastUrl === orderedSignupRoutes[x].path) {
+      return orderedSignupRoutes[x + 1].path
+    }
+  }
+}
 
 export function RedirectToCommunity ({ currentUser }) {
   return <Route path='/' exact render={redirectIfCommunity(currentUser)} />
