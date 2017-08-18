@@ -38,6 +38,8 @@ export default class PostCard extends React.Component {
   }
 
   render () {
+    console.log('!!! console logging in a component (PostCard)')
+
     const {
       post, className, expanded, showDetails, showCommunity, highlightProps, slug
     } = this.props
