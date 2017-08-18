@@ -69,9 +69,8 @@ export default class Drawer extends Component {
 
 export function CommunityRow ({ community, newPostCount }) {
   const { id, name, slug, path, avatarUrl } = community
-  console.log(DEFAULT_AVATAR)
   const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
-  const showBadge = newPostCount && newPostCount > 0
+  const showBadge = newPostCount > 0
   return <li key={`community${id}`}>
     <Link to={path || `/c/${slug}`} styleName='s.communityRow' title={name} className={badgeHoverStyles.parent}>
       <div styleName='s.avatar' style={imageStyle} />
