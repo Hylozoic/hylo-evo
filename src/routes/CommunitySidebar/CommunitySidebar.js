@@ -19,8 +19,6 @@ export default class CommunitySidebar extends Component {
     leaders: array
   }
 
-
-
   render () {
     const { community, members, leaders, currentUser } = this.props
     if (!community || isEmpty(members)) return <Loading />

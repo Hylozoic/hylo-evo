@@ -12,6 +12,8 @@ const store = createStore(history)
 
 const redirecting = process.env.REDIRECT_TO_APP_STORE && mobileRedirect()
 
+console.log('!!! test of basic console logging')
+
 if (!redirecting) {
   ReactDOM.render(
     <Provider store={store}>{ clientRouter(history) }</Provider>,

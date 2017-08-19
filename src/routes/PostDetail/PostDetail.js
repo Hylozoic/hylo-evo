@@ -12,7 +12,6 @@ import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
-import Button from 'components/Button'
 
 // the height of the header plus the padding-top
 const STICKY_HEADER_SCROLL_OFFSET = 78
