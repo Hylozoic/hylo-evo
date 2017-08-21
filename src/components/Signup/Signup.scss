@@ -8,10 +8,12 @@
   border-radius: $space-1x;
   border: 1px solid $color-cape-cod-10;
   background: $color-white;
+  padding-top: 20px;
 }
 
 .left-sidebar {
   width: 200px;
+  padding-top: 20px;
   padding-right: 32px;
   display: flex;
   flex-direction: column;
@@ -23,13 +25,34 @@
   }
 }
 
-.center {
-  width: $center-column-width;
+.sidebar {
+  // From Bootstrap make-col-ready():
+  position: relative;
+  min-height: 1px; // Prevent collapsing
+  height: 100%;
+  flex: 0 0 33%;
+  max-width: 33%;
+  transition-delay: 0.1s;
+  transition-duration: 0.3s;
+  right: 0px;
+  padding: 0 32px 0 32px;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  background-color: 'blue';
+}
+
+.detail {
+  padding-top: 20px;
+  background-color: $color-white;
+  position: absolute;
+  top: 0;
+  right: 0px;
+  height: 100%;
+  width: 67%;
+  overflow-y: auto;
+  background-color: $color-caribbean-green;
+}
+
+.white-text {
+  color: $color-white
 }
 
 .signup-modal {
@@ -54,4 +77,54 @@
   width: $signup-modal-width;
   margin: -($post-editor-height/2) auto 0;
   top: 50%;
+}
+
+.sidebar-header {
+  color: $color-caribbean-green;
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.float-right {
+  float: right;
+  margin-right: $layout-spacing;
+}
+
+.gray-text {
+  color: $color-dove-gray-75;
+}
+
+.logo {
+  @include image(100px);
+  border-radius: 4px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bottom {
+  position:absolute;
+  bottom:40px;
+  right:0;
+}
+
+.my-button {
+  border: 0;
+  font-size: 12px;
+  color: $color-caribbean-green;
+  width: 120%;
+  text-align: center;
+}
+
+.or-press-enter {
+  color: $color-white;
+  font-size: 50%;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: 100;
+  font-style: italic;
+  width: 120%
 }
