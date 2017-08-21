@@ -40,6 +40,12 @@ export function TestComp () {
       <div styleName='center'>
         <div styleName='logo center' style={bgImageStyle(avatarUrl)} />
       </div>
+      <div styleName='center center-vertical'>
+        <input
+          styleName='my-input'
+          autoFocus
+        />
+      </div>
       <div>
         <div styleName='float-right bottom'>
           <div>

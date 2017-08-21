@@ -128,3 +128,28 @@
   font-style: italic;
   width: 120%
 }
+
+.center-vertical {
+  position: absolute;
+  top: 47.5%;
+  width: 100%;
+}
+
+.my-input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid $color-athens-gray-dark;
+  width: 100%;
+  margin-right: 10px;
+  margin-left: 10px;
+  font-size: 24px;
+  color: $color-white;
+}
+
+.my-input:focus {
+    outline: none;
+}
+
+.alert {
+  display: block;
+}
