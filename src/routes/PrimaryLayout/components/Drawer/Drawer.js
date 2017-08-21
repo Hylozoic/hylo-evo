@@ -8,6 +8,7 @@ import s from './Drawer.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../components/Badge/component.scss'
 const { string, number, arrayOf, shape } = PropTypes
 import cx from 'classnames'
+import { DEFAULT_AVATAR } from 'store/models/Community'
 
 export default class Drawer extends Component {
   static propTypes = {
@@ -45,6 +46,7 @@ export default class Drawer extends Component {
 
   render () {
     const { currentCommunity, memberships, networks, className } = this.props
+    const allCommunitiesLink = {id: 'all', path: '/all', name: 'All Communities'}
     return <div className={className} styleName='s.communityDrawer'>
       <Icon name='Ex' styleName='s.closeDrawer' />
       <Logo community={currentCommunity} />
@@ -54,21 +56,23 @@ export default class Drawer extends Component {
           <NetworkRow network={network} key={network.id} />)}
       </ul> : null}
       <ul styleName='s.communitiesList'>
-        <li styleName='s.sectionTitle'>All Communities</li>
+        <li styleName='s.sectionTitle'>Communities</li>
+        <CommunityRow community={allCommunitiesLink} />
         {memberships.map(membership =>
-          <CommunityRow membership={membership} key={membership.id} />)}
+          <CommunityRow {...membership} key={membership.id} />
+        )}
       </ul>
       <Button color='white' styleName='s.newCommunity' label='Start a Community' />
     </div>
   }
 }
 
-export function CommunityRow ({ membership }) {
-  const { community, newPostCount } = membership
-  const imageStyle = bgImageStyle(community.avatarUrl)
+export function CommunityRow ({ community, newPostCount }) {
+  const { id, name, slug, path, avatarUrl } = community
+  const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
   const showBadge = newPostCount > 0
-  return <li key={`community${community.id}`} >
-    <Link to={`/c/${community.slug}`} styleName='s.communityRow' title={community.name} className={badgeHoverStyles.parent}>
+  return <li key={`community${id}`}>
+    <Link to={path || `/c/${slug}`} styleName='s.communityRow' title={name} className={badgeHoverStyles.parent}>
       <div styleName='s.avatar' style={imageStyle} />
       <span styleName={cx('s.community-name', {'s.highlight': showBadge})}>{community.name}</span>
       {showBadge && <Badge number={newPostCount} />}
@@ -83,7 +87,7 @@ export function NetworkRow ({ network }) {
     <span styleName='s.network-name'>{network.name}</span>
     <ul styleName='s.networkCommunitiesList'>
       {network.memberships.map(membership =>
-        <CommunityRow membership={membership} key={membership.id} />)}
+        <CommunityRow {...membership} key={membership.id} />)}
     </ul>
   </li>
 }
