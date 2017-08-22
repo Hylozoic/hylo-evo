@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import './InviteSettingsTab.scss'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
+import TextInput from 'components/TextInput'
+import TextareaAutosize from 'react-textarea-autosize'
 import CopyToClipboard from 'react-copy-to-clipboard'
+import { humanDate } from 'hylo-utils/text'
+
 const { object, func, string } = React.PropTypes
 
 export default class InviteSettingsTab extends Component {
@@ -29,7 +33,7 @@ export default class InviteSettingsTab extends Component {
   }
 
   render () {
-    const { community, regenerateAccessCode, inviteLink, pending } = this.props
+    const { community, regenerateAccessCode, inviteLink, pending, pendingInvites } = this.props
     const { name } = community
     const { copied, reset } = this.state
 
@@ -74,6 +78,37 @@ export default class InviteSettingsTab extends Component {
           </CopyToClipboard>}
         </div>
       </div>}
+
+      <div styleName='email-section'>
+        <TextInput styleName='email-addresses-input' placeholder='Type email addresses' />
+        <TextareaAutosize minRows={5} styleName='invite-msg-input' value={`Hey! Here's an invite to the ${name} community on Hylo`} />
+        <div styleName='send-invite-button'>
+          <Button color='green' disabled narrow small>
+            Send Invite
+          </Button>
+        </div>
+      </div>
+
+      <div styleName='pending-invites-section'>
+        <div styleName='pending-invites-header'>
+          <h1 style={{flex: 1}}>Pending Invites</h1>
+          <Button styleName='resend-all-button' color='green-white-green-border' narrow small>
+            Resend All
+          </Button>
+        </div>
+        <div styleName='pending-invites-list'>
+          {pendingInvites.map(invite => <div styleName='row' key={invite.id}>
+            <div style={{flex: 1}}>
+              <span>{invite.email}</span>
+              <span styleName='invite-date'>{humanDate(invite.date)}</span>
+            </div>
+            <div style={{width: 150}}>
+              <span styleName='expire-btn'>Expire</span>
+              <span styleName='resend-btn'>Resend</span>
+            </div>
+          </div>)}
+        </div>
+      </div>
     </div>
   }
 }
