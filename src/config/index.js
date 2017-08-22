@@ -1,4 +1,3 @@
-import { parse } from 'url'
 import { once } from 'lodash'
 
 export const environment = process.env.NODE_ENV || 'development'
@@ -14,7 +13,6 @@ const isServer = typeof window === 'undefined'
 
 export const filepickerKey = process.env.FILEPICKER_API_KEY
 export const logLevel = process.env.LOG_LEVEL
-export const upstreamHost = process.env.UPSTREAM_HOST || 'http://localhost:3001'
 export const socketHost = process.env.SOCKET_HOST
 export const host = process.env.HOST
 export const slack = {
@@ -38,10 +36,6 @@ export const intercom = {
   appId: process.env.INTERCOM_APP_ID
 }
 
-export const rollbar = {
-  clientToken: process.env.ROLLBAR_CLIENT_TOKEN
-}
-
 export const featureFlags = () => {
   if (isServer) {
     return once(() =>
@@ -60,7 +54,6 @@ const config = {
   environment,
   filepickerKey,
   logLevel,
-  upstreamHost,
   host,
   slack,
   s3,
@@ -68,12 +61,7 @@ const config = {
   facebook,
   segment,
   featureFlags,
-  rollbar,
   intercom
-}
-
-if (!upstreamHost || !parse(upstreamHost).protocol) {
-  throw new Error(`bad value for UPSTREAM_HOST: ${upstreamHost}`)
 }
 
 if (!isServer) window.__appConfig = config

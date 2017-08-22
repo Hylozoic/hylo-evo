@@ -1603,9 +1603,9 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
 
-console-polyfill@rollbar/console-polyfill#eab6ff9d2b7597fc2f259baa18100556bdb94dbe:
-  version "0.2.3"
-  resolved "https://codeload.github.com/rollbar/console-polyfill/tar.gz/eab6ff9d2b7597fc2f259baa18100556bdb94dbe"
+console-polyfill@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/console-polyfill/-/console-polyfill-0.3.0.tgz#84900902a18c47a5eba932be75fa44d23e8af861"
 
 constants-browserify@^1.0.0:
   version "1.0.0"
@@ -1955,6 +1955,12 @@ debug@2.6.3, debug@^2.1.0:
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.3.tgz#0f7eb8c30965ec08c72accfa0130c8b79984141d"
   dependencies:
     ms "0.7.2"
+
+debug@2.6.8:
+  version "2.6.8"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
+  dependencies:
+    ms "2.0.0"
 
 debug@~0.7.4:
   version "0.7.4"
@@ -4733,6 +4739,10 @@ ms@0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.2.tgz#ae25cf2512b3885a1d95d7f037868d8431124765"
 
+ms@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
+
 mute-stream@0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.5.tgz#8fbfabb0a98a253d3184331f9e8deb7372fac6c0"
@@ -6489,13 +6499,13 @@ ripemd160@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ripemd160/-/ripemd160-1.0.1.tgz#93a4bbd4942bc574b69a8fa57c71de10ecca7d6e"
 
-"rollbar@https://github.com/rollbar/rollbar.js.git#2.0.4":
-  version "2.0.4"
-  resolved "https://github.com/rollbar/rollbar.js.git#ef1768b4f70d0312008c0587475702b9e55d87c3"
+rollbar@^2.2.0:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/rollbar/-/rollbar-2.2.3.tgz#80c3d07b70386202b9a7a464761c3ec2b3cc999d"
   dependencies:
     async "~1.2.1"
-    console-polyfill rollbar/console-polyfill#eab6ff9d2b7597fc2f259baa18100556bdb94dbe
-    debug "2.2.0"
+    console-polyfill "0.3.0"
+    debug "2.6.8"
     error-stack-parser "1.3.3"
     extend "3.0.0"
     json-stringify-safe "~5.0.0"

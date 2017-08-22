@@ -5,14 +5,13 @@ export default function errorMiddleware (store) {
     if (action.error) {
       let errMsg = `action error for ${action.type}`
 
-      console.error(errMsg, action)
-
       if (typeof window !== 'undefined' && ROLLBAR_CLIENT_TOKEN) {
         let Rollbar = require('client/rollbar').default
         Rollbar.error(errMsg, {
-          action: safeStringify(action),
-          state: safeStringify(store.getState())
+          action: JSON.parse(safeStringify(action))
         })
+      } else {
+        console.error(errMsg, action)
       }
     }
     return next(action)

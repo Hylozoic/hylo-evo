@@ -11,6 +11,8 @@ import UIKit from 'routes/UIKit'
 import '../css/global/index.scss'
 
 export function clientRouter (history) {
+  require('client/rollbar') // set up handling of uncaught errors
+
   return <ConnectedRouter history={history}>
     {rootRoutes()}
   </ConnectedRouter>
