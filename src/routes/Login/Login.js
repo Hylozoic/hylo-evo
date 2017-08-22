@@ -1,5 +1,6 @@
 import React from 'react'
 import { uniq } from 'lodash'
+import { Link } from 'react-router-dom'
 import Particles from 'react-particles-js'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
@@ -38,7 +39,9 @@ export default class Login extends React.Component {
       </div>
       <div styleName='topRow'>
         <img styleName='logo' src='assets/hylo.svg' />
-        <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
+        <Link to='/signup'>
+          <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
+        </Link>
       </div>
       <div styleName='container'>
         <h1 styleName='title'>Log in to Hylo-Evo</h1>
