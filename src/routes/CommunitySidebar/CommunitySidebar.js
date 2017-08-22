@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Avatar from 'components/Avatar'
 import Loading from 'components/Loading'
 import RoundImageRow from 'components/RoundImageRow'
+import Button from 'components/Button'
 import './CommunitySidebar.scss'
 const { object, string, array } = PropTypes
 import cx from 'classnames'
@@ -21,11 +22,17 @@ export default class CommunitySidebar extends Component {
   render () {
     const { community, members, leaders, currentUser } = this.props
     if (!community || isEmpty(members)) return <Loading />
+    const canModerate = currentUser.canModerate(community)
     const { name, description, slug, memberCount } = community
+
     return <div styleName='community-sidebar'>
       <AboutSection name={name} description={description} />
-      <SettingsLink currentUser={currentUser} community={community} />
-      <MemberSection members={members} memberCount={memberCount} slug={slug} />
+      <SettingsLink canModerate={canModerate} community={community} />
+      <MemberSection
+        members={members}
+        memberCount={memberCount}
+        slug={slug}
+        canModerate={canModerate} />
       <CommunityLeaderSection leaders={leaders} slug={slug} />
     </div>
   }
@@ -69,14 +76,14 @@ export class AboutSection extends Component {
   }
 }
 
-export function SettingsLink ({ currentUser, community }) {
-  if (!currentUser.canModerate(community)) return null
+export function SettingsLink ({ canModerate, community }) {
+  if (!canModerate) return null
   return <Link styleName='settings-link' to={communitySettingsUrl(community.slug)}>
     Settings
   </Link>
 }
 
-export function MemberSection ({ members, memberCount, slug }) {
+export function MemberSection ({ members, memberCount, slug, canModerate }) {
   const formatTotal = total => {
     if (total < 1000) return `+${total}`
     return `+${Number(total / 1000).toFixed(1)}k`
@@ -93,6 +100,9 @@ export function MemberSection ({ members, memberCount, slug }) {
           {formatTotal(memberCount - members.length)}
         </span>}
       </div>
+    </Link>
+    <Link to={`/c/${slug}/settings/invite`} styleName='invite-link'>
+      <Button color='green-white-green-border'>Invite People</Button>
     </Link>
   </div>
 }

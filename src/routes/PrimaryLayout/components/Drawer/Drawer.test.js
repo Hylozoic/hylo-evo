@@ -46,12 +46,14 @@ describe('Drawer', () => {
 
 describe('CommunityRow', () => {
   it('renders with zero new posts', () => {
-    const wrapper = shallow(<CommunityRow membership={memberships[0]} />)
+    const { community, newPostCount } = memberships[0]
+    const wrapper = shallow(<CommunityRow community={community} newPostCount={newPostCount} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('renders with new posts', () => {
-    const wrapper = shallow(<CommunityRow membership={memberships[1]} />)
+    const { community, newPostCount } = memberships[1]
+    const wrapper = shallow(<CommunityRow community={community} newPostCount={newPostCount} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

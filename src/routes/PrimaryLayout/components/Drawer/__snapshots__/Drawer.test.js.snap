@@ -108,35 +108,41 @@ exports[`Drawer renders a community list if networks are present 1`] = `
     <li
       data-styleName="s.sectionTitle"
     >
-      All Communities
+      Communities
     </li>
     <CommunityRow
-      membership={
+      community={
         Object {
-          "community": Object {
-            "avatarUrl": "/foo.png",
-            "id": "11",
-            "name": "Foomunity",
-            "slug": "foo",
-          },
-          "id": "1",
-          "newPostCount": 0,
+          "avatarUrl": "/assets/all-communities-avatar.png",
+          "id": "all",
+          "name": "All Communities",
+          "path": "/all",
         }
       }
     />
     <CommunityRow
-      membership={
+      community={
         Object {
-          "community": Object {
-            "avatarUrl": "/bar.png",
-            "id": "22",
-            "name": "Barmunity",
-            "slug": "bar",
-          },
-          "id": "2",
-          "newPostCount": 7,
+          "avatarUrl": "/foo.png",
+          "id": "11",
+          "name": "Foomunity",
+          "slug": "foo",
         }
       }
+      id="1"
+      newPostCount={0}
+    />
+    <CommunityRow
+      community={
+        Object {
+          "avatarUrl": "/bar.png",
+          "id": "22",
+          "name": "Barmunity",
+          "slug": "bar",
+        }
+      }
+      id="2"
+      newPostCount={7}
     />
   </ul>
   <Button
@@ -171,35 +177,41 @@ exports[`Drawer renders with a current community 1`] = `
     <li
       data-styleName="s.sectionTitle"
     >
-      All Communities
+      Communities
     </li>
     <CommunityRow
-      membership={
+      community={
         Object {
-          "community": Object {
-            "avatarUrl": "/foo.png",
-            "id": "11",
-            "name": "Foomunity",
-            "slug": "foo",
-          },
-          "id": "1",
-          "newPostCount": 0,
+          "avatarUrl": "/assets/all-communities-avatar.png",
+          "id": "all",
+          "name": "All Communities",
+          "path": "/all",
         }
       }
     />
     <CommunityRow
-      membership={
+      community={
         Object {
-          "community": Object {
-            "avatarUrl": "/bar.png",
-            "id": "22",
-            "name": "Barmunity",
-            "slug": "bar",
-          },
-          "id": "2",
-          "newPostCount": 7,
+          "avatarUrl": "/foo.png",
+          "id": "11",
+          "name": "Foomunity",
+          "slug": "foo",
         }
       }
+      id="1"
+      newPostCount={0}
+    />
+    <CommunityRow
+      community={
+        Object {
+          "avatarUrl": "/bar.png",
+          "id": "22",
+          "name": "Barmunity",
+          "slug": "bar",
+        }
+      }
+      id="2"
+      newPostCount={7}
     />
   </ul>
   <Button
@@ -225,35 +237,41 @@ exports[`Drawer renders without a current community 1`] = `
     <li
       data-styleName="s.sectionTitle"
     >
-      All Communities
+      Communities
     </li>
     <CommunityRow
-      membership={
+      community={
         Object {
-          "community": Object {
-            "avatarUrl": "/foo.png",
-            "id": "11",
-            "name": "Foomunity",
-            "slug": "foo",
-          },
-          "id": "1",
-          "newPostCount": 0,
+          "avatarUrl": "/assets/all-communities-avatar.png",
+          "id": "all",
+          "name": "All Communities",
+          "path": "/all",
         }
       }
     />
     <CommunityRow
-      membership={
+      community={
         Object {
-          "community": Object {
-            "avatarUrl": "/bar.png",
-            "id": "22",
-            "name": "Barmunity",
-            "slug": "bar",
-          },
-          "id": "2",
-          "newPostCount": 7,
+          "avatarUrl": "/foo.png",
+          "id": "11",
+          "name": "Foomunity",
+          "slug": "foo",
         }
       }
+      id="1"
+      newPostCount={0}
+    />
+    <CommunityRow
+      community={
+        Object {
+          "avatarUrl": "/bar.png",
+          "id": "22",
+          "name": "Barmunity",
+          "slug": "bar",
+        }
+      }
+      id="2"
+      newPostCount={7}
     />
   </ul>
   <Button

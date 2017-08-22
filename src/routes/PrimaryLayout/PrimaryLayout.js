@@ -19,7 +19,7 @@ import PostEditorModal from 'components/PostEditorModal'
 import Members from 'routes/Members'
 import UserSettings from 'routes/UserSettings'
 import CommunitySettings from 'routes/CommunitySettings'
-import MessageMember from 'components/MessageMember'
+import MemberSidebar from 'routes/MemberSidebar'
 import AllTopics from 'routes/AllTopics'
 import Search from 'routes/Search'
 import NetworkSettings from 'routes/NetworkSettings'
@@ -112,8 +112,8 @@ export default class PrimaryLayout extends Component {
           <Route path='/c/:slug' exact component={CommunitySidebar} />
           <Route path='/c/:slug/:topicName/p/new' exact component={CommunitySidebar} />
           <Route path='/c/:slug/:topicName' exact component={CommunitySidebar} />
-          <Route path='/c/:slug/m/:id' component={MessageMember} />
-          <Route path='/m/:id' component={MessageMember} />
+          <Route path='/c/:slug/m/:id' component={MemberSidebar} />
+          <Route path='/m/:id' component={MemberSidebar} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>
           {/*

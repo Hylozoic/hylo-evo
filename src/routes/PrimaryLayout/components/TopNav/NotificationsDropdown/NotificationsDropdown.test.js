@@ -26,7 +26,7 @@ const commentNotification = {
     },
     unread: true
   },
-  createdAt: new Date('1995-12-17T03:23:00')
+  createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
 }
 
 const tagNotification = {
@@ -38,7 +38,7 @@ const tagNotification = {
     meta: {reasons: ['tag: request']},
     unread: true
   },
-  createdAt: new Date('1995-12-17T03:23:00')
+  createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
 }
 
 const joinRequestNotification = {
@@ -50,7 +50,7 @@ const joinRequestNotification = {
     community: {name: 'Foomunity'},
     unread: true
   },
-  createdAt: new Date('1995-12-17T03:23:00')
+  createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
 }
 
 const approvedJoinRequestNotification = {
@@ -62,7 +62,7 @@ const approvedJoinRequestNotification = {
     community: {name: 'Foomunity'},
     unread: true
   },
-  createdAt: new Date('1995-12-17T03:23:00')
+  createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
 }
 
 const mentionNotification = {
@@ -74,7 +74,7 @@ const mentionNotification = {
     post: {title: 'Heads up'},
     unread: true
   },
-  createdAt: new Date('1995-12-17T03:23:00')
+  createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
 }
 
 const commentMentionNotification = {
@@ -89,7 +89,7 @@ const commentMentionNotification = {
     },
     unread: true
   },
-  createdAt: new Date('1995-12-17T03:23:00')
+  createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
 }
 
 const notifications = [

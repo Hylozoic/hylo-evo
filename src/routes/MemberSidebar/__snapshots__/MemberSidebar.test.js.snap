@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`does something 1`] = `
+<div
+  data-styleName="member-sidebar"
+>
+  <Connect(SkillsSection) />
+  <Connect(MessageMember) />
+</div>
+`;

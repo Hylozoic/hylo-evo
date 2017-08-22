@@ -8,7 +8,6 @@ import {
   MARK_ACTIVITY_READ_PENDING,
   MARK_ALL_ACTIVITIES_READ_PENDING,
   TOGGLE_TOPIC_SUBSCRIBE_PENDING,
-  UPDATE_COMMUNITY_SETTINGS_PENDING,
   FETCH_NOTIFICATIONS
 } from 'store/constants'
 import {
@@ -21,6 +20,9 @@ import {
 import {
   FETCH_FOR_COMMUNITY_PENDING
 } from 'routes/PrimaryLayout/PrimaryLayout.store'
+import {
+  UPDATE_COMMUNITY_SETTINGS_PENDING
+} from 'routes/CommunitySettings/CommunitySettings.store'
 import deep from 'deep-diff'
 
 it('responds to EXTRACT_MODEL', () => {

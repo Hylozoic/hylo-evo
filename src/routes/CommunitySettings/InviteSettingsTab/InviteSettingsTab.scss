@@ -1,0 +1,58 @@
+.exampleName { /* !empty */ }
+
+.header {
+  border-radius: 4px;
+  background-color: $color-athens-gray;
+  padding: $space-7x $space-6x;
+  margin-bottom: $space-8x;
+  margin-top: $space-6x;
+}
+
+.title {
+  composes: hdr-display from 'css/typography.scss';
+}
+
+.subtitle {
+  composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.invite-link-settings {
+  display: flex;
+  align-items: flex-end;
+}
+
+.invite-link-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.help {
+  composes: caption-lt-lg from 'css/typography.scss';
+  margin-bottom: 10px;
+}
+
+.invite-link {
+  composes: text-button from 'css/typography.scss';
+  font-size: 13px;
+}
+
+.buttons {
+  margin-left: auto;
+}
+
+.button {
+  padding: 0 15px;
+  width: 95px;
+  text-align: center;
+  transition: 0.5s;
+}
+
+.reset-button {
+  composes: button;
+  margin-right: 10px;
+}
+
+.copy-button {
+  composes: button;
+  margin-top: 10px;
+}

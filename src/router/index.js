@@ -3,15 +3,17 @@ import { StaticRouter } from 'react-router'
 import { Switch, Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 import PrimaryLayout from 'routes/PrimaryLayout'
-import UIKit from '../routes/UIKit'
 import AuthRoute from './AuthRoute'
 import NonAuthRoute from './NonAuthRoute'
 import Login from 'routes/Login'
 import Signup from 'routes/Signup'
 import LoginCheck from 'routes/Login/LoginCheck'
+import UIKit from 'routes/UIKit'
 import '../css/global/index.scss'
 
 export function clientRouter (history) {
+  require('client/rollbar') // set up handling of uncaught errors
+
   return <ConnectedRouter history={history}>
     {rootRoutes()}
   </ConnectedRouter>

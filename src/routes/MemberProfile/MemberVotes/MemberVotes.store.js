@@ -8,31 +8,33 @@ const memberVotesQuery =
   person (id: $id) {
     id
     votes (first: $limit, order: $order) {
-      id
-      post {
+      items {
         id
-        title
-        details
-        type
-        creator {
+        post {
           id
+          title
+          details
+          type
+          creator {
+            id
+          }
+          commenters {
+            id,
+            name,
+            avatarUrl
+          }
+          commentersTotal
+          communities {
+            id
+            name
+          }
+          createdAt
         }
-        commenters {
-          id,
-          name,
-          avatarUrl
-        }
-        commentersTotal
-        communities {
+        voter {
           id
-          name
         }
         createdAt
       }
-      voter {
-        id
-      }
-      createdAt
     }
   }
 }`

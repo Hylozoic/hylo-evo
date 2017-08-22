@@ -1,7 +1,8 @@
-import {
-  FETCH_COMMUNITY_SETTINGS,
-  UPDATE_COMMUNITY_SETTINGS
-} from 'store/constants'
+export const MODULE_NAME = 'CommunitySettings'
+export const REGENERATE_ACCESS_CODE = `${MODULE_NAME}/REGENERATE_ACCESS_CODE`
+export const FETCH_COMMUNITY_SETTINGS = `${MODULE_NAME}/FETCH_COMMUNITY_SETTINGS`
+export const UPDATE_COMMUNITY_SETTINGS = `${MODULE_NAME}/UPDATE_COMMUNITY_SETTINGS`
+export const UPDATE_COMMUNITY_SETTINGS_PENDING = UPDATE_COMMUNITY_SETTINGS + '_PENDING'
 
 export function fetchCommunitySettings (slug) {
   return {
@@ -17,6 +18,7 @@ export function fetchCommunitySettings (slug) {
           description
           location
           settings
+          invitePath
           moderators (first: 100) {
             hasMore
             items {
@@ -54,6 +56,26 @@ export function updateCommunitySettings (id, changes) {
       id,
       changes,
       optimistic: true
+    }
+  }
+}
+
+export function regenerateAccessCode (communityId) {
+  return {
+    type: REGENERATE_ACCESS_CODE,
+    graphql: {
+      query: `mutation ($communityId: ID) {
+        regenerateAccessCode(communityId: $communityId) {
+          id
+          invitePath
+        }
+      }`,
+      variables: {
+        communityId
+      }
+    },
+    meta: {
+      extractModel: 'Community'
     }
   }
 }

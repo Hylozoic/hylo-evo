@@ -9,16 +9,18 @@ const memberCommentsQuery =
   person (id: $id) {
     id
     comments (first: $limit, order: $order) {
-      id
-      text
-      creator {
+      items {
         id
+        text
+        creator {
+          id
+        }
+        post {
+          id
+          title
+        }
+        createdAt
       }
-      post {
-        id
-        title
-      }
-      createdAt
     }
   }
 }`
