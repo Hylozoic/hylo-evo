@@ -132,12 +132,25 @@
       @include font-regular;
     }
 
-    .expire-btn {
+    .invite-actions {
+      width: 150px;
+      text-align: right;
+    }
+
+    .action-btn {
       @include font-regular;
+      cursor: pointer;
+      &:hover {
+        font-weight: bold;
+      }
+      user-select: none;
+    }
+
+    .expire-btn {
       color: $color-amaranth;
     }
+
     .resend-btn {
-      @include font-regular;
       color: $color-caribbean-green;
       padding-left: 24px;
     }

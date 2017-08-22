@@ -2,12 +2,14 @@ import { connect } from 'react-redux'
 import { origin } from 'util/index'
 import { regenerateAccessCode, FETCH_COMMUNITY_SETTINGS } from '../CommunitySettings.store'
 // import getMe from 'store/selectors/getMe'
+import { createInvitations, getPendingInvites } from './InviteSettingsTab.store'
 
 export function mapStateToProps (state, props) {
   const { community } = props
   const pending = state.pending[FETCH_COMMUNITY_SETTINGS]
   const inviteLink = origin() + community.invitePath
-  const pendingInvites = [{email: 'john.doe@gmail.com', id: 1, date: new Date()}, {email: 'jo222222doe@gmail.com', id: 2, date: new Date(Date.parse('March 21, 2017'))}, {email: 'j333@gmail.com', id: 3, date: new Date(Date.parse('July 21, 2017'))}]
+  const pendingInvites = getPendingInvites(state, { communityId: community.id })
+
   return {
     inviteLink,
     pending,
@@ -15,18 +17,20 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = {
-  regenerateAccessCode
+export function mapDispatchToProps (dispatch, props) {
+  const communityId = props.community.id
+
+  return {
+    regenerateAccessCode: () => dispatch(regenerateAccessCode(communityId)),
+    createInvitations: (emails, message) => dispatch(createInvitations(communityId, emails, message))
+  }
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { community: { id } } = ownProps
-  const regenerateAccessCode = () => dispatchProps.regenerateAccessCode(id)
   return {
     ...stateProps,
     ...dispatchProps,
-    ...ownProps,
-    regenerateAccessCode
+    ...ownProps
   }
 }
 

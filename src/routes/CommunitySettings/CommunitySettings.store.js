@@ -19,6 +19,14 @@ export function fetchCommunitySettings (slug) {
           location
           settings
           invitePath
+          pendingInvitations (first: 100) {
+            hasMore
+            items {
+              id
+              email
+              created_at
+            }
+          }
           moderators (first: 100) {
             hasMore
             items {
