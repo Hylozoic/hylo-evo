@@ -8,7 +8,8 @@ import s from './Drawer.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../components/Badge/component.scss'
 const { string, number, arrayOf, shape } = PropTypes
 import cx from 'classnames'
-import { DEFAULT_AVATAR } from 'store/models/Community'
+
+export const ALL_COMMUNITIES_AVATAR_PATH = '/assets/all-communities-avatar.png'
 
 export default class Drawer extends Component {
   static propTypes = {
@@ -46,7 +47,12 @@ export default class Drawer extends Component {
 
   render () {
     const { currentCommunity, memberships, networks, className } = this.props
-    const allCommunitiesLink = {id: 'all', path: '/all', name: 'All Communities'}
+    const allCommunitiesLink = {
+      id: 'all',
+      path: '/all',
+      name: 'All Communities',
+      avatarUrl: ALL_COMMUNITIES_AVATAR_PATH
+    }
     return <div className={className} styleName='s.communityDrawer'>
       <Icon name='Ex' styleName='s.closeDrawer' />
       <Logo community={currentCommunity} />
@@ -69,7 +75,7 @@ export default class Drawer extends Component {
 
 export function CommunityRow ({ community, newPostCount }) {
   const { id, name, slug, path, avatarUrl } = community
-  const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
+  const imageStyle = bgImageStyle(avatarUrl)
   const showBadge = newPostCount > 0
   return <li key={`community${id}`}>
     <Link to={path || `/c/${slug}`} styleName='s.communityRow' title={name} className={badgeHoverStyles.parent}>
