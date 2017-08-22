@@ -9,10 +9,15 @@ export default class Signup extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
+    console.log('!!!', props)
   }
 
   submit = () => {
     this.props.signup(this.state.fullName, this.state.email, this.state.password)
+
+    // signup action
+    // forward to destination URL
+    // by calling a new action
   }
 
   componentDidMount () {

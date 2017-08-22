@@ -12,6 +12,7 @@ export default class CreateCommunity extends Component {
       communityName
     })
   }
+  
   render () {
     const avatarUrl = hyloNameWhiteBackground
     return <div styleName='wrapper'>
