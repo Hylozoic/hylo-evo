@@ -135,6 +135,8 @@
     .invite-actions {
       width: 150px;
       text-align: right;
+      display: flex;
+      flex-direction: row;
     }
 
     .action-btn {
@@ -148,11 +150,12 @@
 
     .expire-btn {
       color: $color-amaranth;
+      flex: 0.5;
     }
 
     .resend-btn {
       color: $color-caribbean-green;
-      padding-left: 24px;
+      flex: 0.5
     }
   }
 }

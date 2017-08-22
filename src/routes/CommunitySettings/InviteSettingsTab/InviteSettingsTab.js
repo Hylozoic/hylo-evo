@@ -44,7 +44,16 @@ export default class InviteSettingsTab extends Component {
   }
 
   render () {
-    const { community, regenerateAccessCode, inviteLink, pending, pendingInvites, createInvitations } = this.props
+    const { community,
+      regenerateAccessCode,
+      inviteLink,
+      pending,
+      pendingInvites = [],
+      createInvitations,
+      expireInvitation,
+      resendInvitation,
+      reinviteAll
+    } = this.props
     const { name } = community
     const { copied, reset, emails, message } = this.state
 
@@ -54,6 +63,7 @@ export default class InviteSettingsTab extends Component {
         this.setTemporatyState('reset', true)
       }
     }
+
     const onCopy = () => this.setTemporatyState('copied', true)
 
     const buttonColor = highlight => highlight ? 'green' : 'green-white-green-border'
@@ -64,12 +74,16 @@ export default class InviteSettingsTab extends Component {
       createInvitations(parseEmailList(emails), message)
     }
 
-    const expireOnClick = () => {
-      // TODO
+    const resendAllOnClick = () => {
+      reinviteAll()
     }
 
-    const resendOnClick = () => {
-      // TODO
+    const expireOnClick = (invitationId) => {
+      expireInvitation(invitationId)
+    }
+
+    const resendOnClick = (invitationId) => {
+      resendInvitation(invitationId)
     }
 
     return <div>
@@ -122,7 +136,10 @@ export default class InviteSettingsTab extends Component {
       <div styleName='pending-invites-section'>
         <div styleName='pending-invites-header'>
           <h1 style={{flex: 1}}>Pending Invites</h1>
-          <Button styleName='resend-all-button' color='green-white-green-border' narrow small>
+          <Button styleName='resend-all-button'
+            color='green-white-green-border'
+            narrow small
+            onClick={resendAllOnClick}>
             Resend All
           </Button>
         </div>
@@ -130,11 +147,11 @@ export default class InviteSettingsTab extends Component {
           {pendingInvites.map(invite => <div styleName='row' key={invite.id}>
             <div style={{flex: 1}}>
               <span>{invite.email}</span>
-              <span styleName='invite-date'>{humanDate(invite.created_at)}</span>
+              <span styleName='invite-date'>{humanDate(invite.last_sent_at)}</span>
             </div>
             <div styleName='invite-actions'>
-              <span styleName='action-btn expire-btn' onClick={expireOnClick}>Expire</span>
-              <span styleName='action-btn resend-btn' onClick={resendOnClick}>Resend</span>
+              <span styleName='action-btn expire-btn' onClick={() => expireOnClick(invite.id)}>Expire</span>
+              <span styleName='action-btn resend-btn' onClick={() => resendOnClick(invite.id)}>{invite.resent ? 'Sent' : 'Resend'}</span>
             </div>
           </div>)}
         </div>

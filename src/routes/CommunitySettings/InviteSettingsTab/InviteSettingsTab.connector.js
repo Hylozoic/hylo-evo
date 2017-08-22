@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { origin } from 'util/index'
 import { regenerateAccessCode, FETCH_COMMUNITY_SETTINGS } from '../CommunitySettings.store'
 // import getMe from 'store/selectors/getMe'
-import { createInvitations, getPendingInvites } from './InviteSettingsTab.store'
+import { createInvitations, getPendingInvites, expireInvitation, resendInvitation, reinviteAll } from './InviteSettingsTab.store'
 
 export function mapStateToProps (state, props) {
   const { community } = props
@@ -22,7 +22,10 @@ export function mapDispatchToProps (dispatch, props) {
 
   return {
     regenerateAccessCode: () => dispatch(regenerateAccessCode(communityId)),
-    createInvitations: (emails, message) => dispatch(createInvitations(communityId, emails, message))
+    createInvitations: (emails, message) => dispatch(createInvitations(communityId, emails, message)),
+    expireInvitation: (invitationId) => dispatch(expireInvitation(invitationId)),
+    resendInvitation: (invitationId) => dispatch(resendInvitation(invitationId)),
+    reinviteAll: () => dispatch(reinviteAll(communityId))
   }
 }
 
