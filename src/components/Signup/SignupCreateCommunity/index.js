@@ -19,14 +19,14 @@ export default class SignupCreateCommunity extends Component {
         key='signup-modal'>
         <div styleName='signup-background' className='signup-background' />
         <div styleName='signup-wrapper' className='signup-wrapper'>
-          <TestComp />
+          <CreateCommunity />
         </div>
       </div>
     </ReactCSSTransitionGroup>
   }
 }
 
-export function TestComp () {
+export function CreateCommunity () {
   const avatarUrl = hyloNameWhiteBackground
   return <div styleName='wrapper'>
     <div styleName='sidebar'>
