@@ -1,4 +1,4 @@
-export const SIGNUP = `SIGNUP`
+import { SIGNUP } from 'store/constants'
 
 export function signup (fullName, email, password) {
   return {

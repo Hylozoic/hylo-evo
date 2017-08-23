@@ -25,6 +25,7 @@ export default class Login extends React.Component {
 
   render () {
     const setState = key => event => this.setState({[key]: event.target.value})
+    console.log(this.props)
     const { loginWithService } = this.props
     const particlesStyle = {
       position: 'fixed',

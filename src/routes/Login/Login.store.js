@@ -1,10 +1,5 @@
-import { combineReducers } from 'redux'
-import { createSelector } from 'reselect'
-import { get, pick } from 'lodash/fp'
 import authWithService from './authWithService'
-import { LOGIN, LOGOUT } from 'store/constants'
-
-export const CHECK_LOGIN = 'CHECK_LOGIN'
+import { CHECK_LOGIN, LOGIN, LOGOUT } from 'store/constants'
 
 export function login (email, password) {
   return {
@@ -44,31 +39,3 @@ export function logout () {
     }
   }
 }
-
-const reducer = combineReducers({
-  isLoggedIn: (state = null, { type, error, payload, meta }) => {
-    if (error) return state
-    switch (type) {
-      case LOGIN: return true
-      case CHECK_LOGIN: return !!payload.signedIn
-    }
-    return state
-  },
-
-  error: (state = null, { type, error, payload }) => {
-    if (error && type === LOGIN) return payload.message
-    return state
-  }
-})
-
-export default reducer
-
-export const pickIsLoggedIn = createSelector(
-  get('Login'),
-  pick('isLoggedIn')
-)
-
-export const pickError = createSelector(
-  get('Login'),
-  pick('error')
-)

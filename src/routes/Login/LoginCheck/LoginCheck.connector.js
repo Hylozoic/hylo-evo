@@ -4,7 +4,7 @@ import { isNull } from 'lodash'
 
 export function mapStateToProps (state) {
   return {
-    hasCheckedLogin: !isNull(state.Login.isLoggedIn)
+    hasCheckedLogin: !isNull(state.login.isLoggedIn)
   }
 }
 
