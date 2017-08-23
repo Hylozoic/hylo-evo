@@ -1,9 +1,6 @@
 import { createSelector } from 'reselect'
-import { createSelector as ormCreateSelector } from 'redux-orm'
-import orm from 'store/models'
-import { get, includes, isEmpty } from 'lodash/fp'
-import { makeGetQueryResults } from 'store/reducers/queryResults'
-import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import { get } from 'lodash/fp'
+import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 
 export const FETCH_MEMBERS = 'FETCH_MEMBERS'
 
@@ -128,23 +125,13 @@ export default function reducer (state = {}, action) {
 
 const getMemberResults = makeGetQueryResults(FETCH_MEMBERS)
 
-export const getMembers = ormCreateSelector(
-  orm,
-  state => state.orm,
+export const getMembers = makeQueryResultsModelSelector(
   getMemberResults,
-  getCommunityForCurrentRoute,
-  (session, results, community) => {
-    if (isEmpty(results) || isEmpty(results.ids)) return []
-
-    return session.Community.withId(community.id).members
-    .filter(x => includes(x.id, results.ids))
-    .orderBy(x => results.ids.indexOf(x.id))
-    .toModelArray()
-    .map(person => ({
-      ...person.ref,
-      skills: person.skills.toModelArray()
-    }))
-  }
+  'Person',
+  person => ({
+    ...person.ref,
+    skills: person.skills.toModelArray()
+  })
 )
 
 export const getHasMoreMembers = createSelector(

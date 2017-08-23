@@ -21,7 +21,7 @@ export function mapStateToProps (state, props) {
   const slug = communitySlug || networkSlug
   const sortBy = getQueryParam('s', state, props) || defaultSortBy
   const search = getQueryParam('q', state, props)
-  const canModerate = getMe(state, props).canModerate(community)
+  const canModerate = community && getMe(state, props).canModerate(community)
   const extraProps = {
     ...props,
     network,
