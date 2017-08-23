@@ -5,7 +5,7 @@ export default combineReducers({
   isLoggedIn: (state = null, { type, error, payload, meta }) => {
     if (error) return state
     switch (type) {
-      case SIGNUP: return true
+      case SIGNUP:
       case LOGIN: return true
       case CHECK_LOGIN: return !!payload.signedIn
     }
