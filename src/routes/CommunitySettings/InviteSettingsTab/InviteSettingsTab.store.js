@@ -32,7 +32,12 @@ export function createInvitations (communityId, emails, message) {
     graphql: {
       query: `mutation ($communityId: ID, $data: InviteInput) {
         createInvitation(communityId: $communityId, data: $data) {
-          success
+          invitations {
+            id,
+            email,
+            created_at
+            last_sent_at
+          }
         }
       }`,
       variables: {
@@ -119,6 +124,6 @@ export const getPendingInvites = ormCreateSelector(
   ({ Community }, id) => {
     const community = Community.safeGet({id})
     if (!community || !community.pendingInvitations) return []
-    return community.pendingInvitations.toModelArray()
+    return community.pendingInvitations.orderBy(i => -new Date(i.created_at)).toModelArray()
   }
 )

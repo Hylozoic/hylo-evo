@@ -1,4 +1,4 @@
-.exampleName { /* !empty */ }
+$rowHeight: 60px;
 
 .header {
   border-radius: 4px;
@@ -116,7 +116,8 @@
       font-size: 14px;
       width: 100%;
       align-items: center;
-      height: 60px;
+      height: $rowHeight;
+      max-height: $rowHeight;
       border-top: 1px solid $color-ghost;
       display: flex;
       flex-direction: row;
@@ -158,4 +159,24 @@
       flex: 0.5
     }
   }
+}
+
+.enter {
+  opacity: 0.01;
+}
+
+.enter.enter-active {
+  opacity: 1;
+  transition: 400ms ease-in;
+}
+
+.leave {
+  opacity: 1;
+  max-height: $rowHeight;
+}
+
+.leave.leave-active {
+  opacity: 0.01;
+  max-height: 2px;
+  transition: 500ms ease-in;
 }

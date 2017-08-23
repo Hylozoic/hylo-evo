@@ -24,6 +24,7 @@ export function fetchCommunitySettings (slug) {
             items {
               id
               email
+              created_at
               last_sent_at
             }
           }

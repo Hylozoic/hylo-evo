@@ -39,7 +39,7 @@ import {
   UPDATE_COMMUNITY_SETTINGS_PENDING
 } from 'routes/CommunitySettings/CommunitySettings.store'
 import {
-  CREATE_INVITATIONS_PENDING,
+  CREATE_INVITATIONS,
   RESEND_INVITATION_PENDING,
   REINVITE_ALL_PENDING,
   EXPIRE_INVITATION_PENDING
@@ -278,8 +278,11 @@ export default function ormReducer (state = {}, action) {
       person.updateAppending({skills: [Skill.create(skill)]})
       break
 
-    case CREATE_INVITATIONS_PENDING:
-      // TODO
+    case CREATE_INVITATIONS:
+      community = Community.withId(meta.communityId)
+      let invites = payload.data.createInvitation.invitations.map(i => Invitation.create(i))
+
+      community.updateAppending({pendingInvitations: invites})
       break
 
     case RESEND_INVITATION_PENDING:
@@ -291,12 +294,12 @@ export default function ormReducer (state = {}, action) {
 
     case EXPIRE_INVITATION_PENDING:
       invite = Invitation.withId(meta.invitationId)
-      invite.update({resent: true})
+      invite.delete()
       break
 
     case REINVITE_ALL_PENDING:
-      let invites = Invitation.safeGet({community: meta.communityId})
-      invite.update({resent: true, last_sent_at: new Date()})
+      community = Community.withId(meta.communityId)
+      community.pendingInvitations.update({resent: true, last_sent_at: new Date()})
       break
   }
 
