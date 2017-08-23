@@ -212,8 +212,7 @@ export const getModeratorsTotal = createSelector(
 
 export const getModerators = makeQueryResultsModelSelector(
   getModeratorResults,
-  'Person',
-  p => p
+  'Person'
 )
 
 export const getCommunitiesResults = makeGetQueryResults(FETCH_COMMUNITIES)

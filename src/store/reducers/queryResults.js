@@ -178,7 +178,7 @@ export const queryParamWhitelist = [
   'page'
 ]
 
-export function makeQueryResultsModelSelector (resultsSelector, modelName, transform) {
+export function makeQueryResultsModelSelector (resultsSelector, modelName, transform = i => i) {
   return ormCreateSelector(
     orm,
     state => state.orm,
