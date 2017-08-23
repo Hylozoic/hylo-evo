@@ -75,10 +75,13 @@ export default class InviteSettingsTab extends Component {
 
     const sendInvites = () => {
       createInvitations(parseEmailList(emails), message)
+      this.setState({emails: ''})
     }
 
     const resendAllOnClick = () => {
-      reinviteAll()
+      if (window.confirm('Are you sure you want to resend all Pending Invitations')) {
+        reinviteAll()
+      }
     }
 
     const expireOnClick = (invitationId) => {

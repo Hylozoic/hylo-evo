@@ -85,6 +85,10 @@ $rowHeight: 60px;
   border-radius: 2px;
   @include font-regular;
   font-size: 14px;
+
+  &:focus {
+    outline: 0;
+  }
 }
 
 .resend-all-button {
