@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Pill } from 'components/Pillbox/Pillbox'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
-import './Signup.scss'
+import '../Signup.scss'
 
 export default class CreateCommunity extends Component {
   handleCommunityNameChange = (event) => {
@@ -11,9 +11,11 @@ export default class CreateCommunity extends Component {
     this.setState({
       communityName
     })
+    this.props.fetchCommunity(communityName)
   }
 
   render () {
+    console.log('CreateCommunity props', this.props)
     const avatarUrl = hyloNameWhiteBackground
     return <div styleName='wrapper'>
       <div styleName='sidebar'>
