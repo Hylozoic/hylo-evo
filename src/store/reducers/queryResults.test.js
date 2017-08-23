@@ -1,5 +1,11 @@
 import { get } from 'lodash/fp'
-import queryResults, { buildKey, matchNewPostIntoQueryResults } from './queryResults'
+import orm from 'store/models'
+import queryResults, {
+   buildKey,
+   matchNewPostIntoQueryResults,
+   makeGetQueryResults,
+   makeQueryResultsModelSelector
+ } from './queryResults'
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
 
 const variables = {slug: 'foo', sortBy: 'name'}
@@ -201,5 +207,81 @@ describe('matchNewPostIntoQueryResults', () => {
         ids: ['17', '18', '11']
       }
     })
+  })
+})
+
+describe('makeQueryResultsModelSelector', () => {
+  const session = orm.session(orm.getEmptyState())
+
+  const specs = [
+    {
+      modelName: 'Person',
+      values: {
+        id: 1,
+        name: 'The Creator'
+      }
+    },
+    {
+      modelName: 'Post',
+      values: {
+        id: 2,
+        title: 'First past the',
+        creator: 1
+      }
+    },
+    {
+      modelName: 'Post',
+      values: {
+        id: 3,
+        title: 'third post',
+        creator: 1
+      }
+    },
+    {
+      modelName: 'Post',
+      values: {
+        id: 4,
+        title: 'Fourth',
+        creator: 1
+      }
+    },
+    {
+      modelName: 'Post',
+      values: {
+        id: 5,
+        title: 'Fifth',
+        creator: 1
+      }
+    }
+  ]
+
+  specs.forEach(spec => session[spec.modelName].create(spec.values))
+
+  const ACTION_NAME = 'ACTION_NAME'
+
+  const state = {
+    orm: session.state,
+    queryResults: {
+      [buildKey(ACTION_NAME)]: {
+        ids: [5, 2, 3]
+      }
+    }
+  }
+
+  const resultsSelector = makeGetQueryResults(ACTION_NAME)
+
+  it('returns the models in the right order', () => {
+    const modelSelector = makeQueryResultsModelSelector(
+      resultsSelector,
+      'Post',
+      post => ({
+        ...post.ref,
+        creator: post.creator
+      }))
+
+    const models = modelSelector(state)
+    expect(models.length).toEqual(3)
+    expect(models.map(m => m.id)).toEqual([5, 2, 3])
+    expect(models[0].creator.name).toEqual('The Creator')
   })
 })

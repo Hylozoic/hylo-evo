@@ -5,7 +5,9 @@
 // to show when the sort order is set to "Name" separately from when it is set
 // to "Location". And both of these lists are different from what should be
 // shown when something has been typed into the search field.
-import { get, isNull, omitBy, pick, reduce, uniq } from 'lodash/fp'
+import { get, isNull, omitBy, pick, reduce, uniq, isEmpty, includes } from 'lodash/fp'
+import orm from 'store/models'
+import { createSelector as ormCreateSelector } from 'redux-orm'
 import {
   FETCH_POSTS,
   DROP_QUERY_RESULTS
@@ -175,3 +177,18 @@ export const queryParamWhitelist = [
   'type',
   'page'
 ]
+
+export function makeQueryResultsModelSelector (resultsSelector, modelName, transform) {
+  return ormCreateSelector(
+    orm,
+    state => state.orm,
+    resultsSelector,
+    (session, results) => {
+      if (isEmpty(results) || isEmpty(results.ids)) return []
+      return session[modelName].all()
+      .filter(x => includes(x.id, results.ids))
+      .orderBy(x => results.ids.indexOf(x.id))
+      .toModelArray()
+      .map(transform)
+    })
+}
