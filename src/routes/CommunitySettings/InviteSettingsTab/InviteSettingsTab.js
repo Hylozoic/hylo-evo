@@ -46,6 +46,7 @@ export default class InviteSettingsTab extends Component {
 
   render () {
     const { community,
+      pendingCreate,
       regenerateAccessCode,
       inviteLink,
       pending,
@@ -71,10 +72,13 @@ export default class InviteSettingsTab extends Component {
 
     const buttonColor = highlight => highlight ? 'green' : 'green-white-green-border'
 
-    const disableSendBtn = isEmpty(emails)
+    const disableSendBtn = (isEmpty(emails) || pendingCreate)
 
     const sendInvites = () => {
       createInvitations(parseEmailList(emails), message)
+
+      // TODO we should be validating emails here.  and then clear the emails input
+      // AFTER we successfully validated and sent them out.
       this.setState({emails: ''})
     }
 
@@ -127,10 +131,12 @@ export default class InviteSettingsTab extends Component {
       <div styleName='styles.email-section'>
         <TextInput styleName='styles.email-addresses-input'
           placeholder='Type email addresses'
+          disabled={pendingCreate}
           onChange={(event) => this.setState({emails: event.target.value})}
           value={this.state.emails} />
         <TextareaAutosize minRows={5} styleName='styles.invite-msg-input'
           value={this.state.message}
+          disabled={pendingCreate}
           onChange={(event) => this.setState({message: event.target.value})} />
         <div styleName='styles.send-invite-button'>
           <Button color='green' disabled={disableSendBtn} onClick={sendInvites} narrow small>
