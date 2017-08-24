@@ -1,9 +1,12 @@
 import React from 'react'
-import './Signup.scss'
+import { uniq } from 'lodash'
+import Particles from 'react-particles-js'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
-import { uniq } from 'lodash'
+import './Signup.scss'
+
+import particlesjsConfig from 'routes/Login/particlesjsConfig'
 
 export default class Signup extends React.Component {
   constructor (props) {
@@ -26,7 +29,17 @@ export default class Signup extends React.Component {
 
   render () {
     const setState = key => event => this.setState({[key]: event.target.value})
+    const particlesStyle = {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%'
+    }
     return <div styleName='background'>
+      <div styleName='particlesBackgroundWrapper'>
+        <Particles params={particlesjsConfig} style={particlesStyle} />
+      </div>
       <div styleName='container'>
         <h1 styleName='title'>Welcome to Hylo</h1>
         <p styleName='blurb'>Stay connected, organized, and engaged with your community.</p>
