@@ -38,6 +38,12 @@ import {
 import {
   UPDATE_COMMUNITY_SETTINGS_PENDING
 } from 'routes/CommunitySettings/CommunitySettings.store'
+import {
+  CREATE_INVITATIONS,
+  RESEND_INVITATION_PENDING,
+  REINVITE_ALL_PENDING,
+  EXPIRE_INVITATION_PENDING
+} from 'routes/CommunitySettings/InviteSettingsTab/InviteSettingsTab.store'
 
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
@@ -61,7 +67,8 @@ export default function ormReducer (state = {}, action) {
     Person,
     Post,
     PostCommenter,
-    Skill
+    Skill,
+    Invitation
   } = session
 
   const invalidateNotifications = () => {
@@ -69,7 +76,7 @@ export default function ormReducer (state = {}, action) {
     first && first.update({time: Date.now()})
   }
 
-  let membership, community, person
+  let membership, community, person, invite
 
   switch (type) {
     case EXTRACT_MODEL:
@@ -269,6 +276,30 @@ export default function ormReducer (state = {}, action) {
       const skill = payload.data.addSkill
       person = Person.withId(Me.first().id)
       person.updateAppending({skills: [Skill.create(skill)]})
+      break
+
+    case CREATE_INVITATIONS:
+      community = Community.withId(meta.communityId)
+      let invites = payload.data.createInvitation.invitations.map(i => Invitation.create(i))
+
+      community.updateAppending({pendingInvitations: invites})
+      break
+
+    case RESEND_INVITATION_PENDING:
+      invite = Invitation.withId(meta.invitationId)
+      console.log('invite', invite)
+      if (!invite) break
+      invite.update({resent: true, last_sent_at: new Date()})
+      break
+
+    case EXPIRE_INVITATION_PENDING:
+      invite = Invitation.withId(meta.invitationId)
+      invite.delete()
+      break
+
+    case REINVITE_ALL_PENDING:
+      community = Community.withId(meta.communityId)
+      community.pendingInvitations.update({resent: true, last_sent_at: new Date()})
       break
   }
 
