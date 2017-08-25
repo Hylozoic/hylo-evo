@@ -103,8 +103,8 @@ export default class PrimaryLayout extends Component {
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
-            {orderedSignupRoutes.map(({ path, component, props }) =>
-              <Route key={path} {...{path, component, props}} />)}
+            {orderedSignupRoutes.map(({ path, component }) =>
+              <Route key={path} {...{path, component}} />)}
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
