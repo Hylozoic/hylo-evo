@@ -87,7 +87,6 @@ me {
   unseenThreadCount
   settings {
     signupInProgress
-    lastSignupUrl
   }
   memberships {
     id
