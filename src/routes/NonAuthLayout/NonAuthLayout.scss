@@ -1,0 +1,59 @@
+$third-party-icon-size: 14px;
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.particlesBackgroundWrapper {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  z-index: -1000;
+  height: 100vh;
+  width: 100vw;
+  line-height: 100vh;
+}
+
+.topRow {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.form {
+  background-color: white;
+  box-shadow: 0px 0px 6px 0px $color-black-10;
+  padding: 50px 40px 40px;
+  border-radius: 8px;
+  width: 420px;
+}
+
+.below-container {
+  margin-top: $space-2x;
+  a {
+    color: white !important;
+    cursor: pointer;
+  }
+}
+
+.signupButton {
+  background-color: $color-white;
+}
+
+.logo {
+  /* !empty */
+}
+
+.green-text {
+  color: $color-caribbean-green
+}
