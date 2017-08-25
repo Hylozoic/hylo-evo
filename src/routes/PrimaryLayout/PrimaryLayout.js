@@ -104,7 +104,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
             {orderedSignupRoutes.map(({ path, component }) =>
-              <Route key={path} exact {...{path, component}} />)}
+              <Route key={path} {...{path, component}} />)}
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
@@ -159,7 +159,7 @@ const detailRoutes = [
 ]
 
 const orderedSignupRoutes = [
-  {path: '/s/createCommunity', component: SignupCreateCommunity}
+  {path: '/create-community', component: SignupCreateCommunity}
   // if there is already a community associated with the user, leave it to the component to redirect itself
   // {path: '/signup/photo', component: SignupPhoto},
   // {path: '/signup/verify-photo', component: SingupVerifyPhoto},
