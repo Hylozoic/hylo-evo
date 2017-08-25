@@ -1,27 +1,22 @@
-import { FETCH_COMMUNITY } from 'store/constants'
+import { CREATE_COMMUNITY } from 'store/constants'
 
-export function fetchCommunity ({ communityName }) {
-  const extractModel = 'Community'
-  var query = communityQuery
-
+export function createCommunity (name) {
   return {
-    type: FETCH_COMMUNITY,
+    type: CREATE_COMMUNITY,
     graphql: {
-      query,
+      query: `mutation ($name: String) {
+        createCommunity(data: {name: $name}) {
+          name
+        }
+      }`,
       variables: {
-        slug: communityName
+        name
       }
     },
     meta: {
-      extractModel
+      optimistic: true,
+      extractModel: 'Community',
+      name
     }
   }
 }
-
-const communityQuery = `query (
-  $slug: String
-) {
-  community(slug: $slug) {
-    id
-  }
-}`

@@ -11,11 +11,10 @@ export default class CreateCommunity extends Component {
     this.setState({
       communityName
     })
-    this.props.fetchCommunity(communityName)
+    this.props.createCommunity(communityName)
   }
 
   render () {
-    console.log('CreateCommunity props', this.props)
     const avatarUrl = hyloNameWhiteBackground
     return <div styleName='wrapper'>
       <div styleName='sidebar'>
