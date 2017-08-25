@@ -30,7 +30,7 @@ function rootRoutes () {
     <Switch>
       <Route path='/ui-kit' component={UIKit} />
       <NonAuthRoute path='/login' component={NonAuthLayout} />
-      <NonAuthRoute path='/signup' component={NonAuthLayout} />
+      <NonAuthRoute path='/signup' exact component={NonAuthLayout} />
       <AuthRoute path='/' component={PrimaryLayout} />
     </Switch>
   </LoginCheck>

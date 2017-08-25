@@ -159,7 +159,7 @@ const detailRoutes = [
 ]
 
 const orderedSignupRoutes = [
-  {path: '/create-community', component: SignupCreateCommunity}
+  {path: '/signup/create-community', component: SignupCreateCommunity}
   // if there is already a community associated with the user, leave it to the component to redirect itself
   // {path: '/signup/photo', component: SignupPhoto},
   // {path: '/signup/verify-photo', component: SingupVerifyPhoto},
