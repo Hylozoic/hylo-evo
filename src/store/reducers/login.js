@@ -13,7 +13,7 @@ export default combineReducers({
   },
 
   error: (state = null, { type, error, payload }) => {
-    if (error && type === LOGIN) return payload.message
+    if (error && (type === LOGIN || type === SIGNUP)) return payload.message
     return state
   }
 })

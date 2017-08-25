@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { checkLogin } from '../Login.store'
+import { checkLogin } from '../Login/Login.store'
 import { isNull } from 'lodash'
 
 export function mapStateToProps (state) {
