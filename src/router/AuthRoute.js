@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import pickIsLoggedIn from 'store/selectors/pickIsLoggedIn'
 
 function AuthRoute ({ component, isLoggedIn, ...rest }) {
-  console.log('AuthRoute: ', isLoggedIn)
   return <Route {...rest} render={props => isLoggedIn
     ? React.createElement(component, props)
     : redirect(props)} />

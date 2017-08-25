@@ -3,7 +3,10 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import CreateCommunity from '../CreateCommunity'
 import '../Signup.scss'
-export default function SignupCreateCommunity () {
+export default function SignupModal (props, {children}) {
+  console.log('SignupModal props', props)
+  console.log('SignupModal children', children)
+
   return <ReactCSSTransitionGroup
     transitionName='post-editor'
     transitionAppear

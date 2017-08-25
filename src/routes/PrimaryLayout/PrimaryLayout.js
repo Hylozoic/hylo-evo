@@ -24,7 +24,7 @@ import AllTopics from 'routes/AllTopics'
 import Search from 'routes/Search'
 import NetworkSettings from 'routes/NetworkSettings'
 import NetworkCommunities from 'routes/NetworkCommunities'
-import SignupCreateCommunity from 'routes/Signup/SignupCreateCommunity'
+import SignupModal from 'routes/Signup/SignupModal'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
@@ -103,8 +103,8 @@ export default class PrimaryLayout extends Component {
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
-            {orderedSignupRoutes.map(({ path, component }) =>
-              <Route key={path} {...{path, component}} />)}
+            {orderedSignupRoutes.map(({ path, component, props }) =>
+              <Route key={path} {...{path, component, props}} />)}
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
@@ -122,8 +122,10 @@ export default class PrimaryLayout extends Component {
             Best guess is to replace these routes with a render function
             defined above, and store the previous detail component in state
           */}
-          {detailRoutes.map(({ path, component }) =>
-            <Route key={path} {...{path, component}} />)}
+          {detailRoutes.map(({ path, component, children }) =>
+            <Route key={path} {...{path, component}} children={
+              <children />
+            } />)}
         </div>
       </div>
       <Route path='/t' component={Messages} />
@@ -159,7 +161,7 @@ const detailRoutes = [
 ]
 
 const orderedSignupRoutes = [
-  {path: '/signup/create-community', component: SignupCreateCommunity}
+  {path: '/signup/create-community', component: SignupModal}
   // if there is already a community associated with the user, leave it to the component to redirect itself
   // {path: '/signup/photo', component: SignupPhoto},
   // {path: '/signup/verify-photo', component: SingupVerifyPhoto},
@@ -191,7 +193,6 @@ export function RedirectToCommunity ({ currentUser }) {
 export function redirectIfCommunity (currentUser) {
   return () => {
     if (!currentUser || currentUser.memberships.count() === 0) return <Loading type='top' />
-    console.log('in if')
     const mostRecentCommunity = currentUser.memberships
     .orderBy(m => new Date(m.lastViewedAt), 'desc')
     .first()
