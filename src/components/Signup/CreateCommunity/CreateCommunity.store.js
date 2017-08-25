@@ -6,7 +6,10 @@ export function createCommunity (name) {
     graphql: {
       query: `mutation ($name: String) {
         createCommunity(data: {name: $name}) {
-          name
+          id
+          community {
+            name
+          }
         }
       }`,
       variables: {
