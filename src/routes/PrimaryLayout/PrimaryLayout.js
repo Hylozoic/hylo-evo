@@ -25,6 +25,8 @@ import Search from 'routes/Search'
 import NetworkSettings from 'routes/NetworkSettings'
 import NetworkCommunities from 'routes/NetworkCommunities'
 import SignupModal from 'routes/Signup/SignupModal'
+import CreateCommunity from 'routes/Signup/CreateCommunity'
+
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
@@ -103,8 +105,12 @@ export default class PrimaryLayout extends Component {
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
-            {orderedSignupRoutes.map(({ path, component }) =>
-              <Route key={path} {...{path, component}} />)}
+            {signupRoutes.map(({ path, child }) =>
+              <Route
+                path={path}
+                component={(props) => <SignupModal {...props} child={child} />}
+              />
+            )}
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
@@ -160,8 +166,8 @@ const detailRoutes = [
   {path: `/c/:slug/:topicName/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail}
 ]
 
-const orderedSignupRoutes = [
-  {path: '/signup/create-community', component: SignupModal}
+const signupRoutes = [
+  {path: '/signup/create-community', child: CreateCommunity}
   // if there is already a community associated with the user, leave it to the component to redirect itself
   // {path: '/signup/photo', component: SignupPhoto},
   // {path: '/signup/verify-photo', component: SingupVerifyPhoto},
@@ -172,18 +178,8 @@ const orderedSignupRoutes = [
 ]
 export function RedirectToSignupFlow ({ currentUser }) {
   if (!currentUser || !currentUser.settings.signupInProgress) return null
-  const destination = nextUrl(currentUser.settings.lastSignupUrl)
+  const destination = '/signup/create-community'
   return <Redirect to={destination} />
-}
-
-export function nextUrl (lastUrl) {
-  if (lastUrl === '/signup') return orderedSignupRoutes[0].path
-
-  for (let x = 0; x < orderedSignupRoutes.length; x++) {
-    if (lastUrl === orderedSignupRoutes[x].path) {
-      return orderedSignupRoutes[x + 1].path
-    }
-  }
 }
 
 export function RedirectToCommunity ({ currentUser }) {

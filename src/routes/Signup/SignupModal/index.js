@@ -3,7 +3,10 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import CreateCommunity from '../CreateCommunity'
 import '../Signup.scss'
-export default function SignupModal (props) {
+export default function SignupModal (props, thing) {
+  console.log('SignupModal props', props)
+  console.log('SignupModal thing', thing)
+
   return <ReactCSSTransitionGroup
     transitionName='post-editor'
     transitionAppear
@@ -15,17 +18,8 @@ export default function SignupModal (props) {
       key='signup-modal'>
       <div styleName='signup-background' className='signup-background' />
       <div styleName='signup-wrapper' className='signup-wrapper'>
-        {getChild(props.location.pathname)}
+        {<props.child />}
       </div>
     </div>
   </ReactCSSTransitionGroup>
-}
-
-export function getChild (location) {
-  switch (location) {
-    case '/signup/create-community':
-      return <CreateCommunity />
-    default:
-      return null
-  }
 }
