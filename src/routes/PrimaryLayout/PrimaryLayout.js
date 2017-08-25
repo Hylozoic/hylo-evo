@@ -24,7 +24,7 @@ import AllTopics from 'routes/AllTopics'
 import Search from 'routes/Search'
 import NetworkSettings from 'routes/NetworkSettings'
 import NetworkCommunities from 'routes/NetworkCommunities'
-import SignupCreateCommunity from 'components/Signup/SignupCreateCommunity'
+import SignupCreateCommunity from 'routes/Signup/SignupCreateCommunity'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
