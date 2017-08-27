@@ -124,6 +124,11 @@ export const getPendingInvites = ormCreateSelector(
   ({ Community }, id) => {
     const community = Community.safeGet({id})
     if (!community || !community.pendingInvitations) return []
-    return community.pendingInvitations.orderBy(i => -new Date(i.created_at)).toModelArray()
+    community.pendingInvitations.orderBy(i => -new Date(i.created_at)).toModelArray()
+    return community
+    .pendingInvitations
+    .orderBy(i => -new Date(i.created_at))
+    .filter(invite => invite.id)
+    .toModelArray()
   }
 )

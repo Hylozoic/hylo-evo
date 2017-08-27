@@ -3,7 +3,6 @@ import { origin } from 'util/index'
 import { regenerateAccessCode, FETCH_COMMUNITY_SETTINGS } from '../CommunitySettings.store'
 // import getMe from 'store/selectors/getMe'
 import {
-  CREATE_INVITATIONS,
   createInvitations,
   getPendingInvites,
   expireInvitation,
@@ -16,7 +15,6 @@ export function mapStateToProps (state, props) {
   const pending = state.pending[FETCH_COMMUNITY_SETTINGS]
   const inviteLink = origin() + community.invitePath
   const pendingInvites = getPendingInvites(state, { communityId: community.id })
-  const pendingCreate = state.pending[CREATE_INVITATIONS]
 
   return {
     inviteLink,
