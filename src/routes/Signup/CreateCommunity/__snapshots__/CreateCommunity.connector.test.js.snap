@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapDispatchToProps CreateCommunity should match latest snapshot 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($name: String) {
+        createCommunity(data: {name: $name}) {
+          id
+          community {
+            name
+          }
+        }
+      }",
+    "variables": Object {
+      "name": "My Community",
+    },
+  },
+  "meta": Object {
+    "extractModel": "Community",
+    "name": "My Community",
+    "optimistic": true,
+  },
+  "type": "CREATE_COMMUNITY",
+}
+`;

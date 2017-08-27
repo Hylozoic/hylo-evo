@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`signup should match latest snapshot 1`] = `
+Object {
+  "payload": Object {
+    "api": Object {
+      "method": "post",
+      "params": Object {
+        "email": "test@hylo.com",
+        "fullName": "fullName",
+        "login": true,
+        "password": "testPassword",
+      },
+      "path": "/noo/user",
+    },
+  },
+  "type": "SIGNUP",
+}
+`;

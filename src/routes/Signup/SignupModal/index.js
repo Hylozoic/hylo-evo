@@ -4,7 +4,7 @@ import '../Signup.scss'
 
 export default function SignupModal (props) {
   return <ReactCSSTransitionGroup
-    transitionName='post-editor'
+    transitionName='signup'
     transitionAppear
     transitionAppearTimeout={400}
     transitionEnterTimeout={400}

@@ -11,7 +11,9 @@ export default class CreateCommunity extends Component {
     this.setState({
       communityName
     })
-    // this.props.createCommunity(communityName)
+  }
+  submit = (communityName) => {
+    this.props.createCommunity(communityName)
   }
 
   render () {
