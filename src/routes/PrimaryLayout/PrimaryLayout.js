@@ -105,11 +105,11 @@ export default class PrimaryLayout extends Component {
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
-            {signupRoutes.map(({ path, child }) =>
+            {signupRoutes.map(({ path, child, step }) =>
               <Route
                 path={path}
                 key={path}
-                component={(props) => <SignupModal {...props} child={child} />}
+                component={(props) => <SignupModal {...props} child={child} step={step} />}
               />
             )}
           </Switch>
@@ -168,7 +168,7 @@ const detailRoutes = [
 ]
 
 const signupRoutes = [
-  {path: '/signup/create-community', child: CreateCommunity}
+  {path: '/signup/create-community', child: CreateCommunity, step: '1'}
   // if there is already a community associated with the user, leave it to the component to redirect itself
   // {path: '/signup/photo', component: SignupPhoto},
   // {path: '/signup/verify-photo', component: SingupVerifyPhoto},
@@ -178,7 +178,6 @@ const signupRoutes = [
 
 ]
 export function RedirectToSignupFlow ({ currentUser }) {
-  return null
   if (!currentUser || !currentUser.settings.signupInProgress) return null
   const destination = '/signup/create-community'
   return <Redirect to={destination} />

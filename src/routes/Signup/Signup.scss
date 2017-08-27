@@ -8,12 +8,12 @@
   border-radius: $space-1x;
   border: 1px solid $color-cape-cod-10;
   background: $color-white;
-  padding-top: 20px;
+  padding-top: 30px;
 }
 
 .left-sidebar {
   width: 200px;
-  padding-top: 20px;
+  padding-top: 30px;
   padding-right: 32px;
   display: flex;
   flex-direction: column;
@@ -40,7 +40,7 @@
 }
 
 .detail {
-  padding-top: 20px;
+  padding-top: 30px;
   background-color: $color-white;
   position: absolute;
   top: 0;
@@ -87,7 +87,14 @@
 
 .float-right {
   float: right;
-  margin-right: $layout-spacing;
+  margin-right: 50px;
+}
+
+.step-count {
+  float: right;
+  margin-right: 30px;
+  letter-spacing: 1px;
+  font-size: 14px;
 }
 
 .gray-text {
@@ -111,22 +118,30 @@
   right:0;
 }
 
-.my-button {
+.continue-button {
   border: 0;
   font-size: 12px;
   color: $color-caribbean-green;
+  background-color: $color-white;
   width: 120%;
   text-align: center;
+  font-size: 1rem;
 }
 
-.or-press-enter {
+.continue-button:hover {
+  color: $color-caribbean-green;
+  background-color: $color-white;
+}
+
+.instruction {
   color: $color-white;
-  font-size: 50%;
+  font-size: 90%;
   text-align: center;
   margin-top: 10px;
   font-weight: 100;
   font-style: italic;
-  width: 120%
+  width: 120%;
+  opacity: 0.5;
 }
 
 .center-vertical {
@@ -135,21 +150,27 @@
   width: 100%;
 }
 
-.my-input {
+.create-community-input {
   background-color: transparent;
   border: none;
   border-bottom: 1px solid $color-athens-gray-dark;
-  width: 100%;
+  width: 90%;
   margin-right: 10px;
   margin-left: 10px;
   font-size: 24px;
   color: $color-white;
 }
 
-.my-input:focus {
+.create-community-input:focus {
     outline: none;
 }
 
 .alert {
   display: block;
+}
+
+.close-button {
+  letter-spacing: 1px;
+  font-size: 14px;
+  opacity: 0.5;
 }

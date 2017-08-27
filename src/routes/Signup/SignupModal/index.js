@@ -14,7 +14,7 @@ export default function SignupModal (props) {
       key='signup-modal'>
       <div styleName='signup-background' className='signup-background' />
       <div styleName='signup-wrapper' className='signup-wrapper'>
-        {<props.child />}
+        {<props.child step={props.step} />}
       </div>
     </div>
   </ReactCSSTransitionGroup>
