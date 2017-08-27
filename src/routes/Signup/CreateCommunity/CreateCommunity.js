@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Button from 'components/Button'
-import { Pill } from 'components/Pillbox/Pillbox'
+import { Link } from 'react-router-dom'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import '../Signup.scss'
@@ -25,7 +25,7 @@ export default class CreateCommunity extends Component {
         <p styleName='gray-text'>All good things start somewhere! Let's kick things off with a catchy name for your community.</p>
       </div>
       <div styleName='detail'>
-        <span styleName='white-text step-count'>STEP {this.props.step}/4</span>
+        <span styleName='white-text step-count'>STEP 1/4</span>
         <br />
         <div styleName='center'>
           <div styleName='logo center' style={bgImageStyle(avatarUrl)} />
@@ -40,7 +40,9 @@ export default class CreateCommunity extends Component {
         <div>
           <div styleName='float-right bottom'>
             <div>
-              <Button styleName='continue-button' label='Onwards!' />
+              <Link to={'/signup/create-community'}>
+                <Button styleName='continue-button' label='Onwards!' />
+              </Link>
             </div>
             <div styleName='instruction'>or press Enter</div>
           </div>

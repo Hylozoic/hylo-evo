@@ -153,12 +153,14 @@
 .create-community-input {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid $color-athens-gray-dark;
+  border-bottom: 1px solid $color-athens-gray-dark-50;
   width: 90%;
   margin-right: 10px;
   margin-left: 10px;
   font-size: 24px;
   color: $color-white;
+  font-weight: lighter;
+  padding-bottom: 10px;
 }
 
 .create-community-input:focus {
