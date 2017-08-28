@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateCommunity renders correctly 1`] = `
+<div
+  data-styleName="sidebar"
+>
+  <p
+    data-styleName="gray-text close-button"
+  >
+    CLOSE
+  </p>
+  <p
+    data-styleName="sidebar-header"
+  >
+    header text
+  </p>
+  <p
+    data-styleName="gray-text"
+  >
+    body text
+  </p>
+</div>
+`;
