@@ -10,6 +10,7 @@ export default class ChangeImageButton extends Component {
 
   render () {
     const { uploadImage, update, uploadSettings, loading, className } = this.props
+    console.log('ChangeImageButton props', this.props)
     const onClick = loading
       ? () => {}
       : () => uploadImage(uploadSettings)

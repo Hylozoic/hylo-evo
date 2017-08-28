@@ -174,7 +174,7 @@ const signupRoutes = [
 ]
 export function RedirectToSignupFlow ({ currentUser }) {
   if (!currentUser || !currentUser.settings.signupInProgress) return null
-  const destination = '/signup/create-community'
+  const destination = '/signup/upload-photo'
   return <Redirect to={destination} />
 }
 

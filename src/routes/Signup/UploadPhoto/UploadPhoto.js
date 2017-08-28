@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import Button from 'components/Button'
 import { Link } from 'react-router-dom'
 import { Redirect } from 'react-router'
+import { avatarUploadSettings } from 'store/models/Me'
+import { cameraSvg } from 'util/assets'
 import LeftSidebar from '../LeftSidebar'
-import { hyloNameWhiteBackground } from 'util/assets'
+import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
 import '../Signup.scss'
 
@@ -13,8 +15,23 @@ export default class CreateCommunity extends Component {
     this.state = {
       fireRedirect: false
     }
-    this.redirectUrl = '/signup/upload-photo'
+    this.redirectUrl = '/'
   }
+
+  updateSetting = (key, setChanged = true) => event => {
+    const { edits, changed } = this.state
+    // setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
+    this.setState({
+      changed: setChanged ? true : changed,
+      edits: {
+        ...edits,
+        [key]: event.target.value
+      }
+    })
+  }
+
+  updateSettingDirectly = (key, changed) => value =>
+    this.updateSetting(key, changed)({target: {value}})
   handleCommunityNameChange = (event) => {
     const communityName = event.target.value
     this.setState({
@@ -31,19 +48,39 @@ export default class CreateCommunity extends Component {
     })
   }
 
+  con = () => {
+    console.log('click here')
+  }
+
+  uploadOnClick = () => {
+    const { uploadImage, currentUser } = this.props
+    const uploadSettings = avatarUploadSettings(currentUser)
+    const update = this.updateSettingDirectly('avatarUrl')
+
+    uploadImage(uploadSettings)
+    .then(action => {
+      let { error, payload } = action
+      if (error) return
+      update(payload)
+    })
+  }
+
   render () {
+    const { currentUser } = this.props
     const { fireRedirect } = this.state
-    const logoUrl = hyloNameWhiteBackground
+
+    if (!currentUser) return <Loading />
+    if (fireRedirect) return <Redirect to={this.redirectUrl} />
     return <div styleName='wrapper'>
       <LeftSidebar
-        header="Great, let's get started"
-        body="All good things start somewhere! Let's kick things off with a catchy name for your community."
+        header="Let's complete your profile!"
+        body="Welcome to Hylo, NAME. It only takes a couple seconds to complete your profile. Let's get started!"
       />
       <div styleName='detail'>
         <span styleName='white-text step-count'>STEP 1/4</span>
         <br />
-        <div styleName='center'>
-          <div styleName='logo center' style={bgImageStyle(logoUrl)} />
+        <div styleName='image-upload-icon'>
+          <div style={bgImageStyle(cameraSvg)} styleName='camera-svg' onClick={this.uploadOnClick} />
         </div>
         <div styleName='center center-vertical'>
           <input
@@ -54,21 +91,19 @@ export default class CreateCommunity extends Component {
                 this.redirect()
               }
             }}
-            autoFocus
           />
         </div>
         <div>
           <div styleName='float-right bottom'>
             <div>
               <Link to={'/signup/create-community'}>
-                <Button styleName='continue-button' label='Continue' />
+                <Button styleName='continue-button' label='Onwards!' />
               </Link>
             </div>
             <div styleName='instruction'>or press Enter</div>
           </div>
         </div>
       </div>
-      { fireRedirect && <Redirect to={this.redirectUrl} /> }
     </div>
   }
 }
