@@ -28,7 +28,7 @@ export default class UploadPhoto extends Component {
 
   updateSetting = (key, setChanged = true) => event => {
     const { edits, changed } = this.state
-    // setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
+    setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
     this.setState({
       changed: setChanged ? true : changed,
       edits: {
