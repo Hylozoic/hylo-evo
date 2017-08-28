@@ -48,10 +48,6 @@ export default class CreateCommunity extends Component {
     })
   }
 
-  con = () => {
-    console.log('click here')
-  }
-
   uploadOnClick = () => {
     const { uploadImage, currentUser } = this.props
     const uploadSettings = avatarUploadSettings(currentUser)
