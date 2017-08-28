@@ -3,19 +3,27 @@ import Button from 'components/Button'
 import { Link } from 'react-router-dom'
 import { Redirect } from 'react-router'
 import { avatarUploadSettings } from 'store/models/Me'
+import ChangeImageButton from 'components/ChangeImageButton'
+
 import { cameraSvg } from 'util/assets'
 import LeftSidebar from '../LeftSidebar'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
 import '../Signup.scss'
 
-export default class CreateCommunity extends Component {
+export default class UploadPhoto extends Component {
   constructor () {
     super()
     this.state = {
       fireRedirect: false
     }
     this.redirectUrl = '/'
+  }
+
+  redirect = () => {
+    this.setState({
+      fireRedirect: true
+    })
   }
 
   updateSetting = (key, setChanged = true) => event => {
@@ -32,34 +40,6 @@ export default class CreateCommunity extends Component {
 
   updateSettingDirectly = (key, changed) => value =>
     this.updateSetting(key, changed)({target: {value}})
-  handleCommunityNameChange = (event) => {
-    const communityName = event.target.value
-    this.setState({
-      communityName
-    })
-  }
-  submit = (communityName) => {
-    this.props.createCommunity(communityName)
-  }
-
-  redirect = () => {
-    this.setState({
-      fireRedirect: true
-    })
-  }
-
-  uploadOnClick = () => {
-    const { uploadImage, currentUser } = this.props
-    const uploadSettings = avatarUploadSettings(currentUser)
-    const update = this.updateSettingDirectly('avatarUrl')
-
-    uploadImage(uploadSettings)
-    .then(action => {
-      let { error, payload } = action
-      if (error) return
-      update(payload)
-    })
-  }
 
   render () {
     const { currentUser } = this.props
@@ -76,7 +56,12 @@ export default class CreateCommunity extends Component {
         <span styleName='white-text step-count'>STEP 1/4</span>
         <br />
         <div styleName='image-upload-icon'>
-          <div style={bgImageStyle(cameraSvg)} styleName='camera-svg' onClick={this.uploadOnClick} />
+          <ChangeImageButton
+            update={this.updateSettingDirectly('avatarUrl')}
+            uploadSettings={avatarUploadSettings(currentUser)}
+            styleName='change-avatar-button'
+            child={uploadImageIcon(cameraSvg)}
+          />
         </div>
         <div styleName='center center-vertical'>
           <input
@@ -102,4 +87,10 @@ export default class CreateCommunity extends Component {
       </div>
     </div>
   }
+}
+
+export function uploadImageIcon () {
+  return <div styleName='image-upload-icon'>
+    <div style={bgImageStyle(cameraSvg)} styleName='camera-svg' />
+  </div>
 }
