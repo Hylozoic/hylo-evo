@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { Redirect } from 'react-router'
 import { avatarUploadSettings } from 'store/models/Me'
 import ChangeImageButton from 'components/ChangeImageButton'
-
 import { cameraSvg } from 'util/assets'
 import LeftSidebar from '../LeftSidebar'
 import Loading from 'components/Loading'
@@ -15,7 +14,9 @@ export default class UploadPhoto extends Component {
   constructor () {
     super()
     this.state = {
-      fireRedirect: false
+      fireRedirect: false,
+      edits: {},
+      changed: false
     }
     this.redirectUrl = '/'
   }
@@ -28,7 +29,7 @@ export default class UploadPhoto extends Component {
 
   updateSetting = (key, setChanged = true) => event => {
     const { edits, changed } = this.state
-    setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
+    // setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
     this.setState({
       changed: setChanged ? true : changed,
       edits: {
@@ -36,6 +37,12 @@ export default class UploadPhoto extends Component {
         [key]: event.target.value
       }
     })
+  }
+
+  save = () => {
+    this.setState({changed: false})
+    // setConfirm(false)
+    this.props.updateUserSettings(this.state.edits)
   }
 
   updateSettingDirectly = (key, changed) => value =>
@@ -47,6 +54,8 @@ export default class UploadPhoto extends Component {
 
     if (!currentUser) return <Loading />
     if (fireRedirect) return <Redirect to={this.redirectUrl} />
+
+    const currentAvatarUrl = this.props.currentUser.avatarUrl || this.props.state.avatarUrl
     return <div styleName='wrapper'>
       <LeftSidebar
         header="Let's complete your profile!"
@@ -56,17 +65,18 @@ export default class UploadPhoto extends Component {
         <span styleName='white-text step-count'>STEP 1/4</span>
         <br />
         <div styleName='image-upload-icon'>
-          <ChangeImageButton
-            update={this.updateSettingDirectly('avatarUrl')}
-            uploadSettings={avatarUploadSettings(currentUser)}
-            styleName='change-avatar-button'
-            child={uploadImageIcon(cameraSvg)}
+          <UploadSection
+            avatarUrl={currentAvatarUrl}
+            updateSettingDirectly={this.updateSettingDirectly}
+            currentUser={currentUser}
           />
         </div>
         <div styleName='center center-vertical'>
           <input
             styleName='create-community-input'
             onChange={this.handleCommunityNameChange}
+            readonly
+            value={'Upload a profile photo'}
             onKeyPress={event => {
               if (event.key === 'Enter') {
                 this.redirect()
@@ -77,7 +87,7 @@ export default class UploadPhoto extends Component {
         <div>
           <div styleName='float-right bottom'>
             <div>
-              <Link to={'/signup/create-community'}>
+              <Link to={'/signup/create-community'} onClick={this.save}>
                 <Button styleName='continue-button' label='Onwards!' />
               </Link>
             </div>
@@ -89,8 +99,18 @@ export default class UploadPhoto extends Component {
   }
 }
 
-export function uploadImageIcon () {
+export function uploadAvatar (imageUrl) {
   return <div styleName='image-upload-icon'>
-    <div style={bgImageStyle(cameraSvg)} styleName='camera-svg' />
+    <div style={bgImageStyle(imageUrl)} styleName='camera-svg' />
   </div>
+}
+
+export function UploadSection ({avatarUrl, currentUser, updateSettingDirectly}) {
+  const childImage = avatarUrl || cameraSvg
+  return <ChangeImageButton
+    update={updateSettingDirectly('avatarUrl')}
+    uploadSettings={avatarUploadSettings(currentUser)}
+    styleName='change-avatar-button'
+    child={uploadAvatar(childImage)}
+  />
 }

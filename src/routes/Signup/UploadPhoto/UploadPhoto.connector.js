@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
+import { updateUserSettings } from './UploadPhoto.connector.js'
 
 export function mapStateToProps (state, props) {
   return {
@@ -7,4 +8,8 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export default connect(mapStateToProps)
+export const mapDispatchToProps = {
+  updateUserSettings
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)
