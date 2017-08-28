@@ -26,6 +26,7 @@ import NetworkSettings from 'routes/NetworkSettings'
 import NetworkCommunities from 'routes/NetworkCommunities'
 import SignupModal from 'routes/Signup/SignupModal'
 import CreateCommunity from 'routes/Signup/CreateCommunity'
+import UploadPhoto from 'routes/Signup/UploadPhoto'
 
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
@@ -168,14 +169,8 @@ const detailRoutes = [
 ]
 
 const signupRoutes = [
-  {path: '/signup/create-community', child: CreateCommunity}
-  // if there is already a community associated with the user, leave it to the component to redirect itself
-  // {path: '/signup/photo', component: SignupPhoto},
-  // {path: '/signup/verify-photo', component: SingupVerifyPhoto},
-  // {path: '/signup/location', component: SingupLocation},
-  // {path: '/signup/skills', component: SingupSkills},
-  // {path: '/signup/verifyInfo', component: SingupVerifyInfo}
-
+  {path: '/signup/create-community', child: CreateCommunity},
+  {path: '/signup/upload-photo', child: UploadPhoto}
 ]
 export function RedirectToSignupFlow ({ currentUser }) {
   if (!currentUser || !currentUser.settings.signupInProgress) return null

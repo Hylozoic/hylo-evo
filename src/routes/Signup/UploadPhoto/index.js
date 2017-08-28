@@ -13,7 +13,7 @@ export default class CreateCommunity extends Component {
     this.state = {
       fireRedirect: false
     }
-    this.redirectUrl = '/signup/upload-photo'
+    this.redirectUrl = '/'
   }
   handleCommunityNameChange = (event) => {
     const communityName = event.target.value
@@ -36,8 +36,8 @@ export default class CreateCommunity extends Component {
     const avatarUrl = hyloNameWhiteBackground
     return <div styleName='wrapper'>
       <LeftSidebar
-        header="Great, let's get started"
-        body="All good things start somewhere! Let's kick things off with a catchy name for your community."
+        header="Let's complete your profile!"
+        body="Welcome to Hylo, NAME. It only takes a couple seconds to complete your profile. Let's get started!"
       />
       <div styleName='detail'>
         <span styleName='white-text step-count'>STEP 1/4</span>
@@ -61,7 +61,7 @@ export default class CreateCommunity extends Component {
           <div styleName='float-right bottom'>
             <div>
               <Link to={'/signup/create-community'}>
-                <Button styleName='continue-button' label='Continue' />
+                <Button styleName='continue-button' label='Onwards!' />
               </Link>
             </div>
             <div styleName='instruction'>or press Enter</div>
