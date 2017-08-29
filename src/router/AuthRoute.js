@@ -1,19 +1,28 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router'
 import { connect } from 'react-redux'
-import pickIsLoggedIn from 'store/selectors/pickIsLoggedIn'
+import getIsLoggedIn from 'store/selectors/getIsLoggedIn'
+import { SET_RETURN_TO_URL } from 'store/constants'
 
-function AuthRoute ({ component, isLoggedIn, ...rest }) {
+function AuthRoute ({ component, isLoggedIn, setReturnToURL, location, ...rest }) {
+  if (!isLoggedIn) setReturnToURL(location.pathname)
   return <Route {...rest} render={props => isLoggedIn
-    ? React.createElement(component, props)
-    : redirect(props)} />
+      ? React.createElement(component, props)
+      : <Redirect to={'/login'} />
+  } />
 }
 
-export default connect(pickIsLoggedIn)(AuthRoute)
+export function mapStateToProps (state, props) {
+  return {
+    isLoggedIn: getIsLoggedIn(state)
+  }
+}
 
-function redirect ({ location }) {
-  return <Redirect to={{
-    pathname: '/login',
-    state: {from: location} // TODO: test this with server-side rendering
-  }} />
+export default connect(mapStateToProps, { setReturnToURL })(AuthRoute)
+
+function setReturnToURL (returnToURL) {
+  return {
+    type: SET_RETURN_TO_URL,
+    payload: { returnToURL }
+  }
 }

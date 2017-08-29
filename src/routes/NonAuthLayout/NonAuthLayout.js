@@ -14,7 +14,7 @@ export default class NonAuthLayout extends React.Component {
   }
 
   componentDidMount () {
-    this.email.focus()
+    this.email && this.email.focus()
   }
 
   render () {
