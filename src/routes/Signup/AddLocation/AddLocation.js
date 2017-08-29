@@ -7,7 +7,7 @@ import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import '../Signup.scss'
 
-export default class CreateCommunity extends Component {
+export default class AddLocation extends Component {
   constructor () {
     super()
     this.state = {
@@ -15,15 +15,16 @@ export default class CreateCommunity extends Component {
     }
     this.redirectUrl = '/signup/upload-photo'
   }
-  handleCommunityNameChange = (event) => {
-    const communityName = event.target.value
+  handleLocationChange = (event) => {
+    const location = event.target.value
     this.setState({
-      communityName
+      location
     })
   }
   submit = () => {
-    const communityName = this.state.communityName
-    this.props.createCommunity(communityName)
+    const location = this.state.location
+    console.log('submit location', location)
+    this.props.updateUserSettings({location})
   }
 
   redirect = () => {
@@ -37,8 +38,8 @@ export default class CreateCommunity extends Component {
     const logoUrl = hyloNameWhiteBackground
     return <div styleName='wrapper'>
       <LeftSidebar
-        header="Great, let's get started"
-        body="All good things start somewhere! Let's kick things off with a catchy name for your community."
+        header='Add your location'
+        body='Add your location to see more relevant content, and find people and projects around you.'
       />
       <div styleName='detail'>
         <span styleName='white-text step-count'>STEP 1/4</span>
@@ -49,7 +50,7 @@ export default class CreateCommunity extends Component {
         <div styleName='center center-vertical'>
           <input
             styleName='signup-input'
-            onChange={this.handleCommunityNameChange}
+            onChange={this.handleLocationChange}
             onKeyPress={event => {
               if (event.key === 'Enter') {
                 this.submit()
@@ -57,12 +58,13 @@ export default class CreateCommunity extends Component {
               }
             }}
             autoFocus
+            placeholder={'Where do you call home?'}
           />
         </div>
         <div>
           <div styleName='float-right bottom'>
             <div>
-              <Link to={'/signup/create-community'}>
+              <Link to={'/signup/create-community'} onClick={this.submit}>
                 <Button styleName='continue-button' label='Continue' />
               </Link>
             </div>

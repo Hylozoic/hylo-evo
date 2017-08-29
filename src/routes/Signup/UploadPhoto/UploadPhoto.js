@@ -8,7 +8,6 @@ import { cameraSvg } from 'util/assets'
 import LeftSidebar from '../LeftSidebar'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
-import Icon from 'components/Icon'
 import '../Signup.scss'
 
 export default class UploadPhoto extends Component {
@@ -74,20 +73,20 @@ export default class UploadPhoto extends Component {
         </div>
         <div styleName='center center-vertical'>
           <input
-            styleName='create-community-input'
-            onChange={this.handleCommunityNameChange}
+            styleName='signup-input'
             value={'Upload a profile photo'}
             onKeyPress={event => {
               if (event.key === 'Enter') {
                 this.redirect()
               }
             }}
+            readOnly
           />
         </div>
         <div>
           <div styleName='float-right bottom'>
             <div>
-              <Link to={'/signup/create-community'} onClick={this.save}>
+              <Link to={'/signup/add-address'} onClick={this.save}>
                 <Button styleName='continue-button' label='Onwards!' />
               </Link>
             </div>

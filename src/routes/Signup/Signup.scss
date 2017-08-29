@@ -157,7 +157,7 @@
   width: 100%;
 }
 
-.create-community-input {
+.signup-input {
   background-color: transparent;
   border: none;
   border-bottom: 1px solid $color-athens-gray-dark-50;
@@ -170,7 +170,11 @@
   padding-bottom: 10px;
 }
 
-.create-community-input:focus {
+.signup-input::placeholder {
+  color: $color-white;
+}
+
+.signup-input:focus {
     outline: none;
 }
 
