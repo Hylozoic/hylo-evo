@@ -4,30 +4,15 @@ exports[`CreateCommunity renders correctly 1`] = `
 <div
   data-styleName="wrapper"
 >
-  <div
-    data-styleName="sidebar"
-  >
-    <p
-      data-styleName="gray-text"
-    >
-      Close
-    </p>
-    <p
-      data-styleName="sidebar-header"
-    >
-      Great, let's get started
-    </p>
-    <p
-      data-styleName="gray-text"
-    >
-      All good things start somewhere! Let's kick things off with a catchy name for your community.
-    </p>
-  </div>
+  <Connect(LeftSidebar)
+    body="All good things start somewhere! Let's kick things off with a catchy name for your community."
+    header="Great, let's get started"
+  />
   <div
     data-styleName="detail"
   >
     <span
-      data-styleName="white-text float-right"
+      data-styleName="white-text step-count"
     >
       STEP 1/4
     </span>
@@ -49,8 +34,9 @@ exports[`CreateCommunity renders correctly 1`] = `
     >
       <input
         autoFocus={true}
-        data-styleName="my-input"
+        data-styleName="signup-input"
         onChange={[Function]}
+        onKeyPress={[Function]}
       />
     </div>
     <div>
@@ -58,15 +44,20 @@ exports[`CreateCommunity renders correctly 1`] = `
         data-styleName="float-right bottom"
       >
         <div>
-          <Pill
-            data-styleName="my-button"
-            label="Continue"
-          />
+          <Link
+            replace={false}
+            to="/signup/create-community"
+          >
+            <Button
+              data-styleName="continue-button"
+              label="Continue"
+            />
+          </Link>
         </div>
         <div
-          data-styleName="or-press-enter"
+          data-styleName="instruction"
         >
-          Or Press Enter
+          or press Enter
         </div>
       </div>
     </div>

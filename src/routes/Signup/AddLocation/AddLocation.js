@@ -23,7 +23,6 @@ export default class AddLocation extends Component {
   }
   submit = () => {
     const location = this.state.location
-    console.log('submit location', location)
     this.props.updateUserSettings({location})
   }
 
