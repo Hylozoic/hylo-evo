@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapDispatchToProps updateUserSettings should match latest snapshot 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($changes: MeInput) {
+        updateMe(changes: $changes) {
+          id
+        }
+      }",
+    "variables": Object {
+      "changes": Object {
+        "avatarUrl": "www.avatarurl.com/my-avatar",
+      },
+    },
+  },
+  "meta": Object {
+    "changes": Object {
+      "avatarUrl": "www.avatarurl.com/my-avatar",
+    },
+    "optimistic": true,
+  },
+  "type": "UPDATE_USER_SETTINGS",
+}
+`;

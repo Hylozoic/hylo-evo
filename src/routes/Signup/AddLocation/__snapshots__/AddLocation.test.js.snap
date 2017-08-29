@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddLocation renders correctly 1`] = `
+<div
+  data-styleName="wrapper"
+>
+  <LeftSidebar
+    body="Add your location to see more relevant content, and find people and projects around you."
+    header="Add your location"
+  />
+  <div
+    data-styleName="detail"
+  >
+    <span
+      data-styleName="white-text step-count"
+    >
+      STEP 1/4
+    </span>
+    <br />
+    <div
+      data-styleName="center"
+    >
+      <div
+        data-styleName="logo center"
+        style={
+          Object {
+            "backgroundImage": "url(/logo-white.svg)",
+          }
+        }
+      />
+    </div>
+    <div
+      data-styleName="center center-vertical"
+    >
+      <input
+        autoFocus={true}
+        data-styleName="signup-input"
+        onChange={[Function]}
+        onKeyPress={[Function]}
+        placeholder="Where do you call home?"
+      />
+    </div>
+    <div>
+      <div
+        data-styleName="float-right bottom"
+      >
+        <div>
+          <Link
+            onClick={[Function]}
+            replace={false}
+            to="/signup/create-community"
+          >
+            <Button
+              data-styleName="continue-button"
+              label="Continue"
+            />
+          </Link>
+        </div>
+        <div
+          data-styleName="instruction"
+        >
+          or press Enter
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
