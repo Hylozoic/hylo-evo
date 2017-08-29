@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
-import { updateUserSettings } from './LeftSidebar.store.js'
+import { updateUserSettings } from './LeftSidebar.store'
 
 export function mapStateToProps (state, props) {
   return {

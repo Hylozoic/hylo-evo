@@ -1,7 +1,7 @@
 import { mapDispatchToProps } from './LeftSidebar.connector'
 
 describe('mapDispatchToProps', () => {
-  it('updateUserSettings should match latest snapshot', () => {
+  it('should match latest snapshot for updateUserSettings', () => {
     const changes = {settings: {'signupInProgress': false}}
     expect(mapDispatchToProps.updateUserSettings(changes)).toMatchSnapshot()
   })

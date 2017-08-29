@@ -131,10 +131,8 @@ export default class PrimaryLayout extends Component {
             Best guess is to replace these routes with a render function
             defined above, and store the previous detail component in state
           */}
-          {detailRoutes.map(({ path, component, children }) =>
-            <Route key={path} {...{path, component}} children={
-              <children />
-            } />)}
+          {detailRoutes.map(({ path, component }) =>
+            <Route key={path} {...{path, component}} />)}
         </div>
       </div>
       <Route path='/t' component={Messages} />

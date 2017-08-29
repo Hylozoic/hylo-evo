@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
-import { updateUserSettings } from './UploadPhoto.store.js'
+import { updateUserSettings } from './UploadPhoto.store'
 
 export function mapStateToProps (state, props) {
   return {

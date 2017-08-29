@@ -1,7 +1,7 @@
 import { mapDispatchToProps } from './AddLocation.connector'
 
-describe('mapDispatchToProps', () => {
-  it('CreateCommunity should match latest snapshot', () => {
+describe('AddLocation mapDispatchToProps', () => {
+  it('should match latest snapshot for updateUserSettings', () => {
     const changes = {
       location: 'Vallis Aples'
     }

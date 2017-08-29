@@ -59,7 +59,7 @@ export default class UploadPhoto extends Component {
     return <div styleName='wrapper'>
       <LeftSidebar
         header="Let's complete your profile!"
-        body="Welcome to Hylo, NAME. It only takes a couple seconds to complete your profile. Let's get started!"
+        body={`Welcome to Hylo, ${currentUser.name}. It only takes a couple seconds to complete your profile. Let's get started!`}
       />
       <div styleName='detail'>
         <span styleName='white-text step-count'>STEP 1/4</span>

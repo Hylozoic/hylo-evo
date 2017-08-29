@@ -1,7 +1,7 @@
 import { mapDispatchToProps } from './CreateCommunity.connector'
 
-describe('mapDispatchToProps', () => {
-  it('CreateCommunity should match latest snapshot', () => {
+describe('Create Community mapDispatchToProps', () => {
+  it('should match the latest snapshot for createCommunity', () => {
     expect(mapDispatchToProps.createCommunity('My Community')).toMatchSnapshot()
   })
 })

@@ -1,7 +1,7 @@
 import { mapDispatchToProps } from './UploadPhoto.connector'
 
-describe('mapDispatchToProps', () => {
-  it('updateUserSettings should match latest snapshot', () => {
+describe('UploadPhoto mapDispatchToProps', () => {
+  it('should match latest snapshot for updateUserSettings ', () => {
     const changes = {
       avatarUrl: 'www.avatarurl.com/my-avatar'
     }
