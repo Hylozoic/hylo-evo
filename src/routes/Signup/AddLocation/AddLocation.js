@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Button from 'components/Button'
-import { Link } from 'react-router-dom'
 import LeftSidebar from '../LeftSidebar'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
@@ -16,6 +15,7 @@ export default class AddLocation extends Component {
   submit = () => {
     const location = this.state.location
     this.props.updateUserSettings({location})
+    this.props.goToNextStep()
   }
 
   render () {
@@ -48,9 +48,7 @@ export default class AddLocation extends Component {
         <div>
           <div styleName='float-right bottom'>
             <div>
-              <Link to={'/signup/create-community'} onClick={this.submit}>
-                <Button styleName='continue-button' label='Continue' />
-              </Link>
+              <Button styleName='continue-button' label='Continue' onClick={this.submit} />
             </div>
             <div styleName='instruction'>or press Enter</div>
           </div>

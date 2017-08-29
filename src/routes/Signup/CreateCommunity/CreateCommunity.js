@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Button from 'components/Button'
-import { Link } from 'react-router-dom'
 import LeftSidebar from '../LeftSidebar'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
@@ -23,6 +22,7 @@ export default class CreateCommunity extends Component {
   submit = () => {
     const communityName = this.state.communityName
     this.props.createCommunity(communityName)
+    this.props.goToNextStep()
   }
 
   render () {
@@ -45,7 +45,6 @@ export default class CreateCommunity extends Component {
             onKeyPress={event => {
               if (event.key === 'Enter') {
                 this.submit()
-                this.props.goToNextStep()
               }
             }}
             autoFocus
@@ -54,9 +53,7 @@ export default class CreateCommunity extends Component {
         <div>
           <div styleName='float-right bottom'>
             <div>
-              <Link to={'/signup/add-location'} onClick={this.submit}>
-                <Button styleName='continue-button' label='Continue' />
-              </Link>
+              <Button styleName='continue-button' label='Continue' onClick={this.submit} />
             </div>
             <div styleName='instruction'>or press Enter</div>
           </div>

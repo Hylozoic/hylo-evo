@@ -5,7 +5,7 @@ import { createCommunity } from './CreateCommunity.store'
 export function mapDispatchToProps (dispatch, props) {
   return {
     createCommunity: () => dispatch(createCommunity()),
-    goToNextStep: () => dispatch(push('/upload-photo'))
+    goToNextStep: () => dispatch(push('/signup/add-location'))
   }
 }
 export default connect(null, mapDispatchToProps)

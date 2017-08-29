@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Button from 'components/Button'
-import { Link } from 'react-router-dom'
 import { avatarUploadSettings } from 'store/models/Me'
 import ChangeImageButton from 'components/ChangeImageButton'
 import { cameraSvg } from 'util/assets'
@@ -32,6 +31,7 @@ export default class UploadPhoto extends Component {
     this.setState({changed: false})
     // setConfirm(false)
     this.props.updateUserSettings(this.state.edits)
+    this.props.goToNextStep()
   }
 
   updateSettingDirectly = (key, changed) => value =>
@@ -64,7 +64,7 @@ export default class UploadPhoto extends Component {
             value={'Upload a profile photo'}
             onKeyPress={event => {
               if (event.key === 'Enter') {
-                this.props.goToNextStep()
+                this.save()
               }
             }}
             readOnly
@@ -73,9 +73,7 @@ export default class UploadPhoto extends Component {
         <div>
           <div styleName='float-right bottom'>
             <div>
-              <Link to={'/signup/create-community'} onClick={this.save}>
-                <Button styleName='continue-button' label='Onwards!' />
-              </Link>
+              <Button styleName='continue-button' label='Onwards!' onClick={this.save} />
             </div>
             <div styleName='instruction'>or press Enter</div>
           </div>
