@@ -8,6 +8,7 @@ import { cameraSvg } from 'util/assets'
 import LeftSidebar from '../LeftSidebar'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
+import Icon from 'components/Icon'
 import '../Signup.scss'
 
 export default class UploadPhoto extends Component {
@@ -55,7 +56,7 @@ export default class UploadPhoto extends Component {
     if (!currentUser) return <Loading />
     if (fireRedirect) return <Redirect to={this.redirectUrl} />
 
-    const currentAvatarUrl = this.props.currentUser.avatarUrl || this.props.state.avatarUrl
+    const currentAvatarUrl = this.state.edits.avatarUrl
     return <div styleName='wrapper'>
       <LeftSidebar
         header="Let's complete your profile!"
@@ -75,7 +76,6 @@ export default class UploadPhoto extends Component {
           <input
             styleName='create-community-input'
             onChange={this.handleCommunityNameChange}
-            readonly
             value={'Upload a profile photo'}
             onKeyPress={event => {
               if (event.key === 'Enter') {
@@ -99,18 +99,19 @@ export default class UploadPhoto extends Component {
   }
 }
 
-export function uploadAvatar (imageUrl) {
+export function uploadAvatar (imageUrl, loading) {
   return <div styleName='image-upload-icon'>
     <div style={bgImageStyle(imageUrl)} styleName='camera-svg' />
   </div>
 }
 
 export function UploadSection ({avatarUrl, currentUser, updateSettingDirectly}) {
+  const loading = true
   const childImage = avatarUrl || cameraSvg
   return <ChangeImageButton
     update={updateSettingDirectly('avatarUrl')}
     uploadSettings={avatarUploadSettings(currentUser)}
     styleName='change-avatar-button'
-    child={uploadAvatar(childImage)}
+    child={uploadAvatar(childImage, loading)}
   />
 }
