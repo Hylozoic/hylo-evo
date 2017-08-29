@@ -170,7 +170,7 @@ const detailRoutes = [
 const signupRoutes = [
   {path: '/signup/create-community', child: CreateCommunity},
   {path: '/signup/upload-photo', child: UploadPhoto},
-  {path: '/signup/add-address', child: AddLocation}
+  {path: '/signup/add-location', child: AddLocation}
 ]
 export function RedirectToSignupFlow ({ currentUser }) {
   if (!currentUser || !currentUser.settings.signupInProgress) return null

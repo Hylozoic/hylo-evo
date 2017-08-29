@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Button from 'components/Button'
 import { Link } from 'react-router-dom'
-import { Redirect } from 'react-router'
 import LeftSidebar from '../LeftSidebar'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
@@ -11,10 +10,10 @@ export default class CreateCommunity extends Component {
   constructor () {
     super()
     this.state = {
-      fireRedirect: false
+      communityName: ''
     }
-    this.redirectUrl = '/signup/upload-photo'
   }
+
   handleCommunityNameChange = (event) => {
     const communityName = event.target.value
     this.setState({
@@ -26,14 +25,7 @@ export default class CreateCommunity extends Component {
     this.props.createCommunity(communityName)
   }
 
-  redirect = () => {
-    this.setState({
-      fireRedirect: true
-    })
-  }
-
   render () {
-    const { fireRedirect } = this.state
     const logoUrl = hyloNameWhiteBackground
     return <div styleName='wrapper'>
       <LeftSidebar
@@ -53,7 +45,7 @@ export default class CreateCommunity extends Component {
             onKeyPress={event => {
               if (event.key === 'Enter') {
                 this.submit()
-                this.redirect()
+                this.props.goToNextStep()
               }
             }}
             autoFocus
@@ -62,7 +54,7 @@ export default class CreateCommunity extends Component {
         <div>
           <div styleName='float-right bottom'>
             <div>
-              <Link to={'/signup/create-community'}>
+              <Link to={'/signup/add-location'} onClick={this.submit}>
                 <Button styleName='continue-button' label='Continue' />
               </Link>
             </div>
@@ -70,7 +62,6 @@ export default class CreateCommunity extends Component {
           </div>
         </div>
       </div>
-      { fireRedirect && <Redirect to={this.redirectUrl} /> }
     </div>
   }
 }

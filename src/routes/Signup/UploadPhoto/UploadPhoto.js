@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Button from 'components/Button'
 import { Link } from 'react-router-dom'
-import { Redirect } from 'react-router'
 import { avatarUploadSettings } from 'store/models/Me'
 import ChangeImageButton from 'components/ChangeImageButton'
 import { cameraSvg } from 'util/assets'
@@ -14,19 +13,9 @@ export default class UploadPhoto extends Component {
   constructor () {
     super()
     this.state = {
-      fireRedirect: false,
-      edits: {},
-      changed: false
+      edits: {}
     }
-    this.redirectUrl = '/'
   }
-
-  redirect = () => {
-    this.setState({
-      fireRedirect: true
-    })
-  }
-
   updateSetting = (key, setChanged = true) => event => {
     const { edits, changed } = this.state
     // setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
@@ -50,12 +39,10 @@ export default class UploadPhoto extends Component {
 
   render () {
     const { currentUser } = this.props
-    const { fireRedirect } = this.state
+    const currentAvatarUrl = this.state.edits.avatarUrl
 
     if (!currentUser) return <Loading />
-    if (fireRedirect) return <Redirect to={this.redirectUrl} />
 
-    const currentAvatarUrl = this.state.edits.avatarUrl
     return <div styleName='wrapper'>
       <LeftSidebar
         header="Let's complete your profile!"
@@ -77,7 +64,7 @@ export default class UploadPhoto extends Component {
             value={'Upload a profile photo'}
             onKeyPress={event => {
               if (event.key === 'Enter') {
-                this.redirect()
+                this.props.goToNextStep()
               }
             }}
             readOnly
@@ -86,7 +73,7 @@ export default class UploadPhoto extends Component {
         <div>
           <div styleName='float-right bottom'>
             <div>
-              <Link to={'/signup/add-address'} onClick={this.save}>
+              <Link to={'/signup/create-community'} onClick={this.save}>
                 <Button styleName='continue-button' label='Onwards!' />
               </Link>
             </div>

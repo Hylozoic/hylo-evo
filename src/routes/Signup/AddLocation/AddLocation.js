@@ -1,20 +1,12 @@
 import React, { Component } from 'react'
 import Button from 'components/Button'
 import { Link } from 'react-router-dom'
-import { Redirect } from 'react-router'
 import LeftSidebar from '../LeftSidebar'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import '../Signup.scss'
 
 export default class AddLocation extends Component {
-  constructor () {
-    super()
-    this.state = {
-      fireRedirect: false
-    }
-    this.redirectUrl = '/signup/upload-photo'
-  }
   handleLocationChange = (event) => {
     const location = event.target.value
     this.setState({
@@ -26,14 +18,7 @@ export default class AddLocation extends Component {
     this.props.updateUserSettings({location})
   }
 
-  redirect = () => {
-    this.setState({
-      fireRedirect: true
-    })
-  }
-
   render () {
-    const { fireRedirect } = this.state
     const logoUrl = hyloNameWhiteBackground
     return <div styleName='wrapper'>
       <LeftSidebar
@@ -53,7 +38,7 @@ export default class AddLocation extends Component {
             onKeyPress={event => {
               if (event.key === 'Enter') {
                 this.submit()
-                this.redirect()
+                this.props.goToNextStep()
               }
             }}
             autoFocus
@@ -71,7 +56,6 @@ export default class AddLocation extends Component {
           </div>
         </div>
       </div>
-      { fireRedirect && <Redirect to={this.redirectUrl} /> }
     </div>
   }
 }
