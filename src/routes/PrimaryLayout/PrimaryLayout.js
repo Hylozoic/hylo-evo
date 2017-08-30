@@ -78,6 +78,8 @@ export default class PrimaryLayout extends Component {
       detailRoutes
     )
 
+    console.log('props', this.props)
+
     // TODO move FullPageModals
     return <div styleName='container' onClick={closeDrawer}>
       <Drawer currentCommunity={community} styleName={cx('drawer', {hidden: !isDrawerOpen})} />
@@ -85,7 +87,7 @@ export default class PrimaryLayout extends Component {
       <div styleName='main'>
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
-          <RedirectToSignupFlow currentUser={currentUser} />
+          <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
           <RedirectToCommunity currentUser={currentUser} />
           <Switch>
             <Route path='/all' exact component={Feed} />
@@ -172,8 +174,14 @@ const signupRoutes = [
   {path: '/signup/upload-photo', child: UploadPhoto},
   {path: '/signup/add-location', child: AddLocation}
 ]
-export function RedirectToSignupFlow ({ currentUser }) {
+
+export function isSignupPath (path) {
+  return (path.substring(0, 7) === '/signup')
+}
+
+export function RedirectToSignupFlow ({ currentUser, pathname }) {
   if (!currentUser || !currentUser.settings.signupInProgress) return null
+  if (isSignupPath(pathname)) return null
   const destination = '/signup/upload-photo'
   return <Redirect to={destination} />
 }
