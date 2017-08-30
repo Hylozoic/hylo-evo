@@ -25,7 +25,6 @@ import Search from 'routes/Search'
 import NetworkSettings from 'routes/NetworkSettings'
 import NetworkCommunities from 'routes/NetworkCommunities'
 import SignupModal from 'routes/Signup/SignupModal'
-import CreateCommunity from 'routes/Signup/CreateCommunity'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import AddLocation from 'routes/Signup/AddLocation'
 
@@ -170,7 +169,6 @@ const detailRoutes = [
 ]
 
 const signupRoutes = [
-  {path: '/signup/create-community', child: CreateCommunity},
   {path: '/signup/upload-photo', child: UploadPhoto},
   {path: '/signup/add-location', child: AddLocation}
 ]
