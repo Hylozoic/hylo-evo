@@ -6,6 +6,9 @@
     "API_HOST": {
       "required": true
     },
+    "FILEPICKER_API_KEY": {
+      "required": true
+    },
     "NODE_MODULES_CACHE": {
       "required": true
     },
