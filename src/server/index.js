@@ -4,6 +4,8 @@ import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import appMiddleware from './appMiddleware'
 import apiProxy from './apiProxy'
+// import redirectToApp from './redirectToApp'
+import { handleStaticPages } from './proxy'
 
 global.SERVER_SIDE_RENDERING = true
 
@@ -13,8 +15,10 @@ export default function () {
   const server = express()
   server.use(cookieParser())
   server.use(compression())
-  server.use(express.static('build'))
   server.use(apiProxy)
+  // server.use(redirectToApp)
+  handleStaticPages(server)
+  server.use(express.static('build'))
   server.use(appMiddleware)
 
   const listener = server.listen(port, err => {

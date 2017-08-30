@@ -84,6 +84,8 @@
     "ismobilejs": "^0.4.1",
     "linkifyjs": "^2.1.4",
     "lodash": "^4.17.4",
+    "lru-cache": "^4.1.1",
+    "mime": "^1.4.0",
     "node-sass": "^4.5.0",
     "normalize.css": "^5.0.0",
     "postcss-modules-resolve-path": "^1.0.0",
@@ -107,6 +109,7 @@
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.2.0",
     "replacestream": "^4.0.2",
+    "request": "^2.81.0",
     "reselect": "^2.5.4",
     "resolve-url-loader": "^2.0.0",
     "rollbar": "^2.2.0",
@@ -117,6 +120,7 @@
     "socket.io-client": "1.4.8",
     "standard": "^9.0.1",
     "standard-loader": "^6.0.1",
+    "streamifier": "^0.1.1",
     "striptags": "~2",
     "tether": "^1.4.0",
     "trunc-html": "^1.1.2",
@@ -128,7 +132,8 @@
   "scripts": {
     "start": "node --preserve-symlinks scripts/start.js",
     "build": "node scripts/build.js && scripts/build-es5.sh",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "server": "./node_modules/.bin/babel-node scripts/serveUniversal.js"
   },
   "jest": {
     "collectCoverageFrom": [
