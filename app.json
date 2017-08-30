@@ -15,6 +15,9 @@
     "NPM_CONFIG_PRODUCTION": {
       "required": true
     },
+    "PROXY_HOST": {
+      "required": true
+    },
     "SOCKET_HOST": {
       "required": true
     },
