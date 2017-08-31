@@ -23,6 +23,7 @@ import AllTopics from 'routes/AllTopics/AllTopics.store'
 import Search from 'routes/Search/Search.store'
 import queryResults from './queryResults'
 import FeedList from 'components/FeedList/FeedList.store'
+import AddSkills from 'routes/Signup/AddSkills/AddSkills.store'
 
 import { handleSetState, composeReducers } from './util'
 
@@ -52,7 +53,8 @@ const combinedReducers = combineReducers({
   AllTopics,
   ModeratorsSettings,
   Search,
-  FeedList
+  FeedList,
+  AddSkills
 })
 
 export default composeReducers(combinedReducers, handleSetState)

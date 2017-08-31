@@ -12,7 +12,7 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     updateUserSettings: () => dispatch(updateUserSettings()),
-    goToNextStep: () => dispatch(push('/signup/upload-photo'))
+    goToNextStep: () => dispatch(push('/signup/add-skills'))
   }
 }
 
