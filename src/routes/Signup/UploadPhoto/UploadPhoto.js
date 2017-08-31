@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Button from 'components/Button'
 import { avatarUploadSettings } from 'store/models/Me'
 import ChangeImageButton from 'components/ChangeImageButton'
-import { cameraSvg } from 'util/assets'
+import { cameraSvg, loadingSvg } from 'util/assets'
 import LeftSidebar from '../LeftSidebar'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
@@ -36,7 +36,7 @@ export default class UploadPhoto extends Component {
   }
 
   render () {
-    const { currentUser } = this.props
+    const { currentUser, uploadImagePending } = this.props
     const currentAvatarUrl = this.state.edits.avatarUrl
 
     if (!currentUser) return <Loading />
@@ -54,6 +54,7 @@ export default class UploadPhoto extends Component {
             avatarUrl={currentAvatarUrl}
             updateSettingDirectly={this.updateSettingDirectly}
             currentUser={currentUser}
+            loading={uploadImagePending}
           />
         </div>
         <div styleName='center center-vertical'>
@@ -81,19 +82,27 @@ export default class UploadPhoto extends Component {
   }
 }
 
-export function uploadAvatar (imageUrl, loading) {
+export function uploadAvatar (currentUser, loading) {
+  let imageUrl = cameraSvg
+  let styleName = 'upload-background-image'
+
+  if (currentUser.avatarUrl) {
+    imageUrl = currentUser.avatarUr
+  }
+  if (loading) {
+    imageUrl = loadingSvg
+    styleName = 'loading-background-image'
+  }
   return <div styleName='image-upload-icon'>
-    <div style={bgImageStyle(imageUrl)} styleName='camera-svg' />
+    <div style={bgImageStyle(imageUrl)} styleName={styleName} />
   </div>
 }
 
-export function UploadSection ({avatarUrl, currentUser, updateSettingDirectly}) {
-  const loading = true
-  const childImage = avatarUrl || cameraSvg
+export function UploadSection ({avatarUrl, currentUser, updateSettingDirectly, loading}) {
   return <ChangeImageButton
     update={updateSettingDirectly('avatarUrl')}
     uploadSettings={avatarUploadSettings(currentUser)}
     styleName='change-avatar-button'
-    child={uploadAvatar(childImage, loading)}
+    child={uploadAvatar(currentUser, loading)}
   />
 }

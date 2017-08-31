@@ -199,7 +199,7 @@
   margin: -70px auto $space-8x auto;
 }
 
-.camera-svg {
+.upload-background-image {
   height: 120px;
   width: 120px;
   background-position: center;
@@ -207,13 +207,16 @@
   background-color: $color-athens-gray-dark-50;
   border-radius: 50%;
   background-repeat: no-repeat;
-  // display: flex;
-  // align-items: flex-end;
-  // width: 120px;
-  // height: 110px;
-  // background-position: center;
-  // background-size: cover;
-  // margin: -70px auto $space-8x auto;
+}
+
+.loading-background-image {
+  height: 120px;
+  width: 120px;
+  background-position: left 35px top 55px;
+  padding: 30px;
+  background-color: $color-athens-gray-dark-50;
+  border-radius: 50%;
+  background-repeat: no-repeat;
 }
 
 .change-avatar-button {
