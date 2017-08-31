@@ -11,7 +11,8 @@ import {
   FETCH_NOTIFICATIONS
 } from 'store/constants'
 import {
-   DELETE_POST_PENDING
+   DELETE_POST_PENDING,
+   REMOVE_POST_PENDING
  } from 'components/PostCard/PostHeader/PostHeader.store'
 import {
   UPDATE_MEMBERSHIP_SETTINGS_PENDING,
@@ -229,6 +230,30 @@ describe('on DELETE_POST_PENDING', () => {
     const newSession = orm.session(newState)
     expect(newSession.Post.hasId('2')).toBeFalsy()
     expect(newSession.Post.hasId('1')).toBeTruthy()
+  })
+})
+
+describe('on REMOVE_POST_PENDING', () => {
+  const session = orm.session(orm.getEmptyState())
+  const community1 = session.Community.create({id: '1', slug: 'foo'})
+  const community2 = session.Community.create({id: '2', slug: 'bar'})
+
+  session.Post.create({id: '1', communities: [community1, community2]})
+  session.Post.create({id: '2', communities: [community1, community2]})
+
+  it('removes the post from the community', () => {
+    const action = {
+      type: REMOVE_POST_PENDING,
+      meta: {postId: '1', slug: 'bar'}
+    }
+    const newState = ormReducer(session.state, action)
+    const newSession = orm.session(newState)
+
+    const post1Communities = newSession.Post.withId('1').communities.toModelArray()
+
+    expect(post1Communities.length).toEqual(1)
+    expect(post1Communities[0].id).toEqual('1')
+    expect(newSession.Post.withId('2').communities.toModelArray().length).toEqual(2)
   })
 })
 
