@@ -57,3 +57,12 @@ $third-party-icon-size: 14px;
 .green-text {
   color: $color-caribbean-green
 }
+
+.error {
+  color: $color-amaranth;
+  background-color: transparentize($color-amaranth, 0.9);
+  border: 1px solid $color-amaranth;
+  border-radius: 4px;
+  padding: 9px 16px;
+  margin-bottom: 20px;
+}

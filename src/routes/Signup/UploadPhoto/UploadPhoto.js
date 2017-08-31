@@ -15,17 +15,6 @@ export default class UploadPhoto extends Component {
       edits: {}
     }
   }
-  updateSetting = (key, setChanged = true) => event => {
-    const { edits, changed } = this.state
-    // setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
-    this.setState({
-      changed: setChanged ? true : changed,
-      edits: {
-        ...edits,
-        [key]: event.target.value
-      }
-    })
-  }
 
   save = () => {
     this.setState({changed: false})
@@ -34,8 +23,17 @@ export default class UploadPhoto extends Component {
     this.props.goToNextStep()
   }
 
-  updateSettingDirectly = (key, changed) => value =>
-    this.updateSetting(key, changed)({target: {value}})
+  updateSettingDirectly = (key, setChanged) => value => {
+    const { edits, changed } = this.state
+    // setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
+    this.setState({
+      changed: setChanged ? true : changed,
+      edits: {
+        ...edits,
+        [key]: value
+      }
+    })
+  }
 
   render () {
     const { currentUser } = this.props
