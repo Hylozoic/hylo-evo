@@ -10,17 +10,17 @@ import errorMiddleware from 'store/middleware/errorMiddleware'
 import { routerMiddleware } from 'react-router-redux'
 import extractModelMiddleware from './extractModel'
 
-export default function createMiddleware (history) {
+export default function createMiddleware (history, req) {
   const middleware = compact([
     routerMiddleware(history),
     graphqlMiddleware,
-    apiMiddleware(),
+    apiMiddleware(req),
     errorMiddleware,
     extractModelMiddleware,
     optimisticMiddleware,
     pendingMiddleware,
     promiseMiddleware,
-    process.env.NODE_ENV === 'development' && createLogger({collapsed: true})
+    !req && process.env.NODE_ENV === 'development' && createLogger({collapsed: true})
   ])
 
   const composeFn = typeof __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined'

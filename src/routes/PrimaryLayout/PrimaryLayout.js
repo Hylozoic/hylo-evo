@@ -80,7 +80,8 @@ export default class PrimaryLayout extends Component {
       <div styleName='main'>
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
-          <RedirectToCommunity currentUser={currentUser} />
+          <RedirectToCommunity path='/' currentUser={currentUser} />
+          <RedirectToCommunity path='/app' currentUser={currentUser} />
           <Switch>
             <Route path='/all' exact component={Feed} />
             <Route path='/all/:topicName' exact component={Feed} />
@@ -154,8 +155,8 @@ const detailRoutes = [
   {path: `/c/:slug/:topicName/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail}
 ]
 
-export function RedirectToCommunity ({ currentUser }) {
-  return <Route path='/' exact render={redirectIfCommunity(currentUser)} />
+export function RedirectToCommunity ({ path, currentUser }) {
+  return <Route path={path} exact render={redirectIfCommunity(currentUser)} />
 }
 
 export function redirectIfCommunity (currentUser) {
