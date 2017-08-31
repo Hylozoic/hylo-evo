@@ -22,7 +22,8 @@ import {
   RECEIVE_POST
  } from 'components/SocketListener/SocketListener.store'
 import {
-  DELETE_POST_PENDING
+  DELETE_POST_PENDING,
+  REMOVE_POST_PENDING
  } from 'components/PostCard/PostHeader/PostHeader.store'
 import {
   UPDATE_MEMBERSHIP_SETTINGS_PENDING,
@@ -76,7 +77,7 @@ export default function ormReducer (state = {}, action) {
     first && first.update({time: Date.now()})
   }
 
-  let membership, community, person, invite
+  let membership, community, person, invite, post
 
   switch (type) {
     case EXTRACT_MODEL:
@@ -167,7 +168,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case VOTE_ON_POST_PENDING:
-      const post = session.Post.withId(meta.postId)
+      post = session.Post.withId(meta.postId)
       if (post.myVote) {
         !meta.isUpvote && post.update({myVote: false, votesTotal: (post.votesTotal || 1) - 1})
       } else {
@@ -229,6 +230,13 @@ export default function ormReducer (state = {}, action) {
 
     case DELETE_POST_PENDING:
       Post.withId(meta.id).delete()
+      break
+
+    case REMOVE_POST_PENDING:
+      post = Post.withId(meta.postId)
+      const communities = post.communities.filter(c =>
+        c.slug !== meta.slug).toModelArray()
+      post.update({communities})
       break
 
     case UPDATE_COMMUNITY_SETTINGS_PENDING:

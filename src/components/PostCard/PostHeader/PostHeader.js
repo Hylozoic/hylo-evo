@@ -20,6 +20,7 @@ export default function PostHeader ({
   showCommunity,
   editPost,
   deletePost,
+  removePost,
   highlightProps
 }) {
   if (!creator) return null
@@ -50,6 +51,12 @@ export default function PostHeader ({
     dropdownItems = [
       ...dropdownItems,
       {icon: 'Trash', label: 'Delete', onClick: () => deletePost()}
+    ]
+  }
+  if (removePost) {
+    dropdownItems = [
+      ...dropdownItems,
+      {icon: 'Trash', label: 'Remove From Community', onClick: () => removePost()}
     ]
   }
 
