@@ -77,8 +77,6 @@ export default class PrimaryLayout extends Component {
       detailRoutes
     )
 
-    console.log('props', this.props)
-
     // TODO move FullPageModals
     return <div styleName='container' onClick={closeDrawer}>
       <Drawer currentCommunity={community} styleName={cx('drawer', {hidden: !isDrawerOpen})} />

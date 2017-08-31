@@ -45,16 +45,11 @@ exports[`AddLocation renders correctly 1`] = `
         data-styleName="float-right bottom"
       >
         <div>
-          <Link
+          <Button
+            data-styleName="continue-button"
+            label="Continue"
             onClick={[Function]}
-            replace={false}
-            to="/signup/create-community"
-          >
-            <Button
-              data-styleName="continue-button"
-              label="Continue"
-            />
-          </Link>
+          />
         </div>
         <div
           data-styleName="instruction"

@@ -15,7 +15,7 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     updateUserSettings: () => dispatch(updateUserSettings()),
-    goToNextStep: () => dispatch(push('/signup/create-community'))
+    goToNextStep: () => dispatch(push('/signup/add-location'))
   }
 }
 
