@@ -7,6 +7,9 @@ import queryResults, {
    makeQueryResultsModelSelector
  } from './queryResults'
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
+import {
+   REMOVE_POST_PENDING
+ } from 'components/PostCard/PostHeader/PostHeader.store'
 
 const variables = {slug: 'foo', sortBy: 'name'}
 
@@ -172,6 +175,42 @@ describe('using extractQueryResults', () => {
         [expectedKey]: expect.any(Object)
       })
     )
+  })
+})
+
+describe('queryResults reducer', () => {
+  const key1 = '{"type":"FETCH_POSTS","params":{"slug":"foo"}}'
+  const key2 = '{"type":"FETCH_POSTS","params":{"slug":"foo","filter":"request"}}'
+  const key3 = '{"type":"FETCH_POSTS","params":{"slug":"bar"}}'
+
+  const state = {
+    [key1]: {
+      hasMore: true,
+      ids: ['18', '11']
+    },
+    [key2]: {
+      hasMore: true,
+      ids: ['18', '11']
+    },
+    [key3]: {
+      hasMore: true,
+      ids: ['18', '11']
+    }
+  }
+
+  const action = {
+    type: REMOVE_POST_PENDING,
+    meta: {
+      postId: '18',
+      slug: 'foo'
+    }
+  }
+
+  it('removes the id from results on REMOVE_POST_PENDING', () => {
+    const newState = queryResults(state, action)
+    expect(newState[key1].ids).toEqual(['11'])
+    expect(newState[key2].ids).toEqual(['11'])
+    expect(newState[key3].ids).toEqual(['18', '11'])
   })
 })
 

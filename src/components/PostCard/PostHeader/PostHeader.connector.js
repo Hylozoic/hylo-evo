@@ -1,12 +1,14 @@
-import { deletePost } from './PostHeader.store'
+import { deletePost, removePost, getCommunity } from './PostHeader.store'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { removePostFromUrl, postUrl } from 'util/index'
 import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
+  const community = getCommunity(state, props)
   return {
-    currentUser: getMe(state, props)
+    currentUser: getMe(state, props),
+    community
   }
 }
 
@@ -23,21 +25,24 @@ export function mapDispatchToProps (dispatch, props) {
 
   return {
     deletePost: deletePostWithConfirm,
-    editPost
+    editPost,
+    removePost: (postId, slug) => dispatch(removePost(postId, slug))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { currentUser } = stateProps
+  const { currentUser, community } = stateProps
   const { id, creator, slug } = ownProps
-  const { deletePost, editPost } = dispatchProps
+  const { deletePost, editPost, removePost } = dispatchProps
   const canEdit = currentUser && creator && currentUser.id === creator.id
+  const canModerate = currentUser.canModerate(community)
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
     deletePost: canEdit ? () => deletePost(id) : null,
     editPost: canEdit ? () => editPost(id, slug) : null,
+    removePost: canModerate ? () => removePost(id, slug) : null,
     canEdit
   }
 }

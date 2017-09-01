@@ -6,6 +6,7 @@
 // to "Location". And both of these lists are different from what should be
 // shown when something has been typed into the search field.
 import { get, isNull, omitBy, pick, reduce, uniq, isEmpty, includes } from 'lodash/fp'
+import { mapValues } from 'lodash'
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import {
@@ -20,6 +21,9 @@ import {
   FETCH_MODERATORS,
   FETCH_COMMUNITIES
 } from 'routes/NetworkSettings/NetworkSettings.store'
+import {
+  REMOVE_POST_PENDING
+ } from 'components/PostCard/PostHeader/PostHeader.store'
 
 // reducer
 
@@ -73,6 +77,15 @@ export default function (state = {}, action) {
 
     case FETCH_COMMUNITIES:
       return addNetworkCommunities(state)
+
+    case REMOVE_POST_PENDING:
+      return mapValues(state, (results, key) => {
+        if (get('params.slug', JSON.parse(key)) !== meta.slug) return results
+        return {
+          ...results,
+          ids: results.ids.filter(id => id !== meta.postId)
+        }
+      })
 
     case DROP_QUERY_RESULTS:
       return {
