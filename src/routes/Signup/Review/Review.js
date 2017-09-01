@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import LeftSidebar from '../LeftSidebar'
 import { bgImageStyle } from 'util/index'
+import { avatarUploadSettings } from 'store/models/Me'
+import ChangeImageButton from 'components/ChangeImageButton'
 import SignupModalFooter from '../SignupModalFooter'
+import { cameraSvg, loadingSvg } from 'util/assets'
+
 import '../Signup.scss'
 
 export default class AddLocation extends Component {
@@ -50,13 +54,27 @@ export default class AddLocation extends Component {
     this.props.goToPreviousStep()
   }
 
+  updateSettingDirectly = (key, setChanged) => value => {
+    const { edits, changed } = this.state
+    // setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
+    this.setState({
+      changed: setChanged ? true : changed,
+      edits: {
+        ...edits,
+        [key]: value
+      }
+    })
+  }
+
   goBackIfAlreadySignedup = () => {
     const { currentUser } = this.props
     if (currentUser && currentUser.settings.signupInProgress === 'false') this.props.goBack()
   }
   render () {
     this.goBackIfAlreadySignedup()
-    const { currentUser } = this.props
+    const currentAvatarUrl = this.state.edits.avatarUrl
+
+    const { currentUser, uploadImagePending } = this.props
     return <div styleName='wrapper'>
       <LeftSidebar
         header='Everything looking good?'
@@ -66,7 +84,12 @@ export default class AddLocation extends Component {
         <span styleName='white-text step-count'>STEP 4/4</span>
         <br />
         <div styleName='center'>
-          <div styleName='logo center round' style={bgImageStyle(currentUser && currentUser.avatarUrl)} />
+          <UploadSection
+            avatarUrl={currentAvatarUrl}
+            updateSettingDirectly={this.updateSettingDirectly}
+            currentUser={currentUser}
+            loading={uploadImagePending}
+          />
         </div>
         <div styleName='three-column-input'>
           <div styleName='column-left'>YOUR NAME</div>
@@ -178,4 +201,36 @@ export default class AddLocation extends Component {
       </div>
     </div>
   }
+}
+
+
+export function uploadAvatar (currentUser, loading, avatarUrl) {
+  let imageUrl = cameraSvg
+  let styleName = 'upload-background-image'
+
+  if (currentUser.avatarUrl) {
+    imageUrl = currentUser.avatarUrl
+    styleName = 'upload-background-image contain'
+  }
+  if (avatarUrl) {
+    imageUrl = avatarUrl
+    styleName = 'upload-background-image contain'
+  }
+  if (loading) {
+    imageUrl = loadingSvg
+    styleName = 'loading-background-image'
+  }
+  return <div styleName='image-upload-icon'>
+    <div style={bgImageStyle(imageUrl)} styleName={styleName} />
+  </div>
+}
+
+export function UploadSection ({avatarUrl, currentUser, updateSettingDirectly, loading}) {
+  if (!currentUser) return null
+  return <ChangeImageButton
+    update={updateSettingDirectly('avatarUrl')}
+    uploadSettings={avatarUploadSettings(currentUser)}
+    styleName='change-avatar-button'
+    child={uploadAvatar(currentUser, loading, avatarUrl)}
+  />
 }
