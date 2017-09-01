@@ -177,6 +177,43 @@
   width: 100%;
 }
 
+.center-vertical-side {
+  position: absolute;
+  top: 47.5%;
+  width: 20%;
+}
+
+
+.one {
+  position: absolute;
+  top: 34%;
+  width: 100%;
+}
+
+.two {
+  position: absolute;
+  top: 42%;
+  width: 100%;
+}
+
+.three {
+  position: absolute;
+  top: 50.5%;
+  width: 100%;
+}
+
+.four {
+  position: absolute;
+  top: 59%;
+  width: 100%;
+}
+
+.five {
+  position: absolute;
+  top: 67.5%;
+  width: 100%;
+}
+
 .center-skills {
   position: absolute;
   top: 25%;
@@ -192,6 +229,19 @@
   border: none;
   border-bottom: 1px solid $color-athens-gray-dark-50;
   width: 90%;
+  margin-right: 10px;
+  margin-left: 10px;
+  font-size: 24px;
+  color: $color-white;
+  font-weight: lighter;
+  padding-bottom: 10px;
+}
+
+.signup-input-review {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid $color-athens-gray-dark-50;
+  width: 60%;
   margin-right: 10px;
   margin-left: 10px;
   font-size: 24px;
@@ -300,4 +350,43 @@
 .inline-buttons {
   display: inline;
   margin-left: 30px;
+}
+
+.round {
+  border-radius: 50%;
+  margin: 0px auto $space-8x auto;
+}
+
+.column-left {
+  float: left;
+  width: 22.5%;
+  font-size: 10px;
+  color: $color-white;
+  margin-top: 10px;
+}
+.column-right {
+  float: right;
+  width: 22.5%;
+  margin-top: 10px;
+}
+.column-center {
+  display:
+  inline-block;
+  width: 45%;
+}
+
+.three-column-input {
+  margin-left: 5%;
+  width: 90%;
+  border-bottom: 1px solid $color-white;
+}
+
+.show-button {
+  margin-left: 20px;
+  color: $color-white;
+}
+
+.edit-button {
+  float: right;
+  color: $color-white;
 }

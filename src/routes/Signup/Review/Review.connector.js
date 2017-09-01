@@ -11,9 +11,9 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    updateUserSettings: (changes) => dispatch(updateUserSettings(changes)),
-    goToNextStep: () => dispatch(push('/signup/add-skills')),
-    goToPreviousStep: () => dispatch(push('/signup/upload-photo')),
+    updateUserSettings: () => dispatch(updateUserSettings()),
+    goToNextStep: () => dispatch(push('/')),
+    goToPreviousStep: () => dispatch(push('/signup/add-skills')),
     goBack: () => dispatch(goBack())
   }
 }

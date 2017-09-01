@@ -7,7 +7,6 @@ import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
 import SignupModalFooter from '../SignupModalFooter'
 import '../Signup.scss'
-import { browserHistory } from 'react-router'
 
 export default class UploadPhoto extends Component {
   constructor () {

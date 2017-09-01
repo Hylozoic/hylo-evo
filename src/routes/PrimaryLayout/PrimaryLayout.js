@@ -28,6 +28,7 @@ import SignupModal from 'routes/Signup/SignupModal'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import AddLocation from 'routes/Signup/AddLocation'
 import AddSkills from 'routes/Signup/AddSkills'
+import Review from 'routes/Signup/Review'
 
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
@@ -170,7 +171,8 @@ const detailRoutes = [
 const signupRoutes = [
   {path: '/signup/upload-photo', child: UploadPhoto},
   {path: '/signup/add-location', child: AddLocation},
-  {path: '/signup/add-skills', child: AddSkills}
+  {path: '/signup/add-skills', child: AddSkills},
+  {path: '/signup/review', child: Review}
 ]
 
 export function isSignupPath (path) {
