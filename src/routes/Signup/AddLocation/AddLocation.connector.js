@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import getMe from 'store/selectors/getMe'
-import { updateUserSettings } from './AddLocation.store'
+import { updateUserSettings } from 'store/actions/updateUserSettings'
 
 export function mapStateToProps (state, props) {
   return {

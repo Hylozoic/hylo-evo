@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import { push } from 'react-router-redux'
-import { updateUserSettings } from './UploadPhoto.store'
+import { updateUserSettings } from 'store/actions/updateUserSettings'
 import { UPLOAD_IMAGE } from 'store/constants'
 
 export function mapStateToProps (state, props) {
