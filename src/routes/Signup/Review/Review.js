@@ -66,12 +66,12 @@ export default class AddLocation extends Component {
     })
   }
 
-  goBackIfAlreadySignedup = () => {
+  componentWillMount = () => {
     const { currentUser } = this.props
     if (currentUser && currentUser.settings.signupInProgress === 'false') this.props.goBack()
   }
+
   render () {
-    this.goBackIfAlreadySignedup()
     const currentAvatarUrl = this.state.edits.avatarUrl
 
     const { currentUser, uploadImagePending } = this.props

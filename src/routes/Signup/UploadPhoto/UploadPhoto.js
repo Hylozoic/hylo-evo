@@ -33,15 +33,16 @@ export default class UploadPhoto extends Component {
       }
     })
   }
-  goBackIfAlreadySignedup = () => {
+
+  componentWillMount = () => {
     const { currentUser } = this.props
     if (currentUser && currentUser.settings.signupInProgress === 'false') this.props.goBack()
   }
+
   render () {
     const { currentUser, uploadImagePending } = this.props
     const currentAvatarUrl = this.state.edits.avatarUrl
     if (!currentUser) return <Loading />
-    this.goBackIfAlreadySignedup()
 
     return <div styleName='wrapper'>
       <LeftSidebar
