@@ -14,7 +14,8 @@ import {
   RESET_NEW_POST_COUNT_PENDING,
   TOGGLE_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_THREAD_READ_TIME,
-  VOTE_ON_POST_PENDING
+  VOTE_ON_POST_PENDING,
+  UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING
 } from 'store/constants'
 import { REMOVE_MEMBER_PENDING } from 'routes/Members/Members.store'
 import {
@@ -241,6 +242,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case UPDATE_USER_SETTINGS_PENDING:
+    case UPDATE_USER_SETTINGS_GLOBAL_PENDING:
       me = Me.first()
       const changes = {
         ...meta.changes,
