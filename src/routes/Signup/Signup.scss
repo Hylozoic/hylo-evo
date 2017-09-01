@@ -127,7 +127,6 @@
 
 .continue-button {
   border: 0;
-  font-size: 12px;
   color: $color-caribbean-green;
   background-color: $color-white;
   width: 120%;
@@ -136,6 +135,26 @@
 }
 
 .continue-button:hover {
+  color: $color-caribbean-green;
+  background-color: $color-white;
+}
+
+.continue-button-inline {
+  padding: 10px 50px 10px 50px;
+}
+
+.previous-button {
+  border: 0;
+  color: $color-white;
+  background-color: $color-caribbean-green;
+  border: 1px solid $color-white;
+  width: 120%;
+  text-align: center;
+  font-size: 1rem;
+  padding: 5px 30px 5px 30px;
+}
+
+.previous-button:hover {
   color: $color-caribbean-green;
   background-color: $color-white;
 }
@@ -271,4 +290,12 @@
 .skill:hover {
   background-color: $color-white;
   color: $color-caribbean-green;
+}
+
+.inline-buttons {
+  display: inline;
+  margin-left: 30px;
+}
+
+.bottom-inline {
 }

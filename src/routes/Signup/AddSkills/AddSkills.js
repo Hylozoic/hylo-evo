@@ -12,6 +12,14 @@ export default class AddSkills extends Component {
   fetchSkillsFromList (currentUser) {
     return skills
   }
+
+  submit = () => {
+    this.props.goToNextStep()
+  }
+
+  previous = () => {
+    this.props.goToPreviousStep()
+  }
   render () {
     return <div styleName='wrapper'>
       <LeftSidebar
@@ -43,7 +51,8 @@ export default class AddSkills extends Component {
         <div>
           <div styleName='float-right bottom'>
             <div>
-              <Button styleName='continue-button' label='Continue' />
+              <Button styleName='previous-button inline-buttons' label='Previous' onClick={this.previous} />
+              <Button styleName='continue-button inline-buttons continue-button-inline' label='Continue' onClick={this.submit} />
             </div>
             <div styleName='instruction'>or press Enter</div>
           </div>

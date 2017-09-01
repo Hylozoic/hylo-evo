@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import getMe from 'store/selectors/getMe'
 import { push } from 'react-router-redux'
+import getMe from 'store/selectors/getMe'
 import { updateUserSettings } from './AddLocation.store'
 
 export function mapStateToProps (state, props) {
@@ -12,7 +12,8 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     updateUserSettings: () => dispatch(updateUserSettings()),
-    goToNextStep: () => dispatch(push('/signup/add-skills'))
+    goToNextStep: () => dispatch(push('/signup/add-skills')),
+    goToPreviousStep: () => dispatch(push('/signup/upload-photo'))
   }
 }
 

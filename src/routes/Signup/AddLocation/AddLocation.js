@@ -24,6 +24,10 @@ export default class AddLocation extends Component {
     this.props.goToNextStep()
   }
 
+  previous = () => {
+    this.props.goToPreviousStep()
+  }
+
   render () {
     const logoUrl = hyloNameWhiteBackground
     return <div styleName='wrapper'>
@@ -54,7 +58,8 @@ export default class AddLocation extends Component {
         <div>
           <div styleName='float-right bottom'>
             <div>
-              <Button styleName='continue-button' label='Continue' onClick={this.submit} />
+              <Button styleName='previous-button inline-buttons' label='Previous' onClick={this.previous} />
+              <Button styleName='continue-button inline-buttons continue-button-inline' label='Continue' onClick={this.submit} />
             </div>
             <div styleName='instruction'>or press Enter</div>
           </div>

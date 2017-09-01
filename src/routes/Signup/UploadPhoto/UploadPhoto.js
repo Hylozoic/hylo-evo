@@ -16,9 +16,8 @@ export default class UploadPhoto extends Component {
     }
   }
 
-  save = () => {
+  submit = () => {
     this.setState({changed: false})
-    // setConfirm(false)
     this.props.updateUserSettings(this.state.edits)
     this.props.goToNextStep()
   }
@@ -63,7 +62,7 @@ export default class UploadPhoto extends Component {
             value={'Upload a profile photo'}
             onKeyPress={event => {
               if (event.key === 'Enter') {
-                this.save()
+                this.submit()
               }
             }}
             readOnly
@@ -72,7 +71,7 @@ export default class UploadPhoto extends Component {
         <div>
           <div styleName='float-right bottom'>
             <div>
-              <Button styleName='continue-button' label='Onwards!' onClick={this.save} />
+              <Button styleName='continue-button inline-buttons continue-button-inline' label='Continue' onClick={this.submit} />
             </div>
             <div styleName='instruction'>or press Enter</div>
           </div>
