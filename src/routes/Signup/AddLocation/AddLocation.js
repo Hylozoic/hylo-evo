@@ -6,6 +6,12 @@ import { bgImageStyle } from 'util/index'
 import '../Signup.scss'
 
 export default class AddLocation extends Component {
+  constructor () {
+    super()
+    this.state = {
+      location: ''
+    }
+  }
   handleLocationChange = (event) => {
     const location = event.target.value
     this.setState({
