@@ -11,7 +11,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    updateUserSettings: () => dispatch(updateUserSettings()),
+    updateUserSettings: (changes) => dispatch(updateUserSettings(changes)),
     redirectHome: () => dispatch(push('/'))
   }
 }
