@@ -17,6 +17,7 @@ export default class SkillsSection extends Component {
   }
 
   componentDidMount () {
+    console.log('fetchMemberSkills', this.props.fetchMemberSkills())
     this.props.fetchMemberSkills()
   }
 

@@ -240,3 +240,35 @@
   margin-top: 30px;
   color: $color-white;
 }
+
+.skills-cloud {
+  position: absolute;
+  top: 35%;
+}
+
+.my-skills-cloud {
+  position: absolute;
+  top: 75%;
+}
+
+.skills {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0px 50px 0px 50px;
+}
+
+.skill {
+  margin-right: 10px;
+  color: $color-white;
+  padding: 4px 10px 4px 10px;
+  border-radius: 25px;
+  margin: 7px 5px 7px 5px;
+  border: 1px solid $color-white;
+}
+
+.skill:hover {
+  background-color: $color-white;
+  color: $color-caribbean-green;
+}

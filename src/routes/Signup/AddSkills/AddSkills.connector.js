@@ -1,15 +1,18 @@
 import { connect } from 'react-redux'
-import { setAutocomplete, getAutocomplete, fetchSkills } from './AddSkills.store'
+import getMe from 'store/selectors/getMe'
+import { addSkill, fetchMemberSkills, getMemberSkills } from './AddSkills.store'
 
 export function mapStateToProps (state, props) {
-  const autocomplete = getAutocomplete(state)
+  console.log('mapStateToProps', state)
+  const currentUser = getMe(state, props)
   return {
-    autocomplete
+    currentUser,
+    skills: getMemberSkills(state, {memberId: props.memberId})
   }
 }
-export const mapDispatchToProps = {
-  setAutocomplete,
-  fetchSkills
-}
 
+export const mapDispatchToProps = {
+  addSkill,
+  fetchMemberSkills
+}
 export default connect(mapStateToProps, mapDispatchToProps)

@@ -1,24 +1,16 @@
 import React, { Component } from 'react'
 import Button from 'components/Button'
 import LeftSidebar from '../LeftSidebar'
-import { isEmpty } from 'lodash'
+
 import '../Signup.scss'
 
 export default class AddSkills extends Component {
-  submit = () => {
-    // const location = this.state.location
-    // this.props.updateUserSettings({location})
-    // this.props.goToNextStep()
+  clickHandler = (label) => {
+    this.props.addSkill(label)
   }
 
-  handleInputChange = (event) => {
-    this.props.setAutocomplete(event.target.value)
-  }
-
-  componentDidUpdate (prevProps) {
-    if (!isEmpty(this.props.autocomplete) && prevProps.autocomplete !== this.props.autocomplete) {
-      this.props.fetchSkills(this.props.autocomplete)
-    }
+  fetchSkillsFromList (currentUser) {
+    return skills
   }
   render () {
     return <div styleName='wrapper'>
@@ -35,12 +27,23 @@ export default class AddSkills extends Component {
             autoFocus
             onChange={this.handleInputChange}
             placeholder={'How can you help?'}
+            readOnly
           />
+        </div>
+        <div styleName='skills-cloud'>
+          {skills && <div styleName='skills'>
+            {this.fetchSkillsFromList().map((skill, index) =>
+              <Pill key={index} label={skill.name} handler={this.clickHandler} />
+            )}
+          </div>}
+        </div>
+        <div styleName='my-skills-cloud'>
+          <p>My skills</p>
         </div>
         <div>
           <div styleName='float-right bottom'>
             <div>
-              <Button styleName='continue-button' label='Continue' onClick={this.submit} />
+              <Button styleName='continue-button' label='Continue' />
             </div>
             <div styleName='instruction'>or press Enter</div>
           </div>
@@ -49,3 +52,24 @@ export default class AddSkills extends Component {
     </div>
   }
 }
+
+export function Pill ({label, handler}) {
+  return <span styleName='skill' onClick={() => handler(label)}>
+    {label}
+  </span>
+}
+
+const skills = [
+  {name: 'Writing'},
+  {name: 'Design'},
+  {name: 'Project Management'},
+  {name: 'Photography'},
+  {name: 'Facilitation'},
+  {name: 'Community Organizing'},
+  {name: 'Technology'},
+  {name: 'Social Media'},
+  {name: 'Event Planning'},
+  {name: 'Education'},
+  {name: 'Media'},
+  {name: 'Communications'}
+]
