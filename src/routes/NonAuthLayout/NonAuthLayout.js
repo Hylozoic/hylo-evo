@@ -46,7 +46,7 @@ export default class NonAuthLayout extends React.Component {
       } />
 
       <Route path='/reset-password' component={() =>
-        <PasswordReset />
+        <PasswordReset {...this.props} styleName='form' />
       } />
 
       <div>
