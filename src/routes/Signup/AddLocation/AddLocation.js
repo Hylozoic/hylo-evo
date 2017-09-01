@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import Button from 'components/Button'
 import LeftSidebar from '../LeftSidebar'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
+import SignupModalFooter from '../SignupModalFooter'
 import '../Signup.scss'
 
 export default class AddLocation extends Component {
@@ -56,13 +56,7 @@ export default class AddLocation extends Component {
           />
         </div>
         <div>
-          <div styleName='float-right bottom'>
-            <div>
-              <Button styleName='previous-button inline-buttons' label='Previous' onClick={this.previous} />
-              <Button styleName='continue-button inline-buttons continue-button-inline' label='Continue' onClick={this.submit} />
-            </div>
-            <div styleName='instruction'>or press Enter</div>
-          </div>
+          <SignupModalFooter submit={this.submit} previous={this.previous} />
         </div>
       </div>
     </div>

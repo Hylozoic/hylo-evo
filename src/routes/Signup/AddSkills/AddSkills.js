@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Button from 'components/Button'
+import SignupModalFooter from '../SignupModalFooter'
 import LeftSidebar from '../LeftSidebar'
 
 import '../Signup.scss'
@@ -49,13 +49,7 @@ export default class AddSkills extends Component {
           <p>My skills</p>
         </div>
         <div>
-          <div styleName='float-right bottom'>
-            <div>
-              <Button styleName='previous-button inline-buttons' label='Previous' onClick={this.previous} />
-              <Button styleName='continue-button inline-buttons continue-button-inline' label='Continue' onClick={this.submit} />
-            </div>
-            <div styleName='instruction'>or press Enter</div>
-          </div>
+          <SignupModalFooter previous={this.previous} submit={this.submit} />
         </div>
       </div>
     </div>

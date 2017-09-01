@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import Button from 'components/Button'
 import { avatarUploadSettings } from 'store/models/Me'
 import ChangeImageButton from 'components/ChangeImageButton'
 import { cameraSvg, loadingSvg } from 'util/assets'
 import LeftSidebar from '../LeftSidebar'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
+import SignupModalFooter from '../SignupModalFooter'
 import '../Signup.scss'
 
 export default class UploadPhoto extends Component {
@@ -69,12 +69,7 @@ export default class UploadPhoto extends Component {
           />
         </div>
         <div>
-          <div styleName='float-right bottom'>
-            <div>
-              <Button styleName='continue-button inline-buttons continue-button-inline' label='Continue' onClick={this.submit} />
-            </div>
-            <div styleName='instruction'>or press Enter</div>
-          </div>
+          <SignupModalFooter previous={this.previous} submit={this.submit} showPrevious={false} />
         </div>
       </div>
     </div>
