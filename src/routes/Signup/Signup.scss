@@ -102,8 +102,9 @@
 }
 
 .logo {
-  @include image(100px);
+  @include image(120px);
   border-radius: 4px;
+  margin-top: 30px;
 }
 
 .center {

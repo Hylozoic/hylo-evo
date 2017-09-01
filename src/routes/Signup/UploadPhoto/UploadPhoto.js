@@ -48,7 +48,7 @@ export default class UploadPhoto extends Component {
       <div styleName='detail'>
         <span styleName='white-text step-count'>STEP 1/4</span>
         <br />
-        <div styleName='image-upload-icon'>
+        <div styleName='center'>
           <UploadSection
             avatarUrl={currentAvatarUrl}
             updateSettingDirectly={this.updateSettingDirectly}

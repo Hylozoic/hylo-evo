@@ -36,7 +36,7 @@ export default class AddLocation extends Component {
         body='Add your location to see more relevant content, and find people and projects around you.'
       />
       <div styleName='detail'>
-        <span styleName='white-text step-count'>STEP 1/4</span>
+        <span styleName='white-text step-count'>STEP 2/4</span>
         <br />
         <div styleName='center'>
           <div styleName='logo center' style={bgImageStyle(logoUrl)} />

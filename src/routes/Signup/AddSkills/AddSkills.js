@@ -27,7 +27,7 @@ export default class AddSkills extends Component {
         body='Add your location to see more relevant content, and find people and projects around you.'
       />
       <div styleName='detail'>
-        <span styleName='white-text step-count'>STEP 1/4</span>
+        <span styleName='white-text step-count'>STEP 3/4</span>
         <br />
         <div styleName='center center-skills'>
           <input
