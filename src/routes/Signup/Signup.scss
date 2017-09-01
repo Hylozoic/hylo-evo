@@ -239,6 +239,10 @@
   background-repeat: no-repeat;
 }
 
+.contain {
+  background-size: contain;
+}
+
 .loading-background-image {
   height: 120px;
   width: 120px;
@@ -296,7 +300,4 @@
 .inline-buttons {
   display: inline;
   margin-left: 30px;
-}
-
-.bottom-inline {
 }

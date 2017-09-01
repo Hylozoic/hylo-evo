@@ -37,7 +37,6 @@ export default class UploadPhoto extends Component {
   render () {
     const { currentUser, uploadImagePending } = this.props
     const currentAvatarUrl = this.state.edits.avatarUrl
-
     if (!currentUser) return <Loading />
 
     return <div styleName='wrapper'>
@@ -76,12 +75,18 @@ export default class UploadPhoto extends Component {
   }
 }
 
-export function uploadAvatar (currentUser, loading) {
+export function uploadAvatar (currentUser, loading, avatarUrl) {
   let imageUrl = cameraSvg
   let styleName = 'upload-background-image'
 
   if (currentUser.avatarUrl) {
-    imageUrl = currentUser.avatarUr
+    imageUrl = currentUser.avatarUrl
+    styleName = 'upload-background-image contain'
+
+  }
+  if (avatarUrl) {
+    imageUrl = avatarUrl
+    styleName = 'upload-background-image contain'
   }
   if (loading) {
     imageUrl = loadingSvg
@@ -97,6 +102,6 @@ export function UploadSection ({avatarUrl, currentUser, updateSettingDirectly, l
     update={updateSettingDirectly('avatarUrl')}
     uploadSettings={avatarUploadSettings(currentUser)}
     styleName='change-avatar-button'
-    child={uploadAvatar(currentUser, loading)}
+    child={uploadAvatar(currentUser, loading, avatarUrl)}
   />
 }
