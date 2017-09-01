@@ -20,7 +20,13 @@ export default class AddSkills extends Component {
   previous = () => {
     this.props.goToPreviousStep()
   }
+
+  goBackIfAlreadySignedup = () => {
+    const { currentUser } = this.props
+    if (currentUser && currentUser.settings.signupInProgress === 'false') this.props.goBack()
+  }
   render () {
+    this.goBackIfAlreadySignedup()
     return <div styleName='wrapper'>
       <LeftSidebar
         header='Add your location'

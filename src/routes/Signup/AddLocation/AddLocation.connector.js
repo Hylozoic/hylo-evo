@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push, goBack } from 'react-router-redux'
 import getMe from 'store/selectors/getMe'
 import { updateUserSettings } from 'store/actions/updateUserSettings'
 
@@ -13,7 +13,8 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     updateUserSettings: () => dispatch(updateUserSettings()),
     goToNextStep: () => dispatch(push('/signup/add-skills')),
-    goToPreviousStep: () => dispatch(push('/signup/upload-photo'))
+    goToPreviousStep: () => dispatch(push('/signup/upload-photo')),
+    goBack: () => dispatch(goBack())
   }
 }
 

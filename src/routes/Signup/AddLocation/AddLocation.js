@@ -28,8 +28,12 @@ export default class AddLocation extends Component {
     this.props.goToPreviousStep()
   }
 
+  goBackIfAlreadySignedup = () => {
+    const { currentUser } = this.props
+    if (currentUser && currentUser.settings.signupInProgress === 'false') this.props.goBack()
+  }
   render () {
-    const logoUrl = hyloNameWhiteBackground
+    this.goBackIfAlreadySignedup()
     return <div styleName='wrapper'>
       <LeftSidebar
         header='Add your location'
@@ -39,7 +43,7 @@ export default class AddLocation extends Component {
         <span styleName='white-text step-count'>STEP 2/4</span>
         <br />
         <div styleName='center'>
-          <div styleName='logo center' style={bgImageStyle(logoUrl)} />
+          <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
         </div>
         <div styleName='center center-vertical'>
           <input

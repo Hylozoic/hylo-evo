@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
-import { push } from 'react-router-redux'
+import { push, goBack } from 'react-router-redux'
 import { updateUserSettings } from 'store/actions/updateUserSettings'
 import { UPLOAD_IMAGE } from 'store/constants'
 
@@ -15,7 +15,8 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     updateUserSettings: (changes) => dispatch(updateUserSettings(changes)),
-    goToNextStep: () => dispatch(push('/signup/add-location'))
+    goToNextStep: () => dispatch(push('/signup/add-location')),
+    goBack: () => dispatch(goBack())
   }
 }
 
