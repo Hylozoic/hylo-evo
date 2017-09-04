@@ -44,18 +44,18 @@ export default class AddLocation extends Component {
   }
 
   render () {
-    return <div styleName='wrapper'>
+    return <div styleName='flex-wrapper'>
       <LeftSidebar
         header='Add your location'
         body='Add your location to see more relevant content, and find people and projects around you.'
       />
-      <div styleName='detail'>
+      <div styleName='new-component'>
         <span styleName='white-text step-count'>STEP 2/4</span>
         <br />
         <div styleName='center'>
           <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
         </div>
-        <div styleName='center center-vertical'>
+        <div styleName='center'>
           <input
             styleName='signup-input'
             onChange={this.handleLocationChange}

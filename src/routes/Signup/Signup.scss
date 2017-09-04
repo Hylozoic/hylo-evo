@@ -186,9 +186,9 @@
 }
 
 .logo {
-  @include image(120px);
+  @include image(100px);
   border-radius: 4px;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 .bottom {
@@ -244,19 +244,8 @@
   text-align: center;
 }
 
-.upload-input {
-  padding-top: 70px;
-  background-color: transparent;
-  border: none;
-  width: 100%;
-  border-bottom: 1px solid $color-athens-gray-dark-50;
-  font-size: 24px;
-  color: $color-white;
-  font-weight: lighter;
-}
-
 .signup-input {
-  padding-top: 48px;
+  padding-top: 70px;
   background-color: transparent;
   border: none;
   width: 100%;

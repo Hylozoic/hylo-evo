@@ -59,7 +59,7 @@ export default class UploadPhoto extends Component {
         </div>
         <div styleName='center'>
           <input
-            styleName='upload-input'
+            styleName='signup-input'
             value={'Upload a profile photo'}
             onKeyPress={event => {
               if (event.key === 'Enter') {
