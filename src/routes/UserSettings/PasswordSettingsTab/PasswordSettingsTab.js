@@ -50,7 +50,7 @@ export default class AccountSettings extends Component {
     const canSave = !isEmpty(password) && password === confirm && changed
 
     return <div>
-      <div styleName='title'>Reset Password</div>
+      <div styleName='title'>Update Password</div>
       <SettingsControl label='New Password' onChange={updateSetting('password')} value={password} type='password' />
       <SettingsControl label='Confirm' onChange={updateSetting('confirm')} value={confirm} type='password' />
       <div styleName='button-row'>
