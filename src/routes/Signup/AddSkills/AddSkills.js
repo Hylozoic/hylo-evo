@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import { map } from 'lodash'
+import cx from 'classnames'
 import SignupModalFooter from '../SignupModalFooter'
 import LeftSidebar from '../LeftSidebar'
+import Pillbox from 'components/Pillbox'
 
 import '../Signup.scss'
 
@@ -42,6 +45,8 @@ export default class AddSkills extends Component {
   }
   render () {
     const { mySkills } = this.state
+    const expanded = true
+
     return <div styleName='wrapper'>
       <LeftSidebar
         header='Add your location'
@@ -67,9 +72,19 @@ export default class AddSkills extends Component {
           </div>}
         </div>
         <div styleName='my-skills-cloud'>
-          {mySkills && mySkills.map((skill, index) =>
-            <Pill key={index} skill={skill} handler={this.props.removeSkill} handlerArg={'id'} />
-          )}
+          <div
+            styleName={cx('pill-container', {expanded, collapsed: !expanded})}>
+            <Pillbox
+              pills={map(mySkills, skill => ({...skill, label: skill.name}))}
+              handleInputChange={this.handleInputChange}
+              handleAddition={this.handleAddition}
+              handleDelete={this.handleDelete}
+              editable={false}
+              addLabel='Add a Skill'
+              placeholder={null}
+              suggestions={null}
+            />
+          </div>
         </div>
         <div>
           <SignupModalFooter previous={this.previous} submit={this.submit} />

@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
+import { map } from 'lodash'
+import cx from 'classnames'
 import LeftSidebar from '../LeftSidebar'
 import SignupModalFooter from '../SignupModalFooter'
 import UploadImageSection from '../UploadImageSection'
+import Pillbox from 'components/Pillbox'
 
 import '../Signup.scss'
 
@@ -76,6 +79,7 @@ export default class AddLocation extends Component {
     const currentAvatarUrl = this.state.edits.avatarUrl
 
     const { currentUser, uploadImagePending } = this.props
+    const skills = currentUser && currentUser.skills && currentUser.skills.toRefArray()
     return <div styleName='wrapper'>
       <LeftSidebar
         header='Everything looking good?'
@@ -85,12 +89,12 @@ export default class AddLocation extends Component {
         <span styleName='white-text step-count'>STEP 4/4</span>
         <br />
         <div styleName='center'>
-          <UploadImageSection
+          {currentUser && <UploadImageSection
             avatarUrl={currentAvatarUrl}
             updateSettingDirectly={this.updateSettingDirectly}
             currentUser={currentUser}
             loading={uploadImagePending}
-          />
+          />}
         </div>
         <div styleName='three-column-input'>
           <div styleName='column-left'>YOUR NAME</div>
@@ -158,10 +162,18 @@ export default class AddLocation extends Component {
         <div styleName='three-column-input'>
           <div styleName='column-left'>SKILLS</div>
           <div styleName='column-center'>
-            <div styleName='my-skills-input'>
-              {currentUser && currentUser.skills.toRefArray().map((skill, index) =>
-                <Pill key={index} skill={skill} />
-              )}
+            <div
+              styleName={cx('pill-container', {expanded, collapsed: !expanded})}>
+              <Pillbox
+                pills={map(skills, skill => ({...skill, label: skill.name}))}
+                handleInputChange={this.handleInputChange}
+                handleAddition={this.handleAddition}
+                handleDelete={this.handleDelete}
+                editable={false}
+                addLabel='Add a Skill'
+                placeholder={null}
+                suggestions={null}
+              />
             </div>
           </div>
           <div styleName='column-right'>

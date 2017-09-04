@@ -396,3 +396,16 @@
   color: $color-white;
   cursor: pointer;
 }
+
+.pill-container {
+  position: relative;
+}
+
+.expanded {
+  height: auto;
+  max-height: 1000px;
+}
+
+.add-btn {
+  display: none;
+}
