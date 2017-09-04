@@ -3,6 +3,7 @@ import './UserSettings.scss'
 import AccountSettings from './AccountSettings/AccountSettings'
 import CommunitySettings from './CommunitySettings/CommunitySettings'
 import NotificationSettings from './NotificationSettings/NotificationSettings'
+import PasswordSettingsTab from './PasswordSettingsTab/PasswordSettingsTab'
 const { object, func } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
 
@@ -54,6 +55,14 @@ export default class UserSettings extends Component {
           component: <NotificationSettings
             currentUser={currentUser}
             updateUserSettings={updateUserSettings} />
+        },
+        {
+          name: 'Password',
+          path: '/settings/password',
+          component: <PasswordSettingsTab
+            currentUser={currentUser}
+            updateUserSettings={updateUserSettings}
+            setConfirm={setConfirm} />
         }
       ]} />
   }
