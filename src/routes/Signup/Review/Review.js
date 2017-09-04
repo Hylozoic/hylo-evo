@@ -68,7 +68,11 @@ export default class AddLocation extends Component {
 
   componentWillMount = () => {
     const { currentUser } = this.props
-    if (currentUser && currentUser.settings.signupInProgress === 'false') this.props.goBack()
+    if (currentUser && currentUser.settings && currentUser.settings.signupInProgress === 'false') this.props.goBack()
+  }
+
+  componentDidMount = () => {
+    this.props.fetchMySkills()
   }
 
   render () {
@@ -125,33 +129,12 @@ export default class AddLocation extends Component {
                 }
               }}
               autoFocus
-              value={this.state.edits.email || currentUser && currentUser.name}
+              value={this.state.edits.email || currentUser && currentUser.email}
               readOnly={this.state.readOnly.name}
             />
           </div>
           <div styleName='column-right'>
             <span styleName='edit-button' onClick={() => this.makeEditable('email')}>Edit</span>
-          </div>
-        </div>
-        <div styleName='three-column-input'>
-          <div styleName='column-left'>YOUR PASSWORD</div>
-          <div styleName='column-center'>
-            <input
-              styleName='signup-input'
-              onChange={(e) => this.handleInputChange(e, 'password')}
-              onKeyPress={event => {
-                if (event.key === 'Enter') {
-                  this.submit()
-                  this.props.goToNextStep()
-                }
-              }}
-              autoFocus
-              value={this.state.edits.password || currentUser && currentUser.name}
-            />
-          </div>
-          <div styleName='column-right'>
-            <span styleName='show-button'>Show</span>
-            <span styleName='edit-button'>Edit</span>
           </div>
         </div>
         <div styleName='three-column-input'>
@@ -167,7 +150,7 @@ export default class AddLocation extends Component {
                 }
               }}
               autoFocus
-              value={this.state.edits.location || currentUser && currentUser.name}
+              value={this.state.edits.location || currentUser && currentUser.location}
               readOnly={this.state.readOnly.name}
             />
           </div>
@@ -178,18 +161,11 @@ export default class AddLocation extends Component {
         <div styleName='three-column-input'>
           <div styleName='column-left'>SKILLS</div>
           <div styleName='column-center'>
-            <input
-              styleName='signup-input'
-              onChange={this.handleLocationChange}
-              onKeyPress={event => {
-                if (event.key === 'Enter') {
-                  this.submit()
-                  this.props.goToNextStep()
-                }
-              }}
-              autoFocus
-              value={currentUser && currentUser.name}
-            />
+            <div styleName='my-skills-input'>
+              {currentUser && currentUser.skills.toRefArray().map((skill, index) =>
+                <Pill key={index} skill={skill} />
+              )}
+            </div>
           </div>
           <div styleName='column-right'>
             <span styleName='edit-button'>Edit</span>
@@ -233,4 +209,10 @@ export function UploadSection ({avatarUrl, currentUser, updateSettingDirectly, l
     styleName='change-avatar-button'
     child={uploadAvatar(currentUser, loading, avatarUrl)}
   />
+}
+
+export function Pill ({skill}) {
+  return <span styleName='skill'>
+    {skill.name}
+  </span>
 }

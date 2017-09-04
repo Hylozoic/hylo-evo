@@ -38,7 +38,7 @@ export default class AddSkills extends Component {
   }
 
   componentDidMount = () => {
-    this.props.fetchMemberSkills()
+    this.props.fetchMySkills()
   }
   render () {
     const { mySkills } = this.state

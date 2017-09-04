@@ -14,7 +14,7 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     addSkill: (name) => dispatch(addSkill(name)),
-    fetchMemberSkills: () => dispatch(fetchMySkills()),
+    fetchMySkills: () => dispatch(fetchMySkills()),
     goToNextStep: () => dispatch(push('/signup/review')),
     goToPreviousStep: () => dispatch(push('/signup/add-location')),
     goBack: () => dispatch(goBack()),
