@@ -2,7 +2,7 @@ import { createSelector } from 'redux-orm'
 import orm from 'store/models'
 
 export const ADD_SKILL = `ADD_SKILL`
-export const FETCH_MEMBER_SKILLS = `FETCH_MEMBER_SKILLS`
+export const FETCH_MY_SKILLS = `FETCH_MY_SKILLS`
 
 export function addSkill (skillName) {
   return {
@@ -25,12 +25,12 @@ export function addSkill (skillName) {
   }
 }
 
-export function fetchMemberSkills (id, limit = 20) {
+export function fetchMySkills (limit = 20) {
   return {
-    type: FETCH_MEMBER_SKILLS,
+    type: FETCH_MY_SKILLS,
     graphql: {
-      query: `query ($id: ID, $limit: Int) {
-        person (id: $id) {
+      query: `query ($limit: Int) {
+        me {
           id
           skills (first: $limit) {
             items {
@@ -40,23 +40,20 @@ export function fetchMemberSkills (id, limit = 20) {
           }
         }
       }`,
-      variables: { id, limit }
+      variables: { limit }
     },
     meta: {
-      extractModel: 'Person'
+      extractModel: 'Me'
     }
   }
 }
 
-export const getMemberSkills = createSelector(
+export const getMySkills = createSelector(
   orm,
   state => state.orm,
-  (_, props) => props.memberId,
-  (session, memberId) => {
-    if (session.Person.hasId(memberId)) {
-      const person = session.Person.withId(memberId)
-      return person.skills.toRefArray()
-    }
-    return null
+  (session) => {
+    const me = session.Me.first()
+    if (!me) return []
+    return me.skills.toRefArray()
   }
 )

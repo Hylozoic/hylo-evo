@@ -23,9 +23,15 @@ export default class AddSkills extends Component {
 
   componentWillMount = () => {
     const { currentUser } = this.props
-    if (currentUser && currentUser.settings.signupInProgress === 'false') this.props.goBack()
+    if (currentUser && currentUser.settings && currentUser.settings.signupInProgress === 'false') this.props.goBack()
+  }
+
+  componentDidMount = () => {
+    this.props.fetchMemberSkills()
   }
   render () {
+    const { currentUser } = this.props
+    if (currentUser) console.log('addSkill props', this.props.currentUser.skills.toRefArray())
     return <div styleName='wrapper'>
       <LeftSidebar
         header='Add your location'

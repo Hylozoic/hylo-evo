@@ -180,7 +180,7 @@ export function isSignupPath (path) {
 }
 
 export function RedirectToSignupFlow ({ currentUser, pathname }) {
-  if (!currentUser || currentUser.settings.signupInProgress === 'false') return null
+  if (!currentUser || !currentUser.settings || currentUser.settings.signupInProgress === 'false') return null
   if (isSignupPath(pathname)) return null
   const destination = '/signup/upload-photo'
   return <Redirect to={destination} />
