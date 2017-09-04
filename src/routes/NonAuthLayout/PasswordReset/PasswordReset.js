@@ -16,10 +16,9 @@ export default class PasswordReset extends Component {
 
   submit () {
     const { email } = this.state
-    this.resetPassword(email)
+    this.props.resetPassword(email)
     .then(({ error }) => {
       if (error) {
-        console.log('error')
         this.setState({error})
       } else {
         this.setState({success: true})
@@ -33,9 +32,7 @@ export default class PasswordReset extends Component {
       email: event.target.value,
       success: false
     })
-    const { email, success } = this.state
-
-    const errorMessage = null
+    const { email, success, error } = this.state
 
     const canSubmit = validator.isEmail(email)
 
@@ -45,13 +42,13 @@ export default class PasswordReset extends Component {
         Enter your email address and we'll send you an email that lets you reset your password
       </div>
       {success && <div styleName='success'>We've sent the email! It should be in your inbox shortly</div>}
-      {errorMessage && <div styleName='error'>{errorMessage}</div>}
+      {error && <div styleName='error'>There was a problem with your request. Please check your email and try again.</div>}
       <div styleName='field'>
         <label styleName='field-label'>Your email address</label>
         <TextInput type='text' name='email' onChange={onChange} value={email}
           inputRef={input => { this.email = input }} noClearButton />
       </div>
-      <Button styleName='submit' label='Reset'color={canSubmit ? 'green' : 'gray'}
+      <Button styleName='submit' label='Reset' color={canSubmit ? 'green' : 'gray'}
         onClick={canSubmit ? () => this.submit() : null} />
     </div>
   }
