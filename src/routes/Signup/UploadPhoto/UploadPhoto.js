@@ -70,7 +70,7 @@ export default class UploadPhoto extends Component {
           />
         </div>
         <div>
-          <SignupModalFooter previous={this.previous} submit={this.submit} showPrevious={false} />
+          <SignupModalFooter previous={this.previous} submit={this.submit} showPrevious={false} continueText={'Onwards!'} />
         </div>
       </div>
     </div>

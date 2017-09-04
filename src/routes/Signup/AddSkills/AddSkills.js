@@ -84,7 +84,7 @@ export default class AddSkills extends Component {
           </div>
         </div>
         <div>
-          <SignupModalFooter previous={this.previous} submit={this.submit} />
+          <SignupModalFooter previous={this.previous} submit={this.submit} continueText={'Boom, Done'} />
         </div>
       </div>
     </div>

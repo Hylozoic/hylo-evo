@@ -100,7 +100,7 @@ export default class AddLocation extends Component {
           <div styleName='column-left'>YOUR NAME</div>
           <div styleName='column-center'>
             <input
-              styleName='signup-input review-input-text-size'
+              styleName='signup-input'
               onChange={(e) => this.handleInputChange(e, 'name')}
               onKeyPress={event => {
                 if (event.key === 'Enter') {
@@ -178,7 +178,7 @@ export default class AddLocation extends Component {
           </div>
         </div>
         <div>
-          <SignupModalFooter submit={this.submit} previous={this.previous} showPrevious={false} />
+          <SignupModalFooter submit={this.submit} previous={this.previous} showPrevious={false} continueText={"Let's do this!"} />
         </div>
       </div>
     </div>
