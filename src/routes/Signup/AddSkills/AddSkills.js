@@ -76,9 +76,6 @@ export default class AddSkills extends Component {
             styleName={cx('pill-container', {expanded, collapsed: !expanded})}>
             <Pillbox
               pills={map(mySkills, skill => ({...skill, label: skill.name}))}
-              handleInputChange={this.handleInputChange}
-              handleAddition={this.handleAddition}
-              handleDelete={this.handleDelete}
               editable={false}
               addLabel='Add a Skill'
               placeholder={null}

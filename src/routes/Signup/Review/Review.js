@@ -77,7 +77,7 @@ export default class AddLocation extends Component {
 
   render () {
     const currentAvatarUrl = this.state.edits.avatarUrl
-
+    const expanded = true
     const { currentUser, uploadImagePending } = this.props
     const skills = currentUser && currentUser.skills && currentUser.skills.toRefArray()
     return <div styleName='wrapper'>
@@ -166,9 +166,6 @@ export default class AddLocation extends Component {
               styleName={cx('pill-container', {expanded, collapsed: !expanded})}>
               <Pillbox
                 pills={map(skills, skill => ({...skill, label: skill.name}))}
-                handleInputChange={this.handleInputChange}
-                handleAddition={this.handleAddition}
-                handleDelete={this.handleDelete}
                 editable={false}
                 addLabel='Add a Skill'
                 placeholder={null}
