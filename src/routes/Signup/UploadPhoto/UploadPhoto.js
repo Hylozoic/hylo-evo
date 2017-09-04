@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
-import { avatarUploadSettings } from 'store/models/Me'
-import ChangeImageButton from 'components/ChangeImageButton'
-import { cameraSvg, loadingSvg } from 'util/assets'
 import LeftSidebar from '../LeftSidebar'
 import Loading from 'components/Loading'
-import { bgImageStyle } from 'util/index'
 import SignupModalFooter from '../SignupModalFooter'
+import UploadImageSection from '../UploadImageSection'
 import '../Signup.scss'
 
 export default class UploadPhoto extends Component {
@@ -53,7 +50,7 @@ export default class UploadPhoto extends Component {
         <span styleName='white-text step-count'>STEP 1/4</span>
         <br />
         <div styleName='center'>
-          <UploadSection
+          <UploadImageSection
             avatarUrl={currentAvatarUrl}
             updateSettingDirectly={this.updateSettingDirectly}
             currentUser={currentUser}
@@ -78,35 +75,4 @@ export default class UploadPhoto extends Component {
       </div>
     </div>
   }
-}
-
-export function uploadAvatar (currentUser, loading, avatarUrl) {
-  let imageUrl = cameraSvg
-  let styleName = 'upload-background-image'
-
-  if (currentUser.avatarUrl) {
-    imageUrl = currentUser.avatarUrl
-    styleName = 'upload-background-image contain'
-
-  }
-  if (avatarUrl) {
-    imageUrl = avatarUrl
-    styleName = 'upload-background-image contain'
-  }
-  if (loading) {
-    imageUrl = loadingSvg
-    styleName = 'loading-background-image'
-  }
-  return <div styleName='image-upload-icon'>
-    <div style={bgImageStyle(imageUrl)} styleName={styleName} />
-  </div>
-}
-
-export function UploadSection ({avatarUrl, currentUser, updateSettingDirectly, loading}) {
-  return <ChangeImageButton
-    update={updateSettingDirectly('avatarUrl')}
-    uploadSettings={avatarUploadSettings(currentUser)}
-    styleName='change-avatar-button'
-    child={uploadAvatar(currentUser, loading, avatarUrl)}
-  />
 }
