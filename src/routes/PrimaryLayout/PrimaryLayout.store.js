@@ -85,6 +85,8 @@ me {
   avatarUrl
   newNotificationCount
   unseenThreadCount
+  location
+  email
   settings {
     signupInProgress
   }
