@@ -41,12 +41,12 @@ export default class UploadPhoto extends Component {
     const currentAvatarUrl = this.state.edits.avatarUrl
     if (!currentUser) return <Loading />
 
-    return <div styleName='wrapper'>
+    return <div styleName='flex-wrapper'>
       <LeftSidebar
         header="Let's complete your profile!"
         body={`Welcome to Hylo, ${currentUser.name}. It only takes a couple seconds to complete your profile. Let's get started!`}
       />
-      <div styleName='detail'>
+      <div styleName='new-component'>
         <span styleName='white-text step-count'>STEP 1/4</span>
         <br />
         <div styleName='center'>
@@ -57,9 +57,9 @@ export default class UploadPhoto extends Component {
             loading={uploadImagePending}
           />
         </div>
-        <div styleName='center center-vertical'>
+        <div styleName='center'>
           <input
-            styleName='signup-input'
+            styleName='upload-input'
             value={'Upload a profile photo'}
             onKeyPress={event => {
               if (event.key === 'Enter') {

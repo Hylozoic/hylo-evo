@@ -1,3 +1,125 @@
+.flex-wrapper {
+  display: flex;
+  flex-direction: row;
+  background: $color-white;
+  min-width: 680px;
+  min-height: 500px;
+  border-radius: $space-1x;
+}
+
+.new-sidebar {
+  min-height: 1px; // Prevent collapsing
+  height: 100%;
+  flex: 0.3;
+  margin-left: 24px;
+  margin-top: 16px;
+  margin-right: 30px;
+}
+
+.new-component {
+  min-height: 1px; // Prevent collapsing
+  height: 500px;
+  flex: 0.7;
+  padding-left: 16px;
+  padding-top: 16px;
+  border-top-right-radius: $space-1x;
+  border-bottom-right-radius: $space-1x;
+  background-color: $color-caribbean-green;
+  padding-right: 24px;
+}
+
+.step-count {
+  float: right;
+  letter-spacing: 1px;
+  font-size: 10px;
+  color: $color-white;
+}
+
+.sidebar-header {
+  color: $color-caribbean-green;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.change-avatar-button {
+  margin: 0 auto;
+  width: 20px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-upload-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.signup-modal-footer {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 10px;
+}
+
+.footer-buttons {
+  float: right;
+  margin-left: 110px;
+}
+
+.continue-button {
+  color: $color-caribbean-green;
+  background-color: $color-white;
+  text-align: center;
+  font-size: 14px;
+}
+
+.continue-button:hover {
+  color: $color-caribbean-green;
+  background-color: $color-white;
+}
+
+.previous-button {
+  color: $color-white;
+  background-color: $color-caribbean-green;
+  border: 1px solid $color-white;
+  text-align: center;
+  font-size: 12px;
+  margin-right: 20px;
+}
+
+.previous-button:hover {
+  color: $color-caribbean-green;
+  background-color: $color-white;
+}
+
+.press-enter {
+  font-size: 10px;
+  color: $color-white;
+  font-style: italic;
+  margin-left: 300px;
+  margin-top: 5px;
+}
+
+.gray-text {
+  color: $color-dove-gray-75;
+}
+
+.sidebar-text {
+  font-size: 14px;
+  font-weight: lighter;
+}
+.loading-background-image {
+  height: 100px;
+  width: 100px;
+  background-color: $color-athens-gray-dark-50;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -11,44 +133,23 @@
   padding-top: 30px;
 }
 
-.left-sidebar {
-  width: 200px;
-  padding-top: 30px;
-  padding-right: 32px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
-  background-color: 'green';
-  &.border {
-    border-right: 1px solid $color-cape-cod-10;
-  }
-}
-
 .sidebar {
   // From Bootstrap make-col-ready():
-  position: relative;
   min-height: 1px; // Prevent collapsing
   height: 100%;
-  flex: 0 0 33%;
   max-width: 33%;
-  transition-delay: 0.1s;
-  transition-duration: 0.3s;
   right: 0px;
   padding: 0 32px 0 32px;
   overflow-y: auto;
+  display: inline;
+  float: left;
 }
 
 .detail {
-  padding-top: 30px;
-  background-color: $color-white;
-  position: absolute;
-  top: 0;
-  right: 0px;
-  height: 100%;
-  width: 67%;
-  overflow-y: auto;
+  float:right;
   background-color: $color-caribbean-green;
+  display: inline;
+  max-width: 67%;
 }
 
 .white-text {
@@ -74,31 +175,14 @@
 .signup-wrapper {
   position: relative;
   z-index: 1;
-  width: $signup-modal-width;
+  width: 660px;
   margin: -($post-editor-height/2) auto 0;
   top: 50%;
-}
-
-.sidebar-header {
-  color: $color-caribbean-green;
-  margin-top: 20px;
-  font-size: 20px;
 }
 
 .float-right {
   float: right;
   margin-right: 50px;
-}
-
-.step-count {
-  float: right;
-  margin-right: 30px;
-  letter-spacing: 1px;
-  font-size: 14px;
-}
-
-.gray-text {
-  color: $color-dove-gray-75;
 }
 
 .logo {
@@ -107,74 +191,10 @@
   margin-top: 30px;
 }
 
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.image-upload-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-}
-
 .bottom {
   position:absolute;
   bottom:40px;
   right:0;
-}
-
-.continue-button {
-  border: 0;
-  color: $color-caribbean-green;
-  background-color: $color-white;
-  width: 120%;
-  text-align: center;
-  font-size: 1rem;
-}
-
-.continue-button:hover {
-  color: $color-caribbean-green;
-  background-color: $color-white;
-}
-
-.continue-button-inline {
-  padding: 10px 50px 10px 50px;
-}
-
-.previous-button {
-  border: 0;
-  color: $color-white;
-  background-color: $color-caribbean-green;
-  border: 1px solid $color-white;
-  width: 120%;
-  text-align: center;
-  font-size: 1rem;
-  padding: 5px 30px 5px 30px;
-}
-
-.previous-button:hover {
-  color: $color-caribbean-green;
-  background-color: $color-white;
-}
-
-.instruction {
-  color: $color-white;
-  font-size: 90%;
-  text-align: center;
-  margin-top: 10px;
-  font-weight: 100;
-  font-style: italic;
-  width: 120%;
-  opacity: 0.5;
-}
-
-.center-vertical {
-  position: absolute;
-  top: 47.5%;
-  width: 100%;
 }
 
 .center-vertical-side {
@@ -224,17 +244,26 @@
   text-align: center;
 }
 
-.signup-input {
+.upload-input {
+  padding-top: 70px;
   background-color: transparent;
   border: none;
+  width: 100%;
   border-bottom: 1px solid $color-athens-gray-dark-50;
-  width: 90%;
-  margin-right: 10px;
-  margin-left: 10px;
   font-size: 24px;
   color: $color-white;
   font-weight: lighter;
-  padding-bottom: 10px;
+}
+
+.signup-input {
+  padding-top: 48px;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  border-bottom: 1px solid $color-athens-gray-dark-50;
+  font-size: 24px;
+  color: $color-white;
+  font-weight: lighter;
 }
 
 .signup-input-review {
@@ -264,7 +293,7 @@
 
 .close-button {
   letter-spacing: 1px;
-  font-size: 14px;
+  font-size: 10px;
   opacity: 0.5;
 }
 
@@ -280,8 +309,8 @@
 }
 
 .upload-background-image {
-  height: 120px;
-  width: 120px;
+  height: 100px;
+  width: 100px;
   background-position: center;
   padding: 30px;
   background-color: $color-athens-gray-dark-50;
@@ -291,21 +320,6 @@
 
 .contain {
   background-size: contain;
-}
-
-.loading-background-image {
-  height: 120px;
-  width: 120px;
-  background-position: left 35px top 55px;
-  padding: 30px;
-  background-color: $color-athens-gray-dark-50;
-  border-radius: 50%;
-  background-repeat: no-repeat;
-}
-
-.change-avatar-button {
-  margin: 0 auto;
-  width: 30px;
 }
 
 .icon {
