@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import '../Signup.scss'
-import NewTogether from '../NewTogether'
+
 export default function SignupModal (props) {
   return <ReactCSSTransitionGroup
     transitionName='signup'
