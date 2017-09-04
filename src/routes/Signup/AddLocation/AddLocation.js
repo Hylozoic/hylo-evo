@@ -18,6 +18,12 @@ export default class AddLocation extends Component {
       location
     })
   }
+  setLocation = () => {
+    const { currentUser } = this.props
+    if (currentUser && currentUser.location) {
+      this.setState({location: currentUser.location})
+    }
+  }
   submit = () => {
     const location = this.state.location
     this.props.updateUserSettings({location})
@@ -31,6 +37,10 @@ export default class AddLocation extends Component {
   componentWillMount = () => {
     const { currentUser } = this.props
     if (currentUser && currentUser.settings.signupInProgress === 'false') this.props.goBack()
+  }
+
+  componentDidMount = () => {
+    this.setLocation()
   }
 
   render () {
@@ -55,6 +65,7 @@ export default class AddLocation extends Component {
                 this.props.goToNextStep()
               }
             }}
+            value={this.state.location}
             autoFocus
             placeholder={'Where do you call home?'}
           />
