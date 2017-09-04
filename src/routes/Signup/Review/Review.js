@@ -80,12 +80,12 @@ export default class AddLocation extends Component {
     const expanded = true
     const { currentUser, uploadImagePending } = this.props
     const skills = currentUser && currentUser.skills && currentUser.skills.toRefArray()
-    return <div styleName='wrapper'>
+    return <div styleName='flex-wrapper'>
       <LeftSidebar
         header='Everything looking good?'
         body='You can always come back and change your details at any time.'
       />
-      <div styleName='detail'>
+      <div styleName='new-component'>
         <span styleName='white-text step-count'>STEP 4/4</span>
         <br />
         <div styleName='center'>
@@ -100,7 +100,7 @@ export default class AddLocation extends Component {
           <div styleName='column-left'>YOUR NAME</div>
           <div styleName='column-center'>
             <input
-              styleName='signup-input'
+              styleName='signup-input review-input-text-size'
               onChange={(e) => this.handleInputChange(e, 'name')}
               onKeyPress={event => {
                 if (event.key === 'Enter') {

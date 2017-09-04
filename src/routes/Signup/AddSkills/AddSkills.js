@@ -47,17 +47,17 @@ export default class AddSkills extends Component {
     const { mySkills } = this.state
     const expanded = true
 
-    return <div styleName='wrapper'>
+    return <div styleName='flex-wrapper'>
       <LeftSidebar
         header='Add your location'
         body='Add your location to see more relevant content, and find people and projects around you.'
       />
-      <div styleName='detail'>
+      <div styleName='new-component'>
         <span styleName='white-text step-count'>STEP 3/4</span>
         <br />
-        <div styleName='center center-skills'>
+        <div styleName='center'>
           <input
-            styleName='signup-input center-text'
+            styleName='signup-input center-text signup-padding'
             autoFocus
             onChange={this.handleInputChange}
             placeholder={'How can you help?'}

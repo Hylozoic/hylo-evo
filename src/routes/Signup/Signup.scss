@@ -234,25 +234,8 @@
   width: 100%;
 }
 
-.center-skills {
-  position: absolute;
-  top: 25%;
-  width: 100%;
-}
-
 .center-text {
   text-align: center;
-}
-
-.signup-input {
-  padding-top: 70px;
-  background-color: transparent;
-  border: none;
-  width: 100%;
-  border-bottom: 1px solid $color-athens-gray-dark-50;
-  font-size: 24px;
-  color: $color-white;
-  font-weight: lighter;
 }
 
 .signup-input-review {
@@ -266,6 +249,23 @@
   color: $color-white;
   font-weight: lighter;
   padding-bottom: 10px;
+}
+
+.signup-padding {
+  padding-top: 70px;
+}
+
+.large-input-text {
+  font-size: 24px;
+}
+
+.signup-input {
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  border-bottom: 1px solid $color-athens-gray-dark-50;
+  color: $color-white;
+  font-weight: lighter;
 }
 
 .signup-input::placeholder {
@@ -319,8 +319,7 @@
 }
 
 .skills-cloud {
-  position: absolute;
-  top: 35%;
+
 }
 
 .my-skills-cloud {
@@ -343,10 +342,11 @@
 .skill {
   margin-right: 10px;
   color: $color-white;
-  padding: 4px 10px 4px 10px;
+  padding: 2px 12px 2px 12px;
   border-radius: 25px;
-  margin: 7px 5px 7px 5px;
+  margin: 2px;
   border: 1px solid $color-white;
+  font-size: 12.5px;
 }
 
 .skill:hover {
