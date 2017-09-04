@@ -5,8 +5,19 @@ import LeftSidebar from '../LeftSidebar'
 import '../Signup.scss'
 
 export default class AddSkills extends Component {
-  clickHandler = (label) => {
-    this.props.addSkill(label)
+  constructor () {
+    super()
+    this.state = {
+      mySkills: []
+    }
+  }
+  clickHandler = (skill) => {
+    const { mySkills } = this.state
+    mySkills.push(skill)
+    this.setState({
+      mySkills
+    })
+    this.props.addSkill(skill.name)
   }
 
   fetchSkillsFromList (currentUser) {
@@ -30,8 +41,7 @@ export default class AddSkills extends Component {
     this.props.fetchMemberSkills()
   }
   render () {
-    const { currentUser } = this.props
-    if (currentUser) console.log('addSkill props', this.props.currentUser.skills.toRefArray())
+    const { mySkills } = this.state
     return <div styleName='wrapper'>
       <LeftSidebar
         header='Add your location'
@@ -52,12 +62,14 @@ export default class AddSkills extends Component {
         <div styleName='skills-cloud'>
           {skills && <div styleName='skills'>
             {this.fetchSkillsFromList().map((skill, index) =>
-              <Pill key={index} label={skill.name} handler={this.clickHandler} />
+              <Pill key={index} skill={skill} handler={() => this.clickHandler(skill)} handlerArg={'name'} />
             )}
           </div>}
         </div>
         <div styleName='my-skills-cloud'>
-          <p>My skills</p>
+          {mySkills && mySkills.map((skill, index) =>
+            <Pill key={index} skill={skill} handler={this.props.removeSkill} handlerArg={'id'} />
+          )}
         </div>
         <div>
           <SignupModalFooter previous={this.previous} submit={this.submit} />
@@ -67,9 +79,9 @@ export default class AddSkills extends Component {
   }
 }
 
-export function Pill ({label, handler}) {
-  return <span styleName='skill' onClick={() => handler(label)}>
-    {label}
+export function Pill ({skill, handler, handlerArg}) {
+  return <span styleName='skill' onClick={() => handler(skill[handlerArg])}>
+    {skill.name}
   </span>
 }
 

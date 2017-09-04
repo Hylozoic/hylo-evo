@@ -3,6 +3,7 @@ import orm from 'store/models'
 
 export const ADD_SKILL = `ADD_SKILL`
 export const FETCH_MY_SKILLS = `FETCH_MY_SKILLS`
+export const REMOVE_SKILL = `REMOVE_SKILL`
 
 export function addSkill (skillName) {
   return {
@@ -21,6 +22,26 @@ export function addSkill (skillName) {
     meta: {
       optimistic: true,
       skillName
+    }
+  }
+}
+
+export function removeSkill (skillId) {
+  return {
+    type: REMOVE_SKILL,
+    graphql: {
+      query: `mutation ($id: ID) {
+        removeSkill(id: $id) {
+          success
+        }
+      }`,
+      variables: {
+        id: skillId
+      }
+    },
+    meta: {
+      optimistic: true,
+      skillId
     }
   }
 }
