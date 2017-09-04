@@ -6,7 +6,7 @@ import Button from 'components/Button'
 import Loading from 'components/Loading'
 const { object, func } = PropTypes
 
-export default class AccountSettings extends Component {
+export default class PasswordSettingsTab extends Component {
   static propTypes = {
     currentUser: object,
     updateUserSettings: func,

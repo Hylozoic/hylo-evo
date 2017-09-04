@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import SettingsControl from 'components/SettingsControl'
-import './AccountSettings.scss'
+import './AccountSettingsTab.scss'
 import Button from 'components/Button'
 import ChangeImageButton from 'components/ChangeImageButton'
 import Loading from 'components/Loading'
@@ -11,7 +11,7 @@ const { object, func } = PropTypes
 
 const twitterPrompt = () => window.prompt('Please enter your twitter name.')
 
-export default class AccountSettings extends Component {
+export default class AccountSettingsTab extends Component {
   static propTypes = {
     currentUser: object,
     updateUserSettings: func,

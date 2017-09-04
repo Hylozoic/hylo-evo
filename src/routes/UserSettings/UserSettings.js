@@ -1,8 +1,8 @@
 import React, { PropTypes, Component } from 'react'
 import './UserSettings.scss'
-import AccountSettings from './AccountSettings/AccountSettings'
-import CommunitySettings from './CommunitySettings/CommunitySettings'
-import NotificationSettings from './NotificationSettings/NotificationSettings'
+import AccountSettingsTab from './AccountSettingsTab/AccountSettingsTab'
+import CommunitySettingsTab from './CommunitySettingsTab/CommunitySettingsTab'
+import NotificationSettingsTab from './NotificationSettingsTab/NotificationSettingsTab'
 import PasswordSettingsTab from './PasswordSettingsTab/PasswordSettingsTab'
 const { object, func } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
@@ -34,7 +34,7 @@ export default class UserSettings extends Component {
         {
           name: 'Account',
           path: '/settings',
-          component: <AccountSettings
+          component: <AccountSettingsTab
             currentUser={currentUser}
             updateUserSettings={updateUserSettings}
             loginWithService={loginWithService}
@@ -44,7 +44,7 @@ export default class UserSettings extends Component {
         {
           name: 'Communities',
           path: '/settings/communities',
-          component: <CommunitySettings
+          component: <CommunitySettingsTab
             memberships={memberships}
             leaveCommunity={leaveCommunity}
             updateMembershipSettings={updateMembershipSettings} />
@@ -52,7 +52,7 @@ export default class UserSettings extends Component {
         {
           name: 'Notifications',
           path: '/settings/notifications',
-          component: <NotificationSettings
+          component: <NotificationSettingsTab
             currentUser={currentUser}
             updateUserSettings={updateUserSettings} />
         },
