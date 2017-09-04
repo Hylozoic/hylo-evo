@@ -49,22 +49,22 @@ export default class AddSkills extends Component {
 
     return <div styleName='flex-wrapper'>
       <LeftSidebar
-        header='Add your location'
-        body='Add your location to see more relevant content, and find people and projects around you.'
+        header='Share your unique super powers!'
+        body="What skills are you known for? The more skills you add, the more relevant the content. It's like magic."
       />
       <div styleName='new-component'>
         <span styleName='white-text step-count'>STEP 3/4</span>
         <br />
         <div styleName='center'>
           <input
-            styleName='signup-input center-text signup-padding'
+            styleName='signup-input center-text signup-padding large-input-text'
             autoFocus
             onChange={this.handleInputChange}
             placeholder={'How can you help?'}
             readOnly
           />
         </div>
-        <div styleName='skills-cloud'>
+        <div>
           {skills && <div styleName='skills'>
             {this.fetchSkillsFromList().map((skill, index) =>
               <Pill key={index} skill={skill} handler={() => this.clickHandler(skill)} handlerArg={'name'} />
@@ -103,11 +103,11 @@ const skills = [
   {name: 'Project Management'},
   {name: 'Photography'},
   {name: 'Facilitation'},
+  {name: 'Media'},
   {name: 'Community Organizing'},
   {name: 'Technology'},
   {name: 'Social Media'},
   {name: 'Event Planning'},
   {name: 'Education'},
-  {name: 'Media'},
   {name: 'Communications'}
 ]

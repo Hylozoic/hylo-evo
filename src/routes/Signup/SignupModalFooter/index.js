@@ -1,13 +1,12 @@
 import React from 'react'
-import Button from 'components/Button'
 import '../Signup.scss'
 
 export default function SignupModalFooter ({previous, submit, showPrevious = true}) {
   showPrevious = true
   return <div styleName='signup-modal-footer'>
     <div styleName='footer-buttons'>
-      {showPrevious && <Button styleName='previous-button' label='Previous' onClick={previous} />}
-      <Button styleName='continue-button' label='Continue' onClick={submit} />
+      {showPrevious && <span styleName='previous-button' onClick={previous}>Previous</span>}
+      <span styleName='continue-button' onClick={submit}>Continue</span>
     </div>
     <div styleName='press-enter'>or press Enter</div>
   </div>

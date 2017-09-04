@@ -67,7 +67,8 @@
 
 .footer-buttons {
   float: right;
-  margin-left: 110px;
+  margin-left: 200px;
+  margin-bottom: 10px;
 }
 
 .continue-button {
@@ -75,6 +76,8 @@
   background-color: $color-white;
   text-align: center;
   font-size: 14px;
+  padding: 6px 25px 6px 24px;
+  border-radius: 25px;
 }
 
 .continue-button:hover {
@@ -89,6 +92,8 @@
   text-align: center;
   font-size: 12px;
   margin-right: 20px;
+  padding: 4px 16px 4px 16px;
+  border-radius: 25px;
 }
 
 .previous-button:hover {
@@ -100,8 +105,8 @@
   font-size: 10px;
   color: $color-white;
   font-style: italic;
-  margin-left: 300px;
   margin-top: 5px;
+  margin-left: 322px;
 }
 
 .gray-text {
@@ -318,10 +323,6 @@
   color: $color-white;
 }
 
-.skills-cloud {
-
-}
-
 .my-skills-cloud {
   position: absolute;
   top: 70%;
@@ -400,15 +401,7 @@
   cursor: pointer;
 }
 
-.pill-container {
-  position: relative;
-}
-
 .expanded {
   height: auto;
-  max-height: 1000px;
-}
-
-.add-btn {
-  display: none;
+  max-height: 200px;
 }
