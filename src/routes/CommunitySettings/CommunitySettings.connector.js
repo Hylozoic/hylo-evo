@@ -3,16 +3,20 @@ import {
   fetchCommunitySettings, updateCommunitySettings
 } from './CommunitySettings.store'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getMe from 'store/selectors/getMe'
 import getParam from 'store/selectors/getParam'
 import { get } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
   const slug = getParam('slug', state, props, false)
   const community = getCommunityForCurrentRoute(state, props)
+  const currentUser = getMe(state, props)
+  const canModerate = currentUser.canModerate(community)
 
   return {
     community,
-    slug
+    slug,
+    canModerate
   }
 }
 

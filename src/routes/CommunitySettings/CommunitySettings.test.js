@@ -7,8 +7,15 @@ it('renders correctly with no community', () => {
   expect(wrapper).toMatchSnapshot()
 })
 
+it('renders a redirect if you can not moderate', () => {
+  const community = {id: 1, slug: 'foo', name: 'Foomunity'}
+  const wrapper = shallow(<CommunitySettings
+    community={community} />)
+  expect(wrapper).toMatchSnapshot()
+})
+
 it('renders correctly with a community', () => {
   const community = {id: 1, slug: 'foo', name: 'Foomunity'}
-  const wrapper = shallow(<CommunitySettings community={community} />)
+  const wrapper = shallow(<CommunitySettings community={community} canModerate />)
   expect(wrapper).toMatchSnapshot()
 })
