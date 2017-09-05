@@ -7,6 +7,6 @@ export default function SignupModalFooter ({previous, submit, continueText, show
       {showPrevious && <span styleName='previous-button' onClick={previous}>Previous</span>}
       <span styleName='continue-button' onClick={submit}>{continueText}</span>
     </div>
-    <div styleName='press-enter'>or press Enter</div>
+    <div styleName='press-enter text-opacity'>or press Enter</div>
   </div>
 }
