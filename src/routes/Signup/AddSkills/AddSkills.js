@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import { get } from 'lodash/fp'
-import { map } from 'lodash'
-import cx from 'classnames'
 import SignupModalFooter from '../SignupModalFooter'
 import LeftSidebar from '../LeftSidebar'
-import Pillbox from 'components/Pillbox'
 
 import '../Signup.scss'
 
@@ -24,8 +21,14 @@ export default class AddSkills extends Component {
     this.props.addSkill(skill.name)
   }
 
-  fetchSkillsFromList (currentUser) {
-    return skills
+  fetchSkillsFromList = () => {
+    const { currentUser } = this.props
+    console.log('componentDidMount currentUser', this.props.currentUser)
+    if (currentUser && currentUser.skills) {
+      console.log(currentUser.skills.toRefArray())
+      return currentUser.skills.toRefArray()
+    }
+    return this.state.mySkills
   }
 
   submit = () => {
@@ -45,9 +48,6 @@ export default class AddSkills extends Component {
     this.props.fetchMySkills()
   }
   render () {
-    const { mySkills } = this.state
-    const expanded = true
-
     return <div styleName='flex-wrapper'>
       <LeftSidebar
         header='Share your unique super powers!'
@@ -67,21 +67,16 @@ export default class AddSkills extends Component {
         </div>
         <div>
           {skills && <div styleName='skills'>
-            {this.fetchSkillsFromList().map((skill, index) =>
+            {skills.map((skill, index) =>
               <Pill key={index} skill={skill} handler={() => this.clickHandler(skill)} handlerArg={'name'} />
             )}
           </div>}
         </div>
         <div>
-          <div
-            styleName={cx('pill-container', {expanded, collapsed: !expanded})}>
-            <Pillbox
-              pills={map(mySkills, skill => ({...skill, label: skill.name}))}
-              editable={false}
-              addLabel='Add a Skill'
-              placeholder={null}
-              suggestions={null}
-            />
+          <div styleName='skills'>
+            {this.fetchSkillsFromList().map((skill, index) =>
+              <Pill key={index} skill={skill} handler={() => this.clickHandler(skill)} handlerArg={'name'} />
+            )}
           </div>
         </div>
         <div>
