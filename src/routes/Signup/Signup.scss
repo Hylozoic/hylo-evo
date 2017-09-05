@@ -67,7 +67,6 @@
 
 .footer-buttons {
   float: right;
-  margin-left: 200px;
   margin-bottom: 10px;
 }
 
@@ -76,8 +75,9 @@
   background-color: $color-white;
   text-align: center;
   font-size: 14px;
-  padding: 6px 25px 6px 24px;
+  padding: 6px 30px 6px 30px;
   border-radius: 25px;
+  max-width: 10px;
 }
 
 .continue-button:hover {
@@ -106,7 +106,7 @@
   color: $color-white;
   font-style: italic;
   margin-top: 5px;
-  margin-left: 322px;
+  margin-left: 340px;
 }
 
 .gray-text {

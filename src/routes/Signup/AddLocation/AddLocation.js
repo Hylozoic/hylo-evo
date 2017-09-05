@@ -71,7 +71,7 @@ export default class AddLocation extends Component {
           />
         </div>
         <div>
-          <SignupModalFooter submit={this.submit} previous={this.previous} continueText={'Onwards!'} />
+          <SignupModalFooter submit={this.submit} previous={this.previous} continueText={'One Last Step'} />
         </div>
       </div>
     </div>
