@@ -34,7 +34,7 @@ exports[`AddLocation renders correctly 1`] = `
     >
       <input
         autoFocus={true}
-        data-styleName="signup-input signup-padding large-input-text"
+        data-styleName="signup-input signup-padding large-input-text gray-bottom-border"
         onChange={[Function]}
         onKeyPress={[Function]}
         placeholder="Where do you call home?"
