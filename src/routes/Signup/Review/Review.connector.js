@@ -1,9 +1,8 @@
 import { connect } from 'react-redux'
 import { push, goBack } from 'react-router-redux'
 import getMe from 'store/selectors/getMe'
-import { updateUserSettings } from 'store/actions/updateUserSettings'
 import { UPLOAD_IMAGE } from 'store/constants'
-import { fetchMySkills} from './Review.store'
+import { fetchMySkills, updateUserSettings } from './Review.store'
 
 export function mapStateToProps (state, props) {
   const uploadImagePending = state.pending[UPLOAD_IMAGE]
@@ -15,7 +14,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    updateUserSettings: () => dispatch(updateUserSettings()),
+    updateUserSettings: (changes) => dispatch(updateUserSettings(changes)),
     goToNextStep: () => dispatch(push('/')),
     goToPreviousStep: () => dispatch(push('/signup/add-skills')),
     goBack: () => dispatch(goBack()),

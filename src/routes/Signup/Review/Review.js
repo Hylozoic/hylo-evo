@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { map } from 'lodash'
-import cx from 'classnames'
+import { get } from 'lodash/fp'
 import LeftSidebar from '../LeftSidebar'
 import SignupModalFooter from '../SignupModalFooter'
 import UploadImageSection from '../UploadImageSection'
-import Pillbox from 'components/Pillbox'
 
 import '../Signup.scss'
 
@@ -15,13 +13,11 @@ export default class AddLocation extends Component {
       edits: {
         name: null,
         email: null,
-        password: null,
         location: null
       },
       readOnly: {
         name: true,
         email: true,
-        password: true,
         location: true
       }
     }
@@ -45,8 +41,12 @@ export default class AddLocation extends Component {
     })
   }
   submit = () => {
-    const location = this.state.location
-    this.props.updateUserSettings({location})
+    const { edits } = this.state
+    Object.keys(edits).forEach((key) => (edits[key] == null) && delete edits[key])
+    console.log('Review edits 1', edits)
+    const changes = Object.assign(edits, {settings: {signupInProgress: false}})
+    console.log('Review changes', changes)
+    this.props.updateUserSettings({changes})
     this.props.goToNextStep()
   }
 
@@ -73,6 +73,10 @@ export default class AddLocation extends Component {
 
   componentDidMount = () => {
     this.props.fetchMySkills()
+  }
+
+  getValue = (field) => {
+    return this.state.edits[field] || get(field, this.props.currentUser)
   }
 
   render () {
@@ -110,7 +114,7 @@ export default class AddLocation extends Component {
                   }
                 }}
                 autoFocus
-                value={this.state.edits.name || currentUser && currentUser.name}
+                value={this.getValue('name')}
                 readOnly={this.state.readOnly.name}
               />
             </div>
@@ -133,7 +137,7 @@ export default class AddLocation extends Component {
                   }
                 }}
                 autoFocus
-                value={this.state.edits.email || currentUser && currentUser.email}
+                value={this.getValue('email')}
                 readOnly={this.state.readOnly.email}
               />
             </div>
@@ -156,7 +160,7 @@ export default class AddLocation extends Component {
                   }
                 }}
                 autoFocus
-                value={this.state.edits.location || currentUser && currentUser.location}
+                value={this.getValue('location')}
                 readOnly={this.state.readOnly.location}
               />
             </div>
