@@ -5,7 +5,7 @@ export function resetPassword (email) {
   return {
     type: RESET_PASSWORD,
     payload: {
-      api: {method: 'post', path: '/noo/user/password', params: {email}}
+      api: {method: 'post', path: '/noo/user/password', params: {email, evo: true}}
     }
   }
 }
