@@ -15,7 +15,6 @@ export default function UploadImage ({avatarUrl, currentUser, updateSettingDirec
 }
 
 export function uploadAvatar (currentUser, loading, avatarUrl) {
-  loading = true
   let imageUrl = cameraSvg
   let styleName = 'upload-background-image'
 
