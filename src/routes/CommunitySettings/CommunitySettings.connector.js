@@ -12,7 +12,6 @@ export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
   const currentUser = getMe(state, props)
   const canModerate = currentUser.canModerate(community)
-  console.log('currentUser', currentUser)
 
   return {
     community,
