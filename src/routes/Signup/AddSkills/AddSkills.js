@@ -21,14 +21,23 @@ export default class AddSkills extends Component {
     this.props.addSkill(skill.name)
   }
 
-  fetchSkillsFromList = () => {
-    const { currentUser } = this.props
-    console.log('componentDidMount currentUser', this.props.currentUser)
-    if (currentUser && currentUser.skills) {
-      console.log(currentUser.skills.toRefArray())
-      return currentUser.skills.toRefArray()
-    }
+  getAddedSkills = () => {
+    // const { currentUser } = this.props
+    // if (currentUser && currentUser.skills) {
+    //   return currentUser.skills.toRefArray()
+    // }
     return this.state.mySkills
+  }
+
+  getRemainingSkills = () => {
+    const addedSkills = []
+    for (let index in this.state.mySkills) {
+      const skill = this.state.mySkills[index]
+      addedSkills.push(skill.name)
+    }
+    return skills.filter(function (skill) {
+      return (addedSkills.indexOf(skill.name) === -1)
+    })
   }
 
   submit = () => {
@@ -67,14 +76,14 @@ export default class AddSkills extends Component {
         </div>
         <div>
           {skills && <div styleName='skills'>
-            {skills.map((skill, index) =>
+            {this.getRemainingSkills().map((skill, index) =>
               <Pill key={index} skill={skill} handler={() => this.clickHandler(skill)} handlerArg={'name'} />
             )}
           </div>}
         </div>
         <div>
           <div styleName='skills'>
-            {this.fetchSkillsFromList().map((skill, index) =>
+            {this.getAddedSkills().map((skill, index) =>
               <Pill key={index} skill={skill} handler={() => this.clickHandler(skill)} handlerArg={'name'} />
             )}
           </div>
