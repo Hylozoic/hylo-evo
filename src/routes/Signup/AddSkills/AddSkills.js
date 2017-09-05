@@ -52,7 +52,7 @@ export default class AddSkills extends Component {
         header='Share your unique super powers!'
         body="What skills are you known for? The more skills you add, the more relevant the content. It's like magic."
       />
-      <div styleName='new-component'>
+      <div styleName='right-panel'>
         <span styleName='white-text step-count'>STEP 3/4</span>
         <br />
         <div styleName='center'>
@@ -71,7 +71,7 @@ export default class AddSkills extends Component {
             )}
           </div>}
         </div>
-        <div styleName='my-skills-cloud'>
+        <div>
           <div
             styleName={cx('pill-container', {expanded, collapsed: !expanded})}>
             <Pillbox

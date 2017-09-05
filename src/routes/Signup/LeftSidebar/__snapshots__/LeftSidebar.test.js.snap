@@ -16,7 +16,7 @@ exports[`CreateCommunity renders correctly 1`] = `
     header text
   </p>
   <p
-    data-styleName="gray-text"
+    data-styleName="gray-text sidebar-text"
   >
     body text
   </p>

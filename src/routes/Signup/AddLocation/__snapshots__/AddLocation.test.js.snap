@@ -2,19 +2,19 @@
 
 exports[`AddLocation renders correctly 1`] = `
 <div
-  data-styleName="wrapper"
+  data-styleName="flex-wrapper"
 >
   <Connect(LeftSidebar)
     body="Add your location to see more relevant content, and find people and projects around you."
     header="Add your location"
   />
   <div
-    data-styleName="detail"
+    data-styleName="right-panel"
   >
     <span
       data-styleName="white-text step-count"
     >
-      STEP 1/4
+      STEP 2/4
     </span>
     <br />
     <div
@@ -30,33 +30,23 @@ exports[`AddLocation renders correctly 1`] = `
       />
     </div>
     <div
-      data-styleName="center center-vertical"
+      data-styleName="center"
     >
       <input
         autoFocus={true}
-        data-styleName="signup-input"
+        data-styleName="signup-input signup-padding large-input-text"
         onChange={[Function]}
         onKeyPress={[Function]}
         placeholder="Where do you call home?"
+        value=""
       />
     </div>
     <div>
-      <div
-        data-styleName="float-right bottom"
-      >
-        <div>
-          <Button
-            data-styleName="continue-button"
-            label="Continue"
-            onClick={[Function]}
-          />
-        </div>
-        <div
-          data-styleName="instruction"
-        >
-          or press Enter
-        </div>
-      </div>
+      <SignupModalFooter
+        continueText="One Last Step"
+        previous={[Function]}
+        submit={[Function]}
+      />
     </div>
   </div>
 </div>

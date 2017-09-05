@@ -7,7 +7,7 @@
   border-radius: $space-1x;
 }
 
-.new-sidebar {
+.sidebar {
   min-height: 1px; // Prevent collapsing
   height: 100%;
   flex: 0.3;
@@ -16,7 +16,7 @@
   margin-right: 30px;
 }
 
-.new-component {
+.right-panel {
   min-height: 1px; // Prevent collapsing
   height: 500px;
   flex: 0.7;
@@ -125,38 +125,6 @@
   background-repeat: no-repeat;
 }
 
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  min-width: $signup-modal-width;
-  min-height: 600px;
-  list-style: none;
-  border: solid 1px rgb(0,0,0);
-  border-radius: $space-1x;
-  border: 1px solid $color-cape-cod-10;
-  background: $color-white;
-  padding-top: 30px;
-}
-
-.sidebar {
-  // From Bootstrap make-col-ready():
-  min-height: 1px; // Prevent collapsing
-  height: 100%;
-  max-width: 33%;
-  right: 0px;
-  padding: 0 32px 0 32px;
-  overflow-y: auto;
-  display: inline;
-  float: left;
-}
-
-.detail {
-  float:right;
-  background-color: $color-caribbean-green;
-  display: inline;
-  max-width: 67%;
-}
-
 .white-text {
   color: $color-white
 }
@@ -213,36 +181,6 @@
 }
 
 
-.one {
-  position: absolute;
-  top: 34%;
-  width: 100%;
-}
-
-.two {
-  position: absolute;
-  top: 42%;
-  width: 100%;
-}
-
-.three {
-  position: absolute;
-  top: 50.5%;
-  width: 100%;
-}
-
-.four {
-  position: absolute;
-  top: 59%;
-  width: 100%;
-}
-
-.five {
-  position: absolute;
-  top: 67.5%;
-  width: 100%;
-}
-
 .center-text {
   text-align: center;
 }
@@ -285,25 +223,10 @@
     outline: none;
 }
 
-.alert {
-  display: block;
-}
-
 .close-button {
   letter-spacing: 1px;
   font-size: 10px;
   opacity: 0.5;
-}
-
-.avatar {
-  display: flex;
-  align-items: flex-end;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  background-position: center;
-  background-size: cover;
-  margin: -70px auto $space-8x auto;
 }
 
 .upload-background-image {
@@ -327,14 +250,6 @@
   color: $color-white;
 }
 
-.my-skills-cloud {
-  position: absolute;
-  top: 70%;
-  display:block;
-}
-
-.my-skills-input {
-}
 
 .skills {
   margin-top: 16px;
@@ -359,15 +274,41 @@
   color: $color-caribbean-green;
 }
 
-.inline-buttons {
-  display: inline;
-  margin-left: 30px;
+.expanded {
+  height: auto;
+  max-height: 200px;
 }
 
-.round {
-  border-radius: 50%;
-  margin: 0px auto $space-8x auto;
+.one {
+  position: absolute;
+  top: 34%;
+  width: 100%;
 }
+
+.two {
+  position: absolute;
+  top: 42%;
+  width: 100%;
+}
+
+.three {
+  position: absolute;
+  top: 50.5%;
+  width: 100%;
+}
+
+.four {
+  position: absolute;
+  top: 59%;
+  width: 100%;
+}
+
+.five {
+  position: absolute;
+  top: 67.5%;
+  width: 100%;
+}
+
 
 .column-left {
   float: left;
@@ -403,9 +344,4 @@
   float: right;
   color: $color-white;
   cursor: pointer;
-}
-
-.expanded {
-  height: auto;
-  max-height: 200px;
 }

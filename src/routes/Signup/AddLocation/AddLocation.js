@@ -49,7 +49,7 @@ export default class AddLocation extends Component {
         header='Add your location'
         body='Add your location to see more relevant content, and find people and projects around you.'
       />
-      <div styleName='new-component'>
+      <div styleName='right-panel'>
         <span styleName='white-text step-count'>STEP 2/4</span>
         <br />
         <div styleName='center'>

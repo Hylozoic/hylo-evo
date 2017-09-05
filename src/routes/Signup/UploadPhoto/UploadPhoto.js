@@ -46,7 +46,7 @@ export default class UploadPhoto extends Component {
         header="Let's complete your profile!"
         body={`Welcome to Hylo, ${currentUser.name}. It only takes a couple seconds to complete your profile. Let's get started!`}
       />
-      <div styleName='new-component'>
+      <div styleName='right-panel'>
         <span styleName='white-text step-count'>STEP 1/4</span>
         <br />
         <div styleName='center'>
