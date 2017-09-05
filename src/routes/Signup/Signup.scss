@@ -109,10 +109,6 @@
   margin-left: 340px;
 }
 
-.gray-text {
-  color: $color-dove-gray-75;
-}
-
 .sidebar-text {
   font-size: 14px;
   font-weight: lighter;
@@ -285,42 +281,12 @@
   max-height: 200px;
 }
 
-.column-input-label {
+.text-opacity {
   opacity: 0.7;
 }
 
 .final-edit {
   margin-top: 20px;
-}
-
-.one {
-  position: absolute;
-  top: 34%;
-  width: 100%;
-}
-
-.two {
-  position: absolute;
-  top: 42%;
-  width: 100%;
-}
-
-.three {
-  position: absolute;
-  top: 50.5%;
-  width: 100%;
-}
-
-.four {
-  position: absolute;
-  top: 59%;
-  width: 100%;
-}
-
-.five {
-  position: absolute;
-  top: 67.5%;
-  width: 100%;
 }
 
 .left-input-column {
@@ -329,14 +295,13 @@
   font-size: 10px;
   color: $color-white;
   margin-top: 5px;
-  margin-left: -22px;
 }
 .right-input-column {
   float: right;
   width: 22.5%;
   margin-top: 3px;
-  margin-right: -22px;
 }
+
 .center-input-column {
   display:
   inline-block;
@@ -346,6 +311,7 @@
 .three-column-input {
   margin-left: 5%;
   width: 90%;
+  margin-bottom: 8px;
 }
 
 .show-button {
@@ -359,4 +325,8 @@
   color: $color-white;
   cursor: pointer;
   font-size: 14px;
+}
+
+.gray-text {
+  color: $color-dove-gray-75;
 }

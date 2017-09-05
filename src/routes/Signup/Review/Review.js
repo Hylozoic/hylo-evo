@@ -94,10 +94,10 @@ export default class AddLocation extends Component {
             loading={uploadImagePending}
           />}
         </div>
-        <div styleName='final-edit gray-bottom-border'>
-          <div styleName='three-column-input'>
+        <div styleName='final-edit'>
+          <div styleName='three-column-input gray-bottom-border'>
             <div styleName='left-input-column'>
-              <span styleName='column-input-label'>YOUR NAME</span>
+              <span styleName='text-opacity'>YOUR NAME</span>
             </div>
             <div styleName='center-input-column'>
               <input
@@ -115,7 +115,53 @@ export default class AddLocation extends Component {
               />
             </div>
             <div styleName='right-input-column'>
-              <span styleName='edit-button' onClick={() => this.makeEditable('name')}>Edit</span>
+              <span styleName='edit-button text-opacity' onClick={() => this.makeEditable('name')}>Edit</span>
+            </div>
+          </div>
+          <div styleName='three-column-input gray-bottom-border'>
+            <div styleName='left-input-column'>
+              <span styleName='text-opacity'>YOUR EMAIL</span>
+            </div>
+            <div styleName='center-input-column'>
+              <input
+                styleName='signup-input review-input-padding'
+                onChange={(e) => this.handleInputChange(e, 'email')}
+                onKeyPress={event => {
+                  if (event.key === 'Enter') {
+                    this.submit()
+                    this.props.goToNextStep()
+                  }
+                }}
+                autoFocus
+                value={this.state.edits.email || currentUser && currentUser.email}
+                readOnly={this.state.readOnly.email}
+              />
+            </div>
+            <div styleName='right-input-column'>
+              <span styleName='edit-button text-opacity' onClick={() => this.makeEditable('email')}>Edit</span>
+            </div>
+          </div>
+          <div styleName='three-column-input gray-bottom-border'>
+            <div styleName='left-input-column'>
+              <span styleName='text-opacity'>LOCATION</span>
+            </div>
+            <div styleName='center-input-column'>
+              <input
+                styleName='signup-input review-input-padding'
+                onChange={(e) => this.handleInputChange(e, 'location')}
+                onKeyPress={event => {
+                  if (event.key === 'Enter') {
+                    this.submit()
+                    this.props.goToNextStep()
+                  }
+                }}
+                autoFocus
+                value={this.state.edits.location || currentUser && currentUser.location}
+                readOnly={this.state.readOnly.location}
+              />
+            </div>
+            <div styleName='right-input-column'>
+              <span styleName='edit-button text-opacity' onClick={() => this.makeEditable('email')}>Edit</span>
             </div>
           </div>
         </div>
