@@ -14,7 +14,7 @@ export default class Comment extends Component {
   }
 
   render () {
-    const { comment, slug } = this.props
+    const { comment, slug, deleteComment } = this.props
     const { creator, createdAt, text } = comment
     const profileUrl = personUrl(creator.id, slug)
 
@@ -28,9 +28,9 @@ export default class Comment extends Component {
           <span styleName='timestamp'>
             {humanDate(createdAt)}
           </span>
-          <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={[
-            {icon: 'Trash', label: 'Delete', onClick: () => console.log('Delete')}
-          ]} />
+          {deleteComment && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={[
+            {icon: 'Trash', label: 'Delete', onClick: deleteComment}
+          ]} />}
         </div>
       </div>
       <div id='text' styleName='text' dangerouslySetInnerHTML={{__html: presentedText}} />

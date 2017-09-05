@@ -45,6 +45,9 @@ import {
   REINVITE_ALL_PENDING,
   EXPIRE_INVITATION_PENDING
 } from 'routes/CommunitySettings/InviteSettingsTab/InviteSettingsTab.store'
+import {
+  DELETE_COMMENT_PENDING
+} from 'routes/PostDetail/Comments/Comment/Comment.store.js'
 
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
@@ -295,7 +298,6 @@ export default function ormReducer (state = {}, action) {
 
     case RESEND_INVITATION_PENDING:
       invite = Invitation.withId(meta.invitationId)
-      console.log('invite', invite)
       if (!invite) break
       invite.update({resent: true, last_sent_at: new Date()})
       break
@@ -308,6 +310,12 @@ export default function ormReducer (state = {}, action) {
     case REINVITE_ALL_PENDING:
       community = Community.withId(meta.communityId)
       community.pendingInvitations.update({resent: true, last_sent_at: new Date()})
+      break
+
+    case DELETE_COMMENT_PENDING:
+      const comment = Comment.withId(meta.id)
+      console.log('comment', comment)
+      comment.delete()
       break
   }
 
