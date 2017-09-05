@@ -26,7 +26,7 @@ import {
 } from 'routes/CommunitySettings/CommunitySettings.store'
 import {
   DELETE_COMMENT_PENDING
-} from 'routes/PostDetail/Comments/Comment/Comment.store.js'
+} from 'routes/PostDetail/Comments/Comment/Comment.store'
 import deep from 'deep-diff'
 
 it('responds to EXTRACT_MODEL', () => {
