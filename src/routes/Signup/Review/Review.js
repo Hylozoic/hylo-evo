@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { get } from 'lodash/fp'
-import { isEmpty } from 'lodash'
 import LeftSidebar from '../LeftSidebar'
 import SignupModalFooter from '../SignupModalFooter'
 import UploadImageSection from '../UploadImageSection'
@@ -171,7 +170,7 @@ export default class AddLocation extends Component {
             <div styleName='left-input-column'>
               <span styleName='text-opacity'>SKILLS</span>
             </div>
-            <div styleName='center-input-column'>
+            <div styleName='center-input-column-scrollable'>
               {this.props.skills.map((skill, index) =>
                 <div>
                   <Pill key={index} skill={skill} handlerArg={'name'} />
@@ -192,7 +191,7 @@ export default class AddLocation extends Component {
 }
 
 export function Pill ({skill}) {
-  return <span styleName='skill'>
+  return <span styleName='review-skill'>
     {skill.name}
   </span>
 }

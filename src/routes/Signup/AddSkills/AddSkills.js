@@ -59,7 +59,7 @@ export default class AddSkills extends Component {
         <div>
           {skills && <div styleName='skills'>
             {this.getRemainingSkills().map((skill, index) =>
-              <Pill key={index} skill={skill} handler={() => this.clickHandler(skill)} handlerArg={'name'} />
+              <Pill key={index} skill={skill} clickHandler={() => this.props.addSkill(skill.name)} />
             )}
           </div>}
         </div>
@@ -68,7 +68,7 @@ export default class AddSkills extends Component {
             <div styleName='your-skills-label'><span>Your Skills:</span></div>
             <div styleName='your-skills-list'>
               {this.props.skills.map((skill, index) =>
-                <Pill key={index} skill={skill} handler={() => this.clickHandler(skill)} handlerArg={'name'} />
+                <Pill key={index} skill={skill} clickHandler={() => this.props.removeSkill(skill.id)} />
               )}
             </div>
           </div>}
@@ -81,8 +81,8 @@ export default class AddSkills extends Component {
   }
 }
 
-export function Pill ({skill, handler, handlerArg}) {
-  return <span styleName='skill' onClick={() => handler(skill[handlerArg])}>
+export function Pill ({skill, clickHandler}) {
+  return <span styleName='skill' onClick={clickHandler}>
     {skill.name}
   </span>
 }

@@ -40,7 +40,8 @@ import {
   UPDATE_COMMUNITY_SETTINGS_PENDING
 } from 'routes/CommunitySettings/CommunitySettings.store'
 import {
-  SIGNUP_ADD_SKILL
+  SIGNUP_ADD_SKILL,
+  SIGNUP_REMOVE_SKILL_PENDING
 } from 'routes/Signup/AddSkills/AddSkills.store'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
@@ -269,11 +270,17 @@ export default function ormReducer (state = {}, action) {
       person.skills.remove(meta.skillId)
       break
 
+    case SIGNUP_REMOVE_SKILL_PENDING:
+      me = Me.withId(Me.first().id)
+      me.skills.remove(meta.skillId)
+      break
+
     case ADD_SKILL:
       const skill = payload.data.addSkill
       person = Person.withId(Me.first().id)
       person.updateAppending({skills: [Skill.create(skill)]})
       break
+
     case SIGNUP_ADD_SKILL:
       const mySkill = payload.data.addSkill
       me = Me.withId(Me.first().id)

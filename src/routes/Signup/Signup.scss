@@ -280,6 +280,18 @@
 .skill:hover {
   background-color: $color-white;
   color: $color-caribbean-green;
+  cursor: pointer;
+}
+
+.review-skill {
+  margin-right: 10px;
+  color: $color-white;
+  padding: 2px 12px 2px 12px;
+  border-radius: 25px;
+  margin: 2px;
+  border: 1px solid $color-white;
+  font-size: 12.5px;
+  cursor: default;
 }
 
 .your-skills-label {
@@ -333,6 +345,14 @@
   display:
   inline-block;
   width: 45%;
+}
+
+.center-input-column-scrollable {
+  display:
+  inline-block;
+  width: 45%;
+  max-height: 125px;
+  overflow: scroll;
 }
 
 .three-column-input {
