@@ -16,7 +16,7 @@
   margin-right: 30px;
 }
 
-.right-panel {
+.panel {
   min-height: 1px; // Prevent collapsing
   height: 500px;
   flex: 0.7;
@@ -350,9 +350,10 @@
 .center-input-column-scrollable {
   display:
   inline-block;
-  width: 45%;
+  width: 55%;
   max-height: 125px;
-  overflow: scroll;
+  overflow-y: scroll;
+  padding-right: -100px;
 }
 
 .three-column-input {

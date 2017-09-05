@@ -9,7 +9,7 @@ exports[`AddLocation renders correctly 1`] = `
     header="Add your location"
   />
   <div
-    data-styleName="right-panel"
+    data-styleName="panel"
   >
     <span
       data-styleName="white-text step-count"

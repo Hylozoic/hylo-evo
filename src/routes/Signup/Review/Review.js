@@ -85,7 +85,7 @@ export default class AddLocation extends Component {
         header='Everything looking good?'
         body='You can always come back and change your details at any time.'
       />
-      <div styleName='right-panel'>
+      <div styleName='panel'>
         <span styleName='white-text step-count'>STEP 4/4</span>
         <br />
         <div styleName='center'>

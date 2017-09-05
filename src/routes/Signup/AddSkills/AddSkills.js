@@ -44,7 +44,7 @@ export default class AddSkills extends Component {
         header='Share your unique super powers!'
         body="What skills are you known for? The more skills you add, the more relevant the content. It's like magic."
       />
-      <div styleName='right-panel'>
+      <div styleName='panel'>
         <span styleName='white-text step-count'>STEP 3/4</span>
         <br />
         <div styleName='center'>
