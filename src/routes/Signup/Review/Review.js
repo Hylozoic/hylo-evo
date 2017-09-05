@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { get } from 'lodash/fp'
+import { isEmpty } from 'lodash'
 import LeftSidebar from '../LeftSidebar'
 import SignupModalFooter from '../SignupModalFooter'
 import UploadImageSection from '../UploadImageSection'
@@ -164,6 +165,21 @@ export default class AddLocation extends Component {
             </div>
             <div styleName='right-input-column'>
               <span styleName='edit-button text-opacity' onClick={() => this.makeEditable('email')}>Edit</span>
+            </div>
+          </div>
+          <div styleName='three-column-input gray-bottom-border'>
+            <div styleName='left-input-column'>
+              <span styleName='text-opacity'>SKILLS</span>
+            </div>
+            <div styleName='center-input-column'>
+              {this.props.skills.map((skill, index) =>
+                <div>
+                  <Pill key={index} skill={skill} handlerArg={'name'} />
+                </div>
+              )}
+            </div>
+            <div styleName='right-input-column'>
+              <span styleName='edit-button text-opacity' onClick={this.props.goBack}>Edit</span>
             </div>
           </div>
         </div>

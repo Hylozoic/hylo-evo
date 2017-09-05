@@ -64,7 +64,7 @@ export default class AddSkills extends Component {
           </div>}
         </div>
         <div>
-          { !isEmpty(this.props.skills) && <div styleName='your-skills'>
+          {!isEmpty(this.props.skills) && <div styleName='your-skills'>
             <div styleName='your-skills-label'><span>Your Skills:</span></div>
             <div styleName='your-skills-list'>
               {this.props.skills.map((skill, index) =>
