@@ -1,6 +1,6 @@
-import { mapDispatchToProps, mapStateToProps } from './AddLocation.connector'
+import { mapDispatchToProps, mapStateToProps } from './Review.connector'
 
-describe('AddLocation.connector', () => {
+describe('Review.connector', () => {
   it('should match latest snapshot for mapDispatchToProps', () => {
     expect(mapDispatchToProps).toMatchSnapshot()
   })

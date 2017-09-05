@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddSkills.connector should match latest snapshot for mapDispatchToProps 1`] = `[Function]`;
+
+exports[`AddSkills.connector should match latest snapshot for mapStateToProps 1`] = `[Function]`;

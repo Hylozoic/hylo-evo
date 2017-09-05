@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mapDispatchToProps should match latest snapshot for updateUserSettings 1`] = `[Function]`;
+exports[`LeftSidebar should have match latest snapshot for mapDispatchToProps 1`] = `[Function]`;
+
+exports[`LeftSidebar should have match latest snapshot for mapStateToProps 1`] = `[Function]`;

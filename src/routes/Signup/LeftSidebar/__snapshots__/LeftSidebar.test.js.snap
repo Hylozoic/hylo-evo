@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CreateCommunity renders correctly 1`] = `
+exports[`LeftSidebar renders correctly 1`] = `
 <div
   data-styleName="sidebar"
 >

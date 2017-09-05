@@ -1,7 +1,11 @@
-import { mapDispatchToProps } from './LeftSidebar.connector'
+import { mapDispatchToProps, mapStateToProps } from './LeftSidebar.connector'
 
-describe('mapDispatchToProps', () => {
-  it('should match latest snapshot for updateUserSettings', () => {
+describe('LeftSidebar', () => {
+  it('should have match latest snapshot for mapDispatchToProps', () => {
     expect(mapDispatchToProps).toMatchSnapshot()
+  })
+
+  it('should have match latest snapshot for mapStateToProps', () => {
+    expect(mapStateToProps).toMatchSnapshot()
   })
 })

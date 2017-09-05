@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Review renders correctly 1`] = `
+<div
+  data-styleName="flex-wrapper"
+>
+  <Connect(LeftSidebar)
+    body="You can always come back and change your details at any time."
+    header="Everything looking good?"
+  />
+  <div
+    data-styleName="panel"
+  >
+    <span
+      data-styleName="white-text step-count"
+    >
+      STEP 4/4
+    </span>
+    <br />
+    <div
+      data-styleName="center"
+    />
+    <div
+      data-styleName="final-edit"
+    >
+      <div
+        data-styleName="three-column-input gray-bottom-border"
+      >
+        <div
+          data-styleName="left-input-column"
+        >
+          <span
+            data-styleName="text-opacity"
+          >
+            YOUR NAME
+          </span>
+        </div>
+        <div
+          data-styleName="center-input-column"
+        >
+          <input
+            autoFocus={true}
+            data-styleName="signup-input review-input-padding"
+            onChange={[Function]}
+            onKeyPress={[Function]}
+            readOnly={true}
+          />
+        </div>
+        <div
+          data-styleName="right-input-column"
+        >
+          <span
+            data-styleName="edit-button text-opacity"
+            onClick={[Function]}
+          >
+            Edit
+          </span>
+        </div>
+      </div>
+      <div
+        data-styleName="three-column-input gray-bottom-border"
+      >
+        <div
+          data-styleName="left-input-column"
+        >
+          <span
+            data-styleName="text-opacity"
+          >
+            YOUR EMAIL
+          </span>
+        </div>
+        <div
+          data-styleName="center-input-column"
+        >
+          <input
+            autoFocus={true}
+            data-styleName="signup-input review-input-padding"
+            onChange={[Function]}
+            onKeyPress={[Function]}
+            readOnly={true}
+          />
+        </div>
+        <div
+          data-styleName="right-input-column"
+        >
+          <span
+            data-styleName="edit-button text-opacity"
+            onClick={[Function]}
+          >
+            Edit
+          </span>
+        </div>
+      </div>
+      <div
+        data-styleName="three-column-input gray-bottom-border"
+      >
+        <div
+          data-styleName="left-input-column"
+        >
+          <span
+            data-styleName="text-opacity"
+          >
+            LOCATION
+          </span>
+        </div>
+        <div
+          data-styleName="center-input-column"
+        >
+          <input
+            autoFocus={true}
+            data-styleName="signup-input review-input-padding"
+            onChange={[Function]}
+            onKeyPress={[Function]}
+            readOnly={true}
+          />
+        </div>
+        <div
+          data-styleName="right-input-column"
+        >
+          <span
+            data-styleName="edit-button text-opacity"
+            onClick={[Function]}
+          >
+            Edit
+          </span>
+        </div>
+      </div>
+      <div
+        data-styleName="three-column-input gray-bottom-border"
+      >
+        <div
+          data-styleName="left-input-column"
+        >
+          <span
+            data-styleName="text-opacity"
+          >
+            SKILLS
+          </span>
+        </div>
+        <div
+          data-styleName="center-input-column-scrollable"
+        />
+        <div
+          data-styleName="right-input-column"
+        >
+          <span
+            data-styleName="edit-button text-opacity"
+          >
+            Edit
+          </span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <SignupModalFooter
+        continueText="Let's do this!"
+        previous={[Function]}
+        showPrevious={false}
+        submit={[Function]}
+      />
+    </div>
+  </div>
+</div>
+`;

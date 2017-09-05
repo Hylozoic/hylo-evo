@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddSkills renders correctly 1`] = `
+<div
+  data-styleName="flex-wrapper"
+>
+  <Connect(LeftSidebar)
+    body="What skills are you known for? The more skills you add, the more relevant the content. It's like magic."
+    header="Share your unique super powers!"
+  />
+  <div
+    data-styleName="panel"
+  >
+    <span
+      data-styleName="white-text step-count"
+    >
+      STEP 3/4
+    </span>
+    <br />
+    <div
+      data-styleName="center"
+    >
+      <input
+        autoFocus={true}
+        data-styleName="signup-input center-text signup-padding large-input-text gray-bottom-border"
+        placeholder="How can you help?"
+        readOnly={true}
+      />
+    </div>
+    <div>
+      <div
+        data-styleName="skills"
+      >
+        <Pill
+          clickHandler={[Function]}
+          skill={
+            Object {
+              "name": "Writing",
+            }
+          }
+        />
+        <Pill
+          clickHandler={[Function]}
+          skill={
+            Object {
+              "name": "Design",
+            }
+          }
+        />
+        <Pill
+          clickHandler={[Function]}
+          skill={
+            Object {
+              "name": "Project Management",
+            }
+          }
+        />
+        <Pill
+          clickHandler={[Function]}
+          skill={
+            Object {
+              "name": "Photography",
+            }
+          }
+        />
+        <Pill
+          clickHandler={[Function]}
+          skill={
+            Object {
+              "name": "Facilitation",
+            }
+          }
+        />
+        <Pill
+          clickHandler={[Function]}
+          skill={
+            Object {
+              "name": "Media",
+            }
+          }
+        />
+        <Pill
+          clickHandler={[Function]}
+          skill={
+            Object {
+              "name": "Community Organizing",
+            }
+          }
+        />
+        <Pill
+          clickHandler={[Function]}
+          skill={
+            Object {
+              "name": "Technology",
+            }
+          }
+        />
+        <Pill
+          clickHandler={[Function]}
+          skill={
+            Object {
+              "name": "Social Media",
+            }
+          }
+        />
+        <Pill
+          clickHandler={[Function]}
+          skill={
+            Object {
+              "name": "Event Planning",
+            }
+          }
+        />
+        <Pill
+          clickHandler={[Function]}
+          skill={
+            Object {
+              "name": "Education",
+            }
+          }
+        />
+        <Pill
+          clickHandler={[Function]}
+          skill={
+            Object {
+              "name": "Communications",
+            }
+          }
+        />
+      </div>
+    </div>
+    <div />
+    <div>
+      <SignupModalFooter
+        continueText="Boom, Done"
+        previous={[Function]}
+        submit={[Function]}
+      />
+    </div>
+  </div>
+</div>
+`;
