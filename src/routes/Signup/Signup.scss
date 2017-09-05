@@ -62,7 +62,8 @@
 .signup-modal-footer {
   position: absolute;
   bottom: 0;
-  margin-bottom: 10px;
+  padding-bottom: 20px;
+  right: 0;
 }
 
 .footer-buttons {
@@ -104,11 +105,14 @@
 }
 
 .press-enter {
+  position: absolute;
+  bottom: 0;
+  right: 0;
   font-size: 10px;
   color: $color-white;
   font-style: italic;
+  margin-bottom: 5px;
   margin-top: 5px;
-  margin-left: 340px;
 }
 
 .sidebar-text {
