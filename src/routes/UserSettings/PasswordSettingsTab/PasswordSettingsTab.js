@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { isEmpty, omit } from 'lodash/fp'
+import { omit } from 'lodash/fp'
 import SettingsControl from 'components/SettingsControl'
 import './PasswordSettingsTab.scss'
 import Button from 'components/Button'
@@ -47,12 +47,18 @@ export default class PasswordSettingsTab extends Component {
       updateUserSettings(omit('confirm', edits))
     }
 
-    const canSave = !isEmpty(password) && password === confirm && changed
+    const canSave = password &&
+      password.length > 8 &&
+      password === confirm &&
+      changed
 
     return <div>
       <div styleName='title'>Update Password</div>
       <SettingsControl label='New Password' onChange={updateSetting('password')} value={password} type='password' />
       <SettingsControl label='Confirm' onChange={updateSetting('confirm')} value={confirm} type='password' />
+      <div styleName='help'>
+        Passwords must be at least 9 characters long, and should be a mix of lower and upper case letters, numbers and symbols.
+      </div>
       <div styleName='button-row'>
         <Button label='Save Changes' color={canSave ? 'green' : 'gray'} onClick={canSave ? save : null} styleName='save-button' />
       </div>
