@@ -18,13 +18,7 @@ describe('Comment', () => {
 
   it('renders correctly', () => {
     const wrapper = shallow(<Comment {...props} />)
-    expect(wrapper.find('Avatar').length).toEqual(1)
-    expect(wrapper.find('Avatar').prop('avatarUrl')).toEqual(props.comment.creator.avatarUrl)
-    expect(wrapper.find('Link').length).toEqual(1)
-    expect(wrapper.find('div #text').length).toEqual(1)
-    expect(wrapper.find('div #text').prop('dangerouslySetInnerHTML')).toEqual({
-      __html: props.comment.text
-    })
+    expect(wrapper).toMatchSnapshot()
   })
 
   it('sanitizes text', () => {
@@ -36,5 +30,10 @@ describe('Comment', () => {
     expect(wrapper.find('div #text').prop('dangerouslySetInnerHTML')).toEqual({
       __html: '<p>Nice text</p>'
     })
+  })
+
+  it('displays the delete menu when deleteComment is defined', () => {
+    const wrapper = shallow(<Comment {...props} deleteComment={() => {}} />)
+    expect(wrapper).toMatchSnapshot()
   })
 })
