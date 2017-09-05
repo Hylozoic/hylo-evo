@@ -43,10 +43,8 @@ export default class AddLocation extends Component {
   submit = () => {
     const { edits } = this.state
     Object.keys(edits).forEach((key) => (edits[key] == null) && delete edits[key])
-    console.log('Review edits 1', edits)
-    const changes = Object.assign(edits, {settings: {signupInProgress: false}})
-    console.log('Review changes', changes)
-    this.props.updateUserSettings({changes})
+    const changes = Object.assign(edits, {settings: {signupInProgress: 'false'}})
+    this.props.updateUserSettings(changes)
     this.props.goToNextStep()
   }
 
@@ -68,7 +66,7 @@ export default class AddLocation extends Component {
 
   componentWillMount = () => {
     const { currentUser } = this.props
-    if (currentUser && currentUser.settings && currentUser.settings.signupInProgress === 'false') this.props.goBack()
+    if (get('settings.signupInProgress', currentUser) === 'false') this.props.goBack()
   }
 
   componentDidMount = () => {
