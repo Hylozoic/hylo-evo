@@ -39,7 +39,9 @@ import {
 import {
   UPDATE_COMMUNITY_SETTINGS_PENDING
 } from 'routes/CommunitySettings/CommunitySettings.store'
-
+import {
+  SIGNUP_ADD_SKILL
+} from 'routes/Signup/AddSkills/AddSkills.store'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
 import { find } from 'lodash/fp'
@@ -271,6 +273,11 @@ export default function ormReducer (state = {}, action) {
       const skill = payload.data.addSkill
       person = Person.withId(Me.first().id)
       person.updateAppending({skills: [Skill.create(skill)]})
+      break
+    case SIGNUP_ADD_SKILL:
+      const mySkill = payload.data.addSkill
+      me = Me.withId(Me.first().id)
+      me.updateAppending({skills: [Skill.create(mySkill)]})
       break
   }
 

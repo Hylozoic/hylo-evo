@@ -7,33 +7,14 @@ import LeftSidebar from '../LeftSidebar'
 import '../Signup.scss'
 
 export default class AddSkills extends Component {
-  constructor () {
-    super()
-    this.state = {
-      mySkills: []
-    }
-  }
   clickHandler = (skill) => {
-    const { mySkills } = this.state
-    mySkills.push(skill)
-    this.setState({
-      mySkills
-    })
     this.props.addSkill(skill.name)
-  }
-
-  getAddedSkills = () => {
-    // const { currentUser } = this.props
-    // if (currentUser && currentUser.skills) {
-    //   return currentUser.skills.toRefArray()
-    // }
-    return this.state.mySkills
   }
 
   getRemainingSkills = () => {
     const addedSkills = []
-    for (let index in this.state.mySkills) {
-      const skill = this.state.mySkills[index]
+    for (let index in this.props.skills) {
+      const skill = this.props.skills[index]
       addedSkills.push(skill.name)
     }
     return skills.filter(function (skill) {
@@ -83,10 +64,10 @@ export default class AddSkills extends Component {
           </div>}
         </div>
         <div>
-          { !isEmpty(this.state.mySkills) && <div styleName='your-skills'>
+          { !isEmpty(this.props.skills) && <div styleName='your-skills'>
             <div styleName='your-skills-label'><span>Your Skills:</span></div>
             <div styleName='your-skills-list'>
-              {this.getAddedSkills().map((skill, index) =>
+              {this.props.skills.map((skill, index) =>
                 <Pill key={index} skill={skill} handler={() => this.clickHandler(skill)} handlerArg={'name'} />
               )}
             </div>
