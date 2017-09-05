@@ -57,7 +57,7 @@ export default class AddLocation extends Component {
         </div>
         <div styleName='center'>
           <input
-            styleName='signup-input signup-padding large-input-text'
+            styleName='signup-input signup-padding large-input-text gray-bottom-border'
             onChange={this.handleLocationChange}
             onKeyPress={event => {
               if (event.key === 'Enter') {

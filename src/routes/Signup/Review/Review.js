@@ -77,9 +77,7 @@ export default class AddLocation extends Component {
 
   render () {
     const currentAvatarUrl = this.state.edits.avatarUrl
-    const expanded = true
     const { currentUser, uploadImagePending } = this.props
-    const skills = currentUser && currentUser.skills && currentUser.skills.toRefArray()
     return <div styleName='flex-wrapper'>
       <LeftSidebar
         header='Everything looking good?'
@@ -96,85 +94,29 @@ export default class AddLocation extends Component {
             loading={uploadImagePending}
           />}
         </div>
-        <div styleName='three-column-input'>
-          <div styleName='column-left'>YOUR NAME</div>
-          <div styleName='column-center'>
-            <input
-              styleName='signup-input'
-              onChange={(e) => this.handleInputChange(e, 'name')}
-              onKeyPress={event => {
-                if (event.key === 'Enter') {
-                  this.submit()
-                  this.props.goToNextStep()
-                }
-              }}
-              autoFocus
-              value={this.state.edits.name || currentUser && currentUser.name}
-              readOnly={this.state.readOnly.name}
-            />
-          </div>
-          <div styleName='column-right'>
-            <span styleName='edit-button' onClick={() => this.makeEditable('name')}>Edit</span>
-          </div>
-        </div>
-        <div styleName='three-column-input'>
-          <div styleName='column-left'>YOUR EMAIL</div>
-          <div styleName='column-center'>
-            <input
-              styleName='signup-input'
-              onChange={(e) => this.handleInputChange(e, 'email')}
-              onKeyPress={event => {
-                if (event.key === 'Enter') {
-                  this.submit()
-                  this.props.goToNextStep()
-                }
-              }}
-              autoFocus
-              value={this.state.edits.email || currentUser && currentUser.email}
-              readOnly={this.state.readOnly.name}
-            />
-          </div>
-          <div styleName='column-right'>
-            <span styleName='edit-button' onClick={() => this.makeEditable('email')}>Edit</span>
-          </div>
-        </div>
-        <div styleName='three-column-input'>
-          <div styleName='column-left'>LOCATION</div>
-          <div styleName='column-center'>
-            <input
-              styleName='signup-input'
-              onChange={(e) => this.handleInputChange(e, 'location')}
-              onKeyPress={event => {
-                if (event.key === 'Enter') {
-                  this.submit()
-                  this.props.goToNextStep()
-                }
-              }}
-              autoFocus
-              value={this.state.edits.location || currentUser && currentUser.location}
-              readOnly={this.state.readOnly.name}
-            />
-          </div>
-          <div styleName='column-right'>
-            <span styleName='edit-button' onClick={() => this.makeEditable('location')}>Edit</span>
-          </div>
-        </div>
-        <div styleName='three-column-input'>
-          <div styleName='column-left'>SKILLS</div>
-          <div styleName='column-center'>
-            <div
-              styleName={cx('pill-container', {expanded, collapsed: !expanded})}>
-              <Pillbox
-                pills={map(skills, skill => ({...skill, label: skill.name}))}
-                editable={false}
-                addLabel='Add a Skill'
-                placeholder={null}
-                suggestions={null}
+        <div styleName='final-edit gray-bottom-border'>
+          <div styleName='three-column-input'>
+            <div styleName='left-input-column'>
+              <span styleName='column-input-label'>YOUR NAME</span>
+            </div>
+            <div styleName='center-input-column'>
+              <input
+                styleName='signup-input review-input-padding'
+                onChange={(e) => this.handleInputChange(e, 'name')}
+                onKeyPress={event => {
+                  if (event.key === 'Enter') {
+                    this.submit()
+                    this.props.goToNextStep()
+                  }
+                }}
+                autoFocus
+                value={this.state.edits.name || currentUser && currentUser.name}
+                readOnly={this.state.readOnly.name}
               />
             </div>
-          </div>
-          <div styleName='column-right'>
-            <span styleName='edit-button'>Edit</span>
+            <div styleName='right-input-column'>
+              <span styleName='edit-button' onClick={() => this.makeEditable('name')}>Edit</span>
+            </div>
           </div>
         </div>
         <div>

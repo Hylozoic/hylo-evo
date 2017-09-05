@@ -57,7 +57,7 @@ export default class AddSkills extends Component {
         <br />
         <div styleName='center'>
           <input
-            styleName='signup-input center-text signup-padding large-input-text'
+            styleName='signup-input center-text signup-padding large-input-text gray-bottom-border'
             autoFocus
             onChange={this.handleInputChange}
             placeholder={'How can you help?'}
