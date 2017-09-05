@@ -26,7 +26,6 @@ export function fetchMySkills (limit = 20) {
 
 
 export function updateUserSettings ({changes}) {
-  console.log('Review.store updateUserSettings changes', changes)
   return {
     type: UPDATE_USER_SETTINGS,
     graphql: {
