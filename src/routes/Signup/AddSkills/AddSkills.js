@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { get } from 'lodash/fp'
+import { isEmpty } from 'lodash'
 import SignupModalFooter from '../SignupModalFooter'
 import LeftSidebar from '../LeftSidebar'
 
@@ -82,11 +83,14 @@ export default class AddSkills extends Component {
           </div>}
         </div>
         <div>
-          <div styleName='skills'>
-            {this.getAddedSkills().map((skill, index) =>
-              <Pill key={index} skill={skill} handler={() => this.clickHandler(skill)} handlerArg={'name'} />
-            )}
-          </div>
+          { !isEmpty(this.state.mySkills) && <div styleName='your-skills'>
+            <div styleName='your-skills-label'><span>Your Skills:</span></div>
+            <div styleName='your-skills-list'>
+              {this.getAddedSkills().map((skill, index) =>
+                <Pill key={index} skill={skill} handler={() => this.clickHandler(skill)} handlerArg={'name'} />
+              )}
+            </div>
+          </div>}
         </div>
         <div>
           <SignupModalFooter previous={this.previous} submit={this.submit} continueText={'Boom, Done'} />
