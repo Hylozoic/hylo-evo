@@ -24,6 +24,9 @@ import {
 import {
   UPDATE_COMMUNITY_SETTINGS_PENDING
 } from 'routes/CommunitySettings/CommunitySettings.store'
+import {
+  DELETE_COMMENT_PENDING
+} from 'routes/PostDetail/Comments/Comment/Comment.store.js'
 import deep from 'deep-diff'
 
 it('responds to EXTRACT_MODEL', () => {
@@ -407,5 +410,31 @@ describe('on FETCH_FOR_COMMUNITY_PENDING', () => {
     const newSession = orm.session(newState)
     const membership = newSession.Membership.withId('2')
     expect(membership.newPostCount).toEqual(0)
+  })
+})
+
+describe('on DELETE_COMMENT_PENDING', () => {
+  const session = orm.session(orm.getEmptyState())
+
+  session.Comment.create({
+    id: '1'
+  })
+  session.Comment.create({
+    id: '2'
+  })
+
+  const action = {
+    type: DELETE_COMMENT_PENDING,
+    meta: {
+      id: '1'
+    }
+  }
+
+  it('clears newPostCount', () => {
+    const newState = ormReducer(session.state, action)
+    const newSession = orm.session(newState)
+    const comments = newSession.Comment.all().toModelArray()
+    expect(comments.length).toEqual(1)
+    expect(comments[0].id).toEqual('2')
   })
 })

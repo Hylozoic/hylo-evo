@@ -314,7 +314,6 @@ export default function ormReducer (state = {}, action) {
 
     case DELETE_COMMENT_PENDING:
       const comment = Comment.withId(meta.id)
-      console.log('comment', comment)
       comment.delete()
       break
   }
