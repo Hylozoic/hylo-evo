@@ -35,7 +35,6 @@ export default class AddSkills extends Component {
     this.props.fetchMySkills()
   }
   render () {
-    console.log('this.props.skills', this.props.skills)
     return <div styleName='flex-wrapper'>
       <LeftSidebar
         header='Share your unique super powers!'
