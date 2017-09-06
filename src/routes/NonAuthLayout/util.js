@@ -26,7 +26,7 @@ export function formatError (error, action) {
   var text
   switch (error) {
     case 'no user':
-      text = 'Signup was canceled or no user data was found.'
+      text = `${action} was canceled or no user data was found.`
       break
     case 'no email':
       text = 'The user data did not include an email address.'

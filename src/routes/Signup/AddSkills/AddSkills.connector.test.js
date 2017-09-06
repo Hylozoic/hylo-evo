@@ -1,10 +1,17 @@
-import { mapDispatchToProps, mapStateToProps } from './AddSkills.connector'
+import { mapDispatchToProps } from './AddSkills.connector'
 
-describe('AddSkills.connector', () => {
-  it('should match latest snapshot for mapDispatchToProps', () => {
-    expect(mapDispatchToProps).toMatchSnapshot()
+const dispatch = jest.fn(x => x)
+const props = {}
+const dispatchProps = mapDispatchToProps(dispatch, props)
+
+describe('mapDispatchToProps', () => {
+  it('should call addSkill', () => {
+    const name = 'My Name'
+    expect(dispatchProps.addSkill(name)).toMatchSnapshot()
   })
-  it('should match latest snapshot for mapStateToProps', () => {
-    expect(mapStateToProps).toMatchSnapshot()
+
+  it('should call removeSkill', () => {
+    const id = 1
+    expect(dispatchProps.removeSkill(id)).toMatchSnapshot()
   })
 })

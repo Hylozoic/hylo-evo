@@ -176,7 +176,7 @@ const signupRoutes = [
 ]
 
 export function isSignupPath (path) {
-  return (path.substring(0, 7) === '/signup')
+  return (path.startsWith('/signup'))
 }
 
 export function RedirectToSignupFlow ({ currentUser, pathname }) {

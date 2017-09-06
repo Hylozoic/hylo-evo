@@ -1,7 +1,9 @@
 import { connect } from 'react-redux'
 import { push, goBack } from 'react-router-redux'
 import getMe from 'store/selectors/getMe'
-import { addSkill, fetchMySkills, getMySkills, removeSkill } from './AddSkills.store'
+import { addSkill, removeSkill } from './AddSkills.store'
+import fetchMySkills from 'store/actions/fetchMySkills'
+import getMySkills from 'store/selectors/getMySkills'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)

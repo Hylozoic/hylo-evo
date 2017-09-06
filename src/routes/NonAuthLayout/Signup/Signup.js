@@ -12,11 +12,7 @@ export default class Signup extends React.Component {
   }
 
   submit = () => {
-    this.props.signup(this.state.fullName, this.state.email, this.state.password)
-  }
-
-  componentDidMount () {
-    this.email.focus()
+    this.props.signup(this.state.name, this.state.email, this.state.password)
   }
 
   render () {
@@ -28,8 +24,8 @@ export default class Signup extends React.Component {
       {this.props.error && formatError(this.props.error, 'Signup')}
       <div styleName='field'>
         <label styleName='field-label'>Full name</label>
-        <TextInput type='text' name='fullName' onChange={setState('fullName')}
-          inputRef={input => { this.fullName = input }} />
+        <TextInput type='text' name='name' onChange={setState('name')}
+          inputRef={input => { this.name = input }} autoFocus />
       </div>
       <div styleName='field'>
         <label styleName='field-label'>Your email address</label>

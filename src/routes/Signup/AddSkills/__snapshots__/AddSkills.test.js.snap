@@ -23,6 +23,7 @@ exports[`AddSkills renders correctly 1`] = `
       <input
         autoFocus={true}
         data-styleName="signup-input center-text signup-padding large-input-text gray-bottom-border"
+        onKeyPress={[Function]}
         placeholder="How can you help?"
         readOnly={true}
       />

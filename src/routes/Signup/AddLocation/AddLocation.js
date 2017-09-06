@@ -63,7 +63,6 @@ export default class AddLocation extends Component {
             onKeyPress={event => {
               if (event.key === 'Enter') {
                 this.submit()
-                this.props.goToNextStep()
               }
             }}
             value={this.state.location}

@@ -1,3 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`UploadPhoto mapDispatchToProps should match latest snapshot for updateUserSettings  1`] = `[Function]`;
+exports[`Upload Photo should call updateUserSettings 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($changes: MeInput) {
+        updateMe(changes: $changes) {
+          id
+        }
+      }",
+    "variables": Object {
+      "changes": "My Name",
+    },
+  },
+  "meta": Object {
+    "changes": "My Name",
+    "optimistic": true,
+  },
+  "type": "UPDATE_USER_SETTINGS",
+}
+`;

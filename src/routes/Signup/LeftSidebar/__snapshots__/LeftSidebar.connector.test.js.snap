@@ -1,5 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LeftSidebar should have match latest snapshot for mapDispatchToProps 1`] = `[Function]`;
-
-exports[`LeftSidebar should have match latest snapshot for mapStateToProps 1`] = `[Function]`;
+exports[`LeftSidebar should call updateUserSettings 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($changes: MeInput) {
+        updateMe(changes: $changes) {
+          id
+        }
+      }",
+    "variables": Object {
+      "changes": "My Name",
+    },
+  },
+  "meta": Object {
+    "changes": "My Name",
+    "optimistic": true,
+  },
+  "type": "UPDATE_USER_SETTINGS",
+}
+`;

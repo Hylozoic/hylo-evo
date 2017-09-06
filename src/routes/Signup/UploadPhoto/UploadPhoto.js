@@ -66,6 +66,7 @@ export default class UploadPhoto extends Component {
                 this.submit()
               }
             }}
+            autoFocus
             readOnly
           />
         </div>

@@ -7,8 +7,8 @@ Object {
       "method": "post",
       "params": Object {
         "email": "test@hylo.com",
-        "fullName": "fullName",
         "login": true,
+        "name": "name",
         "password": "testPassword",
       },
       "path": "/noo/user",

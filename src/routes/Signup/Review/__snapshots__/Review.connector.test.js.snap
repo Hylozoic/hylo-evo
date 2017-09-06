@@ -1,5 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Review.connector should match latest snapshot for mapDispatchToProps 1`] = `[Function]`;
+exports[`Review should call fetchMySkills 1`] = `
+Object {
+  "graphql": Object {
+    "query": "query ($limit: Int) {
+        me {
+          id
+          skills (first: $limit) {
+            items {
+              id
+              name
+            }
+          }
+        }
+      }",
+    "variables": Object {
+      "limit": 20,
+    },
+  },
+  "meta": Object {
+    "extractModel": "Me",
+  },
+  "type": "FETCH_MY_SKILLS",
+}
+`;
 
-exports[`Review.connector should match latest snapshot for mapStateToProps 1`] = `[Function]`;
+exports[`Review should call updateUserSettings 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($changes: MeInput) {
+        updateMe(changes: $changes) {
+          id
+        }
+      }",
+    "variables": Object {
+      "changes": "My Name",
+    },
+  },
+  "meta": Object {
+    "changes": "My Name",
+    "optimistic": true,
+  },
+  "type": "UPDATE_USER_SETTINGS",
+}
+`;

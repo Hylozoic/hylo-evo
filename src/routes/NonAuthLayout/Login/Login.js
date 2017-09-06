@@ -15,10 +15,6 @@ export default class Login extends React.Component {
     return this.props.login(this.state.email, this.state.password)
   }
 
-  componentDidMount () {
-    this.email.focus()
-  }
-
   render () {
     const { className, loginWithService } = this.props
     const setState = key => event => this.setState({[key]: event.target.value})
@@ -28,7 +24,7 @@ export default class Login extends React.Component {
       <div styleName='field'>
         <label styleName='field-label'>Your email address</label>
         <TextInput type='text' name='email' onChange={setState('email')}
-          inputRef={input => { this.email = input }} />
+          inputRef={input => { this.email = input }} autoFocus />
       </div>
 
       <div styleName='field'>

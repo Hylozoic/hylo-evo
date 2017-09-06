@@ -13,10 +13,6 @@ export default class NonAuthLayout extends React.Component {
     this.state = {}
   }
 
-  componentDidMount () {
-    this.email.focus()
-  }
-
   render () {
     const particlesStyle = {
       position: 'fixed',

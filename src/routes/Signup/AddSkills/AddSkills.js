@@ -12,12 +12,8 @@ export default class AddSkills extends Component {
   }
 
   getRemainingSkills = () => {
-    const addedSkills = []
-    for (let index in this.props.skills) {
-      const skill = this.props.skills[index]
-      addedSkills.push(skill.name)
-    }
-    return skills.filter(function (skill) {
+    const addedSkills = this.props.skills.map(skill => skill.name)
+    return defaultSkills.filter(function (skill) {
       return (addedSkills.indexOf(skill.name) === -1)
     })
   }
@@ -39,6 +35,7 @@ export default class AddSkills extends Component {
     this.props.fetchMySkills()
   }
   render () {
+    console.log('this.props.skills', this.props.skills)
     return <div styleName='flex-wrapper'>
       <LeftSidebar
         header='Share your unique super powers!'
@@ -51,13 +48,18 @@ export default class AddSkills extends Component {
           <input
             styleName='signup-input center-text signup-padding large-input-text gray-bottom-border'
             autoFocus
+            onKeyPress={event => {
+              if (event.key === 'Enter') {
+                this.submit()
+              }
+            }}
             onChange={this.handleInputChange}
             placeholder={'How can you help?'}
             readOnly
           />
         </div>
         <div>
-          {skills && <div styleName='skills'>
+          {<div styleName='skills'>
             {this.getRemainingSkills().map((skill, index) =>
               <Pill key={index} skill={skill} clickHandler={() => this.props.addSkill(skill.name)} />
             )}
@@ -87,7 +89,7 @@ export function Pill ({skill, clickHandler}) {
   </span>
 }
 
-const skills = [
+const defaultSkills = [
   {name: 'Writing'},
   {name: 'Design'},
   {name: 'Project Management'},

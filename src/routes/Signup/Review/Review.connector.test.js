@@ -1,10 +1,17 @@
-import { mapDispatchToProps, mapStateToProps } from './Review.connector'
+import { mapDispatchToProps } from './Review.connector'
 
-describe('Review.connector', () => {
-  it('should match latest snapshot for mapDispatchToProps', () => {
-    expect(mapDispatchToProps).toMatchSnapshot()
+const dispatch = jest.fn(x => x)
+const props = {}
+const dispatchProps = mapDispatchToProps(dispatch, props)
+// const stateProps = mapStateToProps(state, props)
+
+describe('Review', () => {
+  it('should call updateUserSettings', () => {
+    const name = 'My Name'
+    expect(dispatchProps.updateUserSettings(name)).toMatchSnapshot()
   })
-  it('should match latest snapshot for mapStateToProps', () => {
-    expect(mapStateToProps).toMatchSnapshot()
+
+  it('should call fetchMySkills', () => {
+    expect(dispatchProps.fetchMySkills()).toMatchSnapshot()
   })
 })

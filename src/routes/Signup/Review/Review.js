@@ -108,7 +108,6 @@ export default class AddLocation extends Component {
                 onKeyPress={event => {
                   if (event.key === 'Enter') {
                     this.submit()
-                    this.props.goToNextStep()
                   }
                 }}
                 autoFocus
@@ -172,8 +171,8 @@ export default class AddLocation extends Component {
             </div>
             <div styleName='center-input-column-scrollable'>
               {this.props.skills.map((skill, index) =>
-                <div>
-                  <Pill key={index} skill={skill} handlerArg={'name'} />
+                <div key={index}>
+                  <Pill skill={skill} handlerArg={'name'} />
                 </div>
               )}
             </div>

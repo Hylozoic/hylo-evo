@@ -282,6 +282,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case SIGNUP_ADD_SKILL:
+      console.log('called SIGNUP_ADD_SKILL')
       const mySkill = payload.data.addSkill
       me = Me.withId(Me.first().id)
       me.updateAppending({skills: [Skill.create(mySkill)]})
