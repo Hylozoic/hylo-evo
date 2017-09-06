@@ -1,13 +1,25 @@
-import { upload } from 'client/filepicker'
+import { pick } from 'client/filepicker'
 import {
   UPLOAD_IMAGE
 } from 'store/constants'
 
 export function uploadImage (opts) {
-  let { subject, id, path, convert } = opts
+  let { type, id } = opts
   let payload = new Promise((resolve, reject) => {
-    upload({path, convert, success: resolve, failure: reject})
+    pick({
+      success: url => resolve({
+        api: {
+          method: 'post',
+          path: '/noo/upload',
+          params: {url, id, type}
+        }
+      }),
+      failure: err => {
+        if (err.code === 101) return resolve({})
+        reject(err)
+      }
+    })
   })
 
-  return {type: UPLOAD_IMAGE, payload, meta: {subject, id}}
+  return {type: UPLOAD_IMAGE, payload, meta: {type, id}}
 }
