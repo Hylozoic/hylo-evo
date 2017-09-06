@@ -27,6 +27,7 @@ Community.fields = {
     through: 'CommunityModerator',
     throughFields: [ 'community', 'moderator' ]
   }),
+  pendingInvitations: many('Invitation'),
   network: fk('Network'),
   posts: many('Post'),
   postCount: attr(),

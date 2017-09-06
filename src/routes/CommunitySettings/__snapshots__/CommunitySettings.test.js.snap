@@ -1,5 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`renders a redirect if you can not moderate 1`] = `
+<Redirect
+  push={false}
+  to="/c/foo"
+/>
+`;
+
 exports[`renders correctly with a community 1`] = `
 <withRouter(Connect(FullPageModal))
   content={

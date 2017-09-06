@@ -89,8 +89,10 @@ export function CommunityRow ({ community, newPostCount }) {
 export function NetworkRow ({ network }) {
   const imageStyle = bgImageStyle(network.avatarUrl)
   return <li key={`network${network.id}`} styleName='s.networkRow' className={badgeHoverStyles.parent}>
-    <div styleName='s.avatar' style={imageStyle} />
-    <span styleName='s.network-name'>{network.name}</span>
+    <div styleName='s.network-name-wrapper'>
+      <div styleName='s.avatar' style={imageStyle} />
+      <span styleName='s.network-name'>{network.name}</span>
+    </div>
     <ul styleName='s.networkCommunitiesList'>
       {network.memberships.map(membership =>
         <CommunityRow {...membership} key={membership.id} />)}

@@ -1,4 +1,4 @@
-.exampleName { /* !empty */ }
+$rowHeight: 60px;
 
 .header {
   border-radius: 4px;
@@ -37,7 +37,7 @@
 }
 
 .buttons {
-  margin-left: auto;
+  margin-left: 10px;
 }
 
 .button {
@@ -55,4 +55,132 @@
 .copy-button {
   composes: button;
   margin-top: 10px;
+}
+
+.email-section {
+  display: flex;
+  flex-direction: column;
+  margin-top: 38px;
+}
+
+.send-invite-button {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.email-addresses-input {
+  border: 1px solid $color-ghost;
+  font-size: 14px;
+  height: 50px;
+  border-radius: 2px;
+  &::placeholder {
+
+  }
+}
+
+.invite-msg-input {
+  border: 1px solid $color-ghost;
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 2px;
+  @include font-regular;
+  font-size: 14px;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.resend-all-button {
+  margin-top: 3px;
+}
+
+.pending-invites-section {
+  margin-top: 40px;
+
+  .pending-invites-header {
+    display: flex;
+    flex-direction: row;
+
+    h1 {
+      font-size: 24px;
+      color: $color-rhino-darker;
+    }
+  }
+
+  .pending-invites-list {
+    display: flex;
+    margin-top: 10px;
+    align-content: space-between;
+    flex-direction: column;
+
+    .row {
+      @include font-regular;
+      color: $color-rhino-60;
+      font-size: 14px;
+      width: 100%;
+      align-items: center;
+      height: $rowHeight;
+      max-height: $rowHeight;
+      border-top: 1px solid $color-ghost;
+      display: flex;
+      flex-direction: row;
+
+      &:last-child {
+        border-bottom: 1px solid $color-ghost;
+      }
+    }
+
+    .invite-date {
+      padding-left: 10px;
+      color: #BFC5CD;
+      @include font-regular;
+    }
+
+    .invite-actions {
+      width: 150px;
+      text-align: right;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .action-btn {
+      @include font-regular;
+      cursor: pointer;
+      &:hover {
+        font-weight: bold;
+      }
+      user-select: none;
+    }
+
+    .expire-btn {
+      color: $color-amaranth;
+      flex: 0.5;
+    }
+
+    .resend-btn {
+      color: $color-caribbean-green;
+      flex: 0.5
+    }
+  }
+}
+
+.enter {
+  opacity: 0.01;
+}
+
+.enter.enter-active {
+  opacity: 1;
+  transition: 400ms ease-in;
+}
+
+.leave {
+  opacity: 1;
+  max-height: $rowHeight;
+}
+
+.leave.leave-active {
+  opacity: 0.01;
+  max-height: 2px;
+  transition: 500ms ease-in;
 }

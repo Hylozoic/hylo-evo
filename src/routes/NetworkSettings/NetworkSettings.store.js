@@ -2,7 +2,7 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { createSelector } from 'reselect'
 import orm from 'store/models'
-import { makeGetQueryResults } from 'store/reducers/queryResults'
+import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 import { get, includes, isEmpty } from 'lodash/fp'
 
 export const MODULE_NAME = 'NetworkSettings'
@@ -209,17 +209,10 @@ export const getModeratorsTotal = createSelector(
   getModeratorResults,
   get('total')
 )
-export const getModerators = ormCreateSelector(
-  orm,
-  state => state.orm,
+
+export const getModerators = makeQueryResultsModelSelector(
   getModeratorResults,
-  (session, results) => {
-    if (isEmpty(results) || isEmpty(results.ids)) return []
-    return session.Person.all()
-    .filter(x => includes(x.id, results.ids))
-    .orderBy(x => results.ids.indexOf(x.id))
-    .toModelArray()
-  }
+  'Person'
 )
 
 export const getCommunitiesResults = makeGetQueryResults(FETCH_COMMUNITIES)
@@ -231,6 +224,7 @@ export const getCommunitiesHasMore = createSelector(
   getCommunitiesResults,
   get('hasMore')
 )
+
 export const getCommunities = ormCreateSelector(
   orm,
   state => state.orm,

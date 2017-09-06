@@ -1,11 +1,9 @@
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
-import { createSelector as ormCreateSelector } from 'redux-orm'
-import { get, includes, isEmpty } from 'lodash/fp'
-import orm from 'store/models'
+import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
 import { fetchPosts, storeFeedListProps } from './FeedList.store.js'
-import { makeGetQueryResults } from 'store/reducers/queryResults'
+import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 
 export function mapStateToProps (state, props) {
   return {
@@ -49,24 +47,16 @@ export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
 const getPostResults = makeGetQueryResults(FETCH_POSTS)
 
-export const getPosts = ormCreateSelector(
-  orm,
-  state => state.orm,
+export const getPosts = makeQueryResultsModelSelector(
   getPostResults,
-  (session, results) => {
-    if (isEmpty(results) || isEmpty(results.ids)) return []
-    return session.Post.all()
-    .filter(x => includes(x.id, results.ids))
-    .orderBy(x => results.ids.indexOf(x.id))
-    .toModelArray()
-    .map(post => ({
-      ...post.ref,
-      creator: post.creator,
-      linkPreview: post.linkPreview,
-      commenters: post.commenters.toModelArray(),
-      communities: post.communities.toModelArray()
-    }))
-  }
+  'Post',
+  post => ({
+    ...post.ref,
+    creator: post.creator,
+    linkPreview: post.linkPreview,
+    commenters: post.commenters.toModelArray(),
+    communities: post.communities.toModelArray()
+  })
 )
 
 const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
