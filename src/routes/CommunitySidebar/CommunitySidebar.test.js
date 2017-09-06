@@ -57,17 +57,28 @@ describe('MemberSection', () => {
   const members = fakePerson(n)
 
   it("Doesn't show total if it's < 1", () => {
-    const wrapper = shallow(<MemberSection members={members} memberCount={n} canModerate />)
+    const wrapper = shallow(<MemberSection
+      slug={'foo'}
+      members={members}
+      memberCount={n}
+      canModerate />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it("Formats total correctly if it's > 999", () => {
-    const wrapper = shallow(<MemberSection members={members} memberCount={5600} />)
+    const wrapper = shallow(<MemberSection
+      slug={'foo'}
+      members={members}
+      memberCount={5600} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('Shows invite link if canModerate is true', () => {
-    const wrapper = shallow(<MemberSection members={members} memberCount={5600} canModerate />)
+    const wrapper = shallow(<MemberSection
+      slug={'foo'}
+      members={members}
+      memberCount={5600}
+      canModerate />)
     expect(wrapper).toMatchSnapshot()
   })
 })
