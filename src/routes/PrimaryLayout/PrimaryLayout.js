@@ -29,6 +29,8 @@ import UploadPhoto from 'routes/Signup/UploadPhoto'
 import AddLocation from 'routes/Signup/AddLocation'
 import AddSkills from 'routes/Signup/AddSkills'
 import Review from 'routes/Signup/Review'
+import CreateCommunity from 'routes/CreateCommunity'
+import Name from 'routes/CreateCommunity/Name'
 
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
@@ -115,6 +117,13 @@ export default class PrimaryLayout extends Component {
                 component={(props) => <SignupModal {...props} child={child} />}
               />
             )}
+            {createCommunityRoutes.map(({ path, child }) =>
+              <Route
+                path={path}
+                key={path}
+                component={(props) => <CreateCommunity {...props} child={child} />}
+                />
+            )}
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
@@ -173,6 +182,9 @@ const signupRoutes = [
   {path: '/signup/add-location', child: AddLocation},
   {path: '/signup/add-skills', child: AddSkills},
   {path: '/signup/review', child: Review}
+]
+const createCommunityRoutes = [
+  {path: '/create-community/name', child: Name}
 ]
 
 export function isSignupPath (path) {
