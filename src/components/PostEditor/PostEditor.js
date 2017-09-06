@@ -199,7 +199,8 @@ export default class PostEditor extends React.Component {
     const { title, details, communities, linkPreview } = post
     const {
       onClose, initialPrompt, detailsPlaceholder,
-      currentUser, communityOptions, editing, loading
+      currentUser, communityOptions, editing, loading,
+      imagePreviews
     } = this.props
     const submitButtonLabel = editing ? 'Save' : 'Post'
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
@@ -244,6 +245,12 @@ export default class PostEditor extends React.Component {
             <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
         </div>
       </div>
+      <imagePreviews imagePreviews={imagePreviews} />
+      {imagePreviews && <div styleName='image-previews'>
+        {imagePreviews.map(url => <div styleName='image-preview'>
+        </div>)}
+        <div styleName='add-image' />
+      </div>}
       <div styleName='footer'>
         <div styleName='postIn'>
           <div styleName='postIn-label'>Post in</div>

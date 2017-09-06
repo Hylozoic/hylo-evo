@@ -29,6 +29,10 @@ export function mapStateToProps (state, props) {
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
+  const imagePreviews = [
+    'http://www.sftravel.com/sites/sftraveldev.prod.acquia-sites.com/files/styles/sft_views_background_mobile/public/landmark-images/golden-gate_web.jpg?itok=wcIdLd3y&timestamp=1499715987',
+    'https://www.thesun.co.uk/wp-content/uploads/2017/05/nintchdbpict000290298948.jpg?strip=all&w=960'
+  ]
   return {
     currentUser,
     currentCommunity,
@@ -38,7 +42,8 @@ export function mapStateToProps (state, props) {
     editing,
     linkPreview,
     linkPreviewStatus,
-    fetchLinkPreviewPending
+    fetchLinkPreviewPending,
+    imagePreviews
   }
 }
 
