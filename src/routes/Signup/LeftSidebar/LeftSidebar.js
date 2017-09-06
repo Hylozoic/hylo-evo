@@ -3,7 +3,7 @@ import '../Signup.scss'
 
 export default class LeftSidebar extends Component {
   closeSignupModal = () => {
-    const changes = {settings: {signupInProgress: 'false'}}
+    const changes = {settings: {signupInProgress: false}}
     this.props.updateUserSettings(changes)
     this.props.redirectHome()
   }

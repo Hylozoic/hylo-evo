@@ -37,7 +37,7 @@ export default class AddLocation extends Component {
 
   componentWillMount = () => {
     const { currentUser } = this.props
-    if (get('settings.signupInProgress', currentUser) === 'false') this.props.goBack()
+    if (!get('settings.signupInProgress', currentUser)) this.props.goBack()
   }
 
   componentDidMount = () => {

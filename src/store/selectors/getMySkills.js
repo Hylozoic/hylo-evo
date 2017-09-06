@@ -7,7 +7,6 @@ const getMySkills = createSelector(
   (session) => {
     const me = session.Me.first()
     if (!me) return []
-    console.log('selector', me.skills.toRefArray())
     return me.skills.toRefArray()
   }
 )
