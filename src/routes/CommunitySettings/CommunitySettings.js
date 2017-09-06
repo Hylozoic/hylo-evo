@@ -7,6 +7,8 @@ import Loading from 'components/Loading'
 const { object, func } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
 import { get } from 'lodash/fp'
+import { Redirect } from 'react-router'
+import { communityUrl } from 'util/index'
 
 export default class CommunitySettings extends Component {
   static propTypes = {
@@ -27,10 +29,13 @@ export default class CommunitySettings extends Component {
   render () {
     const {
       community,
-      updateCommunitySettings
+      updateCommunitySettings,
+      canModerate
     } = this.props
 
     if (!community) return <Loading />
+
+    if (!canModerate) return <Redirect to={communityUrl(community.slug)} />
 
     const { slug } = community
 

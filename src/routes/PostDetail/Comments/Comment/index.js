@@ -1,3 +1,3 @@
 import Comment from './Comment'
-
-export default Comment
+import connector from './Comment.connector'
+export default connector(Comment)

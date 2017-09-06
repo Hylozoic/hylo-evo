@@ -18,6 +18,7 @@ import SearchResult from './SearchResult'
 import Skill from './Skill'
 import Topic from './Topic'
 import Vote from './Vote'
+import Invitation from './Invitation'
 
 export const orm = new ORM()
 orm.register(
@@ -26,6 +27,7 @@ orm.register(
   Community,
   CommunityModerator,
   CommunityTopic,
+  Invitation,
   LinkPreview,
   Me,
   Membership,
