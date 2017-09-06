@@ -1,11 +1,15 @@
 import { connect } from 'react-redux'
 import { deleteComment } from './Comment.store'
+import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
   const { comment } = props
   const currentUser = getMe(state, props)
-  const canModerate = comment.creator.id === currentUser.id
+  const community = getCommunityForCurrentRoute(state, props)
+  const canModerate = comment.creator.id === currentUser.id ||
+    currentUser.canModerate(community)
+
   return {
     canModerate
   }

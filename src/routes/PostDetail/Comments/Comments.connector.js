@@ -23,7 +23,6 @@ export function mapStateToProps (state, props) {
     comments: getComments(state, props),
     total: getTotalComments(state, {id: props.postId}),
     hasMore: getHasMoreComments(state, {id: props.postId}),
-    slug: 'hylo',
     currentUser: getMe(state)
   }
 }
