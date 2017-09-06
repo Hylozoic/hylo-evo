@@ -8,6 +8,7 @@ import
 import { shallow } from 'enzyme'
 import React from 'react'
 import { fakePerson } from 'components/PostCard/samplePost'
+import faker from 'faker'
 
 const community = {
   id: 1,
@@ -21,22 +22,19 @@ const community = {
 }
 
 describe('CommunitySidebar', () => {
+  const members = [{id: 1}, {id: 2}, {id: 3}]
+  const leaders = [{id: 4}, {id: 5}, {id: 6}]
+  const memberCount = 56
+  const currentUser = {canModerate: () => true}
+
   it('renders correctly', () => {
-    const members = [{id: 1}, {id: 2}, {id: 3}]
-    const leaders = [{id: 4}, {id: 5}, {id: 6}]
-    const memberCount = 56
-    const currentUser = {canModerate: () => true}
     const wrapper = shallow(
       <CommunitySidebar
         community={{...community, memberCount}}
         currentUser={currentUser}
         members={members}
         leaders={leaders} />)
-    expect(wrapper.find('AboutSection').prop('description')).toEqual(community.description)
-    expect(wrapper.find('MemberSection').prop('members')).toEqual(members)
-    expect(wrapper.find('MemberSection').prop('memberCount')).toEqual(memberCount)
-    expect(wrapper.find('CommunityLeaderSection').prop('leaders')).toEqual(leaders)
-    expect(wrapper.find('CommunityLeaderSection').prop('slug')).toEqual(community.slug)
+    expect(wrapper).toMatchSnapshot()
   })
 })
 
@@ -54,19 +52,34 @@ describe('AboutSection', () => {
 })
 
 describe('MemberSection', () => {
+  faker.seed(33)
   const n = 8
   const members = fakePerson(n)
 
   it("Doesn't show total if it's < 1", () => {
-    const wrapper = shallow(<MemberSection members={members} memberCount={n} canModerate />)
-    expect(wrapper.find('RoundImageRow').length).toEqual(1)
-    expect(wrapper.find('span').length).toEqual(0)
+    const wrapper = shallow(<MemberSection
+      slug={'foo'}
+      members={members}
+      memberCount={n}
+      canModerate />)
+    expect(wrapper).toMatchSnapshot()
   })
 
   it("Formats total correctly if it's > 999", () => {
-    const wrapper = shallow(<MemberSection members={members} memberCount={5600} />)
-    expect(wrapper.find('RoundImageRow').length).toEqual(1)
-    expect(wrapper.find('span').text()).toEqual('+5.6k')
+    const wrapper = shallow(<MemberSection
+      slug={'foo'}
+      members={members}
+      memberCount={5600} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('Shows invite link if canModerate is true', () => {
+    const wrapper = shallow(<MemberSection
+      slug={'foo'}
+      members={members}
+      memberCount={5600}
+      canModerate />)
+    expect(wrapper).toMatchSnapshot()
   })
 })
 

@@ -101,9 +101,9 @@ export function MemberSection ({ members, memberCount, slug, canModerate }) {
         </span>}
       </div>
     </Link>
-    <Link to={`/c/${slug}/settings/invite`} styleName='invite-link'>
+    {canModerate && <Link to={`/c/${slug}/settings/invite`} styleName='invite-link'>
       <Button color='green-white-green-border'>Invite People</Button>
-    </Link>
+    </Link>}
   </div>
 }
 
