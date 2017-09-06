@@ -60,12 +60,6 @@ export default class AddLocation extends Component {
           <input
             styleName='signup-input signup-padding large-input-text gray-bottom-border'
             onChange={this.handleLocationChange}
-            onKeyPress={event => {
-              if (event.key === 'Enter') {
-                this.submit()
-                this.props.goToNextStep()
-              }
-            }}
             value={this.state.location}
             autoFocus
             placeholder={'Where do you call home?'}

@@ -34,3 +34,30 @@ $text-input-height: 40px;
   }
   cursor: pointer;
 }
+
+.modal-input {
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  color: $color-white;
+  font-weight: lighter;
+  text-align: left;
+  border-bottom: 1px solid $color-athens-gray-dark-50;
+  font-size: 24px;
+  color: $color-white;
+}
+
+.modal-input::placeholder {
+  color: $color-white;
+  text-align: center;
+}
+
+.modal-input:focus {
+  outline: none;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
