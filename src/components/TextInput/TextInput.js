@@ -13,7 +13,7 @@ export default function TextInput (props) {
   const { theme = {}, onChange, value, inputRef, className, placeholder, showClearButton = true } = props
   // TODO: different styles based on props, e.g. validated, error, etc.
   const onKeyDown = props.onEnter ? onEnter(props.onEnter) : () => {}
-  const otherProps = omit(['onEnter', 'className', 'inputRef', 'theme'], props)
+  const otherProps = omit(['onEnter', 'className', 'inputRef', 'theme', 'showClearButton'], props)
   const clear = () => onChange && onChange({target: {value: ''}})
 
   return <div styleName={theme.wrapperStyle || 'wrapper'} className={theme.wrapper || className}>

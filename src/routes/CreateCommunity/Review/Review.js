@@ -11,9 +11,27 @@ const theme = {
   wrapperStyle: 'center'
 }
 export default class Review extends Component {
-  setState = () => {
-
+  constructor () {
+    super()
+    this.state = {
+      readOnly: {
+        name: true,
+        email: true,
+        communityName: true,
+        domainName: true
+      }
+    }
   }
+
+  editHandler = (name) => {
+    this.setState({
+      readOnly: {
+        ...this.state.readOnly,
+        [name]: false
+      }
+    })
+  }
+
   render () {
     const { currentUser } = this.props
     return <div styleName='flex-wrapper'>
@@ -32,18 +50,26 @@ export default class Review extends Component {
           <ReviewTextInput
             label={'Your Name'}
             value={currentUser && currentUser.name}
+            readOnly={this.state.readOnly.name}
+            editHandler={() => this.editHandler('name')}
           />
           <ReviewTextInput
             label={'Your Email'}
             value={currentUser && currentUser.email}
+            readOnly={this.state.readOnly.email}
+            editHandler={() => this.editHandler('email')}
           />
           <ReviewTextInput
             label={'Community Name'}
             value={this.props.communityName}
+            readOnly={this.state.readOnly.communityName}
+            editHandler={() => this.editHandler('communityName')}
           />
           <ReviewTextInput
             label={'Domain'}
             value={this.props.domainName}
+            readOnly={this.state.readOnly.domain}
+            editHandler={() => this.editHandler('domainName')}
           />
         </div>
       </div>
@@ -57,7 +83,7 @@ export default class Review extends Component {
   }
 }
 
-export function ReviewTextInput ({label, value, readOnly = true}) {
+export function ReviewTextInput ({label, value, editHandler, readOnly = true}) {
   return <div styleName='review-input-text-row'>
     <div styleName='review-input-text-label'>
       <span>{label}</span>
@@ -73,7 +99,7 @@ export function ReviewTextInput ({label, value, readOnly = true}) {
       />
     </div>
     <div styleName='review-input-edit'>
-      <span styleName='edit-button' onClick={() => this.makeEditable('name')}>Edit</span>
+      <span styleName='edit-button' onClick={editHandler}>Edit</span>
     </div>
   </div>
 }
