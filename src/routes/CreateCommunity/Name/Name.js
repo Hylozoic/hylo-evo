@@ -32,13 +32,11 @@ export default class Name extends Component {
   }
 
   submit = () => {
-    this.props.addName(this.state.name)
+    this.props.addCommunityName(this.state.name)
     this.props.goToNextStep()
   }
 
   render () {
-    console.log('this.props.communityName', this.props.communityName)
-
     return <div styleName='flex-wrapper'>
       <LeftSidebar
         theme={sidebarTheme}
@@ -58,7 +56,6 @@ export default class Name extends Component {
             type='text'
             name='community-name'
             onChange={this.handleNameChange}
-            inputRef={input => { this.email = input }}
             value={this.state.name}
             theme={theme}
             placeholder="What's the name of your community?"

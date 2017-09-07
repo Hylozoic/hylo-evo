@@ -30,9 +30,12 @@ export default class Domain extends Component {
     })
   }
 
-  render () {
-    console.log('Domain this.props.communityName', this.props.communityName)
+  submit = () => {
+    this.props.addCommunityDomain(this.state.domain)
+    this.props.goToNextStep()
+  }
 
+  render () {
     return <div styleName='flex-wrapper'>
       <LeftSidebar
         theme={sidebarTheme}
@@ -53,14 +56,13 @@ export default class Domain extends Component {
             name='community-name'
             value={this.state.domain}
             onChange={this.handleDomainChange}
-            inputRef={input => { this.email = input }}
             theme={theme}
             placeholder='Choose a domain name'
           />
         </div>
       </div>
       <ModalFooter
-        submit={this.props.goToNextStep}
+        submit={this.submit}
         previous={this.props.goToPreviousStep}
         hidePrevious={false}
         continueText={'Continue'}
