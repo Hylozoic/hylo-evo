@@ -10,6 +10,11 @@ const theme = {
   inputStyle: 'modal-input',
   wrapperStyle: 'center'
 }
+
+const sidebarTheme = {
+  sidebarHeader: 'sidebar-header-full-page',
+  sidebarText: 'gray-text sidebar-text-full-page'
+}
 export default class Domain extends Component {
   setState = () => {
 
@@ -17,6 +22,7 @@ export default class Domain extends Component {
   render () {
     return <div styleName='flex-wrapper'>
       <LeftSidebar
+        theme={sidebarTheme}
         header='Choose an address for your community'
         body='Your URL is the address that members will use to access your community online. The shorter the better!'
       />

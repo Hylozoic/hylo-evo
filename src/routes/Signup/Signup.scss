@@ -41,6 +41,15 @@
   font-size: 18px;
 }
 
+.sidebar-header-full-page {
+  color: $color-caribbean-green;
+  margin-top: 20px;
+  font-size: 18px;
+  padding-left: 25px;
+  padding-right: 35px;
+}
+
+
 .change-avatar-button {
   margin: 0 auto;
   width: 20px;
@@ -119,6 +128,13 @@
   font-size: 14px;
   font-weight: lighter;
 }
+.sidebar-text-full-page {
+  font-size: 14px;
+  font-weight: lighter;
+  padding-left: 25px;
+  padding-right: 95px;
+}
+
 .loading-background-image {
   height: 100px;
   width: 100px;

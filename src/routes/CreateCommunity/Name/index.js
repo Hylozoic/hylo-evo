@@ -10,6 +10,12 @@ const theme = {
   inputStyle: 'modal-input',
   wrapperStyle: 'center'
 }
+
+const sidebarTheme = {
+  sidebarHeader: 'sidebar-header-full-page',
+  sidebarText: 'gray-text sidebar-text-full-page'
+}
+
 export default class Name extends Component {
   setState = () => {
 
@@ -17,6 +23,7 @@ export default class Name extends Component {
   render () {
     return <div styleName='flex-wrapper'>
       <LeftSidebar
+        theme={sidebarTheme}
         header="Great, let's get started"
         body="All good things start somewhere! Let's kick things off with a catchy name for your community."
       />
