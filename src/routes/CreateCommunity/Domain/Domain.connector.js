@@ -1,5 +1,12 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+import { getCommunityName } from '../CreateCommunity.store'
+
+export function mapStateToProps (state, props) {
+  return {
+    communityName: getCommunityName(state)
+  }
+}
 
 export function mapDispatchToProps (dispatch, props) {
   return {
@@ -8,4 +15,4 @@ export function mapDispatchToProps (dispatch, props) {
   }
 }
 
-export default connect(null, mapDispatchToProps)
+export default connect(mapStateToProps, mapDispatchToProps)

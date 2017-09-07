@@ -53,6 +53,9 @@ import {
 import {
   DELETE_COMMENT_PENDING
 } from 'routes/PostDetail/Comments/Comment/Comment.store'
+import {
+  ADD_COMMUNITY_NAME
+} from 'routes/CreateCommunity/CreateCommunity.store'
 
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
@@ -332,6 +335,10 @@ export default function ormReducer (state = {}, action) {
     case DELETE_COMMENT_PENDING:
       const comment = Comment.withId(meta.id)
       comment.delete()
+      break
+
+    case ADD_COMMUNITY_NAME:
+      console.log('ADD_COMMUNITY_NAME', payload)
       break
   }
 

@@ -23,6 +23,7 @@ import AllTopics from 'routes/AllTopics/AllTopics.store'
 import Search from 'routes/Search/Search.store'
 import queryResults from './queryResults'
 import FeedList from 'components/FeedList/FeedList.store'
+import CreateCommunity from 'routes/CreateCommunity/CreateCommunity.store'
 
 import { handleSetState, composeReducers } from './util'
 
@@ -52,7 +53,8 @@ const combinedReducers = combineReducers({
   AllTopics,
   ModeratorsSettings,
   Search,
-  FeedList
+  FeedList,
+  CreateCommunity
 })
 
 export default composeReducers(combinedReducers, handleSetState)
