@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import orm from './ormReducer'
+import login from 'store/reducers/login'
 import pending from './pending'
 // Local store
 // generator-marker-local-store-import
@@ -14,7 +15,6 @@ import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import PostEditor from 'components/PostEditor/PostEditor.store'
 import MessageForm from 'components/MessageForm/MessageForm.store'
-import Login from 'routes/Login/Login.store'
 import Members from 'routes/Members/Members.store'
 import ThreadList from 'components/ThreadList/ThreadList.store'
 import ModeratorsSettings from 'routes/CommunitySettings/ModeratorsSettingsTab/ModeratorsSettingsTab.store'
@@ -30,6 +30,7 @@ const combinedReducers = combineReducers({
   // Global store
   orm,
   router: routerReducer,
+  login,
   pending,
   queryResults,
 
@@ -45,7 +46,6 @@ const combinedReducers = combineReducers({
   PeopleTyping,
   HyloEditor,
   PostEditor,
-  Login,
   ThreadList,
   Members,
   FullPageModal,

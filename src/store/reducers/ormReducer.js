@@ -14,7 +14,8 @@ import {
   RESET_NEW_POST_COUNT_PENDING,
   TOGGLE_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_THREAD_READ_TIME,
-  VOTE_ON_POST_PENDING
+  VOTE_ON_POST_PENDING,
+  UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING
 } from 'store/constants'
 import { REMOVE_MEMBER_PENDING } from 'routes/Members/Members.store'
 import {
@@ -40,6 +41,10 @@ import {
   UPDATE_COMMUNITY_SETTINGS_PENDING
 } from 'routes/CommunitySettings/CommunitySettings.store'
 import {
+  SIGNUP_ADD_SKILL,
+  SIGNUP_REMOVE_SKILL_PENDING
+} from 'routes/Signup/AddSkills/AddSkills.store'
+import {
   CREATE_INVITATIONS,
   RESEND_INVITATION_PENDING,
   REINVITE_ALL_PENDING,
@@ -47,7 +52,7 @@ import {
 } from 'routes/CommunitySettings/InviteSettingsTab/InviteSettingsTab.store'
 import {
   DELETE_COMMENT_PENDING
-} from 'routes/PostDetail/Comments/Comment/Comment.store.js'
+} from 'routes/PostDetail/Comments/Comment/Comment.store'
 
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
@@ -259,6 +264,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case UPDATE_USER_SETTINGS_PENDING:
+    case UPDATE_USER_SETTINGS_GLOBAL_PENDING:
       me = Me.first()
       const changes = {
         ...meta.changes,
@@ -283,10 +289,21 @@ export default function ormReducer (state = {}, action) {
       person.skills.remove(meta.skillId)
       break
 
+    case SIGNUP_REMOVE_SKILL_PENDING:
+      me = Me.withId(Me.first().id)
+      me.skills.remove(meta.skillId)
+      break
+
     case ADD_SKILL:
       const skill = payload.data.addSkill
       person = Person.withId(Me.first().id)
       person.updateAppending({skills: [Skill.create(skill)]})
+      break
+
+    case SIGNUP_ADD_SKILL:
+      const mySkill = payload.data.addSkill
+      me = Me.withId(Me.first().id)
+      me.updateAppending({skills: [Skill.create(mySkill)]})
       break
 
     case CREATE_INVITATIONS:

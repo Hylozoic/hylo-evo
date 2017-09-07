@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Signup renders correctly 1`] = `
+<div>
+  <h1
+    data-styleName="title"
+  >
+    Welcome to Hylo
+  </h1>
+  <p
+    data-styleName="blurb"
+  >
+    Stay connected, organized, and engaged with your community.
+  </p>
+  <div
+    data-styleName="field"
+  >
+    <label
+      data-styleName="field-label"
+    >
+      Full name
+    </label>
+    <TextInput
+      autoFocus={true}
+      inputRef={[Function]}
+      name="name"
+      onChange={[Function]}
+      type="text"
+    />
+  </div>
+  <div
+    data-styleName="field"
+  >
+    <label
+      data-styleName="field-label"
+    >
+      Your email address
+    </label>
+    <TextInput
+      inputRef={[Function]}
+      name="email"
+      onChange={[Function]}
+      type="text"
+    />
+  </div>
+  <div
+    data-styleName="field"
+  >
+    <label
+      data-styleName="field-label"
+    >
+      Password
+    </label>
+    <TextInput
+      name="password"
+      onChange={[Function]}
+      onEnter={[Function]}
+      type="password"
+    />
+  </div>
+  <Button
+    data-styleName="submit"
+    label="Sign Up"
+    onClick={[Function]}
+  />
+  <p
+    data-styleName="connect-label"
+  >
+    Or connect with:
+  </p>
+  <div
+    data-styleName="auth-buttons"
+  >
+    <a
+      data-styleName="facebook"
+      onClick={[Function]}
+    >
+      <Icon
+        data-styleName="auth-icon"
+        name="Facebook"
+      />
+      Facebook
+    </a>
+    <a
+      data-styleName="google"
+      onClick={[Function]}
+    >
+      <Icon
+        data-styleName="auth-icon"
+        name="Google"
+      />
+      Google
+    </a>
+  </div>
+</div>
+`;

@@ -42,6 +42,7 @@ $layout-spacing: 70px;
 $messages-header-height: 80px;
 $post-editor-width: 590px;
 $post-editor-height: 516px;
+$signup-modal-width: 880px;
 
 $messages-body-height: 420px;
 
@@ -68,12 +69,14 @@ $color-black-10: rgba($color-black, .1);
 $color-athens-gray: #FAFBFC;
 $color-athens-gray-medium: #F1F2F4;
 $color-athens-gray-dark: #E1E5EA;
+$color-athens-gray-dark-50: rgba($color-athens-gray-dark, .5);
 $color-ghost: #CCD1D7;
 $color-ghost-30: rgba($color-ghost, .3);
 $color-cape-cod: #363D3C;
 $color-cape-cod-10: rgba($color-cape-cod, .1);
 $color-cape-cod-05: rgba($color-cape-cod, .05);
 $color-dove-gray-50: rgba(#717171, .5);
+$color-dove-gray-75: rgba(#717171, .75);
 $color-black-squeeze: #E5EEF5;
 $color-cod-gray-0: rgba(#161616, 0);
 $color-cod-gray-dark: #1C1C1C;

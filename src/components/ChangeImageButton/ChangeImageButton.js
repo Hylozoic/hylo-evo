@@ -9,7 +9,8 @@ export default class ChangeImageButton extends Component {
   }
 
   render () {
-    const { uploadImage, update, uploadSettings, loading, className } = this.props
+    const { uploadImage, update, uploadSettings, loading, className, child } = this.props
+    const iconName = loading ? 'Clock' : 'AddImage'
     const onClick = loading
       ? () => {}
       : () => uploadImage(uploadSettings)
@@ -18,9 +19,7 @@ export default class ChangeImageButton extends Component {
         if (error) return
         update(payload)
       })
-
-    const iconName = loading ? 'Clock' : 'AddImage'
-
+    if (child) return <div onClick={onClick}>{child}</div>
     return <div styleName='button' onClick={onClick} className={className}>
       <Icon name={iconName} styleName='icon' />
     </div>

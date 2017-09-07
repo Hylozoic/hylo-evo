@@ -1,0 +1,127 @@
+$third-party-icon-size: 14px;
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.particlesBackgroundWrapper {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  z-index: -1000;
+  height: 100vh;
+  width: 100vw;
+  line-height: 100vh;
+}
+
+.topRow {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.container {
+  background-color: white;
+  // box-shadow: 15px 15px 52px -14px $color-ghost-30;
+  box-shadow: 0px 0px 6px 0px $color-black-10;
+  padding: 50px 40px 40px;
+  border-radius: 8px;
+  // border-top: 1px solid $color-ghost-30;
+  // border-left: 1px solid $color-ghost-30;
+  width: 420px;
+}
+
+.title {
+  composes: hdr-headline from 'css/typography.scss';
+  color: $color-caribbean-green;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.field {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.field-label {
+  composes: caption-drk-lg from 'css/typography.scss';
+  display: block;
+}
+
+.submit {
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.connect-label {
+  composes: caption-lt-lg from 'css/typography.scss';
+  margin-top: 40px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.auth-buttons {
+  composes: caption-lt-lg from 'css/typography.scss';
+  background-color: $color-seashell;
+  border-radius: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > a {
+    display: block;
+    text-align: center;
+    height: 42px;
+    line-height: 40px;
+    vertical-align: middle;
+    flex: 1;
+    cursor: pointer;
+  }
+}
+
+.auth-icon {
+  margin-right: 11px;
+  font-size: $third-party-icon-size;
+}
+
+.facebook {
+  span {
+    position: relative;
+    top: 1px;
+  }
+}
+
+.google {
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+  span {
+    position: relative;
+    top: 1px;
+  }
+}
+
+.error {
+  color: $color-amaranth;
+  background-color: transparentize($color-amaranth, 0.9);
+  border: 1px solid $color-amaranth;
+  border-radius: 4px;
+  padding: 9px 16px;
+  margin-bottom: 20px;
+}
+
+.below-container {
+  margin-top: $space-2x;
+  a {
+    color: white !important;
+    cursor: pointer;
+  }
+}

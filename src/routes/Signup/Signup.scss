@@ -1,0 +1,380 @@
+.flex-wrapper {
+  display: flex;
+  flex-direction: row;
+  background: $color-white;
+  min-width: 680px;
+  min-height: 500px;
+  border-radius: $space-1x;
+}
+
+.sidebar {
+  min-height: 1px; // Prevent collapsing
+  height: 100%;
+  flex: 0.3;
+  margin-left: 24px;
+  margin-top: 16px;
+  margin-right: 30px;
+}
+
+.panel {
+  min-height: 1px; // Prevent collapsing
+  height: 500px;
+  flex: 0.7;
+  padding-left: 16px;
+  padding-top: 16px;
+  border-top-right-radius: $space-1x;
+  border-bottom-right-radius: $space-1x;
+  background-color: $color-caribbean-green;
+  padding-right: 24px;
+}
+
+.step-count {
+  float: right;
+  letter-spacing: 1px;
+  font-size: 10px;
+  color: $color-white;
+}
+
+.sidebar-header {
+  color: $color-caribbean-green;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.change-avatar-button {
+  margin: 0 auto;
+  width: 20px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-upload-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.signup-modal-footer {
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 20px;
+  right: 0;
+}
+
+.footer-buttons {
+  float: right;
+  margin-bottom: 10px;
+}
+
+.continue-button {
+  color: $color-caribbean-green;
+  background-color: $color-white;
+  text-align: center;
+  font-size: 14px;
+  padding: 6px 30px 6px 30px;
+  border-radius: 25px;
+  max-width: 10px;
+  cursor: pointer;
+}
+
+.continue-button:hover {
+  color: $color-caribbean-green;
+  background-color: $color-white;
+}
+
+.previous-button {
+  color: $color-white;
+  background-color: $color-caribbean-green;
+  border: 1px solid $color-white;
+  text-align: center;
+  font-size: 12px;
+  margin-right: 20px;
+  padding: 4px 16px 4px 16px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.previous-button:hover {
+  color: $color-caribbean-green;
+  background-color: $color-white;
+}
+
+.press-enter {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 10px;
+  color: $color-white;
+  font-style: italic;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.sidebar-text {
+  font-size: 14px;
+  font-weight: lighter;
+}
+.loading-background-image {
+  height: 100px;
+  width: 100px;
+  background-color: $color-athens-gray-dark-50;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+}
+
+.white-text {
+  color: $color-white
+}
+
+.signup-modal {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.signup-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.signup-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 660px;
+  margin: -($post-editor-height/2) auto 0;
+  top: 50%;
+}
+
+.pill-container {
+  position: relative;
+}
+
+.float-right {
+  float: right;
+  margin-right: 50px;
+}
+
+.logo {
+  @include image(100px);
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.bottom {
+  position:absolute;
+  bottom:40px;
+  right:0;
+}
+
+.center-vertical-side {
+  position: absolute;
+  top: 47.5%;
+  width: 20%;
+}
+
+
+.center-text {
+  text-align: center;
+}
+
+.signup-input-review {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid $color-athens-gray-dark-50;
+  width: 60%;
+  margin-right: 10px;
+  margin-left: 10px;
+  font-size: 24px;
+  color: $color-white;
+  font-weight: lighter;
+  padding-bottom: 10px;
+}
+
+.signup-padding {
+  padding-top: 70px;
+}
+
+.large-input-text {
+  font-size: 24px;
+}
+
+.signup-input {
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  color: $color-white;
+  font-weight: lighter;
+}
+
+.gray-bottom-border {
+  border-bottom: 1px solid $color-athens-gray-dark-50;
+}
+.review-input-padding {
+  padding-bottom: 5px;
+}
+
+.signup-input::placeholder {
+  color: $color-white;
+}
+
+.signup-input:focus {
+    outline: none;
+}
+
+.close-button {
+  letter-spacing: 1px;
+  font-size: 10px;
+  opacity: 0.5;
+}
+
+.upload-background-image {
+  height: 100px;
+  width: 100px;
+  background-position: center;
+  padding: 30px;
+  background-color: $color-athens-gray-dark-50;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+}
+
+.contain {
+  background-size: contain;
+}
+
+.icon {
+  background-position: center;
+  position: absolute;
+  margin-top: 30px;
+  color: $color-white;
+}
+
+
+.skills {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0px 50px 0px 50px;
+}
+
+.skill {
+  margin-right: 10px;
+  color: $color-white;
+  padding: 2px 12px 2px 12px;
+  border-radius: 25px;
+  margin: 2px;
+  border: 1px solid $color-white;
+  font-size: 12.5px;
+}
+
+.skill:hover {
+  background-color: $color-white;
+  color: $color-caribbean-green;
+  cursor: pointer;
+}
+
+.review-skill {
+  margin-right: 10px;
+  color: $color-white;
+  padding: 2px 12px 2px 12px;
+  border-radius: 25px;
+  margin: 2px;
+  border: 1px solid $color-white;
+  font-size: 12.5px;
+  cursor: default;
+}
+
+.your-skills-label {
+  padding-top: 30px;
+  color: $color-white;
+  font-size: 12px;
+  font-weight: 200;
+}
+
+.your-skills-list {
+  padding-left: 30px;
+  margin-top: -24px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0px 50px 0px 50px;
+}
+
+.your-skills {
+  margin-top: 30px;
+  background-color: $color-black-10;
+  padding-top: -30px;
+  margin-left: -15px;
+  margin-right: -24.5px;
+  padding-left: 20px;
+  padding-bottom: 30px;
+}
+
+.text-opacity {
+  opacity: 0.7;
+}
+
+.final-edit {
+  margin-top: 20px;
+}
+
+.left-input-column {
+  float: left;
+  width: 22.5%;
+  font-size: 10px;
+  color: $color-white;
+  margin-top: 5px;
+}
+.right-input-column {
+  float: right;
+  width: 22.5%;
+  margin-top: 3px;
+}
+
+.center-input-column {
+  display:
+  inline-block;
+  width: 45%;
+}
+
+.center-input-column-scrollable {
+  display:
+  inline-block;
+  width: 55%;
+  max-height: 125px;
+  overflow-y: scroll;
+  padding-right: -100px;
+}
+
+.three-column-input {
+  margin-left: 5%;
+  width: 90%;
+  margin-bottom: 8px;
+}
+
+.show-button {
+  margin-left: 20px;
+  color: $color-white;
+  cursor: pointer;
+}
+
+.edit-button {
+  float: right;
+  color: $color-white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.gray-text {
+  color: $color-dove-gray-75;
+}

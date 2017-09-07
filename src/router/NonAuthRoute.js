@@ -1,7 +1,7 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router'
 import { connect } from 'react-redux'
-import { pickIsLoggedIn } from 'routes/Login/Login.store'
+import pickIsLoggedIn from 'store/selectors/pickIsLoggedIn'
 import { get } from 'lodash/fp'
 
 function NonAuthRoute ({ component, isLoggedIn, ...rest }) {
