@@ -110,7 +110,7 @@ export default class NetworkSettings extends Component {
       updateNetworkSettings(edits)
     }
 
-    return <FullPageModal narrow>
+    return <FullPageModal narrow goToOnClose={`/n/${network.slug}`}>
       <div>
         <input type='text' styleName='name' onChange={updateSetting('name')} value={name || ''} />
         <div style={bgImageStyle(bannerUrl)} styleName='banner'>
