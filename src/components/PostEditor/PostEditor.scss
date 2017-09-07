@@ -170,7 +170,8 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 24px;
+  padding: 10px 20px;
+  border-top: solid 1px $color-ghost-30;
 }
 
 .image-box {
@@ -181,15 +182,27 @@
 
 .image-preview {
   composes: image-box;
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 .image {
   composes: image-box;
+  position: relative;
+  background-size: cover;
+  background-position: center;
 }
 
 .remove-button {
-
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  border-radius: 50%;
+  color: white;
+  background-color: $color-rhino;
+  font-size: 12px;
+  padding: 1px;
+  border: 1px solid white;
+  background-clip: padding-box;
 }
 
 .add-image {

@@ -246,7 +246,9 @@ export default class PostEditor extends React.Component {
             <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
         </div>
       </div>
-      <ImagePreviews imagePreviews={imagePreviews} />
+      <ImagePreviews
+        imagePreviews={imagePreviews}
+        removeImage={url => console.log('removing', url)} />
       <div styleName='footer'>
         <div styleName='postIn'>
           <div styleName='postIn-label'>Post in</div>
@@ -274,14 +276,15 @@ export default class PostEditor extends React.Component {
   }
 }
 
-export function ImagePreviews ({ imagePreviews }) {
+export function ImagePreviews ({ imagePreviews, removeImage }) {
   if (isEmpty(imagePreviews)) return null
 
   return <div styleName='image-previews'>
     <div styleName='section-label'>Images</div>
-    {imagePreviews.map(url => <div styleName='image-preview' key={url}>
-      <div styleName='remove-button' />
-      <div style={bgImageStyle(url)} styleName='image' />
+    {imagePreviews.map((url, i) => <div styleName='image-preview' key={i}>
+      <div style={bgImageStyle(url)} styleName='image'>
+        <Icon name='Ex' styleName='remove-button' onClick={() => removeImage(url)} />
+      </div>
     </div>)}
     <div styleName='add-image'>+</div>
   </div>
