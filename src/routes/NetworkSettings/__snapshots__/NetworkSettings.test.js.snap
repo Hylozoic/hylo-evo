@@ -27,7 +27,7 @@ exports[`NetworkSettings renders correctly 1`] = `
               "rotate": "exif",
               "width": 1600,
             },
-            "id": undefined,
+            "id": "mycelium",
             "path": "network/1/banner",
             "subject": "network-banner",
           }
@@ -49,7 +49,7 @@ exports[`NetworkSettings renders correctly 1`] = `
               "rotate": "exif",
               "width": 160,
             },
-            "id": undefined,
+            "id": "mycelium",
             "path": "network/1/avatar",
             "subject": "network-avatar",
           }
