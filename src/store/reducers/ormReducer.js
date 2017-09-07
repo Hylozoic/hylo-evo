@@ -304,6 +304,7 @@ export default function ormReducer (state = {}, action) {
       const mySkill = payload.data.addSkill
       me = Me.withId(Me.first().id)
       me.updateAppending({skills: [Skill.create(mySkill)]})
+      break
 
     case CREATE_INVITATIONS:
       community = Community.withId(meta.communityId)

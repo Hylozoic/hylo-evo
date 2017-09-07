@@ -28,7 +28,7 @@ export default class AddSkills extends Component {
 
   componentWillMount = () => {
     const { currentUser } = this.props
-    if (!get('settings.signupInProgress', currentUser)) this.props.goBack()
+    if (currentUser && !get('settings.signupInProgress', currentUser)) this.props.goBack()
   }
 
   componentDidMount = () => {
