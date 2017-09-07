@@ -45,7 +45,7 @@ it('just calls next() if user is not logged in', () => {
     headers: {cookie: 'yeah'}
   }
 
-  return redirectToApp(req, res, next, makeStore(false))
+  return redirectToApp(req, res, next, {mockStore: makeStore(false)})
   .then(() => {
     expect(next).toBeCalled()
     expect(res.redirect).not.toBeCalled()
@@ -59,7 +59,7 @@ it('redirects to /app when user is logged in', () => {
     headers: {cookie: 'yeah'}
   }
 
-  return redirectToApp(req, res, next, makeStore(true))
+  return redirectToApp(req, res, next, {mockStore: makeStore(true)})
   .then(() => {
     expect(next).not.toBeCalled()
     expect(res.redirect).toBeCalledWith('/app?rd=1')

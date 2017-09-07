@@ -5,12 +5,12 @@ import createHistory from 'history/createMemoryHistory'
 // this is defined in hylo-node:config/session.js
 export const HYLO_COOKIE_NAME = 'hylo.sid.1'
 
-export default function (req, res, next, store) {
+export default function (req, res, next, opts = {}) {
   if (req.url !== '/' || !req.cookies[HYLO_COOKIE_NAME]) {
     return next()
   }
 
-  if (!store) store = createStore(createHistory(), req)
+  const store = opts.mockStore || createStore(createHistory(), req)
 
   return store.dispatch(checkLogin())
   .then(({ payload }) => {
