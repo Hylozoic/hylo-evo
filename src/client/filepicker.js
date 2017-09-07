@@ -8,7 +8,8 @@ const services = [
   'FACEBOOK',
   'INSTAGRAM',
   'DROPBOX',
-  'GOOGLE_DRIVE'
+  'GOOGLE_DRIVE',
+  'IMAGESEARCH'
 ]
 
 /*
