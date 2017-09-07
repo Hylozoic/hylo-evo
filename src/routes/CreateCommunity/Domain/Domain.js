@@ -35,6 +35,10 @@ export default class Domain extends Component {
     this.props.goToNextStep()
   }
 
+  componentWillMount = () => {
+    const { domainName } = this.props
+    if (domainName) this.setState({domain: domainName})
+  }
   render () {
     return <div styleName='flex-wrapper'>
       <LeftSidebar

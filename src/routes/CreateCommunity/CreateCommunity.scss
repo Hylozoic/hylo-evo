@@ -121,3 +121,65 @@
   font-size: 10px;
   color: $color-white-60;
 }
+
+
+
+
+
+
+
+.review-input-text-row {
+  margin-left: 5%;
+  width: 90%;
+  margin-bottom: 8px;
+  border-bottom: 1px solid $color-athens-gray-dark-50;
+}
+
+.gray-bottom-border {
+  border-bottom: 1px solid $color-athens-gray-dark-50;
+}
+
+.review-input-text-label {
+  float: left;
+  width: 12.5%;
+  font-size: 10px;
+  color: $color-white;
+  margin-top: 5px;
+  opacity: 0.7;
+}
+
+.review-input-text {
+  display:
+  inline-block;
+  width: 65%;
+}
+
+.review-input-edit {
+  float: right;
+  width: 12.5%;
+  margin-top: 3px;
+}
+
+.signup-input {
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  color: $color-white;
+  font-weight: lighter;
+}
+
+.signup-input::placeholder {
+  color: $color-white;
+}
+
+.signup-input:focus {
+    outline: none;
+}
+
+.edit-button {
+  float: right;
+  color: $color-white;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.7;
+}

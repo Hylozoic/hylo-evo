@@ -36,6 +36,11 @@ export default class Name extends Component {
     this.props.goToNextStep()
   }
 
+  componentWillMount = () => {
+    const { communityName } = this.props
+    if (communityName) this.setState({name: communityName})
+  }
+
   render () {
     return <div styleName='flex-wrapper'>
       <LeftSidebar

@@ -7,7 +7,7 @@ import { bgImageStyle } from 'util/index'
 import ModalFooter from '../ModalFooter'
 
 const theme = {
-  inputStyle: 'modal-input',
+  inputStyle: 'modal-input partial',
   wrapperStyle: 'center'
 }
 export default class Review extends Component {
@@ -28,14 +28,32 @@ export default class Review extends Component {
           <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
         </div>
         <div styleName='center-vertically'>
-          <TextInput
-            type='text'
-            name='community-name'
-            onChange={this.setState('community-name')}
-            inputRef={input => { this.email = input }}
-            theme={theme}
-            placeholder='Choose a domain name'
-          />
+
+
+
+
+          <div styleName='review-input-text-row'>
+            <div styleName='review-input-text-label'>
+              <span>YOUR NAME</span>
+            </div>
+            <div styleName='review-input-text'>
+              <TextInput
+                type='text'
+                name='community-name'
+                value={''}
+                theme={theme}
+                placeholder="What's the name of your community?"
+              />
+            </div>
+            <div styleName='review-input-edit'>
+              <span styleName='edit-button' onClick={() => this.makeEditable('name')}>Edit</span>
+            </div>
+          </div>
+
+
+
+
+
         </div>
       </div>
       <ModalFooter

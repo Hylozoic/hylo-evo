@@ -4,7 +4,8 @@ import { addCommunityDomain, fetchCommunity } from './Domain.store'
 
 export function mapStateToProps (state, props) {
   return {
-    communityName: state.CreateCommunity.name
+    communityName: state.CreateCommunity.name,
+    domainName: state.CreateCommunity.domain
   }
 }
 
