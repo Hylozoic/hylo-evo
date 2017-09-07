@@ -5,7 +5,7 @@ import React from 'react'
 describe('NetworkSettings', () => {
   it('renders correctly', () => {
     const network = {
-      id: 1
+      id: 1, slug: 'mycelium'
     }
     const moderators = [{id: 2}, {id: 3}]
     const communities = [{id: 4}, {id: 5}]

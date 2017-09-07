@@ -2,6 +2,7 @@
 
 exports[`NetworkSettings renders correctly 1`] = `
 <withRouter(Connect(FullPageModal))
+  goToOnClose="/n/mycelium"
   narrow={true}
 >
   <div>

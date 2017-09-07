@@ -46,6 +46,7 @@ exports[`renders correctly with a community 1`] = `
       },
     ]
   }
+  goToOnClose="/c/foo"
 />
 `;
 
