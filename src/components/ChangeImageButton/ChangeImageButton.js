@@ -9,18 +9,20 @@ export default class ChangeImageButton extends Component {
   }
 
   render () {
-    const { uploadImage, update, uploadSettings, loading, className, child } = this.props
+    const {
+      uploadImage, update, uploadSettings, loading, className, children
+    } = this.props
     const iconName = loading ? 'Clock' : 'AddImage'
     let onClick
     if (loading) {
       onClick = () => {}
     } else {
       onClick = () =>
-        uploadImage(uploadSettings)
-        .then(({ error, payload }) => !error && payload.url && update(payload.url))
+        uploadImage(uploadSettings).then(({ error, payload }) =>
+          !error && payload.url && update(payload.url))
     }
 
-    if (child) return <div onClick={onClick}>{child}</div>
+    if (children) return <div onClick={onClick}>{children}</div>
     return <div styleName='button' onClick={onClick} className={className}>
       <Icon name={iconName} styleName='icon' />
     </div>
