@@ -10,19 +10,19 @@ const theme = {
   inputStyle: 'modal-input',
   wrapperStyle: 'center'
 }
-export default class Name extends Component {
+export default class Privacy extends Component {
   setState = () => {
 
   }
   render () {
     return <div styleName='flex-wrapper'>
       <LeftSidebar
-        header="Great, let's get started"
-        body="All good things start somewhere! Let's kick things off with a catchy name for your community."
+        header='Set the privacy of your community'
+        body='Hylo helps groups stay connected organized and engaged.'
       />
       <div styleName='panel'>
         <div>
-          <span styleName='step-count'>STEP 1/4</span>
+          <span styleName='step-count'>STEP 3/4</span>
         </div>
         <div styleName='center'>
           <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
@@ -34,7 +34,7 @@ export default class Name extends Component {
             onChange={this.setState('community-name')}
             inputRef={input => { this.email = input }}
             theme={theme}
-            placeholder="What's the name of your community?"
+            placeholder='Choose a domain name'
           />
         </div>
       </div>

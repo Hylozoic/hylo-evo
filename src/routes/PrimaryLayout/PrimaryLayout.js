@@ -31,6 +31,9 @@ import AddSkills from 'routes/Signup/AddSkills'
 import Review from 'routes/Signup/Review'
 import CreateCommunity from 'routes/CreateCommunity'
 import Name from 'routes/CreateCommunity/Name'
+import Domain from 'routes/CreateCommunity/Domain'
+import Privacy from 'routes/CreateCommunity/Privacy'
+import CommunityReview from 'routes/CreateCommunity/Review'
 
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
@@ -184,7 +187,10 @@ const signupRoutes = [
   {path: '/signup/review', child: Review}
 ]
 const createCommunityRoutes = [
-  {path: '/create-community/name', child: Name}
+  {path: '/create-community/name', child: Name},
+  {path: '/create-community/domain', child: Domain},
+  {path: '/create-community/privacy', child: Privacy},
+  {path: '/create-community/review', child: CommunityReview}
 ]
 
 export function isSignupPath (path) {
@@ -192,6 +198,7 @@ export function isSignupPath (path) {
 }
 
 export function RedirectToSignupFlow ({ currentUser, pathname }) {
+  return null
   if (!currentUser || !currentUser.settings || currentUser.settings.signupInProgress === 'false') return null
   if (isSignupPath(pathname)) return null
   const destination = '/signup/upload-photo'
