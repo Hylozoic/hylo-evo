@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { addCommunityDomain } from './Domain.store'
+import { addCommunityDomain, fetchCommunity } from './Domain.store'
 
 export function mapStateToProps (state, props) {
   return {
@@ -12,7 +12,8 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     goToNextStep: () => dispatch(push('/create-community/privacy')),
     goToPreviousStep: () => dispatch(push('/create-community/name')),
-    addCommunityDomain: (domain) => dispatch(addCommunityDomain(domain))
+    addCommunityDomain: (domain) => dispatch(addCommunityDomain(domain)),
+    fetchCommunity: (slug) => dispatch(fetchCommunity(slug))
   }
 }
 

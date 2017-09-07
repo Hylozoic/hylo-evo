@@ -18,7 +18,6 @@ export default class Signup extends React.Component {
   render () {
     const { className } = this.props
     const setState = key => event => this.setState({[key]: event.target.value})
-    console.log(this.state)
     return <div className={className}>
       <h1 styleName='title'>Welcome to Hylo</h1>
       <p styleName='blurb'>Stay connected, organized, and engaged with your community.</p>
