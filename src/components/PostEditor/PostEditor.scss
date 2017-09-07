@@ -1,3 +1,12 @@
+// mixins
+
+.section-label {
+  color: $color-rhino-80;
+  white-space: nowrap;
+  margin-right: 28px;
+  font-size: 14px;
+}
+
 // Overall wrapper
 
 .wrapper {
@@ -122,18 +131,6 @@
   background-color: $color-medium-purple;
 }
 
-.image-previews {
-
-}
-
-.image-preview {
-
-}
-
-.add-image {
-  
-}
-
 // Footer area
 
 .footer {
@@ -148,9 +145,7 @@
   display: flex;
   align-items: center;
   &-label {
-    color: $color-rhino-80;
-    white-space: nowrap;
-    margin-right: $space-4x;
+    composes: section-label;
   }
   &-communities {
     /* !empty */
@@ -167,4 +162,41 @@
 
 .postButton {
   /* !empty */
+}
+
+// ImagePreviews
+
+.image-previews {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 24px;
+}
+
+.image-box {
+  width: 100px;
+  height: 100px;
+  border-radius: 4px;
+}
+
+.image-preview {
+  composes: image-box;
+  margin-right: 10px;
+}
+
+.image {
+  composes: image-box;
+}
+
+.remove-button {
+
+}
+
+.add-image {
+  composes: image-box;
+  padding-top: 16px;
+  text-align: center;
+  border: 2px dashed $color-loblolly;
+  font-size: 40px;
+  color: $color-rhino-30;
 }

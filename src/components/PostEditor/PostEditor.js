@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { get } from 'lodash/fp'
+import { get, isEmpty } from 'lodash/fp'
 import cx from 'classnames'
 import styles from './PostEditor.scss'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
@@ -9,6 +9,7 @@ import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 import LinkPreview from './LinkPreview'
+import { bgImageStyle } from 'util/index'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
@@ -245,12 +246,7 @@ export default class PostEditor extends React.Component {
             <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
         </div>
       </div>
-      <imagePreviews imagePreviews={imagePreviews} />
-      {imagePreviews && <div styleName='image-previews'>
-        {imagePreviews.map(url => <div styleName='image-preview'>
-        </div>)}
-        <div styleName='add-image' />
-      </div>}
+      <ImagePreviews imagePreviews={imagePreviews} />
       <div styleName='footer'>
         <div styleName='postIn'>
           <div styleName='postIn-label'>Post in</div>
@@ -276,4 +272,17 @@ export default class PostEditor extends React.Component {
       </div>
     </div>
   }
+}
+
+export function ImagePreviews ({ imagePreviews }) {
+  if (isEmpty(imagePreviews)) return null
+
+  return <div styleName='image-previews'>
+    <div styleName='section-label'>Images</div>
+    {imagePreviews.map(url => <div styleName='image-preview' key={url}>
+      <div styleName='remove-button' />
+      <div style={bgImageStyle(url)} styleName='image' />
+    </div>)}
+    <div styleName='add-image'>+</div>
+  </div>
 }
