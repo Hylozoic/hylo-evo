@@ -190,7 +190,8 @@ const signupRoutes = [
 const createCommunityRoutes = [
   {path: '/create-community/name', child: Name},
   {path: '/create-community/domain', child: Domain},
-  {path: '/create-community/privacy', child: Privacy},
+  // TODO: Implement create community privacy component when implemented on the server
+  // {path: '/create-community/privacy', child: Privacy},
   {path: '/create-community/review', child: CommunityReview}
 ]
 

@@ -11,7 +11,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    goToNextStep: () => dispatch(push('/create-community/privacy')),
+    goToNextStep: () => dispatch(push('/create-community/review')),
     goToPreviousStep: () => dispatch(push('/create-community/name')),
     addCommunityDomain: (domain) => dispatch(addCommunityDomain(domain)),
     fetchCommunity: (slug) => dispatch(fetchCommunity(slug))
