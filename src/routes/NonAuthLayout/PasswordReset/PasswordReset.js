@@ -7,7 +7,7 @@ import './PasswordReset.scss'
 export default class PasswordReset extends Component {
   constructor (props) {
     super(props)
-    this.state = {email: '', success: false}
+    this.state = {email: '', success: false, error: false}
   }
 
   componentDidMount () {
