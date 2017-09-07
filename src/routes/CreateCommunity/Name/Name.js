@@ -17,9 +17,20 @@ const sidebarTheme = {
 }
 
 export default class Name extends Component {
-  setState = () => {
-
+  constructor (props) {
+    super(props)
+    this.state = {
+      'name': ''
+    }
   }
+
+  handleNameChange = (event) => {
+    const name = event.target.value
+    this.setState({
+      name
+    })
+  }
+
   render () {
     return <div styleName='flex-wrapper'>
       <LeftSidebar
@@ -39,8 +50,9 @@ export default class Name extends Component {
           <TextInput
             type='text'
             name='community-name'
-            onChange={this.setState('community-name')}
+            onChange={this.handleNameChange}
             inputRef={input => { this.email = input }}
+            value={this.state.name}
             theme={theme}
             placeholder="What's the name of your community?"
           />

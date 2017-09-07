@@ -16,9 +16,20 @@ const sidebarTheme = {
   sidebarText: 'gray-text sidebar-text-full-page'
 }
 export default class Domain extends Component {
-  setState = () => {
-
+  constructor (props) {
+    super(props)
+    this.state = {
+      'domain': ''
+    }
   }
+
+  handleDomainChange = (event) => {
+    const domain = event.target.value
+    this.setState({
+      domain
+    })
+  }
+
   render () {
     return <div styleName='flex-wrapper'>
       <LeftSidebar
@@ -38,7 +49,8 @@ export default class Domain extends Component {
           <TextInput
             type='text'
             name='community-name'
-            onChange={this.setState('community-name')}
+            value={this.state.domain}
+            onChange={this.handleDomainChange}
             inputRef={input => { this.email = input }}
             theme={theme}
             placeholder='Choose a domain name'
