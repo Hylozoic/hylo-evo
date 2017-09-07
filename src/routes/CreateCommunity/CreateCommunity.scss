@@ -115,6 +115,12 @@
   width: 68%;
 }
 
+.center-review {
+  position: absolute;
+  top: 30%;
+  width: 68%;
+}
+
 .text-input-label {
   padding-left:5%;
   letter-spacing: 1px;
@@ -122,16 +128,10 @@
   color: $color-white-60;
 }
 
-
-
-
-
-
-
 .review-input-text-row {
   margin-left: 5%;
   width: 90%;
-  margin-bottom: 8px;
+  margin-bottom: 30px;
   border-bottom: 1px solid $color-athens-gray-dark-50;
 }
 

@@ -27,33 +27,11 @@ export default class Review extends Component {
         <div styleName='center'>
           <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
         </div>
-        <div styleName='center-vertically'>
-
-
-
-
-          <div styleName='review-input-text-row'>
-            <div styleName='review-input-text-label'>
-              <span>YOUR NAME</span>
-            </div>
-            <div styleName='review-input-text'>
-              <TextInput
-                type='text'
-                name='community-name'
-                value={''}
-                theme={theme}
-                placeholder="What's the name of your community?"
-              />
-            </div>
-            <div styleName='review-input-edit'>
-              <span styleName='edit-button' onClick={() => this.makeEditable('name')}>Edit</span>
-            </div>
-          </div>
-
-
-
-
-
+        <div styleName='center-review'>
+          <ReviewTextInput label={'Your Name'} />
+          <ReviewTextInput label={'Your Email'} />
+          <ReviewTextInput label={'Community Name'} />
+          <ReviewTextInput label={'Domain'} />
         </div>
       </div>
       <ModalFooter
@@ -64,4 +42,24 @@ export default class Review extends Component {
         />
     </div>
   }
+}
+
+export function ReviewTextInput ({label}) {
+  return <div styleName='review-input-text-row'>
+    <div styleName='review-input-text-label'>
+      <span>{label}</span>
+    </div>
+    <div styleName='review-input-text'>
+      <TextInput
+        type='text'
+        name='community-name'
+        value={''}
+        theme={theme}
+        placeholder="What's the name of your community?"
+      />
+    </div>
+    <div styleName='review-input-edit'>
+      <span styleName='edit-button' onClick={() => this.makeEditable('name')}>Edit</span>
+    </div>
+  </div>
 }
