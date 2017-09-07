@@ -62,6 +62,7 @@ export default class Domain extends Component {
             onChange={this.handleDomainChange}
             theme={theme}
             placeholder='Choose a domain name'
+            showClearButton={false}
           />
         </div>
       </div>

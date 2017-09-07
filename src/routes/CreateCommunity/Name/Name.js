@@ -64,6 +64,7 @@ export default class Name extends Component {
             value={this.state.name}
             theme={theme}
             placeholder="What's the name of your community?"
+            showClearButton={false}
           />
         </div>
       </div>

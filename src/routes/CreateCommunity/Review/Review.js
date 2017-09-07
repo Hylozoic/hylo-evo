@@ -15,6 +15,7 @@ export default class Review extends Component {
 
   }
   render () {
+    const { currentUser } = this.props
     return <div styleName='flex-wrapper'>
       <LeftSidebar
         header='Everything looking good?'
@@ -28,10 +29,22 @@ export default class Review extends Component {
           <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
         </div>
         <div styleName='center-review'>
-          <ReviewTextInput label={'Your Name'} />
-          <ReviewTextInput label={'Your Email'} />
-          <ReviewTextInput label={'Community Name'} />
-          <ReviewTextInput label={'Domain'} />
+          <ReviewTextInput
+            label={'Your Name'}
+            value={currentUser && currentUser.name}
+          />
+          <ReviewTextInput
+            label={'Your Email'}
+            value={currentUser && currentUser.email}
+          />
+          <ReviewTextInput
+            label={'Community Name'}
+            value={this.props.communityName}
+          />
+          <ReviewTextInput
+            label={'Domain'}
+            value={this.props.domainName}
+          />
         </div>
       </div>
       <ModalFooter
@@ -44,7 +57,7 @@ export default class Review extends Component {
   }
 }
 
-export function ReviewTextInput ({label}) {
+export function ReviewTextInput ({label, value, readOnly = true}) {
   return <div styleName='review-input-text-row'>
     <div styleName='review-input-text-label'>
       <span>{label}</span>
@@ -53,9 +66,10 @@ export function ReviewTextInput ({label}) {
       <TextInput
         type='text'
         name='community-name'
-        value={''}
+        value={value}
         theme={theme}
-        placeholder="What's the name of your community?"
+        readOnly={readOnly}
+        showClearButton={false}
       />
     </div>
     <div styleName='review-input-edit'>
