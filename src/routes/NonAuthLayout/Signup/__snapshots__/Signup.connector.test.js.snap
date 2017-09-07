@@ -17,21 +17,3 @@ Object {
   "type": "SIGNUP",
 }
 `;
-
-exports[`mapDispatchToProps signup should match latest snapshot 1`] = `
-Object {
-  "payload": Object {
-    "api": Object {
-      "method": "post",
-      "params": Object {
-        "email": "test@hylo.com",
-        "login": true,
-        "name": "name",
-        "password": "testPassword",
-      },
-      "path": "/noo/user",
-    },
-  },
-  "type": "SIGNUP",
-}
-`;
