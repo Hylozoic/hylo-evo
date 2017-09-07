@@ -32,6 +32,7 @@ export default class Domain extends Component {
 
   render () {
     console.log('Domain this.props.communityName', this.props.communityName)
+
     return <div styleName='flex-wrapper'>
       <LeftSidebar
         theme={sidebarTheme}
