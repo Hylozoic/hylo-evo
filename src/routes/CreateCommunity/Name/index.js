@@ -28,6 +28,7 @@ export default class Name extends Component {
           <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
         </div>
         <div styleName='center-vertically'>
+          <span styleName='text-input-label'>What's the name of your community?</span>
           <TextInput
             type='text'
             name='community-name'

@@ -30,6 +30,7 @@
 }
 
 .center {
+  clear: both;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,11 +40,12 @@
   float: right;
   letter-spacing: 1px;
   font-size: 10px;
+  padding-right: 25px;
   color: $color-white;
 }
 
 .logo {
-  @include image(70px);
+  @include image(67.5px);
   border-radius: 4px;
   margin-top: 30px;
 }
@@ -51,9 +53,9 @@
 .signup-modal-footer {
   position: absolute;
   bottom: 0;
-  padding-bottom: 20px;
+  margin-bottom: 60px;
   right: 0;
-  margin-right: 30px;
+  margin-right: 50px;
 }
 
 .footer-buttons {
@@ -66,7 +68,7 @@
   background-color: $color-white;
   text-align: center;
   font-size: 14px;
-  padding: 6px 30px 6px 30px;
+  padding: 8px 45px 8px 45px;
   border-radius: 25px;
   max-width: 10px;
   cursor: pointer;
@@ -84,7 +86,7 @@
   text-align: center;
   font-size: 14px;
   margin-right: 20px;
-  padding: 6px 30px 6px 30px;
+  padding: 8px 45px 8px 45px;
   border-radius: 25px;
   cursor: pointer;
 }
@@ -98,15 +100,24 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  font-size: 10px;
+  font-size: 12px;
   color: $color-white;
   font-style: italic;
-  margin-bottom: 5px;
+  margin-bottom: 35px;
   margin-top: 5px;
   opacity: 0.7;
-  padding-right: 30px;
+  padding-right: 85px;
 }
 
 .center-vertically {
-   margin: auto;
+  position: absolute;
+  top: 47%;
+  width: 68%;
+}
+
+.text-input-label {
+  padding-left:5%;
+  letter-spacing: 1px;
+  font-size: 10px;
+  color: $color-white-60;
 }

@@ -28,6 +28,7 @@ export default class Domain extends Component {
           <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
         </div>
         <div styleName='center-vertically'>
+          <span styleName='text-input-label'>Choose a domain name</span>
           <TextInput
             type='text'
             name='community-name'
@@ -41,6 +42,7 @@ export default class Domain extends Component {
       <ModalFooter
         submit={this.submit}
         previous={this.previous}
+        hidePrevious={false}
         continueText={'Continue'}
         />
     </div>

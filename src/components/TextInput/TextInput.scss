@@ -38,7 +38,7 @@ $text-input-height: 40px;
 .modal-input {
   background-color: transparent;
   border: none;
-  width: 100%;
+  width: 90%;
   color: $color-white;
   font-weight: lighter;
   text-align: left;
@@ -49,7 +49,6 @@ $text-input-height: 40px;
 
 .modal-input::placeholder {
   color: $color-white;
-  text-align: center;
 }
 
 .modal-input:focus {
