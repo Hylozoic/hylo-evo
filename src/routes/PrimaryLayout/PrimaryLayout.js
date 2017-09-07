@@ -25,8 +25,10 @@ import Search from 'routes/Search'
 import NetworkSettings from 'routes/NetworkSettings'
 import NetworkCommunities from 'routes/NetworkCommunities'
 import SignupModal from 'routes/Signup/SignupModal'
-import CreateCommunity from 'routes/Signup/CreateCommunity'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
+import AddLocation from 'routes/Signup/AddLocation'
+import AddSkills from 'routes/Signup/AddSkills'
+import Review from 'routes/Signup/Review'
 
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
@@ -84,8 +86,9 @@ export default class PrimaryLayout extends Component {
       <div styleName='main'>
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
-          <RedirectToSignupFlow currentUser={currentUser} />
-          <RedirectToCommunity currentUser={currentUser} />
+          <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
+          <RedirectToCommunity path='/' currentUser={currentUser} />
+          <RedirectToCommunity path='/app' currentUser={currentUser} />
           <Switch>
             <Route path='/all' exact component={Feed} />
             <Route path='/all/:topicName' exact component={Feed} />
@@ -130,10 +133,8 @@ export default class PrimaryLayout extends Component {
             Best guess is to replace these routes with a render function
             defined above, and store the previous detail component in state
           */}
-          {detailRoutes.map(({ path, component, children }) =>
-            <Route key={path} {...{path, component}} children={
-              <children />
-            } />)}
+          {detailRoutes.map(({ path, component }) =>
+            <Route key={path} {...{path, component}} />)}
         </div>
       </div>
       <Route path='/t' component={Messages} />
@@ -169,17 +170,25 @@ const detailRoutes = [
 ]
 
 const signupRoutes = [
-  {path: '/signup/create-community', child: CreateCommunity},
-  {path: '/signup/upload-photo', child: UploadPhoto}
+  {path: '/signup/upload-photo', child: UploadPhoto},
+  {path: '/signup/add-location', child: AddLocation},
+  {path: '/signup/add-skills', child: AddSkills},
+  {path: '/signup/review', child: Review}
 ]
-export function RedirectToSignupFlow ({ currentUser }) {
-  if (!currentUser || !currentUser.settings.signupInProgress) return null
+
+export function isSignupPath (path) {
+  return (path.startsWith('/signup'))
+}
+
+export function RedirectToSignupFlow ({ currentUser, pathname }) {
+  if (!currentUser || !currentUser.settings || !currentUser.settings.signupInProgress) return null
+  if (isSignupPath(pathname)) return null
   const destination = '/signup/upload-photo'
   return <Redirect to={destination} />
 }
 
-export function RedirectToCommunity ({ currentUser }) {
-  return <Route path='/' exact render={redirectIfCommunity(currentUser)} />
+export function RedirectToCommunity ({ path, currentUser }) {
+  return <Route path={path} exact render={redirectIfCommunity(currentUser)} />
 }
 
 export function redirectIfCommunity (currentUser) {

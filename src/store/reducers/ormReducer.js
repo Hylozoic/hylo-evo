@@ -14,7 +14,8 @@ import {
   RESET_NEW_POST_COUNT_PENDING,
   TOGGLE_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_THREAD_READ_TIME,
-  VOTE_ON_POST_PENDING
+  VOTE_ON_POST_PENDING,
+  UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING
 } from 'store/constants'
 import { REMOVE_MEMBER_PENDING } from 'routes/Members/Members.store'
 import {
@@ -22,7 +23,8 @@ import {
   RECEIVE_POST
  } from 'components/SocketListener/SocketListener.store'
 import {
-  DELETE_POST_PENDING
+  DELETE_POST_PENDING,
+  REMOVE_POST_PENDING
  } from 'components/PostCard/PostHeader/PostHeader.store'
 import {
   UPDATE_MEMBERSHIP_SETTINGS_PENDING,
@@ -38,6 +40,19 @@ import {
 import {
   UPDATE_COMMUNITY_SETTINGS_PENDING
 } from 'routes/CommunitySettings/CommunitySettings.store'
+import {
+  SIGNUP_ADD_SKILL,
+  SIGNUP_REMOVE_SKILL_PENDING
+} from 'routes/Signup/AddSkills/AddSkills.store'
+import {
+  CREATE_INVITATIONS,
+  RESEND_INVITATION_PENDING,
+  REINVITE_ALL_PENDING,
+  EXPIRE_INVITATION_PENDING
+} from 'routes/CommunitySettings/InviteSettingsTab/InviteSettingsTab.store'
+import {
+  DELETE_COMMENT_PENDING
+} from 'routes/PostDetail/Comments/Comment/Comment.store'
 
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
@@ -61,7 +76,8 @@ export default function ormReducer (state = {}, action) {
     Person,
     Post,
     PostCommenter,
-    Skill
+    Skill,
+    Invitation
   } = session
 
   const invalidateNotifications = () => {
@@ -69,7 +85,7 @@ export default function ormReducer (state = {}, action) {
     first && first.update({time: Date.now()})
   }
 
-  let membership, community, person
+  let membership, community, person, invite, post
 
   switch (type) {
     case EXTRACT_MODEL:
@@ -160,7 +176,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case VOTE_ON_POST_PENDING:
-      const post = session.Post.withId(meta.postId)
+      post = session.Post.withId(meta.postId)
       if (post.myVote) {
         !meta.isUpvote && post.update({myVote: false, votesTotal: (post.votesTotal || 1) - 1})
       } else {
@@ -224,6 +240,13 @@ export default function ormReducer (state = {}, action) {
       Post.withId(meta.id).delete()
       break
 
+    case REMOVE_POST_PENDING:
+      post = Post.withId(meta.postId)
+      const communities = post.communities.filter(c =>
+        c.slug !== meta.slug).toModelArray()
+      post.update({communities})
+      break
+
     case UPDATE_COMMUNITY_SETTINGS_PENDING:
       community = Community.withId(meta.id)
       community.update(meta.changes)
@@ -241,6 +264,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case UPDATE_USER_SETTINGS_PENDING:
+    case UPDATE_USER_SETTINGS_GLOBAL_PENDING:
       me = Me.first()
       const changes = {
         ...meta.changes,
@@ -265,10 +289,49 @@ export default function ormReducer (state = {}, action) {
       person.skills.remove(meta.skillId)
       break
 
+    case SIGNUP_REMOVE_SKILL_PENDING:
+      me = Me.withId(Me.first().id)
+      me.skills.remove(meta.skillId)
+      break
+
     case ADD_SKILL:
       const skill = payload.data.addSkill
       person = Person.withId(Me.first().id)
       person.updateAppending({skills: [Skill.create(skill)]})
+      break
+
+    case SIGNUP_ADD_SKILL:
+      const mySkill = payload.data.addSkill
+      me = Me.withId(Me.first().id)
+      me.updateAppending({skills: [Skill.create(mySkill)]})
+      break
+
+    case CREATE_INVITATIONS:
+      community = Community.withId(meta.communityId)
+      let invites = payload.data.createInvitation.invitations.map(i => Invitation.create(i))
+
+      community.updateAppending({pendingInvitations: invites})
+      break
+
+    case RESEND_INVITATION_PENDING:
+      invite = Invitation.withId(meta.invitationId)
+      if (!invite) break
+      invite.update({resent: true, last_sent_at: new Date()})
+      break
+
+    case EXPIRE_INVITATION_PENDING:
+      invite = Invitation.withId(meta.invitationId)
+      invite.delete()
+      break
+
+    case REINVITE_ALL_PENDING:
+      community = Community.withId(meta.communityId)
+      community.pendingInvitations.update({resent: true, last_sent_at: new Date()})
+      break
+
+    case DELETE_COMMENT_PENDING:
+      const comment = Comment.withId(meta.id)
+      comment.delete()
       break
   }
 

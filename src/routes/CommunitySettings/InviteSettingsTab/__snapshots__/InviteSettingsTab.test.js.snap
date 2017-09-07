@@ -3,15 +3,15 @@
 exports[`renders correctly 1`] = `
 <div>
   <div
-    data-styleName="header"
+    data-styleName="styles.header"
   >
     <div
-      data-styleName="title"
+      data-styleName="styles.title"
     >
       Invite People
     </div>
     <div
-      data-styleName="subtitle"
+      data-styleName="styles.subtitle"
     >
       to 
       Hylo
@@ -19,28 +19,28 @@ exports[`renders correctly 1`] = `
     </div>
   </div>
   <div
-    data-styleName="invite-link-settings"
+    data-styleName="styles.invite-link-settings"
   >
     <div
-      data-styleName="invite-link-text"
+      data-styleName="styles.invite-link-text"
     >
       <div
-        data-styleName="help"
+        data-styleName="styles.help"
       >
         Anyone with this link can join the community
       </div>
       <div
-        data-styleName="invite-link"
+        data-styleName="styles.invite-link"
       >
         http://www.hylo.com/c/hylo/join/lalala
       </div>
     </div>
     <div
-      data-styleName="buttons"
+      data-styleName="styles.buttons"
     >
       <Button
         color="green-white-green-border"
-        data-styleName="reset-button"
+        data-styleName="styles.reset-button"
         narrow={true}
         onClick={[Function]}
         small={true}
@@ -53,13 +53,81 @@ exports[`renders correctly 1`] = `
       >
         <Button
           color="green-white-green-border"
-          data-styleName="copy-button"
+          data-styleName="styles.copy-button"
           narrow={true}
           small={true}
         >
           Copy Link
         </Button>
       </CopyToClipboard>
+    </div>
+  </div>
+  <div
+    data-styleName="styles.email-section"
+  >
+    <TextInput
+      data-styleName="styles.email-addresses-input"
+      onChange={[Function]}
+      placeholder="Type email addresses"
+      value=""
+    />
+    <TextareaAutosize
+      data-styleName="styles.invite-msg-input"
+      minRows={5}
+      onChange={[Function]}
+      onHeightChange={[Function]}
+      useCacheForDOMMeasurements={false}
+      value="Hey! Here’s an invite to the Hylo community on Hylo."
+    />
+    <div
+      data-styleName="styles.send-invite-button"
+    >
+      <Button
+        color="green"
+        disabled={true}
+        narrow={true}
+        onClick={[Function]}
+        small={true}
+      >
+        Send Invite
+      </Button>
+    </div>
+  </div>
+  <div
+    data-styleName="styles.pending-invites-section"
+  >
+    <div
+      data-styleName="styles.pending-invites-header"
+    >
+      <h1
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        No 
+        Pending Invites
+      </h1>
+    </div>
+    <div
+      data-styleName="styles.pending-invites-list"
+    >
+      <ReactCSSTransitionGroup
+        transitionAppear={false}
+        transitionEnter={true}
+        transitionEnterTimeout={400}
+        transitionLeave={true}
+        transitionLeaveTimeout={500}
+        transitionName={
+          Object {
+            "enter": undefined,
+            "enterActive": undefined,
+            "leave": undefined,
+            "leaveActive": undefined,
+          }
+        }
+      />
     </div>
   </div>
 </div>

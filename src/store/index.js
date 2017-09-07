@@ -16,6 +16,6 @@ export const rootReducer = (state, action) => {
   return reducers(state, action)
 }
 
-export default function (history) {
-  return createStore(rootReducer, initialState, createMiddleware(history))
+export default function (history, req) {
+  return createStore(rootReducer, initialState, createMiddleware(history, req))
 }

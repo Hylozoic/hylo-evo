@@ -1,11 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CreateCommunity renders correctly 1`] = `
+exports[`LeftSidebar renders correctly 1`] = `
 <div
   data-styleName="sidebar"
 >
   <p
     data-styleName="gray-text close-button"
+    onClick={[Function]}
   >
     CLOSE
   </p>
@@ -15,7 +16,7 @@ exports[`CreateCommunity renders correctly 1`] = `
     header text
   </p>
   <p
-    data-styleName="gray-text"
+    data-styleName="gray-text sidebar-text"
   >
     body text
   </p>

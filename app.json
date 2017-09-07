@@ -6,10 +6,16 @@
     "API_HOST": {
       "required": true
     },
+    "FILEPICKER_API_KEY": {
+      "required": true
+    },
     "NODE_MODULES_CACHE": {
       "required": true
     },
     "NPM_CONFIG_PRODUCTION": {
+      "required": true
+    },
+    "PROXY_HOST": {
       "required": true
     },
     "SOCKET_HOST": {

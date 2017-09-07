@@ -1,10 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import CreateCommunity from './CreateCommunity'
+import AddLocation from './AddLocation'
 
-describe('CreateCommunity', () => {
+describe('AddLocation', () => {
   it('renders correctly', () => {
-    const wrapper = shallow(<CreateCommunity />)
+    const wrapper = shallow(<AddLocation />)
     expect(wrapper).toMatchSnapshot()
   })
 })

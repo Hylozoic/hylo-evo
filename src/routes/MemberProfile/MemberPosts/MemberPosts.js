@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { get } from 'lodash/fp'
 import PostCard from 'components/PostCard'
 import './MemberPosts.scss'
 
@@ -42,13 +42,16 @@ export default class MemberPosts extends React.Component {
   render () {
     const { personId, posts, showDetails, editPost } = this.props
     return <div>
-      {posts && posts.map(post =>
-        <div styleName='activity-item' key={post.id}>
+      {posts && posts.map(post => {
+        const slug = get('communities.0.slug', post)
+        return <div styleName='activity-item' key={post.id}>
           <PostCard
             post={post}
-            showDetails={() => showDetails(post.id, post.communities[0].slug, personId)}
-            editPost={() => editPost(post.id, post.communities[0].slug, personId)} />
+            showDetails={() => showDetails(post.id, slug, personId)}
+            editPost={() => editPost(post.id, slug, personId)} />
         </div>
+      }
+
       )}
     </div>
   }

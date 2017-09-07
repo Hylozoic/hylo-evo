@@ -1,8 +1,8 @@
 import React from 'react'
-import { uniq } from 'lodash'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
+import { formatError } from '../util'
 import './Login.scss'
 
 export default class Login extends React.Component {
@@ -15,20 +15,16 @@ export default class Login extends React.Component {
     return this.props.login(this.state.email, this.state.password)
   }
 
-  componentDidMount () {
-    this.email.focus()
-  }
-
   render () {
     const { className, loginWithService } = this.props
     const setState = key => event => this.setState({[key]: event.target.value})
     return <div className={className}>
       <h1 styleName='title'>Log in to Hylo-Evo</h1>
-      {this.props.error && formatError(this.props.error)}
+      {this.props.error && formatError(this.props.error, 'Login')}
       <div styleName='field'>
         <label styleName='field-label'>Your email address</label>
         <TextInput type='text' name='email' onChange={setState('email')}
-          inputRef={input => { this.email = input }} />
+          inputRef={input => { this.email = input }} autoFocus />
       </div>
 
       <div styleName='field'>
@@ -51,38 +47,4 @@ export default class Login extends React.Component {
       </div>
     </div>
   }
-}
-
-function formatError (error) {
-  if (!error) return
-
-  const noPasswordMatch = error.match(/password account not found. available: \[(.*)\]/)
-  if (noPasswordMatch) {
-    var options = uniq(noPasswordMatch[1].split(',')
-    .map(option => ({
-      'google': 'Google',
-      'google-token': 'Google',
-      'facebook': 'Facebook',
-      'facebook-token': 'Facebook'
-    }[option])))
-
-    return <div styleName='error'>
-      Your account has no password set. <a href='/set-password'>Set your password here.</a>
-      {options[0] && <span><br />Or log in with {options.join(' or ')}.</span>}
-    </div>
-  }
-
-  var text
-  switch (error) {
-    case 'no user':
-      text = 'Login was canceled or no user data was found.'
-      break
-    case 'no email':
-      text = 'The user data did not include an email address.'
-      break
-    default:
-      text = error
-  }
-
-  return <div styleName='error'>{text}</div>
 }

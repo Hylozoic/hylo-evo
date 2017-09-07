@@ -1,116 +1,79 @@
 import React, { Component } from 'react'
-import Button from 'components/Button'
-import { Link } from 'react-router-dom'
-import { Redirect } from 'react-router'
-import { avatarUploadSettings } from 'store/models/Me'
-import ChangeImageButton from 'components/ChangeImageButton'
-import { cameraSvg } from 'util/assets'
+import { get } from 'lodash/fp'
 import LeftSidebar from '../LeftSidebar'
 import Loading from 'components/Loading'
-import { bgImageStyle } from 'util/index'
+import SignupModalFooter from '../SignupModalFooter'
+import UploadImageSection from '../UploadImageSection'
 import '../Signup.scss'
 
 export default class UploadPhoto extends Component {
   constructor () {
     super()
     this.state = {
-      fireRedirect: false,
-      edits: {},
-      changed: false
+      edits: {}
     }
-    this.redirectUrl = '/'
   }
 
-  redirect = () => {
-    this.setState({
-      fireRedirect: true
-    })
+  submit = () => {
+    this.setState({changed: false})
+    this.props.updateUserSettings(this.state.edits)
+    this.props.goToNextStep()
   }
 
-  updateSetting = (key, setChanged = true) => event => {
+  updateSettingDirectly = (key, setChanged) => value => {
     const { edits, changed } = this.state
-    // setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
     this.setState({
       changed: setChanged ? true : changed,
       edits: {
         ...edits,
-        [key]: event.target.value
+        [key]: value
       }
     })
   }
 
-  save = () => {
-    this.setState({changed: false})
-    // setConfirm(false)
-    this.props.updateUserSettings(this.state.edits)
+  componentWillMount = () => {
+    const { currentUser } = this.props
+    if (currentUser && !get('settings.signupInProgress', currentUser)) this.props.goBack()
   }
 
-  updateSettingDirectly = (key, changed) => value =>
-    this.updateSetting(key, changed)({target: {value}})
-
   render () {
-    const { currentUser } = this.props
-    const { fireRedirect } = this.state
-
+    const { currentUser, uploadImagePending } = this.props
+    const currentAvatarUrl = this.state.edits.avatarUrl
     if (!currentUser) return <Loading />
-    if (fireRedirect) return <Redirect to={this.redirectUrl} />
 
-    const currentAvatarUrl = this.props.currentUser.avatarUrl || this.props.state.avatarUrl
-    return <div styleName='wrapper'>
+    return <div styleName='flex-wrapper'>
       <LeftSidebar
         header="Let's complete your profile!"
-        body="Welcome to Hylo, NAME. It only takes a couple seconds to complete your profile. Let's get started!"
+        body={`Welcome to Hylo, ${currentUser.name}. It only takes a couple seconds to complete your profile. Let's get started!`}
       />
-      <div styleName='detail'>
+      <div styleName='panel'>
         <span styleName='white-text step-count'>STEP 1/4</span>
         <br />
-        <div styleName='image-upload-icon'>
-          <UploadSection
+        <div styleName='center'>
+          <UploadImageSection
             avatarUrl={currentAvatarUrl}
             updateSettingDirectly={this.updateSettingDirectly}
             currentUser={currentUser}
+            loading={uploadImagePending}
           />
         </div>
-        <div styleName='center center-vertical'>
+        <div styleName='center'>
           <input
-            styleName='create-community-input'
-            onChange={this.handleCommunityNameChange}
-            readonly
+            styleName='signup-input signup-padding large-input-text gray-bottom-border'
             value={'Upload a profile photo'}
             onKeyPress={event => {
               if (event.key === 'Enter') {
-                this.redirect()
+                this.submit()
               }
             }}
+            autoFocus
+            readOnly
           />
         </div>
         <div>
-          <div styleName='float-right bottom'>
-            <div>
-              <Link to={'/signup/create-community'} onClick={this.save}>
-                <Button styleName='continue-button' label='Onwards!' />
-              </Link>
-            </div>
-            <div styleName='instruction'>or press Enter</div>
-          </div>
+          <SignupModalFooter previous={this.previous} submit={this.submit} showPrevious={false} continueText={'Onwards!'} />
         </div>
       </div>
     </div>
   }
-}
-
-export function uploadAvatar (imageUrl) {
-  return <div styleName='image-upload-icon'>
-    <div style={bgImageStyle(imageUrl)} styleName='camera-svg' />
-  </div>
-}
-
-export function UploadSection ({avatarUrl, currentUser, updateSettingDirectly}) {
-  const childImage = avatarUrl || cameraSvg
-  return <ChangeImageButton
-    update={updateSettingDirectly('avatarUrl')}
-    uploadSettings={avatarUploadSettings(currentUser)}
-    styleName='change-avatar-button'
-    child={uploadAvatar(childImage)}
-  />
 }

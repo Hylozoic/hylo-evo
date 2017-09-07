@@ -21,8 +21,9 @@ exports[`Signup renders correctly 1`] = `
       Full name
     </label>
     <TextInput
+      autoFocus={true}
       inputRef={[Function]}
-      name="fullName"
+      name="name"
       onChange={[Function]}
       type="text"
     />

@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import LeftSidebar from './index'
+import LeftSidebar from './LeftSidebar'
 
-describe('CreateCommunity', () => {
+describe('LeftSidebar', () => {
   it('renders correctly', () => {
     const wrapper = shallow(<LeftSidebar header={'header text'} body={'body text'} />)
     expect(wrapper).toMatchSnapshot()

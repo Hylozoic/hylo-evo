@@ -13,10 +13,6 @@ export default class NonAuthLayout extends React.Component {
     this.state = {}
   }
 
-  componentDidMount () {
-    this.email && this.email.focus()
-  }
-
   render () {
     const particlesStyle = {
       position: 'fixed',
@@ -30,7 +26,9 @@ export default class NonAuthLayout extends React.Component {
         <Particles params={particlesjsConfig} style={particlesStyle} />
       </div>
       <div styleName='topRow'>
-        <img styleName='logo' src='assets/hylo.svg' />
+        <a href='/'>
+          <img styleName='logo' src='assets/hylo.svg' />
+        </a>
         <Route path='/login' component={() =>
           <Link to='/signup'>
             <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>

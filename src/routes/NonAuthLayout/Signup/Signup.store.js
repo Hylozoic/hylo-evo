@@ -1,6 +1,6 @@
 import { SIGNUP } from 'store/constants'
 
-export function signup (fullName, email, password) {
+export function signup (name, email, password) {
   return {
     type: SIGNUP,
     payload: {
@@ -8,7 +8,7 @@ export function signup (fullName, email, password) {
         method: 'post',
         path: '/noo/user',
         params: {
-          fullName,
+          name,
           email,
           password,
           login: true

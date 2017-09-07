@@ -120,6 +120,7 @@ $new-community-spacing: 16px;
 
 .communityRow {
   display: flex;
+  align-items: center;
   &:hover {
     text-decoration: none;
   }
@@ -153,6 +154,11 @@ $new-community-spacing: 16px;
   text-overflow: ellipsis;
   white-space: nowrap;
   display: inline-block;
+}
+
+.network-name-wrapper {
+  display: flex;
+  align-items: center;
 }
 
 .network-name {
