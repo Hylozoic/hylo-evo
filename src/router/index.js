@@ -29,9 +29,8 @@ function rootRoutes () {
   return <LoginCheck>
     <Switch>
       <Route path='/ui-kit' component={UIKit} />
-      <NonAuthRoute path='/login' component={NonAuthLayout} />
-      <NonAuthRoute path='/signup' exact component={NonAuthLayout} />
-      <NonAuthRoute path='/reset-password' exact component={NonAuthLayout} />
+      <NonAuthRoute
+        path={['/login', '/signup', '/reset-password']} exact component={NonAuthLayout} />
       <AuthRoute path='/' component={PrimaryLayout} />
     </Switch>
   </LoginCheck>
