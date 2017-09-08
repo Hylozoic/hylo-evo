@@ -1,4 +1,4 @@
-import { get } from 'lodash/fp'
+import { get, pullAt } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 import linkMatcher from 'util/linkMatcher'
@@ -9,6 +9,9 @@ export const UPDATE_POST = `${MODULE_NAME}/UPDATE_POST`
 export const FETCH_LINK_PREVIEW = `${MODULE_NAME}/FETCH_LINK_PREVIEW`
 export const REMOVE_LINK_PREVIEW = `${MODULE_NAME}/REMOVE_LINK_PREVIEW`
 export const RESET_LINK_PREVIEW = `${MODULE_NAME}/RESET_LINK_PREVIEW`
+export const SET_IMAGE_PREVIEWS = `${MODULE_NAME}/SET_IMAGE_PREVIEWS`
+export const REMOVE_IMAGE_PREVIEW = `${MODULE_NAME}/REMOVE_IMAGE_PREVIEW`
+export const SWITCH_IMAGE_PREVIEWS = `${MODULE_NAME}/SWITCH_IMAGE_PREVIEWS`
 
 // Actions
 
@@ -147,6 +150,30 @@ export function resetLinkPreview () {
   return {type: RESET_LINK_PREVIEW}
 }
 
+export function setImagePreviews (imagePreviews) {
+  return {
+    type: SET_IMAGE_PREVIEWS,
+    payload: imagePreviews
+  }
+}
+
+export function removeImagePreview (position) {
+  return {
+    type: REMOVE_IMAGE_PREVIEW,
+    payload: position
+  }
+}
+
+export function switchImagePreviews (position1, position2) {
+  return {
+    type: SWITCH_IMAGE_PREVIEWS,
+    payload: {
+      position1,
+      position2
+    }
+  }
+}
+
 // Selectors
 
 export const getLinkPreview = ormCreateSelector(
@@ -157,9 +184,24 @@ export const getLinkPreview = ormCreateSelector(
     LinkPreview.hasId(linkPreviewId) ? LinkPreview.withId(linkPreviewId).ref : null
 )
 
+export function getImagePreviews (state) {
+  return state[MODULE_NAME].imagePreviews
+}
+
 // Reducer
 
-export const defaultState = {linkPreviewId: null, linkPreviewStatus: null}
+export const defaultState = {
+  linkPreviewId: null,
+  linkPreviewStatus: null,
+  imagePreviews: [
+    'http://www.sftravel.com/sites/sftraveldev.prod.acquia-sites.com/files/styles/sft_views_background_mobile/public/landmark-images/golden-gate_web.jpg?itok=wcIdLd3y&timestamp=1499715987',
+    'https://www.thesun.co.uk/wp-content/uploads/2017/05/nintchdbpict000290298948.jpg?strip=all&w=960',
+    'https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg',
+    'https://www.rover.com/blog/wp-content/uploads/2016/07/pug-superheroes.jpg',
+    'https://www.rover.com/blog/wp-content/uploads/2015/05/dog-candy-junk-food-599x340.jpg',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/American_Eskimo_Dog_1.jpg/1200px-American_Eskimo_Dog_1.jpg'
+  ]
+}
 
 export default function reducer (state = defaultState, action) {
   const { error, type, payload, meta } = action
@@ -176,6 +218,20 @@ export default function reducer (state = defaultState, action) {
       return {...state, linkPreviewId: null, linkPreviewStatus: 'removed'}
     case RESET_LINK_PREVIEW:
       return {...state, linkPreviewId: null, linkPreviewStatus: 'reset'}
+    case SET_IMAGE_PREVIEWS:
+      return {...state, imagePreviews: payload}
+    case REMOVE_IMAGE_PREVIEW:
+      return {...state, imagePreviews: pullAt(payload, state.imagePreviews)}
+    case SWITCH_IMAGE_PREVIEWS:
+      const { position1, position2 } = payload
+      const tmp = state.imagePreviews[position1]
+      const imagePreviews = state.imagePreviews
+      imagePreviews[position1] = imagePreviews[position2]
+      imagePreviews[position2] = tmp
+      return {
+        ...state,
+        imagePreviews
+      }
     default:
       return state
   }

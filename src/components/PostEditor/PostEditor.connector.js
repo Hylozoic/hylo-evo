@@ -1,6 +1,7 @@
 import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+import { bindActionCreators } from 'redux'
 import { postUrl } from 'util/index'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
@@ -15,7 +16,11 @@ import {
   pollingFetchLinkPreview,
   removeLinkPreview,
   resetLinkPreview,
-  getLinkPreview
+  setImagePreviews,
+  removeImagePreview,
+  switchImagePreviews,
+  getLinkPreview,
+  getImagePreviews
 } from './PostEditor.store'
 
 export function mapStateToProps (state, props) {
@@ -29,10 +34,8 @@ export function mapStateToProps (state, props) {
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
-  const imagePreviews = [
-    'http://www.sftravel.com/sites/sftraveldev.prod.acquia-sites.com/files/styles/sft_views_background_mobile/public/landmark-images/golden-gate_web.jpg?itok=wcIdLd3y&timestamp=1499715987',
-    'https://www.thesun.co.uk/wp-content/uploads/2017/05/nintchdbpict000290298948.jpg?strip=all&w=960'
-  ]
+  const imagePreviews = getImagePreviews(state, props)
+
   return {
     currentUser,
     currentCommunity,
@@ -58,7 +61,12 @@ export const mapDispatchToProps = (dispatch, props) => {
     goToPost: createPostAction => {
       const id = createPostAction.payload.data.createPost.id
       return dispatch(push(postUrl(id, slug)))
-    }
+    },
+    ...bindActionCreators({
+      removeImagePreview,
+      switchImagePreviews,
+      setImagePreviews
+    }, dispatch)
   }
 }
 

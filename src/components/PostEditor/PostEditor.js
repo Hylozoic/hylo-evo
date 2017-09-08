@@ -203,7 +203,7 @@ export default class PostEditor extends React.Component {
     const {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, editing, loading,
-      imagePreviews
+      imagePreviews, removeImagePreview, switchImagePreviews
     } = this.props
     const submitButtonLabel = editing ? 'Save' : 'Post'
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
@@ -250,8 +250,8 @@ export default class PostEditor extends React.Component {
       </div>
       <ImagePreviews
         imagePreviews={imagePreviews}
-        removeImage={url => console.log('removing', url)}
-        switchImages={(p1, p2) => console.log('p1', p1, 'p2', p2)} />
+        removeImage={removeImagePreview}
+        switchImages={switchImagePreviews} />
       <div styleName='footer'>
         <div styleName='postIn'>
           <div styleName='postIn-label'>Post in</div>
@@ -320,12 +320,12 @@ DragSource('ImagePreview', imagePreviewSource, (connect, monitor) => ({
 class WImagePreview extends React.Component {
   render () {
     const {
-      url, removeImage, connectDragSource, connectDragPreview, connectDropTarget
+      url, removeImage, connectDragSource, connectDragPreview, connectDropTarget, position
     } = this.props
 
     return connectDropTarget(connectDragSource(<div styleName='image-preview'>
       <div style={bgImageStyle(url)} styleName='image'>
-        <Icon name='Ex' styleName='remove-button' onClick={() => removeImage(url)} />
+        <Icon name='Ex' styleName='remove-button' onClick={() => removeImage(position)} />
         {connectDragPreview(<div styleName='drag-preview' />)}
       </div>
     </div>))
