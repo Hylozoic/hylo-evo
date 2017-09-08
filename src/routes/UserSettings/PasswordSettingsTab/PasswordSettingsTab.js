@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { omit } from 'lodash/fp'
+import { omit, isEmpty } from 'lodash/fp'
 import SettingsControl from 'components/SettingsControl'
 import './PasswordSettingsTab.scss'
 import Button from 'components/Button'
@@ -31,7 +31,7 @@ export default class PasswordSettingsTab extends Component {
     } = edits
 
     const updateSetting = (key, setChanged = true) => event => {
-      setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
+      setChanged && setConfirm('You have unsaved changes. Are you sure you want to leave?')
       this.setState({
         changed: setChanged ? true : changed,
         edits: {
@@ -47,10 +47,14 @@ export default class PasswordSettingsTab extends Component {
       updateUserSettings(omit('confirm', edits))
     }
 
+    const matching = password === confirm
+
     const canSave = password &&
       password.length > 8 &&
-      password === confirm &&
+      matching &&
       changed
+
+    const matchError = !isEmpty(password) && !matching
 
     return <div>
       <div styleName='title'>Update Password</div>
@@ -59,6 +63,9 @@ export default class PasswordSettingsTab extends Component {
       <div styleName='help'>
         Passwords must be at least 9 characters long, and should be a mix of lower and upper case letters, numbers and symbols.
       </div>
+      {matchError && <div styleName='error'>
+        Passwords don't match
+      </div>}
       <div styleName='button-row'>
         <Button label='Save Changes' color={canSave ? 'green' : 'gray'} onClick={canSave ? save : null} styleName='save-button' />
       </div>
