@@ -10,6 +10,8 @@ import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 import LinkPreview from './LinkPreview'
 import { bgImageStyle } from 'util/index'
+import { DragDropContext, DragSource, DropTarget } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
@@ -248,7 +250,8 @@ export default class PostEditor extends React.Component {
       </div>
       <ImagePreviews
         imagePreviews={imagePreviews}
-        removeImage={url => console.log('removing', url)} />
+        removeImage={url => console.log('removing', url)}
+        switchImages={(p1, p2) => console.log('p1', p1, 'p2', p2)} />
       <div styleName='footer'>
         <div styleName='postIn'>
           <div styleName='postIn-label'>Post in</div>
@@ -276,16 +279,55 @@ export default class PostEditor extends React.Component {
   }
 }
 
-export function ImagePreviews ({ imagePreviews, removeImage }) {
-  if (isEmpty(imagePreviews)) return null
+const ImagePreviews = DragDropContext(HTML5Backend)(
+class WImagePreviews extends React.Component {
+  render () {
+    const { imagePreviews, removeImage, switchImages } = this.props
+    if (isEmpty(imagePreviews)) return null
 
-  return <div styleName='image-previews'>
-    <div styleName='section-label'>Images</div>
-    {imagePreviews.map((url, i) => <div styleName='image-preview' key={i}>
+    return <div styleName='image-previews'>
+      <div styleName='section-label'>Images</div>
+      {imagePreviews.map((url, i) =>
+        <ImagePreview url={url} removeImage={removeImage} switchImages={switchImages} key={i} position={i} />)}
+      <div styleName='add-image'>+</div>
+    </div>
+  }
+})
+
+const imagePreviewSource = {
+  beginDrag (props) {
+    return {
+      position: props.position
+    }
+  }
+}
+
+const imagePreviewTarget = {
+  drop (props, monitor, component) {
+    const item = monitor.getItem()
+    props.switchImages(props.position, item.position)
+  }
+}
+
+const ImagePreview = DropTarget('ImagePreview', imagePreviewTarget, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget()
+}))(
+DragSource('ImagePreview', imagePreviewSource, (connect, monitor) => ({
+  connectDragSource: connect.dragSource(),
+  connectDragPreview: connect.dragPreview(),
+  isDragging: monitor.isDragging()
+}))(
+class WImagePreview extends React.Component {
+  render () {
+    const {
+      url, removeImage, connectDragSource, connectDragPreview, connectDropTarget
+    } = this.props
+
+    return connectDropTarget(connectDragSource(<div styleName='image-preview'>
       <div style={bgImageStyle(url)} styleName='image'>
         <Icon name='Ex' styleName='remove-button' onClick={() => removeImage(url)} />
+        {connectDragPreview(<div styleName='drag-preview' />)}
       </div>
-    </div>)}
-    <div styleName='add-image'>+</div>
-  </div>
-}
+    </div>))
+  }
+}))
