@@ -1,13 +1,12 @@
-const { ROLLBAR_CLIENT_TOKEN } = process.env
+import rollbar from 'client/rollbar'
 
 export default function errorMiddleware (store) {
   return next => action => {
     if (action.error) {
       let errMsg = `action error for ${action.type}`
 
-      if (typeof window !== 'undefined' && ROLLBAR_CLIENT_TOKEN) {
-        let Rollbar = require('client/rollbar').default
-        Rollbar.error(errMsg, {
+      if (rollbar) {
+        rollbar.error(errMsg, {
           action: JSON.parse(safeStringify(action))
         })
       } else {

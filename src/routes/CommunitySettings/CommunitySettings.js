@@ -39,7 +39,7 @@ export default class CommunitySettings extends Component {
 
     const { slug } = community
 
-    return <FullPageModal
+    return <FullPageModal goToOnClose={`/c/${slug}`}
       content={[
         {
           name: 'Settings',

@@ -24,6 +24,12 @@ import AllTopics from 'routes/AllTopics'
 import Search from 'routes/Search'
 import NetworkSettings from 'routes/NetworkSettings'
 import NetworkCommunities from 'routes/NetworkCommunities'
+import SignupModal from 'routes/Signup/SignupModal'
+import UploadPhoto from 'routes/Signup/UploadPhoto'
+import AddLocation from 'routes/Signup/AddLocation'
+import AddSkills from 'routes/Signup/AddSkills'
+import Review from 'routes/Signup/Review'
+
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
@@ -80,6 +86,7 @@ export default class PrimaryLayout extends Component {
       <div styleName='main'>
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
+          <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
           <RedirectToCommunity path='/' currentUser={currentUser} />
           <RedirectToCommunity path='/app' currentUser={currentUser} />
           <Switch>
@@ -102,6 +109,13 @@ export default class PrimaryLayout extends Component {
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
+            {signupRoutes.map(({ path, child }) =>
+              <Route
+                path={path}
+                key={path}
+                component={(props) => <SignupModal {...props} child={child} />}
+              />
+            )}
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
@@ -155,6 +169,24 @@ const detailRoutes = [
   {path: `/c/:slug/:topicName/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail}
 ]
 
+const signupRoutes = [
+  {path: '/signup/upload-photo', child: UploadPhoto},
+  {path: '/signup/add-location', child: AddLocation},
+  {path: '/signup/add-skills', child: AddSkills},
+  {path: '/signup/review', child: Review}
+]
+
+export function isSignupPath (path) {
+  return (path.startsWith('/signup'))
+}
+
+export function RedirectToSignupFlow ({ currentUser, pathname }) {
+  if (!currentUser || !currentUser.settings || !currentUser.settings.signupInProgress) return null
+  if (isSignupPath(pathname)) return null
+  const destination = '/signup/upload-photo'
+  return <Redirect to={destination} />
+}
+
 export function RedirectToCommunity ({ path, currentUser }) {
   return <Route path={path} exact render={redirectIfCommunity(currentUser)} />
 }
@@ -162,7 +194,6 @@ export function RedirectToCommunity ({ path, currentUser }) {
 export function redirectIfCommunity (currentUser) {
   return () => {
     if (!currentUser || currentUser.memberships.count() === 0) return <Loading type='top' />
-
     const mostRecentCommunity = currentUser.memberships
     .orderBy(m => new Date(m.lastViewedAt), 'desc')
     .first()

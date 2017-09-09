@@ -5,7 +5,7 @@ import ChangeImageButton from 'components/ChangeImageButton'
 import SettingsControl from 'components/SettingsControl'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
-import { bannerUploadSettings, avatarUploadSettings, DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Community'
+import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Community'
 const { object, func } = PropTypes
 
 export default class CommunitySettingsTab extends Component {
@@ -82,13 +82,13 @@ export default class CommunitySettingsTab extends Component {
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <ChangeImageButton
           update={updateSettingDirectly('bannerUrl')}
-          uploadSettings={bannerUploadSettings(community)}
+          uploadSettings={{type: 'communityAvatar', id: community.id}}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
         <ChangeImageButton
           update={updateSettingDirectly('avatarUrl')}
-          uploadSettings={avatarUploadSettings(community)}
+          uploadSettings={{type: 'communityBanner', id: community.id}}
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Description' onChange={updateSetting('description')} value={description} type='textarea' />
