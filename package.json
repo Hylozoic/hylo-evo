@@ -128,7 +128,8 @@
     "velocity-react": "^1.2.1"
   },
   "engines": {
-    "node": "7.10.1"
+    "node": "7.10.1",
+    "yarn": "1.0.1"
   },
   "scripts": {
     "start": "node --preserve-symlinks scripts/start.js",

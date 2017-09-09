@@ -17,12 +17,14 @@ export const mapDispatchToProps = {
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { goBack, push, setConfirmBeforeClose } = dispatchProps
-  const { history } = ownProps
+  const { history, goToOnClose } = ownProps
   const { confirmMessage } = stateProps
 
-  const navigate = history.length > 2
-    ? () => goBack()
-    : () => push('/')
+  const navigate = goToOnClose
+    ? () => push(goToOnClose)
+    : history.length > 2
+      ? () => goBack()
+      : () => push('/')
 
   const onClose = confirmMessage
     ? () => {
