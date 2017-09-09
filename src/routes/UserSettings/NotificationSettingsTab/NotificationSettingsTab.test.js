@@ -1,8 +1,8 @@
-import NotificationSettings from './NotificationSettings'
+import NotificationSettingsTab from './NotificationSettingsTab'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-describe('NotificationSettings', () => {
+describe('NotificationSettingsTab', () => {
   const currentUser = {
     hasDevice: true,
     settings: {
@@ -13,14 +13,14 @@ describe('NotificationSettings', () => {
   }
 
   it('renders correctly', () => {
-    const wrapper = shallow(<NotificationSettings
+    const wrapper = shallow(<NotificationSettingsTab
       currentUser={currentUser}
       updateUserSettings={() => {}} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it("hides mobile options if user doesn't have device", () => {
-    const wrapper = shallow(<NotificationSettings currentUser={{
+    const wrapper = shallow(<NotificationSettingsTab currentUser={{
       ...currentUser,
       hasDevice: false
     }} />)

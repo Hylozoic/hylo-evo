@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
@@ -34,6 +35,9 @@ export default class Login extends React.Component {
           onEnter={this.submit} />
       </div>
       <Button styleName='submit' label='Log In' onClick={this.submit} />
+      <Link to='/reset-password' styleName='forgot-password'>
+        <p styleName='forgot-password'>Forgot password?</p>
+      </Link>
       <p styleName='connect-label'>Or connect with:</p>
       <div styleName='auth-buttons'>
         <a styleName='facebook' onClick={() => loginWithService('facebook')}>

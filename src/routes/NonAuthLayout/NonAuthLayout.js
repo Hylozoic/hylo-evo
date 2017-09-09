@@ -5,6 +5,7 @@ import particlesjsConfig from './particlesjsConfig'
 import Button from 'components/Button'
 import Login from './Login'
 import Signup from './Signup'
+import PasswordReset from 'routes/NonAuthLayout/PasswordReset'
 import './NonAuthLayout.scss'
 
 export default class NonAuthLayout extends React.Component {
@@ -34,6 +35,11 @@ export default class NonAuthLayout extends React.Component {
             <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
           </Link>
         } />
+      <Route path='/reset-password' component={() =>
+          <Link to='/login'>
+            <Button styleName='signupButton' color='green-white-green-border'>Log In</Button>
+          </Link>
+        } />
       </div>
 
       <Route path='/login' component={() =>
@@ -42,6 +48,10 @@ export default class NonAuthLayout extends React.Component {
 
       <Route path='/signup' component={() =>
         <Signup {...this.props} styleName='form' />
+      } />
+
+      <Route path='/reset-password' component={() =>
+        <PasswordReset {...this.props} styleName='form' />
       } />
 
       <div>

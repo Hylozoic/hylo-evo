@@ -1,10 +1,10 @@
-import AccountSettings, { SocialControl } from './AccountSettings'
+import AccountSettingsTab, { SocialControl } from './AccountSettingsTab'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-describe('AccountSettings', () => {
+describe('AccountSettingsTab', () => {
   it('renders correctly', () => {
-    const wrapper = shallow(<AccountSettings currentUser={{}} />)
+    const wrapper = shallow(<AccountSettingsTab currentUser={{}} />)
     expect(wrapper.find('Connect(ChangeImageButton)').length).toEqual(2)
     expect(wrapper.find('SettingsControl').length).toEqual(5)
     expect(wrapper.find('SocialControl').length).toEqual(3)
