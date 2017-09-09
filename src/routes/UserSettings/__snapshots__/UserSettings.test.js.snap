@@ -5,7 +5,7 @@ exports[`UserSettings renders correctly 1`] = `
   content={
     Array [
       Object {
-        "component": <AccountSettings
+        "component": <AccountSettingsTab
           currentUser={
                 Object {
                       "id": 1,
@@ -20,7 +20,7 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings",
       },
       Object {
-        "component": <CommunitySettings
+        "component": <CommunitySettingsTab
           leaveCommunity={[Function]}
           memberships={
                 Array [
@@ -38,7 +38,7 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings/communities",
       },
       Object {
-        "component": <NotificationSettings
+        "component": <NotificationSettingsTab
           currentUser={
                 Object {
                       "id": 1,
@@ -48,6 +48,19 @@ exports[`UserSettings renders correctly 1`] = `
     />,
         "name": "Notifications",
         "path": "/settings/notifications",
+      },
+      Object {
+        "component": <PasswordSettingsTab
+          currentUser={
+                Object {
+                      "id": 1,
+                    }
+          }
+          setConfirm={[Function]}
+          updateUserSettings={[Function]}
+    />,
+        "name": "Password",
+        "path": "/settings/password",
       },
     ]
   }
