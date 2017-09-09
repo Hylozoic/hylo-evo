@@ -39,7 +39,7 @@ export default class PasswordReset extends Component {
     return <div className={className}>
       <h1 styleName='title'>Reset Your Password</h1>
       <div styleName='subtitle'>
-        Enter your email address and we'll send you an email that lets you reset your password
+        Enter your email address and we'll send you an email that lets you reset your password.
       </div>
       {success && <div styleName='success'>If your email address matched an account in our system, we sent you an email. Please check your inbox.</div>}
       {error && <div styleName='error'>There was a problem with your request. Please check your email and try again.</div>}
