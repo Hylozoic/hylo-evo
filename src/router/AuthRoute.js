@@ -5,7 +5,7 @@ import getIsLoggedIn from 'store/selectors/getIsLoggedIn'
 import { SET_RETURN_TO_URL } from 'store/constants'
 
 function AuthRoute ({ component, isLoggedIn, setReturnToURL, location, ...rest }) {
-  if (!isLoggedIn) setReturnToURL(location.pathname)
+  if (!isLoggedIn) setReturnToURL(location.pathname + location.search)
   return <Route {...rest} render={props => isLoggedIn
       ? React.createElement(component, props)
       : <Redirect to={'/login'} />

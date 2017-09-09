@@ -76,41 +76,41 @@ export function reinviteAll (communityId) {
   }
 }
 
-export function expireInvitation (invitationId) {
+export function expireInvitation (invitationToken) {
   return {
     type: EXPIRE_INVITATION,
     graphql: {
-      query: `mutation ($invitationId: ID) {
-        expireInvitation(invitationId: $invitationId) {
+      query: `mutation ($invitationToken: ID) {
+        expireInvitation(invitationToken: $invitationToken) {
           success
         }
       }`,
       variables: {
-        invitationId
+        invitationToken
       }
     },
     meta: {
-      invitationId,
+      invitationToken,
       optimistic: true
     }
   }
 }
 
-export function resendInvitation (invitationId) {
+export function resendInvitation (invitationToken) {
   return {
     type: RESEND_INVITATION,
     graphql: {
-      query: `mutation ($invitationId: ID) {
-        resendInvitation(invitationId: $invitationId) {
+      query: `mutation ($invitationToken: ID) {
+        resendInvitation(invitationToken: $invitationToken) {
           success
         }
       }`,
       variables: {
-        invitationId
+        invitationToken
       }
     },
     meta: {
-      invitationId,
+      invitationToken,
       optimistic: true
     }
   }

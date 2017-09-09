@@ -7,7 +7,6 @@ import getReturnToURL from 'store/selectors/getReturnToURL'
 import { RESET_RETURN_TO_URL } from 'store/constants'
 
 function NonAuthRoute ({ component, isLoggedIn, currentUser, returnToURL, resetReturnToURL, ...rest }) {
-  console.log(currentUser)
   if (isLoggedIn) resetReturnToURL()
   return <Route {...rest} render={props => !isLoggedIn
     ? React.createElement(component, props)

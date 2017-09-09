@@ -29,6 +29,7 @@ import UploadPhoto from 'routes/Signup/UploadPhoto'
 import AddLocation from 'routes/Signup/AddLocation'
 import AddSkills from 'routes/Signup/AddSkills'
 import Review from 'routes/Signup/Review'
+import JoinCommunity from 'routes/JoinCommunity'
 
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
@@ -109,6 +110,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
+            <Route path='/h/use-invitation' component={JoinCommunity} />
             {signupRoutes.map(({ path, child }) =>
               <Route
                 path={path}
