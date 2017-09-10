@@ -50,11 +50,15 @@ export default class Review extends Component {
   }
 
   submit = () => {
+    const { name, email, communityName, communityDomain } = this.state.edits
     this.state.edits.changed && this.props.updateUserSettings({
-      name: this.state.edits.name,
-      email: this.state.edits.email
+      name,
+      email
     })
-
+    this.props.createCommunity(
+      communityName,
+      communityDomain
+    )
     this.props.removeNameFromCreateCommunity()
     this.props.removeDomainFromCreateCommunity()
   }
