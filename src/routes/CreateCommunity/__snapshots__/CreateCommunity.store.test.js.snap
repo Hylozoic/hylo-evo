@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateCommunity store should call addCommunityDomain 1`] = `
+Object {
+  "payload": Object {
+    "domain": "domain",
+  },
+  "type": "CREATE_COMMUNITY_ADD_COMMUNITY_DOMAIN",
+}
+`;
+
+exports[`CreateCommunity store should call addCommunityName 1`] = `
+Object {
+  "payload": Object {
+    "name": "name",
+  },
+  "type": "CREATE_COMMUNITY_ADD_COMMUNITY_NAME",
+}
+`;
+
+exports[`CreateCommunity store should call addCommunityPrivacy 1`] = `
+Object {
+  "payload": Object {
+    "privacy": "privacy",
+  },
+  "type": "CREATE_COMMUNITY_ADD_COMMUNITY_PRIVACY",
+}
+`;
