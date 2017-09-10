@@ -14,6 +14,7 @@ describe('Review', () => {
       communityName={communityName}
       communityDomain={communityDomain}
       communityPrivacy={communityPrivacy}
+      goHome={jest.fn()}
     />)
     expect(wrapper).toMatchSnapshot()
   })

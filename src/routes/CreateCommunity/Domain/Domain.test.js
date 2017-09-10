@@ -11,6 +11,7 @@ describe('Domain', () => {
       goToPreviousStep={jest.fn()}
       addCommunityDomain={jest.fn()}
       fetchCommunity={jest.fn()}
+      goHome={jest.fn()}
     />)
     expect(wrapper).toMatchSnapshot()
   })
