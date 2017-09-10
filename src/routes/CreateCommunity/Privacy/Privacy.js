@@ -3,7 +3,7 @@ import '../CreateCommunity.scss'
 import LeftSidebar from '../../Signup/LeftSidebar'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
-import ModalFooter from '../ModalFooter'
+import ModalFooter from 'components/ModalFooter'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 

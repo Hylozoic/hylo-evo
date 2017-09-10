@@ -61,7 +61,7 @@ exports[`Domain renders correctly 1`] = `
       />
     </div>
   </div>
-  <ModalFooter
+  <SignupModalFooter
     continueText="Continue"
     hidePrevious={false}
     previous={[Function]}

@@ -1,7 +1,7 @@
 import React from 'react'
-import '../CreateCommunity.scss'
+import './ModalFooter.scss'
 
-export default function ModalFooter ({previous, submit, continueText, showPrevious = true}) {
+export default function SignupModalFooter ({previous, submit, continueText, showPrevious = true}) {
   return <div>
     <div styleName='signup-modal-footer'>
       <div styleName='footer-buttons'>

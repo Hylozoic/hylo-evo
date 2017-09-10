@@ -4,7 +4,7 @@ import LeftSidebar from '../../Signup/LeftSidebar'
 import TextInput from 'components/TextInput'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
-import ModalFooter from '../ModalFooter'
+import ModalFooter from 'components/ModalFooter'
 
 export default class Domain extends Component {
   constructor (props) {
