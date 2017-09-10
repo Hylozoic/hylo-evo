@@ -5,6 +5,7 @@ import TextInput from 'components/TextInput'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import ModalFooter from '../ModalFooter'
+import { get } from 'lodash/fp'
 
 export default class Review extends Component {
   constructor () {
@@ -15,6 +16,13 @@ export default class Review extends Component {
         email: true,
         communityName: true,
         communityDomain: true
+      },
+      edits: {
+        name: null,
+        email: null,
+        communityName: null,
+        communityDomain: null,
+        changed: false
       }
     }
   }
@@ -28,8 +36,38 @@ export default class Review extends Component {
     })
   }
 
+  handleInputChange = (event, name) => {
+    console.log('event', event)
+    console.log('name', name)
+    const value = event.target.value
+    this.setState({
+      edits: {
+        ...this.state.edits,
+        [name]: value,
+        changed: true
+      }
+    })
+  }
+
   submit = () => {
-    console.log('submit')
+    this.state.edits.changed && this.props.updateUserSettings({
+      name: this.state.edits.name,
+      email: this.state.edits.email
+    })
+
+    this.props.removeNameFromCreateCommunity()
+    this.props.removeDomainFromCreateCommunity()
+  }
+
+  componentWillMount = () => {
+    this.setState({
+      edits: {
+        name: get('name', this.props.currentUser),
+        email: get('email', this.props.currentUser),
+        communityName: get('communityName', this.props),
+        communityDomain: get('communityDomain', this.props)
+      }
+    })
   }
 
   render () {
@@ -50,31 +88,35 @@ export default class Review extends Component {
         <div styleName='center-review'>
           <ReviewTextInput
             label={'Your Name'}
-            value={currentUser && currentUser.name}
+            value={this.state.edits.name}
             readOnly={this.state.readOnly.name}
             editHandler={() => this.editHandler('name')}
             onEnter={this.onEnter}
+            onChange={(e) => this.handleInputChange(e, 'name')}
           />
           <ReviewTextInput
             label={'Your Email'}
-            value={currentUser && currentUser.email}
+            value={this.state.edits.email}
             readOnly={this.state.readOnly.email}
             editHandler={() => this.editHandler('email')}
             onEnter={this.onEnter}
+            onChange={(e) => this.handleInputChange(e, 'email')}
           />
           <ReviewTextInput
             label={'Community Name'}
-            value={this.props.communityName}
+            value={this.state.edits.communityName}
             readOnly={this.state.readOnly.communityName}
             editHandler={() => this.editHandler('communityName')}
             onEnter={this.onEnter}
+            onChange={(e) => this.handleInputChange(e, 'communityName')}
           />
           <ReviewTextInput
             label={'Domain'}
-            value={this.props.communityDomain}
+            value={this.state.edits.communityDomain}
             readOnly={this.state.readOnly.communityDomain}
             editHandler={() => this.editHandler('communityDomain')}
             onEnter={this.onEnter}
+            onChange={(e) => this.handleInputChange(e, 'communityDomain')}
           />
         </div>
       </div>
@@ -88,7 +130,7 @@ export default class Review extends Component {
   }
 }
 
-export function ReviewTextInput ({label, value, editHandler, readOnly = true}) {
+export function ReviewTextInput ({label, value, editHandler, onChange, readOnly = true}) {
   return <div styleName='review-input-text-row'>
     <div styleName='review-input-text-label'>
       <span>{label}</span>
@@ -101,6 +143,7 @@ export function ReviewTextInput ({label, value, editHandler, readOnly = true}) {
         theme={inputTheme}
         readOnly={readOnly}
         showClearButton={false}
+        onChange={onChange}
       />
     </div>
     <div styleName='review-input-edit'>

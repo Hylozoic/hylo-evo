@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { addCommunityDomain, fetchCommunity } from './Domain.store'
+import { fetchCommunity } from './Domain.store'
+import { addCommunityDomain } from '../CreateCommunity.store'
 import { get } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {

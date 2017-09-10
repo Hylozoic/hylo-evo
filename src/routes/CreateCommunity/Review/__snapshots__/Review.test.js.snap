@@ -42,22 +42,26 @@ exports[`Review renders correctly 1`] = `
       <ReviewTextInput
         editHandler={[Function]}
         label="Your Name"
+        onChange={[Function]}
         readOnly={true}
       />
       <ReviewTextInput
         editHandler={[Function]}
         label="Your Email"
+        onChange={[Function]}
         readOnly={true}
       />
       <ReviewTextInput
         editHandler={[Function]}
         label="Community Name"
+        onChange={[Function]}
         readOnly={true}
         value="communityName"
       />
       <ReviewTextInput
         editHandler={[Function]}
         label="Domain"
+        onChange={[Function]}
         readOnly={true}
         value="communityDomain"
       />

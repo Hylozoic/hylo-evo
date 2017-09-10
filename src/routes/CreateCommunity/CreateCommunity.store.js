@@ -12,3 +12,21 @@ export default function reducer (state = {}, action) {
   }
   return state
 }
+
+export function addCommunityName (name) {
+  return {
+    type: ADD_COMMUNITY_NAME,
+    payload: {
+      name
+    }
+  }
+}
+
+export function addCommunityDomain (domain) {
+  return {
+    type: ADD_COMMUNITY_DOMAIN,
+    payload: {
+      domain
+    }
+  }
+}

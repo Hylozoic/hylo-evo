@@ -1,14 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Domain store should call addCommunityDomain 1`] = `
-Object {
-  "payload": Object {
-    "domain": "domain",
-  },
-  "type": "CREATE_COMMUNITY_ADD_COMMUNITY_DOMAIN",
-}
-`;
-
 exports[`Domain store should call removeSkill 1`] = `
 Object {
   "graphql": Object {
