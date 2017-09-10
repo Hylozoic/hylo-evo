@@ -28,6 +28,10 @@ export default class Review extends Component {
     })
   }
 
+  submit = () => {
+    console.log('submit')
+  }
+
   render () {
     const { currentUser } = this.props
     return <div styleName='flex-wrapper'>
@@ -49,24 +53,28 @@ export default class Review extends Component {
             value={currentUser && currentUser.name}
             readOnly={this.state.readOnly.name}
             editHandler={() => this.editHandler('name')}
+            onEnter={this.onEnter}
           />
           <ReviewTextInput
             label={'Your Email'}
             value={currentUser && currentUser.email}
             readOnly={this.state.readOnly.email}
             editHandler={() => this.editHandler('email')}
+            onEnter={this.onEnter}
           />
           <ReviewTextInput
             label={'Community Name'}
             value={this.props.communityName}
             readOnly={this.state.readOnly.communityName}
             editHandler={() => this.editHandler('communityName')}
+            onEnter={this.onEnter}
           />
           <ReviewTextInput
             label={'Domain'}
             value={this.props.communityDomain}
             readOnly={this.state.readOnly.communityDomain}
             editHandler={() => this.editHandler('communityDomain')}
+            onEnter={this.onEnter}
           />
         </div>
       </div>

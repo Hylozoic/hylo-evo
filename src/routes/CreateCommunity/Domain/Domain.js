@@ -26,6 +26,12 @@ export default class Domain extends Component {
     this.props.goToNextStep()
   }
 
+  onEnter = event => {
+    if (event.key === 'Enter') {
+      this.submit()
+    }
+  }
+
   componentWillMount = () => {
     const { communityDomain } = this.props
     if (communityDomain) this.setState({communityDomain: communityDomain})
@@ -54,6 +60,7 @@ export default class Domain extends Component {
             theme={inputTheme}
             placeholder='Choose a domain name'
             showClearButton={false}
+            onEnter={this.onEnter}
           />
         </div>
       </div>

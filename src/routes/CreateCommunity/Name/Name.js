@@ -26,6 +26,12 @@ export default class Name extends Component {
     this.props.goToNextStep()
   }
 
+  onEnter = event => {
+    if (event.key === 'Enter') {
+      this.submit()
+    }
+  }
+
   componentWillMount = () => {
     const { communityName } = this.props
     if (communityName) this.setState({name: communityName})
@@ -55,6 +61,7 @@ export default class Name extends Component {
             theme={inputTheme}
             placeholder="What's the name of your community?"
             showClearButton={false}
+            onEnter={this.onEnter}
           />
         </div>
       </div>
