@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Review renders correctly 1`] = `
+<div
+  data-styleName="flex-wrapper"
+>
+  <Connect(LeftSidebar)
+    body="You can always come back and change your details at any time"
+    header="Everything looking good?"
+    theme={
+      Object {
+        "sidebarHeader": "sidebar-header-full-page",
+        "sidebarText": "gray-text sidebar-text-full-page",
+      }
+    }
+  />
+  <div
+    data-styleName="panel"
+  >
+    <div>
+      <span
+        data-styleName="step-count"
+      >
+        STEP 3/3
+      </span>
+    </div>
+    <div
+      data-styleName="center"
+    >
+      <div
+        data-styleName="logo center"
+        style={
+          Object {
+            "backgroundImage": "url(/logo-white.svg)",
+          }
+        }
+      />
+    </div>
+    <div
+      data-styleName="center-review"
+    >
+      <ReviewTextInput
+        editHandler={[Function]}
+        label="Your Name"
+        readOnly={true}
+      />
+      <ReviewTextInput
+        editHandler={[Function]}
+        label="Your Email"
+        readOnly={true}
+      />
+      <ReviewTextInput
+        editHandler={[Function]}
+        label="Community Name"
+        readOnly={true}
+        value="communityName"
+      />
+      <ReviewTextInput
+        editHandler={[Function]}
+        label="Domain"
+        readOnly={true}
+        value="communityDomain"
+      />
+    </div>
+  </div>
+  <ModalFooter
+    continueText="Finish Up"
+    showPrevious={false}
+    submit={[Function]}
+  />
+</div>
+`;
