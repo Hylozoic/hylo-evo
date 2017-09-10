@@ -13,12 +13,12 @@ describe('Domain', () => {
     expect(dispatchProps.updateUserSettings(changes)).toMatchSnapshot()
   })
 
-  it('should call removeNameFromCreateCommunity from mapDispatchToProps', () => {
-    expect(dispatchProps.removeNameFromCreateCommunity()).toMatchSnapshot()
+  it('should call clearNameFromCreateCommunity from mapDispatchToProps', () => {
+    expect(dispatchProps.clearNameFromCreateCommunity()).toMatchSnapshot()
   })
 
-  it('should call removeDomainFromCreateCommunity from mapDispatchToProps', () => {
-    expect(dispatchProps.removeDomainFromCreateCommunity()).toMatchSnapshot()
+  it('should call clearDomainFromCreateCommunity from mapDispatchToProps', () => {
+    expect(dispatchProps.clearDomainFromCreateCommunity()).toMatchSnapshot()
   })
 
   it('should have communityName in mapStateToProps', () => {

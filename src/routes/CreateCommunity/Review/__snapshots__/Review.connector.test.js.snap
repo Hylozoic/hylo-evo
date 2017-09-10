@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Domain should call removeDomainFromCreateCommunity from mapDispatchToProps 1`] = `
+exports[`Domain should call clearDomainFromCreateCommunity from mapDispatchToProps 1`] = `
 Object {
   "payload": Object {
     "domain": null,
@@ -9,7 +9,7 @@ Object {
 }
 `;
 
-exports[`Domain should call removeNameFromCreateCommunity from mapDispatchToProps 1`] = `
+exports[`Domain should call clearNameFromCreateCommunity from mapDispatchToProps 1`] = `
 Object {
   "payload": Object {
     "name": null,

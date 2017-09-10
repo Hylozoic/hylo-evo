@@ -57,8 +57,8 @@ export default class Review extends Component {
       communityName,
       communityDomain
     )
-    this.props.removeNameFromCreateCommunity()
-    this.props.removeDomainFromCreateCommunity()
+    this.props.clearNameFromCreateCommunity()
+    this.props.clearDomainFromCreateCommunity()
   }
 
   componentWillMount = () => {

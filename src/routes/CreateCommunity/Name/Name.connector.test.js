@@ -14,6 +14,10 @@ describe('Domain', () => {
     expect(dispatchProps.goToNextStep()).toMatchSnapshot()
   })
 
+  it('should call goHome from mapDispatchToProps', () => {
+    expect(dispatchProps.goHome()).toMatchSnapshot()
+  })
+
   it('should have communityName in mapStateToProps', () => {
     const communityName = 'communityName'
     const state = {

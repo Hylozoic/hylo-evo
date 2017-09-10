@@ -19,8 +19,8 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     goToNextStep: () => dispatch(push('/')),
     updateUserSettings: (changes) => dispatch(updateUserSettings(changes)),
-    removeNameFromCreateCommunity: () => dispatch(addCommunityName(null)),
-    removeDomainFromCreateCommunity: () => dispatch(addCommunityDomain(null)),
+    clearNameFromCreateCommunity: () => dispatch(addCommunityName(null)),
+    clearDomainFromCreateCommunity: () => dispatch(addCommunityDomain(null)),
     createCommunity: (name, slug) => dispatch(createCommunity(name, slug))
   }
 }

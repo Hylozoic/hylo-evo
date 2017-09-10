@@ -34,6 +34,18 @@ Object {
 }
 `;
 
+exports[`Domain should call goHome from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
 exports[`Domain should call goToNextStep from mapDispatchToProps 1`] = `
 Object {
   "payload": Object {
