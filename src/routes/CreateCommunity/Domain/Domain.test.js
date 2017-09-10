@@ -3,8 +3,8 @@ import { shallow } from 'enzyme'
 import Domain from './Domain'
 
 describe('Domain', () => {
-  const communityDomain = 'communityDomain'
   it('renders correctly', () => {
+    const communityDomain = 'communityDomain'
     const wrapper = shallow(<Domain
       communityDomain={communityDomain}
       goToNextStep={jest.fn()}

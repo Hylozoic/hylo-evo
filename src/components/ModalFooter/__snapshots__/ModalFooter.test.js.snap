@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModalFooter renders correctly with a "Previous" button 1`] = `
+<div>
+  <div
+    data-styleName="signup-modal-footer"
+  >
+    <div
+      data-styleName="footer-buttons"
+    >
+      <span
+        data-styleName="previous-button"
+        onClick={[Function]}
+      >
+        Previous
+      </span>
+      <span
+        data-styleName="continue-button"
+        onClick={[Function]}
+      >
+        continueText
+      </span>
+    </div>
+  </div>
+  <div
+    data-styleName="press-enter"
+  >
+    or press Enter
+  </div>
+</div>
+`;
+
+exports[`ModalFooter renders correctly without a "Previous" button 1`] = `
+<div>
+  <div
+    data-styleName="signup-modal-footer"
+  >
+    <div
+      data-styleName="footer-buttons"
+    >
+      <span
+        data-styleName="continue-button"
+        onClick={[Function]}
+      >
+        continueText
+      </span>
+    </div>
+  </div>
+  <div
+    data-styleName="press-enter"
+  >
+    or press Enter
+  </div>
+</div>
+`;
