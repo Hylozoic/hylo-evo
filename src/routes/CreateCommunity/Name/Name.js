@@ -20,19 +20,19 @@ export default class Name extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      'name': ''
+      communityName: ''
     }
   }
 
   handleNameChange = (event) => {
-    const name = event.target.value
+    const communityName = event.target.value
     this.setState({
-      name
+      communityName
     })
   }
 
   submit = () => {
-    this.props.addCommunityName(this.state.name)
+    this.props.addCommunityName(this.state.communityName)
     this.props.goToNextStep()
   }
 
@@ -61,7 +61,7 @@ export default class Name extends Component {
             type='text'
             name='community-name'
             onChange={this.handleNameChange}
-            value={this.state.name}
+            value={this.state.communityName}
             theme={theme}
             placeholder="What's the name of your community?"
             showClearButton={false}

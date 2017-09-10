@@ -1,12 +1,14 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import getMe from 'store/selectors/getMe'
+import { get } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
   return {
     currentUser: getMe(state),
-    communityName: state.CreateCommunity.name,
-    domainName: state.CreateCommunity.domain
+    communityDomain: get('domain', state.CreateCommunity),
+    communityName: get('name', state.CreateCommunity),
+    communityPrivacy: get('privacy', state.CreateCommunity)
   }
 }
 

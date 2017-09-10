@@ -18,7 +18,7 @@ export default class Review extends Component {
         name: true,
         email: true,
         communityName: true,
-        domainName: true
+        communityDomain: true
       }
     }
   }
@@ -67,9 +67,9 @@ export default class Review extends Component {
           />
           <ReviewTextInput
             label={'Domain'}
-            value={this.props.domainName}
-            readOnly={this.state.readOnly.domain}
-            editHandler={() => this.editHandler('domainName')}
+            value={this.props.communityDomain}
+            readOnly={this.state.readOnly.communityDomain}
+            editHandler={() => this.editHandler('communityDomain')}
           />
         </div>
       </div>

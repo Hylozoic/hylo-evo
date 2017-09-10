@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { addCommunityName } from './Name.store'
+import { get } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
   return {
-    communityName: state.CreateCommunity.name,
-    domainName: state.CreateCommunity.domain
+    communityName: get('name', state.CreateCommunity)
   }
 }
 

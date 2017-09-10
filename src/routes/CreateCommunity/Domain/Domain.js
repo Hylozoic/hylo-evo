@@ -19,25 +19,25 @@ export default class Domain extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      'domain': ''
+      'communityDomain': ''
     }
   }
 
   handleDomainChange = (event) => {
-    const domain = event.target.value
+    const communityDomain = event.target.value
     this.setState({
-      domain
+      communityDomain
     })
   }
 
   submit = () => {
-    this.props.addCommunityDomain(this.state.domain)
+    this.props.addCommunityDomain(this.state.communityDomain)
     this.props.goToNextStep()
   }
 
   componentWillMount = () => {
-    const { domainName } = this.props
-    if (domainName) this.setState({domain: domainName})
+    const { communityDomain } = this.props
+    if (communityDomain) this.setState({communityDomain: communityDomain})
   }
   render () {
     return <div styleName='flex-wrapper'>
@@ -58,7 +58,7 @@ export default class Domain extends Component {
           <TextInput
             type='text'
             name='community-name'
-            value={this.state.domain}
+            value={this.state.communityDomain}
             onChange={this.handleDomainChange}
             theme={theme}
             placeholder='Choose a domain name'

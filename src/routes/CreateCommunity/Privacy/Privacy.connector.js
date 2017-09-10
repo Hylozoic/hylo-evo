@@ -1,5 +1,12 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+import { get } from 'lodash/fp'
+
+export function mapStateToProps (state, props) {
+  return {
+    communityPrivacy: get('privacy', state.CreateCommunity)
+  }
+}
 
 export function mapDispatchToProps (dispatch, props) {
   return {
@@ -8,4 +15,4 @@ export function mapDispatchToProps (dispatch, props) {
   }
 }
 
-export default connect(null, mapDispatchToProps)
+export default connect(mapStateToProps, mapDispatchToProps)
