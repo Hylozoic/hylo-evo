@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Review from './Review'
+import Review, { ReviewTextInput } from './Review'
 
 describe('Review', () => {
   it('renders correctly', () => {
@@ -14,6 +14,23 @@ describe('Review', () => {
       communityName={communityName}
       communityDomain={communityDomain}
       communityPrivacy={communityPrivacy}
+    />)
+    expect(wrapper).toMatchSnapshot()
+  })
+})
+
+describe('ReviewTextInput', () => {
+  it('renders correctly', () => {
+    const label = 'label'
+    const value = 'value'
+    const readOnly = false
+
+    const wrapper = shallow(<ReviewTextInput
+      label={label}
+      value={value}
+      readOnly={readOnly}
+      editHandler={jest.fn()}
+      onChange={jest.fn()}
     />)
     expect(wrapper).toMatchSnapshot()
   })

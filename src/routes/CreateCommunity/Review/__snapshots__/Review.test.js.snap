@@ -74,3 +74,45 @@ exports[`Review renders correctly 1`] = `
   />
 </div>
 `;
+
+exports[`ReviewTextInput renders correctly 1`] = `
+<div
+  data-styleName="review-input-text-row"
+>
+  <div
+    data-styleName="review-input-text-label"
+  >
+    <span>
+      label
+    </span>
+  </div>
+  <div
+    data-styleName="review-input-text"
+  >
+    <TextInput
+      name="community-name"
+      onChange={[Function]}
+      readOnly={false}
+      showClearButton={false}
+      theme={
+        Object {
+          "inputStyle": "modal-input partial",
+          "wrapperStyle": "center",
+        }
+      }
+      type="text"
+      value="value"
+    />
+  </div>
+  <div
+    data-styleName="review-input-edit"
+  >
+    <span
+      data-styleName="edit-button"
+      onClick={[Function]}
+    >
+      Edit
+    </span>
+  </div>
+</div>
+`;
