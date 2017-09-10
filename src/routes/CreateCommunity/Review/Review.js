@@ -6,10 +6,6 @@ import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import ModalFooter from '../ModalFooter'
 
-const theme = {
-  inputStyle: 'modal-input partial',
-  wrapperStyle: 'center'
-}
 export default class Review extends Component {
   constructor () {
     super()
@@ -36,12 +32,13 @@ export default class Review extends Component {
     const { currentUser } = this.props
     return <div styleName='flex-wrapper'>
       <LeftSidebar
+        theme={sidebarTheme}
         header='Everything looking good?'
         body='You can always come back and change your details at any time'
       />
       <div styleName='panel'>
         <div>
-          <span styleName='step-count'>STEP 4/4</span>
+          <span styleName='step-count'>STEP 3/3</span>
         </div>
         <div styleName='center'>
           <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
@@ -93,7 +90,7 @@ export function ReviewTextInput ({label, value, editHandler, readOnly = true}) {
         type='text'
         name='community-name'
         value={value}
-        theme={theme}
+        theme={inputTheme}
         readOnly={readOnly}
         showClearButton={false}
       />
@@ -102,4 +99,14 @@ export function ReviewTextInput ({label, value, editHandler, readOnly = true}) {
       <span styleName='edit-button' onClick={editHandler}>Edit</span>
     </div>
   </div>
+}
+
+const inputTheme = {
+  inputStyle: 'modal-input partial',
+  wrapperStyle: 'center'
+}
+
+const sidebarTheme = {
+  sidebarHeader: 'sidebar-header-full-page',
+  sidebarText: 'gray-text sidebar-text-full-page'
 }

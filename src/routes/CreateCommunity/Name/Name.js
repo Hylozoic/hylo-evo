@@ -6,16 +6,6 @@ import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import ModalFooter from '../ModalFooter'
 
-const theme = {
-  inputStyle: 'modal-input',
-  wrapperStyle: 'center'
-}
-
-const sidebarTheme = {
-  sidebarHeader: 'sidebar-header-full-page',
-  sidebarText: 'gray-text sidebar-text-full-page'
-}
-
 export default class Name extends Component {
   constructor (props) {
     super(props)
@@ -50,19 +40,19 @@ export default class Name extends Component {
       />
       <div styleName='panel'>
         <div>
-          <span styleName='step-count'>STEP 1/4</span>
+          <span styleName='step-count'>STEP 1/3</span>
         </div>
         <div styleName='center'>
           <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
         </div>
         <div styleName='center-vertically'>
-          <span styleName='text-input-label'>What's the name of your community?</span>
+          <span styleName='text-input-label'>{ this.state.communityName && "What's the name of your community?"}</span>
           <TextInput
             type='text'
             name='community-name'
             onChange={this.handleNameChange}
             value={this.state.communityName}
-            theme={theme}
+            theme={inputTheme}
             placeholder="What's the name of your community?"
             showClearButton={false}
           />
@@ -75,4 +65,14 @@ export default class Name extends Component {
         />
     </div>
   }
+}
+
+const inputTheme = {
+  inputStyle: 'modal-input',
+  wrapperStyle: 'center'
+}
+
+const sidebarTheme = {
+  sidebarHeader: 'sidebar-header-full-page',
+  sidebarText: 'gray-text sidebar-text-full-page'
 }

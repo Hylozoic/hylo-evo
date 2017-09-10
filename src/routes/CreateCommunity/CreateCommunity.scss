@@ -11,7 +11,7 @@
 }
 
 .sidebar {
-  flex: 0.25;
+  flex: 0.2;
   margin-left: 24px;
   margin-top: 16px;
   margin-right: 30px;
@@ -20,7 +20,7 @@
 
 .panel {
   height: inherit;
-  flex: 0.75;
+  flex: 0.8;
   padding-left: 16px;
   padding-top: 16px;
   border-top-right-radius: $space-1x;
@@ -111,7 +111,7 @@
 
 .center-vertically {
   position: absolute;
-  top: 47%;
+  top: 42%;
   width: 68%;
 }
 

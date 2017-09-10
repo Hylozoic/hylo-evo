@@ -6,10 +6,6 @@ import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import ModalFooter from '../ModalFooter'
 
-const theme = {
-  inputStyle: 'modal-input',
-  wrapperStyle: 'center'
-}
 export default class Privacy extends Component {
   setState = () => {
 
@@ -17,6 +13,7 @@ export default class Privacy extends Component {
   render () {
     return <div styleName='flex-wrapper'>
       <LeftSidebar
+        theme={sidebarTheme}
         header='Set the privacy of your community'
         body='Hylo helps groups stay connected organized and engaged.'
       />
@@ -33,7 +30,7 @@ export default class Privacy extends Component {
             name='community-name'
             onChange={this.setState('community-name')}
             inputRef={input => { this.email = input }}
-            theme={theme}
+            theme={inputTheme}
             placeholder='Choose a domain name'
           />
         </div>
@@ -45,4 +42,14 @@ export default class Privacy extends Component {
         />
     </div>
   }
+}
+
+const inputTheme = {
+  inputStyle: 'modal-input',
+  wrapperStyle: 'center'
+}
+
+const sidebarTheme = {
+  sidebarHeader: 'sidebar-header-full-page',
+  sidebarText: 'gray-text sidebar-text-full-page'
 }
