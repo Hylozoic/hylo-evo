@@ -7,6 +7,7 @@ exports[`Review renders correctly 1`] = `
   <ModalSidebar
     body="All good things start somewhere! Let's kick things off with a catchy name for your community."
     header="Great, let's get started"
+    onClick={[Function]}
     theme={
       Object {
         "sidebarHeader": "sidebar-header-full-page",
