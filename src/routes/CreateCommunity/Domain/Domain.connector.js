@@ -15,7 +15,8 @@ export function mapDispatchToProps (dispatch, props) {
     goToNextStep: () => dispatch(push('/create-community/review')),
     goToPreviousStep: () => dispatch(push('/create-community/name')),
     addCommunityDomain: (domain) => dispatch(addCommunityDomain(domain)),
-    fetchCommunity: (slug) => dispatch(fetchCommunity(slug))
+    fetchCommunity: (slug) => dispatch(fetchCommunity(slug)),
+    goHome: (slug) => dispatch(push('/'))
   }
 }
 

@@ -1,0 +1,44 @@
+.sidebar {
+  min-height: 1px; // Prevent collapsing
+  height: 100%;
+  flex: 0.3;
+  margin-left: 24px;
+  margin-top: 16px;
+  margin-right: 30px;
+}
+
+.sidebar-header {
+  color: $color-caribbean-green;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.gray-text {
+  color: $color-dove-gray-75;
+}
+
+.sidebar-text {
+  font-size: 14px;
+  font-weight: lighter;
+}
+
+.close-button {
+  letter-spacing: 1px;
+  font-size: 10px;
+  opacity: 0.5;
+}
+
+.sidebar-text-full-page {
+  font-size: 14px;
+  font-weight: lighter;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.sidebar-header-full-page {
+  color: $color-caribbean-green;
+  margin-top: 20px;
+  font-size: 18px;
+  padding-left: 25px;
+  padding-right: 35px;
+}

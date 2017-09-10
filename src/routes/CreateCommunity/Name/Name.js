@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import '../CreateCommunity.scss'
-import LeftSidebar from '../../Signup/LeftSidebar'
 import TextInput from 'components/TextInput'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import ModalFooter from 'components/ModalFooter'
+import ModalSidebar from 'components/ModalSidebar'
 
 export default class Name extends Component {
   constructor (props) {
@@ -39,7 +39,8 @@ export default class Name extends Component {
 
   render () {
     return <div styleName='flex-wrapper'>
-      <LeftSidebar
+      <ModalSidebar
+        onClick={this.props.goHome}
         theme={sidebarTheme}
         header="Great, let's get started"
         body="All good things start somewhere! Let's kick things off with a catchy name for your community."

@@ -4,9 +4,9 @@ exports[`Domain renders correctly 1`] = `
 <div
   data-styleName="flex-wrapper"
 >
-  <Connect(LeftSidebar)
-    body="Your URL is the address that members will use to access your community online. The shorter the better!"
-    header="Choose an address for your community"
+  <ModalSidebar
+    body="All good things start somewhere! Let's kick things off with a catchy name for your community."
+    header="Great, let's get started"
     theme={
       Object {
         "sidebarHeader": "sidebar-header-full-page",

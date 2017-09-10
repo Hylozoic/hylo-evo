@@ -12,6 +12,7 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     goToNextStep: () => dispatch(push('/create-community/domain')),
+    goHome: () => dispatch(push('/')),
     addCommunityName: (name) => dispatch(addCommunityName(name))
   }
 }

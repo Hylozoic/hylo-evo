@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../CreateCommunity.scss'
-import LeftSidebar from '../../Signup/LeftSidebar'
+import ModalSidebar from 'components/ModalSidebar'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import ModalFooter from 'components/ModalFooter'
@@ -21,10 +21,11 @@ export default class Privacy extends Component {
   }
   render () {
     return <div styleName='flex-wrapper'>
-      <LeftSidebar
+      <ModalSidebar
+        onClick={this.props.goHome}
         theme={sidebarTheme}
-        header='Set the privacy of your community'
-        body='Hylo helps groups stay connected organized and engaged.'
+        header="Great, let's get started"
+        body="All good things start somewhere! Let's kick things off with a catchy name for your community."
       />
       <div styleName='panel'>
         <div>

@@ -13,7 +13,8 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     goToNextStep: () => dispatch(push('/create-community/review')),
     goToPreviousStep: () => dispatch(push('/create-community/domain')),
-    addCommunityPrivacy: (privacy) => dispatch(addCommunityPrivacy(privacy))
+    addCommunityPrivacy: (privacy) => dispatch(addCommunityPrivacy(privacy)),
+    goHome: () => dispatch(push('/'))
   }
 }
 

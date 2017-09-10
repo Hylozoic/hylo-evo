@@ -4,9 +4,9 @@ exports[`Review renders correctly 1`] = `
 <div
   data-styleName="flex-wrapper"
 >
-  <Connect(LeftSidebar)
-    body="You can always come back and change your details at any time"
-    header="Everything looking good?"
+  <ModalSidebar
+    body="All good things start somewhere! Let's kick things off with a catchy name for your community."
+    header="Great, let's get started"
     theme={
       Object {
         "sidebarHeader": "sidebar-header-full-page",

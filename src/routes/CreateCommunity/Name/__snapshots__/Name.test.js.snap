@@ -4,7 +4,7 @@ exports[`Name renders correctly 1`] = `
 <div
   data-styleName="flex-wrapper"
 >
-  <Connect(LeftSidebar)
+  <ModalSidebar
     body="All good things start somewhere! Let's kick things off with a catchy name for your community."
     header="Great, let's get started"
     theme={

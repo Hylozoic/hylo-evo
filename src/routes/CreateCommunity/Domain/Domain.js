@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../CreateCommunity.scss'
-import LeftSidebar from '../../Signup/LeftSidebar'
+import ModalSidebar from 'components/ModalSidebar'
 import TextInput from 'components/TextInput'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
@@ -38,10 +38,11 @@ export default class Domain extends Component {
   }
   render () {
     return <div styleName='flex-wrapper'>
-      <LeftSidebar
+      <ModalSidebar
+        onClick={this.props.goHome}
         theme={sidebarTheme}
-        header='Choose an address for your community'
-        body='Your URL is the address that members will use to access your community online. The shorter the better!'
+        header="Great, let's get started"
+        body="All good things start somewhere! Let's kick things off with a catchy name for your community."
       />
       <div styleName='panel'>
         <div>
