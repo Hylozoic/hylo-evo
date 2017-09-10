@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Domain should call fetchCommunity from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "name": "Community Name",
+  },
+  "type": "CREATE_COMMUNITY_ADD_COMMUNITY_NAME",
+}
+`;
