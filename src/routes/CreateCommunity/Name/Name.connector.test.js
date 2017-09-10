@@ -1,10 +1,26 @@
-import { mapDispatchToProps } from './Name.connector'
+import { mapDispatchToProps, mapStateToProps } from './Name.connector'
+
+const dispatch = jest.fn(x => x)
+const props = {}
+const dispatchProps = mapDispatchToProps(dispatch, props)
+
 describe('Domain', () => {
   it('should call fetchCommunity from mapDispatchToProps', () => {
-    const dispatch = jest.fn(x => x)
-    const props = {}
     const communityName = 'Community Name'
-    const dispatchProps = mapDispatchToProps(dispatch, props)
     expect(dispatchProps.addCommunityName(communityName)).toMatchSnapshot()
+  })
+
+  it('should call goToNextStep from mapDispatchToProps', () => {
+    expect(dispatchProps.goToNextStep()).toMatchSnapshot()
+  })
+
+  it('should have communityName in mapStateToProps', () => {
+    const communityName = 'communityName'
+    const state = {
+      CreateCommunity: {
+        name: communityName
+      }
+    }
+    expect(mapStateToProps(state, props).communityName).toBe(communityName)
   })
 })

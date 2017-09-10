@@ -33,3 +33,27 @@ Object {
   "type": "CREATE_COMMUNITY_FETCH_COMMUNITY",
 }
 `;
+
+exports[`Domain should call goToNextStep from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/create-community/review",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`Domain should call goToPreviousStep from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/create-community/name",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;

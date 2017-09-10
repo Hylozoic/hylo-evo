@@ -8,3 +8,15 @@ Object {
   "type": "CREATE_COMMUNITY_ADD_COMMUNITY_NAME",
 }
 `;
+
+exports[`Domain should call goToNextStep from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/create-community/domain",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;

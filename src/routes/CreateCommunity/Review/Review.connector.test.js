@@ -1,4 +1,4 @@
-import { mapDispatchToProps } from './Review.connector'
+import { mapDispatchToProps, mapStateToProps } from './Review.connector'
 
 const dispatch = jest.fn(x => x)
 const props = {}
@@ -19,5 +19,38 @@ describe('Domain', () => {
 
   it('should call removeDomainFromCreateCommunity from mapDispatchToProps', () => {
     expect(dispatchProps.removeDomainFromCreateCommunity()).toMatchSnapshot()
+  })
+
+  it('should have communityName in mapStateToProps', () => {
+    const name = 'name'
+
+    const state = {
+      CreateCommunity: {
+        name
+      }
+    }
+    expect(mapStateToProps(state, props).communityName).toBe(name)
+  })
+
+  it('should have communityDomain in mapStateToProps', () => {
+    const domain = 'domain'
+
+    const state = {
+      CreateCommunity: {
+        domain
+      }
+    }
+    expect(mapStateToProps(state, props).communityDomain).toBe(domain)
+  })
+
+  it('should have communityPrivacy in mapStateToProps', () => {
+    const privacy = 'privacy'
+
+    const state = {
+      CreateCommunity: {
+        privacy
+      }
+    }
+    expect(mapStateToProps(state, props).communityPrivacy).toBe(privacy)
   })
 })
