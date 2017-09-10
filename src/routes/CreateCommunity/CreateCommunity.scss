@@ -183,3 +183,32 @@
   font-size: 14px;
   opacity: 0.7;
 }
+
+.privacy-label {
+  color: $color-white;
+  font-size: 24px;
+  font-weight: 100;
+  font-family: sans-serif;
+}
+
+.privacy-label-row {
+  margin-top: 1px;
+  border-bottom: 1px solid $color-athens-gray-dark-50;
+  margin-left: 3.4%;
+  width: 68%;
+  font-weight: 100;
+}
+
+.privacy-input-label {
+  letter-spacing: 1px;
+  font-size: 10px;
+  color: $color-white-60;
+}
+
+.privacy-dropdown {
+  display: inline;
+  margin-left: 10px;
+  color: $color-white;
+  font-size: 24px;
+  font-family: sans-serif;
+}

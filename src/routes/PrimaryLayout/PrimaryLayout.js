@@ -32,7 +32,8 @@ import Review from 'routes/Signup/Review'
 import CreateCommunity from 'routes/CreateCommunity'
 import Name from 'routes/CreateCommunity/Name'
 import Domain from 'routes/CreateCommunity/Domain'
-import Privacy from 'routes/CreateCommunity/Privacy'
+// TODO: Implement create community privacy component when implemented on the server
+// import Privacy from 'routes/CreateCommunity/Privacy'
 import CommunityReview from 'routes/CreateCommunity/Review'
 
 import './PrimaryLayout.scss'
@@ -121,11 +122,11 @@ export default class PrimaryLayout extends Component {
                 component={(props) => <SignupModal {...props} child={child} />}
               />
             )}
-            {createCommunityRoutes.map(({ path, child }) =>
+            {createCommunityRoutes.map(({ path, component }) =>
               <Route
                 path={path}
                 key={path}
-                component={(props) => <CreateCommunity {...props} child={child} />}
+                component={(props) => <CreateCommunity {...props} component={component} />}
                 />
             )}
           </Switch>
@@ -188,11 +189,12 @@ const signupRoutes = [
   {path: '/signup/review', child: Review}
 ]
 const createCommunityRoutes = [
-  {path: '/create-community/name', child: Name},
-  {path: '/create-community/domain', child: Domain},
+  {path: '/create-community/name', component: Name},
+  {path: '/create-community/domain', component: Domain},
   // TODO: Implement create community privacy component when implemented on the server
-  // {path: '/create-community/privacy', child: Privacy},
-  {path: '/create-community/review', child: CommunityReview}
+  // TODO: Don't forget to change 'step' values
+  // {path: '/create-community/privacy', component: Privacy},
+  {path: '/create-community/review', component: CommunityReview}
 ]
 
 export function isSignupPath (path) {

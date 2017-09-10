@@ -71,7 +71,6 @@ export default class Review extends Component {
   }
 
   render () {
-    const { currentUser } = this.props
     return <div styleName='flex-wrapper'>
       <LeftSidebar
         theme={sidebarTheme}
