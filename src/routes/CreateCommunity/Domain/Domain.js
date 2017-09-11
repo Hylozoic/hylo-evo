@@ -10,7 +10,7 @@ export default class Domain extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      'communityDomain': ''
+      communityDomain: ''
     }
   }
 
@@ -26,6 +26,20 @@ export default class Domain extends Component {
     const communityDomain = this.removeUrlFromDomain(this.state.communityDomain)
     this.props.addCommunityDomain(communityDomain)
     this.props.goToNextStep()
+  }
+
+  errorCheckAndSubmit = () => {
+    if (this.props.communityDomainExists) {
+      this.setState({
+        error: 'This domain name is invalid. Try another.'
+      })
+    } else if (this.state.communityDomain === '') {
+      this.setState({
+        error: 'Please enter a domain name.'
+      })
+    } else {
+      this.submit()
+    }
   }
 
   onEnter = event => {
@@ -86,10 +100,12 @@ export default class Domain extends Component {
             showClearButton={false}
             onEnter={this.onEnter}
           />
+          { this.state.error && <span styleName='arrow-up' /> }
+          { this.state.error && <span styleName='error'>{this.state.error}</span>}
         </div>
       </div>
       <ModalFooter
-        submit={this.submit}
+        submit={this.errorCheckAndSubmit}
         previous={this.props.goToPreviousStep}
         hidePrevious={false}
         continueText={'Continue'}

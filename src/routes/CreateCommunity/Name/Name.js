@@ -26,6 +26,16 @@ export default class Name extends Component {
     this.props.goToNextStep()
   }
 
+  errorCheckAndSubmit = () => {
+    if (this.state.communityName === '') {
+      this.setState({
+        error: 'Please enter a community name'
+      })
+    } else {
+      this.submit()
+    }
+  }
+
   onEnter = event => {
     if (event.key === 'Enter') {
       this.submit()
@@ -65,10 +75,12 @@ export default class Name extends Component {
             showClearButton={false}
             onEnter={this.onEnter}
           />
+          { this.state.error && <span styleName='arrow-up' /> }
+          { this.state.error && <span styleName='error'>{this.state.error}</span>}
         </div>
       </div>
       <ModalFooter
-        submit={this.submit}
+        submit={this.errorCheckAndSubmit}
         showPrevious={false}
         continueText={'Continue'}
         />

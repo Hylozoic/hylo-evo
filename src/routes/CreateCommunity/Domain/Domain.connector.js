@@ -6,7 +6,8 @@ import { get } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
   return {
-    communityDomain: get('domain', state.CreateCommunity)
+    communityDomain: get('domain', state.CreateCommunity),
+    communityDomainExists: get('domainExists', state.CreateCommunity)
   }
 }
 
