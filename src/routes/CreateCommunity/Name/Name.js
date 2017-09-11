@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '../CreateCommunity.scss'
 import TextInput from 'components/TextInput'
-import { hyloNameWhiteBackground } from 'util/assets'
+import { hyloNameWhiteBackground, happyAxolotl } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import ModalFooter from 'components/ModalFooter'
 import ModalSidebar from 'components/ModalSidebar'
@@ -40,6 +40,7 @@ export default class Name extends Component {
   render () {
     return <div styleName='flex-wrapper'>
       <ModalSidebar
+        imageUrl={happyAxolotl}
         onClick={this.props.goHome}
         theme={sidebarTheme}
         header="Great, let's get started"

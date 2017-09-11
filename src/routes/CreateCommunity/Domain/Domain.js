@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import '../CreateCommunity.scss'
 import ModalSidebar from 'components/ModalSidebar'
 import TextInput from 'components/TextInput'
-import { hyloNameWhiteBackground } from 'util/assets'
+import { hyloNameWhiteBackground, confusedAxolotl, happyAxolotl } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import ModalFooter from 'components/ModalFooter'
 
@@ -46,6 +46,13 @@ export default class Domain extends Component {
     return communityDomain.replace('hylo.com/c/', '')
   }
 
+  imageChooser = () => {
+    if (this.state.communityDomain !== '') {
+      return happyAxolotl
+    }
+    return confusedAxolotl
+  }
+
   componentWillMount = () => {
     const { communityDomain } = this.props
     if (communityDomain) this.setState({communityDomain: communityDomain})
@@ -53,6 +60,7 @@ export default class Domain extends Component {
   render () {
     return <div styleName='flex-wrapper'>
       <ModalSidebar
+        imageUrl={this.imageChooser()}
         onClick={this.props.goHome}
         theme={sidebarTheme}
         header='Choose an address for your community'
