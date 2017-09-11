@@ -89,6 +89,9 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       />
     </div>
   </div>
+  <DragDropContext(ImagePreviews)
+    id="test"
+  />
   <div
     data-styleName="footer"
   >
@@ -123,17 +126,14 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         />
       </div>
     </div>
-    <div
-      data-styleName="actionsBar"
-    >
-      <Button
-        color="green"
-        data-styleName="postButton"
-        disabled={true}
-        label="Save"
-        onClick={[Function]}
-      />
-    </div>
+    <ActionsBar
+      id="test"
+      loading={false}
+      save={[Function]}
+      showingImagePreviews={false}
+      submitButtonLabel="Save"
+      valid={false}
+    />
   </div>
 </div>
 `;
@@ -227,6 +227,9 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       />
     </div>
   </div>
+  <DragDropContext(ImagePreviews)
+    id="test"
+  />
   <div
     data-styleName="footer"
   >
@@ -261,17 +264,14 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         />
       </div>
     </div>
-    <div
-      data-styleName="actionsBar"
-    >
-      <Button
-        color="green"
-        data-styleName="postButton"
-        disabled={true}
-        label="Save"
-        onClick={[Function]}
-      />
-    </div>
+    <ActionsBar
+      id="test"
+      loading={false}
+      save={[Function]}
+      showingImagePreviews={false}
+      submitButtonLabel="Save"
+      valid={false}
+    />
   </div>
 </div>
 `;
@@ -355,6 +355,9 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
   </div>
+  <DragDropContext(ImagePreviews)
+    id="new"
+  />
   <div
     data-styleName="footer"
   >
@@ -378,17 +381,13 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         />
       </div>
     </div>
-    <div
-      data-styleName="actionsBar"
-    >
-      <Button
-        color="green"
-        data-styleName="postButton"
-        disabled={true}
-        label="Post"
-        onClick={[Function]}
-      />
-    </div>
+    <ActionsBar
+      loading={false}
+      save={[Function]}
+      showingImagePreviews={false}
+      submitButtonLabel="Post"
+      valid={false}
+    />
   </div>
 </div>
 `;
@@ -472,6 +471,9 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
   </div>
+  <DragDropContext(ImagePreviews)
+    id="new"
+  />
   <div
     data-styleName="footer"
   >
@@ -495,17 +497,13 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         />
       </div>
     </div>
-    <div
-      data-styleName="actionsBar"
-    >
-      <Button
-        color="green"
-        data-styleName="postButton"
-        disabled={true}
-        label="Post"
-        onClick={[Function]}
-      />
-    </div>
+    <ActionsBar
+      loading={false}
+      save={[Function]}
+      showingImagePreviews={false}
+      submitButtonLabel="Post"
+      valid={false}
+    />
   </div>
 </div>
 `;
@@ -589,6 +587,9 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
   </div>
+  <DragDropContext(ImagePreviews)
+    id="new"
+  />
   <div
     data-styleName="footer"
   >
@@ -612,17 +613,13 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         />
       </div>
     </div>
-    <div
-      data-styleName="actionsBar"
-    >
-      <Button
-        color="green"
-        data-styleName="postButton"
-        disabled={true}
-        label="Post"
-        onClick={[Function]}
-      />
-    </div>
+    <ActionsBar
+      loading={false}
+      save={[Function]}
+      showingImagePreviews={false}
+      submitButtonLabel="Post"
+      valid={false}
+    />
   </div>
 </div>
 `;
@@ -707,6 +704,9 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       />
     </div>
   </div>
+  <DragDropContext(ImagePreviews)
+    id="new"
+  />
   <div
     data-styleName="footer"
   >
@@ -730,17 +730,13 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         />
       </div>
     </div>
-    <div
-      data-styleName="actionsBar"
-    >
-      <Button
-        color="green"
-        data-styleName="postButton"
-        disabled={true}
-        label="Post"
-        onClick={[Function]}
-      />
-    </div>
+    <ActionsBar
+      loading={false}
+      save={[Function]}
+      showingImagePreviews={false}
+      submitButtonLabel="Post"
+      valid={false}
+    />
   </div>
 </div>
 `;
@@ -825,6 +821,9 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       />
     </div>
   </div>
+  <DragDropContext(ImagePreviews)
+    id="new"
+  />
   <div
     data-styleName="footer"
   >
@@ -848,17 +847,13 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         />
       </div>
     </div>
-    <div
-      data-styleName="actionsBar"
-    >
-      <Button
-        color="green"
-        data-styleName="postButton"
-        disabled={true}
-        label="Save"
-        onClick={[Function]}
-      />
-    </div>
+    <ActionsBar
+      loading={true}
+      save={[Function]}
+      showingImagePreviews={false}
+      submitButtonLabel="Save"
+      valid={false}
+    />
   </div>
 </div>
 `;
@@ -943,6 +938,9 @@ exports[`PostEditor renders with min props 1`] = `
       />
     </div>
   </div>
+  <DragDropContext(ImagePreviews)
+    id="new"
+  />
   <div
     data-styleName="footer"
   >
@@ -966,17 +964,13 @@ exports[`PostEditor renders with min props 1`] = `
         />
       </div>
     </div>
-    <div
-      data-styleName="actionsBar"
-    >
-      <Button
-        color="green"
-        data-styleName="postButton"
-        disabled={true}
-        label="Post"
-        onClick={[Function]}
-      />
-    </div>
+    <ActionsBar
+      loading={false}
+      save={[Function]}
+      showingImagePreviews={false}
+      submitButtonLabel="Post"
+      valid={false}
+    />
   </div>
 </div>
 `;
