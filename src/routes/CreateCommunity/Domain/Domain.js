@@ -14,15 +14,28 @@ export default class Domain extends Component {
     }
   }
 
+  formatDomainWithUrl (communityDomain) {
+    let c = communityDomain.replace('hylo.com/c/', '').replace('hylo.com/c', '')
+    if (c !== '') {
+      c = 'hylo.com/c/' + c
+    }
+    return c
+  }
+
+  removeUrlFromDomain (communityDomain) {
+    return communityDomain.replace('hylo.com/c/', '')
+  }
+
   handleDomainChange = (event) => {
     const communityDomain = event.target.value
     this.setState({
-      communityDomain
+      communityDomain: this.formatDomainWithUrl(communityDomain)
     })
   }
 
   submit = () => {
-    this.props.addCommunityDomain(this.state.communityDomain)
+    const communityDomain = this.state.communityDomain
+    this.props.addCommunityDomain(this.removeUrlFromDomain(communityDomain))
     this.props.goToNextStep()
   }
 
@@ -45,8 +58,9 @@ export default class Domain extends Component {
       <ModalSidebar
         onClick={this.props.goHome}
         theme={sidebarTheme}
-        header="Great, let's get started"
-        body="All good things start somewhere! Let's kick things off with a catchy name for your community."
+        header='Choose an address for your community'
+        body='Your URL is the address that people will use to access your community online.'
+        secondParagraph='The shorter the better!'
       />
       <div styleName='panel'>
         <div>
