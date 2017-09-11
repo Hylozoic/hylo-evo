@@ -50,7 +50,7 @@ export default class Review extends Component {
   }
 
   submit = () => {
-    const { name, email, communityName, communityDomain, communityPrivacy } = this.state.edits
+    const { name, email, communityName, communityDomain } = this.state.edits
     this.state.edits.changed && this.props.updateUserSettings({
       name,
       email
@@ -128,12 +128,12 @@ export default class Review extends Component {
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'communityDomain')}
           />
-          {/*}<ReviewTextInput
+          {/* }<ReviewTextInput
             label={'Privacy'}
             value={this.state.edits.communityPrivacy}
             onEnter={this.onEnter}
             editHandler={() => this.props.goToPrivacyStep()}
-          />*/}
+          /> */}
         </div>
       </div>
       <ModalFooter

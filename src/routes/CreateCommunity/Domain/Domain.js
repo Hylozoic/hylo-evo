@@ -14,6 +14,26 @@ export default class Domain extends Component {
     }
   }
 
+  handleDomainChange = (event) => {
+    const communityDomain = event.target.value
+    this.props.fetchCommunityExists(this.removeUrlFromDomain(communityDomain))
+    this.setState({
+      communityDomain: this.formatDomainWithUrl(communityDomain)
+    })
+  }
+
+  submit = () => {
+    const communityDomain = this.removeUrlFromDomain(this.state.communityDomain)
+    this.props.addCommunityDomain(communityDomain)
+    this.props.goToNextStep()
+  }
+
+  onEnter = event => {
+    if (event.key === 'Enter') {
+      this.submit()
+    }
+  }
+
   formatDomainWithUrl (communityDomain) {
     let c = communityDomain.replace('hylo.com/c/', '').replace('hylo.com/c', '')
     if (c !== '') {
@@ -24,29 +44,6 @@ export default class Domain extends Component {
 
   removeUrlFromDomain (communityDomain) {
     return communityDomain.replace('hylo.com/c/', '')
-  }
-
-  handleDomainChange = (event) => {
-    const communityDomain = event.target.value
-    this.setState({
-      communityDomain: this.formatDomainWithUrl(communityDomain)
-    })
-  }
-
-  submit = () => {
-    const communityDomain = this.state.communityDomain
-    this.props.addCommunityDomain(this.removeUrlFromDomain(communityDomain))
-    this.props.goToNextStep()
-  }
-
-  onEnter = event => {
-    if (event.key === 'Enter') {
-      this.submit()
-    }
-  }
-
-  communityDomainWithUrl = () => {
-    return `${this.props.communityDomain}.hylo.com`
   }
 
   componentWillMount = () => {
