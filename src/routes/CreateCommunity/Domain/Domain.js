@@ -32,6 +32,10 @@ export default class Domain extends Component {
     }
   }
 
+  communityDomainWithUrl = () => {
+    return `${this.props.communityDomain}.hylo.com`
+  }
+
   componentWillMount = () => {
     const { communityDomain } = this.props
     if (communityDomain) this.setState({communityDomain: communityDomain})

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { fetchCommunity } from './Domain.store'
+import { fetchCommunityExists } from './Domain.store'
 import { addCommunityDomain } from '../CreateCommunity.store'
 import { get } from 'lodash/fp'
 
@@ -15,7 +15,7 @@ export function mapDispatchToProps (dispatch, props) {
     goToNextStep: () => dispatch(push('/create-community/review')),
     goToPreviousStep: () => dispatch(push('/create-community/name')),
     addCommunityDomain: (domain) => dispatch(addCommunityDomain(domain)),
-    fetchCommunity: (slug) => dispatch(fetchCommunity(slug)),
+    fetchCommunityExists: (slug) => dispatch(fetchCommunityExists(slug)),
     goHome: (slug) => dispatch(push('/'))
   }
 }

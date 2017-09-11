@@ -1,26 +1,19 @@
-import { get } from 'lodash/fp'
-import { FETCH_COMMUNITY } from '../CreateCommunity.store'
+// import { get } from 'lodash/fp'
+import { FETCH_COMMUNITY_EXISTS } from '../CreateCommunity.store'
 
-export function fetchCommunity (slug) {
+export function fetchCommunityExists (slug) {
   return {
-    type: FETCH_COMMUNITY,
+    type: FETCH_COMMUNITY_EXISTS,
     graphql: {
       query: `
         query ($slug: String) {
-          community (slug: $slug) {
-            id
-            slug
+          communityExists (slug: $slug) {
+            data
           }
         }
       `,
       variables: {
         slug
-      }
-    },
-    meta: {
-      extractModel: 'Community',
-      extractQueryResults: {
-        getItems: get('payload.data.community')
       }
     }
   }

@@ -72,7 +72,8 @@ export default class PrimaryLayout extends Component {
       location,
       toggleDrawer,
       isCommunityRoute,
-      showLogoBadge
+      showLogoBadge,
+      hasMemberships
     } = this.props
 
     if (isCommunityRoute && !community) {
@@ -93,6 +94,7 @@ export default class PrimaryLayout extends Component {
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
+          <RedirectToCreateCommunityFlow hasMemberships={hasMemberships} pathname={this.props.location.pathname} />
           <RedirectToCommunity path='/' currentUser={currentUser} />
           <RedirectToCommunity path='/app' currentUser={currentUser} />
           <Switch>
@@ -201,10 +203,21 @@ export function isSignupPath (path) {
   return (path.startsWith('/signup'))
 }
 
+export function isCreateCommunityPath (path) {
+  return (path.startsWith('/create-community'))
+}
+
 export function RedirectToSignupFlow ({ currentUser, pathname }) {
   if (!currentUser || !currentUser.settings || !currentUser.settings.signupInProgress) return null
   if (isSignupPath(pathname)) return null
   const destination = '/signup/upload-photo'
+  return <Redirect to={destination} />
+}
+
+export function RedirectToCreateCommunityFlow ({ hasMemberships, pathname }) {
+  if (hasMemberships) return null
+  if (isCreateCommunityPath(pathname) || isSignupPath(pathname)) return null
+  const destination = '/create-community/name'
   return <Redirect to={destination} />
 }
 
