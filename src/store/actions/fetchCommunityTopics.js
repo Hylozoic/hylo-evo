@@ -56,11 +56,11 @@ export default function fetchCommunityTopics (communityId, {
   if (communityId) {
     query = communityQuery
     extractModel = 'Community'
-    getItems = get('community.communityTopics')
+    getItems = get('payload.data.community.communityTopics')
   } else {
     query = rootQuery
     extractModel = 'CommunityTopic'
-    getItems = get('communityTopics')
+    getItems = get('payload.data.communityTopics')
   }
   return {
     type: FETCH_COMMUNITY_TOPICS,
