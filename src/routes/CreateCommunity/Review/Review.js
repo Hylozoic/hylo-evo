@@ -128,12 +128,12 @@ export default class Review extends Component {
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'communityDomain')}
           />
-          <ReviewTextInput
+          {/*}<ReviewTextInput
             label={'Privacy'}
             value={this.state.edits.communityPrivacy}
             onEnter={this.onEnter}
             editHandler={() => this.props.goToPrivacyStep()}
-          />
+          />*/}
         </div>
       </div>
       <ModalFooter

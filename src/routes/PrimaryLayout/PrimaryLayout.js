@@ -33,7 +33,7 @@ import CreateCommunity from 'routes/CreateCommunity'
 import Name from 'routes/CreateCommunity/Name'
 import Domain from 'routes/CreateCommunity/Domain'
 // TODO: Implement create community privacy component when implemented on the server
-import Privacy from 'routes/CreateCommunity/Privacy'
+// import Privacy from 'routes/CreateCommunity/Privacy'
 import CommunityReview from 'routes/CreateCommunity/Review'
 
 import './PrimaryLayout.scss'
@@ -193,7 +193,7 @@ const createCommunityRoutes = [
   {path: '/create-community/domain', component: Domain},
   // TODO: Implement create community privacy component when implemented on the server
   // TODO: Don't forget to change 'step' values
-  {path: '/create-community/privacy', component: Privacy},
+  // {path: '/create-community/privacy', component: Privacy},
   {path: '/create-community/review', component: CommunityReview}
 ]
 
