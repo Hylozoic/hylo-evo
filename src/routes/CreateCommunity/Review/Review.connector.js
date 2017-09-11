@@ -21,7 +21,8 @@ export function mapDispatchToProps (dispatch, props) {
     updateUserSettings: (changes) => dispatch(updateUserSettings(changes)),
     clearNameFromCreateCommunity: () => dispatch(addCommunityName(null)),
     clearDomainFromCreateCommunity: () => dispatch(addCommunityDomain(null)),
-    createCommunity: (name, slug) => dispatch(createCommunity(name, slug))
+    createCommunity: (name, slug) => dispatch(createCommunity(name, slug)),
+    goToPrivacyStep: () => dispatch(push('/create-community/privacy'))
   }
 }
 

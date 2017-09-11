@@ -10,6 +10,7 @@ describe('Review', () => {
 
     const wrapper = shallow(<Review
       goToNextStep={jest.fn()}
+      goToPrivacyStep={jest.fn()}
       currentUser={{}}
       communityName={communityName}
       communityDomain={communityDomain}

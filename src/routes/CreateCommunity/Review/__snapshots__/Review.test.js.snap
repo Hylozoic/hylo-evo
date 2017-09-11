@@ -66,6 +66,10 @@ exports[`Review renders correctly 1`] = `
         readOnly={true}
         value="communityDomain"
       />
+      <ReviewTextInput
+        editHandler={[Function]}
+        label="Privacy"
+      />
     </div>
   </div>
   <SignupModalFooter

@@ -18,6 +18,30 @@ Object {
 }
 `;
 
+exports[`Domain should call goToNextStep from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`Domain should call goToPrivacyStep from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/create-community/privacy",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
 exports[`Domain should call updateUserSettings from mapDispatchToProps 1`] = `
 Object {
   "graphql": Object {

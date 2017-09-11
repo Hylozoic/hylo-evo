@@ -21,6 +21,14 @@ describe('Domain', () => {
     expect(dispatchProps.clearDomainFromCreateCommunity()).toMatchSnapshot()
   })
 
+  it('should call goToNextStep from mapDispatchToProps', () => {
+    expect(dispatchProps.goToNextStep()).toMatchSnapshot()
+  })
+
+  it('should call goToPrivacyStep from mapDispatchToProps', () => {
+    expect(dispatchProps.goToPrivacyStep()).toMatchSnapshot()
+  })
+
   it('should have communityName in mapStateToProps', () => {
     const name = 'name'
 

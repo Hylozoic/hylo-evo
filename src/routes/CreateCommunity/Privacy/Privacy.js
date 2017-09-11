@@ -6,18 +6,36 @@ import { bgImageStyle } from 'util/index'
 import ModalFooter from 'components/ModalFooter'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
+import { find } from 'lodash'
+import { get } from 'lodash/fp'
+
 
 export default class Privacy extends Component {
   constructor () {
     super()
     this.state = {
-      privacy: 'Public'
+      // Set to 'private' by default
+      selectedPrivacy: 1
     }
   }
 
   submit = () => {
-    this.props.addCommunityPrivacy(this.state.privacy)
+    // TODO: Find out how this will actuall be saved in the db.
+    // Currently set to be saved by label
+    this.props.addCommunityPrivacy(privacyOptions[this.state.selectedPrivacy].label)
     this.props.goToNextStep()
+  }
+
+  selectPrivacy = (selectedPrivacy) => {
+    this.setState({
+      selectedPrivacy
+    })
+  }
+
+  componentWillMount = () => {
+    const { communityPrivacy } = this.props
+    const privacyOption = find(privacyOptions, {label: communityPrivacy})
+    this.setState({selectedPrivacy: get('id', privacyOption) || 1})
   }
   render () {
     return <div styleName='flex-wrapper'>
@@ -39,16 +57,15 @@ export default class Privacy extends Component {
           <br />
           <span styleName='privacy-label'>This community is</span>
           <Dropdown styleName='privacy-dropdown'
-            toggleChildren={<span styleName=''>
-              {sortOptions[0].label}
+            toggleChildren={<span>
+              {privacyOptions[this.state.selectedPrivacy].label}
               <Icon name='ArrowDown' />
             </span>}
-            items={sortOptions.map(({ id, label }) => ({
+            items={privacyOptions.map(({ id, label }) => ({
               label,
-              onClick: console.log('onChangeSort')
+              onClick: () => this.selectPrivacy(id)
             }))}
             alignRight />
-
         </div>
       </div>
       <ModalFooter
@@ -65,7 +82,8 @@ const sidebarTheme = {
   sidebarText: 'gray-text sidebar-text-full-page'
 }
 
-const sortOptions = [
-  {id: 'updated', label: 'Latest'},
-  {id: 'votes', label: 'Popular'}
+const privacyOptions = [
+  {id: '0', label: 'public'},
+  {id: '1', label: 'private'},
+  {id: '2', label: 'unlisted'}
 ]

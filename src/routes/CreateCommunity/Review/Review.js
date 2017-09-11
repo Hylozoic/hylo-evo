@@ -5,6 +5,7 @@ import TextInput from 'components/TextInput'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import ModalFooter from 'components/ModalFooter'
+import { find } from 'lodash'
 import { get } from 'lodash/fp'
 
 export default class Review extends Component {
@@ -22,6 +23,7 @@ export default class Review extends Component {
         email: null,
         communityName: null,
         communityDomain: null,
+        communityPrivacy: null,
         changed: false
       }
     }
@@ -48,26 +50,32 @@ export default class Review extends Component {
   }
 
   submit = () => {
-    const { name, email, communityName, communityDomain } = this.state.edits
+    const { name, email, communityName, communityDomain, communityPrivacy } = this.state.edits
     this.state.edits.changed && this.props.updateUserSettings({
       name,
       email
     })
     this.props.createCommunity(
+      // communityPrivacy,
       communityName,
       communityDomain
     )
     this.props.clearNameFromCreateCommunity()
     this.props.clearDomainFromCreateCommunity()
+    this.props.goToNextStep()
   }
 
   componentWillMount = () => {
+    const { communityPrivacy } = this.props
+    const privacyOption = find(privacyOptions, {label: communityPrivacy})
+    const selectedCommunityPrivacy = get('label', privacyOption) // set to Private by default
     this.setState({
       edits: {
         name: get('name', this.props.currentUser),
         email: get('email', this.props.currentUser),
         communityName: get('communityName', this.props),
-        communityDomain: get('communityDomain', this.props)
+        communityDomain: get('communityDomain', this.props),
+        communityPrivacy: selectedCommunityPrivacy
       }
     })
   }
@@ -120,6 +128,12 @@ export default class Review extends Component {
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'communityDomain')}
           />
+          <ReviewTextInput
+            label={'Privacy'}
+            value={this.state.edits.communityPrivacy}
+            onEnter={this.onEnter}
+            editHandler={() => this.props.goToPrivacyStep()}
+          />
         </div>
       </div>
       <ModalFooter
@@ -163,3 +177,9 @@ const sidebarTheme = {
   sidebarHeader: 'sidebar-header-full-page',
   sidebarText: 'gray-text sidebar-text-full-page'
 }
+
+const privacyOptions = [
+  {id: '0', label: 'public'},
+  {id: '1', label: 'private'},
+  {id: '2', label: 'unlisted'}
+]
