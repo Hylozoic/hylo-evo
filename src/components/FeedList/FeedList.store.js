@@ -91,6 +91,12 @@ posts(
       name
       slug
     }
+    attachments {
+      id
+      position
+      type
+      url
+    }
   }
 }`
 

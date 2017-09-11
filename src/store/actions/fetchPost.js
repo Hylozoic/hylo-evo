@@ -52,6 +52,7 @@ export const postFieldsFragment = `
   attachments {
     id
     position
+    type
     url
   }`
 

@@ -1,8 +1,6 @@
-import PostDetail, { PostTags } from './PostDetail'
+import PostDetail from './PostDetail'
 import { shallow } from 'enzyme'
 import React from 'react'
-import { PostImage, PostBody, PostFooter } from 'components/PostCard'
-import PostHeader from 'components/PostCard/PostHeader'
 
 describe('PostDetail', () => {
   it('renders correctly', () => {
