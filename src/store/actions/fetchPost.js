@@ -48,6 +48,11 @@ export const postFieldsFragment = `
     id
     name
     slug
+  }
+  attachments {
+    id
+    position
+    url
   }`
 
 export default function fetchPost (id, opts = {}) {
