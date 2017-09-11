@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { push, goBack } from 'react-router-redux'
 import getMe from 'store/selectors/getMe'
-import { UPLOAD_IMAGE } from 'store/constants'
+import { UPLOAD_IMAGE, RESET_IS_SIGNING_IN } from 'store/constants'
 import { updateUserSettings } from 'store/actions/updateUserSettings'
 import fetchMySkills from 'store/actions/fetchMySkills'
 import getMySkills from 'store/selectors/getMySkills'
@@ -19,6 +19,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     updateUserSettings: (changes) => dispatch(updateUserSettings(changes)),
     goToNextStep: () => dispatch(push('/')),
+    resetIsSigningUp: () => dispatch(resetIsSigningUp()),
     goToPreviousStep: () => dispatch(push('/signup/add-skills')),
     goBack: () => dispatch(goBack()),
     fetchMySkills: () => dispatch(fetchMySkills())
@@ -26,3 +27,7 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
+
+export function resetIsSigningUp (returnToURL) {
+  return {type: RESET_IS_SIGNING_IN}
+}

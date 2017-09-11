@@ -22,6 +22,7 @@ export default class AddLocation extends Component {
       }
     }
   }
+
   handleInputChange = (event, name) => {
     const value = event.target.value
     this.setState({
@@ -40,11 +41,13 @@ export default class AddLocation extends Component {
       }
     })
   }
+
   submit = () => {
     const { edits } = this.state
     Object.keys(edits).forEach((key) => (edits[key] == null) && delete edits[key])
     const changes = Object.assign(edits, {settings: {signupInProgress: false}})
     this.props.updateUserSettings(changes)
+    this.props.resetIsSigningUp()
     this.props.goToNextStep()
   }
 

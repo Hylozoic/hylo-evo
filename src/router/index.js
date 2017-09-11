@@ -4,7 +4,6 @@ import { Switch, Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 import PrimaryLayout from 'routes/PrimaryLayout'
 import AuthRoute from './AuthRoute'
-import NonAuthRoute from './NonAuthRoute'
 import NonAuthLayout from 'routes/NonAuthLayout'
 import LoginCheck from 'routes/NonAuthLayout/LoginCheck'
 import UIKit from 'routes/UIKit'
@@ -29,9 +28,9 @@ function rootRoutes () {
   return <LoginCheck>
     <Switch>
       <Route path='/ui-kit' component={UIKit} />
-      <NonAuthRoute path='/login' component={NonAuthLayout} />
-      <NonAuthRoute path='/signup' exact component={NonAuthLayout} />
-      <AuthRoute path='/' component={PrimaryLayout} />
+      <AuthRoute path='/login' component={NonAuthLayout} />
+      <AuthRoute path='/signup' exact component={NonAuthLayout} />
+      <AuthRoute requireAuth path='/' component={PrimaryLayout} />
     </Switch>
   </LoginCheck>
 }
