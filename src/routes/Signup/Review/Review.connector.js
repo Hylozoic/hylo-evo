@@ -19,7 +19,6 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     updateUserSettings: (changes) => dispatch(updateUserSettings(changes)),
     goToNextStep: () => dispatch(push('/')),
-    resetIsSigningUp: () => dispatch(resetIsSigningUp()),
     goToPreviousStep: () => dispatch(push('/signup/add-skills')),
     goBack: () => dispatch(goBack()),
     fetchMySkills: () => dispatch(fetchMySkills())
@@ -27,7 +26,3 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
-
-export function resetIsSigningUp (returnToURL) {
-  return {type: RESET_IS_SIGNING_IN}
-}

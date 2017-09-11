@@ -80,11 +80,6 @@ export default class PrimaryLayout extends Component {
       detailRoutes
     )
 
-    // if (returnToURL) {
-    //   resetReturnToURL()
-    //   return <Redirect to={returnToURL} />
-    // }
-
     // TODO move FullPageModals
     return <div styleName='container' onClick={closeDrawer}>
       <Drawer currentCommunity={community} styleName={cx('drawer', {hidden: !isDrawerOpen})} />

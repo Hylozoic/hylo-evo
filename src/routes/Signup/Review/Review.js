@@ -47,7 +47,6 @@ export default class AddLocation extends Component {
     Object.keys(edits).forEach((key) => (edits[key] == null) && delete edits[key])
     const changes = Object.assign(edits, {settings: {signupInProgress: false}})
     this.props.updateUserSettings(changes)
-    this.props.resetIsSigningUp()
     this.props.goToNextStep()
   }
 

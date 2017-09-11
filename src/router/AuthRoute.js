@@ -6,14 +6,14 @@ import getMe from 'store/selectors/getMe'
 import getReturnToURL from 'store/selectors/getReturnToURL'
 import { SET_RETURN_TO_URL, RESET_RETURN_TO_URL } from 'store/constants'
 
-function AuthRoute ({
-  component, requireAuth, isLoggedIn, isSigningUp, currentUser,
+export function AuthRoute ({
+  component, requireAuth, isLoggedIn, currentUser,
   returnToURL, setReturnToURL, resetReturnToURL, location,
   ...rest
 }) {
   if (isLoggedIn && returnToURL) {
-    returnToURL && resetReturnToURL()
-    return <Route {...rest} render={props => <Redirect to={returnToURL || '/'} />} />
+    resetReturnToURL()
+    return <Route {...rest} render={props => <Redirect to={returnToURL} />} />
   } else if (!isLoggedIn && requireAuth) {
     setReturnToURL(location.pathname + location.search)
     return <Route {...rest} render={props => <Redirect to={'/login'} />} />
