@@ -14,6 +14,11 @@ import { DragDropContext, DragSource, DropTarget } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import ChangeImageButton from 'components/ChangeImageButton'
 
+const uploadSettings = id => ({
+  type: 'post',
+  id: id || 'new'
+})
+
 export default class PostEditor extends React.Component {
   static propTypes = {
     initialPrompt: PropTypes.string,
@@ -207,6 +212,7 @@ export default class PostEditor extends React.Component {
       imagePreviews, removeImagePreview, switchImagePreviews
     } = this.props
     const submitButtonLabel = editing ? 'Save' : 'Post'
+
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
       <div styleName='header'>
         <div styleName='initial'>
@@ -268,15 +274,14 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>
-        <div styleName='actionsBar'>
-          <Button
-            onClick={this.save}
-            disabled={!valid || loading}
-            styleName='postButton'
-            label={submitButtonLabel}
-            color='green'
-          />
-        </div>
+        <ActionsBar
+          id={id}
+          addImage={addImagePreview}
+          showingImagePreviews={!isEmpty(imagePreviews)}
+          valid={valid}
+          loading={loading}
+          submitButtonLabel={submitButtonLabel}
+          save={() => this.save()} />
       </div>
     </div>
   }
@@ -293,7 +298,7 @@ class ImagePreviews extends React.Component {
       {imagePreviews.map((url, i) =>
         <ImagePreview url={url} removeImage={removeImage} switchImages={switchImages} key={i} position={i} />)}
       <ChangeImageButton update={addImage}
-        uploadSettings={{type: 'post', id}}>
+        uploadSettings={uploadSettings(id)}>
         <div styleName='add-image'>+</div>
       </ChangeImageButton>
     </div>
@@ -337,3 +342,27 @@ class ImagePreview extends React.Component {
     </div>))
   }
 }))
+
+export function ActionsBar ({id, addImage, showingImagePreviews, valid, loading, submitButtonLabel, save}) {
+  const addImageIcon = <Icon name='AddImage'
+    styleName={cx('action-icon', {'highlight-icon': showingImagePreviews})} />
+
+  return <div styleName='actionsBar'>
+    <div styleName='actions'>
+      {showingImagePreviews
+        ? addImageIcon
+        : <ChangeImageButton update={addImage}
+          uploadSettings={uploadSettings(id)}>
+          {addImageIcon}
+        </ChangeImageButton>}
+
+    </div>
+    <Button
+      onClick={save}
+      disabled={!valid || loading}
+      styleName='postButton'
+      label={submitButtonLabel}
+      color='green'
+    />
+  </div>
+}

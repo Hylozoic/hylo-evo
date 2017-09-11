@@ -156,12 +156,30 @@
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
-  justify-content: flex-end;
-  padding: $space-3x;
+  padding: $space-3x 18px;
+  align-items: center;
+  border-top: solid 1px $color-ghost-30;
+}
+
+.actions {
+
+}
+
+.action-icon {
+  font-size: 32px;
+  cursor: pointer;
+  &:hover {
+    color: $color-caribbean-green;
+  }
+}
+
+.highlight-icon {
+  color: $color-caribbean-green;
+  cursor: default;
 }
 
 .postButton {
-  /* !empty */
+  margin-left: auto;
 }
 
 // ImagePreviews
