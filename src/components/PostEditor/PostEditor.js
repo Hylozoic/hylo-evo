@@ -12,6 +12,7 @@ import LinkPreview from './LinkPreview'
 import { bgImageStyle } from 'util/index'
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
+import ChangeImageButton from 'components/ChangeImageButton'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
@@ -199,10 +200,10 @@ export default class PostEditor extends React.Component {
 
   render () {
     const { titlePlaceholder, valid, post } = this.state
-    const { title, details, communities, linkPreview } = post
+    const { id, title, details, communities, linkPreview } = post
     const {
       onClose, initialPrompt, detailsPlaceholder,
-      currentUser, communityOptions, editing, loading,
+      currentUser, communityOptions, editing, loading, addImagePreview,
       imagePreviews, removeImagePreview, switchImagePreviews
     } = this.props
     const submitButtonLabel = editing ? 'Save' : 'Post'
@@ -249,7 +250,9 @@ export default class PostEditor extends React.Component {
         </div>
       </div>
       <ImagePreviews
+        id={id || 'new'}
         imagePreviews={imagePreviews}
+        addImage={addImagePreview}
         removeImage={removeImagePreview}
         switchImages={switchImagePreviews} />
       <div styleName='footer'>
@@ -280,16 +283,19 @@ export default class PostEditor extends React.Component {
 }
 
 const ImagePreviews = DragDropContext(HTML5Backend)(
-class WImagePreviews extends React.Component {
+class ImagePreviews extends React.Component {
   render () {
-    const { imagePreviews, removeImage, switchImages } = this.props
+    const { id, imagePreviews, addImage, removeImage, switchImages } = this.props
     if (isEmpty(imagePreviews)) return null
 
     return <div styleName='image-previews'>
       <div styleName='section-label'>Images</div>
       {imagePreviews.map((url, i) =>
         <ImagePreview url={url} removeImage={removeImage} switchImages={switchImages} key={i} position={i} />)}
-      <div styleName='add-image'>+</div>
+      <ChangeImageButton update={addImage}
+        uploadSettings={{type: 'post', id}}>
+        <div styleName='add-image'>+</div>
+      </ChangeImageButton>
     </div>
   }
 })
@@ -317,7 +323,7 @@ DragSource('ImagePreview', imagePreviewSource, (connect, monitor) => ({
   connectDragPreview: connect.dragPreview(),
   isDragging: monitor.isDragging()
 }))(
-class WImagePreview extends React.Component {
+class ImagePreview extends React.Component {
   render () {
     const {
       url, removeImage, connectDragSource, connectDragPreview, connectDropTarget, position

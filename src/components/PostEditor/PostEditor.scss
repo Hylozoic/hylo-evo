@@ -206,6 +206,7 @@
   padding: 1px;
   border: 1px solid white;
   background-clip: padding-box;
+  cursor: pointer;
 }
 
 .drag-preview {
@@ -220,4 +221,5 @@
   border: 2px dashed $color-loblolly;
   font-size: 40px;
   color: $color-rhino-30;
+  cursor: pointer;
 }

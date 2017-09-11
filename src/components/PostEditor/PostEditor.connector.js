@@ -17,6 +17,7 @@ import {
   removeLinkPreview,
   resetLinkPreview,
   setImagePreviews,
+  addImagePreview,
   removeImagePreview,
   switchImagePreviews,
   getLinkPreview,
@@ -63,6 +64,7 @@ export const mapDispatchToProps = (dispatch, props) => {
       return dispatch(push(postUrl(id, slug)))
     },
     ...bindActionCreators({
+      addImagePreview,
       removeImagePreview,
       switchImagePreviews,
       setImagePreviews
