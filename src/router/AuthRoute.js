@@ -1,4 +1,5 @@
 import React from 'react'
+import { get } from 'lodash/fp'
 import { Redirect, Route } from 'react-router'
 import { connect } from 'react-redux'
 import getIsLoggedIn from 'store/selectors/getIsLoggedIn'
@@ -11,16 +12,25 @@ function AuthRoute ({
   returnToURL, setReturnToURL, resetReturnToURL, location,
   ...rest
 }) {
-  console.log('isSigningUp: ', isSigningUp)
-  if (isLoggedIn && returnToURL && !isSigningUp) {
-    resetReturnToURL()
-    return <Redirect to={returnToURL} />
+  if (isLoggedIn) {
+    return <Route {...rest} render={props => redirect(props)} />
   } else if (!isLoggedIn && requireAuth) {
     setReturnToURL(location.pathname + location.search)
-    return <Route {...rest} render={props => <Redirect to={'/login'} />} />
+    return <Route {...rest} render={props => loginRedirect(props)} />
   } else {
     return <Route {...rest} render={props => React.createElement(component, props)} />
   }
+}
+
+function redirect ({ location }) {
+  return <Redirect to={get('state.from', location) || '/'} />
+}
+
+function loginRedirect ({ location }) {
+  return <Redirect to={{
+    pathname: '/login',
+    state: {from: location} // TODO: test this with server-side rendering
+  }} />
 }
 
 export function mapStateToProps (state, props) {
@@ -47,7 +57,6 @@ function resetReturnToURL (returnToURL) {
 
 // selector
 import { createSelector } from 'reselect'
-import { get } from 'lodash/fp'
 
 export const getIsSigningUp = createSelector(
   get('login'),
