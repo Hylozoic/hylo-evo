@@ -21,7 +21,8 @@ import {
   removeImagePreview,
   switchImagePreviews,
   getLinkPreview,
-  getImagePreviews
+  getImagePreviews,
+  getImages
 } from './PostEditor.store'
 
 export function mapStateToProps (state, props) {
@@ -36,6 +37,7 @@ export function mapStateToProps (state, props) {
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
   const imagePreviews = getImagePreviews(state, props)
+  const postImages = getImages(state, {postId: get('id', post)})
 
   return {
     currentUser,
@@ -47,7 +49,8 @@ export function mapStateToProps (state, props) {
     linkPreview,
     linkPreviewStatus,
     fetchLinkPreviewPending,
-    imagePreviews
+    imagePreviews,
+    postImages
   }
 }
 
@@ -73,8 +76,8 @@ export const mapDispatchToProps = (dispatch, props) => {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { fetchLinkPreviewPending } = stateProps
-  const { pollingFetchLinkPreviewRaw } = dispatchProps
+  const { fetchLinkPreviewPending, postImages } = stateProps
+  const { pollingFetchLinkPreviewRaw, setImagePreviews } = dispatchProps
 
   const pollingFetchLinkPreview = fetchLinkPreviewPending
       ? () => Promise.resolve()
@@ -84,7 +87,8 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    pollingFetchLinkPreview
+    pollingFetchLinkPreview,
+    loadImagePreviews: () => setImagePreviews(postImages.map(image => image.url))
   }
 }
 

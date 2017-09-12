@@ -84,6 +84,7 @@ export default class PostEditor extends React.Component {
 
   componentDidMount () {
     this.titleInput.focus()
+    this.props.loadImagePreviews()
   }
 
   componentDidUpdate (prevProps) {
@@ -106,6 +107,7 @@ export default class PostEditor extends React.Component {
     this.editor.reset()
     this.communitiesSelector.reset()
     this.setState(this.buildStateFromProps(props))
+    this.props.loadImagePreviews()
   }
 
   focus = () => this.editor && this.editor.focus()

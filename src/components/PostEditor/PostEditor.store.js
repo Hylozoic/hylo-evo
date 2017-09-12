@@ -9,6 +9,7 @@ export const UPDATE_POST = `${MODULE_NAME}/UPDATE_POST`
 export const FETCH_LINK_PREVIEW = `${MODULE_NAME}/FETCH_LINK_PREVIEW`
 export const REMOVE_LINK_PREVIEW = `${MODULE_NAME}/REMOVE_LINK_PREVIEW`
 export const RESET_LINK_PREVIEW = `${MODULE_NAME}/RESET_LINK_PREVIEW`
+export const LOAD_IMAGE_PREVIEWS = `${MODULE_NAME}/LOAD_IMAGE_PREVIEWS`
 export const SET_IMAGE_PREVIEWS = `${MODULE_NAME}/SET_IMAGE_PREVIEWS`
 export const ADD_IMAGE_PREVIEW = `${MODULE_NAME}/ADD_IMAGE_PREVIEW`
 export const REMOVE_IMAGE_PREVIEW = `${MODULE_NAME}/REMOVE_IMAGE_PREVIEW`
@@ -196,6 +197,14 @@ export const getLinkPreview = ormCreateSelector(
 export function getImagePreviews (state) {
   return state[MODULE_NAME].imagePreviews
 }
+
+export const getImages = ormCreateSelector(
+  orm,
+  get('orm'),
+  (state, { postId }) => postId,
+  ({ Attachment }, postId) =>
+    Attachment.all().filter(({ type, post, position }) =>
+      type === 'image' && post === postId).toModelArray())
 
 // Reducer
 
