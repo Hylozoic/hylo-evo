@@ -202,7 +202,7 @@ describe('PostEditor', () => {
       baseProps = {
         post: {},
         pollingFetchLinkPreview: jest.fn(),
-        resetLinkPreview: jest.fn()
+        clearLinkPreview: jest.fn()
       }
       contentStateMock = {
         getBlockMap: () => ([]),
@@ -261,7 +261,7 @@ describe('PostEditor', () => {
       const testInstance = wrapper.instance()
       testInstance.setLinkPreview(contentStateMock)
       expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
-      expect(props.resetLinkPreview.mock.calls).toHaveLength(1)
+      expect(props.clearLinkPreview.mock.calls).toHaveLength(1)
     })
 
     it('should not reset linkPreview when there is no text but there is a linkPreview present', () => {
@@ -278,7 +278,7 @@ describe('PostEditor', () => {
       const testInstance = wrapper.instance()
       testInstance.setLinkPreview(contentStateMock)
       expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
-      expect(props.resetLinkPreview.mock.calls).toHaveLength(0)
+      expect(props.clearLinkPreview.mock.calls).toHaveLength(0)
     })
   })
 })

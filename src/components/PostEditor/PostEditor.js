@@ -41,7 +41,7 @@ export default class PostEditor extends React.Component {
     updatePost: PropTypes.func,
     pollingFetchLinkPreview: PropTypes.func,
     removeLinkPreview: PropTypes.func,
-    resetLinkPreview: PropTypes.func,
+    clearLinkPreview: PropTypes.func,
     goToPost: PropTypes.func,
     editing: PropTypes.bool,
     loading: PropTypes.bool
@@ -100,7 +100,8 @@ export default class PostEditor extends React.Component {
   }
 
   componentWillUnmount () {
-    this.props.resetLinkPreview()
+    this.props.clearLinkPreview()
+    this.props.clearImagePreviews()
   }
 
   reset = (props) => {
@@ -161,9 +162,9 @@ export default class PostEditor extends React.Component {
   }
 
   setLinkPreview = (contentState) => {
-    const { pollingFetchLinkPreview, linkPreviewStatus, resetLinkPreview } = this.props
+    const { pollingFetchLinkPreview, linkPreviewStatus, clearLinkPreview } = this.props
     const { linkPreview } = this.state.post
-    if (!contentState.hasText() && linkPreviewStatus) return resetLinkPreview()
+    if (!contentState.hasText() && linkPreviewStatus) return clearLinkPreview()
     if (linkPreviewStatus === 'invalid' || linkPreviewStatus === 'removed') return
     if (linkPreview) return
     pollingFetchLinkPreview(contentStateToHTML(contentState))

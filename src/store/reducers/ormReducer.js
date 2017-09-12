@@ -53,6 +53,9 @@ import {
 import {
   DELETE_COMMENT_PENDING
 } from 'routes/PostDetail/Comments/Comment/Comment.store'
+import {
+  UPDATE_POST_PENDING
+} from 'components/PostEditor/PostEditor.store'
 
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
@@ -332,6 +335,11 @@ export default function ormReducer (state = {}, action) {
     case DELETE_COMMENT_PENDING:
       const comment = Comment.withId(meta.id)
       comment.delete()
+      break
+
+    case UPDATE_POST_PENDING:
+      post = Post.withId(meta.id)
+      post.attachments.toModelArray().map(a => a.delete())
       break
   }
 

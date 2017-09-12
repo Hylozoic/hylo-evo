@@ -15,7 +15,7 @@ import {
   updatePost,
   pollingFetchLinkPreview,
   removeLinkPreview,
-  resetLinkPreview,
+  clearLinkPreview,
   setImagePreviews,
   addImagePreview,
   removeImagePreview,
@@ -59,7 +59,7 @@ export const mapDispatchToProps = (dispatch, props) => {
   return {
     pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
     removeLinkPreview: () => dispatch(removeLinkPreview()),
-    resetLinkPreview: () => dispatch(resetLinkPreview()),
+    clearLinkPreview: () => dispatch(clearLinkPreview()),
     updatePost: postParams => dispatch(updatePost(postParams)),
     createPost: postParams => dispatch(createPost(postParams)),
     goToPost: createPostAction => {
@@ -88,7 +88,8 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...dispatchProps,
     ...ownProps,
     pollingFetchLinkPreview,
-    loadImagePreviews: () => setImagePreviews(postImages.map(image => image.url))
+    loadImagePreviews: () => setImagePreviews(postImages.map(image => image.url)),
+    clearImagePreviews: () => setImagePreviews([])
   }
 }
 

@@ -6,9 +6,10 @@ import linkMatcher from 'util/linkMatcher'
 export const MODULE_NAME = 'PostEditor'
 export const CREATE_POST = `${MODULE_NAME}/CREATE_POST`
 export const UPDATE_POST = `${MODULE_NAME}/UPDATE_POST`
+export const UPDATE_POST_PENDING = `${UPDATE_POST}_PENDING`
 export const FETCH_LINK_PREVIEW = `${MODULE_NAME}/FETCH_LINK_PREVIEW`
 export const REMOVE_LINK_PREVIEW = `${MODULE_NAME}/REMOVE_LINK_PREVIEW`
-export const RESET_LINK_PREVIEW = `${MODULE_NAME}/RESET_LINK_PREVIEW`
+export const CLEAR_LINK_PREVIEW = `${MODULE_NAME}/CLEAR_LINK_PREVIEW`
 export const LOAD_IMAGE_PREVIEWS = `${MODULE_NAME}/LOAD_IMAGE_PREVIEWS`
 export const SET_IMAGE_PREVIEWS = `${MODULE_NAME}/SET_IMAGE_PREVIEWS`
 export const ADD_IMAGE_PREVIEW = `${MODULE_NAME}/ADD_IMAGE_PREVIEW`
@@ -42,6 +43,12 @@ export function createPost (post) {
           linkPreview {
             id
           }
+          attachments {
+            id
+            type
+            url
+            position
+          }
         }
       }`,
       variables: {
@@ -58,14 +65,14 @@ export function createPost (post) {
 }
 
 export function updatePost (post) {
-  const { id, type, title, details, communities, linkPreview } = post
+  const { id, type, title, details, communities, linkPreview, imageUrls } = post
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
     type: UPDATE_POST,
     graphql: {
-      query: `mutation ($id: ID, $type: String, $title: String, $details: String, $linkPreviewId: String, $communityIds: [String]) {
-        updatePost(id: $id, data: {type: $type, title: $title, details: $details, linkPreviewId: $linkPreviewId, communityIds: $communityIds}) {
+      query: `mutation ($id: ID, $type: String, $title: String, $details: String, $linkPreviewId: String, $communityIds: [String], $imageUrls: [String]) {
+        updatePost(id: $id, data: {type: $type, title: $title, details: $details, linkPreviewId: $linkPreviewId, communityIds: $communityIds, imageUrls: $imageUrls}) {
           id
           type
           title
@@ -78,6 +85,12 @@ export function updatePost (post) {
             name
             slug
           }
+          attachments {
+            id
+            type
+            url
+            position
+          }
         }
       }`,
       variables: {
@@ -86,10 +99,12 @@ export function updatePost (post) {
         title,
         details,
         linkPreviewId,
-        communityIds
+        communityIds,
+        imageUrls
       }
     },
     meta: {
+      id,
       extractModel: {
         modelName: 'Post',
         getRoot: get('updatePost'),
@@ -149,8 +164,8 @@ export function removeLinkPreview () {
   return {type: REMOVE_LINK_PREVIEW}
 }
 
-export function resetLinkPreview () {
-  return {type: RESET_LINK_PREVIEW}
+export function clearLinkPreview () {
+  return {type: CLEAR_LINK_PREVIEW}
 }
 
 export function setImagePreviews (imagePreviews) {
@@ -203,8 +218,12 @@ export const getImages = ormCreateSelector(
   get('orm'),
   (state, { postId }) => postId,
   ({ Attachment }, postId) =>
-    Attachment.all().filter(({ type, post, position }) =>
-      type === 'image' && post === postId).toModelArray())
+    Attachment.all()
+    .filter(({ type, post }) =>
+      type === 'image' && post === postId)
+    .orderBy('position')
+    .toModelArray()
+  )
 
 // Reducer
 
@@ -227,8 +246,8 @@ export default function reducer (state = defaultState, action) {
       return {...state, linkPreviewId: get('id')(linkPreview), linkPreviewStatus: null}
     case REMOVE_LINK_PREVIEW:
       return {...state, linkPreviewId: null, linkPreviewStatus: 'removed'}
-    case RESET_LINK_PREVIEW:
-      return {...state, linkPreviewId: null, linkPreviewStatus: 'reset'}
+    case CLEAR_LINK_PREVIEW:
+      return {...state, linkPreviewId: null, linkPreviewStatus: 'cleared'}
     case SET_IMAGE_PREVIEWS:
       return {...state, imagePreviews: payload}
     case ADD_IMAGE_PREVIEW:
