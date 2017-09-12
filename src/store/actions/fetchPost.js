@@ -4,7 +4,7 @@ import {
   FETCH_COMMENTS
 } from 'store/constants'
 
-export const postFieldsFragment = `
+export const getPostFieldsFragment = withComments => `
   id
   title
   details
@@ -22,7 +22,7 @@ export const postFieldsFragment = `
     avatarUrl
   }
   commentersTotal
-  comments(first: 10, order: "desc") {
+  ${withComments ? `comments(first: 10, order: "desc") {
     items {
       id
       text
@@ -35,7 +35,7 @@ export const postFieldsFragment = `
     }
     total
     hasMore
-  }
+  }` : ''}
   linkPreview {
     id
     title
@@ -56,7 +56,7 @@ export default function fetchPost (id, opts = {}) {
     graphql: {
       query: `query ($id: ID) {
         post(id: $id) {
-          ${postFieldsFragment}
+          ${getPostFieldsFragment(true)}
         }
       }`,
       variables: {
