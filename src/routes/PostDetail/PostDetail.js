@@ -124,7 +124,7 @@ export default class PostDetail extends Component {
       {atHeader && <div styleName='header-sticky' style={headerStyle}>
         <WrappedPostHeader {...this.props} />
       </div>}
-      <PostImage postId={post.id} styleName='image' />
+      <PostImage postId={post.id} styleName='image' linked />
       <PostTags tags={post.tags} />
       <PostBody title={post.title}
         id={post.id}
