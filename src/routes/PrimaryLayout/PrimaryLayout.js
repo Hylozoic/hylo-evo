@@ -215,6 +215,7 @@ export function RedirectToSignupFlow ({ currentUser, pathname }) {
 }
 
 export function RedirectToCreateCommunityFlow ({ hasMemberships, pathname }) {
+  // return null
   if (hasMemberships) return null
   if (isCreateCommunityPath(pathname) || isSignupPath(pathname)) return null
   const destination = '/create-community/name'

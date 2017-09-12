@@ -11,7 +11,8 @@ export function mapStateToProps (state, props) {
     currentUser: getMe(state),
     communityDomain: get('domain', state.CreateCommunity),
     communityName: get('name', state.CreateCommunity),
-    communityPrivacy: get('privacy', state.CreateCommunity)
+    communityPrivacy: get('privacy', state.CreateCommunity),
+    communityDomainExists: get('domainExists', state.CreateCommunity)
   }
 }
 

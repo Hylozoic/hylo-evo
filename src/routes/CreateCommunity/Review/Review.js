@@ -19,10 +19,10 @@ export default class Review extends Component {
         communityDomain: true
       },
       edits: {
-        name: null,
-        email: null,
-        communityName: null,
-        communityDomain: null,
+        name: '',
+        email: '',
+        communityName: '',
+        communityDomain: '',
         communityPrivacy: null,
         changed: false
       }
@@ -49,6 +49,12 @@ export default class Review extends Component {
     })
   }
 
+  onEnter = event => {
+    if (event.key === 'Enter') {
+      this.errorCheckAndSubmit()
+    }
+  }
+
   submit = () => {
     const { name, email, communityName, communityDomain } = this.state.edits
     this.state.edits.changed && this.props.updateUserSettings({
@@ -63,6 +69,22 @@ export default class Review extends Component {
     this.props.clearNameFromCreateCommunity()
     this.props.clearDomainFromCreateCommunity()
     this.props.goToNextStep()
+  }
+
+  errorCheckAndSubmit = () => {
+    const { name, email, communityName, communityDomain } = this.state.edits
+
+    if (name === '' || email === '' || communityName === '' || communityDomain === '') {
+      this.setState({
+        error: 'Please fill in each field.'
+      })
+    } else if (this.props.communityDomainExists) {
+      this.setState({
+        error: 'This domain name is invalid. Try another.'
+      })
+    } else {
+      this.submit()
+    }
   }
 
   componentWillMount = () => {
@@ -136,9 +158,11 @@ export default class Review extends Component {
             editHandler={() => this.props.goToPrivacyStep()}
           /> */}
         </div>
+        { this.state.error && <span styleName='review-arrow-up' /> }
+        { this.state.error && <span styleName='review-error'>{this.state.error}</span>}
       </div>
       <ModalFooter
-        submit={this.submit}
+        submit={this.errorCheckAndSubmit}
         previous={this.previous}
         showPrevious={false}
         continueText={'Finish Up'}

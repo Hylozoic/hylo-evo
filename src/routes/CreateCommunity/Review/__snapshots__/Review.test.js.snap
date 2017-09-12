@@ -7,6 +7,7 @@ exports[`Review renders correctly 1`] = `
   <ModalSidebar
     body="All good things start somewhere! Let's kick things off with a catchy name for your community."
     header="Great, let's get started"
+    imageUrl="/grooving-axolotl.png"
     onClick={[Function]}
     theme={
       Object {
@@ -66,11 +67,15 @@ exports[`Review renders correctly 1`] = `
         readOnly={true}
         value="communityDomain"
       />
-      <ReviewTextInput
-        editHandler={[Function]}
-        label="Privacy"
-      />
     </div>
+    <span
+      data-styleName="review-arrow-up"
+    />
+    <span
+      data-styleName="review-error"
+    >
+      this error
+    </span>
   </div>
   <SignupModalFooter
     continueText="Finish Up"

@@ -44,7 +44,7 @@ export default class Domain extends Component {
 
   onEnter = event => {
     if (event.key === 'Enter') {
-      this.submit()
+      this.errorCheckAndSubmit()
     }
   }
 

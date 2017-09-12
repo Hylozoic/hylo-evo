@@ -187,3 +187,29 @@
   border-right: 5px solid transparent;
   border-bottom: 5px solid $color-white;
 }
+
+.review-error {
+  position: absolute;
+  top: 75%;
+  width: 40%;
+  margin-left: 5%;
+  padding: 8px;
+  border-radius: 25px;
+  background-color: $color-white;
+  color: red;
+  text-align: center;
+  font-size: 12px;
+  width: 300px;
+}
+
+.review-arrow-up {
+  position: absolute;
+  top: 74.25%;
+  width: 40%;
+  margin-left: 200px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid $color-white;
+}

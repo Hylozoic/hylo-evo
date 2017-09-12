@@ -38,7 +38,7 @@ export default class Name extends Component {
 
   onEnter = event => {
     if (event.key === 'Enter') {
-      this.submit()
+      this.errorCheckAndSubmit()
     }
   }
 
