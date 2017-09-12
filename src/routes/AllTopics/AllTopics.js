@@ -7,7 +7,7 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
 import { pluralize, tagUrl } from 'util/index'
-import { find } from 'lodash/fp'
+import { find, debounce } from 'lodash/fp'
 import ScrollListener from 'components/ScrollListener'
 
 const sortOptions = [
@@ -49,13 +49,15 @@ export default class AllTopics extends Component {
     this.setState({totalTopicsCached: this.props.totalTopics})
   }
 
+  debouncedFetchTopics = debounce(250, this.props.fetchCommunityTopics)
+
   componentDidUpdate (prevProps) {
     if (!this.state.totalTopicsCached && !prevProps.totalTopics && this.props.totalTopics) {
       this.setState({totalTopicsCached: this.props.totalTopics})
     }
     if (prevProps.selectedSort !== this.props.selectedSort ||
       prevProps.search !== this.props.search) {
-      this.props.fetchCommunityTopics()
+      this.debouncedFetchTopics()
     }
   }
 
