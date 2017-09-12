@@ -108,11 +108,11 @@ export default class Review extends Component {
 
   formatDomainWithUrl (communityDomain) {
     if (!communityDomain) return null
-    let c = communityDomain.replace('hylo.com/c/', '').replace('hylo.com/c', '')
-    if (c !== '') {
-      c = 'hylo.com/c/' + c
+    let formattedDomain = communityDomain.replace('hylo.com/c/', '').replace('hylo.com/c', '')
+    if (formattedDomain !== '') {
+      formattedDomain = 'hylo.com/c/' + formattedDomain
     }
-    return c
+    return formattedDomain
   }
 
   removeUrlFromDomain (communityDomain) {
