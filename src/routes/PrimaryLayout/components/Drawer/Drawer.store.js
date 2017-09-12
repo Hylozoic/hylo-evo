@@ -17,10 +17,9 @@ function refineData ({ id, community, newPostCount, lastViewedAt }) {
 const getMembershipsForDrawer = ormCreateSelector(
   orm,
   state => state.orm,
-  session => sortBy('community.name', session.Membership
-    .all()
-    .toModelArray()
-    .map(refineData))
+  ({ Me }) =>
+    sortBy('community.name',
+      Me.first().memberships.toModelArray().map(refineData))
 )
 
 export default getMembershipsForDrawer
