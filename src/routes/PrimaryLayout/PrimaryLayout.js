@@ -90,6 +90,14 @@ export default class PrimaryLayout extends Component {
           <RedirectToCommunity path='/' currentUser={currentUser} />
           <RedirectToCommunity path='/app' currentUser={currentUser} />
           <Switch>
+            {/* Redirect to/from with params doesn't work, so I had to do this 'hack'. from https://stackoverflow.com/a/46064986/2141561 */}
+            <Route
+              exact
+              path='/c/:slug/tag/:topicName'
+              render={props => (
+                <Redirect to={`/c/${props.match.params.slug}/${props.match.params.topicName}`} />
+                )}
+            />
             <Route path='/all' exact component={Feed} />
             <Route path='/all/:topicName' exact component={Feed} />
             <Route path='/all/p/:postId' component={Feed} />
