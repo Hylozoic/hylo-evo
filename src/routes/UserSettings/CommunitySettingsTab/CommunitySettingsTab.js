@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import './CommunitySettings.scss'
+import './CommunitySettingsTab.scss'
 import { Link } from 'react-router-dom'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
@@ -7,7 +7,7 @@ import CheckBox from 'components/CheckBox'
 const { array, func } = PropTypes
 import { communityUrl } from 'util/index'
 
-export default class CommunitySettings extends Component {
+export default class CommunitySettingsTab extends Component {
   static propTypes = {
     memberships: array,
     updateMembershipSettings: func

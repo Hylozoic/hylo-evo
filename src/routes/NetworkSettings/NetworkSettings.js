@@ -8,9 +8,7 @@ import SettingsControl from 'components/SettingsControl'
 const { object, func } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
 import { bgImageStyle } from 'util/index'
-import {
-  bannerUploadSettings, avatarUploadSettings, DEFAULT_BANNER, DEFAULT_AVATAR
-} from 'store/models/Network'
+import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Network'
 import { times, isEmpty } from 'lodash/fp'
 import cx from 'classnames'
 
@@ -110,19 +108,19 @@ export default class NetworkSettings extends Component {
       updateNetworkSettings(edits)
     }
 
-    return <FullPageModal narrow>
+    return <FullPageModal narrow goToOnClose={`/n/${network.slug}`}>
       <div>
         <input type='text' styleName='name' onChange={updateSetting('name')} value={name || ''} />
         <div style={bgImageStyle(bannerUrl)} styleName='banner'>
           <ChangeImageButton
             update={updateSettingDirectly('bannerUrl')}
-            uploadSettings={bannerUploadSettings(network)}
+            uploadSettings={{type: 'networkBanner', id: network.id}}
             styleName='change-banner-button' />
         </div>
         <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
           <ChangeImageButton
             update={updateSettingDirectly('avatarUrl')}
-            uploadSettings={avatarUploadSettings(network)}
+            uploadSettings={{type: 'networkAvatar', id: network.id}}
             styleName='change-avatar-button' />
         </div>
         <SettingsControl label='Description' onChange={updateSetting('description')} value={description} type='textarea' />

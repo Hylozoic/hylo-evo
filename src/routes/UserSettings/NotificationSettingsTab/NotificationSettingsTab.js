@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import './NotificationSettings.scss'
+import './NotificationSettingsTab.scss'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import { Link } from 'react-router-dom'
@@ -9,7 +9,7 @@ const { object, func } = PropTypes
 const iOSAppURL = 'https://itunes.apple.com/app/appName/id1002185140'
 const androidAppURL = 'https://play.google.com/store/apps/details?id=com.hylo.hyloandroid'
 
-export default class NotificationSettings extends Component {
+export default class NotificationSettingsTab extends Component {
   static propTypes = {
     currentUser: object,
     updateUserSettings: func

@@ -25,9 +25,10 @@ exports[`PostDetail renders correctly 1`] = `
     showCommunity={true}
     slug="foo"
   />
-  <Component
+  <Connect(PostImage)
     data-styleName="image"
-    imageUrl="foo.jpg"
+    linked={true}
+    postId="91"
   />
   <PostTags
     tags={

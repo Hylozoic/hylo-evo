@@ -2,6 +2,7 @@
 
 exports[`NetworkSettings renders correctly 1`] = `
 <withRouter(Connect(FullPageModal))
+  goToOnClose="/n/mycelium"
   narrow={true}
 >
   <div>
@@ -20,15 +21,8 @@ exports[`NetworkSettings renders correctly 1`] = `
         update={[Function]}
         uploadSettings={
           Object {
-            "convert": Object {
-              "fit": "max",
-              "format": "jpg",
-              "rotate": "exif",
-              "width": 1600,
-            },
-            "id": undefined,
-            "path": "network/1/banner",
-            "subject": "network-banner",
+            "id": 1,
+            "type": "networkBanner",
           }
         }
       />
@@ -42,15 +36,8 @@ exports[`NetworkSettings renders correctly 1`] = `
         update={[Function]}
         uploadSettings={
           Object {
-            "convert": Object {
-              "fit": "crop",
-              "height": 160,
-              "rotate": "exif",
-              "width": 160,
-            },
-            "id": undefined,
-            "path": "network/1/avatar",
-            "subject": "network-avatar",
+            "id": 1,
+            "type": "networkAvatar",
           }
         }
       />

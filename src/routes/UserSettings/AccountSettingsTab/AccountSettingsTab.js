@@ -1,17 +1,17 @@
 import React, { PropTypes, Component } from 'react'
 import SettingsControl from 'components/SettingsControl'
-import './AccountSettings.scss'
+import './AccountSettingsTab.scss'
 import Button from 'components/Button'
 import ChangeImageButton from 'components/ChangeImageButton'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
-import { bannerUploadSettings, avatarUploadSettings, DEFAULT_BANNER } from 'store/models/Me'
+import { DEFAULT_BANNER } from 'store/models/Me'
 const { object, func } = PropTypes
 
 const twitterPrompt = () => window.prompt('Please enter your twitter name.')
 
-export default class AccountSettings extends Component {
+export default class AccountSettingsTab extends Component {
   static propTypes = {
     currentUser: object,
     updateUserSettings: func,
@@ -98,13 +98,13 @@ export default class AccountSettings extends Component {
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <ChangeImageButton
           update={updateSettingDirectly('bannerUrl')}
-          uploadSettings={bannerUploadSettings(currentUser)}
+          uploadSettings={{type: 'userBanner', id: currentUser.id}}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
         <ChangeImageButton
           update={updateSettingDirectly('avatarUrl')}
-          uploadSettings={avatarUploadSettings(currentUser)}
+          uploadSettings={{type: 'userAvatar', id: currentUser.id}}
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Tagline' onChange={updateSetting('tagline')} value={tagline} />

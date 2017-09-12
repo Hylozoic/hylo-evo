@@ -6,12 +6,14 @@ import { sanitize, present, textLength, truncate, appendInP } from 'hylo-utils/t
 import { parse } from 'url'
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
+import PostImage from './PostImage'
 import './PostCard.scss'
 import samplePost from './samplePost'
 import cx from 'classnames'
 import { decode } from 'ent'
-export { PostHeader, PostFooter }
 import Highlight from 'components/Highlight'
+
+export { PostHeader, PostFooter, PostImage }
 
 const { shape, any, object, string, func, array, bool } = React.PropTypes
 
@@ -68,7 +70,7 @@ export default class PostCard extends React.Component {
         slug={slug}
         id={post.id}
         highlightProps={highlightProps} />
-      <PostImage imageUrl={post.imageUrl} />
+      <PostImage postId={post.id} styleName='image' />
       <PostBody title={post.title}
         id={post.id}
         details={post.details}
@@ -82,11 +84,6 @@ export default class PostCard extends React.Component {
         myVote={post.myVote} />
     </div>
   }
-}
-
-export const PostImage = ({ imageUrl, className }) => {
-  if (!imageUrl) return null
-  return <div style={bgImageStyle(imageUrl)} styleName='image' className={className} />
 }
 
 const maxDetailsLength = 144

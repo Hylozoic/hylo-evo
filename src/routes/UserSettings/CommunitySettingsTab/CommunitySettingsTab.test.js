@@ -1,8 +1,8 @@
-import CommunitySettings, { CommunityControl } from './CommunitySettings'
+import CommunitySettingsTab, { CommunityControl } from './CommunitySettingsTab'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-describe('CommunitySettings', () => {
+describe('CommunitySettingsTab', () => {
   it('renders a list of CommunityControls', () => {
     const memberships = [
       {id: 1},
@@ -10,7 +10,7 @@ describe('CommunitySettings', () => {
       {id: 3},
       {id: 4}
     ]
-    const wrapper = shallow(<CommunitySettings memberships={memberships} />)
+    const wrapper = shallow(<CommunitySettingsTab memberships={memberships} />)
     expect(wrapper.find('CommunityControl').length).toEqual(4)
     expect(wrapper).toMatchSnapshot()
   })
