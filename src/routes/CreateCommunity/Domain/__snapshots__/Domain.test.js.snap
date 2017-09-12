@@ -45,7 +45,7 @@ exports[`Domain renders correctly 1`] = `
       <span
         data-styleName="text-input-label"
       >
-        Choose a domain name
+        Choose a URL
       </span>
       <TextInput
         name="community-name"

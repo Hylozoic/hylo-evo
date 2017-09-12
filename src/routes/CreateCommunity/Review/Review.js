@@ -90,12 +90,12 @@ export default class Review extends Component {
       })
     } else if (this.props.communityDomainExists) {
       this.setState({
-        error: 'This domain name is invalid. Try another.'
+        error: 'This url is invalid. Try another.'
       })
     } else if (!slugValidatorRegex.test(this.removeUrlFromDomain(communityDomain))) {
       this.formatDomainWithUrl(communityDomain)
       this.setState({
-        error: 'Domains can only have lower case letters, numbers, and dashes.'
+        error: 'Urls can only have lower case letters, numbers, and dashes.'
       })
     } else {
       this.submit()
@@ -136,8 +136,8 @@ export default class Review extends Component {
         imageUrl={groovingAxolotl}
         onClick={this.props.goHome}
         theme={sidebarTheme}
-        header="Great, let's get started"
-        body="All good things start somewhere! Let's kick things off with a catchy name for your community."
+        header='Everything looking good?'
+        body='You can always come back and change your details at any time'
       />
       <div styleName='panel'>
         <div>
@@ -172,7 +172,7 @@ export default class Review extends Component {
             onChange={(e) => this.handleInputChange(e, 'communityName')}
           />
           <ReviewTextInput
-            label={'Domain'}
+            label={'URL'}
             value={this.formatDomainWithUrl(this.state.edits.communityDomain) || ''}
             readOnly={this.state.readOnly.communityDomain}
             editHandler={() => this.editHandler('communityDomain')}

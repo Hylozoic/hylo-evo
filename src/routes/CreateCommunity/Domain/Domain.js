@@ -32,11 +32,11 @@ export default class Domain extends Component {
   errorCheckAndSubmit = () => {
     if (this.props.communityDomainExists) {
       this.setState({
-        error: 'This domain name is invalid. Try another.'
+        error: 'This URL is invalid. Try another.'
       })
     } else if (this.state.communityDomain === '') {
       this.setState({
-        error: 'Please enter a domain name.'
+        error: 'Please add a URL.'
       })
     } else if (!slugValidatorRegex.test(this.removeUrlFromDomain(this.state.communityDomain))) {
       this.setState({
@@ -94,7 +94,7 @@ export default class Domain extends Component {
           <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
         </div>
         <div styleName='center-vertically'>
-          <span styleName='text-input-label'>{ this.state.communityDomain && 'Choose a domain name'}</span>
+          <span styleName='text-input-label'>{ this.state.communityDomain && 'Choose a URL'}</span>
           <TextInput
             type='text'
             name='community-name'

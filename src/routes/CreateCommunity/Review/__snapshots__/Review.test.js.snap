@@ -5,8 +5,8 @@ exports[`Review renders correctly 1`] = `
   data-styleName="flex-wrapper"
 >
   <ModalSidebar
-    body="All good things start somewhere! Let's kick things off with a catchy name for your community."
-    header="Great, let's get started"
+    body="You can always come back and change your details at any time"
+    header="Everything looking good?"
     imageUrl="/grooving-axolotl.png"
     onClick={[Function]}
     theme={
@@ -67,7 +67,7 @@ exports[`Review renders correctly 1`] = `
       />
       <ReviewTextInput
         editHandler={[Function]}
-        label="Domain"
+        label="URL"
         onChange={[Function]}
         onEnter={[Function]}
         readOnly={true}
