@@ -13,8 +13,8 @@ export function AuthRoute ({
   ...rest
 }) {
   if (isLoggedIn && location.pathname === '/signup') {
-    return <Route {...rest} render={props => <Redirect to={{pathname: '/', state: {from: location}}} />} />
-  } else if (isLoggedIn && returnToURL && !location.pathname.startsWith('/signup') && get('state.from.pathname', location) !== '/signup') {
+    return <Route {...rest} render={props => <Redirect to={'/signup/upload-photo'} />} />
+  } else if (isLoggedIn && returnToURL && !location.pathname.startsWith('/signup')) {
     resetReturnToURL()
     return <Route {...rest} render={props => <Redirect to={returnToURL} />} />
   } else if (!isLoggedIn && requireAuth) {
