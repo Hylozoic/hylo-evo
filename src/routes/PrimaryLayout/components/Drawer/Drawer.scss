@@ -95,6 +95,7 @@ $new-community-spacing: 16px;
 
 .communitiesList, .networkCommunitiesList {
   li {
+    list-style: none;
     &:hover {
       background: $color-rhino;
     }
@@ -159,6 +160,12 @@ $new-community-spacing: 16px;
 .network-name-wrapper {
   display: flex;
   align-items: center;
+  border-radius: 4px;
+  padding: 5px;
+
+  &:hover {
+    background-color: $color-rhino;
+  }
 }
 
 .network-name {
