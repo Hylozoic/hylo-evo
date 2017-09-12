@@ -17,6 +17,11 @@ describe('Domain', () => {
     expect(dispatchProps.clearNameFromCreateCommunity()).toMatchSnapshot()
   })
 
+  it('should call fetchCommunityExists from mapDispatchToProps', () => {
+    const slug = 'slug'
+    expect(dispatchProps.fetchCommunityExists(slug)).toMatchSnapshot()
+  })
+
   it('should call clearDomainFromCreateCommunity from mapDispatchToProps', () => {
     expect(dispatchProps.clearDomainFromCreateCommunity()).toMatchSnapshot()
   })

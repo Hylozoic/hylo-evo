@@ -1,7 +1,8 @@
 import {
   addCommunityName,
   addCommunityPrivacy,
-  addCommunityDomain
+  addCommunityDomain,
+  fetchCommunityExists
 } from './CreateCommunity.store'
 
 describe('CreateCommunity store', () => {
@@ -16,5 +17,9 @@ describe('CreateCommunity store', () => {
   it('should call addCommunityDomain', () => {
     const communityDomain = 'domain'
     expect(addCommunityDomain(communityDomain)).toMatchSnapshot()
+  })
+  it('should call fetchCommunityExists', () => {
+    const slug = 'slug'
+    expect(fetchCommunityExists(slug)).toMatchSnapshot()
   })
 })
