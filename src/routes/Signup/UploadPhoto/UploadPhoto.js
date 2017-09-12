@@ -31,11 +31,6 @@ export default class UploadPhoto extends Component {
     })
   }
 
-  componentWillMount = () => {
-    const { currentUser } = this.props
-    if (currentUser && !get('settings.signupInProgress', currentUser)) this.props.goBack()
-  }
-
   render () {
     const { currentUser, uploadImagePending } = this.props
     const currentAvatarUrl = this.state.edits.avatarUrl

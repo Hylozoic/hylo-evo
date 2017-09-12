@@ -47,7 +47,8 @@ export default class AddLocation extends Component {
     Object.keys(edits).forEach((key) => (edits[key] == null) && delete edits[key])
     const changes = Object.assign(edits, {settings: {signupInProgress: false}})
     this.props.updateUserSettings(changes)
-    this.props.goToNextStep()
+    // FIXME: Race conditions with signupInProgress updating...
+    setTimeout(this.props.goToNextStep, 1000)
   }
 
   previous = () => {
@@ -64,11 +65,6 @@ export default class AddLocation extends Component {
         [key]: value
       }
     })
-  }
-
-  componentWillMount = () => {
-    const { currentUser } = this.props
-    if (currentUser && !get('settings.signupInProgress', currentUser)) this.props.goBack()
   }
 
   componentDidMount = () => {

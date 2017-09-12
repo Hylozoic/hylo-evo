@@ -1,4 +1,5 @@
 import React from 'react'
+import { get } from 'lodash/fp'
 import { Redirect, Route } from 'react-router'
 import { connect } from 'react-redux'
 import getIsLoggedIn from 'store/selectors/getIsLoggedIn'
@@ -11,7 +12,9 @@ export function AuthRoute ({
   returnToURL, setReturnToURL, resetReturnToURL, location,
   ...rest
 }) {
-  if (isLoggedIn && returnToURL) {
+  if (isLoggedIn && location.pathname === '/signup') {
+    return <Route {...rest} render={props => <Redirect to={{pathname: '/', state: {from: location}}} />} />
+  } else if (isLoggedIn && returnToURL && !location.pathname.startsWith('/signup') && get('state.from.pathname', location) !== '/signup') {
     resetReturnToURL()
     return <Route {...rest} render={props => <Redirect to={returnToURL} />} />
   } else if (!isLoggedIn && requireAuth) {
@@ -30,15 +33,15 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export default connect(mapStateToProps, { setReturnToURL, resetReturnToURL })(AuthRoute)
-
-function setReturnToURL (returnToURL) {
+export function setReturnToURL (returnToURL) {
   return {
     type: SET_RETURN_TO_URL,
     payload: { returnToURL }
   }
 }
 
-function resetReturnToURL (returnToURL) {
+export function resetReturnToURL (returnToURL) {
   return {type: RESET_RETURN_TO_URL}
 }
+
+export default connect(mapStateToProps, { setReturnToURL, resetReturnToURL })(AuthRoute)
