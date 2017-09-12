@@ -1,8 +1,7 @@
 import { connect } from 'react-redux'
-import { find, get } from 'lodash/fp'
+import { get } from 'lodash/fp'
 import getQueryParam from 'store/selectors/getQueryParam'
 import getMe from 'store/selectors/getMe'
-import getMemberships from 'store/selectors/getMemberships'
 import { useInvitation } from './JoinCommunity.store'
 
 export function mapStateToProps (state, props) {

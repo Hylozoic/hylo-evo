@@ -1,5 +1,4 @@
 import React from 'react'
-import { get } from 'lodash/fp'
 import { Redirect, Route } from 'react-router'
 import { connect } from 'react-redux'
 import getIsLoggedIn from 'store/selectors/getIsLoggedIn'

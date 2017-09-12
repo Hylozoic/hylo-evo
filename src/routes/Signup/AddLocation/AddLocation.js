@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { get } from 'lodash/fp'
 import LeftSidebar from '../LeftSidebar'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'

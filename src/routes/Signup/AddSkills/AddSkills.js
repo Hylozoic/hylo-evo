@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { get } from 'lodash/fp'
 import { isEmpty } from 'lodash'
 import SignupModalFooter from '../SignupModalFooter'
 import LeftSidebar from '../LeftSidebar'
