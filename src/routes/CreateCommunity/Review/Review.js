@@ -69,16 +69,21 @@ export default class Review extends Component {
     this.props.createCommunity(
       // communityPrivacy,
       communityName,
-      communityDomain
+      this.removeUrlFromDomain(communityDomain)
     )
-    this.props.clearNameFromCreateCommunity()
-    this.props.clearDomainFromCreateCommunity()
-    // this.props.goToNextStep()
+    .then(({ error }) => {
+      if (error) {
+        console.log('error', error)
+      } else {
+        this.props.clearNameFromCreateCommunity()
+        this.props.clearDomainFromCreateCommunity()
+        this.props.goToCommunity(communityDomain)
+      }
+    })
   }
 
   errorCheckAndSubmit = () => {
     const { name, email, communityName, communityDomain } = this.state.edits
-    console.log('here')
     if (name === '' || email === '' || communityName === '' || communityDomain === '') {
       this.setState({
         error: 'Please fill in each field.'

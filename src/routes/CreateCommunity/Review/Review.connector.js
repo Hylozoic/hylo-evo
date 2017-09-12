@@ -18,7 +18,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    goToNextStep: () => dispatch(push('/')),
+    goToCommunity: (communityDomain) => dispatch(push(`/c/${communityDomain}`)),
     updateUserSettings: (changes) => dispatch(updateUserSettings(changes)),
     clearNameFromCreateCommunity: () => dispatch(addCommunityName(null)),
     clearDomainFromCreateCommunity: () => dispatch(addCommunityDomain(null)),
