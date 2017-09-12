@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { get, isEmpty } from 'lodash/fp'
+import { get } from 'lodash/fp'
 import cx from 'classnames'
 import styles from './PostEditor.scss'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
@@ -8,6 +8,7 @@ import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
+import Loading from 'components/Loading'
 import LinkPreview from './LinkPreview'
 import { bgImageStyle } from 'util/index'
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd'
@@ -214,7 +215,8 @@ export default class PostEditor extends React.Component {
     const {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, editing, loading, addImagePreview,
-      imagePreviews, removeImagePreview, switchImagePreviews
+      imagePreviews, removeImagePreview, switchImagePreviews, showImagePreviews,
+      uploadImagePending
     } = this.props
     const submitButtonLabel = editing ? 'Save' : 'Post'
 
@@ -262,7 +264,9 @@ export default class PostEditor extends React.Component {
       </div>
       <ImagePreviews
         id={id || 'new'}
+        showImagePreviews={showImagePreviews}
         imagePreviews={imagePreviews}
+        uploadImagePending={uploadImagePending}
         addImage={addImagePreview}
         removeImage={removeImagePreview}
         switchImages={switchImagePreviews} />
@@ -282,7 +286,7 @@ export default class PostEditor extends React.Component {
         <ActionsBar
           id={id}
           addImage={addImagePreview}
-          showingImagePreviews={!isEmpty(imagePreviews)}
+          showImagePreviews={showImagePreviews}
           valid={valid}
           loading={loading}
           submitButtonLabel={submitButtonLabel}
@@ -295,13 +299,14 @@ export default class PostEditor extends React.Component {
 const ImagePreviews = DragDropContext(HTML5Backend)(
 class ImagePreviews extends React.Component {
   render () {
-    const { id, imagePreviews, addImage, removeImage, switchImages } = this.props
-    if (isEmpty(imagePreviews)) return null
+    const { id, showImagePreviews, imagePreviews, uploadImagePending, addImage, removeImage, switchImages } = this.props
+    if (!showImagePreviews) return null
 
     return <div styleName='image-previews'>
       <div styleName='section-label'>Images</div>
       {imagePreviews.map((url, i) =>
         <ImagePreview url={url} removeImage={removeImage} switchImages={switchImages} key={i} position={i} />)}
+      {uploadImagePending && <div styleName='add-image'><Loading /></div>}
       <ChangeImageButton update={addImage}
         uploadSettings={uploadSettings(id)}>
         <div styleName='add-image'>+</div>

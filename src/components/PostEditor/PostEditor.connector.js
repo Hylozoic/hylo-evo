@@ -1,4 +1,4 @@
-import { get } from 'lodash/fp'
+import { get, isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { bindActionCreators } from 'redux'
@@ -7,7 +7,7 @@ import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getPost from 'store/selectors/getPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import { FETCH_POST } from 'store/constants'
+import { FETCH_POST, UPLOAD_IMAGE } from 'store/constants'
 import {
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
@@ -36,7 +36,9 @@ export function mapStateToProps (state, props) {
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
+  const uploadImagePending = state.pending[UPLOAD_IMAGE]
   const imagePreviews = getImagePreviews(state, props)
+  const showImagePreviews = !isEmpty(imagePreviews) || uploadImagePending
   const postImages = getImages(state, {postId: get('id', post)})
 
   return {
@@ -50,7 +52,9 @@ export function mapStateToProps (state, props) {
     linkPreviewStatus,
     fetchLinkPreviewPending,
     imagePreviews,
-    postImages
+    postImages,
+    showImagePreviews,
+    uploadImagePending
   }
 }
 
