@@ -60,7 +60,7 @@ exports[`Domain renders correctly 1`] = `
           }
         }
         type="text"
-        value="communityDomain"
+        value="hylo.com/c/communityDomain"
       />
     </div>
   </div>

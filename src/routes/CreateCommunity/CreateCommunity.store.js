@@ -47,3 +47,21 @@ export function addCommunityDomain (domain) {
     }
   }
 }
+
+export function fetchCommunityExists (slug) {
+  return {
+    type: FETCH_COMMUNITY_EXISTS,
+    graphql: {
+      query: `
+        query ($slug: String) {
+          communityExists (slug: $slug) {
+            exists
+          }
+        }
+      `,
+      variables: {
+        slug
+      }
+    }
+  }
+}

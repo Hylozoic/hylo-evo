@@ -71,7 +71,7 @@ exports[`Review renders correctly 1`] = `
         onChange={[Function]}
         onEnter={[Function]}
         readOnly={true}
-        value="communityDomain"
+        value="hylo.com/c/communityDomain"
       />
     </div>
   </div>

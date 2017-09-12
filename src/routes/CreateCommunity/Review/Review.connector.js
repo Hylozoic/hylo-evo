@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import getMe from 'store/selectors/getMe'
 import { updateUserSettings } from 'store/actions/updateUserSettings'
-import { addCommunityName, addCommunityDomain } from '../CreateCommunity.store'
+import { addCommunityName, addCommunityDomain, fetchCommunityExists } from '../CreateCommunity.store'
 import { createCommunity } from './Review.store'
 
 export function mapStateToProps (state, props) {
@@ -24,7 +24,8 @@ export function mapDispatchToProps (dispatch, props) {
     clearDomainFromCreateCommunity: () => dispatch(addCommunityDomain(null)),
     createCommunity: (name, slug) => dispatch(createCommunity(name, slug)),
     goToPrivacyStep: () => dispatch(push('/create-community/privacy')),
-    goHome: () => dispatch(push('/'))
+    goHome: () => dispatch(push('/')),
+    fetchCommunityExists: (slug) => dispatch(fetchCommunityExists(slug))
   }
 }
 

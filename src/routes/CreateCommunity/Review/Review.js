@@ -39,7 +39,11 @@ export default class Review extends Component {
   }
 
   handleInputChange = (event, name) => {
-    const value = event.target.value
+    let value = event.target.value
+    if (name === 'communityDomain') {
+      this.props.fetchCommunityExists(this.removeUrlFromDomain(value))
+      value = this.formatDomainWithUrl(value)
+    }
     this.setState({
       edits: {
         ...this.state.edits,
@@ -88,7 +92,6 @@ export default class Review extends Component {
   }
 
   componentWillMount = () => {
-    console.log('componentWillMount currentUser', this.props.currentUser)
     const { communityPrivacy } = this.props
     const privacyOption = find(privacyOptions, {label: communityPrivacy})
     const selectedCommunityPrivacy = get('label', privacyOption) // set to Private by default
@@ -101,6 +104,19 @@ export default class Review extends Component {
         communityPrivacy: selectedCommunityPrivacy
       }
     })
+  }
+
+  formatDomainWithUrl (communityDomain) {
+    if (!communityDomain) return null
+    let c = communityDomain.replace('hylo.com/c/', '').replace('hylo.com/c', '')
+    if (c !== '') {
+      c = 'hylo.com/c/' + c
+    }
+    return c
+  }
+
+  removeUrlFromDomain (communityDomain) {
+    return communityDomain.replace('hylo.com/c/', '')
   }
 
   render () {
@@ -146,7 +162,7 @@ export default class Review extends Component {
           />
           <ReviewTextInput
             label={'Domain'}
-            value={this.state.edits.communityDomain || ''}
+            value={this.formatDomainWithUrl(this.state.edits.communityDomain) || ''}
             readOnly={this.state.readOnly.communityDomain}
             editHandler={() => this.editHandler('communityDomain')}
             onEnter={this.onEnter}
