@@ -1,26 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Domain store should call removeSkill 1`] = `
+exports[`Domain store should call fetchCommunityExists 1`] = `
 Object {
   "graphql": Object {
     "query": "
         query ($slug: String) {
-          community (slug: $slug) {
-            id
-            slug
+          communityExists (slug: $slug) {
+            data
           }
         }
       ",
     "variables": Object {
-      "slug": "name",
+      "slug": "slug",
     },
   },
-  "meta": Object {
-    "extractModel": "Community",
-    "extractQueryResults": Object {
-      "getItems": [Function],
-    },
-  },
-  "type": "CREATE_COMMUNITY_FETCH_COMMUNITY",
+  "type": "CREATE_COMMUNITY_FETCH_COMMUNITY_EXISTS",
 }
 `;

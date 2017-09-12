@@ -9,28 +9,21 @@ Object {
 }
 `;
 
-exports[`Domain should call fetchCommunity from mapDispatchToProps 1`] = `
+exports[`Domain should call fetchCommunityExists from mapDispatchToProps 1`] = `
 Object {
   "graphql": Object {
     "query": "
         query ($slug: String) {
-          community (slug: $slug) {
-            id
-            slug
+          communityExists (slug: $slug) {
+            data
           }
         }
       ",
     "variables": Object {
-      "slug": "Community Name",
+      "slug": "slug",
     },
   },
-  "meta": Object {
-    "extractModel": "Community",
-    "extractQueryResults": Object {
-      "getItems": [Function],
-    },
-  },
-  "type": "CREATE_COMMUNITY_FETCH_COMMUNITY",
+  "type": "CREATE_COMMUNITY_FETCH_COMMUNITY_EXISTS",
 }
 `;
 

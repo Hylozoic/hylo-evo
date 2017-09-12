@@ -45,18 +45,21 @@ exports[`Review renders correctly 1`] = `
         editHandler={[Function]}
         label="Your Name"
         onChange={[Function]}
+        onEnter={[Function]}
         readOnly={true}
       />
       <ReviewTextInput
         editHandler={[Function]}
         label="Your Email"
         onChange={[Function]}
+        onEnter={[Function]}
         readOnly={true}
       />
       <ReviewTextInput
         editHandler={[Function]}
         label="Community Name"
         onChange={[Function]}
+        onEnter={[Function]}
         readOnly={true}
         value="communityName"
       />
@@ -64,18 +67,11 @@ exports[`Review renders correctly 1`] = `
         editHandler={[Function]}
         label="Domain"
         onChange={[Function]}
+        onEnter={[Function]}
         readOnly={true}
         value="communityDomain"
       />
     </div>
-    <span
-      data-styleName="review-arrow-up"
-    />
-    <span
-      data-styleName="review-error"
-    >
-      this error
-    </span>
   </div>
   <SignupModalFooter
     continueText="Finish Up"

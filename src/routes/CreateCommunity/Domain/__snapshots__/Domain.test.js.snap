@@ -5,9 +5,11 @@ exports[`Domain renders correctly 1`] = `
   data-styleName="flex-wrapper"
 >
   <ModalSidebar
-    body="All good things start somewhere! Let's kick things off with a catchy name for your community."
-    header="Great, let's get started"
+    body="Your URL is the address that people will use to access your community online."
+    header="Choose an address for your community"
+    imageUrl="/happy-axolotl.png"
     onClick={[Function]}
+    secondParagraph="The shorter the better!"
     theme={
       Object {
         "sidebarHeader": "sidebar-header-full-page",

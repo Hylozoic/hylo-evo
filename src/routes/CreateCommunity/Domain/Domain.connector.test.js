@@ -5,9 +5,9 @@ const props = {}
 const dispatchProps = mapDispatchToProps(dispatch, props)
 
 describe('Domain', () => {
-  it('should call fetchCommunity from mapDispatchToProps', () => {
-    const communityName = 'Community Name'
-    expect(dispatchProps.fetchCommunity(communityName)).toMatchSnapshot()
+  it('should call fetchCommunityExists from mapDispatchToProps', () => {
+    const slug = 'slug'
+    expect(dispatchProps.fetchCommunityExists(slug)).toMatchSnapshot()
   })
   it('should call addCommunityDomain from mapDispatchToProps', () => {
     const communityDomain = 'domain'
