@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import orm from 'store/models'
 import getParam from 'store/selectors/getParam'
 
+// FIXME why isn't this ormCreateSelector?
 const getPost = createSelector(
   state => state,
   state => orm.session(state.orm),

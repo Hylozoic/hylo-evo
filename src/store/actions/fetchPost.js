@@ -48,6 +48,12 @@ export const getPostFieldsFragment = withComments => `
     id
     name
     slug
+  }
+  attachments {
+    id
+    position
+    type
+    url
   }`
 
 export default function fetchPost (id, opts = {}) {
