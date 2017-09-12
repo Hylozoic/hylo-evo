@@ -93,7 +93,7 @@ export default class Domain extends Component {
           <TextInput
             type='text'
             name='community-name'
-            value={this.state.communityDomain}
+            value={this.formatDomainWithUrl(this.state.communityDomain)}
             onChange={this.handleDomainChange}
             theme={inputTheme}
             placeholder='Choose a domain name'
