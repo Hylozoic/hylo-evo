@@ -6,7 +6,6 @@ Object {
     SessionBoundModel {
       "_fields": Object {
         "id": "1",
-        "memberships": undefined,
         "name": "Jack",
         "skills": undefined,
       },
@@ -39,7 +38,6 @@ Object {
   "creator": SessionBoundModel {
     "_fields": Object {
       "id": "3",
-      "memberships": undefined,
       "name": "Sue",
       "skills": undefined,
     },
