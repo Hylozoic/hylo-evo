@@ -1,4 +1,4 @@
-import { get, pullAt } from 'lodash/fp'
+import { get, pullAt, clone } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 import linkMatcher from 'util/linkMatcher'
@@ -257,7 +257,7 @@ export default function reducer (state = defaultState, action) {
     case SWITCH_IMAGE_PREVIEWS:
       const { position1, position2 } = payload
       const tmp = state.imagePreviews[position1]
-      const imagePreviews = state.imagePreviews
+      const imagePreviews = clone(state.imagePreviews)
       imagePreviews[position1] = imagePreviews[position2]
       imagePreviews[position2] = tmp
       return {

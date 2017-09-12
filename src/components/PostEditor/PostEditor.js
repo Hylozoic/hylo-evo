@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { get } from 'lodash/fp'
+import { get, isEmpty } from 'lodash/fp'
 import cx from 'classnames'
 import styles from './PostEditor.scss'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
@@ -97,6 +97,13 @@ export default class PostEditor extends React.Component {
       this.setState({
         post: {...this.state.post, linkPreview}
       })
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if ((!isEmpty(this.props.imagePreviews) && this.props.imagePreviews !== nextProps.imagePreviews) ||
+      nextProps.uploadImagePending) {
+      this.setValid()
     }
   }
 
@@ -269,7 +276,8 @@ export default class PostEditor extends React.Component {
         uploadImagePending={uploadImagePending}
         addImage={addImagePreview}
         removeImage={removeImagePreview}
-        switchImages={switchImagePreviews} />
+        switchImages={switchImagePreviews}
+        setValid={() => this.setValid()} />
       <div styleName='footer'>
         <div styleName='postIn'>
           <div styleName='postIn-label'>Post in</div>
@@ -302,15 +310,17 @@ class ImagePreviews extends React.Component {
     const { id, showImagePreviews, imagePreviews, uploadImagePending, addImage, removeImage, switchImages } = this.props
     if (!showImagePreviews) return null
 
-    return <div styleName='image-previews'>
+    return <div styleName='image-preview-section'>
       <div styleName='section-label'>Images</div>
-      {imagePreviews.map((url, i) =>
-        <ImagePreview url={url} removeImage={removeImage} switchImages={switchImages} key={i} position={i} />)}
-      {uploadImagePending && <div styleName='add-image'><Loading /></div>}
-      <ChangeImageButton update={addImage}
-        uploadSettings={uploadSettings(id)}>
-        <div styleName='add-image'>+</div>
-      </ChangeImageButton>
+      <div styleName='image-previews'>
+        {imagePreviews.map((url, i) =>
+          <ImagePreview url={url} removeImage={removeImage} switchImages={switchImages} key={i} position={i} />)}
+        {uploadImagePending && <div styleName='add-image'><Loading /></div>}
+        <ChangeImageButton update={addImage}
+          uploadSettings={uploadSettings(id)}>
+          <div styleName='add-image'>+</div>
+        </ChangeImageButton>
+      </div>
     </div>
   }
 })

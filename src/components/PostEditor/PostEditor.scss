@@ -184,13 +184,19 @@
 
 // ImagePreviews
 
+.image-preview-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 15px 20px 0px;
+  border-top: solid 1px $color-ghost-30;
+}
+
 .image-previews {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  padding: 15px 20px 0px;
-  border-top: solid 1px $color-ghost-30;
 }
 
 .image-box {
