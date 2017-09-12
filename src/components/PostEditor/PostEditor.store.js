@@ -17,14 +17,14 @@ export const SWITCH_IMAGE_PREVIEWS = `${MODULE_NAME}/SWITCH_IMAGE_PREVIEWS`
 // Actions
 
 export function createPost (post) {
-  const { type, title, details, communities, linkPreview } = post
+  const { type, title, details, communities, linkPreview, imageUrls } = post
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
     type: CREATE_POST,
     graphql: {
-      query: `mutation ($type: String, $title: String, $details: String, $linkPreviewId: String, $communityIds: [String]) {
-        createPost(data: {type: $type, title: $title, details: $details, linkPreviewId: $linkPreviewId, communityIds: $communityIds}) {
+      query: `mutation ($type: String, $title: String, $details: String, $linkPreviewId: String, $communityIds: [String], $imageUrls: [String]) {
+        createPost(data: {type: $type, title: $title, details: $details, linkPreviewId: $linkPreviewId, communityIds: $communityIds, imageUrls: $imageUrls}) {
           id
           type
           title
@@ -48,7 +48,8 @@ export function createPost (post) {
         title,
         details,
         linkPreviewId,
-        communityIds
+        communityIds,
+        imageUrls
       }
     },
     meta: {extractModel: 'Post'}

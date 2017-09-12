@@ -195,10 +195,12 @@ export default class PostEditor extends React.Component {
     this.setState({valid: this.isValid()})
 
   save = () => {
-    const { editing, createPost, updatePost, onClose, goToPost } = this.props
+    const { editing, createPost, updatePost, onClose, goToPost, imagePreviews } = this.props
     const { id, type, title, communities, linkPreview } = this.state.post
     const details = this.editor.getContentHTML()
-    const postToSave = { id, type, title, details, communities, linkPreview }
+    const postToSave = {
+      id, type, title, details, communities, linkPreview, imageUrls: imagePreviews
+    }
     const saveFunc = editing ? updatePost : createPost
     saveFunc(postToSave).then(editing ? onClose : goToPost)
   }
