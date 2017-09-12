@@ -16,7 +16,7 @@ export default function reducer (state = {}, action) {
     return {...state, privacy: action.payload.privacy}
   }
   if (action.type === FETCH_COMMUNITY_EXISTS) {
-    return {...state, domainExists: action.payload.data.communityExists.data}
+    return {...state, domainExists: action.payload.data.communityExists.exists}
   }
   return state
 }

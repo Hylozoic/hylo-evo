@@ -8,7 +8,7 @@ export function fetchCommunityExists (slug) {
       query: `
         query ($slug: String) {
           communityExists (slug: $slug) {
-            data
+            exists
           }
         }
       `,
