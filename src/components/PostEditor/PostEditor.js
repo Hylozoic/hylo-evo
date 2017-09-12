@@ -304,7 +304,7 @@ export default class PostEditor extends React.Component {
   }
 }
 
-const ImagePreviews = DragDropContext(HTML5Backend)(
+export const ImagePreviews = DragDropContext(HTML5Backend)(
 class ImagePreviews extends React.Component {
   render () {
     const { id, showImagePreviews, imagePreviews, uploadImagePending, addImage, removeImage, switchImages } = this.props
@@ -340,7 +340,7 @@ const imagePreviewTarget = {
   }
 }
 
-const ImagePreview = DropTarget('ImagePreview', imagePreviewTarget, (connect, monitor) => ({
+export const ImagePreview = DropTarget('ImagePreview', imagePreviewTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget()
 }))(
 DragSource('ImagePreview', imagePreviewSource, (connect, monitor) => ({

@@ -2,7 +2,7 @@
 import React from 'react'
 import { merge } from 'lodash'
 import { shallow } from 'enzyme'
-import PostEditor from './PostEditor'
+import PostEditor, { ActionsBar, ImagePreviews, ImagePreview } from './PostEditor'
 
 describe('PostEditor', () => {
   it('renders with min props', () => {
@@ -87,7 +87,8 @@ describe('PostEditor', () => {
           {id: '2', name: 'test community 2'}
         ]
       },
-      updatePost: jest.fn(() => new Promise(() => {}))
+      updatePost: jest.fn(() => new Promise(() => {})),
+      showImagePreviews: true
     }
 
     test('form in editing mode', () => {
@@ -280,5 +281,52 @@ describe('PostEditor', () => {
       expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
       expect(props.clearLinkPreview.mock.calls).toHaveLength(0)
     })
+  })
+})
+
+describe('ImagePreviews', () => {
+  it('matches last snapshot', () => {
+    const props = {
+      id: 1,
+      addImage: () => {},
+      removeImage: () => {},
+      switchImages: () => {},
+      showImagePreviews: true,
+      uploadImagePending: true,
+      imagePreviews: ['foo.png', 'bar.jpg']
+    }
+    const wrapper = shallow(<ImagePreviews.DecoratedComponent {...props} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+})
+
+describe('ImagePreview', () => {
+  it('matches last snapshot', () => {
+    const props = {
+      url: 'foo.zng',
+      removeImage: () => {},
+      position: 1,
+      connectDragSource: i => i,
+      connectDragPreview: i => i,
+      connectDropTarget: i => i
+    }
+    const wrapper = shallow(<ImagePreview.DecoratedComponent {...props} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+})
+
+describe('ActionsBar', () => {
+  it('matches last snapshot', () => {
+    const props = {
+      id: 1,
+      addImage: () => {},
+      showImagePreviews: true,
+      valid: true,
+      loading: false,
+      submitButtonLabel: 'Save',
+      save: () => {}
+    }
+    const wrapper = shallow(<ActionsBar {...props} />)
+    expect(wrapper).toMatchSnapshot()
   })
 })

@@ -27,6 +27,9 @@ import {
 import {
   DELETE_COMMENT_PENDING
 } from 'routes/PostDetail/Comments/Comment/Comment.store'
+import {
+  UPDATE_POST_PENDING
+} from 'components/PostEditor/PostEditor.store'
 import deep from 'deep-diff'
 
 it('responds to EXTRACT_MODEL', () => {
@@ -436,5 +439,38 @@ describe('on DELETE_COMMENT_PENDING', () => {
     const comments = newSession.Comment.all().toModelArray()
     expect(comments.length).toEqual(1)
     expect(comments[0].id).toEqual('2')
+  })
+})
+
+describe('on UPDATE_POST_PENDING', () => {
+  const postId = '123'
+  const session = orm.session(orm.getEmptyState())
+
+  session.Attachment.create({
+    id: '1',
+    post: postId
+  })
+
+  session.Attachment.create({
+    id: '1',
+    post: postId
+  })
+
+  session.Post.create({
+    id: postId
+  })
+
+  const action = {
+    type: UPDATE_POST_PENDING,
+    meta: {
+      id: postId
+    }
+  }
+
+  it('removes attachments', () => {
+    const newState = ormReducer(session.state, action)
+    const newSession = orm.session(newState)
+    const attachments = newSession.Post.withId(postId).attachments.toModelArray()
+    expect(attachments.length).toEqual(0)
   })
 })
