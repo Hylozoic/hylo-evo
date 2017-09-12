@@ -74,7 +74,8 @@ export const activitySelector = createSelector(
       }))
       const posts = person.posts.toModelArray().map(post => ({
         ...post.ref,
-        creator: post.creator.ref,
+        creator: post.creator,
+        linkPreview: post.linkPreview,
         commenters: post.commenters.toRefArray(),
         communities: post.communities.toRefArray()
       }))
