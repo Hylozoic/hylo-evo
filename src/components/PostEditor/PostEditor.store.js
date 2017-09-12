@@ -109,7 +109,8 @@ export function updatePost (post) {
         modelName: 'Post',
         getRoot: get('updatePost'),
         append: false
-      }
+      },
+      optimistic: true
     }
   }
 }
@@ -256,10 +257,9 @@ export default function reducer (state = defaultState, action) {
       return {...state, imagePreviews: pullAt(payload, state.imagePreviews)}
     case SWITCH_IMAGE_PREVIEWS:
       const { position1, position2 } = payload
-      const tmp = state.imagePreviews[position1]
       const imagePreviews = clone(state.imagePreviews)
-      imagePreviews[position1] = imagePreviews[position2]
-      imagePreviews[position2] = tmp
+      imagePreviews[position1] = state.imagePreviews[position2]
+      imagePreviews[position2] = state.imagePreviews[position1]
       return {
         ...state,
         imagePreviews
