@@ -7,6 +7,7 @@ import { bgImageStyle } from 'util/index'
 import ModalFooter from 'components/ModalFooter'
 import { find } from 'lodash'
 import { get } from 'lodash/fp'
+import { slugValidatorRegex } from '../util'
 
 export default class Review extends Component {
   constructor () {
@@ -77,7 +78,7 @@ export default class Review extends Component {
 
   errorCheckAndSubmit = () => {
     const { name, email, communityName, communityDomain } = this.state.edits
-
+    console.log('here')
     if (name === '' || email === '' || communityName === '' || communityDomain === '') {
       this.setState({
         error: 'Please fill in each field.'
@@ -85,6 +86,11 @@ export default class Review extends Component {
     } else if (this.props.communityDomainExists) {
       this.setState({
         error: 'This domain name is invalid. Try another.'
+      })
+    } else if (!slugValidatorRegex.test(this.removeUrlFromDomain(communityDomain))) {
+      this.formatDomainWithUrl(communityDomain)
+      this.setState({
+        error: 'Domains can only have lower case letters, numbers, and dashes.'
       })
     } else {
       this.submit()
