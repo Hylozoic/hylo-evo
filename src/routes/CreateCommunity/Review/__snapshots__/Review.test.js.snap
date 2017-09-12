@@ -47,6 +47,7 @@ exports[`Review renders correctly 1`] = `
         onChange={[Function]}
         onEnter={[Function]}
         readOnly={true}
+        value=""
       />
       <ReviewTextInput
         editHandler={[Function]}
@@ -54,6 +55,7 @@ exports[`Review renders correctly 1`] = `
         onChange={[Function]}
         onEnter={[Function]}
         readOnly={true}
+        value=""
       />
       <ReviewTextInput
         editHandler={[Function]}

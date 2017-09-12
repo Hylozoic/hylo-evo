@@ -68,7 +68,7 @@ export default class Review extends Component {
     )
     this.props.clearNameFromCreateCommunity()
     this.props.clearDomainFromCreateCommunity()
-    this.props.goToNextStep()
+    // this.props.goToNextStep()
   }
 
   errorCheckAndSubmit = () => {
@@ -88,6 +88,7 @@ export default class Review extends Component {
   }
 
   componentWillMount = () => {
+    console.log('componentWillMount currentUser', this.props.currentUser)
     const { communityPrivacy } = this.props
     const privacyOption = find(privacyOptions, {label: communityPrivacy})
     const selectedCommunityPrivacy = get('label', privacyOption) // set to Private by default
@@ -121,7 +122,7 @@ export default class Review extends Component {
         <div styleName='center-review'>
           <ReviewTextInput
             label={'Your Name'}
-            value={this.state.edits.name}
+            value={this.state.edits.name || ''}
             readOnly={this.state.readOnly.name}
             editHandler={() => this.editHandler('name')}
             onEnter={this.onEnter}
@@ -129,7 +130,7 @@ export default class Review extends Component {
           />
           <ReviewTextInput
             label={'Your Email'}
-            value={this.state.edits.email}
+            value={this.state.edits.email || ''}
             readOnly={this.state.readOnly.email}
             editHandler={() => this.editHandler('email')}
             onEnter={this.onEnter}
@@ -137,7 +138,7 @@ export default class Review extends Component {
           />
           <ReviewTextInput
             label={'Community Name'}
-            value={this.state.edits.communityName}
+            value={this.state.edits.communityName || ''}
             readOnly={this.state.readOnly.communityName}
             editHandler={() => this.editHandler('communityName')}
             onEnter={this.onEnter}
@@ -145,7 +146,7 @@ export default class Review extends Component {
           />
           <ReviewTextInput
             label={'Domain'}
-            value={this.state.edits.communityDomain}
+            value={this.state.edits.communityDomain || ''}
             readOnly={this.state.readOnly.communityDomain}
             editHandler={() => this.editHandler('communityDomain')}
             onEnter={this.onEnter}
