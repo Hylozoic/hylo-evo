@@ -31,37 +31,44 @@ posts(
 ) {
   hasMore
   items {
+    
+  id
+  title
+  details
+  type
+  creator {
+    id
+    name
+    avatarUrl
+  }
+  createdAt
+  updatedAt
+  commenters(first: 3) {
+    id
+    name
+    avatarUrl
+  }
+  commentersTotal
+  
+  linkPreview {
     id
     title
-    details
+    url
+    imageUrl
+  }
+  votesTotal
+  myVote
+  communities {
+    id
+    name
+    slug
+  }
+  attachments {
+    id
+    position
     type
-    creator {
-      id
-      name
-      avatarUrl
-      tagline
-    }
-    createdAt
-    updatedAt
-    commenters(first: 3) {
-      id
-      name
-      avatarUrl
-    }
-    commentersTotal
-    linkPreview {
-      id
-      title
-      url
-      imageUrl
-    }
-    votesTotal
-    myVote
-    communities {
-      id
-      name
-      slug
-    }
+    url
+  }
   }
 }
   }
@@ -110,37 +117,44 @@ posts(
 ) {
   hasMore
   items {
+    
+  id
+  title
+  details
+  type
+  creator {
+    id
+    name
+    avatarUrl
+  }
+  createdAt
+  updatedAt
+  commenters(first: 3) {
+    id
+    name
+    avatarUrl
+  }
+  commentersTotal
+  
+  linkPreview {
     id
     title
-    details
+    url
+    imageUrl
+  }
+  votesTotal
+  myVote
+  communities {
+    id
+    name
+    slug
+  }
+  attachments {
+    id
+    position
     type
-    creator {
-      id
-      name
-      avatarUrl
-      tagline
-    }
-    createdAt
-    updatedAt
-    commenters(first: 3) {
-      id
-      name
-      avatarUrl
-    }
-    commentersTotal
-    linkPreview {
-      id
-      title
-      url
-      imageUrl
-    }
-    votesTotal
-    myVote
-    communities {
-      id
-      name
-      slug
-    }
+    url
+  }
   }
 }
 }",
