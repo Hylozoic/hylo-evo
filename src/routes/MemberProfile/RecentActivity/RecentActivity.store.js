@@ -18,16 +18,18 @@ const recentActivityQuery =
   person (id: $id) {
     id
     comments (first: $first, order: $order) {
-      id
-      text
-      creator {
+      items {
         id
+        text
+        creator {
+          id
+        }
+        post {
+          id
+          title
+        }
+        createdAt
       }
-      post {
-        id
-        title
-      }
-      createdAt
     }
     ${postsQueryFragment}
   }
