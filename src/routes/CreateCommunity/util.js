@@ -1,7 +1,7 @@
 export const slugValidatorRegex = /^[0-9a-z\s-]+$/
 
 export function formatDomainWithUrl (communityDomain) {
-  let formattedDomain = communityDomain.replace('hylo.com/c/', '').replace('hylo.com/c', '')
+  let formattedDomain = communityDomain.replace(/hylo\.com\/c\/?/, '')
   if (formattedDomain !== '') {
     formattedDomain = 'hylo.com/c/' + formattedDomain
   }
