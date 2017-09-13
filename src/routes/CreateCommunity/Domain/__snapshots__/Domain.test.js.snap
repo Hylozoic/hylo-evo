@@ -51,7 +51,7 @@ exports[`Domain renders correctly 1`] = `
         name="community-name"
         onChange={[Function]}
         onEnter={[Function]}
-        placeholder="Choose a domain name"
+        placeholder="Choose a URL"
         showClearButton={false}
         theme={
           Object {
