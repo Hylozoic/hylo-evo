@@ -1,3 +1,12 @@
+// mixins
+
+.section-label {
+  color: $color-rhino-80;
+  white-space: nowrap;
+  margin-right: 28px;
+  font-size: 14px;
+}
+
 // Overall wrapper
 
 .wrapper {
@@ -136,9 +145,7 @@
   display: flex;
   align-items: center;
   &-label {
-    color: $color-rhino-80;
-    white-space: nowrap;
-    margin-right: $space-4x;
+    composes: section-label;
   }
   &-communities {
     /* !empty */
@@ -149,10 +156,28 @@
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
-  justify-content: flex-end;
-  padding: $space-3x;
+  padding: $space-3x 18px;
+  align-items: center;
+  border-top: solid 1px $color-ghost-30;
+}
+
+.actions {
+
+}
+
+.action-icon {
+  font-size: 32px;
+  cursor: pointer;
+  &:hover {
+    color: $color-caribbean-green;
+  }
+}
+
+.highlight-icon {
+  color: $color-caribbean-green;
+  cursor: default;
 }
 
 .postButton {
-  /* !empty */
+  margin-left: auto;
 }

@@ -2,7 +2,7 @@
 import React from 'react'
 import { merge } from 'lodash'
 import { shallow } from 'enzyme'
-import PostEditor from './PostEditor'
+import PostEditor, { ActionsBar } from './PostEditor'
 
 describe('PostEditor', () => {
   it('renders with min props', () => {
@@ -87,7 +87,8 @@ describe('PostEditor', () => {
           {id: '2', name: 'test community 2'}
         ]
       },
-      updatePost: jest.fn(() => new Promise(() => {}))
+      updatePost: jest.fn(() => new Promise(() => {})),
+      showImagePreviews: true
     }
 
     test('form in editing mode', () => {
@@ -202,7 +203,7 @@ describe('PostEditor', () => {
       baseProps = {
         post: {},
         pollingFetchLinkPreview: jest.fn(),
-        resetLinkPreview: jest.fn()
+        clearLinkPreview: jest.fn()
       }
       contentStateMock = {
         getBlockMap: () => ([]),
@@ -261,7 +262,7 @@ describe('PostEditor', () => {
       const testInstance = wrapper.instance()
       testInstance.setLinkPreview(contentStateMock)
       expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
-      expect(props.resetLinkPreview.mock.calls).toHaveLength(1)
+      expect(props.clearLinkPreview.mock.calls).toHaveLength(1)
     })
 
     it('should not reset linkPreview when there is no text but there is a linkPreview present', () => {
@@ -278,7 +279,23 @@ describe('PostEditor', () => {
       const testInstance = wrapper.instance()
       testInstance.setLinkPreview(contentStateMock)
       expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
-      expect(props.resetLinkPreview.mock.calls).toHaveLength(0)
+      expect(props.clearLinkPreview.mock.calls).toHaveLength(0)
     })
+  })
+})
+
+describe('ActionsBar', () => {
+  it('matches last snapshot', () => {
+    const props = {
+      id: 1,
+      addImage: () => {},
+      showImagePreviews: true,
+      valid: true,
+      loading: false,
+      submitButtonLabel: 'Save',
+      save: () => {}
+    }
+    const wrapper = shallow(<ActionsBar {...props} />)
+    expect(wrapper).toMatchSnapshot()
   })
 })
