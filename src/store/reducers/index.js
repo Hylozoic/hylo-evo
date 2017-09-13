@@ -5,6 +5,7 @@ import login from 'store/reducers/login'
 import pending from './pending'
 // Local store
 // generator-marker-local-store-import
+import AuthRoute from 'router/AuthRoute/AuthRoute.store'
 import SkillsSection from 'components/SkillsSection/SkillsSection.store'
 import NetworkCommunities from 'routes/NetworkCommunities/NetworkCommunities.store'
 import NetworkSettings from 'routes/NetworkSettings/NetworkSettings.store'
@@ -37,6 +38,7 @@ const combinedReducers = combineReducers({
 
   // Local store (Component)
   // generator-marker-local-store-reducer
+  AuthRoute,
   SkillsSection,
   NetworkCommunities,
   NetworkSettings,

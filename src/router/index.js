@@ -29,7 +29,7 @@ function rootRoutes () {
   return <LoginCheck>
     <Switch>
       <Route path='/ui-kit' component={UIKit} />
-      <Route path='/h/use-invitation' component={JoinCommunity} />
+      <AuthRoute returnToOnAuth path='/h/use-invitation' component={JoinCommunity} />
       <AuthRoute path='/login' component={NonAuthLayout} />
       <AuthRoute path='/signup' exact component={NonAuthLayout} />
       <AuthRoute path='/reset-password' exact component={NonAuthLayout} />

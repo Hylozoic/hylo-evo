@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { CHECK_LOGIN, LOGIN, SIGNUP, SET_RETURN_TO_URL, RESET_RETURN_TO_URL } from 'store/constants'
+import { CHECK_LOGIN, LOGIN, SIGNUP } from 'store/constants'
 
 export default combineReducers({
   isLoggedIn: (state = null, { type, error, payload, meta }) => {
@@ -8,17 +8,6 @@ export default combineReducers({
       case SIGNUP:
       case LOGIN: return true
       case CHECK_LOGIN: return !!payload.signedIn
-    }
-    return state
-  },
-
-  returnToURL: (state = null, { type, error, payload, meta }) => {
-    if (error) return state
-    switch (type) {
-      case SET_RETURN_TO_URL:
-        return payload.returnToURL
-      case RESET_RETURN_TO_URL:
-        return null
     }
     return state
   },

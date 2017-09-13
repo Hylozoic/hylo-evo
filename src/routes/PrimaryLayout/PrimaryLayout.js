@@ -29,7 +29,6 @@ import UploadPhoto from 'routes/Signup/UploadPhoto'
 import AddLocation from 'routes/Signup/AddLocation'
 import AddSkills from 'routes/Signup/AddSkills'
 import Review from 'routes/Signup/Review'
-import JoinCommunity from 'routes/JoinCommunity'
 
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
