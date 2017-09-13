@@ -1,5 +1,9 @@
 // ImagePreviews
 
+.section-label {
+  composes: section-label from '../PostEditor.scss';
+}
+
 .image-preview-section {
   display: flex;
   flex-direction: row;

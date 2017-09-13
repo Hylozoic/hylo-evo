@@ -10,7 +10,8 @@ import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 import LinkPreview from './LinkPreview'
 import ChangeImageButton from 'components/ChangeImageButton'
-import ImagePreviews, { uploadSettings } from './ImagePreviews'
+import ImagePreviews from './ImagePreviews'
+import { uploadSettings } from './ImagePreviews/ImagePreviews'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
@@ -77,7 +78,12 @@ export default class PostEditor extends React.Component {
 
   componentDidMount () {
     this.titleInput.focus()
-    this.props.loadImagePreviews()
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!isEmpty(this.props.imagePreviews) && this.props.imagePreviews !== nextProps.imagePreviews) {
+      this.setValid()
+    }
   }
 
   componentDidUpdate (prevProps) {
@@ -92,23 +98,14 @@ export default class PostEditor extends React.Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    if ((!isEmpty(this.props.imagePreviews) && this.props.imagePreviews !== nextProps.imagePreviews) ||
-      nextProps.uploadImagePending) {
-      this.setValid()
-    }
-  }
-
   componentWillUnmount () {
     this.props.clearLinkPreview()
-    this.props.clearImagePreviews()
   }
 
   reset = (props) => {
     this.editor.reset()
     this.communitiesSelector.reset()
     this.setState(this.buildStateFromProps(props))
-    this.props.loadImagePreviews()
   }
 
   focus = () => this.editor && this.editor.focus()
@@ -194,8 +191,7 @@ export default class PostEditor extends React.Component {
       communities.length > 0)
   }
 
-  setValid = () =>
-    this.setState({valid: this.isValid()})
+  setValid = () => this.setState({valid: this.isValid()})
 
   save = () => {
     const { editing, createPost, updatePost, onClose, goToPost, imagePreviews } = this.props
@@ -214,8 +210,7 @@ export default class PostEditor extends React.Component {
     const {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, editing, loading, addImagePreview,
-      imagePreviews, removeImagePreview, switchImagePreviews, showImagePreviews,
-      uploadImagePending
+      showImagePreviews
     } = this.props
     const submitButtonLabel = editing ? 'Save' : 'Post'
 
@@ -261,15 +256,7 @@ export default class PostEditor extends React.Component {
             <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
         </div>
       </div>
-      <ImagePreviews
-        id={id || 'new'}
-        showImagePreviews={showImagePreviews}
-        imagePreviews={imagePreviews}
-        uploadImagePending={uploadImagePending}
-        addImage={addImagePreview}
-        removeImage={removeImagePreview}
-        switchImages={switchImagePreviews}
-        setValid={() => this.setValid()} />
+      <ImagePreviews postId={id || 'new'} />
       <div styleName='footer'>
         <div styleName='postIn'>
           <div styleName='postIn-label'>Post in</div>

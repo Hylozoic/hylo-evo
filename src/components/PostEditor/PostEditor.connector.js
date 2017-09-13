@@ -16,14 +16,12 @@ import {
   pollingFetchLinkPreview,
   removeLinkPreview,
   clearLinkPreview,
-  setImagePreviews,
-  addImagePreview,
-  removeImagePreview,
-  switchImagePreviews,
-  getLinkPreview,
-  getImagePreviews,
-  getImages
+  getLinkPreview
 } from './PostEditor.store'
+import {
+  addImagePreview,
+  getImagePreviews
+} from './ImagePreviews/ImagePreviews.store'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
@@ -39,7 +37,6 @@ export function mapStateToProps (state, props) {
   const uploadImagePending = state.pending[UPLOAD_IMAGE]
   const imagePreviews = getImagePreviews(state, props)
   const showImagePreviews = !isEmpty(imagePreviews) || uploadImagePending
-  const postImages = getImages(state, {postId: get('id', post)})
 
   return {
     currentUser,
@@ -51,10 +48,8 @@ export function mapStateToProps (state, props) {
     linkPreview,
     linkPreviewStatus,
     fetchLinkPreviewPending,
-    imagePreviews,
-    postImages,
     showImagePreviews,
-    uploadImagePending
+    imagePreviews
   }
 }
 
@@ -71,17 +66,14 @@ export const mapDispatchToProps = (dispatch, props) => {
       return dispatch(push(postUrl(id, slug)))
     },
     ...bindActionCreators({
-      addImagePreview,
-      removeImagePreview,
-      switchImagePreviews,
-      setImagePreviews
+      addImagePreview
     }, dispatch)
   }
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { fetchLinkPreviewPending, postImages } = stateProps
-  const { pollingFetchLinkPreviewRaw, setImagePreviews } = dispatchProps
+  const { fetchLinkPreviewPending } = stateProps
+  const { pollingFetchLinkPreviewRaw } = dispatchProps
 
   const pollingFetchLinkPreview = fetchLinkPreviewPending
       ? () => Promise.resolve()
@@ -91,9 +83,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    pollingFetchLinkPreview,
-    loadImagePreviews: () => setImagePreviews(postImages.map(image => image.url)),
-    clearImagePreviews: () => setImagePreviews([])
+    pollingFetchLinkPreview
   }
 }
 

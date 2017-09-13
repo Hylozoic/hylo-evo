@@ -50,6 +50,5 @@ Post.fields = {
   endsAt: attr(),
   fulfilledAt: attr(),
   votesTotal: attr(),
-  myVote: attr(),
-  attachment: fk('Attachment', 'post')
+  myVote: attr()
 }
