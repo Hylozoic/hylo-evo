@@ -50,16 +50,16 @@
 }
 
 .postType {
+  composes: tag from 'css/typography.scss';
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  line-height: 40px;
   display: inline-block;
   width: 100%;
   margin: 0 $space-2x;
-  padding: $space-5x;
-  font-size: 0.625rem;
-  text-transform: uppercase;
+  padding: 0 $space-5x;
   text-align: center;
-  line-height: 0;
   border-radius: $space-1x;
-  color: $color-rhino-30;
   background-color: $color-athens-gray-dark;
   &:last-child {
     margin-right: 0;
