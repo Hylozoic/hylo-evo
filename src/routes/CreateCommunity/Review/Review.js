@@ -7,7 +7,7 @@ import { bgImageStyle } from 'util/index'
 import ModalFooter from 'components/ModalFooter'
 import { find } from 'lodash'
 import { get } from 'lodash/fp'
-import { slugValidatorRegex } from '../util'
+import { slugValidatorRegex, formatDomainWithUrl, removeUrlFromDomain } from '../util'
 
 export default class Review extends Component {
   constructor () {
@@ -42,8 +42,10 @@ export default class Review extends Component {
   handleInputChange = (event, name) => {
     let value = event.target.value
     if (name === 'communityDomain') {
-      this.props.fetchCommunityExists(this.removeUrlFromDomain(value))
-      value = this.formatDomainWithUrl(value)
+      if (removeUrlFromDomain(value) !== '') {
+        this.props.fetchCommunityExists(removeUrlFromDomain(value))
+      }
+      value = formatDomainWithUrl(value)
     }
     this.setState({
       edits: {
@@ -69,7 +71,7 @@ export default class Review extends Component {
     this.props.createCommunity(
       // communityPrivacy,
       communityName,
-      this.removeUrlFromDomain(communityDomain)
+      removeUrlFromDomain(communityDomain)
     )
     .then(({ error }) => {
       if (error) {
@@ -77,7 +79,7 @@ export default class Review extends Component {
           error: 'There was an error, please try again.'
         })
       } else {
-        this.props.goToCommunity(`${communityDomain}`)
+        this.props.goToCommunity(`${removeUrlFromDomain(communityDomain)}`)
       }
     })
   }
@@ -92,8 +94,8 @@ export default class Review extends Component {
       this.setState({
         error: 'This url is invalid. Try another.'
       })
-    } else if (!slugValidatorRegex.test(this.removeUrlFromDomain(communityDomain))) {
-      this.formatDomainWithUrl(communityDomain)
+    } else if (!slugValidatorRegex.test(removeUrlFromDomain(communityDomain))) {
+      formatDomainWithUrl(communityDomain)
       this.setState({
         error: 'Urls can only have lower case letters, numbers, and dashes.'
       })
@@ -108,10 +110,10 @@ export default class Review extends Component {
     const selectedCommunityPrivacy = get('label', privacyOption) // set to Private by default
     this.setState({
       edits: {
-        name: get('name', this.props.currentUser),
-        email: get('email', this.props.currentUser),
-        communityName: get('communityName', this.props),
-        communityDomain: get('communityDomain', this.props),
+        name: get('name', this.props.currentUser) || '',
+        email: get('email', this.props.currentUser) || '',
+        communityName: get('communityName', this.props) || '',
+        communityDomain: get('communityDomain', this.props) || '',
         communityPrivacy: selectedCommunityPrivacy
       }
     })
@@ -173,7 +175,7 @@ export default class Review extends Component {
           />
           <ReviewTextInput
             label={'URL'}
-            value={this.formatDomainWithUrl(this.state.edits.communityDomain) || ''}
+            value={formatDomainWithUrl(this.state.edits.communityDomain) || ''}
             readOnly={this.state.readOnly.communityDomain}
             editHandler={() => this.editHandler('communityDomain')}
             onEnter={this.onEnter}

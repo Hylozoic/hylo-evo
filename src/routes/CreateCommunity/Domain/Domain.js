@@ -5,7 +5,7 @@ import TextInput from 'components/TextInput'
 import { hyloNameWhiteBackground, confusedAxolotl, happyAxolotl } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import ModalFooter from 'components/ModalFooter'
-import { slugValidatorRegex } from '../util'
+import { slugValidatorRegex, formatDomainWithUrl, removeUrlFromDomain } from '../util'
 
 export default class Domain extends Component {
   constructor (props) {
@@ -17,14 +17,16 @@ export default class Domain extends Component {
 
   handleDomainChange = (event) => {
     const communityDomain = event.target.value
-    this.props.fetchCommunityExists(this.removeUrlFromDomain(communityDomain))
+    if (removeUrlFromDomain(communityDomain) !== '') {
+      this.props.fetchCommunityExists(removeUrlFromDomain(communityDomain))
+    }
     this.setState({
-      communityDomain: this.formatDomainWithUrl(communityDomain)
+      communityDomain: formatDomainWithUrl(communityDomain)
     })
   }
 
   submit = () => {
-    const communityDomain = this.removeUrlFromDomain(this.state.communityDomain)
+    const communityDomain = removeUrlFromDomain(this.state.communityDomain)
     this.props.addCommunityDomain(communityDomain)
     this.props.goToNextStep()
   }
@@ -38,7 +40,7 @@ export default class Domain extends Component {
       this.setState({
         error: 'Please add a URL.'
       })
-    } else if (!slugValidatorRegex.test(this.removeUrlFromDomain(this.state.communityDomain))) {
+    } else if (!slugValidatorRegex.test(removeUrlFromDomain(this.state.communityDomain))) {
       this.setState({
         error: 'URLs can only have lower case letters, numbers, and dashes.'
       })
@@ -51,18 +53,6 @@ export default class Domain extends Component {
     if (event.key === 'Enter') {
       this.errorCheckAndSubmit()
     }
-  }
-
-  formatDomainWithUrl (communityDomain) {
-    let formattedDomain = communityDomain.replace('hylo.com/c/', '').replace('hylo.com/c', '')
-    if (formattedDomain !== '') {
-      formattedDomain = 'hylo.com/c/' + formattedDomain
-    }
-    return formattedDomain
-  }
-
-  removeUrlFromDomain (communityDomain) {
-    return communityDomain.replace('hylo.com/c/', '')
   }
 
   imageChooser = () => {
@@ -98,7 +88,7 @@ export default class Domain extends Component {
           <TextInput
             type='text'
             name='community-name'
-            value={this.formatDomainWithUrl(this.state.communityDomain)}
+            value={formatDomainWithUrl(this.state.communityDomain)}
             onChange={this.handleDomainChange}
             theme={inputTheme}
             placeholder='Choose a URL'
