@@ -5,9 +5,9 @@ import reducer, {
   REMOVE_IMAGE_PREVIEW,
   SWITCH_IMAGE_PREVIEWS,
   defaultState
-} from './ImagePreviews.store'
+} from './AttachmentManager.store'
 
-describe('ImagePreviews store', () => {
+describe('AttachmentManager store', () => {
   describe('reducer', () => {
     describe(`when ${SET_IMAGE_PREVIEWS}`, () => {
       const action = {

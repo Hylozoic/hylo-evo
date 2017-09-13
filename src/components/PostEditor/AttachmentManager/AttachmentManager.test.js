@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import ImagePreviews, { ImagePreview } from './ImagePreviews'
+import AttachmentManager, { ImagePreview } from './AttachmentManager'
 
-describe('ImagePreviews', () => {
+describe('AttachmentManager', () => {
   it('matches last snapshot', () => {
     const props = {
       id: 1,
@@ -13,7 +13,7 @@ describe('ImagePreviews', () => {
       uploadImagePending: true,
       imagePreviews: ['foo.png', 'bar.jpg']
     }
-    const wrapper = shallow(<ImagePreviews.DecoratedComponent {...props} />)
+    const wrapper = shallow(<AttachmentManager.DecoratedComponent {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

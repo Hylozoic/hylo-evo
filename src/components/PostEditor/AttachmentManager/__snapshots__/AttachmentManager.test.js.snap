@@ -1,30 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ImagePreview matches last snapshot 1`] = `
-<div
-  data-styleName="image-preview"
->
-  <div
-    data-styleName="image"
-    style={
-      Object {
-        "backgroundImage": "url(foo.zng)",
-      }
-    }
-  >
-    <Icon
-      data-styleName="remove-button"
-      name="Ex"
-      onClick={[Function]}
-    />
-    <div
-      data-styleName="drag-preview"
-    />
-  </div>
-</div>
-`;
-
-exports[`ImagePreviews matches last snapshot 1`] = `
+exports[`AttachmentManager matches last snapshot 1`] = `
 <div
   data-styleName="image-preview-section"
 >
@@ -63,6 +39,30 @@ exports[`ImagePreviews matches last snapshot 1`] = `
         +
       </div>
     </Connect(ChangeImageButton)>
+  </div>
+</div>
+`;
+
+exports[`ImagePreview matches last snapshot 1`] = `
+<div
+  data-styleName="image-preview"
+>
+  <div
+    data-styleName="image"
+    style={
+      Object {
+        "backgroundImage": "url(foo.zng)",
+      }
+    }
+  >
+    <Icon
+      data-styleName="remove-button"
+      name="Ex"
+      onClick={[Function]}
+    />
+    <div
+      data-styleName="drag-preview"
+    />
   </div>
 </div>
 `;

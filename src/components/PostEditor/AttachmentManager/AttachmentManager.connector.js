@@ -8,7 +8,7 @@ import {
   setImagePreviews,
   getImagePreviews,
   getImages
-} from './ImagePreviews.store'
+} from './AttachmentManager.store'
 
 export function mapStateToProps (state, props) {
   const uploadImagePending = state.pending[UPLOAD_IMAGE]

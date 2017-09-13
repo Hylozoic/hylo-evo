@@ -10,8 +10,8 @@ import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 import LinkPreview from './LinkPreview'
 import ChangeImageButton from 'components/ChangeImageButton'
-import ImagePreviews from './ImagePreviews'
-import { uploadSettings } from './ImagePreviews/ImagePreviews'
+import AttachmentManager from './AttachmentManager'
+import { uploadSettings } from './AttachmentManager/AttachmentManager'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
@@ -256,7 +256,7 @@ export default class PostEditor extends React.Component {
             <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
         </div>
       </div>
-      <ImagePreviews postId={id || 'new'} />
+      <AttachmentManager postId={id || 'new'} type='image' />
       <div styleName='footer'>
         <div styleName='postIn'>
           <div styleName='postIn-label'>Post in</div>

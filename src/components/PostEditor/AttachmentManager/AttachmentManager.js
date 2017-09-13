@@ -5,15 +5,15 @@ import { bgImageStyle } from 'util/index'
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import ChangeImageButton from 'components/ChangeImageButton'
-import './ImagePreviews.scss'
+import './AttachmentManager.scss'
 
 export const uploadSettings = id => ({
   type: 'post',
   id: id || 'new'
 })
 
-const ImagePreviews = DragDropContext(HTML5Backend)(
-class ImagePreviews extends React.Component {
+const AttachmentManager = DragDropContext(HTML5Backend)(
+class AttachmentManager extends React.Component {
   componentDidMount () {
     this.props.loadImagePreviews()
   }
@@ -47,7 +47,7 @@ class ImagePreviews extends React.Component {
   }
 })
 
-export default ImagePreviews
+export default AttachmentManager
 
 const imagePreviewSource = {
   beginDrag (props) {

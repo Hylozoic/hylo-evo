@@ -21,7 +21,7 @@ import {
 import {
   addImagePreview,
   getImagePreviews
-} from './ImagePreviews/ImagePreviews.store'
+} from './AttachmentManager/AttachmentManager.store'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)

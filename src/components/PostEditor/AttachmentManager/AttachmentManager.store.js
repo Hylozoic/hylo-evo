@@ -2,7 +2,7 @@ import { pullAt, clone, get } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 
-export const MODULE_NAME = 'ImagePreviews'
+export const MODULE_NAME = 'AttachmentManager'
 export const LOAD_IMAGE_PREVIEWS = `${MODULE_NAME}/LOAD_IMAGE_PREVIEWS`
 export const SET_IMAGE_PREVIEWS = `${MODULE_NAME}/SET_IMAGE_PREVIEWS`
 export const ADD_IMAGE_PREVIEW = `${MODULE_NAME}/ADD_IMAGE_PREVIEW`
