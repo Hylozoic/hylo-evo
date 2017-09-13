@@ -6,12 +6,12 @@ describe('AttachmentManager', () => {
   it('matches last snapshot', () => {
     const props = {
       id: 1,
-      addImage: () => {},
-      removeImage: () => {},
-      switchImages: () => {},
-      showImagePreviews: true,
+      addAttachment: () => {},
+      removeAttachment: () => {},
+      switchAttachments: () => {},
+      showAttachments: true,
       uploadImagePending: true,
-      imagePreviews: ['foo.png', 'bar.jpg']
+      attachments: ['foo.png', 'bar.jpg']
     }
     const wrapper = shallow(<AttachmentManager.DecoratedComponent {...props} />)
     expect(wrapper).toMatchSnapshot()

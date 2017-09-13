@@ -14,10 +14,14 @@ exports[`AttachmentManager matches last snapshot 1`] = `
   >
     <DropTarget(DragSource(ImagePreview))
       position={0}
+      removeImage={[Function]}
+      switchImages={[Function]}
       url="foo.png"
     />
     <DropTarget(DragSource(ImagePreview))
       position={1}
+      removeImage={[Function]}
+      switchImages={[Function]}
       url="bar.jpg"
     />
     <div
@@ -26,6 +30,7 @@ exports[`AttachmentManager matches last snapshot 1`] = `
       <Loading />
     </div>
     <Connect(ChangeImageButton)
+      update={[Function]}
       uploadSettings={
         Object {
           "id": "new",

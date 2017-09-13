@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { get, isEmpty } from 'lodash/fp'
+import { get } from 'lodash/fp'
 import cx from 'classnames'
 import styles from './PostEditor.scss'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
@@ -78,12 +78,6 @@ export default class PostEditor extends React.Component {
 
   componentDidMount () {
     this.titleInput.focus()
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (!isEmpty(this.props.imagePreviews) && this.props.imagePreviews !== nextProps.imagePreviews) {
-      this.setValid()
-    }
   }
 
   componentDidUpdate (prevProps) {
@@ -194,11 +188,11 @@ export default class PostEditor extends React.Component {
   setValid = () => this.setState({valid: this.isValid()})
 
   save = () => {
-    const { editing, createPost, updatePost, onClose, goToPost, imagePreviews } = this.props
+    const { editing, createPost, updatePost, onClose, goToPost, images } = this.props
     const { id, type, title, communities, linkPreview } = this.state.post
     const details = this.editor.getContentHTML()
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: imagePreviews
+      id, type, title, details, communities, linkPreview, imageUrls: images
     }
     const saveFunc = editing ? updatePost : createPost
     saveFunc(postToSave).then(editing ? onClose : goToPost)
@@ -209,8 +203,8 @@ export default class PostEditor extends React.Component {
     const { id, title, details, communities, linkPreview } = post
     const {
       onClose, initialPrompt, detailsPlaceholder,
-      currentUser, communityOptions, editing, loading, addImagePreview,
-      showImagePreviews
+      currentUser, communityOptions, editing, loading, addImage,
+      showImages
     } = this.props
     const submitButtonLabel = editing ? 'Save' : 'Post'
 
@@ -272,8 +266,8 @@ export default class PostEditor extends React.Component {
         </div>
         <ActionsBar
           id={id}
-          addImage={addImagePreview}
-          showImagePreviews={showImagePreviews}
+          addImage={addImage}
+          showImages={showImages}
           valid={valid}
           loading={loading}
           submitButtonLabel={submitButtonLabel}
@@ -283,13 +277,13 @@ export default class PostEditor extends React.Component {
   }
 }
 
-export function ActionsBar ({id, addImage, showingImagePreviews, valid, loading, submitButtonLabel, save}) {
+export function ActionsBar ({id, addImage, showImages, valid, loading, submitButtonLabel, save}) {
   const addImageIcon = <Icon name='AddImage'
-    styleName={cx('action-icon', {'highlight-icon': showingImagePreviews})} />
+    styleName={cx('action-icon', {'highlight-icon': showImages})} />
 
   return <div styleName='actionsBar'>
     <div styleName='actions'>
-      {showingImagePreviews
+      {showImages
         ? addImageIcon
         : <ChangeImageButton update={addImage}
           uploadSettings={uploadSettings(id)}>

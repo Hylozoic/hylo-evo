@@ -1,7 +1,6 @@
 import { get, isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { bindActionCreators } from 'redux'
 import { postUrl } from 'util/index'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
@@ -19,8 +18,8 @@ import {
   getLinkPreview
 } from './PostEditor.store'
 import {
-  addImagePreview,
-  getImagePreviews
+  addAttachment,
+  getAttachments
 } from './AttachmentManager/AttachmentManager.store'
 
 export function mapStateToProps (state, props) {
@@ -35,8 +34,9 @@ export function mapStateToProps (state, props) {
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
   const uploadImagePending = state.pending[UPLOAD_IMAGE]
-  const imagePreviews = getImagePreviews(state, props)
-  const showImagePreviews = !isEmpty(imagePreviews) || uploadImagePending
+  const images = getAttachments(state, {type: 'image'})
+  // TODO: this should be a selector exported from AttachmentManager
+  const showImagePreviews = !isEmpty(images) || uploadImagePending
 
   return {
     currentUser,
@@ -49,7 +49,7 @@ export function mapStateToProps (state, props) {
     linkPreviewStatus,
     fetchLinkPreviewPending,
     showImagePreviews,
-    imagePreviews
+    images
   }
 }
 
@@ -65,9 +65,7 @@ export const mapDispatchToProps = (dispatch, props) => {
       const id = createPostAction.payload.data.createPost.id
       return dispatch(push(postUrl(id, slug)))
     },
-    ...bindActionCreators({
-      addImagePreview
-    }, dispatch)
+    addImage: url => dispatch(addAttachment(url, 'image'))
   }
 }
 

@@ -15,30 +15,30 @@ export const uploadSettings = id => ({
 const AttachmentManager = DragDropContext(HTML5Backend)(
 class AttachmentManager extends React.Component {
   componentDidMount () {
-    this.props.loadImagePreviews()
+    this.props.loadAttachments()
   }
 
   componentWillReceiveProps (nextProps) {
     if (this.props.postId !== nextProps.postId) {
-      this.props.loadImagePreviews()
+      this.props.loadAttachments()
     }
   }
 
   componentWillUnmount () {
-    this.props.clearImagePreviews()
+    this.props.clearAttachments()
   }
 
   render () {
-    const { postId, showImagePreviews, imagePreviews, uploadImagePending, addImagePreview, removeImagePreview, switchImagePreviews } = this.props
-    if (!showImagePreviews) return null
+    const { postId, showAttachments, attachments, uploadImagePending, addAttachment, removeAttachment, switchAttachments } = this.props
+    if (!showAttachments) return null
 
     return <div styleName='image-preview-section'>
       <div styleName='section-label'>Images</div>
       <div styleName='image-previews'>
-        {imagePreviews.map((url, i) =>
-          <ImagePreview url={url} removeImagePreview={removeImagePreview} switchImagePreviews={switchImagePreviews} key={i} position={i} />)}
+        {attachments.map((url, i) =>
+          <ImagePreview url={url} removeImage={removeAttachment} switchImages={switchAttachments} key={i} position={i} />)}
         {uploadImagePending && <div styleName='add-image'><Loading /></div>}
-        <ChangeImageButton update={addImagePreview}
+        <ChangeImageButton update={addAttachment}
           uploadSettings={uploadSettings(postId)}>
           <div styleName='add-image'>+</div>
         </ChangeImageButton>
@@ -60,7 +60,7 @@ const imagePreviewSource = {
 const imagePreviewTarget = {
   drop (props, monitor, component) {
     const item = monitor.getItem()
-    props.switchImagePreviews(props.position, item.position)
+    props.switchImages(props.position, item.position)
   }
 }
 
@@ -75,12 +75,12 @@ DragSource('ImagePreview', imagePreviewSource, (connect, monitor) => ({
 class ImagePreview extends React.Component {
   render () {
     const {
-      url, removeImagePreview, connectDragSource, connectDragPreview, connectDropTarget, position
+      url, removeImage, connectDragSource, connectDragPreview, connectDropTarget, position
     } = this.props
 
     return connectDropTarget(connectDragSource(<div styleName='image-preview'>
       <div style={bgImageStyle(url)} styleName='image'>
-        <Icon name='Ex' styleName='remove-button' onClick={() => removeImagePreview(position)} />
+        <Icon name='Ex' styleName='remove-button' onClick={() => removeImage(position)} />
         {connectDragPreview(<div styleName='drag-preview' />)}
       </div>
     </div>))

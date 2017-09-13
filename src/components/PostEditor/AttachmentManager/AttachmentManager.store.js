@@ -3,59 +3,69 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 
 export const MODULE_NAME = 'AttachmentManager'
-export const LOAD_IMAGE_PREVIEWS = `${MODULE_NAME}/LOAD_IMAGE_PREVIEWS`
-export const SET_IMAGE_PREVIEWS = `${MODULE_NAME}/SET_IMAGE_PREVIEWS`
-export const ADD_IMAGE_PREVIEW = `${MODULE_NAME}/ADD_IMAGE_PREVIEW`
-export const REMOVE_IMAGE_PREVIEW = `${MODULE_NAME}/REMOVE_IMAGE_PREVIEW`
-export const SWITCH_IMAGE_PREVIEWS = `${MODULE_NAME}/SWITCH_IMAGE_PREVIEWS`
+export const LOAD_ATTACHMENTS = `${MODULE_NAME}/LOAD_ATTACHMENTS`
+export const SET_ATTACHMENTS = `${MODULE_NAME}/SET_ATTACHMENTS`
+export const ADD_ATTACHMENT = `${MODULE_NAME}/ADD_ATTACHMENT`
+export const REMOVE_ATTACHMENT = `${MODULE_NAME}/REMOVE_ATTACHMENT`
+export const SWITCH_ATTACHMENTS = `${MODULE_NAME}/SWITCH_ATTACHMENTS`
 
 // action generators
 
-export function setImagePreviews (imagePreviews) {
+export function setAttachments (attachments, type) {
   return {
-    type: SET_IMAGE_PREVIEWS,
-    payload: imagePreviews
+    type: SET_ATTACHMENTS,
+    payload: {
+      attachments,
+      type
+    }
   }
 }
 
-export function addImagePreview (url) {
+export function addAttachment (url, type) {
   return {
-    type: ADD_IMAGE_PREVIEW,
-    payload: url
+    type: ADD_ATTACHMENT,
+    payload: {
+      url,
+      type
+    }
   }
 }
 
-export function removeImagePreview (position) {
+export function removeAttachment (position, type) {
   return {
-    type: REMOVE_IMAGE_PREVIEW,
-    payload: position
+    type: REMOVE_ATTACHMENT,
+    payload: {
+      position,
+      type
+    }
   }
 }
 
-export function switchImagePreviews (position1, position2) {
+export function switchAttachments (position1, position2, type) {
   return {
-    type: SWITCH_IMAGE_PREVIEWS,
+    type: SWITCH_ATTACHMENTS,
     payload: {
       position1,
-      position2
+      position2,
+      type
     }
   }
 }
 
 // Selectors
 
-export function getImagePreviews (state) {
-  return state[MODULE_NAME].imagePreviews
+export function getAttachments (state, { type }) {
+  return state[MODULE_NAME][type]
 }
 
-export const getImages = ormCreateSelector(
+export const makeAttachmentSelector = attachmentType => ormCreateSelector(
   orm,
   get('orm'),
   (state, { postId }) => postId,
   ({ Attachment }, postId) =>
     Attachment.all()
     .filter(({ type, post }) =>
-      type === 'image' && post === postId)
+      type === attachmentType && post === postId)
     .orderBy('position')
     .toModelArray()
   )
@@ -63,7 +73,8 @@ export const getImages = ormCreateSelector(
 // Reducer
 
 export const defaultState = {
-  imagePreviews: []
+  image: [],
+  file: []
 }
 
 export default function reducer (state = defaultState, action) {
@@ -71,20 +82,20 @@ export default function reducer (state = defaultState, action) {
   if (error) return state
 
   switch (type) {
-    case SET_IMAGE_PREVIEWS:
-      return {...state, imagePreviews: payload}
-    case ADD_IMAGE_PREVIEW:
-      return {...state, imagePreviews: state.imagePreviews.concat([payload])}
-    case REMOVE_IMAGE_PREVIEW:
-      return {...state, imagePreviews: pullAt(payload, state.imagePreviews)}
-    case SWITCH_IMAGE_PREVIEWS:
+    case SET_ATTACHMENTS:
+      return {...state, [payload.type]: payload.attachments}
+    case ADD_ATTACHMENT:
+      return {...state, [payload.type]: state[payload.type].concat([payload.url])}
+    case REMOVE_ATTACHMENT:
+      return {...state, [payload.type]: pullAt(payload.position, state[payload.type])}
+    case SWITCH_ATTACHMENTS:
       const { position1, position2 } = payload
-      const imagePreviews = clone(state.imagePreviews)
-      imagePreviews[position1] = state.imagePreviews[position2]
-      imagePreviews[position2] = state.imagePreviews[position1]
+      const attachments = clone(state[payload.type])
+      attachments[position1] = state[payload.type][position2]
+      attachments[position2] = state[payload.type][position1]
       return {
         ...state,
-        imagePreviews
+        [payload.type]: attachments
       }
     default:
       return state
