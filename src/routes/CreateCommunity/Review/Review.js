@@ -79,7 +79,7 @@ export default class Review extends Component {
       } else {
         this.props.clearNameFromCreateCommunity()
         this.props.clearDomainFromCreateCommunity()
-        this.props.goToCommunity(`/c/${communityDomain}`)
+        this.props.goToCommunity(`${communityDomain}`)
       }
     })
   }

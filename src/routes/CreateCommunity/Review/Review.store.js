@@ -1,3 +1,5 @@
+import { uniqueId } from 'lodash/fp'
+
 export const MODULE_NAME = `Review`
 export const CREATE_COMMUNITY = `${MODULE_NAME}/CREATE_COMMUNITY`
 
@@ -7,7 +9,9 @@ export function createCommunity (name, slug) {
     graphql: {
       query: `mutation ($data: CommunityInput) {
         createCommunity(data: $data) {
+          id
           community {
+            id
             name
             slug
           }
@@ -22,8 +26,11 @@ export function createCommunity (name, slug) {
       }
     },
     meta: {
-      optimistic: false,
-      extractModel: 'Membership'
+      optimistic: true,
+      extractModel: 'Membership',
+      tempId: uniqueId(`membership${slug}_`),
+      slug,
+      name
     }
   }
 }
