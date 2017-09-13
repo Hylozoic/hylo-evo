@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a single image 1`] = `
+<div
+  style={
+    Object {
+      "backgroundImage": "url(foo)",
+    }
+  }
+>
+  <div>
+    <div
+      data-styleName="others"
+    >
+      <div
+        data-styleName="others-inner"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders multiple images 1`] = `
+<div
+  style={
+    Object {
+      "backgroundImage": "url(foo)",
+    }
+  }
+>
+  <div>
+    <div
+      data-styleName="others"
+    >
+      <div
+        data-styleName="others-inner"
+      >
+        <a
+          data-styleName="other"
+          href="bar"
+          target="_blank"
+        >
+          <div
+            style={
+              Object {
+                "backgroundImage": "url(bar)",
+              }
+            }
+          />
+        </a>
+        <a
+          data-styleName="other"
+          href="baz"
+          target="_blank"
+        >
+          <div
+            style={
+              Object {
+                "backgroundImage": "url(baz)",
+              }
+            }
+          />
+        </a>
+        <a
+          data-styleName="other"
+          href="bonk"
+          target="_blank"
+        >
+          <div
+            style={
+              Object {
+                "backgroundImage": "url(bonk)",
+              }
+            }
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
