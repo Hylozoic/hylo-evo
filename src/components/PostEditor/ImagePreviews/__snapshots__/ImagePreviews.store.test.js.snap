@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ImagePreviews store reducer when ImagePreviews/ADD_IMAGE_PREVIEW adds an image preview 1`] = `
+Object {
+  "imagePreviews": Array [
+    "bar.jog",
+  ],
+}
+`;
+
+exports[`ImagePreviews store reducer when ImagePreviews/REMOVE_IMAGE_PREVIEW removes an image preview 1`] = `
+Object {
+  "imagePreviews": Array [
+    "a.png",
+    "c.png",
+  ],
+}
+`;
+
+exports[`ImagePreviews store reducer when ImagePreviews/SET_IMAGE_PREVIEWS sets image previews 1`] = `
+Object {
+  "imagePreviews": Array [
+    "foo.png",
+    "bar.jog",
+  ],
+}
+`;
+
+exports[`ImagePreviews store reducer when ImagePreviews/SWITCH_IMAGE_PREVIEWS switches two image previews 1`] = `
+Object {
+  "imagePreviews": Array [
+    "a.png",
+    "c.png",
+    "b.png",
+  ],
+}
+`;

@@ -32,78 +32,6 @@ exports[`ActionsBar matches last snapshot 1`] = `
 </div>
 `;
 
-exports[`ImagePreview matches last snapshot 1`] = `
-<div
-  data-styleName="image-preview"
->
-  <div
-    data-styleName="image"
-    style={
-      Object {
-        "backgroundImage": "url(foo.zng)",
-      }
-    }
-  >
-    <Icon
-      data-styleName="remove-button"
-      name="Ex"
-      onClick={[Function]}
-    />
-    <div
-      data-styleName="drag-preview"
-    />
-  </div>
-</div>
-`;
-
-exports[`ImagePreviews matches last snapshot 1`] = `
-<div
-  data-styleName="image-preview-section"
->
-  <div
-    data-styleName="section-label"
-  >
-    Images
-  </div>
-  <div
-    data-styleName="image-previews"
-  >
-    <DropTarget(DragSource(ImagePreview))
-      position={0}
-      removeImage={[Function]}
-      switchImages={[Function]}
-      url="foo.png"
-    />
-    <DropTarget(DragSource(ImagePreview))
-      position={1}
-      removeImage={[Function]}
-      switchImages={[Function]}
-      url="bar.jpg"
-    />
-    <div
-      data-styleName="add-image"
-    >
-      <Loading />
-    </div>
-    <Connect(ChangeImageButton)
-      update={[Function]}
-      uploadSettings={
-        Object {
-          "id": 1,
-          "type": "post",
-        }
-      }
-    >
-      <div
-        data-styleName="add-image"
-      >
-        +
-      </div>
-    </Connect(ChangeImageButton)>
-  </div>
-</div>
-`;
-
 exports[`PostEditor editing a post form in editing mode 1`] = `
 <div
   data-styleName="wrapper"
@@ -193,10 +121,8 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       />
     </div>
   </div>
-  <DragDropContext(ImagePreviews)
-    id="test"
-    setValid={[Function]}
-    showImagePreviews={true}
+  <Connect(DragDropContext(ImagePreviews))
+    postId="test"
   />
   <div
     data-styleName="footer"
@@ -333,10 +259,8 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       />
     </div>
   </div>
-  <DragDropContext(ImagePreviews)
-    id="test"
-    setValid={[Function]}
-    showImagePreviews={true}
+  <Connect(DragDropContext(ImagePreviews))
+    postId="test"
   />
   <div
     data-styleName="footer"
@@ -463,9 +387,8 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
   </div>
-  <DragDropContext(ImagePreviews)
-    id="new"
-    setValid={[Function]}
+  <Connect(DragDropContext(ImagePreviews))
+    postId="new"
   />
   <div
     data-styleName="footer"
@@ -579,9 +502,8 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
   </div>
-  <DragDropContext(ImagePreviews)
-    id="new"
-    setValid={[Function]}
+  <Connect(DragDropContext(ImagePreviews))
+    postId="new"
   />
   <div
     data-styleName="footer"
@@ -695,9 +617,8 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
   </div>
-  <DragDropContext(ImagePreviews)
-    id="new"
-    setValid={[Function]}
+  <Connect(DragDropContext(ImagePreviews))
+    postId="new"
   />
   <div
     data-styleName="footer"
@@ -812,9 +733,8 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       />
     </div>
   </div>
-  <DragDropContext(ImagePreviews)
-    id="new"
-    setValid={[Function]}
+  <Connect(DragDropContext(ImagePreviews))
+    postId="new"
   />
   <div
     data-styleName="footer"
@@ -929,9 +849,8 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       />
     </div>
   </div>
-  <DragDropContext(ImagePreviews)
-    id="new"
-    setValid={[Function]}
+  <Connect(DragDropContext(ImagePreviews))
+    postId="new"
   />
   <div
     data-styleName="footer"
@@ -1046,9 +965,8 @@ exports[`PostEditor renders with min props 1`] = `
       />
     </div>
   </div>
-  <DragDropContext(ImagePreviews)
-    id="new"
-    setValid={[Function]}
+  <Connect(DragDropContext(ImagePreviews))
+    postId="new"
   />
   <div
     data-styleName="footer"

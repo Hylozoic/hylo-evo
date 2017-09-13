@@ -2,7 +2,7 @@
 import React from 'react'
 import { merge } from 'lodash'
 import { shallow } from 'enzyme'
-import PostEditor, { ActionsBar, ImagePreviews, ImagePreview } from './PostEditor'
+import PostEditor, { ActionsBar } from './PostEditor'
 
 describe('PostEditor', () => {
   it('renders with min props', () => {
@@ -281,37 +281,6 @@ describe('PostEditor', () => {
       expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
       expect(props.clearLinkPreview.mock.calls).toHaveLength(0)
     })
-  })
-})
-
-describe('ImagePreviews', () => {
-  it('matches last snapshot', () => {
-    const props = {
-      id: 1,
-      addImage: () => {},
-      removeImage: () => {},
-      switchImages: () => {},
-      showImagePreviews: true,
-      uploadImagePending: true,
-      imagePreviews: ['foo.png', 'bar.jpg']
-    }
-    const wrapper = shallow(<ImagePreviews.DecoratedComponent {...props} />)
-    expect(wrapper).toMatchSnapshot()
-  })
-})
-
-describe('ImagePreview', () => {
-  it('matches last snapshot', () => {
-    const props = {
-      url: 'foo.zng',
-      removeImage: () => {},
-      position: 1,
-      connectDragSource: i => i,
-      connectDragPreview: i => i,
-      connectDropTarget: i => i
-    }
-    const wrapper = shallow(<ImagePreview.DecoratedComponent {...props} />)
-    expect(wrapper).toMatchSnapshot()
   })
 })
 

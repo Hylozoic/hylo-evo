@@ -1,15 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PostEditor store reducer when PostEditor/ADD_IMAGE_PREVIEW adds an image preview 1`] = `
-Object {
-  "imagePreviews": Array [
-    "bar.jog",
-  ],
-  "linkPreviewId": null,
-  "linkPreviewStatus": null,
-}
-`;
-
 exports[`PostEditor store reducer when PostEditor/CLEAR_LINK_PREVIEW linkPreviewId is cleared and status set to "cleared" 1`] = `
 Object {
   "imagePreviews": Array [],
@@ -34,84 +24,10 @@ Object {
 }
 `;
 
-exports[`PostEditor store reducer when PostEditor/REMOVE_IMAGE_PREVIEW removes an image preview 1`] = `
-Object {
-  "imagePreviews": Array [
-    "a.png",
-    "c.png",
-  ],
-  "linkPreviewId": null,
-  "linkPreviewStatus": null,
-}
-`;
-
 exports[`PostEditor store reducer when PostEditor/REMOVE_LINK_PREVIEW linkPreviewId is cleared and status set to "removed" 1`] = `
 Object {
   "imagePreviews": Array [],
   "linkPreviewId": null,
   "linkPreviewStatus": "removed",
-}
-`;
-
-exports[`PostEditor store reducer when PostEditor/SET_IMAGE_PREVIEWS sets image previews 1`] = `
-Object {
-  "imagePreviews": Array [
-    "foo.png",
-    "bar.jog",
-  ],
-  "linkPreviewId": null,
-  "linkPreviewStatus": null,
-}
-`;
-
-exports[`PostEditor store reducer when PostEditor/SWITCH_IMAGE_PREVIEWS switches two image previews 1`] = `
-Object {
-  "imagePreviews": Array [
-    "a.png",
-    "c.png",
-    "b.png",
-  ],
-  "linkPreviewId": null,
-  "linkPreviewStatus": null,
-}
-`;
-
-exports[`PostEditor store reducer when undefined adds an image preview 1`] = `
-Object {
-  "imagePreviews": Array [],
-  "linkPreviewId": null,
-  "linkPreviewStatus": null,
-}
-`;
-
-exports[`PostEditor store reducer when undefined removes an image preview 1`] = `
-Object {
-  "imagePreviews": Array [
-    "a.png",
-    "b.png",
-    "c.png",
-  ],
-  "linkPreviewId": null,
-  "linkPreviewStatus": null,
-}
-`;
-
-exports[`PostEditor store reducer when undefined sets image previews 1`] = `
-Object {
-  "imagePreviews": Array [],
-  "linkPreviewId": null,
-  "linkPreviewStatus": null,
-}
-`;
-
-exports[`PostEditor store reducer when undefined switches two image previews 1`] = `
-Object {
-  "imagePreviews": Array [
-    "a.png",
-    "b.png",
-    "c.png",
-  ],
-  "linkPreviewId": null,
-  "linkPreviewStatus": null,
 }
 `;
