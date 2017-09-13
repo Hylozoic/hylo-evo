@@ -3,7 +3,6 @@ import ormReducer from './ormReducer'
 import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
 import {
   CREATE_MESSAGE,
-  EXTRACT_MODEL,
   VOTE_ON_POST_PENDING,
   MARK_ACTIVITY_READ_PENDING,
   MARK_ALL_ACTIVITIES_READ_PENDING,
@@ -32,27 +31,31 @@ import {
 } from 'components/PostEditor/PostEditor.store'
 import deep from 'deep-diff'
 
-it('responds to EXTRACT_MODEL', () => {
+it('responds to an action with meta.extractModel', () => {
   const state = orm.getEmptyState()
 
   const action = {
-    type: EXTRACT_MODEL,
+    type: 'whatever',
     payload: {
-      id: '1',
-      title: 'Cat on the loose',
-      communities: [
-        {
+      data: {
+        post: {
           id: '1',
-          name: 'Neighborhood'
+          title: 'Cat on the loose',
+          communities: [
+            {
+              id: '1',
+              name: 'Neighborhood'
+            }
+          ],
+          creator: {
+            id: '2',
+            name: 'Greg'
+          }
         }
-      ],
-      creator: {
-        id: '2',
-        name: 'Greg'
       }
     },
     meta: {
-      modelName: 'Post'
+      extractModel: 'Post'
     }
   }
 
