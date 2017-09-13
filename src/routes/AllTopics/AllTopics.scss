@@ -61,10 +61,14 @@
   &:hover, &:active, &:visited, &:link {
     text-decoration: none;
   }
+  flex-grow: 1;
+  overflow: hidden;
 }
 
 .topic-name {
   composes: hdr-headline from 'css/typography.scss';
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .topic-stats {
@@ -75,4 +79,5 @@
 .topic-subscribe {
   composes: text-button from 'css/typography.scss';
   font-size: 16px;
+  margin-left: 15px;
 }
