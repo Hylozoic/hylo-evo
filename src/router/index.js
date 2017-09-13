@@ -4,8 +4,9 @@ import { Switch, Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 import PrimaryLayout from 'routes/PrimaryLayout'
 import AuthRoute from './AuthRoute'
-import NonAuthLayout from 'routes/NonAuthLayout'
 import LoginCheck from 'routes/NonAuthLayout/LoginCheck'
+import JoinCommunity from 'routes/JoinCommunity'
+import NonAuthLayout from 'routes/NonAuthLayout'
 import UIKit from 'routes/UIKit'
 import '../css/global/index.scss'
 
@@ -28,6 +29,7 @@ function rootRoutes () {
   return <LoginCheck>
     <Switch>
       <Route path='/ui-kit' component={UIKit} />
+      <Route path='/h/use-invitation' component={JoinCommunity} />
       <AuthRoute path='/login' component={NonAuthLayout} />
       <AuthRoute path='/signup' exact component={NonAuthLayout} />
       <AuthRoute path='/reset-password' exact component={NonAuthLayout} />

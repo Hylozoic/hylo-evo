@@ -110,7 +110,6 @@ export default class PrimaryLayout extends Component {
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
-            <Route path='/h/use-invitation' component={JoinCommunity} />
             {signupRoutes.map(({ path, child }) =>
               <Route
                 path={path}
