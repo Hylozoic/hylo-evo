@@ -27,7 +27,8 @@ describe('Domain', () => {
   })
 
   it('should call goToNextStep from mapDispatchToProps', () => {
-    expect(dispatchProps.goToNextStep()).toMatchSnapshot()
+    const communityDomain = 'communityDomain'
+    expect(dispatchProps.goToCommunity(communityDomain)).toMatchSnapshot()
   })
 
   it('should call goToPrivacyStep from mapDispatchToProps', () => {

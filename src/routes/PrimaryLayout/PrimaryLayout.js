@@ -94,7 +94,11 @@ export default class PrimaryLayout extends Component {
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
-          <RedirectToCreateCommunityFlow hasMemberships={hasMemberships} pathname={this.props.location.pathname} />
+          <RedirectToCreateCommunityFlow
+            hasMemberships={hasMemberships}
+            pathname={this.props.location.pathname}
+            currentUser={currentUser}
+          />
           <RedirectToCommunity path='/' currentUser={currentUser} />
           <RedirectToCommunity path='/app' currentUser={currentUser} />
           <Switch>
@@ -214,8 +218,9 @@ export function RedirectToSignupFlow ({ currentUser, pathname }) {
   return <Redirect to={destination} />
 }
 
-export function RedirectToCreateCommunityFlow ({ hasMemberships, pathname }) {
+export function RedirectToCreateCommunityFlow ({ hasMemberships, pathname, currentUser }) {
   // return null
+  if (!currentUser || !currentUser.settings || currentUser.settings.signupInProgress) return null
   if (hasMemberships) return null
   if (isCreateCommunityPath(pathname) || isSignupPath(pathname)) return null
   const destination = '/create-community/name'

@@ -22,7 +22,7 @@ export function createCommunity (name, slug) {
       }
     },
     meta: {
-      optimistic: true
+      optimistic: false
     }
   }
 }
