@@ -21,7 +21,7 @@ export default class Domain extends Component {
       this.props.fetchCommunityExists(removeUrlFromDomain(communityDomain))
     }
     this.setState({
-      communityDomain: formatDomainWithUrl(communityDomain)
+      communityDomain: communityDomain
     })
   }
 

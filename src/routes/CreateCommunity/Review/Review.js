@@ -45,7 +45,6 @@ export default class Review extends Component {
       if (removeUrlFromDomain(value) !== '') {
         this.props.fetchCommunityExists(removeUrlFromDomain(value))
       }
-      value = formatDomainWithUrl(value)
     }
     this.setState({
       edits: {
