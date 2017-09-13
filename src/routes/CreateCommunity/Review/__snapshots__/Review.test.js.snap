@@ -75,7 +75,7 @@ exports[`Review renders correctly 1`] = `
       />
     </div>
   </div>
-  <SignupModalFooter
+  <ModalFooter
     continueText="Finish Up"
     showPrevious={false}
     submit={[Function]}

@@ -7,6 +7,8 @@ exports[`Name renders correctly 1`] = `
   <ModalSidebar
     body="All good things start somewhere! Let's kick things off with a catchy name for your community."
     header="Great, let's get started"
+    imageDialogOne="Hi, I'm Hylo the Axolotl!"
+    imageDialogTwo="It's great to meet you!"
     imageUrl="/happy-axolotl.png"
     onClick={[Function]}
     theme={
@@ -61,7 +63,7 @@ exports[`Name renders correctly 1`] = `
       />
     </div>
   </div>
-  <SignupModalFooter
+  <ModalFooter
     continueText="Continue"
     showPrevious={false}
     submit={[Function]}

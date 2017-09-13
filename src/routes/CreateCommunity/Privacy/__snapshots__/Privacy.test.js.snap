@@ -81,7 +81,7 @@ exports[`Privacy renders correctly 1`] = `
       />
     </div>
   </div>
-  <SignupModalFooter
+  <ModalFooter
     continueText="Continue"
     previous={[Function]}
     submit={[Function]}

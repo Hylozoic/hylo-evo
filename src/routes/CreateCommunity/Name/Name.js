@@ -50,6 +50,8 @@ export default class Name extends Component {
   render () {
     return <div styleName='flex-wrapper'>
       <ModalSidebar
+        imageDialogOne={"Hi, I'm Hylo the Axolotl!"}
+        imageDialogTwo={"It's great to meet you!"}
         imageUrl={happyAxolotl}
         onClick={this.props.goHome}
         theme={sidebarTheme}
