@@ -7,7 +7,7 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
 import { pluralize, tagUrl } from 'util/index'
-import { find, debounce } from 'lodash/fp'
+import { find } from 'lodash/fp'
 import ScrollListener from 'components/ScrollListener'
 
 const sortOptions = [
@@ -49,15 +49,13 @@ export default class AllTopics extends Component {
     this.setState({totalTopicsCached: this.props.totalTopics})
   }
 
-  debouncedFetchTopics = debounce(250, this.props.fetchCommunityTopics)
-
   componentDidUpdate (prevProps) {
     if (!this.state.totalTopicsCached && !prevProps.totalTopics && this.props.totalTopics) {
       this.setState({totalTopicsCached: this.props.totalTopics})
     }
     if (prevProps.selectedSort !== this.props.selectedSort ||
       prevProps.search !== this.props.search) {
-      this.debouncedFetchTopics()
+      this.props.fetchCommunityTopics()
     }
   }
 
@@ -70,6 +68,7 @@ export default class AllTopics extends Component {
       selectedSort,
       setSort,
       toggleSubscribe,
+      fetchIsPending,
       fetchMoreCommunityTopics
     } = this.props
 
@@ -79,7 +78,7 @@ export default class AllTopics extends Component {
       <div styleName='all-topics'>
         <div styleName='title'>Topics</div>
         <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
-        <SearchBar {...{search, setSearch, selectedSort, setSort}} />
+        <SearchBar {...{search, setSearch, selectedSort, setSort, fetchIsPending}} />
         <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {communityTopics.map(ct =>
             <CommunityTopicListItem key={ct.id} item={ct} slug={slug}
@@ -93,7 +92,7 @@ export default class AllTopics extends Component {
   }
 }
 
-export function SearchBar ({search, setSearch, selectedSort, setSort}) {
+export function SearchBar ({search, setSearch, selectedSort, setSort, fetchIsPending}) {
   var selected = find(o => o.id === selectedSort, sortOptions)
 
   if (!selected) selected = sortOptions[0]
@@ -102,6 +101,8 @@ export function SearchBar ({search, setSearch, selectedSort, setSort}) {
     <TextInput styleName='search-input'
       value={search}
       placeholder='Search topics'
+      loading={fetchIsPending}
+      noClearButton
       onChange={event => setSearch(event.target.value)} />
     <Dropdown styleName='search-order'
       toggleChildren={<span styleName='search-sorter-label'>

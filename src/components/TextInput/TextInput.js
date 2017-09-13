@@ -9,11 +9,12 @@ import { omit } from 'lodash/fp'
 //
 // https://facebook.github.io/react/docs/refs-and-the-dom.html#exposing-dom-refs-to-parent-components
 //
+
 export default function TextInput (props) {
-  const { theme = {}, onChange, value, inputRef, className, noClearButton } = props
+  const { theme = {}, onChange, value, inputRef, className, noClearButton, loading } = props
   // TODO: different styles based on props, e.g. validated, error, etc.
   const onKeyDown = props.onEnter ? onEnter(props.onEnter) : () => {}
-  const otherProps = omit(['onEnter', 'className', 'inputRef', 'theme', 'noClearButton'], props)
+  const otherProps = omit(['onEnter', 'className', 'inputRef', 'theme', 'noClearButton', 'loading'], props)
   const clear = () => onChange && onChange({target: {value: ''}})
 
   return <div styleName='wrapper' className={theme.wrapper || className}>
@@ -21,5 +22,6 @@ export default function TextInput (props) {
       ref={inputRef}
       className={theme.input} />
     {value && !noClearButton && <div styleName='clear' className={theme.clear} onClick={clear}>Clear</div>}
+    {loading && <span styleName='loading' />}
   </div>
 }
