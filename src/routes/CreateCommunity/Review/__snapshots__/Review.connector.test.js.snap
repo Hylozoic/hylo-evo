@@ -2,18 +2,14 @@
 
 exports[`Domain should call clearDomainFromCreateCommunity from mapDispatchToProps 1`] = `
 Object {
-  "payload": Object {
-    "domain": null,
-  },
+  "payload": null,
   "type": "CreateCommunity/ADD_COMMUNITY_DOMAIN",
 }
 `;
 
 exports[`Domain should call clearNameFromCreateCommunity from mapDispatchToProps 1`] = `
 Object {
-  "payload": Object {
-    "name": null,
-  },
+  "payload": null,
   "type": "CreateCommunity/ADD_COMMUNITY_NAME",
 }
 `;

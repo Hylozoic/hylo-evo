@@ -2,27 +2,21 @@
 
 exports[`CreateCommunity store should call addCommunityDomain 1`] = `
 Object {
-  "payload": Object {
-    "domain": "domain",
-  },
+  "payload": "domain",
   "type": "CreateCommunity/ADD_COMMUNITY_DOMAIN",
 }
 `;
 
 exports[`CreateCommunity store should call addCommunityName 1`] = `
 Object {
-  "payload": Object {
-    "name": "name",
-  },
+  "payload": "name",
   "type": "CreateCommunity/ADD_COMMUNITY_NAME",
 }
 `;
 
 exports[`CreateCommunity store should call addCommunityPrivacy 1`] = `
 Object {
-  "payload": Object {
-    "privacy": "privacy",
-  },
+  "payload": "privacy",
   "type": "CreateCommunity/ADD_COMMUNITY_PRIVACY",
 }
 `;

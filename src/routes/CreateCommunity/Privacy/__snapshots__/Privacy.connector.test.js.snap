@@ -2,9 +2,7 @@
 
 exports[`Privacy should call addCommunityPrivacy from mapDispatchToProps 1`] = `
 Object {
-  "payload": Object {
-    "privacy": "privacy",
-  },
+  "payload": "privacy",
   "type": "CreateCommunity/ADD_COMMUNITY_PRIVACY",
 }
 `;

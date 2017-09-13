@@ -2,9 +2,7 @@
 
 exports[`Domain should call addCommunityDomain from mapDispatchToProps 1`] = `
 Object {
-  "payload": Object {
-    "domain": "domain",
-  },
+  "payload": "domain",
   "type": "CreateCommunity/ADD_COMMUNITY_DOMAIN",
 }
 `;

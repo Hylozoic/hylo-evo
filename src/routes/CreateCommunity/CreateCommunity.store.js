@@ -7,13 +7,13 @@ export const FETCH_COMMUNITY_EXISTS = `${MODULE_NAME}/FETCH_COMMUNITY_EXISTS`
 
 export default function reducer (state = {}, action) {
   if (action.type === ADD_COMMUNITY_NAME) {
-    return {...state, name: action.payload.name}
+    return {...state, name: action.payload}
   }
   if (action.type === ADD_COMMUNITY_DOMAIN) {
-    return {...state, domain: action.payload.domain}
+    return {...state, domain: action.payload}
   }
   if (action.type === ADD_COMMUNITY_PRIVACY) {
-    return {...state, privacy: action.payload.privacy}
+    return {...state, privacy: action.payload}
   }
   if (action.type === FETCH_COMMUNITY_EXISTS) {
     return {...state, domainExists: action.payload.data.communityExists.exists}
@@ -24,27 +24,21 @@ export default function reducer (state = {}, action) {
 export function addCommunityName (name) {
   return {
     type: ADD_COMMUNITY_NAME,
-    payload: {
-      name
-    }
+    payload: name
   }
 }
 
 export function addCommunityPrivacy (privacy) {
   return {
     type: ADD_COMMUNITY_PRIVACY,
-    payload: {
-      privacy
-    }
+    payload: privacy
   }
 }
 
 export function addCommunityDomain (domain) {
   return {
     type: ADD_COMMUNITY_DOMAIN,
-    payload: {
-      domain
-    }
+    payload: domain
   }
 }
 
