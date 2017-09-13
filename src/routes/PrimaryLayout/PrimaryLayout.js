@@ -219,7 +219,6 @@ export function RedirectToSignupFlow ({ currentUser, pathname }) {
 }
 
 export function RedirectToCreateCommunityFlow ({ hasMemberships, pathname, currentUser }) {
-  // return null
   if (!currentUser || !currentUser.settings || currentUser.settings.signupInProgress) return null
   if (hasMemberships) return null
   if (isCreateCommunityPath(pathname) || isSignupPath(pathname)) return null

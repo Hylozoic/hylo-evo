@@ -79,7 +79,9 @@ export default class Review extends Component {
       } else {
         this.props.clearNameFromCreateCommunity()
         this.props.clearDomainFromCreateCommunity()
-        this.props.goToCommunity(communityDomain)
+        // FIXME
+        // this.props.goToCommunity(`/c/${communityDomain}`)
+        window.location = `/c/${communityDomain}`
       }
     })
   }
@@ -94,8 +96,6 @@ export default class Review extends Component {
       this.setState({
         error: 'This url is invalid. Try another.'
       })
-      this.submit()
-
     } else if (!slugValidatorRegex.test(this.removeUrlFromDomain(communityDomain))) {
       this.formatDomainWithUrl(communityDomain)
       this.setState({
