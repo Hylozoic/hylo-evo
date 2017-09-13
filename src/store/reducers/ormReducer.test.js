@@ -81,6 +81,21 @@ it('responds to an action with meta.extractModel', () => {
   })
 })
 
+it('ignores an action with meta.extractModel that is a promise', () => {
+  const state = orm.getEmptyState()
+
+  const action = {
+    type: 'FOO',
+    payload: new Promise(() => {}),
+    meta: {
+      extractModel: 'Post'
+    }
+  }
+
+  const newState = ormReducer(state, action)
+  expect(newState).toEqual(state)
+})
+
 describe('on VOTE_ON_POST_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
 
