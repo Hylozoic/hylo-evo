@@ -5,7 +5,7 @@ Object {
   "payload": Object {
     "domain": "domain",
   },
-  "type": "CREATE_COMMUNITY_ADD_COMMUNITY_DOMAIN",
+  "type": "CreateCommunity/ADD_COMMUNITY_DOMAIN",
 }
 `;
 
@@ -23,7 +23,7 @@ Object {
       "slug": "slug",
     },
   },
-  "type": "CREATE_COMMUNITY_FETCH_COMMUNITY_EXISTS",
+  "type": "CreateCommunity/FETCH_COMMUNITY_EXISTS",
 }
 `;
 

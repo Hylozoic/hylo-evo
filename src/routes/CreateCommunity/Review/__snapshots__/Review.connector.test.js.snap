@@ -5,7 +5,7 @@ Object {
   "payload": Object {
     "domain": null,
   },
-  "type": "CREATE_COMMUNITY_ADD_COMMUNITY_DOMAIN",
+  "type": "CreateCommunity/ADD_COMMUNITY_DOMAIN",
 }
 `;
 
@@ -14,7 +14,7 @@ Object {
   "payload": Object {
     "name": null,
   },
-  "type": "CREATE_COMMUNITY_ADD_COMMUNITY_NAME",
+  "type": "CreateCommunity/ADD_COMMUNITY_NAME",
 }
 `;
 
@@ -32,7 +32,7 @@ Object {
       "slug": "slug",
     },
   },
-  "type": "CREATE_COMMUNITY_FETCH_COMMUNITY_EXISTS",
+  "type": "CreateCommunity/FETCH_COMMUNITY_EXISTS",
 }
 `;
 

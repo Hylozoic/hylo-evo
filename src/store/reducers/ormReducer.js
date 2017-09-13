@@ -53,10 +53,12 @@ import {
 import {
   DELETE_COMMENT_PENDING
 } from 'routes/PostDetail/Comments/Comment/Comment.store'
-
+import {
+  CREATE_COMMUNITY
+} from 'routes/CreateCommunity/Review/Review.store'
 import orm from 'store/models'
 import ModelExtractor from './ModelExtractor'
-import { find } from 'lodash/fp'
+import { find, get } from 'lodash/fp'
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
@@ -332,6 +334,10 @@ export default function ormReducer (state = {}, action) {
     case DELETE_COMMENT_PENDING:
       const comment = Comment.withId(meta.id)
       comment.delete()
+      break
+
+    case CREATE_COMMUNITY:
+      console.log('meta', meta)
       break
   }
 

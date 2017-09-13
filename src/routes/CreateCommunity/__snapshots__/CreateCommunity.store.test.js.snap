@@ -5,7 +5,7 @@ Object {
   "payload": Object {
     "domain": "domain",
   },
-  "type": "CREATE_COMMUNITY_ADD_COMMUNITY_DOMAIN",
+  "type": "CreateCommunity/ADD_COMMUNITY_DOMAIN",
 }
 `;
 
@@ -14,7 +14,7 @@ Object {
   "payload": Object {
     "name": "name",
   },
-  "type": "CREATE_COMMUNITY_ADD_COMMUNITY_NAME",
+  "type": "CreateCommunity/ADD_COMMUNITY_NAME",
 }
 `;
 
@@ -23,7 +23,7 @@ Object {
   "payload": Object {
     "privacy": "privacy",
   },
-  "type": "CREATE_COMMUNITY_ADD_COMMUNITY_PRIVACY",
+  "type": "CreateCommunity/ADD_COMMUNITY_PRIVACY",
 }
 `;
 
@@ -41,6 +41,6 @@ Object {
       "slug": "slug",
     },
   },
-  "type": "CREATE_COMMUNITY_FETCH_COMMUNITY_EXISTS",
+  "type": "CreateCommunity/FETCH_COMMUNITY_EXISTS",
 }
 `;

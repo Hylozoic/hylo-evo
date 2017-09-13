@@ -79,9 +79,7 @@ export default class Review extends Component {
       } else {
         this.props.clearNameFromCreateCommunity()
         this.props.clearDomainFromCreateCommunity()
-        // FIXME
-        // this.props.goToCommunity(`/c/${communityDomain}`)
-        window.location = `/c/${communityDomain}`
+        this.props.goToCommunity(`/c/${communityDomain}`)
       }
     })
   }

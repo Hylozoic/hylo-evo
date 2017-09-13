@@ -1,5 +1,5 @@
-export const MODULE_NAME = `CREATE_COMMUNITY`
-export const CREATE_COMMUNITY = `${MODULE_NAME}_CREATE_COMMUNITY`
+export const MODULE_NAME = `Review`
+export const CREATE_COMMUNITY = `${MODULE_NAME}/CREATE_COMMUNITY`
 
 export function createCommunity (name, slug) {
   return {
@@ -22,7 +22,8 @@ export function createCommunity (name, slug) {
       }
     },
     meta: {
-      optimistic: false
+      optimistic: false,
+      extractModel: 'Membership'
     }
   }
 }
