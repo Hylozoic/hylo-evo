@@ -73,7 +73,9 @@ export default class Review extends Component {
     )
     .then(({ error }) => {
       if (error) {
-        console.log('error', error)
+        this.setState({
+          error: 'There was an error, please try again.'
+        })
       } else {
         this.props.clearNameFromCreateCommunity()
         this.props.clearDomainFromCreateCommunity()
@@ -92,6 +94,8 @@ export default class Review extends Component {
       this.setState({
         error: 'This url is invalid. Try another.'
       })
+      this.submit()
+
     } else if (!slugValidatorRegex.test(this.removeUrlFromDomain(communityDomain))) {
       this.formatDomainWithUrl(communityDomain)
       this.setState({
