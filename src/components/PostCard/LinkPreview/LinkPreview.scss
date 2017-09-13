@@ -13,7 +13,7 @@ $preview-height: 80px;
   padding-top: $space-2x;
   padding-right: $space-3x;
 
-  a {
+  a, a:hover {
     text-decoration: none;
   }
 }

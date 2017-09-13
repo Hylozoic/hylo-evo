@@ -3,9 +3,7 @@ import { decode } from 'ent'
 import { pick } from 'lodash/fp'
 import Highlight from 'components/Highlight'
 import LinkPreview from '../LinkPreview'
-import {
-  sanitize, present, textLength, truncate, appendInP
-} from 'hylo-utils/text'
+import { sanitize, present, textLength, truncate } from 'hylo-utils/text'
 import './PostBody.scss'
 
 const maxDetailsLength = 144
@@ -21,21 +19,17 @@ export default function PostBody ({
   className,
   highlightProps
 }) {
-  const decodedTitle = decode(title)
-  let presentedDetails = present(sanitize(details), {slug})
-  const shouldTruncate = !expanded &&
-    textLength(presentedDetails) > maxDetailsLength
-  if (shouldTruncate) {
-    presentedDetails = truncate(presentedDetails, maxDetailsLength)
+  title = decode(title)
+  details = present(sanitize(details), {slug})
+  if (!expanded && textLength(details) > maxDetailsLength) {
+    details = truncate(details, maxDetailsLength)
   }
-  if (presentedDetails) presentedDetails = appendInP(presentedDetails, '&nbsp;')
 
   return <Highlight {...highlightProps}>
     <div styleName='body' className={className}>
-      <div styleName='title' className='hdr-headline'>{decodedTitle}</div>
-      {presentedDetails &&
-        <div styleName='description'
-          dangerouslySetInnerHTML={{__html: presentedDetails}} />}
+      <div styleName='title' className='hdr-headline'>{title}</div>
+      {details &&
+        <div styleName='details' dangerouslySetInnerHTML={{__html: details}} />}
       {linkPreview &&
         <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />}
     </div>
