@@ -1,6 +1,7 @@
 import orm from 'store/models/index'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { includes, mapKeys } from 'lodash'
+import { get } from 'lodash/fp'
 import { fromJS } from 'immutable'
 import {
   MODULE_NAME,
@@ -41,18 +42,16 @@ export function clearMentions (searchText) {
 
 export function findTopics (topicsSearchTerm) {
   const collectTopics = results =>
-    results.community.communityTopics.items.map(item => item.topic)
+    results.communityTopics.items.map(get('topic'))
   return {
     type: FIND_TOPICS,
     graphql: {
       query: `query ($topicsSearchTerm: String) {
-        community() {
-          communityTopics(autocomplete: $topicsSearchTerm, first: 1) {
-            items {
-              topic {
-                id
-                name
-              }
+        communityTopics(autocomplete: $topicsSearchTerm, first: 8) {
+          items {
+            topic {
+              id
+              name
             }
           }
         }

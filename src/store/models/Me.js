@@ -26,7 +26,13 @@ Me.modelName = 'Me'
 Me.fields = {
   name: attr(),
   posts: many('Post'),
+
+  // strictly speaking, a membership belongs to a single person, so it's not a
+  // many-to-many relationship. but putting this here ensures that when we have
+  // a query on the current user that contains memberships, the data will be
+  // properly extracted and stored for the user.
   memberships: many('Membership'),
+
   messageThreads: many('MessageThread'),
   notifications: many('Notification'),
   skills: many('Skill')

@@ -12,5 +12,6 @@ Membership.modelName = 'Membership'
 Membership.fields = {
   id: attr(),
   community: fk('Community', 'memberships'),
+  person: fk('Person', 'memberships'),
   newPostCount: attr()
 }

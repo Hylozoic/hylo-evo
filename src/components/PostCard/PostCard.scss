@@ -1,5 +1,3 @@
-// PostCard
-
 .card {
   padding-top: 15px;
   border: 1px solid $color-cape-cod-10;
@@ -17,12 +15,6 @@
   box-shadow: 0px 2px 6px 0px $color-black-10;
 }
 
-.cardPadding {
-  padding: 0px $space-4x;
-}
-
-// PostImage
-
 .image {
   background-position: center;
   background-size: cover;
@@ -30,73 +22,4 @@
   width: 100%;
   margin-bottom: 20px;
   margin: 0 auto 20px auto;
-}
-
-// PostBody
-
-:global {
-  .hashtag, .mention {
-    color: $color-caribbean-green;
-    &:hover {
-      text-decoration: none;
-      color: $color-gossamer;
-    }
-  }
-}
-
-.body {
-  margin-bottom: 36px;
-}
-
-.title {
-  composes: cardPadding;
-  margin-bottom: 12px;
-}
-
-.description {
-  composes: cardPadding;
-  // TODO: Extract typography? This one is exactly half way between
-  // BDY-LT-LG and BDY-LT-SM
-  @include font-regular;
-  color: $color-rhino-60;
-  font-size: 16px;
-  line-height: 24px;
-  margin-bottom: 20px;
-}
-
-//LinkPreview
-
-$preview-height: 80px;
-
-.linkPreview {
-  height: $preview-height + 2;
-  background-color: $color-athens-gray;
-  border: 1px solid $color-athens-gray-dark;
-  border-radius: 4px;
-  padding-top: $space-2x;
-  padding-right: $space-3x;
-}
-
-.previewImage {
-  @include image($preview-height);
-  margin-top: -$space-2x;
-  margin-right: 15px;
-  float: left;
-}
-
-.previewText {
-  display: inline;
-  vertical-align: top;
-}
-
-.previewTitle {
-  composes: bdy-drk-sm from 'css/typography.scss';
-  color: $color-rhino-80;
-}
-
-.previewDomain {
-  // TODO: Extract typography? Very close to BDY-DRK-SM
-  @include font-regular;
-  color: $color-dove-gray-50;
-  font-size: 12px;
 }

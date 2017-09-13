@@ -4,9 +4,8 @@ import './component.scss'
 
 export default function Icon ({ name, className, green, children, onClick }) {
   const iconClassName = `icon-${name}`
-  return <span styleName={cx('icon', {green})}
-    className={cx(iconClassName, className)}
-    onClick={onClick}>
+  return <span styleName={cx('icon', {green})} onClick={onClick}
+    className={cx(iconClassName, className)}>
     {children}
   </span>
 }

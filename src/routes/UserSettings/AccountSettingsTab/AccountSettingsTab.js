@@ -107,7 +107,7 @@ export default class AccountSettingsTab extends Component {
           uploadSettings={{type: 'userAvatar', id: currentUser.id}}
           styleName='change-avatar-button' />
       </div>
-      <SettingsControl label='Tagline' onChange={updateSetting('tagline')} value={tagline} />
+      <SettingsControl label='Tagline' onChange={updateSetting('tagline')} value={tagline} maxLength={60} />
       <SettingsControl label='About Me' onChange={updateSetting('bio')} value={bio} type='textarea' />
       <SettingsControl label='Location' onChange={updateSetting('location')} value={location} />
       <SettingsControl label='Email' onChange={updateSetting('email')} value={email} />

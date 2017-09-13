@@ -112,7 +112,10 @@ export default class Pillbox extends Component {
       </div>
       }
       <div styleName='styles.pill-container'>
-        {editable && <span styleName='styles.add-btn' onClick={addOnClick}>{addLabel}</span>}
+        {editable &&
+          <span styleName='styles.add-btn' onClick={addOnClick}>
+            {addLabel}
+          </span>}
         <ReactCSSTransitionGroup
           transitionName={{
             enter: styles['enter'],
@@ -122,10 +125,19 @@ export default class Pillbox extends Component {
           }}
           transitionEnterTimeout={400}
           transitionLeaveTimeout={300}>
-          {pills.map(pill => <Pill key={pill.id} {...pill} editable={editable} onRemove={handleDelete} />)}
+          {pills.map(pill =>
+            <Pill key={pill.id}
+              {...pill}
+              editable={editable}
+              onRemove={handleDelete} />)}
         </ReactCSSTransitionGroup>
       </div>
-      <ReactTooltip place='top' type='dark' id='pill-remove' effect='solid' disable={!editable} delayShow={500} />
+      <ReactTooltip place='top'
+        type='dark'
+        id='pill-remove'
+        effect='solid'
+        disable={!editable}
+        delayShow={500} />
     </div>
   }
 }
@@ -136,20 +148,16 @@ export default class Pillbox extends Component {
  * @param onRemove called when removing a pill.  Function is passed the ID and LABEL
  * @param className a custom classname to apply
  * @param editable allow removing of pills
- * @param small applies the small class
  */
 export class Pill extends Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      removing: false
-    }
+    this.state = {removing: false}
   }
 
   render () {
-    const {id, label, onRemove, className, small, editable} = this.props
-
+    const { id, label, onRemove, className, editable } = this.props
     const { removing } = this.state
 
     const onClick = () => {
@@ -166,10 +174,13 @@ export class Pill extends Component {
       this.setState({removing: false})
     }
 
-    const pillStyles = cx('styles.pill',
-      {'styles.removable': (editable && onRemove),
-        'styles.removing': (editable && onRemove && removing),
-        small})
+    const pillStyles = cx(
+      'styles.pill',
+      {
+        'styles.removable': editable && onRemove,
+        'styles.removing': editable && onRemove && removing
+      }
+    )
 
     return <div styleName={pillStyles}
       className={className}

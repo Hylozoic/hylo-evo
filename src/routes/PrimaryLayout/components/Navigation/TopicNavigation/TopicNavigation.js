@@ -21,7 +21,7 @@ export default class TopicNavigation extends Component {
 
   render () {
     const {
-      communityTopics, backUrl, communitySlug,
+      communityTopics, goBack, communitySlug,
       clearBadge, clearFeedList, expand, collapsed, location
     } = this.props
 
@@ -38,6 +38,7 @@ export default class TopicNavigation extends Component {
         {communityTopics.map(({ id, topic, newPostCount }) =>
           <li key={topic.name} styleName='s.topic'>
             <NavLink className={badgeHoverStyles.parent}
+              styleName='s.topicLink'
               to={tagUrl(topic.name, communitySlug)}
               onClick={() => {
                 if (id) {
@@ -49,11 +50,9 @@ export default class TopicNavigation extends Component {
               <span styleName='s.name'>#{topic.name}</span>
               {newPostCount > 0 && !currentTopic(topic.name) &&
                 <Badge number={newPostCount} styleName='s.badge' />}
+              {currentTopic(topic.name) &&
+                <Icon name='Ex' styleName='s.closeIcon' onClick={goBack} />}
             </NavLink>
-            {currentTopic(topic.name) &&
-            <Link to={backUrl} styleName='s.topicCloseBtn'>
-              <Icon name='Ex' styleName='s.closeIcon' />
-            </Link>}
           </li>)}
       </ul>
       {communitySlug && <div styleName='s.addTopic'>
