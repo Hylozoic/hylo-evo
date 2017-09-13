@@ -6,6 +6,7 @@ import { DragDropContext, DragSource, DropTarget } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import ChangeImageButton from 'components/ChangeImageButton'
 import './AttachmentManager.scss'
+import path from 'path'
 
 export const uploadSettings = id => ({
   type: 'post',
@@ -14,12 +15,12 @@ export const uploadSettings = id => ({
 
 export default class AttachmentManager extends React.Component {
   componentDidMount () {
-    this.props.loadAttachments()
+    if (this.props.type !== 'file') this.props.loadAttachments() // if is temporary for testing
   }
 
   componentWillReceiveProps (nextProps) {
     if (this.props.postId !== nextProps.postId) {
-      this.props.loadAttachments()
+      if (this.props.type !== 'file') this.props.loadAttachments() // if is temporary for testing
     }
   }
 
@@ -61,33 +62,6 @@ class ImageManager extends React.Component {
   }
 })
 
-export function FileManager ({
-  postId, showAttachments, attachments, uploadImagePending, addAttachment, removeAttachment
-}) {
-  return <div styleName='file-manager'>
-    <div styleName='section-label'>Images</div>
-    <div styleName='file-previews'>
-      {attachments.map((url, i) =>
-        <ImagePreview url={url}
-          removeFile={removeAttachment}
-          position={i}
-          key={i} />)}
-      {uploadImagePending && <div styleName='add-file'><Loading /></div>}
-      <ChangeImageButton update={addAttachment}
-        uploadSettings={uploadSettings(postId)}>
-        <div styleName='add-file'>+</div>
-      </ChangeImageButton>
-    </div>
-  </div>
-}
-
-export function FilePreview ({ url, position, removeAttachment }) {
-  const name = path.basename(url)
-  return <div styleName='file-preview'>
-    
-  </div>
-}
-
 const imagePreviewSource = {
   beginDrag (props) {
     return {
@@ -119,9 +93,39 @@ class ImagePreview extends React.Component {
 
     return connectDropTarget(connectDragSource(<div styleName='image-preview'>
       <div style={bgImageStyle(url)} styleName='image'>
-        <Icon name='Ex' styleName='remove-button' onClick={() => removeImage(position)} />
+        <Icon name='Ex' styleName='remove-image' onClick={() => removeImage(position)} />
         {connectDragPreview(<div styleName='drag-preview' />)}
       </div>
     </div>))
   }
 }))
+
+export function FileManager ({
+  postId, showAttachments, attachments, uploadImagePending, addAttachment, removeAttachment
+}) {
+  return <div styleName='file-manager'>
+    <div styleName='section-label'>Files</div>
+    <div styleName='file-previews'>
+      {attachments.map((url, i) =>
+        <FilePreview url={url}
+          removeFile={removeAttachment}
+          position={i}
+          key={i} />)}
+      {uploadImagePending && <div styleName='add-file'><Loading /></div>}
+      <ChangeImageButton update={addAttachment}
+        uploadSettings={uploadSettings(postId)}>
+        <div styleName='add-file'>+</div>
+      </ChangeImageButton>
+    </div>
+  </div>
+}
+
+export function FilePreview ({ url, position, removeFile }) {
+  const name = path.basename(url)
+  return <div styleName='file-preview'>
+    <Icon name='Document' styleName='icon-document' />
+    <div styleName='file-name'>{name}</div>
+    <div styleName='file-size'>~31.9mb</div>
+    <Icon name='Ex' styleName='remove-file' onClick={() => removeFile(position)} />
+  </div>
+}

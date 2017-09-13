@@ -76,7 +76,7 @@ export const defaultState = {
   image: [],
   file: [
     'http://www.google.com/whatever/doc.pdf',
-    'http://www.hylo.com/whatever/doc.zip'
+    'http://www.hylo.com/whatever/docwithareallylongnameridiculouslongnametoolongreally.zip'
   ]
 }
 

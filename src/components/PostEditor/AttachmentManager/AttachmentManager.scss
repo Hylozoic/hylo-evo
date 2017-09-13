@@ -7,6 +7,17 @@
   border-top: solid 1px $color-ghost-30;
 }
 
+.remove-button {
+  border-radius: 50%;
+  color: white;
+  background-color: $color-rhino;
+  font-size: 12px;
+  padding: 1px;
+  border: 1px solid white;
+  background-clip: padding-box;
+  cursor: pointer;
+}
+
 // ImageManager
 .section-label {
   composes: section-label from '../PostEditor.scss';
@@ -43,18 +54,11 @@
   padding: 8px;
 }
 
-.remove-button {
+.remove-image {
+  composes: remove-button;
   position: absolute;
   top: -7px;
   right: -7px;
-  border-radius: 50%;
-  color: white;
-  background-color: $color-rhino;
-  font-size: 12px;
-  padding: 1px;
-  border: 1px solid white;
-  background-clip: padding-box;
-  cursor: pointer;
 }
 
 .drag-preview {
@@ -83,9 +87,49 @@
 }
 
 .file-preview {
-  
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.icon-file {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.icon-document {
+  composes: icon-file;
+  color: $color-tree-poppy;
+}
+
+.icon-download {
+  composes: icon-file;
+  color: $color-picton-blue;
+}
+
+.file-name {
+  composes: caption-drk-lg from 'css/typography.scss';
+  width: 155px;
+  margin-right: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-size {
+  color: $color-ghost;
+  @include font-regular;
+  font-size: 12px;
+  width: 70px;
+}
+
+.remove-file {
+  composes: remove-button;
 }
 
 .add-file {
-  border: 2px dashed $color-loblolly;
+  composes: add-image;
+  padding: 0;
+  height: 20px;
+  width: 200px;
+  font-size: 12px;
 }
