@@ -12,8 +12,7 @@ export const uploadSettings = id => ({
   id: id || 'new'
 })
 
-const AttachmentManager = DragDropContext(HTML5Backend)(
-class AttachmentManager extends React.Component {
+export default class AttachmentManager extends React.Component {
   componentDidMount () {
     this.props.loadAttachments()
   }
@@ -29,14 +28,29 @@ class AttachmentManager extends React.Component {
   }
 
   render () {
+    if (this.props.type === 'image') {
+      return <ImageManager {...this.props} />
+    } else if (this.props.type === 'file') {
+      return <FileManager {...this.props} />
+    }
+  }
+}
+
+const ImageManager = DragDropContext(HTML5Backend)(
+class ImageManager extends React.Component {
+  render () {
     const { postId, showAttachments, attachments, uploadImagePending, addAttachment, removeAttachment, switchAttachments } = this.props
     if (!showAttachments) return null
 
-    return <div styleName='image-preview-section'>
+    return <div styleName='image-manager'>
       <div styleName='section-label'>Images</div>
       <div styleName='image-previews'>
         {attachments.map((url, i) =>
-          <ImagePreview url={url} removeImage={removeAttachment} switchImages={switchAttachments} key={i} position={i} />)}
+          <ImagePreview url={url}
+            removeImage={removeAttachment}
+            switchImages={switchAttachments}
+            position={i}
+            key={i} />)}
         {uploadImagePending && <div styleName='add-image'><Loading /></div>}
         <ChangeImageButton update={addAttachment}
           uploadSettings={uploadSettings(postId)}>
@@ -47,7 +61,32 @@ class AttachmentManager extends React.Component {
   }
 })
 
-export default AttachmentManager
+export function FileManager ({
+  postId, showAttachments, attachments, uploadImagePending, addAttachment, removeAttachment
+}) {
+  return <div styleName='file-manager'>
+    <div styleName='section-label'>Images</div>
+    <div styleName='file-previews'>
+      {attachments.map((url, i) =>
+        <ImagePreview url={url}
+          removeFile={removeAttachment}
+          position={i}
+          key={i} />)}
+      {uploadImagePending && <div styleName='add-file'><Loading /></div>}
+      <ChangeImageButton update={addAttachment}
+        uploadSettings={uploadSettings(postId)}>
+        <div styleName='add-file'>+</div>
+      </ChangeImageButton>
+    </div>
+  </div>
+}
+
+export function FilePreview ({ url, position, removeAttachment }) {
+  const name = path.basename(url)
+  return <div styleName='file-preview'>
+    
+  </div>
+}
 
 const imagePreviewSource = {
   beginDrag (props) {

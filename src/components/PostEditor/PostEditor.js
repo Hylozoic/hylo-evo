@@ -251,6 +251,7 @@ export default class PostEditor extends React.Component {
         </div>
       </div>
       <AttachmentManager postId={id || 'new'} type='image' />
+      <AttachmentManager postId={id || 'new'} type='file' />
       <div styleName='footer'>
         <div styleName='postIn'>
           <div styleName='postIn-label'>Post in</div>
@@ -289,7 +290,6 @@ export function ActionsBar ({id, addImage, showImages, valid, loading, submitBut
           uploadSettings={uploadSettings(id)}>
           {addImageIcon}
         </ChangeImageButton>}
-
     </div>
     <Button
       onClick={save}

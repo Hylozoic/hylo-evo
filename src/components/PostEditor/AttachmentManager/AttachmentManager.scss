@@ -1,15 +1,19 @@
-// ImagePreviews
-
-.section-label {
-  composes: section-label from '../PostEditor.scss';
-}
-
-.image-preview-section {
+// mixins
+.attachment-manager {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 15px 20px 0px;
   border-top: solid 1px $color-ghost-30;
+}
+
+// ImageManager
+.section-label {
+  composes: section-label from '../PostEditor.scss';
+}
+
+.image-manager {
+  composes: attachment-manager;
 }
 
 .image-previews {
@@ -66,4 +70,22 @@
   font-size: 40px;
   color: $color-rhino-30;
   cursor: pointer;
+}
+
+// FileManager
+
+.file-manager {
+  composes: attachment-manager;
+}
+
+.file-previews {
+
+}
+
+.file-preview {
+  
+}
+
+.add-file {
+  border: 2px dashed $color-loblolly;
 }

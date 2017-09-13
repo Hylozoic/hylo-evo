@@ -74,7 +74,10 @@ export const makeAttachmentSelector = attachmentType => ormCreateSelector(
 
 export const defaultState = {
   image: [],
-  file: []
+  file: [
+    'http://www.google.com/whatever/doc.pdf',
+    'http://www.hylo.com/whatever/doc.zip'
+  ]
 }
 
 export default function reducer (state = defaultState, action) {
