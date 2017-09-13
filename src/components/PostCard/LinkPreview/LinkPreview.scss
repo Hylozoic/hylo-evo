@@ -12,6 +12,10 @@ $preview-height: 80px;
   border-radius: 4px;
   padding-top: $space-2x;
   padding-right: $space-3x;
+
+  a {
+    text-decoration: none;
+  }
 }
 
 .previewImage {
