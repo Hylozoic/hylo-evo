@@ -1,6 +1,58 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`does something 1`] = `
+exports[`Pill renders 1`] = `
+<Pill
+  id={1}
+  label="mountain climbing"
+>
+  <div
+    data-for="pill-remove"
+    data-styleName="styles.pill"
+    data-tip="Click to Remove"
+    onClick={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <span
+      data-styleName="styles.display-label"
+    >
+      mountain climbing
+    </span>
+  </div>
+</Pill>
+`;
+
+exports[`Pill renders when editable 1`] = `
+<Pill
+  editable={true}
+  id={1}
+  label="mountain climbing"
+>
+  <div
+    data-for="pill-remove"
+    data-styleName="styles.pill"
+    data-tip="Click to Remove"
+    onClick={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <span
+      data-styleName="styles.display-label"
+    >
+      mountain climbing
+    </span>
+    <Icon
+      data-styleName="styles.remove-label"
+      name="Ex"
+    >
+      <span
+        className="icon-Ex"
+        data-styleName="icon"
+      />
+    </Icon>
+  </div>
+</Pill>
+`;
+
+exports[`Pillbox renders 1`] = `
 <div
   data-styleName="styles.root"
 >
