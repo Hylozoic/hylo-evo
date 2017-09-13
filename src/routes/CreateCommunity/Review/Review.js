@@ -42,8 +42,9 @@ export default class Review extends Component {
   handleInputChange = (event, name) => {
     let value = event.target.value
     if (name === 'communityDomain') {
-      if (removeUrlFromDomain(value) !== '') {
-        this.props.fetchCommunityExists(removeUrlFromDomain(value))
+      value = removeUrlFromDomain(value)
+      if (value !== '') {
+        this.props.fetchCommunityExists(value)
       }
     }
     this.setState({
@@ -70,7 +71,7 @@ export default class Review extends Component {
     this.props.createCommunity(
       // communityPrivacy,
       communityName,
-      removeUrlFromDomain(communityDomain)
+      communityDomain
     )
     .then(({ error }) => {
       if (error) {
@@ -78,7 +79,7 @@ export default class Review extends Component {
           error: 'There was an error, please try again.'
         })
       } else {
-        this.props.goToCommunity(`${removeUrlFromDomain(communityDomain)}`)
+        this.props.goToCommunity(`${communityDomain}`)
       }
     })
   }

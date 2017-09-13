@@ -16,9 +16,9 @@ export default class Domain extends Component {
   }
 
   handleDomainChange = (event) => {
-    const communityDomain = event.target.value
-    if (removeUrlFromDomain(communityDomain) !== '') {
-      this.props.fetchCommunityExists(removeUrlFromDomain(communityDomain))
+    const communityDomain = removeUrlFromDomain(event.target.value)
+    if (communityDomain !== '') {
+      this.props.fetchCommunityExists(communityDomain)
     }
     this.setState({
       communityDomain: communityDomain
@@ -26,8 +26,7 @@ export default class Domain extends Component {
   }
 
   submit = () => {
-    const communityDomain = removeUrlFromDomain(this.state.communityDomain)
-    this.props.addCommunityDomain(communityDomain)
+    this.props.addCommunityDomain(this.state.communityDomain)
     this.props.goToNextStep()
   }
 
@@ -67,6 +66,7 @@ export default class Domain extends Component {
     if (communityDomain) this.setState({communityDomain: communityDomain})
   }
   render () {
+    console.log('state', this.state)
     return <div styleName='flex-wrapper'>
       <ModalSidebar
         imageUrl={this.imageChooser()}
