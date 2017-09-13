@@ -40,7 +40,7 @@ export default class Domain extends Component {
       })
     } else if (!slugValidatorRegex.test(this.removeUrlFromDomain(this.state.communityDomain))) {
       this.setState({
-        error: 'Domains can only have lower case letters, numbers, and dashes.'
+        error: 'URLs can only have lower case letters, numbers, and dashes.'
       })
     } else {
       this.submit()
@@ -101,7 +101,7 @@ export default class Domain extends Component {
             value={this.formatDomainWithUrl(this.state.communityDomain)}
             onChange={this.handleDomainChange}
             theme={inputTheme}
-            placeholder='Choose a domain name'
+            placeholder='Choose a URL'
             showClearButton={false}
             onEnter={this.onEnter}
           />

@@ -2,7 +2,8 @@ import React from 'react'
 import './ModalSidebar.scss'
 import { bgImageStyle } from 'util/index'
 
-export default function ModalSidebar ({theme = {},
+export default function ModalSidebar ({
+  theme = {},
   header,
   body,
   onClick,
@@ -10,7 +11,8 @@ export default function ModalSidebar ({theme = {},
   imageUrl,
   imageStyle,
   imageDialogOne,
-  imageDialogTwo}) {
+  imageDialogTwo
+}) {
   return <div styleName={'sidebar'}>
     <p styleName='gray-text close-button' onClick={onClick}>CLOSE</p>
     <p styleName={theme.sidebarHeader || 'sidebar-header'}>{header}</p>

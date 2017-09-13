@@ -77,8 +77,6 @@ export default class Review extends Component {
           error: 'There was an error, please try again.'
         })
       } else {
-        this.props.clearNameFromCreateCommunity()
-        this.props.clearDomainFromCreateCommunity()
         this.props.goToCommunity(`${communityDomain}`)
       }
     })
