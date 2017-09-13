@@ -41,6 +41,7 @@ export const memberPostsSelector = createSelector(
       return person.posts.toModelArray().map(post => ({
         ...post.ref,
         creator: post.creator.ref,
+        linkPreview: post.linkPreview,
         commenters: post.commenters.toRefArray(),
         communities: post.communities.toRefArray()
       }))

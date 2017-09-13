@@ -22,8 +22,8 @@
   "memberships": [
     {
       "id": "3",
-      "role": "1",
       "hasModeratorRole": true,
+      "person": "46816",
       "community": "1836"
     }
   ],

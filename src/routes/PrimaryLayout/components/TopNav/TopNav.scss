@@ -26,7 +26,6 @@
 .image {
   @include image(30px);
   border-radius: 4px;
-  margin-right: 10px;
   cursor: pointer;
   position: relative;
 
@@ -48,7 +47,9 @@
 }
 
 .title {
+  padding-left: 10px;
   display: inline-block;
+  cursor: pointer;
 }
 
 .label {

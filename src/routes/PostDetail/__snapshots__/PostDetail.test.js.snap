@@ -38,7 +38,7 @@ exports[`PostDetail renders correctly 1`] = `
       ]
     }
   />
-  <Component
+  <PostBody
     data-styleName="body"
     details="the body of the post"
     expanded={true}
