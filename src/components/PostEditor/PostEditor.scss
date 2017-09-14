@@ -162,7 +162,9 @@
 }
 
 .actions {
-
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
 }
 
 .action-icon {
