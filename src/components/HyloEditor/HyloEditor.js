@@ -40,7 +40,6 @@ export default class HyloEditor extends Component {
 
   constructor (props) {
     super(props)
-    console.log('props', props)
     // https://github.com/draft-js-plugins/draft-js-plugins/issues/298
     this._mentionsPlugin = createMentionPlugin({
       theme: {
