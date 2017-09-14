@@ -121,9 +121,13 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       />
     </div>
   </div>
-  <Connect(DragDropContext(AttachmentManager))
+  <Connect(AttachmentManager)
     postId="test"
     type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="test"
+    type="file"
   />
   <div
     data-styleName="footer"
@@ -259,9 +263,13 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       />
     </div>
   </div>
-  <Connect(DragDropContext(AttachmentManager))
+  <Connect(AttachmentManager)
     postId="test"
     type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="test"
+    type="file"
   />
   <div
     data-styleName="footer"
@@ -387,9 +395,13 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
   </div>
-  <Connect(DragDropContext(AttachmentManager))
+  <Connect(AttachmentManager)
     postId="new"
     type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="new"
+    type="file"
   />
   <div
     data-styleName="footer"
@@ -503,9 +515,13 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
   </div>
-  <Connect(DragDropContext(AttachmentManager))
+  <Connect(AttachmentManager)
     postId="new"
     type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="new"
+    type="file"
   />
   <div
     data-styleName="footer"
@@ -619,9 +635,13 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
   </div>
-  <Connect(DragDropContext(AttachmentManager))
+  <Connect(AttachmentManager)
     postId="new"
     type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="new"
+    type="file"
   />
   <div
     data-styleName="footer"
@@ -736,9 +756,13 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       />
     </div>
   </div>
-  <Connect(DragDropContext(AttachmentManager))
+  <Connect(AttachmentManager)
     postId="new"
     type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="new"
+    type="file"
   />
   <div
     data-styleName="footer"
@@ -853,9 +877,13 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       />
     </div>
   </div>
-  <Connect(DragDropContext(AttachmentManager))
+  <Connect(AttachmentManager)
     postId="new"
     type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="new"
+    type="file"
   />
   <div
     data-styleName="footer"
@@ -970,9 +998,13 @@ exports[`PostEditor renders with min props 1`] = `
       />
     </div>
   </div>
-  <Connect(DragDropContext(AttachmentManager))
+  <Connect(AttachmentManager)
     postId="new"
     type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="new"
+    type="file"
   />
   <div
     data-styleName="footer"

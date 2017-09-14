@@ -61,7 +61,7 @@ exports[`ImagePreview matches last snapshot 1`] = `
     }
   >
     <Icon
-      data-styleName="remove-button"
+      data-styleName="remove-image"
       name="Ex"
       onClick={[Function]}
     />
