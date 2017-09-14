@@ -68,7 +68,12 @@ export default class Drawer extends Component {
           <CommunityRow {...membership} key={membership.id} />
         )}
       </ul>
-      <Button color='white' styleName='s.newCommunity' label='Start a Community' />
+      <Button
+        color='white'
+        styleName='s.newCommunity'
+        label='Start a Community'
+        onClick={this.props.goToCreateCommunity}
+      />
     </div>
   }
 }

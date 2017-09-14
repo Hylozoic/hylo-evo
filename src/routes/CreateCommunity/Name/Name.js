@@ -44,7 +44,7 @@ export default class Name extends Component {
 
   componentWillMount = () => {
     const { communityName } = this.props
-    if (communityName) this.setState({name: communityName})
+    if (communityName) this.setState({communityName})
   }
 
   render () {

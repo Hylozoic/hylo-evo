@@ -37,6 +37,7 @@ export default class Review extends Component {
         [name]: false
       }
     })
+    this[name].select()
   }
 
   handleInputChange = (event, name) => {
@@ -153,9 +154,10 @@ export default class Review extends Component {
             label={'Your Name'}
             value={this.state.edits.name || ''}
             readOnly={this.state.readOnly.name}
-            editHandler={() => this.editHandler('name')}
+            editHandler={(event) => this.editHandler('name')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'name')}
+            inputRef={(input) => { this.name = input }}
           />
           <ReviewTextInput
             label={'Your Email'}
@@ -164,6 +166,7 @@ export default class Review extends Component {
             editHandler={() => this.editHandler('email')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'email')}
+            inputRef={(input) => { this.email = input }}
           />
           <ReviewTextInput
             label={'Community Name'}
@@ -172,6 +175,7 @@ export default class Review extends Component {
             editHandler={() => this.editHandler('communityName')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'communityName')}
+            inputRef={(input) => { this.communityName = input }}
           />
           <ReviewTextInput
             label={'URL'}
@@ -180,6 +184,7 @@ export default class Review extends Component {
             editHandler={() => this.editHandler('communityDomain')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'communityDomain')}
+            inputRef={(input) => { this.communityDomain = input }}
           />
           {/* }<ReviewTextInput
             label={'Privacy'}
@@ -201,7 +206,7 @@ export default class Review extends Component {
   }
 }
 
-export function ReviewTextInput ({label, value, editHandler, onChange, readOnly = true}) {
+export function ReviewTextInput ({label, value, editHandler, onChange, readOnly = true, inputRef}) {
   return <div styleName='review-input-text-row'>
     <div styleName='review-input-text-label'>
       <span>{label}</span>
@@ -215,6 +220,7 @@ export function ReviewTextInput ({label, value, editHandler, onChange, readOnly 
         readOnly={readOnly}
         noClearButton
         onChange={onChange}
+        inputRef={inputRef}
       />
     </div>
     <div styleName='review-input-edit'>

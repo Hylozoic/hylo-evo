@@ -63,6 +63,7 @@ export default class Domain extends Component {
 
   componentWillMount = () => {
     const { communityDomain } = this.props
+    console.log('componentWillMount communityDomain', communityDomain)
     if (communityDomain) this.setState({communityDomain: communityDomain})
   }
   render () {
