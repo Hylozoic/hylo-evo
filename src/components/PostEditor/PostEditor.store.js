@@ -20,8 +20,24 @@ export function createPost (post) {
   return {
     type: CREATE_POST,
     graphql: {
-      query: `mutation ($type: String, $title: String, $details: String, $linkPreviewId: String, $communityIds: [String], $imageUrls: [String], $fileUrls: [String]) {
-        createPost(data: {type: $type, title: $title, details: $details, linkPreviewId: $linkPreviewId, communityIds: $communityIds, imageUrls: $imageUrls, fileUrls: $fileUrls}) {
+      query: `mutation (
+        $type: String,
+        $title: String,
+        $details: String,
+        $linkPreviewId: String,
+        $communityIds: [String],
+        $imageUrls: [String],
+        $fileUrls: [String]
+      ) {
+        createPost(data: {
+          type: $type,
+          title: $title,
+          details: $details,
+          linkPreviewId: $linkPreviewId,
+          communityIds: $communityIds,
+          imageUrls: $imageUrls,
+          fileUrls: $fileUrls
+        }) {
           id
           type
           title
@@ -67,8 +83,25 @@ export function updatePost (post) {
   return {
     type: UPDATE_POST,
     graphql: {
-      query: `mutation ($id: ID, $type: String, $title: String, $details: String, $linkPreviewId: String, $communityIds: [String], $imageUrls: [String], $fileUrls: [String]) {
-        updatePost(id: $id, data: {type: $type, title: $title, details: $details, linkPreviewId: $linkPreviewId, communityIds: $communityIds, imageUrls: $imageUrls, fileUrls: $fileUrls}) {
+      query: `mutation (
+        $id: ID,
+        $type: String,
+        $title: String,
+        $details: String,
+        $linkPreviewId: String,
+        $communityIds: [String],
+        $imageUrls: [String],
+        $fileUrls: [String]
+      ) {
+        updatePost(id: $id, data: {
+          type: $type,
+          title: $title,
+          details: $details,
+          linkPreviewId: $linkPreviewId,
+          communityIds: $communityIds,
+          imageUrls: $imageUrls,
+          fileUrls: $fileUrls
+        }) {
           id
           type
           title
