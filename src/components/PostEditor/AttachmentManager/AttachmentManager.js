@@ -38,7 +38,7 @@ export default class AttachmentManager extends React.Component {
   }
 }
 
-const ImageManager = DragDropContext(HTML5Backend)(
+export const ImageManager = DragDropContext(HTML5Backend)(
 class ImageManager extends React.Component {
   render () {
     const { postId, showAttachments, attachments, pending, addAttachment, removeAttachment, switchAttachments } = this.props

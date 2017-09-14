@@ -1,63 +1,75 @@
 /* eslint-env jest */
 import reducer, {
-  SET_IMAGE_PREVIEWS,
-  ADD_IMAGE_PREVIEW,
-  REMOVE_IMAGE_PREVIEW,
-  SWITCH_IMAGE_PREVIEWS,
+  SET_ATTACHMENTS,
+  ADD_ATTACHMENT,
+  REMOVE_ATTACHMENT,
+  SWITCH_ATTACHMENTS,
   defaultState
 } from './AttachmentManager.store'
 
 describe('AttachmentManager store', () => {
   describe('reducer', () => {
-    describe(`when ${SET_IMAGE_PREVIEWS}`, () => {
+    describe('when SET_ATTACHMENTS', () => {
       const action = {
-        type: SET_IMAGE_PREVIEWS,
-        payload: ['foo.png', 'bar.jog']
+        type: SET_ATTACHMENTS,
+        payload: {
+          attachments: ['foo.png', 'bar.jog'],
+          type: 'image'
+        }
       }
-      it('sets image previews', () => {
+      it('sets attachments', () => {
         const finalState = reducer(defaultState, action)
         expect(finalState).toMatchSnapshot()
       })
     })
 
-    describe(`when ${ADD_IMAGE_PREVIEW}`, () => {
+    describe('when ADD_ATTACHMENT', () => {
       const action = {
-        type: ADD_IMAGE_PREVIEW,
-        payload: 'bar.jog'
+        type: ADD_ATTACHMENT,
+        payload: {
+          url: 'bar.pdf',
+          type: 'file'
+        }
       }
-      it('adds an image preview', () => {
+      it('adds an attachment', () => {
         const finalState = reducer(defaultState, action)
         expect(finalState).toMatchSnapshot()
       })
     })
 
-    describe(`when ${REMOVE_IMAGE_PREVIEW}`, () => {
+    describe('when REMOVE_ATTACHMENT', () => {
       const action = {
-        type: REMOVE_IMAGE_PREVIEW,
-        payload: 1
+        type: REMOVE_ATTACHMENT,
+        payload: {
+          position: 1,
+          type: 'file'
+        }
       }
-      it('removes an image preview', () => {
+      it('removes an attachment', () => {
         const state = {
           ...defaultState,
-          imagePreviews: ['a.png', 'b.png', 'c.png']
+          image: ['a.png', 'b.png', 'c.png'],
+          file: ['a.pdf', 'b.pdf', 'c.pdf']
         }
         const finalState = reducer(state, action)
         expect(finalState).toMatchSnapshot()
       })
     })
 
-    describe(`when ${SWITCH_IMAGE_PREVIEWS}`, () => {
+    describe('when SWITCH_ATTACHMENTS', () => {
       const action = {
-        type: SWITCH_IMAGE_PREVIEWS,
+        type: SWITCH_ATTACHMENTS,
         payload: {
           position1: 1,
-          position2: 2
+          position2: 2,
+          type: 'image'
         }
       }
-      it('switches two image previews', () => {
+      it('switches two attachments', () => {
         const state = {
           ...defaultState,
-          imagePreviews: ['a.png', 'b.png', 'c.png']
+          image: ['a.png', 'b.png', 'c.png'],
+          file: ['a.pdf', 'b.pdf', 'c.pdf']
         }
         const finalState = reducer(state, action)
         expect(finalState).toMatchSnapshot()

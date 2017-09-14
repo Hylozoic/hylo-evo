@@ -1,8 +1,105 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AttachmentManager matches last snapshot 1`] = `
+exports[`AttachmentManager renders FileManager when type is file 1`] = `
+<FileManager
+  prop1="foo"
+  prop2="bar"
+  prop3="baz"
+  type="file"
+/>
+`;
+
+exports[`AttachmentManager renders ImageManager when type is image 1`] = `
+<DragDropContext(ImageManager)
+  prop1="foo"
+  prop2="bar"
+  prop3="baz"
+  type="image"
+/>
+`;
+
+exports[`FileManager matches last snapshot 1`] = `
 <div
-  data-styleName="image-preview-section"
+  data-styleName="file-manager"
+>
+  <div
+    data-styleName="section-label"
+  >
+    Files
+  </div>
+  <div
+    data-styleName="file-previews"
+  >
+    <FilePreview
+      position={0}
+      removeFile={[Function]}
+      url="foo.pdf"
+    />
+    <FilePreview
+      position={1}
+      removeFile={[Function]}
+      url="bar.zip"
+    />
+    <div
+      data-styleName="loading-file"
+    >
+      Loading...
+    </div>
+    <Connect(ChangeImageButton)
+      attachmentType="file"
+      data-styleName="add-file-row"
+      update={[Function]}
+      uploadSettings={
+        Object {
+          "id": 1,
+          "type": "post",
+        }
+      }
+    >
+      <div
+        data-styleName="add-file"
+      >
+        <span
+          data-styleName="add-file-plus"
+        >
+          +
+        </span>
+         Add File
+      </div>
+    </Connect(ChangeImageButton)>
+  </div>
+</div>
+`;
+
+exports[`FilePreview matches last snapshot 1`] = `
+<div
+  data-styleName="file-preview"
+>
+  <Icon
+    data-styleName="icon-document"
+    name="Document"
+  />
+  <div
+    data-styleName="file-name"
+  >
+    foo.pdf
+  </div>
+  <div
+    data-styleName="file-size"
+  >
+    23.3mb
+  </div>
+  <Icon
+    data-styleName="remove-file"
+    name="Ex"
+    onClick={[Function]}
+  />
+</div>
+`;
+
+exports[`ImageManager matches last snapshot 1`] = `
+<div
+  data-styleName="image-manager"
 >
   <div
     data-styleName="section-label"
@@ -30,10 +127,11 @@ exports[`AttachmentManager matches last snapshot 1`] = `
       <Loading />
     </div>
     <Connect(ChangeImageButton)
+      attachmentType="image"
       update={[Function]}
       uploadSettings={
         Object {
-          "id": "new",
+          "id": 1,
           "type": "post",
         }
       }

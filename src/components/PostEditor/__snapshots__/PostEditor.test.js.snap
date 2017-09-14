@@ -8,6 +8,7 @@ exports[`ActionsBar matches last snapshot 1`] = `
     data-styleName="actions"
   >
     <Connect(ChangeImageButton)
+      attachmentType="image"
       update={[Function]}
       uploadSettings={
         Object {
@@ -19,6 +20,20 @@ exports[`ActionsBar matches last snapshot 1`] = `
       <Icon
         data-styleName="action-icon"
         name="AddImage"
+      />
+    </Connect(ChangeImageButton)>
+    <Connect(ChangeImageButton)
+      attachmentType="file"
+      uploadSettings={
+        Object {
+          "id": 1,
+          "type": "post",
+        }
+      }
+    >
+      <Icon
+        data-styleName="action-icon"
+        name="Paperclip"
       />
     </Connect(ChangeImageButton)>
   </div>

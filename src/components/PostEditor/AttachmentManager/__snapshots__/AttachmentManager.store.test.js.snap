@@ -1,17 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AttachmentManager store reducer when undefined adds an image preview 1`] = `
+exports[`AttachmentManager store reducer when ADD_ATTACHMENT adds an attachment 1`] = `
 Object {
-  "file": Array [],
+  "file": Array [
+    "bar.pdf",
+  ],
   "image": Array [],
 }
 `;
 
-exports[`AttachmentManager store reducer when undefined removes an image preview 1`] = `
+exports[`AttachmentManager store reducer when REMOVE_ATTACHMENT removes an attachment 1`] = `
 Object {
-  "file": Array [],
-  "image": Array [],
-  "imagePreviews": Array [
+  "file": Array [
+    "a.pdf",
+    "c.pdf",
+  ],
+  "image": Array [
     "a.png",
     "b.png",
     "c.png",
@@ -19,21 +23,27 @@ Object {
 }
 `;
 
-exports[`AttachmentManager store reducer when undefined sets image previews 1`] = `
+exports[`AttachmentManager store reducer when SET_ATTACHMENTS sets attachments 1`] = `
 Object {
   "file": Array [],
-  "image": Array [],
+  "image": Array [
+    "foo.png",
+    "bar.jog",
+  ],
 }
 `;
 
-exports[`AttachmentManager store reducer when undefined switches two image previews 1`] = `
+exports[`AttachmentManager store reducer when SWITCH_ATTACHMENTS switches two attachments 1`] = `
 Object {
-  "file": Array [],
-  "image": Array [],
-  "imagePreviews": Array [
+  "file": Array [
+    "a.pdf",
+    "b.pdf",
+    "c.pdf",
+  ],
+  "image": Array [
     "a.png",
-    "b.png",
     "c.png",
+    "b.png",
   ],
 }
 `;

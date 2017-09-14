@@ -24,7 +24,8 @@ export function upload (opts) {
         if (err.code === 101) return resolve({})
 
         reject(err)
-      }
+      },
+      attachmentType
     })
   })
 

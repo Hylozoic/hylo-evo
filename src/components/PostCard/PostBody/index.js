@@ -14,7 +14,6 @@ export default function PostBody ({
   id,
   title,
   details,
-  imageUrl,
   linkPreview,
   slug,
   expanded,
