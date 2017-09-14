@@ -4,6 +4,7 @@ import { isNil } from 'lodash'
 import getQueryParam from 'store/selectors/getQueryParam'
 import getMe from 'store/selectors/getMe'
 import getIsLoggedIn from 'store/selectors/getIsLoggedIn'
+import { fetchForCurrentUser } from 'routes/PrimaryLayout/PrimaryLayout.store'
 import { useInvitation, checkInvitation } from './JoinCommunity.store'
 
 export function mapStateToProps (state, props) {
@@ -20,6 +21,7 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = {
+  fetchForCurrentUser,
   useInvitation,
   checkInvitation
 }

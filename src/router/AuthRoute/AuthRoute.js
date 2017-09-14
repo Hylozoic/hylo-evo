@@ -13,7 +13,6 @@ export default function AuthRoute ({
   location,
   ...rest
 }) {
-  console.log('!!!!', returnToURL)
   if (isLoggedIn && location.pathname === '/signup') {
     return <Route {...rest} render={props => <Redirect to={'/signup/upload-photo'} />} />
   }
