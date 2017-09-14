@@ -8,7 +8,6 @@ import pendingMiddleware from './pendingMiddleware'
 import optimisticMiddleware from './optimisticMiddleware'
 import errorMiddleware from 'store/middleware/errorMiddleware'
 import { routerMiddleware } from 'react-router-redux'
-import extractModelMiddleware from './extractModel'
 
 export default function createMiddleware (history, req) {
   const middleware = compact([
@@ -16,7 +15,6 @@ export default function createMiddleware (history, req) {
     graphqlMiddleware,
     apiMiddleware(req),
     errorMiddleware,
-    extractModelMiddleware,
     optimisticMiddleware,
     pendingMiddleware,
     promiseMiddleware,

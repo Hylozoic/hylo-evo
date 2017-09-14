@@ -1,0 +1,33 @@
+.cardPadding {
+  padding: 0px $space-4x;
+}
+
+.body {
+  margin-bottom: 36px;
+}
+
+.title {
+  composes: cardPadding;
+  margin-bottom: 12px;
+}
+
+.details {
+  composes: cardPadding;
+  // TODO: Extract typography? This one is exactly half way between
+  // BDY-LT-LG and BDY-LT-SM
+  @include font-regular;
+  color: $color-rhino-60;
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 20px;
+}
+
+:global {
+  .hashtag, .mention {
+    color: $color-caribbean-green;
+    &:hover {
+      text-decoration: none;
+      color: $color-gossamer;
+    }
+  }
+}

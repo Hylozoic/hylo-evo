@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`findTopics queries communityTopics at the top level 1`] = `
+Object {
+  "graphql": Object {
+    "query": "query ($topicsSearchTerm: String) {
+        communityTopics(autocomplete: $topicsSearchTerm, first: 8) {
+          items {
+            topic {
+              id
+              name
+            }
+          }
+        }
+      }",
+    "variables": Object {
+      "topicsSearchTerm": "foo",
+    },
+  },
+  "meta": Object {
+    "extractModel": Object {
+      "append": true,
+      "getRoot": [Function],
+      "modelName": "Topic",
+    },
+  },
+  "type": "HyloEditor/FIND_TOPICS",
+}
+`;

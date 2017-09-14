@@ -15,7 +15,6 @@ export default class PostEditorModal extends Component {
       {match && <div
         styleName='post-editor-modal'
         key='post-editor-modal'>
-        <div styleName='post-editor-background' className='post-editor-background' />
         <div styleName='post-editor-wrapper' className='post-editor-wrapper'>
           <PostEditor onClose={hidePostEditor} {...this.props} />
         </div>

@@ -7,8 +7,8 @@ import SkillsSection from 'components/SkillsSection'
 export default class MemberSidebar extends Component {
   render () {
     return <div styleName='member-sidebar'>
-      <SkillsSection memberId={this.props.memberId} />
       <MessageMember id={this.props.memberId} />
+      <SkillsSection memberId={this.props.memberId} />
     </div>
   }
 }

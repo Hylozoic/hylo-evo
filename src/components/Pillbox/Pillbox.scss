@@ -1,4 +1,3 @@
-$pill-font-size: 14px;
 $search-width: 266px;
 
 .root {
@@ -19,18 +18,12 @@ $search-width: 266px;
 }
 
 .add-btn {
-  background: #FFF;
-  font-size: $pill-font-size;
+  composes: label from 'components/SkillLabel/component.scss';
   cursor: pointer;
-  border: 2px solid $color-caribbean-green;
+  border: 1px solid $color-caribbean-green;
   color: $color-caribbean-green;
-  font-family: 'Circular Bold';
-  letter-spacing: 0.08em;
-  display: inline-block;
-  padding: 3px 8px;
-  margin: 10px 8px 0px 0px;
-  border-radius: 20px;
-  text-transform: uppercase;
+  margin-right: 8px;
+  margin-bottom: 8px;
 }
 
 .search-wrapper {
@@ -136,22 +129,31 @@ $search-width: 266px;
   position: relative;
 }
 
+.remove-label {
+  font-size: 12px;
+  font-weight: bold;
+  content: '\2715';
+  cursor: pointer;
+  color: transparent;
+  position: absolute;
+  top: 1px;
+  right: 5px;
+  padding: 4px;
+  border-radius: 4px;
+  vertical-align: top;
+}
+
 .pill {
+  composes: label from 'components/SkillLabel/component.scss';
+  position: relative;
+
   // Prevent highlighting of text on click/doubleclick
   -webkit-user-select: none;  /* Chrome all / Safari all */
   -moz-user-select: none;     /* Firefox all */
   -ms-user-select: none;      /* IE 10+ */
 
-  border: 2px solid $color-ghost;
-  background: #FFF;
-  font-size: $pill-font-size;
-  font-family: 'Circular Bold';
-  letter-spacing: 0.08em;
-  display: inline-block;
-  padding: 2px 8px;
-  margin: 10px 8px 0px 0px;
-  border-radius: 20px;
-  text-transform: uppercase;
+  margin-right: 8px;
+  margin-bottom: 8px;
 
   .display-label {
     color: $color-slate-gray-80;
@@ -159,26 +161,13 @@ $search-width: 266px;
   // onclick bump word to left to make room for X
   // click again to actually remove it
 
-  .remove-label {
-    font-size: 12px;
-    content: '\2715';
-    cursor: pointer;
-    color: transparent;
-    margin-left: 2px;
-    vertical-align: top;
-  }
-
   &.removable {
-    padding: 3px 4px;
     cursor: pointer;
-
-    .display-label {
-      margin-left: 17px;
-    }
 
     &:hover {
       .remove-label {
         color: $color-slate-gray-80;
+        background: #fff;
       }
     }
   }
@@ -188,21 +177,14 @@ $search-width: 266px;
       color: #FFF;
     }
 
-    border: 2px solid $color-amaranth;
+    border: 1px solid $color-amaranth;
     background-color: $color-amaranth;
     color: #FFF;
 
     .remove-label {
       color: #FFF !important;
+      background-color: $color-amaranth !important;
     }
-  }
-
-  .small {
-    border-width: 1px;
-    padding: 0 8px;
-    height: 24px;
-    line-height: 24px;
-    font-size: 10px;
   }
 }
 

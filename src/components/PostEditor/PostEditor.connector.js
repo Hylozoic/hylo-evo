@@ -1,12 +1,13 @@
-import { get } from 'lodash/fp'
+import { get, isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+import { bindActionCreators } from 'redux'
 import { postUrl } from 'util/index'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getPost from 'store/selectors/getPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import { FETCH_POST } from 'store/constants'
+import { FETCH_POST, UPLOAD_IMAGE } from 'store/constants'
 import {
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
@@ -14,9 +15,13 @@ import {
   updatePost,
   pollingFetchLinkPreview,
   removeLinkPreview,
-  resetLinkPreview,
+  clearLinkPreview,
   getLinkPreview
 } from './PostEditor.store'
+import {
+  addImagePreview,
+  getImagePreviews
+} from './ImagePreviews/ImagePreviews.store'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
@@ -29,6 +34,10 @@ export function mapStateToProps (state, props) {
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
+  const uploadImagePending = state.pending[UPLOAD_IMAGE]
+  const imagePreviews = getImagePreviews(state, props)
+  const showImagePreviews = !isEmpty(imagePreviews) || uploadImagePending
+
   return {
     currentUser,
     currentCommunity,
@@ -38,7 +47,9 @@ export function mapStateToProps (state, props) {
     editing,
     linkPreview,
     linkPreviewStatus,
-    fetchLinkPreviewPending
+    fetchLinkPreviewPending,
+    showImagePreviews,
+    imagePreviews
   }
 }
 
@@ -47,13 +58,16 @@ export const mapDispatchToProps = (dispatch, props) => {
   return {
     pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
     removeLinkPreview: () => dispatch(removeLinkPreview()),
-    resetLinkPreview: () => dispatch(resetLinkPreview()),
+    clearLinkPreview: () => dispatch(clearLinkPreview()),
     updatePost: postParams => dispatch(updatePost(postParams)),
     createPost: postParams => dispatch(createPost(postParams)),
     goToPost: createPostAction => {
       const id = createPostAction.payload.data.createPost.id
       return dispatch(push(postUrl(id, slug)))
-    }
+    },
+    ...bindActionCreators({
+      addImagePreview
+    }, dispatch)
   }
 }
 
