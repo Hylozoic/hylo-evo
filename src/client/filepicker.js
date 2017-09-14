@@ -22,7 +22,7 @@ const uploadCore = function ({ success, failure }) {
   window.filepicker.setKey(filepickerKey)
   window.filepicker.pick(
     {mimetype: 'image/*', multiple: false, services},
-    blob => success(blob.url),
+    blob => success(blob.url, blob.filename),
     failure
   )
 }

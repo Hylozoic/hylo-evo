@@ -9,11 +9,11 @@ export function upload (opts) {
   } = opts
   let payload = new Promise((resolve, reject) => {
     pick({
-      success: url => resolve({
+      success: (url, filename) => resolve({
         api: {
           method: 'post',
           path: '/noo/upload',
-          params: {url, id, type}
+          params: {url, id, type, filename}
         }
       }),
       failure: err => {
