@@ -15,12 +15,12 @@ export const uploadSettings = id => ({
 
 export default class AttachmentManager extends React.Component {
   componentDidMount () {
-    if (this.props.type !== 'file') this.props.loadAttachments() // if is temporary for testing
+    this.props.loadAttachments()
   }
 
   componentWillReceiveProps (nextProps) {
     if (this.props.postId !== nextProps.postId) {
-      if (this.props.type !== 'file') this.props.loadAttachments() // if is temporary for testing
+      this.props.loadAttachments()
     }
   }
 
@@ -122,12 +122,12 @@ export function FileManager ({
   </div>
 }
 
-export function FilePreview ({ url, position, removeFile }) {
+export function FilePreview ({ url, position, removeFile, fileSize }) {
   const name = path.basename(url)
   return <div styleName='file-preview'>
     <Icon name='Document' styleName='icon-document' />
     <div styleName='file-name'>{name}</div>
-    <div styleName='file-size'>~31.9mb</div>
+    {fileSize && <div styleName='file-size'>{fileSize}</div>}
     <Icon name='Ex' styleName='remove-file' onClick={() => removeFile(position)} />
   </div>
 }

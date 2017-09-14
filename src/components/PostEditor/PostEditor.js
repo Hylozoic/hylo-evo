@@ -188,11 +188,11 @@ export default class PostEditor extends React.Component {
   setValid = () => this.setState({valid: this.isValid()})
 
   save = () => {
-    const { editing, createPost, updatePost, onClose, goToPost, images } = this.props
+    const { editing, createPost, updatePost, onClose, goToPost, images, files } = this.props
     const { id, type, title, communities, linkPreview } = this.state.post
     const details = this.editor.getContentHTML()
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files
     }
     const saveFunc = editing ? updatePost : createPost
     saveFunc(postToSave).then(editing ? onClose : goToPost)
@@ -204,7 +204,7 @@ export default class PostEditor extends React.Component {
     const {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, editing, loading, addImage,
-      showImages
+      showImages, addFile, showFiles
     } = this.props
     const submitButtonLabel = editing ? 'Save' : 'Post'
 
@@ -269,6 +269,8 @@ export default class PostEditor extends React.Component {
           id={id}
           addImage={addImage}
           showImages={showImages}
+          addFile={addFile}
+          showFiles={showFiles}
           valid={valid}
           loading={loading}
           submitButtonLabel={submitButtonLabel}
@@ -278,18 +280,23 @@ export default class PostEditor extends React.Component {
   }
 }
 
-export function ActionsBar ({id, addImage, showImages, valid, loading, submitButtonLabel, save}) {
-  const addImageIcon = <Icon name='AddImage'
-    styleName={cx('action-icon', {'highlight-icon': showImages})} />
-
+export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid, loading, submitButtonLabel, save}) {
   return <div styleName='actionsBar'>
     <div styleName='actions'>
-      {showImages
-        ? addImageIcon
-        : <ChangeImageButton update={addImage}
-          uploadSettings={uploadSettings(id)}>
-          {addImageIcon}
-        </ChangeImageButton>}
+      <ChangeImageButton update={addImage}
+        uploadSettings={uploadSettings(id)}
+        attachmentType='image'
+        disable={showImages}>
+        <Icon name='AddImage'
+          styleName={cx('action-icon', {'highlight-icon': showImages})} />
+      </ChangeImageButton>
+      <ChangeImageButton update={addFile}
+        uploadSettings={uploadSettings(id)}
+        attachmentType='file'
+        disable={showFiles}>
+        <Icon name='Paperclip'
+          styleName={cx('action-icon', {'highlight-icon': showImages})} />
+      </ChangeImageButton>
     </div>
     <Button
       onClick={save}

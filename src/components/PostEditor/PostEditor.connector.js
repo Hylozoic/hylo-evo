@@ -33,10 +33,14 @@ export function mapStateToProps (state, props) {
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
-  const uploadImagePending = state.pending[UPLOAD_ATTACHMENT]
+  const uploadAttachmentPending = state.pending[UPLOAD_ATTACHMENT]
   const images = getAttachments(state, {type: 'image'})
+  const files = getAttachments(state, {type: 'file'})
   // TODO: this should be a selector exported from AttachmentManager
-  const showImagePreviews = !isEmpty(images) || uploadImagePending
+  const showImages = !isEmpty(images) ||
+    get('attachmentType', uploadAttachmentPending) === 'image'
+  const showFiles = !isEmpty(files) ||
+    get('attachmentType', uploadAttachmentPending) === 'file'
 
   return {
     currentUser,
@@ -48,8 +52,10 @@ export function mapStateToProps (state, props) {
     linkPreview,
     linkPreviewStatus,
     fetchLinkPreviewPending,
-    showImagePreviews,
-    images
+    showImages,
+    showFiles,
+    images,
+    files
   }
 }
 
@@ -65,7 +71,8 @@ export const mapDispatchToProps = (dispatch, props) => {
       const id = createPostAction.payload.data.createPost.id
       return dispatch(push(postUrl(id, slug)))
     },
-    addImage: url => dispatch(addAttachment(url, 'image'))
+    addImage: url => dispatch(addAttachment(url, 'image')),
+    addFile: url => dispatch(addAttachment(url, 'file'))
   }
 }
 
