@@ -7,6 +7,7 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import ChangeImageButton from 'components/ChangeImageButton'
 import './AttachmentManager.scss'
 import path from 'path'
+import { isEmpty } from 'lodash/fp'
 
 export const uploadSettings = id => ({
   type: 'post',
@@ -18,8 +19,8 @@ export default class AttachmentManager extends React.Component {
     this.props.loadAttachments()
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (this.props.postId !== nextProps.postId) {
+  componentDidUpdate (prevProps) {
+    if (isEmpty(prevProps.attachmentsFromPost) && !isEmpty(this.props.attachmentsFromPost)) {
       this.props.loadAttachments()
     }
   }
