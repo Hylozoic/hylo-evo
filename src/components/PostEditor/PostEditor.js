@@ -295,7 +295,7 @@ export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid
         attachmentType='file'
         disable={showFiles}>
         <Icon name='Paperclip'
-          styleName={cx('action-icon', {'highlight-icon': showImages})} />
+          styleName={cx('action-icon', {'highlight-icon': showFiles})} />
       </ChangeImageButton>
     </div>
     <Button

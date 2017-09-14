@@ -105,6 +105,8 @@ class ImagePreview extends React.Component {
 export function FileManager ({
   postId, showAttachments, attachments, pending, addAttachment, removeAttachment
 }) {
+  if (!showAttachments) return null
+
   return <div styleName='file-manager'>
     <div styleName='section-label'>Files</div>
     <div styleName='file-previews'>
@@ -113,11 +115,14 @@ export function FileManager ({
           removeFile={removeAttachment}
           position={i}
           key={i} />)}
-      {pending && <div styleName='add-file'><Loading /></div>}
-      <ChangeImageButton update={addAttachment}
+      {pending && <div styleName='loading-file'>Loading...</div>}
+      <ChangeImageButton
+        styleName='add-file-row'
+        update={addAttachment}
         uploadSettings={uploadSettings(postId)}
         attachmentType='file'>
-        <div styleName='add-file'>+</div>
+        <div styleName='add-file'>
+          <span styleName='add-file-plus'>+</span> Add File</div>
       </ChangeImageButton>
     </div>
   </div>

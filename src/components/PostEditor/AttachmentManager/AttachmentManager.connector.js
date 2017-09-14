@@ -14,7 +14,7 @@ export function mapStateToProps (state, props) {
   const pending = get(['pending', UPLOAD_ATTACHMENT, 'attachmentType'], state) === props.type
   const attachments = getAttachments(state, props)
   const attachmentsFromPost = makeAttachmentSelector(props.type)(state, props)
-  const showAttachments = !isEmpty(attachments) || pending || props.type === 'file' // last clause is for testing only
+  const showAttachments = !isEmpty(attachments) || pending  // last clause is for testing only
 
   return {
     attachments,

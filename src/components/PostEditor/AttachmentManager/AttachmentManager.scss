@@ -126,10 +126,24 @@
   composes: remove-button;
 }
 
+.add-file-row {
+  margin-top: 12px;
+}
+
 .add-file {
   composes: add-image;
-  padding: 0;
-  height: 20px;
-  width: 200px;
-  font-size: 12px;
+  padding-top: 0px;
+  height: 30px;
+  font-size: 14px;
+}
+
+.add-file-plus {
+  font-size: 17px;
+  margin-right: 4px;
+}
+
+.loading-file {
+  composes: add-file;
+  margin-top: 12px;
+  padding-top: 3px;
 }
