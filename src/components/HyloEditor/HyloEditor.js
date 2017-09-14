@@ -9,7 +9,6 @@ import contentStateToHTML from './contentStateToHTML'
 import contentStateFromHTML from './contentStateFromHTML'
 import 'draft-js/dist/Draft.css'
 import styles from './HyloEditor.scss'
-
 export default class HyloEditor extends Component {
   static propTypes = {
     contentHTML: PropTypes.string,
@@ -41,11 +40,12 @@ export default class HyloEditor extends Component {
 
   constructor (props) {
     super(props)
+    console.log('props', props)
     // https://github.com/draft-js-plugins/draft-js-plugins/issues/298
     this._mentionsPlugin = createMentionPlugin({
       theme: {
         mention: styles.mention,
-        mentionSuggestions: styles.mentionSuggestions,
+        mentionSuggestions: styles['mentionSuggestions' + props.parentComponent],
         mentionSuggestionsEntry: styles.mentionSuggestionsEntry,
         mentionSuggestionsEntryFocused: styles.mentionSuggestionsEntryFocused,
         mentionSuggestionsEntryText: styles.mentionSuggestionsEntryText,
@@ -57,7 +57,7 @@ export default class HyloEditor extends Component {
       mentionPrefix: '#',
       theme: {
         mention: styles.topic,
-        mentionSuggestions: styles.topicSuggestions,
+        mentionSuggestions: styles['topicSuggestions' + props.parentComponent],
         mentionSuggestionsEntry: styles.topicSuggestionsEntry,
         mentionSuggestionsEntryFocused: styles.topicSuggestionsEntryFocused,
         mentionSuggestionsEntryText: styles.topicSuggestionsEntryText,

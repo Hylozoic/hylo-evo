@@ -250,6 +250,7 @@ export default class PostEditor extends React.Component {
             onChange={this.handleDetailsChange}
             contentHTML={details}
             readOnly={loading}
+            parentComponent={'PostEditor'}
             ref={component => { this.editor = component && component.getWrappedInstance() }}
           />
           {linkPreview &&
