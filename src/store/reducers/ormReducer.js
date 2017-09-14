@@ -52,13 +52,10 @@ import {
 import {
   DELETE_COMMENT_PENDING
 } from 'routes/PostDetail/Comments/Comment/Comment.store'
-<<<<<<< HEAD
-=======
 import {
   UPDATE_POST_PENDING
 } from 'components/PostEditor/PostEditor.store'
 
->>>>>>> master
 import orm from 'store/models'
 import { find } from 'lodash/fp'
 import extractModelsFromAction from './ModelExtractor/extractModelsFromAction'
