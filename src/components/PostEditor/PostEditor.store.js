@@ -14,14 +14,14 @@ export const CLEAR_LINK_PREVIEW = `${MODULE_NAME}/CLEAR_LINK_PREVIEW`
 // Actions
 
 export function createPost (post) {
-  const { type, title, details, communities, linkPreview, imageUrls } = post
+  const { type, title, details, communities, linkPreview, imageUrls, fileUrls } = post
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
     type: CREATE_POST,
     graphql: {
-      query: `mutation ($type: String, $title: String, $details: String, $linkPreviewId: String, $communityIds: [String], $imageUrls: [String]) {
-        createPost(data: {type: $type, title: $title, details: $details, linkPreviewId: $linkPreviewId, communityIds: $communityIds, imageUrls: $imageUrls}) {
+      query: `mutation ($type: String, $title: String, $details: String, $linkPreviewId: String, $communityIds: [String], $imageUrls: [String], $fileUrls: [String]) {
+        createPost(data: {type: $type, title: $title, details: $details, linkPreviewId: $linkPreviewId, communityIds: $communityIds, imageUrls: $imageUrls, fileUrls: $fileUrls}) {
           id
           type
           title
@@ -52,7 +52,8 @@ export function createPost (post) {
         details,
         linkPreviewId,
         communityIds,
-        imageUrls
+        imageUrls,
+        fileUrls
       }
     },
     meta: {extractModel: 'Post'}
@@ -60,14 +61,14 @@ export function createPost (post) {
 }
 
 export function updatePost (post) {
-  const { id, type, title, details, communities, linkPreview, imageUrls } = post
+  const { id, type, title, details, communities, linkPreview, imageUrls, fileUrls } = post
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
     type: UPDATE_POST,
     graphql: {
-      query: `mutation ($id: ID, $type: String, $title: String, $details: String, $linkPreviewId: String, $communityIds: [String], $imageUrls: [String]) {
-        updatePost(id: $id, data: {type: $type, title: $title, details: $details, linkPreviewId: $linkPreviewId, communityIds: $communityIds, imageUrls: $imageUrls}) {
+      query: `mutation ($id: ID, $type: String, $title: String, $details: String, $linkPreviewId: String, $communityIds: [String], $imageUrls: [String], $fileUrls: [String]) {
+        updatePost(id: $id, data: {type: $type, title: $title, details: $details, linkPreviewId: $linkPreviewId, communityIds: $communityIds, imageUrls: $imageUrls, fileUrls: $fileUrls}) {
           id
           type
           title
@@ -95,7 +96,8 @@ export function updatePost (post) {
         details,
         linkPreviewId,
         communityIds,
-        imageUrls
+        imageUrls,
+        fileUrls
       }
     },
     meta: {
@@ -178,8 +180,7 @@ export const getLinkPreview = ormCreateSelector(
 
 export const defaultState = {
   linkPreviewId: null,
-  linkPreviewStatus: null,
-  imagePreviews: []
+  linkPreviewStatus: null
 }
 
 export default function reducer (state = defaultState, action) {
