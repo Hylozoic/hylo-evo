@@ -1,6 +1,7 @@
 import orm from 'store/models'
 import {
   findMentions,
+  findTopics,
   getMentionResults
 } from './HyloEditor.store'
 import {
@@ -68,5 +69,11 @@ describe('getMentionResults selector', () => {
   it('transforms avatarURL key to avatar on results', () => {
     const results = getMentionResults(getSearchState('test'))
     expect(results.get(0).keySeq().toArray().some(k => k === 'avatar')).toBeTruthy()
+  })
+})
+
+describe('findTopics', () => {
+  it('queries communityTopics at the top level', () => {
+    expect(findTopics('foo')).toMatchSnapshot()
   })
 })

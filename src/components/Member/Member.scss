@@ -1,11 +1,12 @@
 $member-width: 288px;
 $member-padding: 16px;
 $avatar-size: 120px;
-
+$skill-vertical-margin: 8px; 
 .member {
   position: relative;
   display: block;
   padding: $member-padding;
+  padding-bottom: $member-padding - $skill-vertical-margin;
   text-align: center;
   border: 1px solid rgba(54,60,60,0.10);
   border-radius: 4px;
@@ -49,5 +50,7 @@ $avatar-size: 120px;
 }
 
 .skill {
-  margin-right: 10px;
+  margin-left: 4px;
+  margin-right: 4px;
+  margin-bottom: $skill-vertical-margin;
 }

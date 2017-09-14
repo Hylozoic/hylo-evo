@@ -1,5 +1,6 @@
 import { FETCH_POSTS } from 'store/constants'
 import { get } from 'lodash/fp'
+import { getPostFieldsFragment } from 'store/actions/fetchPost'
 
 export const MODULE_NAME = 'FeedList'
 
@@ -60,37 +61,7 @@ posts(
 ) {
   hasMore
   items {
-    id
-    title
-    details
-    type
-    creator {
-      id
-      name
-      avatarUrl
-      tagline
-    }
-    createdAt
-    updatedAt
-    commenters(first: 3) {
-      id
-      name
-      avatarUrl
-    }
-    commentersTotal
-    linkPreview {
-      id
-      title
-      url
-      imageUrl
-    }
-    votesTotal
-    myVote
-    communities {
-      id
-      name
-      slug
-    }
+    ${getPostFieldsFragment(false)}
   }
 }`
 

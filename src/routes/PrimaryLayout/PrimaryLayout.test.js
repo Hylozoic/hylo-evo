@@ -29,7 +29,7 @@ describe('RedirectToCommunity', () => {
 
   beforeEach(() => {
     session = orm.mutableSession(orm.getEmptyState())
-    session.Person.create({ id: '1' })
+    session.Me.create({ id: '1' })
   })
 
   it('shows a Loading component if currentUser not set yet', () => {
@@ -39,19 +39,19 @@ describe('RedirectToCommunity', () => {
   })
 
   it('shows a Loading component if currentUser has no memberships', () => {
-    const user = session.Person.withId('1')
-    const wrapper = shallow(redirectIfCommunity(user)())
+    const me = session.Me.first()
+    const wrapper = shallow(redirectIfCommunity(me)())
     expect(wrapper.find('[data-styleName="loading-top"]').length).toBe(1)
   })
 
   it('sets `to` prop of Redirect correctly', () => {
     session.Community.create({ id: '1', slug: 'foo' })
     session.Membership.create({ id: '1', community: '1' })
-    const user = session.Person.withId('1')
-    user.set('memberships', [ '1' ])
+    const me = session.Me.first()
+    me.set('memberships', ['1'])
 
     const wrapper = shallow(<MemoryRouter>
-      {redirectIfCommunity(user)()}
+      {redirectIfCommunity(me)()}
     </MemoryRouter>)
 
     const expected = '/c/foo'

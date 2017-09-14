@@ -34,7 +34,7 @@ export default class TopNav extends Component {
     return <div styleName='topNavWrapper' className={className}>
       <div styleName='topNav' ref='topNav'>
         <Logo {...{communityOrNetwork: community || network, toggleDrawer, showLogoBadge}} />
-        <Title community={community} network={network} />
+        <Title community={community} network={network} onClick={toggleDrawer} />
         <div styleName='navIcons'>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
           <MessagesDropdown renderToggleChildren={showBadge =>
@@ -69,7 +69,7 @@ function Logo ({ communityOrNetwork, toggleDrawer, showLogoBadge }) {
   </span>
 }
 
-function Title ({ community, network }) {
+function Title ({ community, network, onClick }) {
   var [ label, name ] = ['GLOBAL', 'All Communities']
   if (community) {
     [ label, name ] = ['COMMUNITY', community.name]
@@ -77,10 +77,10 @@ function Title ({ community, network }) {
     [ label, name ] = ['NETWORK', network.name]
   }
 
-  return <div styleName='title'>
+  return <a styleName='title' onClick={onClick}>
     <div styleName='label'>
       {label}
     </div>
     <div styleName='communityName'>{name}</div>
-  </div>
+  </a>
 }

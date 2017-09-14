@@ -23,18 +23,25 @@ export function mapDispatchToProps (dispatch, props) {
       if (props.collapsed) {
         return dispatch(push(removePostFromUrl(window.location.pathname)))
       }
+    },
+    goBack: event => {
+      // this action is assigned to an element inside a link, so preventDefault
+      // stops the link from being clicked
+      event.preventDefault()
+      return dispatch(push(props.backUrl))
     }
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { feedListProps, communityTopics } = stateProps
-  const { clearBadge, expand, dropPostResultsMaker } = dispatchProps
+  const { clearBadge, expand, dropPostResultsMaker, goBack } = dispatchProps
   return {
     ...ownProps,
     communityTopics,
     clearBadge,
     expand,
+    goBack,
     clearFeedList: dropPostResultsMaker(feedListProps)
   }
 }

@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommunityControl renders correctly 1`] = `
+<div
+  data-styleName="community-control"
+>
+  <div
+    data-styleName="row"
+  >
+    <Link
+      replace={false}
+      to="/all"
+    >
+      <RoundImage
+        data-styleName="avatar"
+        medium={true}
+      />
+    </Link>
+    <Link
+      data-styleName="name"
+      replace={false}
+      to="/all"
+    >
+      Foomunity
+    </Link>
+    <span
+      data-styleName="leave-button"
+      onClick={[Function]}
+    >
+      Leave
+    </span>
+  </div>
+  <div
+    data-styleName="settings-row"
+  >
+    <span
+      data-styleName="settings-label"
+    >
+      Receive Notifications:
+    </span>
+    <span
+      data-styleName="settings"
+    >
+      <span
+        data-styleName="checkbox-label"
+      >
+        Email
+      </span>
+      <CheckBox
+        checked={false}
+        onChange={[Function]}
+      />
+      <span
+        data-styleName="checkbox-label"
+      >
+        Mobile
+      </span>
+      <CheckBox
+        checked={true}
+        onChange={[Function]}
+      />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`CommunitySettingsTab renders a list of CommunityControls 1`] = `
+<div>
+  <CommunityControl
+    membership={
+      Object {
+        "id": 1,
+      }
+    }
+  />
+  <CommunityControl
+    membership={
+      Object {
+        "id": 2,
+      }
+    }
+  />
+  <CommunityControl
+    membership={
+      Object {
+        "id": 3,
+      }
+    }
+  />
+  <CommunityControl
+    membership={
+      Object {
+        "id": 4,
+      }
+    }
+  />
+</div>
+`;

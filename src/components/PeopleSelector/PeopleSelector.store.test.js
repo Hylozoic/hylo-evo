@@ -115,6 +115,7 @@ describe('connector', () => {
       })
       session.Membership.create({
         ...person.memberships[0],
+        person: person.id,
         community: person.memberships[0].community.id
       })
       session.Community.create(person.memberships[0].community)
@@ -165,16 +166,16 @@ describe('connector', () => {
       state.PeopleSelector.autocomplete = 'BR'
       const expected = [
         {
-          "id": "72203",
-          "name": "Brooks Funk",
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg",
-          "community": "Associate"
+          'id': '72203',
+          'name': 'Brooks Funk',
+          'avatarUrl': 'https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg',
+          'community': 'Associate'
         },
         {
-          "id": "72019",
-          "name": "Vita Breitenberg",
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/markjenkins/128.jpg",
-          "community": "Associate"
+          'id': '72019',
+          'name': 'Vita Breitenberg',
+          'avatarUrl': 'https://s3.amazonaws.com/uifaces/faces/twitter/markjenkins/128.jpg',
+          'community': 'Associate'
         }
       ]
       const actual = store.matchesSelector(state)
@@ -186,10 +187,10 @@ describe('connector', () => {
       state.PeopleSelector.autocomplete = 'BR'
       const expected = [
         {
-          "id": "72203",
-          "name": "Brooks Funk",
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg",
-          "community": "Associate"
+          'id': '72203',
+          'name': 'Brooks Funk',
+          'avatarUrl': 'https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg',
+          'community': 'Associate'
         }
       ]
       const actual = store.matchesSelector(state)
@@ -201,10 +202,10 @@ describe('connector', () => {
       state.PeopleSelector.autocomplete = 'BRE'
       const expected = [
         {
-          "id": "72019",
-          "name": "Vita Breitenberg",
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/markjenkins/128.jpg",
-          "community": "Associate"
+          'id': '72019',
+          'name': 'Vita Breitenberg',
+          'avatarUrl': 'https://s3.amazonaws.com/uifaces/faces/twitter/markjenkins/128.jpg',
+          'community': 'Associate'
         }
       ]
       const actual = store.matchesSelector(state)
@@ -215,10 +216,10 @@ describe('connector', () => {
       it('picks the correct properties', () => {
         const person = session.Person.withId('72203')
         const expected = {
-          "id": "72203",
-          "name": "Brooks Funk",
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg",
-          "community": "Associate"
+          'id': '72203',
+          'name': 'Brooks Funk',
+          'avatarUrl': 'https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg',
+          'community': 'Associate'
         }
         const actual = store.pickPersonListItem(person)
         expect(actual).toEqual(expected)

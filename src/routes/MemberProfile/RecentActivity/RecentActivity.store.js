@@ -18,16 +18,18 @@ const recentActivityQuery =
   person (id: $id) {
     id
     comments (first: $first, order: $order) {
-      id
-      text
-      creator {
+      items {
         id
+        text
+        creator {
+          id
+        }
+        post {
+          id
+          title
+        }
+        createdAt
       }
-      post {
-        id
-        title
-      }
-      createdAt
     }
     ${postsQueryFragment}
   }
@@ -72,7 +74,8 @@ export const activitySelector = createSelector(
       }))
       const posts = person.posts.toModelArray().map(post => ({
         ...post.ref,
-        creator: post.creator.ref,
+        creator: post.creator,
+        linkPreview: post.linkPreview,
         commenters: post.commenters.toRefArray(),
         communities: post.communities.toRefArray()
       }))

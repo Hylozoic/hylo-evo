@@ -3,7 +3,7 @@ import { merge } from 'lodash'
 import reducer, {
   FETCH_LINK_PREVIEW,
   REMOVE_LINK_PREVIEW,
-  RESET_LINK_PREVIEW,
+  CLEAR_LINK_PREVIEW,
   defaultState,
   fetchLinkPreview
 } from './PostEditor.store'
@@ -53,12 +53,12 @@ describe('PostEditor store', () => {
       })
     })
 
-    describe(`when ${RESET_LINK_PREVIEW}`, () => {
-      const action = {type: RESET_LINK_PREVIEW}
-      test('linkPreviewId is cleared and status set to "reset"', () => {
+    describe(`when ${CLEAR_LINK_PREVIEW}`, () => {
+      const action = {type: CLEAR_LINK_PREVIEW}
+      test('linkPreviewId is cleared and status set to "cleared"', () => {
         const finalState = reducer(defaultState, action)
         expect(finalState.linkPreviewId).toBeFalsy()
-        expect(finalState.linkPreviewStatus).toEqual('reset')
+        expect(finalState.linkPreviewStatus).toEqual('cleared')
         expect(finalState).toMatchSnapshot()
       })
     })

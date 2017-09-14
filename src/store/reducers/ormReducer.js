@@ -5,7 +5,6 @@ import {
   CREATE_COMMENT_PENDING,
   CREATE_MESSAGE,
   CREATE_MESSAGE_PENDING,
-  EXTRACT_MODEL,
   FETCH_NOTIFICATIONS,
   FETCH_MESSAGES_PENDING,
   LEAVE_COMMUNITY,
@@ -53,9 +52,17 @@ import {
 import {
   DELETE_COMMENT_PENDING
 } from 'routes/PostDetail/Comments/Comment/Comment.store'
+<<<<<<< HEAD
+=======
+import {
+  UPDATE_POST_PENDING
+} from 'components/PostEditor/PostEditor.store'
+
+>>>>>>> master
 import orm from 'store/models'
-import ModelExtractor from './ModelExtractor'
 import { find } from 'lodash/fp'
+import extractModelsFromAction from './ModelExtractor/extractModelsFromAction'
+import { isPromise } from 'util/index'
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
@@ -84,18 +91,13 @@ export default function ormReducer (state = {}, action) {
     first && first.update({time: Date.now()})
   }
 
+  if (payload && !isPromise(payload) && meta && meta.extractModel) {
+    extractModelsFromAction(action, session)
+  }
+
   let membership, community, person, invite, post
 
   switch (type) {
-    case EXTRACT_MODEL:
-      ModelExtractor.addAll({
-        session,
-        root: payload,
-        modelName: meta.modelName,
-        append: meta.append
-      })
-      break
-
     case CREATE_COMMENT_PENDING:
       Comment.create({
         id: meta.tempId,
@@ -331,6 +333,12 @@ export default function ormReducer (state = {}, action) {
     case DELETE_COMMENT_PENDING:
       const comment = Comment.withId(meta.id)
       comment.delete()
+      break
+
+    case UPDATE_POST_PENDING:
+      // deleting all attachments here because we restore them from the result of the UPDATE_POST action
+      post = Post.withId(meta.id)
+      post.attachments.toModelArray().map(a => a.delete())
       break
   }
   return session.state

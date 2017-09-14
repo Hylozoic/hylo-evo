@@ -7,8 +7,8 @@ export function mapStateToProps (state, props) {
   const { comment } = props
   const currentUser = getMe(state, props)
   const community = getCommunityForCurrentRoute(state, props)
-  const canModerate = comment.creator.id === currentUser.id ||
-    currentUser.canModerate(community)
+  const canModerate = currentUser && (comment.creator.id === currentUser.id ||
+    currentUser.canModerate(community))
 
   return {
     canModerate

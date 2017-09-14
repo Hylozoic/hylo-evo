@@ -90,7 +90,7 @@ it('marks as read when scrolled to bottom by user', () => {
 describe('when receiving a new message', () => {
   beforeEach(() => {
     // we're using `mount` instead of `shallow` here because we're testing
-    // componentDidUpdate, but `setProps` does not trigger `componentDidUpdate`
+    // componentDidUpdate, and `setProps` does not trigger `componentDidUpdate`
     // with `shallow` unless you use an experimental flag.
     // https://github.com/airbnb/enzyme/issues/34
     wrapper = mountWithMockRouter(
