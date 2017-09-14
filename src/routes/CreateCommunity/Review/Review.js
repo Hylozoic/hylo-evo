@@ -213,7 +213,7 @@ export function ReviewTextInput ({label, value, editHandler, onChange, readOnly 
         value={value}
         theme={inputTheme}
         readOnly={readOnly}
-        showClearButton={false}
+        noClearButton
         onChange={onChange}
       />
     </div>

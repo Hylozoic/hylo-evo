@@ -92,7 +92,7 @@ export default class Domain extends Component {
             onChange={this.handleDomainChange}
             theme={inputTheme}
             placeholder='Choose a URL'
-            showClearButton={false}
+            noClearButton
             onEnter={this.onEnter}
           />
           { this.state.error && <span styleName='arrow-up' /> }

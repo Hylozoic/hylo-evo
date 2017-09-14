@@ -74,7 +74,7 @@ export default class Name extends Component {
             value={this.state.communityName}
             theme={inputTheme}
             placeholder="What's the name of your community?"
-            showClearButton={false}
+            noClearButton
             onEnter={this.onEnter}
           />
           { this.state.error && <span styleName='arrow-up' /> }
