@@ -87,8 +87,8 @@ export function CommunityRow ({ community, newPostCount }) {
 }
 
 export function NetworkRow ({ network }) {
-  const { id, memberships, name, slug } = network
-  const imageStyle = bgImageStyle(network.avatarUrl)
+  const { id, memberships, name, slug, avatarUrl } = network
+  const imageStyle = bgImageStyle(avatarUrl)
   return <li key={`network${id}`}>
     <Link to={`/n/${slug}`} styleName='s.networkRow' title={name} className={badgeHoverStyles.parent}>
       <div styleName='s.network-name-wrapper'>
