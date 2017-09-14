@@ -112,6 +112,10 @@ $new-community-spacing: 16px;
   }
 }
 
+.networkList li {
+  padding-right: 0;
+}
+
 .networkCommunitiesList {
   margin: $ul-vertical-spacing 0 0 $ul-horizontal-spacing;
 
