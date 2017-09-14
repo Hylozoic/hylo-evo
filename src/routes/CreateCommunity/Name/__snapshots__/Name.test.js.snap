@@ -48,10 +48,10 @@ exports[`Name renders correctly 1`] = `
       />
       <TextInput
         name="community-name"
+        noClearButton={true}
         onChange={[Function]}
         onEnter={[Function]}
         placeholder="What's the name of your community?"
-        showClearButton={false}
         theme={
           Object {
             "inputStyle": "modal-input",

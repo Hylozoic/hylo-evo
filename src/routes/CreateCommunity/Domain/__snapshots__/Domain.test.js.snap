@@ -49,10 +49,10 @@ exports[`Domain renders correctly 1`] = `
       </span>
       <TextInput
         name="community-name"
+        noClearButton={true}
         onChange={[Function]}
         onEnter={[Function]}
         placeholder="Choose a URL"
-        showClearButton={false}
         theme={
           Object {
             "inputStyle": "modal-input",

@@ -66,7 +66,6 @@ export default class Domain extends Component {
     if (communityDomain) this.setState({communityDomain: communityDomain})
   }
   render () {
-    console.log('state', this.state)
     return <div styleName='flex-wrapper'>
       <ModalSidebar
         imageUrl={this.imageChooser()}

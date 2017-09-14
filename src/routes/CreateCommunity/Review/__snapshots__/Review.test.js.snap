@@ -99,9 +99,9 @@ exports[`ReviewTextInput renders correctly 1`] = `
   >
     <TextInput
       name="community-name"
+      noClearButton={true}
       onChange={[Function]}
       readOnly={false}
-      showClearButton={false}
       theme={
         Object {
           "inputStyle": "modal-input partial",
