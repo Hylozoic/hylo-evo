@@ -31,7 +31,8 @@ function presentSearchResult (searchResult, session) {
       creator: content.creator,
       commenters: content.commenters.toModelArray(),
       communities: content.communities.toModelArray(),
-      linkPreview: content.linkPreview
+      linkPreview: content.linkPreview,
+      fileAttachments: content.attachments.filter(a => a.type === 'file').toModelArray()
     }
   }
 
