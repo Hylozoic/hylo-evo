@@ -6,7 +6,7 @@ import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getPost from 'store/selectors/getPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import { FETCH_POST, UPLOAD_IMAGE } from 'store/constants'
+import { FETCH_POST, UPLOAD_ATTACHMENT } from 'store/constants'
 import {
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
@@ -33,7 +33,7 @@ export function mapStateToProps (state, props) {
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
-  const uploadImagePending = state.pending[UPLOAD_IMAGE]
+  const uploadImagePending = state.pending[UPLOAD_ATTACHMENT]
   const images = getAttachments(state, {type: 'image'})
   // TODO: this should be a selector exported from AttachmentManager
   const showImagePreviews = !isEmpty(images) || uploadImagePending

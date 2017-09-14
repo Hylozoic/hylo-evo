@@ -1,8 +1,12 @@
 import { pick } from 'client/filepicker'
-import { UPLOAD_IMAGE } from 'store/constants'
+import { UPLOAD_ATTACHMENT } from 'store/constants'
 
-export function uploadImage (opts) {
-  let { type, id } = opts
+export function upload (opts) {
+  let {
+    type, // this is the type of thing that the upload is for, e.g. post
+    id, // this is the id of the thing that the upload is for
+    attachmentType // this is the type of the upload itself, e.g. image or file
+  } = opts
   let payload = new Promise((resolve, reject) => {
     pick({
       success: url => resolve({
@@ -24,5 +28,9 @@ export function uploadImage (opts) {
     })
   })
 
-  return {type: UPLOAD_IMAGE, payload, meta: {type, id}}
+  return {
+    type: UPLOAD_ATTACHMENT,
+    payload,
+    meta: {type, id, attachmentType}
+  }
 }

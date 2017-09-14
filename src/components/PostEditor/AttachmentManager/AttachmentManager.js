@@ -40,7 +40,7 @@ export default class AttachmentManager extends React.Component {
 const ImageManager = DragDropContext(HTML5Backend)(
 class ImageManager extends React.Component {
   render () {
-    const { postId, showAttachments, attachments, uploadImagePending, addAttachment, removeAttachment, switchAttachments } = this.props
+    const { postId, showAttachments, attachments, pending, addAttachment, removeAttachment, switchAttachments } = this.props
     if (!showAttachments) return null
 
     return <div styleName='image-manager'>
@@ -52,9 +52,10 @@ class ImageManager extends React.Component {
             switchImages={switchAttachments}
             position={i}
             key={i} />)}
-        {uploadImagePending && <div styleName='add-image'><Loading /></div>}
+        {pending && <div styleName='add-image'><Loading /></div>}
         <ChangeImageButton update={addAttachment}
-          uploadSettings={uploadSettings(postId)}>
+          uploadSettings={uploadSettings(postId)}
+          attachmentType='image'>
           <div styleName='add-image'>+</div>
         </ChangeImageButton>
       </div>
@@ -101,7 +102,7 @@ class ImagePreview extends React.Component {
 }))
 
 export function FileManager ({
-  postId, showAttachments, attachments, uploadImagePending, addAttachment, removeAttachment
+  postId, showAttachments, attachments, pending, addAttachment, removeAttachment
 }) {
   return <div styleName='file-manager'>
     <div styleName='section-label'>Files</div>
@@ -111,9 +112,10 @@ export function FileManager ({
           removeFile={removeAttachment}
           position={i}
           key={i} />)}
-      {uploadImagePending && <div styleName='add-file'><Loading /></div>}
+      {pending && <div styleName='add-file'><Loading /></div>}
       <ChangeImageButton update={addAttachment}
-        uploadSettings={uploadSettings(postId)}>
+        uploadSettings={uploadSettings(postId)}
+        attachmentType='file'>
         <div styleName='add-file'>+</div>
       </ChangeImageButton>
     </div>

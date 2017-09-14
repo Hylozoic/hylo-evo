@@ -1,5 +1,5 @@
 import { mapStateToProps } from './ChangeImageButton.connector'
-import { UPLOAD_IMAGE } from 'store/constants'
+import { UPLOAD_ATTACHMENT } from 'store/constants'
 
 describe('mapStateToProps', () => {
   const props = {
@@ -22,7 +22,7 @@ describe('mapStateToProps', () => {
   it("sets loading to false when pending doesn't match settings", () => {
     const state = {
       pending: {
-        [UPLOAD_IMAGE]: {
+        [UPLOAD_ATTACHMENT]: {
           id: '124',
           subject: 'user-avatar'
         }
@@ -37,7 +37,7 @@ describe('mapStateToProps', () => {
   it('sets loading to true when pending matches settings', () => {
     const state = {
       pending: {
-        [UPLOAD_IMAGE]: {
+        [UPLOAD_ATTACHMENT]: {
           id: '123',
           subject: 'user-avatar'
         }

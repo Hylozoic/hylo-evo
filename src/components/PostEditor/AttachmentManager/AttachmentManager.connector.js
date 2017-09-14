@@ -1,6 +1,6 @@
-import { isEmpty } from 'lodash/fp'
+import { get, isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
-import { UPLOAD_IMAGE } from 'store/constants'
+import { UPLOAD_ATTACHMENT } from 'store/constants'
 import {
   addAttachment,
   removeAttachment,
@@ -11,16 +11,16 @@ import {
 } from './AttachmentManager.store'
 
 export function mapStateToProps (state, props) {
-  const uploadImagePending = state.pending[UPLOAD_IMAGE]
+  const pending = get(['pending', UPLOAD_ATTACHMENT, 'attachmentType'], state) === props.type
   const attachments = getAttachments(state, props)
   const attachmentsFromPost = makeAttachmentSelector(props.type)(state, props)
-  const showAttachments = !isEmpty(attachments) || uploadImagePending || props.type === 'file' // last clause is for testing only
+  const showAttachments = !isEmpty(attachments) || pending || props.type === 'file' // last clause is for testing only
 
   return {
     attachments,
     attachmentsFromPost,
     showAttachments,
-    uploadImagePending
+    pending
   }
 }
 
