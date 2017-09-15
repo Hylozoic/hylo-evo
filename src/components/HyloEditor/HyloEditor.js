@@ -28,7 +28,23 @@ export default class HyloEditor extends Component {
     contentHTML: '',
     readOnly: false,
     mentionResults: Immutable.List(),
-    topicResults: Immutable.List()
+    topicResults: Immutable.List(),
+    themes: {
+      base: {
+        mention: styles.mention,
+        mentionSuggestions: styles.mentionSuggestionsPostEditor,
+        mentionSuggestionsEntry: styles.mentionSuggestionsEntry,
+        mentionSuggestionsEntryFocused: styles.mentionSuggestionsEntryFocused,
+        mentionSuggestionsEntryText: styles.mentionSuggestionsEntryText,
+        mentionSuggestionsEntryAvatar: styles.mentionSuggestionsEntryAvatar
+      },
+      PostEditor: {
+        mentionSuggestions: styles.mentionSuggestionsPostEditor
+      },
+      CommentForm: {
+        mentionSuggestions: styles.mentionSuggestionsCommentForm
+      }
+    }
   }
 
   defaultState = ({ contentHTML }) => {
@@ -41,15 +57,9 @@ export default class HyloEditor extends Component {
   constructor (props) {
     super(props)
     // https://github.com/draft-js-plugins/draft-js-plugins/issues/298
+    const { themes } = this.props
     this._mentionsPlugin = createMentionPlugin({
-      theme: {
-        mention: styles.mention,
-        mentionSuggestions: styles['mentionSuggestions' + props.parentComponent],
-        mentionSuggestionsEntry: styles.mentionSuggestionsEntry,
-        mentionSuggestionsEntryFocused: styles.mentionSuggestionsEntryFocused,
-        mentionSuggestionsEntryText: styles.mentionSuggestionsEntryText,
-        mentionSuggestionsEntryAvatar: styles.mentionSuggestionsEntryAvatar
-      }
+      theme: Object.assign(themes.base, themes[this.props.parentComponent])
     })
     this._topicsPlugin = createMentionPlugin({
       mentionTrigger: '#',
