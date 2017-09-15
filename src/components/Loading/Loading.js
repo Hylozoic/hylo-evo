@@ -7,6 +7,8 @@ export default function Loading ({ type }) {
       return <div styleName='loading-fullscreen'><SvgLoader /></div>
     case 'top':
       return <div styleName='loading-top'><SvgLoader /></div>
+    case 'bottom':
+      return <div styleName='loading-bottom'><SvgLoader /></div>
     default:
       return <div styleName='loading'><SvgLoader /></div>
   }
