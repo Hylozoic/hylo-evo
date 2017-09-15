@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { mapStateToProps } from './JoinCommunity.connector'
+import { MODULE_NAME } from './JoinCommunity.store'
 import JoinCommunity from './JoinCommunity'
 
 const defaultProps = {
@@ -21,7 +22,7 @@ describe('connector', () => {
   describe('mapStateToProps', () => {
     it('hasCheckedValidToken false when there is not a validToken key', () => {
       const state = {
-        JoinCommunity: {}
+        [MODULE_NAME]: {}
       }
       const actual = mapStateToProps(state, defaultProps)
       expect(actual.hasCheckedValidToken).toBeFalsy()
@@ -29,7 +30,7 @@ describe('connector', () => {
 
     it('hasCheckedValidToken false when there is a null validToken key', () => {
       const state = {
-        JoinCommunity: {
+        [MODULE_NAME]: {
           validToken: null
         }
       }
@@ -40,7 +41,7 @@ describe('connector', () => {
     it('gets the new newCommunitySlug from the newMembership', () => {
       const newCommunitySlug = 'newcommunity'
       const state = {
-        JoinCommunity: {
+        [MODULE_NAME]: {
           membership: {
             community: {
               slug: newCommunitySlug
@@ -54,7 +55,7 @@ describe('connector', () => {
 
     it('validToken gets set', () => {
       const state = {
-        JoinCommunity: {
+        [MODULE_NAME]: {
           valid: true
         }
       }

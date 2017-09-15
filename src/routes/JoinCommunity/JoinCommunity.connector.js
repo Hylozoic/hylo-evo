@@ -5,11 +5,13 @@ import getQueryParam from 'store/selectors/getQueryParam'
 import getMe from 'store/selectors/getMe'
 import getIsLoggedIn from 'store/selectors/getIsLoggedIn'
 import { fetchForCurrentUser } from 'routes/PrimaryLayout/PrimaryLayout.store'
-import { useInvitation, checkInvitation } from './JoinCommunity.store'
+import {
+  getNewMembership, getValidToken, useInvitation, checkInvitation
+} from './JoinCommunity.store'
 
 export function mapStateToProps (state, props) {
-  const newMembership = get('JoinCommunity.membership', state)
-  const validToken = get('JoinCommunity.valid', state)
+  const newMembership = getNewMembership(state)
+  const validToken = getValidToken(state)
   return {
     currentUser: getMe(state),
     invitationToken: getQueryParam('token', state, props),
