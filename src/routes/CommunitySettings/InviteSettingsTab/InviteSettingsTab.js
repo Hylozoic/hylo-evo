@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import styles from './InviteSettingsTab.scss'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
-import TextInput from 'components/TextInput'
 import TextareaAutosize from 'react-textarea-autosize'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { humanDate } from 'hylo-utils/text'
@@ -76,10 +75,22 @@ export default class InviteSettingsTab extends Component {
 
     const sendInvites = () => {
       createInvitations(parseEmailList(emails), message)
+      .then(res => {
+        const { invitations } = res.payload.data.createInvitation
+        const invalidEmails = invitations.filter(email => email.error).map(e => e.email)
+        const emailsDelivered = invitations.length - invalidEmails.length
+        const pluralizeEmails = emailsDelivered === 1 ? 'email' : 'emails'
+        const errorMessage = `Sent ${emailsDelivered} ${pluralizeEmails}. The emails below are invalid.`
+        const successMessage = `Sent ${emailsDelivered} ${pluralizeEmails}`
+        this.setState({
+          emails: invalidEmails.toString(),
+          errorMessage: invalidEmails.length > 0 ? errorMessage : null,
+          successMessage: invalidEmails.length === 0 ? successMessage : null
+        })
+      })
 
       // TODO we should be validating emails here.  and then clear the emails input
       // AFTER we successfully validated and sent them out.
-      this.setState({emails: ''})
     }
 
     const resendAllOnClick = () => {
@@ -127,13 +138,14 @@ export default class InviteSettingsTab extends Component {
           </CopyToClipboard>}
         </div>
       </div>}
-
       <div styleName='styles.email-section'>
-        <TextInput styleName='styles.email-addresses-input'
+        {this.state.errorMessage && <div>{this.state.errorMessage}</div>}
+        {this.state.successMessage && <div>{this.state.successMessage}</div>}
+        <TextareaAutosize minRows={5} styleName='styles.invite-msg-input'
           placeholder='Type email addresses'
+          value={this.state.emails}
           disabled={pendingCreate}
-          onChange={(event) => this.setState({emails: event.target.value})}
-          value={this.state.emails} />
+          onChange={(event) => this.setState({emails: event.target.value})} />
         <TextareaAutosize minRows={5} styleName='styles.invite-msg-input'
           value={this.state.message}
           disabled={pendingCreate}
