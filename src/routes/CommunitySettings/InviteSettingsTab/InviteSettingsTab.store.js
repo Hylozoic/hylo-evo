@@ -35,8 +35,9 @@ export function createInvitations (communityId, emails, message) {
           invitations {
             id,
             email,
-            created_at
-            last_sent_at
+            created_at,
+            last_sent_at,
+            error
           }
         }
       }`,
