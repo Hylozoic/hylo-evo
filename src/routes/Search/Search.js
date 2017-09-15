@@ -63,13 +63,13 @@ export default class Search extends Component {
         <div styleName='search-results'
           id={SEARCH_RESULTS_ID}
           ref={x => { this.searchResultsDiv = x }}>
-          {pending && <Loading type='top' />}
           {searchResults.map(sr =>
             <SearchResult key={sr.id}
               searchResult={sr}
               term={searchForInput}
               showPostDetails={showPostDetails}
               showPerson={showPerson} />)}
+          {pending && <Loading type='bottom' />}
           <ScrollListener onBottom={() => fetchMoreSearchResults()}
             elementId={SEARCH_RESULTS_ID} />
         </div>

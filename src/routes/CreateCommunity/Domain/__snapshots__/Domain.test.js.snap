@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Domain renders correctly 1`] = `
+<div
+  data-styleName="flex-wrapper"
+>
+  <ModalSidebar
+    body="Your URL is the address that people will use to access your community online."
+    header="Choose an address for your community"
+    imageUrl="/happy-axolotl.png"
+    onClick={[Function]}
+    secondParagraph="The shorter the better!"
+    theme={
+      Object {
+        "sidebarHeader": "sidebar-header-full-page",
+        "sidebarText": "gray-text sidebar-text-full-page",
+      }
+    }
+  />
+  <div
+    data-styleName="panel"
+  >
+    <div>
+      <span
+        data-styleName="step-count"
+      >
+        STEP 2/3
+      </span>
+    </div>
+    <div
+      data-styleName="center"
+    >
+      <div
+        data-styleName="logo center"
+        style={
+          Object {
+            "backgroundImage": "url(/logo-white.svg)",
+          }
+        }
+      />
+    </div>
+    <div
+      data-styleName="center-vertically"
+    >
+      <span
+        data-styleName="text-input-label"
+      >
+        Choose a URL
+      </span>
+      <TextInput
+        name="community-name"
+        noClearButton={true}
+        onChange={[Function]}
+        onEnter={[Function]}
+        placeholder="Choose a URL"
+        theme={
+          Object {
+            "inputStyle": "modal-input",
+            "wrapperStyle": "center",
+          }
+        }
+        type="text"
+        value="hylo.com/c/communityDomain"
+      />
+    </div>
+  </div>
+  <ModalFooter
+    continueText="Continue"
+    hidePrevious={false}
+    previous={[Function]}
+    submit={[Function]}
+  />
+</div>
+`;

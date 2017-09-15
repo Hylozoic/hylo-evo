@@ -26,6 +26,7 @@ import Search from 'routes/Search/Search.store'
 import queryResults from './queryResults'
 import FeedList from 'components/FeedList/FeedList.store'
 import JoinCommunity from 'routes/JoinCommunity/JoinCommunity.store'
+import CreateCommunity from 'routes/CreateCommunity/CreateCommunity.store'
 
 import { handleSetState, composeReducers } from './util'
 
@@ -58,7 +59,8 @@ const combinedReducers = combineReducers({
   ModeratorsSettings,
   Search,
   FeedList,
-  JoinCommunity
+  JoinCommunity,
+  CreateCommunity
 })
 
 export default composeReducers(combinedReducers, handleSetState)

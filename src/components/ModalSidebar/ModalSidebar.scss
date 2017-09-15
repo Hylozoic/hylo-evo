@@ -1,0 +1,93 @@
+.sidebar {
+  min-height: 1px; // Prevent collapsing
+  height: 100%;
+  flex: 0.3;
+  margin-left: 24px;
+  margin-top: 16px;
+  margin-right: 30px;
+}
+
+.sidebar-header {
+  color: $color-caribbean-green;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.gray-text {
+  color: $color-dove-gray-75;
+}
+
+.sidebar-text {
+  font-size: 14px;
+  font-weight: lighter;
+}
+
+.close-button {
+  letter-spacing: 1px;
+  font-size: 10px;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.sidebar-text-full-page {
+  font-size: 14px;
+  font-weight: lighter;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.sidebar-header-full-page {
+  color: $color-caribbean-green;
+  margin-top: 20px;
+  font-size: 18px;
+  padding-left: 25px;
+  padding-right: 35px;
+}
+
+.sidebar-image {
+  position: absolute;
+  bottom: 0;
+  height: 150px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.sidebar-dialog {
+  font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 195px;
+  font-style: italic;
+  margin-left: 50px;
+}
+
+.sidebar-dialog-two {
+  font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 180px;
+  font-style: italic;
+  margin-left: 50px;
+}
+
+.dialog-line {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 140px;
+  margin-left: 100px;
+}
+.dialog-line:after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border: 1px solid transparent;
+  border-bottom-color: black;
+  top: -5px;
+  left: 50%;
+  border-radius: 50%;
+  transform: rotate(255deg);
+}

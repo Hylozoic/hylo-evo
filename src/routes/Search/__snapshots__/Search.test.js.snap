@@ -95,9 +95,6 @@ exports[`Search matches the latest snapshot 1`] = `
       data-styleName="search-results"
       id="search-results"
     >
-      <Loading
-        type="top"
-      />
       <SearchResult
         searchResult={
           Object {
@@ -107,6 +104,9 @@ exports[`Search matches the latest snapshot 1`] = `
         showPerson={[Function]}
         showPostDetails={[Function]}
         term="cat"
+      />
+      <Loading
+        type="bottom"
       />
       <ScrollListener
         elementId="search-results"

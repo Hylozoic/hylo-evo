@@ -51,6 +51,7 @@ exports[`SearchBar matches the latest snapshot 1`] = `
 >
   <TextInput
     data-styleName="search-input"
+    noClearButton={true}
     onChange={[Function]}
     placeholder="Search topics"
     value="test"

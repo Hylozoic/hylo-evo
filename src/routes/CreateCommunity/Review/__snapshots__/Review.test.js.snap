@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Review renders correctly 1`] = `
+<div
+  data-styleName="flex-wrapper"
+>
+  <ModalSidebar
+    body="You can always come back and change your details at any time"
+    header="Everything looking good?"
+    imageUrl="/grooving-axolotl.png"
+    onClick={[Function]}
+    theme={
+      Object {
+        "sidebarHeader": "sidebar-header-full-page",
+        "sidebarText": "gray-text sidebar-text-full-page",
+      }
+    }
+  />
+  <div
+    data-styleName="panel"
+  >
+    <div>
+      <span
+        data-styleName="step-count"
+      >
+        STEP 3/3
+      </span>
+    </div>
+    <div
+      data-styleName="center"
+    >
+      <div
+        data-styleName="logo center"
+        style={
+          Object {
+            "backgroundImage": "url(/logo-white.svg)",
+          }
+        }
+      />
+    </div>
+    <div
+      data-styleName="center-review"
+    >
+      <ReviewTextInput
+        editHandler={[Function]}
+        inputRef={[Function]}
+        label="Your Name"
+        onChange={[Function]}
+        onEnter={[Function]}
+        readOnly={true}
+        value=""
+      />
+      <ReviewTextInput
+        editHandler={[Function]}
+        inputRef={[Function]}
+        label="Your Email"
+        onChange={[Function]}
+        onEnter={[Function]}
+        readOnly={true}
+        value=""
+      />
+      <ReviewTextInput
+        editHandler={[Function]}
+        inputRef={[Function]}
+        label="Community Name"
+        onChange={[Function]}
+        onEnter={[Function]}
+        readOnly={true}
+        value="communityName"
+      />
+      <ReviewTextInput
+        editHandler={[Function]}
+        inputRef={[Function]}
+        label="URL"
+        onChange={[Function]}
+        onEnter={[Function]}
+        readOnly={true}
+        value="hylo.com/c/communityDomain"
+      />
+    </div>
+  </div>
+  <ModalFooter
+    continueText="Finish Up"
+    showPrevious={false}
+    submit={[Function]}
+  />
+</div>
+`;
+
+exports[`ReviewTextInput renders correctly 1`] = `
+<div
+  data-styleName="review-input-text-row"
+>
+  <div
+    data-styleName="review-input-text-label"
+  >
+    <span>
+      label
+    </span>
+  </div>
+  <div
+    data-styleName="review-input-text"
+  >
+    <TextInput
+      name="community-name"
+      noClearButton={true}
+      onChange={[Function]}
+      readOnly={false}
+      theme={
+        Object {
+          "inputStyle": "modal-input partial",
+          "wrapperStyle": "center",
+        }
+      }
+      type="text"
+      value="value"
+    />
+  </div>
+  <div
+    data-styleName="review-input-edit"
+  >
+    <span
+      data-styleName="edit-button"
+      onClick={[Function]}
+    >
+      Edit
+    </span>
+  </div>
+</div>
+`;

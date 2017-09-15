@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Privacy renders correctly 1`] = `
+<div
+  data-styleName="flex-wrapper"
+>
+  <ModalSidebar
+    body="All good things start somewhere! Let's kick things off with a catchy name for your community."
+    header="Great, let's get started"
+    onClick={[Function]}
+    theme={
+      Object {
+        "sidebarHeader": "sidebar-header-full-page",
+        "sidebarText": "gray-text sidebar-text-full-page",
+      }
+    }
+  />
+  <div
+    data-styleName="panel"
+  >
+    <div>
+      <span
+        data-styleName="step-count"
+      >
+        STEP 3/4
+      </span>
+    </div>
+    <div
+      data-styleName="center"
+    >
+      <div
+        data-styleName="logo center"
+        style={
+          Object {
+            "backgroundImage": "url(/logo-white.svg)",
+          }
+        }
+      />
+    </div>
+    <div
+      data-styleName="center-vertically privacy-label-row"
+    >
+      <span
+        data-styleName="privacy-input-label"
+      >
+        SET THE PRIVACY LEVEL
+      </span>
+      <br />
+      <span
+        data-styleName="privacy-label"
+      >
+        This community is
+      </span>
+      <Dropdown
+        alignRight={true}
+        data-styleName="privacy-dropdown"
+        items={
+          Array [
+            Object {
+              "label": "public",
+              "onClick": [Function],
+            },
+            Object {
+              "label": "private",
+              "onClick": [Function],
+            },
+            Object {
+              "label": "unlisted",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <span>
+            private
+            <Icon
+              name="ArrowDown"
+            />
+          </span>
+        }
+      />
+    </div>
+  </div>
+  <ModalFooter
+    continueText="Continue"
+    previous={[Function]}
+    submit={[Function]}
+  />
+</div>
+`;

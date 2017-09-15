@@ -338,6 +338,5 @@ export default function ormReducer (state = {}, action) {
       post.attachments.toModelArray().map(a => a.delete())
       break
   }
-
   return session.state
 }

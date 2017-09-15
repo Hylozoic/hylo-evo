@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import getParam from 'store/selectors/getParam'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { createSelector } from 'reselect'
 import { omit } from 'lodash'
-import { get, includes, isEmpty } from 'lodash/fp'
+import { get, includes, isEmpty, debounce } from 'lodash/fp'
 import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
 import fetchCommunityTopics, { FETCH_COMMUNITY_TOPICS } from 'store/actions/fetchCommunityTopics'
 import { setSort, setSearch, getSort, getSearch } from './AllTopics.store'
@@ -56,33 +57,41 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = {
-  fetchCommunityTopicsRaw: fetchCommunityTopics,
-  toggleTopicSubscribe,
-  setSort,
-  setSearch
+export function mapDispatchToProps (dispatch, props) {
+  return {
+    ...bindActionCreators({
+      toggleTopicSubscribe,
+      setSort,
+      setSearch
+    }, dispatch),
+    fetchCommunityTopics: (communityId, { search, first, sortBy, offset } = {}) =>
+      debouncedFetch(dispatch, communityId, {search, first, sortBy, offset})
+  }
 }
+
+var debouncedFetch = debounce(250, (dispatch, communityId, { search, first, sortBy, offset }) => {
+  return dispatch(fetchCommunityTopics(communityId, {
+    autocomplete: search, first, sortBy, offset
+  }))
+})
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const {
     community, communityTopics, selectedSort, search, hasMore, fetchIsPending
   } = stateProps
   const {
-    setSort, setSearch, toggleTopicSubscribe, fetchCommunityTopicsRaw
+    setSort, setSearch, toggleTopicSubscribe
   } = dispatchProps
 
   const offset = get('length', communityTopics, 0)
   const first = 10
 
-  const fetchCommunityTopics = fetchIsPending
-   ? () => {}
-   : () => fetchCommunityTopicsRaw(community.id, {
-     sortBy: selectedSort, autocomplete: search, first
-   })
-
   const fetchMoreCommunityTopics = fetchIsPending || !hasMore
-    ? () => {}
-    : () => fetchCommunityTopicsRaw(community.id, {offset, sortBy: selectedSort, autocomplete: search, first})
+    ? () => { }
+    : () => dispatchProps.fetchCommunityTopics(community.id, {offset, sortBy: selectedSort, search, first})
+
+  const fetchCommunityTopics = () =>
+    dispatchProps.fetchCommunityTopics(community.id, { search, first, sortBy: selectedSort })
 
   return {
     ...omit(stateProps, 'community'),
