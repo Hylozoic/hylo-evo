@@ -34,6 +34,7 @@
   position: relative;
   top: -110px;
   padding-left: 24px;
+  display: flex;
 }
 
 .logo {
@@ -45,6 +46,7 @@
 .header-text {
   display: inline-block;
   vertical-align: top;
+  line-height: 1.1;
 }
 
 .header-name {
@@ -56,8 +58,6 @@
 }
 
 .header-subtitle {
-  position: relative;
-  top: -3px;
   @include font-regular;
   color: $color-white;
   font-size: 13px;
