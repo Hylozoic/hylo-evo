@@ -132,7 +132,7 @@ export function FilePreview ({ url, position, removeFile, fileSize }) {
   const name = path.basename(url)
   return <div styleName='file-preview'>
     <Icon name='Document' styleName='icon-document' />
-    <div styleName='file-name'>{name}</div>
+    <div styleName='file-name'>{decodeURIComponent(name)}</div>
     {fileSize && <div styleName='file-size'>{fileSize}</div>}
     <Icon name='Ex' styleName='remove-file' onClick={() => removeFile(position)} />
   </div>
