@@ -88,12 +88,12 @@ export default class InviteSettingsTab extends Component {
       }
     }
 
-    const expireOnClick = (invitationId) => {
-      expireInvitation(invitationId)
+    const expireOnClick = (invitationToken) => {
+      expireInvitation(invitationToken)
     }
 
-    const resendOnClick = (invitationId) => {
-      resendInvitation(invitationId)
+    const resendOnClick = (invitationToken) => {
+      resendInvitation(invitationToken)
     }
 
     return <div>

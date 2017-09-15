@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
-import { get, pick } from 'lodash/fp'
+import { get } from 'lodash/fp'
 
 export default createSelector(
   get('login'),
-  pick('isLoggedIn')
+  get('isLoggedIn')
 )

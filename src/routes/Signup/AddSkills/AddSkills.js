@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { get } from 'lodash/fp'
 import { isEmpty } from 'lodash'
 import SignupModalFooter from '../SignupModalFooter'
 import LeftSidebar from '../LeftSidebar'
@@ -24,11 +23,6 @@ export default class AddSkills extends Component {
 
   previous = () => {
     this.props.goToPreviousStep()
-  }
-
-  componentWillMount = () => {
-    const { currentUser } = this.props
-    if (currentUser && !get('settings.signupInProgress', currentUser)) this.props.goBack()
   }
 
   componentDidMount = () => {

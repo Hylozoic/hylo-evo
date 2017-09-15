@@ -5,6 +5,7 @@ import login from 'store/reducers/login'
 import pending from './pending'
 // Local store
 // generator-marker-local-store-import
+import AuthRoute from 'router/AuthRoute/AuthRoute.store'
 import SkillsSection from 'components/SkillsSection/SkillsSection.store'
 import NetworkCommunities from 'routes/NetworkCommunities/NetworkCommunities.store'
 import NetworkSettings from 'routes/NetworkSettings/NetworkSettings.store'
@@ -24,6 +25,7 @@ import AllTopics from 'routes/AllTopics/AllTopics.store'
 import Search from 'routes/Search/Search.store'
 import queryResults from './queryResults'
 import FeedList from 'components/FeedList/FeedList.store'
+import JoinCommunity from 'routes/JoinCommunity/JoinCommunity.store'
 import CreateCommunity from 'routes/CreateCommunity/CreateCommunity.store'
 
 import { handleSetState, composeReducers } from './util'
@@ -38,6 +40,7 @@ const combinedReducers = combineReducers({
 
   // Local store (Component)
   // generator-marker-local-store-reducer
+  AuthRoute,
   SkillsSection,
   NetworkCommunities,
   NetworkSettings,
@@ -56,6 +59,7 @@ const combinedReducers = combineReducers({
   ModeratorsSettings,
   Search,
   FeedList,
+  JoinCommunity,
   CreateCommunity
 })
 

@@ -312,13 +312,13 @@ export default function ormReducer (state = {}, action) {
       break
 
     case RESEND_INVITATION_PENDING:
-      invite = Invitation.withId(meta.invitationId)
+      invite = Invitation.withId(meta.invitationToken)
       if (!invite) break
       invite.update({resent: true, last_sent_at: new Date()})
       break
 
     case EXPIRE_INVITATION_PENDING:
-      invite = Invitation.withId(meta.invitationId)
+      invite = Invitation.withId(meta.invitationToken)
       invite.delete()
       break
 
