@@ -28,12 +28,12 @@ export function mapStateToProps (state, props) {
   const communityOptions = props.communityOptions ||
     (currentUser && currentUser.memberships.toModelArray().map(m => m.community))
   let post = props.post || getPost(state, props)
-  const loading = !!state.pending[FETCH_POST]
-  const editing = !!post || loading
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
   const uploadAttachmentPending = state.pending[UPLOAD_ATTACHMENT]
+  const loading = !!state.pending[FETCH_POST] || !!uploadAttachmentPending
+  const editing = !!post || loading
   const images = getAttachments(state, {type: 'image'})
   const files = getAttachments(state, {type: 'file'})
   // TODO: this should be a selector exported from AttachmentManager
