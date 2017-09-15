@@ -16,13 +16,14 @@ const services = [
  * options:
  *   success:  a success callback, which receives the new file's url as an argument
  *   failure:  a failure callback, which receives the error as an argument
- *
+ *   attachmentType: either 'image' or 'file'. Determines what file types are allowed
  */
-const uploadCore = function ({ success, failure }) {
+const uploadCore = function ({ success, failure, attachmentType }) {
+  const mimetype = attachmentType === 'image' ? 'image/*' : null
   window.filepicker.setKey(filepickerKey)
   window.filepicker.pick(
-    {mimetype: 'image/*', multiple: false, services},
-    blob => success(blob.url),
+    {mimetype, multiple: false, services},
+    blob => success(blob.url, blob.filename),
     failure
   )
 }

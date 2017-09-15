@@ -1,6 +1,6 @@
 import testPayloads from './ModelExtractor.test.json'
-import ModelExtractor from './ModelExtractor'
-import orm from '../models'
+import ModelExtractor from './index'
+import orm from '../../models'
 
 const payload = testPayloads['FETCH_POSTS for me']
 const payload2 = testPayloads['FETCH_POSTS for community']

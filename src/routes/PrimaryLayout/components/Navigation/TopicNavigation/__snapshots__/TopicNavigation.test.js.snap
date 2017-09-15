@@ -21,6 +21,7 @@ exports[`renders correctly for All Communities 1`] = `
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t1"
       >
@@ -41,6 +42,7 @@ exports[`renders correctly for All Communities 1`] = `
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t2"
       >
@@ -57,6 +59,7 @@ exports[`renders correctly for All Communities 1`] = `
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t3"
       >
@@ -73,6 +76,7 @@ exports[`renders correctly for All Communities 1`] = `
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t4"
       >
@@ -123,6 +127,7 @@ exports[`renders correctly for a community 1`] = `
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t1"
       >
@@ -143,6 +148,7 @@ exports[`renders correctly for a community 1`] = `
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t2"
       >
@@ -159,6 +165,7 @@ exports[`renders correctly for a community 1`] = `
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t3"
       >
@@ -175,6 +182,7 @@ exports[`renders correctly for a community 1`] = `
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t4"
       >

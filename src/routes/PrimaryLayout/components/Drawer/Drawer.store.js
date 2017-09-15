@@ -10,7 +10,7 @@ function refineData ({ id, community, newPostCount, lastViewedAt }) {
     newPostCount,
     lastViewedAt,
     community: pick([ 'id', 'name', 'slug', 'avatarUrl' ], community.ref),
-    network: network ? pick([ 'id', 'name', 'avatarUrl' ], network.ref) : null
+    network: network ? pick([ 'id', 'name', 'slug', 'avatarUrl' ], network.ref) : null
   }
 }
 

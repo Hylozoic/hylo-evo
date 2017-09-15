@@ -15,6 +15,7 @@ import PeopleSelector from 'components/PeopleSelector/PeopleSelector.store'
 import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import PostEditor from 'components/PostEditor/PostEditor.store'
+import AttachmentManager from 'components/PostEditor/AttachmentManager/AttachmentManager.store'
 import MessageForm from 'components/MessageForm/MessageForm.store'
 import Members from 'routes/Members/Members.store'
 import ThreadList from 'components/ThreadList/ThreadList.store'
@@ -49,6 +50,7 @@ const combinedReducers = combineReducers({
   PeopleTyping,
   HyloEditor,
   PostEditor,
+  AttachmentManager,
   ThreadList,
   Members,
   FullPageModal,

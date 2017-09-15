@@ -9,6 +9,9 @@ import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 import LinkPreview from './LinkPreview'
+import ChangeImageButton from 'components/ChangeImageButton'
+import AttachmentManager from './AttachmentManager'
+import { uploadSettings } from './AttachmentManager/AttachmentManager'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
@@ -32,7 +35,7 @@ export default class PostEditor extends React.Component {
     updatePost: PropTypes.func,
     pollingFetchLinkPreview: PropTypes.func,
     removeLinkPreview: PropTypes.func,
-    resetLinkPreview: PropTypes.func,
+    clearLinkPreview: PropTypes.func,
     goToPost: PropTypes.func,
     editing: PropTypes.bool,
     loading: PropTypes.bool
@@ -90,7 +93,7 @@ export default class PostEditor extends React.Component {
   }
 
   componentWillUnmount () {
-    this.props.resetLinkPreview()
+    this.props.clearLinkPreview()
   }
 
   reset = (props) => {
@@ -150,9 +153,9 @@ export default class PostEditor extends React.Component {
   }
 
   setLinkPreview = (contentState) => {
-    const { pollingFetchLinkPreview, linkPreviewStatus, resetLinkPreview } = this.props
+    const { pollingFetchLinkPreview, linkPreviewStatus, clearLinkPreview } = this.props
     const { linkPreview } = this.state.post
-    if (!contentState.hasText() && linkPreviewStatus) return resetLinkPreview()
+    if (!contentState.hasText() && linkPreviewStatus) return clearLinkPreview()
     if (linkPreviewStatus === 'invalid' || linkPreviewStatus === 'removed') return
     if (linkPreview) return
     pollingFetchLinkPreview(contentStateToHTML(contentState))
@@ -182,26 +185,29 @@ export default class PostEditor extends React.Component {
       communities.length > 0)
   }
 
-  setValid = () =>
-    this.setState({valid: this.isValid()})
+  setValid = () => this.setState({valid: this.isValid()})
 
   save = () => {
-    const { editing, createPost, updatePost, onClose, goToPost } = this.props
+    const { editing, createPost, updatePost, onClose, goToPost, images, files } = this.props
     const { id, type, title, communities, linkPreview } = this.state.post
     const details = this.editor.getContentHTML()
-    const postToSave = { id, type, title, details, communities, linkPreview }
+    const postToSave = {
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files
+    }
     const saveFunc = editing ? updatePost : createPost
     saveFunc(postToSave).then(editing ? onClose : goToPost)
   }
 
   render () {
     const { titlePlaceholder, valid, post } = this.state
-    const { title, details, communities, linkPreview } = post
+    const { id, title, details, communities, linkPreview } = post
     const {
       onClose, initialPrompt, detailsPlaceholder,
-      currentUser, communityOptions, editing, loading
+      currentUser, communityOptions, editing, loading, addImage,
+      showImages, addFile, showFiles
     } = this.props
     const submitButtonLabel = editing ? 'Save' : 'Post'
+
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
       <div styleName='header'>
         <div styleName='initial'>
@@ -244,6 +250,8 @@ export default class PostEditor extends React.Component {
             <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
         </div>
       </div>
+      <AttachmentManager postId={id || 'new'} type='image' />
+      <AttachmentManager postId={id || 'new'} type='file' />
       <div styleName='footer'>
         <div styleName='postIn'>
           <div styleName='postIn-label'>Post in</div>
@@ -257,16 +265,45 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>
-        <div styleName='actionsBar'>
-          <Button
-            onClick={this.save}
-            disabled={!valid || loading}
-            styleName='postButton'
-            label={submitButtonLabel}
-            color='green'
-          />
-        </div>
+        <ActionsBar
+          id={id}
+          addImage={addImage}
+          showImages={showImages}
+          addFile={addFile}
+          showFiles={showFiles}
+          valid={valid}
+          loading={loading}
+          submitButtonLabel={submitButtonLabel}
+          save={() => this.save()} />
       </div>
     </div>
   }
+}
+
+export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid, loading, submitButtonLabel, save}) {
+  return <div styleName='actionsBar'>
+    <div styleName='actions'>
+      <ChangeImageButton update={addImage}
+        uploadSettings={uploadSettings(id)}
+        attachmentType='image'
+        disable={showImages}>
+        <Icon name='AddImage'
+          styleName={cx('action-icon', {'highlight-icon': showImages})} />
+      </ChangeImageButton>
+      <ChangeImageButton update={addFile}
+        uploadSettings={uploadSettings(id)}
+        attachmentType='file'
+        disable={showFiles}>
+        <Icon name='Paperclip'
+          styleName={cx('action-icon', {'highlight-icon': showFiles})} />
+      </ChangeImageButton>
+    </div>
+    <Button
+      onClick={save}
+      disabled={!valid || loading}
+      styleName='postButton'
+      label={submitButtonLabel}
+      color='green'
+    />
+  </div>
 }

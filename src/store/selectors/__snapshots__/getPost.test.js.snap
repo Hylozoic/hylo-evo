@@ -42,6 +42,7 @@ Object {
       "skills": undefined,
     },
   },
+  "fileAttachments": Array [],
   "followers": undefined,
   "id": "1",
   "linkPreview": undefined,

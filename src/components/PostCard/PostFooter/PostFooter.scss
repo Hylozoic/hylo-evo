@@ -3,13 +3,14 @@
 $footer-height: 56px;
 
 .footer {
-  composes: cardPadding from 'components/PostCard/PostCard.scss';
+  padding-left: $space-4x;
   padding-right: 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   height: $footer-height;
   border-top: 1px solid $color-cape-cod-10;
+  border-bottom: 1px solid $color-cape-cod-10;
   overflow: hidden;
 }
 

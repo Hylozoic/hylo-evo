@@ -30,7 +30,9 @@ function presentSearchResult (searchResult, session) {
       ...content.ref,
       creator: content.creator,
       commenters: content.commenters.toModelArray(),
-      communities: content.communities.toModelArray()
+      communities: content.communities.toModelArray(),
+      linkPreview: content.linkPreview,
+      fileAttachments: content.attachments.filter(a => a.type === 'file').toModelArray()
     }
   }
 

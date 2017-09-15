@@ -55,12 +55,7 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-}
-
-.post-editor-background {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  overflow-y: auto;
   background: rgba(0, 0, 0, 0.4);
 }
 
@@ -68,6 +63,6 @@
   position: relative;
   z-index: 1;
   width: $post-editor-width;
-  margin: -($post-editor-height/2) auto 0;
+  margin: -($post-editor-height/2) auto 70px;
   top: 50%;
 }

@@ -1,5 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`PostEditor store reducer when PostEditor/CLEAR_LINK_PREVIEW linkPreviewId is cleared and status set to "cleared" 1`] = `
+Object {
+  "linkPreviewId": null,
+  "linkPreviewStatus": "cleared",
+}
+`;
+
 exports[`PostEditor store reducer when PostEditor/FETCH_LINK_PREVIEW linkPreviewId is not set status is "invalid" if a record is not found 1`] = `
 Object {
   "linkPreviewId": null,
@@ -18,12 +25,5 @@ exports[`PostEditor store reducer when PostEditor/REMOVE_LINK_PREVIEW linkPrevie
 Object {
   "linkPreviewId": null,
   "linkPreviewStatus": "removed",
-}
-`;
-
-exports[`PostEditor store reducer when PostEditor/RESET_LINK_PREVIEW linkPreviewId is cleared and status set to "reset" 1`] = `
-Object {
-  "linkPreviewId": null,
-  "linkPreviewStatus": "reset",
 }
 `;
