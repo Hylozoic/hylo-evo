@@ -71,7 +71,8 @@ export default class PostCard extends React.Component {
         details={post.details}
         linkPreview={post.linkPreview}
         slug={slug}
-        highlightProps={highlightProps} />
+        highlightProps={highlightProps}
+        fileAttachments={post.fileAttachments} />
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}

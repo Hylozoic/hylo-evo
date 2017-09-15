@@ -132,7 +132,8 @@ export default class PostDetail extends Component {
         linkPreview={post.linkPreview}
         slug={slug}
         expanded
-        styleName='body' />
+        styleName='body'
+        fileAttachments={post.fileAttachments} />
       <div styleName='activity-header' ref={this.setActivityStateFromDOM}>Activity</div>
       <PostFooter id={post.id}
         commenters={post.commenters}

@@ -55,7 +55,8 @@ export const getPosts = makeQueryResultsModelSelector(
     creator: post.creator,
     linkPreview: post.linkPreview,
     commenters: post.commenters.toModelArray(),
-    communities: post.communities.toModelArray()
+    communities: post.communities.toModelArray(),
+    fileAttachments: post.attachments.filter(a => a.type === 'file').toModelArray()
   })
 )
 

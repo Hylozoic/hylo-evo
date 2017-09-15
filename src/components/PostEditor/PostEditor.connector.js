@@ -1,13 +1,12 @@
 import { get, isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { bindActionCreators } from 'redux'
 import { postUrl } from 'util/index'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getPost from 'store/selectors/getPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import { FETCH_POST, UPLOAD_IMAGE } from 'store/constants'
+import { FETCH_POST, UPLOAD_ATTACHMENT } from 'store/constants'
 import {
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
@@ -19,9 +18,9 @@ import {
   getLinkPreview
 } from './PostEditor.store'
 import {
-  addImagePreview,
-  getImagePreviews
-} from './ImagePreviews/ImagePreviews.store'
+  addAttachment,
+  getAttachments
+} from './AttachmentManager/AttachmentManager.store'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
@@ -34,9 +33,14 @@ export function mapStateToProps (state, props) {
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
-  const uploadImagePending = state.pending[UPLOAD_IMAGE]
-  const imagePreviews = getImagePreviews(state, props)
-  const showImagePreviews = !isEmpty(imagePreviews) || uploadImagePending
+  const uploadAttachmentPending = state.pending[UPLOAD_ATTACHMENT]
+  const images = getAttachments(state, {type: 'image'})
+  const files = getAttachments(state, {type: 'file'})
+  // TODO: this should be a selector exported from AttachmentManager
+  const showImages = !isEmpty(images) ||
+    get('attachmentType', uploadAttachmentPending) === 'image'
+  const showFiles = !isEmpty(files) ||
+    get('attachmentType', uploadAttachmentPending) === 'file'
 
   return {
     currentUser,
@@ -48,8 +52,10 @@ export function mapStateToProps (state, props) {
     linkPreview,
     linkPreviewStatus,
     fetchLinkPreviewPending,
-    showImagePreviews,
-    imagePreviews
+    showImages,
+    showFiles,
+    images,
+    files
   }
 }
 
@@ -65,9 +71,8 @@ export const mapDispatchToProps = (dispatch, props) => {
       const id = createPostAction.payload.data.createPost.id
       return dispatch(push(postUrl(id, slug)))
     },
-    ...bindActionCreators({
-      addImagePreview
-    }, dispatch)
+    addImage: url => dispatch(addAttachment(url, 'image')),
+    addFile: url => dispatch(addAttachment(url, 'file'))
   }
 }
 

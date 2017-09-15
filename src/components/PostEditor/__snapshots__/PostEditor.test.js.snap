@@ -8,6 +8,7 @@ exports[`ActionsBar matches last snapshot 1`] = `
     data-styleName="actions"
   >
     <Connect(ChangeImageButton)
+      attachmentType="image"
       update={[Function]}
       uploadSettings={
         Object {
@@ -19,6 +20,20 @@ exports[`ActionsBar matches last snapshot 1`] = `
       <Icon
         data-styleName="action-icon"
         name="AddImage"
+      />
+    </Connect(ChangeImageButton)>
+    <Connect(ChangeImageButton)
+      attachmentType="file"
+      uploadSettings={
+        Object {
+          "id": 1,
+          "type": "post",
+        }
+      }
+    >
+      <Icon
+        data-styleName="action-icon"
+        name="Paperclip"
       />
     </Connect(ChangeImageButton)>
   </div>
@@ -121,8 +136,13 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       />
     </div>
   </div>
-  <Connect(DragDropContext(ImagePreviews))
+  <Connect(AttachmentManager)
     postId="test"
+    type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="test"
+    type="file"
   />
   <div
     data-styleName="footer"
@@ -162,7 +182,6 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       id="test"
       loading={false}
       save={[Function]}
-      showImagePreviews={true}
       submitButtonLabel="Save"
       valid={false}
     />
@@ -259,8 +278,13 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       />
     </div>
   </div>
-  <Connect(DragDropContext(ImagePreviews))
+  <Connect(AttachmentManager)
     postId="test"
+    type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="test"
+    type="file"
   />
   <div
     data-styleName="footer"
@@ -300,7 +324,6 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       id="test"
       loading={false}
       save={[Function]}
-      showImagePreviews={true}
       submitButtonLabel="Save"
       valid={false}
     />
@@ -387,8 +410,13 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
   </div>
-  <Connect(DragDropContext(ImagePreviews))
+  <Connect(AttachmentManager)
     postId="new"
+    type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="new"
+    type="file"
   />
   <div
     data-styleName="footer"
@@ -502,8 +530,13 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
   </div>
-  <Connect(DragDropContext(ImagePreviews))
+  <Connect(AttachmentManager)
     postId="new"
+    type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="new"
+    type="file"
   />
   <div
     data-styleName="footer"
@@ -617,8 +650,13 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
   </div>
-  <Connect(DragDropContext(ImagePreviews))
+  <Connect(AttachmentManager)
     postId="new"
+    type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="new"
+    type="file"
   />
   <div
     data-styleName="footer"
@@ -733,8 +771,13 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       />
     </div>
   </div>
-  <Connect(DragDropContext(ImagePreviews))
+  <Connect(AttachmentManager)
     postId="new"
+    type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="new"
+    type="file"
   />
   <div
     data-styleName="footer"
@@ -849,8 +892,13 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       />
     </div>
   </div>
-  <Connect(DragDropContext(ImagePreviews))
+  <Connect(AttachmentManager)
     postId="new"
+    type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="new"
+    type="file"
   />
   <div
     data-styleName="footer"
@@ -965,8 +1013,13 @@ exports[`PostEditor renders with min props 1`] = `
       />
     </div>
   </div>
-  <Connect(DragDropContext(ImagePreviews))
+  <Connect(AttachmentManager)
     postId="new"
+    type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="new"
+    type="file"
   />
   <div
     data-styleName="footer"

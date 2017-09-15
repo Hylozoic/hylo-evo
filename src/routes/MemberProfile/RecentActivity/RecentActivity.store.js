@@ -77,7 +77,8 @@ export const activitySelector = createSelector(
         creator: post.creator,
         linkPreview: post.linkPreview,
         commenters: post.commenters.toRefArray(),
-        communities: post.communities.toRefArray()
+        communities: post.communities.toRefArray(),
+        fileAttachments: post.attachments.filter(a => a.type === 'file').toModelArray()
       }))
       return indexActivityItems(comments, posts)
     }

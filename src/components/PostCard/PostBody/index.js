@@ -1,7 +1,9 @@
 import React from 'react'
 import { decode } from 'ent'
+import path from 'path'
 import { pick } from 'lodash/fp'
 import Highlight from 'components/Highlight'
+import Icon from 'components/Icon'
 import LinkPreview from '../LinkPreview'
 import { sanitize, present, textLength, truncate } from 'hylo-utils/text'
 import './PostBody.scss'
@@ -12,12 +14,12 @@ export default function PostBody ({
   id,
   title,
   details,
-  imageUrl,
   linkPreview,
   slug,
   expanded,
   className,
-  highlightProps
+  highlightProps,
+  fileAttachments
 }) {
   title = decode(title)
   details = present(sanitize(details), {slug})
@@ -32,6 +34,16 @@ export default function PostBody ({
         <div styleName='details' dangerouslySetInnerHTML={{__html: details}} />}
       {linkPreview &&
         <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />}
+      {fileAttachments && <div styleName='file-attachments'>
+        {fileAttachments.map(fileAttachment =>
+          <a styleName='file-attachment'
+            href={fileAttachment.url}
+            target='_blank'
+            key={fileAttachment.id}>
+            <Icon name='Document' styleName='file-icon' />
+            <span styleName='file-name'>{path.basename(fileAttachment.url)}</span>
+          </a>)}
+      </div>}
     </div>
   </Highlight>
 }

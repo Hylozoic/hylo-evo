@@ -1,13 +1,13 @@
 import { connect } from 'react-redux'
 import { push, goBack } from 'react-router-redux'
 import getMe from 'store/selectors/getMe'
-import { UPLOAD_IMAGE } from 'store/constants'
+import { UPLOAD_ATTACHMENT } from 'store/constants'
 import { updateUserSettings } from 'store/actions/updateUserSettings'
 import fetchMySkills from 'store/actions/fetchMySkills'
 import getMySkills from 'store/selectors/getMySkills'
 
 export function mapStateToProps (state, props) {
-  const uploadImagePending = state.pending[UPLOAD_IMAGE]
+  const uploadImagePending = state.pending[UPLOAD_ATTACHMENT]
   return {
     currentUser: getMe(state),
     uploadImagePending,

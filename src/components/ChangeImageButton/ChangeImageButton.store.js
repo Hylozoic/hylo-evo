@@ -1,15 +1,19 @@
 import { pick } from 'client/filepicker'
-import { UPLOAD_IMAGE } from 'store/constants'
+import { UPLOAD_ATTACHMENT } from 'store/constants'
 
-export function uploadImage (opts) {
-  let { type, id } = opts
+export function upload (opts) {
+  let {
+    type, // this is the type of thing that the upload is for, e.g. post
+    id, // this is the id of the thing that the upload is for
+    attachmentType // this is the type of the upload itself, e.g. image or file
+  } = opts
   let payload = new Promise((resolve, reject) => {
     pick({
-      success: url => resolve({
+      success: (url, filename) => resolve({
         api: {
           method: 'post',
           path: '/noo/upload',
-          params: {url, id, type}
+          params: {url, id, type, filename}
         }
       }),
       failure: err => {
@@ -20,9 +24,14 @@ export function uploadImage (opts) {
         if (err.code === 101) return resolve({})
 
         reject(err)
-      }
+      },
+      attachmentType
     })
   })
 
-  return {type: UPLOAD_IMAGE, payload, meta: {type, id}}
+  return {
+    type: UPLOAD_ATTACHMENT,
+    payload,
+    meta: {type, id, attachmentType}
+  }
 }
