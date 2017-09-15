@@ -2,6 +2,7 @@ import React from 'react'
 import './TextInput.scss'
 import { onEnter } from 'util/textInput'
 import { omit } from 'lodash/fp'
+import Loading from 'components/Loading'
 
 // pass inputRef to this from a parent, with the same kind of callback you would
 // pass to ref, if you want to have a reference to the input field, e.g. for
@@ -21,7 +22,10 @@ export default function TextInput (props) {
     <input styleName='input' {...{onKeyDown, ...otherProps}}
       ref={inputRef}
       className={theme.input} />
-    {value && !noClearButton && <div styleName='clear' className={theme.clear} onClick={clear}>Clear</div>}
-    {loading && <span styleName='loading' />}
+    {value && !noClearButton &&
+      <div styleName='clear' className={theme.clear} onClick={clear}>
+        Clear
+      </div>}
+    {loading && <Loading type='inline' styleName='loading' />}
   </div>
 }
