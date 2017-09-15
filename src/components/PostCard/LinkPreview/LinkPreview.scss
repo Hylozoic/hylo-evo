@@ -18,6 +18,11 @@ $preview-height: 80px;
   }
 }
 
+.noImage {
+  //TODO: this class is a hack. We should be using flexbox for this component
+  padding-left: $space-3x;
+}
+
 .previewImage {
   @include image($preview-height);
   margin-top: -$space-2x;

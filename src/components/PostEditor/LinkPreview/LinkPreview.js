@@ -9,7 +9,7 @@ export default function LinkPreview ({ className, linkPreview, onClose }) {
   const imageStyle = bgImageStyle(imageUrl)
 
   return <div styleName='link-preview' className={className}>
-    <div style={imageStyle} styleName='image' />
+    {imageUrl && <div style={imageStyle} styleName='image' />}
     <div styleName='text'>
       <div styleName='header'>
         <span styleName='title'>{title}</span>
