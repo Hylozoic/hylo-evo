@@ -33,7 +33,7 @@ export default class Domain extends Component {
   errorCheckAndSubmit = () => {
     if (this.props.communityDomainExists) {
       this.setState({
-        error: 'This URL is invalid. Try another.'
+        error: 'This URL already exists. Try another.'
       })
     } else if (this.state.communityDomain === '') {
       this.setState({

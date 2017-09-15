@@ -45,7 +45,9 @@ exports[`Name renders correctly 1`] = `
     >
       <span
         data-styleName="text-input-label"
-      />
+      >
+        What's the name of your community?
+      </span>
       <TextInput
         name="community-name"
         noClearButton={true}
@@ -59,7 +61,7 @@ exports[`Name renders correctly 1`] = `
           }
         }
         type="text"
-        value=""
+        value="communityName"
       />
     </div>
   </div>

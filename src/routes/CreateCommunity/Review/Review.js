@@ -93,7 +93,7 @@ export default class Review extends Component {
       })
     } else if (this.props.communityDomainExists) {
       this.setState({
-        error: 'This url is invalid. Try another.'
+        error: 'This URL already exists. Try another.'
       })
     } else if (!slugValidatorRegex.test(removeUrlFromDomain(communityDomain))) {
       formatDomainWithUrl(communityDomain)

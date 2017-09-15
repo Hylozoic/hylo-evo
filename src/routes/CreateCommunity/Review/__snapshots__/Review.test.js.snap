@@ -43,6 +43,7 @@ exports[`Review renders correctly 1`] = `
     >
       <ReviewTextInput
         editHandler={[Function]}
+        inputRef={[Function]}
         label="Your Name"
         onChange={[Function]}
         onEnter={[Function]}
@@ -51,6 +52,7 @@ exports[`Review renders correctly 1`] = `
       />
       <ReviewTextInput
         editHandler={[Function]}
+        inputRef={[Function]}
         label="Your Email"
         onChange={[Function]}
         onEnter={[Function]}
@@ -59,6 +61,7 @@ exports[`Review renders correctly 1`] = `
       />
       <ReviewTextInput
         editHandler={[Function]}
+        inputRef={[Function]}
         label="Community Name"
         onChange={[Function]}
         onEnter={[Function]}
@@ -67,6 +70,7 @@ exports[`Review renders correctly 1`] = `
       />
       <ReviewTextInput
         editHandler={[Function]}
+        inputRef={[Function]}
         label="URL"
         onChange={[Function]}
         onEnter={[Function]}
