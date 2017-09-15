@@ -184,3 +184,11 @@ $rowHeight: 60px;
   max-height: 2px;
   transition: 500ms ease-in;
 }
+
+.error {
+  color: $color-amaranth;
+}
+
+.success {
+  color: $color-mountain-meadow;
+}
