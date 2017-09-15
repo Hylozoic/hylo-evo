@@ -3,7 +3,7 @@
 $footer-height: 56px;
 
 .footer {
-  composes: cardPadding from 'components/PostCard/PostCard.scss';
+  padding-left: $space-4x;
   padding-right: 0;
   display: flex;
   justify-content: flex-start;
