@@ -29,6 +29,12 @@ import UploadPhoto from 'routes/Signup/UploadPhoto'
 import AddLocation from 'routes/Signup/AddLocation'
 import AddSkills from 'routes/Signup/AddSkills'
 import Review from 'routes/Signup/Review'
+import CreateCommunity from 'routes/CreateCommunity'
+import Name from 'routes/CreateCommunity/Name'
+import Domain from 'routes/CreateCommunity/Domain'
+// TODO: Implement create community privacy component when implemented on the server
+// import Privacy from 'routes/CreateCommunity/Privacy'
+import CommunityReview from 'routes/CreateCommunity/Review'
 
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
@@ -66,7 +72,8 @@ export default class PrimaryLayout extends Component {
       location,
       toggleDrawer,
       isCommunityRoute,
-      showLogoBadge
+      showLogoBadge,
+      hasMemberships
     } = this.props
 
     if (isCommunityRoute && !community) {
@@ -87,6 +94,11 @@ export default class PrimaryLayout extends Component {
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
+          <RedirectToCreateCommunityFlow
+            hasMemberships={hasMemberships}
+            pathname={this.props.location.pathname}
+            currentUser={currentUser}
+          />
           <RedirectToCommunity path='/' currentUser={currentUser} />
           <RedirectToCommunity path='/app' currentUser={currentUser} />
           <Switch>
@@ -187,6 +199,13 @@ export default class PrimaryLayout extends Component {
                 component={(props) => <SignupModal {...props} child={child} />}
               />
             )}
+            {createCommunityRoutes.map(({ path, component }) =>
+              <Route
+                path={path}
+                key={path}
+                component={(props) => <CreateCommunity {...props} component={component} />}
+                />
+            )}
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
@@ -247,15 +266,35 @@ const signupRoutes = [
   {path: '/signup/add-skills', child: AddSkills},
   {path: '/signup/review', child: Review}
 ]
+const createCommunityRoutes = [
+  {path: '/create-community/name', component: Name},
+  {path: '/create-community/domain', component: Domain},
+  // TODO: Implement create community privacy component when implemented on the server
+  // TODO: Don't forget to change 'step' values
+  // {path: '/create-community/privacy', component: Privacy},
+  {path: '/create-community/review', component: CommunityReview}
+]
 
 export function isSignupPath (path) {
   return (path.startsWith('/signup'))
+}
+
+export function isCreateCommunityPath (path) {
+  return (path.startsWith('/create-community'))
 }
 
 export function RedirectToSignupFlow ({ currentUser, pathname }) {
   if (!currentUser || !currentUser.settings || !currentUser.settings.signupInProgress) return null
   if (isSignupPath(pathname)) return null
   const destination = '/signup/upload-photo'
+  return <Redirect to={destination} />
+}
+
+export function RedirectToCreateCommunityFlow ({ hasMemberships, pathname, currentUser }) {
+  if (!currentUser || !currentUser.settings || currentUser.settings.signupInProgress) return null
+  if (hasMemberships) return null
+  if (isCreateCommunityPath(pathname) || isSignupPath(pathname)) return null
+  const destination = '/create-community/name'
   return <Redirect to={destination} />
 }
 

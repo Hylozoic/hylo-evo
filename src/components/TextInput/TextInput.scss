@@ -38,3 +38,35 @@ $text-input-height: 40px;
   }
   cursor: pointer;
 }
+
+// Modal themes
+.modal-input {
+  background-color: transparent;
+  border: none;
+  width: 90%;
+  font-weight: lighter;
+  text-align: left;
+  border-bottom: 1px solid $color-athens-gray-dark-50;
+  font-size: 24px;
+  color: $color-white;
+}
+
+.modal-input::placeholder {
+  color: $color-white;
+}
+
+.modal-input:focus {
+  outline: none;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.partial {
+  font-size: 20px;
+  width: 100%;
+  border-bottom: none;
+}

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { toggleDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
 import getMembershipsForDrawer from './Drawer.store'
+import { push } from 'react-router-redux'
 
 function buildNetworkLookup (networks, { id, community, newPostCount, network }) {
   if (!network) return networks
@@ -19,8 +20,11 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = {
-  toggleDrawer
+export function mapDispatchToProps (dispatch, props) {
+  return {
+    toggleDrawer: () => dispatch(toggleDrawer()),
+    goToCreateCommunity: () => dispatch(push('/create-community/name'))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)

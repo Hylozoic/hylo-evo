@@ -18,8 +18,8 @@ export default function TextInput (props) {
   const otherProps = omit(['onEnter', 'className', 'inputRef', 'theme', 'noClearButton', 'loading'], props)
   const clear = () => onChange && onChange({target: {value: ''}})
 
-  return <div styleName='wrapper' className={theme.wrapper || className}>
-    <input styleName='input' {...{onKeyDown, ...otherProps}}
+  return <div styleName={theme.wrapperStyle || 'wrapper'} className={theme.wrapper || className}>
+    <input styleName={theme.inputStyle || 'input'} {...{onKeyDown, ...otherProps}}
       ref={inputRef}
       className={theme.input} />
     {value && !noClearButton &&

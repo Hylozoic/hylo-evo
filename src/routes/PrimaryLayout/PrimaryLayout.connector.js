@@ -12,14 +12,15 @@ import { some } from 'lodash/fp'
 function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
   const showLogoBadge = some(m => m.newPostCount > 0, memberships)
-
+  const hasMemberships = memberships.length > 0
   return {
     isCommunityRoute: isCommunityRoute(state, props),
     community: getCommunityForCurrentRoute(state, props),
     network: getNetworkForCurrentRoute(state, props),
     currentUser: getMe(state),
     isDrawerOpen: state.PrimaryLayout.isDrawerOpen,
-    showLogoBadge
+    showLogoBadge,
+    hasMemberships
   }
 }
 
