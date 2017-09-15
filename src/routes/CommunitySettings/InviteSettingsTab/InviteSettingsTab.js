@@ -43,20 +43,50 @@ export default class InviteSettingsTab extends Component {
     }, 3000)
   }
 
+  sendInvites = () => {
+    const { createInvitations } = this.props
+    const { emails, message } = this.state
+
+    createInvitations(parseEmailList(emails), message)
+    .then(res => {
+      const { invitations } = res.payload.data.createInvitation
+      const badEmails = invitations.filter(email => email.error).map(e => e.email)
+
+      const numBad = badEmails.length
+      let errorMessage
+      if (numBad === 1) {
+        errorMessage = 'The address below is invalid.'
+      } else if (numBad > 1) {
+        errorMessage = `The ${numBad} addresses below are invalid.`
+      }
+
+      const numGood = invitations.length - badEmails.length
+      const successMessage = numGood > 0
+        ? `Sent ${numGood} ${numGood === 1 ? 'email' : 'emails'}.`
+        : null
+
+      this.setState({
+        emails: badEmails.join('\n'),
+        errorMessage,
+        successMessage
+      })
+    })
+  }
+
   render () {
-    const { community,
+    const {
+      community,
       pendingCreate,
       regenerateAccessCode,
       inviteLink,
       pending,
       pendingInvites = [],
-      createInvitations,
       expireInvitation,
       resendInvitation,
       reinviteAll
     } = this.props
     const { name } = community
-    const { copied, reset, emails, message } = this.state
+    const { copied, reset, emails, errorMessage, successMessage } = this.state
 
     const onReset = () => {
       if (window.confirm("Are you sure you want to create a new join link? The current link won't work anymore if you do.")) {
@@ -72,26 +102,6 @@ export default class InviteSettingsTab extends Component {
     const buttonColor = highlight => highlight ? 'green' : 'green-white-green-border'
 
     const disableSendBtn = (isEmpty(emails) || pendingCreate)
-
-    const sendInvites = () => {
-      createInvitations(parseEmailList(emails), message)
-      .then(res => {
-        const { invitations } = res.payload.data.createInvitation
-        const invalidEmails = invitations.filter(email => email.error).map(e => e.email)
-        const emailsDelivered = invitations.length - invalidEmails.length
-        const pluralizeEmails = emailsDelivered === 1 ? 'email' : 'emails'
-        const errorMessage = `Sent ${emailsDelivered} ${pluralizeEmails}. The emails below are invalid.`
-        const successMessage = `Sent ${emailsDelivered} ${pluralizeEmails}`
-        this.setState({
-          emails: invalidEmails.toString(),
-          errorMessage: invalidEmails.length > 0 ? errorMessage : null,
-          successMessage: invalidEmails.length === 0 ? successMessage : null
-        })
-      })
-
-      // TODO we should be validating emails here.  and then clear the emails input
-      // AFTER we successfully validated and sent them out.
-    }
 
     const resendAllOnClick = () => {
       if (window.confirm('Are you sure you want to resend all Pending Invitations')) {
@@ -139,8 +149,8 @@ export default class InviteSettingsTab extends Component {
         </div>
       </div>}
       <div styleName='styles.email-section'>
-        {this.state.errorMessage && <div>{this.state.errorMessage}</div>}
-        {this.state.successMessage && <div>{this.state.successMessage}</div>}
+        {successMessage && <span styleName='success'>{successMessage}</span>}
+        {errorMessage && <span styleName='error'>{errorMessage}</span>}
         <TextareaAutosize minRows={5} styleName='styles.invite-msg-input'
           placeholder='Type email addresses'
           value={this.state.emails}
@@ -151,7 +161,7 @@ export default class InviteSettingsTab extends Component {
           disabled={pendingCreate}
           onChange={(event) => this.setState({message: event.target.value})} />
         <div styleName='styles.send-invite-button'>
-          <Button color='green' disabled={disableSendBtn} onClick={sendInvites} narrow small>
+          <Button color='green' disabled={disableSendBtn} onClick={this.sendInvites} narrow small>
             Send Invite
           </Button>
         </div>
