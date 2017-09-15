@@ -65,10 +65,13 @@ exports[`renders correctly 1`] = `
   <div
     data-styleName="styles.email-section"
   >
-    <TextInput
-      data-styleName="styles.email-addresses-input"
+    <TextareaAutosize
+      data-styleName="styles.invite-msg-input"
+      minRows={5}
       onChange={[Function]}
+      onHeightChange={[Function]}
       placeholder="Type email addresses"
+      useCacheForDOMMeasurements={false}
       value=""
     />
     <TextareaAutosize

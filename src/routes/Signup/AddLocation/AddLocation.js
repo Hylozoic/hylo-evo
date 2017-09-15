@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { get } from 'lodash/fp'
 import LeftSidebar from '../LeftSidebar'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
@@ -33,11 +32,6 @@ export default class AddLocation extends Component {
 
   previous = () => {
     this.props.goToPreviousStep()
-  }
-
-  componentWillMount = () => {
-    const { currentUser } = this.props
-    if (currentUser && !get('settings.signupInProgress', currentUser)) this.props.goBack()
   }
 
   componentDidMount = () => {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { get } from 'lodash/fp'
 import LeftSidebar from '../LeftSidebar'
 import Loading from 'components/Loading'
 import SignupModalFooter from '../SignupModalFooter'
@@ -29,11 +28,6 @@ export default class UploadPhoto extends Component {
         [key]: value
       }
     })
-  }
-
-  componentWillMount = () => {
-    const { currentUser } = this.props
-    if (currentUser && !get('settings.signupInProgress', currentUser)) this.props.goBack()
   }
 
   render () {
