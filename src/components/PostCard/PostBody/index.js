@@ -41,7 +41,7 @@ export default function PostBody ({
             target='_blank'
             key={fileAttachment.id}>
             <Icon name='Document' styleName='file-icon' />
-            <span styleName='file-name'>{path.basename(fileAttachment.url)}</span>
+            <span styleName='file-name'>{decodeURIComponent(path.basename(fileAttachment.url))}</span>
           </a>)}
       </div>}
     </div>

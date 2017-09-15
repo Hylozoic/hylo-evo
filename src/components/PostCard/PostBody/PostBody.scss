@@ -33,7 +33,7 @@
   align-items: center;
   margin-right: 10px;
   text-decoration: none;
-  &:hover {
+  &:hover, &:visited {
     text-decoration: none;
   }
 }
