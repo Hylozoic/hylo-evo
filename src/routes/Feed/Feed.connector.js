@@ -66,7 +66,7 @@ export const mapDispatchToProps = function (dispatch, props) {
     // we need to preserve url parameters when opening the details for a post,
     // or the center column will revert to its default sort & filter settings
     showPostDetails: postId =>
-      dispatch(push(makeUrl(postUrl(postId, slug, {topicName}), params))),
+      dispatch(push(makeUrl(postUrl(postId, slug, {topicName, networkSlug}), params))),
     newPost: () =>
       dispatch(push(makeUrl(postUrl('new', slug, {topicName}), params))),
     fetchTopic: () => {

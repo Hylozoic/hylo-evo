@@ -173,6 +173,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/c/:slug/:topicName/p/:postId' component={Feed} />
             <Route path='/c/:slug/:topicName' component={Feed} />
             <Route path='/n/:networkSlug' exact component={Feed} />
+            <Route path='/n/:networkSlug/p/:postId' component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
             <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />
@@ -235,6 +236,7 @@ const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
   {path: `/all/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/c/:slug/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/n/:networkSlug/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/c/:slug/m/:id/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/c/:slug/:topicName/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail}
 ]
