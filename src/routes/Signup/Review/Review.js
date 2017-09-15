@@ -32,13 +32,14 @@ export default class AddLocation extends Component {
     })
   }
 
-  makeEditable = (event, name) => {
+  makeEditable = (name) => {
     this.setState({
       readOnly: {
         ...this.state.edits,
         [name]: false
       }
     })
+    this[name].select()
   }
   submit = () => {
     const { edits } = this.state
@@ -106,6 +107,7 @@ export default class AddLocation extends Component {
                   }
                 }}
                 autoFocus
+                ref={(input) => { this.name = input }}
                 value={this.getValue('name')}
                 readOnly={this.state.readOnly.name}
               />
@@ -129,6 +131,7 @@ export default class AddLocation extends Component {
                   }
                 }}
                 autoFocus
+                ref={(input) => { this.email = input }}
                 value={this.getValue('email')}
                 readOnly={this.state.readOnly.email}
               />
@@ -152,12 +155,13 @@ export default class AddLocation extends Component {
                   }
                 }}
                 autoFocus
+                ref={(input) => { this.location = input }}
                 value={this.getValue('location')}
                 readOnly={this.state.readOnly.location}
               />
             </div>
             <div styleName='right-input-column'>
-              <span styleName='edit-button text-opacity' onClick={() => this.makeEditable('email')}>Edit</span>
+              <span styleName='edit-button text-opacity' onClick={() => this.makeEditable('location')}>Edit</span>
             </div>
           </div>
           <div styleName='three-column-input gray-bottom-border'>
