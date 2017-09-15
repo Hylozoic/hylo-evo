@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 import React, { Component } from 'react'
 import { isEmpty } from 'lodash'
 import SignupModalFooter from '../SignupModalFooter'
@@ -6,6 +7,14 @@ import LeftSidebar from '../LeftSidebar'
 import '../Signup.scss'
 
 export default class AddSkills extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      editing: false,
+      skillText: ''
+    }
+  }
+
   clickHandler = (skill) => {
     this.props.addSkill(skill.name)
   }
@@ -28,7 +37,31 @@ export default class AddSkills extends Component {
   componentDidMount = () => {
     this.props.fetchMySkills()
   }
+
+  editNewSkill = () => {
+    this.setState({
+      editing: true,
+      skillText: ''
+    })
+    this.skillInput.focus()
+  }
+
+  createNewSkill = () => {
+    this.setState({
+      editing: false,
+      skillText: ''
+    })
+  }
+
+  handleInputChange = event => {
+    this.setState({
+      skillText: event.target.value
+    })
+  }
+
   render () {
+    const { editing, skillText } = this.state
+
     return <div styleName='flex-wrapper'>
       <LeftSidebar
         header='Share your unique super powers!'
@@ -39,16 +72,23 @@ export default class AddSkills extends Component {
         <br />
         <div styleName='center'>
           <input
+            ref={input => this.skillInput = input}
+            value={skillText}
             styleName='signup-input center-text signup-padding large-input-text gray-bottom-border'
             autoFocus
             onKeyPress={event => {
               if (event.key === 'Enter') {
-                this.submit()
+                if (editing) {
+                  this.createNewSkill()
+                } else {
+                  this.submit()
+                }
               }
             }}
+            onClick={() => this.editNewSkill()}
             onChange={this.handleInputChange}
-            placeholder={'How can you help?'}
-            readOnly
+            placeholder={editing ? '' : 'How can you help?'}
+            readOnly={!editing}
           />
         </div>
         <div>
@@ -56,6 +96,7 @@ export default class AddSkills extends Component {
             {this.getRemainingSkills().map((skill, index) =>
               <Pill key={index} skill={skill} clickHandler={() => this.props.addSkill(skill.name)} />
             )}
+            <Pill skill={{name: '+ Other'}} clickHandler={() => this.editNewSkill()} />
           </div>}
         </div>
         <div>
@@ -69,7 +110,10 @@ export default class AddSkills extends Component {
           </div>}
         </div>
         <div>
-          <SignupModalFooter previous={this.previous} submit={this.submit} continueText={'Boom, Done'} />
+          <SignupModalFooter
+            previous={this.previous}
+            submit={editing ? this.createNewSkill : this.submit}
+            continueText={editing ? 'Save Skill' : 'Boom, Done'} />
         </div>
       </div>
     </div>
