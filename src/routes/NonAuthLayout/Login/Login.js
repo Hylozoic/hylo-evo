@@ -14,6 +14,7 @@ export default class Login extends React.Component {
 
   submit = () => {
     return this.props.login(this.state.email, this.state.password)
+    .then(({ error }) => error || this.props.navigate('/'))
   }
 
   render () {
