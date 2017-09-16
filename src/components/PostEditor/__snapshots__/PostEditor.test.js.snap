@@ -122,6 +122,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         contentHTML="valid details"
         data-styleName="editor"
         onChange={[Function]}
+        parentComponent="PostEditor"
         placeholder="Add a description"
         readOnly={false}
       />
@@ -264,6 +265,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         contentHTML="valid details"
         data-styleName="editor"
         onChange={[Function]}
+        parentComponent="PostEditor"
         placeholder="Add a description"
         readOnly={false}
       />
@@ -405,6 +407,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       <Connect(HyloEditor)
         data-styleName="editor"
         onChange={[Function]}
+        parentComponent="PostEditor"
         placeholder="Add a description"
         readOnly={false}
       />
@@ -525,6 +528,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       <Connect(HyloEditor)
         data-styleName="editor"
         onChange={[Function]}
+        parentComponent="PostEditor"
         placeholder="Add a description"
         readOnly={false}
       />
@@ -645,6 +649,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       <Connect(HyloEditor)
         data-styleName="editor"
         onChange={[Function]}
+        parentComponent="PostEditor"
         placeholder="Add a description"
         readOnly={false}
       />
@@ -766,6 +771,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         contentHTML=""
         data-styleName="editor"
         onChange={[Function]}
+        parentComponent="PostEditor"
         placeholder="details placeholder"
         readOnly={false}
       />
@@ -887,6 +893,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         contentHTML=""
         data-styleName="editor"
         onChange={[Function]}
+        parentComponent="PostEditor"
         placeholder="Add a description"
         readOnly={true}
       />
@@ -1008,6 +1015,7 @@ exports[`PostEditor renders with min props 1`] = `
         contentHTML=""
         data-styleName="editor"
         onChange={[Function]}
+        parentComponent="PostEditor"
         placeholder="Add a description"
         readOnly={false}
       />

@@ -29,6 +29,8 @@
 
 .mentionSuggestionsEntry,
 .mentionSuggestionsEntryFocused {
+  background-color: $color-white;
+  min-height: 40px;
   display: inline-flex;
   padding: 7px 10px 3px 10px;
 }
@@ -62,9 +64,31 @@
   border-radius: 12px;
 }
 
-.mentionSuggestions {
+.mentionSuggestionsPostEditor {
+  max-height: 140px;
+  overflow-y: auto;
   border: 1px solid #eee;
-  margin-top: 1.6em;
+  margin-top: 2.8em;
+  position: absolute;
+  min-width: 220px;
+  max-width: 440px;
+  background: $color-white;
+  border-radius: 2px;
+  box-shadow: 0px 4px 30px 0px rgba(220,220,220,1);
+  cursor: pointer;
+  z-index: 2;
+  display: -webkit-box;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  transform: scale(0);
+}
+
+.mentionSuggestionsCommentForm {
+  max-height: 140px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  margin-top: -10.5em;
   position: absolute;
   min-width: 220px;
   max-width: 440px;
