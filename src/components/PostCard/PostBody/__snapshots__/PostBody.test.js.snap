@@ -16,14 +16,16 @@ exports[`matches last snapshot 1`] = `
     >
       hello there
     </div>
-    <div
-      dangerouslySetInnerHTML={
-        Object {
-          "__html": "<p>the details</p>",
+    <Connect(ClickCatcher)>
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p>the details</p>",
+          }
         }
-      }
-      data-styleName="details"
-    />
+        data-styleName="details"
+      />
+    </Connect(ClickCatcher)>
     <LinkPreview
       imageUrl="foo.png"
       title="a walk in the park"
