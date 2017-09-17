@@ -23,8 +23,8 @@ exports[`matches the last snapshot 1`] = `
     data-styleName="message-form"
   >
     <Connect(MessageForm)
-      editorRef={[Function]}
-      focusEditor={[Function]}
+      focusForm={[Function]}
+      formRef={[Function]}
       messageThreadId="1"
     />
   </div>

@@ -17,6 +17,8 @@ export default class MessageForm extends React.Component {
     createMessage: func,
     currentUser: object,
     findOrCreateThread: func,
+    focusForm: func,
+    formRef: func,
     forNewThread: bool,
     goToThread: func,
     messageThreadId: string,
@@ -30,7 +32,7 @@ export default class MessageForm extends React.Component {
 
   sendForExisting () {
     const { createMessage, messageThreadId, text } = this.props
-    createMessage(messageThreadId, text).then(() => this.props.focusEditor())
+    createMessage(messageThreadId, text).then(() => this.props.focusForm())
     this.startTyping.cancel()
     this.props.sendIsTyping(false)
   }
@@ -55,10 +57,6 @@ export default class MessageForm extends React.Component {
     return false
   }
 
-  isFocused () {
-    return this.editor === document.activeElement
-  }
-
   // broadcast "I'm typing!" every 3 seconds starting when the user is typing.
   // We send repeated notifications to make sure that a user gets notified even
   // if they load a comment thread after someone else has already started
@@ -69,7 +67,7 @@ export default class MessageForm extends React.Component {
 
   render () {
     const {
-      editorRef,
+      formRef,
       forNewThread,
       messageThreadId,
       onFocus,
@@ -91,17 +89,16 @@ export default class MessageForm extends React.Component {
       }, e)
     }
 
-    return <form onSubmit={this.submit} styleName='message-form'
-      className={className}>
-      <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image'
-        medium />
-      <TextareaAutosize value={text} innerRef={editorRef} styleName='message-textarea'
-        placeholder={placeholder}
+    return <form styleName='message-form' className={className} onSubmit={this.submit}>
+      <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
+      <TextareaAutosize value={text} styleName='message-textarea'
+        disabled={pending}
+        innerRef={formRef} 
         onFocus={onFocus}
         onChange={onChange}
         onBlur={onBlur}
         onKeyDown={handleKeyDown}
-        disabled={pending} />
+        placeholder={placeholder} />
     </form>
   }
 }
