@@ -312,6 +312,10 @@ autoproxy@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/autoproxy/-/autoproxy-1.0.1.tgz#a8242b9dac0aeeb96dbeade07dd00a6b5e221b15"
 
+autosize@^3.0.15:
+  version "3.0.21"
+  resolved "https://registry.yarnpkg.com/autosize/-/autosize-3.0.21.tgz#f182f40d17757d978a139a4c9ca40c4c0e448603"
+
 aws-sign2@~0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.6.0.tgz#14342dd38dbcc94d0e5b87d763cd63612c0e794f"
@@ -1591,6 +1595,10 @@ compression@1.6.2, compression@^1.5.2, compression@^1.6.2:
     debug "~2.2.0"
     on-headers "~1.0.1"
     vary "~1.1.0"
+
+computed-style@~0.1.3:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/computed-style/-/computed-style-0.1.4.tgz#7f344fd8584b2e425bedca4a1afc0e300bb05d74"
 
 concat-map@0.0.1:
   version "0.0.1"
@@ -4522,6 +4530,12 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+line-height@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/line-height/-/line-height-0.3.1.tgz#4b1205edde182872a5efa3c8f620b3187a9c54c9"
+  dependencies:
+    computed-style "~0.1.3"
+
 linkify-it@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-2.0.0.tgz#61de35c5f22c3633189a75d3c40cd3dc96acbb94"
@@ -6215,7 +6229,7 @@ promise@7.1.1, promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10:
+prop-types@^15.5.10, prop-types@^15.5.6:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -6349,6 +6363,14 @@ react-addons-test-utils@^15.4.2:
   dependencies:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
+
+react-autosize-textarea@^0.4.8:
+  version "0.4.8"
+  resolved "https://registry.yarnpkg.com/react-autosize-textarea/-/react-autosize-textarea-0.4.8.tgz#691a842fc3af838792a99650d795af10b29ad149"
+  dependencies:
+    autosize "^3.0.15"
+    line-height "^0.3.1"
+    prop-types "^15.5.6"
 
 react-copy-to-clipboard@^5.0.0:
   version "5.0.0"

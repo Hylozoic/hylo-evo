@@ -26,9 +26,11 @@ export default class Thread extends React.Component {
     }
   }
 
+  focusEditor = () => this.editor.focus()
+
   onThreadIdChange = () => {
     this.props.fetchThread()
-    this.refs.form.getWrappedInstance().focus()
+    this.focusEditor()
   }
 
   render () {
@@ -37,7 +39,7 @@ export default class Thread extends React.Component {
       <Header thread={thread} currentUser={currentUser} />
       <MessageSection thread={thread} messageThreadId={id} />
       <div styleName='message-form'>
-        <MessageForm messageThreadId={id} ref='form' />
+        <MessageForm focusEditor={this.focusEditor} editorRef={textArea => this.editor = textArea} messageThreadId={id} ref='form' />
       </div>
       <PeopleTyping styleName='people-typing' />
       <SocketSubscriber type='post' id={id} />
