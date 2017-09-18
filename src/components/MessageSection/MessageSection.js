@@ -100,7 +100,7 @@ export default class MessageSection extends React.Component {
       // If there's one new message, it's not from currentUser,
       // and we're not already at the bottom, don't scroll
       if (deltaLength === 1 &&
-        get('creator.id', latest) !== currentUser.id &&
+        get('creator.id', latest) !== get('id', currentUser) &&
         !this.atBottom(this.list)) return
 
       this.shouldScroll = true
