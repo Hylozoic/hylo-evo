@@ -133,6 +133,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          id="other-pill"
           skill={
             Object {
               "name": "+ Other",

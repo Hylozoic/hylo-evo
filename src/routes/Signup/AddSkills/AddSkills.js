@@ -1,4 +1,3 @@
-/* eslint-disable no-return-assign */
 import React, { Component } from 'react'
 import { isEmpty } from 'lodash'
 import SignupModalFooter from '../SignupModalFooter'
@@ -43,7 +42,7 @@ export default class AddSkills extends Component {
       editing: true,
       skillText: ''
     })
-    this.skillInput.focus()
+    this.skillInput && this.skillInput.focus()
   }
 
   createNewSkill = () => {
@@ -73,7 +72,7 @@ export default class AddSkills extends Component {
         <br />
         <div styleName='center'>
           <input
-            ref={input => this.skillInput = input}
+            ref={input => { this.skillInput = input }}
             value={skillText}
             styleName='signup-input center-text signup-padding large-input-text gray-bottom-border'
             autoFocus
@@ -97,7 +96,7 @@ export default class AddSkills extends Component {
             {this.getRemainingSkills().map((skill, index) =>
               <Pill key={index} skill={skill} clickHandler={() => this.props.addSkill(skill.name)} />
             )}
-            <Pill skill={{name: '+ Other'}} clickHandler={() => this.editNewSkill()} />
+            <Pill id='other-pill' skill={{name: '+ Other'}} clickHandler={() => this.editNewSkill()} />
           </div>}
         </div>
         <div>
