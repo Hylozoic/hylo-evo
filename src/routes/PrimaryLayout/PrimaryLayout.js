@@ -35,6 +35,7 @@ import Domain from 'routes/CreateCommunity/Domain'
 // TODO: Implement create community privacy component when implemented on the server
 // import Privacy from 'routes/CreateCommunity/Privacy'
 import CommunityReview from 'routes/CreateCommunity/Review'
+import NotFound from 'components/NotFound'
 
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
@@ -77,7 +78,7 @@ export default class PrimaryLayout extends Component {
     } = this.props
 
     if (isCommunityRoute && !community) {
-      return <Redirect to={'/'} />
+      return <NotFound />
     }
 
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
