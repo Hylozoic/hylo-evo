@@ -47,6 +47,7 @@ export default class AddSkills extends Component {
   }
 
   createNewSkill = () => {
+    this.props.addSkill(this.state.skillText)
     this.setState({
       editing: false,
       skillText: ''
