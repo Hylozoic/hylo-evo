@@ -14,3 +14,10 @@ exports[`RedirectToCreateCommunityFlow returns null if pathname starts with /cre
 exports[`RedirectToCreateCommunityFlow returns null if pathname starts with /signup 1`] = `null`;
 
 exports[`RedirectToCreateCommunityFlow returns null if there are memberships 1`] = `null`;
+
+exports[`redirects if a community does not exist 1`] = `
+<Redirect
+  push={false}
+  to="/"
+/>
+`;

@@ -77,7 +77,7 @@ export default class PrimaryLayout extends Component {
     } = this.props
 
     if (isCommunityRoute && !community) {
-      return <Loading type='fullscreen' />
+      return <Redirect to={'/'} />
     }
 
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
@@ -85,7 +85,6 @@ export default class PrimaryLayout extends Component {
       ({ path }) => matchPath(location.pathname, {path}),
       detailRoutes
     )
-
     // TODO move FullPageModals
     return <div styleName='container' onClick={closeDrawer}>
       <Drawer currentCommunity={community} styleName={cx('drawer', {hidden: !isDrawerOpen})} />

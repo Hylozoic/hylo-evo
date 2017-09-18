@@ -11,9 +11,9 @@ PrimaryLayout,
   RedirectToCreateCommunityFlow
 } from './PrimaryLayout'
 
-it('shows nothing for a community route if the community is not loaded', () => {
+it('redirects if a community does not exist', () => {
   const wrapper = shallow(<PrimaryLayout isCommunityRoute />)
-  expect(wrapper.name()).toEqual('Loading')
+  expect(wrapper).toMatchSnapshot()
 })
 
 it('shows normal children for a community route if the community is loaded', () => {
