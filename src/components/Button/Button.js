@@ -17,7 +17,7 @@ export default function Button ({
   className
 }) {
   let styleName = cx('button', color, {hover, active, narrow, small, disabled})
-  return <div styleName={styleName} className={className} onClick={!disabled && onClick}>
+  return <div tabIndex='0' styleName={styleName} className={className} onClick={!disabled && onClick}>
     {label || children}
   </div>
 }

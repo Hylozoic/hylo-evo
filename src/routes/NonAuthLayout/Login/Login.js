@@ -29,14 +29,14 @@ export default class Login extends React.Component {
       <h1 styleName='title'>Log in to Hylo</h1>
       {this.props.error && formatError(this.props.error, 'Login')}
       <div styleName='field'>
-        <label styleName='field-label'>Your email address</label>
-        <TextInput type='text' name='email' onChange={setState('email')}
+        <label htmlFor='email' styleName='field-label'>Your email address</label>
+        <TextInput label='email' type='text' name='email' onChange={setState('email')}
           inputRef={input => { this.email = input }} autoFocus />
       </div>
 
       <div styleName='field'>
-        <label styleName='field-label'>Password</label>
-        <TextInput type='password' name='password'
+        <label htmlFor='password' styleName='field-label'>Password</label>
+        <TextInput label='password' type='password' name='password'
           onChange={setState('password')}
           onEnter={this.submit} />
       </div>
@@ -46,11 +46,11 @@ export default class Login extends React.Component {
       </Link>
       <p styleName='connect-label'>Or connect with:</p>
       <div styleName='auth-buttons'>
-        <a styleName='facebook' onClick={() => this.loginAndRedirect('facebook')}>
+        <a styleName='facebook' onClick={() => this.loginAndRedirect('facebook')} tabIndex='0'>
           <Icon name='Facebook' styleName='auth-icon' />
           Facebook
         </a>
-        <a styleName='google' onClick={() => this.loginAndRedirect('google')}>
+        <a styleName='google' onClick={() => this.loginAndRedirect('google')} tabIndex='0'>
           <Icon name='Google' styleName='auth-icon' />
           Google
           </a>
