@@ -4,8 +4,8 @@ import AddSkills from './AddSkills'
 
 describe('AddSkills', () => {
   it('renders correctly', () => {
-    const skills = []
-    const wrapper = shallow(<AddSkills skills={skills}/>)
+    const skills = ['Dancing', 'Running', 'Hiding']
+    const wrapper = shallow(<AddSkills skills={skills} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
