@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import { postUrl } from 'util/index'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import Highlight from 'components/Highlight'
+import ClickCatcher from 'components/ClickCatcher'
 import './CommentCard.scss'
 
 export default function CommentCard ({ comment, shouldShowReply, expanded = true, highlightProps }) {
@@ -30,9 +30,11 @@ export default function CommentCard ({ comment, shouldShowReply, expanded = true
         </Highlight>
         <span styleName='date'>{humanDate(comment.createdAt)}</span>
       </div>
-      <Highlight {...highlightProps}>
-        <div styleName='comment-body' dangerouslySetInnerHTML={{__html: commentText}} />
-      </Highlight>
+      <ClickCatcher>
+        <Highlight {...highlightProps}>
+          <div styleName='comment-body' dangerouslySetInnerHTML={{__html: commentText}} />
+        </Highlight>
+      </ClickCatcher>
       <div styleName='comment-footer'>
         {shouldShowReply && <span><Icon styleName='reply-button' name='Reply' green /> Reply</span>}
       </div>
