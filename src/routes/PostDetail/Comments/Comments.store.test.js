@@ -14,6 +14,7 @@ describe('getComments', () => {
               items: [
                 {
                   id: 11,
+                  text: 'eleven',
                   attachments: [
                     {
                       id: 111,
@@ -23,6 +24,7 @@ describe('getComments', () => {
                 },
                 {
                   id: 12,
+                  text: 'twelve',
                   attachments: [
                     {
                       id: 121,
@@ -46,6 +48,7 @@ describe('getComments', () => {
               items: [
                 {
                   id: 21,
+                  text: 'twentyone',
                   attachments: [
                     {
                       id: 211,
@@ -55,6 +58,7 @@ describe('getComments', () => {
                 },
                 {
                   id: 22,
+                  text: 'twentytwo',
                   attachments: [
                     {
                       id: 221,
@@ -77,11 +81,9 @@ describe('getComments', () => {
     const state = {
       orm: session.state
     }
-    console.log('state.Post', JSON.stringify(session.state.Post))
-    console.log('state.Comment', JSON.stringify(session.state.Comment))
-    console.log('state.Attachment', JSON.stringify(session.state.Attachment))
     const comments = getComments(state, {postId: 1})
-    console.log('length', session.Post.withId(1).comments.toModelArray().length)
-    console.log('comments', comments)
+    expect(comments.length).toEqual(2)
+    expect(comments.map(c => c.text)).toEqual(['eleven', 'twelve'])
+    expect(comments.map(c => c.image.url)).toEqual(['foo.png', 'bar.png'])
   })
 })

@@ -19,8 +19,6 @@ export default class Comment extends Component {
     const { creator, createdAt, text, image } = comment
     const profileUrl = personUrl(creator.id, slug)
 
-    console.log('image', image)
-
     const presentedText = present(sanitize(text), {slug})
 
     return <div styleName='comment'>

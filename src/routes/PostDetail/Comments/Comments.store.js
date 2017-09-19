@@ -100,12 +100,8 @@ export const getComments = createSelector(
       return []
     }
     return post.comments.orderBy(c => Number(c.id)).toModelArray()
-    .map(c => {
-      console.log('comment', c.attachments)
-      return c
-    })
     .map(comment => ({
       ...comment.ref,
-      image: comment.attachments[0]
+      image: comment.attachments.toModelArray()[0]
     }))
   })
