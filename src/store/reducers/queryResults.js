@@ -11,7 +11,9 @@ import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import {
   FETCH_POSTS,
-  DROP_QUERY_RESULTS
+  DROP_QUERY_RESULTS,
+  FIND_OR_CREATE_THREAD,
+  FETCH_THREADS
 } from 'store/constants'
 import {
   CREATE_POST
@@ -69,6 +71,10 @@ export default function (state = {}, action) {
       root = payload.data.createPost
       return matchNewPostIntoQueryResults(state, root)
 
+    case FIND_OR_CREATE_THREAD:
+      root = payload.data.findOrCreateThread
+      return matchNewThreadIntoQueryResults(state, root)
+
     case FETCH_NETWORK_SETTINGS:
       return addNetworkCommunities(addNetworkModerators(state))
 
@@ -115,6 +121,10 @@ export function matchNewPostIntoQueryResults (state, {id, type, communities}) {
       return prependIdForCreate(innerMemo, FETCH_POSTS, params, id)
     }, memo, queriesToMatch)
   }, state, communities)
+}
+
+export function matchNewThreadIntoQueryResults (state, {id, type}) {
+  return prependIdForCreate(state, FETCH_THREADS, null, id)
 }
 
 function prependIdForCreate (state, type, params, id) {
@@ -188,7 +198,8 @@ export const queryParamWhitelist = [
   'filter',
   'topic',
   'type',
-  'page'
+  'page',
+  'threadSearch'
 ]
 
 export function makeQueryResultsModelSelector (resultsSelector, modelName, transform = i => i) {
