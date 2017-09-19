@@ -19,16 +19,16 @@ export default function Button ({
 }) {
   let styleName = cx('button', color, {hover, active, narrow, small, disabled})
   const clickable = (!disabled && onClick)
-  const click = clickable ? onClick : null
+  const onClickIfClickable = clickable ? onClick : null
   return <div
     role='button'
     tabIndex={tabIndex}
     styleName={styleName}
     className={className}
-    onClick={click}
+    onClick={onClickIfClickable}
     onKeyPress={event => {
       if (clickable && event.key === 'Enter') {
-        click()
+        onClickIfClickable()
       }
     }}
   >
