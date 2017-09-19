@@ -18,7 +18,7 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
       uploadSettings={
         Object {
           "id": 1,
-          "type": "communityAvatar",
+          "type": "communityBanner",
         }
       }
     />
@@ -33,7 +33,7 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
       uploadSettings={
         Object {
           "id": 1,
-          "type": "communityBanner",
+          "type": "communityAvatar",
         }
       }
     />
