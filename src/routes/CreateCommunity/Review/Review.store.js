@@ -27,9 +27,7 @@ export function createCommunity (name, slug) {
       }
     },
     meta: {
-      optimistic: true,
       extractModel: 'Membership',
-      tempId: uniqueId(`membership${slug}_`),
       slug,
       name
     }

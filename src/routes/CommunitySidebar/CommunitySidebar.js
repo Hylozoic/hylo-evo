@@ -20,9 +20,9 @@ export default class CommunitySidebar extends Component {
   }
 
   render () {
-    const { community, members, leaders, currentUser } = this.props
+    const { community, members, leaders, currentUser, canModerate } = this.props
     if (!community || isEmpty(members)) return <Loading />
-    const canModerate = currentUser.canModerate(community)
+    // const canModerate = currentUser.canModerate(community)
     const { name, description, slug, memberCount } = community
 
     return <div styleName='community-sidebar'>
