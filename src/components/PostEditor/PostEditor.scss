@@ -9,13 +9,15 @@
 
 // Overall wrapper
 
+$wrapperBorderRadius: 8px;
+
 .wrapper {
   display: flex;
   flex-direction: column;
   min-width: $post-editor-width;
   list-style: none;
   border: solid 1px rgb(0,0,0);
-  border-radius: 8px;
+  border-radius: $wrapperBorderRadius;
   border: 1px solid $color-cape-cod-10;
   background: $color-white;
 }
@@ -55,7 +57,7 @@
   color: $color-rhino-darker;
   font-size: 11px;
   letter-spacing: 1.2px;
-  line-height: 40px;
+  line-height: 40px !important;
   display: inline-block;
   width: 100%;
   margin: 0 $space-2x;
@@ -160,6 +162,7 @@
   background-color: $color-athens-gray;
   flex-direction: row;
   padding: $space-3x 18px;
+  border-radius: $wrapperBorderRadius;
   align-items: center;
   border-top: solid 1px $color-ghost-30;
 }
