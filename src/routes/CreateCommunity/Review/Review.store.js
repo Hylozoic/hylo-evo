@@ -10,6 +10,7 @@ export function createCommunity (name, slug) {
       query: `mutation ($data: CommunityInput) {
         createCommunity(data: $data) {
           id
+          hasModeratorRole
           community {
             id
             name
