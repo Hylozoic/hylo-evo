@@ -93,7 +93,7 @@ export default class MessageForm extends React.Component {
       <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
       <TextareaAutosize value={text} styleName='message-textarea'
         disabled={pending}
-        innerRef={formRef} 
+        innerRef={formRef}
         onFocus={onFocus}
         onChange={onChange}
         onBlur={onBlur}
