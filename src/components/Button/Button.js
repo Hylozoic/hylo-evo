@@ -14,17 +14,18 @@ export default function Button ({
   disabled = false,
   children,
   onClick,
-  className
+  className,
+  tabIndex = 0
 }) {
   let styleName = cx('button', color, {hover, active, narrow, small, disabled})
   return <div
     role='button'
-    tabIndex='0'
+    tabIndex={tabIndex}
     styleName={styleName}
     className={className}
     onClick={!disabled && onClick}
     onKeyPress={event => {
-      if (!disabled && event.key === 'Enter') {
+      if (!disabled && event.key === 'Enter' && onClick) {
         onClick()
       }
     }}

@@ -22,6 +22,13 @@ export default class Login extends React.Component {
     .then(({ error }) => error || this.props.navigate('/'))
   }
 
+  googleLogin = () => {
+    this.loginAndRedirect('google')
+  }
+
+  facebookLogin = () => {
+    this.loginAndRedirect('facebook')
+  }
   render () {
     const { className, loginWithService } = this.props
     const setState = key => event => this.setState({[key]: event.target.value})
@@ -47,11 +54,12 @@ export default class Login extends React.Component {
       <p styleName='connect-label'>Or connect with:</p>
       <div styleName='auth-buttons'>
         <a styleName='facebook'
-          onClick={() => this.loginAndRedirect('facebook')}
+          onClick={this.facebookLogin}
           tabIndex='0'
+          role='button'
           onKeyPress={event => {
             if (event.key === 'Enter') {
-              this.loginAndRedirect('facebook')
+              this.facebookLogin()
             }
           }}
         >
@@ -59,11 +67,12 @@ export default class Login extends React.Component {
           Facebook
         </a>
         <a styleName='google'
-          onClick={() => this.loginAndRedirect('google')}
+          onClick={this.googleLogin}
           tabIndex='0'
+          role='button'
           onKeyPress={event => {
             if (event.key === 'Enter') {
-              this.loginAndRedirect('google')
+              this.googleLogin()
             }
           }}
         >
