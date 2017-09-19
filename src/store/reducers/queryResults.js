@@ -198,8 +198,7 @@ export const queryParamWhitelist = [
   'filter',
   'topic',
   'type',
-  'page',
-  'threadSearch'
+  'page'
 ]
 
 export function makeQueryResultsModelSelector (resultsSelector, modelName, transform = i => i) {

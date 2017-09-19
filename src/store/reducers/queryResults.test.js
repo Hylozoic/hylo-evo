@@ -4,7 +4,8 @@ import queryResults, {
    buildKey,
    matchNewPostIntoQueryResults,
    makeGetQueryResults,
-   makeQueryResultsModelSelector
+   makeQueryResultsModelSelector,
+   matchNewThreadIntoQueryResults
  } from './queryResults'
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
 import {
@@ -244,6 +245,34 @@ describe('matchNewPostIntoQueryResults', () => {
       '{"type":"FETCH_POSTS","params":{"slug":"bar","filter":"request"}}': {
         hasMore: true,
         ids: ['17', '18', '11']
+      }
+    })
+  })
+})
+
+describe('matchNewThreadIntoQueryResults', () => {
+  it('prepends the thread id to matching query result sets', () => {
+    const state = {
+      '{"type":"FETCH_THREADS","params":{}}': {
+        hasMore: true,
+        ids: ['20', '21']
+      },
+      '{"type":"FETCH_THREADS","params":{"id": "27"}}': {
+        hasMore: false,
+        ids: ['27']
+      }
+    }
+
+    const thread = {id: '27'}
+
+    expect(matchNewThreadIntoQueryResults(state, thread)).toEqual({
+      '{"type":"FETCH_THREADS","params":{"id": "27"}}': {
+        hasMore: false,
+        ids: ['27']
+      },
+      '{"type":"FETCH_THREADS","params":{}}': {
+        hasMore: true,
+        ids: ['27', '20', '21']
       }
     })
   })
