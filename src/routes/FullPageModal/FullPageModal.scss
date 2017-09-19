@@ -13,8 +13,13 @@ $size-sidebar-width: 10rem;
 .left-sidebar {
   width: $size-sidebar-width;
   padding-right: 32px;
-  .sidebar-tabs {
+  .left-sidebar-fixed {
+    position: fixed;
+    padding-top: 220px;
+    padding-right: 32px;
     display: flex;
+    height: 100%;
+    width: $size-sidebar-width;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-end;
@@ -55,6 +60,10 @@ $size-sidebar-width: 10rem;
 
 .right-sidebar {
   width: $size-sidebar-width;
+  .right-sidebar-inner {
+    position: fixed;
+    width: $size-sidebar-width;
+  }
 }
 
 // CloseButton
