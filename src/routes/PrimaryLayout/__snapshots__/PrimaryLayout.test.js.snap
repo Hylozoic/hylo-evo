@@ -15,4 +15,4 @@ exports[`RedirectToCreateCommunityFlow returns null if pathname starts with /sig
 
 exports[`RedirectToCreateCommunityFlow returns null if there are memberships 1`] = `null`;
 
-exports[`redirects if a currentUser is loaded and the community does not exist 1`] = `<withRouter(Connect(NotFound)) />`;
+exports[`shows NotFound if a currentUser is loaded and the community does not exist 1`] = `<withRouter(Connect(NotFound)) />`;
