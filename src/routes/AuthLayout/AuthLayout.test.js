@@ -4,20 +4,20 @@ import { shallow } from 'enzyme'
 
 import orm from 'store/models'
 import
-PrimaryLayout,
+AuthLayout,
 {
   redirectIfCommunity,
   RedirectToCommunity,
   RedirectToCreateCommunityFlow
-} from './PrimaryLayout'
+} from './AuthLayout'
 
 it('shows nothing for a community route if the community is not loaded', () => {
-  const wrapper = shallow(<PrimaryLayout isCommunityRoute />)
+  const wrapper = shallow(<AuthLayout isCommunityRoute />)
   expect(wrapper.name()).toEqual('Loading')
 })
 
 it('shows normal children for a community route if the community is loaded', () => {
-  const wrapper = shallow(<PrimaryLayout
+  const wrapper = shallow(<AuthLayout
     isCommunityRoute
     location={{pathname: '/'}}
     community={{id: '1'}} />)

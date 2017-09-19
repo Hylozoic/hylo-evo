@@ -4,7 +4,6 @@ import { isNil } from 'lodash'
 import getQueryParam from 'store/selectors/getQueryParam'
 import getMe from 'store/selectors/getMe'
 import getIsLoggedIn from 'store/selectors/getIsLoggedIn'
-import { fetchForCurrentUser } from 'routes/PrimaryLayout/PrimaryLayout.store'
 import {
   getNewMembership, getValidToken, useInvitation, checkInvitation
 } from './JoinCommunity.store'
@@ -13,17 +12,16 @@ export function mapStateToProps (state, props) {
   const newMembership = getNewMembership(state)
   const validToken = getValidToken(state)
   return {
+    hasCheckedValidToken: !isNil(validToken),
+    validToken,
+    isLoggedIn: getIsLoggedIn(state),
     currentUser: getMe(state),
     invitationToken: getQueryParam('token', state, props),
-    communitySlug: get('community.slug', newMembership),
-    isLoggedIn: getIsLoggedIn(state),
-    hasCheckedValidToken: !isNil(validToken),
-    validToken
+    communitySlug: get('community.slug', newMembership)
   }
 }
 
 export const mapDispatchToProps = {
-  fetchForCurrentUser,
   useInvitation,
   checkInvitation
 }

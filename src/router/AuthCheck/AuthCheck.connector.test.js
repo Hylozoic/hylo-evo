@@ -1,4 +1,4 @@
-import { mapStateToProps } from './LoginCheck.connector'
+import { mapStateToProps } from './AuthCheck.connector'
 
 it('sets hasCheckedLogin correctly', () => {
   expect(mapStateToProps({login: {isLoggedIn: true}}))

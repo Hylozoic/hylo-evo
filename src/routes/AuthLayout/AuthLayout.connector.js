@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import {
   fetchForCurrentUser, fetchForCommunity, toggleDrawer
-} from './PrimaryLayout.store'
+} from './AuthLayout.store'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
@@ -18,7 +18,7 @@ function mapStateToProps (state, props) {
     community: getCommunityForCurrentRoute(state, props),
     network: getNetworkForCurrentRoute(state, props),
     currentUser: getMe(state),
-    isDrawerOpen: state.PrimaryLayout.isDrawerOpen,
+    isDrawerOpen: state.AuthLayout.isDrawerOpen,
     showLogoBadge,
     hasMemberships
   }

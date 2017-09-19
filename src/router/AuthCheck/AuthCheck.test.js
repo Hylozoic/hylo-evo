@@ -1,21 +1,21 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import LoginCheck from './LoginCheck'
+import AuthCheck from './AuthCheck'
 
 function MockChild () {
   return null
 }
 
 it('shows a loading placeholder', () => {
-  const wrapper = shallow(<LoginCheck hasCheckedLogin={false}>
+  const wrapper = shallow(<AuthCheck hasCheckedLogin={false}>
     <MockChild />
-  </LoginCheck>)
+  </AuthCheck>)
   expect(wrapper.find('Loading')).toHaveLength(1)
 })
 
 it('shows children', () => {
-  const wrapper = shallow(<LoginCheck hasCheckedLogin>
+  const wrapper = shallow(<AuthCheck hasCheckedLogin>
     <MockChild />
-  </LoginCheck>)
+  </AuthCheck>)
   expect(wrapper.find('MockChild')).toHaveLength(1)
 })

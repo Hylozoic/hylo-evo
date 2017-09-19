@@ -31,7 +31,7 @@ import {
 } from 'routes/UserSettings/UserSettings.store'
 import {
   FETCH_FOR_COMMUNITY_PENDING
-} from 'routes/PrimaryLayout/PrimaryLayout.store'
+} from 'routes/AuthLayout/AuthLayout.store'
 import {
   REMOVE_SKILL_PENDING,
   ADD_SKILL

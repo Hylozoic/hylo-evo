@@ -2,9 +2,9 @@ import React from 'react'
 import { StaticRouter } from 'react-router'
 import { Switch, Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
-import PrimaryLayout from 'routes/PrimaryLayout'
+import AuthLayout from 'routes/AuthLayout'
 import AuthRoute from './AuthRoute'
-import LoginCheck from 'routes/NonAuthLayout/LoginCheck'
+import AuthCheck from './AuthCheck'
 import JoinCommunity from 'routes/JoinCommunity'
 import NonAuthLayout from 'routes/NonAuthLayout'
 import UIKit from 'routes/UIKit'
@@ -26,14 +26,14 @@ export function serverRouter (req, context) {
 }
 
 function rootRoutes () {
-  return <LoginCheck>
+  return <AuthCheck>
     <Switch>
       <Route path='/ui-kit' component={UIKit} />
       <AuthRoute returnToOnAuth path='/h/use-invitation' component={JoinCommunity} />
       <AuthRoute path='/login' component={NonAuthLayout} />
       <AuthRoute path='/signup' exact component={NonAuthLayout} />
       <AuthRoute path='/reset-password' exact component={NonAuthLayout} />
-      <AuthRoute requireAuth path='/' component={PrimaryLayout} />
+      <AuthRoute requireAuth path='/' component={AuthLayout} />
     </Switch>
-  </LoginCheck>
+  </AuthCheck>
 }

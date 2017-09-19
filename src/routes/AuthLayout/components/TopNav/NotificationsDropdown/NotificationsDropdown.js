@@ -17,8 +17,8 @@ import {
 } from 'store/models/Notification'
 import striptags from 'striptags'
 import { decode } from 'ent'
-import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
-import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
+import NoItems from 'routes/AuthLayout/components/TopNav/NoItems'
+import LoadingItems from 'routes/AuthLayout/components/TopNav/LoadingItems'
 
 export default class NotificationsDropdown extends Component {
   static propTypes = {

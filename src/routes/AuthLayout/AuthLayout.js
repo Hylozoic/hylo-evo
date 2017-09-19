@@ -36,31 +36,18 @@ import Domain from 'routes/CreateCommunity/Domain'
 // import Privacy from 'routes/CreateCommunity/Privacy'
 import CommunityReview from 'routes/CreateCommunity/Review'
 
-import './PrimaryLayout.scss'
+import './AuthLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
 export const POST_ID_MATCH_REGEX = '\\d+'
 
-export default class PrimaryLayout extends Component {
+export default class AuthLayout extends Component {
   static propTypes = {
     community: PropTypes.object,
     currentUser: PropTypes.object,
     location: PropTypes.object,
     isDrawerOpen: PropTypes.bool,
     toggleDrawer: PropTypes.func
-  }
-
-  componentDidMount () {
-    // avoid fetching topics for All Communities if we're just going to redirect
-    // to a single community
-    const skipTopics = this.props.location.pathname !== '/all'
-    this.props.fetchForCurrentUser(skipTopics)
-  }
-
-  componentDidUpdate (prevProps) {
-    if (get('community.id', this.props) !== get('community.id', prevProps)) {
-      this.props.fetchForCommunity()
-    }
   }
 
   render () {

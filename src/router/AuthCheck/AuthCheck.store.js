@@ -1,24 +1,10 @@
-import { communityTopicsQueryFragment } from 'store/actions/fetchCommunityTopics'
 import { get } from 'lodash/fp'
+import { communityTopicsQueryFragment } from 'store/actions/fetchCommunityTopics'
 
-export const MODULE_NAME = 'PrimaryLayout'
-const FETCH_FOR_CURRENT_USER = `${MODULE_NAME}/FETCH_FOR_CURRENT_USER`
-const FETCH_FOR_COMMUNITY = `${MODULE_NAME}/FETCH_FOR_COMMUNITY`
+export const MODULE_NAME = 'AuthCheck'
+export const FETCH_FOR_CURRENT_USER = `${MODULE_NAME}/FETCH_FOR_CURRENT_USER`
+export const FETCH_FOR_COMMUNITY = `${MODULE_NAME}/FETCH_FOR_COMMUNITY`
 export const FETCH_FOR_COMMUNITY_PENDING = FETCH_FOR_COMMUNITY + '_PENDING'
-const TOGGLE_DRAWER = `${MODULE_NAME}/TOGGLE_DRAWER`
-
-export default function reducer (state = {}, action) {
-  if (action.type === TOGGLE_DRAWER) {
-    return {...state, isDrawerOpen: !state.isDrawerOpen}
-  }
-  return state
-}
-
-export function toggleDrawer () {
-  return {
-    type: TOGGLE_DRAWER
-  }
-}
 
 export function fetchForCurrentUser (slug, skipTopics) {
   const query = slug

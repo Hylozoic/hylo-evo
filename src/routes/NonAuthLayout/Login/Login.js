@@ -23,7 +23,7 @@ export default class Login extends React.Component {
   }
 
   render () {
-    const { className, loginWithService } = this.props
+    const { className } = this.props
     const setState = key => event => this.setState({[key]: event.target.value})
     return <div className={className}>
       <h1 styleName='title'>Log in to Hylo</h1>
