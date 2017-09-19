@@ -1,22 +1,7 @@
 import { connect } from 'react-redux'
-import { createSelector } from 'reselect'
 import getMe from 'store/selectors/getMe'
 import { isEmpty } from 'lodash/fp'
-import orm from 'store/models'
-import { fetchComments, createComment, getHasMoreComments, getTotalComments } from './Comments.store'
-
-export const getComments = createSelector(
-  state => orm.session(state.orm),
-  (state, props) => props.postId,
-  (session, id) => {
-    var post
-    try {
-      post = session.Post.get({id})
-    } catch (e) {
-      return []
-    }
-    return post.comments.orderBy(c => Number(c.id)).toModelArray()
-  })
+import { fetchComments, createComment, getComments, getHasMoreComments, getTotalComments } from './Comments.store'
 
 export function mapStateToProps (state, props) {
   return {
