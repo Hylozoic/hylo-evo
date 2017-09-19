@@ -15,7 +15,7 @@
   min-width: $post-editor-width;
   list-style: none;
   border: solid 1px rgb(0,0,0);
-  border-radius: $space-1x;
+  border-radius: 8px;
   border: 1px solid $color-cape-cod-10;
   background: $color-white;
 }
@@ -34,6 +34,7 @@
   line-height: normal;
   margin-bottom: $space-4x;
   &-prompt {
+    color: $color-loblolly;
     composes: bdy-lt-sm from 'css/typography.scss';
   }
   &-closeButton {
@@ -51,6 +52,7 @@
 
 .postType {
   composes: tag from 'css/typography.scss';
+  color: $color-rhino-darker;
   font-size: 11px;
   letter-spacing: 1.2px;
   line-height: 40px;
@@ -155,6 +157,7 @@
 .actionsBar {
   display: flex;
   flex-wrap: nowrap;
+  background-color: $color-athens-gray;
   flex-direction: row;
   padding: $space-3x 18px;
   align-items: center;

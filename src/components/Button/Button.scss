@@ -19,6 +19,7 @@
 }
 
 .disabled {
+  cursor: not-allowed;
   background-color: #cccccc;
 }
 
@@ -33,6 +34,7 @@
     background-color: darken($color-caribbean-green, 2%);
   }
   &.disabled {
+    border-color: lighten(desaturate($color-caribbean-green, 40%), 35%);
     background-color: lighten(desaturate($color-caribbean-green, 40%), 35%);
   }
 }
