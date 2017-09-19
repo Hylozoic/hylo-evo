@@ -1,4 +1,3 @@
-import { get } from 'lodash/fp'
 import React from 'react'
 import Loading from 'components/Loading'
 
@@ -13,12 +12,6 @@ export default class AuthCheck extends React.Component {
       // to a single community
       const skipTopics = this.props.location.pathname !== '/all'
       this.props.fetchForCurrentUser(skipTopics)
-    }
-  }
-
-  componentDidUpdate (prevProps) {
-    if (get('community.id', this.props) !== get('community.id', prevProps)) {
-      this.props.currentUser && this.props.fetchForCommunity()
     }
   }
 

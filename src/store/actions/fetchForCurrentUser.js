@@ -1,12 +1,8 @@
 import { get } from 'lodash/fp'
 import { communityTopicsQueryFragment } from 'store/actions/fetchCommunityTopics'
+import { FETCH_FOR_CURRENT_USER } from 'store/constants'
 
-export const MODULE_NAME = 'AuthCheck'
-export const FETCH_FOR_CURRENT_USER = `${MODULE_NAME}/FETCH_FOR_CURRENT_USER`
-export const FETCH_FOR_COMMUNITY = `${MODULE_NAME}/FETCH_FOR_COMMUNITY`
-export const FETCH_FOR_COMMUNITY_PENDING = FETCH_FOR_COMMUNITY + '_PENDING'
-
-export function fetchForCurrentUser (slug, skipTopics) {
+export default function fetchForCurrentUser (slug, skipTopics) {
   const query = slug
     ? `query ($slug: String, $first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean, $updateLastViewed: Boolean) {
       ${meQueryFragment}
@@ -41,28 +37,9 @@ export function fetchForCurrentUser (slug, skipTopics) {
   }
 }
 
-export function fetchForCommunity (slug) {
-  const query = slug
-    ? `query ($slug: String, $first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean, $updateLastViewed: Boolean) {
-      ${communityQueryFragment}
-    }`
-    : `query ($first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean) {
-      ${communityTopicsQueryFragment}
-    }`
-
-  return {
-    type: FETCH_FOR_COMMUNITY,
-    graphql: {query, variables: queryVariables(slug)},
-    meta: {
-      extractModel: slug ? 'Community' : 'CommunityTopic',
-      slug
-    }
-  }
-}
-
 // the value of `first` is high because we are receiving unaggregated data from
 // the API, so there could be many duplicates
-const queryVariables = slug => ({slug, first: 200, offset: 0, subscribed: true, updateLastViewed: true})
+export const queryVariables = slug => ({slug, first: 200, offset: 0, subscribed: true, updateLastViewed: true})
 
 const meQueryFragment = `
 me {

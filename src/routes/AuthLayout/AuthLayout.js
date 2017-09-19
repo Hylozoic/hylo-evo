@@ -50,6 +50,13 @@ export default class AuthLayout extends Component {
     toggleDrawer: PropTypes.func
   }
 
+  componentDidUpdate (prevProps) {
+    console.log('!!! componentDidUpdate running: ', get('community.id', this.props), get('community.id', prevProps))
+    if (get('community.id', this.props) !== get('community.id', prevProps)) {
+      this.props.currentUser && this.props.fetchForCommunity()
+    }
+  }
+
   render () {
     const {
       community,
@@ -80,7 +87,6 @@ export default class AuthLayout extends Component {
       <div styleName='main'>
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
-          <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
           <RedirectToCreateCommunityFlow
             hasMemberships={hasMemberships}
             pathname={this.props.location.pathname}
@@ -268,13 +274,6 @@ export function isSignupPath (path) {
 
 export function isCreateCommunityPath (path) {
   return (path.startsWith('/create-community'))
-}
-
-export function RedirectToSignupFlow ({ currentUser, pathname }) {
-  if (!currentUser || !currentUser.settings || !currentUser.settings.signupInProgress) return null
-  if (isSignupPath(pathname)) return null
-  const destination = '/signup/upload-photo'
-  return <Redirect to={destination} />
 }
 
 export function RedirectToCreateCommunityFlow ({ hasMemberships, pathname, currentUser }) {

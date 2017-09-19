@@ -1,13 +1,12 @@
+import { some } from 'lodash/fp'
 import { connect } from 'react-redux'
-import {
-  fetchForCurrentUser, fetchForCommunity, toggleDrawer
-} from './AuthLayout.store'
+import fetchForCommunity from 'store/actions/fetchForCommunity'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import getMemberships from 'store/selectors/getMemberships'
 import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommunityRoute'
-import { some } from 'lodash/fp'
+import { toggleDrawer } from './AuthLayout.store'
 
 function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
@@ -26,11 +25,9 @@ function mapStateToProps (state, props) {
 
 function mapDispatchToProps (dispatch, props) {
   const slug = getSlugFromLocation(null, props)
-
   return {
-    fetchForCurrentUser: skipTopics => dispatch(fetchForCurrentUser(slug, skipTopics)),
-    fetchForCommunity: () => dispatch(fetchForCommunity(slug)),
-    toggleDrawer: () => dispatch(toggleDrawer())
+    toggleDrawer: () => dispatch(toggleDrawer()),
+    fetchForCommunity: () => dispatch(fetchForCommunity(slug))
   }
 }
 

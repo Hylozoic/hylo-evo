@@ -3,9 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import orm from 'store/models'
-import
-AuthLayout,
-{
+import AuthLayout, {
   redirectIfCommunity,
   RedirectToCommunity,
   RedirectToCreateCommunityFlow

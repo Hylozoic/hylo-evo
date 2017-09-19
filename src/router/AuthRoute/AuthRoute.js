@@ -1,6 +1,7 @@
 import { get } from 'lodash/fp'
 import React, { Component } from 'react'
 import { Redirect, Route } from 'react-router'
+import { isSignupPath } from 'routes/AuthLayout/AuthLayout'
 
 export default class AuthRoute extends Component {
   render () {
@@ -16,11 +17,14 @@ export default class AuthRoute extends Component {
       location,
       ...rest
     } = this.props
+    const signupInProgress = get('settings.signupInProgress', currentUser)
     const onInitialSignupStep = location.pathname === '/signup'
-    const signupInProgress = get('settings.signupInProgress', currentUser) // location.pathname.startsWith('/signup')
+    const isOnSignupPath = isSignupPath(location.pathname)
+    const nextSignupStepPath = '/signup/upload-photo'
+
     if (isLoggedIn) {
-      if (onInitialSignupStep) {
-        return <Route {...rest} render={props => <Redirect to={'/signup/upload-photo'} />} />
+      if (onInitialSignupStep || (signupInProgress && !isOnSignupPath)) {
+        return <Route {...rest} render={props => <Redirect to={nextSignupStepPath} />} />
       }
       if (returnToURL && !signupInProgress) {
         resetReturnToURL()
