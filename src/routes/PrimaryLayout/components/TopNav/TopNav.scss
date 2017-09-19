@@ -107,3 +107,11 @@
     border-bottom: 1px solid $color-athens-gray;
   }
 }
+
+.hover-highlight {
+  /* emtpy */
+}
+
+.hover-highlight:hover {
+  color: $color-black;
+}

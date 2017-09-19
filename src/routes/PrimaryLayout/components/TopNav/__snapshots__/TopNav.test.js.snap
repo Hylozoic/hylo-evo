@@ -38,6 +38,7 @@ exports[`renders as expected with no community 1`] = `
       >
         <li>
           <Link
+            data-styleName="hover-highlight"
             replace={false}
             to="/"
           >
@@ -46,6 +47,7 @@ exports[`renders as expected with no community 1`] = `
         </li>
         <li>
           <Link
+            data-styleName="hover-highlight"
             replace={false}
             to="/settings"
           >
