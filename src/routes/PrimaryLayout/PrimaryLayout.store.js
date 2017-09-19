@@ -134,7 +134,7 @@ community(slug: $slug, updateLastViewed: $updateLastViewed) {
     }
   }
   memberCount
-  members(first: 8, sortBy: "id", order: "desc") {
+  members(first: 8, sortBy: "name", order: "desc") {
     items {
       id
       name
