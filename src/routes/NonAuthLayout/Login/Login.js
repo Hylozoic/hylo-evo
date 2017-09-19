@@ -46,11 +46,27 @@ export default class Login extends React.Component {
       </Link>
       <p styleName='connect-label'>Or connect with:</p>
       <div styleName='auth-buttons'>
-        <a styleName='facebook' onClick={() => this.loginAndRedirect('facebook')} tabIndex='0'>
+        <a styleName='facebook'
+          onClick={() => this.loginAndRedirect('facebook')}
+          tabIndex='0'
+          onKeyPress={event => {
+            if (event.key === 'Enter') {
+              this.loginAndRedirect('facebook')
+            }
+          }}
+        >
           <Icon name='Facebook' styleName='auth-icon' />
           Facebook
         </a>
-        <a styleName='google' onClick={() => this.loginAndRedirect('google')} tabIndex='0'>
+        <a styleName='google'
+          onClick={() => this.loginAndRedirect('google')}
+          tabIndex='0'
+          onKeyPress={event => {
+            if (event.key === 'Enter') {
+              this.loginAndRedirect('google')
+            }
+          }}
+        >
           <Icon name='Google' styleName='auth-icon' />
           Google
           </a>
