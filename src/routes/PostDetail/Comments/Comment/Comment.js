@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
+import ClickCatcher from 'components/ClickCatcher'
 import { personUrl } from 'util/index'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 const { object } = PropTypes
@@ -33,8 +34,10 @@ export default class Comment extends Component {
           ]} />}
         </div>
       </div>
-      <div id='text' styleName='text' dangerouslySetInnerHTML={{__html: presentedText}} />
-      {/* <div styleName='reply'><Icon name='Reply' styleName='icon' />Reply</div> */}
+      <ClickCatcher>
+        <div id='text' styleName='text' dangerouslySetInnerHTML={{__html: presentedText}} />
+        {/* <div styleName='reply'><Icon name='Reply' styleName='icon' />Reply</div> */}
+      </ClickCatcher>
     </div>
   }
 }
