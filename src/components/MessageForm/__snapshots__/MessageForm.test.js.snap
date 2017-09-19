@@ -13,9 +13,10 @@ exports[`component matches the latest snapshot 1`] = `
   <TextareaAutosize
     data-styleName="message-textarea"
     onChange={[Function]}
+    onHeightChange={[Function]}
     onKeyDown={[Function]}
     placeholder="Write something..."
-    rows={1}
+    useCacheForDOMMeasurements={false}
     value="hey you"
   />
 </form>
