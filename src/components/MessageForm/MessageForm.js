@@ -1,7 +1,7 @@
 import React from 'react'
 import { throttle } from 'lodash'
 import { get } from 'lodash/fp'
-import TextareaAutosize from 'react-autosize-textarea'
+import TextareaAutosize from 'react-textarea-autosize'
 import { onEnterNoShift } from 'util/textInput'
 import RoundImage from 'components/RoundImage'
 var { func, object, string, bool } = React.PropTypes
@@ -93,7 +93,7 @@ export default class MessageForm extends React.Component {
       <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
       <TextareaAutosize value={text} styleName='message-textarea'
         disabled={pending}
-        innerRef={formRef}
+        inputRef={formRef}
         onFocus={onFocus}
         onChange={onChange}
         onBlur={onBlur}

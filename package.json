@@ -96,7 +96,6 @@
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
-    "react-autosize-textarea": "^0.4.8",
     "react-copy-to-clipboard": "^5.0.0",
     "react-dnd": "^2.5.1",
     "react-dnd-html5-backend": "^2.5.1",
