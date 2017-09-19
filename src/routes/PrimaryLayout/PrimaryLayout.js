@@ -64,6 +64,20 @@ export default class PrimaryLayout extends Component {
     }
   }
 
+  communityExists () {
+    const {
+      isCommunityRoute,
+      community,
+      currentUser,
+      communityPending
+    } = this.props
+
+    if (isCommunityRoute && !community && currentUser && !communityPending) {
+      return false
+    }
+    return true
+  }
+
   render () {
     const {
       community,
@@ -77,11 +91,11 @@ export default class PrimaryLayout extends Component {
       hasMemberships
     } = this.props
 
-    if (isCommunityRoute && !community && !currentUser) {
+    if (isCommunityRoute && !currentUser) {
       return <Loading />
     }
 
-    if (isCommunityRoute && !community && currentUser) {
+    if (!this.communityExists()) {
       return <NotFound />
     }
 
