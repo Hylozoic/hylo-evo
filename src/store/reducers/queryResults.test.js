@@ -256,20 +256,12 @@ describe('matchNewThreadIntoQueryResults', () => {
       '{"type":"FETCH_THREADS","params":{}}': {
         hasMore: true,
         ids: ['20', '21']
-      },
-      '{"type":"FETCH_THREADS","params":{"id": "27"}}': {
-        hasMore: false,
-        ids: ['27']
       }
     }
 
     const thread = {id: '27'}
 
     expect(matchNewThreadIntoQueryResults(state, thread)).toEqual({
-      '{"type":"FETCH_THREADS","params":{"id": "27"}}': {
-        hasMore: false,
-        ids: ['27']
-      },
       '{"type":"FETCH_THREADS","params":{}}': {
         hasMore: true,
         ids: ['27', '20', '21']
