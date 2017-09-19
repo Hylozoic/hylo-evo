@@ -4,6 +4,7 @@ import { NavLink, Route } from 'react-router-dom'
 import Icon from 'components/Icon'
 const { object, func, array, oneOfType } = PropTypes
 import cx from 'classnames'
+import AffixWrapper from 'components/AffixWrapper'
 
 export default class FullPageModal extends Component {
   static propTypes = {
@@ -16,18 +17,20 @@ export default class FullPageModal extends Component {
 
     const multipleTabs = Array.isArray(content)
 
-    return <div styleName='modal'>
+    return <div styleName='modal' id='fullPageModal'>
       <div styleName='content'>
-        <div styleName={cx('left-sidebar', {border: multipleTabs})}>
-          {multipleTabs && content.map(tab =>
-            <NavLink to={tab.path}
-              exact
-              replace
-              activeClassName={styles.active}
-              styleName='nav-link'
-              key={tab.path}>
-              {tab.name}
-            </NavLink>)}
+        <div styleName='left-sidebar'>
+          <AffixWrapper styleName={cx('sidebar-tabs', {border: multipleTabs})} offset={200} scrollableId='fullPageModal'>
+            {multipleTabs && content.map(tab =>
+              <NavLink to={tab.path}
+                exact
+                replace
+                activeClassName={styles.active}
+                styleName='nav-link'
+                key={tab.path}>
+                {tab.name}
+              </NavLink>)}
+          </AffixWrapper>
         </div>
         {multipleTabs && <div styleName='center narrow'>
           {content.map(tab =>
