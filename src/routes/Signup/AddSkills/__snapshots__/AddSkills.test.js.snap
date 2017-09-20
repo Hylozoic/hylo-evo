@@ -23,9 +23,12 @@ exports[`AddSkills renders correctly 1`] = `
       <input
         autoFocus={true}
         data-styleName="signup-input center-text signup-padding large-input-text gray-bottom-border"
+        onChange={[Function]}
+        onClick={[Function]}
         onKeyPress={[Function]}
         placeholder="How can you help?"
         readOnly={true}
+        value=""
       />
     </div>
     <div>
@@ -128,9 +131,46 @@ exports[`AddSkills renders correctly 1`] = `
             }
           }
         />
+        <Pill
+          clickHandler={[Function]}
+          id="other-pill"
+          skill={
+            Object {
+              "name": "+ Other",
+            }
+          }
+        />
       </div>
     </div>
-    <div />
+    <div>
+      <div
+        data-styleName="your-skills"
+      >
+        <div
+          data-styleName="your-skills-label"
+        >
+          <span>
+            Your Skills:
+          </span>
+        </div>
+        <div
+          data-styleName="your-skills-list"
+        >
+          <Pill
+            clickHandler={[Function]}
+            skill="Dancing"
+          />
+          <Pill
+            clickHandler={[Function]}
+            skill="Running"
+          />
+          <Pill
+            clickHandler={[Function]}
+            skill="Hiding"
+          />
+        </div>
+      </div>
+    </div>
     <div>
       <SignupModalFooter
         continueText="Boom, Done"

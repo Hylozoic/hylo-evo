@@ -48,11 +48,11 @@ export default class TopNav extends Component {
               <RoundImage url={get('avatarUrl', currentUser)} small />
             }>
             <li>
-              <Link to={profileUrl}>
+              <Link styleName={'hover-highlight'} to={profileUrl}>
                 Profile
               </Link>
             </li>
-            <li><Link to='/settings'>Settings</Link></li>
+            <li><Link styleName={'hover-highlight'} to='/settings'>Settings</Link></li>
             <li><a onClick={logout}>Log out</a></li>
           </Dropdown>
         </div>

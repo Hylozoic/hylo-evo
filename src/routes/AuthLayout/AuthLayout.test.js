@@ -18,7 +18,8 @@ it('shows normal children for a community route if the community is loaded', () 
   const wrapper = shallow(<AuthLayout
     isCommunityRoute
     location={{pathname: '/'}}
-    community={{id: '1'}} />)
+    community={{id: '1'}}
+    currentUser={{}} />)
   expect(wrapper.name()).toEqual('div')
 })
 

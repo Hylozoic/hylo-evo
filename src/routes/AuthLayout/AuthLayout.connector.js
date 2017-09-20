@@ -7,6 +7,7 @@ import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute
 import getMemberships from 'store/selectors/getMemberships'
 import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommunityRoute'
 import { toggleDrawer } from './AuthLayout.store'
+import { FETCH_FOR_COMMUNITY } from 'store/constants'
 
 function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
@@ -19,7 +20,8 @@ function mapStateToProps (state, props) {
     currentUser: getMe(state),
     isDrawerOpen: state.AuthLayout.isDrawerOpen,
     showLogoBadge,
-    hasMemberships
+    hasMemberships,
+    communityPending: state.pending[FETCH_FOR_COMMUNITY]
   }
 }
 
