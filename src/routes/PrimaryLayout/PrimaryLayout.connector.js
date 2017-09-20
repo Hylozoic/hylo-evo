@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import {
-  fetchForCurrentUser, fetchForCommunity, toggleDrawer
+  fetchForCurrentUser, fetchForCommunity, toggleDrawer, FETCH_FOR_COMMUNITY
 } from './PrimaryLayout.store'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
@@ -20,7 +20,8 @@ function mapStateToProps (state, props) {
     currentUser: getMe(state),
     isDrawerOpen: state.PrimaryLayout.isDrawerOpen,
     showLogoBadge,
-    hasMemberships
+    hasMemberships,
+    communityPending: state.pending[FETCH_FOR_COMMUNITY]
   }
 }
 

@@ -48,7 +48,7 @@ exports[`PostDetail renders correctly 1`] = `
   <div
     data-styleName="activity-header"
   >
-    Activity
+    ACTIVITY
   </div>
   <Connect(PostFooter)
     id="91"

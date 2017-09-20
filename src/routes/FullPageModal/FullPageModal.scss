@@ -2,6 +2,7 @@ $size-sidebar-width: 10rem;
 
 .modal {
   composes: modal from 'css/layout.scss';
+  overflow-y: scroll;
 }
 
 .content {
@@ -11,14 +12,20 @@ $size-sidebar-width: 10rem;
 
 .left-sidebar {
   width: $size-sidebar-width;
-  padding-top: 220px;
   padding-right: 32px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
-  &.border {
-    border-right: 1px solid $color-cape-cod-10;
+  .left-sidebar-fixed {
+    position: fixed;
+    padding-top: 220px;
+    padding-right: 32px;
+    display: flex;
+    height: 100%;
+    width: $size-sidebar-width;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    &.border {
+      border-right: 1px solid $color-cape-cod-10;
+    }
   }
 }
 
@@ -42,7 +49,6 @@ $size-sidebar-width: 10rem;
 
 .center {
   width: $center-column-width;
-  overflow-y: auto;
   padding-top: 72px;
 }
 
@@ -54,6 +60,10 @@ $size-sidebar-width: 10rem;
 
 .right-sidebar {
   width: $size-sidebar-width;
+  .right-sidebar-inner {
+    position: fixed;
+    width: $size-sidebar-width;
+  }
 }
 
 // CloseButton

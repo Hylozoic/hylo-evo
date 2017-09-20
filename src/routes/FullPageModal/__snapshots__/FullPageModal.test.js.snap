@@ -9,7 +9,11 @@ exports[`FullPageModal renders correctly when passed children 1`] = `
   >
     <div
       data-styleName="left-sidebar"
-    />
+    >
+      <div
+        data-styleName="left-sidebar-fixed"
+      />
+    </div>
     <div
       data-styleName="center"
     >
@@ -23,7 +27,11 @@ exports[`FullPageModal renders correctly when passed children 1`] = `
     <div
       data-styleName="right-sidebar"
     >
-      <CloseButton />
+      <div
+        data-styleName="right-sidebar-inner"
+      >
+        <CloseButton />
+      </div>
     </div>
   </div>
 </div>
@@ -38,7 +46,11 @@ exports[`FullPageModal renders correctly with a single component 1`] = `
   >
     <div
       data-styleName="left-sidebar"
-    />
+    >
+      <div
+        data-styleName="left-sidebar-fixed"
+      />
+    </div>
     <div
       data-styleName="center"
     >
@@ -49,7 +61,11 @@ exports[`FullPageModal renders correctly with a single component 1`] = `
     <div
       data-styleName="right-sidebar"
     >
-      <CloseButton />
+      <div
+        data-styleName="right-sidebar-inner"
+      >
+        <CloseButton />
+      </div>
     </div>
   </div>
 </div>
@@ -63,26 +79,30 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
     data-styleName="content"
   >
     <div
-      data-styleName="left-sidebar border"
+      data-styleName="left-sidebar"
     >
-      <NavLink
-        activeClassName="active"
-        data-styleName="nav-link"
-        exact={true}
-        replace={true}
-        to="/settings"
+      <div
+        data-styleName="left-sidebar-fixed border"
       >
-        Account
-      </NavLink>
-      <NavLink
-        activeClassName="active"
-        data-styleName="nav-link"
-        exact={true}
-        replace={true}
-        to="/settings/communities"
-      >
-        Communities
-      </NavLink>
+        <NavLink
+          activeClassName="active"
+          data-styleName="nav-link"
+          exact={true}
+          replace={true}
+          to="/settings"
+        >
+          Account
+        </NavLink>
+        <NavLink
+          activeClassName="active"
+          data-styleName="nav-link"
+          exact={true}
+          replace={true}
+          to="/settings/communities"
+        >
+          Communities
+        </NavLink>
+      </div>
     </div>
     <div
       data-styleName="center narrow"
@@ -101,7 +121,11 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
     <div
       data-styleName="right-sidebar"
     >
-      <CloseButton />
+      <div
+        data-styleName="right-sidebar-inner"
+      >
+        <CloseButton />
+      </div>
     </div>
   </div>
 </div>

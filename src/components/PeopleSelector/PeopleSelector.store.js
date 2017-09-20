@@ -4,12 +4,12 @@ import { pick } from 'lodash/fp'
 import getMe from 'store/selectors/getMe'
 import orm from 'store/models'
 import {
-  CREATE_MESSAGE
+  CREATE_MESSAGE,
+  FIND_OR_CREATE_THREAD
 } from 'store/constants'
 
 export const MODULE_NAME = 'PeopleSelector'
 
-export const FIND_OR_CREATE_THREAD = 'FIND_OR_CREATE_THREAD'
 export const FETCH_PEOPLE = 'FETCH_PEOPLE'
 export const FETCH_CONTACTS = 'FETCH_CONTACTS'
 export const FETCH_RECENT_CONTACTS = 'FETCH_RECENT_CONTACTS'

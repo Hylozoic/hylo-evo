@@ -4,6 +4,7 @@ import path from 'path'
 import { pick } from 'lodash/fp'
 import Highlight from 'components/Highlight'
 import Icon from 'components/Icon'
+import ClickCatcher from 'components/ClickCatcher'
 import LinkPreview from '../LinkPreview'
 import { sanitize, present, textLength, truncate } from 'hylo-utils/text'
 import './PostBody.scss'
@@ -31,7 +32,10 @@ export default function PostBody ({
     <div styleName='body' className={className}>
       <div styleName='title' className='hdr-headline'>{title}</div>
       {details &&
-        <div styleName='details' dangerouslySetInnerHTML={{__html: details}} />}
+        <ClickCatcher>
+          <div styleName='details' dangerouslySetInnerHTML={{__html: details}} />
+        </ClickCatcher>
+      }
       {linkPreview &&
         <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />}
       {fileAttachments && <div styleName='file-attachments'>

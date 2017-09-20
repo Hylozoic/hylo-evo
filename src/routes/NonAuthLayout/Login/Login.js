@@ -14,10 +14,16 @@ export default class Login extends React.Component {
 
   submit = () => {
     return this.props.login(this.state.email, this.state.password)
+    .then(({ error }) => error || this.props.navigate('/'))
+  }
+
+  loginAndRedirect = (service) => {
+    this.props.loginWithService(service)
+    .then(({ error }) => error || this.props.navigate('/'))
   }
 
   render () {
-    const { className, loginWithService } = this.props
+    const { className } = this.props
     const setState = key => event => this.setState({[key]: event.target.value})
     return <div className={className}>
       <h1 styleName='title'>Log in to Hylo</h1>
@@ -40,11 +46,11 @@ export default class Login extends React.Component {
       </Link>
       <p styleName='connect-label'>Or connect with:</p>
       <div styleName='auth-buttons'>
-        <a styleName='facebook' onClick={() => loginWithService('facebook')}>
+        <a styleName='facebook' onClick={() => this.loginAndRedirect('facebook')}>
           <Icon name='Facebook' styleName='auth-icon' />
           Facebook
         </a>
-        <a styleName='google' onClick={() => loginWithService('google')}>
+        <a styleName='google' onClick={() => this.loginAndRedirect('google')}>
           <Icon name='Google' styleName='auth-icon' />
           Google
           </a>

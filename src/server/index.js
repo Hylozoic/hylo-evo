@@ -1,4 +1,5 @@
 import setupStartTime from './setup' // this must be first
+import './newrelic' // this must be second
 import express from 'express'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'

@@ -8,7 +8,7 @@ export default function SettingsControl ({ label, value = '', onChange, type, ..
   switch (type) {
     case 'textarea':
       control = <TextareaAutosize minRows={1}
-        maxRows={3}
+        maxRows={100}
         styleName='control-input'
         value={value}
         onChange={onChange}

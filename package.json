@@ -86,6 +86,7 @@
     "lodash": "^4.17.4",
     "lru-cache": "^4.1.1",
     "mime": "^1.4.0",
+    "newrelic": "^2.2.1",
     "node-sass": "^4.5.0",
     "normalize.css": "^5.0.0",
     "postcss-modules-resolve-path": "^1.0.0",
@@ -131,7 +132,7 @@
   },
   "engines": {
     "node": "7.10.1",
-    "yarn": "1.0.1"
+    "yarn": "^1.0.1"
   },
   "scripts": {
     "start": "node --preserve-symlinks scripts/start.js",

@@ -46,15 +46,17 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
       />
     </div>
   </div>
-  <div
-    dangerouslySetInnerHTML={
-      Object {
-        "__html": "<p>text of the comment</p>",
+  <Connect(ClickCatcher)>
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>text of the comment</p>",
+        }
       }
-    }
-    data-styleName="text"
-    id="text"
-  />
+      data-styleName="text"
+      id="text"
+    />
+  </Connect(ClickCatcher)>
 </div>
 `;
 
@@ -87,14 +89,16 @@ exports[`Comment renders correctly 1`] = `
       </span>
     </div>
   </div>
-  <div
-    dangerouslySetInnerHTML={
-      Object {
-        "__html": "<p>text of the comment</p>",
+  <Connect(ClickCatcher)>
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>text of the comment</p>",
+        }
       }
-    }
-    data-styleName="text"
-    id="text"
-  />
+      data-styleName="text"
+      id="text"
+    />
+  </Connect(ClickCatcher)>
 </div>
 `;

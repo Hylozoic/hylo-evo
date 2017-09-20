@@ -41,6 +41,7 @@ export default class CommentForm extends Component {
           styleName='editor'
           onChange={this.startTyping}
           placeholder={placeholder}
+          parentComponent={'CommentForm'}
           submitOnReturnHandler={this.save} />
       </div>
     </div>
