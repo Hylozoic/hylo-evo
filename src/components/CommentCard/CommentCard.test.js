@@ -4,7 +4,7 @@ import React from 'react'
 
 const props = {
   comment: {
-    text: '<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one.</p>',
+    text: '<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. Irrelevant Change</p>',
     creator: {
       id: 1,
       name: 'Joe Smith',
