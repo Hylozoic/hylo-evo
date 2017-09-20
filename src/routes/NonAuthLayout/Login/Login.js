@@ -32,10 +32,8 @@ export default class Login extends React.Component {
   render () {
     const { className, loginWithService } = this.props
     const setState = key => event => this.setState({[key]: event.target.value})
-    return <div className={className}>
-      <div aria-label='Log in with email and password, Facebook, or Google.' tabIndex='0' role='header'>
-        <h1 styleName='title' role='heading' aria-label>Log in to Hylo</h1>
-      </div>
+    return <div className={className} role='form' aria-label='Log in with email and password, Facebook, or Google.' tabIndex='0'>
+      <h1 styleName='title'>Log in to Hylo</h1>
       {this.props.error && formatError(this.props.error, 'Login')}
       <div styleName='field'>
         <label htmlFor='email' styleName='field-label'>Your email address</label>
