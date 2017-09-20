@@ -26,19 +26,32 @@ export default function AuthRoute ({
 
   if (isLoggedIn) {
     if (onInitialSignupStep || (signupInProgress && !isOnSignupPath)) {
-      return <Route {...rest} render={props => <Redirect to={nextSignupStepPath} />} />
+      return <RedirectRoute {...rest} to={nextSignupStepPath} />
     }
     if (returnToURL && !signupInProgress) {
       resetReturnToURL()
-      return <Route {...rest} render={props => <Redirect to={returnToURL} />} />
+      return <RedirectRoute {...rest} to={returnToURL} />
     }
   } else {
     if (requireAuth || returnToOnAuth) {
       setReturnToURL(location.pathname + location.search)
     }
     if (requireAuth) {
-      return <Route {...rest} render={props => <Redirect to={LOGIN_PATH} />} />
+      return <RedirectRoute {...rest} to={LOGIN_PATH} />
     }
   }
   return <Route {...rest} render={props => React.createElement(component, props)} />
+}
+AuthRoute.defaultProps = {
+  isLoggedIn: false,
+  requireAuth: false,
+  returnToOnAuth: false,
+  location: {
+    pathname: '',
+    search: ''
+  }
+}
+
+export function RedirectRoute ({to, ...props}) {
+  return <Route {...props} render={() => <Redirect to={to} />} />
 }
