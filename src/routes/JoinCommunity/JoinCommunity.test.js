@@ -87,8 +87,7 @@ describe('component', () => {
       checkInvitation: jest.fn(),
       useInvitation: jest.fn(),
       currentUser: {id: 'validUser'},
-      communitySlug: 'mycommunity',
-      fetchForCurrentUser: jest.fn(() => Promise.resolve({id: 'validUser'}))
+      communitySlug: 'mycommunity'
     }
     const wrapper = shallow(<JoinCommunity {...testProps} />)
     expect(testProps.checkInvitation.mock.calls.length).toBe(0)
@@ -104,8 +103,7 @@ describe('component', () => {
       invitationToken: 'aslkjdflkjsadf',
       checkInvitation: jest.fn(),
       useInvitation: jest.fn(),
-      currentUser: null,
-      fetchForCurrentUser: jest.fn(() => Promise.resolve({id: 'validUser'}))
+      currentUser: null
     }
     const wrapper = shallow(<JoinCommunity {...testProps} />)
     const communitySlug = 'mycommunity'
@@ -117,7 +115,6 @@ describe('component', () => {
       communitySlug
     })
     expect(testProps.checkInvitation.mock.calls.length).toBe(0)
-    expect(testProps.fetchForCurrentUser.mock.calls.length).toBe(1)
     expect(testProps.useInvitation.mock.calls.length).toBe(1)
     expect(wrapper.find('Redirect').props().to).toContain(communitySlug)
   })
