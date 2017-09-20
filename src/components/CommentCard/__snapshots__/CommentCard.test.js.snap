@@ -1,0 +1,197 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`displays an image 1`] = `
+<Link
+  data-styleName="link"
+  replace={false}
+  to="/all/p/77"
+>
+  <div
+    data-styleName="comment-card"
+  >
+    <div
+      data-styleName="comment-header"
+    >
+      <RoundImage
+        large={true}
+        url="foo.jpg"
+      />
+      <Highlight
+        component="span"
+        highlightClassName="highlight"
+        term="foo"
+      >
+        <div
+          data-styleName="comment-meta"
+        >
+          <span
+            data-styleName="person-name"
+          >
+            Joe Smith
+          </span>
+           commented on 
+          <span
+            data-styleName="post-title"
+          >
+            Awesome Sauce
+          </span>
+        </div>
+      </Highlight>
+      <span
+        data-styleName="date"
+      >
+        just now
+      </span>
+    </div>
+    <img
+      data-styleName="comment-image"
+      onClick={[Function]}
+      src="jam.png"
+    />
+    <div
+      data-styleName="comment-footer"
+    />
+  </div>
+</Link>
+`;
+
+exports[`matches last snapshot 1`] = `
+<Link
+  data-styleName="link"
+  replace={false}
+  to="/all/p/77"
+>
+  <div
+    data-styleName="comment-card"
+  >
+    <div
+      data-styleName="comment-header"
+    >
+      <RoundImage
+        large={true}
+        url="foo.jpg"
+      />
+      <Highlight
+        component="span"
+        highlightClassName="highlight"
+        term="foo"
+      >
+        <div
+          data-styleName="comment-meta"
+        >
+          <span
+            data-styleName="person-name"
+          >
+            Joe Smith
+          </span>
+           commented on 
+          <span
+            data-styleName="post-title"
+          >
+            Awesome Sauce
+          </span>
+        </div>
+      </Highlight>
+      <span
+        data-styleName="date"
+      >
+        just now
+      </span>
+    </div>
+    <Connect(ClickCatcher)>
+      <Highlight
+        component="span"
+        highlightClassName="highlight"
+        term="foo"
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the …</p>",
+            }
+          }
+          data-styleName="comment-body"
+        />
+      </Highlight>
+    </Connect(ClickCatcher)>
+    <div
+      data-styleName="comment-footer"
+    />
+  </div>
+</Link>
+`;
+
+exports[`matches last snapshot with different config 1`] = `
+<Link
+  data-styleName="link"
+  replace={false}
+  to="/all/p/77"
+>
+  <div
+    data-styleName="comment-card"
+  >
+    <div
+      data-styleName="comment-header"
+    >
+      <RoundImage
+        large={true}
+        url="foo.jpg"
+      />
+      <Highlight
+        component="span"
+        highlightClassName="highlight"
+        term="foo"
+      >
+        <div
+          data-styleName="comment-meta"
+        >
+          <span
+            data-styleName="person-name"
+          >
+            Joe Smith
+          </span>
+           commented on 
+          <span
+            data-styleName="post-title"
+          >
+            Awesome Sauce
+          </span>
+        </div>
+      </Highlight>
+      <span
+        data-styleName="date"
+      >
+        just now
+      </span>
+    </div>
+    <Connect(ClickCatcher)>
+      <Highlight
+        component="span"
+        highlightClassName="highlight"
+        term="foo"
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one.</p>",
+            }
+          }
+          data-styleName="comment-body"
+        />
+      </Highlight>
+    </Connect(ClickCatcher)>
+    <div
+      data-styleName="comment-footer"
+    >
+      <span>
+        <Icon
+          data-styleName="reply-button"
+          green={true}
+          name="Reply"
+        />
+         Reply
+      </span>
+    </div>
+  </div>
+</Link>
+`;

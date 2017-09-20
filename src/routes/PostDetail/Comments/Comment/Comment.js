@@ -34,7 +34,9 @@ export default class Comment extends Component {
           ]} />}
         </div>
       </div>
-      {image && <img src={image.url} styleName='image' />}
+      {image && <a href={image.url} target='_blank'>
+        <img src={image.url} styleName='image' />
+      </a>}
       {!image && <ClickCatcher>
         <div id='text' styleName='text' dangerouslySetInnerHTML={{__html: presentedText}} />
         {/* <div styleName='reply'><Icon name='Reply' styleName='icon' />Reply</div> */}

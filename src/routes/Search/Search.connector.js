@@ -43,6 +43,14 @@ function presentSearchResult (searchResult, session) {
     }
   }
 
+  if (type === 'Comment') {
+    content = {
+      ...content.ref,
+      creator: content.creator,
+      image: content.attachments.toModelArray()[0]
+    }
+  }
+
   return {
     ...searchResult.ref,
     content,

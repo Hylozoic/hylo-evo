@@ -9,7 +9,7 @@ import ClickCatcher from 'components/ClickCatcher'
 import './CommentCard.scss'
 
 export default function CommentCard ({ comment, shouldShowReply, expanded = true, highlightProps }) {
-  const { creator, post, slug } = comment
+  const { creator, post, slug, image } = comment
   const postTitle = present(sanitize(post.title), { maxlength: 25, noP: true })
   const commentPresentOpts = {
     maxlength: expanded ? null : 144,
@@ -30,11 +30,14 @@ export default function CommentCard ({ comment, shouldShowReply, expanded = true
         </Highlight>
         <span styleName='date'>{humanDate(comment.createdAt)}</span>
       </div>
-      <ClickCatcher>
+      {image && <img src={image.url}
+        onClick={() => window.open(image.url)}
+        styleName='comment-image' />}
+      {!image && <ClickCatcher>
         <Highlight {...highlightProps}>
           <div styleName='comment-body' dangerouslySetInnerHTML={{__html: commentText}} />
         </Highlight>
-      </ClickCatcher>
+      </ClickCatcher>}
       <div styleName='comment-footer'>
         {shouldShowReply && <span><Icon styleName='reply-button' name='Reply' green /> Reply</span>}
       </div>
