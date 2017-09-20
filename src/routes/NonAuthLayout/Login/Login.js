@@ -33,7 +33,9 @@ export default class Login extends React.Component {
     const { className, loginWithService } = this.props
     const setState = key => event => this.setState({[key]: event.target.value})
     return <div className={className}>
-      <h1 styleName='title'>Log in to Hylo</h1>
+      <div aria-label='Log in with email and password, Facebook, or Google.' tabIndex='0' role='header'>
+        <h1 styleName='title' role='heading' aria-label>Log in to Hylo</h1>
+      </div>
       {this.props.error && formatError(this.props.error, 'Login')}
       <div styleName='field'>
         <label htmlFor='email' styleName='field-label'>Your email address</label>
@@ -54,6 +56,7 @@ export default class Login extends React.Component {
       <p styleName='connect-label'>Or connect with:</p>
       <div styleName='auth-buttons'>
         <a styleName='facebook'
+          aria-label='Log in with Facebook'
           onClick={this.facebookLogin}
           tabIndex='0'
           role='button'
@@ -67,6 +70,7 @@ export default class Login extends React.Component {
           Facebook
         </a>
         <a styleName='google'
+          aria-label='Log in with Google'
           onClick={this.googleLogin}
           tabIndex='0'
           role='button'
