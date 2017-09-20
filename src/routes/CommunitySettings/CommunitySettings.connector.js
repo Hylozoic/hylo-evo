@@ -11,7 +11,7 @@ export function mapStateToProps (state, props) {
   const slug = getParam('slug', state, props, false)
   const community = getCommunityForCurrentRoute(state, props)
   const currentUser = getMe(state, props)
-  const canModerate = currentUser.canModerate(community)
+  const canModerate = currentUser && currentUser.canModerate(community)
 
   return {
     community,

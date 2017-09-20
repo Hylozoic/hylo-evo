@@ -36,12 +36,9 @@
 }
 
 .activity-header {
-  // TODO: Extract Typography
-  padding: 0 25px;
-  margin-bottom: 20px;
-  @include font-regular;
-  color: $color-rhino-80;
-  font-size: 17px;
+  composes: tag from 'css/typography.scss';
+  padding-bottom: 8px;
+  padding-left: 27px;
 }
 
 // PostTag

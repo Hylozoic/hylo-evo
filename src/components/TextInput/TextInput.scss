@@ -13,6 +13,7 @@ $text-input-height: 40px;
   height: $text-input-height - 2px;
   line-height: $text-input-height - 2px;
   border: none;
+  border-radius: 4px;
   outline: none;
   composes: bdy-drk-sm from 'css/typography.scss';
   color: $color-rhino;
@@ -43,6 +44,7 @@ $text-input-height: 40px;
 .modal-input {
   background-color: transparent;
   border: none;
+  border-radius: 4px;
   width: 90%;
   font-weight: lighter;
   text-align: left;

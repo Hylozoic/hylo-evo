@@ -1,8 +1,9 @@
 // Global Typography
 
-/* override draft-js placeholder color */
+/* override draft-js placeholder */
 .public-DraftEditorPlaceholder-root {
   color: $color-rhino-30 !important;
+  padding-left: 2px;
 }
 
 .hdr-display {
