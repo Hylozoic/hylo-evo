@@ -13,7 +13,7 @@ exports[`RedirectToCreateCommunityFlow returns null if pathname starts with /cre
 
 exports[`RedirectToCreateCommunityFlow returns null if pathname starts with /signup 1`] = `null`;
 
-exports[`RedirectToCreateCommunityFlow returns null if redirectToURL is /h/use-invitation 1`] = `null`;
+exports[`RedirectToCreateCommunityFlow returns null if returnToURL is /h/use-invitation 1`] = `null`;
 
 exports[`RedirectToCreateCommunityFlow returns null if there are memberships 1`] = `null`;
 

@@ -87,9 +87,9 @@ describe('RedirectToCreateCommunityFlow', () => {
     const wrapper = shallow(<RedirectToCreateCommunityFlow pathname={pathname} />)
     expect(wrapper).toMatchSnapshot()
   })
-  it('returns null if redirectToURL is /h/use-invitation', () => {
+  it('returns null if returnToURL is /h/use-invitation', () => {
     const pathname = '/h/use-invitation'
-    const wrapper = shallow(<RedirectToCreateCommunityFlow redirectToURL={pathname} />)
+    const wrapper = shallow(<RedirectToCreateCommunityFlow returnToURL={pathname} />)
     expect(wrapper).toMatchSnapshot()
   })
 
