@@ -9,6 +9,7 @@ exports[`CommunitySidebar renders correctly 1`] = `
     name="A Great Cause"
   />
   <SettingsLink
+    canModerate={true}
     community={
       Object {
         "description": "the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, ",
@@ -20,6 +21,7 @@ exports[`CommunitySidebar renders correctly 1`] = `
     }
   />
   <MemberSection
+    canModerate={true}
     memberCount={56}
     members={
       Array [
