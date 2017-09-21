@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`works with a slug 1`] = `
+Object {
+  "graphql": Object {
+    "query": "query ($slug: String, $first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean, $updateLastViewed: Boolean) {
+      
+community(slug: $slug, updateLastViewed: $updateLastViewed) {
+  id
+  name
+  slug
+  description
+  avatarUrl
+  network {
+    id
+    slug
+    name
+    avatarUrl
+    communities(first: 100) {
+      items {
+        id
+      }
+    }
+  }
+  memberCount
+  members(first: 8, sortBy: \\"name\\", order: \\"desc\\") {
+    items {
+      id
+      name
+      avatarUrl
+    }
+  }
+  moderators {
+    items {
+      id
+      name
+      avatarUrl
+    }
+  }
+  
+communityTopics(
+  first: $first,
+  offset: $offset,
+  sortBy: $sortBy,
+  order: $order,
+  subscribed: $subscribed,
+  autocomplete: $autocomplete
+) {
+  hasMore
+  total
+  items {
+    id
+    postsTotal
+    followersTotal
+    isSubscribed
+    newPostCount
+    topic {
+      id
+      name
+    }
+  }
+}
+
+}
+    }",
+    "variables": Object {
+      "first": 200,
+      "offset": 0,
+      "slug": "anyslug",
+      "subscribed": true,
+      "updateLastViewed": true,
+    },
+  },
+  "meta": Object {
+    "extractModel": "Community",
+    "slug": "anyslug",
+  },
+  "type": "FETCH_FOR_COMMUNITY",
+}
+`;

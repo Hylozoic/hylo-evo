@@ -6,7 +6,9 @@ import AuthLayout from 'routes/AuthLayout'
 import AuthRoute from './AuthRoute'
 import AuthCheck from './AuthCheck'
 import JoinCommunity from 'routes/JoinCommunity'
+import RedirectRoute from 'routes/RedirectRoute'
 import NonAuthLayout from 'routes/NonAuthLayout'
+import legacyRedirectsMap from 'router/legacyRedirectsMap'
 import UIKit from 'routes/UIKit'
 import '../css/global/index.scss'
 
@@ -26,8 +28,10 @@ export function serverRouter (req, context) {
 }
 
 function rootRoutes () {
+  const { match } = this.props
   return <AuthCheck>
     <Switch>
+      {legacyRedirectsMap(match).forEach(redirect => <RedirectRoute {...redirect} />)}
       <Route path='/ui-kit' component={UIKit} />
       <AuthRoute returnToOnAuth path='/h/use-invitation' component={JoinCommunity} />
       <AuthRoute path='/login' component={NonAuthLayout} />

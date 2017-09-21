@@ -80,17 +80,6 @@ describe('RedirectToCreateCommunityFlow', () => {
     const wrapper = shallow(<RedirectToCreateCommunityFlow pathname={pathname} />)
     expect(wrapper).toMatchSnapshot()
   })
-  it('returns null if returnToURL is /h/use-invitation', () => {
-    const currentUser = {settings: {signupInProgress: false}}
-    const pathname = '/'
-    const returnToURL = '/h/use-invitation'
-    const wrapper = shallow(<RedirectToCreateCommunityFlow
-      pathname={pathname}
-      returnToURL={returnToURL}
-      currentUser={currentUser}
-    />)
-    expect(wrapper).toMatchSnapshot()
-  })
   it('returns a redirect from create community if: signup is complete, a user does not have memberships, and is not already on /signup or /create-community', () => {
     const currentUser = {settings: {signupInProgress: false}}
     const hasMemberships = false

@@ -1,6 +1,7 @@
 import { get } from 'lodash/fp'
 import React from 'react'
-import { Redirect, Route } from 'react-router'
+import { Route } from 'react-router'
+import RedirectRoute from 'router/RedirectRoute'
 import { isSignupPath } from 'routes/AuthLayout/AuthLayout'
 
 export const STEP_1_SIGNUP_PATH = '/signup'
@@ -50,8 +51,4 @@ AuthRoute.defaultProps = {
     pathname: '',
     search: ''
   }
-}
-
-export function RedirectRoute ({to, ...props}) {
-  return <Route {...props} render={() => <Redirect to={to} />} />
 }

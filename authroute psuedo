@@ -1,0 +1,66 @@
+rootRoutes
+  <AuthCheck>
+    <Route /ui-kit component='NonAuthLayout' />
+    <LegacyRedirectRoute path='' to='' />
+    <NonAuthRoute /login component='NonAuthLayout' />
+    <NonAuthRoute /signup component='NonAuthLayout' />
+    <NonAuthRoute /reset-password component='NonAuthLayout' />
+    <NonAuthRoute /check-invite component='JoinCommunity' /> (TODO: create router/CheckInvitation ref. JoinCommunity comp.)
+    <AuthRoute '\' component='AuthLayout' >
+  </AuthCheck>
+
+AuthCheck (mostly complete)
+  loads currentUser
+  loads currentCommunity (with tags?)
+  loads memberships (?)
+
+AuthRoute
+(connector props)
+  isLoggedIn = getter
+  currentUser = getter
+  returnToURL = getter
+  resetReturnToURL
+  setReturnToURL
+  joinCommunityPending = pending getter
+  memberships = getter
+  onSignupURL = match '/signup'
+  onCreateCommunityURL = match '/create-community'
+  // creating a community if you do have memberships
+  creatingCommunity = !memberships && !onCreateCommunityURL && !joinCommunityPending
+  signupInProgress = currentUser.settings.signupInProgress
+  onCreateCommunityURL
+(component props)
+  requiresAuth
+(component render pseudo code)
+  if (isLoggedIn)
+    if (!currentUser)
+      <loading>
+    if (currentUser)
+      if (!onSignupURL && signupInProgress)
+        // NOTE: When onSignupURL and not signupInProgress is responsibility of signup components
+        <redirect to STEP_2_SIGNUP>
+      if (!onCreateCommunityURL && creatingCommunity)
+        <redirect to STEP_1_CREATE_COMMUNITY>
+      if (returnToURL)
+        resetReturnToURL
+        <redirect to returnToURL>
+  else
+    setReturnToURL
+    <redirect to LOGIN_URL>
+  <render component>
+(component tests)
+  describe AuthRoute
+    it should render <loading> when logged-in WITHOUT a current user loaded
+      it should render <loading>
+    describe logged-in with a current user loaded
+      it should redirect into signup process when !onSignupURL && signupInProgress
+      it should redirect to first step of create community if !onCreateCommunityURL && creatingCommunity
+      it should redirect to returnToURL if one is present
+      it should render component is not onSignupURL or onCreateCommunityURL and doesn't have a returnToURL
+    it should set a returnToURL and redirect to LOGIN_URL if not logged-in
+
+NonAuthRoute
+  if (isLoggedIn)
+    <redirect to '/'>
+  else
+    <render component>
