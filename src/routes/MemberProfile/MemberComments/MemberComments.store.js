@@ -19,6 +19,11 @@ const memberCommentsQuery =
           id
           title
         }
+        attachments {
+          id
+          url
+          type
+        }
         createdAt
       }
     }
@@ -48,6 +53,7 @@ export const memberCommentsSelector = createSelector(
         ...comment.ref,
         creator: comment.creator.ref,
         post: comment.post.ref,
+        image: comment.attachments.toModelArray()[0],
         slug
       }))
     }

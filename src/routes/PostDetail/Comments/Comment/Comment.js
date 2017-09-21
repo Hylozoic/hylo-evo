@@ -16,7 +16,7 @@ export default class Comment extends Component {
 
   render () {
     const { comment, slug, deleteComment } = this.props
-    const { creator, createdAt, text } = comment
+    const { creator, createdAt, text, image } = comment
     const profileUrl = personUrl(creator.id, slug)
 
     const presentedText = present(sanitize(text), {slug})
@@ -34,10 +34,13 @@ export default class Comment extends Component {
           ]} />}
         </div>
       </div>
-      <ClickCatcher>
+      {image && <a href={image.url} target='_blank'>
+        <img src={image.url} styleName='image' />
+      </a>}
+      {!image && <ClickCatcher>
         <div id='text' styleName='text' dangerouslySetInnerHTML={{__html: presentedText}} />
         {/* <div styleName='reply'><Icon name='Reply' styleName='icon' />Reply</div> */}
-      </ClickCatcher>
+      </ClickCatcher>}
     </div>
   }
 }

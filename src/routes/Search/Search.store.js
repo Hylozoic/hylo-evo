@@ -94,6 +94,11 @@ export function fetchSearchResults ({search, offset = 0, filter}) {
                   id
                   title
                 }
+                attachments {
+                  id
+                  url
+                  type
+                }
               }
             }
           }

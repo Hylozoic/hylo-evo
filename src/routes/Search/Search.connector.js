@@ -19,7 +19,7 @@ import { postUrl, personUrl } from 'util/index'
 
 const getSearchResultResults = makeGetQueryResults(FETCH_SEARCH)
 
-function presentSearchResult (searchResult, session) {
+export function presentSearchResult (searchResult, session) {
   const contentRaw = searchResult.getContent(session)
   const type = contentRaw.constructor.modelName
 
@@ -40,6 +40,14 @@ function presentSearchResult (searchResult, session) {
     content = {
       ...content.ref,
       skills: content.skills.toModelArray()
+    }
+  }
+
+  if (type === 'Comment') {
+    content = {
+      ...content.ref,
+      creator: content.creator,
+      image: content.attachments.toModelArray()[0]
     }
   }
 

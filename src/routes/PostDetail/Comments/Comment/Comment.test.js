@@ -21,6 +21,15 @@ describe('Comment', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
+  it('displays an image', () => {
+    const comment = {
+      ...props.comment,
+      image: {url: 'foo.png'}
+    }
+    const wrapper = shallow(<Comment comment={comment} slug={props.slug} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
   it('sanitizes text', () => {
     const comment = {
       ...props.comment,

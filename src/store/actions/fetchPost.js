@@ -31,6 +31,10 @@ export const getPostFieldsFragment = withComments => `
         name
         avatarUrl
       }
+      attachments {
+        id
+        url
+      }
       createdAt
     }
     total

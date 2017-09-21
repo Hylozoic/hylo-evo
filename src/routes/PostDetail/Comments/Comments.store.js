@@ -2,6 +2,7 @@ import { FETCH_COMMENTS, CREATE_COMMENT } from 'store/constants'
 import { get, uniqueId } from 'lodash/fp'
 import { createSelector } from 'reselect'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
+import orm from 'store/models'
 
 export function fetchComments (id, opts = {}) {
   return {
@@ -20,6 +21,10 @@ export function fetchComments (id, opts = {}) {
                 avatarUrl
               }
               createdAt
+              attachments {
+                id
+                url
+              }
             }
             total
             hasMore
@@ -83,3 +88,21 @@ export const getTotalComments = createSelector(
   getCommentResults,
   get('total')
 )
+
+export const getComments = createSelector(
+  state => orm.session(state.orm),
+  (state, props) => props.postId,
+  (session, id) => {
+    var post
+    try {
+      post = session.Post.get({id})
+    } catch (e) {
+      return []
+    }
+    return post.comments.orderBy(c => Number(c.id)).toModelArray()
+    .map(comment => ({
+      ...comment.ref,
+      creator: comment.creator,
+      image: comment.attachments.toModelArray()[0]
+    }))
+  })
