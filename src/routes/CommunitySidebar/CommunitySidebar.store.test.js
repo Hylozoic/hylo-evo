@@ -9,14 +9,12 @@ describe('getCanModerate', () => {
     })
   })
   it('returns expected values', () => {
+    const community = session.Community.create({id: 1})
+    const membership = session.Membership.create({id: 1, community: community.id, hasModeratorRole: true})
+    const me = session.Me.first()
+    me.updateAppending({memberships: [membership.id]})
     const state = { orm: session.state }
-
-    const props = {
-      community: {
-        id: 1,
-        hasModeratorRole: true
-      }
-    }
-    expect(getCanModerate(state, props)).toMatchSnapshot()
+    const props = { community }
+    expect(getCanModerate(state, props)).toEqual(true)
   })
 })
