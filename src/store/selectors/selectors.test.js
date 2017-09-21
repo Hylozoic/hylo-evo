@@ -20,18 +20,18 @@ describe('getMe', () => {
 })
 
 describe('getMemberships', () => {
-  it('returns only my memberships', () => {
-    const session = orm.session(orm.getEmptyState())
+  const session = orm.session(orm.getEmptyState())
+  beforeEach(() => {
     const community1 = session.Community.create({id: 'c1'})
     const community2 = session.Community.create({id: 'c2'})
     const membership = session.Membership.create({id: 'm1', community: community1.id})
     session.Membership.create({id: 'm2', community: community2.id})
+    const me = session.Me.create({})
+    me.updateAppending({memberships: [membership.id]})
+  })
 
-    session.Membership.create({id: 'm2', community: community2.id})
-    const me = session.Me.create({
-      memberships: [membership.id]
-    })
-    expect(me.memberships.toRefArray().length).toEqual(1)
+  it('returns expected values', () => {
+    expect(getMemberships({orm: session.state}, {}).length).toEqual(1)
   })
 })
 

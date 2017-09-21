@@ -501,8 +501,9 @@ describe('on CREATE_COMMUNITY', () => {
   const session = orm.session(orm.getEmptyState())
   const community1 = session.Community.create({id: 'c1'})
   const community2 = session.Community.create({id: 'c2'})
-  const membership = session.Membership.create({id: 'm1', community: community1.id})
-  session.Membership.create({id: 'm2', community: community2.id})
+  const hasModeratorRole = true
+  const membership = session.Membership.create({id: 'm1', community: community1.id, hasModeratorRole})
+  session.Membership.create({id: 'm2', community: community2.id, hasModeratorRole})
   session.Me.create({
     memberships: [membership.id]
   })
@@ -521,10 +522,11 @@ describe('on CREATE_COMMUNITY', () => {
     }
   }
 
-  it('it adds a membership to the currentUser', () => {
+  it('adds a membership to the currentUser with hasModeratorRole', () => {
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
     const currentUser = newSession.Me.first()
     expect(currentUser.memberships.toModelArray().length).toEqual(2)
+    expect(currentUser.memberships.toRefArray()[0].hasModeratorRole).toEqual(true)
   })
 })
