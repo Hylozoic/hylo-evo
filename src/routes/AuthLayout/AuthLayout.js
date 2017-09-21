@@ -295,9 +295,6 @@ export function isCreateCommunityPath (path) {
   return (path.startsWith('/create-community'))
 }
 
-<<<<<<< HEAD:src/routes/AuthLayout/AuthLayout.js
-export function RedirectToCreateCommunityFlow ({ hasMemberships, pathname, currentUser }) {
-=======
 export function isJoinCommunityPath (path) {
   return (path.startsWith('/h/use-invitation'))
 }
@@ -311,7 +308,6 @@ export function RedirectToSignupFlow ({ currentUser, pathname }) {
 
 export function RedirectToCreateCommunityFlow ({ hasMemberships, pathname, returnToURL, currentUser }) {
   if (returnToURL && isJoinCommunityPath(returnToURL)) return null
->>>>>>> master:src/routes/PrimaryLayout/PrimaryLayout.js
   if (!currentUser || !currentUser.settings || currentUser.settings.signupInProgress) return null
   if (hasMemberships) return null
   if (isCreateCommunityPath(pathname) || isSignupPath(pathname)) return null
