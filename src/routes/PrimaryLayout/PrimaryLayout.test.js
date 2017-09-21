@@ -88,8 +88,14 @@ describe('RedirectToCreateCommunityFlow', () => {
     expect(wrapper).toMatchSnapshot()
   })
   it('returns null if returnToURL is /h/use-invitation', () => {
-    const pathname = '/h/use-invitation'
-    const wrapper = shallow(<RedirectToCreateCommunityFlow returnToURL={pathname} />)
+    const currentUser = {settings: {signupInProgress: false}}
+    const pathname = '/'
+    const returnToURL = '/h/use-invitation'
+    const wrapper = shallow(<RedirectToCreateCommunityFlow
+      pathname={pathname}
+      returnToURL={returnToURL}
+      currentUser={currentUser}
+    />)
     expect(wrapper).toMatchSnapshot()
   })
 
