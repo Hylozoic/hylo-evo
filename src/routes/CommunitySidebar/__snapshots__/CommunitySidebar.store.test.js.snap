@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CommunitySidebar store should call getCanModerate 1`] = `undefined`;
+exports[`getCanModerate returns expected values 1`] = `undefined`;

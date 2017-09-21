@@ -1,13 +1,14 @@
 import orm from 'store/models' // this initializes redux-orm
 import { getCanModerate } from './CommunitySidebar.store'
 
-describe('CommunitySidebar store', () => {
+describe('getCanModerate', () => {
   const session = orm.session(orm.getEmptyState())
-  session.Me.create({
-    id: '1'
+  beforeEach(() => {
+    session.Me.create({
+      id: '1'
+    })
   })
-
-  it('should call getCanModerate', () => {
+  it('returns expected values', () => {
     const state = { orm: session.state }
 
     const props = {
