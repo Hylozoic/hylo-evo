@@ -19,7 +19,7 @@ import { postUrl, personUrl } from 'util/index'
 
 const getSearchResultResults = makeGetQueryResults(FETCH_SEARCH)
 
-function presentSearchResult (searchResult, session) {
+export function presentSearchResult (searchResult, session) {
   const contentRaw = searchResult.getContent(session)
   const type = contentRaw.constructor.modelName
 
