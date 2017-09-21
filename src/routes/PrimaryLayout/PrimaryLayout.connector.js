@@ -10,7 +10,7 @@ import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommuni
 import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import { some } from 'lodash/fp'
 
-function mapStateToProps (state, props) {
+export function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
   const showLogoBadge = some(m => m.newPostCount > 0, memberships)
   const hasMemberships = memberships.length > 0
@@ -22,12 +22,12 @@ function mapStateToProps (state, props) {
     isDrawerOpen: state.PrimaryLayout.isDrawerOpen,
     showLogoBadge,
     hasMemberships,
-    communityPending: state.pending[FETCH_FOR_COMMUNITY],
+    // communityPending: state.pending[FETCH_FOR_COMMUNITY],
     returnToURL: getReturnToURL(state)
   }
 }
 
-function mapDispatchToProps (dispatch, props) {
+export function mapDispatchToProps (dispatch, props) {
   const slug = getSlugFromLocation(null, props)
 
   return {
