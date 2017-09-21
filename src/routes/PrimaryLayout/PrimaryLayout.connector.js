@@ -22,7 +22,7 @@ export function mapStateToProps (state, props) {
     isDrawerOpen: state.PrimaryLayout.isDrawerOpen,
     showLogoBadge,
     hasMemberships,
-    // communityPending: state.pending[FETCH_FOR_COMMUNITY],
+    communityPending: state.pending[FETCH_FOR_COMMUNITY],
     returnToURL: getReturnToURL(state)
   }
 }
