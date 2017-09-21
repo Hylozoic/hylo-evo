@@ -98,7 +98,6 @@ describe('RedirectToCreateCommunityFlow', () => {
     />)
     expect(wrapper).toMatchSnapshot()
   })
-
   it('returns a redirect from create community if: signup is complete, a user does not have memberships, and is not already on /signup or /create-community', () => {
     const currentUser = {settings: {signupInProgress: false}}
     const hasMemberships = false
