@@ -1,6 +1,6 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
-import { pick } from 'lodash/fp'
+import { pick, sortBy } from 'lodash/fp'
 
 // Flattens membership, leading to a repetition of network data in some cases.
 function refineData ({ id, community, newPostCount, lastViewedAt }) {
@@ -17,8 +17,12 @@ function refineData ({ id, community, newPostCount, lastViewedAt }) {
 const getMembershipsForDrawer = ormCreateSelector(
   orm,
   state => state.orm,
-  ({ Membership }) =>
-      Membership.all().orderBy(m => m.community.name).toModelArray().map(refineData)
+  ({ Me }) => {
+    const currentUser = Me.first()
+    if (!currentUser) return []
+    return sortBy('community.name',
+      currentUser.memberships.toModelArray().map(refineData))
+  }
 )
 
 export default getMembershipsForDrawer
