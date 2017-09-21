@@ -1,4 +1,5 @@
 import { get } from 'lodash/fp'
+import { communityQueryFragment } from 'store/actions/fetchForCommunity'
 import { communityTopicsQueryFragment } from 'store/actions/fetchCommunityTopics'
 import { FETCH_FOR_CURRENT_USER } from 'store/constants'
 
@@ -41,7 +42,7 @@ export default function fetchForCurrentUser (slug, skipTopics) {
 // the API, so there could be many duplicates
 export const queryVariables = slug => ({slug, first: 200, offset: 0, subscribed: true, updateLastViewed: true})
 
-const meQueryFragment = `
+export const meQueryFragment = `
 me {
   id
   name
@@ -76,40 +77,4 @@ me {
       }
     }
   }
-}`
-
-const communityQueryFragment = `
-community(slug: $slug, updateLastViewed: $updateLastViewed) {
-  id
-  name
-  slug
-  description
-  avatarUrl
-  network {
-    id
-    slug
-    name
-    avatarUrl
-    communities(first: 100) {
-      items {
-        id
-      }
-    }
-  }
-  memberCount
-  members(first: 8, sortBy: "name", order: "desc") {
-    items {
-      id
-      name
-      avatarUrl
-    }
-  }
-  moderators {
-    items {
-      id
-      name
-      avatarUrl
-    }
-  }
-  ${communityTopicsQueryFragment}
 }`
