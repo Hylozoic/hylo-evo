@@ -88,7 +88,8 @@ export default class PrimaryLayout extends Component {
       toggleDrawer,
       isCommunityRoute,
       showLogoBadge,
-      hasMemberships
+      hasMemberships,
+      returnToURL
     } = this.props
 
     if (isCommunityRoute && !currentUser) {
@@ -116,6 +117,7 @@ export default class PrimaryLayout extends Component {
             hasMemberships={hasMemberships}
             pathname={this.props.location.pathname}
             currentUser={currentUser}
+            returnToURL={returnToURL}
           />
           <RedirectToCommunity path='/' currentUser={currentUser} />
           <RedirectToCommunity path='/app' currentUser={currentUser} />
@@ -301,6 +303,10 @@ export function isCreateCommunityPath (path) {
   return (path.startsWith('/create-community'))
 }
 
+export function isJoinCommunityPath (path) {
+  return (path.startsWith('/h/use-invitation'))
+}
+
 export function RedirectToSignupFlow ({ currentUser, pathname }) {
   if (!currentUser || !currentUser.settings || !currentUser.settings.signupInProgress) return null
   if (isSignupPath(pathname)) return null
@@ -308,7 +314,8 @@ export function RedirectToSignupFlow ({ currentUser, pathname }) {
   return <Redirect to={destination} />
 }
 
-export function RedirectToCreateCommunityFlow ({ hasMemberships, pathname, currentUser }) {
+export function RedirectToCreateCommunityFlow ({ hasMemberships, pathname, returnToURL, currentUser }) {
+  if (returnToURL && isJoinCommunityPath(returnToURL)) return null
   if (!currentUser || !currentUser.settings || currentUser.settings.signupInProgress) return null
   if (hasMemberships) return null
   if (isCreateCommunityPath(pathname) || isSignupPath(pathname)) return null
