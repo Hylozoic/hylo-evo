@@ -3,26 +3,19 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import orm from 'store/models'
-import
-PrimaryLayout,
-{
+import AuthLayout, {
   redirectIfCommunity,
   RedirectToCommunity,
   RedirectToCreateCommunityFlow
-} from './PrimaryLayout'
+} from './AuthLayout'
 
-it('shows NotFound if a currentUser is loaded and the community does not exist', () => {
-  const wrapper = shallow(<PrimaryLayout isCommunityRoute currentUser={{}} />)
-  expect(wrapper).toMatchSnapshot()
-})
-
-it('shows nothing for a community route if the community and currentUser are not loaded', () => {
-  const wrapper = shallow(<PrimaryLayout isCommunityRoute />)
+it('shows nothing for a community route if the community is not loaded', () => {
+  const wrapper = shallow(<AuthLayout isCommunityRoute />)
   expect(wrapper.name()).toEqual('Loading')
 })
 
 it('shows normal children for a community route if the community is loaded', () => {
-  const wrapper = shallow(<PrimaryLayout
+  const wrapper = shallow(<AuthLayout
     isCommunityRoute
     location={{pathname: '/'}}
     community={{id: '1'}}
@@ -85,17 +78,6 @@ describe('RedirectToCreateCommunityFlow', () => {
   it('returns null if pathname starts with /create-community', () => {
     const pathname = '/create-community/any-path-here'
     const wrapper = shallow(<RedirectToCreateCommunityFlow pathname={pathname} />)
-    expect(wrapper).toMatchSnapshot()
-  })
-  it('returns null if returnToURL is /h/use-invitation', () => {
-    const currentUser = {settings: {signupInProgress: false}}
-    const pathname = '/'
-    const returnToURL = '/h/use-invitation'
-    const wrapper = shallow(<RedirectToCreateCommunityFlow
-      pathname={pathname}
-      returnToURL={returnToURL}
-      currentUser={currentUser}
-    />)
     expect(wrapper).toMatchSnapshot()
   })
   it('returns a redirect from create community if: signup is complete, a user does not have memberships, and is not already on /signup or /create-community', () => {

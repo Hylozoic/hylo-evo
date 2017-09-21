@@ -1,11 +1,11 @@
-import { mapStateToProps } from './PrimaryLayout.connector'
+import { mapStateToProps } from './AuthLayout.connector'
 
 const emptyState = {
-  PrimaryLayout: {},
+  AuthLayout: {},
   pending: {}
 }
 
-describe('PrimaryLayout.connector', () => {
+describe('AuthLayout.connector', () => {
   it('should get correct value for returnToURL from state', () => {
     const returnToURL = '/anything'
     const state = {

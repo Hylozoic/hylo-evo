@@ -1,6 +1,6 @@
 import { withRouter } from 'react-router-dom'
-import connector from './LoginCheck.connector'
-import component from './LoginCheck'
+import connector from './AuthCheck.connector'
+import component from './AuthCheck'
 
 // withRouter is necessary here, and it's necessary for it to wrap the
 // connector. otherwise, the routing components that are descendants of this

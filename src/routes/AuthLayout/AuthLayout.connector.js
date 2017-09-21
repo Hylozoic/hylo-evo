@@ -1,14 +1,14 @@
+import { some } from 'lodash/fp'
 import { connect } from 'react-redux'
-import {
-  fetchForCurrentUser, fetchForCommunity, toggleDrawer, FETCH_FOR_COMMUNITY
-} from './PrimaryLayout.store'
+import fetchForCommunity from 'store/actions/fetchForCommunity'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import getMemberships from 'store/selectors/getMemberships'
 import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommunityRoute'
+import { toggleDrawer } from './AuthLayout.store'
+import { FETCH_FOR_COMMUNITY } from 'store/constants'
 import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
-import { some } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
@@ -19,7 +19,7 @@ export function mapStateToProps (state, props) {
     community: getCommunityForCurrentRoute(state, props),
     network: getNetworkForCurrentRoute(state, props),
     currentUser: getMe(state),
-    isDrawerOpen: state.PrimaryLayout.isDrawerOpen,
+    isDrawerOpen: state.AuthLayout.isDrawerOpen,
     showLogoBadge,
     hasMemberships,
     communityPending: state.pending[FETCH_FOR_COMMUNITY],
@@ -29,11 +29,9 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   const slug = getSlugFromLocation(null, props)
-
   return {
-    fetchForCurrentUser: skipTopics => dispatch(fetchForCurrentUser(slug, skipTopics)),
-    fetchForCommunity: () => dispatch(fetchForCommunity(slug)),
-    toggleDrawer: () => dispatch(toggleDrawer())
+    toggleDrawer: () => dispatch(toggleDrawer()),
+    fetchForCommunity: () => dispatch(fetchForCommunity(slug))
   }
 }
 

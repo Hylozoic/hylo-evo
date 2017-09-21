@@ -37,12 +37,12 @@ import Domain from 'routes/CreateCommunity/Domain'
 import CommunityReview from 'routes/CreateCommunity/Review'
 import NotFound from 'components/NotFound'
 
-import './PrimaryLayout.scss'
+import './AuthLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
 export const POST_ID_MATCH_REGEX = '\\d+'
 
-export default class PrimaryLayout extends Component {
+export default class AuthLayout extends Component {
   static propTypes = {
     community: PropTypes.object,
     currentUser: PropTypes.object,
@@ -51,16 +51,9 @@ export default class PrimaryLayout extends Component {
     toggleDrawer: PropTypes.func
   }
 
-  componentDidMount () {
-    // avoid fetching topics for All Communities if we're just going to redirect
-    // to a single community
-    const skipTopics = this.props.location.pathname !== '/all'
-    this.props.fetchForCurrentUser(skipTopics)
-  }
-
   componentDidUpdate (prevProps) {
     if (get('community.id', this.props) !== get('community.id', prevProps)) {
-      this.props.fetchForCommunity()
+      this.props.currentUser && this.props.fetchForCommunity()
     }
   }
 
@@ -88,8 +81,7 @@ export default class PrimaryLayout extends Component {
       toggleDrawer,
       isCommunityRoute,
       showLogoBadge,
-      hasMemberships,
-      returnToURL
+      hasMemberships
     } = this.props
 
     if (isCommunityRoute && !currentUser) {
@@ -112,86 +104,14 @@ export default class PrimaryLayout extends Component {
       <div styleName='main'>
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
-          <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
           <RedirectToCreateCommunityFlow
             hasMemberships={hasMemberships}
             pathname={this.props.location.pathname}
             currentUser={currentUser}
-            returnToURL={returnToURL}
           />
           <RedirectToCommunity path='/' currentUser={currentUser} />
           <RedirectToCommunity path='/app' currentUser={currentUser} />
           <Switch>
-            {/* Redirect from->to with params doesn't work as expected, so I had to do this
-            'hack'. from https://stackoverflow.com/a/46064986/2141561 */}
-            <Route
-              exact
-              path='/c/:slug/tag/:topicName'
-              render={props => (
-                <Redirect to={`/c/${props.match.params.slug}/${props.match.params.topicName}`} />
-                )}
-            />
-            <Route
-              exact
-              path='/c/:slug/join/:betaAccessCode/tag/:topicName'
-              render={props => (
-                <Redirect to={`/c/${props.match.params.slug}/join/${props.match.params.betaAccessCode}/${props.match.params.topicName}`} />
-              )}
-            />
-            <Route
-              exact
-              path='/p/:postId'
-              render={props => (
-                <Redirect to={`/all/p/${props.match.params.postId}`} />
-              )}
-            />
-            <Route
-              exact
-              path='/u/:id'
-              render={props => (
-                <Redirect to={`/m/${props.match.params.id}`} />
-              )}
-            />
-            <Route
-              exact
-              path='/c/:slug/about'
-              render={props => (
-                <Redirect to={`/c/${props.match.params.slug}`} />
-              )}
-            />
-            <Route
-              exact
-              path='/c/:slug/people'
-              render={props => (
-                <Redirect to={`/c/${props.match.params.slug}/members`} />
-              )}
-            />
-            <Route
-              exact
-              path='/c/:slug/invite'
-              render={props => (
-                <Redirect to={`/c/${props.match.params.slug}/settings/invite`} />
-              )}
-            />
-
-            {/* TODO this route should probably redirect to the communities events page when it's implemented (or remove this if the URLS are the same) */}
-            <Route
-              exact
-              path='/c/:slug/events'
-              render={props => (
-                <Redirect to={`/c/${props.match.params.slug}`} />
-              )}
-            />
-
-            {/* TODO this route should probably redirect to the communities projects page when it's implemented (or remove this if the URLS are the same) */}
-            <Route
-              exact
-              path='/c/:slug/projects'
-              render={props => (
-                <Redirect to={`/c/${props.match.params.slug}`} />
-              )}
-            />
-
             <Route path='/all' exact component={Feed} />
             <Route path='/all/:topicName' exact component={Feed} />
             <Route path='/all/p/:postId' component={Feed} />
@@ -303,10 +223,6 @@ export function isCreateCommunityPath (path) {
   return (path.startsWith('/create-community'))
 }
 
-export function isJoinCommunityPath (path) {
-  return (path.startsWith('/h/use-invitation'))
-}
-
 export function RedirectToSignupFlow ({ currentUser, pathname }) {
   if (!currentUser || !currentUser.settings || !currentUser.settings.signupInProgress) return null
   if (isSignupPath(pathname)) return null
@@ -314,8 +230,7 @@ export function RedirectToSignupFlow ({ currentUser, pathname }) {
   return <Redirect to={destination} />
 }
 
-export function RedirectToCreateCommunityFlow ({ hasMemberships, pathname, returnToURL, currentUser }) {
-  if (returnToURL && isJoinCommunityPath(returnToURL)) return null
+export function RedirectToCreateCommunityFlow ({ hasMemberships, communityPending, pathname, currentUser }) {
   if (!currentUser || !currentUser.settings || currentUser.settings.signupInProgress) return null
   if (hasMemberships) return null
   if (isCreateCommunityPath(pathname) || isSignupPath(pathname)) return null

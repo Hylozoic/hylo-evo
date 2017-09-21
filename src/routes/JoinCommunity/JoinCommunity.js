@@ -9,12 +9,11 @@ export const EXPIRED_INVITE_PATH = '/invite-expired'
 export default class JoinCommunity extends Component {
   componentWillMount () {
     const {
-      isLoggedIn, currentUser, fetchForCurrentUser, useInvitation, checkInvitation
+      isLoggedIn, currentUser, useInvitation, checkInvitation
     } = this.props
     if (!isLoggedIn) {
       checkInvitation()
     } else {
-      fetchForCurrentUser(null, true)
       if (currentUser) useInvitation(currentUser.id)
     }
   }

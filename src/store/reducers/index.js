@@ -9,8 +9,8 @@ import AuthRoute from 'router/AuthRoute/AuthRoute.store'
 import SkillsSection from 'components/SkillsSection/SkillsSection.store'
 import NetworkCommunities from 'routes/NetworkCommunities/NetworkCommunities.store'
 import NetworkSettings from 'routes/NetworkSettings/NetworkSettings.store'
-import PrimaryLayout from 'routes/PrimaryLayout/PrimaryLayout.store'
-import TopNav from 'routes/PrimaryLayout/components/TopNav/TopNav.store'
+import AuthLayout from 'routes/AuthLayout/AuthLayout.store'
+import TopNav from 'routes/AuthLayout/components/TopNav/TopNav.store'
 import PeopleSelector from 'components/PeopleSelector/PeopleSelector.store'
 import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
@@ -44,7 +44,7 @@ const combinedReducers = combineReducers({
   SkillsSection,
   NetworkCommunities,
   NetworkSettings,
-  PrimaryLayout,
+  AuthLayout,
   TopNav,
   PeopleSelector,
   MessageForm,

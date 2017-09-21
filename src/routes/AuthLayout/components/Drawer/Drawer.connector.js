@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { toggleDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
+import { toggleDrawer } from 'routes/AuthLayout/AuthLayout.store'
 import getMembershipsForDrawer from './Drawer.store'
 import { push } from 'react-router-redux'
 

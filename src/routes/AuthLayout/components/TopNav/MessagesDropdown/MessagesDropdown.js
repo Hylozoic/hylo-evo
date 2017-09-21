@@ -9,8 +9,8 @@ import RoundImageRow from 'components/RoundImageRow'
 import TopNavDropdown from '../TopNavDropdown'
 import { get, isEmpty, some } from 'lodash/fp'
 
-import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
-import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
+import NoItems from 'routes/AuthLayout/components/TopNav/NoItems'
+import LoadingItems from 'routes/AuthLayout/components/TopNav/LoadingItems'
 
 export default class MessagesDropdown extends Component {
   static propTypes = {
