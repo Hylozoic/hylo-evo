@@ -173,7 +173,7 @@ exports[`matches last snapshot with different config 1`] = `
         <div
           dangerouslySetInnerHTML={
             Object {
-              "__html": "<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one.</p>",
+              "__html": "<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. Irrelevant Change</p>",
             }
           }
           data-styleName="comment-body"
