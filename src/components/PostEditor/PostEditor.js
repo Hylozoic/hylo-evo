@@ -77,7 +77,9 @@ export default class PostEditor extends React.Component {
   }
 
   componentDidMount () {
-    this.titleInput.focus()
+    setTimeout(() => {
+      this.titleInput.focus()
+    }, 100)
   }
 
   componentDidUpdate (prevProps) {

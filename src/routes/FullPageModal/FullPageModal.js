@@ -18,16 +18,18 @@ export default class FullPageModal extends Component {
 
     return <div styleName='modal'>
       <div styleName='content'>
-        <div styleName={cx('left-sidebar', {border: multipleTabs})}>
-          {multipleTabs && content.map(tab =>
-            <NavLink to={tab.path}
-              exact
-              replace
-              activeClassName={styles.active}
-              styleName='nav-link'
-              key={tab.path}>
-              {tab.name}
-            </NavLink>)}
+        <div styleName='left-sidebar'>
+          <div styleName={cx('left-sidebar-fixed', {border: multipleTabs})}>
+            {multipleTabs && content.map(tab =>
+              <NavLink to={tab.path}
+                exact
+                replace
+                activeClassName={styles.active}
+                styleName='nav-link'
+                key={tab.path}>
+                {tab.name}
+              </NavLink>)}
+          </div>
         </div>
         {multipleTabs && <div styleName='center narrow'>
           {content.map(tab =>
@@ -38,7 +40,9 @@ export default class FullPageModal extends Component {
         </div>}
         {!multipleTabs && <div styleName={cx('center', {narrow})}>{content || children}</div>}
         <div styleName='right-sidebar'>
-          <CloseButton onClose={onClose} />
+          <div styleName='right-sidebar-inner'>
+            <CloseButton onClose={onClose} />
+          </div>
         </div>
       </div>
     </div>

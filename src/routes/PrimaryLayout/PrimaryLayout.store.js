@@ -3,7 +3,7 @@ import { get } from 'lodash/fp'
 
 export const MODULE_NAME = 'PrimaryLayout'
 const FETCH_FOR_CURRENT_USER = `${MODULE_NAME}/FETCH_FOR_CURRENT_USER`
-const FETCH_FOR_COMMUNITY = `${MODULE_NAME}/FETCH_FOR_COMMUNITY`
+export const FETCH_FOR_COMMUNITY = `${MODULE_NAME}/FETCH_FOR_COMMUNITY`
 export const FETCH_FOR_COMMUNITY_PENDING = FETCH_FOR_COMMUNITY + '_PENDING'
 const TOGGLE_DRAWER = `${MODULE_NAME}/TOGGLE_DRAWER`
 
@@ -134,7 +134,7 @@ community(slug: $slug, updateLastViewed: $updateLastViewed) {
     }
   }
   memberCount
-  members(first: 8, sortBy: "id", order: "desc") {
+  members(first: 8, sortBy: "name", order: "desc") {
     items {
       id
       name

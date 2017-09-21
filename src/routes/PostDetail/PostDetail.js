@@ -134,14 +134,14 @@ export default class PostDetail extends Component {
         expanded
         styleName='body'
         fileAttachments={post.fileAttachments} />
-      <div styleName='activity-header' ref={this.setActivityStateFromDOM}>Activity</div>
+      <div styleName='activity-header' ref={this.setActivityStateFromDOM}>ACTIVITY</div>
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
         votesTotal={post.votesTotal}
         myVote={post.myVote} />
       {atActivity && <div styleName='activity-sticky' style={activityStyle}>
-        <div styleName='activity-header'>Activity</div>
+        <div styleName='activity-header'>ACTIVITY</div>
         <PostFooter id={post.id}
           commenters={post.commenters}
           commentersTotal={post.commentersTotal}
