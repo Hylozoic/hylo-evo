@@ -2,6 +2,7 @@ import orm from '../models'
 import getMe from './getMe'
 import getCommunityTopicForCurrentRoute from './getCommunityTopicForCurrentRoute'
 import getTopicForCurrentRoute from './getTopicForCurrentRoute'
+import getMemberships from './getMemberships'
 
 describe('getMe', () => {
   it('returns Me', () => {
@@ -15,6 +16,19 @@ describe('getMe', () => {
 
     expect(result.name).toEqual('Joe Smith')
     expect(result.id).toEqual('1')
+  })
+})
+
+describe('getMemberships', () => {
+  it('returns expected values', () => {
+    const session = orm.session(orm.getEmptyState())
+    const community1 = session.Community.create({id: 'c1'})
+    const community2 = session.Community.create({id: 'c2'})
+    const membership = session.Membership.create({id: 'm1', community: community1.id})
+    session.Membership.create({id: 'm2', community: community2.id})
+    const me = session.Me.create({})
+    me.updateAppending({memberships: [membership.id]})
+    expect(getMemberships({orm: session.state}, {}).length).toEqual(1)
   })
 })
 
