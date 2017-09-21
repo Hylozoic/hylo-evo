@@ -13,6 +13,8 @@ exports[`RedirectToCreateCommunityFlow returns null if pathname starts with /cre
 
 exports[`RedirectToCreateCommunityFlow returns null if pathname starts with /signup 1`] = `null`;
 
+exports[`RedirectToCreateCommunityFlow returns null if redirectToURL is /h/use-invitation 1`] = `null`;
+
 exports[`RedirectToCreateCommunityFlow returns null if there are memberships 1`] = `null`;
 
 exports[`shows NotFound if a currentUser is loaded and the community does not exist 1`] = `<withRouter(Connect(NotFound)) />`;

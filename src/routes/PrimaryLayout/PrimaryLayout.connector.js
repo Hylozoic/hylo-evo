@@ -7,6 +7,7 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import getMemberships from 'store/selectors/getMemberships'
 import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommunityRoute'
+import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import { some } from 'lodash/fp'
 
 function mapStateToProps (state, props) {
@@ -21,7 +22,8 @@ function mapStateToProps (state, props) {
     isDrawerOpen: state.PrimaryLayout.isDrawerOpen,
     showLogoBadge,
     hasMemberships,
-    communityPending: state.pending[FETCH_FOR_COMMUNITY]
+    communityPending: state.pending[FETCH_FOR_COMMUNITY],
+    returnToURL: getReturnToURL(state)
   }
 }
 
