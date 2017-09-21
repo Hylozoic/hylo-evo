@@ -20,7 +20,7 @@ it('shows children', () => {
   expect(wrapper.find('MockChild')).toHaveLength(1)
 })
 
-it('fetchs the currentUser if logged in and not yet fetched', () => {
+it('fetches the currentUser if logged in and not yet fetched', () => {
   const testProps = {
     isLoggedIn: false,
     fetchForCurrentUser: jest.fn(),
