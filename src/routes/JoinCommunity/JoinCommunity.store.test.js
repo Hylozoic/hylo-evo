@@ -4,8 +4,7 @@ import {
   useInvitation,
   getNewMembership,
   getValidInvite,
-  defaultState,
-  reducer
+  defaultState
 } from './JoinCommunity.store'
 
 describe('JoinCommunity.store', () => {
