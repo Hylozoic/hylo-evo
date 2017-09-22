@@ -50,10 +50,6 @@ export function useInvitation (userId, inviteCodes = {}) {
     meta: {
       extractModel: [
         {
-          modelName: 'Community',
-          getRoot: get('useInvitation.membership.community')
-        },
-        {
           modelName: 'Membership',
           getRoot: get('useInvitation.membership')
         }

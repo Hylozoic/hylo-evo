@@ -44,10 +44,6 @@ Object {
     "extractModel": Array [
       Object {
         "getRoot": [Function],
-        "modelName": "Community",
-      },
-      Object {
-        "getRoot": [Function],
         "modelName": "Membership",
       },
     ],
