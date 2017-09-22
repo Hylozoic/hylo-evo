@@ -1,7 +1,5 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { mapStateToProps } from './JoinCommunity.connector'
-import { MODULE_NAME } from './JoinCommunity.store'
 import JoinCommunity from './JoinCommunity'
 
 const defaultProps = {
@@ -12,7 +10,7 @@ const defaultProps = {
   isLoggedIn: false,
   hasCheckedValidInvite: false,
   validInvite: null,
-  userInvitation: () => {},
+  useInvitation: () => {},
   checkInvitation: () => {},
   match: {
     accessCode: ''
@@ -22,55 +20,8 @@ const defaultProps = {
   }
 }
 
-describe('connector', () => {
-  describe('mapStateToProps', () => {
-    it('hasCheckedValidInvite false when there is not a validInvite key', () => {
-      const state = {
-        [MODULE_NAME]: {}
-      }
-      const actual = mapStateToProps(state, defaultProps)
-      expect(actual.hasCheckedValidInvite).toBeFalsy()
-    })
-
-    it('hasCheckedValidInvite false when there is a null validInvite key', () => {
-      const state = {
-        [MODULE_NAME]: {
-          valid: null
-        }
-      }
-      const actual = mapStateToProps(state, defaultProps)
-      expect(actual.hasCheckedValidInvite).toBeFalsy()
-    })
-
-    it('gets the new newCommunitySlug from the newMembership', () => {
-      const newCommunitySlug = 'newcommunity'
-      const state = {
-        [MODULE_NAME]: {
-          membership: {
-            community: {
-              slug: newCommunitySlug
-            }
-          }
-        }
-      }
-      const actual = mapStateToProps(state, defaultProps)
-      expect(actual.communitySlug).toEqual(newCommunitySlug)
-    })
-
-    it('isValidInvite gets set', () => {
-      const state = {
-        [MODULE_NAME]: {
-          valid: true
-        }
-      }
-      const actual = mapStateToProps(state, defaultProps)
-      expect(actual.isValidInvite).toEqual(true)
-    })
-  })
-})
-
-describe('component', () => {
-  it('should check for a valid invitation when not logged in', () => {
+describe('JoinCommunity', () => {
+  it('should check for a valid invitation when not logged-in', () => {
     const testProps = {
       ...defaultProps,
       isLoggedIn: false,
@@ -83,7 +34,7 @@ describe('component', () => {
     expect(testProps.checkInvitation.mock.calls.length).toBe(1)
   })
 
-  it('should use invitation when already logged', () => {
+  it('should use invitation when already logged-in', () => {
     const testProps = {
       ...defaultProps,
       isLoggedIn: true,

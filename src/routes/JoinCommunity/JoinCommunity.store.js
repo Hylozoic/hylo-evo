@@ -64,7 +64,9 @@ export function getValidInvite (state) {
   return get(`${MODULE_NAME}.valid`, state)
 }
 
-export default function reducer (state = {}, action) {
+export const defaultState = {}
+
+export default function reducer (state = defaultState, action) {
   const { type, payload } = action
   switch (type) {
     case CHECK_INVITATION:
