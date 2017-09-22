@@ -10,11 +10,13 @@ exports[`component matches the latest snapshot 1`] = `
     medium={true}
     url="http://image.com/p.png"
   />
-  <textarea
+  <TextareaAutosize
     data-styleName="message-textarea"
     onChange={[Function]}
+    onHeightChange={[Function]}
     onKeyDown={[Function]}
     placeholder="Write something..."
+    useCacheForDOMMeasurements={false}
     value="hey you"
   />
 </form>

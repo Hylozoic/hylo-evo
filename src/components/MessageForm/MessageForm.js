@@ -1,6 +1,7 @@
 import React from 'react'
 import { throttle } from 'lodash'
 import { get } from 'lodash/fp'
+import TextareaAutosize from 'react-textarea-autosize'
 import { onEnterNoShift } from 'util/textInput'
 import RoundImage from 'components/RoundImage'
 var { func, object, string, bool } = React.PropTypes
@@ -13,24 +14,25 @@ export const NEW_THREAD_ID = 'new'
 
 export default class MessageForm extends React.Component {
   static propTypes = {
-    text: string,
-    className: string,
+    createMessage: func,
     currentUser: object,
+    findOrCreateThread: func,
+    focusForm: func,
+    formRef: func,
+    forNewThread: bool,
+    goToThread: func,
     messageThreadId: string,
-    placeholder: string,
     onFocus: func,
     onBlur: func,
     pending: bool,
-    forNewThread: bool,
-    createMessage: func,
-    updateMessageText: func,
-    findOrCreateThread: func,
-    goToThread: func
+    placeholder: string,
+    text: string,
+    updateMessageText: func
   }
 
   sendForExisting () {
     const { createMessage, messageThreadId, text } = this.props
-    createMessage(messageThreadId, text).then(() => this.focus())
+    createMessage(messageThreadId, text).then(() => this.props.focusForm())
     this.startTyping.cancel()
     this.props.sendIsTyping(false)
   }
@@ -55,22 +57,6 @@ export default class MessageForm extends React.Component {
     return false
   }
 
-  componentDidMount () {
-    this.resize()
-  }
-
-  componentDidUpdate (prevProps) {
-    if (prevProps.text !== this.props.text) this.resize()
-  }
-
-  focus () {
-    this.refs.editor.focus()
-  }
-
-  isFocused () {
-    return this.refs.editor === document.activeElement
-  }
-
   // broadcast "I'm typing!" every 3 seconds starting when the user is typing.
   // We send repeated notifications to make sure that a user gets notified even
   // if they load a comment thread after someone else has already started
@@ -79,19 +65,9 @@ export default class MessageForm extends React.Component {
     this.props.sendIsTyping(true)
   }, STARTED_TYPING_INTERVAL)
 
-  resize = () => {
-    const editor = this.refs.editor
-    const cloned = editor.cloneNode()
-    cloned.style.height = 0
-    editor.parentElement.appendChild(cloned)
-    if (editor.style.height !== cloned.scrollHeight + 'px') {
-      editor.style.height = cloned.scrollHeight + 'px'
-    }
-    editor.parentElement.removeChild(cloned)
-  }
-
   render () {
     const {
+      formRef,
       forNewThread,
       messageThreadId,
       onFocus,
@@ -113,17 +89,16 @@ export default class MessageForm extends React.Component {
       }, e)
     }
 
-    return <form onSubmit={this.submit} styleName='message-form'
-      className={className}>
-      <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image'
-        medium />
-      <textarea ref='editor' value={text} styleName='message-textarea'
-        placeholder={placeholder}
+    return <form styleName='message-form' className={className} onSubmit={this.submit}>
+      <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
+      <TextareaAutosize value={text} styleName='message-textarea'
+        disabled={pending}
+        inputRef={formRef}
         onFocus={onFocus}
         onChange={onChange}
         onBlur={onBlur}
         onKeyDown={handleKeyDown}
-        disabled={pending} />
+        placeholder={placeholder} />
     </form>
   }
 }

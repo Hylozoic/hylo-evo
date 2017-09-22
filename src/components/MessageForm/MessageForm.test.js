@@ -21,6 +21,7 @@ describe('component', () => {
   }
   const messageThreadId = '1'
   const wrapper = mount(<MessageForm
+    focusForm={() => {}}
     messageThreadId={messageThreadId}
     text='hey you'
     currentUser={currentUser}

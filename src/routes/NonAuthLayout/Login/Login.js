@@ -23,9 +23,8 @@ export default class Login extends React.Component {
   }
 
   render () {
-    const { className } = this.props
     const setState = key => event => this.setState({[key]: event.target.value})
-    return <div className={className}>
+    return <div className={this.props.className}>
       <h1 styleName='title'>Log in to Hylo</h1>
       {this.props.error && formatError(this.props.error, 'Login')}
       <div styleName='field'>
