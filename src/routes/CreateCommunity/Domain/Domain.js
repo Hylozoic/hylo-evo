@@ -5,7 +5,12 @@ import TextInput from 'components/TextInput'
 import { hyloNameWhiteBackground, confusedAxolotl, happyAxolotl } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import ModalFooter from 'components/ModalFooter'
-import { slugValidatorRegex, formatDomainWithUrl, removeUrlFromDomain } from '../util'
+import {
+  slugValidatorRegex,
+  formatDomainWithUrl,
+  removeUrlFromDomain,
+  invalidSlugMessage
+} from '../util'
 
 export default class Domain extends Component {
   constructor (props) {
@@ -41,7 +46,7 @@ export default class Domain extends Component {
       })
     } else if (!slugValidatorRegex.test(removeUrlFromDomain(this.state.communityDomain))) {
       this.setState({
-        error: 'URLs can only have lower case letters, numbers, and dashes.'
+        error: invalidSlugMessage
       })
     } else {
       this.submit()
