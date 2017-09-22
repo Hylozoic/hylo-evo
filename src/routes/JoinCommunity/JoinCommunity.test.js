@@ -14,6 +14,9 @@ const defaultProps = {
   validInvite: null,
   userInvitation: () => {},
   checkInvitation: () => {},
+  match: {
+    accessCode: ''
+  },
   location: {
     search: ''
   }
@@ -32,7 +35,7 @@ describe('connector', () => {
     it('hasCheckedValidInvite false when there is a null validInvite key', () => {
       const state = {
         [MODULE_NAME]: {
-          validInvite: null
+          valid: null
         }
       }
       const actual = mapStateToProps(state, defaultProps)
@@ -54,14 +57,14 @@ describe('connector', () => {
       expect(actual.communitySlug).toEqual(newCommunitySlug)
     })
 
-    it('validInvite gets set', () => {
+    it('isValidInvite gets set', () => {
       const state = {
         [MODULE_NAME]: {
           valid: true
         }
       }
       const actual = mapStateToProps(state, defaultProps)
-      expect(actual.validInvite).toEqual(true)
+      expect(actual.isValidInvite).toEqual(true)
     })
   })
 })
@@ -80,11 +83,10 @@ describe('component', () => {
     expect(testProps.checkInvitation.mock.calls.length).toBe(1)
   })
 
-  it('should use invitation when already logged in', () => {
+  it('should use invitation when already logged', () => {
     const testProps = {
       ...defaultProps,
       isLoggedIn: true,
-      invitationToken: 'aslkjdflkjsadf',
       checkInvitation: jest.fn(),
       useInvitation: jest.fn(),
       currentUser: {id: 'validUser'},
@@ -102,7 +104,6 @@ describe('component', () => {
     const testProps = {
       ...defaultProps,
       isLoggedIn: true,
-      invitationToken: 'aslkjdflkjsadf',
       checkInvitation: jest.fn(),
       useInvitation: jest.fn(),
       currentUser: null,
