@@ -4,28 +4,31 @@ export const MODULE_NAME = 'JoinCommunity'
 export const USE_INVITATION = `${MODULE_NAME}/USE_INVITATION`
 export const CHECK_INVITATION = `${MODULE_NAME}/CHECK_INVITATION`
 
-export function checkInvitation (invitationToken) {
+export function checkInvitation (inviteCodes) {
+  const { invitationToken, accessCode } = inviteCodes
   return {
     type: CHECK_INVITATION,
     graphql: {
-      query: `query ($invitationToken: String) {
-        checkInvitation (invitationToken: $invitationToken) {
+      query: `query ($invitationToken: String, $accessCode: String) {
+        checkInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
           valid
         }
       }`,
       variables: {
-        invitationToken
+        invitationToken,
+        accessCode
       }
     }
   }
 }
 
-export function useInvitation (userId, invitationToken) {
+export function useInvitation (userId, inviteCodes = {}) {
+  const { invitationToken, accessCode } = inviteCodes
   return {
     type: USE_INVITATION,
     graphql: {
-      query: `mutation ($userId: ID, $invitationToken: String) {
-        useInvitation (userId: $userId, invitationToken: $invitationToken) {
+      query: `mutation ($userId: ID, $invitationToken: String, $accessCode: String) {
+        useInvitation (userId: $userId, invitationToken: $invitationToken, accessCode: $accessCode) {
           membership {
             id
             role
@@ -40,7 +43,8 @@ export function useInvitation (userId, invitationToken) {
       }`,
       variables: {
         userId,
-        invitationToken
+        invitationToken,
+        accessCode
       }
     },
     meta: {
@@ -56,11 +60,13 @@ export function getNewMembership (state) {
   return get(`${MODULE_NAME}.membership`, state)
 }
 
-export function getValidToken (state) {
+export function getValidInvite (state) {
   return get(`${MODULE_NAME}.valid`, state)
 }
 
-export default function reducer (state = {}, action) {
+export const defaultState = {}
+
+export default function reducer (state = defaultState, action) {
   const { type, payload } = action
   switch (type) {
     case CHECK_INVITATION:
