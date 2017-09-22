@@ -16,10 +16,6 @@ export default function AuthRoute ({
   if (isLoggedIn && location.pathname === '/signup') {
     return <Route {...rest} render={props => <Redirect to={'/signup/upload-photo'} />} />
   }
-  if (isLoggedIn && returnToURL && !location.pathname.startsWith('/signup')) {
-    resetReturnToURL()
-    return <Route {...rest} render={props => <Redirect to={returnToURL} />} />
-  }
   if (!isLoggedIn && (requireAuth || returnToOnAuth)) {
     setReturnToURL(location.pathname + location.search)
   }

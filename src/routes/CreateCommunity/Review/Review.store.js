@@ -1,5 +1,3 @@
-import { uniqueId } from 'lodash/fp'
-
 export const MODULE_NAME = `Review`
 export const CREATE_COMMUNITY = `${MODULE_NAME}/CREATE_COMMUNITY`
 

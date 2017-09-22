@@ -5,24 +5,39 @@ import { UPLOAD_ATTACHMENT } from 'store/constants'
 import { updateUserSettings } from 'store/actions/updateUserSettings'
 import fetchMySkills from 'store/actions/fetchMySkills'
 import getMySkills from 'store/selectors/getMySkills'
+import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 
 export function mapStateToProps (state, props) {
   const uploadImagePending = state.pending[UPLOAD_ATTACHMENT]
   return {
     currentUser: getMe(state),
     uploadImagePending,
-    skills: getMySkills(state)
+    skills: getMySkills(state),
+    returnToURL: getReturnToURL(state)
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
   return {
     updateUserSettings: (changes) => dispatch(updateUserSettings(changes)),
-    goToNextStep: () => dispatch(push('/')),
     goToPreviousStep: () => dispatch(push('/signup/add-skills')),
     goBack: () => dispatch(goBack()),
-    fetchMySkills: () => dispatch(fetchMySkills())
+    push: (path) => dispatch(push(path)),
+    fetchMySkills: () => dispatch(fetchMySkills()),
+    resetReturnToURL: () => dispatch(resetReturnToURL())
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    goToNextStep: (defaultPath = '/') => {
+      dispatchProps.resetReturnToURL()
+      dispatchProps.push(stateProps.returnToURL || defaultPath)
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)

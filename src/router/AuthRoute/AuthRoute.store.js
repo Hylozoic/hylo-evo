@@ -1,8 +1,9 @@
 import { createSelector } from 'reselect'
 import { get } from 'lodash/fp'
 
-export const SET_RETURN_TO_URL = 'SET_RETURN_TO_URL'
-export const RESET_RETURN_TO_URL = 'RESET_RETURN_TO_URL'
+export const MODULE_NAME = 'AuthRoute'
+export const SET_RETURN_TO_URL = `${MODULE_NAME}/SET_RETURN_TO_URL`
+export const RESET_RETURN_TO_URL = `${MODULE_NAME}/RESET_RETURN_TO_URL`
 
 export function setReturnToURL (returnToURL) {
   return {
@@ -12,11 +13,13 @@ export function setReturnToURL (returnToURL) {
 }
 
 export function resetReturnToURL (returnToURL) {
-  return {type: RESET_RETURN_TO_URL}
+  return {
+    type: RESET_RETURN_TO_URL
+  }
 }
 
 export const getReturnToURL = createSelector(
-  get('AuthRoute'),
+  get(MODULE_NAME),
   get('returnToURL')
 )
 
