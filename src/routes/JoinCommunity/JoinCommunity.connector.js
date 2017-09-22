@@ -2,23 +2,25 @@ import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
 import { isNil } from 'lodash'
 import getQueryParam from 'store/selectors/getQueryParam'
+import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getIsLoggedIn from 'store/selectors/getIsLoggedIn'
 import { fetchForCurrentUser } from 'routes/PrimaryLayout/PrimaryLayout.store'
 import {
-  getNewMembership, getValidToken, useInvitation, checkInvitation
+  getNewMembership, getValidInvite, useInvitation, checkInvitation
 } from './JoinCommunity.store'
 
 export function mapStateToProps (state, props) {
   const newMembership = getNewMembership(state)
-  const validToken = getValidToken(state)
+  const isValidInvite = getValidInvite(state)
   return {
     currentUser: getMe(state),
     invitationToken: getQueryParam('token', state, props),
+    accessCode: getParam('accessCode', state, props),
     communitySlug: get('community.slug', newMembership),
     isLoggedIn: getIsLoggedIn(state),
-    hasCheckedValidToken: !isNil(validToken),
-    validToken
+    hasCheckedValidInvite: !isNil(isValidInvite),
+    isValidInvite
   }
 }
 
@@ -29,14 +31,15 @@ export const mapDispatchToProps = {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { invitationToken, accessCode } = stateProps
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
     useInvitation: (userId) =>
-      dispatchProps.useInvitation(userId, stateProps.invitationToken),
+      dispatchProps.useInvitation(userId, {invitationToken, accessCode}),
     checkInvitation: () =>
-      dispatchProps.checkInvitation(stateProps.invitationToken)
+      dispatchProps.checkInvitation({invitationToken, accessCode})
   }
 }
 

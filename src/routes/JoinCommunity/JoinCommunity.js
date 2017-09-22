@@ -26,9 +26,9 @@ export default class JoinCommunity extends Component {
   }
 
   render () {
-    const { isLoggedIn, communitySlug, hasCheckedValidToken, validToken } = this.props
-    if (!isLoggedIn && hasCheckedValidToken) {
-      if (validToken) {
+    const { isLoggedIn, communitySlug, hasCheckedValidInvite, isValidInvite } = this.props
+    if (!isLoggedIn && hasCheckedValidInvite) {
+      if (isValidInvite) {
         return <Redirect to={LOGIN_PATH} />
       } else {
         return <Redirect to={EXPIRED_INVITE_PATH} />

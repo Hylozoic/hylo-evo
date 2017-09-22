@@ -7,10 +7,11 @@ import JoinCommunity from './JoinCommunity'
 const defaultProps = {
   currentUser: null,
   invitationToken: null,
+  accessCode: null,
   communitySlug: null,
   isLoggedIn: false,
-  hasCheckedValidToken: false,
-  validToken: null,
+  hasCheckedValidInvite: false,
+  validInvite: null,
   userInvitation: () => {},
   checkInvitation: () => {},
   location: {
@@ -20,22 +21,22 @@ const defaultProps = {
 
 describe('connector', () => {
   describe('mapStateToProps', () => {
-    it('hasCheckedValidToken false when there is not a validToken key', () => {
+    it('hasCheckedValidInvite false when there is not a validInvite key', () => {
       const state = {
         [MODULE_NAME]: {}
       }
       const actual = mapStateToProps(state, defaultProps)
-      expect(actual.hasCheckedValidToken).toBeFalsy()
+      expect(actual.hasCheckedValidInvite).toBeFalsy()
     })
 
-    it('hasCheckedValidToken false when there is a null validToken key', () => {
+    it('hasCheckedValidInvite false when there is a null validInvite key', () => {
       const state = {
         [MODULE_NAME]: {
-          validToken: null
+          validInvite: null
         }
       }
       const actual = mapStateToProps(state, defaultProps)
-      expect(actual.hasCheckedValidToken).toBeFalsy()
+      expect(actual.hasCheckedValidInvite).toBeFalsy()
     })
 
     it('gets the new newCommunitySlug from the newMembership', () => {
@@ -53,14 +54,14 @@ describe('connector', () => {
       expect(actual.communitySlug).toEqual(newCommunitySlug)
     })
 
-    it('validToken gets set', () => {
+    it('validInvite gets set', () => {
       const state = {
         [MODULE_NAME]: {
           valid: true
         }
       }
       const actual = mapStateToProps(state, defaultProps)
-      expect(actual.validToken).toEqual(true)
+      expect(actual.validInvite).toEqual(true)
     })
   })
 })
@@ -70,7 +71,7 @@ describe('component', () => {
     const testProps = {
       ...defaultProps,
       isLoggedIn: false,
-      hasCheckedValidToken: false,
+      hasCheckedValidInvite: false,
       useInvitation: jest.fn(),
       checkInvitation: jest.fn()
     }

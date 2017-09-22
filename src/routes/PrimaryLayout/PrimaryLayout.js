@@ -133,9 +133,9 @@ export default class PrimaryLayout extends Component {
             />
             <Route
               exact
-              path='/c/:slug/join/:betaAccessCode/tag/:topicName'
+              path='/c/:slug/join/:accessCode/tag/:topicName'
               render={props => (
-                <Redirect to={`/c/${props.match.params.slug}/join/${props.match.params.betaAccessCode}/${props.match.params.topicName}`} />
+                <Redirect to={`/c/${props.match.params.slug}/join/${props.match.params.accessCode}/${props.match.params.topicName}`} />
               )}
             />
             <Route
