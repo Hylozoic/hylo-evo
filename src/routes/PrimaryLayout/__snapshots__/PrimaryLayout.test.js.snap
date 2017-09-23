@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RedirectToCreateCommunityFlow returns a redirect from create community if: signup is complete, a user does not have memberships, and is not already on /signup or /create-community 1`] = `
+exports[`RedirectToCreateCommunityFlow redirects to create community if: signup is complete, a user does not have memberships, and is not already on /signup or /create-community 1`] = `
 <Redirect
   push={false}
   to="/create-community/name"
