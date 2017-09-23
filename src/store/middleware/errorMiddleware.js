@@ -1,9 +1,13 @@
 import rollbar from 'client/rollbar'
+import { get } from 'lodash/fp'
 
 export default function errorMiddleware (store) {
   return next => action => {
-    if (action.error) {
-      let errMsg = `action error for ${action.type}`
+    const { error, type, payload } = action
+    if (error) {
+      let errMsg = `action error for ${type}`
+      const serverMessage = get('response.body', payload)
+      if (serverMessage) errMsg += `: ${serverMessage}`
 
       if (rollbar) {
         rollbar.error(errMsg, {
