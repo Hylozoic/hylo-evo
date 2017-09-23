@@ -76,8 +76,8 @@ export function topicsUrl (slug) {
   return communityUrl(slug) + '/topics'
 }
 
-export const communityJoinUrl = ({slug, betaAccessCode}) =>
-  slug && betaAccessCode && `${origin()}/c/${slug}/join/${betaAccessCode}`
+export const communityJoinUrl = ({slug, accessCode}) =>
+  slug && accessCode && `${origin()}/c/${slug}/join/${accessCode}`
 
 export function removePostFromUrl (url) {
   return url.replace(/\/p\/[0-9]+/, '')

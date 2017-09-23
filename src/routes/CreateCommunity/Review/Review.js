@@ -7,7 +7,12 @@ import { bgImageStyle } from 'util/index'
 import ModalFooter from 'components/ModalFooter'
 import { find } from 'lodash'
 import { get } from 'lodash/fp'
-import { slugValidatorRegex, formatDomainWithUrl, removeUrlFromDomain } from '../util'
+import {
+  slugValidatorRegex,
+  formatDomainWithUrl,
+  removeUrlFromDomain,
+  invalidSlugMessage
+} from '../util'
 
 export default class Review extends Component {
   constructor () {
@@ -98,7 +103,7 @@ export default class Review extends Component {
     } else if (!slugValidatorRegex.test(removeUrlFromDomain(communityDomain))) {
       formatDomainWithUrl(communityDomain)
       this.setState({
-        error: 'Urls can only have lower case letters, numbers, and dashes.'
+        error: invalidSlugMessage
       })
     } else {
       this.submit()

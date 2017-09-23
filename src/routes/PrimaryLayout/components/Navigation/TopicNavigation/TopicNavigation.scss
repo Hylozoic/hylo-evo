@@ -1,7 +1,7 @@
 .topicNavigation {
   min-width: 206px;
   padding: 32px 12.5px 0 12.5px;
-  color: $color-rhino-50;
+  color: $color-rhino-60;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -11,7 +11,7 @@
 .header {
   display: flex;
   align-items: center;
-  color: $color-rhino-50;
+  color: $color-rhino-60;
   margin-bottom: 14px;
 }
 
@@ -24,13 +24,13 @@
   padding: 0 0 0 46px;
   line-height: 27px;
   overflow: auto;
-  color: $color-rhino-50;
+  color: $color-rhino-60;
 }
 
 .topic {
   a {
     font-size: 14.5px;
-    color: $color-rhino-50;
+    color: $color-rhino-60;
     text-decoration: none !important;
   }
   a:hover, a:active {

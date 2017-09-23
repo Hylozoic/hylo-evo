@@ -26,9 +26,11 @@ export default class Thread extends React.Component {
     }
   }
 
+  focusForm = () => this.form.focus()
+
   onThreadIdChange = () => {
     this.props.fetchThread()
-    this.refs.form.getWrappedInstance().focus()
+    this.focusForm()
   }
 
   render () {
@@ -37,7 +39,10 @@ export default class Thread extends React.Component {
       <Header thread={thread} currentUser={currentUser} />
       <MessageSection thread={thread} messageThreadId={id} />
       <div styleName='message-form'>
-        <MessageForm messageThreadId={id} ref='form' />
+        <MessageForm
+          formRef={textArea => this.form = textArea} // eslint-disable-line no-return-assign
+          focusForm={this.focusForm}
+          messageThreadId={id} />
       </div>
       <PeopleTyping styleName='people-typing' />
       <SocketSubscriber type='post' id={id} />

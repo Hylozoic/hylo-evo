@@ -1,8 +1,6 @@
 import Comments, { ShowMore } from './Comments'
-import { getComments } from './Comments.connector'
 import { shallow } from 'enzyme'
 import React from 'react'
-import orm from 'store/models'
 
 describe('Comments', () => {
   it('renders correctly', () => {
@@ -42,29 +40,5 @@ describe('ShowMore', () => {
     const wrapper = shallow(<ShowMore {...props} />)
     expect(wrapper.find('div').length).toEqual(1)
     expect(wrapper.find('div').text()).toEqual('View 1 previous comment')
-  })
-})
-
-describe('getComments', () => {
-  it("returns an empty array if post doesn't exist", () => {
-    const session = orm.session(orm.getEmptyState())
-    expect(getComments(session.state, {postId: '1'})).toEqual([])
-  })
-
-  it('returns comments for post, ordered by id', () => {
-    const session = orm.session(orm.getEmptyState())
-    const { Post, Comment } = session;
-    [
-      {model: Comment, attrs: {id: '4', post: '1'}},
-      {model: Comment, attrs: {id: '5', post: '2'}},
-      {model: Comment, attrs: {id: '1', post: '1'}},
-      {model: Comment, attrs: {id: '3', post: '2'}},
-      {model: Comment, attrs: {id: '2', post: '1'}},
-      {model: Post, attrs: {id: '1'}},
-      {model: Post, attrs: {id: '2'}}
-    ].forEach(({ model, attrs }) => model.create(attrs))
-
-    expect(getComments({orm: session.state}, {postId: '1'}).map(c => c.id))
-    .toEqual(['1', '2', '4'])
   })
 })

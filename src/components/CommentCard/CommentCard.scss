@@ -44,6 +44,11 @@
   }
 }
 
+.comment-image {
+  max-width: 256px;
+  max-height: 256px;
+}
+
 .comment-body {
   composes: bdy-lt-sm from 'css/typography.scss';
 }

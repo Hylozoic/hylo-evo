@@ -55,6 +55,12 @@ import {
 import {
   UPDATE_POST_PENDING
 } from 'components/PostEditor/PostEditor.store'
+import {
+  CREATE_COMMUNITY
+} from 'routes/CreateCommunity/Review/Review.store'
+import {
+  USE_INVITATION
+} from 'routes/JoinCommunity/JoinCommunity.store'
 
 import orm from 'store/models'
 import { find } from 'lodash/fp'
@@ -336,6 +342,15 @@ export default function ormReducer (state = {}, action) {
       // deleting all attachments here because we restore them from the result of the UPDATE_POST action
       post = Post.withId(meta.id)
       post.attachments.toModelArray().map(a => a.delete())
+      break
+
+    case CREATE_COMMUNITY:
+      me = Me.withId(Me.first().id)
+      me.updateAppending({memberships: [payload.data.createCommunity.id]})
+      break
+
+    case USE_INVITATION:
+      Me.first().updateAppending({memberships: [payload.data.useInvitation.membership.id]})
       break
   }
   return session.state

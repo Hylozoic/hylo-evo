@@ -29,6 +29,10 @@ import {
 import {
   UPDATE_POST_PENDING
 } from 'components/PostEditor/PostEditor.store'
+import {
+  CREATE_COMMUNITY
+} from 'routes/CreateCommunity/Review/Review.store'
+
 import deep from 'deep-diff'
 
 it('responds to an action with meta.extractModel', () => {
@@ -490,5 +494,39 @@ describe('on UPDATE_POST_PENDING', () => {
     const newSession = orm.session(newState)
     const attachments = newSession.Post.withId(postId).attachments.toModelArray()
     expect(attachments.length).toEqual(0)
+  })
+})
+
+describe('on CREATE_COMMUNITY', () => {
+  const session = orm.session(orm.getEmptyState())
+  const community1 = session.Community.create({id: 'c1'})
+  const community2 = session.Community.create({id: 'c2'})
+  const hasModeratorRole = true
+  const membership = session.Membership.create({id: 'm1', community: community1.id, hasModeratorRole})
+  session.Membership.create({id: 'm2', community: community2.id, hasModeratorRole})
+  session.Me.create({
+    memberships: [membership.id]
+  })
+  const action = {
+    type: CREATE_COMMUNITY,
+    payload: {
+      data: {
+        createCommunity: {
+          id: 'm2',
+          hasModeratorRole: true,
+          community: {
+            id: 'c2'
+          }
+        }
+      }
+    }
+  }
+
+  it('adds a membership to the currentUser with hasModeratorRole', () => {
+    const newState = ormReducer(session.state, action)
+    const newSession = orm.session(newState)
+    const currentUser = newSession.Me.first()
+    expect(currentUser.memberships.toModelArray().length).toEqual(2)
+    expect(currentUser.memberships.toRefArray()[0].hasModeratorRole).toEqual(true)
   })
 })

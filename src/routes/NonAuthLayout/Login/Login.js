@@ -14,18 +14,17 @@ export default class Login extends React.Component {
 
   submit = () => {
     return this.props.login(this.state.email, this.state.password)
-    .then(({ error }) => error || this.props.navigate('/'))
+    .then(({ error }) => error || this.props.redirectOnSignIn('/'))
   }
 
   loginAndRedirect = (service) => {
     this.props.loginWithService(service)
-    .then(({ error }) => error || this.props.navigate('/'))
+    .then(({ error }) => error || this.props.redirectOnSignIn('/'))
   }
 
   render () {
-    const { className } = this.props
     const setState = key => event => this.setState({[key]: event.target.value})
-    return <div className={className}>
+    return <div className={this.props.className}>
       <h1 styleName='title'>Log in to Hylo</h1>
       {this.props.error && formatError(this.props.error, 'Login')}
       <div styleName='field'>

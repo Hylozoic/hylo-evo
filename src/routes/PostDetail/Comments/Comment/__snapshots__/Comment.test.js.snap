@@ -1,5 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Comment displays an image 1`] = `
+<div
+  data-styleName="comment"
+>
+  <div
+    data-styleName="header"
+  >
+    <Avatar
+      avatarUrl="foo.jpg"
+      data-styleName="avatar"
+      url="/c/foo/m/1"
+    />
+    <Link
+      data-styleName="userName"
+      replace={false}
+      to="/c/foo/m/1"
+    >
+      Joe Smith
+    </Link>
+    <div
+      data-styleName="upperRight"
+    >
+      <span
+        data-styleName="timestamp"
+      >
+        just now
+      </span>
+    </div>
+  </div>
+  <a
+    href="foo.png"
+    target="_blank"
+  >
+    <img
+      data-styleName="image"
+      src="foo.png"
+    />
+  </a>
+</div>
+`;
+
 exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
 <div
   data-styleName="comment"
