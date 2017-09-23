@@ -41,10 +41,12 @@ Object {
     },
   },
   "meta": Object {
-    "extractModel": Object {
-      "getRoot": [Function],
-      "modelName": "Community",
-    },
+    "extractModel": Array [
+      Object {
+        "getRoot": [Function],
+        "modelName": "Membership",
+      },
+    ],
   },
   "type": "JoinCommunity/USE_INVITATION",
 }

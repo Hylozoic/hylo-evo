@@ -58,6 +58,9 @@ import {
 import {
   CREATE_COMMUNITY
 } from 'routes/CreateCommunity/Review/Review.store'
+import {
+  USE_INVITATION
+} from 'routes/JoinCommunity/JoinCommunity.store'
 
 import orm from 'store/models'
 import { find } from 'lodash/fp'
@@ -344,6 +347,10 @@ export default function ormReducer (state = {}, action) {
     case CREATE_COMMUNITY:
       me = Me.withId(Me.first().id)
       me.updateAppending({memberships: [payload.data.createCommunity.id]})
+      break
+
+    case USE_INVITATION:
+      Me.first().updateAppending({memberships: [payload.data.useInvitation.membership.id]})
       break
   }
   return session.state

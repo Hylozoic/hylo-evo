@@ -14,12 +14,12 @@ export default class Login extends React.Component {
 
   submit = () => {
     return this.props.login(this.state.email, this.state.password)
-    .then(({ error }) => error || this.props.navigate('/'))
+    .then(({ error }) => error || this.props.redirectOnSignIn('/'))
   }
 
   loginAndRedirect = (service) => {
     this.props.loginWithService(service)
-    .then(({ error }) => error || this.props.navigate('/'))
+    .then(({ error }) => error || this.props.redirectOnSignIn('/'))
   }
 
   render () {

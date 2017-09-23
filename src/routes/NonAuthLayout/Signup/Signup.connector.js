@@ -1,7 +1,30 @@
 import { connect } from 'react-redux'
-import pickLoginError from 'store/selectors/pickLoginError'
+import getLoginError from 'store/selectors/getLoginError'
+import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import { signup } from './Signup.store'
 
-export const mapDispatchToProps = { signup }
+export function mapStateToProps (state) {
+  return {
+    error: getLoginError(state),
+    returnToURL: getReturnToURL(state)
+  }
+}
 
-export default connect(pickLoginError, mapDispatchToProps)
+export const mapDispatchToProps = {
+  signup,
+  resetReturnToURL
+}
+
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    redirectOnSignIn: (defaultPath) => {
+      dispatchProps.resetReturnToURL()
+      dispatchProps.push(stateProps.returnToURL || defaultPath)
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
