@@ -6,6 +6,7 @@ If you don't set `SOCKET_HOST`, you will be sad that some things do not work as 
 
 ```
 SOCKET_HOST=http://localhost:3001
+FILEPICKER_API_KEY=ABCDE
 ```
 
-This is only required for the development/testing environment.
+This is only required for the development/testing environment. Get the current value for `FILEPICKER_API_KEY` from a team member.
