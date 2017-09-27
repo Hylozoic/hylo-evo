@@ -33,7 +33,9 @@ export function transformPathname (pathname) {
   // a path without an extension should be served by index.html in
   // the folder of the same name, unless it's the IOS_SITE_ASSOCIATION_FILE
   // which is needed for site verification for iOS app deep linking.
-  if (pathname !== `/${IOS_SITE_ASSOCIATION_FILE}` && !pathname.match(/\.\w{2,4}$/)) {
+  if (pathname === `/${IOS_SITE_ASSOCIATION_FILE}`) {
+    pathname += `.json`
+  } else if (!pathname.match(/\.\w{2,4}$/)) {
     pathname += '/index.html'
   }
 
