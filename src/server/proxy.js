@@ -24,20 +24,23 @@ const staticPages = [
   '/newapp'
 ]
 
-function transformPathname (pathname) {
+export const IOS_SITE_ASSOCIATION_FILE = 'apple-app-site-association'
+
+export function transformPathname (pathname) {
   // remove trailing slash
   pathname = pathname.replace(/\/$/, '')
 
   // a path without an extension should be served by index.html in
-  // the folder of the same name.
-  if (!pathname.match(/\.\w{2,4}$/)) {
+  // the folder of the same name, unless it's the IOS_SITE_ASSOCIATION_FILE
+  // which is needed for site verification for iOS app deep linking.
+  if (pathname !== `/${IOS_SITE_ASSOCIATION_FILE}` && !pathname.match(/\.\w{2,4}$/)) {
     pathname += '/index.html'
   }
 
   return process.env.PROXY_HOST.replace(/\/$/, '') + pathname
 }
 
-function getAndStore (url) {
+export function getAndStore (url) {
   const chunks = []
   return new Promise((resolve, reject) => {
     request.get(url)
@@ -58,7 +61,7 @@ function getAndStore (url) {
   })
 }
 
-function handlePage (req, res) {
+export function handlePage (req, res) {
   if (process.env.DISABLE_PROXY) {
     return res.status(503).send('Service Unavailable')
   }
