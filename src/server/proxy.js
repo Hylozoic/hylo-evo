@@ -29,7 +29,8 @@ function transformPathname (pathname) {
   pathname = pathname.replace(/\/$/, '')
 
   // NOTE: Removing this index.html rooting in order to allow the apple ios
-  //       apple-app-site-association file to be served from root of public
+  //       apple-app-site-association file to be served from root of
+  //       upstream proxied site.
   //
   // // a path without an extension should be served by index.html in
   // // the folder of the same name.
