@@ -32,11 +32,11 @@ function transformPathname (pathname) {
   //       apple-app-site-association file to be served from root of
   //       upstream proxied site.
   //
-  // // a path without an extension should be served by index.html in
-  // // the folder of the same name.
-  // if (!pathname.match(/\.\w{2,4}$/)) {
-  //   pathname += '/index.html'
-  // }
+  // a path without an extension should be served by index.html in
+  // the folder of the same name.
+  if (!pathname.match(/\.\w{2,4}$/)) {
+    pathname += '/index.html'
+  }
 
   return process.env.PROXY_HOST.replace(/\/$/, '') + pathname
 }
