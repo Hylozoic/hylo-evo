@@ -31,6 +31,7 @@ export default class ThreadList extends Component {
       threads,
       threadSearch,
       setThreadSearch,
+      fetchMoreThreads,
       match: { params: { threadId } },
       className
     } = this.props
@@ -59,7 +60,7 @@ export default class ThreadList extends Component {
       </ul>
       <ScrollListener
         elementId={'thread-list-list'}
-        onBottom={() => this.fetchMoreThreads()} />
+        onBottom={fetchMoreThreads} />
     </div>
   }
 }
