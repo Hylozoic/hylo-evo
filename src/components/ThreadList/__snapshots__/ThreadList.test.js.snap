@@ -42,7 +42,6 @@ exports[`matches the last snapshot 1`] = `
   </ul>
   <ScrollListener
     elementId="thread-list-list"
-    onBottom={[Function]}
   />
 </div>
 `;
