@@ -3,7 +3,7 @@ import { get } from 'lodash/fp'
 import rollbar from 'client/rollbar'
 
 export const MODULE_NAME = 'PrimaryLayout'
-const FETCH_FOR_CURRENT_USER = `${MODULE_NAME}/FETCH_FOR_CURRENT_USER`
+export const FETCH_FOR_CURRENT_USER = `${MODULE_NAME}/FETCH_FOR_CURRENT_USER`
 export const FETCH_FOR_COMMUNITY = `${MODULE_NAME}/FETCH_FOR_COMMUNITY`
 export const FETCH_FOR_COMMUNITY_PENDING = FETCH_FOR_COMMUNITY + '_PENDING'
 const TOGGLE_DRAWER = `${MODULE_NAME}/TOGGLE_DRAWER`
@@ -24,7 +24,6 @@ export default function reducer (state = {}, action) {
         }
       }
     })
-    console.log('configuring rollbar', id, name, email)
   }
 
   return state
