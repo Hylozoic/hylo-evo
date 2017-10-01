@@ -1,8 +1,9 @@
 import { communityTopicsQueryFragment } from 'store/actions/fetchCommunityTopics'
 import { get } from 'lodash/fp'
+import rollbar from 'client/rollbar'
 
 export const MODULE_NAME = 'PrimaryLayout'
-const FETCH_FOR_CURRENT_USER = `${MODULE_NAME}/FETCH_FOR_CURRENT_USER`
+export const FETCH_FOR_CURRENT_USER = `${MODULE_NAME}/FETCH_FOR_CURRENT_USER`
 export const FETCH_FOR_COMMUNITY = `${MODULE_NAME}/FETCH_FOR_COMMUNITY`
 export const FETCH_FOR_COMMUNITY_PENDING = FETCH_FOR_COMMUNITY + '_PENDING'
 const TOGGLE_DRAWER = `${MODULE_NAME}/TOGGLE_DRAWER`
@@ -11,6 +12,20 @@ export default function reducer (state = {}, action) {
   if (action.type === TOGGLE_DRAWER) {
     return {...state, isDrawerOpen: !state.isDrawerOpen}
   }
+  // Links current user to rollbar config
+  if (action.type === FETCH_FOR_CURRENT_USER) {
+    let { id, name, email } = action.payload.data.me
+    rollbar.configure({
+      payload: {
+        person: {
+          id: id,
+          username: name,
+          email: email
+        }
+      }
+    })
+  }
+
   return state
 }
 
