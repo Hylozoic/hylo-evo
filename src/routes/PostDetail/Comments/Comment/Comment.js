@@ -34,7 +34,7 @@ export default class Comment extends Component {
           ]} />}
         </div>
       </div>
-      {image && <a href={image.url} target='_blank'>
+      {image && <a styleName='imageLink' href={image.url} target='_blank'>
         <img src={image.url} styleName='image' />
       </a>}
       {!image && <ClickCatcher>
