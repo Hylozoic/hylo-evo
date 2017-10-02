@@ -30,6 +30,7 @@ exports[`Comment displays an image 1`] = `
     </div>
   </div>
   <a
+    data-styleName="imageLink"
     href="foo.png"
     target="_blank"
   >
