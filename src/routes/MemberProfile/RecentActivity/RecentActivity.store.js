@@ -13,7 +13,7 @@ const recentActivityQuery =
   $search: String,
   $filter: String,
   $first: Int,
-  $topic: Int
+  $topic: ID
 ) {
   person (id: $id) {
     id
