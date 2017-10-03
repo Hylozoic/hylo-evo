@@ -19,7 +19,7 @@ Object {
     avatarUrl
     bannerUrl
     postCount
-
+    
 posts(
   first: $first,
   offset: $offset,
@@ -31,7 +31,7 @@ posts(
 ) {
   hasMore
   items {
-
+    
   id
   title
   details
@@ -49,7 +49,7 @@ posts(
     avatarUrl
   }
   commentersTotal
-
+  
   linkPreview {
     id
     title
@@ -105,7 +105,7 @@ Object {
   $topic: ID,
   $first: Int
 ) {
-
+  
 posts(
   first: $first,
   offset: $offset,
@@ -117,7 +117,7 @@ posts(
 ) {
   hasMore
   items {
-
+    
   id
   title
   details
@@ -135,7 +135,7 @@ posts(
     avatarUrl
   }
   commentersTotal
-
+  
   linkPreview {
     id
     title
