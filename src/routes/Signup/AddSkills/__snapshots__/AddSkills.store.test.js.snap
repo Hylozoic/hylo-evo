@@ -17,7 +17,7 @@ Object {
     "optimistic": true,
     "skillName": "My Name",
   },
-  "type": "ADD_SKILLS_SIGNUP_ADD_SKILL",
+  "type": "AddSkills/SIGNUP_ADD_SKILL",
 }
 `;
 
@@ -37,6 +37,6 @@ Object {
     "optimistic": true,
     "skillId": 1,
   },
-  "type": "ADD_SKILLS_SIGNUP_REMOVE_SKILL",
+  "type": "AddSkills/SIGNUP_REMOVE_SKILL",
 }
 `;
