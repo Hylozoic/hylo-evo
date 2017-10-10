@@ -37,7 +37,7 @@ export default class AccountSettingsTab extends Component {
     if (!currentUser) return
 
     const {
-      name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl
+      name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedinUrl
     } = currentUser
 
     this.setState({
@@ -52,7 +52,7 @@ export default class AccountSettingsTab extends Component {
         url: url || '',
         facebookUrl,
         twitterName,
-        linkedInUrl
+        linkedinUrl
       }
     })
   }
@@ -69,7 +69,7 @@ export default class AccountSettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedInUrl
+      name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedinUrl
     } = edits
 
     const updateSetting = (key, setChanged = true) => event => {
@@ -132,9 +132,9 @@ export default class AccountSettingsTab extends Component {
         label='LinkedIn'
         onLink={() => loginWithService('linkedin')}
         unlinkAccount={unlinkAccount}
-        onChange={updateSettingDirectly('linkedInUrl', false)}
+        onChange={updateSettingDirectly('linkedinUrl', false)}
         provider='linkedin'
-        value={linkedInUrl} />
+        value={linkedinUrl} />
       <div styleName='button-row'>
         <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
       </div>
