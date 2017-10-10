@@ -28,19 +28,25 @@ $search-width: 266px;
 
 .search-wrapper {
   width: 100%;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  margin-top: 3px;
 
   .search {
     background: none;
     max-width: 100%;
     min-width: $search-width;
-    margin: 23px 0 0px 0;
     padding: 0;
     border: 0;
     outline: none;
     color: rgba(44, 64, 89, 0.8);
     font-size: 15px;
     border-bottom: 1px solid rgba(44, 64, 89, 0.3);
-    line-height: inherit;
+    line-height: 24px;
+    height: 24px;
+    flex-grow: 1;
+    font-size: 14px;
 
     &::placeholder {
       color: $color-ghost;
@@ -61,19 +67,16 @@ $search-width: 266px;
   }
 
   .close-icon:after {
-    content: "X";
+    content: '\00d7';
     display: block;
-    width: 17px;
-    height: 17px;
-    position: absolute;
+    width: 16px;
+    height: 16px;
     background-color: $color-ghost;
-    z-index: 1;
-    top: 20px;
     border-radius: 50%;
     text-align: center;
     color: #fff;
     font-weight: normal;
-    font-size: 12px;
+    font-size: 11px;
     box-shadow: 0 0 2px $color-slate-gray-80;
     cursor: pointer;
   }
