@@ -18,6 +18,8 @@ export default class TopNav extends Component {
   componentDidMount () {
     const setTopNavPosition = () => {
       const { topNav } = this.refs
+      if (!topNav) return
+
       const height = topNav.clientHeight
       const width = topNav.clientWidth
       const { x } = position(topNav)
