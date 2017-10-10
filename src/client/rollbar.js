@@ -1,7 +1,11 @@
 const { ROLLBAR_CLIENT_TOKEN, NODE_ENV, ROLLBAR_ENV } = process.env
 
 const rollbar = (() => {
-  if (typeof window === 'undefined' || !ROLLBAR_CLIENT_TOKEN) return null
+  if (typeof window === 'undefined' || !ROLLBAR_CLIENT_TOKEN) {
+    return {
+      configure: () => {}
+    }
+  }
 
   const Rollbar = require('rollbar/dist/rollbar.umd')
   return new Rollbar({
