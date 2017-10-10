@@ -23,11 +23,14 @@ export default class Domain extends Component {
   handleDomainChange = (event) => {
     const communityDomain = removeUrlFromDomain(event.target.value)
     if (communityDomain !== '') {
-      this.props.fetchCommunityExists(communityDomain)
+      if (!slugValidatorRegex.test(communityDomain)) {
+        this.setState({communityDomainInvalid: true})
+      } else {
+        this.setState({communityDomainInvalid: false})
+        this.props.fetchCommunityExists(communityDomain)
+      }
     }
-    this.setState({
-      communityDomain: communityDomain
-    })
+    this.setState({communityDomain})
   }
 
   submit = () => {
@@ -44,7 +47,7 @@ export default class Domain extends Component {
       this.setState({
         error: 'Please add a URL.'
       })
-    } else if (!slugValidatorRegex.test(removeUrlFromDomain(this.state.communityDomain))) {
+    } else if (this.state.communityDomainInvalid) {
       this.setState({
         error: invalidSlugMessage
       })
