@@ -102,7 +102,7 @@ export function resendInvitation (invitationToken) {
     type: RESEND_INVITATION,
     graphql: {
       query: `mutation ($invitationToken: ID) {
-        resendInvitation(invitationToken: $invitationToken) {
+        resendInvitation(invitationId: $invitationToken) {
           success
         }
       }`,
