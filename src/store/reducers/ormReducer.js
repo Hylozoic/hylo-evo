@@ -1,3 +1,4 @@
+import * as sessionReducers from './ormReducer/sessionReducers'
 import {
   ADD_MODERATOR_PENDING,
   REMOVE_MODERATOR_PENDING,
@@ -5,11 +6,8 @@ import {
   CREATE_COMMENT_PENDING,
   CREATE_MESSAGE,
   CREATE_MESSAGE_PENDING,
-  FETCH_NOTIFICATIONS,
   FETCH_MESSAGES_PENDING,
   LEAVE_COMMUNITY,
-  MARK_ACTIVITY_READ_PENDING,
-  MARK_ALL_ACTIVITIES_READ_PENDING,
   RESET_NEW_POST_COUNT_PENDING,
   TOGGLE_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_THREAD_READ_TIME,
@@ -63,7 +61,7 @@ import {
 } from 'routes/JoinCommunity/JoinCommunity.store'
 
 import orm from 'store/models'
-import { find } from 'lodash/fp'
+import { find, values } from 'lodash/fp'
 import extractModelsFromAction from './ModelExtractor/extractModelsFromAction'
 import { isPromise } from 'util/index'
 
@@ -73,7 +71,6 @@ export default function ormReducer (state = {}, action) {
   if (error) return state
 
   const {
-    Activity,
     Comment,
     Community,
     CommunityTopic,
@@ -81,18 +78,12 @@ export default function ormReducer (state = {}, action) {
     Membership,
     Message,
     MessageThread,
-    Notification,
     Person,
     Post,
     PostCommenter,
     Skill,
     Invitation
   } = session
-
-  const invalidateNotifications = () => {
-    const first = Notification.first()
-    first && first.update({time: Date.now()})
-  }
 
   if (payload && !isPromise(payload) && meta && meta.extractModel) {
     extractModelsFromAction(action, session)
@@ -140,12 +131,6 @@ export default function ormReducer (state = {}, action) {
         // this is so that after websocket reconnect events, pagination
         // of messages works as expected
         Message.filter({messageThread: meta.id}).delete()
-      }
-      break
-
-    case FETCH_NOTIFICATIONS:
-      if (meta.resetCount) {
-        Me.first().update({newNotificationCount: 0})
       }
       break
 
@@ -206,18 +191,6 @@ export default function ormReducer (state = {}, action) {
         membership = Membership.safeGet({community: payload.communityId})
         membership.update({newPostCount: membership.newPostCount + 1})
       }
-      break
-
-    case MARK_ACTIVITY_READ_PENDING:
-      Activity.withId(meta.id).update({unread: false})
-      // invalidating selector memoization
-      invalidateNotifications()
-      break
-
-    case MARK_ALL_ACTIVITIES_READ_PENDING:
-      Activity.all().update({unread: false})
-      // invalidating selector memoization
-      invalidateNotifications()
       break
 
     case ADD_MODERATOR_PENDING:
@@ -353,5 +326,7 @@ export default function ormReducer (state = {}, action) {
       Me.first().updateAppending({memberships: [payload.data.useInvitation.membership.id]})
       break
   }
+
+  values(sessionReducers).forEach(fn => fn(session, action))
   return session.state
 }
