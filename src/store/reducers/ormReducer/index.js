@@ -14,39 +14,23 @@ import {
   VOTE_ON_POST_PENDING,
   UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING
 } from 'store/constants'
-import { REMOVE_MEMBER_PENDING } from 'routes/Members/Members.store'
-import {
-  RECEIVE_MESSAGE,
-  RECEIVE_POST
- } from 'components/SocketListener/SocketListener.store'
-import {
-  DELETE_POST_PENDING,
-  REMOVE_POST_PENDING
- } from 'components/PostCard/PostHeader/PostHeader.store'
 import {
   UPDATE_MEMBERSHIP_SETTINGS_PENDING,
   UPDATE_USER_SETTINGS_PENDING
 } from 'routes/UserSettings/UserSettings.store'
+
+// FIXME these should not be using different constants and getting handled in
+// different places -- they're doing the same thing!
 import {
-  FETCH_FOR_COMMUNITY_PENDING
-} from 'routes/PrimaryLayout/PrimaryLayout.store'
-import {
-  REMOVE_SKILL_PENDING,
-  ADD_SKILL
+  REMOVE_SKILL_PENDING, ADD_SKILL
 } from 'components/SkillsSection/SkillsSection.store'
+import {
+  SIGNUP_ADD_SKILL, SIGNUP_REMOVE_SKILL_PENDING
+} from 'routes/Signup/AddSkills/AddSkills.store'
+
 import {
   UPDATE_COMMUNITY_SETTINGS_PENDING
 } from 'routes/CommunitySettings/CommunitySettings.store'
-import {
-  SIGNUP_ADD_SKILL,
-  SIGNUP_REMOVE_SKILL_PENDING
-} from 'routes/Signup/AddSkills/AddSkills.store'
-import {
-  CREATE_INVITATIONS,
-  RESEND_INVITATION_PENDING,
-  REINVITE_ALL_PENDING,
-  EXPIRE_INVITATION_PENDING
-} from 'routes/CommunitySettings/InviteSettingsTab/InviteSettingsTab.store'
 import {
   DELETE_COMMENT_PENDING
 } from 'routes/PostDetail/Comments/Comment/Comment.store'
@@ -81,15 +65,14 @@ export default function ormReducer (state = {}, action) {
     Person,
     Post,
     PostCommenter,
-    Skill,
-    Invitation
+    Skill
   } = session
 
   if (payload && !isPromise(payload) && meta && meta.extractModel) {
     extractModelsFromAction(action, session)
   }
 
-  let membership, community, person, invite, post
+  let membership, community, person, post
 
   switch (type) {
     case CREATE_COMMENT_PENDING:
@@ -134,18 +117,6 @@ export default function ormReducer (state = {}, action) {
       }
       break
 
-    case RECEIVE_MESSAGE:
-      const id = payload.data.message.messageThread
-      if (!MessageThread.hasId(id)) {
-        MessageThread.create({
-          id,
-          updatedAt: new Date().toString(),
-          lastReadAt: 0
-        })
-      }
-      MessageThread.withId(id).newMessageReceived(meta.bumpUnreadCount)
-      break
-
     case UPDATE_THREAD_READ_TIME:
       MessageThread.withId(meta.id).markAsRead()
       break
@@ -182,27 +153,9 @@ export default function ormReducer (state = {}, action) {
       }
       break
 
-    case RECEIVE_POST:
-      if (payload.creatorId !== Me.first().id) {
-        payload.topics.forEach(topicId => {
-          const sub = CommunityTopic.safeGet({topic: topicId, community: payload.communityId})
-          if (sub) sub.update({newPostCount: sub.newPostCount + 1})
-        })
-        membership = Membership.safeGet({community: payload.communityId})
-        membership.update({newPostCount: membership.newPostCount + 1})
-      }
-      break
-
     case ADD_MODERATOR_PENDING:
       person = Person.withId(meta.personId)
       Community.withId(meta.communityId).updateAppending({moderators: [person]})
-      break
-
-    case REMOVE_MEMBER_PENDING:
-      community = Community.withId(meta.communityId)
-      const members = community.members.filter(m => m.id !== meta.personId)
-        .toModelArray()
-      community.update({members, memberCount: community.memberCount - 1})
       break
 
     case REMOVE_MODERATOR_PENDING:
@@ -211,17 +164,6 @@ export default function ormReducer (state = {}, action) {
         m.id !== meta.personId)
         .toModelArray()
       community.update({moderators})
-      break
-
-    case DELETE_POST_PENDING:
-      Post.withId(meta.id).delete()
-      break
-
-    case REMOVE_POST_PENDING:
-      post = Post.withId(meta.postId)
-      const communities = post.communities.filter(c =>
-        c.slug !== meta.slug).toModelArray()
-      post.update({communities})
       break
 
     case UPDATE_COMMUNITY_SETTINGS_PENDING:
@@ -253,14 +195,6 @@ export default function ormReducer (state = {}, action) {
       me.update(changes)
       break
 
-    case FETCH_FOR_COMMUNITY_PENDING:
-      community = Community.safeGet({slug: meta.slug})
-      if (!community) break
-      membership = Membership.safeGet({community: community.id})
-      if (!membership) break
-      membership.update({newPostCount: 0})
-      break
-
     case REMOVE_SKILL_PENDING:
       person = Person.withId(Me.first().id)
       person.skills.remove(meta.skillId)
@@ -281,29 +215,6 @@ export default function ormReducer (state = {}, action) {
       const mySkill = payload.data.addSkill
       me = Me.withId(Me.first().id)
       me.updateAppending({skills: [Skill.create(mySkill)]})
-      break
-
-    case CREATE_INVITATIONS:
-      community = Community.withId(meta.communityId)
-      let invites = payload.data.createInvitation.invitations.map(i => Invitation.create(i))
-
-      community.updateAppending({pendingInvitations: invites})
-      break
-
-    case RESEND_INVITATION_PENDING:
-      invite = Invitation.withId(meta.invitationToken)
-      if (!invite) break
-      invite.update({resent: true, last_sent_at: new Date()})
-      break
-
-    case EXPIRE_INVITATION_PENDING:
-      invite = Invitation.withId(meta.invitationToken)
-      invite.delete()
-      break
-
-    case REINVITE_ALL_PENDING:
-      community = Community.withId(meta.communityId)
-      community.pendingInvitations.update({resent: true, last_sent_at: new Date()})
       break
 
     case DELETE_COMMENT_PENDING:

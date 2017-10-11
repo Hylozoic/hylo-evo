@@ -32,6 +32,9 @@ import {
 import {
   CREATE_COMMUNITY
 } from 'routes/CreateCommunity/Review/Review.store'
+import {
+  REMOVE_MEMBER_PENDING
+} from 'routes/Members/Members.store'
 
 import deep from 'deep-diff'
 
@@ -528,5 +531,28 @@ describe('on CREATE_COMMUNITY', () => {
     const currentUser = newSession.Me.first()
     expect(currentUser.memberships.toModelArray().length).toEqual(2)
     expect(currentUser.memberships.toRefArray()[0].hasModeratorRole).toEqual(true)
+  })
+})
+
+describe('on REMOVE_MEMBER_PENDING', () => {
+  it('decrements the member count and removes the member', () => {
+    const action = {
+      type: REMOVE_MEMBER_PENDING,
+      meta: {
+        communityId: '3',
+        personId: '4'
+      }
+    }
+    const session = orm.session(orm.getEmptyState())
+    session.Person.create({id: '2', name: 'Foo'})
+    session.Person.create({id: '4', name: 'Bar'})
+    session.Community.create({id: '3', memberCount: 8, members: ['2', '4']})
+
+    const newState = ormReducer(session.state, action)
+    const community = orm.session(newState).Community.withId('3')
+    expect(community.memberCount).toBe(7)
+    const members = community.members.toRefArray()
+    expect(members.length).toBe(1)
+    expect(members[0].name).toBe('Foo')
   })
 })

@@ -133,3 +133,33 @@ export const getPendingInvites = ormCreateSelector(
     .toModelArray()
   }
 )
+
+export function ormSessionReducer (session, { type, meta, payload }) {
+  const { Community, Invitation } = session
+  let community, invite
+
+  switch (type) {
+    case CREATE_INVITATIONS:
+      community = Community.withId(meta.communityId)
+      let invites = payload.data.createInvitation.invitations.map(i => Invitation.create(i))
+
+      community.updateAppending({pendingInvitations: invites})
+      break
+
+    case RESEND_INVITATION_PENDING:
+      invite = Invitation.withId(meta.invitationToken)
+      if (!invite) break
+      invite.update({resent: true, last_sent_at: new Date()})
+      break
+
+    case EXPIRE_INVITATION_PENDING:
+      invite = Invitation.withId(meta.invitationToken)
+      invite.delete()
+      break
+
+    case REINVITE_ALL_PENDING:
+      community = Community.withId(meta.communityId)
+      community.pendingInvitations.update({resent: true, last_sent_at: new Date()})
+      break
+  }
+}
