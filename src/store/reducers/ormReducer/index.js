@@ -1,4 +1,4 @@
-import * as sessionReducers from './ormReducer/sessionReducers'
+import * as sessionReducers from './sessionReducers'
 import {
   ADD_MODERATOR_PENDING,
   REMOVE_MODERATOR_PENDING,
@@ -62,7 +62,7 @@ import {
 
 import orm from 'store/models'
 import { find, values } from 'lodash/fp'
-import extractModelsFromAction from './ModelExtractor/extractModelsFromAction'
+import extractModelsFromAction from '../ModelExtractor/extractModelsFromAction'
 import { isPromise } from 'util/index'
 
 export default function ormReducer (state = {}, action) {

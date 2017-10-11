@@ -1,5 +1,5 @@
 import orm from 'store/models' // this initializes redux-orm
-import ormReducer from './ormReducer'
+import ormReducer from './index'
 import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
 import {
   CREATE_MESSAGE,
