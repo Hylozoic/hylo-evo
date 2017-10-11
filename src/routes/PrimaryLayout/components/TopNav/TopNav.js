@@ -8,27 +8,11 @@ import RoundImage from 'components/RoundImage'
 import './TopNav.scss'
 import Dropdown from 'components/Dropdown'
 import { get } from 'lodash/fp'
-import { throttle } from 'lodash'
 import { hyloLogo } from 'util/assets'
 import MessagesDropdown from './MessagesDropdown'
 import NotificationsDropdown from './NotificationsDropdown'
-import { position } from 'util/scrolling'
 
 export default class TopNav extends Component {
-  componentDidMount () {
-    const setTopNavPosition = () => {
-      const { topNav } = this.refs
-      if (!topNav) return
-
-      const height = topNav.clientHeight
-      const width = topNav.clientWidth
-      const { x } = position(topNav)
-      this.props.setTopNavPosition({height, rightX: x + width})
-    }
-    setTopNavPosition()
-    window.addEventListener('resize', throttle(setTopNavPosition, 300, {trailing: true}))
-  }
-
   render () {
     const { className, community, network, currentUser, logout, toggleDrawer, showLogoBadge } = this.props
     const profileUrl = personUrl(get('id', currentUser), get('slug', community))

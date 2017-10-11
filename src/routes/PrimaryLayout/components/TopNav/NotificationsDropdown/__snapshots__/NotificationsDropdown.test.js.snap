@@ -594,7 +594,7 @@ exports[`NotificationHeader renders correctly with an approved join request noti
 `;
 
 exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
-<Connect(TopNavDropdown)
+<TopNavDropdown
   body={
     <div
       data-styleName="notifications"
@@ -828,7 +828,7 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
 `;
 
 exports[`NotificationsDropdown renders correctly with an empty list 1`] = `
-<Connect(TopNavDropdown)
+<TopNavDropdown
   body={
     <NoItems
       message="No notifications"

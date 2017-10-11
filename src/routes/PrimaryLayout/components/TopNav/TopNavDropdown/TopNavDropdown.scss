@@ -13,6 +13,8 @@ $dropdown-width: 375px;
 .wrapper {
   display: none;
   position: fixed;
+  top: 80px;
+  right: 15px;
   background-color: $color-white;
   border: 1px solid $dropdown-border-color;
   border-radius: 4px;
@@ -32,6 +34,7 @@ $dropdown-width: 375px;
 .triangle {
   min-width: 0 !important;
   @include is-top-triangle(#fff, $dropdown-border-color, 14px);
+  left: auto;
 }
 
 .header {
