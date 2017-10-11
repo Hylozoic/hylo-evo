@@ -16,7 +16,7 @@ export {
 
 export {
   ormSessionReducer as socketListenerReducer
-} from 'routes/CommunitySettings/InviteSettingsTab/InviteSettingsTab.store'
+} from 'components/SocketListener/SocketListener.store'
 
 export {
   ormSessionReducer as primaryLayoutReducer

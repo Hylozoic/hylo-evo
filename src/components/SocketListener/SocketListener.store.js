@@ -98,5 +98,10 @@ export function ormSessionReducer (session, { meta, type, payload }) {
         membership.update({newPostCount: membership.newPostCount + 1})
       }
       break
+
+    case RECEIVE_NOTIFICATION:
+      let me = Me.first()
+      me.update({newNotificationCount: me.newNotificationCount + 1})
+      break
   }
 }
