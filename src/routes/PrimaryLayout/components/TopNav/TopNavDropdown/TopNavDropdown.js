@@ -3,9 +3,6 @@ import './TopNavDropdown.scss'
 const { func, object, string } = PropTypes
 import cx from 'classnames'
 import { position } from 'util/scrolling'
-import { isEmpty } from 'lodash/fp'
-
-const DROPDOWN_WIDTH = 375
 
 export default class TopNavDropdown extends Component {
   static propTypes = {
