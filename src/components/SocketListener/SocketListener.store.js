@@ -75,6 +75,8 @@ export function receiveNotification (notification) {
 
 export function ormSessionReducer (session, { meta, type, payload }) {
   const { MessageThread, Membership, CommunityTopic, Me } = session
+  let currentUser
+
   switch (type) {
     case RECEIVE_MESSAGE:
       const id = payload.data.message.messageThread
@@ -82,26 +84,37 @@ export function ormSessionReducer (session, { meta, type, payload }) {
         MessageThread.create({
           id,
           updatedAt: new Date().toString(),
-          lastReadAt: 0
+          lastReadAt: 0,
+          unreadCount: 0
         })
       }
       MessageThread.withId(id).newMessageReceived(meta.bumpUnreadCount)
       break
 
     case RECEIVE_POST:
-      if (payload.creatorId !== Me.first().id) {
+      currentUser = Me.first()
+      if (currentUser && payload.creatorId !== currentUser.id) {
+        const increment = obj =>
+          obj && obj.update({
+            newPostCount: (obj.newPostCount || 0) + 1
+          })
+
         payload.topics.forEach(topicId => {
-          const sub = CommunityTopic.safeGet({topic: topicId, community: payload.communityId})
-          if (sub) sub.update({newPostCount: sub.newPostCount + 1})
+          increment(CommunityTopic.safeGet({
+            topic: topicId, community: payload.communityId
+          }))
         })
-        let membership = Membership.safeGet({community: payload.communityId})
-        membership.update({newPostCount: membership.newPostCount + 1})
+
+        increment(Membership.filter(m =>
+          !m.person && m.community === payload.communityId).first())
       }
       break
 
     case RECEIVE_NOTIFICATION:
-      let me = Me.first()
-      me.update({newNotificationCount: me.newNotificationCount + 1})
+      currentUser = Me.first()
+      currentUser.update({
+        newNotificationCount: currentUser.newNotificationCount + 1
+      })
       break
   }
 }

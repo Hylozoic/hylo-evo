@@ -1,4 +1,4 @@
-import { attr, Model } from 'redux-orm'
+import { attr, fk, Model } from 'redux-orm'
 
 const Invitation = Model.createClass({
   toString () {
@@ -12,7 +12,8 @@ Invitation.modelName = 'Invitation'
 Invitation.fields = {
   id: attr(),
   email: attr(),
-  created_at: attr(),
-  last_sent_at: attr(),
-  resent: attr()
+  createdAt: attr(),
+  lastSentAt: attr(),
+  resent: attr(),
+  community: fk('Community', 'pendingInvitations')
 }

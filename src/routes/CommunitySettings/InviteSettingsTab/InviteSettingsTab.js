@@ -190,7 +190,7 @@ export default class InviteSettingsTab extends Component {
             {pendingInvites.map(invite => <div styleName='styles.row' key={invite.id}>
               <div style={{flex: 1}}>
                 <span>{invite.email}</span>
-                <span styleName='styles.invite-date'>{humanDate(invite.last_sent_at)}</span>
+                <span styleName='styles.invite-date'>{humanDate(invite.lastSentAt)}</span>
               </div>
               <div styleName='styles.invite-actions'>
                 <span styleName='styles.action-btn styles.expire-btn' onClick={() => expireOnClick(invite.id)}>Expire</span>

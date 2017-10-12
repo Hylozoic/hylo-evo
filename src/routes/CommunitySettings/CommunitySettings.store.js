@@ -24,8 +24,8 @@ export function fetchCommunitySettings (slug) {
             items {
               id
               email
-              created_at
-              last_sent_at
+              createdAt
+              lastSentAt
             }
           }
           moderators (first: 100) {
