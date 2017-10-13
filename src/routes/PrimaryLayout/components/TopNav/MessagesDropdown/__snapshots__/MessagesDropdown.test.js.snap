@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
-<Connect(TopNavDropdown)
+<TopNavDropdown
   body={
     <div
       data-styleName="threads"
@@ -62,7 +62,7 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
 `;
 
 exports[`MessagesDropdown renders correctly with an empty list 1`] = `
-<Connect(TopNavDropdown)
+<TopNavDropdown
   body={
     <NoItems
       message="You don't have any conversations yet"

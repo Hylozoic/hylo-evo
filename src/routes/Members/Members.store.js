@@ -138,3 +138,12 @@ export const getHasMoreMembers = createSelector(
   getMemberResults,
   get('hasMore')
 )
+
+export function ormSessionReducer ({ Community }, { meta, type }) {
+  if (type === REMOVE_MEMBER_PENDING) {
+    const community = Community.withId(meta.communityId)
+    const members = community.members.filter(m => m.id !== meta.personId)
+    .toModelArray()
+    community.update({members, memberCount: community.memberCount - 1})
+  }
+}

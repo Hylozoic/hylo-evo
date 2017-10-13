@@ -35,8 +35,8 @@ export function createInvitations (communityId, emails, message) {
           invitations {
             id,
             email,
-            created_at,
-            last_sent_at,
+            createdAt,
+            lastSentAt,
             error
           }
         }
@@ -122,14 +122,41 @@ export const getPendingInvites = ormCreateSelector(
   orm,
   state => state.orm,
   (state, props) => props.communityId,
-  ({ Community }, id) => {
-    const community = Community.safeGet({id})
-    if (!community || !community.pendingInvitations) return []
-    community.pendingInvitations.orderBy(i => -new Date(i.created_at)).toModelArray()
-    return community
-    .pendingInvitations
-    .orderBy(i => -new Date(i.created_at))
-    .filter(invite => invite.id)
+  ({ Invitation }, id) =>
+    Invitation.filter(i => i.community === id)
+    .orderBy(i => -new Date(i.createdAt))
     .toModelArray()
-  }
 )
+
+export function ormSessionReducer (session, { type, meta, payload }) {
+  const { Community, Invitation } = session
+  let community, invite
+
+  switch (type) {
+    case CREATE_INVITATIONS:
+      payload.data.createInvitation.invitations.forEach(i =>
+        Invitation.create({
+          email: i.email,
+          id: Math.random().toString().substring(2, 7),
+          createdAt: new Date().toString(),
+          community: meta.communityId
+        }))
+      break
+
+    case RESEND_INVITATION_PENDING:
+      invite = Invitation.withId(meta.invitationToken)
+      if (!invite) break
+      invite.update({resent: true, lastSentAt: new Date()})
+      break
+
+    case EXPIRE_INVITATION_PENDING:
+      invite = Invitation.withId(meta.invitationToken)
+      invite.delete()
+      break
+
+    case REINVITE_ALL_PENDING:
+      community = Community.withId(meta.communityId)
+      community.pendingInvitations.update({resent: true, lastSentAt: new Date()})
+      break
+  }
+}

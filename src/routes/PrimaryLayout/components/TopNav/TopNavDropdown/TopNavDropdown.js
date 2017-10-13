@@ -3,9 +3,6 @@ import './TopNavDropdown.scss'
 const { func, object, string } = PropTypes
 import cx from 'classnames'
 import { position } from 'util/scrolling'
-import { isEmpty } from 'lodash/fp'
-
-const DROPDOWN_WIDTH = 375
 
 export default class TopNavDropdown extends Component {
   static propTypes = {
@@ -33,28 +30,18 @@ export default class TopNavDropdown extends Component {
   }
 
   render () {
-    const { toggleChildren, className, topNavPosition, header, body } = this.props
+    const { toggleChildren, className, header, body } = this.props
     const { active } = this.state
 
-    if (isEmpty(topNavPosition)) return null
-
-    const wrapperStyle = {
-      top: topNavPosition.height + 24,
-      left: topNavPosition.rightX - (DROPDOWN_WIDTH + 15)
-    }
-
-    const toggleX = position(this.refs.toggle).x
-
-    const triangleStyle = {
-      left: (toggleX - wrapperStyle.left) + 10
-    }
+    const toggleRight = document.documentElement.clientWidth - position(this.refs.toggle).x
+    const triangleStyle = {right: toggleRight - 41}
 
     return <div className={className}>
       {active && <div styleName='backdrop' onClick={() => this.toggle(false)} />}
       <a onClick={() => this.toggle()} ref='toggle'>
         {toggleChildren}
       </a>
-      <div styleName={cx('wrapper', {active})} style={wrapperStyle}>
+      <div styleName={cx('wrapper', {active})}>
         <ul styleName='menu'>
           <li styleName='triangle' style={triangleStyle} />
           <li styleName='header'>

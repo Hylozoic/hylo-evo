@@ -165,3 +165,13 @@ community(slug: $slug, updateLastViewed: $updateLastViewed) {
   }
   ${communityTopicsQueryFragment}
 }`
+
+export function ormSessionReducer ({ Community, Membership }, { type, meta }) {
+  if (type === FETCH_FOR_COMMUNITY_PENDING) {
+    let community = Community.safeGet({slug: meta.slug})
+    if (!community) return
+    let membership = Membership.safeGet({community: community.id})
+    if (!membership) return
+    membership.update({newPostCount: 0})
+  }
+}

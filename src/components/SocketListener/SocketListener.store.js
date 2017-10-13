@@ -72,3 +72,49 @@ export function receiveNotification (notification) {
     }
   }
 }
+
+export function ormSessionReducer (session, { meta, type, payload }) {
+  const { MessageThread, Membership, CommunityTopic, Me } = session
+  let currentUser
+
+  switch (type) {
+    case RECEIVE_MESSAGE:
+      const id = payload.data.message.messageThread
+      if (!MessageThread.hasId(id)) {
+        MessageThread.create({
+          id,
+          updatedAt: new Date().toString(),
+          lastReadAt: 0,
+          unreadCount: 0
+        })
+      }
+      MessageThread.withId(id).newMessageReceived(meta.bumpUnreadCount)
+      break
+
+    case RECEIVE_POST:
+      currentUser = Me.first()
+      if (currentUser && payload.creatorId !== currentUser.id) {
+        const increment = obj =>
+          obj && obj.update({
+            newPostCount: (obj.newPostCount || 0) + 1
+          })
+
+        payload.topics.forEach(topicId => {
+          increment(CommunityTopic.safeGet({
+            topic: topicId, community: payload.communityId
+          }))
+        })
+
+        increment(Membership.filter(m =>
+          !m.person && m.community === payload.communityId).first())
+      }
+      break
+
+    case RECEIVE_NOTIFICATION:
+      currentUser = Me.first()
+      currentUser.update({
+        newNotificationCount: currentUser.newNotificationCount + 1
+      })
+      break
+  }
+}

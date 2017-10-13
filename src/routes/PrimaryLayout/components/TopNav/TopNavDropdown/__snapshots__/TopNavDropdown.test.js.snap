@@ -11,12 +11,6 @@ exports[`TopNavDropdown renders correctly 1`] = `
   </a>
   <div
     data-styleName="wrapper"
-    style={
-      Object {
-        "left": 890,
-        "top": 80,
-      }
-    }
   >
     <ul
       data-styleName="menu"
@@ -25,7 +19,7 @@ exports[`TopNavDropdown renders correctly 1`] = `
         data-styleName="triangle"
         style={
           Object {
-            "left": -880,
+            "right": -41,
           }
         }
       />
