@@ -147,10 +147,10 @@ export default class PostEditor extends React.Component {
       post: {...this.state.post, title},
       valid: this.isValid({ title })
     })
+    this.setValid()
   }
 
   handleDetailsChange = (editorState, contentChanged) => {
-    this.setValid()
     if (contentChanged) this.setLinkPreview(editorState.getCurrentContent())
   }
 
@@ -183,7 +183,6 @@ export default class PostEditor extends React.Component {
       communities &&
       type.length > 0 &&
       title.length > 0 &&
-      !this.editor.isEmpty() &&
       communities.length > 0)
   }
 
