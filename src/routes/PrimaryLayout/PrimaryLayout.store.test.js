@@ -1,36 +1,62 @@
 /* eslint-env jest */
-import reducer, { FETCH_FOR_CURRENT_USER } from './PrimaryLayout.store'
+import reducer, { ormSessionReducer, FETCH_FOR_CURRENT_USER } from './PrimaryLayout.store'
 import rollbar from 'client/rollbar'
+import orm from 'store/models'
 
 jest.mock('client/rollbar', () => ({}))
 
-describe('PrimaryLayout store', () => {
-  describe('reducer', () => {
-    describe(`when ${FETCH_FOR_CURRENT_USER}`, () => {
-      beforeEach(() => {
-        rollbar.configure = jest.fn()
-      })
-
-      test('rollbar called', () => {
-        const action = {
-          type: FETCH_FOR_CURRENT_USER,
-          payload: {data: {me: {id: '1', username: 'Proteus', email: 'prot@e.us'}}}
-        }
-
-        reducer({}, action)
-        expect(rollbar.configure).toBeCalled()
-      })
-
-      it('does nothing if the action had an error', () => {
-        const action = {
-          type: FETCH_FOR_CURRENT_USER,
-          payload: {},
-          error: true
-        }
-
-        reducer({}, action)
-        expect(rollbar.configure).not.toBeCalled()
-      })
+describe('reducer', () => {
+  describe(`when ${FETCH_FOR_CURRENT_USER}`, () => {
+    beforeEach(() => {
+      rollbar.configure = jest.fn()
     })
+
+    test('rollbar called', () => {
+      const action = {
+        type: FETCH_FOR_CURRENT_USER,
+        payload: {data: {me: {id: '1', username: 'Proteus', email: 'prot@e.us'}}}
+      }
+
+      reducer({}, action)
+      expect(rollbar.configure).toBeCalled()
+    })
+
+    it('does nothing if the action had an error', () => {
+      const action = {
+        type: FETCH_FOR_CURRENT_USER,
+        payload: {},
+        error: true
+      }
+
+      reducer({}, action)
+      expect(rollbar.configure).not.toBeCalled()
+    })
+  })
+})
+
+describe('ormSessionReducer', () => {
+  it('adds a person for current user', () => {
+    const session = orm.session(orm.getEmptyState())
+    const me = {
+      id: '5',
+      name: 'foo',
+      avatarUrl: 'foo.png',
+      memberships: [{id: '7'}],
+      settings: {lights: 'on'}
+    }
+    const action = {
+      type: FETCH_FOR_CURRENT_USER,
+      payload: {
+        data: {me}
+      }
+    }
+
+    ormSessionReducer(session, action)
+    const person = session.Person.withId('5')
+    expect(person._fields).toEqual(expect.objectContaining({
+      id: me.id,
+      avatarUrl: me.avatarUrl,
+      name: me.name
+    }))
   })
 })
