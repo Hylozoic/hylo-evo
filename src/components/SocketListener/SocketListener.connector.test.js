@@ -1,6 +1,18 @@
 import { mapDispatchToProps } from './SocketListener.connector'
 import timezoneMock from 'timezone-mock'
 
+const commentData = {
+  createdAt: '2017-05-13T01:21:14.202Z',
+  id: '24738',
+  text: '<p>clunk</p>',
+  creator: {
+    id: '13249',
+    name: 'foo',
+    avatarUrl: 'foo.png'
+  },
+  post: '22498'
+}
+
 const legacyCommentData = {
   comment: {
     created_at: '2017-05-13T01:21:14.202Z',
@@ -52,7 +64,7 @@ it('returns the expected value', () => {
 
   const { receiveComment, receiveMessage, receiveThread } = newProps
 
-  expect(receiveComment(legacyCommentData)).toMatchSnapshot()
+  expect(receiveComment(commentData)).toMatchSnapshot()
   expect(receiveMessage(legacyMessageData)).toMatchSnapshot()
   expect(receiveThread(legacyThreadData)).toMatchSnapshot()
 })
