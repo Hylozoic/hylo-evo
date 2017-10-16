@@ -20,7 +20,8 @@ export default class TopNav extends Component {
     return <div styleName='topNavWrapper' className={className}>
       <div styleName='topNav' ref='topNav'>
         <div styleName='logo-hover'>
-          <Logo {...{communityOrNetwork: community || network, toggleDrawer, showLogoBadge}} />
+          <Logo {...{communityOrNetwork: community || network, toggleDrawer}} />
+          {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
           <Title community={community} network={network} onClick={toggleDrawer} />
         </div>
         <div styleName='navIcons'>
@@ -51,10 +52,7 @@ export default class TopNav extends Component {
 
 function Logo ({ communityOrNetwork, toggleDrawer, showLogoBadge }) {
   const imageStyle = bgImageStyle(get('avatarUrl', communityOrNetwork) || hyloLogo)
-  return <span styleName='image' style={imageStyle}
-    onClick={toggleDrawer}>
-    {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
-  </span>
+  return <span styleName='image' style={imageStyle} onClick={toggleDrawer} />
 }
 
 function Title ({ community, network, onClick }) {
