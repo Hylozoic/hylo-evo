@@ -9,9 +9,12 @@ export const FETCH_FOR_COMMUNITY_PENDING = FETCH_FOR_COMMUNITY + '_PENDING'
 const TOGGLE_DRAWER = `${MODULE_NAME}/TOGGLE_DRAWER`
 
 export default function reducer (state = {}, action) {
+  if (action.error) return state
+
   if (action.type === TOGGLE_DRAWER) {
     return {...state, isDrawerOpen: !state.isDrawerOpen}
   }
+
   // Links current user to rollbar config
   if (action.type === FETCH_FOR_CURRENT_USER) {
     let { id, name, email } = action.payload.data.me
