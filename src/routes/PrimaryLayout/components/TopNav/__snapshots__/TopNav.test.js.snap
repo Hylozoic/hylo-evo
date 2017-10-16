@@ -7,8 +7,12 @@ exports[`renders as expected with no community 1`] = `
   <div
     data-styleName="topNav"
   >
-    <Logo />
-    <Title />
+    <div
+      data-styleName="logo-hover"
+    >
+      <Logo />
+      <Title />
+    </div>
     <div
       data-styleName="navIcons"
     >
