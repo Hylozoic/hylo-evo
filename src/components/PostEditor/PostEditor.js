@@ -147,7 +147,6 @@ export default class PostEditor extends React.Component {
       post: {...this.state.post, title},
       valid: this.isValid({ title })
     })
-    this.setValid()
   }
 
   handleDetailsChange = (editorState, contentChanged) => {
