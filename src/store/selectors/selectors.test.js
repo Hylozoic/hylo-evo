@@ -3,6 +3,7 @@ import getMe from './getMe'
 import getCommunityTopicForCurrentRoute from './getCommunityTopicForCurrentRoute'
 import getTopicForCurrentRoute from './getTopicForCurrentRoute'
 import getMemberships from './getMemberships'
+import getCanModerate from './getCanModerate'
 
 describe('getMe', () => {
   it('returns Me', () => {
@@ -107,5 +108,23 @@ describe('getTopicForCurrentRoute', () => {
     }
     const result = getTopicForCurrentRoute({orm: session.state}, props)
     expect(result).toBeNull()
+  })
+})
+
+describe('getCanModerate', () => {
+  const session = orm.session(orm.getEmptyState())
+  beforeEach(() => {
+    session.Me.create({
+      id: '1'
+    })
+  })
+  it('returns expected values', () => {
+    const community = session.Community.create({id: 1})
+    const membership = session.Membership.create({id: 1, community: community.id, hasModeratorRole: true})
+    const me = session.Me.first()
+    me.updateAppending({memberships: [membership.id]})
+    const state = { orm: session.state }
+    const props = { community }
+    expect(getCanModerate(state, props)).toEqual(true)
   })
 })
