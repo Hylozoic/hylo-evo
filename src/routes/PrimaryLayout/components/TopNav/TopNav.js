@@ -19,8 +19,10 @@ export default class TopNav extends Component {
 
     return <div styleName='topNavWrapper' className={className}>
       <div styleName='topNav' ref='topNav'>
-        <Logo {...{communityOrNetwork: community || network, toggleDrawer, showLogoBadge}} />
-        <Title community={community} network={network} onClick={toggleDrawer} />
+        <div styleName='logo-hover'>
+          <Logo {...{communityOrNetwork: community || network, toggleDrawer, showLogoBadge}} />
+          <Title community={community} network={network} onClick={toggleDrawer} />
+        </div>
         <div styleName='navIcons'>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
           <MessagesDropdown renderToggleChildren={showBadge =>
