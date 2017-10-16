@@ -180,6 +180,7 @@ export default class HyloEditor extends Component {
     return <div styleName={styleNames} className={className}>
       <Editor
         editorState={editorState}
+        spellCheck
         onChange={this.handleChange}
         readOnly={readOnly}
         placeholder={placeholder}
