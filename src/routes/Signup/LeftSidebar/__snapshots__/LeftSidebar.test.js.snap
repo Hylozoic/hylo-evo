@@ -6,7 +6,6 @@ exports[`LeftSidebar renders correctly 1`] = `
 >
   <p
     data-styleName="gray-text close-button"
-    onClick={[Function]}
   >
     CLOSE
   </p>
