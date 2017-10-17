@@ -13,7 +13,7 @@ export default function PostFooter ({ id, currentUser, commenters, commentersTot
     <RoundImageRow imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
     <span styleName='caption'>{commentCaption(commenters, commentersTotal, get('id', currentUser))}</span>
     <a onClick={vote} styleName={cx('vote-button', {voted: myVote})}
-      data-tip-disable={myVote} data-tip='Upvote this post so more people can see it.' data-for='postfooter-tt'>
+      data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for='postfooter-tt'>
       <Icon name='ArrowUp' styleName='arrowIcon' />
       {votesTotal}
     </a>
