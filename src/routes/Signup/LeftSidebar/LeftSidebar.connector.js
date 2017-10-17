@@ -11,12 +11,10 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export function mapDispatchToProps (dispatch, props) {
-  return {
-    updateUserSettings: (changes) => dispatch(updateUserSettings(changes)),
-    resetReturnToURL: () => dispatch(resetReturnToURL()),
-    push: (path) => dispatch(push(path))
-  }
+export const mapDispatchToProps = {
+  updateUserSettings,
+  resetReturnToURL,
+  push
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {

@@ -1,11 +1,7 @@
 import { mapDispatchToProps, mergeProps } from './LeftSidebar.connector'
 
-test('updateUserSettings > mapDispatchToProps should match snapshot', () => {
-  const dispatch = jest.fn(x => x)
-  const props = {}
-  const name = 'My Name'
-  const dispatchProps = mapDispatchToProps(dispatch, props)
-  expect(dispatchProps.updateUserSettings(name)).toMatchSnapshot()
+test('mapDispatchToProps', () => {
+  expect(mapDispatchToProps).toMatchSnapshot()
 })
 
 test('mergeProps > handleCloseSignupModal', () => {
