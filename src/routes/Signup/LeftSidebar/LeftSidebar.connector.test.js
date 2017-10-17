@@ -18,6 +18,6 @@ test('mergeProps > handleCloseSignupModal', () => {
   return result.handleCloseSignupModal().then(() => {
     expect(dispatchProps.updateUserSettings).toHaveBeenCalled()
     expect(dispatchProps.resetReturnToURL).toHaveBeenCalled()
-    return expect(dispatchProps.push).toHaveBeenCalledWith(stateProps.returnToURL)
+    expect(dispatchProps.push).toHaveBeenCalledWith(stateProps.returnToURL)
   })
 })
