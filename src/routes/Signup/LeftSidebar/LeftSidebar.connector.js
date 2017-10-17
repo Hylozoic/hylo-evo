@@ -26,7 +26,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     handleCloseSignupModal: (defaultPath = '/') => {
       const changes = {settings: {signupInProgress: false}}
-      dispatchProps.updateUserSettings(changes).then(() => {
+      return dispatchProps.updateUserSettings(changes).then(() => {
         dispatchProps.resetReturnToURL()
         dispatchProps.push(stateProps.returnToURL || defaultPath)
       })
