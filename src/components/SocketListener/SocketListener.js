@@ -1,5 +1,7 @@
 import { PropTypes, Component } from 'react'
 import { getSocket, socketUrl } from 'client/websockets'
+import { isEqual } from 'lodash'
+import rollbar from 'client/rollbar'
 const { func, object } = PropTypes
 
 export default class SocketListener extends Component {
@@ -44,7 +46,15 @@ export default class SocketListener extends Component {
   }
 
   reconnect = () => {
-    this.socket.post(socketUrl('/noo/threads/subscribe'))
+    if (process.env.NODE_ENV === 'development') {
+      console.log('connecting SocketListener...')
+    }
+
+    this.socket.post(socketUrl('/noo/threads/subscribe'), (body, jwr) => {
+      if (!isEqual(body, {})) {
+        rollbar.error(`Failed to connect SocketListener: ${body}`)
+      }
+    })
   }
 
   userTypingHandler = ({userId, userName, isTyping}) => {

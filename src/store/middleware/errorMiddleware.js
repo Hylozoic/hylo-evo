@@ -8,14 +8,7 @@ export default function errorMiddleware (store) {
       let errMsg = `action error for ${type}`
       const serverMessage = get('response.body', payload)
       if (serverMessage) errMsg += `: ${serverMessage}`
-
-      if (rollbar && rollbar.error) {
-        rollbar.error(errMsg, {
-          action: JSON.parse(safeStringify(action))
-        })
-      } else {
-        console.error(errMsg, action)
-      }
+      rollbar.error(errMsg, {action: JSON.parse(safeStringify(action))})
     }
     return next(action)
   }
