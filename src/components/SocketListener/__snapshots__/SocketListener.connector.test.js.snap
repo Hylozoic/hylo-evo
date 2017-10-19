@@ -20,8 +20,12 @@ Object {
   "payload": Object {
     "data": Object {
       "comment": Object {
-        "createdAt": "Mockday 2017-05-13T01:21:14.202Z GMT-0700 (MockDate)",
-        "creator": "13249",
+        "createdAt": "2017-05-13T01:21:14.202Z",
+        "creator": Object {
+          "avatarUrl": "foo.png",
+          "id": "13249",
+          "name": "foo",
+        },
         "id": "24738",
         "post": "22498",
         "text": "<p>clunk</p>",

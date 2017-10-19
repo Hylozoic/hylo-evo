@@ -4,6 +4,7 @@ import './PostFooter.scss'
 import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
 import cx from 'classnames'
+import ReactTooltip from 'react-tooltip'
 
 const { string, array, number, func, object } = React.PropTypes
 
@@ -11,10 +12,15 @@ export default function PostFooter ({ id, currentUser, commenters, commentersTot
   return <div styleName='footer'>
     <RoundImageRow imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
     <span styleName='caption'>{commentCaption(commenters, commentersTotal, get('id', currentUser))}</span>
-    <a onClick={vote} styleName={cx('vote-button', {voted: myVote})}>
+    <a onClick={vote} styleName={cx('vote-button', {voted: myVote})}
+      data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for='postfooter-tt'>
       <Icon name='ArrowUp' styleName='arrowIcon' />
       {votesTotal}
     </a>
+    <ReactTooltip
+      effect={'solid'}
+      delayShow={550}
+      id='postfooter-tt' />
   </div>
 }
 PostFooter.propTypes = {

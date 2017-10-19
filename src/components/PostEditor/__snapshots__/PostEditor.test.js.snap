@@ -119,7 +119,6 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         value="valid title"
       />
       <Connect(HyloEditor)
-        contentHTML="valid details"
         data-styleName="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
@@ -262,7 +261,6 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         value="valid title"
       />
       <Connect(HyloEditor)
-        contentHTML="valid details"
         data-styleName="editor"
         onChange={[Function]}
         parentComponent="PostEditor"

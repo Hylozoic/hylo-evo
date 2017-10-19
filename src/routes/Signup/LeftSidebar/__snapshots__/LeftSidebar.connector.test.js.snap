@@ -1,21 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LeftSidebar should call updateUserSettings 1`] = `
+exports[`mapDispatchToProps 1`] = `
 Object {
-  "graphql": Object {
-    "query": "mutation ($changes: MeInput) {
-        updateMe(changes: $changes) {
-          id
-        }
-      }",
-    "variables": Object {
-      "changes": "My Name",
-    },
-  },
-  "meta": Object {
-    "changes": "My Name",
-    "optimistic": true,
-  },
-  "type": "UPDATE_USER_SETTINGS",
+  "push": [Function],
+  "resetReturnToURL": [Function],
+  "updateUserSettings": [Function],
 }
 `;

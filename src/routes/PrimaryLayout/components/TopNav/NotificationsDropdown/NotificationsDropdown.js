@@ -61,7 +61,7 @@ export default class NotificationsDropdown extends Component {
     const onClick = notification => {
       if (notification.activity.unread) markActivityRead(notification.activity.id)
       goToNotification(notification)
-      this.refs.dropdown.getWrappedInstance().toggle(false)
+      this.refs.dropdown.toggle(false)
     }
 
     const showBadge = currentUser && currentUser.newNotificationCount > 0

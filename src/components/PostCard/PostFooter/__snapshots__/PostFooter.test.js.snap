@@ -1,5 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`PostFooter enables tooltip when myvote is false 1`] = `
+<div
+  data-styleName="footer"
+>
+  <RoundImageRow
+    data-styleName="people"
+    imageUrls={
+      Array [
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+  />
+  <span
+    data-styleName="caption"
+  >
+    Joe, Sue and 2 others commented
+  </span>
+  <a
+    data-for="postfooter-tt"
+    data-styleName="vote-button"
+    data-tip="Upvote this post so more people see it."
+    data-tip-disable={false}
+  >
+    <Icon
+      data-styleName="arrowIcon"
+      name="ArrowUp"
+    />
+    3
+  </a>
+  <ReactTooltip
+    delayShow={550}
+    effect="solid"
+    id="postfooter-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
+</div>
+`;
+
 exports[`PostFooter matches the latest snapshot 1`] = `
 <div
   data-styleName="footer"
@@ -21,7 +64,10 @@ exports[`PostFooter matches the latest snapshot 1`] = `
     Joe, Sue and 2 others commented
   </span>
   <a
+    data-for="postfooter-tt"
     data-styleName="vote-button voted"
+    data-tip="Upvote this post so more people see it."
+    data-tip-disable={true}
   >
     <Icon
       data-styleName="arrowIcon"
@@ -29,5 +75,13 @@ exports[`PostFooter matches the latest snapshot 1`] = `
     />
     3
   </a>
+  <ReactTooltip
+    delayShow={550}
+    effect="solid"
+    id="postfooter-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
 </div>
 `;

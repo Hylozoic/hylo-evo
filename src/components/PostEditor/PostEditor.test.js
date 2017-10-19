@@ -48,7 +48,6 @@ describe('PostEditor', () => {
         post: {
           type: 'offer',
           title: 'valid title',
-          details: 'valid details',
           communities: [
             {id: '1', name: 'test community 1'},
             {id: '2', name: 'test community 2'}
@@ -80,7 +79,6 @@ describe('PostEditor', () => {
         id: 'test',
         type: 'request',
         title: 'valid title',
-        details: 'valid details',
         linkPreview: {id: '1', title: 'a link'},
         communities: [
           {id: '1', name: 'test community 1'},
@@ -172,7 +170,6 @@ describe('PostEditor', () => {
         id: 'test',
         type: 'offer',
         title: 'valid title',
-        details: 'valid details',
         linkPreview: {id: '1', title: 'a link'},
         communities: [
           {id: '1', name: 'test community 1'},
