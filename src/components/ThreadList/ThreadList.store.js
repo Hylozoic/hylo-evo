@@ -104,7 +104,7 @@ export const getThreads = ormCreateSelector(
     if (isEmpty(results) || isEmpty(results.ids)) return []
     return session.MessageThread.all()
     .filter(x => includes(x.id, results.ids))
-    .orderBy(x => results.ids.indexOf(x.id))
+    .orderBy(x => -new Date(x.updatedAt))
     .toModelArray()
     .filter(filterThreadsByParticipant(threadSearch))
   }
