@@ -28,8 +28,12 @@
   border-radius: 4px;
   cursor: pointer;
   position: relative;
+  overflow: hidden;
+}
 
-  &:hover {
+.logo-hover {
+  position: relative;
+  &:hover .image {
     background: $color-caribbean-green !important;
     &::after {
       content: "<";

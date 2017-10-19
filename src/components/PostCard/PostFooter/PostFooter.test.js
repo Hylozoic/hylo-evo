@@ -23,6 +23,15 @@ describe('PostFooter', () => {
       myVote />)
     expect(wrapper).toMatchSnapshot()
   })
+
+  it('enables tooltip when myvote is false', () => {
+    const wrapper = shallow(<PostFooter
+      commenters={commenters}
+      commentersTotal={4}
+      votesTotal={3}
+      myVote={false} />)
+    expect(wrapper).toMatchSnapshot()
+  })
 })
 
 describe('commentCaption', () => {

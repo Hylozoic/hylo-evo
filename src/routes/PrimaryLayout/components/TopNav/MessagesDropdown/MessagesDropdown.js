@@ -57,7 +57,7 @@ export default class MessagesDropdown extends Component {
 
     const onClick = id => {
       goToThread(id)
-      this.refs.dropdown.getWrappedInstance().toggle(false)
+      this.refs.dropdown.toggle(false)
     }
 
     let body
