@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapDispatchToProps maps the action generators 1`] = `
+Object {
+  "fetchCommunitySettingsMaker": [Function],
+  "updateCommunitySettingsMaker": [Function],
+}
+`;
+
+exports[`mapStateToProps returns the right keys 1`] = `
+Object {
+  "canModerate": undefined,
+  "community": null,
+  "slug": undefined,
+}
+`;
+
+exports[`mergeProps merges the props 1`] = `
+Object {
+  "fetchCommunitySettings": [Function],
+  "updateCommunitySettings": [Function],
+}
+`;
