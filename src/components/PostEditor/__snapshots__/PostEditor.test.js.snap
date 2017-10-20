@@ -97,87 +97,93 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-styleName="wrapper-scrollable-inner"
   >
     <div
-      data-styleName="body-column"
-    >
-      <RoundImage
-        data-styleName="titleAvatar"
-        medium={true}
-      />
-    </div>
-    <div
-      data-styleName="body-column"
-    >
-      <input
-        data-styleName="titleInput"
-        disabled={false}
-        onChange={[Function]}
-        placeholder="What are you looking for help with?"
-        type="text"
-        value="valid title"
-      />
-      <Connect(HyloEditor)
-        data-styleName="editor"
-        onChange={[Function]}
-        parentComponent="PostEditor"
-        placeholder="Add a description"
-        readOnly={false}
-      />
-      <LinkPreview
-        linkPreview={
-          Object {
-            "id": "1",
-            "title": "a link",
-          }
-        }
-        onClose={[Function]}
-      />
-    </div>
-  </div>
-  <Connect(AttachmentManager)
-    postId="test"
-    type="image"
-  />
-  <Connect(AttachmentManager)
-    postId="test"
-    type="file"
-  />
-  <div
-    data-styleName="footer"
-  >
-    <div
-      data-styleName="postIn"
+      data-styleName="body"
     >
       <div
-        data-styleName="postIn-label"
+        data-styleName="body-column"
       >
-        Post in
+        <RoundImage
+          data-styleName="titleAvatar"
+          medium={true}
+        />
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-styleName="body-column"
       >
-        <CommunitiesSelector
+        <input
+          data-styleName="titleInput"
+          disabled={false}
           onChange={[Function]}
-          options={Array []}
-          placeholder="Type community name..."
+          placeholder="What are you looking for help with?"
+          type="text"
+          value="valid title"
+        />
+        <Connect(HyloEditor)
+          data-styleName="editor"
+          onChange={[Function]}
+          parentComponent="PostEditor"
+          placeholder="Add a description"
           readOnly={false}
-          selected={
-            Array [
-              Object {
-                "id": "1",
-                "name": "test community 1",
-              },
-              Object {
-                "id": "2",
-                "name": "test community 2",
-              },
-            ]
+        />
+        <LinkPreview
+          linkPreview={
+            Object {
+              "id": "1",
+              "title": "a link",
+            }
           }
+          onClose={[Function]}
         />
       </div>
     </div>
+    <Connect(AttachmentManager)
+      postId="test"
+      type="image"
+    />
+    <Connect(AttachmentManager)
+      postId="test"
+      type="file"
+    />
+    <div
+      data-styleName="footer"
+    >
+      <div
+        data-styleName="postIn"
+      >
+        <div
+          data-styleName="postIn-label"
+        >
+          Post in
+        </div>
+        <div
+          data-styleName="postIn-communities"
+        >
+          <CommunitiesSelector
+            onChange={[Function]}
+            options={Array []}
+            placeholder="Type community name..."
+            readOnly={false}
+            selected={
+              Array [
+                Object {
+                  "id": "1",
+                  "name": "test community 1",
+                },
+                Object {
+                  "id": "2",
+                  "name": "test community 2",
+                },
+              ]
+            }
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
     <ActionsBar
       id="test"
       loading={false}
@@ -239,87 +245,93 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-styleName="wrapper-scrollable-inner"
   >
     <div
-      data-styleName="body-column"
-    >
-      <RoundImage
-        data-styleName="titleAvatar"
-        medium={true}
-      />
-    </div>
-    <div
-      data-styleName="body-column"
-    >
-      <input
-        data-styleName="titleInput"
-        disabled={false}
-        onChange={[Function]}
-        placeholder="What are you looking for help with?"
-        type="text"
-        value="valid title"
-      />
-      <Connect(HyloEditor)
-        data-styleName="editor"
-        onChange={[Function]}
-        parentComponent="PostEditor"
-        placeholder="Add a description"
-        readOnly={false}
-      />
-      <LinkPreview
-        linkPreview={
-          Object {
-            "id": "1",
-            "title": "a link",
-          }
-        }
-        onClose={[Function]}
-      />
-    </div>
-  </div>
-  <Connect(AttachmentManager)
-    postId="test"
-    type="image"
-  />
-  <Connect(AttachmentManager)
-    postId="test"
-    type="file"
-  />
-  <div
-    data-styleName="footer"
-  >
-    <div
-      data-styleName="postIn"
+      data-styleName="body"
     >
       <div
-        data-styleName="postIn-label"
+        data-styleName="body-column"
       >
-        Post in
+        <RoundImage
+          data-styleName="titleAvatar"
+          medium={true}
+        />
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-styleName="body-column"
       >
-        <CommunitiesSelector
+        <input
+          data-styleName="titleInput"
+          disabled={false}
           onChange={[Function]}
-          options={Array []}
-          placeholder="Type community name..."
+          placeholder="What are you looking for help with?"
+          type="text"
+          value="valid title"
+        />
+        <Connect(HyloEditor)
+          data-styleName="editor"
+          onChange={[Function]}
+          parentComponent="PostEditor"
+          placeholder="Add a description"
           readOnly={false}
-          selected={
-            Array [
-              Object {
-                "id": "1",
-                "name": "test community 1",
-              },
-              Object {
-                "id": "2",
-                "name": "test community 2",
-              },
-            ]
+        />
+        <LinkPreview
+          linkPreview={
+            Object {
+              "id": "1",
+              "title": "a link",
+            }
           }
+          onClose={[Function]}
         />
       </div>
     </div>
+    <Connect(AttachmentManager)
+      postId="test"
+      type="image"
+    />
+    <Connect(AttachmentManager)
+      postId="test"
+      type="file"
+    />
+    <div
+      data-styleName="footer"
+    >
+      <div
+        data-styleName="postIn"
+      >
+        <div
+          data-styleName="postIn-label"
+        >
+          Post in
+        </div>
+        <div
+          data-styleName="postIn-communities"
+        >
+          <CommunitiesSelector
+            onChange={[Function]}
+            options={Array []}
+            placeholder="Type community name..."
+            readOnly={false}
+            selected={
+              Array [
+                Object {
+                  "id": "1",
+                  "name": "test community 1",
+                },
+                Object {
+                  "id": "2",
+                  "name": "test community 2",
+                },
+              ]
+            }
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
     <ActionsBar
       id="test"
       loading={false}
@@ -381,67 +393,73 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-styleName="wrapper-scrollable-inner"
   >
     <div
-      data-styleName="body-column"
-    >
-      <RoundImage
-        data-styleName="titleAvatar"
-        medium={true}
-      />
-    </div>
-    <div
-      data-styleName="body-column"
-    >
-      <input
-        data-styleName="titleInput"
-        disabled={false}
-        onChange={[Function]}
-        placeholder="discussion placeholder"
-        type="text"
-        value=""
-      />
-      <Connect(HyloEditor)
-        data-styleName="editor"
-        onChange={[Function]}
-        parentComponent="PostEditor"
-        placeholder="Add a description"
-        readOnly={false}
-      />
-    </div>
-  </div>
-  <Connect(AttachmentManager)
-    postId="new"
-    type="image"
-  />
-  <Connect(AttachmentManager)
-    postId="new"
-    type="file"
-  />
-  <div
-    data-styleName="footer"
-  >
-    <div
-      data-styleName="postIn"
+      data-styleName="body"
     >
       <div
-        data-styleName="postIn-label"
+        data-styleName="body-column"
       >
-        Post in
+        <RoundImage
+          data-styleName="titleAvatar"
+          medium={true}
+        />
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-styleName="body-column"
       >
-        <CommunitiesSelector
+        <input
+          data-styleName="titleInput"
+          disabled={false}
           onChange={[Function]}
-          options={Array []}
-          placeholder="Type community name..."
+          placeholder="discussion placeholder"
+          type="text"
+          value=""
+        />
+        <Connect(HyloEditor)
+          data-styleName="editor"
+          onChange={[Function]}
+          parentComponent="PostEditor"
+          placeholder="Add a description"
           readOnly={false}
-          selected={Array []}
         />
       </div>
     </div>
+    <Connect(AttachmentManager)
+      postId="new"
+      type="image"
+    />
+    <Connect(AttachmentManager)
+      postId="new"
+      type="file"
+    />
+    <div
+      data-styleName="footer"
+    >
+      <div
+        data-styleName="postIn"
+      >
+        <div
+          data-styleName="postIn-label"
+        >
+          Post in
+        </div>
+        <div
+          data-styleName="postIn-communities"
+        >
+          <CommunitiesSelector
+            onChange={[Function]}
+            options={Array []}
+            placeholder="Type community name..."
+            readOnly={false}
+            selected={Array []}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
     <ActionsBar
       loading={false}
       save={[Function]}
@@ -502,67 +520,73 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-styleName="wrapper-scrollable-inner"
   >
     <div
-      data-styleName="body-column"
-    >
-      <RoundImage
-        data-styleName="titleAvatar"
-        medium={true}
-      />
-    </div>
-    <div
-      data-styleName="body-column"
-    >
-      <input
-        data-styleName="titleInput"
-        disabled={false}
-        onChange={[Function]}
-        placeholder="offer placeholder"
-        type="text"
-        value=""
-      />
-      <Connect(HyloEditor)
-        data-styleName="editor"
-        onChange={[Function]}
-        parentComponent="PostEditor"
-        placeholder="Add a description"
-        readOnly={false}
-      />
-    </div>
-  </div>
-  <Connect(AttachmentManager)
-    postId="new"
-    type="image"
-  />
-  <Connect(AttachmentManager)
-    postId="new"
-    type="file"
-  />
-  <div
-    data-styleName="footer"
-  >
-    <div
-      data-styleName="postIn"
+      data-styleName="body"
     >
       <div
-        data-styleName="postIn-label"
+        data-styleName="body-column"
       >
-        Post in
+        <RoundImage
+          data-styleName="titleAvatar"
+          medium={true}
+        />
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-styleName="body-column"
       >
-        <CommunitiesSelector
+        <input
+          data-styleName="titleInput"
+          disabled={false}
           onChange={[Function]}
-          options={Array []}
-          placeholder="Type community name..."
+          placeholder="offer placeholder"
+          type="text"
+          value=""
+        />
+        <Connect(HyloEditor)
+          data-styleName="editor"
+          onChange={[Function]}
+          parentComponent="PostEditor"
+          placeholder="Add a description"
           readOnly={false}
-          selected={Array []}
         />
       </div>
     </div>
+    <Connect(AttachmentManager)
+      postId="new"
+      type="image"
+    />
+    <Connect(AttachmentManager)
+      postId="new"
+      type="file"
+    />
+    <div
+      data-styleName="footer"
+    >
+      <div
+        data-styleName="postIn"
+      >
+        <div
+          data-styleName="postIn-label"
+        >
+          Post in
+        </div>
+        <div
+          data-styleName="postIn-communities"
+        >
+          <CommunitiesSelector
+            onChange={[Function]}
+            options={Array []}
+            placeholder="Type community name..."
+            readOnly={false}
+            selected={Array []}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
     <ActionsBar
       loading={false}
       save={[Function]}
@@ -623,67 +647,73 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-styleName="wrapper-scrollable-inner"
   >
     <div
-      data-styleName="body-column"
-    >
-      <RoundImage
-        data-styleName="titleAvatar"
-        medium={true}
-      />
-    </div>
-    <div
-      data-styleName="body-column"
-    >
-      <input
-        data-styleName="titleInput"
-        disabled={false}
-        onChange={[Function]}
-        placeholder="request placeholder"
-        type="text"
-        value=""
-      />
-      <Connect(HyloEditor)
-        data-styleName="editor"
-        onChange={[Function]}
-        parentComponent="PostEditor"
-        placeholder="Add a description"
-        readOnly={false}
-      />
-    </div>
-  </div>
-  <Connect(AttachmentManager)
-    postId="new"
-    type="image"
-  />
-  <Connect(AttachmentManager)
-    postId="new"
-    type="file"
-  />
-  <div
-    data-styleName="footer"
-  >
-    <div
-      data-styleName="postIn"
+      data-styleName="body"
     >
       <div
-        data-styleName="postIn-label"
+        data-styleName="body-column"
       >
-        Post in
+        <RoundImage
+          data-styleName="titleAvatar"
+          medium={true}
+        />
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-styleName="body-column"
       >
-        <CommunitiesSelector
+        <input
+          data-styleName="titleInput"
+          disabled={false}
           onChange={[Function]}
-          options={Array []}
-          placeholder="Type community name..."
+          placeholder="request placeholder"
+          type="text"
+          value=""
+        />
+        <Connect(HyloEditor)
+          data-styleName="editor"
+          onChange={[Function]}
+          parentComponent="PostEditor"
+          placeholder="Add a description"
           readOnly={false}
-          selected={Array []}
         />
       </div>
     </div>
+    <Connect(AttachmentManager)
+      postId="new"
+      type="image"
+    />
+    <Connect(AttachmentManager)
+      postId="new"
+      type="file"
+    />
+    <div
+      data-styleName="footer"
+    >
+      <div
+        data-styleName="postIn"
+      >
+        <div
+          data-styleName="postIn-label"
+        >
+          Post in
+        </div>
+        <div
+          data-styleName="postIn-communities"
+        >
+          <CommunitiesSelector
+            onChange={[Function]}
+            options={Array []}
+            placeholder="Type community name..."
+            readOnly={false}
+            selected={Array []}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
     <ActionsBar
       loading={false}
       save={[Function]}
@@ -744,68 +774,74 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-styleName="wrapper-scrollable-inner"
   >
     <div
-      data-styleName="body-column"
-    >
-      <RoundImage
-        data-styleName="titleAvatar"
-        medium={true}
-      />
-    </div>
-    <div
-      data-styleName="body-column"
-    >
-      <input
-        data-styleName="titleInput"
-        disabled={false}
-        onChange={[Function]}
-        placeholder="a test title placeholder"
-        type="text"
-        value=""
-      />
-      <Connect(HyloEditor)
-        contentHTML=""
-        data-styleName="editor"
-        onChange={[Function]}
-        parentComponent="PostEditor"
-        placeholder="details placeholder"
-        readOnly={false}
-      />
-    </div>
-  </div>
-  <Connect(AttachmentManager)
-    postId="new"
-    type="image"
-  />
-  <Connect(AttachmentManager)
-    postId="new"
-    type="file"
-  />
-  <div
-    data-styleName="footer"
-  >
-    <div
-      data-styleName="postIn"
+      data-styleName="body"
     >
       <div
-        data-styleName="postIn-label"
+        data-styleName="body-column"
       >
-        Post in
+        <RoundImage
+          data-styleName="titleAvatar"
+          medium={true}
+        />
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-styleName="body-column"
       >
-        <CommunitiesSelector
+        <input
+          data-styleName="titleInput"
+          disabled={false}
           onChange={[Function]}
-          options={Array []}
-          placeholder="Type community name..."
+          placeholder="a test title placeholder"
+          type="text"
+          value=""
+        />
+        <Connect(HyloEditor)
+          contentHTML=""
+          data-styleName="editor"
+          onChange={[Function]}
+          parentComponent="PostEditor"
+          placeholder="details placeholder"
           readOnly={false}
-          selected={Array []}
         />
       </div>
     </div>
+    <Connect(AttachmentManager)
+      postId="new"
+      type="image"
+    />
+    <Connect(AttachmentManager)
+      postId="new"
+      type="file"
+    />
+    <div
+      data-styleName="footer"
+    >
+      <div
+        data-styleName="postIn"
+      >
+        <div
+          data-styleName="postIn-label"
+        >
+          Post in
+        </div>
+        <div
+          data-styleName="postIn-communities"
+        >
+          <CommunitiesSelector
+            onChange={[Function]}
+            options={Array []}
+            placeholder="Type community name..."
+            readOnly={false}
+            selected={Array []}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
     <ActionsBar
       loading={false}
       save={[Function]}
@@ -866,68 +902,74 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-styleName="wrapper-scrollable-inner"
   >
     <div
-      data-styleName="body-column"
-    >
-      <RoundImage
-        data-styleName="titleAvatar"
-        medium={true}
-      />
-    </div>
-    <div
-      data-styleName="body-column"
-    >
-      <input
-        data-styleName="titleInput"
-        disabled={true}
-        onChange={[Function]}
-        placeholder="What’s on your mind?"
-        type="text"
-        value=""
-      />
-      <Connect(HyloEditor)
-        contentHTML=""
-        data-styleName="editor"
-        onChange={[Function]}
-        parentComponent="PostEditor"
-        placeholder="Add a description"
-        readOnly={true}
-      />
-    </div>
-  </div>
-  <Connect(AttachmentManager)
-    postId="new"
-    type="image"
-  />
-  <Connect(AttachmentManager)
-    postId="new"
-    type="file"
-  />
-  <div
-    data-styleName="footer"
-  >
-    <div
-      data-styleName="postIn"
+      data-styleName="body"
     >
       <div
-        data-styleName="postIn-label"
+        data-styleName="body-column"
       >
-        Post in
+        <RoundImage
+          data-styleName="titleAvatar"
+          medium={true}
+        />
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-styleName="body-column"
       >
-        <CommunitiesSelector
+        <input
+          data-styleName="titleInput"
+          disabled={true}
           onChange={[Function]}
-          options={Array []}
-          placeholder="Type community name..."
+          placeholder="What’s on your mind?"
+          type="text"
+          value=""
+        />
+        <Connect(HyloEditor)
+          contentHTML=""
+          data-styleName="editor"
+          onChange={[Function]}
+          parentComponent="PostEditor"
+          placeholder="Add a description"
           readOnly={true}
-          selected={Array []}
         />
       </div>
     </div>
+    <Connect(AttachmentManager)
+      postId="new"
+      type="image"
+    />
+    <Connect(AttachmentManager)
+      postId="new"
+      type="file"
+    />
+    <div
+      data-styleName="footer"
+    >
+      <div
+        data-styleName="postIn"
+      >
+        <div
+          data-styleName="postIn-label"
+        >
+          Post in
+        </div>
+        <div
+          data-styleName="postIn-communities"
+        >
+          <CommunitiesSelector
+            onChange={[Function]}
+            options={Array []}
+            placeholder="Type community name..."
+            readOnly={true}
+            selected={Array []}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
     <ActionsBar
       loading={true}
       save={[Function]}
@@ -988,68 +1030,74 @@ exports[`PostEditor renders with min props 1`] = `
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-styleName="wrapper-scrollable-inner"
   >
     <div
-      data-styleName="body-column"
-    >
-      <RoundImage
-        data-styleName="titleAvatar"
-        medium={true}
-      />
-    </div>
-    <div
-      data-styleName="body-column"
-    >
-      <input
-        data-styleName="titleInput"
-        disabled={false}
-        onChange={[Function]}
-        placeholder="What’s on your mind?"
-        type="text"
-        value=""
-      />
-      <Connect(HyloEditor)
-        contentHTML=""
-        data-styleName="editor"
-        onChange={[Function]}
-        parentComponent="PostEditor"
-        placeholder="Add a description"
-        readOnly={false}
-      />
-    </div>
-  </div>
-  <Connect(AttachmentManager)
-    postId="new"
-    type="image"
-  />
-  <Connect(AttachmentManager)
-    postId="new"
-    type="file"
-  />
-  <div
-    data-styleName="footer"
-  >
-    <div
-      data-styleName="postIn"
+      data-styleName="body"
     >
       <div
-        data-styleName="postIn-label"
+        data-styleName="body-column"
       >
-        Post in
+        <RoundImage
+          data-styleName="titleAvatar"
+          medium={true}
+        />
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-styleName="body-column"
       >
-        <CommunitiesSelector
+        <input
+          data-styleName="titleInput"
+          disabled={false}
           onChange={[Function]}
-          options={Array []}
-          placeholder="Type community name..."
+          placeholder="What’s on your mind?"
+          type="text"
+          value=""
+        />
+        <Connect(HyloEditor)
+          contentHTML=""
+          data-styleName="editor"
+          onChange={[Function]}
+          parentComponent="PostEditor"
+          placeholder="Add a description"
           readOnly={false}
-          selected={Array []}
         />
       </div>
     </div>
+    <Connect(AttachmentManager)
+      postId="new"
+      type="image"
+    />
+    <Connect(AttachmentManager)
+      postId="new"
+      type="file"
+    />
+    <div
+      data-styleName="footer"
+    >
+      <div
+        data-styleName="postIn"
+      >
+        <div
+          data-styleName="postIn-label"
+        >
+          Post in
+        </div>
+        <div
+          data-styleName="postIn-communities"
+        >
+          <CommunitiesSelector
+            onChange={[Function]}
+            options={Array []}
+            placeholder="Type community name..."
+            readOnly={false}
+            selected={Array []}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
     <ActionsBar
       loading={false}
       save={[Function]}
