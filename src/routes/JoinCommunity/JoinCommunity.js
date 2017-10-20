@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 import { communityUrl } from 'util/index'
 import Loading from 'components/Loading'
 
-export const SIGNUP_PATH = '/singup'
+export const SIGNUP_PATH = '/signup'
 export const EXPIRED_INVITE_PATH = '/invite-expired'
 
 export default class JoinCommunity extends Component {
