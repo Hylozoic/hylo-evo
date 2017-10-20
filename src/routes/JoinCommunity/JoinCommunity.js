@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 import { communityUrl } from 'util/index'
 import Loading from 'components/Loading'
 
-export const LOGIN_PATH = '/login'
+export const SIGNUP_PATH = '/singup'
 export const EXPIRED_INVITE_PATH = '/invite-expired'
 
 export default class JoinCommunity extends Component {
@@ -29,7 +29,7 @@ export default class JoinCommunity extends Component {
     const { isLoggedIn, communitySlug, hasCheckedValidInvite, isValidInvite } = this.props
     if (!isLoggedIn && hasCheckedValidInvite) {
       if (isValidInvite) {
-        return <Redirect to={LOGIN_PATH} />
+        return <Redirect to={SIGNUP_PATH} />
       } else {
         return <Redirect to={EXPIRED_INVITE_PATH} />
       }
