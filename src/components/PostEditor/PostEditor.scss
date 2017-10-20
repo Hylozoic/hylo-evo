@@ -22,6 +22,11 @@ $wrapperBorderRadius: 8px;
   background: $color-white;
 }
 
+.wrapper-scrollable-inner {
+  max-height: 360px;
+  overflow: scroll;
+}
+
 // Header area
 
 .header {
