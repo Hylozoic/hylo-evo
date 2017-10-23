@@ -199,8 +199,9 @@ export default class PostEditor extends React.Component {
   }
 
   buttonLabel = () => {
-    if (this.props.postPending) return 'Posting...'
-    if (this.props.editing) return 'Save'
+    const { postPending, editing } = this.props
+    if (postPending) return 'Posting...'
+    if (editing) return 'Save'
     return 'Post'
   }
 
