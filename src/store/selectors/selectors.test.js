@@ -118,7 +118,7 @@ describe('getCanModerate', () => {
       id: '1'
     })
   })
-  it('returns expected values', () => {
+  it('returns true when user can moderate', () => {
     const community = session.Community.create({id: 1})
     const membership = session.Membership.create({id: 1, community: community.id, hasModeratorRole: true})
     const me = session.Me.first()
@@ -126,5 +126,11 @@ describe('getCanModerate', () => {
     const state = { orm: session.state }
     const props = { community }
     expect(getCanModerate(state, props)).toEqual(true)
+  })
+  it('returns false when user cannot moderate', () => {
+    const community = session.Community.create({id: 2})
+    const state = { orm: session.state }
+    const props = { community }
+    expect(getCanModerate(state, props)).toBeFalsy()
   })
 })
