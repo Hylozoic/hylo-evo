@@ -1,16 +1,5 @@
 import { mapStateToProps, mapDispatchToProps, mergeProps } from './PostEditor.connector'
 import orm from 'store/models'
-import {
-  CREATE_POST,
-  MODULE_NAME,
-  FETCH_LINK_PREVIEW,
-  createPost,
-  updatePost,
-  pollingFetchLinkPreview,
-  removeLinkPreview,
-  clearLinkPreview,
-  getLinkPreview
-} from './PostEditor.store'
 
 let state
 beforeAll(() => {
