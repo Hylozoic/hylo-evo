@@ -40,7 +40,6 @@ exports[`ActionsBar matches last snapshot 1`] = `
   <Button
     color="green"
     data-styleName="postButton"
-    disabled={false}
     label="Save"
     onClick={[Function]}
   />
