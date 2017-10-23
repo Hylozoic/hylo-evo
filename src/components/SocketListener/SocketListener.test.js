@@ -23,7 +23,7 @@ afterEach(() => {
 })
 
 it('sets up event handlers and subscribes', () => {
-  const wrapper = mount(<SocketListener 
+  const wrapper = mount(<SocketListener
     receiveComment={() => {}}
     receiveMessage={() => {}}
     receiveNotification={() => {}}
@@ -36,6 +36,7 @@ it('sets up event handlers and subscribes', () => {
     expect(typeof listen[1]).toEqual('function')
   })
 
-  expect(mockSocket.post)
-  .toHaveBeenCalledWith(`${process.env.SOCKET_HOST}/noo/threads/subscribe`)
+  expect(mockSocket.post).toBeCalled()
+  expect(mockSocket.post.mock.calls[0][0])
+  .toBe(`${process.env.SOCKET_HOST}/noo/threads/subscribe`)
 })
