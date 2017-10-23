@@ -40,7 +40,55 @@ exports[`ActionsBar matches last snapshot 1`] = `
   <Button
     color="green"
     data-styleName="postButton"
+    disabled={false}
     label="Save"
+    onClick={[Function]}
+  />
+</div>
+`;
+
+exports[`ActionsBar matches last snapshot while pending 1`] = `
+<div
+  data-styleName="actionsBar"
+>
+  <div
+    data-styleName="actions"
+  >
+    <Connect(ChangeImageButton)
+      attachmentType="image"
+      update={[Function]}
+      uploadSettings={
+        Object {
+          "id": 1,
+          "type": "post",
+        }
+      }
+    >
+      <Icon
+        data-styleName="action-icon"
+        name="AddImage"
+      />
+    </Connect(ChangeImageButton)>
+    <Connect(ChangeImageButton)
+      attachmentType="file"
+      uploadSettings={
+        Object {
+          "id": 1,
+          "type": "post",
+        }
+      }
+    >
+      <Icon
+        data-styleName="action-icon"
+        name="Paperclip"
+      />
+    </Connect(ChangeImageButton)>
+  </div>
+  <Button
+    color="green"
+    data-styleName="postButton"
+    disabled={true}
+    label="Posting..."
     onClick={[Function]}
   />
 </div>

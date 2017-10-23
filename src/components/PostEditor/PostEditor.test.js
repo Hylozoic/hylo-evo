@@ -290,6 +290,22 @@ describe('ActionsBar', () => {
       valid: true,
       loading: false,
       submitButtonLabel: 'Save',
+      postPending: false,
+      save: () => {}
+    }
+    const wrapper = shallow(<ActionsBar {...props} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('matches last snapshot while pending', () => {
+    const props = {
+      id: 1,
+      addImage: () => {},
+      showImagePreviews: true,
+      valid: true,
+      loading: false,
+      postPending: true,
+      submitButtonLabel: 'Posting...',
       save: () => {}
     }
     const wrapper = shallow(<ActionsBar {...props} />)
