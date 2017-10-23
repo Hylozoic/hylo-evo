@@ -47,7 +47,7 @@ exports[`ActionsBar matches last snapshot 1`] = `
 </div>
 `;
 
-exports[`ActionsBar matches last snapshot while pending 1`] = `
+exports[`ActionsBar matches last snapshot while loading 1`] = `
 <div
   data-styleName="actionsBar"
 >
