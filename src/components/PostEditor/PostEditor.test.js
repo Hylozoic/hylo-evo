@@ -290,7 +290,6 @@ describe('ActionsBar', () => {
       valid: true,
       loading: false,
       submitButtonLabel: 'Save',
-      postPending: false,
       save: () => {}
     }
     const wrapper = shallow(<ActionsBar {...props} />)
@@ -303,8 +302,7 @@ describe('ActionsBar', () => {
       addImage: () => {},
       showImagePreviews: true,
       valid: true,
-      loading: false,
-      postPending: true,
+      loading: true,
       submitButtonLabel: 'Posting...',
       save: () => {}
     }
