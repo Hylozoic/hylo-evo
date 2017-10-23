@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mapStateToProps returns the right keys 1`] = `
+exports[`mapStateToProps returns the right keys for a new post 1`] = `
 Object {
   "communityOptions": Array [
     SessionBoundModel {
@@ -36,10 +36,10 @@ Object {
   },
   "editing": false,
   "fetchLinkPreviewPending": undefined,
-  "files": undefined,
-  "images": undefined,
+  "files": Array [],
+  "images": Array [],
   "linkPreview": null,
-  "linkPreviewStatus": undefined,
+  "linkPreviewStatus": false,
   "loading": false,
   "post": null,
   "postPending": false,

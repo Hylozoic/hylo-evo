@@ -1,5 +1,16 @@
 import { mapStateToProps, mapDispatchToProps, mergeProps } from './PostEditor.connector'
 import orm from 'store/models'
+import {
+  CREATE_POST,
+  MODULE_NAME,
+  FETCH_LINK_PREVIEW,
+  createPost,
+  updatePost,
+  pollingFetchLinkPreview,
+  removeLinkPreview,
+  clearLinkPreview,
+  getLinkPreview
+} from './PostEditor.store'
 
 let state
 beforeAll(() => {
@@ -8,6 +19,7 @@ beforeAll(() => {
   session.LinkPreview.create({
     id: 1
   })
+
   session.Me.create({
     id: '1',
     memberships: [session.Membership.create({
@@ -19,14 +31,21 @@ beforeAll(() => {
 
   state = {
     orm: session.state,
-    PostEditor: false,
-    pending: [],
-    AttachmentManager: {}
+    PostEditor: {
+      linkPreviewStatus: false
+    },
+    pending: {
+      FETCH_LINK_PREVIEW: false
+    },
+    AttachmentManager: {
+      image: [],
+      file: []
+    }
   }
 })
 
 describe('mapStateToProps', () => {
-  it('returns the right keys', () => {
+  it('returns the right keys for a new post', () => {
     const props = {
       forNew: true,
       match: {
@@ -38,17 +57,3 @@ describe('mapStateToProps', () => {
     expect(mapStateToProps(state, props)).toMatchSnapshot()
   })
 })
-
-// describe('mergeProps', () => {
-//   it('merges the props', () => {
-//     const slug = 'foo'
-//     const dispatch = x => x
-//     const ownProps = {}
-//     const stateProps = mapStateToProps(state, {match: {params: {slug}}})
-//     const dispatchProps = mapDispatchToProps(dispatch, stateProps)
-//     const mergedProps = mergeProps(stateProps, dispatchProps, ownProps)
-//     expect(mergedProps.fetchCommunitySettings()).toMatchSnapshot()
-//     expect(mergedProps.updateCommunitySettings()).toMatchSnapshot()
-//     expect(mergedProps).toMatchSnapshot()
-//   })
-// })
