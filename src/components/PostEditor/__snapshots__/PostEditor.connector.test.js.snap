@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapStateToProps returns the right keys 1`] = `
+Object {
+  "communityOptions": Array [
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "99",
+        "members": undefined,
+        "moderators": undefined,
+        "posts": undefined,
+        "slug": "foo",
+      },
+      "slug": "foo",
+    },
+  ],
+  "currentCommunity": SessionBoundModel {
+    "_fields": Object {
+      "id": "99",
+      "members": undefined,
+      "moderators": undefined,
+      "posts": undefined,
+      "slug": "foo",
+    },
+    "slug": "foo",
+  },
+  "currentUser": SessionBoundModel {
+    "_fields": Object {
+      "id": "1",
+      "messageThreads": undefined,
+      "notifications": undefined,
+      "posts": undefined,
+      "skills": undefined,
+    },
+    "id": "1",
+  },
+  "editing": false,
+  "fetchLinkPreviewPending": undefined,
+  "files": undefined,
+  "images": undefined,
+  "linkPreview": null,
+  "linkPreviewStatus": undefined,
+  "loading": false,
+  "post": null,
+  "postPending": false,
+  "showFiles": false,
+  "showImages": false,
+}
+`;
