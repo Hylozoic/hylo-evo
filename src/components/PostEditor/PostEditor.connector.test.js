@@ -1,4 +1,4 @@
-import { mapStateToProps, mapDispatchToProps, mergeProps } from './PostEditor.connector'
+import { mapStateToProps } from './PostEditor.connector'
 import orm from 'store/models'
 
 let state
