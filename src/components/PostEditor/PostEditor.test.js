@@ -296,7 +296,7 @@ describe('ActionsBar', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('matches last snapshot while pending', () => {
+  it('matches last snapshot while loading', () => {
     const props = {
       id: 1,
       addImage: () => {},
