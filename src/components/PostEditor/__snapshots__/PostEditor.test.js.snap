@@ -87,7 +87,7 @@ exports[`ActionsBar matches last snapshot while pending 1`] = `
   <Button
     color="green"
     data-styleName="postButton"
-    disabled={true}
+    disabled={false}
     label="Posting..."
     onClick={[Function]}
   />

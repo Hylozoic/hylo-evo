@@ -211,7 +211,7 @@ export default class PostEditor extends React.Component {
     const {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
-      showImages, addFile, showFiles, postPending
+      showImages, addFile, showFiles
     } = this.props
 
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
@@ -281,14 +281,13 @@ export default class PostEditor extends React.Component {
           valid={valid}
           loading={loading}
           submitButtonLabel={this.buttonLabel()}
-          postPending={postPending}
           save={() => this.save()} />
       </div>
     </div>
   }
 }
 
-export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid, loading, submitButtonLabel, save, postPending}) {
+export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid, loading, submitButtonLabel, save}) {
   return <div styleName='actionsBar'>
     <div styleName='actions'>
       <ChangeImageButton update={addImage}
@@ -308,7 +307,7 @@ export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid
     </div>
     <Button
       onClick={save}
-      disabled={!valid || loading || postPending}
+      disabled={!valid || loading}
       styleName='postButton'
       label={submitButtonLabel}
       color='green'
