@@ -24,9 +24,13 @@ beforeAll(() => {
 describe('mapStateToProps', () => {
   it('returns the right keys', () => {
     const props = {
-
+      match: {
+        params: {
+          slug: 'foo'
+        }
+      }
     }
-    expect(mapStateToProps(state, {match: {params: {slug: 'foo'}}})).toMatchSnapshot()
+    expect(mapStateToProps(state, props)).toMatchSnapshot()
   })
 })
 
@@ -37,7 +41,6 @@ describe('mergeProps', () => {
     const ownProps = {}
     const stateProps = mapStateToProps(state, {match: {params: {slug}}})
     const dispatchProps = mapDispatchToProps(dispatch, stateProps)
-    console.log(dispatchProps)
     const mergedProps = mergeProps(stateProps, dispatchProps, ownProps)
     expect(mergedProps.fetchCommunitySettings()).toMatchSnapshot()
     expect(mergedProps.updateCommunitySettings()).toMatchSnapshot()
