@@ -1,13 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mapDispatchToProps maps the action generators 1`] = `
+exports[`mapStateToProps returns the right keys 1`] = `
 Object {
-  "fetchCommunitySettingsMaker": [Function],
-  "updateCommunitySettingsMaker": [Function],
+  "canModerate": true,
+  "community": SessionBoundModel {
+    "_fields": Object {
+      "id": "99",
+      "members": undefined,
+      "moderators": undefined,
+      "posts": undefined,
+      "slug": "foo",
+    },
+    "slug": "foo",
+  },
+  "slug": "foo",
 }
 `;
 
-exports[`mapDispatchToProps maps the action generators 2`] = `
+exports[`mergeProps merges the props 1`] = `
 Object {
   "graphql": Object {
     "query": "query ($slug: String) {
@@ -41,7 +51,7 @@ Object {
         }
       }",
     "variables": Object {
-      "slug": "anyslug",
+      "slug": "foo",
     },
   },
   "meta": Object {
@@ -51,7 +61,7 @@ Object {
 }
 `;
 
-exports[`mapDispatchToProps maps the action generators 3`] = `
+exports[`mergeProps merges the props 2`] = `
 Object {
   "graphql": Object {
     "query": "mutation ($id: ID, $changes: CommunityInput) {
@@ -60,24 +70,20 @@ Object {
         }
       }",
     "variables": Object {
-      "changes": Object {
-        "name": "a new name",
-      },
-      "id": "anyslug",
+      "changes": undefined,
+      "id": "99",
     },
   },
   "meta": Object {
-    "changes": Object {
-      "name": "a new name",
-    },
-    "id": "anyslug",
+    "changes": undefined,
+    "id": "99",
     "optimistic": true,
   },
   "type": "CommunitySettings/UPDATE_COMMUNITY_SETTINGS",
 }
 `;
 
-exports[`mapStateToProps returns the right keys 1`] = `
+exports[`mergeProps merges the props 3`] = `
 Object {
   "canModerate": true,
   "community": SessionBoundModel {
@@ -90,19 +96,10 @@ Object {
     },
     "slug": "foo",
   },
-  "slug": "foo",
-}
-`;
-
-exports[`mergeProps merges the props 1`] = `
-Object {
-  "community": Object {
-    "id": 99,
-  },
-  "fetchCommunitySettings": "bar",
+  "fetchCommunitySettings": [Function],
   "fetchCommunitySettingsMaker": [Function],
-  "slug": "bar",
-  "updateCommunitySettings": 99,
+  "slug": "foo",
+  "updateCommunitySettings": [Function],
   "updateCommunitySettingsMaker": [Function],
 }
 `;

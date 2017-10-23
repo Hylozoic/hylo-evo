@@ -23,37 +23,24 @@ beforeAll(() => {
 
 describe('mapStateToProps', () => {
   it('returns the right keys', () => {
-    expect(mapStateToProps(state, {match: {params: {slug: 'foo'}}})).toMatchSnapshot()
-  })
-})
+    const props = {
 
-describe('mapDispatchToProps', () => {
-  it('maps the action generators', () => {
-    const dispatch = x => x
-    const props = {}
-    // fetchCommunitySettingsMaker
-    // updateCommunitySettingsMaker
-    const result = mapDispatchToProps(dispatch, props)
-    expect(result).toMatchSnapshot()
-    expect(result.fetchCommunitySettingsMaker('anyslug')()).toMatchSnapshot()
-    expect(result.updateCommunitySettingsMaker('anyslug')({name: 'a new name'})).toMatchSnapshot()
+    }
+    expect(mapStateToProps(state, {match: {params: {slug: 'foo'}}})).toMatchSnapshot()
   })
 })
 
 describe('mergeProps', () => {
   it('merges the props', () => {
-    const stateProps = {
-      slug: 'bar',
-      community: {
-        id: 99
-      }
-    }
-    const dispatchProps = {
-      fetchCommunitySettingsMaker: jest.fn(x => x),
-      updateCommunitySettingsMaker: jest.fn(x => x)
-    }
+    const slug = 'foo'
+    const dispatch = x => x
     const ownProps = {}
+    const stateProps = mapStateToProps(state, {match: {params: {slug}}})
+    const dispatchProps = mapDispatchToProps(dispatch, stateProps)
+    console.log(dispatchProps)
     const mergedProps = mergeProps(stateProps, dispatchProps, ownProps)
+    expect(mergedProps.fetchCommunitySettings()).toMatchSnapshot()
+    expect(mergedProps.updateCommunitySettings()).toMatchSnapshot()
     expect(mergedProps).toMatchSnapshot()
   })
 })
