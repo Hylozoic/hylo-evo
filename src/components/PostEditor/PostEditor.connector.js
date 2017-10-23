@@ -8,6 +8,7 @@ import getPost from 'store/selectors/getPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import { FETCH_POST, UPLOAD_ATTACHMENT } from 'store/constants'
 import {
+  CREATE_POST,
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
   createPost,
@@ -15,8 +16,7 @@ import {
   pollingFetchLinkPreview,
   removeLinkPreview,
   clearLinkPreview,
-  getLinkPreview,
-  CREATE_POST
+  getLinkPreview
 } from './PostEditor.store'
 import {
   addAttachment,
