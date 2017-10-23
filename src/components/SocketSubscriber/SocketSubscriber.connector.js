@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
 import { getSocket, socketUrl } from 'client/websockets'
+import { isEqual } from 'lodash'
+import rollbar from 'client/rollbar'
 
 function mapDispatchToProps (dispatch, props) {
   const { id, type } = props
@@ -20,7 +22,15 @@ function mapDispatchToProps (dispatch, props) {
       if (oldHandler) socket.off('reconnect', oldHandler)
 
       const newHandler = () => {
-        socket.post(socketUrl(`/noo/${type}/${id}/subscribe`))
+        const label = `SocketSubscriber(${type}, ${id})`
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`connecting ${label}...`)
+        }
+        socket.post(socketUrl(`/noo/${type}/${id}/subscribe`), (body, jwr) => {
+          if (!isEqual(body, {})) {
+            rollbar.error(`Failed to connect ${label}: ${body}`)
+          }
+        })
       }
 
       socket.on('reconnect', newHandler)

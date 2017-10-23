@@ -2,6 +2,7 @@ const { ROLLBAR_CLIENT_TOKEN, ROLLBAR_ENV, NODE_ENV } = process.env
 
 function getBundleVersion () {
   if (NODE_ENV === 'development') return 'dev'
+  if (NODE_ENV === 'test') return 'test'
 
   try {
     let scripts = document.querySelectorAll('script')
@@ -18,7 +19,9 @@ function getBundleVersion () {
 const rollbar = (() => {
   if (typeof window === 'undefined' || !ROLLBAR_CLIENT_TOKEN) {
     return {
-      configure: () => {}
+      configure: () => {},
+      error: console.error.bind(console),
+      disabled: true
     }
   }
 
