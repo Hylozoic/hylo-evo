@@ -45,4 +45,22 @@ describe('mapStateToProps', () => {
     }
     expect(mapStateToProps(state, props)).toMatchSnapshot()
   })
+  it('returns the right keys for a new post while pending', () => {
+    const props = {
+      forNew: true,
+      match: {
+        params: {
+          slug: 'foo'
+        }
+      }
+    }
+    const newState = {
+      ...state,
+      pending: {
+        FETCH_LINK_PREVIEW: false,
+        'PostEditor/CREATE_POST': true
+      }
+    }
+    expect(mapStateToProps(newState, props)).toMatchSnapshot()
+  })
 })
