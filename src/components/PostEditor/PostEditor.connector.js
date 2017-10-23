@@ -15,7 +15,8 @@ import {
   pollingFetchLinkPreview,
   removeLinkPreview,
   clearLinkPreview,
-  getLinkPreview
+  getLinkPreview,
+  CREATE_POST
 } from './PostEditor.store'
 import {
   addAttachment,
@@ -33,6 +34,7 @@ export function mapStateToProps (state, props) {
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
   const uploadAttachmentPending = state.pending[UPLOAD_ATTACHMENT]
   const loading = !!state.pending[FETCH_POST] || !!uploadAttachmentPending
+  const postPending = !!state.pending[CREATE_POST]
   const editing = !!post || loading
   const images = getAttachments(state, {type: 'image'})
   const files = getAttachments(state, {type: 'file'})
@@ -48,6 +50,7 @@ export function mapStateToProps (state, props) {
     communityOptions,
     post,
     loading,
+    postPending,
     editing,
     linkPreview,
     linkPreviewStatus,
