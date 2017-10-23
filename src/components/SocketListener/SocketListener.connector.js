@@ -29,7 +29,7 @@ export function mapDispatchToProps (dispatch, props) {
     receiveComment: data => dispatch(receiveComment(data)),
 
     receiveMessage: data => {
-      const message = convertToMessage(data.message, data.postId)
+      const message = convertToMessage(data)
       return dispatch(receiveMessage(message, {
         bumpUnreadCount: !isActiveThread(props.location, data)
       }))
@@ -57,24 +57,50 @@ function mergeProps (stateProps, dispatchProps) {
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
 function convertToThread (data) {
+  if (data.createdAt) {
+    // data is already in GraphQL/redux-orm style
+    return {
+      ...data,
+      createdAt: new Date(data.createdAt).toString(),
+      updatedAt: new Date(data.updatedAt).toString(),
+      messages: data.messages.map(({ id, createdAt, text, creator }) => ({
+        id,
+        text,
+        creator,
+        createdAt: new Date(createdAt).toString(),
+        messageThread: data.id
+      })),
+      unreadCount: 1
+    }
+  }
+
   const { id, created_at, updated_at, people, comments } = data
   return {
     id,
     createdAt: new Date(created_at).toString(),
     updatedAt: new Date(updated_at).toString(),
     participants: people.map(({id, name, avatar_url}) => ({id, name, avatarUrl: avatar_url})),
-    messages: comments.map(c => convertToMessage(c, id)),
+    messages: comments.map(c => convertToMessage({message: c, postId: id})),
     unreadCount: 1
   }
 }
 
-function convertToMessage ({ id, created_at, text, user_id }, messageThreadId) {
+function convertToMessage (data) {
+  if (data.createdAt) {
+    // data is already in GraphQL/redux-orm style
+    return {
+      ...data,
+      createdAt: new Date(data.createdAt).toString()
+    }
+  }
+
+  const { message: { id, created_at, text, user_id }, postId } = data
   return {
     id,
     createdAt: new Date(created_at).toString(),
     text,
     creator: user_id,
-    messageThread: messageThreadId
+    messageThread: postId
   }
 }
 

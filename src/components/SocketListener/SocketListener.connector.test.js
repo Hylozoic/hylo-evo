@@ -33,6 +33,14 @@ const legacyMessageData = {
   postId: '8'
 }
 
+const messageData = {
+  id: '5',
+  createdAt: '2017-05-13T01:21:14.202Z',
+  text: 'hello!',
+  creator: '5557',
+  messageThread: '8'
+}
+
 const legacyThreadData = {
   id: '89',
   created_at: '2017-05-13T01:01:14.202Z',
@@ -47,24 +55,56 @@ const legacyThreadData = {
   ]
 }
 
-beforeEach(() => {
+const threadData = {
+  id: '89',
+  createdAt: '2017-05-13T01:01:14.202Z',
+  updatedAt: '2017-05-13T01:01:14.202Z',
+  participants: [
+    {id: '1', name: 'Foo', avatarUrl: 'foo.png'},
+    {id: '2', name: 'Bar', avatarUrl: 'bar.png'},
+    {id: '3', name: 'Zot', avatarUrl: 'zot.png'}
+  ],
+  messages: [
+    {
+      ...commentData,
+      creator: commentData.creator.id
+    }
+  ]
+}
+
+let newProps
+
+beforeAll(() => {
   timezoneMock.register('US/Pacific')
+  const dispatch = jest.fn(x => x)
+  const props = {location: {pathname: '/t/77'}}
+  newProps = mapDispatchToProps(dispatch, props)
 })
 
-afterEach(() => {
+afterAll(() => {
   timezoneMock.unregister()
 })
 
-// just a placeholder for a real test
 it('returns the expected value', () => {
-  const dispatch = jest.fn(x => x)
-  const props = {location: {pathname: '/t/77'}}
-  const newProps = mapDispatchToProps(dispatch, props)
   expect(newProps).toMatchSnapshot()
+})
 
-  const { receiveComment, receiveMessage, receiveThread } = newProps
+it('receives comments', () => {
+  expect(newProps.receiveComment(commentData)).toMatchSnapshot()
+})
 
-  expect(receiveComment(commentData)).toMatchSnapshot()
-  expect(receiveMessage(legacyMessageData)).toMatchSnapshot()
-  expect(receiveThread(legacyThreadData)).toMatchSnapshot()
+it('receives messages', () => {
+  const receiveOldMessage = newProps.receiveMessage(legacyMessageData)
+  expect(receiveOldMessage).toMatchSnapshot()
+
+  const receiveNewMessage = newProps.receiveMessage(messageData)
+  expect(receiveOldMessage).toEqual(receiveNewMessage)
+})
+
+it('receives threads', () => {
+  const receiveOldThread = newProps.receiveThread(legacyThreadData)
+  expect(receiveOldThread).toMatchSnapshot()
+
+  const receiveNewThread = newProps.receiveThread(threadData)
+  expect(receiveOldThread).toEqual(receiveNewThread)
 })
