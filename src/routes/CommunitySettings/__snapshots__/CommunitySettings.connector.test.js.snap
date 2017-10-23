@@ -7,17 +7,102 @@ Object {
 }
 `;
 
+exports[`mapDispatchToProps maps the action generators 2`] = `
+Object {
+  "graphql": Object {
+    "query": "query ($slug: String) {
+        community (slug: $slug) {
+          id
+          name
+          slug
+          avatarUrl
+          bannerUrl
+          description
+          location
+          settings
+          invitePath
+          pendingInvitations (first: 100) {
+            hasMore
+            items {
+              id
+              email
+              createdAt
+              lastSentAt
+            }
+          }
+          moderators (first: 100) {
+            hasMore
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+        }
+      }",
+    "variables": Object {
+      "slug": "anyslug",
+    },
+  },
+  "meta": Object {
+    "extractModel": "Community",
+  },
+  "type": "CommunitySettings/FETCH_COMMUNITY_SETTINGS",
+}
+`;
+
+exports[`mapDispatchToProps maps the action generators 3`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($id: ID, $changes: CommunityInput) {
+        updateCommunitySettings(id: $id, changes: $changes) {
+          id
+        }
+      }",
+    "variables": Object {
+      "changes": Object {
+        "name": "a new name",
+      },
+      "id": "anyslug",
+    },
+  },
+  "meta": Object {
+    "changes": Object {
+      "name": "a new name",
+    },
+    "id": "anyslug",
+    "optimistic": true,
+  },
+  "type": "CommunitySettings/UPDATE_COMMUNITY_SETTINGS",
+}
+`;
+
 exports[`mapStateToProps returns the right keys 1`] = `
 Object {
-  "canModerate": undefined,
-  "community": null,
-  "slug": undefined,
+  "canModerate": true,
+  "community": SessionBoundModel {
+    "_fields": Object {
+      "id": "99",
+      "members": undefined,
+      "moderators": undefined,
+      "posts": undefined,
+      "slug": "foo",
+    },
+    "slug": "foo",
+  },
+  "slug": "foo",
 }
 `;
 
 exports[`mergeProps merges the props 1`] = `
 Object {
-  "fetchCommunitySettings": [Function],
-  "updateCommunitySettings": [Function],
+  "community": Object {
+    "id": 99,
+  },
+  "fetchCommunitySettings": "bar",
+  "fetchCommunitySettingsMaker": [Function],
+  "slug": "bar",
+  "updateCommunitySettings": 99,
+  "updateCommunitySettingsMaker": [Function],
 }
 `;

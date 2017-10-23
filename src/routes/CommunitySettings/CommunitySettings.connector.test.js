@@ -23,22 +23,35 @@ beforeAll(() => {
 
 describe('mapStateToProps', () => {
   it('returns the right keys', () => {
-    expect(mapStateToProps(state, {})).toMatchSnapshot()
+    expect(mapStateToProps(state, {match: {params: {slug: 'foo'}}})).toMatchSnapshot()
   })
 })
 
 describe('mapDispatchToProps', () => {
   it('maps the action generators', () => {
-    const state = {}
+    const dispatch = x => x
     const props = {}
-    expect(mapDispatchToProps(state, props)).toMatchSnapshot()
+    // fetchCommunitySettingsMaker
+    // updateCommunitySettingsMaker
+    const result = mapDispatchToProps(dispatch, props)
+    expect(result).toMatchSnapshot()
+    expect(result.fetchCommunitySettingsMaker('anyslug')()).toMatchSnapshot()
+    expect(result.updateCommunitySettingsMaker('anyslug')({name: 'a new name'})).toMatchSnapshot()
   })
 })
 
 describe('mergeProps', () => {
   it('merges the props', () => {
-    const stateProps = {}
-    const dispatchProps = {}
+    const stateProps = {
+      slug: 'bar',
+      community: {
+        id: 99
+      }
+    }
+    const dispatchProps = {
+      fetchCommunitySettingsMaker: jest.fn(x => x),
+      updateCommunitySettingsMaker: jest.fn(x => x)
+    }
     const ownProps = {}
     const mergedProps = mergeProps(stateProps, dispatchProps, ownProps)
     expect(mergedProps).toMatchSnapshot()
