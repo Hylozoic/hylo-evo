@@ -2,7 +2,7 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 import { find, get } from 'lodash/fp'
 
-export const getCanModerate = ormCreateSelector(
+const getCanModerate = ormCreateSelector(
   orm,
   state => state.orm,
   (state, props) => props.community,
@@ -14,3 +14,5 @@ export const getCanModerate = ormCreateSelector(
     return get('hasModeratorRole', membership)
   }
 )
+
+export default getCanModerate

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import getParam from 'store/selectors/getParam'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import { getCanModerate } from './CommunitySidebar.store'
+import getCanModerate from 'store/selectors/getCanModerate'
 
 export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)

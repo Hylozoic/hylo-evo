@@ -295,4 +295,18 @@ describe('ActionsBar', () => {
     const wrapper = shallow(<ActionsBar {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
+
+  it('matches last snapshot while loading', () => {
+    const props = {
+      id: 1,
+      addImage: () => {},
+      showImagePreviews: true,
+      valid: true,
+      loading: true,
+      submitButtonLabel: 'Posting...',
+      save: () => {}
+    }
+    const wrapper = shallow(<ActionsBar {...props} />)
+    expect(wrapper).toMatchSnapshot()
+  })
 })
