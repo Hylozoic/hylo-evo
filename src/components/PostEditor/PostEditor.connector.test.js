@@ -1,5 +1,6 @@
 import { mapStateToProps } from './PostEditor.connector'
 import orm from 'store/models'
+import { CREATE_POST } from './PostEditor.store'
 
 let state
 beforeAll(() => {
@@ -54,11 +55,12 @@ describe('mapStateToProps', () => {
         }
       }
     }
+
     const newState = {
       ...state,
       pending: {
         FETCH_LINK_PREVIEW: false,
-        'PostEditor/CREATE_POST': true
+        [CREATE_POST]: true
       }
     }
     expect(mapStateToProps(newState, props)).toMatchSnapshot()
