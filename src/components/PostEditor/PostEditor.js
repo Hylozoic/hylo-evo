@@ -198,15 +198,21 @@ export default class PostEditor extends React.Component {
     saveFunc(postToSave).then(editing ? onClose : goToPost)
   }
 
+  buttonLabel = () => {
+    const { postPending, editing } = this.props
+    if (postPending) return 'Posting...'
+    if (editing) return 'Save'
+    return 'Post'
+  }
+
   render () {
     const { titlePlaceholder, valid, post } = this.state
     const { id, title, details, communities, linkPreview } = post
     const {
       onClose, initialPrompt, detailsPlaceholder,
-      currentUser, communityOptions, editing, loading, addImage,
+      currentUser, communityOptions, loading, addImage,
       showImages, addFile, showFiles
     } = this.props
-    const submitButtonLabel = editing ? 'Save' : 'Post'
 
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
       <div styleName='header'>
@@ -278,7 +284,7 @@ export default class PostEditor extends React.Component {
           showFiles={showFiles}
           valid={valid}
           loading={loading}
-          submitButtonLabel={submitButtonLabel}
+          submitButtonLabel={this.buttonLabel()}
           save={() => this.save()} />
       </div>
     </div>

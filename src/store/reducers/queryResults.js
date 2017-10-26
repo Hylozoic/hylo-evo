@@ -26,6 +26,9 @@ import {
 import {
   REMOVE_POST_PENDING
  } from 'components/PostCard/PostHeader/PostHeader.store'
+import {
+  RECEIVE_THREAD
+} from 'components/SocketListener/SocketListener.store'
 
 // reducer
 
@@ -74,6 +77,9 @@ export default function (state = {}, action) {
     case FIND_OR_CREATE_THREAD:
       root = payload.data.findOrCreateThread
       return matchNewThreadIntoQueryResults(state, root)
+
+    case RECEIVE_THREAD:
+      return matchNewThreadIntoQueryResults(state, payload.data.thread)
 
     case FETCH_NETWORK_SETTINGS:
       return addNetworkCommunities(addNetworkModerators(state))

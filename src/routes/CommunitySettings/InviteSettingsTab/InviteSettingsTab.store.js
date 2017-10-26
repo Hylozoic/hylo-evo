@@ -82,7 +82,7 @@ export function expireInvitation (invitationToken) {
     type: EXPIRE_INVITATION,
     graphql: {
       query: `mutation ($invitationToken: ID) {
-        expireInvitation(invitationToken: $invitationToken) {
+        expireInvitation(invitationId: $invitationToken) {
           success
         }
       }`,

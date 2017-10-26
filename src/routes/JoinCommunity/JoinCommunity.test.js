@@ -1,6 +1,7 @@
 import React from 'react'
+import { MemoryRouter } from 'react-router'
 import { shallow } from 'enzyme'
-import JoinCommunity from './JoinCommunity'
+import JoinCommunity, { SIGNUP_PATH, EXPIRED_INVITE_PATH } from './JoinCommunity'
 
 const defaultProps = {
   currentUser: null,
@@ -24,14 +25,32 @@ describe('JoinCommunity', () => {
   it('should check for a valid invitation when not logged-in', () => {
     const testProps = {
       ...defaultProps,
-      isLoggedIn: false,
-      hasCheckedValidInvite: false,
       useInvitation: jest.fn(),
       checkInvitation: jest.fn()
     }
     shallow(<JoinCommunity {...testProps} />)
     expect(testProps.useInvitation.mock.calls.length).toBe(0)
     expect(testProps.checkInvitation.mock.calls.length).toBe(1)
+  })
+
+  it('should redirect to signup if invite is valid when not logged-in', () => {
+    const testProps = {
+      ...defaultProps,
+      isValidInvite: true,
+      hasCheckedValidInvite: true
+    }
+    const wrapper = shallow(<JoinCommunity {...testProps} />)
+    expect(wrapper.find('Redirect').props().to).toContain(SIGNUP_PATH)
+  })
+
+  it('should redirect to expired page if invite is invalid when not logged-in', () => {
+    const testProps = {
+      ...defaultProps,
+      isValidInvite: false,
+      hasCheckedValidInvite: true
+    }
+    const wrapper = shallow(<JoinCommunity {...testProps} />)
+    expect(wrapper.find('Redirect').props().to).toContain(EXPIRED_INVITE_PATH)
   })
 
   it('should use invitation when already logged-in', () => {

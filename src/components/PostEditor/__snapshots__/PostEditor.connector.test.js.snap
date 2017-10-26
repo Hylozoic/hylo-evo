@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapStateToProps returns the right keys for a new post 1`] = `
+Object {
+  "communityOptions": Array [
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "99",
+        "members": undefined,
+        "moderators": undefined,
+        "posts": undefined,
+        "slug": "foo",
+      },
+      "slug": "foo",
+    },
+  ],
+  "currentCommunity": SessionBoundModel {
+    "_fields": Object {
+      "id": "99",
+      "members": undefined,
+      "moderators": undefined,
+      "posts": undefined,
+      "slug": "foo",
+    },
+    "slug": "foo",
+  },
+  "currentUser": SessionBoundModel {
+    "_fields": Object {
+      "id": "1",
+      "messageThreads": undefined,
+      "notifications": undefined,
+      "posts": undefined,
+      "skills": undefined,
+    },
+    "id": "1",
+  },
+  "editing": false,
+  "fetchLinkPreviewPending": undefined,
+  "files": Array [],
+  "images": Array [],
+  "linkPreview": null,
+  "linkPreviewStatus": false,
+  "loading": false,
+  "post": null,
+  "postPending": false,
+  "showFiles": false,
+  "showImages": false,
+}
+`;
+
+exports[`mapStateToProps returns the right keys for a new post while pending 1`] = `
+Object {
+  "communityOptions": Array [
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "99",
+        "members": undefined,
+        "moderators": undefined,
+        "posts": undefined,
+        "slug": "foo",
+      },
+      "slug": "foo",
+    },
+  ],
+  "currentCommunity": SessionBoundModel {
+    "_fields": Object {
+      "id": "99",
+      "members": undefined,
+      "moderators": undefined,
+      "posts": undefined,
+      "slug": "foo",
+    },
+    "slug": "foo",
+  },
+  "currentUser": SessionBoundModel {
+    "_fields": Object {
+      "id": "1",
+      "messageThreads": undefined,
+      "notifications": undefined,
+      "posts": undefined,
+      "skills": undefined,
+    },
+    "id": "1",
+  },
+  "editing": true,
+  "fetchLinkPreviewPending": undefined,
+  "files": Array [],
+  "images": Array [],
+  "linkPreview": null,
+  "linkPreviewStatus": false,
+  "loading": true,
+  "post": null,
+  "postPending": true,
+  "showFiles": false,
+  "showImages": false,
+}
+`;

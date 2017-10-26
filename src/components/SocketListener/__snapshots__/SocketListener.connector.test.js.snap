@@ -1,18 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`returns the expected value 1`] = `
-Object {
-  "addUserTyping": [Function],
-  "clearUserTyping": [Function],
-  "receiveComment": [Function],
-  "receiveMessage": [Function],
-  "receiveNotification": [Function],
-  "receivePost": [Function],
-  "receiveThread": [Function],
-}
-`;
-
-exports[`returns the expected value 2`] = `
+exports[`receives comments 1`] = `
 Object {
   "meta": Object {
     "extractModel": "Comment",
@@ -36,7 +24,7 @@ Object {
 }
 `;
 
-exports[`returns the expected value 3`] = `
+exports[`receives messages 1`] = `
 Object {
   "meta": Object {
     "bumpUnreadCount": true,
@@ -57,7 +45,7 @@ Object {
 }
 `;
 
-exports[`returns the expected value 4`] = `
+exports[`receives threads 1`] = `
 Object {
   "meta": Object {
     "extractModel": "MessageThread",
@@ -99,5 +87,17 @@ Object {
     },
   },
   "type": "SocketListener/RECEIVE_THREAD",
+}
+`;
+
+exports[`returns the expected value 1`] = `
+Object {
+  "addUserTyping": [Function],
+  "clearUserTyping": [Function],
+  "receiveComment": [Function],
+  "receiveMessage": [Function],
+  "receiveNotification": [Function],
+  "receivePost": [Function],
+  "receiveThread": [Function],
 }
 `;
