@@ -226,56 +226,52 @@ export default class PostEditor extends React.Component {
           <Button {...this.postTypeButtonProps('offer')} />
         </div>
       </div>
-      <div styleName='wrapper-scrollable-inner'>
-        <div styleName='body'>
-          <div styleName='body-column'>
-            <RoundImage
-              medium
-              styleName='titleAvatar'
-              url={currentUser && currentUser.avatarUrl}
-            />
-          </div>
-          <div styleName='body-column'>
-            <input
-              type='text'
-              styleName='titleInput'
-              placeholder={titlePlaceholder}
-              value={title || ''}
-              onChange={this.handleTitleChange}
-              disabled={loading}
-              ref={x => { this.titleInput = x }}
-            />
-            <HyloEditor
-              styleName='editor'
-              placeholder={detailsPlaceholder}
-              onChange={this.handleDetailsChange}
-              contentHTML={details}
-              readOnly={loading}
-              parentComponent={'PostEditor'}
-              ref={component => { this.editor = component && component.getWrappedInstance() }}
-            />
-            {linkPreview &&
-              <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
-          </div>
+      <div styleName='body'>
+        <div styleName='body-column'>
+          <RoundImage
+            medium
+            styleName='titleAvatar'
+            url={currentUser && currentUser.avatarUrl}
+          />
         </div>
-        <AttachmentManager postId={id || 'new'} type='image' />
-        <AttachmentManager postId={id || 'new'} type='file' />
-        <div styleName='footer'>
-          <div styleName='postIn'>
-            <div styleName='postIn-label'>Post in</div>
-            <div styleName='postIn-communities'>
-              <CommunitiesSelector
-                options={communityOptions}
-                selected={communities}
-                onChange={this.setSelectedCommunities}
-                readOnly={loading}
-                ref={component => { this.communitiesSelector = component }}
-              />
-            </div>
-          </div>
+        <div styleName='body-column'>
+          <input
+            type='text'
+            styleName='titleInput'
+            placeholder={titlePlaceholder}
+            value={title || ''}
+            onChange={this.handleTitleChange}
+            disabled={loading}
+            ref={x => { this.titleInput = x }}
+          />
+          <HyloEditor
+            styleName='editor'
+            placeholder={detailsPlaceholder}
+            onChange={this.handleDetailsChange}
+            contentHTML={details}
+            readOnly={loading}
+            parentComponent={'PostEditor'}
+            ref={component => { this.editor = component && component.getWrappedInstance() }}
+          />
         </div>
       </div>
-      <div>
+      {linkPreview &&
+        <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
+      <AttachmentManager postId={id || 'new'} type='image' />
+      <AttachmentManager postId={id || 'new'} type='file' />
+      <div styleName='footer'>
+        <div styleName='postIn'>
+          <div styleName='postIn-label'>Post in</div>
+          <div styleName='postIn-communities'>
+            <CommunitiesSelector
+              options={communityOptions}
+              selected={communities}
+              onChange={this.setSelectedCommunities}
+              readOnly={loading}
+              ref={component => { this.communitiesSelector = component }}
+            />
+          </div>
+        </div>
         <ActionsBar
           id={id}
           addImage={addImage}
