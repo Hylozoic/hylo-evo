@@ -117,9 +117,18 @@ describe('PostEditor', () => {
     })
   })
 
-  test('post is defaulted while loading editor', () => {
+  it('post is defaulted while loading editor', () => {
     const props = {
       editing: true,
+      loading: true
+    }
+    const wrapper = shallow(<PostEditor {...props} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('post is defaulted while loading editor for NEW post', () => {
+    const props = {
+      editing: false,
       loading: true
     }
     const wrapper = shallow(<PostEditor {...props} />)
