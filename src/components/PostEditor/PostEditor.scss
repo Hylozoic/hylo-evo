@@ -22,6 +22,11 @@ $wrapperBorderRadius: 8px;
   background: $color-white;
 }
 
+.wrapper-scrollable-inner {
+  max-height: 360px;
+  overflow: scroll;
+}
+
 // Header area
 
 .header {
@@ -125,14 +130,10 @@ $wrapperBorderRadius: 8px;
 }
 
 .editor {
-  height: 200px;
+  min-height: 100px;
+  max-height: 200px;
   margin-bottom: $space-6x;
   color: $color-rhino-80;
-}
-
-.linkPreview {
-  height: $space-16x;
-  background-color: $color-medium-purple;
 }
 
 // Footer area

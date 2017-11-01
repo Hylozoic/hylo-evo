@@ -23,6 +23,6 @@ beforeAll(() => {
 
 describe('mapStateToProps', () => {
   it('returns the right keys', () => {
-    expect(mapStateToProps(state, {})).toMatchSnapshot()
+    expect(mapStateToProps(state, {match: {}})).toMatchSnapshot()
   })
 })

@@ -1,6 +1,6 @@
 .link-preview {
   display: flex;
-  margin-bottom: 26px;
+  padding: $space-5x;
 }
 
 .image {
@@ -16,7 +16,6 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding-right: 40px;
 }
 
 .header {

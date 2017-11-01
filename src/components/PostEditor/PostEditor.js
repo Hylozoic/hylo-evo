@@ -253,10 +253,10 @@ export default class PostEditor extends React.Component {
             parentComponent={'PostEditor'}
             ref={component => { this.editor = component && component.getWrappedInstance() }}
           />
-          {linkPreview &&
-            <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
         </div>
       </div>
+      {linkPreview &&
+        <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
       <AttachmentManager postId={id || 'new'} type='image' />
       <AttachmentManager postId={id || 'new'} type='file' />
       <div styleName='footer'>
