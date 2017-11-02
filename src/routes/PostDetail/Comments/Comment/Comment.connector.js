@@ -7,11 +7,12 @@ export function mapStateToProps (state, props) {
   const { comment } = props
   const currentUser = getMe(state, props)
   const community = getCommunityForCurrentRoute(state, props)
-  const canModerate = currentUser && (comment.creator.id === currentUser.id ||
-    currentUser.canModerate(community))
+  const isCreator = currentUser && (comment.creator.id === currentUser.id)
+  const canModerate = currentUser && currentUser.canModerate(community)
 
   return {
-    canModerate
+    canModerate,
+    isCreator
   }
 }
 
@@ -20,17 +21,24 @@ export const mapDispatchToProps = {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { canModerate } = stateProps
+  const { canModerate, isCreator } = stateProps
   const { comment } = ownProps
-  const deleteCommentWithConfirm = canModerate
+  const deleteCommentWithConfirm = isCreator
     ? () => window.confirm('Are you sure you want to delete this comment?') &&
       dispatchProps.deleteComment(comment.id)
     : null
+
+  const removeCommentWithConfirm = !isCreator && canModerate
+    ? () => window.confirm('Are you sure you want to remove this comment?') &&
+    dispatchProps.deleteComment(comment.id)
+    : null
+
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    deleteComment: deleteCommentWithConfirm
+    deleteComment: deleteCommentWithConfirm,
+    removeComment: removeCommentWithConfirm
   }
 }
 

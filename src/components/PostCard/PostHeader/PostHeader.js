@@ -8,6 +8,7 @@ import Icon from 'components/Icon'
 import { communityUrl, personUrl } from 'util/index'
 import { humanDate } from 'hylo-utils/text'
 import './PostHeader.scss'
+import { filter, isFunction } from 'lodash'
 
 export default function PostHeader ({
   creator,
@@ -35,37 +36,15 @@ export default function PostHeader ({
     }
   }
 
-  let dropdownItems = [
+  const dropdownItems = filter([
     // Leaving these here as they will be implemented in the future
     // {icon: 'Pin', label: 'Pin', onClick: () => console.log('Pin')},
-    // {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')}
-  ]
-
-  if (editPost) {
-    dropdownItems = [
-      ...dropdownItems,
-      {icon: 'Edit', label: 'Edit', onClick: editPost}
-    ]
-  }
-  if (deletePost) {
-    dropdownItems = [
-      ...dropdownItems,
-      {icon: 'Trash', label: 'Delete', onClick: () => deletePost()}
-    ]
-  }
-  if (removePost) {
-    dropdownItems = [
-      ...dropdownItems,
-      {icon: 'Trash', label: 'Remove From Community', onClick: () => removePost()}
-    ]
-  }
-
-  // Leaving these here as they will be implemented in the future
-  // dropdownItems = [
-  //   ...dropdownItems,
-  //   {label: 'Other'},
-  //   {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
-  // ]
+    // {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')},
+    {icon: 'Edit', label: 'Edit', onClick: editPost},
+    {icon: 'Trash', label: 'Delete', onClick: deletePost},
+    {icon: 'Trash', label: 'Remove From Community', onClick: removePost}
+    // {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
+  ], item => isFunction(item.onClick))
 
   return <div styleName='header' className={className}>
     <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
