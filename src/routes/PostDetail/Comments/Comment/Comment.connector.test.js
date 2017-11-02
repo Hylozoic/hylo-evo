@@ -99,7 +99,7 @@ describe('mergeProps', () => {
       const stateProps = {canModerate: true, isCreator: false}
       const props = mergeProps(stateProps, {}, {})
       props.removeComment(1)
-      expect(window.confirm).toHaveBeenCalledWith('Are you sure you want to remove this users comment?')
+      expect(window.confirm).toHaveBeenCalledWith('Are you sure you want to remove this comment?')
       expect(props.deleteComment).toBeFalsy()
     })
   })
