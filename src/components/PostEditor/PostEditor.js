@@ -67,7 +67,7 @@ export default class PostEditor extends React.Component {
     return {
       post: currentPost,
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
-      valid: false
+      valid: editing === true // if we're editing, than it's already valid upon entry.
     }
   }
 
