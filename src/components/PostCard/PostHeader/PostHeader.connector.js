@@ -15,7 +15,7 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   const closeUrl = removePostFromUrl(window.location.pathname)
   const deletePostWithConfirm = id => {
-    if (window.confirm('are you sure you want to delete this post?')) {
+    if (window.confirm('Are you sure you want to delete this post?')) {
       dispatch(deletePost(id))
       .then(() => dispatch(push(closeUrl)))
     }

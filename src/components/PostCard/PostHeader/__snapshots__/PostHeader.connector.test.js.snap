@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapDispatchToProps maps the action generators 1`] = `
+Object {
+  "deletePost": [Function],
+  "editPost": [Function],
+  "removePost": [Function],
+}
+`;
+
+exports[`mapDispatchToProps maps the action generators 2`] = `
+Array [
+  Array [
+    Object {
+      "graphql": Object {
+        "query": "mutation ($postId: ID, $slug: String) {
+        removePost(postId: $postId, slug: $slug) {
+          success
+        }
+      }",
+        "variables": Object {
+          "postId": 10,
+          "slug": "mycommunity",
+        },
+      },
+      "meta": Object {
+        "optimistic": true,
+        "postId": 10,
+        "slug": "mycommunity",
+      },
+      "type": "PostHeader/REMOVE_POST",
+    },
+  ],
+  Array [
+    Object {
+      "payload": Object {
+        "args": Array [
+          "/c/mycommunity/p/10/edit",
+        ],
+        "method": "push",
+      },
+      "type": "@@router/CALL_HISTORY_METHOD",
+    },
+  ],
+]
+`;
