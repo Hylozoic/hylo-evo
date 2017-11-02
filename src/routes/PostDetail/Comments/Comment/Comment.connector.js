@@ -29,7 +29,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     : null
 
   const removeCommentWithConfirm = !isCreator && canModerate
-    ? () => window.confirm('Are you sure you want to remove this comment?') &&
+    ? () => window.confirm('Are you sure you want to remove this users comment?') &&
     dispatchProps.deleteComment(comment.id)
     : null
 
