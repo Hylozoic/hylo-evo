@@ -34,7 +34,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { currentUser, community } = stateProps
   const { id, creator, slug } = ownProps
   const { deletePost, editPost, removePost } = dispatchProps
-  const canEdit = currentUser && creator && currentUser.id === creator.id
+  const isCreator = currentUser && creator && currentUser.id === creator.id
+  const canEdit = isCreator
   const canModerate = currentUser && currentUser.canModerate(community)
   return {
     ...stateProps,
@@ -42,7 +43,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     deletePost: canEdit ? () => deletePost(id) : null,
     editPost: canEdit ? () => editPost(id, slug) : null,
-    removePost: canModerate ? () => removePost(id, slug) : null,
+    removePost: !isCreator && canModerate ? () => removePost(id, slug) : null,
     canEdit
   }
 }

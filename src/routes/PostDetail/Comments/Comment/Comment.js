@@ -7,6 +7,8 @@ import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import { personUrl } from 'util/index'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
+import { filter, isFunction } from 'lodash'
+
 const { object } = PropTypes
 
 export default class Comment extends Component {
@@ -15,9 +17,14 @@ export default class Comment extends Component {
   }
 
   render () {
-    const { comment, slug, deleteComment } = this.props
+    const { comment, slug, deleteComment, removeComment } = this.props
     const { creator, createdAt, text, image } = comment
     const profileUrl = personUrl(creator.id, slug)
+
+    const dropdownItems = filter([
+      {icon: 'Trash', label: 'Delete', onClick: deleteComment},
+      {icon: 'Trash', label: 'Remove', onClick: removeComment}
+    ], item => isFunction(item.onClick))
 
     const presentedText = present(sanitize(text), {slug})
 
@@ -29,9 +36,7 @@ export default class Comment extends Component {
           <span styleName='timestamp'>
             {humanDate(createdAt)}
           </span>
-          {deleteComment && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={[
-            {icon: 'Trash', label: 'Delete', onClick: deleteComment}
-          ]} />}
+          {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
         </div>
       </div>
       {image && <a styleName='imageLink' href={image.url} target='_blank'>
