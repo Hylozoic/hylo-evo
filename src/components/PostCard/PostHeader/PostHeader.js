@@ -41,8 +41,8 @@ export default function PostHeader ({
     // {icon: 'Pin', label: 'Pin', onClick: () => console.log('Pin')},
     // {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')},
     {icon: 'Edit', label: 'Edit', onClick: editPost},
-    {icon: 'Trash', label: 'Delete', onClick: () => deletePost()},
-    {icon: 'Trash', label: 'Remove From Community', onClick: () => removePost()}
+    {icon: 'Trash', label: 'Delete', onClick: deletePost},
+    {icon: 'Trash', label: 'Remove From Community', onClick: removePost}
     // {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
   ], item => isFunction(item.onClick))
 

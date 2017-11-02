@@ -41,7 +41,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    deletePost: canEdit ? () => deletePost(id) : null,
+    deletePost: isCreator ? () => deletePost(id) : null,
     editPost: canEdit ? () => editPost(id, slug) : null,
     removePost: !isCreator && canModerate ? () => removePost(id, slug) : null,
     canEdit

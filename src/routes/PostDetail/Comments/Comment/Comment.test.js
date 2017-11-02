@@ -45,4 +45,9 @@ describe('Comment', () => {
     const wrapper = shallow(<Comment {...props} deleteComment={() => {}} />)
     expect(wrapper).toMatchSnapshot()
   })
+
+  it('displays the remove menu when removeComment is defined', () => {
+    const wrapper = shallow(<Comment {...props} removeComment={() => {}} />)
+    expect(wrapper).toMatchSnapshot()
+  })
 })
