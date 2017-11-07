@@ -156,7 +156,7 @@ export default class PostDetail extends Component {
 
 function WrappedPostHeader ({post, showCommunity, onClose, slug}) {
   return <PostHeader creator={post.creator}
-    date={post.updatedAt || post.createdAt}
+    date={post.createdAt}
     type={post.type}
     communities={post.communities}
     showCommunity={showCommunity}
