@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`partitionCommunities separates independent communities from networked communities 1`] = `
+Object {
+  "1": Object {
+    "communities": Array [
+      Object {
+        "id": "1",
+        "name": "one",
+        "network": Object {
+          "id": "1",
+          "name": "networkOne",
+        },
+        "newPostCount": undefined,
+      },
+      Object {
+        "id": "4",
+        "name": "four",
+        "network": Object {
+          "id": "1",
+          "name": "networkOne",
+        },
+        "newPostCount": undefined,
+      },
+    ],
+    "id": "1",
+    "name": "networkOne",
+  },
+  "2": Object {
+    "communities": Array [
+      Object {
+        "id": "3",
+        "name": "three",
+        "network": Object {
+          "id": "2",
+          "name": "networkTwo",
+        },
+        "newPostCount": undefined,
+      },
+    ],
+    "id": "2",
+    "name": "networkTwo",
+  },
+  "independent": Array [
+    Object {
+      "id": "2",
+      "name": "two",
+      "network": undefined,
+      "newPostCount": undefined,
+    },
+    Object {
+      "id": "5",
+      "name": "five",
+      "network": undefined,
+      "newPostCount": undefined,
+    },
+  ],
+}
+`;

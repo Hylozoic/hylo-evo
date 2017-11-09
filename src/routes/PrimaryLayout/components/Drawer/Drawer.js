@@ -9,8 +9,6 @@ import badgeHoverStyles from '../../../../components/Badge/component.scss'
 const { string, number, arrayOf, shape } = PropTypes
 import cx from 'classnames'
 
-export const ALL_COMMUNITIES_AVATAR_PATH = '/assets/all-communities-avatar.png'
-
 export default class Drawer extends Component {
   static propTypes = {
     currentCommunity: shape({
@@ -46,13 +44,7 @@ export default class Drawer extends Component {
   }
 
   render () {
-    const { currentCommunity, memberships, networks, className } = this.props
-    const allCommunitiesLink = {
-      id: 'all',
-      path: '/all',
-      name: 'All Communities',
-      avatarUrl: ALL_COMMUNITIES_AVATAR_PATH
-    }
+    const { currentCommunity, communities, networks, className } = this.props
     return <div className={className} styleName='s.communityDrawer'>
       <Icon name='Ex' styleName='s.closeDrawer' />
       <Logo community={currentCommunity} />
@@ -60,14 +52,11 @@ export default class Drawer extends Component {
         <li styleName='s.sectionTitle'>Networks</li>
         {networks.map(network =>
           <NetworkRow network={network} key={network.id} />)}
-      </ul> : null}
-      <ul styleName='s.communitiesList'>
         <li styleName='s.sectionTitle'>Communities</li>
-        <CommunityRow community={allCommunitiesLink} />
-        {memberships.map(membership =>
-          <CommunityRow {...membership} key={membership.id} />
+        {communities.map(community =>
+          <CommunityRow {...community} key={community.id} />
         )}
-      </ul>
+      </ul> : null}
       <Button
         color='white'
         styleName='s.newCommunity'
@@ -78,21 +67,20 @@ export default class Drawer extends Component {
   }
 }
 
-export function CommunityRow ({ community, newPostCount }) {
-  const { id, name, slug, path, avatarUrl } = community
+export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount }) {
   const imageStyle = bgImageStyle(avatarUrl)
   const showBadge = newPostCount > 0
   return <li key={`community${id}`}>
     <Link to={path || `/c/${slug}`} styleName='s.communityRow' title={name} className={badgeHoverStyles.parent}>
       <div styleName='s.avatar' style={imageStyle} />
-      <span styleName={cx('s.community-name', {'s.highlight': showBadge})}>{community.name}</span>
+      <span styleName={cx('s.community-name', {'s.highlight': showBadge})}>{name}</span>
       {showBadge && <Badge number={newPostCount} />}
     </Link>
   </li>
 }
 
 export function NetworkRow ({ network }) {
-  const { id, memberships, name, slug, avatarUrl } = network
+  const { id, communities, name, slug, avatarUrl } = network
   const imageStyle = bgImageStyle(avatarUrl)
   return <li key={`network${id}`}>
     <Link to={`/n/${slug}`} styleName='s.networkRow' title={name} className={badgeHoverStyles.parent}>
@@ -102,8 +90,8 @@ export function NetworkRow ({ network }) {
       </div>
     </Link>
     <ul styleName='s.networkCommunitiesList'>
-      {memberships.map(membership =>
-        <CommunityRow {...membership} key={membership.id} />)}
+      {communities.map(community =>
+        <CommunityRow {...community} key={community.id} />)}
     </ul>
   </li>
 }

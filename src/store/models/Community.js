@@ -35,3 +35,7 @@ Community.fields = {
 
 export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg'
 export const DEFAULT_AVATAR = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png'
+
+export const ALL_COMMUNITIES_ID = 'all-communities'
+
+export const ALL_COMMUNITIES_AVATAR_PATH = '/assets/all-communities-avatar.png'
