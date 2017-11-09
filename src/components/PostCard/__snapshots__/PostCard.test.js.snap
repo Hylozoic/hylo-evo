@@ -23,7 +23,6 @@ exports[`renders as expected 1`] = `
         "tagline": "Legacy Marketing Executive",
       }
     }
-    date="2014-01-17T00:00:00.000Z"
     id="FAKE_29222"
     slug="foom"
     type="offer"
