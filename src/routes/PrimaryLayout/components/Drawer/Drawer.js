@@ -51,7 +51,7 @@ export default class Drawer extends Component {
       <Link styleName='s.settingsLink' to={'/settings'}>
         <Icon name='Settings' styleName='s.settingsIcon' /> Settings
       </Link>
-      {networks.length ? <ul styleName='s.communitiesList'>
+      {networks.length ? <ul styleName='s.networkList'>
         <li styleName='s.sectionTitle'>Networked Communities</li>
         {networks.map(network =>
           <NetworkRow network={network} key={network.id} />)}
@@ -73,8 +73,8 @@ export default class Drawer extends Component {
 export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount }) {
   const imageStyle = bgImageStyle(avatarUrl)
   const showBadge = newPostCount > 0
-  return <li key={`community${id}`}>
-    <Link to={path || `/c/${slug}`} styleName='s.communityRow' title={name} className={badgeHoverStyles.parent}>
+  return <li styleName='s.communityRow'>
+    <Link to={path || `/c/${slug}`} styleName='s.communityRowLink' title={name} className={badgeHoverStyles.parent}>
       <div styleName='s.avatar' style={imageStyle} />
       <span styleName={cx('s.community-name', {'s.highlight': showBadge})}>{name}</span>
       {showBadge && <Badge number={newPostCount} />}
@@ -105,8 +105,8 @@ export class NetworkRow extends React.Component {
     const { expanded } = this.state
     const imageStyle = bgImageStyle(avatarUrl)
 
-    return <li styleName={cx({'s.networkExpanded': expanded})}>
-      <Link to={`/n/${slug}`} styleName={'s.networkRow'} title={name} className={badgeHoverStyles.parent}>
+    return <li styleName={cx('s.networkRow', {'s.networkExpanded': expanded})}>
+      <Link to={`/n/${slug}`} styleName='s.networkRowLink' title={name} className={badgeHoverStyles.parent}>
         <div styleName='s.network-name-wrapper'>
           <div styleName='s.avatar' style={imageStyle} />
           <span styleName='s.network-name'>{name}</span>

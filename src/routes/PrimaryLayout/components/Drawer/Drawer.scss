@@ -10,7 +10,7 @@ $close-dimension: 24px;
 $current-avatar-size: 42px;
 $current-avatar-border-radius: 8px;
 $current-padding-top: 28px;
-$current-padding-bottom: 32px;
+$current-padding-bottom: 20px;
 $current-name-margin-top: 13px;
 
 $ul-vertical-spacing: 10px;
@@ -61,9 +61,31 @@ $new-community-spacing: 16px;
   }
 }
 
+.settingsLink {
+  margin-bottom: 23px;
+  @include font-regular;
+  text-align: center;
+  color: $color-white;
+  font-size: 16px;
+  &:hover {
+    color: $color-white;
+    text-decoration: none;
+  }
+}
+
+.settingsIcon {
+  font-size: 16px;
+  color: $color-white;
+  margin-right: 4px;
+  &:hover {
+    color: $color-white;
+    text-decoration: none;
+  }
+}
+
 .communitiesList, .networkList {
   height: unset;
-  padding: $ul-vertical-spacing $ul-horizontal-spacing;
+  padding: $ul-vertical-spacing 0;
   margin: 0;
   flex-grow: 1;
   list-style: none;
@@ -75,6 +97,8 @@ $new-community-spacing: 16px;
     border-radius: 4px;
 
     &.sectionTitle {
+      margin-bottom: 15px;
+      margin: 15px 0 15px $ul-horizontal-spacing;
       text-transform: uppercase;
       font-size: 8pt;
       font-weight: 300;
@@ -102,10 +126,6 @@ $new-community-spacing: 16px;
       padding: $li-padding;
     }
 
-    &:hover {
-      background: $color-rhino;
-    }
-
     .avatar {
       @include image($community-list-avatar-size);
     }
@@ -130,6 +150,14 @@ $new-community-spacing: 16px;
 }
 
 .communityRow {
+  padding-left: $ul-horizontal-spacing;
+  padding-right: $ul-horizontal-spacing;
+  &:hover {
+    background: $color-black-10;
+  }
+}
+
+.communityRowLink {
   display: flex;
   align-items: center;
   &:hover {
@@ -138,10 +166,22 @@ $new-community-spacing: 16px;
 }
 
 .networkRow {
+  padding-left: $ul-horizontal-spacing !important;
+  padding-right: $ul-horizontal-spacing !important;
+  &:hover {
+    background: $color-black-10;
+  }
+}
+
+.networkRowLink {
   padding-right: 0 !important;
   li {
     list-style: none;
   }
+}
+
+.networkExpanded {
+  background-color: $color-black-10;
 }
 
 .allCommunities {
@@ -173,10 +213,6 @@ $new-community-spacing: 16px;
   align-items: center;
   border-radius: 4px;
   padding: 5px;
-
-  &:hover {
-    background-color: $color-rhino;
-  }
 }
 
 .network-name {
