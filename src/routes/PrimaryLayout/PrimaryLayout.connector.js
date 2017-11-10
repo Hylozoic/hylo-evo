@@ -19,7 +19,7 @@ export function mapStateToProps (state, props) {
     community: getCommunityForCurrentRoute(state, props),
     network: getNetworkForCurrentRoute(state, props),
     currentUser: getMe(state),
-    isDrawerOpen: state.PrimaryLayout.isDrawerOpen || true,
+    isDrawerOpen: state.PrimaryLayout.isDrawerOpen,
     showLogoBadge,
     hasMemberships,
     communityPending: state.pending[FETCH_FOR_COMMUNITY],

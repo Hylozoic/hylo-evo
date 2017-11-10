@@ -1,4 +1,5 @@
 import { communityTopicsQueryFragment } from 'store/actions/fetchCommunityTopics'
+import { LOCATION_CHANGE } from 'react-router-redux'
 import { get, pick } from 'lodash/fp'
 import rollbar from 'client/rollbar'
 
@@ -13,6 +14,10 @@ export default function reducer (state = {}, action) {
 
   if (action.type === TOGGLE_DRAWER) {
     return {...state, isDrawerOpen: !state.isDrawerOpen}
+  }
+
+  if (action.type === LOCATION_CHANGE) {
+    return {...state, isDrawerOpen: false}
   }
 
   // Links current user to rollbar config

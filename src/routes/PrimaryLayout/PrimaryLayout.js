@@ -106,10 +106,10 @@ export default class PrimaryLayout extends Component {
       detailRoutes
     )
     // TODO move FullPageModals
-    return <div styleName='container' onClick={closeDrawer}>
+    return <div styleName='container'>
       <Drawer currentCommunity={community} styleName={cx('drawer', {hidden: !isDrawerOpen})} />
-      <TopNav {...{community, network, currentUser, showLogoBadge}} styleName='top' />
-      <div styleName='main'>
+      <TopNav {...{community, network, currentUser, showLogoBadge}} styleName='top' onClick={closeDrawer} />
+      <div styleName='main' onClick={closeDrawer}>
         <Navigation collapsed={hasDetail} styleName='left' />
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />

@@ -8,6 +8,7 @@ import s from './Drawer.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../components/Badge/component.scss'
 const { string, number, arrayOf, shape } = PropTypes
 import cx from 'classnames'
+import { isEmpty } from 'lodash/fp'
 
 export default class Drawer extends Component {
   static propTypes = {
@@ -51,7 +52,7 @@ export default class Drawer extends Component {
       <Link styleName='s.settingsLink' to={'/settings'}>
         <Icon name='Settings' styleName='s.settingsIcon' /> Settings
       </Link>
-      {networks.length ? <ul styleName='s.networkList'>
+      {networks.length ? <ul styleName='s.communitiesList'>
         <li styleName='s.sectionTitle'>Networked Communities</li>
         {networks.map(network =>
           <NetworkRow network={network} key={network.id} />)}
@@ -75,7 +76,7 @@ export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount })
   const showBadge = newPostCount > 0
   return <li styleName='s.communityRow'>
     <Link to={path || `/c/${slug}`} styleName='s.communityRowLink' title={name} className={badgeHoverStyles.parent}>
-      <div styleName='s.avatar' style={imageStyle} />
+      <div styleName='s.communityRowAvatar' style={imageStyle} />
       <span styleName={cx('s.community-name', {'s.highlight': showBadge})}>{name}</span>
       {showBadge && <Badge number={newPostCount} />}
     </Link>
@@ -85,15 +86,19 @@ export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount })
 export class NetworkRow extends React.Component {
   constructor (props) {
     super(props)
-    const expanded = props.network.communities.reduce((acc, community) =>
-      acc || !!community.newPostCount,
-      false)
+    const newPostCount = props.network.communities.reduce((acc, community) =>
+      acc + community.newPostCount,
+      0)
+    const expanded = !!newPostCount
+
     this.state = {
-      expanded
+      expanded,
+      newPostCount
     }
   }
 
-  toggleExpanded = () => {
+  toggleExpanded = e => {
+    e.preventDefault()
     this.setState({
       expanded: !this.state.expanded
     })
@@ -102,17 +107,25 @@ export class NetworkRow extends React.Component {
   render () {
     const { network } = this.props
     const { communities, name, slug, avatarUrl } = network
-    const { expanded } = this.state
+    const { expanded, newPostCount } = this.state
     const imageStyle = bgImageStyle(avatarUrl)
+    const showCommunities = !isEmpty(communities)
+
+    const path = network.path || `/n/${slug}`
 
     return <li styleName={cx('s.networkRow', {'s.networkExpanded': expanded})}>
-      <Link to={`/n/${slug}`} styleName='s.networkRowLink' title={name} className={badgeHoverStyles.parent}>
+      <Link to={path} styleName='s.networkRowLink' title={name} className={badgeHoverStyles.parent}>
         <div styleName='s.network-name-wrapper'>
           <div styleName='s.avatar' style={imageStyle} />
           <span styleName='s.network-name'>{name}</span>
+          {showCommunities && (expanded
+            ? <Icon name='ArrowDown' styleName='s.arrowDown' onClick={this.toggleExpanded} />
+            : newPostCount
+              ? <Badge number={newPostCount} onClick={this.toggleExpanded} expanded />
+              : <Icon name='ArrowForward' styleName='s.arrowForward' onClick={this.toggleExpanded} />)}
         </div>
       </Link>
-      {expanded && <ul styleName='s.networkCommunitiesList'>
+      {showCommunities && expanded && <ul styleName='s.networkCommunitiesList'>
         {communities.map(community =>
           <CommunityRow {...community} key={community.id} />)}
       </ul>}

@@ -19,11 +19,11 @@ $ul-network-community-indent: 25px;
 $li-padding: 4px;
 $li-spacing: 14px;
 $li-height: 40px;
-$li-avatar-size: 32px;
+$li-avatar-size: 42px;
 
 $badge-width: 20px;
 
-$community-list-avatar-size: 24px;
+$community-list-avatar-size: 33px;
 $community-list-font-size: 14px;
 
 $break-border: 1px solid rgba(255,255,255,0.11);
@@ -62,7 +62,7 @@ $new-community-spacing: 16px;
 }
 
 .settingsLink {
-  margin-bottom: 23px;
+  margin-bottom: 6px;
   @include font-regular;
   text-align: center;
   color: $color-white;
@@ -83,75 +83,53 @@ $new-community-spacing: 16px;
   }
 }
 
-.communitiesList, .networkList {
-  height: unset;
-  padding: $ul-vertical-spacing 0;
-  margin: 0;
-  flex-grow: 1;
-  list-style: none;
-  overflow-y: auto;
+.sectionTitle {
   border-top: $break-border;
-
-  li {
-    padding: $li-padding;
-    border-radius: 4px;
-
-    &.sectionTitle {
-      margin-bottom: 15px;
-      margin: 15px 0 15px $ul-horizontal-spacing;
-      text-transform: uppercase;
-      font-size: 8pt;
-      font-weight: 300;
-      color: $color-white;
-      opacity: 0.5;
-      letter-spacing: 0.2px;
-    }
-
-    .avatar {
-      @include image($li-avatar-size);
-      display: inline-block;
-      vertical-align: middle;
-      border-radius: 4px;
-      margin-right: $li-spacing;
-    }
-  }
+  padding-top: 20px;
+  padding-left: $ul-horizontal-spacing;
+  margin-bottom: 6px;
+  margin: 15px 0 15px 0;
+  text-transform: uppercase;
+  font-size: 8pt;
+  font-weight: 300;
+  color: $color-white;
+  opacity: 0.5;
+  letter-spacing: 0.2px;
 }
 
-.communitiesList, .networkCommunitiesList {
+.avatar {
+  @include image($li-avatar-size);
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 4px;
+  margin-right: $li-spacing;
+}
+
+.communitiesList {
+  padding: 0;
+  overflow-y: auto;
   li {
     list-style: none;
-    padding: 0;
-
-    a {
-      padding: $li-padding;
-    }
-
-    .avatar {
-      @include image($community-list-avatar-size);
-    }
   }
-}
-
-.networkList li {
-  padding-right: 0;
 }
 
 .networkCommunitiesList {
-  margin: $ul-vertical-spacing 0 0 $ul-horizontal-spacing;
-
-  padding-left: $ul-network-community-indent;
-  white-space: nowrap;
-
-  .communityRow {
-    .community-name {
-      margin-right: 0;
-    }
+  padding: 0;
+  li {
+    list-style: none;
   }
 }
 
+.communityRowAvatar {
+  @include image($community-list-avatar-size);
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 4px;
+  margin-right: $li-spacing;
+}
+
 .communityRow {
-  padding-left: $ul-horizontal-spacing;
-  padding-right: $ul-horizontal-spacing;
+  padding: 6px $ul-horizontal-spacing 6px 28px;
   &:hover {
     background: $color-black-10;
   }
@@ -166,14 +144,16 @@ $new-community-spacing: 16px;
 }
 
 .networkRow {
-  padding-left: $ul-horizontal-spacing !important;
-  padding-right: $ul-horizontal-spacing !important;
+  padding: 6px 0;
   &:hover {
     background: $color-black-10;
   }
 }
 
 .networkRowLink {
+  &:hover, &:visited, &:focus {
+    text-decoration: none;
+  }
   padding-right: 0 !important;
   li {
     list-style: none;
@@ -182,19 +162,6 @@ $new-community-spacing: 16px;
 
 .networkExpanded {
   background-color: $color-black-10;
-}
-
-.allCommunities {
-  display: block;
-
-  &:hover, &:active, &:visited {
-    color: $color-white;
-  }
-
-  .allCommunitiesText {
-    margin-left: $li-spacing;
-    vertical-align: middle;
-  }
 }
 
 .community-name, .network-name {
@@ -212,12 +179,27 @@ $new-community-spacing: 16px;
   display: flex;
   align-items: center;
   border-radius: 4px;
-  padding: 5px;
+  padding: 5px $ul-horizontal-spacing 5px 20px;
 }
 
 .network-name {
   font-weight: 600;
   opacity: unset;
+}
+
+.arrowDown {
+  color: $color-white;
+  &:hover, &:visited {
+    text-decoration: none;
+  }
+}
+
+.arrowForward {
+  color: $color-white;
+  font-size: 16px;
+  &:hover, &:visited {
+    text-decoration: none;
+  }
 }
 
 .community-name {
