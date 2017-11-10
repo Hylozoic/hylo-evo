@@ -38,4 +38,4 @@ export const DEFAULT_AVATAR = 'https://d3ngex8q79bk55.cloudfront.net/misc/defaul
 
 export const ALL_COMMUNITIES_ID = 'all-communities'
 
-export const ALL_COMMUNITIES_AVATAR_PATH = '/assets/all-communities-avatar.png'
+export const ALL_COMMUNITIES_AVATAR_PATH = '/assets/white-merkaba.png'
