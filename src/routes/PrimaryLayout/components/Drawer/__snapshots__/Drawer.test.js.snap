@@ -1,54 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CommunityRow renders with new posts 1`] = `
-<li>
+<li
+  data-styleName="s.communityRow"
+>
   <Link
-    data-styleName="s.communityRow"
+    data-styleName="s.communityRowLink"
     replace={false}
-    title="Barmunity"
-    to="/c/bar"
+    to="/c/undefined"
   >
     <div
-      data-styleName="s.avatar"
-      style={
-        Object {
-          "backgroundImage": "url(/bar.png)",
-        }
-      }
+      data-styleName="s.communityRowAvatar"
+      style={Object {}}
     />
     <span
-      data-styleName="s.community-name s.highlight"
-    >
-      Barmunity
-    </span>
-    <Badge
-      number={7}
+      data-styleName="s.community-name"
     />
   </Link>
 </li>
 `;
 
 exports[`CommunityRow renders with zero new posts 1`] = `
-<li>
+<li
+  data-styleName="s.communityRow"
+>
   <Link
-    data-styleName="s.communityRow"
+    data-styleName="s.communityRowLink"
     replace={false}
-    title="Foomunity"
-    to="/c/foo"
+    to="/c/undefined"
   >
     <div
-      data-styleName="s.avatar"
-      style={
-        Object {
-          "backgroundImage": "url(/foo.png)",
-        }
-      }
+      data-styleName="s.communityRowAvatar"
+      style={Object {}}
     />
     <span
       data-styleName="s.community-name"
-    >
-      Foomunity
-    </span>
+    />
   </Link>
 </li>
 `;
@@ -62,87 +49,68 @@ exports[`Drawer renders a community list if networks are present 1`] = `
     name="Ex"
   />
   <Logo />
-  <ul
-    data-styleName="s.networkList"
+  <Link
+    data-styleName="s.settingsLink"
+    replace={false}
+    to="/settings"
   >
-    <li
-      data-styleName="s.sectionTitle"
-    >
-      Networks
-    </li>
-    <NetworkRow
-      network={
-        Object {
-          "avatarUrl": "/wombat.png",
-          "id": "1",
-          "memberships": Array [
-            Object {
-              "community": Object {
-                "avatarUrl": "/foo.png",
-                "id": "11",
-                "name": "Foomunity",
-                "slug": "foo",
-              },
-              "id": "1",
-              "newPostCount": 0,
-            },
-            Object {
-              "community": Object {
-                "avatarUrl": "/bar.png",
-                "id": "22",
-                "name": "Barmunity",
-                "slug": "bar",
-              },
-              "id": "2",
-              "newPostCount": 7,
-            },
-          ],
-          "name": "Wombat Network",
-        }
-      }
+    <Icon
+      data-styleName="s.settingsIcon"
+      name="Settings"
     />
-  </ul>
+     Settings
+  </Link>
   <ul
     data-styleName="s.communitiesList"
   >
     <li
       data-styleName="s.sectionTitle"
     >
-      Communities
+      Networked Communities
+    </li>
+    <NetworkRow
+      network={
+        Object {
+          "avatarUrl": "/wombat.png",
+          "communities": Array [
+            Object {
+              "avatarUrl": "/foo.png",
+              "id": "11",
+              "name": "Foomunity",
+              "newPostCount": 0,
+              "slug": "foo",
+            },
+            Object {
+              "avatarUrl": "/bar.png",
+              "id": "22",
+              "name": "Barmunity",
+              "newPostCount": 7,
+              "slug": "bar",
+            },
+          ],
+          "id": "1",
+          "name": "Wombat Network",
+        }
+      }
+    />
+    <li
+      data-styleName="s.sectionTitle s.sectionTitleSeparator"
+    >
+      Independent Communities
     </li>
     <CommunityRow
-      community={
-        Object {
-          "avatarUrl": "/assets/all-communities-avatar.png",
-          "id": "all",
-          "name": "All Communities",
-          "path": "/all",
-        }
-      }
-    />
-    <CommunityRow
-      community={
-        Object {
-          "avatarUrl": "/foo.png",
-          "id": "11",
-          "name": "Foomunity",
-          "slug": "foo",
-        }
-      }
-      id="1"
+      avatarUrl="/foo.png"
+      id="11"
+      name="Foomunity"
       newPostCount={0}
+      slug="foo"
     />
     <CommunityRow
-      community={
-        Object {
-          "avatarUrl": "/bar.png",
-          "id": "22",
-          "name": "Barmunity",
-          "slug": "bar",
-        }
-      }
-      id="2"
+      avatarUrl="/bar.png"
+      id="22"
+      name="Barmunity"
       newPostCount={7}
+      slug="bar"
     />
   </ul>
   <Button
@@ -167,53 +135,22 @@ exports[`Drawer renders with a current community 1`] = `
         "avatarUrl": "/foo.png",
         "id": "11",
         "name": "Foomunity",
+        "newPostCount": 0,
         "slug": "foo",
       }
     }
   />
-  <ul
-    data-styleName="s.communitiesList"
+  <Link
+    data-styleName="s.settingsLink"
+    replace={false}
+    to="/settings"
   >
-    <li
-      data-styleName="s.sectionTitle"
-    >
-      Communities
-    </li>
-    <CommunityRow
-      community={
-        Object {
-          "avatarUrl": "/assets/all-communities-avatar.png",
-          "id": "all",
-          "name": "All Communities",
-          "path": "/all",
-        }
-      }
+    <Icon
+      data-styleName="s.settingsIcon"
+      name="Settings"
     />
-    <CommunityRow
-      community={
-        Object {
-          "avatarUrl": "/foo.png",
-          "id": "11",
-          "name": "Foomunity",
-          "slug": "foo",
-        }
-      }
-      id="1"
-      newPostCount={0}
-    />
-    <CommunityRow
-      community={
-        Object {
-          "avatarUrl": "/bar.png",
-          "id": "22",
-          "name": "Barmunity",
-          "slug": "bar",
-        }
-      }
-      id="2"
-      newPostCount={7}
-    />
-  </ul>
+     Settings
+  </Link>
   <Button
     color="white"
     data-styleName="s.newCommunity"
@@ -231,49 +168,17 @@ exports[`Drawer renders without a current community 1`] = `
     name="Ex"
   />
   <Logo />
-  <ul
-    data-styleName="s.communitiesList"
+  <Link
+    data-styleName="s.settingsLink"
+    replace={false}
+    to="/settings"
   >
-    <li
-      data-styleName="s.sectionTitle"
-    >
-      Communities
-    </li>
-    <CommunityRow
-      community={
-        Object {
-          "avatarUrl": "/assets/all-communities-avatar.png",
-          "id": "all",
-          "name": "All Communities",
-          "path": "/all",
-        }
-      }
+    <Icon
+      data-styleName="s.settingsIcon"
+      name="Settings"
     />
-    <CommunityRow
-      community={
-        Object {
-          "avatarUrl": "/foo.png",
-          "id": "11",
-          "name": "Foomunity",
-          "slug": "foo",
-        }
-      }
-      id="1"
-      newPostCount={0}
-    />
-    <CommunityRow
-      community={
-        Object {
-          "avatarUrl": "/bar.png",
-          "id": "22",
-          "name": "Barmunity",
-          "slug": "bar",
-        }
-      }
-      id="2"
-      newPostCount={7}
-    />
-  </ul>
+     Settings
+  </Link>
   <Button
     color="white"
     data-styleName="s.newCommunity"
