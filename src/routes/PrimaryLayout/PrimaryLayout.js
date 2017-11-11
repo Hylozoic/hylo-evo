@@ -107,7 +107,7 @@ export default class PrimaryLayout extends Component {
     )
     // TODO move FullPageModals
     return <div styleName='container'>
-      <Drawer currentCommunity={community} styleName={cx('drawer', {hidden: !isDrawerOpen})} />
+      <Drawer currentCommunityOrNetwork={network || community} styleName={cx('drawer', {hidden: !isDrawerOpen})} />
       <TopNav {...{community, network, currentUser, showLogoBadge}} styleName='top' onClick={closeDrawer} />
       <div styleName='main' onClick={closeDrawer}>
         <Navigation collapsed={hasDetail} styleName='left' />

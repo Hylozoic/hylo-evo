@@ -62,7 +62,7 @@ $new-community-spacing: 16px;
 }
 
 .settingsLink {
-  margin-bottom: 6px;
+  margin-bottom: 21px;
   @include font-regular;
   text-align: center;
   color: $color-white;
@@ -84,8 +84,7 @@ $new-community-spacing: 16px;
 }
 
 .sectionTitle {
-  border-top: $break-border;
-  padding-top: 20px;
+  padding-top: 5px;
   padding-left: $ul-horizontal-spacing;
   margin-bottom: 6px;
   margin: 15px 0 15px 0;
@@ -95,6 +94,11 @@ $new-community-spacing: 16px;
   color: $color-white;
   opacity: 0.5;
   letter-spacing: 0.2px;
+}
+
+.sectionTitleSeparator {
+  border-top: $break-border;
+  padding-top: 20px;
 }
 
 .avatar {
@@ -107,6 +111,7 @@ $new-community-spacing: 16px;
 
 .communitiesList {
   padding: 0;
+  border-top: $break-border;
   overflow-y: auto;
   li {
     list-style: none;

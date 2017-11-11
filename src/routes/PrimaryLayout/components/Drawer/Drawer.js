@@ -45,10 +45,10 @@ export default class Drawer extends Component {
   }
 
   render () {
-    const { currentCommunity, communities, networks, className } = this.props
+    const { currentCommunityOrNetwork, communities, networks, className } = this.props
     return <div className={className} styleName='s.communityDrawer'>
       <Icon name='Ex' styleName='s.closeDrawer' />
-      <Logo community={currentCommunity} />
+      <Logo community={currentCommunityOrNetwork} />
       <Link styleName='s.settingsLink' to={'/settings'}>
         <Icon name='Settings' styleName='s.settingsIcon' /> Settings
       </Link>
@@ -56,7 +56,7 @@ export default class Drawer extends Component {
         <li styleName='s.sectionTitle'>Networked Communities</li>
         {networks.map(network =>
           <NetworkRow network={network} key={network.id} />)}
-        <li styleName='s.sectionTitle'>Independent Communities</li>
+        <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>Independent Communities</li>
         {communities.map(community =>
           <CommunityRow {...community} key={community.id} />
         )}
