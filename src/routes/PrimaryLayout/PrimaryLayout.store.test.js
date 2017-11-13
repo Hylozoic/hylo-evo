@@ -1,5 +1,6 @@
 /* eslint-env jest */
 import reducer, { ormSessionReducer, FETCH_FOR_CURRENT_USER } from './PrimaryLayout.store'
+import { LOCATION_CHANGE } from 'react-router-redux'
 import rollbar from 'client/rollbar'
 import orm from 'store/models'
 
@@ -30,6 +31,18 @@ describe('reducer', () => {
 
       reducer({}, action)
       expect(rollbar.configure).not.toBeCalled()
+    })
+  })
+
+  describe('on LOCATION_CHANGE', () => {
+    it('sets isDrawerOpen to false', () => {
+      const state = {
+        isDrawerOpen: true
+      }
+      const action = {
+        type: LOCATION_CHANGE
+      }
+      expect(reducer(state, action).isDrawerOpen).toEqual(false)
     })
   })
 })

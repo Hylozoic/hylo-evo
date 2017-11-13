@@ -1,4 +1,4 @@
-import { partitionCommunities } from './Drawer.connector'
+import { partitionCommunities, mapStateToProps } from './Drawer.connector'
 
 describe('partitionCommunities', () => {
   it('separates independent communities from networked communities', () => {
@@ -63,5 +63,11 @@ describe('partitionCommunities', () => {
       }
     ]
     expect(partitionCommunities(memberships)).toMatchSnapshot()
+  })
+})
+
+describe('mapStateToProps', () => {
+  it('returns the right keys, adding All Communities link', () => {
+    expect(mapStateToProps({})).toMatchSnapshot()
   })
 })
