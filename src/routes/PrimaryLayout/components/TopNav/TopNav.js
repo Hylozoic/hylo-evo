@@ -14,10 +14,10 @@ import NotificationsDropdown from './NotificationsDropdown'
 
 export default class TopNav extends Component {
   render () {
-    const { className, community, network, currentUser, logout, toggleDrawer, showLogoBadge } = this.props
+    const { className, community, network, currentUser, logout, toggleDrawer, showLogoBadge, onClick } = this.props
     const profileUrl = personUrl(get('id', currentUser), get('slug', community))
 
-    return <div styleName='topNavWrapper' className={className}>
+    return <div styleName='topNavWrapper' className={className} onClick={onClick}>
       <div styleName='topNav' ref='topNav'>
         <div styleName='logo-hover'>
           <Logo {...{communityOrNetwork: community || network, toggleDrawer}} />

@@ -8,8 +8,7 @@ import s from './Drawer.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../components/Badge/component.scss'
 const { string, number, arrayOf, shape } = PropTypes
 import cx from 'classnames'
-
-export const ALL_COMMUNITIES_AVATAR_PATH = '/assets/all-communities-avatar.png'
+import { isEmpty } from 'lodash/fp'
 
 export default class Drawer extends Component {
   static propTypes = {
@@ -46,28 +45,22 @@ export default class Drawer extends Component {
   }
 
   render () {
-    const { currentCommunity, memberships, networks, className } = this.props
-    const allCommunitiesLink = {
-      id: 'all',
-      path: '/all',
-      name: 'All Communities',
-      avatarUrl: ALL_COMMUNITIES_AVATAR_PATH
-    }
+    const { currentCommunityOrNetwork, communities, networks, className } = this.props
     return <div className={className} styleName='s.communityDrawer'>
       <Icon name='Ex' styleName='s.closeDrawer' />
-      <Logo community={currentCommunity} />
-      {networks.length ? <ul styleName='s.networkList'>
-        <li styleName='s.sectionTitle'>Networks</li>
+      <Logo community={currentCommunityOrNetwork} />
+      <Link styleName='s.settingsLink' to={'/settings'}>
+        <Icon name='Settings' styleName='s.settingsIcon' /> Settings
+      </Link>
+      {networks.length ? <ul styleName='s.communitiesList'>
+        <li styleName='s.sectionTitle'>Networked Communities</li>
         {networks.map(network =>
           <NetworkRow network={network} key={network.id} />)}
-      </ul> : null}
-      <ul styleName='s.communitiesList'>
-        <li styleName='s.sectionTitle'>Communities</li>
-        <CommunityRow community={allCommunitiesLink} />
-        {memberships.map(membership =>
-          <CommunityRow {...membership} key={membership.id} />
+        <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>Independent Communities</li>
+        {communities.map(community =>
+          <CommunityRow {...community} key={community.id} />
         )}
-      </ul>
+      </ul> : null}
       <Button
         color='white'
         styleName='s.newCommunity'
@@ -78,34 +71,66 @@ export default class Drawer extends Component {
   }
 }
 
-export function CommunityRow ({ community, newPostCount }) {
-  const { id, name, slug, path, avatarUrl } = community
+export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount }) {
   const imageStyle = bgImageStyle(avatarUrl)
   const showBadge = newPostCount > 0
-  return <li key={`community${id}`}>
-    <Link to={path || `/c/${slug}`} styleName='s.communityRow' title={name} className={badgeHoverStyles.parent}>
-      <div styleName='s.avatar' style={imageStyle} />
-      <span styleName={cx('s.community-name', {'s.highlight': showBadge})}>{community.name}</span>
+  return <li styleName='s.communityRow'>
+    <Link to={path || `/c/${slug}`} styleName='s.communityRowLink' title={name} className={badgeHoverStyles.parent}>
+      <div styleName='s.communityRowAvatar' style={imageStyle} />
+      <span styleName={cx('s.community-name', {'s.highlight': showBadge})}>{name}</span>
       {showBadge && <Badge number={newPostCount} />}
     </Link>
   </li>
 }
 
-export function NetworkRow ({ network }) {
-  const { id, memberships, name, slug, avatarUrl } = network
-  const imageStyle = bgImageStyle(avatarUrl)
-  return <li key={`network${id}`}>
-    <Link to={`/n/${slug}`} styleName='s.networkRow' title={name} className={badgeHoverStyles.parent}>
-      <div styleName='s.network-name-wrapper'>
-        <div styleName='s.avatar' style={imageStyle} />
-        <span styleName='s.network-name'>{name}</span>
-      </div>
-    </Link>
-    <ul styleName='s.networkCommunitiesList'>
-      {memberships.map(membership =>
-        <CommunityRow {...membership} key={membership.id} />)}
-    </ul>
-  </li>
+export class NetworkRow extends React.Component {
+  constructor (props) {
+    super(props)
+    const newPostCount = props.network.communities.reduce((acc, community) =>
+      acc + community.newPostCount,
+      0)
+    const expanded = !!newPostCount
+
+    this.state = {
+      expanded,
+      newPostCount
+    }
+  }
+
+  toggleExpanded = e => {
+    e.preventDefault()
+    this.setState({
+      expanded: !this.state.expanded
+    })
+  }
+
+  render () {
+    const { network } = this.props
+    const { communities, name, slug, avatarUrl } = network
+    const { expanded, newPostCount } = this.state
+    const imageStyle = bgImageStyle(avatarUrl)
+    const showCommunities = !isEmpty(communities)
+
+    const path = network.path || `/n/${slug}`
+
+    return <li styleName={cx('s.networkRow', {'s.networkExpanded': expanded})}>
+      <Link to={path} styleName='s.networkRowLink' title={name} className={badgeHoverStyles.parent}>
+        <div styleName='s.network-name-wrapper'>
+          <div styleName='s.avatar' style={imageStyle} />
+          <span styleName='s.network-name'>{name}</span>
+          {showCommunities && (expanded
+            ? <Icon name='ArrowDown' styleName='s.arrowDown' onClick={this.toggleExpanded} />
+            : newPostCount
+              ? <Badge number={newPostCount} onClick={this.toggleExpanded} expanded />
+              : <Icon name='ArrowForward' styleName='s.arrowForward' onClick={this.toggleExpanded} />)}
+        </div>
+      </Link>
+      {showCommunities && expanded && <ul styleName='s.networkCommunitiesList'>
+        {communities.map(community =>
+          <CommunityRow {...community} key={community.id} />)}
+      </ul>}
+    </li>
+  }
 }
 
 function Logo ({ community }) {

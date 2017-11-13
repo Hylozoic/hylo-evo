@@ -42,7 +42,11 @@
   transition: 0.15s;
   color: $color-white;
   position: relative;
-  top: -1px
+  top: -1px;
+  text-decoration: none;
+  &:hover, &:visited {
+    text-decoration: none;
+  }
 }
 
 .badgeNumber {
