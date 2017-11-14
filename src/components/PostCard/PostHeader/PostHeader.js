@@ -14,6 +14,7 @@ export default function PostHeader ({
   creator,
   date,
   type,
+  pinned,
   communities,
   close,
   className,
@@ -22,6 +23,7 @@ export default function PostHeader ({
   editPost,
   deletePost,
   removePost,
+  pinPost,
   highlightProps
 }) {
   if (!creator) return null
@@ -38,8 +40,8 @@ export default function PostHeader ({
 
   const dropdownItems = filter([
     // Leaving these here as they will be implemented in the future
-    // {icon: 'Pin', label: 'Pin', onClick: () => console.log('Pin')},
     // {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')},
+    {icon: 'Pin', label: 'Pin', onClick: pinPost},
     {icon: 'Edit', label: 'Edit', onClick: editPost},
     {icon: 'Trash', label: 'Delete', onClick: deletePost},
     {icon: 'Trash', label: 'Remove From Community', onClick: removePost}
@@ -63,6 +65,7 @@ export default function PostHeader ({
       </div>
     </div>
     <div styleName='upperRight'>
+      {pinned && <Icon name='Pin' styleName='pinIcon' />}
       {type && <PostLabel type={type} styleName='label' />}
       {dropdownItems.length > 0 &&
         <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} />}

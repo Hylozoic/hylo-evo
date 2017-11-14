@@ -8,7 +8,8 @@ export function mapStateToProps (state, props) {
   const community = getCommunity(state, props)
   return {
     currentUser: getMe(state, props),
-    community
+    community,
+    pinned: Number(props.id) % 2 === 0
   }
 }
 
@@ -43,6 +44,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     deletePost: isCreator ? () => deletePost(id) : null,
     editPost: canEdit ? () => editPost(id, slug) : null,
+    pinPost: canModerate ? () => console.log('Pin Post') : null,
     removePost: !isCreator && canModerate ? () => removePost(id, slug) : null,
     canEdit
   }
