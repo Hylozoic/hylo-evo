@@ -3,7 +3,21 @@ import orm from 'store/models'
 import getParam from 'store/selectors/getParam'
 
 // FIXME why isn't this ormCreateSelector?
-const getPost = communityId => createSelector(
+const getPost = createSelector(
+  state => state,
+  state => orm.session(state.orm),
+  (state, props) => getParam('postId', state, props),
+  (state, session, id) => {
+    try {
+      const post = session.Post.get({id})
+      return presentPost(post)
+    } catch (e) {
+      return null
+    }
+  }
+)
+
+export const getPostInCommunity = communityId => createSelector(
   state => state,
   state => orm.session(state.orm),
   (state, props) => getParam('postId', state, props),

@@ -4,6 +4,7 @@ exports[`mapDispatchToProps maps the action generators 1`] = `
 Object {
   "deletePost": [Function],
   "editPost": [Function],
+  "pinPost": [Function],
   "removePost": [Function],
 }
 `;

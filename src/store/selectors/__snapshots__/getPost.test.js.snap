@@ -44,6 +44,8 @@ Object {
   "followers": undefined,
   "id": "1",
   "linkPreview": undefined,
+  "pinned": undefined,
+  "postMemberships": undefined,
   "title": "Hay",
 }
 `;
