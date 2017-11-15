@@ -35,6 +35,7 @@ describe('mapDispatchToProps', () => {
     expect(dispatch).toHaveBeenCalledTimes(2)
 
     dispatchProps.deletePost(1)
+    dispatchProps.pinPost(2, 3)
     expect(window.confirm).toHaveBeenCalledWith('Are you sure you want to delete this post?')
     expect(dispatch.mock.calls).toMatchSnapshot()
   })
@@ -44,17 +45,19 @@ describe('mergeProps', () => {
   const dispatchProps = {
     removePost: jest.fn(),
     deletePost: jest.fn(),
-    editPost: jest.fn()
+    editPost: jest.fn(),
+    pinPost: jest.fn()
   }
 
   beforeEach(() => {
     dispatchProps.removePost.mockReset()
     dispatchProps.editPost.mockReset()
     dispatchProps.deletePost.mockReset()
+    dispatchProps.pinPost.mockReset()
   })
 
   describe('as moderator', () => {
-    it('can delete and edit own posts', () => {
+    it('can delete and edit own posts, and pin a post', () => {
       const session = orm.session(orm.getEmptyState())
       const community = session.Community.create({id: 33, slug: 'mycommunity'})
       session.Me.create({id: 20,
@@ -71,7 +74,7 @@ describe('mergeProps', () => {
       const ownProps = {id: 20, slug: 'mycommunity', creator: {id: 20}}
       const stateProps = mapStateToProps(state, ownProps)
 
-      const {deletePost, removePost, editPost, canEdit} = mergeProps(stateProps, dispatchProps, ownProps)
+      const {deletePost, removePost, editPost, canEdit, pinPost} = mergeProps(stateProps, dispatchProps, ownProps)
 
       expect(canEdit).toBeTruthy()
       expect(deletePost).toBeTruthy()
@@ -83,6 +86,9 @@ describe('mergeProps', () => {
 
       editPost()
       expect(dispatchProps.editPost).toHaveBeenCalledWith(20, 'mycommunity')
+
+      pinPost()
+      expect(dispatchProps.pinPost).toHaveBeenCalledWith(20, 33)
     })
 
     it('cannot delete posts but can moderate', () => {
@@ -114,7 +120,7 @@ describe('mergeProps', () => {
   })
 
   describe('as non-moderator', () => {
-    it('can delete own posts', () => {
+    it("can delete own posts, can't pin posts", () => {
       const session = orm.session(orm.getEmptyState())
       const community = session.Community.create({id: 33, slug: 'mycommunity'})
       session.Me.create({id: 20,
@@ -131,11 +137,12 @@ describe('mergeProps', () => {
       const ownProps = {id: 20, slug: 'mycommunity', creator: {id: 20}}
       const stateProps = mapStateToProps(state, ownProps)
 
-      const {deletePost, removePost, editPost} = mergeProps(stateProps, dispatchProps, ownProps)
+      const {deletePost, removePost, editPost, pinPost} = mergeProps(stateProps, dispatchProps, ownProps)
 
       expect(editPost).toBeTruthy()
       expect(deletePost).toBeTruthy()
       expect(removePost).toBeFalsy()
+      expect(pinPost).toBeFalsy()
 
       deletePost()
       expect(dispatchProps.deletePost).toHaveBeenCalledWith(20)

@@ -84,13 +84,14 @@ export const getCommunity = ormCreateSelector(
 )
 
 export function ormSessionReducer ({ Post }, { type, meta }) {
+  var post
   switch (type) {
     case DELETE_POST_PENDING:
       Post.withId(meta.id).delete()
       break
 
     case REMOVE_POST_PENDING:
-      let post = Post.withId(meta.postId)
+      post = Post.withId(meta.postId)
       const communities = post.communities.filter(c =>
         c.slug !== meta.slug).toModelArray()
       post.update({communities})

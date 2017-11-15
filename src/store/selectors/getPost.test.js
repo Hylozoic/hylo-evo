@@ -1,5 +1,5 @@
 import orm from 'store/models'
-import getPost from 'store/selectors/getPost'
+import getPost, { getPostInCommunity } from 'store/selectors/getPost'
 
 describe('getPost', () => {
   it("returns null if post doesn't exist", () => {
@@ -37,5 +37,20 @@ describe('getPost', () => {
 
     const result = getPost({orm: session.state}, {match: {params: {postId: '1'}}})
     expect(result).toMatchSnapshot()
+  })
+})
+
+describe('getPostInCommunity', () => {
+  it('returns the pinned status', () => {
+    const communityId = 121
+    const postId = 324
+    const session = orm.session(orm.getEmptyState())
+
+    const community = session.Community.create({id: communityId})
+    const postMembership = session.PostMembership.create({community, pinned: true})
+    session.Post.create({id: postId, postMemberships: [postMembership]})
+
+    const result = getPostInCommunity(communityId)({orm: session.state}, {match: {params: {postId}}})
+    expect(result.pinned).toEqual(true)
   })
 })

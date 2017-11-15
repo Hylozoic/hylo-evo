@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapStateToProps returns the right keys 1`] = `
+Object {
+  "currentUser": undefined,
+  "id": undefined,
+  "pending": undefined,
+  "post": null,
+  "showCommunity": true,
+  "slug": undefined,
+}
+`;

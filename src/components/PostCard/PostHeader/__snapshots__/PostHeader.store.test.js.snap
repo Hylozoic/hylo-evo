@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pinPost matches last snapshot 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($postId: ID, $communityId: ID) {
+        pinPost(postId: $postId, communityId: $communityId) {
+          success
+        }
+      }",
+    "variables": Object {
+      "communityId": 2,
+      "postId": 1,
+    },
+  },
+  "meta": Object {
+    "communityId": 2,
+    "optimistic": true,
+    "postId": 1,
+  },
+  "type": "PostHeader/PIN_POST",
+}
+`;
