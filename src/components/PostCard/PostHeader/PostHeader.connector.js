@@ -8,8 +8,7 @@ export function mapStateToProps (state, props) {
   const community = getCommunity(state, props)
   return {
     currentUser: getMe(state, props),
-    community,
-    pinned: Number(props.id) % 2 === 0
+    community
   }
 }
 
