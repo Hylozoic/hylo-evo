@@ -12,7 +12,7 @@ export function mapStateToProps (state, props) {
   const communityId = currentCommunity && currentCommunity.id
 
   return {
-    posts: getPosts(communityId)(state, props),
+    posts: getPosts(state, props).map(p => presentPost(p, communityId)),
     hasMore: getHasMorePosts(state, props),
     pending: state.pending[FETCH_POSTS]
   }
@@ -52,10 +52,9 @@ export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
 const getPostResults = makeGetQueryResults(FETCH_POSTS)
 
-export const getPosts = communityId => makeQueryResultsModelSelector(
+export const getPosts = makeQueryResultsModelSelector(
   getPostResults,
-  'Post',
-  post => presentPost(post, communityId)
+  'Post'
 )
 
 const getHasMorePosts = createSelector(getPostResults, get('hasMore'))

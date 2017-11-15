@@ -4,7 +4,7 @@ import { push } from 'react-router-redux'
 import { postUrl } from 'util/index'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
-import getPost from 'store/selectors/getPost'
+import getPost, { presentPost } from 'store/selectors/getPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import { FETCH_POST, UPLOAD_ATTACHMENT } from 'store/constants'
 import {
@@ -28,7 +28,7 @@ export function mapStateToProps (state, props) {
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const communityOptions = props.communityOptions ||
     (currentUser && currentUser.memberships.toModelArray().map(m => m.community))
-  let post = props.post || getPost(state, props)
+  let post = props.post || presentPost(getPost(state, props))
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]

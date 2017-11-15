@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import fetchPost from 'store/actions/fetchPost'
 import getParam from 'store/selectors/getParam'
-import { getPostInCommunity } from 'store/selectors/getPost'
+import getPost, { presentPost } from 'store/selectors/getPost'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import { FETCH_POST } from 'store/constants'
@@ -12,7 +12,7 @@ export function mapStateToProps (state, props) {
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const communityId = currentCommunity && currentCommunity.id
   return {
-    post: getPostInCommunity(communityId)(state, props),
+    post: presentPost(getPost(state, props), (communityId)),
     id: getParam('postId', state, props),
     currentUser: getMe(state),
     slug,

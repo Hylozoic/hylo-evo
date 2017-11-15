@@ -1,51 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`getPost returns the post with creator, commenters and communities 1`] = `
-Object {
-  "commenters": Array [
-    SessionBoundModel {
-      "_fields": Object {
-        "id": "1",
-        "name": "Jack",
-        "skills": undefined,
-      },
-    },
-  ],
-  "communities": Array [
-    SessionBoundModel {
-      "_fields": Object {
-        "id": "1",
-        "members": undefined,
-        "moderators": undefined,
-        "posts": undefined,
-        "slug": "foo",
-      },
-      "slug": "foo",
-    },
-    SessionBoundModel {
-      "_fields": Object {
-        "id": "2",
-        "members": undefined,
-        "moderators": undefined,
-        "posts": undefined,
-        "slug": "bar",
-      },
-      "slug": "bar",
-    },
-  ],
-  "creator": SessionBoundModel {
-    "_fields": Object {
-      "id": "3",
-      "name": "Sue",
-      "skills": undefined,
-    },
+exports[`getPost returns the post 1`] = `
+SessionBoundModel {
+  "_fields": Object {
+    "commenters": undefined,
+    "communities": undefined,
+    "followers": undefined,
+    "id": 31,
+    "postMemberships": undefined,
   },
+}
+`;
+
+exports[`true 1`] = `
+Object {
+  "commenters": Array [],
+  "communities": Array [],
+  "creator": undefined,
   "fileAttachments": Array [],
   "followers": undefined,
-  "id": "1",
+  "id": 324,
   "linkPreview": undefined,
-  "pinned": undefined,
-  "postMemberships": undefined,
-  "title": "Hay",
+  "pinned": true,
 }
 `;
