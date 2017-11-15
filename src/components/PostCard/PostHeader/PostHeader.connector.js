@@ -15,7 +15,7 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   const closeUrl = removePostFromUrl(window.location.pathname)
   const deletePostWithConfirm = id => {
-    if (window.confirm('are you sure you want to delete this post?')) {
+    if (window.confirm('Are you sure you want to delete this post?')) {
       dispatch(deletePost(id))
       .then(() => dispatch(push(closeUrl)))
     }
@@ -34,15 +34,16 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { currentUser, community } = stateProps
   const { id, creator, slug } = ownProps
   const { deletePost, editPost, removePost } = dispatchProps
-  const canEdit = currentUser && creator && currentUser.id === creator.id
+  const isCreator = currentUser && creator && currentUser.id === creator.id
+  const canEdit = isCreator
   const canModerate = currentUser && currentUser.canModerate(community)
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    deletePost: canEdit ? () => deletePost(id) : null,
+    deletePost: isCreator ? () => deletePost(id) : null,
     editPost: canEdit ? () => editPost(id, slug) : null,
-    removePost: canModerate ? () => removePost(id, slug) : null,
+    removePost: !isCreator && canModerate ? () => removePost(id, slug) : null,
     canEdit
   }
 }

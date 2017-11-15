@@ -102,6 +102,66 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
 </div>
 `;
 
+exports[`Comment displays the remove menu when removeComment is defined 1`] = `
+<div
+  data-styleName="comment"
+>
+  <div
+    data-styleName="header"
+  >
+    <Avatar
+      avatarUrl="foo.jpg"
+      data-styleName="avatar"
+      url="/c/foo/m/1"
+    />
+    <Link
+      data-styleName="userName"
+      replace={false}
+      to="/c/foo/m/1"
+    >
+      Joe Smith
+    </Link>
+    <div
+      data-styleName="upperRight"
+    >
+      <span
+        data-styleName="timestamp"
+      >
+        just now
+      </span>
+      <Dropdown
+        data-styleName="dropdown"
+        items={
+          Array [
+            Object {
+              "icon": "Trash",
+              "label": "Remove",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
+      />
+    </div>
+  </div>
+  <Connect(ClickCatcher)>
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>text of the comment</p>",
+        }
+      }
+      data-styleName="text"
+      id="text"
+    />
+  </Connect(ClickCatcher)>
+</div>
+`;
+
 exports[`Comment renders correctly 1`] = `
 <div
   data-styleName="comment"
