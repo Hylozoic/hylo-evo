@@ -19,12 +19,12 @@ $ul-network-community-indent: 25px;
 $li-padding: 4px;
 $li-spacing: 14px;
 $li-height: 40px;
-$li-avatar-size: 42px;
+$li-avatar-size: 38px;
 
 $badge-width: 20px;
 
-$community-list-avatar-size: 33px;
-$community-list-font-size: 14px;
+$community-list-avatar-size: 28px;
+$community-list-font-size: 13px;
 
 $break-border: 1px solid rgba(255,255,255,0.11);
 
@@ -184,12 +184,21 @@ $new-community-spacing: 16px;
   display: flex;
   align-items: center;
   border-radius: 4px;
-  padding: 5px $ul-horizontal-spacing 5px 20px;
+  padding: 5px 0px 5px 20px;
 }
 
 .network-name {
   font-weight: 600;
   opacity: unset;
+}
+
+.communtiesButton {
+  width: 38px;
+  height: 26px;
+  border-left: 1px solid rgba(#FFF, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .arrowDown {

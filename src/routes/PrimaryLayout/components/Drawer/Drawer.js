@@ -97,6 +97,15 @@ export class NetworkRow extends React.Component {
     }
   }
 
+  componentDidUpdate () {
+    const newPostCount = this.props.network.communities.reduce((acc, community) =>
+      acc + community.newPostCount,
+      0)
+    if (newPostCount !== this.state.newPostCount) {
+      this.setState({newPostCount})
+    }
+  }
+
   toggleExpanded = e => {
     e.preventDefault()
     this.setState({
@@ -118,11 +127,13 @@ export class NetworkRow extends React.Component {
         <div styleName='s.network-name-wrapper'>
           <div styleName='s.avatar' style={imageStyle} />
           <span styleName='s.network-name'>{name}</span>
-          {showCommunities && (expanded
-            ? <Icon name='ArrowDown' styleName='s.arrowDown' onClick={this.toggleExpanded} />
+          {showCommunities && <span styleName='s.communtiesButton' onClick={this.toggleExpanded}>
+            {expanded
+            ? <Icon name='ArrowDown' styleName='s.arrowDown' />
             : newPostCount
-              ? <Badge number={newPostCount} onClick={this.toggleExpanded} expanded />
-              : <Icon name='ArrowForward' styleName='s.arrowForward' onClick={this.toggleExpanded} />)}
+              ? <Badge number={newPostCount} expanded />
+              : <Icon name='ArrowForward' styleName='s.arrowForward' />}
+          </span>}
         </div>
       </Link>
       {showCommunities && expanded && <ul styleName='s.networkCommunitiesList'>
