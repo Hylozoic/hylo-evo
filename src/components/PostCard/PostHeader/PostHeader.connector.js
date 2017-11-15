@@ -1,4 +1,4 @@
-import { deletePost, removePost, getCommunity } from './PostHeader.store'
+import { deletePost, removePost, pinPost, getCommunity } from './PostHeader.store'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { removePostFromUrl, postUrl } from 'util/index'
@@ -27,14 +27,15 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     deletePost: deletePostWithConfirm,
     editPost,
-    removePost: (postId, slug) => dispatch(removePost(postId, slug))
+    removePost: (postId, slug) => dispatch(removePost(postId, slug)),
+    pinPost: (postId, communityId) => dispatch(pinPost(postId, communityId))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { currentUser, community } = stateProps
   const { id, creator, slug } = ownProps
-  const { deletePost, editPost, removePost } = dispatchProps
+  const { deletePost, editPost, removePost, pinPost } = dispatchProps
   const isCreator = currentUser && creator && currentUser.id === creator.id
   const canEdit = isCreator
   const canModerate = currentUser && currentUser.canModerate(community)
@@ -44,7 +45,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     deletePost: isCreator ? () => deletePost(id) : null,
     editPost: canEdit ? () => editPost(id, slug) : null,
-    pinPost: canModerate ? () => console.log('Pin Post') : null,
+    pinPost: canModerate && community ? () => pinPost(id, community.id) : null,
     removePost: !isCreator && canModerate ? () => removePost(id, slug) : null,
     canEdit
   }

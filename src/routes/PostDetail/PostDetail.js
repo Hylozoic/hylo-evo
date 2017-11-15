@@ -162,6 +162,7 @@ function WrappedPostHeader ({post, showCommunity, onClose, slug}) {
     showCommunity={showCommunity}
     close={onClose}
     slug={slug}
+    pinned={post.pinned}
     styleName='header'
     id={post.id} />
 }

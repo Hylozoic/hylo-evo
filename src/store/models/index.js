@@ -16,6 +16,7 @@ import Notification from './Notification'
 import Person from './Person'
 import PersonConnection from './PersonConnection'
 import Post, { PostFollower, PostCommenter } from './Post'
+import PostMembership from './PostMembership'
 import SearchResult from './SearchResult'
 import Skill from './Skill'
 import Topic from './Topic'
@@ -43,6 +44,7 @@ orm.register(
   Post,
   PostCommenter,
   PostFollower,
+  PostMembership,
   SearchResult,
   Skill,
   Topic,

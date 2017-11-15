@@ -41,7 +41,7 @@ export default function PostHeader ({
   const dropdownItems = filter([
     // Leaving these here as they will be implemented in the future
     // {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')},
-    {icon: 'Pin', label: 'Pin', onClick: pinPost},
+    {icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost},
     {icon: 'Edit', label: 'Edit', onClick: editPost},
     {icon: 'Trash', label: 'Delete', onClick: deletePost},
     {icon: 'Trash', label: 'Remove From Community', onClick: removePost}
