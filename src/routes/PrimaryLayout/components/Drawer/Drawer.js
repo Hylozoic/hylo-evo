@@ -127,7 +127,7 @@ export class NetworkRow extends React.Component {
         <div styleName='s.network-name-wrapper'>
           <div styleName='s.avatar' style={imageStyle} />
           <span styleName='s.network-name'>{name}</span>
-          {showCommunities && <span styleName='s.communtiesButton' onClick={this.toggleExpanded}>
+          {showCommunities && <span styleName='s.communitiesButton' onClick={this.toggleExpanded}>
             {expanded
             ? <Icon name='ArrowDown' styleName='s.arrowDown' />
             : newPostCount
