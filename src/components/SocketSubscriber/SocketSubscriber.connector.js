@@ -22,9 +22,9 @@ function mapDispatchToProps (dispatch, props) {
       if (oldHandler) socket.off('reconnect', oldHandler)
 
       const newHandler = () => {
-        const label = `SocketSubscriber(${type}, ${id})`
+        const label = `SocketSubscriber(${type})`
         if (process.env.NODE_ENV === 'development') {
-          console.log(`connecting ${label}...`)
+          console.log(`connecting ${label} ${id}...`)
         }
         socket.post(socketUrl(`/noo/${type}/${id}/subscribe`), (body, jwr) => {
           if (!isEqual(body, {})) {
