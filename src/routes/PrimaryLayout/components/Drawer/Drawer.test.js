@@ -74,7 +74,6 @@ describe('NetworkRow', () => {
   it('matches last snapshot', () => {
     const wrapper = shallow(<NetworkRow {...defaultProps} />)
     expect(wrapper).toMatchSnapshot()
-    expect(wrapper.state('newPostCount')).toEqual(13)
     expect(wrapper.state('expanded')).toEqual(true)
   })
 
@@ -88,7 +87,6 @@ describe('NetworkRow', () => {
     }
     const wrapper = shallow(<NetworkRow {...props} />)
     expect(wrapper).toMatchSnapshot()
-    expect(wrapper.state('newPostCount')).toEqual(13)
     expect(wrapper.state('expanded')).toEqual(true)
   })
 

@@ -8,7 +8,7 @@ import s from './Drawer.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../components/Badge/component.scss'
 const { string, number, arrayOf, shape } = PropTypes
 import cx from 'classnames'
-import { isEmpty } from 'lodash/fp'
+import { isEmpty, sum } from 'lodash/fp'
 
 export default class Drawer extends Component {
   static propTypes = {
@@ -86,23 +86,10 @@ export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount })
 export class NetworkRow extends React.Component {
   constructor (props) {
     super(props)
-    const newPostCount = props.network.communities.reduce((acc, community) =>
-      acc + community.newPostCount,
-      0)
-    const expanded = !!newPostCount
+    const expanded = !!sum(props.network.communities.map(c => c.newPostCount))
 
     this.state = {
-      expanded,
-      newPostCount
-    }
-  }
-
-  componentDidUpdate () {
-    const newPostCount = this.props.network.communities.reduce((acc, community) =>
-      acc + community.newPostCount,
-      0)
-    if (newPostCount !== this.state.newPostCount) {
-      this.setState({newPostCount})
+      expanded
     }
   }
 
@@ -116,7 +103,8 @@ export class NetworkRow extends React.Component {
   render () {
     const { network } = this.props
     const { communities, name, slug, avatarUrl } = network
-    const { expanded, newPostCount } = this.state
+    const { expanded } = this.state
+    const newPostCount = sum(network.communities.map(c => c.newPostCount))
     const imageStyle = bgImageStyle(avatarUrl)
     const showCommunities = !isEmpty(communities)
 
