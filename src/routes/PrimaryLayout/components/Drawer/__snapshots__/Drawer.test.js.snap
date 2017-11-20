@@ -213,11 +213,15 @@ exports[`NetworkRow is not expanded when post counts are 0 1`] = `
       >
         Network One
       </span>
-      <Icon
-        data-styleName="s.arrowDown"
-        name="ArrowDown"
+      <span
+        data-styleName="s.communitiesButton"
         onClick={[Function]}
-      />
+      >
+        <Icon
+          data-styleName="s.arrowDown"
+          name="ArrowDown"
+        />
+      </span>
     </div>
   </Link>
   <ul
@@ -261,11 +265,15 @@ exports[`NetworkRow matches last snapshot 1`] = `
       >
         Network One
       </span>
-      <Icon
-        data-styleName="s.arrowDown"
-        name="ArrowDown"
+      <span
+        data-styleName="s.communitiesButton"
         onClick={[Function]}
-      />
+      >
+        <Icon
+          data-styleName="s.arrowDown"
+          name="ArrowDown"
+        />
+      </span>
     </div>
   </Link>
   <ul
