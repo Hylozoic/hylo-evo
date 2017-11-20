@@ -11,6 +11,18 @@ describe('PostEditor', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
+  it('sets component refs as expected', () => {
+    const props = {}
+    const wrapper = shallow(<PostEditor {...props} />)
+    const instance = wrapper.instance()
+    wrapper.find('[data-styleName="titleInput"]').node.ref('titleInput')
+    expect(instance.titleInput).toEqual('titleInput')
+    wrapper.find('CommunitiesSelector').node.ref('communitiesSelector')
+    expect(instance.communitiesSelector).toEqual('communitiesSelector')
+    wrapper.find('Connect(HyloEditor)').node.ref({getWrappedInstance: () => 'editor'})
+    expect(instance.editor).toEqual('editor')
+  })
+
   describe('for a new post', () => {
     test('initial prompt and placeholders', () => {
       const props = {
