@@ -1,5 +1,5 @@
 import orm from 'store/models'
-import getPost from 'store/selectors/getPost'
+import getPost, { presentPost } from 'store/selectors/getPost'
 
 describe('getPost', () => {
   it("returns null if post doesn't exist", () => {
@@ -7,35 +7,27 @@ describe('getPost', () => {
     expect(getPost(session.state, {match: {params: {postId: '1'}}})).toEqual(null)
   })
 
-  it('returns the post with creator, commenters and communities', () => {
+  it('returns the post', () => {
+    const postId = 31
     const session = orm.session(orm.getEmptyState())
-    const { Post, Person, Community } = session;
-    [{
-      model: Community, attrs: {id: '1', slug: 'foo'}
-    },
-    {
-      model: Community, attrs: {id: '2', slug: 'bar'}
-    },
-    {
-      model: Community, attrs: {id: '3', slug: 'baz'}
-    },
-    {
-      model: Person, attrs: {id: '1', name: 'Jack'}
-    },
-    {
-      model: Person, attrs: {id: '2'}
-    },
-    {
-      model: Person, attrs: {id: '3', name: 'Sue'}
-    },
-    {
-      model: Post, attrs: {id: '1', title: 'Hay', commenters: ['1'], creator: '3', communities: ['1', '2']}
-    },
-    {
-      model: Post, attrs: {id: '2', commenters: ['2'], creator: '1', communities: ['2', '3']}
-    }].forEach(spec => spec.model.create(spec.attrs))
-
-    const result = getPost({orm: session.state}, {match: {params: {postId: '1'}}})
+    session.Post.create({id: postId})
+    const result = getPost({orm: session.state}, {match: {params: {postId}}})
     expect(result).toMatchSnapshot()
+  })
+})
+
+describe('presentPost', () => {
+  const communityId = 121
+  const postId = 324
+  const session = orm.session(orm.getEmptyState())
+
+  const community = session.Community.create({id: communityId})
+  const postMembership = session.PostMembership.create({community, pinned: true})
+  session.Post.create({id: postId, postMemberships: [postMembership]})
+
+  it('matches the snapshot', () => {
+    const post = session.Post.withId(postId)
+    const result = presentPost(post, communityId)
+    expect(result).toMatchSnapshot(true)
   })
 })

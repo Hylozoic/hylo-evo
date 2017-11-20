@@ -37,6 +37,7 @@ Post.fields = {
     throughFields: [ 'post', 'follower' ]
   }),
   communities: many('Community'),
+  postMemberships: many('PostMembership'),
   communitiesTotal: attr(),
   commenters: many({
     to: 'Person',

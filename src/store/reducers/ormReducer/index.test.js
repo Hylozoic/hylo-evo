@@ -11,7 +11,8 @@ import {
 } from 'store/constants'
 import {
    DELETE_POST_PENDING,
-   REMOVE_POST_PENDING
+   REMOVE_POST_PENDING,
+   PIN_POST_PENDING
  } from 'components/PostCard/PostHeader/PostHeader.store'
 import {
   UPDATE_MEMBERSHIP_SETTINGS_PENDING,
@@ -285,6 +286,38 @@ describe('on REMOVE_POST_PENDING', () => {
     expect(post1Communities.length).toEqual(1)
     expect(post1Communities[0].id).toEqual('1')
     expect(newSession.Post.withId('2').communities.toModelArray().length).toEqual(2)
+  })
+})
+
+describe('on PIN_POST_PENDING', () => {
+  const session = orm.session(orm.getEmptyState())
+  const community = session.Community.create({id: '1', slug: 'foo'})
+  const postId = 123
+  const postMembership = session.PostMembership.create({
+    pinned: false,
+    community: community
+  })
+
+  session.Post.create({
+    id: postId,
+    communities: [community],
+    postMemberships: [postMembership]
+  })
+
+  const action = {
+    type: PIN_POST_PENDING,
+    meta: {
+      postId,
+      communityId: community.id
+    }
+  }
+
+  it('updates the postMembership', () => {
+    const newState = ormReducer(session.state, action)
+    const newSession = orm.session(newState)
+
+    const postMembership = newSession.Post.withId(postId).postMemberships.toModelArray()[0]
+    expect(postMembership.pinned).toEqual(true)
   })
 })
 

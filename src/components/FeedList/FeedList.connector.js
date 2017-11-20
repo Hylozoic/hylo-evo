@@ -2,12 +2,17 @@ import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
+import { presentPost } from 'store/selectors/getPost'
+import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import { fetchPosts, storeFeedListProps } from './FeedList.store.js'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 
 export function mapStateToProps (state, props) {
+  const currentCommunity = getCommunityForCurrentRoute(state, props)
+  const communityId = currentCommunity && currentCommunity.id
+
   return {
-    posts: getPosts(state, props),
+    posts: getPosts(state, props).map(p => presentPost(p, communityId)),
     hasMore: getHasMorePosts(state, props),
     pending: state.pending[FETCH_POSTS]
   }
@@ -49,15 +54,7 @@ const getPostResults = makeGetQueryResults(FETCH_POSTS)
 
 export const getPosts = makeQueryResultsModelSelector(
   getPostResults,
-  'Post',
-  post => ({
-    ...post.ref,
-    creator: post.creator,
-    linkPreview: post.linkPreview,
-    commenters: post.commenters.toModelArray(),
-    communities: post.communities.toModelArray(),
-    fileAttachments: post.attachments.filter(a => a.type === 'file').toModelArray()
-  })
+  'Post'
 )
 
 const getHasMorePosts = createSelector(getPostResults, get('hasMore'))

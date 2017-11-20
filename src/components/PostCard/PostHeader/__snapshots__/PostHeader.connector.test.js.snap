@@ -4,6 +4,7 @@ exports[`mapDispatchToProps maps the action generators 1`] = `
 Object {
   "deletePost": [Function],
   "editPost": [Function],
+  "pinPost": [Function],
   "removePost": [Function],
 }
 `;
@@ -40,6 +41,27 @@ Array [
         "method": "push",
       },
       "type": "@@router/CALL_HISTORY_METHOD",
+    },
+  ],
+  Array [
+    Object {
+      "graphql": Object {
+        "query": "mutation ($postId: ID, $communityId: ID) {
+        pinPost(postId: $postId, communityId: $communityId) {
+          success
+        }
+      }",
+        "variables": Object {
+          "communityId": 3,
+          "postId": 2,
+        },
+      },
+      "meta": Object {
+        "communityId": 3,
+        "optimistic": true,
+        "postId": 2,
+      },
+      "type": "PostHeader/PIN_POST",
     },
   ],
 ]

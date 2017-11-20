@@ -69,6 +69,13 @@ posts(
     type
     url
   }
+  postMemberships {
+    id
+    pinned
+    community {
+      id
+    }
+  }
   }
 }
   }
@@ -154,6 +161,13 @@ posts(
     position
     type
     url
+  }
+  postMemberships {
+    id
+    pinned
+    community {
+      id
+    }
   }
   }
 }
