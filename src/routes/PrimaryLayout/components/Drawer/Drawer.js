@@ -8,7 +8,7 @@ import s from './Drawer.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../components/Badge/component.scss'
 const { string, number, arrayOf, shape } = PropTypes
 import cx from 'classnames'
-import { isEmpty } from 'lodash/fp'
+import { isEmpty, sum } from 'lodash/fp'
 
 export default class Drawer extends Component {
   static propTypes = {
@@ -86,14 +86,10 @@ export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount })
 export class NetworkRow extends React.Component {
   constructor (props) {
     super(props)
-    const newPostCount = props.network.communities.reduce((acc, community) =>
-      acc + community.newPostCount,
-      0)
-    const expanded = !!newPostCount
+    const expanded = !!sum(props.network.communities.map(c => c.newPostCount))
 
     this.state = {
-      expanded,
-      newPostCount
+      expanded
     }
   }
 
@@ -107,7 +103,8 @@ export class NetworkRow extends React.Component {
   render () {
     const { network } = this.props
     const { communities, name, slug, avatarUrl } = network
-    const { expanded, newPostCount } = this.state
+    const { expanded } = this.state
+    const newPostCount = sum(network.communities.map(c => c.newPostCount))
     const imageStyle = bgImageStyle(avatarUrl)
     const showCommunities = !isEmpty(communities)
 
@@ -118,11 +115,13 @@ export class NetworkRow extends React.Component {
         <div styleName='s.network-name-wrapper'>
           <div styleName='s.avatar' style={imageStyle} />
           <span styleName='s.network-name'>{name}</span>
-          {showCommunities && (expanded
-            ? <Icon name='ArrowDown' styleName='s.arrowDown' onClick={this.toggleExpanded} />
+          {showCommunities && <span styleName='s.communitiesButton' onClick={this.toggleExpanded}>
+            {expanded
+            ? <Icon name='ArrowDown' styleName='s.arrowDown' />
             : newPostCount
-              ? <Badge number={newPostCount} onClick={this.toggleExpanded} expanded />
-              : <Icon name='ArrowForward' styleName='s.arrowForward' onClick={this.toggleExpanded} />)}
+              ? <Badge number={newPostCount} expanded />
+              : <Icon name='ArrowForward' styleName='s.arrowForward' />}
+          </span>}
         </div>
       </Link>
       {showCommunities && expanded && <ul styleName='s.networkCommunitiesList'>
