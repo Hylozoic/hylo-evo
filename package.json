@@ -131,7 +131,7 @@
     "velocity-react": "^1.2.1"
   },
   "engines": {
-    "node": "7.10.1",
+    "node": "8.6.0",
     "yarn": "^1.0.1"
   },
   "scripts": {
