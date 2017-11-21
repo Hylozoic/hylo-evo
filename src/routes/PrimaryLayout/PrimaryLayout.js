@@ -207,6 +207,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/n/:networkSlug' exact component={Feed} />
             <Route path='/n/:networkSlug/p/:postId' component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
+            <Route path='/n/:networkSlug/m/:id' component={MemberProfile} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
             <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />
             <Route path='/events' component={Events} />
@@ -234,6 +235,7 @@ export default class PrimaryLayout extends Component {
           <Route path='/c/:slug/:topicName/p/new' exact component={CommunitySidebar} />
           <Route path='/c/:slug/:topicName' exact component={CommunitySidebar} />
           <Route path='/c/:slug/m/:id' component={MemberSidebar} />
+          <Route path='/n/:slug/m/:id' component={MemberSidebar} />
           <Route path='/m/:id' component={MemberSidebar} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>
@@ -268,7 +270,8 @@ const postEditorRoutes = [
   {path: '/all/p/:postId/edit'},
   {path: '/c/:slug/p/:postId/edit'},
   {path: '/c/:slug/m/:id/p/:postId/edit'},
-  {path: '/c/:slug/:topicName/p/:postId/edit'}
+  {path: '/c/:slug/:topicName/p/:postId/edit'},
+  {path: '/n/:slug/m/:id/p/:postId/edit'}
 ]
 
 const detailRoutes = [
@@ -277,7 +280,8 @@ const detailRoutes = [
   {path: `/c/:slug/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/n/:networkSlug/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/c/:slug/m/:id/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/c/:slug/:topicName/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail}
+  {path: `/c/:slug/:topicName/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/n/:slug/m/:id/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail}
 ]
 
 const signupRoutes = [
