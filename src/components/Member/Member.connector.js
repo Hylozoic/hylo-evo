@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { personUrl } from 'util/index'
+import { personUrl, networkUrl } from 'util/index'
 
 export function mapStateToProps (state, props) {
   return { }
@@ -8,7 +8,12 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = (dispatch, props) => {
   return {
-    goToPerson: (id, slug) => () => dispatch(push(personUrl(id, slug)))
+    goToPerson: (id, slug) => () => {
+      const url = props.subject === 'network'
+        ? networkUrl(slug) + personUrl(id)
+        : personUrl(id, slug)
+      return dispatch(push(url))
+    }
   }
 }
 
