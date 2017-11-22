@@ -8,7 +8,7 @@ import './Member.scss'
 const { string, shape } = React.PropTypes
 
 export default class Member extends React.Component {
-  deleteOnClick (e, id, name, removeMember) {
+  removeOnClick (e, id, name, removeMember) {
     e.preventDefault()
 
     if (window.confirm(`are you sure you want to remove ${name}?`)) {
@@ -28,7 +28,7 @@ export default class Member extends React.Component {
 
     return <div styleName='member' className={className}>
       {canModerate && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={[
-        {icon: 'Trash', label: 'Delete', onClick: (e) => this.deleteOnClick(e, id, name, removeMember)}
+        {icon: 'Trash', label: 'Remove', onClick: (e) => this.removeOnClick(e, id, name, removeMember)}
       ]} />}
       <div onClick={goToPerson(id, slug)}>
         <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
