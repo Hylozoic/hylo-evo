@@ -10,5 +10,6 @@ Object {
   "membersPath": undefined,
   "rootPath": undefined,
   "rootSlug": undefined,
+  "showTopics": undefined,
 }
 `;
