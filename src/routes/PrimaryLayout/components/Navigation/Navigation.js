@@ -17,9 +17,6 @@ export default function Navigation (props) {
     showTopics
   } = props
 
-  console.log('showTopics', showTopics)
-  console.log('rootSlug', rootSlug)
-
   const homeOnClick = () => {
     if (window.location.pathname === rootPath) {
       clearFeedList()
@@ -51,7 +48,7 @@ export default function Navigation (props) {
           <NavLink key={link.label} {...link} collapsed={collapsed}
             onClick={link.onClick} />)}
       </ul>
-      { showTopics && <TopicNavigation backUrl={rootPath} communitySlug={rootSlug} collapsed={collapsed} />}
+      {showTopics && <TopicNavigation backUrl={rootPath} communitySlug={rootSlug} collapsed={collapsed} />}
     </div>
   </div>
 }

@@ -106,12 +106,15 @@ export default class PrimaryLayout extends Component {
       ({ path }) => matchPath(location.pathname, {path}),
       detailRoutes
     )
+
+    const showTopics = !isAllCommunitiesPath(location.pathname) && !isNetworkPath(location.pathname)
+
     // TODO move FullPageModals
     return <div styleName='container'>
       <Drawer currentCommunityOrNetwork={network || community} styleName={cx('drawer', {hidden: !isDrawerOpen})} />
       <TopNav {...{community, network, currentUser, showLogoBadge}} styleName='top' onClick={closeDrawer} />
       <div styleName='main' onClick={closeDrawer}>
-        <Navigation collapsed={hasDetail} styleName='left' />
+        <Navigation collapsed={hasDetail} styleName='left' showTopics={showTopics} />
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
           <RedirectToCreateCommunityFlow
@@ -313,6 +316,15 @@ export function isCreateCommunityPath (path) {
 export function isJoinCommunityPath (path) {
   return (path.startsWith('/h/use-invitation'))
 }
+
+export function isAllCommunitiesPath (path) {
+  return (path.startsWith('/all'))
+}
+
+export function isNetworkPath (path) {
+  return (path.startsWith('/n/'))
+}
+
 
 export function RedirectToSignupFlow ({ currentUser, pathname }) {
   if (!currentUser || !currentUser.settings || !currentUser.settings.signupInProgress) return null
