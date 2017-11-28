@@ -36,6 +36,7 @@ import Domain from 'routes/CreateCommunity/Domain'
 // import Privacy from 'routes/CreateCommunity/Privacy'
 import CommunityReview from 'routes/CreateCommunity/Review'
 import NotFound from 'components/NotFound'
+import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
@@ -193,7 +194,7 @@ export default class PrimaryLayout extends Component {
             />
 
             <Route path='/all' exact component={Feed} />
-            <Route path='/all/:topicName' exact component={Feed} />
+            <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
             <Route path='/all/p/:postId' component={Feed} />
             <Route path='/c/:slug' exact component={Feed} />
             <Route path='/c/:slug/members' component={Members} />

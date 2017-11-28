@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`does something 1`] = `
+<div>
+  <h1>
+    Were working on expanding
+  </h1>
+  <h2>
+    #topics to more places
+  </h2>
+  <p>
+    In the meantime, click a topic from an individual community
+  </p>
+  <p>
+    to see posts from that community
+  </p>
+  <Link
+    replace={false}
+    to="/reset-password"
+  >
+    <p>
+      Forgot password?
+    </p>
+  </Link>
+</div>
+`;
