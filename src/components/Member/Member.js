@@ -39,8 +39,7 @@ export default class Member extends React.Component {
             <SkillLabel key={index} styleName='skill'>{skill.name}</SkillLabel>
           )}
         </div>}
-        {name === 'Test Account' && <div styleName='tagline'>taglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetaglinetagline</div>}
-        {name !== 'Test Account' && <div styleName='tagline'>{tagline}</div>}
+        <div styleName='tagline'>{tagline}</div>
       </div>
     </div>
   }
