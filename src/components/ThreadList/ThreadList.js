@@ -75,12 +75,20 @@ function ThreadListItem ({currentUser, active, id, participants, latestMessage, 
       text += '...'
     }
   }
+  var names, avatarUrls
+  if (isEmpty(otherParticipants)) {
+    names = ['You']
+    avatarUrls = [currentUser.avatarUrl]
+  } else {
+    names = map('name', otherParticipants)
+    avatarUrls = map('avatarUrl', otherParticipants)
+  }
   return <li styleName='list-item'>
     <Link to={`/t/${id}`}>
       {active && <div styleName='active-thread' />}
-      <ThreadAvatars avatarUrls={map('avatarUrl', otherParticipants)} />
+      <ThreadAvatars avatarUrls={avatarUrls} />
       <div styleName='li-center-content'>
-        <ThreadNames names={map('name', otherParticipants)} />
+        <ThreadNames names={names} />
         <div styleName='thread-message-text'>{text}</div>
       </div>
       <div styleName='li-right-content'>

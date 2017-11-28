@@ -56,9 +56,11 @@ function Header ({ thread, currentUser }) {
   const others = map('name', filter(f => f.id !== id, participants))
   const othersMinusLast = others.slice(0, others.length - 1)
 
+  const headerText = `You${others.length > 1 ? `, ${othersMinusLast.join(', ')}` : ''}${others.length > 0 ? ` and ${others[others.length - 1]}` : ''}`
+
   return <div styleName='header' id='thread-header'>
     <div styleName='header-text'>
-      You{others.length > 1 ? `, ${othersMinusLast.join(', ')}` : ''} and {others[others.length - 1]}
+      {headerText}
     </div>
     <CloseMessages />
   </div>

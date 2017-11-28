@@ -1,5 +1,5 @@
 import MessagesDropdown, { MessagesDropdownItem } from './MessagesDropdown'
-import { shallow } from 'enzyme'
+ import { shallow } from 'enzyme'
 import React from 'react'
 import orm from 'store/models'
 
@@ -60,7 +60,7 @@ describe('MessagesDropdownItem', () => {
     const goToThread = i => mockNavigate(i)
 
     const wrapper = shallow(<MessagesDropdownItem
-      thread={threads[0]} currentUserId={u1.id} onClick={() => goToThread(threads[0].id)} />)
+      thread={threads[0]} currentUser={u1} onClick={() => goToThread(threads[0].id)} />)
     expect(wrapper.find('RoundImageRow').prop('imageUrls')).toEqual(['bar.png', 'baz.png'])
     expect(wrapper.find('div').at(2).text()).toEqual('Marie Curie and Arthur Fonzarelli')
     expect(wrapper.find('div').at(3).text()).toEqual('hi')

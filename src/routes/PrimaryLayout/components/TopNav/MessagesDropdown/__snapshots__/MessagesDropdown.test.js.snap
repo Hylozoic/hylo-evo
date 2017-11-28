@@ -7,7 +7,13 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
       data-styleName="threads"
     >
       <MessagesDropdownItem
-        currentUserId="1"
+        currentUser={
+          Object {
+            "avatarUrl": "foo.png",
+            "id": "1",
+            "name": "Charles Darwin",
+          }
+        }
         onClick={[Function]}
         thread={
           SessionBoundModel {
@@ -19,7 +25,13 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
         }
       />
       <MessagesDropdownItem
-        currentUserId="1"
+        currentUser={
+          Object {
+            "avatarUrl": "foo.png",
+            "id": "1",
+            "name": "Charles Darwin",
+          }
+        }
         onClick={[Function]}
         thread={
           SessionBoundModel {
