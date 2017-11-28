@@ -110,3 +110,5 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
 `;
 
 exports[`MessagesDropdownItem renders correctly with an empty thread 1`] = `null`;
+
+exports[`MessagesDropdownItem renders correctly with no other participants 1`] = `null`;

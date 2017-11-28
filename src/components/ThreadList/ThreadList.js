@@ -65,7 +65,7 @@ export default class ThreadList extends Component {
   }
 }
 
-function ThreadListItem ({currentUser, active, id, participants, latestMessage, unreadCount}) {
+export function ThreadListItem ({currentUser, active, id, participants, latestMessage, unreadCount}) {
   const otherParticipants = filter(p => p.id !== get('id', currentUser), participants)
   let text = ''
   const maxTextLength = 54

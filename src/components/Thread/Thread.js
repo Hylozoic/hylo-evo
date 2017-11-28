@@ -50,7 +50,7 @@ export default class Thread extends React.Component {
   }
 }
 
-function Header ({ thread, currentUser }) {
+export function Header ({ thread, currentUser }) {
   const participants = get('participants', thread) || []
   const id = get('id', currentUser)
   const others = map('name', filter(f => f.id !== id, participants))

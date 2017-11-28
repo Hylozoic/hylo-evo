@@ -1,6 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches the last snapshot 1`] = `
+exports[`Header matches the last snapshot 1`] = `
+<div
+  data-styleName="header"
+  id="thread-header"
+>
+  <div
+    data-styleName="header-text"
+  >
+    You, Jo and La
+  </div>
+  <CloseMessages />
+</div>
+`;
+
+exports[`Header matches the last snapshot when just 2 participants 1`] = `
+<div
+  data-styleName="header"
+  id="thread-header"
+>
+  <div
+    data-styleName="header-text"
+  >
+    You and Jo
+  </div>
+  <CloseMessages />
+</div>
+`;
+
+exports[`Header matches the last snapshot when just you 1`] = `
+<div
+  data-styleName="header"
+  id="thread-header"
+>
+  <div
+    data-styleName="header-text"
+  >
+    You
+  </div>
+  <CloseMessages />
+</div>
+`;
+
+exports[`Thread matches the last snapshot 1`] = `
 <div
   data-styleName="thread"
 >
