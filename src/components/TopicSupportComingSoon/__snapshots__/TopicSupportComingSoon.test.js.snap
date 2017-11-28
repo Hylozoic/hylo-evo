@@ -1,26 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`does something 1`] = `
-<div>
+<div
+  data-styleName="container"
+>
   <h1>
     Were working on expanding
-  </h1>
-  <h2>
+    <br />
     #topics to more places
-  </h2>
-  <p>
-    In the meantime, click a topic from an individual community
-  </p>
-  <p>
-    to see posts from that community
+  </h1>
+  <p
+    data-styleName="gray-text"
+  >
+    In the meantime, click a topic from an individual
+    <br />
+    community to see posts from that community
   </p>
   <Link
     replace={false}
-    to="/reset-password"
+    to="/all"
   >
-    <p>
-      Forgot password?
-    </p>
+    <Button
+      data-styleName="back-button"
+    >
+      Return to All Communities
+    </Button>
   </Link>
+  <img
+    data-styleName="axolotl-digging-image"
+    src="/axolotl-digging.svg"
+  />
 </div>
 `;
