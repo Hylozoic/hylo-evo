@@ -107,7 +107,7 @@ export default class PrimaryLayout extends Component {
       detailRoutes
     )
 
-    const showTopics = !isAllCommunitiesPath(location.pathname) && !isNetworkPath(location.pathname)
+    const showTopics = !isAllCommunitiesPath(location.pathname) && !isNetworkPath(location.pathname) && !isTagPath(location.pathname)
 
     // TODO move FullPageModals
     return <div styleName='container'>
@@ -195,7 +195,7 @@ export default class PrimaryLayout extends Component {
                 <Redirect to={`/c/${props.match.params.slug}`} />
               )}
             />
-
+            <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
             <Route path='/all' exact component={Feed} />
             <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
             <Route path='/all/p/:postId' component={Feed} />
@@ -323,6 +323,10 @@ export function isAllCommunitiesPath (path) {
 
 export function isNetworkPath (path) {
   return (path.startsWith('/n/'))
+}
+
+export function isTagPath (path) {
+  return (path.startsWith('/tag/'))
 }
 
 
