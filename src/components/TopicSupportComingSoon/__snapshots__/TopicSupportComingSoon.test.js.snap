@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<div
+  data-styleName="container"
+>
+  <h1>
+    We're working on expanding
+    <br />
+    #topics to more places
+  </h1>
+  <p
+    data-styleName="gray-text"
+  >
+    In the meantime, click a topic from an individual
+    <br />
+    community to see posts from that community.
+  </p>
+  <Link
+    replace={false}
+    to="/all"
+  >
+    <Button
+      data-styleName="back-button"
+    >
+      Return to All Communities
+    </Button>
+  </Link>
+  <img
+    data-styleName="axolotl-digging-image"
+    src="/axolotl-digging.svg"
+  />
+</div>
+`;
