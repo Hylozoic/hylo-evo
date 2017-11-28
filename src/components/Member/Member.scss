@@ -33,17 +33,20 @@ $skill-vertical-margin: 8px;
   composes: hdr-headline from 'css/typography.scss';
   margin-top: $member-padding;
   word-wrap: break-word;
+  max-width: 242px;
 }
 
 .location {
   composes: caption-lt-lg from 'css/typography.scss';
   word-wrap: break-word;
+  max-width: 242px;
 }
 
 .tagline {
   composes: bdy-lt-sm from 'css/typography.scss';
   margin-top: $member-padding;
   word-wrap: break-word;
+  max-width: 242px;
 }
 
 .skills {
