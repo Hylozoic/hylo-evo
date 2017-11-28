@@ -1,7 +1,7 @@
 $member-width: 288px;
 $member-padding: 16px;
 $avatar-size: 120px;
-$skill-vertical-margin: 8px; 
+$skill-vertical-margin: 8px;
 .member {
   position: relative;
   display: block;
@@ -10,6 +10,7 @@ $skill-vertical-margin: 8px;
   text-align: center;
   border: 1px solid rgba(54,60,60,0.10);
   border-radius: 4px;
+  max-width: $member-width;
 
   &:hover {
     text-decoration: none;
@@ -31,15 +32,18 @@ $skill-vertical-margin: 8px;
 .name {
   composes: hdr-headline from 'css/typography.scss';
   margin-top: $member-padding;
+  word-wrap: break-word;
 }
 
 .location {
   composes: caption-lt-lg from 'css/typography.scss';
+  word-wrap: break-word;
 }
 
 .tagline {
   composes: bdy-lt-sm from 'css/typography.scss';
   margin-top: $member-padding;
+  word-wrap: break-word;
 }
 
 .skills {

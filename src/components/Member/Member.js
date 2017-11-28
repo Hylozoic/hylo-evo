@@ -39,7 +39,7 @@ export default class Member extends React.Component {
             <SkillLabel key={index} styleName='skill'>{skill.name}</SkillLabel>
           )}
         </div>}
-        <div styleName='tagline'>{tagline}</div>
+        <div styleName='tagline'>kjlkjlkjlkjlkjlkjlkjlkjlkjlkjlkjlkjlkjlkjlkjlkjlkjlkjlkjlkjlkjlkjlkjlkjl</div>
       </div>
     </div>
   }
