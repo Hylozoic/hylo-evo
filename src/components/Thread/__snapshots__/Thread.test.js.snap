@@ -8,7 +8,7 @@ exports[`Header matches the last snapshot 1`] = `
   <div
     data-styleName="header-text"
   >
-    You, Jo and La
+    Jo and La
   </div>
   <CloseMessages />
 </div>
@@ -22,7 +22,7 @@ exports[`Header matches the last snapshot when just 2 participants 1`] = `
   <div
     data-styleName="header-text"
   >
-    You and Jo
+    Jo
   </div>
   <CloseMessages />
 </div>
