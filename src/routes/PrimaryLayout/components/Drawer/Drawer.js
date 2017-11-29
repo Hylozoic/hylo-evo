@@ -12,7 +12,7 @@ import { isEmpty, sum } from 'lodash/fp'
 
 export default class Drawer extends Component {
   static propTypes = {
-    currentCommunity: shape({
+    community: shape({
       id: string,
       name: string,
       location: string,
@@ -45,10 +45,10 @@ export default class Drawer extends Component {
   }
 
   render () {
-    const { currentCommunityOrNetwork, communities, networks, className } = this.props
+    const { community, network, communities, networks, className } = this.props
     return <div className={className} styleName='s.communityDrawer'>
       <Icon name='Ex' styleName='s.closeDrawer' />
-      <Logo community={currentCommunityOrNetwork} />
+      <Logo community={community} network={network} />
       <Link styleName='s.settingsLink' to={'/settings'}>
         <Icon name='Settings' styleName='s.settingsIcon' /> Settings
       </Link>
@@ -132,10 +132,11 @@ export class NetworkRow extends React.Component {
   }
 }
 
-function Logo ({ community }) {
-  if (!community) return null
-  const { slug, name, location, avatarUrl } = community
-  return <Link styleName='s.currentCommunity' to={`/c/${slug}`}>
+function Logo ({ community, network }) {
+  if (!community && !network) return null
+  const { slug, name, location, avatarUrl } = (community || network)
+  const link = `/${community ? 'c' : 'n'}/${slug}`
+  return <Link styleName='s.currentCommunity' to={link}>
     <div styleName='s.avatar' style={bgImageStyle(avatarUrl)} />
     <div styleName='s.name' className='drawer-inv-bd'>{name}</div>
     <div className='drawer-inv-sm'>{location}</div>
