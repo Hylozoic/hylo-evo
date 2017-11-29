@@ -1,4 +1,5 @@
 import { attr, many, Model } from 'redux-orm'
+import { get, isEmpty } from 'lodash/fp'
 
 const MessageThread = Model.createClass({
   isUnread () {
@@ -27,6 +28,23 @@ const MessageThread = Model.createClass({
       lastReadAt: new Date().toString()
     })
     return this
+  },
+
+  particpantAttributes (currentUser) {
+    const currentUserId = get('id', currentUser)
+    const participants = this.participants.toRefArray()
+    .filter(p => p.id !== currentUserId)
+    var names, avatarUrls
+
+    if (isEmpty(participants)) {
+      avatarUrls = [get('avatarUrl', currentUser)]
+      names = ['You']
+    } else {
+      avatarUrls = participants.map(p => p.avatarUrl)
+      names = participants.map(p => p.name)
+    }
+
+    return {names, avatarUrls}
   }
 })
 

@@ -97,15 +97,15 @@ export default class MessagesDropdown extends Component {
   }
 }
 
-const participantNames = participants => {
-  const length = participants.length
+const formatNames = names => {
+  const length = names.length
   if (length === 1) {
-    return participants[0].name
+    return names[0]
   } else if (length === 2) {
-    return `${participants[0].name} and ${participants[1].name}`
+    return `${names[0]} and ${names[1]}`
   } else if (length > 2) {
     const n = length - 2
-    return `${participants[0].name}, ${participants[1].name} and ${n} other${n > 1 ? 's' : ''}`
+    return `${names[0]}, ${names[1]} and ${n} other${n > 1 ? 's' : ''}`
   }
 }
 
@@ -119,16 +119,7 @@ export function MessagesDropdownItem ({ thread, onClick, currentUser }) {
     text = `You: ${text}`
   }
 
-  var names, avatarUrls
-  const participants = thread.participants.toRefArray()
-  .filter(p => p.id !== currentUserId)
-  if (isEmpty(participants)) {
-    avatarUrls = [get('avatarUrl', currentUser)]
-    names = 'You'
-  } else {
-    avatarUrls = participants.map(p => p.avatarUrl)
-    names = participantNames(participants)
-  }
+  const { names, avatarUrls } = thread.particpantAttributes(currentUser)
 
   const maxMessageLength = 145
 
@@ -142,7 +133,7 @@ export function MessagesDropdownItem ({ thread, onClick, currentUser }) {
       <RoundImageRow imageUrls={avatarUrls} vertical ascending cap='2' />
     </div>
     <div styleName='message-content'>
-      <div styleName='name'>{names}</div>
+      <div styleName='name'>{formatNames(names)}</div>
       <div styleName='body'>{text}</div>
       <div styleName='date'>{humanDate(thread.updatedAt)}</div>
     </div>

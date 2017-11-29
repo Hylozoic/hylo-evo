@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { filter, get, isEmpty, map } from 'lodash/fp'
+import { get, isEmpty } from 'lodash/fp'
 import { Link } from 'react-router-dom'
 import RoundImage from 'components/RoundImage'
 import Badge from 'components/Badge'
@@ -51,7 +51,7 @@ export default class ThreadList extends Component {
             key={`thread-li-${t.id}`}
             currentUser={currentUser}
             active={t.id === threadId}
-            participants={t.participants.toRefArray()}
+            thread={t}
             latestMessage={t.messages.orderBy(m => Date.parse(m.createdAt), 'desc').first()}
             unreadCount={t.unreadCount} />
         })}
@@ -65,8 +65,7 @@ export default class ThreadList extends Component {
   }
 }
 
-export function ThreadListItem ({currentUser, active, id, participants, latestMessage, unreadCount}) {
-  const otherParticipants = filter(p => p.id !== get('id', currentUser), participants)
+export function ThreadListItem ({currentUser, active, id, thread, latestMessage, unreadCount}) {
   let text = ''
   const maxTextLength = 54
   if (latestMessage) {
@@ -75,14 +74,9 @@ export function ThreadListItem ({currentUser, active, id, participants, latestMe
       text += '...'
     }
   }
-  var names, avatarUrls
-  if (isEmpty(otherParticipants)) {
-    names = ['You']
-    avatarUrls = [currentUser.avatarUrl]
-  } else {
-    names = map('name', otherParticipants)
-    avatarUrls = map('avatarUrl', otherParticipants)
-  }
+
+  const { names, avatarUrls } = thread.particpantAttributes(currentUser)
+
   return <li styleName='list-item'>
     <Link to={`/t/${id}`}>
       {active && <div styleName='active-thread' />}
