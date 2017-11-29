@@ -23,7 +23,7 @@ const networks = [
 describe('Drawer', () => {
   it('renders with a current community', () => {
     const wrapper = shallow(<Drawer
-      currentCommunityOrNetwork={communities[0]}
+      community={communities[0]}
       communities={communities}
       networks={[]} />)
     expect(wrapper).toMatchSnapshot()

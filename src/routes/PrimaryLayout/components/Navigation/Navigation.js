@@ -13,7 +13,8 @@ export default function Navigation (props) {
     membersPath,
     badge,
     clearBadge,
-    clearFeedList
+    clearFeedList,
+    showTopics
   } = props
 
   const homeOnClick = () => {
@@ -47,7 +48,7 @@ export default function Navigation (props) {
           <NavLink key={link.label} {...link} collapsed={collapsed}
             onClick={link.onClick} />)}
       </ul>
-      <TopicNavigation backUrl={rootPath} communitySlug={rootSlug} collapsed={collapsed} />
+      {showTopics && <TopicNavigation backUrl={rootPath} communitySlug={rootSlug} collapsed={collapsed} />}
     </div>
   </div>
 }

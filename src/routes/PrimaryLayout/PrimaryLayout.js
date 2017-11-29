@@ -36,6 +36,7 @@ import Domain from 'routes/CreateCommunity/Domain'
 // import Privacy from 'routes/CreateCommunity/Privacy'
 import CommunityReview from 'routes/CreateCommunity/Review'
 import NotFound from 'components/NotFound'
+import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
@@ -105,14 +106,21 @@ export default class PrimaryLayout extends Component {
       ({ path }) => matchPath(location.pathname, {path}),
       detailRoutes
     )
+
+    const showTopics = !isAllCommunitiesPath(location.pathname) && !isNetworkPath(location.pathname) && !isTagPath(location.pathname)
+
     // TODO move FullPageModals
     return <div styleName='container'>
-      <Drawer currentCommunityOrNetwork={network || community} styleName={cx('drawer', {hidden: !isDrawerOpen})} />
-      <TopNav {...{community, network, currentUser, showLogoBadge}} styleName='top' onClick={closeDrawer} />
+      <Drawer community={community} network={network}
+        styleName={cx('drawer', {hidden: !isDrawerOpen})} />
+      <TopNav {...{community, network, currentUser, showLogoBadge}}
+        styleName='top'
+        onClick={closeDrawer} />
       <div styleName='main' onClick={closeDrawer}>
-        <Navigation collapsed={hasDetail} styleName='left' />
+        <Navigation collapsed={hasDetail} styleName='left' showTopics={showTopics} />
         <div styleName='center' id={CENTER_COLUMN_ID}>
-          <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
+          <RedirectToSignupFlow currentUser={currentUser}
+            pathname={this.props.location.pathname} />
           <RedirectToCreateCommunityFlow
             hasMemberships={hasMemberships}
             pathname={this.props.location.pathname}
@@ -191,9 +199,9 @@ export default class PrimaryLayout extends Component {
                 <Redirect to={`/c/${props.match.params.slug}`} />
               )}
             />
-
+            <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
             <Route path='/all' exact component={Feed} />
-            <Route path='/all/:topicName' exact component={Feed} />
+            <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
             <Route path='/all/p/:postId' component={Feed} />
             <Route path='/c/:slug' exact component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
@@ -210,6 +218,8 @@ export default class PrimaryLayout extends Component {
             <Route path='/n/:networkSlug/m/:id' component={MemberProfile} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
             <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />
+            <Route path='/n/:networkSlug/:topicName' exact component={TopicSupportComingSoon} />
+
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
@@ -309,6 +319,18 @@ export function isCreateCommunityPath (path) {
 
 export function isJoinCommunityPath (path) {
   return (path.startsWith('/h/use-invitation'))
+}
+
+export function isAllCommunitiesPath (path) {
+  return (path.startsWith('/all'))
+}
+
+export function isNetworkPath (path) {
+  return (path.startsWith('/n/'))
+}
+
+export function isTagPath (path) {
+  return (path.startsWith('/tag/'))
 }
 
 export function RedirectToSignupFlow ({ currentUser, pathname }) {
