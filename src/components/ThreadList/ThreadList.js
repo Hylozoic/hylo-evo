@@ -75,7 +75,7 @@ export function ThreadListItem ({currentUser, active, id, thread, latestMessage,
     }
   }
 
-  const { names, avatarUrls } = thread.particpantAttributes(currentUser)
+  const { names, avatarUrls } = thread.participantAttributes(currentUser, 2)
 
   return <li styleName='list-item'>
     <Link to={`/t/${id}`}>
@@ -109,17 +109,7 @@ function ThreadAvatars ({avatarUrls}) {
 }
 
 function ThreadNames ({names}) {
-  let nameString = ''
-  switch (names.length) {
-    case 1:
-    case 2:
-      nameString = names.join(', ')
-      break
-    default:
-      nameString = `${names.slice(0, 1).join(', ')} and ${names.length - 1} other${names.length > 2 ? 's' : ''}`
-      break
-  }
   return <div styleName='thread-names'>
-    {nameString}
+    {names}
   </div>
 }

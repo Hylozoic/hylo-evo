@@ -66,12 +66,7 @@ exports[`ThreadListItem matches the last snapshot 1`] = `
       data-styleName="li-center-content"
     >
       <ThreadNames
-        names={
-          Array [
-            "Jo",
-            "La",
-          ]
-        }
+        names="Jo and La"
       />
       <div
         data-styleName="thread-message-text"
@@ -107,11 +102,7 @@ exports[`ThreadListItem matches the last snapshot with 2 participants 1`] = `
       data-styleName="li-center-content"
     >
       <ThreadNames
-        names={
-          Array [
-            "Jo",
-          ]
-        }
+        names="Jo"
       />
       <div
         data-styleName="thread-message-text"
@@ -147,11 +138,7 @@ exports[`ThreadListItem matches the last snapshot with just you 1`] = `
       data-styleName="li-center-content"
     >
       <ThreadNames
-        names={
-          Array [
-            "You",
-          ]
-        }
+        names="You"
       />
       <div
         data-styleName="thread-message-text"
