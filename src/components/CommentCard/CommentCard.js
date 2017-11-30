@@ -10,7 +10,7 @@ import './CommentCard.scss'
 
 export default function CommentCard ({ comment, shouldShowReply, expanded = true, highlightProps }) {
   const { creator, post, slug, image } = comment
-  const postTitle = present(sanitize(post.title), { maxlength: 25, noP: true })
+  const postTitle = present(sanitize(post.title), { maxlength: 25, noP: true, noLinks: true })
   const commentPresentOpts = {
     maxlength: expanded ? null : 144,
     noP: true,
