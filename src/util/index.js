@@ -56,6 +56,10 @@ export function networkUrl (slug) {
   return slug ? `/n/${slug}` : ''
 }
 
+export function networkSettingsUrl (slug) {
+  return `/n/${slug}/settings`
+}
+
 export function threadUrl (id) {
   return `/t/${id}`
 }
