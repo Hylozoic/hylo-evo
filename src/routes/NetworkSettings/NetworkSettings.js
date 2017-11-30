@@ -1,24 +1,41 @@
 import React, { PropTypes, Component } from 'react'
-import './NetworkSettings.scss'
-import Loading from 'components/Loading'
+import cx from 'classnames'
+import { times, isEmpty } from 'lodash/fp'
+
+import { bgImageStyle } from 'util/index'
 import Button from 'components/Button'
 import ChangeImageButton from 'components/ChangeImageButton'
+import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Network'
+import FullPageModal from 'routes/FullPageModal'
+import Loading from 'components/Loading'
 import RemovableListItem from 'components/RemovableListItem'
 import SettingsControl from 'components/SettingsControl'
-import FullPageModal from 'routes/FullPageModal'
-import { bgImageStyle } from 'util/index'
-import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Network'
-import { times, isEmpty } from 'lodash/fp'
-import cx from 'classnames'
 
-const { object, func } = PropTypes
+import './NetworkSettings.scss'
+
+const { any, array, bool, func, number, object } = PropTypes
 
 export default class NetworkSettings extends Component {
   static propTypes = {
+    // TODO: temp, fix types
+    addCommunityToNetwork: func,
+    addNetworkModeratorRole: func,
+    communities: array,
+    communitiesPage: number,
+    communitiesPageCount: number,
+    communitiesPending: any,
+    fetchNetworkSettings: func.isRequired,
+    isAdmin: bool,
+    moderators: array,
+    moderatorsPage: number,
+    moderatorsPageCount: number,
+    moderatorsPending: any,
     network: object,
-    updateNetworkSettings: func,
-    fetchNetworkSettings: func,
-    setConfirm: func
+    removeCommunityFromNetwork: func.isRequired,
+    removeNetworkModeratorRole: func.isRequired,
+    setCommunitiesPage: func.isRequired,
+    setConfirm: func.isRequired,
+    updateNetworkSettings: func.isRequired
   }
 
   constructor (props) {
@@ -77,13 +94,19 @@ export default class NetworkSettings extends Component {
       moderatorsPageCount,
       moderatorsPending,
       network,
+      removeCommunityFromNetwork,
+      removeNetworkModeratorRole,
       setCommunitiesPage,
       setConfirm,
       setModeratorsPage,
       updateNetworkSettings
     } = this.props
-    if (!isAdmin) return <FullPageModal>Sorry, you must be an admin to access this page. {isAdmin}</FullPageModal>
     if (!network) return <FullPageModal><Loading /></FullPageModal>
+    if (!isAdmin) {
+      return <FullPageModal goToOnClose={`/n/${network.slug}`}>
+        Sorry, you must be an admin to access this page.
+      </FullPageModal>
+    }
 
     const { edits, changed } = this.state
     const {
@@ -113,7 +136,6 @@ export default class NetworkSettings extends Component {
 
     return <FullPageModal narrow goToOnClose={`/n/${network.slug}`}>
       <div>
-        <div>isAdmin: {isAdmin}</div>
         <input type='text' styleName='name' onChange={updateSetting('name')} value={name || ''} />
         <div style={bgImageStyle(bannerUrl)} styleName='banner'>
           <ChangeImageButton
@@ -132,21 +154,24 @@ export default class NetworkSettings extends Component {
           <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
         </div>
         <PaginatedList
-          label={'Moderators'}
+          isAdmin={isAdmin}
           items={moderators}
+          label={'Moderators'}
           page={moderatorsPage}
           pageCount={moderatorsPageCount}
-          setPage={setModeratorsPage}
-          pending={moderatorsPending} />
-        <PaginatedList
-          styleName='communities'
-          label={'Communities'}
+          pending={moderatorsPending}
+          remove={removeNetworkModeratorRole}
+          setPage={setModeratorsPage} />
+        <PaginatedList styleName='communities'
+          isAdmin={isAdmin}
           items={communities}
+          itemProps={{square: true, size: 40}}
+          label={'Communities'}
           page={communitiesPage}
           pageCount={communitiesPageCount}
-          setPage={setCommunitiesPage}
           pending={communitiesPending}
-          itemProps={{square: true, size: 40}} />
+          remove={removeCommunityFromNetwork}
+          setPage={setCommunitiesPage} />
       </div>
     </FullPageModal>
   }
