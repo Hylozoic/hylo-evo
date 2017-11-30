@@ -11,6 +11,7 @@ describe('NetworkSettings', () => {
     const communities = [{id: 4}, {id: 5}]
 
     const wrapper = shallow(<NetworkSettings
+      isAdmin
       network={network}
       updateNetworkSettings={() => {}}
       moderators={moderators}

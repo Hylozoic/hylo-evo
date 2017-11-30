@@ -18,6 +18,7 @@ import {
   FETCH_MODERATORS
 } from './NetworkSettings.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
+import getMe from 'store/selectors/getMe'
 import getParam from 'store/selectors/getParam'
 import { get } from 'lodash/fp'
 import { bindActionCreators } from 'redux'
@@ -42,7 +43,10 @@ export function mapStateToProps (state, props) {
 
   const confirm = state.FullPageModal.confirm
 
+  const me = getMe(state)
+
   return {
+    isAdmin: me ? me.isAdmin : false,
     slug,
     network,
     moderators,

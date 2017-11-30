@@ -5,12 +5,13 @@ import Button from 'components/Button'
 import ChangeImageButton from 'components/ChangeImageButton'
 import RemovableListItem from 'components/RemovableListItem'
 import SettingsControl from 'components/SettingsControl'
-const { object, func } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
 import { bgImageStyle } from 'util/index'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Network'
 import { times, isEmpty } from 'lodash/fp'
 import cx from 'classnames'
+
+const { object, func } = PropTypes
 
 export default class NetworkSettings extends Component {
   static propTypes = {
@@ -66,20 +67,22 @@ export default class NetworkSettings extends Component {
 
   render () {
     const {
-      network,
-      updateNetworkSettings,
-      moderators,
       communities,
-      setConfirm,
-      moderatorsPage,
-      moderatorsPageCount,
-      setModeratorsPage,
       communitiesPage,
       communitiesPageCount,
-      setCommunitiesPage,
+      communitiesPending,
+      isAdmin,
+      moderators,
+      moderatorsPage,
+      moderatorsPageCount,
       moderatorsPending,
-      communitiesPending
+      network,
+      setCommunitiesPage,
+      setConfirm,
+      setModeratorsPage,
+      updateNetworkSettings
     } = this.props
+    if (!isAdmin) return <FullPageModal>Sorry, you must be an admin to access this page. {isAdmin}</FullPageModal>
     if (!network) return <FullPageModal><Loading /></FullPageModal>
 
     const { edits, changed } = this.state
@@ -110,6 +113,7 @@ export default class NetworkSettings extends Component {
 
     return <FullPageModal narrow goToOnClose={`/n/${network.slug}`}>
       <div>
+        <div>isAdmin: {isAdmin}</div>
         <input type='text' styleName='name' onChange={updateSetting('name')} value={name || ''} />
         <div style={bgImageStyle(bannerUrl)} styleName='banner'>
           <ChangeImageButton
