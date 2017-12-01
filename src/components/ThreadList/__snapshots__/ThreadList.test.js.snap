@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches the last snapshot 1`] = `
+exports[`ThreadList matches the last snapshot 1`] = `
 <div
   data-styleName="thread-list"
 >
@@ -44,4 +44,113 @@ exports[`matches the last snapshot 1`] = `
     elementId="thread-list-list"
   />
 </div>
+`;
+
+exports[`ThreadListItem matches the last snapshot 1`] = `
+<li
+  data-styleName="list-item"
+>
+  <Link
+    replace={false}
+    to="/t/undefined"
+  >
+    <ThreadAvatars
+      avatarUrls={
+        Array [
+          "jo.png",
+          "la.png",
+        ]
+      }
+    />
+    <div
+      data-styleName="li-center-content"
+    >
+      <ThreadNames
+        names="Jo and La"
+      />
+      <div
+        data-styleName="thread-message-text"
+      />
+    </div>
+    <div
+      data-styleName="li-right-content"
+    >
+      <div
+        data-styleName="message-time"
+      />
+    </div>
+  </Link>
+</li>
+`;
+
+exports[`ThreadListItem matches the last snapshot with 2 participants 1`] = `
+<li
+  data-styleName="list-item"
+>
+  <Link
+    replace={false}
+    to="/t/undefined"
+  >
+    <ThreadAvatars
+      avatarUrls={
+        Array [
+          "jo.png",
+        ]
+      }
+    />
+    <div
+      data-styleName="li-center-content"
+    >
+      <ThreadNames
+        names="Jo"
+      />
+      <div
+        data-styleName="thread-message-text"
+      />
+    </div>
+    <div
+      data-styleName="li-right-content"
+    >
+      <div
+        data-styleName="message-time"
+      />
+    </div>
+  </Link>
+</li>
+`;
+
+exports[`ThreadListItem matches the last snapshot with just you 1`] = `
+<li
+  data-styleName="list-item"
+>
+  <Link
+    replace={false}
+    to="/t/undefined"
+  >
+    <ThreadAvatars
+      avatarUrls={
+        Array [
+          "ra.png",
+        ]
+      }
+    />
+    <div
+      data-styleName="li-center-content"
+    >
+      <ThreadNames
+        names="You"
+      />
+      <div
+        data-styleName="thread-message-text"
+      />
+    </div>
+    <div
+      data-styleName="li-right-content"
+    >
+      <div
+        data-styleName="message-time"
+      />
+    </div>
+  </Link>
+</li>
 `;

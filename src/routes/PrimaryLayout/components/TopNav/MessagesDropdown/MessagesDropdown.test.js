@@ -55,12 +55,21 @@ describe('MessagesDropdownItem', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
+  it('renders correctly with no other participants', () => {
+    const currentUser = {id: 1, name: 'Ra', avatarUrl: 'ra.png'}
+    const thread = new MessageThread({
+      participants: [currentUser]
+    })
+    const wrapper = shallow(<MessagesDropdownItem thread={thread} currentUser />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
   it('renders correctly with a message', () => {
     const mockNavigate = jest.fn()
     const goToThread = i => mockNavigate(i)
 
     const wrapper = shallow(<MessagesDropdownItem
-      thread={threads[0]} currentUserId={u1.id} onClick={() => goToThread(threads[0].id)} />)
+      thread={threads[0]} currentUser={u1} onClick={() => goToThread(threads[0].id)} />)
     expect(wrapper.find('RoundImageRow').prop('imageUrls')).toEqual(['bar.png', 'baz.png'])
     expect(wrapper.find('div').at(2).text()).toEqual('Marie Curie and Arthur Fonzarelli')
     expect(wrapper.find('div').at(3).text()).toEqual('hi')
