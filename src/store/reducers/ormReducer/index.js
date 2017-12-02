@@ -43,6 +43,9 @@ import {
 import {
   USE_INVITATION
 } from 'routes/JoinCommunity/JoinCommunity.store'
+import {
+  REMOVE_COMMUNITY_FROM_NETWORK_PENDING, REMOVE_NETWORK_MODERATOR_ROLE_PENDING
+} from 'routes/NetworkSettings/NetworkSettings.store'
 
 import orm from 'store/models'
 import { find, values } from 'lodash/fp'
@@ -62,6 +65,7 @@ export default function ormReducer (state = {}, action) {
     Membership,
     Message,
     MessageThread,
+    Network,
     Person,
     Post,
     PostCommenter,
@@ -235,6 +239,26 @@ export default function ormReducer (state = {}, action) {
 
     case USE_INVITATION:
       Me.first().updateAppending({memberships: [payload.data.useInvitation.membership.id]})
+      break
+
+    case REMOVE_COMMUNITY_FROM_NETWORK_PENDING:
+      if (Network.hasId(meta.networkId)) {
+        const network = Network.withId(meta.networkId)
+        network.update({
+          communities: network.communities.toModelArray()
+            .filter(c => c.id !== meta.communityId)
+        })
+      }
+      break
+
+    case REMOVE_NETWORK_MODERATOR_ROLE_PENDING:
+      if (Network.hasId(meta.networkId)) {
+        const network = Network.withId(meta.networkId)
+        network.update({
+          moderators: network.moderators.toModelArray()
+            .filter(m => m.id !== meta.personId)
+        })
+      }
       break
   }
 

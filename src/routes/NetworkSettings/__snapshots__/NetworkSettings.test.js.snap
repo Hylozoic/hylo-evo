@@ -73,7 +73,7 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       page={2}
       pageCount={7}
       pending={false}
-      remove={[Function]}
+      removeItem={[Function]}
       setPage={[Function]}
     />
     <PaginatedList
@@ -99,7 +99,7 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       page={3}
       pageCount={5}
       pending={true}
-      remove={[Function]}
+      removeItem={[Function]}
       setPage={[Function]}
     />
   </div>

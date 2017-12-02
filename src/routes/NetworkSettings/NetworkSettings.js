@@ -18,8 +18,8 @@ const { any, array, bool, func, number, object } = PropTypes
 export default class NetworkSettings extends Component {
   static propTypes = {
     // TODO: temp, fix types
-    addCommunityToNetwork: func,
-    addNetworkModeratorRole: func,
+    addCommunityToNetwork: func.isRequired,
+    addNetworkModeratorRole: func.isRequired,
     communities: array,
     communitiesPage: number,
     communitiesPageCount: number,
@@ -49,6 +49,7 @@ export default class NetworkSettings extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
+    console.log(prevProps, this.props)
     if (prevProps.network !== this.props.network) {
       this.props.fetchNetworkSettings()
       this.setEditState()
@@ -160,7 +161,7 @@ export default class NetworkSettings extends Component {
           page={moderatorsPage}
           pageCount={moderatorsPageCount}
           pending={moderatorsPending}
-          remove={removeNetworkModeratorRole}
+          removeItem={removeNetworkModeratorRole(network.id)}
           setPage={setModeratorsPage} />
         <PaginatedList styleName='communities'
           isAdmin={isAdmin}
@@ -170,7 +171,7 @@ export default class NetworkSettings extends Component {
           page={communitiesPage}
           pageCount={communitiesPageCount}
           pending={communitiesPending}
-          remove={removeCommunityFromNetwork}
+          removeItem={removeCommunityFromNetwork(network.id)}
           setPage={setCommunitiesPage} />
       </div>
     </FullPageModal>
@@ -202,15 +203,26 @@ export class PaginatedList extends Component {
 
   render () {
     const {
-      items, page, pageCount, setPage, pending, label, itemProps, className
+      className,
+      items,
+      itemProps,
+      label,
+      page,
+      pageCount,
+      pending,
+      removeItem,
+      setPage
     } = this.props
     const { prevItems } = this.state
-
     const visibleItems = pending ? prevItems : items
 
     return <div styleName={cx('paginated-list', {loading: pending})} className={className}>
       <div styleName='section-label'>{label}</div>
-      {visibleItems.map(m => <RemovableListItem item={m} key={m.id} {...itemProps} />)}
+      {visibleItems.map(m => <RemovableListItem
+        item={m}
+        key={m.id}
+        removeItem={removeItem}
+        {...itemProps} />)}
       <PaginationLinks page={page} pageCount={pageCount} setPage={setPage} />
     </div>
   }

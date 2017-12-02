@@ -1,4 +1,3 @@
-// import { combineReducers } from 'redux'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { createSelector } from 'reselect'
 import orm from 'store/models'
@@ -8,10 +7,18 @@ import { get, includes, isEmpty } from 'lodash/fp'
 export const MODULE_NAME = 'NetworkSettings'
 
 // Constants
+export const ADD_COMMUNITY_TO_NETWORK = `${MODULE_NAME}/ADD_COMMUNITY_TO_NETWORK`
+export const ADD_COMMUNITY_TO_NETWORK_PENDING = `${ADD_COMMUNITY_TO_NETWORK}_PENDING`
+export const ADD_NETWORK_MODERATOR_ROLE = `${MODULE_NAME}/ADD_NETWORK_MODERATOR_ROLE`
+export const ADD_NETWORK_MODERATOR_ROLE_PENDING = `${ADD_NETWORK_MODERATOR_ROLE}_PENDING`
 export const FETCH_NETWORK_SETTINGS = `${MODULE_NAME}/FETCH_NETWORK_SETTINGS`
 export const UPDATE_NETWORK_SETTINGS = `${MODULE_NAME}/UPDATE_NETWORK_SETTINGS`
 export const FETCH_MODERATORS = `${MODULE_NAME}/FETCH_MODERATORS`
 export const FETCH_COMMUNITIES = `${MODULE_NAME}/FETCH_COMMUNITIES`
+export const REMOVE_COMMUNITY_FROM_NETWORK = `${MODULE_NAME}/REMOVE_COMMUNITY_FROM_NETWORK`
+export const REMOVE_COMMUNITY_FROM_NETWORK_PENDING = `${REMOVE_COMMUNITY_FROM_NETWORK}_PENDING`
+export const REMOVE_NETWORK_MODERATOR_ROLE = `${MODULE_NAME}/REMOVE_NETWORK_MODERATOR_ROLE`
+export const REMOVE_NETWORK_MODERATOR_ROLE_PENDING = `${REMOVE_NETWORK_MODERATOR_ROLE}_PENDING`
 export const SET_MODERATORS_PAGE = `${MODULE_NAME}/SET_MODERATORS_PAGE`
 export const SET_COMMUNITIES_PAGE = `${MODULE_NAME}/SET_COMMUNITIES_PAGE`
 
@@ -43,6 +50,60 @@ export default function reducer (state = defaultState, action) {
 }
 
 // Action Creators
+
+export function addCommunityToNetwork (communityId, networkId) {
+  return {
+    type: ADD_COMMUNITY_TO_NETWORK,
+    graphql: {
+      query: `mutation ($communityId: ID, $networkId: ID) {
+        addCommunityToNetwork(communityId: $communityId, networkId: $networkId) {
+          id
+          communities {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+        }
+      }`,
+      variables: {
+        communityId,
+        networkId
+      }
+    },
+    meta: {
+      extractModel: 'Network'
+    }
+  }
+}
+
+export function addNetworkModeratorRole (personId, networkId) {
+  return {
+    type: ADD_NETWORK_MODERATOR_ROLE,
+    graphql: {
+      query: `mutation ($personId: ID, $networkId: ID) {
+        addNetworkModeratorRole(personId: $personId, networkId: $networkId) {
+          id
+          moderators {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+        }
+      }`,
+      variables: {
+        personId,
+        networkId
+      }
+    },
+    meta: {
+      extractModel: 'Network'
+    }
+  }
+}
 
 export function setModeratorsPage (page) {
   return {
@@ -196,13 +257,71 @@ export function fetchCommunities ({slug, page, offset, sortBy = 'name', order, s
   }
 }
 
+export function removeCommunityFromNetwork (communityId, networkId, pageSize = PAGE_SIZE) {
+  return {
+    type: REMOVE_COMMUNITY_FROM_NETWORK,
+    graphql: {
+      query: `mutation ($communityId: ID, $networkId: ID) {
+        removeCommunityFromNetwork(communityId: $communityId, networkId: $networkId) {
+          id
+          communities (first: ${pageSize}) {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+        }
+      }`,
+      variables: {
+        communityId,
+        networkId
+      }
+    },
+    meta: {
+      communityId,
+      extractModel: 'Network',
+      networkId
+    }
+  }
+}
+
+export function removeNetworkModeratorRole (personId, networkId) {
+  return {
+    type: REMOVE_NETWORK_MODERATOR_ROLE,
+    graphql: {
+      query: `mutation ($personId: ID, $networkId: ID) {
+        removeNetworkModeratorRole(personId: $personId, networkId: $networkId) {
+          id
+          moderators {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+        }
+      }`,
+      variables: {
+        personId,
+        networkId
+      }
+    },
+    meta: {
+      extractModel: 'Network',
+      personId,
+      networkId
+    }
+  }
+}
+
 // Selectors
 export const getNetwork = ormCreateSelector(
   orm,
   state => state.orm,
   (state, { slug }) => slug,
   (session, slug) =>
-    session.Network.safeGet({slug}))
+  session.Network.safeGet({slug}))
 
 export const getModeratorResults = makeGetQueryResults(FETCH_MODERATORS)
 export const getModeratorsTotal = createSelector(
@@ -232,9 +351,9 @@ export const getCommunities = ormCreateSelector(
   (session, results) => {
     if (isEmpty(results) || isEmpty(results.ids)) return []
     return session.Community.all()
-    .filter(x => includes(x.id, results.ids))
-    .orderBy(x => results.ids.indexOf(x.id))
-    .toModelArray()
+      .filter(x => includes(x.id, results.ids))
+      .orderBy(x => results.ids.indexOf(x.id))
+      .toModelArray()
   }
 )
 

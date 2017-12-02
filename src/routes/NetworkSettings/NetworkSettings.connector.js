@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
 import {
+  addCommunityToNetwork,
+  addNetworkModeratorRole,
   fetchNetworkSettings,
   fetchModerators,
   fetchCommunities,
@@ -13,6 +15,8 @@ import {
   getCommunities,
   getCommunitiesPage,
   getCommunitiesTotal,
+  removeCommunityFromNetwork,
+  removeNetworkModeratorRole,
   PAGE_SIZE,
   FETCH_COMMUNITIES,
   FETCH_MODERATORS
@@ -63,10 +67,14 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
+    addCommunityToNetwork: networkId => communityId => dispatch(addCommunityToNetwork(communityId, networkId)),
+    addNetworkModeratorRole: networkId => personId => dispatch(addNetworkModeratorRole(personId, networkId)),
     fetchNetworkSettingsMaker: slug => () => dispatch(fetchNetworkSettings(slug)),
     updateNetworkSettingsMaker: id => changes => dispatch(updateNetworkSettings(id, changes)),
     fetchModeratorsMaker: (slug, page) => () => dispatch(fetchModerators(slug, page)),
     fetchCommunitiesMaker: (slug, page) => () => dispatch(fetchCommunities({slug, page})),
+    removeCommunityFromNetwork: networkId => communityId => dispatch(removeCommunityFromNetwork(communityId, networkId)),
+    removeNetworkModeratorRole: networkId => personId => dispatch(removeNetworkModeratorRole(personId, networkId)),
     ...bindActionCreators({
       setConfirmBeforeClose, setModeratorsPage, setCommunitiesPage
     }, dispatch)
