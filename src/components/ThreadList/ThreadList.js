@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { filter, get, isEmpty, map } from 'lodash/fp'
+import { get, isEmpty } from 'lodash/fp'
 import { Link } from 'react-router-dom'
 import RoundImage from 'components/RoundImage'
 import Badge from 'components/Badge'
@@ -51,7 +51,7 @@ export default class ThreadList extends Component {
             key={`thread-li-${t.id}`}
             currentUser={currentUser}
             active={t.id === threadId}
-            participants={t.participants.toRefArray()}
+            thread={t}
             latestMessage={t.messages.orderBy(m => Date.parse(m.createdAt), 'desc').first()}
             unreadCount={t.unreadCount} />
         })}
@@ -65,8 +65,7 @@ export default class ThreadList extends Component {
   }
 }
 
-function ThreadListItem ({currentUser, active, id, participants, latestMessage, unreadCount}) {
-  const otherParticipants = filter(p => p.id !== get('id', currentUser), participants)
+export function ThreadListItem ({currentUser, active, id, thread, latestMessage, unreadCount}) {
   let text = ''
   const maxTextLength = 54
   if (latestMessage) {
@@ -75,12 +74,15 @@ function ThreadListItem ({currentUser, active, id, participants, latestMessage, 
       text += '...'
     }
   }
+
+  const { names, avatarUrls } = thread.participantAttributes(currentUser, 2)
+
   return <li styleName='list-item'>
     <Link to={`/t/${id}`}>
       {active && <div styleName='active-thread' />}
-      <ThreadAvatars avatarUrls={map('avatarUrl', otherParticipants)} />
+      <ThreadAvatars avatarUrls={avatarUrls} />
       <div styleName='li-center-content'>
-        <ThreadNames names={map('name', otherParticipants)} />
+        <ThreadNames names={names} />
         <div styleName='thread-message-text'>{text}</div>
       </div>
       <div styleName='li-right-content'>
@@ -107,17 +109,7 @@ function ThreadAvatars ({avatarUrls}) {
 }
 
 function ThreadNames ({names}) {
-  let nameString = ''
-  switch (names.length) {
-    case 1:
-    case 2:
-      nameString = names.join(', ')
-      break
-    default:
-      nameString = `${names.slice(0, 1).join(', ')} and ${names.length - 1} other${names.length > 2 ? 's' : ''}`
-      break
-  }
   return <div styleName='thread-names'>
-    {nameString}
+    {names}
   </div>
 }
