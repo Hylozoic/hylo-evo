@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react'
+import Autocomplete from 'react-autocomplete'
 import cx from 'classnames'
 import { times, isEmpty } from 'lodash/fp'
 
@@ -24,6 +25,8 @@ export default class NetworkSettings extends Component {
     communitiesPage: number,
     communitiesPageCount: number,
     communitiesPending: any,
+    fetchCommunityAutocomplete: func.isRequired,
+    fetchModeratorAutocomplete: func.isRequired,
     fetchNetworkSettings: func.isRequired,
     isAdmin: bool,
     moderators: array,
@@ -38,9 +41,13 @@ export default class NetworkSettings extends Component {
     updateNetworkSettings: func.isRequired
   }
 
-  constructor (props) {
-    super(props)
-    this.state = {edits: {}, changed: false}
+  state = {
+    changed: false,
+    communityChoice: null,
+    communitySearch: '',
+    edits: {},
+    moderatorChoice: null,
+    moderatorSearch: ''
   }
 
   componentDidMount () {
@@ -49,7 +56,6 @@ export default class NetworkSettings extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    console.log(prevProps, this.props)
     if (prevProps.network !== this.props.network) {
       this.props.fetchNetworkSettings()
       this.setEditState()
@@ -83,17 +89,65 @@ export default class NetworkSettings extends Component {
     })
   }
 
+  addCommunity = () => {
+    const { communityChoice } = this.state
+    if (communityChoice) {
+      this.props.addCommunityToNetwork(communityChoice.id)
+      this.setState({
+        communityChoice: null,
+        communitySearch: ''
+      })
+    }
+  }
+
+  addModerator = () => {
+    const { moderatorChoice } = this.state
+    if (moderatorChoice) {
+      this.props.addNetworkModeratorRole(moderatorChoice.id)
+      this.setState({
+        moderatorChoice: null,
+        moderatorSearch: ''
+      })
+    }
+  }
+
+  chooseCommunity = (_, community) => {
+    this.setState({
+      communityChoice: community,
+      communitySearch: community.name
+    })
+  }
+
+  chooseModerator = (_, person) => {
+    this.setState({
+      moderatorChoice: person,
+      moderatorSearch: person.name
+    })
+  }
+
+  communityAutocomplete = ({ target: { value } }) => {
+    this.setState({ communitySearch: value })
+    this.props.fetchCommunityAutocomplete(value)
+  }
+
+  moderatorAutocomplete = ({ target: { value } }) => {
+    this.setState({ moderatorSearch: value })
+    this.props.fetchModeratorAutocomplete(value)
+  }
+
   render () {
     const {
       communities,
       communitiesPage,
       communitiesPageCount,
       communitiesPending,
+      communityAutocompleteCandidates,
       isAdmin,
       moderators,
       moderatorsPage,
       moderatorsPageCount,
       moderatorsPending,
+      moderatorAutocompleteCandidates,
       network,
       removeCommunityFromNetwork,
       removeNetworkModeratorRole,
@@ -152,9 +206,9 @@ export default class NetworkSettings extends Component {
         </div>
         <SettingsControl label='Description' onChange={updateSetting('description')} value={description} type='textarea' />
         <div styleName='button-row'>
-          <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
+          <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='button' />
         </div>
-        <PaginatedList
+        <PaginatedList styleName='moderators'
           isAdmin={isAdmin}
           items={moderators}
           label={'Moderators'}
@@ -163,6 +217,30 @@ export default class NetworkSettings extends Component {
           pending={moderatorsPending}
           removeItem={removeNetworkModeratorRole(network.id)}
           setPage={setModeratorsPage} />
+        <div styleName='autocomplete'>
+          <Autocomplete
+            getItemValue={person => person.name}
+            inputProps={{
+              placeholder: "Start typing a person's name",
+              style: {
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                padding: '3px',
+                width: '400px'
+              }
+            }}
+            items={moderatorAutocompleteCandidates}
+            renderItem={(person, isHighlighted) =>
+              <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                {person.name}
+              </div>
+            }
+            value={this.state.moderatorSearch}
+            onChange={this.moderatorAutocomplete}
+            onSelect={this.chooseModerator}
+          />
+          <Button label='Add Moderator' color={'green'} onClick={this.addModerator} styleName='button' />
+        </div>
         <PaginatedList styleName='communities'
           isAdmin={isAdmin}
           items={communities}
@@ -173,6 +251,30 @@ export default class NetworkSettings extends Component {
           pending={communitiesPending}
           removeItem={removeCommunityFromNetwork(network.id)}
           setPage={setCommunitiesPage} />
+        <div styleName='autocomplete'>
+          <Autocomplete
+            getItemValue={community => community.name}
+            inputProps={{
+              placeholder: 'Start typing a community name',
+              style: {
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                padding: '3px',
+                width: '400px'
+              }
+            }}
+            items={communityAutocompleteCandidates}
+            renderItem={(community, isHighlighted) =>
+              <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                {community.name}
+              </div>
+            }
+            value={this.state.communitySearch}
+            onChange={this.communityAutocomplete}
+            onSelect={this.chooseCommunity}
+          />
+          <Button label='Add Community' color={'green'} onClick={this.addCommunity} styleName='button' />
+        </div>
       </div>
     </FullPageModal>
   }

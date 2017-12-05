@@ -11,17 +11,20 @@ export const ADD_COMMUNITY_TO_NETWORK = `${MODULE_NAME}/ADD_COMMUNITY_TO_NETWORK
 export const ADD_COMMUNITY_TO_NETWORK_PENDING = `${ADD_COMMUNITY_TO_NETWORK}_PENDING`
 export const ADD_NETWORK_MODERATOR_ROLE = `${MODULE_NAME}/ADD_NETWORK_MODERATOR_ROLE`
 export const ADD_NETWORK_MODERATOR_ROLE_PENDING = `${ADD_NETWORK_MODERATOR_ROLE}_PENDING`
-export const FETCH_NETWORK_SETTINGS = `${MODULE_NAME}/FETCH_NETWORK_SETTINGS`
-export const UPDATE_NETWORK_SETTINGS = `${MODULE_NAME}/UPDATE_NETWORK_SETTINGS`
-export const FETCH_MODERATORS = `${MODULE_NAME}/FETCH_MODERATORS`
 export const FETCH_COMMUNITIES = `${MODULE_NAME}/FETCH_COMMUNITIES`
+export const FETCH_COMMUNITY_AUTOCOMPLETE = `${MODULE_NAME}/FETCH_COMMUNITY_AUTOCOMPLETE`
+export const FETCH_MODERATOR_AUTOCOMPLETE = `{MODULE_NAME}/FETCH_MODERATOR_AUTOCOMPLETE`
+export const FETCH_MODERATORS = `${MODULE_NAME}/FETCH_MODERATORS`
+export const FETCH_NETWORK_SETTINGS = `${MODULE_NAME}/FETCH_NETWORK_SETTINGS`
 export const REMOVE_COMMUNITY_FROM_NETWORK = `${MODULE_NAME}/REMOVE_COMMUNITY_FROM_NETWORK`
 export const REMOVE_COMMUNITY_FROM_NETWORK_PENDING = `${REMOVE_COMMUNITY_FROM_NETWORK}_PENDING`
 export const REMOVE_NETWORK_MODERATOR_ROLE = `${MODULE_NAME}/REMOVE_NETWORK_MODERATOR_ROLE`
 export const REMOVE_NETWORK_MODERATOR_ROLE_PENDING = `${REMOVE_NETWORK_MODERATOR_ROLE}_PENDING`
-export const SET_MODERATORS_PAGE = `${MODULE_NAME}/SET_MODERATORS_PAGE`
 export const SET_COMMUNITIES_PAGE = `${MODULE_NAME}/SET_COMMUNITIES_PAGE`
+export const SET_MODERATORS_PAGE = `${MODULE_NAME}/SET_MODERATORS_PAGE`
+export const UPDATE_NETWORK_SETTINGS = `${MODULE_NAME}/UPDATE_NETWORK_SETTINGS`
 
+export const AUTOCOMPLETE_SIZE = 20
 export const PAGE_SIZE = 10
 
 const defaultState = {
@@ -34,16 +37,30 @@ export default function reducer (state = defaultState, action) {
   if (error) return state
 
   switch (type) {
+    case FETCH_MODERATOR_AUTOCOMPLETE:
+      return {
+        ...state,
+        moderatorAutocomplete: payload.data.people.items
+      }
+
+    case FETCH_COMMUNITY_AUTOCOMPLETE:
+      return {
+        ...state,
+        communityAutocomplete: payload.data.communities.items
+      }
+
     case SET_MODERATORS_PAGE:
       return {
         ...state,
         moderatorsPage: payload
       }
+
     case SET_COMMUNITIES_PAGE:
       return {
         ...state,
         communitiesPage: payload
       }
+
     default:
       return state
   }
@@ -118,6 +135,43 @@ export function setCommunitiesPage (page) {
     payload: page
   }
 }
+
+// If we do an extractModel off this, we likely end up with a large set of
+// unnecessary entities in the front end (especially if user is admin).
+// Better to just house them in the module's store temporarily (see reducer).
+export function autocompleteQuery (queryName, type) {
+  return (autocomplete, first = AUTOCOMPLETE_SIZE, offset = 0) => ({
+    type,
+    graphql: {
+      query: `query ($autocomplete: String, $first: Int, $offset: Int) {
+        ${queryName} (autocomplete: $autocomplete, first: $first, offset: $offset) {
+          total
+          hasMore
+          items {
+            id
+            name
+            avatarUrl
+          }
+        }
+      }`,
+      variables: {
+        autocomplete,
+        first,
+        offset
+      }
+    }
+  })
+}
+
+export const fetchModeratorAutocomplete = autocompleteQuery(
+  'people',
+  FETCH_MODERATOR_AUTOCOMPLETE
+)
+
+export const fetchCommunityAutocomplete = autocompleteQuery(
+  'communities',
+  FETCH_COMMUNITY_AUTOCOMPLETE
+)
 
 export function fetchNetworkSettings (slug, pageSize = PAGE_SIZE) {
   return {
@@ -357,5 +411,7 @@ export const getCommunities = ormCreateSelector(
   }
 )
 
-export const getModeratorsPage = state => state[MODULE_NAME].moderatorsPage
 export const getCommunitiesPage = state => state[MODULE_NAME].communitiesPage
+export const getModeratorsPage = state => state[MODULE_NAME].moderatorsPage
+export const getCommunityAutocomplete = state => state[MODULE_NAME].communityAutocomplete
+export const getModeratorAutocomplete = state => state[MODULE_NAME].moderatorAutocomplete

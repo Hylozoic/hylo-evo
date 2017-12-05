@@ -249,6 +249,10 @@ export default function ormReducer (state = {}, action) {
             .filter(c => c.id !== meta.communityId)
         })
       }
+      if (Community.hasId(meta.communityId)) {
+        const community = Community.withId(meta.communityId)
+        community.update({ network: null })
+      }
       break
 
     case REMOVE_NETWORK_MODERATOR_ROLE_PENDING:

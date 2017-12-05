@@ -53,14 +53,13 @@
   margin-top: $space-9x;
 }
 
-.button-row {
-  display: flex;
-  width: 100%;
-  margin-top: $space-9x;
+.button {
+  margin-top: $space-8x;
 }
 
-.save-button {
-  margin: 0 auto;
+.button-row {
+  display: flex;
+  justify-content: center;
 }
 
 .section-label {
@@ -72,6 +71,13 @@
   margin-top: 15px;
 }
 
+.moderators, .communities {
+  flex: 2;
+}
+
+.description-input {
+  flex: 2;
+}
 
 // PaginatedList
 .paginated-list {
@@ -99,4 +105,15 @@
   letter-spacing: 0;
   line-height: 20px;
   color: $color-rhino;
+}
+
+.autocomplete {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: $space-2x;
+}
+
+.autocomplete-input {
+  font-size: 10px;
 }
