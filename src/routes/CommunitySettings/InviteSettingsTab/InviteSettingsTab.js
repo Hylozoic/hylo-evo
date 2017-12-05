@@ -44,11 +44,15 @@ export default class InviteSettingsTab extends Component {
   }
 
   sendInvites = () => {
+    if (this.sending) return
+    this.sending = true
+
     const { createInvitations } = this.props
     const { emails, message } = this.state
 
     createInvitations(parseEmailList(emails), message)
     .then(res => {
+      this.sending = false
       const { invitations } = res.payload.data.createInvitation
       const badEmails = invitations.filter(email => email.error).map(e => e.email)
 

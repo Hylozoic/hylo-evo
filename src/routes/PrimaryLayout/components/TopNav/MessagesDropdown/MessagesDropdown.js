@@ -70,7 +70,7 @@ export default class MessagesDropdown extends Component {
         {threads.map(thread => <MessagesDropdownItem
           thread={thread}
           onClick={() => onClick(thread.id)}
-          currentUserId={get('id', currentUser)}
+          currentUser={currentUser}
           key={thread.id} />)}
       </div>
     }
@@ -97,28 +97,17 @@ export default class MessagesDropdown extends Component {
   }
 }
 
-const participantNames = participants => {
-  const length = participants.length
-  if (length === 1) {
-    return participants[0].name
-  } else if (length === 2) {
-    return `${participants[0].name} and ${participants[1].name}`
-  } else if (length > 2) {
-    const n = length - 2
-    return `${participants[0].name}, ${participants[1].name} and ${n} other${n > 1 ? 's' : ''}`
-  }
-}
-
-export function MessagesDropdownItem ({ thread, onClick, currentUserId }) {
+export function MessagesDropdownItem ({ thread, onClick, currentUser }) {
   const message = thread.messages.orderBy(m => Date.parse(m.createdAt), 'desc').first()
   if (!message || !message.text) return null
-  const participants = thread.participants.toRefArray()
-  .filter(p => p.id !== currentUserId)
+  const currentUserId = get('id', currentUser)
 
   var { text } = message
   if (message.creator.id === currentUserId) {
     text = `You: ${text}`
   }
+
+  const { names, avatarUrls } = thread.participantAttributes(currentUser, 2)
 
   const maxMessageLength = 145
 
@@ -129,10 +118,10 @@ export function MessagesDropdownItem ({ thread, onClick, currentUserId }) {
   return <li styleName={cx('thread', {unread: thread.isUnread()})}
     onClick={onClick}>
     <div styleName='image-wrapper'>
-      <RoundImageRow imageUrls={participants.map(p => p.avatarUrl)} vertical ascending cap='2' />
+      <RoundImageRow imageUrls={avatarUrls} vertical ascending cap='2' />
     </div>
     <div styleName='message-content'>
-      <div styleName='name'>{participantNames(participants)}</div>
+      <div styleName='name'>{names}</div>
       <div styleName='body'>{text}</div>
       <div styleName='date'>{humanDate(thread.updatedAt)}</div>
     </div>

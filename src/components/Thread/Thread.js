@@ -1,12 +1,13 @@
 import React from 'react'
 
-import { filter, get, map } from 'lodash/fp'
+import { filter, get, map, isEmpty } from 'lodash/fp'
 const { func, object } = React.PropTypes
 import MessageSection from 'components/MessageSection'
 import MessageForm from 'components/MessageForm'
 import PeopleTyping from 'components/PeopleTyping'
 import CloseMessages from './CloseMessages'
 import SocketSubscriber from 'components/SocketSubscriber'
+import { formatNames } from 'store/models/MessageThread'
 import './Thread.scss'
 
 export default class Thread extends React.Component {
@@ -50,15 +51,18 @@ export default class Thread extends React.Component {
   }
 }
 
-function Header ({ thread, currentUser }) {
+export function Header ({ thread, currentUser }) {
   const participants = get('participants', thread) || []
   const id = get('id', currentUser)
   const others = map('name', filter(f => f.id !== id, participants))
-  const othersMinusLast = others.slice(0, others.length - 1)
+
+  const headerText = isEmpty(others) 
+    ? 'You'
+    : formatNames(others)
 
   return <div styleName='header' id='thread-header'>
     <div styleName='header-text'>
-      You{others.length > 1 ? `, ${othersMinusLast.join(', ')}` : ''} and {others[others.length - 1]}
+      {headerText}
     </div>
     <CloseMessages />
   </div>
