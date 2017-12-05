@@ -33,7 +33,7 @@ exports[`displays an image 1`] = `
           <span
             data-styleName="post-title"
           >
-            Awesome Sauce
+            Awesome Sauce #hashtag
           </span>
         </div>
       </Highlight>
@@ -88,7 +88,7 @@ exports[`matches last snapshot 1`] = `
           <span
             data-styleName="post-title"
           >
-            Awesome Sauce
+            Awesome Sauce #hashtag
           </span>
         </div>
       </Highlight>
@@ -154,7 +154,7 @@ exports[`matches last snapshot with different config 1`] = `
           <span
             data-styleName="post-title"
           >
-            Awesome Sauce
+            Awesome Sauce #hashtag
           </span>
         </div>
       </Highlight>

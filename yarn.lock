@@ -1262,8 +1262,8 @@ buffer@^4.3.0:
     isarray "^1.0.0"
 
 buffer@^5.0.6:
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.0.6.tgz#2ea669f7eec0b6eda05b08f8b5ff661b28573588"
+  version "5.0.8"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.0.8.tgz#84daa52e7cf2fa8ce4195bc5cf0f7809e0930b24"
   dependencies:
     base64-js "^1.0.2"
     ieee754 "^1.1.4"
@@ -3529,9 +3529,9 @@ https-proxy-agent@^0.3.5:
     debug "2"
     extend "3"
 
-"hylo-utils@https://github.com/Hylozoic/hylo-utils#74918e5":
-  version "1.0.9"
-  resolved "https://github.com/Hylozoic/hylo-utils#74918e5b996522351befb7179def481bccfa574e"
+"hylo-utils@https://github.com/Hylozoic/hylo-utils#bfbb219":
+  version "1.2.2"
+  resolved "https://github.com/Hylozoic/hylo-utils#bfbb219ef9a11b32fb357055d45d56821e11ed14"
   dependencies:
     buffer "^5.0.6"
     cheerio "^0.22.0"
@@ -3543,6 +3543,7 @@ https-proxy-agent@^0.3.5:
     pretty-date "^0.2.0"
     stream "^0.0.2"
     trunc-html "^1.1.2"
+    validator "^8.2.0"
 
 iconv-lite@0.4.13:
   version "0.4.13"
@@ -3637,9 +3638,16 @@ inquirer@^0.12.0:
     strip-ansi "^3.0.0"
     through "^2.3.6"
 
-insane@2.6.1, insane@^2.6.1:
+insane@2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/insane/-/insane-2.6.1.tgz#c7dcae7b51c20346883b71078fad6ce0483c198f"
+  dependencies:
+    assignment "2.0.0"
+    he "0.5.0"
+
+insane@^2.6.1:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/insane/-/insane-2.6.2.tgz#c2ab68bb3e006ab451560d1b446917329c0a8120"
   dependencies:
     assignment "2.0.0"
     he "0.5.0"
@@ -4546,7 +4554,7 @@ linkify-it@2.0.0:
 
 linkifyjs@Hylozoic/linkifyjs#allow-underscores, linkifyjs@^2.1.4:
   version "2.1.4"
-  resolved "https://codeload.github.com/Hylozoic/linkifyjs/tar.gz/ede14b0f4bf09c675f74e707ab5a173041685dc8"
+  resolved "https://codeload.github.com/Hylozoic/linkifyjs/tar.gz/d7de1aaa8012fae035a995051cf062ff78ea878e"
   optionalDependencies:
     jquery ">=1.9.0"
     react ">=0.14.0"
@@ -5431,8 +5439,8 @@ p-locate@^2.0.0:
     p-limit "^1.1.0"
 
 p-map@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/p-map/-/p-map-1.1.1.tgz#05f5e4ae97a068371bc2a5cc86bfbdbc19c4ae7a"
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/p-map/-/p-map-1.2.0.tgz#e4e94f311eabbc8633a1e79908165fca26241b6b"
 
 pako@~0.2.0:
   version "0.2.9"
@@ -7792,6 +7800,10 @@ validate-npm-package-license@^3.0.1:
 validator@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/validator/-/validator-8.1.0.tgz#89cf6b512ff71eba886afd8d10d47f8dc800eac0"
+
+validator@^8.2.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-8.2.0.tgz#3c1237290e37092355344fef78c231249dab77b9"
 
 value-equal@^0.2.0:
   version "0.2.0"
