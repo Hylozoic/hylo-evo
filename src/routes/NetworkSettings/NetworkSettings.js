@@ -137,13 +137,13 @@ export default class NetworkSettings extends Component {
 
   render () {
     const {
-      communities,
+      // communities,
       communitiesPage,
       communitiesPageCount,
       communitiesPending,
       communityAutocompleteCandidates,
       isAdmin,
-      moderators,
+      // moderators,
       moderatorsPage,
       moderatorsPageCount,
       moderatorsPending,
