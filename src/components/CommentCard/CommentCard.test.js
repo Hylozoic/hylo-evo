@@ -12,7 +12,7 @@ const props = {
     },
     post: {
       id: 77,
-      title: 'Awesome Sauce'
+      title: 'Awesome Sauce #hashtag'
     },
     createdAt: new Date()
   },
