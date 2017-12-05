@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapStateToProps matches the last snapshot 1`] = `
+Object {
+  "isAdmin": true,
+  "network": null,
+}
+`;

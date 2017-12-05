@@ -1,4 +1,3 @@
-// import { combineReducers } from 'redux'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { createSelector } from 'reselect'
 import orm from 'store/models'
@@ -8,14 +7,25 @@ import { get, includes, isEmpty } from 'lodash/fp'
 export const MODULE_NAME = 'NetworkSettings'
 
 // Constants
-export const FETCH_NETWORK_SETTINGS = `${MODULE_NAME}/FETCH_NETWORK_SETTINGS`
-export const UPDATE_NETWORK_SETTINGS = `${MODULE_NAME}/UPDATE_NETWORK_SETTINGS`
-export const FETCH_MODERATORS = `${MODULE_NAME}/FETCH_MODERATORS`
+export const ADD_COMMUNITY_TO_NETWORK = `${MODULE_NAME}/ADD_COMMUNITY_TO_NETWORK`
+export const ADD_COMMUNITY_TO_NETWORK_PENDING = `${ADD_COMMUNITY_TO_NETWORK}_PENDING`
+export const ADD_NETWORK_MODERATOR_ROLE = `${MODULE_NAME}/ADD_NETWORK_MODERATOR_ROLE`
+export const ADD_NETWORK_MODERATOR_ROLE_PENDING = `${ADD_NETWORK_MODERATOR_ROLE}_PENDING`
 export const FETCH_COMMUNITIES = `${MODULE_NAME}/FETCH_COMMUNITIES`
-export const SET_MODERATORS_PAGE = `${MODULE_NAME}/SET_MODERATORS_PAGE`
+export const FETCH_COMMUNITY_AUTOCOMPLETE = `${MODULE_NAME}/FETCH_COMMUNITY_AUTOCOMPLETE`
+export const FETCH_MODERATOR_AUTOCOMPLETE = `{MODULE_NAME}/FETCH_MODERATOR_AUTOCOMPLETE`
+export const FETCH_MODERATORS = `${MODULE_NAME}/FETCH_MODERATORS`
+export const FETCH_NETWORK_SETTINGS = `${MODULE_NAME}/FETCH_NETWORK_SETTINGS`
+export const REMOVE_COMMUNITY_FROM_NETWORK = `${MODULE_NAME}/REMOVE_COMMUNITY_FROM_NETWORK`
+export const REMOVE_COMMUNITY_FROM_NETWORK_PENDING = `${REMOVE_COMMUNITY_FROM_NETWORK}_PENDING`
+export const REMOVE_NETWORK_MODERATOR_ROLE = `${MODULE_NAME}/REMOVE_NETWORK_MODERATOR_ROLE`
+export const REMOVE_NETWORK_MODERATOR_ROLE_PENDING = `${REMOVE_NETWORK_MODERATOR_ROLE}_PENDING`
 export const SET_COMMUNITIES_PAGE = `${MODULE_NAME}/SET_COMMUNITIES_PAGE`
+export const SET_MODERATORS_PAGE = `${MODULE_NAME}/SET_MODERATORS_PAGE`
+export const UPDATE_NETWORK_SETTINGS = `${MODULE_NAME}/UPDATE_NETWORK_SETTINGS`
 
-export const PAGE_SIZE = 10
+export const AUTOCOMPLETE_SIZE = 20
+export const PAGE_SIZE = 1000
 
 const defaultState = {
   moderatorsPage: 0,
@@ -27,22 +37,100 @@ export default function reducer (state = defaultState, action) {
   if (error) return state
 
   switch (type) {
+    case FETCH_MODERATOR_AUTOCOMPLETE:
+      return {
+        ...state,
+        moderatorAutocomplete: payload.data.people.items
+      }
+
+    case FETCH_COMMUNITY_AUTOCOMPLETE:
+      return {
+        ...state,
+        communityAutocomplete: payload.data.communities.items
+      }
+
     case SET_MODERATORS_PAGE:
       return {
         ...state,
         moderatorsPage: payload
       }
+
     case SET_COMMUNITIES_PAGE:
       return {
         ...state,
         communitiesPage: payload
       }
+
     default:
       return state
   }
 }
 
 // Action Creators
+
+export function addCommunityToNetwork (communityId, networkId) {
+  return {
+    type: ADD_COMMUNITY_TO_NETWORK,
+    graphql: {
+      query: `mutation ($communityId: ID, $networkId: ID) {
+        addCommunityToNetwork(communityId: $communityId, networkId: $networkId) {
+          id
+          communities {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+        }
+      }`,
+      variables: {
+        communityId,
+        networkId
+      }
+    },
+    meta: {
+      extractModel: [
+        {
+          modelName: 'Community',
+          getRoot: get('addCommunityToNetwork.communities.items')
+        }
+      ]
+    }
+  }
+}
+
+export function addNetworkModeratorRole (personId, networkId) {
+  return {
+    type: ADD_NETWORK_MODERATOR_ROLE,
+    graphql: {
+      query: `mutation ($personId: ID, $networkId: ID) {
+        addNetworkModeratorRole(personId: $personId, networkId: $networkId) {
+          id
+          moderators {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+        }
+      }`,
+      variables: {
+        personId,
+        networkId
+      }
+    },
+    meta: {
+      extractModel: [
+        {
+          modelName: 'Person',
+          getRoot: get('addNetworkModeratorRole.moderators.items')
+        }
+      ]
+    }
+  }
+}
 
 export function setModeratorsPage (page) {
   return {
@@ -57,6 +145,43 @@ export function setCommunitiesPage (page) {
     payload: page
   }
 }
+
+// If we do an extractModel off this, we likely end up with a large set of
+// unnecessary entities in the front end (especially if user is admin).
+// Better to just house them in the module's store temporarily (see reducer).
+export function autocompleteQuery (queryName, type) {
+  return (autocomplete, first = AUTOCOMPLETE_SIZE, offset = 0) => ({
+    type,
+    graphql: {
+      query: `query ($autocomplete: String, $first: Int, $offset: Int) {
+        ${queryName} (autocomplete: $autocomplete, first: $first, offset: $offset) {
+          total
+          hasMore
+          items {
+            id
+            name
+            avatarUrl
+          }
+        }
+      }`,
+      variables: {
+        autocomplete,
+        first,
+        offset
+      }
+    }
+  })
+}
+
+export const fetchModeratorAutocomplete = autocompleteQuery(
+  'people',
+  FETCH_MODERATOR_AUTOCOMPLETE
+)
+
+export const fetchCommunityAutocomplete = autocompleteQuery(
+  'communities',
+  FETCH_COMMUNITY_AUTOCOMPLETE
+)
 
 export function fetchNetworkSettings (slug, pageSize = PAGE_SIZE) {
   return {
@@ -196,13 +321,81 @@ export function fetchCommunities ({slug, page, offset, sortBy = 'name', order, s
   }
 }
 
+export function removeCommunityFromNetwork (communityId, networkId, pageSize = PAGE_SIZE) {
+  return {
+    type: REMOVE_COMMUNITY_FROM_NETWORK,
+    graphql: {
+      query: `mutation ($communityId: ID, $networkId: ID) {
+        removeCommunityFromNetwork(communityId: $communityId, networkId: $networkId) {
+          id
+          communities (first: ${pageSize}) {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+        }
+      }`,
+      variables: {
+        communityId,
+        networkId
+      }
+    },
+    meta: {
+      communityId,
+      extractModel: 'Network',
+      networkId
+    }
+  }
+}
+
+export function removeNetworkModeratorRole (personId, networkId) {
+  return {
+    type: REMOVE_NETWORK_MODERATOR_ROLE,
+    graphql: {
+      query: `mutation ($personId: ID, $networkId: ID) {
+        removeNetworkModeratorRole(personId: $personId, networkId: $networkId) {
+          id
+          moderators {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+        }
+      }`,
+      variables: {
+        personId,
+        networkId
+      }
+    },
+    meta: {
+      extractModel: 'Network',
+      personId,
+      networkId
+    }
+  }
+}
+
 // Selectors
 export const getNetwork = ormCreateSelector(
   orm,
   state => state.orm,
   (state, { slug }) => slug,
-  (session, slug) =>
-    session.Network.safeGet({slug}))
+  (session, slug) => {
+    const network = session.Network.safeGet({ slug })
+    if (network) {
+      return {
+        ...network.ref,
+        communities: network.communities.orderBy(c => c.name).toModelArray(),
+        moderators: network.moderators.orderBy(m => m.name).toModelArray()
+      }
+    }
+    return null
+  }
+)
 
 export const getModeratorResults = makeGetQueryResults(FETCH_MODERATORS)
 export const getModeratorsTotal = createSelector(
@@ -232,11 +425,13 @@ export const getCommunities = ormCreateSelector(
   (session, results) => {
     if (isEmpty(results) || isEmpty(results.ids)) return []
     return session.Community.all()
-    .filter(x => includes(x.id, results.ids))
-    .orderBy(x => results.ids.indexOf(x.id))
-    .toModelArray()
+      .filter(x => includes(x.id, results.ids))
+      .orderBy(x => results.ids.indexOf(x.id))
+      .toModelArray()
   }
 )
 
-export const getModeratorsPage = state => state[MODULE_NAME].moderatorsPage
 export const getCommunitiesPage = state => state[MODULE_NAME].communitiesPage
+export const getModeratorsPage = state => state[MODULE_NAME].moderatorsPage
+export const getCommunityAutocomplete = state => state[MODULE_NAME].communityAutocomplete
+export const getModeratorAutocomplete = state => state[MODULE_NAME].moderatorAutocomplete

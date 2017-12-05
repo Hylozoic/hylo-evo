@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NetworkSidebar matches the last snapshot 1`] = `
+<div
+  data-styleName="network-sidebar"
+>
+  <Link
+    data-styleName="settings-link"
+    replace={false}
+    to="/n/networky-network/settings"
+  >
+    Settings
+  </Link>
+</div>
+`;
