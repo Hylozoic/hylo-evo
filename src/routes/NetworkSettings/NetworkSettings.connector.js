@@ -45,7 +45,8 @@ export function mapStateToProps (state, props) {
 
   const communitiesPage = getCommunitiesPage(state, props)
   const communitiesResultProps = {slug, page: communitiesPage}
-  const communities = getCommunities(state, communitiesResultProps)
+  // const communities = getCommunities(state, communitiesResultProps)
+  const communities = getCommunities(state, props)
   const communitiesTotal = getCommunitiesTotal(state, communitiesResultProps)
   const communitiesPageCount = Math.ceil(communitiesTotal / PAGE_SIZE)
   const communitiesPending = state.pending[FETCH_COMMUNITIES]

@@ -210,7 +210,7 @@ export default class NetworkSettings extends Component {
         </div>
         <PaginatedList styleName='moderators'
           isAdmin={isAdmin}
-          items={moderators}
+          items={network.moderators}
           label={'Moderators'}
           page={moderatorsPage}
           pageCount={moderatorsPageCount}
@@ -243,7 +243,7 @@ export default class NetworkSettings extends Component {
         </div>
         <PaginatedList styleName='communities'
           isAdmin={isAdmin}
-          items={communities}
+          items={network.communities}
           itemProps={{square: true, size: 40}}
           label={'Communities'}
           page={communitiesPage}

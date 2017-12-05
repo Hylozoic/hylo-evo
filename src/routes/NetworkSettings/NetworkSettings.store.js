@@ -25,7 +25,7 @@ export const SET_MODERATORS_PAGE = `${MODULE_NAME}/SET_MODERATORS_PAGE`
 export const UPDATE_NETWORK_SETTINGS = `${MODULE_NAME}/UPDATE_NETWORK_SETTINGS`
 
 export const AUTOCOMPLETE_SIZE = 20
-export const PAGE_SIZE = 10
+export const PAGE_SIZE = 1000
 
 const defaultState = {
   moderatorsPage: 0,
@@ -90,7 +90,12 @@ export function addCommunityToNetwork (communityId, networkId) {
       }
     },
     meta: {
-      extractModel: 'Network'
+      extractModel: [
+        {
+          modelName: 'Community',
+          getRoot: get('addCommunityToNetwork.communities.items')
+        }
+      ]
     }
   }
 }
@@ -117,7 +122,12 @@ export function addNetworkModeratorRole (personId, networkId) {
       }
     },
     meta: {
-      extractModel: 'Network'
+      extractModel: [
+        {
+          modelName: 'Person',
+          getRoot: get('addNetworkModeratorRole.moderators.items')
+        }
+      ]
     }
   }
 }
@@ -374,8 +384,18 @@ export const getNetwork = ormCreateSelector(
   orm,
   state => state.orm,
   (state, { slug }) => slug,
-  (session, slug) =>
-  session.Network.safeGet({slug}))
+  (session, slug) => {
+    const network = session.Network.safeGet({ slug })
+    if (network) {
+      return {
+        ...network.ref,
+        communities: network.communities.orderBy(c => c.name).toModelArray(),
+        moderators: network.moderators.orderBy(m => m.name).toModelArray()
+      }
+    }
+    return null
+  }
+)
 
 export const getModeratorResults = makeGetQueryResults(FETCH_MODERATORS)
 export const getModeratorsTotal = createSelector(
