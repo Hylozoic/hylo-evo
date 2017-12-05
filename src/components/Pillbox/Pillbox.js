@@ -6,7 +6,7 @@ import { KeyControlledItemList } from 'components/KeyControlledList'
 import cx from 'classnames'
 import Icon from 'components/Icon'
 import ReactTooltip from 'react-tooltip'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 // keys that can be pressed to create a new pill
 const creationKeyCodes = [keyMap.ENTER]

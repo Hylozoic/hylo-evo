@@ -7,7 +7,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { humanDate } from 'hylo-utils/text'
 import { isEmpty } from 'lodash'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 const { object, func, string } = PropTypes
 
