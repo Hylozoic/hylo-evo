@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 import React from 'react'
-const { func } = React.PropTypes
+const { func } = PropTypes
 
 export default class SocketSubscriber extends React.Component {
   static propTypes = {

@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react'
-const { array, string, bool, func } = React.PropTypes
+const { array, string, bool, func } = PropTypes
 import Icon from 'components/Icon'
 import Badge from 'components/Badge'
 import { Link, NavLink, matchPath } from 'react-router-dom'

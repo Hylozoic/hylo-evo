@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
-import React from 'react'
+import PropTypes from 'prop-types';
+
+import React from 'react';
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
 import PostImage from './PostImage'
@@ -10,7 +12,7 @@ import cx from 'classnames'
 
 export { PostHeader, PostFooter, PostImage, PostBody }
 
-const { shape, any, object, string, func, array, bool } = React.PropTypes
+const { shape, any, object, string, func, array, bool } = PropTypes
 
 export default class PostCard extends React.Component {
   static propTypes = {

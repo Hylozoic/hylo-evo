@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import cx from 'classnames'
 
 import RoundImage from 'components/RoundImage'
 import './PersonListItem.scss'
 
-const { any, bool, func, shape, string } = React.PropTypes
+const { any, bool, func, shape, string } = PropTypes
 
 const personType = shape({
   id: any,

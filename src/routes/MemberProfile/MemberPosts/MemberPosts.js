@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { get } from 'lodash/fp'
 import PostCard from 'components/PostCard'
 import './MemberPosts.scss'
 
-const { any, arrayOf, func, number, shape, string } = React.PropTypes
+const { any, arrayOf, func, number, shape, string } = PropTypes
 
 const personShape = shape({
   id: any,

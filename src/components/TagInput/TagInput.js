@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { debounce, includes, isEmpty } from 'lodash'
 import { uniqBy } from 'lodash/fp'
 import cx from 'classnames'

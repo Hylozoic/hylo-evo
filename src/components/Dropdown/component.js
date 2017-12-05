@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import cx from 'classnames'
 import { isEmpty } from 'lodash'
 import { position } from 'util/scrolling'
 import Icon from 'components/Icon'
-const { array, object, string, bool } = React.PropTypes
+const { array, object, string, bool } = PropTypes
 import './component.scss'
 
 export default class Dropdown extends React.Component {

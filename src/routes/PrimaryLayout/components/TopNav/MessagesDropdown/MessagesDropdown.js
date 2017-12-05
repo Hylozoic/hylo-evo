@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import './MessagesDropdown.scss'
 const {array, string, func} = PropTypes
 import { Link } from 'react-router-dom'

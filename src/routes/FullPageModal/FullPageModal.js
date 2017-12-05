@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import styles from './FullPageModal.scss'
 import { NavLink, Route } from 'react-router-dom'
 import Icon from 'components/Icon'

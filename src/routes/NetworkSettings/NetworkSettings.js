@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import Autocomplete from 'react-autocomplete'
 import cx from 'classnames'
 import { times, isEmpty } from 'lodash/fp'

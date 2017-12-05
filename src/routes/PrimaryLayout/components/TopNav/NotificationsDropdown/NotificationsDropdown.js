@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import './NotificationsDropdown.scss'
 const { array, string, func } = PropTypes
 import { humanDate, textLength, truncate } from 'hylo-utils/text'

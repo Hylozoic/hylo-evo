@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { debounce, throttle } from 'lodash/fp'
 
@@ -9,7 +10,7 @@ import PeopleSelectorContacts from './PeopleSelectorContacts'
 import SelectorMatchedItem from './SelectorMatchedItem'
 import './PeopleSelector.scss'
 
-const { any, arrayOf, func, shape, string } = React.PropTypes
+const { any, arrayOf, func, shape, string } = PropTypes
 
 const personType = shape({
   id: any,

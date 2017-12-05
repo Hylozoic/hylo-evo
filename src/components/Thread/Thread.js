@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 
 import { filter, get, map, isEmpty } from 'lodash/fp'
-const { func, object } = React.PropTypes
+const { func, object } = PropTypes
 import MessageSection from 'components/MessageSection'
 import MessageForm from 'components/MessageForm'
 import PeopleTyping from 'components/PeopleTyping'

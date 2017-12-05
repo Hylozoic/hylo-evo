@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 import React from 'react'
-const { any, arrayOf, func, shape, string } = React.PropTypes
+const { any, arrayOf, func, shape, string } = PropTypes
 
 import PersonListItem from 'components/PersonListItem'
 import './PeopleSelectorContacts.scss'

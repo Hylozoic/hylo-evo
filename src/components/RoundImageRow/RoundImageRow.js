@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import RoundImage from 'components/RoundImage'
 import './RoundImageRow.scss'
 
-const { array, string, bool } = React.PropTypes
+const { array, string, bool } = PropTypes
 
 export default function RoundImageRow ({ imageUrls = [], className, vertical, cap, ascending }) {
   var capped

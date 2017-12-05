@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import cx from 'classnames'
 import Avatar from 'components/Avatar'
@@ -5,7 +6,7 @@ import { personUrl } from 'util/index'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import './Message.scss'
 
-const { bool, object } = React.PropTypes
+const { bool, object } = PropTypes
 
 export default function Message ({ message, isHeader }) {
   const person = message.creator

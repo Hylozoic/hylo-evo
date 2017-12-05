@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react'
 import styles from './InviteSettingsTab.scss'
 import Button from 'components/Button'
@@ -8,7 +9,7 @@ import { humanDate } from 'hylo-utils/text'
 import { isEmpty } from 'lodash'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-const { object, func, string } = React.PropTypes
+const { object, func, string } = PropTypes
 
 const parseEmailList = emails =>
   (emails || '').split(/,|\n/).map(email => {

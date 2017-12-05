@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import './NetworkCommunities.scss'
 const { string, array, func, object } = PropTypes
 import Dropdown from 'components/Dropdown'

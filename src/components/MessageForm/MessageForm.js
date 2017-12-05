@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { throttle } from 'lodash'
 import { get } from 'lodash/fp'
 import TextareaAutosize from 'react-textarea-autosize'
 import { onEnterNoShift } from 'util/textInput'
 import RoundImage from 'components/RoundImage'
-var { func, object, string, bool } = React.PropTypes
+var { func, object, string, bool } = PropTypes
 import './MessageForm.scss'
 
 // should share with comment form

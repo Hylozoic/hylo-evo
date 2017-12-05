@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import './component.scss'
 
-const { string } = React.PropTypes
+const { string } = PropTypes
 
 export default function ColorSample ({ color, colorName, opacity = 1, textColor = '#FFF', borderColor, description }) {
   const circleStyle = {

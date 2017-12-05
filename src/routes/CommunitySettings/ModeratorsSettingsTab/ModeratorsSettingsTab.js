@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import styles from './ModeratorsSettingsTab.scss'
 import Loading from 'components/Loading'
 import { KeyControlledItemList } from 'components/KeyControlledList'

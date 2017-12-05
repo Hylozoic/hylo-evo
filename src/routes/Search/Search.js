@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import styles from './Search.scss'
 const { arrayOf, bool, func, shape, string, object } = PropTypes
 import FullPageModal from 'routes/FullPageModal'

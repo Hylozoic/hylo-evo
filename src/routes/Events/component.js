@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './component.scss'
 
-const { string, bool } = React.PropTypes
+const { string, bool } = PropTypes
 
 export default function Events () {
   return <div styleName='event-list'>

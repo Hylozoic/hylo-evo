@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { find, get, sortBy } from 'lodash/fp'
 import './PostFooter.scss'
@@ -6,7 +7,7 @@ import RoundImageRow from 'components/RoundImageRow'
 import cx from 'classnames'
 import ReactTooltip from 'react-tooltip'
 
-const { string, array, number, func, object } = React.PropTypes
+const { string, array, number, func, object } = PropTypes
 
 export default function PostFooter ({ id, currentUser, commenters, commentersTotal, votesTotal, myVote, vote }) {
   return <div styleName='footer'>

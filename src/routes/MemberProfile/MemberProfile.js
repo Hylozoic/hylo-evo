@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { get } from 'lodash/fp'
 
@@ -13,7 +14,7 @@ import MemberPosts from './MemberPosts'
 import MemberComments from './MemberComments'
 import MemberVotes from './MemberVotes'
 
-const { any, arrayOf, object, string, shape } = React.PropTypes
+const { any, arrayOf, object, string, shape } = PropTypes
 
 export default class MemberProfile extends React.Component {
   static propTypes = {

@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 
 import PersonListItem from 'components/PersonListItem'
 import './PeopleSelectorMatches.scss'
 
-const { any, arrayOf, func, shape, string } = React.PropTypes
+const { any, arrayOf, func, shape, string } = PropTypes
 
 const personType = shape({
   id: any,
