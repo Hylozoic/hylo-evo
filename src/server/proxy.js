@@ -75,7 +75,7 @@ export function handlePage (req, res) {
   console.log(`[proxy] ${pathname} -> ${newUrl} ${cachedValue ? '☺' : '↑'}`)
 
   const sendCachedData = data => {
-    var mimeType = mime.lookup(newUrl)
+    var mimeType = mime.getType(newUrl)
     res.set('Content-Type', mimeType)
     res.set('Content-Encoding', 'gzip')
     streamifier.createReadStream(data).pipe(res)
