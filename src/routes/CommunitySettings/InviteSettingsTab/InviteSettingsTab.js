@@ -7,7 +7,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { humanDate } from 'hylo-utils/text'
 import { isEmpty } from 'lodash'
-import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
+import { CSSTransitionGroup } from 'react-transition-group'
 
 const { object, func, string } = PropTypes
 
@@ -183,7 +183,7 @@ export default class InviteSettingsTab extends Component {
           </Button>}
         </div>
         <div styleName='styles.pending-invites-list'>
-          <ReactCSSTransitionGroup
+          <CSSTransitionGroup
             transitionName={{
               enter: styles['enter'],
               enterActive: styles['enter-active'],
@@ -202,7 +202,7 @@ export default class InviteSettingsTab extends Component {
                 <span styleName='styles.action-btn styles.resend-btn' onClick={() => !invite.resent && resendOnClick(invite.id)}>{invite.resent ? 'Sent' : 'Resend'}</span>
               </div>
             </div>)}
-          </ReactCSSTransitionGroup>
+          </CSSTransitionGroup>
         </div>
       </div>
     </div>

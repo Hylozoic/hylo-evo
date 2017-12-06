@@ -1,9 +1,9 @@
 import React from 'react'
-import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
+import { CSSTransitionGroup } from 'react-transition-group'
 import '../Signup.scss'
 
 export default function SignupModal (props) {
-  return <ReactCSSTransitionGroup
+  return <CSSTransitionGroup
     transitionName='signup'
     transitionAppear
     transitionAppearTimeout={400}
@@ -17,5 +17,5 @@ export default function SignupModal (props) {
         {<props.child />}
       </div>
     </div>
-  </ReactCSSTransitionGroup>
+  </CSSTransitionGroup>
 }

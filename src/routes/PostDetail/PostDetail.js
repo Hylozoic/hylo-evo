@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { throttle, isEmpty } from 'lodash/fp'
 import './PostDetail.scss'
