@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
-import React from 'react';
+import React from 'react'
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
 import PostImage from './PostImage'

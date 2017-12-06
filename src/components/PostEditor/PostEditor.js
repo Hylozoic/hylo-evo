@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
 import { get } from 'lodash/fp'
 import cx from 'classnames'
 import styles from './PostEditor.scss'

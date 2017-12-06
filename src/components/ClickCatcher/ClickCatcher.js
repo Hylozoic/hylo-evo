@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
 
 export default function ClickCatcher ({ tag, handleMouseOver, navigate, ...props }) {
   if (!['div', 'span', 'p'].includes(tag)) {

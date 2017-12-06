@@ -1,11 +1,12 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import React from 'react'
 import { throttle, debounce } from 'lodash'
 import { get } from 'lodash/fp'
-const { array, bool, func, number, object, string } = PropTypes
 import Loading from 'components/Loading'
 import Message from 'components/Message'
 import './MessageSection.scss'
+
+const { array, bool, func, number, object, string } = PropTypes
 
 // the maximum amount of time in minutes that can pass between messages to still
 // include them under the same avatar and timestamp

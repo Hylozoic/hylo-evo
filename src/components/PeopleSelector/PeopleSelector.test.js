@@ -72,7 +72,7 @@ describe('PeopleSelector', () => {
       PeopleSelector.prototype.arrow = jest.fn()
       input.simulate('keyDown', { keyCode: keyMap.UP })
       const calls = PeopleSelector.prototype.arrow.mock.calls
-      expect(calls[calls.length -1][0]).toBe('up')
+      expect(calls[calls.length - 1][0]).toBe('up')
       PeopleSelector.prototype.arrow = arrow
     })
 
@@ -81,7 +81,7 @@ describe('PeopleSelector', () => {
       PeopleSelector.prototype.arrow = jest.fn()
       input.simulate('keyDown', { keyCode: keyMap.DOWN })
       const calls = PeopleSelector.prototype.arrow.mock.calls
-      expect(calls[calls.length -1][0]).toBe('down')
+      expect(calls[calls.length - 1][0]).toBe('down')
       PeopleSelector.prototype.arrow = arrow
     })
 

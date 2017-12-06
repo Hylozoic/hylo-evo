@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import './Comment.scss'
 import { Link } from 'react-router-dom'
 import Avatar from 'components/Avatar'

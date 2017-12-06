@@ -1,12 +1,13 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import styles from './ModeratorsSettingsTab.scss'
 import Loading from 'components/Loading'
 import { KeyControlledItemList } from 'components/KeyControlledList'
 import RemovableListItem from 'components/RemovableListItem'
-const { array, func, string } = PropTypes
 import { isEmpty, get } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
+
+const { array, func, string } = PropTypes
 
 export default class ModeratorsSettingsTab extends Component {
   static propTypes = {

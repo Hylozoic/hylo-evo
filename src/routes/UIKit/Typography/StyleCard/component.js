@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
 import hyloAppTypographyStyles from '../../../../css/typography.scss'
 import s from './component.scss' // eslint-disable-line no-unused-vars
 

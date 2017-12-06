@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
 import { bgImageStyle } from 'util/index'

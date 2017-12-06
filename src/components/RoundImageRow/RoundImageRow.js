@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import React from 'react'
 import RoundImage from 'components/RoundImage'
 import './RoundImageRow.scss'

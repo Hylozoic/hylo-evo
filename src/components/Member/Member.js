@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import React from 'react'
 import { bgImageStyle } from 'util/index'
 import Dropdown from 'components/Dropdown'

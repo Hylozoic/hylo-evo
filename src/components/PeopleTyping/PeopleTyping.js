@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import React from 'react'
 import { each, values } from 'lodash'
 import './PeopleTyping.scss'

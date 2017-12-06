@@ -9,7 +9,6 @@ import Icon from 'components/Icon'
 import { find } from 'lodash'
 import { get } from 'lodash/fp'
 
-
 export default class Privacy extends Component {
   constructor () {
     super()

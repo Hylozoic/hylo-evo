@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { differenceBy } from 'lodash'
 import TagInput from 'components/TagInput'
 import styles from './CommunitiesSelector.scss'

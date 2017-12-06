@@ -1,9 +1,10 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import './TopNavDropdown.scss'
-const { func, object, string } = PropTypes
 import cx from 'classnames'
 import { position } from 'util/scrolling'
+
+const { func, object, string } = PropTypes
 
 export default class TopNavDropdown extends Component {
   static propTypes = {

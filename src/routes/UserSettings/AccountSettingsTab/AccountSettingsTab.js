@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import SettingsControl from 'components/SettingsControl'
 import './AccountSettingsTab.scss'
 import Button from 'components/Button'

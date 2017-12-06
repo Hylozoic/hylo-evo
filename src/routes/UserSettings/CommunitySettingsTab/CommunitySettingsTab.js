@@ -1,12 +1,13 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import './CommunitySettingsTab.scss'
 import { Link } from 'react-router-dom'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
 import CheckBox from 'components/CheckBox'
-const { array, func } = PropTypes
 import { communityUrl } from 'util/index'
+
+const { array, func } = PropTypes
 
 export default class CommunitySettingsTab extends Component {
   static propTypes = {

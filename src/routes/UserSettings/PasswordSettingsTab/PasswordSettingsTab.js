@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { omit, isEmpty } from 'lodash/fp'
 import SettingsControl from 'components/SettingsControl'
 import './PasswordSettingsTab.scss'

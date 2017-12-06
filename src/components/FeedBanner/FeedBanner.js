@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
 import cx from 'classnames'
 import { bgImageStyle } from 'util/index'
 import './FeedBanner.scss'

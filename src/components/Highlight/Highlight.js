@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
 import cheerio from 'cheerio'
 import { flatten } from 'lodash/fp'
 
@@ -160,7 +160,7 @@ export default class Highlight extends React.Component {
             dangerouslySetInnerHTML: {
               __html: this.domParseHTMLString(originalHTML)
             }
-          },
+          }
         )
       } else {
         parsed = React.cloneElement(

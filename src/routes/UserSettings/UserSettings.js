@@ -1,12 +1,13 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import './UserSettings.scss'
 import AccountSettingsTab from './AccountSettingsTab/AccountSettingsTab'
 import CommunitySettingsTab from './CommunitySettingsTab/CommunitySettingsTab'
 import NotificationSettingsTab from './NotificationSettingsTab/NotificationSettingsTab'
 import PasswordSettingsTab from './PasswordSettingsTab/PasswordSettingsTab'
-const { object, func } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
+
+const { object, func } = PropTypes
 
 export default class UserSettings extends Component {
   static propTypes = {
