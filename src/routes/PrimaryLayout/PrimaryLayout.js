@@ -41,8 +41,6 @@ import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import mobileRedirect from 'util/mobileRedirect'
-import Modal from 'react-modal'
-
 
 export const POST_ID_MATCH_REGEX = '\\d+'
 
