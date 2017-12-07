@@ -7,7 +7,7 @@ import cx from 'classnames'
 import { newMessageUrl, threadUrl } from 'util/index'
 import RoundImageRow from 'components/RoundImageRow'
 import TopNavDropdown from '../TopNavDropdown'
-import { get, isEmpty, some } from 'lodash/fp'
+import { get, isEmpty, some, find } from 'lodash/fp'
 
 import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
 import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
@@ -100,12 +100,10 @@ export default class MessagesDropdown extends Component {
 export function MessagesDropdownItem ({ thread, onClick, currentUser }) {
   const message = thread.messages.orderBy(m => Date.parse(m.createdAt), 'desc').first()
   if (!message || !message.text) return null
-  const currentUserId = get('id', currentUser)
 
   var { text } = message
-  if (message.creator.id === currentUserId) {
-    text = `You: ${text}`
-  }
+  var participants = thread.participants.toRefArray()
+  text = lastMessageCreator(message, currentUser, participants) + text
 
   const { names, avatarUrls } = thread.participantAttributes(currentUser, 2)
 
@@ -126,4 +124,10 @@ export function MessagesDropdownItem ({ thread, onClick, currentUser }) {
       <div styleName='date'>{humanDate(thread.updatedAt)}</div>
     </div>
   </li>
+}
+
+export function lastMessageCreator (message, currentUser, participants) {
+  if (get('id', message.creator) === currentUser.id) return 'You: '
+  if (participants.length <= 2) return ''
+  return find(p => p.id === get('id', message.creator), participants).name + ': '
 }
