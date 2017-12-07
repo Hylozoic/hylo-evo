@@ -1,33 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Signup renders correctly 1`] = `
+exports[`Login renders correctly 1`] = `
 <div>
   <h1
     data-styleName="title"
   >
-    Welcome to Hylo
+    Log in to Hylo
   </h1>
-  <p
-    data-styleName="blurb"
-  >
-    Stay connected, organized, and engaged with your community.
-  </p>
-  <div
-    data-styleName="field"
-  >
-    <label
-      data-styleName="field-label"
-    >
-      Full name
-    </label>
-    <TextInput
-      autoFocus={true}
-      inputRef={[Function]}
-      name="name"
-      onChange={[Function]}
-      type="text"
-    />
-  </div>
   <div
     data-styleName="field"
   >
@@ -37,6 +16,7 @@ exports[`Signup renders correctly 1`] = `
       Your email address
     </label>
     <TextInput
+      autoFocus={true}
       inputRef={[Function]}
       name="email"
       onChange={[Function]}
@@ -60,9 +40,20 @@ exports[`Signup renders correctly 1`] = `
   </div>
   <Button
     data-styleName="submit"
-    label="Sign Up"
+    label="Log In"
     onClick={[Function]}
   />
+  <Link
+    data-styleName="forgot-password"
+    replace={false}
+    to="/reset-password"
+  >
+    <p
+      data-styleName="forgot-password"
+    >
+      Forgot password?
+    </p>
+  </Link>
   <p
     data-styleName="connect-label"
   >
@@ -95,7 +86,7 @@ exports[`Signup renders correctly 1`] = `
 </div>
 `;
 
-exports[`Signup renders download app modal correctly 1`] = `
+exports[`Login renders download app modal correctly 1`] = `
 <div>
   <DownloadAppModal
     url="some-url.com"
@@ -103,29 +94,8 @@ exports[`Signup renders download app modal correctly 1`] = `
   <h1
     data-styleName="title"
   >
-    Welcome to Hylo
+    Log in to Hylo
   </h1>
-  <p
-    data-styleName="blurb"
-  >
-    Stay connected, organized, and engaged with your community.
-  </p>
-  <div
-    data-styleName="field"
-  >
-    <label
-      data-styleName="field-label"
-    >
-      Full name
-    </label>
-    <TextInput
-      autoFocus={true}
-      inputRef={[Function]}
-      name="name"
-      onChange={[Function]}
-      type="text"
-    />
-  </div>
   <div
     data-styleName="field"
   >
@@ -135,6 +105,7 @@ exports[`Signup renders download app modal correctly 1`] = `
       Your email address
     </label>
     <TextInput
+      autoFocus={true}
       inputRef={[Function]}
       name="email"
       onChange={[Function]}
@@ -158,9 +129,20 @@ exports[`Signup renders download app modal correctly 1`] = `
   </div>
   <Button
     data-styleName="submit"
-    label="Sign Up"
+    label="Log In"
     onClick={[Function]}
   />
+  <Link
+    data-styleName="forgot-password"
+    replace={false}
+    to="/reset-password"
+  >
+    <p
+      data-styleName="forgot-password"
+    >
+      Forgot password?
+    </p>
+  </Link>
   <p
     data-styleName="connect-label"
   >
