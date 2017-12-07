@@ -1,4 +1,4 @@
-import MessagesDropdown, { MessagesDropdownItem } from './MessagesDropdown'
+import MessagesDropdown, { MessagesDropdownItem, lastMessageCreator } from './MessagesDropdown'
 import { shallow } from 'enzyme'
 import React from 'react'
 import orm from 'store/models'
@@ -72,8 +72,44 @@ describe('MessagesDropdownItem', () => {
       thread={threads[0]} currentUser={u1} onClick={() => goToThread(threads[0].id)} />)
     expect(wrapper.find('RoundImageRow').prop('imageUrls')).toEqual(['bar.png', 'baz.png'])
     expect(wrapper.find('div').at(2).text()).toEqual('Marie Curie and Arthur Fonzarelli')
-    expect(wrapper.find('div').at(3).text()).toEqual('hi')
+    expect(wrapper.find('div').at(3).text()).toEqual('Marie Curie: hi')
     wrapper.simulate('click')
     expect(mockNavigate).toHaveBeenCalledWith(threads[0].id)
+  })
+})
+
+describe('lastMessageCreator', () => {
+  it('handles when the current user created the message', () => {
+    const formattedName = 'You: '
+    const currentUser = {id: 1}
+    const message = {
+      creator: {id: 1}
+    }
+    expect(lastMessageCreator(message, currentUser, [])).toBe(formattedName)
+  })
+  it('handles when a different user created the message', () => {
+    const name = 'name'
+    const formattedName = 'name: '
+    const currentUser = {id: 1}
+    const message = {
+      creator: {id: 2}
+    }
+    const participants = [
+      {id: 2, name},
+      {id: 3, name: 'other'},
+      {id: 4, name: 'another'}
+    ]
+    expect(lastMessageCreator(message, currentUser, participants)).toBe(formattedName)
+  })
+  it('handles when there are 2 participants and a different user created the message', () => {
+    const currentUser = {id: 1}
+    const message = {
+      creator: {id: 2}
+    }
+    const participants = [
+      {id: 2, name: 'name1'},
+      {id: 2, name: 'name2'}
+    ]
+    expect(lastMessageCreator(message, currentUser, participants)).toBe('')
   })
 })
