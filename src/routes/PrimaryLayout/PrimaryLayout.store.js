@@ -104,6 +104,7 @@ const queryVariables = slug => ({slug, first: 200, offset: 0, subscribed: true, 
 const meQueryFragment = `
 me {
   id
+  isAdmin
   name
   avatarUrl
   newNotificationCount

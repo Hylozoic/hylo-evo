@@ -1,28 +1,53 @@
 import React, { PropTypes, Component } from 'react'
-import './NetworkSettings.scss'
-import Loading from 'components/Loading'
+import Autocomplete from 'react-autocomplete'
+import cx from 'classnames'
+import { times, isEmpty } from 'lodash/fp'
+
+import { bgImageStyle } from 'util/index'
 import Button from 'components/Button'
 import ChangeImageButton from 'components/ChangeImageButton'
+import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Network'
+import FullPageModal from 'routes/FullPageModal'
+import Loading from 'components/Loading'
 import RemovableListItem from 'components/RemovableListItem'
 import SettingsControl from 'components/SettingsControl'
-const { object, func } = PropTypes
-import FullPageModal from 'routes/FullPageModal'
-import { bgImageStyle } from 'util/index'
-import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Network'
-import { times, isEmpty } from 'lodash/fp'
-import cx from 'classnames'
+
+import './NetworkSettings.scss'
+
+const { any, array, bool, func, number, object } = PropTypes
 
 export default class NetworkSettings extends Component {
   static propTypes = {
+    // TODO: temp, fix types
+    addCommunityToNetwork: func.isRequired,
+    addNetworkModeratorRole: func.isRequired,
+    communities: array,
+    communitiesPage: number,
+    communitiesPageCount: number,
+    communitiesPending: any,
+    fetchCommunityAutocomplete: func.isRequired,
+    fetchModeratorAutocomplete: func.isRequired,
+    fetchNetworkSettings: func.isRequired,
+    isAdmin: bool,
+    moderators: array,
+    moderatorsPage: number,
+    moderatorsPageCount: number,
+    moderatorsPending: any,
     network: object,
-    updateNetworkSettings: func,
-    fetchNetworkSettings: func,
-    setConfirm: func
+    removeCommunityFromNetwork: func.isRequired,
+    removeNetworkModeratorRole: func.isRequired,
+    setCommunitiesPage: func.isRequired,
+    setConfirm: func.isRequired,
+    updateNetworkSettings: func.isRequired
   }
 
-  constructor (props) {
-    super(props)
-    this.state = {edits: {}, changed: false}
+  state = {
+    changed: false,
+    communityChoice: null,
+    communitySearch: '',
+    edits: {},
+    moderatorChoice: null,
+    moderatorSearch: ''
   }
 
   componentDidMount () {
@@ -64,23 +89,79 @@ export default class NetworkSettings extends Component {
     })
   }
 
+  addCommunity = () => {
+    const { communityChoice } = this.state
+    if (communityChoice) {
+      this.props.addCommunityToNetwork(communityChoice.id)
+      this.setState({
+        communityChoice: null,
+        communitySearch: ''
+      })
+    }
+  }
+
+  addModerator = () => {
+    const { moderatorChoice } = this.state
+    if (moderatorChoice) {
+      this.props.addNetworkModeratorRole(moderatorChoice.id)
+      this.setState({
+        moderatorChoice: null,
+        moderatorSearch: ''
+      })
+    }
+  }
+
+  chooseCommunity = (_, community) => {
+    this.setState({
+      communityChoice: community,
+      communitySearch: community.name
+    })
+  }
+
+  chooseModerator = (_, person) => {
+    this.setState({
+      moderatorChoice: person,
+      moderatorSearch: person.name
+    })
+  }
+
+  communityAutocomplete = ({ target: { value } }) => {
+    this.setState({ communitySearch: value })
+    this.props.fetchCommunityAutocomplete(value)
+  }
+
+  moderatorAutocomplete = ({ target: { value } }) => {
+    this.setState({ moderatorSearch: value })
+    this.props.fetchModeratorAutocomplete(value)
+  }
+
   render () {
     const {
-      network,
-      updateNetworkSettings,
-      moderators,
-      communities,
-      setConfirm,
-      moderatorsPage,
-      moderatorsPageCount,
-      setModeratorsPage,
+      // communities,
       communitiesPage,
       communitiesPageCount,
-      setCommunitiesPage,
+      communitiesPending,
+      communityAutocompleteCandidates,
+      isAdmin,
+      // moderators,
+      moderatorsPage,
+      moderatorsPageCount,
       moderatorsPending,
-      communitiesPending
+      moderatorAutocompleteCandidates,
+      network,
+      removeCommunityFromNetwork,
+      removeNetworkModeratorRole,
+      setCommunitiesPage,
+      setConfirm,
+      setModeratorsPage,
+      updateNetworkSettings
     } = this.props
     if (!network) return <FullPageModal><Loading /></FullPageModal>
+    if (!isAdmin) {
+      return <FullPageModal goToOnClose={`/n/${network.slug}`}>
+        Sorry, you must be an admin to access this page.
+      </FullPageModal>
+    }
 
     const { edits, changed } = this.state
     const {
@@ -125,24 +206,75 @@ export default class NetworkSettings extends Component {
         </div>
         <SettingsControl label='Description' onChange={updateSetting('description')} value={description} type='textarea' />
         <div styleName='button-row'>
-          <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
+          <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='button' />
         </div>
-        <PaginatedList
+        <PaginatedList styleName='moderators'
+          isAdmin={isAdmin}
+          items={network.moderators}
           label={'Moderators'}
-          items={moderators}
           page={moderatorsPage}
           pageCount={moderatorsPageCount}
-          setPage={setModeratorsPage}
-          pending={moderatorsPending} />
-        <PaginatedList
-          styleName='communities'
+          pending={moderatorsPending}
+          removeItem={removeNetworkModeratorRole(network.id)}
+          setPage={setModeratorsPage} />
+        <div styleName='autocomplete'>
+          <Autocomplete
+            getItemValue={person => person.name}
+            inputProps={{
+              placeholder: "Start typing a person's name",
+              style: {
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                padding: '3px',
+                width: '400px'
+              }
+            }}
+            items={moderatorAutocompleteCandidates}
+            renderItem={(person, isHighlighted) =>
+              <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                {person.name}
+              </div>
+            }
+            value={this.state.moderatorSearch}
+            onChange={this.moderatorAutocomplete}
+            onSelect={this.chooseModerator}
+          />
+          <Button label='Add Moderator' color={'green'} onClick={this.addModerator} styleName='button' />
+        </div>
+        <PaginatedList styleName='communities'
+          isAdmin={isAdmin}
+          items={network.communities}
+          itemProps={{square: true, size: 40}}
           label={'Communities'}
-          items={communities}
           page={communitiesPage}
           pageCount={communitiesPageCount}
-          setPage={setCommunitiesPage}
           pending={communitiesPending}
-          itemProps={{square: true, size: 40}} />
+          removeItem={removeCommunityFromNetwork(network.id)}
+          setPage={setCommunitiesPage} />
+        <div styleName='autocomplete'>
+          <Autocomplete
+            getItemValue={community => community.name}
+            inputProps={{
+              placeholder: 'Start typing a community name',
+              style: {
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                padding: '3px',
+                width: '400px'
+              }
+            }}
+            items={communityAutocompleteCandidates}
+            renderItem={(community, isHighlighted) =>
+              <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                {community.name}
+              </div>
+            }
+            value={this.state.communitySearch}
+            onChange={this.communityAutocomplete}
+            onSelect={this.chooseCommunity}
+          />
+          <Button label='Add Community' color={'green'} onClick={this.addCommunity} styleName='button' />
+        </div>
       </div>
     </FullPageModal>
   }
@@ -173,15 +305,26 @@ export class PaginatedList extends Component {
 
   render () {
     const {
-      items, page, pageCount, setPage, pending, label, itemProps, className
+      className,
+      items,
+      itemProps,
+      label,
+      page,
+      pageCount,
+      pending,
+      removeItem,
+      setPage
     } = this.props
     const { prevItems } = this.state
-
     const visibleItems = pending ? prevItems : items
 
     return <div styleName={cx('paginated-list', {loading: pending})} className={className}>
       <div styleName='section-label'>{label}</div>
-      {visibleItems.map(m => <RemovableListItem item={m} key={m.id} {...itemProps} />)}
+      {visibleItems.map(m => <RemovableListItem
+        item={m}
+        key={m.id}
+        removeItem={removeItem}
+        {...itemProps} />)}
       <PaginationLinks page={page} pageCount={pageCount} setPage={setPage} />
     </div>
   }

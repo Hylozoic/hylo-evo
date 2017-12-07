@@ -24,6 +24,7 @@ export default Me
 
 Me.modelName = 'Me'
 Me.fields = {
+  isAdmin: attr(),
   name: attr(),
   posts: many('Post'),
 
