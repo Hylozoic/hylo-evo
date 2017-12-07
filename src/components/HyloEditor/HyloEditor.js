@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import Immutable from 'immutable'
 import Editor from 'draft-js-plugins-editor'
 import createMentionPlugin from 'draft-js-mention-plugin'
 import createLinkifyPlugin from 'draft-js-linkify-plugin'
@@ -21,15 +20,15 @@ export default class HyloEditor extends Component {
     clearMentions: PropTypes.func.isRequired,
     findTopics: PropTypes.func.isRequired,
     clearTopics: PropTypes.func.isRequired,
-    mentionResults: PropTypes.instanceOf(Immutable.List),
-    topicResults: PropTypes.instanceOf(Immutable.List)
+    mentionResults: PropTypes.array,
+    topicResults: PropTypes.array
   }
 
   static defaultProps = {
     contentHTML: '',
     readOnly: false,
-    mentionResults: Immutable.List(),
-    topicResults: Immutable.List(),
+    mentionResults: [],
+    topicResults: [],
     themes: {
       base: {
         mention: styles.mention,

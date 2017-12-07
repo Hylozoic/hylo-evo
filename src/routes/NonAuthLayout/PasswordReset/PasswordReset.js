@@ -49,7 +49,7 @@ export default class PasswordReset extends Component {
           inputRef={input => { this.email = input }} noClearButton />
       </div>
       <Button styleName='submit' label='Reset' color={canSubmit ? 'green' : 'gray'}
-        onClick={canSubmit ? () => this.submit() : null} />
+        onClick={canSubmit ? () => this.submit() : undefined} />
     </div>
   }
 }

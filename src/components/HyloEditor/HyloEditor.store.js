@@ -2,7 +2,6 @@ import orm from 'store/models/index'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { includes, mapKeys } from 'lodash'
 import { get } from 'lodash/fp'
-import { fromJS } from 'immutable'
 import {
   MODULE_NAME,
   FIND_MENTIONS,
@@ -111,8 +110,8 @@ export const getMentionResults = ormCreateSelector(
   moduleSelector,
   (session, moduleNode) => {
     const { mentionSearchTerm } = moduleNode
-    if (!mentionSearchTerm) return fromJS([])
-    const people = session.Person.all()
+    if (!mentionSearchTerm) return []
+    return session.Person.all()
       .filter(person => {
         return includes(
           person.name && person.name.toLowerCase(),
@@ -127,7 +126,6 @@ export const getMentionResults = ormCreateSelector(
           }[key] || key
         })
       })
-    return fromJS(people)
   }
 )
 
@@ -137,11 +135,11 @@ export const getTopicResults = ormCreateSelector(
   moduleSelector,
   (session, moduleNode) => {
     const { topicsSearchTerm } = moduleNode
-    if (!topicsSearchTerm) return fromJS([])
+    if (!topicsSearchTerm) return []
 
     // FIXME: if the user has been browsing multiple communities, this will
     // include results that don't belong to the current community
-    const topics = session.Topic.all()
+    return session.Topic.all()
       .filter(topic => {
         return includes(
           topic.name && topic.name.toLowerCase(),
@@ -149,6 +147,5 @@ export const getTopicResults = ormCreateSelector(
         )
       })
       .toRefArray()
-    return fromJS(topics)
   }
 )

@@ -207,7 +207,7 @@ export default class NetworkSettings extends Component {
         </div>
         <SettingsControl label='Description' onChange={updateSetting('description')} value={description} type='textarea' />
         <div styleName='button-row'>
-          <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='button' />
+          <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : undefined} styleName='button' />
         </div>
         <PaginatedList styleName='moderators'
           isAdmin={isAdmin}

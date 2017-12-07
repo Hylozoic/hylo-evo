@@ -106,7 +106,7 @@ export default class TagInput extends Component {
       <li key={t.id} className={theme.selectedTag}>
         {t.avatar_url && <Avatar person={t} isLink={false} />}
         <span className={theme.selectedTagName}>{t.label || t.name}</span>
-        <a onClick={!readOnly && this.remove(t)} className={theme.selectedTagRemove}>&times;</a>
+        <a onClick={!readOnly ? this.remove(t) : undefined} className={theme.selectedTagRemove}>&times;</a>
       </li>
     )
 
