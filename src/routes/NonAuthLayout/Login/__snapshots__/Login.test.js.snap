@@ -89,6 +89,7 @@ exports[`Login renders correctly 1`] = `
 exports[`Login renders download app modal correctly 1`] = `
 <div>
   <DownloadAppModal
+    header="Download the app to sign up!"
     url="some-url.com"
   />
   <h1

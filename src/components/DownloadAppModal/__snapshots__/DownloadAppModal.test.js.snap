@@ -12,7 +12,10 @@ exports[`matches last snapshot 1`] = `
   style={
     Object {
       "content": Object {
-        "borderRadius": "100px",
+        "borderRadius": "10px",
+      },
+      "overlay": Object {
+        "backgroundColor": "rgba(103, 117, 136, 0.75)",
       },
     }
   }
@@ -22,9 +25,7 @@ exports[`matches last snapshot 1`] = `
   >
     <h1
       data-styleName="header"
-    >
-      Download the app to sign up!
-    </h1>
+    />
     <a
       href="some-url.com"
     >
