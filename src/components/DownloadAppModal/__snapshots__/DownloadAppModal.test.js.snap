@@ -9,11 +9,20 @@ exports[`matches last snapshot 1`] = `
   parentSelector={[Function]}
   portalClassName="ReactModalPortal"
   shouldCloseOnOverlayClick={true}
+  style={
+    Object {
+      "content": Object {
+        "borderRadius": "100px",
+      },
+    }
+  }
 >
   <div
     data-styleName="center"
   >
-    <h1>
+    <h1
+      data-styleName="header"
+    >
       Download the app to sign up!
     </h1>
     <a
