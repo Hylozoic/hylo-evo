@@ -5,7 +5,7 @@
   "devDependencies": {
     "babel-cli": "6.26.0",
     "babel-core": "6.26.0",
-    "babel-eslint": "8.0.1",
+    "babel-eslint": "7.2.3",
     "babel-loader": "7.1.2",
     "babel-plugin-data-stylename": "^0.1.0",
     "babel-preset-react-app": "3.1.0",
@@ -51,7 +51,7 @@
     "timezone-mock": "^0.0.7",
     "url-loader": "0.6.2",
     "webpack": "3.10.0",
-    "webpack-dev-server": "2.9.5",
+    "webpack-dev-server": "2.9.6",
     "webpack-manifest-plugin": "1.3.2",
     "whatwg-fetch": "2.0.3"
   },
