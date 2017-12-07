@@ -37,6 +37,7 @@ import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
+import DownloadAppModal from 'components/DownloadAppModal'
 
 // TODO: Implement create community privacy component when implemented on the server
 // import Privacy from 'routes/CreateCommunity/Privacy'
@@ -96,6 +97,12 @@ export default class PrimaryLayout extends Component {
       hasMemberships,
       returnToURL
     } = this.props
+
+    const mobileRedirectLink = mobileRedirect()
+
+    if (mobileRedirectLink) {
+      return <DownloadAppModal url={mobileRedirectLink} header={'Download the app to log in!'} />
+    }
 
     if (isCommunityRoute && !currentUser) {
       return <Loading />
