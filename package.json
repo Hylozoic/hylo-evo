@@ -75,6 +75,7 @@
     "draft-js-mention-plugin": "2.0.1",
     "draft-js-plugins-editor": "2.0.3",
     "ent": "^2.2.0",
+    "enzyme-adapter-react-16": "^1.1.0",
     "express": "^4.15.2",
     "faker": "^4.1.0",
     "global": "^4.3.2",
@@ -149,6 +150,7 @@
       "json",
       "lcov"
     ],
+    "setupTestFrameworkScriptFile": "./src/setupTests.js",
     "moduleDirectories": [
       "node_modules",
       "src"
