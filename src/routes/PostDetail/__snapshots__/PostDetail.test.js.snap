@@ -9,6 +9,7 @@ exports[`PostDetail renders correctly 1`] = `
     onScroll={[Function]}
   />
   <WrappedPostHeader
+    fetchPost={[Function]}
     post={
       Object {
         "details": "the body of the post",

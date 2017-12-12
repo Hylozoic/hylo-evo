@@ -13,6 +13,7 @@ describe('PeopleSelector', () => {
         fetchContacts={() => {}}
         fetchPeople={() => {}}
         matches={[]}
+        fetchRecentContacts={jest.fn()}
         participants={[]} />
     )
     expect(wrapper).toMatchSnapshot()
@@ -209,6 +210,8 @@ describe('PeopleSelector', () => {
         <PeopleSelector
           fetchPeople={() => {}}
           participants={[]}
+          fetchContacts={jest.fn()}
+          fetchRecentContacts={jest.fn()}
           removeParticipant={removeParticipant} />
       )
       const ps = wrapper.instance()
@@ -222,6 +225,8 @@ describe('PeopleSelector', () => {
         <PeopleSelector
           fetchPeople={() => {}}
           participants={[]}
+          fetchContacts={jest.fn()}
+          fetchRecentContacts={jest.fn()}
           removeParticipant={() => {}} />
       )
       const ps = wrapper.instance()
@@ -236,6 +241,8 @@ describe('PeopleSelector', () => {
         <PeopleSelector
           fetchPeople={() => {}}
           participants={[]}
+          fetchContacts={jest.fn()}
+          fetchRecentContacts={jest.fn()}
           removeParticipant={() => {}} />
       )
       const ps = wrapper.instance()
@@ -250,7 +257,7 @@ describe('PeopleSelector', () => {
     it('adds particpants in the search, then clears it', () => {
       const addParticipant = jest.fn()
       const changeQueryParam = jest.fn()
-      const wrapper = mount(
+      mount(
         <MemoryRouter>
           <PeopleSelector
             addParticipant={addParticipant}

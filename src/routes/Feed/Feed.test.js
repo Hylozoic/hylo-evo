@@ -27,6 +27,7 @@ describe('Feed', () => {
     const wrapper = shallow(<Feed
       filter='request'
       network={{id: 2}}
+      fetchNetwork={jest.fn()}
       networkSlug='bar'
       sortBy='votes' />)
 
@@ -56,7 +57,7 @@ describe('Feed', () => {
       topicName: 'petitions',
       topic: {id: '5', name: 'petitions'}
     }
-    const wrapper = shallow(<Feed {...props} />)
+    const wrapper = shallow(<Feed {...props} fetchTopic={jest.fn()} />)
     expect(wrapper.find('FeedBanner')).toHaveLength(0)
     expect(wrapper.find('Connect(TopicFeedHeader)')).toHaveLength(1)
   })

@@ -14,7 +14,11 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
     />
     <div
       data-stylename="banner"
-      style={Object {}}
+      style={
+        Object {
+          "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg)",
+        }
+      }
     >
       <Connect(ChangeImageButton)
         data-stylename="change-banner-button"
@@ -29,7 +33,11 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
     </div>
     <div
       data-stylename="avatar"
-      style={Object {}}
+      style={
+        Object {
+          "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png)",
+        }
+      }
     >
       <Connect(ChangeImageButton)
         data-stylename="change-avatar-button"
@@ -46,6 +54,7 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       label="Description"
       onChange={[Function]}
       type="textarea"
+      value=""
     />
     <div
       data-stylename="button-row"

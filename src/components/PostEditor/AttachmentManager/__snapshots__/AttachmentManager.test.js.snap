@@ -2,6 +2,7 @@
 
 exports[`AttachmentManager renders FileManager when type is file 1`] = `
 <FileManager
+  loadAttachments={[Function]}
   prop1="foo"
   prop2="bar"
   prop3="baz"
@@ -11,6 +12,7 @@ exports[`AttachmentManager renders FileManager when type is file 1`] = `
 
 exports[`AttachmentManager renders ImageManager when type is image 1`] = `
 <DragDropContext(ImageManager)
+  loadAttachments={[Function]}
   prop1="foo"
   prop2="bar"
   prop3="baz"

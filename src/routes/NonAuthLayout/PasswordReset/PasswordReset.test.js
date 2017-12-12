@@ -4,7 +4,7 @@ import PasswordReset from './PasswordReset'
 
 describe('Signup', () => {
   it('renders correctly', () => {
-    const wrapper = shallow(<PasswordReset />)
+    const wrapper = shallow(<PasswordReset />, { disableLifecycleMethods: true })
     expect(wrapper).toMatchSnapshot()
   })
 })

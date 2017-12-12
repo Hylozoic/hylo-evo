@@ -6,11 +6,15 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
     data-stylename="name"
     onChange={[Function]}
     type="text"
-    value=""
+    value="Foomunity"
   />
   <div
     data-stylename="banner"
-    style={Object {}}
+    style={
+      Object {
+        "backgroundImage": "url(avatar.png)",
+      }
+    }
   >
     <Connect(ChangeImageButton)
       data-stylename="change-banner-button"
@@ -25,7 +29,11 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
   </div>
   <div
     data-stylename="avatar"
-    style={Object {}}
+    style={
+      Object {
+        "backgroundImage": "url(avatar.png)",
+      }
+    }
   >
     <Connect(ChangeImageButton)
       data-stylename="change-avatar-button"
@@ -42,10 +50,12 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
     label="Description"
     onChange={[Function]}
     type="textarea"
+    value="Great community"
   />
   <SettingsControl
     label="Location"
     onChange={[Function]}
+    value="Fuji"
   />
   <div
     data-stylename="button-row"

@@ -10,7 +10,7 @@ describe('MemberProfile', () => {
   it('renders the same as the last snapshot', () => {
     const match = { params: { id: '1' } }
     const wrapper = shallow(
-      <MemberProfile match={match} person={person} ready />
+      <MemberProfile match={match} person={person} fetchPerson={jest.fn()} ready />
     )
     expect(wrapper).toMatchSnapshot()
   })
