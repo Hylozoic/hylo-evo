@@ -172,38 +172,6 @@
       "\\.(css|less|scss)$": "<rootDir>/config/jest/__mocks__/styleMock.js"
     }
   },
-  "babel": {
-    "presets": [
-      "react-app"
-    ],
-    "plugins": [
-      [
-        "react-css-modules",
-        {
-          "filetypes": {
-            ".scss": "postcss-scss"
-          },
-          "exclude": "node_modules",
-          "searchPaths": [
-            "src"
-          ],
-          "webpackHotModuleReloading": true
-        }
-      ]
-    ],
-    "env": {
-      "test": {
-        "plugins": [
-          [
-            "data-stylename"
-          ]
-        ]
-      }
-    },
-    "ignore": [
-      "scripts/templates/*"
-    ]
-  },
   "standard": {
     "parser": "babel-eslint",
     "global": [
