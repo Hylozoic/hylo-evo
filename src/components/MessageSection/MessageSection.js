@@ -88,14 +88,17 @@ export default class MessageSection extends React.Component {
     // Note: we write directly to the object here rather than using setState.
     // This avoids an automatic re-render on scroll, and any inconsistencies
     // owing to the async nature of setState and/or setState batching.
+
+    // if (oldMessages && oldMessages.length > 1 && messages && messages.length > 1)
+
     this.shouldScroll = false
 
     if (deltaLength) {
       const latest = messages[messages.length - 1]
-      const oldLatest = oldMessages[oldMessages.length - 1]
+      // const oldLatest = oldMessages[oldMessages.length - 1]
 
-      // Are additional messages old (at the beginning of the sorted array)?
-      if (get('id', latest) === get('id', oldLatest)) return
+      // // Are additional messages old (at the beginning of the sorted array)?
+      // if (get('id', latest) === get('id', oldLatest)) return
 
       // If there's one new message, it's not from currentUser,
       // and we're not already at the bottom, don't scroll
@@ -151,6 +154,7 @@ export default class MessageSection extends React.Component {
   }
 
   scrollToBottom = () => {
+    console.log('scrollToBottom')
     this.list.scrollTop = this.list.scrollHeight
     if (this.state.visible) {
       this.markAsRead()
