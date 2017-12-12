@@ -626,9 +626,9 @@ babel-plugin-check-es2015-constants@^6.22.0:
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-data-stylename@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-data-stylename/-/babel-plugin-data-stylename-0.1.0.tgz#c3883afdd519b7e6513a7c094aca9f3d0f3411c4"
+babel-plugin-data-stylename@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-data-stylename/-/babel-plugin-data-stylename-0.1.1.tgz#1090d9bd3536a5aec9f545c2061a2f00d20dd62a"
 
 babel-plugin-dynamic-import-node@1.1.0:
   version "1.1.0"
