@@ -26,7 +26,7 @@ const modalStyles = {
     backgroundColor: 'rgba(103, 117, 136, 0.75)',
     left: -20,
     top: -15,
-    bottom: 200
+    bottom: 50
   },
   content: {
     borderRadius: '10px'
