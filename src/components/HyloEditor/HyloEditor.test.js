@@ -24,7 +24,7 @@ describe('HyloEditor', () => {
   it('renders correctly (with min props)', () => {
     const wrapper = renderComponent(shallow)
     expect(wrapper.find('PluginEditor')).toHaveLength(1)
-    expect(wrapper.find('Decorated(Component)')).toHaveLength(2)
+    expect(wrapper.find('[suggestions]')).toHaveLength(2)
   })
 
   it('#setEditorStateFromContentState creates expected result through #getContentRaw', () => {
