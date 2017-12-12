@@ -24,7 +24,7 @@ export default function DownloadAppModal ({url, header}) {
 const modalStyles = {
   overlay: {
     backgroundColor: 'rgba(103, 117, 136, 0.75)',
-    left: -20,
+    left: -30,
     top: -15,
     bottom: 50
   },
