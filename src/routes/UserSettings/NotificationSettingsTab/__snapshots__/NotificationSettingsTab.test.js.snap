@@ -3,12 +3,12 @@
 exports[`NotificationSettingsTab renders correctly 1`] = `
 <div>
   <div
-    data-styleName="title"
+    data-stylename="title"
   >
     Notifications
   </div>
   <div
-    data-styleName="prompt"
+    data-stylename="prompt"
   >
     How often would you like to receive email digests for new posts in your communities?
   </div>
@@ -33,7 +33,7 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
     selected="daily"
   />
   <div
-    data-styleName="prompt"
+    data-stylename="prompt"
   >
     How would you like to receive notifications about new direct messages?
   </div>
@@ -62,7 +62,7 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
     selected="none"
   />
   <div
-    data-styleName="prompt"
+    data-stylename="prompt"
   >
     How would you like to receive notifications about new comments on posts you're following?
   </div>
@@ -91,10 +91,10 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
     selected="email"
   />
   <div
-    data-styleName="help"
+    data-stylename="help"
   >
     <p
-      data-styleName="help-paragraph"
+      data-stylename="help-paragraph"
     >
       Download our 
       <a
@@ -113,7 +113,7 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
        app to receive push notifications.
     </p>
     <p
-      data-styleName="help-paragraph"
+      data-stylename="help-paragraph"
     >
       See the 
       <Link

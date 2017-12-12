@@ -3,7 +3,7 @@
 exports[`MemberVotes renders the same as the last snapshot 1`] = `
 <div>
   <div
-    data-styleName="activity-item"
+    data-stylename="activity-item"
     key="2"
   >
     <PostCard
@@ -47,7 +47,7 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
     />
   </div>
   <div
-    data-styleName="activity-item"
+    data-stylename="activity-item"
     key="1"
   >
     <PostCard

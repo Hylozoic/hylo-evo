@@ -2,27 +2,27 @@
 
 exports[`AddSkills renders correctly 1`] = `
 <div
-  data-styleName="flex-wrapper"
+  data-stylename="flex-wrapper"
 >
   <Connect(LeftSidebar)
     body="What skills are you known for? The more skills you add, the more relevant the content. It's like magic."
     header="Share your unique super powers!"
   />
   <div
-    data-styleName="panel"
+    data-stylename="panel"
   >
     <span
-      data-styleName="white-text step-count"
+      data-stylename="white-text step-count"
     >
       STEP 3/4
     </span>
     <br />
     <div
-      data-styleName="center"
+      data-stylename="center"
     >
       <input
         autoFocus={true}
-        data-styleName="signup-input center-text signup-padding large-input-text gray-bottom-border"
+        data-stylename="signup-input center-text signup-padding large-input-text gray-bottom-border"
         onChange={[Function]}
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -33,7 +33,7 @@ exports[`AddSkills renders correctly 1`] = `
     </div>
     <div>
       <div
-        data-styleName="skills"
+        data-stylename="skills"
       >
         <Pill
           clickHandler={[Function]}
@@ -156,17 +156,17 @@ exports[`AddSkills renders correctly 1`] = `
     </div>
     <div>
       <div
-        data-styleName="your-skills"
+        data-stylename="your-skills"
       >
         <div
-          data-styleName="your-skills-label"
+          data-stylename="your-skills-label"
         >
           <span>
             Your Skills:
           </span>
         </div>
         <div
-          data-styleName="your-skills-list"
+          data-stylename="your-skills-list"
         >
           <Pill
             clickHandler={[Function]}

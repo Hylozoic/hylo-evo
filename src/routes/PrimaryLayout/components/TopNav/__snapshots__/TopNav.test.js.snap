@@ -2,26 +2,26 @@
 
 exports[`renders as expected with no community 1`] = `
 <div
-  data-styleName="topNavWrapper"
+  data-stylename="topNavWrapper"
 >
   <div
-    data-styleName="topNav"
+    data-stylename="topNav"
   >
     <div
-      data-styleName="logo-hover"
+      data-stylename="logo-hover"
     >
       <Logo />
       <Title />
     </div>
     <div
-      data-styleName="navIcons"
+      data-stylename="navIcons"
     >
       <Link
         replace={false}
         to="/search"
       >
         <Icon
-          data-styleName="icon"
+          data-stylename="icon"
           name="Search"
         />
       </Link>
@@ -33,7 +33,7 @@ exports[`renders as expected with no community 1`] = `
       />
       <Dropdown
         alignRight={true}
-        data-styleName="user-menu"
+        data-stylename="user-menu"
         toggleChildren={
           <RoundImage
             small={true}
@@ -43,7 +43,7 @@ exports[`renders as expected with no community 1`] = `
       >
         <li>
           <Link
-            data-styleName="hover-highlight"
+            data-stylename="hover-highlight"
             replace={false}
             to="/"
           >
@@ -52,7 +52,7 @@ exports[`renders as expected with no community 1`] = `
         </li>
         <li>
           <Link
-            data-styleName="hover-highlight"
+            data-stylename="hover-highlight"
             replace={false}
             to="/settings"
           >

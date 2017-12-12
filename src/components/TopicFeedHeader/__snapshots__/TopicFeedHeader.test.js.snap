@@ -2,28 +2,28 @@
 
 exports[`matches the latest snapshot 1`] = `
 <div
-  data-styleName="topic-feed-header"
+  data-stylename="topic-feed-header"
 >
   <Link
-    data-styleName="back"
+    data-stylename="back"
     replace={false}
     to="/all"
   >
     <Icon
-      data-styleName="back-icon"
+      data-stylename="back-icon"
       name="Back"
     />
      back to 
     All Communities
   </Link>
   <div
-    data-styleName="topic-name"
+    data-stylename="topic-name"
   >
     #
     cats
   </div>
   <div
-    data-styleName="meta"
+    data-stylename="meta"
   >
     11 posts
      • 

@@ -2,16 +2,16 @@
 
 exports[`PersonCard renders a skill when the search terms match a skill 1`] = `
 <div
-  data-styleName="person-card"
+  data-stylename="person-card"
   onClick={[Function]}
 >
   <RoundImage
-    data-styleName="person-image"
+    data-stylename="person-image"
     large={true}
     url="me.png"
   />
   <div
-    data-styleName="person-details"
+    data-stylename="person-details"
   >
     <Highlight
       component="span"
@@ -23,19 +23,19 @@ exports[`PersonCard renders a skill when the search terms match a skill 1`] = `
       }
     >
       <div
-        data-styleName="person-name"
+        data-stylename="person-name"
       >
         Joe Person
       </div>
     </Highlight>
     <div
-      data-styleName="person-location"
+      data-stylename="person-location"
     >
       home
     </div>
   </div>
   <Pill
-    data-styleName="person-skill"
+    data-stylename="person-skill"
     label="walking"
     small={true}
   />
@@ -44,16 +44,16 @@ exports[`PersonCard renders a skill when the search terms match a skill 1`] = `
 
 exports[`PersonCard renders correctly 1`] = `
 <div
-  data-styleName="person-card"
+  data-stylename="person-card"
   onClick={[Function]}
 >
   <RoundImage
-    data-styleName="person-image"
+    data-stylename="person-image"
     large={true}
     url="me.png"
   />
   <div
-    data-styleName="person-details"
+    data-stylename="person-details"
   >
     <Highlight
       component="span"
@@ -65,13 +65,13 @@ exports[`PersonCard renders correctly 1`] = `
       }
     >
       <div
-        data-styleName="person-name"
+        data-stylename="person-name"
       >
         Joe Person
       </div>
     </Highlight>
     <div
-      data-styleName="person-location"
+      data-stylename="person-location"
     >
       home
     </div>
@@ -82,7 +82,7 @@ exports[`PersonCard renders correctly 1`] = `
 exports[`Search matches the latest snapshot 1`] = `
 <withRouter(Connect(FullPageModal))>
   <div
-    data-styleName="search"
+    data-stylename="search"
   >
     <SearchBar
       filter="person"
@@ -92,7 +92,7 @@ exports[`Search matches the latest snapshot 1`] = `
       updateQueryParam={[Function]}
     />
     <div
-      data-styleName="search-results"
+      data-stylename="search-results"
       id="search-results"
     >
       <SearchResult

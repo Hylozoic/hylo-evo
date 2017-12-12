@@ -2,11 +2,11 @@
 
 exports[`renders as expected 1`] = `
 <div
-  data-styleName="messages-section"
+  data-stylename="messages-section"
   onScroll={[Function]}
 >
   <div
-    data-styleName="messages-section-inner"
+    data-stylename="messages-section-inner"
   >
     <Message
       isHeader={true}

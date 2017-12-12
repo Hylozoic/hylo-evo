@@ -3,21 +3,21 @@
 exports[`AllTopics matches the latest snapshot 1`] = `
 <withRouter(Connect(FullPageModal))>
   <div
-    data-styleName="all-topics"
+    data-stylename="all-topics"
   >
     <div
-      data-styleName="title"
+      data-stylename="title"
     >
       Topics
     </div>
     <div
-      data-styleName="subtitle"
+      data-stylename="subtitle"
     >
        Total Topics
     </div>
     <SearchBar />
     <div
-      data-styleName="topic-list"
+      data-stylename="topic-list"
       id="topic-list"
     >
       <CommunityTopicListItem
@@ -48,10 +48,10 @@ exports[`AllTopics matches the latest snapshot 1`] = `
 
 exports[`SearchBar matches the latest snapshot 1`] = `
 <div
-  data-styleName="search-bar"
+  data-stylename="search-bar"
 >
   <TextInput
-    data-styleName="search-input"
+    data-stylename="search-input"
     noClearButton={true}
     onChange={[Function]}
     placeholder="Search topics"
@@ -59,7 +59,7 @@ exports[`SearchBar matches the latest snapshot 1`] = `
   />
   <Dropdown
     alignRight={true}
-    data-styleName="search-order"
+    data-stylename="search-order"
     items={
       Array [
         Object {
@@ -74,7 +74,7 @@ exports[`SearchBar matches the latest snapshot 1`] = `
     }
     toggleChildren={
       <span
-        data-styleName="search-sorter-label"
+        data-stylename="search-sorter-label"
       >
         Popular
         <Icon
@@ -88,21 +88,21 @@ exports[`SearchBar matches the latest snapshot 1`] = `
 
 exports[`TopicListItem matches the latest snapshot 1`] = `
 <div
-  data-styleName="topic"
+  data-stylename="topic"
 >
   <Link
-    data-styleName="topic-details"
+    data-stylename="topic-details"
     replace={false}
     to="/c/goteam/petitions"
   >
     <div
-      data-styleName="topic-name"
+      data-stylename="topic-name"
     >
       #
       petitions
     </div>
     <div
-      data-styleName="topic-stats"
+      data-stylename="topic-stats"
     >
       24 posts
        • 
@@ -110,7 +110,7 @@ exports[`TopicListItem matches the latest snapshot 1`] = `
     </div>
   </Link>
   <span
-    data-styleName="topic-subscribe"
+    data-stylename="topic-subscribe"
   >
     Subscribe
   </span>

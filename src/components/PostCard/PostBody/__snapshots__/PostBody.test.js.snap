@@ -8,11 +8,11 @@ exports[`matches last snapshot 1`] = `
 >
   <div
     className="classy"
-    data-styleName="body"
+    data-stylename="body"
   >
     <div
       className="hdr-headline"
-      data-styleName="title"
+      data-stylename="title"
     >
       hello there
     </div>
@@ -23,7 +23,7 @@ exports[`matches last snapshot 1`] = `
             "__html": "<p>the details</p>",
           }
         }
-        data-styleName="details"
+        data-stylename="details"
       />
     </Connect(ClickCatcher)>
     <LinkPreview
@@ -32,36 +32,36 @@ exports[`matches last snapshot 1`] = `
       url="www.hylo.com/awitp"
     />
     <div
-      data-styleName="file-attachments"
+      data-stylename="file-attachments"
     >
       <a
-        data-styleName="file-attachment"
+        data-stylename="file-attachment"
         href="https://www.hylo.com/awitp.pdf"
         key="1"
         target="_blank"
       >
         <Icon
-          data-styleName="file-icon"
+          data-stylename="file-icon"
           name="Document"
         />
         <span
-          data-styleName="file-name"
+          data-stylename="file-name"
         >
           awitp.pdf
         </span>
       </a>
       <a
-        data-styleName="file-attachment"
+        data-stylename="file-attachment"
         href="http://www.google.com/lalala.zip"
         key="1"
         target="_blank"
       >
         <Icon
-          data-styleName="file-icon"
+          data-stylename="file-icon"
           name="Document"
         />
         <span
-          data-styleName="file-name"
+          data-stylename="file-name"
         >
           lalala.zip
         </span>

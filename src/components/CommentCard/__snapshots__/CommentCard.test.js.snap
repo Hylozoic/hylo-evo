@@ -2,15 +2,15 @@
 
 exports[`displays an image 1`] = `
 <Link
-  data-styleName="link"
+  data-stylename="link"
   replace={false}
   to="/all/p/77"
 >
   <div
-    data-styleName="comment-card"
+    data-stylename="comment-card"
   >
     <div
-      data-styleName="comment-header"
+      data-stylename="comment-header"
     >
       <RoundImage
         large={true}
@@ -22,34 +22,34 @@ exports[`displays an image 1`] = `
         term="foo"
       >
         <div
-          data-styleName="comment-meta"
+          data-stylename="comment-meta"
         >
           <span
-            data-styleName="person-name"
+            data-stylename="person-name"
           >
             Joe Smith
           </span>
            commented on 
           <span
-            data-styleName="post-title"
+            data-stylename="post-title"
           >
             Awesome Sauce #hashtag
           </span>
         </div>
       </Highlight>
       <span
-        data-styleName="date"
+        data-stylename="date"
       >
         just now
       </span>
     </div>
     <img
-      data-styleName="comment-image"
+      data-stylename="comment-image"
       onClick={[Function]}
       src="jam.png"
     />
     <div
-      data-styleName="comment-footer"
+      data-stylename="comment-footer"
     />
   </div>
 </Link>
@@ -57,15 +57,15 @@ exports[`displays an image 1`] = `
 
 exports[`matches last snapshot 1`] = `
 <Link
-  data-styleName="link"
+  data-stylename="link"
   replace={false}
   to="/all/p/77"
 >
   <div
-    data-styleName="comment-card"
+    data-stylename="comment-card"
   >
     <div
-      data-styleName="comment-header"
+      data-stylename="comment-header"
     >
       <RoundImage
         large={true}
@@ -77,23 +77,23 @@ exports[`matches last snapshot 1`] = `
         term="foo"
       >
         <div
-          data-styleName="comment-meta"
+          data-stylename="comment-meta"
         >
           <span
-            data-styleName="person-name"
+            data-stylename="person-name"
           >
             Joe Smith
           </span>
            commented on 
           <span
-            data-styleName="post-title"
+            data-stylename="post-title"
           >
             Awesome Sauce #hashtag
           </span>
         </div>
       </Highlight>
       <span
-        data-styleName="date"
+        data-stylename="date"
       >
         just now
       </span>
@@ -110,12 +110,12 @@ exports[`matches last snapshot 1`] = `
               "__html": "<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the …</p>",
             }
           }
-          data-styleName="comment-body"
+          data-stylename="comment-body"
         />
       </Highlight>
     </Connect(ClickCatcher)>
     <div
-      data-styleName="comment-footer"
+      data-stylename="comment-footer"
     />
   </div>
 </Link>
@@ -123,15 +123,15 @@ exports[`matches last snapshot 1`] = `
 
 exports[`matches last snapshot with different config 1`] = `
 <Link
-  data-styleName="link"
+  data-stylename="link"
   replace={false}
   to="/all/p/77"
 >
   <div
-    data-styleName="comment-card"
+    data-stylename="comment-card"
   >
     <div
-      data-styleName="comment-header"
+      data-stylename="comment-header"
     >
       <RoundImage
         large={true}
@@ -143,23 +143,23 @@ exports[`matches last snapshot with different config 1`] = `
         term="foo"
       >
         <div
-          data-styleName="comment-meta"
+          data-stylename="comment-meta"
         >
           <span
-            data-styleName="person-name"
+            data-stylename="person-name"
           >
             Joe Smith
           </span>
            commented on 
           <span
-            data-styleName="post-title"
+            data-stylename="post-title"
           >
             Awesome Sauce #hashtag
           </span>
         </div>
       </Highlight>
       <span
-        data-styleName="date"
+        data-stylename="date"
       >
         just now
       </span>
@@ -176,16 +176,16 @@ exports[`matches last snapshot with different config 1`] = `
               "__html": "<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. Irrelevant Change</p>",
             }
           }
-          data-styleName="comment-body"
+          data-stylename="comment-body"
         />
       </Highlight>
     </Connect(ClickCatcher)>
     <div
-      data-styleName="comment-footer"
+      data-stylename="comment-footer"
     >
       <span>
         <Icon
-          data-styleName="reply-button"
+          data-stylename="reply-button"
           green={true}
           name="Reply"
         />

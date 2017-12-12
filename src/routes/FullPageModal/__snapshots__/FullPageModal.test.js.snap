@@ -2,20 +2,20 @@
 
 exports[`FullPageModal renders correctly when passed children 1`] = `
 <div
-  data-styleName="modal"
+  data-stylename="modal"
 >
   <div
-    data-styleName="content"
+    data-stylename="content"
   >
     <div
-      data-styleName="left-sidebar"
+      data-stylename="left-sidebar"
     >
       <div
-        data-styleName="left-sidebar-fixed"
+        data-stylename="left-sidebar-fixed"
       />
     </div>
     <div
-      data-styleName="center"
+      data-stylename="center"
     >
       <div>
         First Child
@@ -25,10 +25,10 @@ exports[`FullPageModal renders correctly when passed children 1`] = `
       </div>
     </div>
     <div
-      data-styleName="right-sidebar"
+      data-stylename="right-sidebar"
     >
       <div
-        data-styleName="right-sidebar-inner"
+        data-stylename="right-sidebar-inner"
       >
         <CloseButton />
       </div>
@@ -39,30 +39,30 @@ exports[`FullPageModal renders correctly when passed children 1`] = `
 
 exports[`FullPageModal renders correctly with a single component 1`] = `
 <div
-  data-styleName="modal"
+  data-stylename="modal"
 >
   <div
-    data-styleName="content"
+    data-stylename="content"
   >
     <div
-      data-styleName="left-sidebar"
+      data-stylename="left-sidebar"
     >
       <div
-        data-styleName="left-sidebar-fixed"
+        data-stylename="left-sidebar-fixed"
       />
     </div>
     <div
-      data-styleName="center"
+      data-stylename="center"
     >
       <div>
         The Content
       </div>
     </div>
     <div
-      data-styleName="right-sidebar"
+      data-stylename="right-sidebar"
     >
       <div
-        data-styleName="right-sidebar-inner"
+        data-stylename="right-sidebar-inner"
       >
         <CloseButton />
       </div>
@@ -73,21 +73,21 @@ exports[`FullPageModal renders correctly with a single component 1`] = `
 
 exports[`FullPageModal renders correctly with multiple tabs 1`] = `
 <div
-  data-styleName="modal"
+  data-stylename="modal"
 >
   <div
-    data-styleName="content"
+    data-stylename="content"
   >
     <div
-      data-styleName="left-sidebar"
+      data-stylename="left-sidebar"
     >
       <div
-        data-styleName="left-sidebar-fixed border"
+        data-stylename="left-sidebar-fixed border"
       >
         <NavLink
           activeClassName="active"
           ariaCurrent="true"
-          data-styleName="nav-link"
+          data-stylename="nav-link"
           exact={true}
           key="/settings"
           replace={true}
@@ -98,7 +98,7 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
         <NavLink
           activeClassName="active"
           ariaCurrent="true"
-          data-styleName="nav-link"
+          data-stylename="nav-link"
           exact={true}
           key="/settings/communities"
           replace={true}
@@ -109,7 +109,7 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
       </div>
     </div>
     <div
-      data-styleName="center narrow"
+      data-stylename="center narrow"
     >
       <Route
         exact={true}
@@ -125,10 +125,10 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
       />
     </div>
     <div
-      data-styleName="right-sidebar"
+      data-stylename="right-sidebar"
     >
       <div
-        data-styleName="right-sidebar-inner"
+        data-stylename="right-sidebar-inner"
       >
         <CloseButton />
       </div>

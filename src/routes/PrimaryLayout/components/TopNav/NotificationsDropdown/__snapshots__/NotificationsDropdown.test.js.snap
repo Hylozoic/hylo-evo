@@ -2,18 +2,18 @@
 
 exports[`Notification renders correctly with a comment mention notification 1`] = `
 <li
-  data-styleName="notification unread"
+  data-stylename="notification unread"
   onClick={[Function]}
 >
   <div
-    data-styleName="image-wraper"
+    data-stylename="image-wraper"
   >
     <RoundImage
       url="bar.png"
     />
   </div>
   <div
-    data-styleName="content"
+    data-stylename="content"
   >
     <NotificationHeader
       notification={
@@ -64,7 +64,7 @@ exports[`Notification renders correctly with a comment mention notification 1`] 
       }
     />
     <div
-      data-styleName="date"
+      data-stylename="date"
     >
       22 years ago
     </div>
@@ -74,18 +74,18 @@ exports[`Notification renders correctly with a comment mention notification 1`] 
 
 exports[`Notification renders correctly with a comment notification 1`] = `
 <li
-  data-styleName="notification unread"
+  data-stylename="notification unread"
   onClick={[Function]}
 >
   <div
-    data-styleName="image-wraper"
+    data-stylename="image-wraper"
   >
     <RoundImage
       url="bar.png"
     />
   </div>
   <div
-    data-styleName="content"
+    data-stylename="content"
   >
     <NotificationHeader
       notification={
@@ -136,7 +136,7 @@ exports[`Notification renders correctly with a comment notification 1`] = `
       }
     />
     <div
-      data-styleName="date"
+      data-stylename="date"
     >
       22 years ago
     </div>
@@ -146,18 +146,18 @@ exports[`Notification renders correctly with a comment notification 1`] = `
 
 exports[`Notification renders correctly with a join request notification 1`] = `
 <li
-  data-styleName="notification unread"
+  data-stylename="notification unread"
   onClick={[Function]}
 >
   <div
-    data-styleName="image-wraper"
+    data-stylename="image-wraper"
   >
     <RoundImage
       url="bar.png"
     />
   </div>
   <div
-    data-styleName="content"
+    data-stylename="content"
   >
     <NotificationHeader
       notification={
@@ -202,7 +202,7 @@ exports[`Notification renders correctly with a join request notification 1`] = `
       }
     />
     <div
-      data-styleName="date"
+      data-stylename="date"
     >
       22 years ago
     </div>
@@ -212,18 +212,18 @@ exports[`Notification renders correctly with a join request notification 1`] = `
 
 exports[`Notification renders correctly with a mention notification 1`] = `
 <li
-  data-styleName="notification unread"
+  data-stylename="notification unread"
   onClick={[Function]}
 >
   <div
-    data-styleName="image-wraper"
+    data-stylename="image-wraper"
   >
     <RoundImage
       url="bar.png"
     />
   </div>
   <div
-    data-styleName="content"
+    data-stylename="content"
   >
     <NotificationHeader
       notification={
@@ -268,7 +268,7 @@ exports[`Notification renders correctly with a mention notification 1`] = `
       }
     />
     <div
-      data-styleName="date"
+      data-stylename="date"
     >
       22 years ago
     </div>
@@ -278,18 +278,18 @@ exports[`Notification renders correctly with a mention notification 1`] = `
 
 exports[`Notification renders correctly with a tag notification 1`] = `
 <li
-  data-styleName="notification unread"
+  data-stylename="notification unread"
   onClick={[Function]}
 >
   <div
-    data-styleName="image-wraper"
+    data-stylename="image-wraper"
   >
     <RoundImage
       url="baz.png"
     />
   </div>
   <div
-    data-styleName="content"
+    data-stylename="content"
   >
     <NotificationHeader
       notification={
@@ -342,7 +342,7 @@ exports[`Notification renders correctly with a tag notification 1`] = `
       }
     />
     <div
-      data-styleName="date"
+      data-stylename="date"
     >
       22 years ago
     </div>
@@ -352,18 +352,18 @@ exports[`Notification renders correctly with a tag notification 1`] = `
 
 exports[`Notification renders correctly with an approved join request notification 1`] = `
 <li
-  data-styleName="notification unread"
+  data-stylename="notification unread"
   onClick={[Function]}
 >
   <div
-    data-styleName="image-wraper"
+    data-stylename="image-wraper"
   >
     <RoundImage
       url="bar.png"
     />
   </div>
   <div
-    data-styleName="content"
+    data-stylename="content"
   >
     <NotificationHeader
       notification={
@@ -408,7 +408,7 @@ exports[`Notification renders correctly with an approved join request notificati
       }
     />
     <div
-      data-styleName="date"
+      data-stylename="date"
     >
       22 years ago
     </div>
@@ -418,10 +418,10 @@ exports[`Notification renders correctly with an approved join request notificati
 
 exports[`NotificationBody renders correctly with a comment mention notification 1`] = `
 <div
-  data-styleName="body"
+  data-stylename="body"
 >
   <span
-    data-styleName="bold"
+    data-stylename="bold"
   >
     Marie
   </span>
@@ -433,10 +433,10 @@ exports[`NotificationBody renders correctly with a comment mention notification 
 
 exports[`NotificationBody renders correctly with a comment notification 1`] = `
 <div
-  data-styleName="body"
+  data-stylename="body"
 >
   <span
-    data-styleName="bold"
+    data-stylename="bold"
   >
     Marie
   </span>
@@ -448,17 +448,17 @@ exports[`NotificationBody renders correctly with a comment notification 1`] = `
 
 exports[`NotificationBody renders correctly with a join request notification 1`] = `
 <div
-  data-styleName="body"
+  data-stylename="body"
 >
   <span
-    data-styleName="bold"
+    data-stylename="bold"
   >
     Marie Curie
      
   </span>
   asked to join
   <span
-    data-styleName="bold"
+    data-stylename="bold"
   >
      
     Foomunity
@@ -468,10 +468,10 @@ exports[`NotificationBody renders correctly with a join request notification 1`]
 
 exports[`NotificationBody renders correctly with a mention notification 1`] = `
 <div
-  data-styleName="body"
+  data-stylename="body"
 >
   <span
-    data-styleName="bold"
+    data-stylename="bold"
   >
     Marie
   </span>
@@ -483,10 +483,10 @@ exports[`NotificationBody renders correctly with a mention notification 1`] = `
 
 exports[`NotificationBody renders correctly with a tag notification 1`] = `
 <div
-  data-styleName="body"
+  data-stylename="body"
 >
   <span
-    data-styleName="bold"
+    data-stylename="bold"
   >
     Arthur
   </span>
@@ -498,17 +498,17 @@ exports[`NotificationBody renders correctly with a tag notification 1`] = `
 
 exports[`NotificationBody renders correctly with an approved join request notification 1`] = `
 <div
-  data-styleName="body"
+  data-stylename="body"
 >
   <span
-    data-styleName="bold"
+    data-stylename="bold"
   >
     Marie Curie
      
   </span>
   approved your request to join
   <span
-    data-styleName="bold"
+    data-stylename="bold"
   >
      
     Foomunity
@@ -518,17 +518,17 @@ exports[`NotificationBody renders correctly with an approved join request notifi
 
 exports[`NotificationHeader renders correctly with a comment mention notification 1`] = `
 <div
-  data-styleName="header"
+  data-stylename="header"
 >
   <span
-    data-styleName="bold"
+    data-stylename="bold"
   >
     Marie Curie
      
   </span>
   mentioned you in a comment on
   <span
-    data-styleName="bold"
+    data-stylename="bold"
   >
      
     Our Oceans
@@ -538,11 +538,11 @@ exports[`NotificationHeader renders correctly with a comment mention notificatio
 
 exports[`NotificationHeader renders correctly with a comment notification 1`] = `
 <div
-  data-styleName="header"
+  data-stylename="header"
 >
   New Comment on 
   <span
-    data-styleName="bold"
+    data-stylename="bold"
   >
     Our Oceans
   </span>
@@ -551,7 +551,7 @@ exports[`NotificationHeader renders correctly with a comment notification 1`] = 
 
 exports[`NotificationHeader renders correctly with a join request notification 1`] = `
 <div
-  data-styleName="header"
+  data-stylename="header"
 >
   New Join Request
 </div>
@@ -559,10 +559,10 @@ exports[`NotificationHeader renders correctly with a join request notification 1
 
 exports[`NotificationHeader renders correctly with a mention notification 1`] = `
 <div
-  data-styleName="header"
+  data-stylename="header"
 >
   <span
-    data-styleName="bold"
+    data-stylename="bold"
   >
     Marie Curie
      
@@ -573,11 +573,11 @@ exports[`NotificationHeader renders correctly with a mention notification 1`] = 
 
 exports[`NotificationHeader renders correctly with a tag notification 1`] = `
 <div
-  data-styleName="header"
+  data-stylename="header"
 >
   New Post in 
   <span
-    data-styleName="bold"
+    data-stylename="bold"
   >
     #
     request
@@ -587,7 +587,7 @@ exports[`NotificationHeader renders correctly with a tag notification 1`] = `
 
 exports[`NotificationHeader renders correctly with an approved join request notification 1`] = `
 <div
-  data-styleName="header"
+  data-stylename="header"
 >
   Join Request Approved
 </div>
@@ -597,7 +597,7 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
 <TopNavDropdown
   body={
     <div
-      data-styleName="notifications"
+      data-stylename="notifications"
     >
       <Notification
         notification={
@@ -798,22 +798,22 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
   }
   header={
     <div
-      data-styleName="header-content"
+      data-stylename="header-content"
     >
       <span
-        data-styleName="tab active"
+        data-stylename="tab active"
         onClick={[Function]}
       >
         Recent
       </span>
       <span
-        data-styleName="tab"
+        data-stylename="tab"
         onClick={[Function]}
       >
         Unread
       </span>
       <span
-        data-styleName="mark-read"
+        data-stylename="mark-read"
         onClick={undefined}
       >
         Mark all as read
@@ -837,22 +837,22 @@ exports[`NotificationsDropdown renders correctly with an empty list 1`] = `
   }
   header={
     <div
-      data-styleName="header-content"
+      data-stylename="header-content"
     >
       <span
-        data-styleName="tab active"
+        data-stylename="tab active"
         onClick={[Function]}
       >
         Recent
       </span>
       <span
-        data-styleName="tab"
+        data-stylename="tab"
         onClick={[Function]}
       >
         Unread
       </span>
       <span
-        data-styleName="mark-read"
+        data-stylename="mark-read"
         onClick={undefined}
       >
         Mark all as read

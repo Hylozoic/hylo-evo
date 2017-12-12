@@ -3,7 +3,7 @@
 exports[`MemberPosts renders the same as the last snapshot 1`] = `
 <div>
   <div
-    data-styleName="activity-item"
+    data-stylename="activity-item"
     key="30003"
   >
     <PostCard
@@ -33,7 +33,7 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
     />
   </div>
   <div
-    data-styleName="activity-item"
+    data-stylename="activity-item"
     key="30002"
   >
     <PostCard

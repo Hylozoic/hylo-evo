@@ -7,17 +7,17 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
 >
   <div>
     <input
-      data-styleName="name"
+      data-stylename="name"
       onChange={[Function]}
       type="text"
       value=""
     />
     <div
-      data-styleName="banner"
+      data-stylename="banner"
       style={Object {}}
     >
       <Connect(ChangeImageButton)
-        data-styleName="change-banner-button"
+        data-stylename="change-banner-button"
         update={[Function]}
         uploadSettings={
           Object {
@@ -28,11 +28,11 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       />
     </div>
     <div
-      data-styleName="avatar"
+      data-stylename="avatar"
       style={Object {}}
     >
       <Connect(ChangeImageButton)
-        data-styleName="change-avatar-button"
+        data-stylename="change-avatar-button"
         update={[Function]}
         uploadSettings={
           Object {
@@ -48,17 +48,17 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       type="textarea"
     />
     <div
-      data-styleName="button-row"
+      data-stylename="button-row"
     >
       <Button
         color="gray"
-        data-styleName="button"
+        data-stylename="button"
         label="Save Changes"
         onClick={null}
       />
     </div>
     <PaginatedList
-      data-styleName="moderators"
+      data-stylename="moderators"
       isAdmin={true}
       items={Array []}
       label="Moderators"
@@ -68,7 +68,7 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       setPage={[Function]}
     />
     <div
-      data-styleName="autocomplete"
+      data-stylename="autocomplete"
     >
       <Autocomplete
         autoHighlight={true}
@@ -114,13 +114,13 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       />
       <Button
         color="green"
-        data-styleName="button"
+        data-stylename="button"
         label="Add Moderator"
         onClick={[Function]}
       />
     </div>
     <PaginatedList
-      data-styleName="communities"
+      data-stylename="communities"
       isAdmin={true}
       itemProps={
         Object {
@@ -136,7 +136,7 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       setPage={[Function]}
     />
     <div
-      data-styleName="autocomplete"
+      data-stylename="autocomplete"
     >
       <Autocomplete
         autoHighlight={true}
@@ -182,7 +182,7 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       />
       <Button
         color="green"
-        data-styleName="button"
+        data-stylename="button"
         label="Add Community"
         onClick={[Function]}
       />
@@ -193,10 +193,10 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
 
 exports[`PaginatedList renders correctly 1`] = `
 <div
-  data-styleName="paginated-list"
+  data-stylename="paginated-list"
 >
   <div
-    data-styleName="section-label"
+    data-stylename="section-label"
   />
   <RemovableListItem
     item={
@@ -228,7 +228,7 @@ exports[`PaginatedList renders correctly 1`] = `
 
 exports[`PaginationLinks renders correctly 1`] = `
 <div
-  data-styleName="pagination-links"
+  data-stylename="pagination-links"
 >
   <PageLink
     i={0}

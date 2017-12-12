@@ -2,7 +2,7 @@
 
 exports[`Privacy renders correctly 1`] = `
 <div
-  data-styleName="flex-wrapper"
+  data-stylename="flex-wrapper"
 >
   <ModalSidebar
     body="All good things start somewhere! Let's kick things off with a catchy name for your community."
@@ -16,20 +16,20 @@ exports[`Privacy renders correctly 1`] = `
     }
   />
   <div
-    data-styleName="panel"
+    data-stylename="panel"
   >
     <div>
       <span
-        data-styleName="step-count"
+        data-stylename="step-count"
       >
         STEP 3/4
       </span>
     </div>
     <div
-      data-styleName="center"
+      data-stylename="center"
     >
       <div
-        data-styleName="logo center"
+        data-stylename="logo center"
         style={
           Object {
             "backgroundImage": "url(/logo-white.svg)",
@@ -38,22 +38,22 @@ exports[`Privacy renders correctly 1`] = `
       />
     </div>
     <div
-      data-styleName="center-vertically privacy-label-row"
+      data-stylename="center-vertically privacy-label-row"
     >
       <span
-        data-styleName="privacy-input-label"
+        data-stylename="privacy-input-label"
       >
         SET THE PRIVACY LEVEL
       </span>
       <br />
       <span
-        data-styleName="privacy-label"
+        data-stylename="privacy-label"
       >
         This community is
       </span>
       <Dropdown
         alignRight={true}
-        data-styleName="privacy-dropdown"
+        data-stylename="privacy-dropdown"
         items={
           Array [
             Object {

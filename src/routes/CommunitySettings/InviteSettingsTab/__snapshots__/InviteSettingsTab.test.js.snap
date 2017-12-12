@@ -3,15 +3,15 @@
 exports[`renders correctly 1`] = `
 <div>
   <div
-    data-styleName="styles.header"
+    data-stylename="styles.header"
   >
     <div
-      data-styleName="styles.title"
+      data-stylename="styles.title"
     >
       Invite People
     </div>
     <div
-      data-styleName="styles.subtitle"
+      data-stylename="styles.subtitle"
     >
       to 
       Hylo
@@ -19,28 +19,28 @@ exports[`renders correctly 1`] = `
     </div>
   </div>
   <div
-    data-styleName="styles.invite-link-settings"
+    data-stylename="styles.invite-link-settings"
   >
     <div
-      data-styleName="styles.invite-link-text"
+      data-stylename="styles.invite-link-text"
     >
       <div
-        data-styleName="styles.help"
+        data-stylename="styles.help"
       >
         Anyone with this link can join the community
       </div>
       <div
-        data-styleName="styles.invite-link"
+        data-stylename="styles.invite-link"
       >
         http://www.hylo.com/c/hylo/join/lalala
       </div>
     </div>
     <div
-      data-styleName="styles.buttons"
+      data-stylename="styles.buttons"
     >
       <Button
         color="green-white-green-border"
-        data-styleName="styles.reset-button"
+        data-stylename="styles.reset-button"
         narrow={true}
         onClick={[Function]}
         small={true}
@@ -53,7 +53,7 @@ exports[`renders correctly 1`] = `
       >
         <Button
           color="green-white-green-border"
-          data-styleName="styles.copy-button"
+          data-stylename="styles.copy-button"
           narrow={true}
           small={true}
         >
@@ -63,10 +63,10 @@ exports[`renders correctly 1`] = `
     </div>
   </div>
   <div
-    data-styleName="styles.email-section"
+    data-stylename="styles.email-section"
   >
     <TextareaAutosize
-      data-styleName="styles.invite-msg-input"
+      data-stylename="styles.invite-msg-input"
       minRows={5}
       onChange={[Function]}
       onHeightChange={[Function]}
@@ -75,7 +75,7 @@ exports[`renders correctly 1`] = `
       value=""
     />
     <TextareaAutosize
-      data-styleName="styles.invite-msg-input"
+      data-stylename="styles.invite-msg-input"
       minRows={5}
       onChange={[Function]}
       onHeightChange={[Function]}
@@ -83,7 +83,7 @@ exports[`renders correctly 1`] = `
       value="Hey! Here’s an invite to the Hylo community on Hylo."
     />
     <div
-      data-styleName="styles.send-invite-button"
+      data-stylename="styles.send-invite-button"
     >
       <Button
         color="green"
@@ -97,10 +97,10 @@ exports[`renders correctly 1`] = `
     </div>
   </div>
   <div
-    data-styleName="styles.pending-invites-section"
+    data-stylename="styles.pending-invites-section"
   >
     <div
-      data-styleName="styles.pending-invites-header"
+      data-stylename="styles.pending-invites-header"
     >
       <h1
         style={
@@ -114,7 +114,7 @@ exports[`renders correctly 1`] = `
       </h1>
     </div>
     <div
-      data-styleName="styles.pending-invites-list"
+      data-stylename="styles.pending-invites-list"
     >
       <CSSTransitionGroup
         transitionAppear={false}

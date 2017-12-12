@@ -2,22 +2,22 @@
 
 exports[`matches snapshot 1`] = `
 <div
-  data-styleName="header"
+  data-stylename="header"
 >
   <Avatar
     avatarUrl="foo.png"
-    data-styleName="avatar"
+    data-stylename="avatar"
     url="/m/123"
   />
   <div
-    data-styleName="headerText"
+    data-stylename="headerText"
   >
     <Highlight
       component="span"
       highlightClassName="highlight"
     >
       <Link
-        data-styleName="userName"
+        data-stylename="userName"
         replace={false}
         to="/m/123"
       >
@@ -26,34 +26,34 @@ exports[`matches snapshot 1`] = `
     </Highlight>
     <div>
       <span
-        data-styleName="timestamp"
+        data-stylename="timestamp"
       />
     </div>
   </div>
   <div
-    data-styleName="upperRight"
+    data-stylename="upperRight"
   />
 </div>
 `;
 
 exports[`matches snapshot 2`] = `
 <div
-  data-styleName="header"
+  data-stylename="header"
 >
   <Avatar
     avatarUrl="foo.png"
-    data-styleName="avatar"
+    data-stylename="avatar"
     url="/m/123"
   />
   <div
-    data-styleName="headerText"
+    data-stylename="headerText"
   >
     <Highlight
       component="span"
       highlightClassName="highlight"
     >
       <Link
-        data-styleName="userName"
+        data-stylename="userName"
         replace={false}
         to="/m/123"
       >
@@ -62,16 +62,16 @@ exports[`matches snapshot 2`] = `
     </Highlight>
     <div>
       <span
-        data-styleName="timestamp"
+        data-stylename="timestamp"
       >
         <span
-          data-styleName="spacer"
+          data-stylename="spacer"
         >
           •
         </span>
       </span>
       <Link
-        data-styleName="context"
+        data-stylename="context"
         replace={false}
         to="/c/fooc"
       >
@@ -80,10 +80,10 @@ exports[`matches snapshot 2`] = `
     </div>
   </div>
   <div
-    data-styleName="upperRight"
+    data-stylename="upperRight"
   >
     <PostLabel
-      data-styleName="label"
+      data-stylename="label"
       type="request"
     />
   </div>
@@ -92,22 +92,22 @@ exports[`matches snapshot 2`] = `
 
 exports[`matches snapshot 3`] = `
 <div
-  data-styleName="header"
+  data-stylename="header"
 >
   <Avatar
     avatarUrl="foo.png"
-    data-styleName="avatar"
+    data-stylename="avatar"
     url="/m/123"
   />
   <div
-    data-styleName="headerText"
+    data-stylename="headerText"
   >
     <Highlight
       component="span"
       highlightClassName="highlight"
     >
       <Link
-        data-styleName="userName"
+        data-stylename="userName"
         replace={false}
         to="/m/123"
       >
@@ -116,16 +116,16 @@ exports[`matches snapshot 3`] = `
     </Highlight>
     <div>
       <span
-        data-styleName="timestamp"
+        data-stylename="timestamp"
       >
         <span
-          data-styleName="spacer"
+          data-stylename="spacer"
         >
           •
         </span>
       </span>
       <Link
-        data-styleName="context"
+        data-stylename="context"
         replace={false}
         to="/c/fooc"
       >
@@ -134,10 +134,10 @@ exports[`matches snapshot 3`] = `
     </div>
   </div>
   <div
-    data-styleName="upperRight"
+    data-stylename="upperRight"
   >
     <PostLabel
-      data-styleName="label"
+      data-stylename="label"
       type="request"
     />
     <Dropdown

@@ -3,20 +3,20 @@
 exports[`Signup renders correctly 1`] = `
 <div>
   <h1
-    data-styleName="title"
+    data-stylename="title"
   >
     Welcome to Hylo
   </h1>
   <p
-    data-styleName="blurb"
+    data-stylename="blurb"
   >
     Stay connected, organized, and engaged with your community.
   </p>
   <div
-    data-styleName="field"
+    data-stylename="field"
   >
     <label
-      data-styleName="field-label"
+      data-stylename="field-label"
     >
       Full name
     </label>
@@ -29,10 +29,10 @@ exports[`Signup renders correctly 1`] = `
     />
   </div>
   <div
-    data-styleName="field"
+    data-stylename="field"
   >
     <label
-      data-styleName="field-label"
+      data-stylename="field-label"
     >
       Your email address
     </label>
@@ -44,10 +44,10 @@ exports[`Signup renders correctly 1`] = `
     />
   </div>
   <div
-    data-styleName="field"
+    data-stylename="field"
   >
     <label
-      data-styleName="field-label"
+      data-stylename="field-label"
     >
       Password
     </label>
@@ -59,34 +59,34 @@ exports[`Signup renders correctly 1`] = `
     />
   </div>
   <Button
-    data-styleName="submit"
+    data-stylename="submit"
     label="Sign Up"
     onClick={[Function]}
   />
   <p
-    data-styleName="connect-label"
+    data-stylename="connect-label"
   >
     Or connect with:
   </p>
   <div
-    data-styleName="auth-buttons"
+    data-stylename="auth-buttons"
   >
     <a
-      data-styleName="facebook"
+      data-stylename="facebook"
       onClick={[Function]}
     >
       <Icon
-        data-styleName="auth-icon"
+        data-stylename="auth-icon"
         name="Facebook"
       />
       Facebook
     </a>
     <a
-      data-styleName="google"
+      data-stylename="google"
       onClick={[Function]}
     >
       <Icon
-        data-styleName="auth-icon"
+        data-stylename="auth-icon"
         name="Google"
       />
       Google

@@ -2,7 +2,7 @@
 
 exports[`matches the last snapshot 1`] = `
 <ul
-  data-styleName="people-selector-matches"
+  data-stylename="people-selector-matches"
 >
   <PersonListItem
     active={true}

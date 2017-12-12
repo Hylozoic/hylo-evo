@@ -2,7 +2,7 @@
 
 exports[`PostDetail renders correctly 1`] = `
 <div
-  data-styleName="post"
+  data-stylename="post"
 >
   <ScrollListener
     elementId="detail-column"
@@ -26,7 +26,7 @@ exports[`PostDetail renders correctly 1`] = `
     slug="foo"
   />
   <Connect(PostImage)
-    data-styleName="image"
+    data-stylename="image"
     linked={true}
     postId="91"
   />
@@ -39,14 +39,14 @@ exports[`PostDetail renders correctly 1`] = `
     }
   />
   <PostBody
-    data-styleName="body"
+    data-stylename="body"
     details="the body of the post"
     expanded={true}
     id="91"
     slug="foo"
   />
   <div
-    data-styleName="activity-header"
+    data-stylename="activity-header"
   >
     ACTIVITY
   </div>
