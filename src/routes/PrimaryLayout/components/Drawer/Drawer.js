@@ -46,9 +46,9 @@ export default class Drawer extends Component {
   }
 
   render () {
-    const { community, network, communities, networks, className } = this.props
+    const { community, network, communities, networks, className, toggleDrawer } = this.props
     return <div className={className} styleName='s.communityDrawer'>
-      <Icon name='Ex' styleName='s.closeDrawer' />
+      <Icon name='Ex' styleName='s.closeDrawer' onClick={toggleDrawer} />
       <Logo community={community} network={network} />
       <Link styleName='s.settingsLink' to={'/settings'}>
         <Icon name='Settings' styleName='s.settingsIcon' /> Settings
