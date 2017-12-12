@@ -47,14 +47,14 @@ it('displays the topic name', () => {
     topic: {name: 'Petitions'}
   }
   const wrapper = shallow(<TopicFeedHeader {...props} />)
-  expect(wrapper.find('[data-styleName="topic-name"]').text()).toEqual('#Petitions')
+  expect(wrapper.find('[data-stylename="topic-name"]').text()).toEqual('#Petitions')
 })
 
 describe('meta', () => {
   it('uses values of 0 if the meta info is not passed in', () => {
     const props = {topic}
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-styleName="meta"]').text()).toEqual('0 posts • 0 followers')
+    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('0 posts • 0 followers')
   })
 
   it('correctly pluralizes meta counts when count is 0', () => {
@@ -64,7 +64,7 @@ describe('meta', () => {
       postsTotal: 0
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-styleName="meta"]').text()).toEqual('0 posts • 0 followers')
+    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('0 posts • 0 followers')
   })
 
   it('correctly pluralizes counts when count is 1', () => {
@@ -74,7 +74,7 @@ describe('meta', () => {
       postsTotal: 1
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-styleName="meta"]').text()).toEqual('1 post • 1 follower')
+    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('1 post • 1 follower')
   })
 
   it('correctly pluralizes counts when count is greater than 1', () => {
@@ -84,7 +84,7 @@ describe('meta', () => {
       postsTotal: 10
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-styleName="meta"]').text()).toEqual('10 posts • 2 followers')
+    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('10 posts • 2 followers')
   })
 })
 
@@ -99,13 +99,13 @@ describe('subscribe', () => {
       }
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-styleName="subscribe"]')).toHaveLength(1)
+    expect(wrapper.find('[data-stylename="subscribe"]')).toHaveLength(1)
   })
 
   it('does not show sub/unsub if community prop is not present', () => {
     const props = {topic}
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-styleName="subscribe"]')).toHaveLength(0)
+    expect(wrapper.find('[data-stylename="subscribe"]')).toHaveLength(0)
   })
 
   it('should say Subscribe when not subscribed', () => {
@@ -115,7 +115,7 @@ describe('subscribe', () => {
       communityTopic: {isSubscribed: false}
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-styleName="subscribe"]').render().text()).toEqual('Subscribe')
+    expect(wrapper.find('[data-stylename="subscribe"]').render().text()).toEqual('Subscribe')
   })
 
   it('should say Unsubscribe when subscribed', () => {
@@ -125,7 +125,7 @@ describe('subscribe', () => {
       communityTopic: {isSubscribed: true}
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-styleName="subscribe"]').render().text()).toEqual('Unsubscribe')
+    expect(wrapper.find('[data-stylename="subscribe"]').render().text()).toEqual('Unsubscribe')
   })
 
   it('calls toggleSubscribe when sub/unsub button is clicked', () => {
@@ -136,7 +136,7 @@ describe('subscribe', () => {
       toggleSubscribe: jest.fn()
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    wrapper.find('[data-styleName="subscribe"]').simulate('click')
+    wrapper.find('[data-stylename="subscribe"]').simulate('click')
     expect(props.toggleSubscribe.mock.calls).toHaveLength(1)
   })
 })

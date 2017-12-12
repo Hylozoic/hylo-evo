@@ -41,13 +41,13 @@ describe('RedirectToCommunity', () => {
   it('shows a Loading component if currentUser not set yet', () => {
     const wrapper = shallow(<RedirectToCommunity currentUser={null} />)
     const renderWrapper = shallow(wrapper.props().render())
-    expect(renderWrapper.find('[data-styleName="loading-top"]').length).toBe(1)
+    expect(renderWrapper.find('[data-stylename="loading-top"]').length).toBe(1)
   })
 
   it('shows a Loading component if currentUser has no memberships', () => {
     const me = session.Me.first()
     const wrapper = shallow(redirectIfCommunity(me)())
-    expect(wrapper.find('[data-styleName="loading-top"]').length).toBe(1)
+    expect(wrapper.find('[data-stylename="loading-top"]').length).toBe(1)
   })
 
   it('sets `to` prop of Redirect correctly', () => {

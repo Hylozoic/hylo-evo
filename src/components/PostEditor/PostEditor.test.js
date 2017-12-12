@@ -15,11 +15,11 @@ describe('PostEditor', () => {
     const props = {}
     const wrapper = shallow(<PostEditor {...props} />)
     const instance = wrapper.instance()
-    wrapper.find('[data-styleName="titleInput"]').getElement().ref('titleInput')
+    wrapper.find('[data-stylename="titleInput"]').first().getElement().ref('titleInput')
     expect(instance.titleInput).toEqual('titleInput')
-    wrapper.find('CommunitiesSelector').getElement().ref('communitiesSelector')
+    wrapper.find('CommunitiesSelector').first().getElement().ref('communitiesSelector')
     expect(instance.communitiesSelector).toEqual('communitiesSelector')
-    wrapper.find('Connect(HyloEditor)').getElement().ref({getWrappedInstance: () => 'editor'})
+    wrapper.find('Connect(HyloEditor)').first().getElement().ref({getWrappedInstance: () => 'editor'})
     expect(instance.editor).toEqual('editor')
   })
 
@@ -180,7 +180,7 @@ describe('PostEditor', () => {
       onClose: jest.fn()
     }
     const wrapper = shallow(<PostEditor {...props} />)
-    expect(wrapper.find('[data-styleName="initial-closeButton"]').props().onClick)
+    expect(wrapper.find('[data-stylename="initial-closeButton"]').props().onClick)
       .toEqual(props.onClose)
   })
 
