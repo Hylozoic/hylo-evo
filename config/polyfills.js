@@ -1,5 +1,5 @@
 // a polyfill shim to silence warnings for requestAnimationFrame.  @see https://github.com/facebook/jest/issues/4545#issuecomment-332762365
-global.requestAnimationFrame = (cb) => {
+global.requestAnimationFrame = function (cb) {
   setTimeout(cb, 0)
 }
 
