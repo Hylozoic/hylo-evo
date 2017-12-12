@@ -16,6 +16,9 @@ exports[`matches last snapshot 1`] = `
       },
       "overlay": Object {
         "backgroundColor": "rgba(103, 117, 136, 0.75)",
+        "bottom": 200,
+        "left": -20,
+        "top": -15,
       },
     }
   }
