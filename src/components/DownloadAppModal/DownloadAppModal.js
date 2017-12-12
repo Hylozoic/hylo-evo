@@ -12,7 +12,7 @@ export default function DownloadAppModal ({url, header}) {
     style={modalStyles}
   >
     <div styleName='center'>
-      <h1 styleName='header'>{header}kjh</h1>
+      <h1 styleName='header'>{header}</h1>
       <a href={url}>
         <Button>Go to the App Store</Button>
       </a>
@@ -25,7 +25,8 @@ const modalStyles = {
   overlay: {
     backgroundColor: 'rgba(103, 117, 136, 0.75)',
     left: -20,
-    top: -15
+    top: -15,
+    bottom: 200
   },
   content: {
     borderRadius: '10px'
