@@ -7,6 +7,7 @@ import Button from 'components/Button'
 import Icon from 'components/Icon'
 import s from './Drawer.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../components/Badge/component.scss'
+import { DEFAULT_AVATAR } from 'store/models/Community'
 import cx from 'classnames'
 import { isEmpty, sum } from 'lodash/fp'
 
@@ -74,7 +75,7 @@ export default class Drawer extends Component {
 }
 
 export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount }) {
-  const imageStyle = bgImageStyle(avatarUrl)
+  const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
   const showBadge = newPostCount > 0
   return <li styleName='s.communityRow'>
     <Link to={path || `/c/${slug}`} styleName='s.communityRowLink' title={name} className={badgeHoverStyles.parent}>
@@ -139,7 +140,7 @@ function Logo ({ community, network }) {
   const { slug, name, location, avatarUrl } = (community || network)
   const link = `/${community ? 'c' : 'n'}/${slug}`
   return <Link styleName='s.currentCommunity' to={link}>
-    <div styleName='s.avatar' style={bgImageStyle(avatarUrl)} />
+    <div styleName='s.avatar' style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
     <div styleName='s.name' className='drawer-inv-bd'>{name}</div>
     <div className='drawer-inv-sm'>{location}</div>
   </Link>
