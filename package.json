@@ -126,7 +126,7 @@
     "standard": "10.0.3",
     "standard-loader": "^6.0.1",
     "streamifier": "^0.1.1",
-    "striptags": "3.1.1",
+    "striptags": "2.2.1",
     "tether": "^1.4.0",
     "trunc-html": "^1.1.2",
     "validator": "^8.1.0",
