@@ -77,6 +77,13 @@ exports[`Review renders correctly 1`] = `
         readOnly={true}
         value="hylo.com/c/communityDomain"
       />
+      /*
+      <ReviewTextInput
+        editHandler={[Function]}
+        label="Privacy"
+        onEnter={[Function]}
+      />
+      */
     </div>
   </div>
   <ModalFooter

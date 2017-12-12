@@ -18,9 +18,11 @@ exports[`renders correctly for All Communities 1`] = `
   >
     <li
       data-styleName="s.topic"
+      key="t1"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        ariaCurrent="true"
         data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t1"
@@ -39,9 +41,11 @@ exports[`renders correctly for All Communities 1`] = `
     </li>
     <li
       data-styleName="s.topic"
+      key="t2"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        ariaCurrent="true"
         data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t2"
@@ -56,9 +60,11 @@ exports[`renders correctly for All Communities 1`] = `
     </li>
     <li
       data-styleName="s.topic"
+      key="t3"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        ariaCurrent="true"
         data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t3"
@@ -73,9 +79,11 @@ exports[`renders correctly for All Communities 1`] = `
     </li>
     <li
       data-styleName="s.topic"
+      key="t4"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        ariaCurrent="true"
         data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t4"
@@ -124,9 +132,11 @@ exports[`renders correctly for a community 1`] = `
   >
     <li
       data-styleName="s.topic"
+      key="t1"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        ariaCurrent="true"
         data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t1"
@@ -145,9 +155,11 @@ exports[`renders correctly for a community 1`] = `
     </li>
     <li
       data-styleName="s.topic"
+      key="t2"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        ariaCurrent="true"
         data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t2"
@@ -162,9 +174,11 @@ exports[`renders correctly for a community 1`] = `
     </li>
     <li
       data-styleName="s.topic"
+      key="t3"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        ariaCurrent="true"
         data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t3"
@@ -179,9 +193,11 @@ exports[`renders correctly for a community 1`] = `
     </li>
     <li
       data-styleName="s.topic"
+      key="t4"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
+        ariaCurrent="true"
         data-styleName="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t4"

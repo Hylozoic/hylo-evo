@@ -59,7 +59,7 @@ exports[`Pillbox renders 1`] = `
   <div
     data-styleName="styles.pill-container"
   >
-    <ReactCSSTransitionGroup
+    <CSSTransitionGroup
       transitionAppear={false}
       transitionEnter={true}
       transitionEnterTimeout={400}
@@ -76,14 +76,16 @@ exports[`Pillbox renders 1`] = `
     >
       <Pill
         id={1}
+        key="1"
         label="clickable"
         onClick={[Function]}
       />
       <Pill
         id={2}
+        key="2"
         label="unclickable"
       />
-    </ReactCSSTransitionGroup>
+    </CSSTransitionGroup>
   </div>
   <ReactTooltip
     delayShow={500}

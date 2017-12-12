@@ -14,6 +14,7 @@ exports[`does something 1`] = `
       data-styleName="contact-list"
     >
       <PersonListItem
+        key="1"
         onClick={[Function]}
         person={
           Object {
@@ -25,6 +26,7 @@ exports[`does something 1`] = `
         }
       />
       <PersonListItem
+        key="2"
         onClick={[Function]}
         person={
           Object {
@@ -36,6 +38,7 @@ exports[`does something 1`] = `
         }
       />
       <PersonListItem
+        key="3"
         onClick={[Function]}
         person={
           Object {

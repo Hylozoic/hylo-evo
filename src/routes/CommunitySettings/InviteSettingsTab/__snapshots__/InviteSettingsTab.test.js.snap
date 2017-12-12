@@ -116,7 +116,7 @@ exports[`renders correctly 1`] = `
     <div
       data-styleName="styles.pending-invites-list"
     >
-      <ReactCSSTransitionGroup
+      <CSSTransitionGroup
         transitionAppear={false}
         transitionEnter={true}
         transitionEnterTimeout={400}

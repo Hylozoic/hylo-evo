@@ -7,14 +7,14 @@ exports[`RedirectToCreateCommunityFlow redirects to create community if: signup 
 />
 `;
 
-exports[`RedirectToCreateCommunityFlow returns null if a signup is in progress 1`] = `null`;
+exports[`RedirectToCreateCommunityFlow returns null if a signup is in progress 1`] = `""`;
 
-exports[`RedirectToCreateCommunityFlow returns null if pathname starts with /create-community 1`] = `null`;
+exports[`RedirectToCreateCommunityFlow returns null if pathname starts with /create-community 1`] = `""`;
 
-exports[`RedirectToCreateCommunityFlow returns null if pathname starts with /signup 1`] = `null`;
+exports[`RedirectToCreateCommunityFlow returns null if pathname starts with /signup 1`] = `""`;
 
-exports[`RedirectToCreateCommunityFlow returns null if returnToURL is /h/use-invitation 1`] = `null`;
+exports[`RedirectToCreateCommunityFlow returns null if returnToURL is /h/use-invitation 1`] = `""`;
 
-exports[`RedirectToCreateCommunityFlow returns null if there are memberships 1`] = `null`;
+exports[`RedirectToCreateCommunityFlow returns null if there are memberships 1`] = `""`;
 
 exports[`shows NotFound if a currentUser is loaded and the community does not exist 1`] = `<withRouter(Connect(NotFound)) />`;

@@ -66,7 +66,7 @@ exports[`Notification renders correctly with a comment mention notification 1`] 
     <div
       data-styleName="date"
     >
-      21 years ago
+      22 years ago
     </div>
   </div>
 </li>
@@ -138,7 +138,7 @@ exports[`Notification renders correctly with a comment notification 1`] = `
     <div
       data-styleName="date"
     >
-      21 years ago
+      22 years ago
     </div>
   </div>
 </li>
@@ -204,7 +204,7 @@ exports[`Notification renders correctly with a join request notification 1`] = `
     <div
       data-styleName="date"
     >
-      21 years ago
+      22 years ago
     </div>
   </div>
 </li>
@@ -270,7 +270,7 @@ exports[`Notification renders correctly with a mention notification 1`] = `
     <div
       data-styleName="date"
     >
-      21 years ago
+      22 years ago
     </div>
   </div>
 </li>
@@ -344,7 +344,7 @@ exports[`Notification renders correctly with a tag notification 1`] = `
     <div
       data-styleName="date"
     >
-      21 years ago
+      22 years ago
     </div>
   </div>
 </li>
@@ -410,7 +410,7 @@ exports[`Notification renders correctly with an approved join request notificati
     <div
       data-styleName="date"
     >
-      21 years ago
+      22 years ago
     </div>
   </div>
 </li>
@@ -814,6 +814,7 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
       </span>
       <span
         data-styleName="mark-read"
+        onClick={undefined}
       >
         Mark all as read
       </span>
@@ -852,6 +853,7 @@ exports[`NotificationsDropdown renders correctly with an empty list 1`] = `
       </span>
       <span
         data-styleName="mark-read"
+        onClick={undefined}
       >
         Mark all as read
       </span>

@@ -96,6 +96,7 @@ exports[`Search matches the latest snapshot 1`] = `
       id="search-results"
     >
       <SearchResult
+        key="1"
         searchResult={
           Object {
             "id": "1",

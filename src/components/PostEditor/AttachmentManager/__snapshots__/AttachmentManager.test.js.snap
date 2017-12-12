@@ -31,11 +31,13 @@ exports[`FileManager matches last snapshot 1`] = `
     data-styleName="file-previews"
   >
     <FilePreview
+      key="0"
       position={0}
       removeFile={[Function]}
       url="foo.pdf"
     />
     <FilePreview
+      key="1"
       position={1}
       removeFile={[Function]}
       url="bar.zip"
@@ -110,12 +112,14 @@ exports[`ImageManager matches last snapshot 1`] = `
     data-styleName="image-previews"
   >
     <DropTarget(DragSource(ImagePreview))
+      key="0"
       position={0}
       removeImage={[Function]}
       switchImages={[Function]}
       url="foo.png"
     />
     <DropTarget(DragSource(ImagePreview))
+      key="1"
       position={1}
       removeImage={[Function]}
       switchImages={[Function]}

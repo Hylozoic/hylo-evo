@@ -37,6 +37,7 @@ exports[`AddSkills renders correctly 1`] = `
       >
         <Pill
           clickHandler={[Function]}
+          key="0"
           skill={
             Object {
               "name": "Writing",
@@ -45,6 +46,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="1"
           skill={
             Object {
               "name": "Design",
@@ -53,6 +55,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="2"
           skill={
             Object {
               "name": "Project Management",
@@ -61,6 +64,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="3"
           skill={
             Object {
               "name": "Photography",
@@ -69,6 +73,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="4"
           skill={
             Object {
               "name": "Facilitation",
@@ -77,6 +82,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="5"
           skill={
             Object {
               "name": "Media",
@@ -85,6 +91,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="6"
           skill={
             Object {
               "name": "Community Organizing",
@@ -93,6 +100,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="7"
           skill={
             Object {
               "name": "Technology",
@@ -101,6 +109,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="8"
           skill={
             Object {
               "name": "Social Media",
@@ -109,6 +118,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="9"
           skill={
             Object {
               "name": "Event Planning",
@@ -117,6 +127,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="10"
           skill={
             Object {
               "name": "Education",
@@ -125,6 +136,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="11"
           skill={
             Object {
               "name": "Communications",
@@ -158,14 +170,17 @@ exports[`AddSkills renders correctly 1`] = `
         >
           <Pill
             clickHandler={[Function]}
+            key="0"
             skill="Dancing"
           />
           <Pill
             clickHandler={[Function]}
+            key="1"
             skill="Running"
           />
           <Pill
             clickHandler={[Function]}
+            key="2"
             skill="Hiding"
           />
         </div>

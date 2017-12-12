@@ -33,6 +33,6 @@ it('renders correctly for All Communities', () => {
 it('can be clicked to expand the left nav', () => {
   const expand = jest.fn()
   const wrapper = shallow(<TopicNavigation {...requiredProps} collapsed expand={expand} />)
-  wrapper.find('> div').first().simulate('click')
+  wrapper.find('.header').first().simulate('click')
   expect(expand).toBeCalled()
 })

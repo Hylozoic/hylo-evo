@@ -15,11 +15,11 @@ describe('PostEditor', () => {
     const props = {}
     const wrapper = shallow(<PostEditor {...props} />)
     const instance = wrapper.instance()
-    wrapper.find('[data-styleName="titleInput"]').node.ref('titleInput')
+    wrapper.find('[data-styleName="titleInput"]').getElement().ref('titleInput')
     expect(instance.titleInput).toEqual('titleInput')
-    wrapper.find('CommunitiesSelector').node.ref('communitiesSelector')
+    wrapper.find('CommunitiesSelector').getElement().ref('communitiesSelector')
     expect(instance.communitiesSelector).toEqual('communitiesSelector')
-    wrapper.find('Connect(HyloEditor)').node.ref({getWrappedInstance: () => 'editor'})
+    wrapper.find('Connect(HyloEditor)').getElement().ref({getWrappedInstance: () => 'editor'})
     expect(instance.editor).toEqual('editor')
   })
 

@@ -38,6 +38,7 @@ exports[`renders multiple images 1`] = `
         <a
           data-styleName="other"
           href="bar"
+          key="bar"
           target="_blank"
         >
           <div
@@ -51,6 +52,7 @@ exports[`renders multiple images 1`] = `
         <a
           data-styleName="other"
           href="baz"
+          key="baz"
           target="_blank"
         >
           <div
@@ -64,6 +66,7 @@ exports[`renders multiple images 1`] = `
         <a
           data-styleName="other"
           href="bonk"
+          key="bonk"
           target="_blank"
         >
           <div

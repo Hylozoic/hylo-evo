@@ -37,6 +37,7 @@ exports[`matches last snapshot 1`] = `
       <a
         data-styleName="file-attachment"
         href="https://www.hylo.com/awitp.pdf"
+        key="1"
         target="_blank"
       >
         <Icon
@@ -52,6 +53,7 @@ exports[`matches last snapshot 1`] = `
       <a
         data-styleName="file-attachment"
         href="http://www.google.com/lalala.zip"
+        key="1"
         target="_blank"
       >
         <Icon

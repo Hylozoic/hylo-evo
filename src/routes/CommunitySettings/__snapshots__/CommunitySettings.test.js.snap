@@ -14,33 +14,34 @@ exports[`renders correctly with a community 1`] = `
       Object {
         "component": <CommunitySettingsTab
           community={
-                Object {
-                      "id": 1,
-                      "name": "Foomunity",
-                      "slug": "foo",
-                    }
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
           }
-    />,
+          updateCommunitySettings={undefined}
+        />,
         "name": "Settings",
         "path": "/c/foo/settings",
       },
       Object {
         "component": <Connect(ModeratorsSettingsTab)
           communityId={1}
-    />,
+        />,
         "name": "Moderators",
         "path": "/c/foo/settings/moderators",
       },
       Object {
         "component": <Connect(InviteSettingsTab)
           community={
-                Object {
-                      "id": 1,
-                      "name": "Foomunity",
-                      "slug": "foo",
-                    }
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
           }
-    />,
+        />,
         "name": "Invite",
         "path": "/c/foo/settings/invite",
       },

@@ -67,6 +67,7 @@ exports[`CommunityControl renders correctly 1`] = `
 exports[`CommunitySettingsTab renders a list of CommunityControls 1`] = `
 <div>
   <CommunityControl
+    key="1"
     membership={
       Object {
         "id": 1,
@@ -74,6 +75,7 @@ exports[`CommunitySettingsTab renders a list of CommunityControls 1`] = `
     }
   />
   <CommunityControl
+    key="2"
     membership={
       Object {
         "id": 2,
@@ -81,6 +83,7 @@ exports[`CommunitySettingsTab renders a list of CommunityControls 1`] = `
     }
   />
   <CommunityControl
+    key="3"
     membership={
       Object {
         "id": 3,
@@ -88,6 +91,7 @@ exports[`CommunitySettingsTab renders a list of CommunityControls 1`] = `
     }
   />
   <CommunityControl
+    key="4"
     membership={
       Object {
         "id": 4,

@@ -38,6 +38,7 @@ exports[`CommunityList renders correctly 1`] = `
         "id": 9,
       }
     }
+    key="9"
   />
   <CommunityCard
     community={
@@ -45,6 +46,7 @@ exports[`CommunityList renders correctly 1`] = `
         "id": 8,
       }
     }
+    key="8"
   />
   <CommunityCard
     community={
@@ -52,6 +54,7 @@ exports[`CommunityList renders correctly 1`] = `
         "id": 7,
       }
     }
+    key="7"
   />
   <ScrollListener
     elementId="center-column"
