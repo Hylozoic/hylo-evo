@@ -1,7 +1,4 @@
-// a polyfill shim to silence warnings for requestAnimationFrame.  @see https://github.com/facebook/jest/issues/4545#issuecomment-332762365
-global.requestAnimationFrame = function (cb) {
-  setTimeout(cb, 0)
-}
+'use strict'
 
 if (typeof Promise === 'undefined') {
   // Rejection tracking prevents a common issue where React gets into an
@@ -17,3 +14,9 @@ require('whatwg-fetch')
 // Object.assign() is commonly used with React.
 // It will use the native implementation if it's present and isn't buggy.
 Object.assign = require('object-assign')
+
+// In tests, polyfill requestAnimationFrame since jsdom doesn't provide it yet.
+// We don't polyfill it in the browser--this is user's responsibility.
+if (process.env.NODE_ENV === 'test') {
+  require('raf').polyfill(global)
+}
