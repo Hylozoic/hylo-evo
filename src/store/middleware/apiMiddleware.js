@@ -26,7 +26,7 @@ export function fetchJSON (path, params, options = {}) {
       'Content-Type': 'application/json',
       'Cookie': options.cookie
     },
-    credentials: 'same-origin',
+    credentials: 'include',
     body: JSON.stringify(params)
   })
   .then(resp => {
