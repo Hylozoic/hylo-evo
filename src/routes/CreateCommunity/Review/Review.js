@@ -191,12 +191,12 @@ export default class Review extends Component {
             onChange={(e) => this.handleInputChange(e, 'communityDomain')}
             inputRef={(input) => { this.communityDomain = input }}
           />
-          {/*<ReviewTextInput*/}
-            {/*label={'Privacy'}*/}
-            {/*value={this.state.edits.communityPrivacy}*/}
-            {/*onEnter={this.onEnter}*/}
-            {/*editHandler={() => this.props.goToPrivacyStep()}*/}
-          {/*/>*/}
+          {/* <ReviewTextInput */}
+          {/* label={'Privacy'} */}
+          {/* value={this.state.edits.communityPrivacy} */}
+          {/* onEnter={this.onEnter} */}
+          {/* editHandler={() => this.props.goToPrivacyStep()} */}
+          {/* /> */}
 
         </div>
         { this.state.error && <span styleName='review-arrow-up' /> }
