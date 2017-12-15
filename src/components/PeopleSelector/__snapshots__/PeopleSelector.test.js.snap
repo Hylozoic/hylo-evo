@@ -2,18 +2,18 @@
 
 exports[`PeopleSelector matches the last snapshot 1`] = `
 <div
-  data-styleName="people-selector"
+  data-stylename="people-selector"
 >
   <div
-    data-styleName="thread-header"
+    data-stylename="thread-header"
     tabIndex="0"
   >
     <div
-      data-styleName="autocomplete-control"
+      data-stylename="autocomplete-control"
     >
       <input
         autoFocus={true}
-        data-styleName="autocomplete"
+        data-stylename="autocomplete"
         onChange={[Function]}
         onKeyDown={[Function]}
         placeholder="Type in the names of people to message"

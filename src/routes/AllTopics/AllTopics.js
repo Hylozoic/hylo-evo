@@ -1,7 +1,7 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './AllTopics.scss'
-const { boolean, arrayOf, func, number, shape, string } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
@@ -9,6 +9,7 @@ import TextInput from 'components/TextInput'
 import { pluralize, tagUrl } from 'util/index'
 import { find } from 'lodash/fp'
 import ScrollListener from 'components/ScrollListener'
+const { boolean, arrayOf, func, number, shape, string } = PropTypes
 
 const sortOptions = [
   {id: 'num_followers', label: 'Popular'},

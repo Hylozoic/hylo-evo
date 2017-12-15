@@ -59,7 +59,7 @@ beforeEach(() => {
 })
 
 it('renders as expected', () => {
-  wrapper = shallow(<MessageSection messages={messages} />)
+  wrapper = shallow(<MessageSection messages={messages} />, { disableLifecycleMethods: true })
   expect(wrapper).toMatchSnapshot()
 })
 
@@ -77,7 +77,7 @@ it('fetches messages when the socket reconnects', () => {
 })
 
 it('marks as read when scrolled to bottom by user', () => {
-  wrapper = shallow(<MessageSection messages={[]} />)
+  wrapper = shallow(<MessageSection messages={[]} />, { disableLifecycleMethods: true })
   instance = wrapper.instance()
   jest.spyOn(instance, 'markAsRead')
 
@@ -155,12 +155,12 @@ it('fetches more messages when scrolled to top', () => {
 })
 
 it('shows Loading component when pending set', () => {
-  wrapper = shallow(<MessageSection messages={[]} pending />)
+  wrapper = shallow(<MessageSection messages={[]} pending />, { disableLifecycleMethods: true })
   expect(wrapper.find(Loading).length).toBe(1)
 })
 
 it('sets visible to false in state when visibility changes', () => {
-  wrapper = shallow(<MessageSection messages={[]} pending />)
+  wrapper = shallow(<MessageSection messages={[]} pending />, { disableLifecycleMethods: true })
   wrapper.setState({ visible: true })
   // Note that document.hidden always returns true in jsdom
   wrapper.instance().handleVisibilityChange()
@@ -169,14 +169,14 @@ it('sets visible to false in state when visibility changes', () => {
 
 it('returns true from atBottom when scrolled to bottom', () => {
   const bottom = { offsetHeight: 10, scrollHeight: 100, scrollTop: 100 }
-  wrapper = shallow(<MessageSection messages={[]} />)
+  wrapper = shallow(<MessageSection messages={[]} />, { disableLifecycleMethods: true })
   const actual = wrapper.instance().atBottom(bottom)
   expect(actual).toBe(true)
 })
 
 it('returns false from atBottom when scrolled up', () => {
   const top = { offsetHeight: 10, scrollHeight: 100, scrollTop: 50 }
-  wrapper = shallow(<MessageSection messages={[]} />)
+  wrapper = shallow(<MessageSection messages={[]} />, { disableLifecycleMethods: true })
   const actual = wrapper.instance().atBottom(top)
   expect(actual).toBe(false)
 })

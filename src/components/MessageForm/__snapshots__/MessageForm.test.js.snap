@@ -2,16 +2,16 @@
 
 exports[`component matches the latest snapshot 1`] = `
 <form
-  data-styleName="message-form"
+  data-stylename="message-form"
   onSubmit={[Function]}
 >
   <RoundImage
-    data-styleName="user-image"
+    data-stylename="user-image"
     medium={true}
     url="http://image.com/p.png"
   />
   <TextareaAutosize
-    data-styleName="message-textarea"
+    data-stylename="message-textarea"
     onChange={[Function]}
     onHeightChange={[Function]}
     onKeyDown={[Function]}

@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { CSSTransitionGroup } from 'react-transition-group'
 import PostEditor from 'components/PostEditor'
 import './PostEditorModal.scss'
 
 export default class PostEditorModal extends Component {
   render () {
     const { match, hidePostEditor } = this.props
-    return <ReactCSSTransitionGroup
+    return <CSSTransitionGroup
       transitionName='post-editor'
       transitionAppear
       transitionAppearTimeout={400}
@@ -19,6 +19,6 @@ export default class PostEditorModal extends Component {
           <PostEditor onClose={hidePostEditor} {...this.props} />
         </div>
       </div>}
-    </ReactCSSTransitionGroup>
+    </CSSTransitionGroup>
   }
 }

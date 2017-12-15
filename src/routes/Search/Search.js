@@ -1,6 +1,6 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import styles from './Search.scss'
-const { arrayOf, bool, func, shape, string, object } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
@@ -12,6 +12,7 @@ import Loading from 'components/Loading'
 import { Pill } from 'components/Pillbox/Pillbox'
 import { get, intersection } from 'lodash/fp'
 
+const { arrayOf, bool, func, shape, string, object } = PropTypes
 const SEARCH_RESULTS_ID = 'search-results'
 
 export default class Search extends Component {

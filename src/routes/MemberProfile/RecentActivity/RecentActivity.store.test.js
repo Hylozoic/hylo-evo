@@ -41,8 +41,8 @@ describe('connector', () => {
   describe('activitySelector', () => {
     it('indexes activityItems preseving sort order', () => {
       const expected = [
-        "Sat Apr 15 2017 16:27:55 GMT+1200 (NZST)",
-        "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)"
+        'Sat Apr 15 2017 16:27:55 GMT+1200 (NZST)',
+        'Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)'
       ]
       const actual = activitySelector(state, props)
         .map(item => item.createdAt)

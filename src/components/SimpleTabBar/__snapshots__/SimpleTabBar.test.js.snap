@@ -2,22 +2,25 @@
 
 exports[`renders the same as the last snapshot 1`] = `
 <ul
-  data-styleName="tab-bar"
+  data-stylename="tab-bar"
 >
   <li
-    data-styleName="tab-active"
+    data-stylename="tab-active"
+    key="Wombats"
     onClick={[Function]}
   >
     Wombats
   </li>
   <li
-    data-styleName="tab"
+    data-stylename="tab"
+    key="Aardvarks"
     onClick={[Function]}
   >
     Aardvarks
   </li>
   <li
-    data-styleName="tab"
+    data-stylename="tab"
+    key="Ocelots"
     onClick={[Function]}
   >
     Ocelots

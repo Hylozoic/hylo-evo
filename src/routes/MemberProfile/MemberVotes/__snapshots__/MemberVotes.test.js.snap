@@ -3,7 +3,8 @@
 exports[`MemberVotes renders the same as the last snapshot 1`] = `
 <div>
   <div
-    data-styleName="activity-item"
+    data-stylename="activity-item"
+    key="2"
   >
     <PostCard
       post={
@@ -31,8 +32,8 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
               "id": "46816",
             },
             "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
-        <p></p>
-        <p></p>",
+<p></p>
+<p></p>",
             "id": "30002",
             "title": "0123456789 0123456789 0123456789",
             "type": "discussion",
@@ -46,7 +47,8 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
     />
   </div>
   <div
-    data-styleName="activity-item"
+    data-stylename="activity-item"
+    key="1"
   >
     <PostCard
       post={

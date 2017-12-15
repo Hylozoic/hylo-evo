@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import cx from 'classnames'
 import './Button.scss'
 
@@ -17,7 +18,7 @@ export default function Button ({
   className
 }) {
   let styleName = cx('button', color, {hover, active, narrow, small, disabled})
-  return <div styleName={styleName} className={className} onClick={!disabled && onClick}>
+  return <div styleName={styleName} className={className} onClick={!disabled ? onClick : undefined}>
     {label || children}
   </div>
 }

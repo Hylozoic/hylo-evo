@@ -6,7 +6,7 @@ import { KeyControlledItemList } from 'components/KeyControlledList'
 import cx from 'classnames'
 import Icon from 'components/Icon'
 import ReactTooltip from 'react-tooltip'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { CSSTransitionGroup } from 'react-transition-group'
 
 // keys that can be pressed to create a new pill
 const creationKeyCodes = [keyMap.ENTER]
@@ -116,7 +116,7 @@ export default class Pillbox extends Component {
           <span styleName='styles.add-btn' onClick={addOnClick}>
             {addLabel}
           </span>}
-        <ReactCSSTransitionGroup
+        <CSSTransitionGroup
           transitionName={{
             enter: styles['enter'],
             enterActive: styles['enter-active'],
@@ -130,7 +130,7 @@ export default class Pillbox extends Component {
               {...pill}
               editable={editable}
               onRemove={handleDelete} />)}
-        </ReactCSSTransitionGroup>
+        </CSSTransitionGroup>
       </div>
       <ReactTooltip place='top'
         type='dark'

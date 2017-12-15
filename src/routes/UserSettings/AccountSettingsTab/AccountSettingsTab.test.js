@@ -28,14 +28,14 @@ describe('SocialControl', () => {
   it('calls linkClicked when link is clicked', () => {
     const wrapper = shallow(<SocialControl label='A Social Control' />)
     wrapper.instance().linkClicked = jest.fn()
-    wrapper.find('[data-styleName="link-button"]').simulate('click')
+    wrapper.find('[data-stylename="link-button"]').simulate('click')
     expect(wrapper.instance().linkClicked).toHaveBeenCalled()
   })
 
   it('calls unlinkClicked when unlink is clicked', () => {
     const wrapper = shallow(<SocialControl label='A Social Control' value='someurl.com' />)
     wrapper.instance().unlinkClicked = jest.fn()
-    wrapper.find('[data-styleName="link-button"]').simulate('click')
+    wrapper.find('[data-stylename="link-button"]').simulate('click')
     expect(wrapper.instance().unlinkClicked).toHaveBeenCalled()
   })
 

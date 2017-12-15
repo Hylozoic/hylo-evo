@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
 import { bgImageStyle } from 'util/index'
 import './component.scss'
 
-const { string, bool } = React.PropTypes
+const { string, bool } = PropTypes
 
 export default function RoundImage ({ url, small, medium, overlaps, overlapsVertical, large, xlarge, className, square, size }) {
   let styleName = cx('image', { square, overlaps, small, medium, large, xlarge, 'overlaps-vertical': overlapsVertical })

@@ -1,6 +1,6 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import './MessagesDropdown.scss'
-const {array, string, func} = PropTypes
 import { Link } from 'react-router-dom'
 import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import cx from 'classnames'
@@ -11,6 +11,8 @@ import { get, isEmpty, some, find } from 'lodash/fp'
 
 import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
 import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
+
+const {array, string, func} = PropTypes
 
 export default class MessagesDropdown extends Component {
   static propTypes = {

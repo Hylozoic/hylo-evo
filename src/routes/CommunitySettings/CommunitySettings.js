@@ -1,14 +1,16 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import './CommunitySettings.scss'
 import CommunitySettingsTab from './CommunitySettingsTab'
 import ModeratorsSettingsTab from './ModeratorsSettingsTab'
 import InviteSettingsTab from './InviteSettingsTab'
 import Loading from 'components/Loading'
-const { object, func } = PropTypes
 import FullPageModal from 'routes/FullPageModal'
 import { get } from 'lodash/fp'
 import { Redirect } from 'react-router'
 import { communityUrl } from 'util/index'
+
+const { object, func } = PropTypes
 
 export default class CommunitySettings extends Component {
   static propTypes = {

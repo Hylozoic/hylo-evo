@@ -52,23 +52,23 @@ describe('getMentionResults selector', () => {
 
   it('no results are found with an empty search string', () => {
     const results = getMentionResults(getSearchState(''))
-    expect(results.size).toEqual(0)
+    expect(results.length).toEqual(0)
   })
 
   it('finds using lowercase', () => {
     const results = getMentionResults(getSearchState('test'))
-    expect(results.size).toEqual(1)
-    expect(results.get(0).get('name')).toEqual(people[0].name)
+    expect(results.length).toEqual(1)
+    expect(results[0].name).toEqual(people[0].name)
   })
 
   it('finds in parts of names to return multiple matches', () => {
     const results = getMentionResults(getSearchState('se'))
-    expect(results.size).toEqual(3)
+    expect(results.length).toEqual(3)
   })
 
   it('transforms avatarURL key to avatar on results', () => {
     const results = getMentionResults(getSearchState('test'))
-    expect(results.get(0).keySeq().toArray().some(k => k === 'avatar')).toBeTruthy()
+    expect(results[0].avatar).toBeTruthy()
   })
 })
 

@@ -2,11 +2,11 @@
 
 exports[`Header matches the last snapshot 1`] = `
 <div
-  data-styleName="header"
+  data-stylename="header"
   id="thread-header"
 >
   <div
-    data-styleName="header-text"
+    data-stylename="header-text"
   >
     Jo and La
   </div>
@@ -16,11 +16,11 @@ exports[`Header matches the last snapshot 1`] = `
 
 exports[`Header matches the last snapshot when just 2 participants 1`] = `
 <div
-  data-styleName="header"
+  data-stylename="header"
   id="thread-header"
 >
   <div
-    data-styleName="header-text"
+    data-stylename="header-text"
   >
     Jo
   </div>
@@ -30,11 +30,11 @@ exports[`Header matches the last snapshot when just 2 participants 1`] = `
 
 exports[`Header matches the last snapshot when just you 1`] = `
 <div
-  data-styleName="header"
+  data-stylename="header"
   id="thread-header"
 >
   <div
-    data-styleName="header-text"
+    data-stylename="header-text"
   >
     You
   </div>
@@ -44,7 +44,7 @@ exports[`Header matches the last snapshot when just you 1`] = `
 
 exports[`Thread matches the last snapshot 1`] = `
 <div
-  data-styleName="thread"
+  data-stylename="thread"
 >
   <Header
     thread={
@@ -62,7 +62,7 @@ exports[`Thread matches the last snapshot 1`] = `
     }
   />
   <div
-    data-styleName="message-form"
+    data-stylename="message-form"
   >
     <Connect(MessageForm)
       focusForm={[Function]}
@@ -71,7 +71,7 @@ exports[`Thread matches the last snapshot 1`] = `
     />
   </div>
   <Connect(PeopleTyping)
-    data-styleName="people-typing"
+    data-stylename="people-typing"
   />
   <Connect(SocketSubscriber)
     id="1"

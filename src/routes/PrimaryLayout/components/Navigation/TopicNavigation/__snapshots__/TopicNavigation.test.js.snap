@@ -2,52 +2,56 @@
 
 exports[`renders correctly for All Communities 1`] = `
 <div
-  data-styleName="s.topicNavigation"
+  data-stylename="s.topicNavigation"
 >
   <div
-    data-styleName="s.header"
+    data-stylename="s.header"
   >
     <Icon
-      data-styleName="s.icon"
+      data-stylename="s.icon"
       name="Topics"
     />
     Topics
   </div>
   <ul
-    data-styleName="s.topics"
+    data-stylename="s.topics"
   >
     <li
-      data-styleName="s.topic"
+      data-stylename="s.topic"
+      key="t1"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
-        data-styleName="s.topicLink"
+        ariaCurrent="true"
+        data-stylename="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t1"
       >
         <span
-          data-styleName="s.name"
+          data-stylename="s.name"
         >
           #
           t1
         </span>
         <Badge
-          data-styleName="s.badge"
+          data-stylename="s.badge"
           number={3}
         />
       </NavLink>
     </li>
     <li
-      data-styleName="s.topic"
+      data-stylename="s.topic"
+      key="t2"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
-        data-styleName="s.topicLink"
+        ariaCurrent="true"
+        data-stylename="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t2"
       >
         <span
-          data-styleName="s.name"
+          data-stylename="s.name"
         >
           #
           t2
@@ -55,16 +59,18 @@ exports[`renders correctly for All Communities 1`] = `
       </NavLink>
     </li>
     <li
-      data-styleName="s.topic"
+      data-stylename="s.topic"
+      key="t3"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
-        data-styleName="s.topicLink"
+        ariaCurrent="true"
+        data-stylename="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t3"
       >
         <span
-          data-styleName="s.name"
+          data-stylename="s.name"
         >
           #
           t3
@@ -72,29 +78,31 @@ exports[`renders correctly for All Communities 1`] = `
       </NavLink>
     </li>
     <li
-      data-styleName="s.topic"
+      data-stylename="s.topic"
+      key="t4"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
-        data-styleName="s.topicLink"
+        ariaCurrent="true"
+        data-stylename="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t4"
       >
         <span
-          data-styleName="s.name"
+          data-stylename="s.name"
         >
           #
           t4
         </span>
         <Badge
-          data-styleName="s.badge"
+          data-stylename="s.badge"
           number={2}
         />
       </NavLink>
     </li>
   </ul>
   <div
-    data-styleName="s.addTopic"
+    data-stylename="s.addTopic"
   >
     <Link
       replace={false}
@@ -108,52 +116,56 @@ exports[`renders correctly for All Communities 1`] = `
 
 exports[`renders correctly for a community 1`] = `
 <div
-  data-styleName="s.topicNavigation"
+  data-stylename="s.topicNavigation"
 >
   <div
-    data-styleName="s.header"
+    data-stylename="s.header"
   >
     <Icon
-      data-styleName="s.icon"
+      data-stylename="s.icon"
       name="Topics"
     />
     Topics
   </div>
   <ul
-    data-styleName="s.topics"
+    data-stylename="s.topics"
   >
     <li
-      data-styleName="s.topic"
+      data-stylename="s.topic"
+      key="t1"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
-        data-styleName="s.topicLink"
+        ariaCurrent="true"
+        data-stylename="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t1"
       >
         <span
-          data-styleName="s.name"
+          data-stylename="s.name"
         >
           #
           t1
         </span>
         <Badge
-          data-styleName="s.badge"
+          data-stylename="s.badge"
           number={3}
         />
       </NavLink>
     </li>
     <li
-      data-styleName="s.topic"
+      data-stylename="s.topic"
+      key="t2"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
-        data-styleName="s.topicLink"
+        ariaCurrent="true"
+        data-stylename="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t2"
       >
         <span
-          data-styleName="s.name"
+          data-stylename="s.name"
         >
           #
           t2
@@ -161,16 +173,18 @@ exports[`renders correctly for a community 1`] = `
       </NavLink>
     </li>
     <li
-      data-styleName="s.topic"
+      data-stylename="s.topic"
+      key="t3"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
-        data-styleName="s.topicLink"
+        ariaCurrent="true"
+        data-stylename="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t3"
       >
         <span
-          data-styleName="s.name"
+          data-stylename="s.name"
         >
           #
           t3
@@ -178,29 +192,31 @@ exports[`renders correctly for a community 1`] = `
       </NavLink>
     </li>
     <li
-      data-styleName="s.topic"
+      data-stylename="s.topic"
+      key="t4"
     >
       <NavLink
         activeClassName="active-topic-nav-link"
-        data-styleName="s.topicLink"
+        ariaCurrent="true"
+        data-stylename="s.topicLink"
         onClick={[Function]}
         to="/c/foo/t4"
       >
         <span
-          data-styleName="s.name"
+          data-stylename="s.name"
         >
           #
           t4
         </span>
         <Badge
-          data-styleName="s.badge"
+          data-stylename="s.badge"
           number={2}
         />
       </NavLink>
     </li>
   </ul>
   <div
-    data-styleName="s.addTopic"
+    data-stylename="s.addTopic"
   >
     <Link
       replace={false}

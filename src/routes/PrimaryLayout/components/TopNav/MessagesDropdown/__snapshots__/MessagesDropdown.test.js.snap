@@ -4,7 +4,7 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
 <TopNavDropdown
   body={
     <div
-      data-styleName="threads"
+      data-stylename="threads"
     >
       <MessagesDropdownItem
         currentUser={
@@ -46,17 +46,17 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
   }
   header={
     <div
-      data-styleName="header-content"
+      data-stylename="header-content"
     >
       <Link
-        data-styleName="open"
+        data-stylename="open"
         replace={false}
         to="/t/2"
       >
         Open Messages
       </Link>
       <Link
-        data-styleName="new"
+        data-stylename="new"
         replace={false}
         to="/t/new"
       >
@@ -82,17 +82,17 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
   }
   header={
     <div
-      data-styleName="header-content"
+      data-stylename="header-content"
     >
       <Link
-        data-styleName="open"
+        data-stylename="open"
         replace={false}
         to="/t/new"
       >
         Open Messages
       </Link>
       <Link
-        data-styleName="new"
+        data-stylename="new"
         replace={false}
         to="/t/new"
       >
@@ -109,6 +109,6 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
 />
 `;
 
-exports[`MessagesDropdownItem renders correctly with an empty thread 1`] = `null`;
+exports[`MessagesDropdownItem renders correctly with an empty thread 1`] = `""`;
 
-exports[`MessagesDropdownItem renders correctly with no other participants 1`] = `null`;
+exports[`MessagesDropdownItem renders correctly with no other participants 1`] = `""`;

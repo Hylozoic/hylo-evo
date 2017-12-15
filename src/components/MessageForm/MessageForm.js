@@ -1,11 +1,12 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { throttle } from 'lodash'
 import { get } from 'lodash/fp'
 import TextareaAutosize from 'react-textarea-autosize'
 import { onEnterNoShift } from 'util/textInput'
 import RoundImage from 'components/RoundImage'
-var { func, object, string, bool } = React.PropTypes
 import './MessageForm.scss'
+var { func, object, string, bool } = PropTypes
 
 // should share with comment form
 export const STARTED_TYPING_INTERVAL = 3000

@@ -1,5 +1,5 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-const { array, string, bool, func } = React.PropTypes
 import Icon from 'components/Icon'
 import Badge from 'components/Badge'
 import { Link, NavLink, matchPath } from 'react-router-dom'
@@ -7,6 +7,8 @@ import { tagUrl, topicsUrl } from 'util/index'
 import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../../components/Badge/component.scss'
 import cx from 'classnames'
+
+const { array, string, bool, func } = PropTypes
 
 export default class TopicNavigation extends Component {
   static propTypes = {

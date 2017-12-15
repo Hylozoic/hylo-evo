@@ -6,7 +6,7 @@ import orm from 'store/models'
 describe('ThreadList', () => {
   it('matches the last snapshot', () => {
     const match = {params: {}}
-    const wrapper = shallow(<ThreadList threads={[]} match={match} />)
+    const wrapper = shallow(<ThreadList threads={[]} fetchThreads={jest.fn()} match={match} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

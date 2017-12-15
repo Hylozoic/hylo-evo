@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { bgImageStyle } from 'util/index'
 import Badge from 'components/Badge'
@@ -7,9 +8,10 @@ import Icon from 'components/Icon'
 import s from './Drawer.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../components/Badge/component.scss'
 import { DEFAULT_AVATAR } from 'store/models/Community'
-const { string, number, arrayOf, shape } = PropTypes
 import cx from 'classnames'
 import { isEmpty, sum } from 'lodash/fp'
+
+const { string, number, arrayOf, shape } = PropTypes
 
 export default class Drawer extends Component {
   static propTypes = {

@@ -2,27 +2,27 @@
 
 exports[`AddSkills renders correctly 1`] = `
 <div
-  data-styleName="flex-wrapper"
+  data-stylename="flex-wrapper"
 >
   <Connect(LeftSidebar)
     body="What skills are you known for? The more skills you add, the more relevant the content. It's like magic."
     header="Share your unique super powers!"
   />
   <div
-    data-styleName="panel"
+    data-stylename="panel"
   >
     <span
-      data-styleName="white-text step-count"
+      data-stylename="white-text step-count"
     >
       STEP 3/4
     </span>
     <br />
     <div
-      data-styleName="center"
+      data-stylename="center"
     >
       <input
         autoFocus={true}
-        data-styleName="signup-input center-text signup-padding large-input-text gray-bottom-border"
+        data-stylename="signup-input center-text signup-padding large-input-text gray-bottom-border"
         onChange={[Function]}
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -33,10 +33,11 @@ exports[`AddSkills renders correctly 1`] = `
     </div>
     <div>
       <div
-        data-styleName="skills"
+        data-stylename="skills"
       >
         <Pill
           clickHandler={[Function]}
+          key="0"
           skill={
             Object {
               "name": "Writing",
@@ -45,6 +46,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="1"
           skill={
             Object {
               "name": "Design",
@@ -53,6 +55,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="2"
           skill={
             Object {
               "name": "Project Management",
@@ -61,6 +64,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="3"
           skill={
             Object {
               "name": "Photography",
@@ -69,6 +73,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="4"
           skill={
             Object {
               "name": "Facilitation",
@@ -77,6 +82,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="5"
           skill={
             Object {
               "name": "Media",
@@ -85,6 +91,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="6"
           skill={
             Object {
               "name": "Community Organizing",
@@ -93,6 +100,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="7"
           skill={
             Object {
               "name": "Technology",
@@ -101,6 +109,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="8"
           skill={
             Object {
               "name": "Social Media",
@@ -109,6 +118,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="9"
           skill={
             Object {
               "name": "Event Planning",
@@ -117,6 +127,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="10"
           skill={
             Object {
               "name": "Education",
@@ -125,6 +136,7 @@ exports[`AddSkills renders correctly 1`] = `
         />
         <Pill
           clickHandler={[Function]}
+          key="11"
           skill={
             Object {
               "name": "Communications",
@@ -144,28 +156,31 @@ exports[`AddSkills renders correctly 1`] = `
     </div>
     <div>
       <div
-        data-styleName="your-skills"
+        data-stylename="your-skills"
       >
         <div
-          data-styleName="your-skills-label"
+          data-stylename="your-skills-label"
         >
           <span>
             Your Skills:
           </span>
         </div>
         <div
-          data-styleName="your-skills-list"
+          data-stylename="your-skills-list"
         >
           <Pill
             clickHandler={[Function]}
+            key="0"
             skill="Dancing"
           />
           <Pill
             clickHandler={[Function]}
+            key="1"
             skill="Running"
           />
           <Pill
             clickHandler={[Function]}
+            key="2"
             skill="Hiding"
           />
         </div>

@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import RoundImage from 'components/RoundImage'
 import { Link } from 'react-router-dom'
 
-const { string, bool } = React.PropTypes
+const { string, bool } = PropTypes
 
 export default function Avatar ({ url, avatarUrl, small, medium, className }) {
   return <Link to={url} className={className}>

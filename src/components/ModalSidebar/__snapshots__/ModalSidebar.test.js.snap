@@ -2,21 +2,21 @@
 
 exports[`ModalSidebar renders correctly with a "Previous" button 1`] = `
 <div
-  data-styleName="sidebar"
+  data-stylename="sidebar"
 >
   <p
-    data-styleName="gray-text close-button"
+    data-stylename="gray-text close-button"
     onClick={[Function]}
   >
     CLOSE
   </p>
   <p
-    data-styleName="header-theme"
+    data-stylename="header-theme"
   >
     header
   </p>
   <p
-    data-styleName="text-theme"
+    data-stylename="text-theme"
   >
     body
   </p>
@@ -25,21 +25,21 @@ exports[`ModalSidebar renders correctly with a "Previous" button 1`] = `
 
 exports[`ModalSidebar renders correctly without a theme 1`] = `
 <div
-  data-styleName="sidebar"
+  data-stylename="sidebar"
 >
   <p
-    data-styleName="gray-text close-button"
+    data-stylename="gray-text close-button"
     onClick={[Function]}
   >
     CLOSE
   </p>
   <p
-    data-styleName="sidebar-header"
+    data-stylename="sidebar-header"
   >
     header
   </p>
   <p
-    data-styleName="gray-text sidebar-text"
+    data-stylename="gray-text sidebar-text"
   >
     body
   </p>

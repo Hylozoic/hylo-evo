@@ -52,7 +52,7 @@ export default class Login extends React.Component {
         <a styleName='google' onClick={() => this.loginAndRedirect('google')}>
           <Icon name='Google' styleName='auth-icon' />
           Google
-          </a>
+        </a>
       </div>
     </div>
   }

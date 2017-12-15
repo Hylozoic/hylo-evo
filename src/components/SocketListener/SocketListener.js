@@ -1,4 +1,5 @@
-import { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types'
+import { Component } from 'react'
 import { getSocket, socketUrl } from 'client/websockets'
 import { isEqual } from 'lodash'
 import rollbar from 'client/rollbar'

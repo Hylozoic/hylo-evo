@@ -13,6 +13,7 @@ describe('PeopleSelector', () => {
         fetchContacts={() => {}}
         fetchPeople={() => {}}
         matches={[]}
+        fetchRecentContacts={jest.fn()}
         participants={[]} />
     )
     expect(wrapper).toMatchSnapshot()
@@ -42,7 +43,7 @@ describe('PeopleSelector', () => {
             setAutocomplete={setAutocomplete} />
         </MemoryRouter>
       )
-      wrapper.find(PeopleSelector).node.setState({ currentMatch: '1' })
+      wrapper.find(PeopleSelector).instance().setState({ currentMatch: '1' })
       input = wrapper.find('input').first()
     })
 
@@ -57,7 +58,7 @@ describe('PeopleSelector', () => {
     })
 
     it('removes participant if backspace pressed when currentMatch missing', () => {
-      wrapper.find(PeopleSelector).node.setState({ currentMatch: null })
+      wrapper.find(PeopleSelector).instance().setState({ currentMatch: null })
       input.simulate('keyDown', { keyCode: keyMap.BACKSPACE })
       expect(removeParticipant).toHaveBeenCalled()
     })
@@ -72,7 +73,7 @@ describe('PeopleSelector', () => {
       PeopleSelector.prototype.arrow = jest.fn()
       input.simulate('keyDown', { keyCode: keyMap.UP })
       const calls = PeopleSelector.prototype.arrow.mock.calls
-      expect(calls[calls.length -1][0]).toBe('up')
+      expect(calls[calls.length - 1][0]).toBe('up')
       PeopleSelector.prototype.arrow = arrow
     })
 
@@ -81,7 +82,7 @@ describe('PeopleSelector', () => {
       PeopleSelector.prototype.arrow = jest.fn()
       input.simulate('keyDown', { keyCode: keyMap.DOWN })
       const calls = PeopleSelector.prototype.arrow.mock.calls
-      expect(calls[calls.length -1][0]).toBe('down')
+      expect(calls[calls.length - 1][0]).toBe('down')
       PeopleSelector.prototype.arrow = arrow
     })
 
@@ -92,14 +93,14 @@ describe('PeopleSelector', () => {
     })
 
     it('changes active match if not at top of list when up arrow pressed', () => {
-      wrapper.find(PeopleSelector).node.setState({ currentMatch: '2' })
+      wrapper.find(PeopleSelector).instance().setState({ currentMatch: '2' })
       input.simulate('keyDown', { keyCode: keyMap.UP })
       const actual = wrapper.find(PersonListItem).last().prop('active')
       expect(actual).toBe(false)
     })
 
     it('does not change active match if at bottom of list when down arrow pressed', () => {
-      wrapper.find(PeopleSelector).node.setState({ currentMatch: '2' })
+      wrapper.find(PeopleSelector).instance().setState({ currentMatch: '2' })
       input.simulate('keyDown', { keyCode: keyMap.DOWN })
       const actual = wrapper.find(PersonListItem).last().prop('active')
       expect(actual).toBe(true)
@@ -124,7 +125,7 @@ describe('PeopleSelector', () => {
     it('resets values after adding participants', () => {
       input.simulate('keyDown', { keyCode: keyMap.ENTER })
       expect(setAutocomplete).toBeCalledWith(null)
-      expect(input.node.value).toBe('')
+      expect(input.instance().value).toBe('')
     })
   })
 
@@ -148,7 +149,7 @@ describe('PeopleSelector', () => {
     it('updates if user input contains valid characters', () => {
       const expected = 'Poor Yorick'
       const input = wrapper.find('input').first()
-      input.node.value = expected
+      input.instance().value = expected
       input.simulate('change')
       jest.runAllTimers()
       const actual = setAutocomplete.mock.calls[0][0]
@@ -159,11 +160,11 @@ describe('PeopleSelector', () => {
       const invalid = 'Poor Yorick9238183$@#$$@!'
       const expected = 'Poor Yorick'
       const input = wrapper.find('input').first()
-      input.node.value = invalid
+      input.instance().value = invalid
       input.simulate('change')
       jest.runAllTimers()
       expect(setAutocomplete).not.toHaveBeenCalled()
-      expect(input.node.value).toBe(expected)
+      expect(input.instance().value).toBe(expected)
     })
   })
 
@@ -179,7 +180,7 @@ describe('PeopleSelector', () => {
             setAutocomplete={() => {}} />
         </MemoryRouter>
       )
-      wrapper.find(PeopleSelector).node.addParticipant('1')
+      wrapper.find(PeopleSelector).instance().addParticipant('1')
       expect(addParticipant).toBeCalledWith('1')
     })
 
@@ -195,9 +196,9 @@ describe('PeopleSelector', () => {
         </MemoryRouter>
       )
       const input = wrapper.find('input').first()
-      input.node.value = 'flargle'
-      wrapper.find(PeopleSelector).node.addParticipant('1')
-      expect(input.node.value).toBe('')
+      input.instance().value = 'flargle'
+      wrapper.find(PeopleSelector).instance().addParticipant('1')
+      expect(input.instance().value).toBeFalsy()
       expect(setAutocomplete).toBeCalledWith(null)
     })
   })
@@ -209,6 +210,8 @@ describe('PeopleSelector', () => {
         <PeopleSelector
           fetchPeople={() => {}}
           participants={[]}
+          fetchContacts={jest.fn()}
+          fetchRecentContacts={jest.fn()}
           removeParticipant={removeParticipant} />
       )
       const ps = wrapper.instance()
@@ -222,6 +225,8 @@ describe('PeopleSelector', () => {
         <PeopleSelector
           fetchPeople={() => {}}
           participants={[]}
+          fetchContacts={jest.fn()}
+          fetchRecentContacts={jest.fn()}
           removeParticipant={() => {}} />
       )
       const ps = wrapper.instance()
@@ -236,6 +241,8 @@ describe('PeopleSelector', () => {
         <PeopleSelector
           fetchPeople={() => {}}
           participants={[]}
+          fetchContacts={jest.fn()}
+          fetchRecentContacts={jest.fn()}
           removeParticipant={() => {}} />
       )
       const ps = wrapper.instance()
@@ -250,7 +257,7 @@ describe('PeopleSelector', () => {
     it('adds particpants in the search, then clears it', () => {
       const addParticipant = jest.fn()
       const changeQueryParam = jest.fn()
-      const wrapper = mount(
+      mount(
         <MemoryRouter>
           <PeopleSelector
             addParticipant={addParticipant}

@@ -12,12 +12,12 @@ PrimaryLayout,
 } from './PrimaryLayout'
 
 it('shows NotFound if a currentUser is loaded and the community does not exist', () => {
-  const wrapper = shallow(<PrimaryLayout isCommunityRoute currentUser={{}} />)
+  const wrapper = shallow(<PrimaryLayout isCommunityRoute currentUser={{}} />, { disableLifecycleMethods: true })
   expect(wrapper).toMatchSnapshot()
 })
 
 it('shows nothing for a community route if the community and currentUser are not loaded', () => {
-  const wrapper = shallow(<PrimaryLayout isCommunityRoute />)
+  const wrapper = shallow(<PrimaryLayout isCommunityRoute />, { disableLifecycleMethods: true })
   expect(wrapper.name()).toEqual('Loading')
 })
 
@@ -26,7 +26,7 @@ it('shows normal children for a community route if the community is loaded', () 
     isCommunityRoute
     location={{pathname: '/'}}
     community={{id: '1'}}
-    currentUser={{}} />)
+    currentUser={{}} />, { disableLifecycleMethods: true })
   expect(wrapper.name()).toEqual('div')
 })
 
@@ -41,13 +41,13 @@ describe('RedirectToCommunity', () => {
   it('shows a Loading component if currentUser not set yet', () => {
     const wrapper = shallow(<RedirectToCommunity currentUser={null} />)
     const renderWrapper = shallow(wrapper.props().render())
-    expect(renderWrapper.find('[data-styleName="loading-top"]').length).toBe(1)
+    expect(renderWrapper.find('[data-stylename="loading-top"]').length).toBe(1)
   })
 
   it('shows a Loading component if currentUser has no memberships', () => {
     const me = session.Me.first()
     const wrapper = shallow(redirectIfCommunity(me)())
-    expect(wrapper.find('[data-styleName="loading-top"]').length).toBe(1)
+    expect(wrapper.find('[data-stylename="loading-top"]').length).toBe(1)
   })
 
   it('sets `to` prop of Redirect correctly', () => {

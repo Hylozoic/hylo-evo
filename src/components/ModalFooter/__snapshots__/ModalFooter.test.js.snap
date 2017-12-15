@@ -3,19 +3,19 @@
 exports[`ModalFooter renders correctly with a "Previous" button 1`] = `
 <div>
   <div
-    data-styleName="signup-modal-footer"
+    data-stylename="signup-modal-footer"
   >
     <div
-      data-styleName="footer-buttons"
+      data-stylename="footer-buttons"
     >
       <span
-        data-styleName="previous-button"
+        data-stylename="previous-button"
         onClick={[Function]}
       >
         Previous
       </span>
       <span
-        data-styleName="continue-button"
+        data-stylename="continue-button"
         onClick={[Function]}
       >
         continueText
@@ -23,7 +23,7 @@ exports[`ModalFooter renders correctly with a "Previous" button 1`] = `
     </div>
   </div>
   <div
-    data-styleName="press-enter"
+    data-stylename="press-enter"
   >
     or press Enter
   </div>
@@ -33,13 +33,13 @@ exports[`ModalFooter renders correctly with a "Previous" button 1`] = `
 exports[`ModalFooter renders correctly without a "Previous" button 1`] = `
 <div>
   <div
-    data-styleName="signup-modal-footer"
+    data-stylename="signup-modal-footer"
   >
     <div
-      data-styleName="footer-buttons"
+      data-stylename="footer-buttons"
     >
       <span
-        data-styleName="continue-button"
+        data-stylename="continue-button"
         onClick={[Function]}
       >
         continueText
@@ -47,7 +47,7 @@ exports[`ModalFooter renders correctly without a "Previous" button 1`] = `
     </div>
   </div>
   <div
-    data-styleName="press-enter"
+    data-stylename="press-enter"
   >
     or press Enter
   </div>

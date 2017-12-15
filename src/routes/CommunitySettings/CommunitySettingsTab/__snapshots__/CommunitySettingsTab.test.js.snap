@@ -3,17 +3,21 @@
 exports[`CommunitySettingsTab renders correctly 1`] = `
 <div>
   <input
-    data-styleName="name"
+    data-stylename="name"
     onChange={[Function]}
     type="text"
-    value=""
+    value="Foomunity"
   />
   <div
-    data-styleName="banner"
-    style={Object {}}
+    data-stylename="banner"
+    style={
+      Object {
+        "backgroundImage": "url(avatar.png)",
+      }
+    }
   >
     <Connect(ChangeImageButton)
-      data-styleName="change-banner-button"
+      data-stylename="change-banner-button"
       update={[Function]}
       uploadSettings={
         Object {
@@ -24,11 +28,15 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
     />
   </div>
   <div
-    data-styleName="avatar"
-    style={Object {}}
+    data-stylename="avatar"
+    style={
+      Object {
+        "backgroundImage": "url(avatar.png)",
+      }
+    }
   >
     <Connect(ChangeImageButton)
-      data-styleName="change-avatar-button"
+      data-stylename="change-avatar-button"
       update={[Function]}
       uploadSettings={
         Object {
@@ -42,17 +50,19 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
     label="Description"
     onChange={[Function]}
     type="textarea"
+    value="Great community"
   />
   <SettingsControl
     label="Location"
     onChange={[Function]}
+    value="Fuji"
   />
   <div
-    data-styleName="button-row"
+    data-stylename="button-row"
   >
     <Button
       color="gray"
-      data-styleName="save-button"
+      data-stylename="save-button"
       label="Save Changes"
       onClick={null}
     />

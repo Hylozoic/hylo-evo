@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { debounce, includes, isEmpty } from 'lodash'
 import { uniqBy } from 'lodash/fp'
 import cx from 'classnames'
@@ -105,7 +106,7 @@ export default class TagInput extends Component {
       <li key={t.id} className={theme.selectedTag}>
         {t.avatar_url && <Avatar person={t} isLink={false} />}
         <span className={theme.selectedTagName}>{t.label || t.name}</span>
-        <a onClick={!readOnly && this.remove(t)} className={theme.selectedTagRemove}>&times;</a>
+        <a onClick={!readOnly ? this.remove(t) : undefined} className={theme.selectedTagRemove}>&times;</a>
       </li>
     )
 

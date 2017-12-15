@@ -2,18 +2,18 @@
 
 exports[`Banner renders correctly 1`] = `
 <div
-  data-styleName="banner"
+  data-stylename="banner"
 >
   <div
-    data-styleName="banner-text"
+    data-stylename="banner-text"
   >
     <div
-      data-styleName="name"
+      data-stylename="name"
     >
       Communities
     </div>
     <div
-      data-styleName="stats"
+      data-stylename="stats"
     >
       12
        Communities  •  
@@ -22,7 +22,7 @@ exports[`Banner renders correctly 1`] = `
     </div>
   </div>
   <Icon
-    data-styleName="icon"
+    data-stylename="icon"
     name="More"
   />
 </div>
@@ -30,7 +30,7 @@ exports[`Banner renders correctly 1`] = `
 
 exports[`CommunityList renders correctly 1`] = `
 <div
-  data-styleName="community-list"
+  data-stylename="community-list"
 >
   <CommunityCard
     community={
@@ -38,6 +38,7 @@ exports[`CommunityList renders correctly 1`] = `
         "id": 9,
       }
     }
+    key="9"
   />
   <CommunityCard
     community={
@@ -45,6 +46,7 @@ exports[`CommunityList renders correctly 1`] = `
         "id": 8,
       }
     }
+    key="8"
   />
   <CommunityCard
     community={
@@ -52,6 +54,7 @@ exports[`CommunityList renders correctly 1`] = `
         "id": 7,
       }
     }
+    key="7"
   />
   <ScrollListener
     elementId="center-column"
@@ -62,24 +65,24 @@ exports[`CommunityList renders correctly 1`] = `
 
 exports[`CommunityList renders correctly 2`] = `
 <div
-  data-styleName="community-card"
+  data-stylename="community-card"
 >
   <RoundImage
-    data-styleName="community-image"
+    data-stylename="community-image"
     size="50px"
     square={true}
     url="foom.png"
   />
   <div
-    data-styleName="community-details"
+    data-stylename="community-details"
   >
     <span
-      data-styleName="community-name"
+      data-stylename="community-name"
     >
       Foom
     </span>
     <span
-      data-styleName="community-stats"
+      data-stylename="community-stats"
     >
       77
        Members
@@ -90,7 +93,7 @@ exports[`CommunityList renders correctly 2`] = `
 
 exports[`NetworkCommunities renders correctly 1`] = `
 <div
-  data-styleName="container"
+  data-stylename="container"
 >
   <Banner
     network={
@@ -126,17 +129,17 @@ exports[`NetworkCommunities renders correctly 1`] = `
 
 exports[`SearchBar renders correctly 1`] = `
 <div
-  data-styleName="search-bar"
+  data-stylename="search-bar"
 >
   <TextInput
-    data-styleName="search-input"
+    data-stylename="search-input"
     onChange={[Function]}
     placeholder="Search by name"
     value="fo"
   />
   <Dropdown
     alignRight={true}
-    data-styleName="search-order"
+    data-stylename="search-order"
     items={
       Array [
         Object {
@@ -155,7 +158,7 @@ exports[`SearchBar renders correctly 1`] = `
     }
     toggleChildren={
       <span
-        data-styleName="search-sorter-label"
+        data-stylename="search-sorter-label"
       >
         Alphabetical
         <Icon

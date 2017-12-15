@@ -13,6 +13,7 @@ describe('NetworkCommunities', () => {
       communities={communities}
       search='fo'
       sortBy='name'
+      fetchNetwork={jest.fn()}
       setSearch={() => {}}
       setSort={() => {}}
       fetchMoreCommunities={() => {}} />)

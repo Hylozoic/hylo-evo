@@ -2,10 +2,10 @@
 
 exports[`ActionsBar matches last snapshot 1`] = `
 <div
-  data-styleName="actionsBar"
+  data-stylename="actionsBar"
 >
   <div
-    data-styleName="actions"
+    data-stylename="actions"
   >
     <Connect(ChangeImageButton)
       attachmentType="image"
@@ -18,7 +18,7 @@ exports[`ActionsBar matches last snapshot 1`] = `
       }
     >
       <Icon
-        data-styleName="action-icon"
+        data-stylename="action-icon"
         name="AddImage"
       />
     </Connect(ChangeImageButton)>
@@ -32,14 +32,14 @@ exports[`ActionsBar matches last snapshot 1`] = `
       }
     >
       <Icon
-        data-styleName="action-icon"
+        data-stylename="action-icon"
         name="Paperclip"
       />
     </Connect(ChangeImageButton)>
   </div>
   <Button
     color="green"
-    data-styleName="postButton"
+    data-stylename="postButton"
     disabled={false}
     label="Save"
     onClick={[Function]}
@@ -49,10 +49,10 @@ exports[`ActionsBar matches last snapshot 1`] = `
 
 exports[`ActionsBar matches last snapshot while loading 1`] = `
 <div
-  data-styleName="actionsBar"
+  data-stylename="actionsBar"
 >
   <div
-    data-styleName="actions"
+    data-stylename="actions"
   >
     <Connect(ChangeImageButton)
       attachmentType="image"
@@ -65,7 +65,7 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
       }
     >
       <Icon
-        data-styleName="action-icon"
+        data-stylename="action-icon"
         name="AddImage"
       />
     </Connect(ChangeImageButton)>
@@ -79,14 +79,14 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
       }
     >
       <Icon
-        data-styleName="action-icon"
+        data-stylename="action-icon"
         name="Paperclip"
       />
     </Connect(ChangeImageButton)>
   </div>
   <Button
     color="green"
-    data-styleName="postButton"
+    data-stylename="postButton"
     disabled={true}
     label="Posting..."
     onClick={[Function]}
@@ -96,21 +96,21 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
 
 exports[`PostEditor editing a post form in editing mode 1`] = `
 <div
-  data-styleName="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    data-styleName="header"
+    data-stylename="header"
   >
     <div
-      data-styleName="initial"
+      data-stylename="initial"
     >
       <div
-        data-styleName="initial-prompt"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        data-styleName="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -118,7 +118,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       </a>
     </div>
     <div
-      data-styleName="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className="undefined"
@@ -144,21 +144,21 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-stylename="body"
   >
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        data-styleName="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <input
-        data-styleName="titleInput"
+        data-stylename="titleInput"
         disabled={false}
         onChange={[Function]}
         placeholder="What are you looking for help with?"
@@ -166,7 +166,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         value="valid title"
       />
       <Connect(HyloEditor)
-        data-styleName="editor"
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -192,18 +192,18 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
     type="file"
   />
   <div
-    data-styleName="footer"
+    data-stylename="footer"
   >
     <div
-      data-styleName="postIn"
+      data-stylename="postIn"
     >
       <div
-        data-styleName="postIn-label"
+        data-stylename="postIn-label"
       >
         Post in
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-stylename="postIn-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -238,21 +238,21 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
 
 exports[`PostEditor editing a post post is loaded into fields 1`] = `
 <div
-  data-styleName="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    data-styleName="header"
+    data-stylename="header"
   >
     <div
-      data-styleName="initial"
+      data-stylename="initial"
     >
       <div
-        data-styleName="initial-prompt"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        data-styleName="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -260,7 +260,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       </a>
     </div>
     <div
-      data-styleName="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className="undefined"
@@ -286,21 +286,21 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-stylename="body"
   >
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        data-styleName="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <input
-        data-styleName="titleInput"
+        data-stylename="titleInput"
         disabled={false}
         onChange={[Function]}
         placeholder="What are you looking for help with?"
@@ -308,7 +308,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         value="valid title"
       />
       <Connect(HyloEditor)
-        data-styleName="editor"
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -334,18 +334,18 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
     type="file"
   />
   <div
-    data-styleName="footer"
+    data-stylename="footer"
   >
     <div
-      data-styleName="postIn"
+      data-stylename="postIn"
     >
       <div
-        data-styleName="postIn-label"
+        data-stylename="postIn-label"
       >
         Post in
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-stylename="postIn-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -380,21 +380,21 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
 
 exports[`PostEditor for a new post correct title placeholder and type button selection for "discussion" type 1`] = `
 <div
-  data-styleName="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    data-styleName="header"
+    data-stylename="header"
   >
     <div
-      data-styleName="initial"
+      data-stylename="initial"
     >
       <div
-        data-styleName="initial-prompt"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        data-styleName="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -402,7 +402,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </a>
     </div>
     <div
-      data-styleName="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className=""
@@ -428,21 +428,21 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-stylename="body"
   >
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        data-styleName="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <input
-        data-styleName="titleInput"
+        data-stylename="titleInput"
         disabled={false}
         onChange={[Function]}
         placeholder="discussion placeholder"
@@ -450,7 +450,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         value=""
       />
       <Connect(HyloEditor)
-        data-styleName="editor"
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -467,18 +467,18 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     type="file"
   />
   <div
-    data-styleName="footer"
+    data-stylename="footer"
   >
     <div
-      data-styleName="postIn"
+      data-stylename="postIn"
     >
       <div
-        data-styleName="postIn-label"
+        data-stylename="postIn-label"
       >
         Post in
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-stylename="postIn-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -501,21 +501,21 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
 
 exports[`PostEditor for a new post correct title placeholder and type button selection for "offer" type 1`] = `
 <div
-  data-styleName="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    data-styleName="header"
+    data-stylename="header"
   >
     <div
-      data-styleName="initial"
+      data-stylename="initial"
     >
       <div
-        data-styleName="initial-prompt"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        data-styleName="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -523,7 +523,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </a>
     </div>
     <div
-      data-styleName="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className="undefined"
@@ -549,21 +549,21 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-stylename="body"
   >
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        data-styleName="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <input
-        data-styleName="titleInput"
+        data-stylename="titleInput"
         disabled={false}
         onChange={[Function]}
         placeholder="offer placeholder"
@@ -571,7 +571,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         value=""
       />
       <Connect(HyloEditor)
-        data-styleName="editor"
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -588,18 +588,18 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     type="file"
   />
   <div
-    data-styleName="footer"
+    data-stylename="footer"
   >
     <div
-      data-styleName="postIn"
+      data-stylename="postIn"
     >
       <div
-        data-styleName="postIn-label"
+        data-stylename="postIn-label"
       >
         Post in
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-stylename="postIn-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -622,21 +622,21 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
 
 exports[`PostEditor for a new post correct title placeholder and type button selection for "request" type 1`] = `
 <div
-  data-styleName="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    data-styleName="header"
+    data-stylename="header"
   >
     <div
-      data-styleName="initial"
+      data-stylename="initial"
     >
       <div
-        data-styleName="initial-prompt"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        data-styleName="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -644,7 +644,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </a>
     </div>
     <div
-      data-styleName="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className="undefined"
@@ -670,21 +670,21 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-stylename="body"
   >
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        data-styleName="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <input
-        data-styleName="titleInput"
+        data-stylename="titleInput"
         disabled={false}
         onChange={[Function]}
         placeholder="request placeholder"
@@ -692,7 +692,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         value=""
       />
       <Connect(HyloEditor)
-        data-styleName="editor"
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -709,18 +709,18 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     type="file"
   />
   <div
-    data-styleName="footer"
+    data-stylename="footer"
   >
     <div
-      data-styleName="postIn"
+      data-stylename="postIn"
     >
       <div
-        data-styleName="postIn-label"
+        data-stylename="postIn-label"
       >
         Post in
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-stylename="postIn-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -743,21 +743,21 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
 
 exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
 <div
-  data-styleName="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    data-styleName="header"
+    data-stylename="header"
   >
     <div
-      data-styleName="initial"
+      data-stylename="initial"
     >
       <div
-        data-styleName="initial-prompt"
+        data-stylename="initial-prompt"
       >
         a test prompt
       </div>
       <a
-        data-styleName="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -765,7 +765,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       </a>
     </div>
     <div
-      data-styleName="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className=""
@@ -791,21 +791,21 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-stylename="body"
   >
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        data-styleName="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <input
-        data-styleName="titleInput"
+        data-stylename="titleInput"
         disabled={false}
         onChange={[Function]}
         placeholder="a test title placeholder"
@@ -814,7 +814,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       />
       <Connect(HyloEditor)
         contentHTML=""
-        data-styleName="editor"
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="details placeholder"
@@ -831,18 +831,18 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
     type="file"
   />
   <div
-    data-styleName="footer"
+    data-stylename="footer"
   >
     <div
-      data-styleName="postIn"
+      data-stylename="postIn"
     >
       <div
-        data-styleName="postIn-label"
+        data-stylename="postIn-label"
       >
         Post in
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-stylename="postIn-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -865,21 +865,21 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
 
 exports[`PostEditor post is defaulted while loading editor 1`] = `
 <div
-  data-styleName="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    data-styleName="header"
+    data-stylename="header"
   >
     <div
-      data-styleName="initial"
+      data-stylename="initial"
     >
       <div
-        data-styleName="initial-prompt"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        data-styleName="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -887,7 +887,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       </a>
     </div>
     <div
-      data-styleName="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className=""
@@ -913,21 +913,21 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-stylename="body"
   >
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        data-styleName="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <input
-        data-styleName="titleInput"
+        data-stylename="titleInput"
         disabled={true}
         onChange={[Function]}
         placeholder="What’s on your mind?"
@@ -936,7 +936,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       />
       <Connect(HyloEditor)
         contentHTML=""
-        data-styleName="editor"
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -953,18 +953,18 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
     type="file"
   />
   <div
-    data-styleName="footer"
+    data-stylename="footer"
   >
     <div
-      data-styleName="postIn"
+      data-stylename="postIn"
     >
       <div
-        data-styleName="postIn-label"
+        data-stylename="postIn-label"
       >
         Post in
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-stylename="postIn-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -987,21 +987,21 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
 
 exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
 <div
-  data-styleName="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    data-styleName="header"
+    data-stylename="header"
   >
     <div
-      data-styleName="initial"
+      data-stylename="initial"
     >
       <div
-        data-styleName="initial-prompt"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        data-styleName="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -1009,7 +1009,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       </a>
     </div>
     <div
-      data-styleName="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className=""
@@ -1035,21 +1035,21 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-stylename="body"
   >
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        data-styleName="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <input
-        data-styleName="titleInput"
+        data-stylename="titleInput"
         disabled={true}
         onChange={[Function]}
         placeholder="What’s on your mind?"
@@ -1058,7 +1058,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       />
       <Connect(HyloEditor)
         contentHTML=""
-        data-styleName="editor"
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -1075,18 +1075,18 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
     type="file"
   />
   <div
-    data-styleName="footer"
+    data-stylename="footer"
   >
     <div
-      data-styleName="postIn"
+      data-stylename="postIn"
     >
       <div
-        data-styleName="postIn-label"
+        data-stylename="postIn-label"
       >
         Post in
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-stylename="postIn-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -1109,21 +1109,21 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
 
 exports[`PostEditor renders with min props 1`] = `
 <div
-  data-styleName="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    data-styleName="header"
+    data-stylename="header"
   >
     <div
-      data-styleName="initial"
+      data-stylename="initial"
     >
       <div
-        data-styleName="initial-prompt"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        data-styleName="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -1131,7 +1131,7 @@ exports[`PostEditor renders with min props 1`] = `
       </a>
     </div>
     <div
-      data-styleName="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className=""
@@ -1157,21 +1157,21 @@ exports[`PostEditor renders with min props 1`] = `
     </div>
   </div>
   <div
-    data-styleName="body"
+    data-stylename="body"
   >
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        data-styleName="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      data-styleName="body-column"
+      data-stylename="body-column"
     >
       <input
-        data-styleName="titleInput"
+        data-stylename="titleInput"
         disabled={false}
         onChange={[Function]}
         placeholder="What’s on your mind?"
@@ -1180,7 +1180,7 @@ exports[`PostEditor renders with min props 1`] = `
       />
       <Connect(HyloEditor)
         contentHTML=""
-        data-styleName="editor"
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -1197,18 +1197,18 @@ exports[`PostEditor renders with min props 1`] = `
     type="file"
   />
   <div
-    data-styleName="footer"
+    data-stylename="footer"
   >
     <div
-      data-styleName="postIn"
+      data-stylename="postIn"
     >
       <div
-        data-styleName="postIn-label"
+        data-stylename="postIn-label"
       >
         Post in
       </div>
       <div
-        data-styleName="postIn-communities"
+        data-stylename="postIn-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}

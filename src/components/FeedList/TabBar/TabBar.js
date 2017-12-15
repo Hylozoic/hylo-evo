@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+
+import React from 'react'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import { capitalize, sortBy } from 'lodash/fp'

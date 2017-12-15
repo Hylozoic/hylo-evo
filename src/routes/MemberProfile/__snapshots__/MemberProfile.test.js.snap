@@ -2,7 +2,7 @@
 
 exports[`MemberProfile renders the same as the last snapshot 1`] = `
 <div
-  data-styleName="member-profile"
+  data-stylename="member-profile"
 >
   <ProfileBanner
     bannerUrl="http://www.axolotl.org/images/tiger/tiger_larva.jpg"
@@ -14,13 +14,13 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
     />
   </ProfileBanner>
   <div
-    data-styleName="content"
+    data-stylename="content"
   >
     <ProfileControls
       selectTab={[Function]}
     >
       <span
-        data-styleName="tagline"
+        data-stylename="tagline"
       />
       <SocialButtons
         facebookUrl="https://www.facebook.com/rich.churcher"

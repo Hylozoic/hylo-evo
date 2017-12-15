@@ -2,18 +2,18 @@
 
 exports[`matches last snapshot 1`] = `
 <div
-  data-styleName="selector-matched-item"
+  data-stylename="selector-matched-item"
 >
   <RoundImage
-    data-styleName="avatar"
+    data-stylename="avatar"
     small={true}
   />
   <span
-    data-styleName="name"
+    data-stylename="name"
   />
   <span>
     <Icon
-      data-styleName="delete-match"
+      data-stylename="delete-match"
       name="Ex"
     />
   </span>

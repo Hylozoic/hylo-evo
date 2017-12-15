@@ -2,14 +2,14 @@
 
 exports[`matches the last snapshot 1`] = `
 <span
-  data-styleName="badgeWrapper"
+  data-stylename="badgeWrapper"
   onClick={[Function]}
 >
   <span
-    data-styleName="badge"
+    data-stylename="badge"
   >
     <span
-      data-styleName="badgeNumber"
+      data-stylename="badgeNumber"
     >
       7
     </span>

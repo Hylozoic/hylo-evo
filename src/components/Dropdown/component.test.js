@@ -10,7 +10,7 @@ const sampleItems = [
 it('renders with no items', () => {
   const wrapper = shallow(<Dropdown toggleChildren={<span>click me</span>} />)
   expect(wrapper.children()).toHaveLength(2)
-  expect(wrapper.find('> a span').text()).toBe('click me')
+  expect(wrapper.find('a span').text()).toBe('click me')
   expect(wrapper.find('ul')).toBeTruthy()
 })
 
@@ -19,7 +19,7 @@ it('renders with items', () => {
     toggleChildren={<span>click me</span>}
     items={sampleItems} />)
 
-  wrapper.find('> a').simulate('click')
+  wrapper.find('a').simulate('click')
 
   const list = wrapper.find('ul li')
   expect(list).toHaveLength(2)
@@ -33,7 +33,7 @@ it('renders with a triangle', () => {
     items={sampleItems}
     triangle />)
 
-  wrapper.find('> a').simulate('click')
+  wrapper.find('a').simulate('click')
 
   const list = wrapper.find('ul li')
   expect(list).toHaveLength(3)
@@ -47,7 +47,7 @@ it('renders with passed-in children', () => {
     <li>bar</li>
   </Dropdown>)
 
-  wrapper.find('> a').simulate('click')
+  wrapper.find('a').simulate('click')
 
   const list = wrapper.find('ul li')
   expect(list).toHaveLength(2)
@@ -61,7 +61,7 @@ it('renders with passed-in children and a triangle', () => {
     <li>bar</li>
   </Dropdown>)
 
-  wrapper.find('> a').simulate('click')
+  wrapper.find('a').simulate('click')
 
   const list = wrapper.find('ul li')
   expect(list).toHaveLength(3)

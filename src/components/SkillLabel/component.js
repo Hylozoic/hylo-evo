@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
 import './component.scss'
 
-const { string, bool } = React.PropTypes
+const { string, bool } = PropTypes
 
 export default function SkillLabel ({ children, label, color = 'dark', active, className }) {
   let styleName = cx('label', color, {active})
