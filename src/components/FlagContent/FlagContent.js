@@ -108,7 +108,7 @@ export default class FlagContent extends PureComponent {
             value={explanation}
             onChange={(e) => { this.setState({explanation: e.target.value}) }}
             placeholder={subtitle} />
-          <Button styleName='submit-btn' onClick={this.submit}>Submit</Button>
+          <Button styleName='submit-btn' onClick={this.submit} disabled={isEmpty(selectedCategory)}>Submit</Button>
         </div>
       </div>
     </div>
