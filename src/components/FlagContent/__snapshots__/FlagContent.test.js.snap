@@ -162,11 +162,11 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
         </TextareaAutosize>
         <Button
           data-stylename="submit-btn"
+          disabled={true}
           onClick={[Function]}
         >
           <div
-            data-stylename="button green"
-            onClick={[Function]}
+            data-stylename="button green disabled"
           >
             Submit
           </div>
@@ -245,6 +245,7 @@ exports[`FlagContent changes title based on type 1`] = `
       />
       <Button
         data-stylename="submit-btn"
+        disabled={true}
         onClick={[Function]}
       >
         Submit
@@ -322,6 +323,7 @@ exports[`FlagContent matches the last snapshot 1`] = `
       />
       <Button
         data-stylename="submit-btn"
+        disabled={true}
         onClick={[Function]}
       >
         Submit
