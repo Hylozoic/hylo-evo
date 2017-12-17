@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
 import cx from 'classnames'
 import { get, some } from 'lodash/fp'

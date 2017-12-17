@@ -11,7 +11,7 @@ describe('Comments', () => {
       postId: '91',
       slug: 'foo'
     }
-    const wrapper = shallow(<Comments {...props} />)
+    const wrapper = shallow(<Comments {...props} />, { disableLifecycleMethods: true })
     expect(wrapper.find('ShowMore').length).toEqual(1)
     expect(wrapper.find('ShowMore').prop('commentsLength')).toEqual(3)
     expect(wrapper.find('Connect(Comment)').length).toEqual(3)

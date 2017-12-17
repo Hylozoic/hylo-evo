@@ -2,6 +2,7 @@
 
 exports[`AttachmentManager renders FileManager when type is file 1`] = `
 <FileManager
+  loadAttachments={[Function]}
   prop1="foo"
   prop2="bar"
   prop3="baz"
@@ -11,6 +12,7 @@ exports[`AttachmentManager renders FileManager when type is file 1`] = `
 
 exports[`AttachmentManager renders ImageManager when type is image 1`] = `
 <DragDropContext(ImageManager)
+  loadAttachments={[Function]}
   prop1="foo"
   prop2="bar"
   prop3="baz"
@@ -20,34 +22,36 @@ exports[`AttachmentManager renders ImageManager when type is image 1`] = `
 
 exports[`FileManager matches last snapshot 1`] = `
 <div
-  data-styleName="file-manager"
+  data-stylename="file-manager"
 >
   <div
-    data-styleName="section-label"
+    data-stylename="section-label"
   >
     Files
   </div>
   <div
-    data-styleName="file-previews"
+    data-stylename="file-previews"
   >
     <FilePreview
+      key="0"
       position={0}
       removeFile={[Function]}
       url="foo.pdf"
     />
     <FilePreview
+      key="1"
       position={1}
       removeFile={[Function]}
       url="bar.zip"
     />
     <div
-      data-styleName="loading-file"
+      data-stylename="loading-file"
     >
       Loading...
     </div>
     <Connect(ChangeImageButton)
       attachmentType="file"
-      data-styleName="add-file-row"
+      data-stylename="add-file-row"
       update={[Function]}
       uploadSettings={
         Object {
@@ -57,10 +61,10 @@ exports[`FileManager matches last snapshot 1`] = `
       }
     >
       <div
-        data-styleName="add-file"
+        data-stylename="add-file"
       >
         <span
-          data-styleName="add-file-plus"
+          data-stylename="add-file-plus"
         >
           +
         </span>
@@ -73,24 +77,24 @@ exports[`FileManager matches last snapshot 1`] = `
 
 exports[`FilePreview matches last snapshot 1`] = `
 <div
-  data-styleName="file-preview"
+  data-stylename="file-preview"
 >
   <Icon
-    data-styleName="icon-document"
+    data-stylename="icon-document"
     name="Document"
   />
   <div
-    data-styleName="file-name"
+    data-stylename="file-name"
   >
     foo.pdf
   </div>
   <div
-    data-styleName="file-size"
+    data-stylename="file-size"
   >
     23.3mb
   </div>
   <Icon
-    data-styleName="remove-file"
+    data-stylename="remove-file"
     name="Ex"
     onClick={[Function]}
   />
@@ -99,30 +103,32 @@ exports[`FilePreview matches last snapshot 1`] = `
 
 exports[`ImageManager matches last snapshot 1`] = `
 <div
-  data-styleName="image-manager"
+  data-stylename="image-manager"
 >
   <div
-    data-styleName="section-label"
+    data-stylename="section-label"
   >
     Images
   </div>
   <div
-    data-styleName="image-previews"
+    data-stylename="image-previews"
   >
     <DropTarget(DragSource(ImagePreview))
+      key="0"
       position={0}
       removeImage={[Function]}
       switchImages={[Function]}
       url="foo.png"
     />
     <DropTarget(DragSource(ImagePreview))
+      key="1"
       position={1}
       removeImage={[Function]}
       switchImages={[Function]}
       url="bar.jpg"
     />
     <div
-      data-styleName="add-image"
+      data-stylename="add-image"
     >
       <Loading />
     </div>
@@ -137,7 +143,7 @@ exports[`ImageManager matches last snapshot 1`] = `
       }
     >
       <div
-        data-styleName="add-image"
+        data-stylename="add-image"
       >
         +
       </div>
@@ -148,10 +154,10 @@ exports[`ImageManager matches last snapshot 1`] = `
 
 exports[`ImagePreview matches last snapshot 1`] = `
 <div
-  data-styleName="image-preview"
+  data-stylename="image-preview"
 >
   <div
-    data-styleName="image"
+    data-stylename="image"
     style={
       Object {
         "backgroundImage": "url(foo.zng)",
@@ -159,12 +165,12 @@ exports[`ImagePreview matches last snapshot 1`] = `
     }
   >
     <Icon
-      data-styleName="remove-image"
+      data-stylename="remove-image"
       name="Ex"
       onClick={[Function]}
     />
     <div
-      data-styleName="drag-preview"
+      data-stylename="drag-preview"
     />
   </div>
 </div>

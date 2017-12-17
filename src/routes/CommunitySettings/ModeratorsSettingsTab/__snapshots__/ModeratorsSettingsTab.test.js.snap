@@ -2,31 +2,31 @@
 
 exports[`AddModerator renders correctly when adding with suggestions 1`] = `
 <div
-  data-styleName="add-moderator adding"
+  data-stylename="add-moderator adding"
 >
   <div
-    data-styleName="help-text"
+    data-stylename="help-text"
   >
     Search here for members to grant moderator powers
   </div>
   <div
-    data-styleName="input-row"
+    data-stylename="input-row"
   >
     <input
-      data-styleName="input"
+      data-stylename="input"
       onChange={[Function]}
       onKeyDown={[Function]}
       placeholder="Type..."
       type="text"
     />
     <span
-      data-styleName="cancel-button"
+      data-stylename="cancel-button"
       onClick={[Function]}
     >
       Cancel
     </span>
     <span
-      data-styleName="add-button"
+      data-stylename="add-button"
       onClick={[Function]}
     >
       Add
@@ -65,7 +65,7 @@ exports[`AddModerator renders correctly when adding with suggestions 1`] = `
 
 exports[`AddModerator renders correctly, and transitions from not adding to adding 1`] = `
 <div
-  data-styleName="add-moderator add-new"
+  data-stylename="add-moderator add-new"
   onClick={[Function]}
 >
   + Add New
@@ -74,31 +74,31 @@ exports[`AddModerator renders correctly, and transitions from not adding to addi
 
 exports[`AddModerator renders correctly, and transitions from not adding to adding 2`] = `
 <div
-  data-styleName="add-moderator adding"
+  data-stylename="add-moderator adding"
 >
   <div
-    data-styleName="help-text"
+    data-stylename="help-text"
   >
     Search here for members to grant moderator powers
   </div>
   <div
-    data-styleName="input-row"
+    data-stylename="input-row"
   >
     <input
-      data-styleName="input"
+      data-stylename="input"
       onChange={[Function]}
       onKeyDown={[Function]}
       placeholder="Type..."
       type="text"
     />
     <span
-      data-styleName="cancel-button"
+      data-stylename="cancel-button"
       onClick={[Function]}
     >
       Cancel
     </span>
     <span
-      data-styleName="add-button"
+      data-stylename="add-button"
       onClick={[Function]}
     >
       Add
@@ -117,6 +117,7 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
           "id": 1,
         }
       }
+      key="1"
     />
     <RemovableListItem
       confirmMessage="Are you sure you want to remove undefined's moderator powers?"
@@ -125,6 +126,7 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
           "id": 2,
         }
       }
+      key="2"
     />
     <RemovableListItem
       confirmMessage="Are you sure you want to remove undefined's moderator powers?"
@@ -133,6 +135,7 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
           "id": 3,
         }
       }
+      key="3"
     />
     <RemovableListItem
       confirmMessage="Are you sure you want to remove undefined's moderator powers?"
@@ -141,6 +144,7 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
           "id": 4,
         }
       }
+      key="4"
     />
   </div>
   <AddModerator />

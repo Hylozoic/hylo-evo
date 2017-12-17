@@ -2,27 +2,27 @@
 
 exports[`RemovableListItem renders correctly 1`] = `
 <div
-  data-styleName="item"
+  data-stylename="item"
 >
   <Link
     replace={false}
     to="/c/foo/m/7"
   >
     <RoundImage
-      data-styleName="avatar"
+      data-stylename="avatar"
       medium={true}
       url="zeus.png"
     />
   </Link>
   <Link
-    data-styleName="name"
+    data-stylename="name"
     replace={false}
     to="/c/foo/m/7"
   >
     Zeus
   </Link>
   <span
-    data-styleName="remove-button"
+    data-stylename="remove-button"
     onClick={[Function]}
   >
     Remove

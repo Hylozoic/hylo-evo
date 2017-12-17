@@ -1,9 +1,11 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import './CommentForm.scss'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
-const { object, func, string } = PropTypes
 import { throttle } from 'lodash'
+
+const { object, func, string } = PropTypes
 
 export const STARTED_TYPING_INTERVAL = 3000
 

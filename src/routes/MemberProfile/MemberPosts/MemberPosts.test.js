@@ -9,7 +9,7 @@ describe.only('MemberPosts', () => {
 
   it('renders the same as the last snapshot', () => {
     const wrapper = shallow(
-      <MemberPosts posts={person.posts} />
+      <MemberPosts fetchMemberPosts={jest.fn()} posts={person.posts} />
     )
     expect(wrapper).toMatchSnapshot()
   })

@@ -5,14 +5,14 @@ import AddSkills from './AddSkills'
 describe('AddSkills', () => {
   it('renders correctly', () => {
     const skills = ['Dancing', 'Running', 'Hiding']
-    const wrapper = shallow(<AddSkills skills={skills} />)
+    const wrapper = shallow(<AddSkills fetchMySkills={jest.fn()} skills={skills} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('responds to interaction', () => {
     const addSkill = jest.fn()
     const skills = ['Dancing', 'Running', 'Hiding']
-    const wrapper = shallow(<AddSkills skills={skills} addSkill={addSkill} />)
+    const wrapper = shallow(<AddSkills skills={skills} fetchMySkills={jest.fn()} addSkill={addSkill} />)
     const firstPill = wrapper.find('Pill').at(0)
     const firstSkill = firstPill.props().skill.name
     expect(addSkill).not.toHaveBeenCalled()

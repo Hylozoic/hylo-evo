@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import './CheckBox.scss'
 import Icon from 'components/Icon'
 
-const { bool, string, func } = React.PropTypes
+const { bool, string, func } = PropTypes
 
 export default function CheckBox ({ checked, onChange, className }) {
   const iconName = checked ? 'Checkmark' : 'Empty'

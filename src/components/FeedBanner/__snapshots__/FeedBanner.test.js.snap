@@ -14,24 +14,24 @@ exports[`renders for all communities 1`] = `
   }
 >
   <div
-    data-styleName="banner all-communities"
+    data-stylename="banner all-communities"
   >
     <div
-      data-styleName="image"
+      data-stylename="image"
       style={Object {}}
     >
       <div
-        data-styleName="fade"
+        data-stylename="fade"
       >
         <div
-          data-styleName="fade2"
+          data-stylename="fade2"
         />
       </div>
       <div
-        data-styleName="header"
+        data-stylename="header"
       >
         <div
-          data-styleName="logo"
+          data-stylename="logo"
           style={
             Object {
               "backgroundImage": "url(/hylo-merkaba.png)",
@@ -39,15 +39,15 @@ exports[`renders for all communities 1`] = `
           }
         />
         <div
-          data-styleName="header-text"
+          data-stylename="header-text"
         >
           <span
-            data-styleName="header-name"
+            data-stylename="header-name"
           >
             All Communities
           </span>
           <div
-            data-styleName="header-subtitle"
+            data-stylename="header-subtitle"
           >
             18 Communities
           </div>
@@ -70,15 +70,15 @@ exports[`renders for all communities 1`] = `
         onMouseLeave={[Function]}
       >
         <div
-          data-styleName="postPrompt"
+          data-stylename="postPrompt"
         >
           <RoundImage
-            data-styleName="prompt-image"
+            data-stylename="prompt-image"
             small={true}
             url="me.png"
           >
             <div
-              data-styleName="image small"
+              data-stylename="image small"
               style={
                 Object {
                   "backgroundImage": "url(me.png)",
@@ -91,7 +91,7 @@ exports[`renders for all communities 1`] = `
           , what's on your mind?
         </div>
         <div
-          data-styleName="shadow"
+          data-stylename="shadow"
         />
       </div>
     </PostPrompt>
@@ -111,10 +111,10 @@ exports[`renders with a community 1`] = `
   }
 >
   <div
-    data-styleName="banner"
+    data-stylename="banner"
   >
     <div
-      data-styleName="image"
+      data-stylename="image"
       style={
         Object {
           "backgroundImage": "url(banner.png)",
@@ -122,17 +122,17 @@ exports[`renders with a community 1`] = `
       }
     >
       <div
-        data-styleName="fade"
+        data-stylename="fade"
       >
         <div
-          data-styleName="fade2"
+          data-stylename="fade2"
         />
       </div>
       <div
-        data-styleName="header"
+        data-stylename="header"
       >
         <div
-          data-styleName="logo"
+          data-stylename="logo"
           style={
             Object {
               "backgroundImage": "url(avatar.png)",
@@ -140,23 +140,23 @@ exports[`renders with a community 1`] = `
           }
         />
         <div
-          data-styleName="header-text"
+          data-stylename="header-text"
         >
           <span
-            data-styleName="header-name"
+            data-stylename="header-name"
           >
             Spacebase
           </span>
           <div
-            data-styleName="header-subtitle"
+            data-stylename="header-subtitle"
           >
             <Icon
-              data-styleName="header-icon"
+              data-stylename="header-icon"
               name="Location"
             >
               <span
                 className="icon-Location"
-                data-styleName="icon"
+                data-stylename="icon"
               />
             </Icon>
             space, duh

@@ -9,7 +9,7 @@ it('will call onLeaveTop', () => {
     },
     onLeaveTop: jest.fn()
   }
-  const wrapper = shallow(<ScrollListener {...props} />)
+  const wrapper = shallow(<ScrollListener {...props} />, { disableLifecycleMethods: true })
   const simEvent = {
     preventDefault: jest.fn()
   }
@@ -24,7 +24,7 @@ it('will call onTop', () => {
     },
     onTop: jest.fn()
   }
-  const wrapper = shallow(<ScrollListener {...props} />)
+  const wrapper = shallow(<ScrollListener {...props} />, { disableLifecycleMethods: true })
   wrapper.setState({hitTop: false})
   const simEvent = {
     preventDefault: jest.fn()

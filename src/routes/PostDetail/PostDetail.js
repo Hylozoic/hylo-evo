@@ -1,9 +1,9 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { throttle, isEmpty } from 'lodash/fp'
 import './PostDetail.scss'
-const { bool, func, object, string } = PropTypes
 import { PostImage, PostBody, PostFooter, PostHeader } from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
 import Comments from './Comments'
@@ -12,6 +12,8 @@ import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
+
+const { bool, func, object, string } = PropTypes
 
 // the height of the header plus the padding-top
 const STICKY_HEADER_SCROLL_OFFSET = 78

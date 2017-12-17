@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import './LinkPreview.scss'
 import { bgImageStyle } from 'util/index'
 import Icon from 'components/Icon'

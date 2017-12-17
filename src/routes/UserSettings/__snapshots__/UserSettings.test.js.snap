@@ -7,15 +7,15 @@ exports[`UserSettings renders correctly 1`] = `
       Object {
         "component": <AccountSettingsTab
           currentUser={
-                Object {
-                      "id": 1,
-                    }
+            Object {
+              "id": 1,
+            }
           }
           loginWithService={[Function]}
           setConfirm={[Function]}
           unlinkAccount={[Function]}
           updateUserSettings={[Function]}
-    />,
+        />,
         "name": "Account",
         "path": "/settings",
       },
@@ -23,42 +23,42 @@ exports[`UserSettings renders correctly 1`] = `
         "component": <CommunitySettingsTab
           leaveCommunity={[Function]}
           memberships={
-                Array [
-                      Object {
-                        "id": 2,
-                      },
-                      Object {
-                        "id": 3,
-                      },
-                    ]
+            Array [
+              Object {
+                "id": 2,
+              },
+              Object {
+                "id": 3,
+              },
+            ]
           }
           updateMembershipSettings={[Function]}
-    />,
+        />,
         "name": "Communities",
         "path": "/settings/communities",
       },
       Object {
         "component": <NotificationSettingsTab
           currentUser={
-                Object {
-                      "id": 1,
-                    }
+            Object {
+              "id": 1,
+            }
           }
           updateUserSettings={[Function]}
-    />,
+        />,
         "name": "Notifications",
         "path": "/settings/notifications",
       },
       Object {
         "component": <PasswordSettingsTab
           currentUser={
-                Object {
-                      "id": 1,
-                    }
+            Object {
+              "id": 1,
+            }
           }
           setConfirm={[Function]}
           updateUserSettings={[Function]}
-    />,
+        />,
         "name": "Password",
         "path": "/settings/password",
       },

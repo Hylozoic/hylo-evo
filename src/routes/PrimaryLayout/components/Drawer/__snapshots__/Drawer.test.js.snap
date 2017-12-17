@@ -2,15 +2,15 @@
 
 exports[`CommunityRow renders with new posts 1`] = `
 <li
-  data-styleName="s.communityRow"
+  data-stylename="s.communityRow"
 >
   <Link
-    data-styleName="s.communityRowLink"
+    data-stylename="s.communityRowLink"
     replace={false}
     to="/c/undefined"
   >
     <div
-      data-styleName="s.communityRowAvatar"
+      data-stylename="s.communityRowAvatar"
       style={
         Object {
           "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png)",
@@ -18,7 +18,7 @@ exports[`CommunityRow renders with new posts 1`] = `
       }
     />
     <span
-      data-styleName="s.community-name"
+      data-stylename="s.community-name"
     />
   </Link>
 </li>
@@ -26,15 +26,15 @@ exports[`CommunityRow renders with new posts 1`] = `
 
 exports[`CommunityRow renders with zero new posts 1`] = `
 <li
-  data-styleName="s.communityRow"
+  data-stylename="s.communityRow"
 >
   <Link
-    data-styleName="s.communityRowLink"
+    data-stylename="s.communityRowLink"
     replace={false}
     to="/c/undefined"
   >
     <div
-      data-styleName="s.communityRowAvatar"
+      data-stylename="s.communityRowAvatar"
       style={
         Object {
           "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png)",
@@ -42,7 +42,7 @@ exports[`CommunityRow renders with zero new posts 1`] = `
       }
     />
     <span
-      data-styleName="s.community-name"
+      data-stylename="s.community-name"
     />
   </Link>
 </li>
@@ -50,33 +50,34 @@ exports[`CommunityRow renders with zero new posts 1`] = `
 
 exports[`Drawer renders a community list if networks are present 1`] = `
 <div
-  data-styleName="s.communityDrawer"
+  data-stylename="s.communityDrawer"
 >
   <Icon
-    data-styleName="s.closeDrawer"
+    data-stylename="s.closeDrawer"
     name="Ex"
   />
   <Logo />
   <Link
-    data-styleName="s.settingsLink"
+    data-stylename="s.settingsLink"
     replace={false}
     to="/settings"
   >
     <Icon
-      data-styleName="s.settingsIcon"
+      data-stylename="s.settingsIcon"
       name="Settings"
     />
      Settings
   </Link>
   <ul
-    data-styleName="s.communitiesList"
+    data-stylename="s.communitiesList"
   >
     <li
-      data-styleName="s.sectionTitle"
+      data-stylename="s.sectionTitle"
     >
       Networked Communities
     </li>
     <NetworkRow
+      key="1"
       network={
         Object {
           "avatarUrl": "/wombat.png",
@@ -102,13 +103,14 @@ exports[`Drawer renders a community list if networks are present 1`] = `
       }
     />
     <li
-      data-styleName="s.sectionTitle s.sectionTitleSeparator"
+      data-stylename="s.sectionTitle s.sectionTitleSeparator"
     >
       Independent Communities
     </li>
     <CommunityRow
       avatarUrl="/foo.png"
       id="11"
+      key="11"
       name="Foomunity"
       newPostCount={0}
       slug="foo"
@@ -116,6 +118,7 @@ exports[`Drawer renders a community list if networks are present 1`] = `
     <CommunityRow
       avatarUrl="/bar.png"
       id="22"
+      key="22"
       name="Barmunity"
       newPostCount={7}
       slug="bar"
@@ -123,7 +126,7 @@ exports[`Drawer renders a community list if networks are present 1`] = `
   </ul>
   <Button
     color="white"
-    data-styleName="s.newCommunity"
+    data-stylename="s.newCommunity"
     label="Start a Community"
   />
 </div>
@@ -131,10 +134,10 @@ exports[`Drawer renders a community list if networks are present 1`] = `
 
 exports[`Drawer renders with a current community 1`] = `
 <div
-  data-styleName="s.communityDrawer"
+  data-stylename="s.communityDrawer"
 >
   <Icon
-    data-styleName="s.closeDrawer"
+    data-stylename="s.closeDrawer"
     name="Ex"
   />
   <Logo
@@ -149,19 +152,19 @@ exports[`Drawer renders with a current community 1`] = `
     }
   />
   <Link
-    data-styleName="s.settingsLink"
+    data-stylename="s.settingsLink"
     replace={false}
     to="/settings"
   >
     <Icon
-      data-styleName="s.settingsIcon"
+      data-stylename="s.settingsIcon"
       name="Settings"
     />
      Settings
   </Link>
   <Button
     color="white"
-    data-styleName="s.newCommunity"
+    data-stylename="s.newCommunity"
     label="Start a Community"
   />
 </div>
@@ -169,27 +172,27 @@ exports[`Drawer renders with a current community 1`] = `
 
 exports[`Drawer renders without a current community 1`] = `
 <div
-  data-styleName="s.communityDrawer"
+  data-stylename="s.communityDrawer"
 >
   <Icon
-    data-styleName="s.closeDrawer"
+    data-stylename="s.closeDrawer"
     name="Ex"
   />
   <Logo />
   <Link
-    data-styleName="s.settingsLink"
+    data-stylename="s.settingsLink"
     replace={false}
     to="/settings"
   >
     <Icon
-      data-styleName="s.settingsIcon"
+      data-stylename="s.settingsIcon"
       name="Settings"
     />
      Settings
   </Link>
   <Button
     color="white"
-    data-styleName="s.newCommunity"
+    data-stylename="s.newCommunity"
     label="Start a Community"
   />
 </div>
@@ -197,19 +200,19 @@ exports[`Drawer renders without a current community 1`] = `
 
 exports[`NetworkRow is not expanded when post counts are 0 1`] = `
 <li
-  data-styleName="s.networkRow s.networkExpanded"
+  data-stylename="s.networkRow s.networkExpanded"
 >
   <Link
-    data-styleName="s.networkRowLink"
+    data-stylename="s.networkRowLink"
     replace={false}
     title="Network One"
     to="/n/none"
   >
     <div
-      data-styleName="s.network-name-wrapper"
+      data-stylename="s.network-name-wrapper"
     >
       <div
-        data-styleName="s.avatar"
+        data-stylename="s.avatar"
         style={
           Object {
             "backgroundImage": "url(foo.png)",
@@ -217,30 +220,32 @@ exports[`NetworkRow is not expanded when post counts are 0 1`] = `
         }
       />
       <span
-        data-styleName="s.network-name"
+        data-stylename="s.network-name"
       >
         Network One
       </span>
       <span
-        data-styleName="s.communitiesButton"
+        data-stylename="s.communitiesButton"
         onClick={[Function]}
       >
         <Icon
-          data-styleName="s.arrowDown"
+          data-stylename="s.arrowDown"
           name="ArrowDown"
         />
       </span>
     </div>
   </Link>
   <ul
-    data-styleName="s.networkCommunitiesList"
+    data-stylename="s.networkCommunitiesList"
   >
     <CommunityRow
       id={1}
+      key="1"
       newPostCount={7}
     />
     <CommunityRow
       id={2}
+      key="2"
       newPostCount={6}
     />
   </ul>
@@ -249,19 +254,19 @@ exports[`NetworkRow is not expanded when post counts are 0 1`] = `
 
 exports[`NetworkRow matches last snapshot 1`] = `
 <li
-  data-styleName="s.networkRow s.networkExpanded"
+  data-stylename="s.networkRow s.networkExpanded"
 >
   <Link
-    data-styleName="s.networkRowLink"
+    data-stylename="s.networkRowLink"
     replace={false}
     title="Network One"
     to="/n/none"
   >
     <div
-      data-styleName="s.network-name-wrapper"
+      data-stylename="s.network-name-wrapper"
     >
       <div
-        data-styleName="s.avatar"
+        data-stylename="s.avatar"
         style={
           Object {
             "backgroundImage": "url(foo.png)",
@@ -269,30 +274,32 @@ exports[`NetworkRow matches last snapshot 1`] = `
         }
       />
       <span
-        data-styleName="s.network-name"
+        data-stylename="s.network-name"
       >
         Network One
       </span>
       <span
-        data-styleName="s.communitiesButton"
+        data-stylename="s.communitiesButton"
         onClick={[Function]}
       >
         <Icon
-          data-styleName="s.arrowDown"
+          data-stylename="s.arrowDown"
           name="ArrowDown"
         />
       </span>
     </div>
   </Link>
   <ul
-    data-styleName="s.networkCommunitiesList"
+    data-stylename="s.networkCommunitiesList"
   >
     <CommunityRow
       id={1}
+      key="1"
       newPostCount={7}
     />
     <CommunityRow
       id={2}
+      key="2"
       newPostCount={6}
     />
   </ul>

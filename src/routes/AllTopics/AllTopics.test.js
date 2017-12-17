@@ -20,6 +20,7 @@ describe('AllTopics', () => {
       communityTopics={ct}
       slug='goteam'
       topicsTotal='10'
+      fetchCommunityTopics={jest.fn()}
       toggleSubscribe={() => {}} />)
 
     expect(wrapper).toMatchSnapshot()
@@ -33,16 +34,10 @@ describe('AllTopics', () => {
       selectedSort='followers'
     />)
 
-    // calling lifecycle methods by hand here because they don't fire
-    // on a shallow rendered component
-    wrapper.instance().componentDidMount()
     expect(wrapper.state().totalTopicsCached).not.toBeDefined()
-    var prevProps = wrapper.props
     wrapper.setProps({totalTopics: 11})
-    wrapper.instance().componentDidUpdate(prevProps, wrapper.props())
     expect(wrapper.state().totalTopicsCached).toEqual(11)
     wrapper.setProps({totalTopics: 5})
-    wrapper.instance().componentDidUpdate(prevProps, wrapper.props())
     expect(wrapper.state().totalTopicsCached).toEqual(11)
   })
 })

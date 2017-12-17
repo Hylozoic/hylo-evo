@@ -17,5 +17,5 @@ beforeEach(() => {
 
 it('renders the app', () => {
   appMiddleware(req, res)
-  expect(res.body).toMatch(/<html><div id="root"><div data-styleName="[\w-]+" data-reactroot="" data-reactid="1" data-react-checksum="-?\d+">.*<\/div><\/div><\/html>/)
+  expect(res.body).toMatchSnapshot()
 })

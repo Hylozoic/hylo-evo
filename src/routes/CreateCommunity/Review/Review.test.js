@@ -12,6 +12,7 @@ describe('Review', () => {
       goToNextStep={jest.fn()}
       goToPrivacyStep={jest.fn()}
       currentUser={{}}
+      fetchMySkills={jest.fn()}
       communityName={communityName}
       communityDomain={communityDomain}
       communityPrivacy={communityPrivacy}

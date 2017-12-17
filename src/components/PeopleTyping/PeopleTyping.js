@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { each, values } from 'lodash'
 import './PeopleTyping.scss'
-const { string, object } = React.PropTypes
+const { string, object } = PropTypes
 
 // the amount to delay before deciding that someone is no longer typing
 const MAX_TYPING_PAUSE = 5000

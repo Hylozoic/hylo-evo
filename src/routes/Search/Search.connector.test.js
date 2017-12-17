@@ -1,8 +1,6 @@
 import { presentSearchResult, mergeProps } from './Search.connector'
 import orm from 'store/models'
 
-
-
 describe('presentSearchResult', () => {
   const session = orm.session(orm.getEmptyState())
   const commentId = 21

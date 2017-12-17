@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { bgImageStyle } from 'util/index'
 import Dropdown from 'components/Dropdown'
@@ -5,7 +6,7 @@ import Icon from 'components/Icon'
 import SkillLabel from 'components/SkillLabel'
 import './Member.scss'
 
-const { string, shape } = React.PropTypes
+const { string, shape } = PropTypes
 
 export default class Member extends React.Component {
   removeOnClick (e, id, name, removeMember) {

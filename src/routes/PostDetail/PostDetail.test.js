@@ -20,7 +20,7 @@ describe('PostDetail', () => {
       myVote
     }
 
-    const wrapper = shallow(<PostDetail post={post} slug={slug} showCommunity />)
+    const wrapper = shallow(<PostDetail post={post} fetchPost={jest.fn()} slug={slug} showCommunity />)
     expect(wrapper).toMatchSnapshot()
   })
 })

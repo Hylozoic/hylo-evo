@@ -1,6 +1,6 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import './NetworkCommunities.scss'
-const { string, array, func, object } = PropTypes
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
@@ -8,6 +8,8 @@ import RoundImage from 'components/RoundImage'
 import { find, get } from 'lodash/fp'
 import ScrollListener from 'components/ScrollListener'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
+
+const { string, array, func, object } = PropTypes
 
 const sortOptions = [
   {id: 'name', label: 'Alphabetical'},

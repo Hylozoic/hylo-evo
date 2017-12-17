@@ -2,7 +2,7 @@
 
 exports[`Domain renders correctly 1`] = `
 <div
-  data-styleName="flex-wrapper"
+  data-stylename="flex-wrapper"
 >
   <ModalSidebar
     body="Your URL is the address that people will use to access your community online."
@@ -18,20 +18,20 @@ exports[`Domain renders correctly 1`] = `
     }
   />
   <div
-    data-styleName="panel"
+    data-stylename="panel"
   >
     <div>
       <span
-        data-styleName="step-count"
+        data-stylename="step-count"
       >
         STEP 2/3
       </span>
     </div>
     <div
-      data-styleName="center"
+      data-stylename="center"
     >
       <div
-        data-styleName="logo center"
+        data-stylename="logo center"
         style={
           Object {
             "backgroundImage": "url(/logo-white.svg)",
@@ -40,10 +40,10 @@ exports[`Domain renders correctly 1`] = `
       />
     </div>
     <div
-      data-styleName="center-vertically"
+      data-stylename="center-vertically"
     >
       <span
-        data-styleName="text-input-label"
+        data-stylename="text-input-label"
       >
         Choose a URL
       </span>

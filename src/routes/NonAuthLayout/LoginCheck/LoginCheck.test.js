@@ -7,14 +7,14 @@ function MockChild () {
 }
 
 it('shows a loading placeholder', () => {
-  const wrapper = shallow(<LoginCheck hasCheckedLogin={false}>
+  const wrapper = shallow(<LoginCheck checkLogin={jest.fn()} hasCheckedLogin={false}>
     <MockChild />
   </LoginCheck>)
   expect(wrapper.find('Loading')).toHaveLength(1)
 })
 
 it('shows children', () => {
-  const wrapper = shallow(<LoginCheck hasCheckedLogin>
+  const wrapper = shallow(<LoginCheck checkLogin={jest.fn()} hasCheckedLogin>
     <MockChild />
   </LoginCheck>)
   expect(wrapper.find('MockChild')).toHaveLength(1)

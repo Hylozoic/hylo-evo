@@ -4,7 +4,7 @@ import Review from './Review'
 
 describe('Review', () => {
   it('renders correctly', () => {
-    const wrapper = shallow(<Review skills={[]} />)
+    const wrapper = shallow(<Review fetchMySkills={jest.fn()} skills={[]} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

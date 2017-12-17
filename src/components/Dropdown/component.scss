@@ -16,6 +16,7 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
 .dropdown-toggle {
   text-decoration: none;
   cursor: pointer;
+  user-select: none;
 }
 
 .wrapper {
@@ -56,6 +57,7 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
   padding: $space-2x $space-4x;
   cursor: pointer;
   background-color: white;
+  user-select: none;
   &:hover {
     background-color: $color-polar;
   }
@@ -78,6 +80,7 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
   line-height: 32px;
   padding: 0 15px;
   width: 100%;
+  user-select: none;
 }
 
 .triangle {

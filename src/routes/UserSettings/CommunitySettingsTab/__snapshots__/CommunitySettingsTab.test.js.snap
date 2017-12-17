@@ -2,47 +2,47 @@
 
 exports[`CommunityControl renders correctly 1`] = `
 <div
-  data-styleName="community-control"
+  data-stylename="community-control"
 >
   <div
-    data-styleName="row"
+    data-stylename="row"
   >
     <Link
       replace={false}
       to="/all"
     >
       <RoundImage
-        data-styleName="avatar"
+        data-stylename="avatar"
         medium={true}
       />
     </Link>
     <Link
-      data-styleName="name"
+      data-stylename="name"
       replace={false}
       to="/all"
     >
       Foomunity
     </Link>
     <span
-      data-styleName="leave-button"
+      data-stylename="leave-button"
       onClick={[Function]}
     >
       Leave
     </span>
   </div>
   <div
-    data-styleName="settings-row"
+    data-stylename="settings-row"
   >
     <span
-      data-styleName="settings-label"
+      data-stylename="settings-label"
     >
       Receive Notifications:
     </span>
     <span
-      data-styleName="settings"
+      data-stylename="settings"
     >
       <span
-        data-styleName="checkbox-label"
+        data-stylename="checkbox-label"
       >
         Email
       </span>
@@ -51,7 +51,7 @@ exports[`CommunityControl renders correctly 1`] = `
         onChange={[Function]}
       />
       <span
-        data-styleName="checkbox-label"
+        data-stylename="checkbox-label"
       >
         Mobile
       </span>
@@ -67,6 +67,7 @@ exports[`CommunityControl renders correctly 1`] = `
 exports[`CommunitySettingsTab renders a list of CommunityControls 1`] = `
 <div>
   <CommunityControl
+    key="1"
     membership={
       Object {
         "id": 1,
@@ -74,6 +75,7 @@ exports[`CommunitySettingsTab renders a list of CommunityControls 1`] = `
     }
   />
   <CommunityControl
+    key="2"
     membership={
       Object {
         "id": 2,
@@ -81,6 +83,7 @@ exports[`CommunitySettingsTab renders a list of CommunityControls 1`] = `
     }
   />
   <CommunityControl
+    key="3"
     membership={
       Object {
         "id": 3,
@@ -88,6 +91,7 @@ exports[`CommunitySettingsTab renders a list of CommunityControls 1`] = `
     }
   />
   <CommunityControl
+    key="4"
     membership={
       Object {
         "id": 4,

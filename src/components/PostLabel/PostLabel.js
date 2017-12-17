@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
 import './PostLabel.scss'
 
-const { string } = React.PropTypes
+const { string } = PropTypes
 
 export default function PostLabel ({ type, className }) {
   let styleName = cx('label', type)

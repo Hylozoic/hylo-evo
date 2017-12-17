@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import './SelectorMatchedItem.scss'
 
-const { func, string } = React.PropTypes
+const { func, string } = PropTypes
 
 export default function SelectorMatchedItem ({ avatarUrl, id, name, removeParticipant }) {
   return <div styleName='selector-matched-item'>

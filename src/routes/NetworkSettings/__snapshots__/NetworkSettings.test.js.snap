@@ -7,17 +7,21 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
 >
   <div>
     <input
-      data-styleName="name"
+      data-stylename="name"
       onChange={[Function]}
       type="text"
       value=""
     />
     <div
-      data-styleName="banner"
-      style={Object {}}
+      data-stylename="banner"
+      style={
+        Object {
+          "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg)",
+        }
+      }
     >
       <Connect(ChangeImageButton)
-        data-styleName="change-banner-button"
+        data-stylename="change-banner-button"
         update={[Function]}
         uploadSettings={
           Object {
@@ -28,11 +32,15 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       />
     </div>
     <div
-      data-styleName="avatar"
-      style={Object {}}
+      data-stylename="avatar"
+      style={
+        Object {
+          "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png)",
+        }
+      }
     >
       <Connect(ChangeImageButton)
-        data-styleName="change-avatar-button"
+        data-stylename="change-avatar-button"
         update={[Function]}
         uploadSettings={
           Object {
@@ -46,19 +54,20 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       label="Description"
       onChange={[Function]}
       type="textarea"
+      value=""
     />
     <div
-      data-styleName="button-row"
+      data-stylename="button-row"
     >
       <Button
         color="gray"
-        data-styleName="button"
+        data-stylename="button"
         label="Save Changes"
         onClick={null}
       />
     </div>
     <PaginatedList
-      data-styleName="moderators"
+      data-stylename="moderators"
       isAdmin={true}
       items={Array []}
       label="Moderators"
@@ -68,7 +77,7 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       setPage={[Function]}
     />
     <div
-      data-styleName="autocomplete"
+      data-stylename="autocomplete"
     >
       <Autocomplete
         autoHighlight={true}
@@ -114,13 +123,13 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       />
       <Button
         color="green"
-        data-styleName="button"
+        data-stylename="button"
         label="Add Moderator"
         onClick={[Function]}
       />
     </div>
     <PaginatedList
-      data-styleName="communities"
+      data-stylename="communities"
       isAdmin={true}
       itemProps={
         Object {
@@ -136,7 +145,7 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       setPage={[Function]}
     />
     <div
-      data-styleName="autocomplete"
+      data-stylename="autocomplete"
     >
       <Autocomplete
         autoHighlight={true}
@@ -182,7 +191,7 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       />
       <Button
         color="green"
-        data-styleName="button"
+        data-stylename="button"
         label="Add Community"
         onClick={[Function]}
       />
@@ -193,10 +202,10 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
 
 exports[`PaginatedList renders correctly 1`] = `
 <div
-  data-styleName="paginated-list"
+  data-stylename="paginated-list"
 >
   <div
-    data-styleName="section-label"
+    data-stylename="section-label"
   />
   <RemovableListItem
     item={
@@ -204,6 +213,7 @@ exports[`PaginatedList renders correctly 1`] = `
         "id": 2,
       }
     }
+    key="2"
     size={40}
     square={true}
   />
@@ -213,6 +223,7 @@ exports[`PaginatedList renders correctly 1`] = `
         "id": 3,
       }
     }
+    key="3"
     size={40}
     square={true}
   />
@@ -226,22 +237,27 @@ exports[`PaginatedList renders correctly 1`] = `
 
 exports[`PaginationLinks renders correctly 1`] = `
 <div
-  data-styleName="pagination-links"
+  data-stylename="pagination-links"
 >
   <PageLink
     i={0}
+    key="0"
   />
   <PageLink
     i={1}
+    key="1"
   />
   <PageLink
     i={2}
+    key="2"
   />
   <PageLink
     i={3}
+    key="3"
   />
   <PageLink
     i={4}
+    key="4"
   />
 </div>
 `;

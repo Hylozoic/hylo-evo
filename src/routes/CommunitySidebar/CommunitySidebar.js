@@ -1,15 +1,17 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Avatar from 'components/Avatar'
 import Loading from 'components/Loading'
 import RoundImageRow from 'components/RoundImageRow'
 import Button from 'components/Button'
 import './CommunitySidebar.scss'
-const { object, string, array } = PropTypes
 import cx from 'classnames'
 import { personUrl, communitySettingsUrl } from 'util/index'
 import { markdown } from 'hylo-utils/text'
 import { isEmpty } from 'lodash/fp'
+
+const { object, string, array } = PropTypes
 
 export default class CommunitySidebar extends Component {
   static propTypes = {

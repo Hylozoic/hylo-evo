@@ -1,6 +1,6 @@
-import React, { PropTypes, Component } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import './NotificationsDropdown.scss'
-const { array, string, func } = PropTypes
 import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
@@ -19,6 +19,8 @@ import striptags from 'striptags'
 import { decode } from 'ent'
 import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
 import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
+
+const { array, string, func } = PropTypes
 
 export default class NotificationsDropdown extends Component {
   static propTypes = {

@@ -2,7 +2,7 @@
 
 exports[`Review renders correctly 1`] = `
 <div
-  data-styleName="flex-wrapper"
+  data-stylename="flex-wrapper"
 >
   <ModalSidebar
     body="You can always come back and change your details at any time"
@@ -17,20 +17,20 @@ exports[`Review renders correctly 1`] = `
     }
   />
   <div
-    data-styleName="panel"
+    data-stylename="panel"
   >
     <div>
       <span
-        data-styleName="step-count"
+        data-stylename="step-count"
       >
         STEP 3/3
       </span>
     </div>
     <div
-      data-styleName="center"
+      data-stylename="center"
     >
       <div
-        data-styleName="logo center"
+        data-stylename="logo center"
         style={
           Object {
             "backgroundImage": "url(/logo-white.svg)",
@@ -39,7 +39,7 @@ exports[`Review renders correctly 1`] = `
       />
     </div>
     <div
-      data-styleName="center-review"
+      data-stylename="center-review"
     >
       <ReviewTextInput
         editHandler={[Function]}
@@ -89,17 +89,17 @@ exports[`Review renders correctly 1`] = `
 
 exports[`ReviewTextInput renders correctly 1`] = `
 <div
-  data-styleName="review-input-text-row"
+  data-stylename="review-input-text-row"
 >
   <div
-    data-styleName="review-input-text-label"
+    data-stylename="review-input-text-label"
   >
     <span>
       label
     </span>
   </div>
   <div
-    data-styleName="review-input-text"
+    data-stylename="review-input-text"
   >
     <TextInput
       name="community-name"
@@ -117,10 +117,10 @@ exports[`ReviewTextInput renders correctly 1`] = `
     />
   </div>
   <div
-    data-styleName="review-input-edit"
+    data-stylename="review-input-edit"
   >
     <span
-      data-styleName="edit-button"
+      data-stylename="edit-button"
       onClick={[Function]}
     >
       Edit

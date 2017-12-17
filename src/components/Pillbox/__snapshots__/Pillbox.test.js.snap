@@ -7,13 +7,13 @@ exports[`Pill renders 1`] = `
 >
   <div
     data-for="pill-remove"
-    data-styleName="styles.pill"
+    data-stylename="styles.pill"
     data-tip="Click to Remove"
     onClick={[Function]}
     onMouseLeave={[Function]}
   >
     <span
-      data-styleName="styles.display-label"
+      data-stylename="styles.display-label"
     >
       mountain climbing
     </span>
@@ -29,23 +29,23 @@ exports[`Pill renders when editable 1`] = `
 >
   <div
     data-for="pill-remove"
-    data-styleName="styles.pill"
+    data-stylename="styles.pill"
     data-tip="Click to Remove"
     onClick={[Function]}
     onMouseLeave={[Function]}
   >
     <span
-      data-styleName="styles.display-label"
+      data-stylename="styles.display-label"
     >
       mountain climbing
     </span>
     <Icon
-      data-styleName="styles.remove-label"
+      data-stylename="styles.remove-label"
       name="Ex"
     >
       <span
         className="icon-Ex"
-        data-styleName="icon"
+        data-stylename="icon"
       />
     </Icon>
   </div>
@@ -54,12 +54,12 @@ exports[`Pill renders when editable 1`] = `
 
 exports[`Pillbox renders 1`] = `
 <div
-  data-styleName="styles.root"
+  data-stylename="styles.root"
 >
   <div
-    data-styleName="styles.pill-container"
+    data-stylename="styles.pill-container"
   >
-    <ReactCSSTransitionGroup
+    <CSSTransitionGroup
       transitionAppear={false}
       transitionEnter={true}
       transitionEnterTimeout={400}
@@ -76,14 +76,16 @@ exports[`Pillbox renders 1`] = `
     >
       <Pill
         id={1}
+        key="1"
         label="clickable"
         onClick={[Function]}
       />
       <Pill
         id={2}
+        key="2"
         label="unclickable"
       />
-    </ReactCSSTransitionGroup>
+    </CSSTransitionGroup>
   </div>
   <ReactTooltip
     delayShow={500}

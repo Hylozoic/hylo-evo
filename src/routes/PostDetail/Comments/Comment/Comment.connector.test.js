@@ -80,7 +80,6 @@ describe('mapStateToProps', () => {
       expect(props.isCreator).toBeFalsy()
     })
   })
-
 })
 
 describe('mergeProps', () => {

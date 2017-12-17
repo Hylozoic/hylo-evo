@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import CommentCard from 'components/CommentCard'
 import './MemberComments.scss'
 
-const { any, arrayOf, shape, string } = React.PropTypes
+const { any, arrayOf, shape, string } = PropTypes
 
 const personShape = shape({
   id: any,

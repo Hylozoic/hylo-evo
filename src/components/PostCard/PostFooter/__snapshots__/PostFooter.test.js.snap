@@ -2,10 +2,10 @@
 
 exports[`PostFooter enables tooltip when myvote is false 1`] = `
 <div
-  data-styleName="footer"
+  data-stylename="footer"
 >
   <RoundImageRow
-    data-styleName="people"
+    data-stylename="people"
     imageUrls={
       Array [
         undefined,
@@ -16,18 +16,18 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
     }
   />
   <span
-    data-styleName="caption"
+    data-stylename="caption"
   >
     Joe, Sue and 2 others commented
   </span>
   <a
     data-for="postfooter-tt"
-    data-styleName="vote-button"
+    data-stylename="vote-button"
     data-tip="Upvote this post so more people see it."
     data-tip-disable={false}
   >
     <Icon
-      data-styleName="arrowIcon"
+      data-stylename="arrowIcon"
       name="ArrowUp"
     />
     3
@@ -45,10 +45,10 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
 
 exports[`PostFooter matches the latest snapshot 1`] = `
 <div
-  data-styleName="footer"
+  data-stylename="footer"
 >
   <RoundImageRow
-    data-styleName="people"
+    data-stylename="people"
     imageUrls={
       Array [
         undefined,
@@ -59,18 +59,18 @@ exports[`PostFooter matches the latest snapshot 1`] = `
     }
   />
   <span
-    data-styleName="caption"
+    data-stylename="caption"
   >
     Joe, Sue and 2 others commented
   </span>
   <a
     data-for="postfooter-tt"
-    data-styleName="vote-button voted"
+    data-stylename="vote-button voted"
     data-tip="Upvote this post so more people see it."
     data-tip-disable={true}
   >
     <Icon
-      data-styleName="arrowIcon"
+      data-stylename="arrowIcon"
       name="ArrowUp"
     />
     3

@@ -2,20 +2,20 @@
 
 exports[`LeftSidebar renders correctly 1`] = `
 <div
-  data-styleName="sidebar"
+  data-stylename="sidebar"
 >
   <p
-    data-styleName="gray-text close-button"
+    data-stylename="gray-text close-button"
   >
     CLOSE
   </p>
   <p
-    data-styleName="sidebar-header"
+    data-stylename="sidebar-header"
   >
     header text
   </p>
   <p
-    data-styleName="gray-text sidebar-text"
+    data-stylename="gray-text sidebar-text"
   >
     body text
   </p>
