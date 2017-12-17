@@ -56,7 +56,7 @@ export function Header ({ thread, currentUser }) {
   const id = get('id', currentUser)
   const others = map('name', filter(f => f.id !== id, participants))
 
-  const headerText = isEmpty(others) 
+  const headerText = isEmpty(others)
     ? 'You'
     : formatNames(others)
 

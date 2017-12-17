@@ -95,10 +95,10 @@ export default class MessageSection extends React.Component {
 
     if (deltaLength) {
       const latest = messages[messages.length - 1]
-      // const oldLatest = oldMessages[oldMessages.length - 1]
+      const oldLatest = oldMessages[oldMessages.length - 1]
 
-      // // Are additional messages old (at the beginning of the sorted array)?
-      // if (get('id', latest) === get('id', oldLatest)) return
+      // Are additional messages old (at the beginning of the sorted array)?
+      if (this.props.hasMore && get('id', latest) === get('id', oldLatest)) return
 
       // If there's one new message, it's not from currentUser,
       // and we're not already at the bottom, don't scroll
@@ -154,7 +154,6 @@ export default class MessageSection extends React.Component {
   }
 
   scrollToBottom = () => {
-    console.log('scrollToBottom')
     this.list.scrollTop = this.list.scrollHeight
     if (this.state.visible) {
       this.markAsRead()
