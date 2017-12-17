@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react'
-import ReactDOM from 'react-dom'
 import { isEmpty, trim } from 'lodash'
 import './FlagContent.scss'
 import Select from 'components/Select'
@@ -32,7 +31,7 @@ export default class FlagContent extends PureComponent {
   isOptionalExplanation = (selectedCategory) =>
   (selectedCategory || this.state.selectedCategory) !== 'other'
 
-  submit = (value) => {
+  submit = () => {
     const {submitFlagContent, linkData} = this.props
     const {selectedCategory, explanation} = this.state
 
@@ -45,7 +44,7 @@ export default class FlagContent extends PureComponent {
       this.setState({highlightRequired: true})
       this.updateSelected(selectedCategory)
     } else {
-      submitFlagContent(selectedCategory, trim(value), linkData)
+      submitFlagContent(selectedCategory, trim(explanation), linkData)
       this.closeModal()
       return true
     }

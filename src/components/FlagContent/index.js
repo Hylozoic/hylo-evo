@@ -1,3 +1,13 @@
-import component from './FlagContent'
+import React from 'react'
+import FlagContent from './FlagContent'
+import ReactDOM from 'react-dom'
 import connector from './FlagContent.connector'
-export default connector(component)
+
+const FlagContentPortal = function (props) {
+  return ReactDOM.createPortal(
+    <FlagContent {...props} />,
+    document.getElementById('root')
+  )
+}
+
+export default connector(FlagContentPortal)

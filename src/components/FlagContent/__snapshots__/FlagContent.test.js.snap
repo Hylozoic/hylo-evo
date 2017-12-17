@@ -1,0 +1,332 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FlagContent calls submit successfully with category:other 1`] = `
+<FlagContent
+  explanation=""
+  highlightRequired={false}
+  linkData={
+    Object {
+      "id": 33,
+      "type": "post",
+    }
+  }
+  onClose={[Function]}
+  promptVisible={false}
+  reasonRequired={false}
+  submitFlagContent={[Function]}
+  type="post"
+  visible={true}
+>
+  <div
+    data-stylename="popup"
+  >
+    <div
+      data-stylename="popup_inner"
+    >
+      <h1>
+        Explanation for Flagging
+      </h1>
+      <span
+        data-stylename="close-btn"
+        onClick={[Function]}
+      >
+        <Icon
+          data-stylename="icon"
+          name="Ex"
+        >
+          <span
+            className="icon-Ex"
+            data-stylename="icon"
+          />
+        </Icon>
+      </span>
+      <div
+        data-stylename="content"
+      >
+        <div
+          data-stylename="reason"
+        >
+          <Select
+            data-stylename=""
+            fullWidth={true}
+            onChange={[Function]}
+            options={
+              Array [
+                Object {
+                  "id": "inappropriate",
+                  "label": "Inappropriate Content",
+                },
+                Object {
+                  "id": "spam",
+                  "label": "Spam",
+                },
+                Object {
+                  "id": "offensive",
+                  "label": "Offensive",
+                },
+                Object {
+                  "id": "illegal",
+                  "label": "Illegal",
+                },
+                Object {
+                  "id": "other",
+                  "label": "Other",
+                },
+              ]
+            }
+            placeholder="What was wrong?"
+            selected=""
+          >
+            <span
+              data-stylename="select-wrapper"
+            >
+              <select
+                data-stylename="select"
+                onChange={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                value=""
+              >
+                <option
+                  disabled={true}
+                  value=""
+                >
+                  What was wrong?
+                </option>
+                <option
+                  key="inappropriate"
+                  value="inappropriate"
+                >
+                  Inappropriate Content
+                </option>
+                <option
+                  key="spam"
+                  value="spam"
+                >
+                  Spam
+                </option>
+                <option
+                  key="offensive"
+                  value="offensive"
+                >
+                  Offensive
+                </option>
+                <option
+                  key="illegal"
+                  value="illegal"
+                >
+                  Illegal
+                </option>
+                <option
+                  key="other"
+                  value="other"
+                >
+                  Other
+                </option>
+              </select>
+              <Icon
+                data-stylename="icon"
+                name="ArrowDown"
+              >
+                <span
+                  className="icon-ArrowDown"
+                  data-stylename="icon"
+                />
+              </Icon>
+            </span>
+          </Select>
+        </div>
+        <TextareaAutosize
+          data-stylename="explanation-textbox"
+          minRows={6}
+          onChange={[Function]}
+          onHeightChange={[Function]}
+          placeholder="Select a reason"
+          useCacheForDOMMeasurements={false}
+          value=""
+        >
+          <textarea
+            data-stylename="explanation-textbox"
+            onChange={[Function]}
+            placeholder="Select a reason"
+            style={
+              Object {
+                "height": 0,
+              }
+            }
+            value=""
+          />
+        </TextareaAutosize>
+        <Button
+          data-stylename="submit-btn"
+          onClick={[Function]}
+        >
+          <div
+            data-stylename="button green"
+            onClick={[Function]}
+          >
+            Submit
+          </div>
+        </Button>
+      </div>
+    </div>
+  </div>
+</FlagContent>
+`;
+
+exports[`FlagContent changes title based on type 1`] = `
+<div
+  data-stylename="popup"
+>
+  <div
+    data-stylename="popup_inner"
+  >
+    <h1>
+      Explanation for Flagging
+    </h1>
+    <span
+      data-stylename="close-btn"
+      onClick={[Function]}
+    >
+      <Icon
+        data-stylename="icon"
+        name="Ex"
+      />
+    </span>
+    <div
+      data-stylename="content"
+    >
+      <div
+        data-stylename="reason"
+      >
+        <Select
+          data-stylename=""
+          fullWidth={true}
+          onChange={[Function]}
+          options={
+            Array [
+              Object {
+                "id": "inappropriate",
+                "label": "Inappropriate Content",
+              },
+              Object {
+                "id": "spam",
+                "label": "Spam",
+              },
+              Object {
+                "id": "offensive",
+                "label": "Offensive",
+              },
+              Object {
+                "id": "illegal",
+                "label": "Illegal",
+              },
+              Object {
+                "id": "other",
+                "label": "Other",
+              },
+            ]
+          }
+          placeholder="What was wrong?"
+          selected=""
+        />
+      </div>
+      <TextareaAutosize
+        data-stylename="explanation-textbox"
+        minRows={6}
+        onChange={[Function]}
+        onHeightChange={[Function]}
+        placeholder="Select a reason"
+        useCacheForDOMMeasurements={false}
+        value=""
+      />
+      <Button
+        data-stylename="submit-btn"
+        onClick={[Function]}
+      >
+        Submit
+      </Button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FlagContent matches the last snapshot 1`] = `
+<div
+  data-stylename="popup"
+>
+  <div
+    data-stylename="popup_inner"
+  >
+    <h1>
+      Explanation for Flagging
+    </h1>
+    <span
+      data-stylename="close-btn"
+      onClick={[Function]}
+    >
+      <Icon
+        data-stylename="icon"
+        name="Ex"
+      />
+    </span>
+    <div
+      data-stylename="content"
+    >
+      <div
+        data-stylename="reason"
+      >
+        <Select
+          data-stylename=""
+          fullWidth={true}
+          onChange={[Function]}
+          options={
+            Array [
+              Object {
+                "id": "inappropriate",
+                "label": "Inappropriate Content",
+              },
+              Object {
+                "id": "spam",
+                "label": "Spam",
+              },
+              Object {
+                "id": "offensive",
+                "label": "Offensive",
+              },
+              Object {
+                "id": "illegal",
+                "label": "Illegal",
+              },
+              Object {
+                "id": "other",
+                "label": "Other",
+              },
+            ]
+          }
+          placeholder="What was wrong?"
+          selected=""
+        />
+      </div>
+      <TextareaAutosize
+        data-stylename="explanation-textbox"
+        minRows={6}
+        onChange={[Function]}
+        onHeightChange={[Function]}
+        placeholder="Select a reason"
+        useCacheForDOMMeasurements={false}
+        value=""
+      />
+      <Button
+        data-stylename="submit-btn"
+        onClick={[Function]}
+      >
+        Submit
+      </Button>
+    </div>
+  </div>
+</div>
+`;
