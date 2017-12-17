@@ -32,6 +32,12 @@
     position: absolute;
     top: 5px;
     right: 5px;
+    cursor: pointer;
+    padding: 10px;
+
+    .icon {
+      font-size: 26px;
+    }
   }
 
   .content {
@@ -61,5 +67,9 @@
   .submit-btn {
     align-self: flex-end;
     margin-top: 31px;
+  }
+
+  .reason-required {
+    color: red;
   }
 }

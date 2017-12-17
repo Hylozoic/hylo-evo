@@ -4,18 +4,21 @@ import { isEmpty, trim } from 'lodash'
 import './FlagContent.scss'
 import Select from 'components/Select'
 import Button from 'components/Button'
+import Icon from 'components/Icon'
 import TextareaAutosize from 'react-textarea-autosize'
 
 export default class FlagContent extends PureComponent {
   state = {
     promptVisible: false,
     highlightRequired: false,
+    reasonRequired: false,
     explanation: ''
   }
 
   static defaultProps = {
     promptVisible: false,
     highlightRequired: false,
+    reasonRequired: false,
     explanation: ''
   }
 
@@ -39,14 +42,15 @@ export default class FlagContent extends PureComponent {
     }
 
     if (!this.isOptionalExplanation() && isEmpty(trim(explanation))) {
-      console.log('highlight required')
       this.setState({highlightRequired: true})
       this.updateSelected(selectedCategory)
     } else {
-      console.log('closing!!!')
       submitFlagContent(selectedCategory, trim(value), linkData)
       this.closeModal()
+      return true
     }
+
+    return false
   }
 
   cancel = () => {
@@ -77,33 +81,37 @@ export default class FlagContent extends PureComponent {
       {label: 'Other', id: 'other'}
     ]
 
-    const {subtitle = 'Select a reason', selectedCategory = '', explanation} = this.state
+    const {
+      subtitle = 'Select a reason',
+      reasonRequired,
+      selectedCategory = '', explanation} = this.state
 
-    return ReactDOM.createPortal(
-      <div styleName='popup'>
-        <div styleName='popup_inner'>
-          <h1>Explanation for Flagging</h1>
-          <button styleName='close-btn' onClick={this.closeModal}>X</button>
+    return <div styleName='popup'>
+      <div styleName='popup_inner'>
+        <h1>Explanation for Flagging</h1>
+        <span onClick={this.closeModal} styleName='close-btn'>
+          <Icon name='Ex' styleName='icon' />
+        </span>
 
-          <div styleName='content'>
-            <div styleName='reason'>
-              <Select
-                onChange={this.updateSelected}
-                fullWidth
-                selected={selectedCategory}
-                placeholder='What was wrong?'
-                options={options} />
-            </div>
-            <TextareaAutosize
-              styleName='explanation-textbox'
-              minRows={6}
-              value={explanation}
-              placeholder={subtitle} />
-            <Button styleName='submit-btn' onClick={this.submit}>Submit</Button>
+        <div styleName='content'>
+          <div styleName='reason'>
+            <Select
+              onChange={this.updateSelected}
+              fullWidth
+              styleName={reasonRequired ? 'reason-required' : ''}
+              selected={selectedCategory}
+              placeholder='What was wrong?'
+              options={options} />
           </div>
+          <TextareaAutosize
+            styleName='explanation-textbox'
+            minRows={6}
+            value={explanation}
+            onChange={(e) => { this.setState({explanation: e.target.value}) }}
+            placeholder={subtitle} />
+          <Button styleName='submit-btn' onClick={this.submit}>Submit</Button>
         </div>
-      </div>,
-      document.getElementById('root')
-    )
+      </div>
+    </div>
   }
 }
