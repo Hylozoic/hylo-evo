@@ -31,6 +31,25 @@ describe('FlagContent', () => {
     expect(onClose).toHaveBeenCalled()
   })
 
+  it('sets required to true when called with no reason', () => {
+    const onClose = jest.fn()
+    const submitFlagContent = jest.fn()
+
+    const linkData = {id: 33, type: 'post'}
+    const instance = mount(<FlagContent visible
+      type='post'
+      linkData={linkData}
+      submitFlagContent={submitFlagContent}
+      onClose={onClose} />
+    ).instance()
+
+    expect(instance.state.reasonRequired).toBeFalsy()
+
+    instance.submit()
+
+    expect(instance.state.reasonRequired).toBeTruthy()
+  })
+
   it('calls submit successfully with category:inappropriate', () => {
     const onClose = jest.fn()
     const submitFlagContent = jest.fn()
