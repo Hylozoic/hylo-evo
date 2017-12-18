@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
+import DownloadAppModal from 'components/DownloadAppModal'
+
 import { formatError } from '../util'
 import './Login.scss'
 
@@ -25,6 +27,7 @@ export default class Login extends React.Component {
   render () {
     const setState = key => event => this.setState({[key]: event.target.value})
     return <div className={this.props.className}>
+      <DownloadAppModal />
       <h1 styleName='title'>Log in to Hylo</h1>
       {this.props.error && formatError(this.props.error, 'Login')}
       <div styleName='field'>
