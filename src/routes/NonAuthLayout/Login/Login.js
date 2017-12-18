@@ -4,6 +4,7 @@ import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import { formatError } from '../util'
+import DownloadAppModal from 'components/DownloadAppModal'
 import './Login.scss'
 
 export default class Login extends React.Component {
@@ -24,7 +25,9 @@ export default class Login extends React.Component {
 
   render () {
     const setState = key => event => this.setState({[key]: event.target.value})
+    const { downloadAppUrl } = this.props
     return <div className={this.props.className}>
+      {downloadAppUrl && <DownloadAppModal url={downloadAppUrl} header={'Download the app to sign up!'} />}
       <h1 styleName='title'>Log in to Hylo</h1>
       {this.props.error && formatError(this.props.error, 'Login')}
       <div styleName='field'>

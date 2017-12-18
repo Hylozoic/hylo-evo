@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches last snapshot 1`] = `
+<Modal
+  ariaHideApp={true}
+  closeTimeoutMS={0}
+  contentLabel="Download Mobile App"
+  isOpen={true}
+  parentSelector={[Function]}
+  portalClassName="ReactModalPortal"
+  shouldCloseOnOverlayClick={true}
+  style={
+    Object {
+      "content": Object {
+        "borderRadius": "10px",
+      },
+      "overlay": Object {
+        "backgroundColor": "rgba(103, 117, 136, 0.75)",
+        "bottom": 50,
+        "left": -30,
+        "top": -15,
+      },
+    }
+  }
+>
+  <div
+    data-styleName="center"
+  >
+    <h1
+      data-styleName="header"
+    />
+    <a
+      href="some-url.com"
+    >
+      <Button>
+        Go to the App Store
+      </Button>
+    </a>
+    <img
+      data-styleName="axolotl-phone-image"
+      src="/axolotl-phone.png"
+    />
+  </div>
+</Modal>
+`;

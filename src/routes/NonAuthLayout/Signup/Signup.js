@@ -3,6 +3,7 @@ import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import { formatError } from '../util'
+import DownloadAppModal from 'components/DownloadAppModal'
 import './Signup.scss'
 
 export default class Signup extends React.Component {
@@ -16,9 +17,10 @@ export default class Signup extends React.Component {
   }
 
   render () {
-    const { className } = this.props
+    const { className, downloadAppUrl } = this.props
     const setState = key => event => this.setState({[key]: event.target.value})
     return <div className={className}>
+      {downloadAppUrl && <DownloadAppModal url={downloadAppUrl} header={'Download the app to sign up!'} />}
       <h1 styleName='title'>Welcome to Hylo</h1>
       <p styleName='blurb'>Stay connected, organized, and engaged with your community.</p>
       {this.props.error && formatError(this.props.error, 'Signup')}

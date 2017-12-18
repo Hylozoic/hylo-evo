@@ -17,3 +17,11 @@ Object {
   "type": "SIGNUP",
 }
 `;
+
+exports[`mapStateToProps returns the right keys 1`] = `
+Object {
+  "downloadAppUrl": undefined,
+  "error": undefined,
+  "returnToURL": undefined,
+}
+`;
