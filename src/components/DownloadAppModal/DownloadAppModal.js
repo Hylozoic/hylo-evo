@@ -1,8 +1,6 @@
-import ReactDOM from 'react-dom'
 import React from 'react'
 import './DownloadAppModal.scss'
-const modalRoot = document.getElementById('modal-root')
-
+import Modal from '../Modal'
 export default function DownloadAppModal () {
   return <Modal>
     <div styleName='modal'>
@@ -11,26 +9,4 @@ export default function DownloadAppModal () {
       </div>
     </div>
   </Modal>
-}
-
-export class Modal extends React.Component {
-  constructor (props) {
-    super(props)
-    this.el = document.createElement('div')
-  }
-
-  componentDidMount () {
-    modalRoot.appendChild(this.el)
-  }
-
-  componentWillUnmount () {
-    modalRoot.removeChild(this.el)
-  }
-
-  render () {
-    return ReactDOM.createPortal(
-      this.props.children,
-      this.el
-    )
-  }
 }
