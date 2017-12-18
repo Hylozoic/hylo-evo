@@ -4,8 +4,6 @@ export const APP_STORE_APP_URL = 'https://appsto.re/us/0gcV7.i'
 export const GOOGLE_PLAY_APP_URL = 'https://play.google.com/store/apps/details?id=com.hylo.hyloandroid'
 
 export default function mobileRedirect () {
-  if (!process.env.REDIRECT_TO_APP_STORE) return false
-
   const forceApp = (
     isMobile.apple.phone ||
     isMobile.apple.ipod ||
@@ -15,10 +13,9 @@ export default function mobileRedirect () {
 
   if (forceApp) {
     if (isMobile.apple.device) {
-      window.location = APP_STORE_APP_URL
+      return APP_STORE_APP_URL
     } else if (isMobile.android.device) {
-      window.location = GOOGLE_PLAY_APP_URL
+      return GOOGLE_PLAY_APP_URL
     }
-    return true
   }
 }
