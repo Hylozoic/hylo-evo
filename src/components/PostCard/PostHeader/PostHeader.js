@@ -8,7 +8,7 @@ import Icon from 'components/Icon'
 import { communityUrl, personUrl } from 'util/index'
 import { humanDate } from 'hylo-utils/text'
 import './PostHeader.scss'
-import { filter, isFunction } from 'lodash'
+import { filter, isFunction, isEmpty } from 'lodash'
 
 export default function PostHeader ({
   creator,
@@ -30,7 +30,7 @@ export default function PostHeader ({
 
   let context
 
-  if (showCommunity) {
+  if (showCommunity && !isEmpty(communities) && communities[0]) {
     const { name, slug } = communities[0]
     context = {
       label: name,
