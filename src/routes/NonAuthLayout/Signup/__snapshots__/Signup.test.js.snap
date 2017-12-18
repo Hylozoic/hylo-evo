@@ -94,3 +94,101 @@ exports[`Signup renders correctly 1`] = `
   </div>
 </div>
 `;
+
+exports[`Signup renders correctly with mobile redirect 1`] = `
+<div>
+  <DownloadAppModal
+    url="some.url"
+  />
+  <h1
+    data-stylename="title"
+  >
+    Welcome to Hylo
+  </h1>
+  <p
+    data-stylename="blurb"
+  >
+    Stay connected, organized, and engaged with your community.
+  </p>
+  <div
+    data-stylename="field"
+  >
+    <label
+      data-stylename="field-label"
+    >
+      Full name
+    </label>
+    <TextInput
+      autoFocus={true}
+      inputRef={[Function]}
+      name="name"
+      onChange={[Function]}
+      type="text"
+    />
+  </div>
+  <div
+    data-stylename="field"
+  >
+    <label
+      data-stylename="field-label"
+    >
+      Your email address
+    </label>
+    <TextInput
+      inputRef={[Function]}
+      name="email"
+      onChange={[Function]}
+      type="text"
+    />
+  </div>
+  <div
+    data-stylename="field"
+  >
+    <label
+      data-stylename="field-label"
+    >
+      Password
+    </label>
+    <TextInput
+      name="password"
+      onChange={[Function]}
+      onEnter={[Function]}
+      type="password"
+    />
+  </div>
+  <Button
+    data-stylename="submit"
+    label="Sign Up"
+    onClick={[Function]}
+  />
+  <p
+    data-stylename="connect-label"
+  >
+    Or connect with:
+  </p>
+  <div
+    data-stylename="auth-buttons"
+  >
+    <a
+      data-stylename="facebook"
+      onClick={[Function]}
+    >
+      <Icon
+        data-stylename="auth-icon"
+        name="Facebook"
+      />
+      Facebook
+    </a>
+    <a
+      data-stylename="google"
+      onClick={[Function]}
+    >
+      <Icon
+        data-stylename="auth-icon"
+        name="Google"
+      />
+      Google
+    </a>
+  </div>
+</div>
+`;

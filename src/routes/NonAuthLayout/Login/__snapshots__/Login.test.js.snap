@@ -85,3 +85,92 @@ exports[`renders correctly 1`] = `
   </div>
 </div>
 `;
+
+exports[`renders correctly with mobile redirect 1`] = `
+<div>
+  <DownloadAppModal
+    url="some.url"
+  />
+  <h1
+    data-stylename="title"
+  >
+    Log in to Hylo
+  </h1>
+  <div
+    data-stylename="field"
+  >
+    <label
+      data-stylename="field-label"
+    >
+      Your email address
+    </label>
+    <TextInput
+      autoFocus={true}
+      inputRef={[Function]}
+      name="email"
+      onChange={[Function]}
+      type="text"
+    />
+  </div>
+  <div
+    data-stylename="field"
+  >
+    <label
+      data-stylename="field-label"
+    >
+      Password
+    </label>
+    <TextInput
+      name="password"
+      onChange={[Function]}
+      onEnter={[Function]}
+      type="password"
+    />
+  </div>
+  <Button
+    data-stylename="submit"
+    label="Log In"
+    onClick={[Function]}
+  />
+  <Link
+    data-stylename="forgot-password"
+    replace={false}
+    to="/reset-password"
+  >
+    <p
+      data-stylename="forgot-password"
+    >
+      Forgot password?
+    </p>
+  </Link>
+  <p
+    data-stylename="connect-label"
+  >
+    Or connect with:
+  </p>
+  <div
+    data-stylename="auth-buttons"
+  >
+    <a
+      data-stylename="facebook"
+      onClick={[Function]}
+    >
+      <Icon
+        data-stylename="auth-icon"
+        name="Facebook"
+      />
+      Facebook
+    </a>
+    <a
+      data-stylename="google"
+      onClick={[Function]}
+    >
+      <Icon
+        data-stylename="auth-icon"
+        name="Google"
+      />
+      Google
+    </a>
+  </div>
+</div>
+`;
