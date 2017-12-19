@@ -21,7 +21,7 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
     data-stylename="popup"
   >
     <div
-      data-stylename="popup_inner"
+      data-stylename="popup-inner"
     >
       <h1>
         Explanation for Flagging
@@ -182,7 +182,7 @@ exports[`FlagContent changes title based on type 1`] = `
   data-stylename="popup"
 >
   <div
-    data-stylename="popup_inner"
+    data-stylename="popup-inner"
   >
     <h1>
       Explanation for Flagging
@@ -260,7 +260,7 @@ exports[`FlagContent matches the last snapshot 1`] = `
   data-stylename="popup"
 >
   <div
-    data-stylename="popup_inner"
+    data-stylename="popup-inner"
   >
     <h1>
       Explanation for Flagging

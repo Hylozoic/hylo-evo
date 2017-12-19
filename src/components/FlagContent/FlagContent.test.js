@@ -70,7 +70,7 @@ describe('FlagContent', () => {
 
     instance.submit()
 
-    expect(instance.isOptionalExplanation()).toBeTruthy()
+    expect(instance.isExplanationOptional()).toBeTruthy()
 
     expect(submitFlagContent).toHaveBeenCalledWith('inappropriate', 'my reason', linkData)
     expect(onClose).toHaveBeenCalled()
@@ -94,7 +94,7 @@ describe('FlagContent', () => {
 
     instance.setState({selectedCategory: 'other'})
 
-    expect(instance.isOptionalExplanation()).toBeFalsy()
+    expect(instance.isExplanationOptional()).toBeFalsy()
     expect(instance.state.highlightRequired).toBeFalsy()
 
     instance.setState({
@@ -133,7 +133,7 @@ describe('FlagContent', () => {
     })
   })
 
-  describe('isOptionalExplanation', () => {
+  describe('isExplanationOptional', () => {
     it('works from param', () => {
       const instance = mount(
         <FlagContent type='post' />).instance()
@@ -141,8 +141,8 @@ describe('FlagContent', () => {
       instance.setState({
         selectedCategory: 'Not other'
       })
-      expect(instance.isOptionalExplanation('other')).toEqual(false)
-      expect(instance.isOptionalExplanation('fine')).toEqual(true)
+      expect(instance.isExplanationOptional('other')).toEqual(false)
+      expect(instance.isExplanationOptional('fine')).toEqual(true)
     })
 
     it('works from state', () => {
@@ -152,11 +152,11 @@ describe('FlagContent', () => {
       instance.setState({
         selectedCategory: 'other'
       })
-      expect(instance.isOptionalExplanation()).toEqual(false)
+      expect(instance.isExplanationOptional()).toEqual(false)
       instance.setState({
         selectedCategory: 'fine'
       })
-      expect(instance.isOptionalExplanation()).toEqual(true)
+      expect(instance.isExplanationOptional()).toEqual(true)
     })
   })
 })
