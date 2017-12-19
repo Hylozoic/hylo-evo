@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
 import { bgImageStyle } from 'util/index'
+import { DEFAULT_AVATAR } from 'store/models/Community'
 import './FeedBanner.scss'
 import { hyloLogo } from 'util/assets'
 import Icon from 'components/Icon'
@@ -24,7 +25,7 @@ export default function FeedBanner ({ all, community, currentUser, newPost }) {
     <div style={bgImageStyle(bannerUrl)} styleName='image'>
       <div styleName='fade'><div styleName='fade2' /></div>
       <div styleName='header'>
-        <div styleName='logo' style={bgImageStyle(avatarUrl)} />
+        <div styleName='logo' style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
         <div styleName='header-text'>
           <span styleName='header-name'>{name}</span>
           {location && <div styleName='header-subtitle'>
