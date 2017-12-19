@@ -97,7 +97,7 @@ exports[`Signup renders correctly 1`] = `
 
 exports[`Signup renders correctly with mobile redirect 1`] = `
 <div>
-  <DownloadAppModal
+  <DownloadAppPortal
     url="some.url"
   />
   <h1

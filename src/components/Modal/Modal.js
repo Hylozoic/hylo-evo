@@ -1,19 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-const modalRoot = document.getElementById('root')
 
 export default class Modal extends React.Component {
   constructor (props) {
     super(props)
     this.el = document.createElement('div')
+    this.modalRoot = document.getElementById('root')
   }
 
   componentDidMount () {
-    modalRoot.appendChild(this.el)
+    this.modalRoot.appendChild(this.el)
   }
 
   componentWillUnmount () {
-    modalRoot.removeChild(this.el)
+    this.modalRoot.removeChild(this.el)
   }
 
   render () {
