@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login renders correctly 1`] = `
+<div>
+  <h1
+    data-stylename="title"
+  >
+    Log in to Hylo
+  </h1>
+  <div
+    data-stylename="field"
+  >
+    <label
+      data-stylename="field-label"
+      htmlFor="email"
+    >
+      Your email address
+    </label>
+    <TextInput
+      autoFocus={true}
+      inputRef={[Function]}
+      label="email"
+      name="email"
+      onChange={[Function]}
+      type="text"
+    />
+  </div>
+  <div
+    data-stylename="field"
+  >
+    <label
+      data-stylename="field-label"
+      htmlFor="password"
+    >
+      Password
+    </label>
+    <TextInput
+      label="password"
+      name="password"
+      onChange={[Function]}
+      onEnter={[Function]}
+      type="password"
+    />
+  </div>
+  <Button
+    data-stylename="submit"
+    label="Log In"
+    onClick={[Function]}
+  />
+  <Link
+    data-stylename="forgot-password"
+    replace={false}
+    to="/reset-password"
+  >
+    <p
+      data-stylename="forgot-password"
+    >
+      Forgot password?
+    </p>
+  </Link>
+  <p
+    data-stylename="connect-label"
+  >
+    Or connect with:
+  </p>
+  <div
+    data-stylename="auth-buttons"
+  >
+    <a
+      aria-label="Log in with Facebook"
+      data-stylename="facebook"
+      onClick={[Function]}
+      tabIndex={0}
+    >
+      <Icon
+        data-stylename="auth-icon"
+        name="Facebook"
+      />
+      Facebook
+    </a>
+    <a
+      aria-label="Log in with Google"
+      data-stylename="google"
+      onClick={[Function]}
+      tabIndex={0}
+    >
+      <Icon
+        data-stylename="auth-icon"
+        name="Google"
+      />
+      Google
+    </a>
+  </div>
+</div>
+`;
