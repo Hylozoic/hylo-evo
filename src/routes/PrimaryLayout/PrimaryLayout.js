@@ -45,7 +45,6 @@ import DownloadAppModal from 'components/DownloadAppModal'
 
 import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
-import mobileRedirect from 'util/mobileRedirect'
 
 export const POST_ID_MATCH_REGEX = '\\d+'
 
@@ -96,12 +95,12 @@ export default class PrimaryLayout extends Component {
       isCommunityRoute,
       showLogoBadge,
       hasMemberships,
-      returnToURL
+      returnToURL,
+      downloadAppUrl
     } = this.props
 
-    const mobileRedirectLink = mobileRedirect()
-    if (mobileRedirectLink) {
-      return <DownloadAppModal url={mobileRedirectLink} header={'Download the app to log in!'} />
+    if (downloadAppUrl) {
+      return <DownloadAppModal url={downloadAppUrl} header={'Download the app to log in!'} />
     }
 
     if (isCommunityRoute && !currentUser) {
