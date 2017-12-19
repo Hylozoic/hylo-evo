@@ -28,8 +28,8 @@ export default class FlagContent extends PureComponent {
     }
   }
 
-  isOptionalExplanation = (selectedCategory) =>
-  (selectedCategory || this.state.selectedCategory) !== 'other'
+  isExplanationOptional = (selectedCategory) =>
+    (selectedCategory || this.state.selectedCategory) !== 'other'
 
   submit = () => {
     const {submitFlagContent, linkData} = this.props
@@ -40,7 +40,7 @@ export default class FlagContent extends PureComponent {
       return
     }
 
-    if (!this.isOptionalExplanation() && isEmpty(trim(explanation))) {
+    if (!this.isExplanationOptional() && isEmpty(trim(explanation))) {
       this.setState({highlightRequired: true})
       this.updateSelected(selectedCategory)
     } else {
@@ -65,7 +65,7 @@ export default class FlagContent extends PureComponent {
     const {highlightRequired} = this.state
 
     var subtitle = `Why was this ${type} '${selectedCategory}'`
-    if (!this.isOptionalExplanation(selectedCategory) && highlightRequired) {
+    if (!this.isExplanationOptional(selectedCategory) && highlightRequired) {
       subtitle += ' (explanation required)'
     }
     this.setState({subtitle})
@@ -86,7 +86,7 @@ export default class FlagContent extends PureComponent {
       selectedCategory = '', explanation} = this.state
 
     return <div styleName='popup'>
-      <div styleName='popup_inner'>
+      <div styleName='popup-inner'>
         <h1>Explanation for Flagging</h1>
         <span onClick={this.closeModal} styleName='close-btn'>
           <Icon name='Ex' styleName='icon' />

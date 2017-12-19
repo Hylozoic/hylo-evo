@@ -4,7 +4,7 @@ export const MODULE_NAME = 'FlagContent'
 export const FLAG_CONTENT = `${MODULE_NAME}/FLAG_CONTENT`
 
 // Action Creators
-export function flagContent (category, reason, linkData) {
+export function submitFlagContent (category, reason, linkData) {
   return {
     type: FLAG_CONTENT,
     graphql: {

@@ -10,12 +10,10 @@
   background-color: rgba(0,0,0, 0.5);
   z-index: 200000;
 }
-.popup_inner {
-  position: absolute;
+.popup-inner {
+  position: relative;
   width: 500px;
-  left: 25%;
-  right: 25%;
-  top: 25%;
+  top: 10%;
   background: white;
   margin: auto;
   text-align: center;
@@ -23,7 +21,8 @@
   h1 {
     font-size: 24px;
     color: #2C405A;
-    margin: 40px 0;
+    margin: 0;
+    padding: 40px 0;
     font-weight: normal;
     font-family: "Circular Medium";
   }
