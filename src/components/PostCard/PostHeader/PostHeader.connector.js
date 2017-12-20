@@ -44,6 +44,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     deletePost: isCreator ? () => deletePost(id) : null,
     editPost: canEdit ? () => editPost(id, slug) : null,
+    canFlag: !isCreator,
     pinPost: canModerate && community ? () => pinPost(id, community.id) : null,
     removePost: !isCreator && canModerate ? () => removePost(id, slug) : null,
     canEdit

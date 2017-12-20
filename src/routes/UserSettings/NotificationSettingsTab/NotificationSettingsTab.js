@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './NotificationSettingsTab.scss'
-import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import { Link } from 'react-router-dom'
 import { compact } from 'lodash/fp'
+import Select from 'components/Select'
+
 const { object, func } = PropTypes
 
 const iOSAppURL = 'https://itunes.apple.com/app/appName/id1002185140'
@@ -71,15 +72,4 @@ export default class NotificationSettingsTab extends Component {
       </div>
     </div>
   }
-}
-
-export function Select ({ options, selected, onChange }) {
-  return <span styleName='select-wrapper'>
-    <select styleName='select' onChange={e => onChange(e.target.value)} value={selected}>
-      {options.map(({id, label}) => <option value={id} key={id}>
-        {label}
-      </option>)}
-    </select>
-    <Icon name='ArrowDown' styleName='icon' />
-  </span>
 }

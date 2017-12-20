@@ -1,0 +1,21 @@
+.select-wrapper {
+  position: relative;
+}
+
+.select {
+  appearance: none;
+  height: 40px;
+  background-color: transparent;
+  padding: 0 34px 0 13px;
+  color: $color-rhino-60;
+  border: 1px solid $color-ghost;
+  border-radius: 4px;
+}
+
+.icon {
+  position: absolute;
+  right: 13px;
+  top: 2px;
+  font-size: 20px;
+  z-index: 1;
+}
