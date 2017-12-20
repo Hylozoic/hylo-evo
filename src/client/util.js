@@ -1,3 +1,6 @@
+// This is the id of the root element in the index.html file
+export const rootDomId = 'root'
+
 export const loadScript = url => {
   var script = document.createElement('script')
   script.src = url

@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`flagContent should match the last snapshot 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($category: String, $reason: String, $linkData: LinkDataInput) {
+        flagInappropriateContent(data: {category: $category, reason: $reason, linkData: $linkData}) {
+          success
+        }
+      }",
+    "variables": Object {
+      "category": "other",
+      "linkData": Object {
+        "id": 22,
+        "type": "post",
+      },
+      "reason": "A Reason",
+    },
+  },
+  "meta": Object {
+    "optimistic": true,
+  },
+  "type": "FlagContent/FLAG_CONTENT",
+}
+`;

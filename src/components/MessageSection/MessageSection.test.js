@@ -107,7 +107,7 @@ describe('when receiving a new message', () => {
   })
 
   it('sets shouldScroll to false when new messages at top of array', () => {
-    wrapper.setProps({ messages })
+    wrapper.setProps({ messages, hasMore: true })
     wrapper.setProps({ messages: [ { id: '99', creator: person2 }, ...messages ] })
     expect(instance.shouldScroll).toBe(false)
   })
