@@ -16,7 +16,7 @@ export default function Button ({
   children,
   onClick,
   className,
-  tabIndex
+  tabIndex = 0
 }) {
   let styleName = cx('button', color, {hover, active, narrow, small, disabled})
   return <div

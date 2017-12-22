@@ -39,7 +39,7 @@ export default class Login extends React.Component {
           onChange={setState('password')}
           onEnter={this.submit} />
       </div>
-      <Button tabIndex={0} styleName='submit' label='Log In' onClick={this.submit} />
+      <Button styleName='submit' label='Log In' onClick={this.submit} />
       <Link to='/reset-password' styleName='forgot-password'>
         <p styleName='forgot-password'>Forgot password?</p>
       </Link>
