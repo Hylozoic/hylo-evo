@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`linkedinPrompt rejects an incorrect linkedIn Url, calling itself again 1`] = `
+Array [
+  Array [
+    "Please enter the full url for your LinkedIn page.",
+  ],
+  Array [
+    "Invalid url. Please enter full url for your LinkedIn page.",
+  ],
+]
+`;
