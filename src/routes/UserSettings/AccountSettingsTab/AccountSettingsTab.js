@@ -11,6 +11,18 @@ import { DEFAULT_BANNER } from 'store/models/Me'
 const { object, func } = PropTypes
 
 const twitterPrompt = () => window.prompt('Please enter your twitter name.')
+export function linkedinPrompt (prompt) {
+  var url = window.prompt(prompt || 'Please enter the full url for your LinkedIn page.')
+  if (url) {
+    if (validateLinkedin(url)) {
+      return url
+    } else {
+      return linkedinPrompt('Invalid url. Please enter full url for your LinkedIn page.')
+    }
+  }
+}
+
+export const validateLinkedin = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com/)
 
 export default class AccountSettingsTab extends Component {
   static propTypes = {
@@ -28,7 +40,7 @@ export default class AccountSettingsTab extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (prevProps.currentUser !== this.props.currentUser) {
+    if (prevProps.fetchPending && !this.props.fetchPending) {
       this.setEditState()
     }
   }
@@ -131,11 +143,12 @@ export default class AccountSettingsTab extends Component {
         updateUserSettings={updateUserSettings} />
       <SocialControl
         label='LinkedIn'
-        onLink={() => loginWithService('linkedin')}
+        onLink={() => linkedinPrompt()}
         unlinkAccount={unlinkAccount}
         onChange={updateSettingDirectly('linkedinUrl', false)}
         provider='linkedin'
-        value={linkedinUrl} />
+        value={linkedinUrl}
+        updateUserSettings={updateUserSettings} />
       <div styleName='button-row'>
         <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
       </div>
@@ -149,10 +162,11 @@ export class SocialControl extends Component {
   linkClicked () {
     const { provider, onLink, updateUserSettings, onChange } = this.props
 
-    if (provider === 'twitter') {
-      const twitterName = onLink()
-      if (twitterName === null) return onChange(false)
-      updateUserSettings({twitterName})
+    if (provider === 'twitter' || provider === 'linkedin') {
+      const key = provider === 'twitter' ? 'twitterName' : 'linkedinUrl'
+      const value = onLink()
+      if (!value) return onChange(false)
+      updateUserSettings({[key]: value})
       return onChange(true)
     } else {
       return onLink()

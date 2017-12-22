@@ -11,6 +11,7 @@ exports[`UserSettings renders correctly 1`] = `
               "id": 1,
             }
           }
+          fetchPending={true}
           loginWithService={[Function]}
           setConfirm={[Function]}
           unlinkAccount={[Function]}
