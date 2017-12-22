@@ -17,6 +17,7 @@ exports[`Login renders correctly 1`] = `
       Your email address
     </label>
     <TextInput
+      aria-label="email"
       autoFocus={true}
       inputRef={[Function]}
       label="email"
@@ -35,6 +36,7 @@ exports[`Login renders correctly 1`] = `
       Password
     </label>
     <TextInput
+      aria-label="password"
       label="password"
       name="password"
       onChange={[Function]}

@@ -29,13 +29,13 @@ export default class Login extends React.Component {
       {this.props.error && formatError(this.props.error, 'Login')}
       <div styleName='field'>
         <label htmlFor='email' styleName='field-label'>Your email address</label>
-        <TextInput label='email' type='text' name='email' onChange={setState('email')}
+        <TextInput aria-label='email' label='email' type='text' name='email' onChange={setState('email')}
           inputRef={input => { this.email = input }} autoFocus />
       </div>
 
       <div styleName='field'>
         <label htmlFor='password' styleName='field-label'>Password</label>
-        <TextInput label='password' type='password' name='password'
+        <TextInput aria-label='password' label='password' type='password' name='password'
           onChange={setState('password')}
           onEnter={this.submit} />
       </div>

@@ -110,7 +110,7 @@ $third-party-icon-size: 14px;
   color: inherit;
   text-decoration: none !important;
 }
-.facebook:hover {
+.facebook:hover, .facebook:focus {
   color: inherit;
 }
 
@@ -124,7 +124,7 @@ $third-party-icon-size: 14px;
   color: inherit;
   text-decoration: none !important;
 }
-.google:hover {
+.google:hover, .google:focus {
   color: inherit;
 }
 
