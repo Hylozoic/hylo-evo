@@ -28,10 +28,10 @@ export default class NonAuthLayout extends React.Component {
       </div>
       <div styleName='topRow'>
         <a href='/'>
-          <img styleName='logo' src='assets/hylo.svg' />
+          <img styleName='logo' src='assets/hylo.svg' alt='Hylo logo' />
         </a>
         <Route path='/login' component={() =>
-          <Link to='/signup'>
+          <Link tabIndex={-1} to='/signup'>
             <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
           </Link>
         } />

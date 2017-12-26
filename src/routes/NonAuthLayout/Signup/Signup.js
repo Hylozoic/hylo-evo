@@ -23,29 +23,39 @@ export default class Signup extends React.Component {
       <p styleName='blurb'>Stay connected, organized, and engaged with your community.</p>
       {this.props.error && formatError(this.props.error, 'Signup')}
       <div styleName='field'>
-        <label styleName='field-label'>Full name</label>
-        <TextInput type='text' name='name' onChange={setState('name')}
+        <label htmlFor='name' styleName='field-label'>Full name</label>
+        <TextInput aria-label='name' label='name' type='text' name='name' onChange={setState('name')}
           inputRef={input => { this.name = input }} autoFocus />
       </div>
       <div styleName='field'>
-        <label styleName='field-label'>Your email address</label>
-        <TextInput type='text' name='email' onChange={setState('email')}
+        <label htmlFor='email' styleName='field-label'>Your email address</label>
+        <TextInput aria-label='email' label='email' type='text' name='email' onChange={setState('email')}
           inputRef={input => { this.email = input }} />
       </div>
       <div styleName='field'>
-        <label styleName='field-label'>Password</label>
-        <TextInput type='password' name='password'
+        <label htmlFor='password' styleName='field-label'>Password</label>
+        <TextInput aria-label='password' label='password' type='password' name='password'
           onChange={setState('password')}
           onEnter={this.submit} />
       </div>
       <Button styleName='submit' label='Sign Up' onClick={this.submit} />
       <p styleName='connect-label'>Or connect with:</p>
       <div styleName='auth-buttons'>
-        <a styleName='facebook' onClick={this.submit}>
+        <a
+          tabIndex={0}
+          styleName='facebook'
+          onClick={this.submit}
+          aria-label='Log in with Facebook'
+        >
           <Icon name='Facebook' styleName='auth-icon' />
           Facebook
         </a>
-        <a styleName='google' onClick={this.submit}>
+        <a
+          tabIndex={0}
+          styleName='google'
+          onClick={this.submit}
+          aria-label='Log in with Google'
+        >
           <Icon name='Google' styleName='auth-icon' />
           Google
         </a>
