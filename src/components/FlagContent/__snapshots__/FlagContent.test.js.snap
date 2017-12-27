@@ -167,6 +167,8 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
         >
           <div
             data-stylename="button green disabled"
+            role="button"
+            tabIndex={0}
           >
             Submit
           </div>
