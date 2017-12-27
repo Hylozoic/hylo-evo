@@ -95,7 +95,7 @@ export default class NetworkCommunitiesTab extends Component {
           }}
           items={communityAutocompleteCandidates}
           renderItem={(community, isHighlighted) =>
-            <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+            <div key={community.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
               {community.name}
             </div>
          }

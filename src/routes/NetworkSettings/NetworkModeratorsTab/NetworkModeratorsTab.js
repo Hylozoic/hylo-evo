@@ -93,7 +93,7 @@ export default class NetworkModeratorsTab extends Component {
           }}
           items={moderatorAutocompleteCandidates}
           renderItem={(person, isHighlighted) =>
-            <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+            <div key={person.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
               {person.name}
             </div>
           }

@@ -47,11 +47,11 @@ export default class NetworkSettings extends Component {
     } = this.props
 
     if (!network) return <FullPageModal><Loading /></FullPageModal>
-    //if (!isAdmin && !isModerator) {
-    //  return <FullPageModal goToOnClose={`/n/${network.slug}`}>
-    //    Sorry, you must be an admin to access this page.
-    //  </FullPageModal>
-    //}
+    if (!isAdmin && !isModerator) {
+      return <FullPageModal goToOnClose={`/n/${network.slug}`}>
+        Sorry, you must be an admin to access this page.
+      </FullPageModal>
+    }
 
     return <FullPageModal narrow goToOnClose={`/n/${network.slug}`}
       content={[
