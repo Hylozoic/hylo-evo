@@ -128,12 +128,15 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
   >
     <label
       data-stylename="field-label"
+      htmlFor="name"
     >
       Full name
     </label>
     <TextInput
+      aria-label="name"
       autoFocus={true}
       inputRef={[Function]}
+      label="name"
       name="name"
       onChange={[Function]}
       type="text"
@@ -144,11 +147,14 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
   >
     <label
       data-stylename="field-label"
+      htmlFor="email"
     >
       Your email address
     </label>
     <TextInput
+      aria-label="email"
       inputRef={[Function]}
+      label="email"
       name="email"
       onChange={[Function]}
       type="text"
@@ -159,10 +165,13 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
   >
     <label
       data-stylename="field-label"
+      htmlFor="password"
     >
       Password
     </label>
     <TextInput
+      aria-label="password"
+      label="password"
       name="password"
       onChange={[Function]}
       onEnter={[Function]}
@@ -183,8 +192,10 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
     data-stylename="auth-buttons"
   >
     <a
+      aria-label="Log in with Facebook"
       data-stylename="facebook"
       onClick={[Function]}
+      tabIndex={0}
     >
       <Icon
         data-stylename="auth-icon"
@@ -193,8 +204,10 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
       Facebook
     </a>
     <a
+      aria-label="Log in with Google"
       data-stylename="google"
       onClick={[Function]}
+      tabIndex={0}
     >
       <Icon
         data-stylename="auth-icon"
