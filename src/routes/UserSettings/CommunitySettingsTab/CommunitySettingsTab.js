@@ -2,10 +2,11 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import './CommunitySettingsTab.scss'
 import { Link } from 'react-router-dom'
+import { DEFAULT_AVATAR } from 'store/models/Community'
+import { communityUrl } from 'util/index'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
 import CheckBox from 'components/CheckBox'
-import { communityUrl } from 'util/index'
 
 const { array, func } = PropTypes
 
@@ -45,7 +46,7 @@ export function CommunityControl ({ membership, leaveCommunity, updateMembership
   return <div styleName='community-control'>
     <div styleName='row'>
       <Link to={communityUrl(community.slug)}>
-        <RoundImage url={community.avatarUrl} medium styleName='avatar' />
+        <RoundImage url={community.avatarUrl || DEFAULT_AVATAR} medium styleName='avatar' />
       </Link>
       <Link to={communityUrl(community.slug)} styleName='name'>{community.name}</Link>
       <span onClick={leave} styleName='leave-button'>Leave</span>
