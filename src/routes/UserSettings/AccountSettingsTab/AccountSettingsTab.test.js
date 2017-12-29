@@ -1,6 +1,40 @@
-import AccountSettingsTab, { SocialControl } from './AccountSettingsTab'
+import AccountSettingsTab, { SocialControl, linkedinPrompt } from './AccountSettingsTab'
 import { shallow } from 'enzyme'
 import React from 'react'
+
+describe('linkedinPrompt', () => {
+  var oldPrompt
+
+  beforeAll(() => {
+    oldPrompt = window.prompt
+  })
+
+  afterAll(() => {
+    window.prompt = oldPrompt
+  })
+
+  it('returns a correct linkedIn Url', () => {
+    const url = 'https://www.linkedin.com/in/username/'
+    window.prompt = jest.fn(() => url)
+    expect(linkedinPrompt()).toEqual(url)
+  })
+
+  it('rejects an incorrect linkedIn Url, calling itself again', () => {
+    var count = 0
+    window.prompt = jest.fn(() => {
+      if (count === 0) {
+        count += 1
+        return 'a bad url'
+      } else {
+        count += 1
+        return null
+      }
+    })
+    expect(linkedinPrompt()).toEqual(undefined)
+    expect(count).toEqual(2)
+    expect(window.prompt.mock.calls).toMatchSnapshot()
+  })
+})
 
 describe('AccountSettingsTab', () => {
   it('renders correctly', () => {
