@@ -9,6 +9,7 @@ import getMemberships from 'store/selectors/getMemberships'
 import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommunityRoute'
 import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import { some } from 'lodash/fp'
+import mobileRedirect from 'util/mobileRedirect'
 
 export function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
@@ -23,7 +24,8 @@ export function mapStateToProps (state, props) {
     showLogoBadge,
     hasMemberships,
     communityPending: state.pending[FETCH_FOR_COMMUNITY],
-    returnToURL: getReturnToURL(state)
+    returnToURL: getReturnToURL(state),
+    downloadAppUrl: mobileRedirect()
   }
 }
 

@@ -17,4 +17,11 @@ exports[`RedirectToCreateCommunityFlow returns null if returnToURL is /h/use-inv
 
 exports[`RedirectToCreateCommunityFlow returns null if there are memberships 1`] = `""`;
 
+exports[`shows DownloadAppModal if the user is on mobile 1`] = `
+<DownloadAppPortal
+  header="Download the app to log in!"
+  url="some.url"
+/>
+`;
+
 exports[`shows NotFound if a currentUser is loaded and the community does not exist 1`] = `<withRouter(Connect(NotFound)) />`;

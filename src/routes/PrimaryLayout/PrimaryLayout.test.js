@@ -11,6 +11,19 @@ PrimaryLayout,
   RedirectToCreateCommunityFlow
 } from './PrimaryLayout'
 
+it('shows DownloadAppModal if the user is on mobile', () => {
+  const url = 'some.url'
+  const location = {
+    pathname: 'path'
+  }
+  const wrapper = shallow(<PrimaryLayout
+    downloadAppUrl={url}
+    location={location}
+    fetchForCurrentUser={jest.fn}
+  />)
+  expect(wrapper).toMatchSnapshot()
+})
+
 it('shows NotFound if a currentUser is loaded and the community does not exist', () => {
   const wrapper = shallow(<PrimaryLayout isCommunityRoute currentUser={{}} />, { disableLifecycleMethods: true })
   expect(wrapper).toMatchSnapshot()

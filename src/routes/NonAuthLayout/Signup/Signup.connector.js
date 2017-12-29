@@ -1,12 +1,14 @@
 import { connect } from 'react-redux'
 import getLoginError from 'store/selectors/getLoginError'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
+import mobileRedirect from 'util/mobileRedirect'
 import { signup } from './Signup.store'
 
 export function mapStateToProps (state) {
   return {
     error: getLoginError(state),
-    returnToURL: getReturnToURL(state)
+    returnToURL: getReturnToURL(state),
+    downloadAppUrl: mobileRedirect()
   }
 }
 
