@@ -1,6 +1,9 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
-import { fetchUserSettings, updateUserSettings, leaveCommunity, unlinkAccount, updateMembershipSettings } from './UserSettings.store'
+import {
+  fetchUserSettings, updateUserSettings, leaveCommunity,
+  unlinkAccount, updateMembershipSettings, FETCH_USER_SETTINGS
+} from './UserSettings.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
@@ -21,11 +24,13 @@ export function mapStateToProps (state, props) {
   const memberships = getCurrentUserMemberships(state, props)
 
   const confirm = state.FullPageModal.confirm
+  const fetchPending = state.pending[FETCH_USER_SETTINGS]
 
   return {
     currentUser,
     memberships,
-    confirm
+    confirm,
+    fetchPending
   }
 }
 
