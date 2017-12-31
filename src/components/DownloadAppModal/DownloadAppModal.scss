@@ -1,0 +1,39 @@
+body {
+  zoom: 90%;
+}
+
+.modal {
+  background-color: rgba(0,0,0,0.5);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200000;
+  margin: auto;
+}
+
+.modal-container {
+  background-color: $color-white;
+  width: 80%;
+  height: 80%;
+  border-radius: 10px;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.axolotl-phone-image {
+  max-width: 80%;
+  max-height: 60%;
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.modal-header {
+  font-size: 140%;
+  color: $color-rhino-60;
+}

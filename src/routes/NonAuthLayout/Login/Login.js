@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
+import DownloadAppModal from 'components/DownloadAppModal'
+
 import { formatError } from '../util'
 import './Login.scss'
 
@@ -24,18 +26,20 @@ export default class Login extends React.Component {
 
   render () {
     const setState = key => event => this.setState({[key]: event.target.value})
+    const { downloadAppUrl } = this.props
     return <div className={this.props.className}>
+      {downloadAppUrl && <DownloadAppModal url={downloadAppUrl} />}
       <h1 styleName='title'>Log in to Hylo</h1>
       {this.props.error && formatError(this.props.error, 'Login')}
       <div styleName='field'>
-        <label styleName='field-label'>Your email address</label>
-        <TextInput type='text' name='email' onChange={setState('email')}
+        <label htmlFor='email' styleName='field-label'>Your email address</label>
+        <TextInput aria-label='email' label='email' type='text' name='email' onChange={setState('email')}
           inputRef={input => { this.email = input }} autoFocus />
       </div>
 
       <div styleName='field'>
-        <label styleName='field-label'>Password</label>
-        <TextInput type='password' name='password'
+        <label htmlFor='password' styleName='field-label'>Password</label>
+        <TextInput aria-label='password' label='password' type='password' name='password'
           onChange={setState('password')}
           onEnter={this.submit} />
       </div>
@@ -45,11 +49,21 @@ export default class Login extends React.Component {
       </Link>
       <p styleName='connect-label'>Or connect with:</p>
       <div styleName='auth-buttons'>
-        <a styleName='facebook' onClick={() => this.loginAndRedirect('facebook')}>
+        <a
+          aria-label='Log in with Facebook'
+          tabIndex={0}
+          styleName='facebook'
+          onClick={() => this.loginAndRedirect('facebook')}
+        >
           <Icon name='Facebook' styleName='auth-icon' />
           Facebook
         </a>
-        <a styleName='google' onClick={() => this.loginAndRedirect('google')}>
+        <a
+          aria-label='Log in with Google'
+          tabIndex={0}
+          styleName='google'
+          onClick={() => this.loginAndRedirect('google')}
+        >
           <Icon name='Google' styleName='auth-icon' />
           Google
         </a>

@@ -68,7 +68,7 @@ $third-party-icon-size: 14px;
   composes: text-button from 'css/typography.scss';
   font-size: 12px;
   &:hover {
-    text-decoration: none;    
+    text-decoration: none;
   }
 }
 
@@ -107,6 +107,11 @@ $third-party-icon-size: 14px;
     position: relative;
     top: 1px;
   }
+  color: inherit;
+  text-decoration: none !important;
+}
+.facebook:hover, .facebook:focus {
+  color: inherit;
 }
 
 .google {
@@ -116,6 +121,11 @@ $third-party-icon-size: 14px;
     position: relative;
     top: 1px;
   }
+  color: inherit;
+  text-decoration: none !important;
+}
+.google:hover, .google:focus {
+  color: inherit;
 }
 
 .error {
