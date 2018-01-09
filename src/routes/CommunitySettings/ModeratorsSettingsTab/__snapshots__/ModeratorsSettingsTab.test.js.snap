@@ -118,6 +118,7 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
         }
       }
       key="1"
+      url="/m/1"
     />
     <RemovableListItem
       confirmMessage="Are you sure you want to remove undefined's moderator powers?"
@@ -127,6 +128,7 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
         }
       }
       key="2"
+      url="/m/2"
     />
     <RemovableListItem
       confirmMessage="Are you sure you want to remove undefined's moderator powers?"
@@ -136,6 +138,7 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
         }
       }
       key="3"
+      url="/m/3"
     />
     <RemovableListItem
       confirmMessage="Are you sure you want to remove undefined's moderator powers?"
@@ -145,6 +148,7 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
         }
       }
       key="4"
+      url="/m/4"
     />
   </div>
   <AddModerator />

@@ -11,11 +11,18 @@ export default function RemovableListItem ({ item, removeItem, square, size, con
     }
   }
 
+  const avatar = <RoundImage url={item.avatarUrl} medium square={square} size={size} styleName='avatar' />
+  const title = item.name
+
   return <div styleName='item'>
-    <Link to={url}>
-      <RoundImage url={item.avatarUrl} medium square={square} size={size} styleName='avatar' />
-    </Link>
-    <Link to={url} styleName='name'>{item.name}</Link>
+    {url && <Link to={url}>
+      {avatar}
+    </Link>}
+    {!url && avatar}
+
+    {url && <Link to={url} styleName='name'>{title}</Link>}
+    {!url && <span>{title}</span>}
+
     {removeItem && <span onClick={remove} styleName='remove-button'>Remove</span>}
   </div>
 }

@@ -92,10 +92,8 @@ export function ormSessionReducer ({ Network, Community, Person }, { meta, type 
   }
 
   if (type === ADD_NETWORK_MODERATOR_ROLE) {
-    console.log("adding network", meta.networkId, meta.personId)
     if (Network.hasId(meta.networkId)) {
       const person = Person.withId(meta.personId)
-      console.log("adding person to moderators", person)
       Network.withId(meta.networkId).updateAppending({moderators: [person]})
     }
   }

@@ -36,6 +36,8 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
       },
       Object {
         "component": <Connect(NetworkCommunitiesTab)
+          isAdmin={true}
+          isModerator={false}
           network={
             Object {
               "communities": Array [],
