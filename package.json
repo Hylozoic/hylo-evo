@@ -39,6 +39,7 @@
     "minimist": "^1.2.0",
     "mock-fs": "^4.2.0",
     "object-assign": "4.1.1",
+    "opn": "^5.1.0",
     "path-exists": "2.1.0",
     "postcss-cssnext": "^3.0.2",
     "postcss-loader": "2.0.9",
@@ -63,6 +64,7 @@
     "babel-jest": "^21.2.0",
     "babel-plugin-react-css-modules": "levity/babel-plugin-react-css-modules#ab83008",
     "bootstrap": "4.0.0-alpha.6",
+    "chrome-remote-interface": "^0.25.5",
     "classnames": "^2.2.5",
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",
@@ -144,7 +146,8 @@
     "build": "node scripts/build.js && scripts/build-es5.sh",
     "test": "node scripts/test.js --env=jsdom",
     "server": "./node_modules/.bin/babel-node scripts/serveUniversal.js",
-    "seed": "node scripts/seed.js"
+    "seed": "node scripts/seed.js",
+    "foo": "node foo.js"
   },
   "jest": {
     "collectCoverageFrom": [
