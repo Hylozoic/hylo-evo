@@ -13,6 +13,7 @@ import {
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import getMe from 'store/selectors/getMe'
 import getParam from 'store/selectors/getParam'
+import { FETCH_NETWORK_SETTINGS } from 'routes/NetworkSettings/NetworkSettings.store'
 
 export function mapStateToProps (state, props) {
   const slug = getParam('networkSlug', state, props)
@@ -23,7 +24,7 @@ export function mapStateToProps (state, props) {
   const moderators = getModerators(state, moderatorResultProps)
 
   const confirm = state.FullPageModal.confirm
-
+  const loading = !!state.pending[FETCH_NETWORK_SETTINGS]
   const me = getMe(state)
 
   return {
@@ -32,6 +33,7 @@ export function mapStateToProps (state, props) {
     slug,
     network,
     moderators,
+    loading,
     confirm,
     moderatorsPage
   }

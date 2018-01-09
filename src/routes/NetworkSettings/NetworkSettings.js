@@ -41,12 +41,13 @@ export default class NetworkSettings extends Component {
     const {
       isAdmin,
       isModerator,
+      loading,
       network,
       updateNetworkSettings,
       setConfirm
     } = this.props
 
-    if (!network) return <FullPageModal><Loading /></FullPageModal>
+    if (!network || loading) return <FullPageModal><Loading /></FullPageModal>
     if (!isAdmin && !isModerator) {
       return <FullPageModal goToOnClose={`/n/${network.slug}`}>
         Sorry, you must be an admin to access this page.
@@ -70,7 +71,7 @@ export default class NetworkSettings extends Component {
         }, {
           name: 'Communities',
           path: `/n/${network.slug}/settings/communities`,
-          component: <NetworkCommunitiesTab network={network} />
+          component: <NetworkCommunitiesTab network={network} isModerator={isModerator} isAdmin={isAdmin} />
         }
       ]} />
   }

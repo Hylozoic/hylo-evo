@@ -13,7 +13,7 @@ export const ADD_NETWORK_MODERATOR_ROLE = `${MODULE_NAME}/ADD_NETWORK_MODERATOR_
 export const ADD_NETWORK_MODERATOR_ROLE_PENDING = `${ADD_NETWORK_MODERATOR_ROLE}_PENDING`
 export const FETCH_COMMUNITIES = `${MODULE_NAME}/FETCH_COMMUNITIES`
 export const FETCH_COMMUNITY_AUTOCOMPLETE = `${MODULE_NAME}/FETCH_COMMUNITY_AUTOCOMPLETE`
-export const FETCH_MODERATOR_AUTOCOMPLETE = `{MODULE_NAME}/FETCH_MODERATOR_AUTOCOMPLETE`
+export const FETCH_MODERATOR_AUTOCOMPLETE = `${MODULE_NAME}/FETCH_MODERATOR_AUTOCOMPLETE`
 export const FETCH_MODERATORS = `${MODULE_NAME}/FETCH_MODERATORS`
 export const FETCH_NETWORK_SETTINGS = `${MODULE_NAME}/FETCH_NETWORK_SETTINGS`
 export const REMOVE_COMMUNITY_FROM_NETWORK = `${MODULE_NAME}/REMOVE_COMMUNITY_FROM_NETWORK`
@@ -66,6 +66,44 @@ export default function reducer (state = defaultState, action) {
   }
 }
 
+export function ormSessionReducer ({ Network, Community, Person }, { meta, type }) {
+  if (type === REMOVE_COMMUNITY_FROM_NETWORK_PENDING) {
+    if (Network.hasId(meta.networkId)) {
+      const network = Network.withId(meta.networkId)
+      network.update({
+        communities: network.communities.toModelArray()
+        .filter(c => c.id !== meta.communityId)
+      })
+    }
+    if (Community.hasId(meta.communityId)) {
+      const community = Community.withId(meta.communityId)
+      community.update({ network: null })
+    }
+  }
+
+  if (type === REMOVE_NETWORK_MODERATOR_ROLE_PENDING) {
+    if (Network.hasId(meta.networkId)) {
+      const network = Network.withId(meta.networkId)
+      network.update({
+        moderators: network.moderators.toModelArray()
+        .filter(m => m.id !== meta.personId)
+      })
+    }
+  }
+
+  if (type === ADD_NETWORK_MODERATOR_ROLE) {
+    console.log("adding network", meta.networkId, meta.personId)
+    if (Network.hasId(meta.networkId)) {
+      const person = Person.withId(meta.personId)
+      console.log("adding person to moderators", person)
+      Network.withId(meta.networkId).updateAppending({moderators: [person]})
+    }
+  }
+  //if (type === ADD_NETWORK_MODERATOR_ROLE) {
+  //  const moderators =
+  //}
+}
+
 // Action Creators
 
 export function addCommunityToNetwork (communityId, networkId) {
@@ -95,7 +133,9 @@ export function addCommunityToNetwork (communityId, networkId) {
           modelName: 'Community',
           getRoot: get('addCommunityToNetwork.communities.items')
         }
-      ]
+      ],
+      networkId,
+      communityId
     }
   }
 }
@@ -127,7 +167,9 @@ export function addNetworkModeratorRole (personId, networkId) {
           modelName: 'Person',
           getRoot: get('addNetworkModeratorRole.moderators.items')
         }
-      ]
+      ],
+      networkId,
+      personId
     }
   }
 }
