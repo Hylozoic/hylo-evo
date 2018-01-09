@@ -2,262 +2,57 @@
 
 exports[`NetworkSettings matches the previous snapshot 1`] = `
 <withRouter(Connect(FullPageModal))
+  content={
+    Array [
+      Object {
+        "component": <NetworkSettingsTab
+          network={
+            Object {
+              "communities": Array [],
+              "id": 1,
+              "moderators": Array [],
+              "slug": "mycelium",
+            }
+          }
+          setConfirm={[Function]}
+          updateNetworkSettings={[Function]}
+        />,
+        "name": "Settings",
+        "path": "/n/mycelium/settings",
+      },
+      Object {
+        "component": <Connect(NetworkModeratorsTab)
+          network={
+            Object {
+              "communities": Array [],
+              "id": 1,
+              "moderators": Array [],
+              "slug": "mycelium",
+            }
+          }
+        />,
+        "name": "Moderators",
+        "path": "/n/mycelium/settings/moderators",
+      },
+      Object {
+        "component": <Connect(NetworkCommunitiesTab)
+          isAdmin={true}
+          isModerator={false}
+          network={
+            Object {
+              "communities": Array [],
+              "id": 1,
+              "moderators": Array [],
+              "slug": "mycelium",
+            }
+          }
+        />,
+        "name": "Communities",
+        "path": "/n/mycelium/settings/communities",
+      },
+    ]
+  }
   goToOnClose="/n/mycelium"
   narrow={true}
->
-  <div>
-    <input
-      data-stylename="name"
-      onChange={[Function]}
-      type="text"
-      value=""
-    />
-    <div
-      data-stylename="banner"
-      style={
-        Object {
-          "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg)",
-        }
-      }
-    >
-      <Connect(ChangeImageButton)
-        data-stylename="change-banner-button"
-        update={[Function]}
-        uploadSettings={
-          Object {
-            "id": 1,
-            "type": "networkBanner",
-          }
-        }
-      />
-    </div>
-    <div
-      data-stylename="avatar"
-      style={
-        Object {
-          "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png)",
-        }
-      }
-    >
-      <Connect(ChangeImageButton)
-        data-stylename="change-avatar-button"
-        update={[Function]}
-        uploadSettings={
-          Object {
-            "id": 1,
-            "type": "networkAvatar",
-          }
-        }
-      />
-    </div>
-    <SettingsControl
-      label="Description"
-      onChange={[Function]}
-      type="textarea"
-      value=""
-    />
-    <div
-      data-stylename="button-row"
-    >
-      <Button
-        color="gray"
-        data-stylename="button"
-        label="Save Changes"
-        onClick={null}
-      />
-    </div>
-    <PaginatedList
-      data-stylename="moderators"
-      isAdmin={true}
-      items={Array []}
-      label="Moderators"
-      page={2}
-      pageCount={7}
-      pending={false}
-      setPage={[Function]}
-    />
-    <div
-      data-stylename="autocomplete"
-    >
-      <Autocomplete
-        autoHighlight={true}
-        getItemValue={[Function]}
-        inputProps={
-          Object {
-            "placeholder": "Start typing a person's name",
-            "style": Object {
-              "border": "1px solid #ccc",
-              "borderRadius": "4px",
-              "padding": "3px",
-              "width": "400px",
-            },
-          }
-        }
-        items={Array []}
-        menuStyle={
-          Object {
-            "background": "rgba(255, 255, 255, 0.9)",
-            "borderRadius": "3px",
-            "boxShadow": "0 2px 12px rgba(0, 0, 0, 0.1)",
-            "fontSize": "90%",
-            "maxHeight": "50%",
-            "overflow": "auto",
-            "padding": "2px 0",
-            "position": "fixed",
-          }
-        }
-        onChange={[Function]}
-        onMenuVisibilityChange={[Function]}
-        onSelect={[Function]}
-        renderInput={[Function]}
-        renderItem={[Function]}
-        renderMenu={[Function]}
-        selectOnBlur={false}
-        value=""
-        wrapperProps={Object {}}
-        wrapperStyle={
-          Object {
-            "display": "inline-block",
-          }
-        }
-      />
-      <Button
-        color="green"
-        data-stylename="button"
-        label="Add Moderator"
-        onClick={[Function]}
-      />
-    </div>
-    <PaginatedList
-      data-stylename="communities"
-      isAdmin={true}
-      itemProps={
-        Object {
-          "size": 40,
-          "square": true,
-        }
-      }
-      items={Array []}
-      label="Communities"
-      page={3}
-      pageCount={5}
-      pending={true}
-      setPage={[Function]}
-    />
-    <div
-      data-stylename="autocomplete"
-    >
-      <Autocomplete
-        autoHighlight={true}
-        getItemValue={[Function]}
-        inputProps={
-          Object {
-            "placeholder": "Start typing a community name",
-            "style": Object {
-              "border": "1px solid #ccc",
-              "borderRadius": "4px",
-              "padding": "3px",
-              "width": "400px",
-            },
-          }
-        }
-        items={Array []}
-        menuStyle={
-          Object {
-            "background": "rgba(255, 255, 255, 0.9)",
-            "borderRadius": "3px",
-            "boxShadow": "0 2px 12px rgba(0, 0, 0, 0.1)",
-            "fontSize": "90%",
-            "maxHeight": "50%",
-            "overflow": "auto",
-            "padding": "2px 0",
-            "position": "fixed",
-          }
-        }
-        onChange={[Function]}
-        onMenuVisibilityChange={[Function]}
-        onSelect={[Function]}
-        renderInput={[Function]}
-        renderItem={[Function]}
-        renderMenu={[Function]}
-        selectOnBlur={false}
-        value=""
-        wrapperProps={Object {}}
-        wrapperStyle={
-          Object {
-            "display": "inline-block",
-          }
-        }
-      />
-      <Button
-        color="green"
-        data-stylename="button"
-        label="Add Community"
-        onClick={[Function]}
-      />
-    </div>
-  </div>
-</withRouter(Connect(FullPageModal))>
-`;
-
-exports[`PaginatedList renders correctly 1`] = `
-<div
-  data-stylename="paginated-list"
->
-  <div
-    data-stylename="section-label"
-  />
-  <RemovableListItem
-    item={
-      Object {
-        "id": 2,
-      }
-    }
-    key="2"
-    size={40}
-    square={true}
-  />
-  <RemovableListItem
-    item={
-      Object {
-        "id": 3,
-      }
-    }
-    key="3"
-    size={40}
-    square={true}
-  />
-  <PaginationLinks
-    page={3}
-    pageCount={5}
-    setPage={[Function]}
-  />
-</div>
-`;
-
-exports[`PaginationLinks renders correctly 1`] = `
-<div
-  data-stylename="pagination-links"
->
-  <PageLink
-    i={0}
-    key="0"
-  />
-  <PageLink
-    i={1}
-    key="1"
-  />
-  <PageLink
-    i={2}
-    key="2"
-  />
-  <PageLink
-    i={3}
-    key="3"
-  />
-  <PageLink
-    i={4}
-    key="4"
-  />
-</div>
+/>
 `;

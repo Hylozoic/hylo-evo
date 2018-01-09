@@ -54,7 +54,7 @@ export default class CommunitySettings extends Component {
         {
           name: 'Moderators',
           path: `/c/${slug}/settings/moderators`,
-          component: <ModeratorsSettingsTab communityId={community.id} />
+          component: <ModeratorsSettingsTab communityId={community.id} slug={community.slug} />
         },
         {
           name: 'Invite',

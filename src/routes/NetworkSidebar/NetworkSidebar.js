@@ -16,11 +16,11 @@ export default class NetworkSidebar extends Component {
   }
 
   render () {
-    const { isAdmin, network } = this.props
+    const { isAdmin, network, isModerator } = this.props
     if (!network) return <Loading />
 
     return <div styleName='network-sidebar'>
-      {isAdmin && <Link
+      {(isAdmin || isModerator) && <Link
         styleName='settings-link'
         to={networkSettingsUrl(network.slug)}>Settings</Link>}
     </div>

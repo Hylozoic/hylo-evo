@@ -72,6 +72,7 @@ export function fetchNetwork (slug) {
           id
           slug
           name
+          isModerator
           description
           avatarUrl
           bannerUrl
