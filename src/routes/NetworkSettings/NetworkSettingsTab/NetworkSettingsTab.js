@@ -13,7 +13,7 @@ const { func, object } = PropTypes
 export default class NetworkSettingsTab extends Component {
   constructor (props) {
     super(props)
-    this.state = {edits: {}, changed: false}
+    this.state = {edits: {}, changed: false, saved: false}
   }
 
   static propTypes = {
@@ -24,6 +24,7 @@ export default class NetworkSettingsTab extends Component {
 
   state = {
     changed: false,
+    saved: false,
     edits: {}
   }
 
@@ -65,7 +66,7 @@ export default class NetworkSettingsTab extends Component {
 
     if (!network) return <Loading />
 
-    const { edits, changed } = this.state
+    const { edits, changed, saved } = this.state
     const {
       name, description, avatarUrl, bannerUrl
     } = edits
@@ -74,6 +75,7 @@ export default class NetworkSettingsTab extends Component {
       const { edits, changed } = this.state
       setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
       this.setState({
+        saved: false,
         changed: setChanged ? true : changed,
         edits: {
           ...edits,
@@ -87,6 +89,7 @@ export default class NetworkSettingsTab extends Component {
 
     const save = () => {
       this.setState({changed: false})
+      this.setState({saved: true})
       setConfirm(false)
       updateNetworkSettings(edits)
     }
@@ -107,7 +110,7 @@ export default class NetworkSettingsTab extends Component {
       </div>
       <SettingsControl label='Description' onChange={updateSetting('description')} value={description} type='textarea' />
       <div styleName='button-row'>
-        <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='button' />
+        <Button label={saved ? 'Saved' : 'Save Changes'} color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='button' />
       </div>
     </div>
   }
