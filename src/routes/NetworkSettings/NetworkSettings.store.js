@@ -123,6 +123,7 @@ export function addCommunityToNetwork (communityId, networkId) {
             items {
               id
               name
+              slug
               avatarUrl
             }
           }
@@ -249,6 +250,7 @@ export function fetchNetworkSettings (slug, pageSize = PAGE_SIZE) {
             hasMore
             items {
               id
+              slug
               name
               avatarUrl
             }
@@ -348,6 +350,7 @@ export function fetchCommunities ({slug, page, offset, sortBy = 'name', order, s
             items {
               id
               name
+              slug
               avatarUrl
             }
           }
@@ -380,6 +383,7 @@ export function removeCommunityFromNetwork (communityId, networkId, pageSize = P
             items {
               id
               name
+              slug
               avatarUrl
             }
           }
