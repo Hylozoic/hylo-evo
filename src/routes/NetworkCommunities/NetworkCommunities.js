@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import './NetworkCommunities.scss'
 import { DEFAULT_AVATAR } from 'store/models/Community'
 import Dropdown from 'components/Dropdown'

@@ -18,7 +18,11 @@ exports[`renders for all communities 1`] = `
   >
     <div
       data-stylename="image"
-      style={Object {}}
+      style={
+        Object {
+          "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg)",
+        }
+      }
     >
       <div
         data-stylename="fade"
