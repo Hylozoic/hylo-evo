@@ -7,12 +7,14 @@ import { isEmpty } from 'lodash/fp'
 import PaginatedList from '../PaginatedList'
 import '../NetworkSettings.scss'
 
-const { any, array, func, number, object } = PropTypes
+const { any, array, bool, func, number, object } = PropTypes
 
 export default class NetworkCommunitiesTab extends Component {
   static propTypes = {
     addCommunityToNetwork: func.isRequired,
     communities: array,
+    isAdmin: bool,
+    isModerator: bool,
     communitiesPage: number,
     communitiesPageCount: number,
     communitiesPending: any,
@@ -46,6 +48,10 @@ export default class NetworkCommunitiesTab extends Component {
     }
   }
 
+  addNewCommunity = () => {
+    this.props.createCommunity()
+  }
+
   chooseCommunity = (_, community) => {
     this.setState({
       communityChoice: community,
@@ -60,6 +66,8 @@ export default class NetworkCommunitiesTab extends Component {
 
   render () {
     const {
+      // isModerator,
+      isAdmin,
       communitiesPage,
       communitiesPageCount,
       communitiesPending,
@@ -79,9 +87,9 @@ export default class NetworkCommunitiesTab extends Component {
         page={communitiesPage}
         pageCount={communitiesPageCount}
         pending={communitiesPending}
-        removeItem={removeCommunityFromNetwork(network.id)}
+        removeItem={isAdmin && removeCommunityFromNetwork(network.id)}
         setPage={setCommunitiesPage} />
-      <div styleName='autocomplete'>
+      {isAdmin && <div styleName='autocomplete'>
         <Autocomplete
           getItemValue={community => community.name}
           inputProps={{
@@ -95,16 +103,18 @@ export default class NetworkCommunitiesTab extends Component {
           }}
           items={communityAutocompleteCandidates}
           renderItem={(community, isHighlighted) =>
-            <div key={community.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+            <div key={community.id} style={{background: isHighlighted ? 'lightgray' : 'white'}}>
               {community.name}
             </div>
-         }
+          }
           value={this.state.communitySearch}
           onChange={this.communityAutocomplete}
           onSelect={this.chooseCommunity}
         />
         <Button label='Add Community' color={'green'} onClick={this.addCommunity} styleName='button' />
       </div>
+      }
+      {/* {isModerator && <Button label='Add New Community' color={'green'} onClick={this.addNewCommunity} styleName='button' />} */}
     </div>
   }
 }

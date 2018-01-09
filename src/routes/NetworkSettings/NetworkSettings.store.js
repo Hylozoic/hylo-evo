@@ -99,9 +99,15 @@ export function ormSessionReducer ({ Network, Community, Person }, { meta, type 
       Network.withId(meta.networkId).updateAppending({moderators: [person]})
     }
   }
-  //if (type === ADD_NETWORK_MODERATOR_ROLE) {
-  //  const moderators =
-  //}
+
+  if (type === ADD_COMMUNITY_TO_NETWORK) {
+    if (Network.hasId(meta.networkId) && Community.hasId(meta.communityId)) {
+      const network = Network.withId(meta.networkId)
+      const community = Community.withId(meta.communityId)
+      network.updateAppending({communities: [community]})
+      community.update({ network: network })
+    }
+  }
 }
 
 // Action Creators
