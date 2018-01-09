@@ -66,7 +66,7 @@ export default class NetworkCommunitiesTab extends Component {
 
   render () {
     const {
-      // isModerator,
+      isModerator,
       isAdmin,
       communitiesPage,
       communitiesPageCount,
@@ -111,10 +111,10 @@ export default class NetworkCommunitiesTab extends Component {
           onChange={this.communityAutocomplete}
           onSelect={this.chooseCommunity}
         />
-        <Button label='Add Community' color={'green'} onClick={this.addCommunity} styleName='button' />
+        <Button label='Add Existing Community' color={'green'} onClick={this.addCommunity} styleName='button' />
       </div>
       }
-      {/* {isModerator && <Button label='Add New Community' color={'green'} onClick={this.addNewCommunity} styleName='button' />} */}
+      {isModerator && <Button label='Add New Community' color={'green'} onClick={this.addNewCommunity} styleName='button' />}
     </div>
   }
 }

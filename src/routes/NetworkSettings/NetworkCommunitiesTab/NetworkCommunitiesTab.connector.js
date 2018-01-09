@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
 import { bindActionCreators } from 'redux'
+import { push } from 'react-router-redux'
 
 import {
   addCommunityToNetwork,
@@ -41,12 +42,13 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export function mapDispatchToProps (dispatch, props) {
+export function mapDispatchToProps (dispatch, state) {
   return {
     addCommunityToNetwork: networkId => communityId => dispatch(addCommunityToNetwork(communityId, networkId)),
     fetchCommunityAutocomplete: (auto, first, offset) => dispatch(fetchCommunityAutocomplete(auto, first, offset)),
     fetchCommunitiesMaker: (slug, page) => () => dispatch(fetchCommunities({slug, page})),
     removeCommunityFromNetwork: networkId => communityId => dispatch(removeCommunityFromNetwork(communityId, networkId)),
+    createCommunity: networkId => () => push(`/create-community/name/$networkId`),
     ...bindActionCreators({
       setCommunitiesPage
     }, dispatch)
@@ -59,7 +61,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const {
     fetchCommunitiesMaker
   } = dispatchProps
-  let addCommunityToNetwork, fetchCommunities
+  let addCommunityToNetwork, fetchCommunities, createCommunity
 
   if (slug) {
     fetchCommunities = fetchCommunitiesMaker(slug, communitiesPage)
@@ -68,16 +70,21 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const networkId = get('id', network)
   if (networkId) {
     addCommunityToNetwork = dispatchProps.addCommunityToNetwork(networkId)
+    createCommunity = dispatchProps.createCommunity(networkId)
   } else {
     addCommunityToNetwork = () => {}
+    createCommunity = () => {}
   }
+
+  console.log('createCommunity', createCommunity)
 
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
     addCommunityToNetwork,
-    fetchCommunities
+    fetchCommunities,
+    createCommunity
   }
 }
 
