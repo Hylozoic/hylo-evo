@@ -48,7 +48,7 @@ export function mapDispatchToProps (dispatch, state) {
     fetchCommunityAutocomplete: (auto, first, offset) => dispatch(fetchCommunityAutocomplete(auto, first, offset)),
     fetchCommunitiesMaker: (slug, page) => () => dispatch(fetchCommunities({slug, page})),
     removeCommunityFromNetwork: networkId => communityId => dispatch(removeCommunityFromNetwork(communityId, networkId)),
-    createCommunity: networkId => () => push(`/create-community/name/$networkId`),
+    createCommunity: networkId => () => dispatch(push(`/create-community/name/${networkId}`)),
     ...bindActionCreators({
       setCommunitiesPage
     }, dispatch)
@@ -75,8 +75,6 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     addCommunityToNetwork = () => {}
     createCommunity = () => {}
   }
-
-  console.log('createCommunity', createCommunity)
 
   return {
     ...stateProps,

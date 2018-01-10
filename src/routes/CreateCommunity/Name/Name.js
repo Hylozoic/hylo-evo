@@ -47,6 +47,10 @@ export default class Name extends Component {
     if (communityName) this.setState({communityName})
   }
 
+  componentDidMount = () => {
+    this.props.addNetworkId()
+  }
+
   render () {
     return <div styleName='flex-wrapper'>
       <ModalSidebar
