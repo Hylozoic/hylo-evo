@@ -49,7 +49,6 @@ export default class NetworkCommunitiesTab extends Component {
   }
 
   addNewCommunity = () => {
-    console.log('calling addNewCommunity')
     this.props.createCommunity()
   }
 

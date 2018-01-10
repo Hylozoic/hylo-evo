@@ -46,7 +46,7 @@ export function addCommunityDomain (domain) {
   }
 }
 
-export function addnetworkId (networkId) {
+export function addNetworkId (networkId) {
   return {
     type: ADD_NETWORK_ID,
     payload: networkId
