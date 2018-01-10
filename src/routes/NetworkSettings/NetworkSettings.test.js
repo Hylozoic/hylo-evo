@@ -23,6 +23,14 @@ describe('NetworkSettings', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
+  it('doesnt have the moderators tab if only a moderator', () => {
+    props.isAdmin = false
+    props.isModerator = true
+
+    const wrapper = shallow(<NetworkSettings {...props} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
   it('prevents non-admin access', () => {
     props.isAdmin = false
     const wrapper = shallow(<NetworkSettings {...props} />)
