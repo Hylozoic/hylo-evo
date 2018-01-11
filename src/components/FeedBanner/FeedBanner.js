@@ -42,7 +42,7 @@ export default function FeedBanner ({ all, community, currentUser, newPost }) {
   </div>
 }
 
-class PostPrompt extends React.Component {
+export class PostPrompt extends React.Component {
   static propTypes = {
     currentUser: PropTypes.object,
     newPost: PropTypes.func
@@ -58,11 +58,11 @@ class PostPrompt extends React.Component {
   onMouseLeaveHandler = () => this.setState({hover: false})
 
   render () {
-    const { currentUser, newPost } = this.props
+    const { currentUser, newPost, className } = this.props
     const { hover } = this.state
     if (!currentUser) return null
     return <div onMouseEnter={this.onMouseEnterHandler} onMouseLeave={this.onMouseLeaveHandler}>
-      <div styleName='postPrompt' onClick={newPost}>
+      <div styleName='postPrompt' className={className} onClick={newPost}>
         <RoundImage url={currentUser.avatarUrl} small styleName='prompt-image' />
           Hi {currentUser.firstName()}, what's on your mind?
       </div>

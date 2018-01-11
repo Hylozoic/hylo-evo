@@ -73,7 +73,9 @@ export default class Feed extends Component {
           postsTotal={postsTotal}
           followersTotal={followersTotal}
           topic={topic}
-          community={community} />
+          community={community}
+          currentUser={currentUser}
+          newPost={newPost} />
         : <FeedBanner community={community || network} currentUser={currentUser}
           all={!community && !networkSlug} newPost={newPost} />}
       <FeedList {...this.getFeedProps()} />
