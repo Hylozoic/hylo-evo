@@ -76,7 +76,6 @@ export default class Review extends Component {
     })
     // TODO: passing params to createCommunity could happen in mergeProps,
     // so that this call is just this.props.createCommunity()
-    console.log('communityNetworkId', communityNetworkId)
     this.props.createCommunity(
       // communityPrivacy,
       communityName,
