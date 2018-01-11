@@ -45,6 +45,7 @@ Object {
   "postPending": false,
   "showFiles": false,
   "showImages": false,
+  "topicName": undefined,
 }
 `;
 
@@ -93,5 +94,6 @@ Object {
   "postPending": true,
   "showFiles": false,
   "showImages": false,
+  "topicName": undefined,
 }
 `;

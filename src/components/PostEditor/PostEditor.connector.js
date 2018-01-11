@@ -44,6 +44,8 @@ export function mapStateToProps (state, props) {
   const showFiles = !isEmpty(files) ||
     get('attachmentType', uploadAttachmentPending) === 'file'
 
+  const topicName = getParam('topicName', state, props)
+
   return {
     currentUser,
     currentCommunity,
@@ -58,7 +60,8 @@ export function mapStateToProps (state, props) {
     showImages,
     showFiles,
     images,
-    files
+    files,
+    topicName
   }
 }
 

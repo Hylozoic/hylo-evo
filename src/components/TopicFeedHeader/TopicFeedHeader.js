@@ -34,7 +34,7 @@ export default function TopicFeedHeader ({
     {community && <Button styleName='subscribe' onClick={toggleSubscribe}>
       {communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
     </Button>}
-    <PostPrompt currentUser={currentUser} newPost={() => newPost(topic.name)} styleName='post-prompt' />
+    <PostPrompt currentUser={currentUser} newPost={newPost} styleName='post-prompt' />
   </div>
 }
 TopicFeedHeader.propTypes = {
