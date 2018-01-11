@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import NetworkSettingsTab from './NetworkSettingsTab'
 import NetworkModeratorsTab from './NetworkModeratorsTab'
 import NetworkCommunitiesTab from './NetworkCommunitiesTab'
-
+import { pullAt } from 'lodash'
 import FullPageModal from 'routes/FullPageModal'
 import Loading from 'components/Loading'
 
@@ -54,25 +54,31 @@ export default class NetworkSettings extends Component {
       </FullPageModal>
     }
 
-    return <FullPageModal narrow goToOnClose={`/n/${network.slug}`}
-      content={[
-        {
-          name: 'Settings',
-          path: `/n/${network.slug}/settings`,
-          component: <NetworkSettingsTab
-            network={network}
-            setConfirm={setConfirm}
-            updateNetworkSettings={updateNetworkSettings}
-          />
-        }, {
-          name: 'Moderators',
-          path: `/n/${network.slug}/settings/moderators`,
-          component: <NetworkModeratorsTab network={network} />
-        }, {
-          name: 'Communities',
-          path: `/n/${network.slug}/settings/communities`,
-          component: <NetworkCommunitiesTab network={network} isModerator={isModerator} isAdmin={isAdmin} />
-        }
-      ]} />
+    const content = [
+      {
+        name: 'Settings',
+        path: `/n/${network.slug}/settings`,
+        component: <NetworkSettingsTab
+          network={network}
+          setConfirm={setConfirm}
+          updateNetworkSettings={updateNetworkSettings}
+        />
+      }, {
+        name: 'Moderators',
+        path: `/n/${network.slug}/settings/moderators`,
+        component: <NetworkModeratorsTab network={network} />
+      }, {
+        name: 'Communities',
+        path: `/n/${network.slug}/settings/communities`,
+        component: <NetworkCommunitiesTab network={network} isModerator={isModerator} isAdmin={isAdmin} />
+      }
+    ]
+
+    // Remove the moderators tab when not a HyloAdmin
+    if (!isAdmin) {
+      pullAt(content, 1)
+    }
+
+    return <FullPageModal narrow goToOnClose={`/n/${network.slug}`} content={content} />
   }
 }

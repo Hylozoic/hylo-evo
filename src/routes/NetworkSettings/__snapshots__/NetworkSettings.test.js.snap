@@ -1,5 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`NetworkSettings doesnt have the moderators tab if only a moderator 1`] = `
+<withRouter(Connect(FullPageModal))
+  content={
+    Array [
+      Object {
+        "component": <NetworkSettingsTab
+          network={
+            Object {
+              "communities": Array [],
+              "id": 1,
+              "moderators": Array [],
+              "slug": "mycelium",
+            }
+          }
+          setConfirm={[Function]}
+          updateNetworkSettings={[Function]}
+        />,
+        "name": "Settings",
+        "path": "/n/mycelium/settings",
+      },
+      Object {
+        "component": <Connect(NetworkCommunitiesTab)
+          isAdmin={false}
+          isModerator={true}
+          network={
+            Object {
+              "communities": Array [],
+              "id": 1,
+              "moderators": Array [],
+              "slug": "mycelium",
+            }
+          }
+        />,
+        "name": "Communities",
+        "path": "/n/mycelium/settings/communities",
+      },
+    ]
+  }
+  goToOnClose="/n/mycelium"
+  narrow={true}
+/>
+`;
+
 exports[`NetworkSettings matches the previous snapshot 1`] = `
 <withRouter(Connect(FullPageModal))
   content={

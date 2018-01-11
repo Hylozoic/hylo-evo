@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { DEFAULT_AVATAR } from 'store/models/Community'
 import RoundImage from 'components/RoundImage'
 import './RemovableListItem.scss'
 
@@ -11,7 +12,7 @@ export default function RemovableListItem ({ item, removeItem, square, size, con
     }
   }
 
-  const avatar = <RoundImage url={item.avatarUrl} medium square={square} size={size} styleName='avatar' />
+  const avatar = <RoundImage url={item.avatarUrl || DEFAULT_AVATAR} medium square={square} size={size} styleName='avatar' />
   const title = item.name
 
   return <div styleName='item'>
