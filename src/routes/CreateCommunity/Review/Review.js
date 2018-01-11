@@ -69,15 +69,19 @@ export default class Review extends Component {
   }
 
   submit = () => {
-    const { name, email, communityName, communityDomain } = this.state.edits
+    const { name, email, communityName, communityDomain, communityNetworkId } = this.state.edits
     this.state.edits.changed && this.props.updateUserSettings({
       name,
       email
     })
+    // TODO: passing params to createCommunity could happen in mergeProps,
+    // so that this call is just this.props.createCommunity()
+    console.log('communityNetworkId', communityNetworkId)
     this.props.createCommunity(
       // communityPrivacy,
       communityName,
-      communityDomain
+      communityDomain,
+      communityNetworkId
     )
     .then(({ error }) => {
       if (error) {
@@ -120,6 +124,7 @@ export default class Review extends Component {
         email: get('email', this.props.currentUser) || '',
         communityName: get('communityName', this.props) || '',
         communityDomain: get('communityDomain', this.props) || '',
+        communityNetworkId: get('communityNetworkId', this.props) || '',
         communityPrivacy: selectedCommunityPrivacy
       }
     })
@@ -139,6 +144,8 @@ export default class Review extends Component {
   }
 
   render () {
+    const { networkName } = this.props
+
     return <div styleName='flex-wrapper'>
       <ModalSidebar
         imageUrl={groovingAxolotl}
@@ -191,6 +198,11 @@ export default class Review extends Component {
             onChange={(e) => this.handleInputChange(e, 'communityDomain')}
             inputRef={(input) => { this.communityDomain = input }}
           />
+          {networkName && <ReviewTextInput
+            label={'Network'}
+            value={networkName}
+            readOnly
+          />}
           {/* <ReviewTextInput */}
           {/* label={'Privacy'} */}
           {/* value={this.state.edits.communityPrivacy} */}
@@ -229,9 +241,9 @@ export function ReviewTextInput ({label, value, editHandler, onChange, readOnly 
         inputRef={inputRef}
       />
     </div>
-    <div styleName='review-input-edit'>
+    {editHandler && <div styleName='review-input-edit'>
       <span styleName='edit-button' onClick={editHandler}>Edit</span>
-    </div>
+    </div>}
   </div>
 }
 
