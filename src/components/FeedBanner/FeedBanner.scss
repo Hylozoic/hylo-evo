@@ -43,6 +43,11 @@
   margin-right: $space-5x;
 }
 
+.all-logo {
+  width: 55px;
+  height: 62px;
+}
+
 .header-text {
   display: inline-block;
   vertical-align: top;
@@ -63,6 +68,7 @@
   color: $color-white;
   font-size: 13px;
   opacity: 0.8;
+  margin-top: 10px;
 }
 
 .header-icon {
@@ -115,8 +121,8 @@
 
 .all-communities {
   background-color: $color-athens-gray;
-  .header-name, .header-subtitle {
-    color: $color-rhino;
+  .header-name {
+    text-shadow: none;
   }
   .fade {
     background-image: none;
