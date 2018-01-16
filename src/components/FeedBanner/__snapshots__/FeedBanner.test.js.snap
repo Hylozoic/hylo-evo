@@ -20,7 +20,7 @@ exports[`renders for all communities 1`] = `
       data-stylename="image"
       style={
         Object {
-          "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg)",
+          "backgroundImage": "url(/all-communities-banner.png)",
         }
       }
     >
@@ -35,10 +35,10 @@ exports[`renders for all communities 1`] = `
         data-stylename="header"
       >
         <div
-          data-stylename="logo"
+          data-stylename="logo all-logo"
           style={
             Object {
-              "backgroundImage": "url(/hylo-merkaba.png)",
+              "backgroundImage": "url(/white-merkaba.png)",
             }
           }
         />
