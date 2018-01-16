@@ -16,6 +16,9 @@ export function createCommunity (name, slug, networkId) {
             id
             name
             slug
+            network {
+              id
+            }
           }
         }
       }
