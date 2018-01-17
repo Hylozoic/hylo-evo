@@ -79,7 +79,7 @@ export default class NetworkCommunitiesTab extends Component {
 
     if (!network) return <Loading />
 
-    return <div>
+    return <div styleName='communities-tab'>
       <PaginatedList styleName='communities'
         items={network.communities}
         itemProps={{square: true, size: 40}}

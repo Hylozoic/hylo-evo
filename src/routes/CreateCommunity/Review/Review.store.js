@@ -5,6 +5,15 @@ export const MODULE_NAME = `Review`
 export const CREATE_COMMUNITY = `${MODULE_NAME}/CREATE_COMMUNITY`
 
 export function createCommunity (name, slug, networkId) {
+  const data = {
+    name,
+    slug
+  }
+
+  if (networkId) {
+    data.networkId = networkId
+  }
+
   return {
     type: CREATE_COMMUNITY,
     graphql: {
@@ -24,18 +33,12 @@ export function createCommunity (name, slug, networkId) {
       }
       `,
       variables: {
-        data: {
-          name,
-          slug,
-          networkId
-        }
+        data
       }
     },
     meta: {
       extractModel: 'Membership',
-      slug,
-      name,
-      networkId
+      ...data
     }
   }
 }
