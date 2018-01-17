@@ -1,5 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`mapDispatchToProps returns the right keys 1`] = `
+Object {
+  "addFile": [Function],
+  "addImage": [Function],
+  "clearLinkPreview": [Function],
+  "createPost": [Function],
+  "goToUrl": [Function],
+  "pollingFetchLinkPreviewRaw": [Function],
+  "removeLinkPreview": [Function],
+  "updatePost": [Function],
+}
+`;
+
 exports[`mapStateToProps returns the right keys for a new post 1`] = `
 Object {
   "communityOptions": Array [
@@ -98,4 +111,20 @@ Object {
   "slug": "foo",
   "topicName": undefined,
 }
+`;
+
+exports[`mergeProps goToPost redirects to community feed with no topicName 1`] = `
+Array [
+  Array [
+    "/c/theslug/p/123",
+  ],
+]
+`;
+
+exports[`mergeProps goToPost redirects to topic with topicName 1`] = `
+Array [
+  Array [
+    "/c/theslug/thetopicname/p/123",
+  ],
+]
 `;

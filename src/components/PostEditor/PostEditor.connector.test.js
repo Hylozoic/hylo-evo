@@ -1,4 +1,4 @@
-import { mapStateToProps } from './PostEditor.connector'
+import { mapStateToProps, mapDispatchToProps, mergeProps } from './PostEditor.connector'
 import orm from 'store/models'
 import { CREATE_POST } from './PostEditor.store'
 
@@ -64,5 +64,58 @@ describe('mapStateToProps', () => {
       }
     }
     expect(mapStateToProps(newState, props)).toMatchSnapshot()
+  })
+})
+
+describe('mapDispatchToProps', () => {
+  it('returns the right keys', () => {
+    expect(mapDispatchToProps()).toMatchSnapshot()
+  })
+})
+
+describe('mergeProps', () => {
+  it('goToPost redirects to topic with topicName', () => {
+    const stateProps = {
+      topicName: 'thetopicname',
+      slug: 'theslug'
+    }
+    const dispatchProps = {
+      goToUrl: jest.fn()
+    }
+    const action = {
+      payload: {
+        data: {
+          createPost: {
+            id: 123
+          }
+        }
+      }
+    }
+    const mergedProps = mergeProps(stateProps, dispatchProps)
+    mergedProps.goToPost(action)
+    expect(dispatchProps.goToUrl).toHaveBeenCalled()
+    expect(dispatchProps.goToUrl.mock.calls).toMatchSnapshot()
+  })
+
+  it('goToPost redirects to community feed with no topicName', () => {
+    const stateProps = {
+      slug: 'theslug'
+    }
+    const dispatchProps = {
+      goToUrl: jest.fn()
+    }
+    const action = {
+      payload: {
+        data: {
+          createPost: {
+            id: 123
+          }
+        }
+      }
+    }
+    const mergedProps = mergeProps(stateProps, dispatchProps)
+    mergedProps.goToPost(action)
+    expect(dispatchProps.goToUrl).toHaveBeenCalled()
+    expect(dispatchProps.goToUrl.mock.calls).toMatchSnapshot()
   })
 })
