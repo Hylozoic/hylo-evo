@@ -45,6 +45,7 @@ export function mapStateToProps (state, props) {
     get('attachmentType', uploadAttachmentPending) === 'file'
 
   const topicName = getParam('topicName', state, props)
+  const slug = getParam('slug', null, props)
 
   return {
     currentUser,
@@ -61,30 +62,35 @@ export function mapStateToProps (state, props) {
     showFiles,
     images,
     files,
-    topicName
+    topicName,
+    slug
   }
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
-  const slug = getParam('slug', null, props)
   return {
     pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
     removeLinkPreview: () => dispatch(removeLinkPreview()),
     clearLinkPreview: () => dispatch(clearLinkPreview()),
     updatePost: postParams => dispatch(updatePost(postParams)),
     createPost: postParams => dispatch(createPost(postParams)),
-    goToPost: createPostAction => {
-      const id = createPostAction.payload.data.createPost.id
-      return dispatch(push(postUrl(id, slug)))
-    },
+    goToUrl: url => dispatch(push(url)),
     addImage: url => dispatch(addAttachment(url, 'image')),
     addFile: url => dispatch(addAttachment(url, 'file'))
   }
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { fetchLinkPreviewPending } = stateProps
-  const { pollingFetchLinkPreviewRaw } = dispatchProps
+  const { fetchLinkPreviewPending, topicName, slug } = stateProps
+  const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
+
+  const goToPost = createPostAction => {
+    const id = createPostAction.payload.data.createPost.id
+    const url = topicName
+      ? postUrl(id, slug, {topicName})
+      : postUrl(id, slug)
+    return goToUrl(url)
+  }
 
   const pollingFetchLinkPreview = fetchLinkPreviewPending
       ? () => Promise.resolve()
@@ -94,6 +100,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
+    goToPost,
     pollingFetchLinkPreview
   }
 }
