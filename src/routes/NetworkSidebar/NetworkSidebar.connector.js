@@ -11,6 +11,7 @@ export function mapStateToProps (state, props) {
 
   return {
     network: network ? network.ref : null,
+    isModerator: network && !!network.isModerator,
     isAdmin: me ? me.isAdmin : false
   }
 }

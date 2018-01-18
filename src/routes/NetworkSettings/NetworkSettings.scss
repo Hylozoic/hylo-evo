@@ -117,3 +117,10 @@
 .autocomplete-input {
   font-size: 10px;
 }
+
+.centered {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: $space-2x;
+}

@@ -6,6 +6,7 @@ import { KeyControlledItemList } from 'components/KeyControlledList'
 import RemovableListItem from 'components/RemovableListItem'
 import { isEmpty, get } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
+import { personUrl } from 'util/index'
 
 const { array, func, string } = PropTypes
 
@@ -28,7 +29,8 @@ export default class ModeratorsSettingsTab extends Component {
       fetchModeratorSuggestions,
       addModerator,
       moderatorSuggestions,
-      clearModeratorSuggestions
+      clearModeratorSuggestions,
+      slug
     } = this.props
 
     if (!moderators) return <Loading />
@@ -38,6 +40,7 @@ export default class ModeratorsSettingsTab extends Component {
         {moderators.map(m =>
           <RemovableListItem
             item={m}
+            url={personUrl(m.id, slug)}
             removeModerator={removeModerator}
             confirmMessage={`Are you sure you want to remove ${m.name}'s moderator powers?`}
             key={m.id} />)}

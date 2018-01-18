@@ -28,6 +28,7 @@ exports[`renders correctly with a community 1`] = `
       Object {
         "component": <Connect(ModeratorsSettingsTab)
           communityId={1}
+          slug="foo"
         />,
         "name": "Moderators",
         "path": "/c/foo/settings/moderators",

@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import './NetworkCommunities.scss'
+import { DEFAULT_AVATAR } from 'store/models/Community'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
@@ -109,7 +110,7 @@ export function CommunityList ({ communities, fetchMoreCommunities }) {
 
 export function CommunityCard ({ community }) {
   return <div styleName='community-card'>
-    <RoundImage url={community.avatarUrl} styleName='community-image' size='50px' square />
+    <RoundImage url={community.avatarUrl || DEFAULT_AVATAR} styleName='community-image' size='50px' square />
     <div styleName='community-details'>
       <span styleName='community-name'>{community.name}</span>
       <span styleName='community-stats'>{community.numMembers} Members</span>

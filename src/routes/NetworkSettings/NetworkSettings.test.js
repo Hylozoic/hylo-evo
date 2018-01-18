@@ -1,4 +1,4 @@
-import NetworkSettings, { PaginatedList, PaginationLinks } from './NetworkSettings'
+import NetworkSettings from './NetworkSettings'
 import { shallow } from 'enzyme'
 import React from 'react'
 
@@ -9,28 +9,11 @@ describe('NetworkSettings', () => {
 
   beforeEach(() => {
     props = {
-      addCommunityToNetwork: () => {},
-      addNetworkModeratorRole: () => {},
-      communities: [ { id: 4 }, { id: 5 } ],
-      communitiesPage: 3,
-      communitiesPageCount: 5,
-      communitiesPending: true,
-      communityAutocompleteCandidates: [],
-      fetchCommunityAutocomplete: () => {},
-      fetchModeratorAutocomplete: () => {},
       fetchNetworkSettings: () => {},
       isAdmin: true,
-      moderatorAutocompleteCandidates: [],
-      moderators: [ { id: 2 }, { id: 3 } ],
-      moderatorsPage: 2,
-      moderatorsPageCount: 7,
-      moderatorsPending: false,
+      isModerator: false,
       network: { id: 1, communities: [], moderators: [], slug: 'mycelium' },
-      removeCommunityFromNetwork: () => {},
-      removeNetworkModeratorRole: () => {},
-      setCommunitiesPage: () => {},
       setConfirm: () => {},
-      setModeratorsPage: () => {},
       updateNetworkSettings: () => {}
     }
   })
@@ -40,44 +23,18 @@ describe('NetworkSettings', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('prevents non-admin access (at least for now)', () => {
+  it('doesnt have the moderators tab if only a moderator', () => {
+    props.isAdmin = false
+    props.isModerator = true
+
+    const wrapper = shallow(<NetworkSettings {...props} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('prevents non-admin access', () => {
     props.isAdmin = false
     const wrapper = shallow(<NetworkSettings {...props} />)
     const actual = wrapper.find(FullPageModal).children()
     expect(actual.text()).toContain('must be an admin')
-  })
-})
-
-describe('PaginatedList', () => {
-  it('renders correctly', () => {
-    const items = [{id: 2}, {id: 3}]
-
-    const wrapper = shallow(<PaginatedList
-      isAdmin
-      items={items}
-      page={3}
-      pageCount={5}
-      setPage={() => {}}
-      itemProps={{square: true, size: 40}} />)
-    expect(wrapper).toMatchSnapshot()
-  })
-})
-
-describe('PaginationLinks', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<PaginationLinks
-      isAdmin
-      page={3}
-      pageCount={5}
-      setPage={() => {}} />)
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  it('renders null with 1 page', () => {
-    const wrapper = shallow(<PaginationLinks
-      page={1}
-      pageCount={1}
-      setPage={() => {}} />)
-    expect(wrapper.html()).toEqual(null)
   })
 })

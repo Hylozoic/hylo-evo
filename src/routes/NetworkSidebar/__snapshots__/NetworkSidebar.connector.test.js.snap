@@ -3,6 +3,7 @@
 exports[`mapStateToProps matches the last snapshot 1`] = `
 Object {
   "isAdmin": true,
+  "isModerator": null,
   "network": null,
 }
 `;

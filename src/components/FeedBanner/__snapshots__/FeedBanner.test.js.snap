@@ -18,7 +18,11 @@ exports[`renders for all communities 1`] = `
   >
     <div
       data-stylename="image"
-      style={Object {}}
+      style={
+        Object {
+          "backgroundImage": "url(/all-communities-banner.png)",
+        }
+      }
     >
       <div
         data-stylename="fade"
@@ -31,10 +35,10 @@ exports[`renders for all communities 1`] = `
         data-stylename="header"
       >
         <div
-          data-stylename="logo"
+          data-stylename="logo all-logo"
           style={
             Object {
-              "backgroundImage": "url(/hylo-merkaba.png)",
+              "backgroundImage": "url(/white-merkaba.png)",
             }
           }
         />

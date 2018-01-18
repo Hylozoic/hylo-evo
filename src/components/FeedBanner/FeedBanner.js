@@ -2,9 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
 import { bgImageStyle } from 'util/index'
-import { DEFAULT_AVATAR } from 'store/models/Community'
+import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Community'
 import './FeedBanner.scss'
-import { hyloLogo } from 'util/assets'
+import { whiteMerkaba, allCommunitiesBanner } from 'util/assets'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 
@@ -13,7 +13,8 @@ export default function FeedBanner ({ all, community, currentUser, newPost }) {
 
   if (all) {
     name = 'All Communities'
-    avatarUrl = hyloLogo
+    avatarUrl = whiteMerkaba
+    bannerUrl = allCommunitiesBanner
     subtitle = currentUser && `${currentUser.memberships.count()} Communities`
   } else if (!community) {
     return null
@@ -22,10 +23,10 @@ export default function FeedBanner ({ all, community, currentUser, newPost }) {
   }
 
   return <div styleName={cx('banner', {'all-communities': all})}>
-    <div style={bgImageStyle(bannerUrl)} styleName='image'>
+    <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
       <div styleName='fade'><div styleName='fade2' /></div>
       <div styleName='header'>
-        <div styleName='logo' style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
+        <div styleName={cx('logo', {'all-logo': all})} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
         <div styleName='header-text'>
           <span styleName='header-name'>{name}</span>
           {location && <div styleName='header-subtitle'>

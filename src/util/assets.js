@@ -1,4 +1,6 @@
 export const hyloLogo = '/hylo-merkaba.png'
+export const whiteMerkaba = '/white-merkaba.png'
+export const allCommunitiesBanner = '/all-communities-banner.png'
 export const hyloNameWhiteBackground = '/logo-white.svg'
 export const cameraSvg = '/camera.svg'
 export const loadingSvg = '/loading.svg'

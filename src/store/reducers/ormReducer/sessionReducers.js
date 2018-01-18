@@ -25,3 +25,7 @@ export {
 export {
   ormSessionReducer as membersReducer
 } from 'routes/Members/Members.store'
+
+export {
+  ormSessionReducer as NetworkSettingsReducer
+} from 'routes/NetworkSettings/NetworkSettings.store'

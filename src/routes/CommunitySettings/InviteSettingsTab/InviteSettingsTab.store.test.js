@@ -33,13 +33,13 @@ describe('InviteSettingsTab.store.ormSessionReducer', () => {
     }
 
     ormSessionReducer(session, action)
+    const now = new Date().getTime()
     const invitations = session.Invitation.all().toRefArray()
     expect(invitations).toEqual([
       expect.objectContaining({email: 'foo5@bar.com', community: '5'}),
       expect.objectContaining({email: 'foo6@bar.com', community: '5'}),
       expect.objectContaining({email: 'foo7@bar.com', community: '5'})
     ])
-    const now = new Date().getTime()
     invitations.forEach(i => {
       const createdAt = new Date(i.createdAt).getTime()
       expect(now - createdAt).toBeLessThan(1000)
