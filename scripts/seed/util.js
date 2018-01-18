@@ -1,11 +1,15 @@
-const readline = require('readline')
+/* global API_URI, GRAPHQL_URI */
 
-const iface = () => readline.createInterface({
+import readline from 'readline'
+import { Writable } from 'stream'
+
+const iface = (out) => readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: out || process.stdout,
+  terminal: true
 })
 
-function finalWarning (message) {
+export function finalWarning (message) {
   return new Promise(resolve => {
     const rl = iface()
     rl.question(
@@ -22,9 +26,22 @@ function finalWarning (message) {
   })
 }
 
-function getValue (message) {
+export function getValue (message, muted) {
   return new Promise(resolve => {
-    const rl = iface()
+    const out = new Writable({
+      write: function (chunk, encoding, callback) {
+        if (!this.muted) {
+          process.stdout.write(chunk, encoding)
+        }
+        callback()
+      }
+    })
+    if (muted) {
+      process.stdout.write(message)
+      out.muted = true
+    }
+
+    const rl = iface(out)
     rl.question(message, answer => {
       rl.close()
       resolve(answer)
@@ -32,7 +49,7 @@ function getValue (message) {
   })
 }
 
-function hitEnter (message) {
+export function hitEnter (message) {
   return new Promise(resolve => {
     const rl = iface()
     rl.question(message, () => {
@@ -42,7 +59,7 @@ function hitEnter (message) {
   })
 }
 
-function fatalErrorMsg ({ message }) {
+export function fatalErrorMsg ({ message }) {
   return console.error(`
   The seeder encountered an error it didn't know how to handle. Sorry! If you're
   curious, the message was:
@@ -51,9 +68,6 @@ function fatalErrorMsg ({ message }) {
 `)
 }
 
-module.exports = {
-  getValue,
-  fatalErrorMsg,
-  finalWarning,
-  hitEnter
+export function oneTo (n) {
+  return Math.floor(Math.random() * n + 1)
 }

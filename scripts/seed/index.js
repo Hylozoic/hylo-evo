@@ -14,10 +14,10 @@
 // using the named files in the `seeder` directory. These can be modified or extended as
 // required. The seeder will run 'em all in the order specified.
 
-const minimist = require('minimist')
+import minimist from 'minimist'
 
-const { finalWarning } = require('./seeder/util')
-const seeder = require('./seeder')
+import { finalWarning } from './util'
+import seeder from './seeder'
 
 ;(async function seed () {
   // Please don't run this in production. It's not nice.
@@ -39,12 +39,14 @@ const seeder = require('./seeder')
 
   const WARNING = `
   This is the Hylo seeder. It grows fake databases using Hylo client functions
-  to simulate user activity. Please use it with caution, as it will completely
-  destroy your existing development data without remorse.`
+  to simulate user activity. Please use it with caution.
+    
+  Note that it requires the Hylo backend to be up and running.`
   const EXTRA_EXTRA_WARNING = `
-  *WARNING*: This will COMPLETELY WIPE anything you cared about in the database.
-  If you're sure that's what you want, type 'yes'. Anything else will result in
-  this script terminating.
+  *WARNING*: This is mostly an ADDITIVE seeder, in that it won't truncate tables
+  or anything like that. It will however issue several thousand API requests via
+  headless Chrome. If you're sure that's what you want, type 'yes'. Anything
+  else will result in this script terminating.
 
     : `
 
