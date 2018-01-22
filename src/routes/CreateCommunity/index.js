@@ -4,7 +4,7 @@ import './CreateCommunity.scss'
 export default class CreateCommunity extends Component {
   render () {
     return <div styleName='modal'>
-      {<this.props.component />}
+      {<this.props.component {...this.props} />}
     </div>
   }
 }
