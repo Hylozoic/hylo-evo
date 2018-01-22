@@ -313,6 +313,8 @@ const signupRoutes = [
   {path: '/signup/review', child: Review}
 ]
 const createCommunityRoutes = [
+  // order matters here, or it matches the non param version
+  {path: '/create-community/name/:networkId', component: Name},
   {path: '/create-community/name', component: Name},
   {path: '/create-community/domain', component: Domain},
   // TODO: Implement create community privacy component when implemented on the server

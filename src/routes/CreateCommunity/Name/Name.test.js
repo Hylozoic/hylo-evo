@@ -10,6 +10,7 @@ describe('Name', () => {
       goToNextStep={jest.fn()}
       addCommunityName={jest.fn()}
       goHome={jest.fn()}
+      addNetworkId={() => {}}
     />)
     expect(wrapper).toMatchSnapshot()
   })
