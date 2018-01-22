@@ -59,6 +59,7 @@ Object {
   "showFiles": false,
   "showImages": false,
   "slug": "foo",
+  "topic": null,
   "topicName": undefined,
 }
 `;
@@ -109,6 +110,7 @@ Object {
   "showFiles": false,
   "showImages": false,
   "slug": "foo",
+  "topic": null,
   "topicName": undefined,
 }
 `;
