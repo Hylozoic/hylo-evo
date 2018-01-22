@@ -5,6 +5,7 @@ import { postUrl } from 'util/index'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getPost, { presentPost } from 'store/selectors/getPost'
+import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import { FETCH_POST, UPLOAD_ATTACHMENT } from 'store/constants'
 import {
@@ -44,8 +45,9 @@ export function mapStateToProps (state, props) {
   const showFiles = !isEmpty(files) ||
     get('attachmentType', uploadAttachmentPending) === 'file'
 
-  const topicName = getParam('topicName', state, props)
   const slug = getParam('slug', null, props)
+  const topic = getTopicForCurrentRoute(state, props)
+  const topicName = get('name', topic)
 
   return {
     currentUser,
@@ -62,6 +64,7 @@ export function mapStateToProps (state, props) {
     showFiles,
     images,
     files,
+    topic,
     topicName,
     slug
   }
@@ -73,7 +76,7 @@ export const mapDispatchToProps = (dispatch, props) => {
     removeLinkPreview: () => dispatch(removeLinkPreview()),
     clearLinkPreview: () => dispatch(clearLinkPreview()),
     updatePost: postParams => dispatch(updatePost(postParams)),
-    createPost: postParams => dispatch(createPost(postParams)),
+    createPost: (postParams, topic) => dispatch(createPost(postParams, topic)),
     goToUrl: url => dispatch(push(url)),
     addImage: url => dispatch(addAttachment(url, 'image')),
     addFile: url => dispatch(addAttachment(url, 'file'))
@@ -81,7 +84,7 @@ export const mapDispatchToProps = (dispatch, props) => {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { fetchLinkPreviewPending, topicName, slug } = stateProps
+  const { fetchLinkPreviewPending, topicName, slug, topic } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
 
   const goToPost = createPostAction => {
@@ -96,12 +99,15 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
       ? () => Promise.resolve()
       : url => pollingFetchLinkPreviewRaw(url)
 
+  const createPost = postParams => dispatchProps.createPost(postParams, topic)
+
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
     goToPost,
-    pollingFetchLinkPreview
+    pollingFetchLinkPreview,
+    createPost
   }
 }
 
