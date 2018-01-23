@@ -3,7 +3,7 @@ import { get, isEmpty } from 'lodash/fp'
 
 const MessageThread = Model.createClass({
   isUnread () {
-    return new Date(this.lastReadAt) < new Date(this.updatedAt)
+    return this.lastReadAt === undefined || new Date(this.lastReadAt) < new Date(this.updatedAt)
   },
 
   isUpdatedSince (date) {
