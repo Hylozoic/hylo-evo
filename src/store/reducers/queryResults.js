@@ -72,7 +72,12 @@ export default function (state = {}, action) {
   switch (type) {
     case CREATE_POST:
       root = payload.data.createPost
-      return matchNewPostIntoQueryResults(state, root)
+      const { topic } = meta
+      // TODO: passing topic throught the meta is a temporary hack to avoid parsing
+      // the post details here. Once we implement the topic line in the post editor we
+      // can remove this because we'll have the topics. At that time we can remove
+      // the topic param in PostEditor.store#createPost
+      return matchNewPostIntoQueryResults(state, root, topic)
 
     case FIND_OR_CREATE_THREAD:
       root = payload.data.findOrCreateThread
@@ -109,7 +114,7 @@ export default function (state = {}, action) {
   return state
 }
 
-export function matchNewPostIntoQueryResults (state, {id, type, communities}) {
+export function matchNewPostIntoQueryResults (state, {id, type, communities}, topic) {
   /* about this:
       we add the post id into queryResult sets that are based on time of
       creation because we know that the post just created is the latest
@@ -123,6 +128,7 @@ export function matchNewPostIntoQueryResults (state, {id, type, communities}) {
       {slug: community.slug, sortBy: 'updated'},
       {slug: community.slug, sortBy: 'updated', filter: type}
     ]
+    if (topic) queriesToMatch.push({slug: community.slug, topic: topic.id})
     return reduce((innerMemo, params) => {
       return prependIdForCreate(innerMemo, FETCH_POSTS, params, id)
     }, memo, queriesToMatch)

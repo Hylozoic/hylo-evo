@@ -248,6 +248,24 @@ describe('matchNewPostIntoQueryResults', () => {
       }
     })
   })
+
+  it('prepends the post id to matching query result sets with a topic', () => {
+    const state = {
+      '{"type":"FETCH_POSTS","params":{"slug":"bar","topic":"123"}}': {
+        hasMore: true,
+        ids: ['18', '11']
+      }
+    }
+    const communities = [{slug: 'foo'}, {slug: 'bar'}]
+    const post = {id: '17', type: 'request', communities}
+    const topic = {id: '123'}
+    expect(matchNewPostIntoQueryResults(state, post, topic)).toEqual({
+      '{"type":"FETCH_POSTS","params":{"slug":"bar","topic":"123"}}': {
+        hasMore: true,
+        ids: ['17', '18', '11']
+      }
+    })
+  })
 })
 
 describe('matchNewThreadIntoQueryResults', () => {
