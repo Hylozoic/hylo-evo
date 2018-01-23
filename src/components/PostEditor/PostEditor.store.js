@@ -13,7 +13,7 @@ export const CLEAR_LINK_PREVIEW = `${MODULE_NAME}/CLEAR_LINK_PREVIEW`
 
 // Actions
 
-export function createPost (post) {
+export function createPost (post, topic) {
   const { type, title, details, communities, linkPreview, imageUrls, fileUrls } = post
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
@@ -72,7 +72,10 @@ export function createPost (post) {
         fileUrls
       }
     },
-    meta: {extractModel: 'Post'}
+    meta: {
+      extractModel: 'Post',
+      topic
+    }
   }
 }
 

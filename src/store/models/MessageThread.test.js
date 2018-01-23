@@ -1,4 +1,33 @@
 import { formatNames } from './MessageThread'
+import orm from 'store/models'
+
+describe('MessageThread', () => {
+  it('marks a thread as unread if lastReadAt is undefined', () => {
+    const session = orm.session(orm.getEmptyState())
+    const { MessageThread } = session
+
+    const thread = MessageThread.create({id: '1', lastReadAt: undefined})
+    expect(thread.isUnread()).toBeTruthy()
+  })
+  it('marks a thread as unread if lastReadAt is older than updatedAt', () => {
+    const session = orm.session(orm.getEmptyState())
+    const { MessageThread } = session
+
+    const lastReadAt = new Date('2018-01-01')
+    const updatedAt = new Date('2018-01-02')
+    const thread = MessageThread.create({id: '1', updatedAt, lastReadAt})
+    expect(thread.isUnread()).toBeTruthy()
+  })
+  it('marks a thread as read if updatedAt is older than lastReadAt', () => {
+    const session = orm.session(orm.getEmptyState())
+    const { MessageThread } = session
+
+    const lastReadAt = new Date('2018-01-02')
+    const updatedAt = new Date('2018-01-01')
+    const thread = MessageThread.create({id: '1', updatedAt, lastReadAt})
+    expect(thread.isUnread()).toBeFalsy()
+  })
+})
 
 describe('formatNames', () => {
   it('shows all names with no maxShown', () => {
