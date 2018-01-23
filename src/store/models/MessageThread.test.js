@@ -18,6 +18,15 @@ describe('MessageThread', () => {
     const thread = MessageThread.create({id: '1', updatedAt, lastReadAt})
     expect(thread.isUnread()).toBeTruthy()
   })
+  it('marks a thread as read if updatedAt is older than lastReadAt', () => {
+    const session = orm.session(orm.getEmptyState())
+    const { MessageThread } = session
+
+    const lastReadAt = new Date('2018-01-02')
+    const updatedAt = new Date('2018-01-01')
+    const thread = MessageThread.create({id: '1', updatedAt, lastReadAt})
+    expect(thread.isUnread()).toBeFalsy()
+  })
 })
 
 describe('formatNames', () => {
