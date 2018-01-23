@@ -3,7 +3,7 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { communityUrl, networkUrl } from 'util/index'
+import { communityUrl, networkUrl } from 'utils/index'
 import orm from 'store/models'
 import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'

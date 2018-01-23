@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { indexOf, isEmpty, omit } from 'lodash/fp'
 import cx from 'classnames'
-import { getKeyCode, keyMap } from 'util/textInput'
+import { getKeyCode, keyMap } from 'utils/textInput'
 
 const { array, func, object, bool, number, string } = PropTypes
 

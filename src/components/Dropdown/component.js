@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
 import { isEmpty } from 'lodash'
-import { position } from 'util/scrolling'
+import { position } from 'utils/scrolling'
 import Icon from 'components/Icon'
 import './component.scss'
 const { array, object, string, bool } = PropTypes

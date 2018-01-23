@@ -1,7 +1,7 @@
 import React from 'react'
 import ChangeImageButton from 'components/ChangeImageButton'
-import { cameraSvg, loadingSvg } from 'util/assets'
-import { bgImageStyle } from 'util/index'
+import { cameraSvg, loadingSvg } from 'utils/assets'
+import { bgImageStyle } from 'utils/index'
 import '../Signup.scss'
 
 export default function UploadImage ({avatarUrl, currentUser, updateSettingDirectly, loading}) {

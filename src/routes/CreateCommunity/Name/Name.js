@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import '../CreateCommunity.scss'
 import TextInput from 'components/TextInput'
-import { hyloNameWhiteBackground, happyAxolotl } from 'util/assets'
-import { bgImageStyle } from 'util/index'
+import { hyloNameWhiteBackground, happyAxolotl } from 'utils/assets'
+import { bgImageStyle } from 'utils/index'
 import ModalFooter from 'components/ModalFooter'
 import ModalSidebar from 'components/ModalSidebar'
 

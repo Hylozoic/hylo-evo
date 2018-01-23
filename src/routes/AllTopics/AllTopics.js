@@ -6,7 +6,7 @@ import FullPageModal from 'routes/FullPageModal'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
-import { pluralize, tagUrl } from 'util/index'
+import { pluralize, tagUrl } from 'utils/index'
 import { find } from 'lodash/fp'
 import ScrollListener from 'components/ScrollListener'
 const { boolean, arrayOf, func, number, shape, string } = PropTypes

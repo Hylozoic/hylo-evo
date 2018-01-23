@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import LeftSidebar from '../LeftSidebar'
-import { hyloNameWhiteBackground } from 'util/assets'
-import { bgImageStyle } from 'util/index'
+import { hyloNameWhiteBackground } from 'utils/assets'
+import { bgImageStyle } from 'utils/index'
 import SignupModalFooter from '../SignupModalFooter'
 import '../Signup.scss'
 

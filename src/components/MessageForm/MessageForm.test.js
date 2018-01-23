@@ -1,5 +1,5 @@
 import MessageForm from './MessageForm'
-import { keyMap } from 'util/textInput'
+import { keyMap } from 'utils/textInput'
 import { shallow, mount } from 'enzyme'
 import React from 'react'
 import { CREATE_MESSAGE, CREATE_MESSAGE_PENDING } from 'store/constants'

@@ -1,5 +1,5 @@
 import { get } from 'lodash/fp'
-import { isPromise } from 'util/index'
+import { isPromise } from 'utils/index'
 import { SET_STATE } from 'store/constants'
 
 export default function optimisticMiddleware (store) {

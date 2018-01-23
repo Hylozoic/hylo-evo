@@ -6,7 +6,7 @@ import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
-import { personUrl } from 'util/index'
+import { personUrl } from 'utils/index'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import { filter, isFunction } from 'lodash'
 

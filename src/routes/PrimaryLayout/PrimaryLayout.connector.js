@@ -9,7 +9,7 @@ import getMemberships from 'store/selectors/getMemberships'
 import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommunityRoute'
 import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import { some } from 'lodash/fp'
-import mobileRedirect from 'util/mobileRedirect'
+import mobileRedirect from 'utils/mobileRedirect'
 
 export function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)

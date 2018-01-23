@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Icon from 'components/Icon'
 import Badge from 'components/Badge'
 import { Link, NavLink, matchPath } from 'react-router-dom'
-import { tagUrl, topicsUrl } from 'util/index'
+import { tagUrl, topicsUrl } from 'utils/index'
 import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
 import badgeHoverStyles from '../../../../../components/Badge/component.scss'
 import cx from 'classnames'

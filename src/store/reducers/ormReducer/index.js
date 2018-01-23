@@ -47,7 +47,7 @@ import {
 import orm from 'store/models'
 import { find, values } from 'lodash/fp'
 import extractModelsFromAction from '../ModelExtractor/extractModelsFromAction'
-import { isPromise } from 'util/index'
+import { isPromise } from 'utils/index'
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)

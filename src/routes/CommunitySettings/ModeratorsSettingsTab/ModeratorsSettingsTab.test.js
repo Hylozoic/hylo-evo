@@ -1,7 +1,7 @@
 import ModeratorsSettingsTab, { AddModerator } from './ModeratorsSettingsTab'
 import { shallow } from 'enzyme'
 import React from 'react'
-import { keyMap } from 'util/textInput'
+import { keyMap } from 'utils/textInput'
 
 describe('ModeratorsSettingsTab', () => {
   it('renders loading if no moderators', () => {

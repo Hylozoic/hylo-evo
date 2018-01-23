@@ -1,7 +1,7 @@
 import MessageSection from './MessageSection'
 import { mount, shallow } from 'enzyme'
 import React from 'react'
-import { mountWithMockRouter } from 'util/testing'
+import { mountWithMockRouter } from 'utils/testing'
 import Loading from 'components/Loading'
 
 const person1 = {id: '1', name: 'City Bob'}

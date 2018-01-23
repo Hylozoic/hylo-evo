@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { debounce, includes, isEmpty } from 'lodash'
 import { uniqBy } from 'lodash/fp'
 import cx from 'classnames'
-import { getKeyCode, keyMap } from 'util/textInput'
+import { getKeyCode, keyMap } from 'utils/textInput'
 import { KeyControlledItemList } from 'components/KeyControlledList'
 import Avatar from 'components/Avatar'
 

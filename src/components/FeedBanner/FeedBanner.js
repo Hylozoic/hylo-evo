@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle } from 'utils/index'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Community'
 import './FeedBanner.scss'
-import { whiteMerkaba, allCommunitiesBanner } from 'util/assets'
+import { whiteMerkaba, allCommunitiesBanner } from 'utils/assets'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 

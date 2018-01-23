@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { personUrl, networkUrl } from 'util/index'
+import { personUrl, networkUrl } from 'utils/index'
 
 export function mapStateToProps (state, props) {
   return { }

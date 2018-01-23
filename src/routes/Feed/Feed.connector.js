@@ -10,8 +10,8 @@ import getMe from 'store/selectors/getMe'
 import changeQueryParam from 'store/actions/changeQueryParam'
 import getQueryParam from 'store/selectors/getQueryParam'
 import { push } from 'react-router-redux'
-import { postUrl } from 'util/index'
-import { makeUrl } from 'util/navigation'
+import { postUrl } from 'utils/index'
+import { makeUrl } from 'utils/navigation'
 import { fetchTopic, fetchCommunityTopic, fetchNetwork } from './Feed.store'
 
 export function mapStateToProps (state, props) {

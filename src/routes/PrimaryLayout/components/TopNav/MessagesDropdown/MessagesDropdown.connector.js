@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { fetchThreads } from './MessagesDropdown.store.js'
 import { push } from 'react-router-redux'
-import { threadUrl } from 'util/index'
+import { threadUrl } from 'utils/index'
 import { getThreads } from 'components/ThreadList/ThreadList.store'
 import getMe from 'store/selectors/getMe'
 import { FETCH_THREADS } from 'store/constants'

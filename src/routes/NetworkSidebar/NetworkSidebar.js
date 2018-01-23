@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 import Loading from 'components/Loading'
-import { networkSettingsUrl } from 'util/index'
+import { networkSettingsUrl } from 'utils/index'
 
 import './NetworkSidebar.scss'
 

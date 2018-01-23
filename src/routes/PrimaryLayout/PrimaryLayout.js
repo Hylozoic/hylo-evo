@@ -44,7 +44,7 @@ import DownloadAppModal from 'components/DownloadAppModal'
 // import Privacy from 'routes/CreateCommunity/Privacy'
 
 import './PrimaryLayout.scss'
-import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
+import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'utils/scrolling'
 
 export const POST_ID_MATCH_REGEX = '\\d+'
 

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { getSlugInPath } from 'util/index'
+import { getSlugInPath } from 'utils/index'
 import getParam from './getParam'
 
 const isCommunityRoute = createSelector(
