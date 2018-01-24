@@ -28,6 +28,10 @@ export default class MessagesDropdown extends Component {
     this.state = {}
   }
 
+  componentWillMount = () => {
+    this.props.fetchThreads()
+  }
+
   onToggle = nowActive => {
     // TODO this is not quite sufficient -- this value should also be bumped
     // if the current user is in the messages UI, receiving new messages.
