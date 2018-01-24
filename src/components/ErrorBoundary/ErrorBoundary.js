@@ -1,5 +1,6 @@
 import React from 'react'
 import './ErrorBoundary.scss'
+import rollbar from 'client/rollbar'
 
 export default class ErrorBoundary extends React.Component {
   constructor (props) {
@@ -10,8 +11,9 @@ export default class ErrorBoundary extends React.Component {
   componentDidCatch (error, info) {
     // Display fallback UI
     this.setState({hasError: true})
-    // You can also log the error to an error reporting service
-    console.log(error, info)
+
+    // Log to rollbar
+    rollbar.error(error, info)
   }
 
   render () {
