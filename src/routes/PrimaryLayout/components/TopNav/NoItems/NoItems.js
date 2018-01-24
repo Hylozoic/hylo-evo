@@ -1,5 +1,5 @@
 import React from 'react'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle } from 'utils/index'
 import './NoItems.scss'
 
 export default function NoItems ({message}) {

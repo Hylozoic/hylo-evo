@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import { PostPrompt } from 'components/FeedBanner/FeedBanner'
-import { pluralize, communityUrl, allCommunitiesUrl } from 'util/index'
+import { pluralize, communityUrl, allCommunitiesUrl } from 'utils/index'
 import './TopicFeedHeader.scss'
 
 const { string, number, object, shape, func } = PropTypes

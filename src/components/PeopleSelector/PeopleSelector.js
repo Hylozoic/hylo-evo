@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { debounce, throttle } from 'lodash/fp'
 
-import { getKeyCode, keyMap } from 'util/textInput'
+import { getKeyCode, keyMap } from 'utils/textInput'
 import MessageForm from 'components/MessageForm'
 import CloseMessages from 'components/Thread/CloseMessages'
 import PeopleSelectorMatches from './PeopleSelectorMatches'

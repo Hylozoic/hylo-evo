@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { getSubscribedCommunityTopics } from './TopicNavigation.store'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
-import { removePostFromUrl } from 'util/index'
+import { removePostFromUrl } from 'utils/index'
 import { FETCH_POSTS } from 'store/constants'
 import { makeDropQueryResults } from 'store/reducers/queryResults'
 

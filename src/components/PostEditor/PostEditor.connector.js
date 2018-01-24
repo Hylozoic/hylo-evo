@@ -1,7 +1,7 @@
 import { get, isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { postUrl } from 'util/index'
+import { postUrl } from 'utils/index'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getPost, { presentPost } from 'store/selectors/getPost'

@@ -1,7 +1,7 @@
 import React from 'react'
 import './DownloadAppModal.scss'
 import Button from '../Button'
-import { axolotlPhone } from 'util/assets'
+import { axolotlPhone } from 'utils/assets'
 
 export default function DownloadAppModal ({url, header = 'Download the app to use Hylo on mobile!'}) {
   return <div styleName='modal'>

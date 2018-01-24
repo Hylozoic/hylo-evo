@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Button from 'components/Button'
-import { axolotlDigging } from 'util/assets'
+import { axolotlDigging } from 'utils/assets'
 import './TopicSupportComingSoon.scss'
 
 export default function TopicSupportComingSoon () {

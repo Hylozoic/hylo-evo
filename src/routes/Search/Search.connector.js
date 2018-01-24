@@ -15,7 +15,7 @@ import changeQueryParam from 'store/actions/changeQueryParam'
 import getQueryParam from 'store/selectors/getQueryParam'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 import { push } from 'react-router-redux'
-import { postUrl, personUrl } from 'util/index'
+import { postUrl, personUrl } from 'utils/index'
 
 const getSearchResultResults = makeGetQueryResults(FETCH_SEARCH)
 

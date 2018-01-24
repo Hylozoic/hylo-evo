@@ -1,7 +1,7 @@
 import React from 'react'
 import Loading from 'components/Loading'
 import Icon from 'components/Icon'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle } from 'utils/index'
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import ChangeImageButton from 'components/ChangeImageButton'

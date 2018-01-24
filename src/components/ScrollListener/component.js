@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { throttle } from 'lodash/fp'
-import { isAtBottom } from 'util/scrolling'
+import { isAtBottom } from 'utils/scrolling'
 const { func, number, object, string } = PropTypes
 
 export default class ScrollListener extends React.Component {

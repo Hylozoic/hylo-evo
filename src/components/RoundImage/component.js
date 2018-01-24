@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle } from 'utils/index'
 import './component.scss'
 
 const { string, bool } = PropTypes

@@ -1,6 +1,6 @@
 import React from 'react'
 import './ModalSidebar.scss'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle } from 'utils/index'
 
 export default function ModalSidebar ({
   theme = {},

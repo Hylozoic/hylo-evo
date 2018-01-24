@@ -1,7 +1,7 @@
 import { get } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
-import linkMatcher from 'util/linkMatcher'
+import linkMatcher from 'utils/linkMatcher'
 
 export const MODULE_NAME = 'PostEditor'
 export const CREATE_POST = `${MODULE_NAME}/CREATE_POST`

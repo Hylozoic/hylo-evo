@@ -1,5 +1,5 @@
 import qs from 'querystring'
-import { makeUrl } from 'util/navigation'
+import { makeUrl } from 'utils/navigation'
 import { push, replace } from 'react-router-redux'
 
 export default function changeQueryParam (props, key, value, defaultValue, useReplace) {

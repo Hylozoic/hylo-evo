@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import cx from 'classnames'
 import { times, isEmpty } from 'lodash/fp'
 import RemovableListItem from 'components/RemovableListItem'
-import { communityUrl } from 'util/index'
+import { communityUrl } from 'utils/index'
 
 import '../NetworkSettings.scss'
 

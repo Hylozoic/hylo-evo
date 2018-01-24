@@ -3,7 +3,7 @@ import React from 'react'
 import { throttle } from 'lodash'
 import { get } from 'lodash/fp'
 import TextareaAutosize from 'react-textarea-autosize'
-import { onEnterNoShift } from 'util/textInput'
+import { onEnterNoShift } from 'utils/textInput'
 import RoundImage from 'components/RoundImage'
 import './MessageForm.scss'
 var { func, object, string, bool } = PropTypes

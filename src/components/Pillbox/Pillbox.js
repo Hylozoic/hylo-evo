@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styles from './Pillbox.scss'
-import { getKeyCode, keyMap } from 'util/textInput'
+import { getKeyCode, keyMap } from 'utils/textInput'
 import { debounce, includes, isEmpty, delay } from 'lodash'
 import { KeyControlledItemList } from 'components/KeyControlledList'
 import cx from 'classnames'

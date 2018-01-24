@@ -1,7 +1,7 @@
 import { deletePost, removePost, pinPost, getCommunity } from './PostHeader.store'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { removePostFromUrl, postUrl } from 'util/index'
+import { removePostFromUrl, postUrl } from 'utils/index'
 import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {

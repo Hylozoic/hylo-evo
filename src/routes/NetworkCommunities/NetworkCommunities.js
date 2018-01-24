@@ -8,7 +8,7 @@ import TextInput from 'components/TextInput'
 import RoundImage from 'components/RoundImage'
 import { find, get } from 'lodash/fp'
 import ScrollListener from 'components/ScrollListener'
-import { CENTER_COLUMN_ID } from 'util/scrolling'
+import { CENTER_COLUMN_ID } from 'utils/scrolling'
 
 const { string, array, func, object } = PropTypes
 

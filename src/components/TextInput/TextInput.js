@@ -1,6 +1,6 @@
 import React from 'react'
 import './TextInput.scss'
-import { onEnter } from 'util/textInput'
+import { onEnter } from 'utils/textInput'
 import { omit } from 'lodash/fp'
 import Loading from 'components/Loading'
 

@@ -2,7 +2,7 @@ import { mount, shallow, render } from 'enzyme'
 import { MemoryRouter } from 'react-router'
 import React from 'react'
 
-import { keyMap } from 'util/textInput'
+import { keyMap } from 'utils/textInput'
 import PeopleSelector from './PeopleSelector'
 import PersonListItem from 'components/PersonListItem'
 

@@ -5,7 +5,7 @@ import './AccountSettingsTab.scss'
 import Button from 'components/Button'
 import ChangeImageButton from 'components/ChangeImageButton'
 import Loading from 'components/Loading'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle } from 'utils/index'
 import cx from 'classnames'
 import { DEFAULT_BANNER } from 'store/models/Me'
 const { object, func } = PropTypes

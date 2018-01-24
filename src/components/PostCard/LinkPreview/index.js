@@ -1,4 +1,4 @@
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle } from 'utils/index'
 import { parse } from 'url'
 import React from 'react'
 import cx from 'classnames'

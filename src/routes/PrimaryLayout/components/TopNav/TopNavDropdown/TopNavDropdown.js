@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import './TopNavDropdown.scss'
 import cx from 'classnames'
-import { position } from 'util/scrolling'
+import { position } from 'utils/scrolling'
 
 const { func, object, string } = PropTypes
 

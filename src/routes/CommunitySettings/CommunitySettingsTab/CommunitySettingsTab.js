@@ -5,7 +5,7 @@ import Button from 'components/Button'
 import ChangeImageButton from 'components/ChangeImageButton'
 import SettingsControl from 'components/SettingsControl'
 import Loading from 'components/Loading'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle } from 'utils/index'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Community'
 const { object, func } = PropTypes
 

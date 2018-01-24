@@ -5,8 +5,8 @@ import Loading from 'components/Loading'
 import { KeyControlledItemList } from 'components/KeyControlledList'
 import RemovableListItem from 'components/RemovableListItem'
 import { isEmpty, get } from 'lodash/fp'
-import { getKeyCode, keyMap } from 'util/textInput'
-import { personUrl } from 'util/index'
+import { getKeyCode, keyMap } from 'utils/textInput'
+import { personUrl } from 'utils/index'
 
 const { array, func, string } = PropTypes
 

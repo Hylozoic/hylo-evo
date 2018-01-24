@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle } from 'utils/index'
 import ChangeImageButton from 'components/ChangeImageButton'
 import SettingsControl from 'components/SettingsControl'
 import '../NetworkSettings.scss'

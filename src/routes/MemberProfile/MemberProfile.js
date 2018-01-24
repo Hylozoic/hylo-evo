@@ -5,7 +5,7 @@ import { get } from 'lodash/fp'
 import './MemberProfile.scss'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle } from 'utils/index'
 
 import Loading from 'components/Loading'
 import SimpleTabBar from 'components/SimpleTabBar'

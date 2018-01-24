@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import './LinkPreview.scss'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle } from 'utils/index'
 import Icon from 'components/Icon'
 
 export default function LinkPreview ({ className, linkPreview, onClose }) {

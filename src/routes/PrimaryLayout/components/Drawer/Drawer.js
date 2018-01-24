@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { bgImageStyle } from 'util/index'
+import { bgImageStyle } from 'utils/index'
 import Badge from 'components/Badge'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
