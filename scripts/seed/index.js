@@ -16,7 +16,7 @@
 
 import minimist from 'minimist'
 
-import { finalWarning } from './util'
+import { finalWarning } from './utils'
 import seeder from './seeder'
 
 ;(async function seed () {

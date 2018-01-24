@@ -4,7 +4,7 @@ import faker from 'faker'
 import { pick, times } from 'lodash/fp'
 
 import backend from './api'
-import { oneTo } from './util'
+import { oneTo } from './utils'
 
 import { addSkill } from 'routes/Signup/AddSkills/AddSkills.store'
 import { createCommunity } from 'routes/CreateCommunity/Review/Review.store'
@@ -56,10 +56,10 @@ export default async function users (page) {
   ]
 
   for (let user of userBatch) {
-    process.stdout.write('\n  Creating user and logging in, ')
+    process.stdout.write('\n  Creating user, logging in, ')
     await api.request('/noo/user', user)
 
-    process.stdout.write('faking their data, ')
+    process.stdout.write('faking data, ')
     const fields = pick([
       'avatarUrl',
       'bannerUrl',
@@ -75,41 +75,20 @@ export default async function users (page) {
     const person = await api.graphql(updateUserSettings(fields))
     user.id = person.data.updateMe.id
 
-    process.stdout.write('adding skills, ')
+    process.stdout.write('skills, ')
     for (let skill of user.skills || []) {
       await api.graphql(addSkill(skill))
     }
 
     if (Math.random() < USER_COMMUNITY_CHANCE || user.email.endsWith('@hylo.com')) {
-      process.stdout.write('creating community, ')
-      await api.graphql(createCommunity(user.community.name, user.community.slug))
+      process.stdout.write('community, ')
+      const community = await api.graphql(createCommunity(user.community.name, user.community.slug))
+      user.community.id = community.data.createCommunity.community.id
     }
 
-    process.stdout.write('and logging out.')
+    process.stdout.write('logging out. ✓')
     await api.logout()
   }
 
-  // Now we need to update the rest. Relevant files:
-  //  - Signup/AddSkills/AddSkills.store
-  //  - store/updateUserSettings
-  // for (let user of userBatch) {
-  //   const fields = pick([
-  //     'avatarUrl',
-  //     'bannerUrl',
-  //     'bio',
-  //     'extraInfo',
-  //     'facebookUrl',
-  //     'firstName',
-  //     'intention',
-  //     'linkedinUrl',
-  //     'location',
-  //     'twitterName',
-  //     'work',
-  //     'url'
-  //   ], user)
-  //   const encodedQuery = encodeUriComponent(updateUserSettings(
-  //   query(
-  // }
-  //
   return userBatch
 }

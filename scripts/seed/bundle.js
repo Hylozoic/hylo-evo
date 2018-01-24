@@ -60,22 +60,34 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+module.exports = require("redux-orm");
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash/fp");
+
+/***/ }),
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["b"] = finalWarning;
-/* unused harmony export getValue */
+/* harmony export (immutable) */ __webpack_exports__["c"] = getValue;
 /* unused harmony export hitEnter */
 /* harmony export (immutable) */ __webpack_exports__["a"] = fatalErrorMsg;
-/* harmony export (immutable) */ __webpack_exports__["c"] = oneTo;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_readline__ = __webpack_require__(4);
+/* harmony export (immutable) */ __webpack_exports__["d"] = oneTo;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_readline__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_readline___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_readline__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_stream__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_stream__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_stream___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_stream__);
 /* global API_URI, GRAPHQL_URI */
 
@@ -153,22 +165,59 @@ function oneTo (n) {
 
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = __webpack_require__(2);
+"use strict";
+/* global API_URI, GRAPHQL_URI */
+
+const api = page => ({
+  async apiRequest (uri, payload) {
+    await page.setRequestInterception(true)
+    page.once('request', request =>
+      request.continue({
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        postData: JSON.stringify(payload)
+      })
+    )
+    const res = await page.goto(uri)
+    await page.setRequestInterception(false)
+    return JSON.parse(await res.text())
+  },
+
+  async graphql (action) {
+    return this.apiRequest('http://localhost:3001/noo/graphql', action.graphql)
+  },
+
+  async logout () {
+    return page.goto(`${'http://localhost:3001'}/noo/logout`)
+  },
+
+  async request (endpoint, json) {
+    return this.apiRequest(`${'http://localhost:3001'}${endpoint}`, json)
+  }
+})
+
+/* harmony default export */ __webpack_exports__["a"] = (api);
 
 
 /***/ }),
-/* 2 */
+/* 4 */
+/***/ (function(module, exports) {
+
+module.exports = require("faker");
+
+/***/ }),
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_minimist__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_minimist__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_minimist___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_minimist__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__seeder__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__seeder__ = __webpack_require__(9);
 // Populate a development database with faked data using the same GraphQL the client uses.
 //
 // Motivation: our previous seed script... kind of worked, but quickly became out of date
@@ -232,58 +281,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     default:
       console.log(WARNING)
-      await Object(__WEBPACK_IMPORTED_MODULE_1__util__["b" /* finalWarning */])(EXTRA_EXTRA_WARNING)
+      await Object(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* finalWarning */])(EXTRA_EXTRA_WARNING)
       Object(__WEBPACK_IMPORTED_MODULE_2__seeder__["a" /* default */])()
   }
 })()
 
 
 /***/ }),
-/* 3 */
+/* 6 */
 /***/ (function(module, exports) {
 
 module.exports = require("minimist");
 
 /***/ }),
-/* 4 */
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = require("readline");
 
 /***/ }),
-/* 5 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = require("stream");
 
 /***/ }),
-/* 6 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = seeder;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_puppeteer__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_puppeteer__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_puppeteer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_puppeteer__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__admin__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__comments__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__communities__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__posts__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__users__ = __webpack_require__(46);
 
 
 
 
 
-// const networks = require('./networks')
-// const communities = require('./communities')
-// const posts = require('./posts')
 
-const ADMIN_LOGIN_MESSAGE = `
-  This script requires an admin login. Any Hylo developer should have one of
-  these: you just need an @hylo.com email. The script delivers your password
-  to the server using headless Chrome and then should be promptly GC'd out of
-  existence. It doesn't get cached or written anywhere.
 
-  (The admin login is completely separate to Hylo user accounts, so we can do
-  it without a single user in the database which is handy.)
-`
+
+
 const BE_PATIENT = `
   This will take awhile (API requests issued sequentially). If you're not sure
   if everything is still working, you can always check the backend log output
@@ -291,12 +335,6 @@ const BE_PATIENT = `
 `
 
 async function seeder () {
-  // First, we need an admin login.
-  // console.log(ADMIN_LOGIN_MESSAGE)
-  // const email = await getValue('    Hylo email: ')
-  // const password = await getValue('    Password: ', true)
-  // process.stdout.write('\n\n  Authenticating you with Google...')
-  //
   let browser
   let page
 
@@ -311,59 +349,1574 @@ async function seeder () {
     page = await browser.newPage()
     await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3264.0 Safari/537.36')
 
-    // Google auth
-    // await page.goto('http://localhost:3001/noo/admin/login')
-    // await page.waitForNavigation()
-    // await page.keyboard.type(email)
-    // await page.click('#identifierNext')
-    //
-    // If you're having difficulties logging in, try increasing this from 2s
-    // await page.waitFor(2 * 1000)
-    //
-    // await page.keyboard.type(password)
-    // await page.click('#passwordNext')
-    // await page.waitForNavigation()
-    //
-    // Great, now we should be authenticated. We can start sending POST requests
-    // to the GraphQL endpoint.
-    // process.stdout.write(' ✓')
-
     process.stdout.write(`\n  ${BE_PATIENT}`)
-    await Object(__WEBPACK_IMPORTED_MODULE_2__users__["a" /* default */])(page)
+
+    // userBatch is gradually modified: definitely not immutable!
+    const userBatch = await Object(__WEBPACK_IMPORTED_MODULE_6__users__["a" /* default */])(page)
+    await Object(__WEBPACK_IMPORTED_MODULE_1__admin__["a" /* default */])(page)
+    await Object(__WEBPACK_IMPORTED_MODULE_3__communities__["a" /* default */])(page, userBatch)
+    const postBatch = await Object(__WEBPACK_IMPORTED_MODULE_5__posts__["a" /* default */])(page, userBatch)
+    await Object(__WEBPACK_IMPORTED_MODULE_2__comments__["a" /* default */])(page, userBatch, postBatch)
 
     await page.close()
     await browser.close()
   } catch (e) {
     if (page) await page.close()
     if (browser) await browser.close()
-    Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* fatalErrorMsg */])(e)
+    console.log(e)
+    Object(__WEBPACK_IMPORTED_MODULE_4__utils__["a" /* fatalErrorMsg */])(e)
   }
 }
 
 
 /***/ }),
-/* 7 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = require("puppeteer");
 
 /***/ }),
-/* 8 */
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = admin;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(2);
+
+
+const ADMIN_LOGIN_MESSAGE = `
+  This script requires an admin login. Any Hylo developer should have one of
+  these: you just need an @hylo.com email. The script delivers your password
+  to the server using headless Chrome and then should be promptly GC'd out of
+  existence. It doesn't get cached or written anywhere.
+
+  (The admin login is completely separate to Hylo user accounts, so we can do
+  it without a single user in the database which is handy.)
+`
+
+async function admin (page) {
+  console.log(`\n${ADMIN_LOGIN_MESSAGE}`)
+  const email = await Object(__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* getValue */])('    Hylo email: ')
+  const password = await Object(__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* getValue */])('    Password: ', true)
+  process.stdout.write('\n\n  Authenticating you with Google...')
+
+  // Google auth
+  await page.goto('http://localhost:3001/noo/admin/login')
+  await page.waitForNavigation()
+  await page.keyboard.type(email)
+  await page.click('#identifierNext')
+
+  // If you're having difficulties logging in, try increasing this from 2s
+  await page.waitFor(2 * 1000)
+
+  await page.keyboard.type(password)
+  await page.click('#passwordNext')
+  await page.waitForNavigation()
+  process.stdout.write(' ✓')
+}
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = seedComments;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_faker__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_faker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_faker__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_routes_PostDetail_Comments_Comment_Comment_store__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_routes_PostDetail_Comments_Comment_Comment_store___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_routes_PostDetail_Comments_Comment_Comment_store__);
+/* global COMMENT_COUNT */
+
+
+
+
+
+async function seedComments (page, userBatch, postBatch) {
+  const api = Object(__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */])(page)
+
+  const communities = userBatch.reduce((acc, user) => {
+    if (user.community.id) {
+      return [ ...acc, user.community ]
+    }
+    return acc
+  }, [])
+
+  for (let community of communities) {
+    const posts = postBatch.filter(p => {
+      console.log(p.communities)
+      return true
+    })
+    // process.stdout.write(`\n  Adding posts to ${community.name}...`)
+    // const members = userBatch.reduce((acc, user) => {
+    //   if (user.memberships.includes(community.id) || user.community.id === community.id) {
+    //     return [ ...acc, user ]
+    //   }
+    //   return acc
+    // }, [])
+    //
+    // // This is slow, with a lot of logging in and out, but it means no two posts
+    // // from each user are adjacent. Shame there's no easy way to fake the
+    // // timestamps though...
+    // for (let i = 0; i < POST_COUNT; i++) {
+    //   for (let member of members) {
+    //     // Let the login dance begin!
+    //     await api.request('/noo/login', member)
+    //     const post = await api.graphql(createPost({
+    //       type: 'discussion',
+    //       title: faker.lorem.sentence(),
+    //       details: faker.lorem.paragraph(),
+    //       communities: [ community ]
+    //     }))
+    //     posts.push(post)
+    //     await api.logout()
+    //   }
+    // }
+    //
+    // process.stdout.write(' ✓')
+  }
+
+  return null
+}
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.deleteComment = deleteComment;
+var MODULE_NAME = exports.MODULE_NAME = 'Comment';
+var DELETE_COMMENT = exports.DELETE_COMMENT = MODULE_NAME + '/DELETE_COMMENT';
+var DELETE_COMMENT_PENDING = exports.DELETE_COMMENT_PENDING = DELETE_COMMENT + '_PENDING';
+
+function deleteComment(id) {
+  return {
+    type: DELETE_COMMENT,
+    graphql: {
+      query: 'mutation ($id: ID) {\n        deleteComment(id: $id) {\n          success\n        }\n      }',
+      variables: {
+        id: id
+      }
+    },
+    meta: {
+      optimistic: true,
+      id: id
+    }
+  };
+}
+
+/***/ }),
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = seedCommunities;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_fp__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_fp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash_fp__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api__ = __webpack_require__(3);
+/* global MEMBER_COUNT */
+
+
+
+
+
+async function seedCommunities (page, userBatch) {
+  const api = Object(__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */])(page)
+
+  // Only use communities with an ID
+  const communities = userBatch.reduce((acc, user) => {
+    if (user.community.id) {
+      return [ ...acc, user.community ]
+    }
+    return acc
+  }, [])
+
+  for (let community of communities) {
+    process.stdout.write(`\n  Adding members to ${community.name}...`)
+    const members = Object(__WEBPACK_IMPORTED_MODULE_0_lodash_fp__["sampleSize"])(5, userBatch)
+
+    for (let member of members) {
+      // Don't add if they're the owner
+      if (community.id === member.community.id) continue
+
+      // This one isn't in the front-end yet, exposed as an admin-only mutation
+      // on the server.
+      const mutation = {
+        graphql: {
+          query: `mutation { 
+            addMemberToCommunity (personId: ${member.id}, communityId: ${community.id}) {
+              community {
+                id
+              }
+            }
+          }`
+        }
+      }
+      const membership = await api.graphql(mutation)
+      if (!member.memberships) member.memberships = []
+      member.memberships.push(membership.data.addMemberToCommunity.community.id)
+    }
+    process.stdout.write(' ✓')
+  }
+
+  // Don't let anyone through without being a member of at least one community:
+  // if they don't have any, add 'em to the first one, usually test-community.
+  userBatch
+    .filter(u => !u.memberships)
+    .forEach(u => { u.memberships = [ communities[0].id ] })
+}
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = seedPosts;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_faker__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_faker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_faker__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_components_PostEditor_PostEditor_store__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_components_PostEditor_PostEditor_store___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_components_PostEditor_PostEditor_store__);
+/* global POST_COUNT */
+
+
+
+
+
+async function seedPosts (page, userBatch) {
+  const api = Object(__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */])(page)
+
+  // Only use communities with an ID
+  const communities = userBatch.reduce((acc, user) => {
+    if (user.community.id) {
+      return [ ...acc, user.community ]
+    }
+    return acc
+  }, [])
+
+  const posts = []
+  for (let community of communities) {
+    process.stdout.write(`\n  Adding posts to ${community.name}...`)
+    const members = userBatch.reduce((acc, user) => {
+      console.log('u', user)
+      if (user.memberships.includes(community.id) || user.community.id === community.id) {
+        return [ ...acc, user ]
+      }
+      return acc
+    }, [])
+
+    // This is slow, with a lot of logging in and out, but it means no two posts
+    // from each user are adjacent. Shame there's no easy way to fake the
+    // timestamps though...
+    for (let i = 0; i < 3; i++) {
+      for (let member of members) {
+        // Let the login dance begin!
+        await api.request('/noo/login', member)
+        const post = await api.graphql(Object(__WEBPACK_IMPORTED_MODULE_2_components_PostEditor_PostEditor_store__["createPost"])({
+          type: 'discussion',
+          title: __WEBPACK_IMPORTED_MODULE_0_faker___default.a.lorem.sentence(),
+          details: __WEBPACK_IMPORTED_MODULE_0_faker___default.a.lorem.paragraph(),
+          communities: [ community ]
+        }))
+        posts.push(post)
+        await api.logout()
+      }
+    }
+
+    process.stdout.write(' ✓')
+  }
+
+  return posts
+}
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.defaultState = exports.getLinkPreview = exports.CLEAR_LINK_PREVIEW = exports.REMOVE_LINK_PREVIEW = exports.FETCH_LINK_PREVIEW = exports.UPDATE_POST_PENDING = exports.UPDATE_POST = exports.CREATE_POST = exports.MODULE_NAME = undefined;
+exports.createPost = createPost;
+exports.updatePost = updatePost;
+exports.fetchLinkPreview = fetchLinkPreview;
+exports.pollingFetchLinkPreview = pollingFetchLinkPreview;
+exports.removeLinkPreview = removeLinkPreview;
+exports.clearLinkPreview = clearLinkPreview;
+exports.default = reducer;
+
+var _fp = __webpack_require__(1);
+
+var _reduxOrm = __webpack_require__(0);
+
+var _models = __webpack_require__(17);
+
+var _models2 = _interopRequireDefault(_models);
+
+var _linkMatcher = __webpack_require__(43);
+
+var _linkMatcher2 = _interopRequireDefault(_linkMatcher);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MODULE_NAME = exports.MODULE_NAME = 'PostEditor';
+var CREATE_POST = exports.CREATE_POST = MODULE_NAME + '/CREATE_POST';
+var UPDATE_POST = exports.UPDATE_POST = MODULE_NAME + '/UPDATE_POST';
+var UPDATE_POST_PENDING = exports.UPDATE_POST_PENDING = UPDATE_POST + '_PENDING';
+var FETCH_LINK_PREVIEW = exports.FETCH_LINK_PREVIEW = MODULE_NAME + '/FETCH_LINK_PREVIEW';
+var REMOVE_LINK_PREVIEW = exports.REMOVE_LINK_PREVIEW = MODULE_NAME + '/REMOVE_LINK_PREVIEW';
+var CLEAR_LINK_PREVIEW = exports.CLEAR_LINK_PREVIEW = MODULE_NAME + '/CLEAR_LINK_PREVIEW';
+
+// Actions
+
+function createPost(post) {
+  var type = post.type,
+      title = post.title,
+      details = post.details,
+      communities = post.communities,
+      linkPreview = post.linkPreview,
+      imageUrls = post.imageUrls,
+      fileUrls = post.fileUrls;
+
+  var linkPreviewId = linkPreview && linkPreview.id;
+  var communityIds = communities.map(function (c) {
+    return c.id;
+  });
+  return {
+    type: CREATE_POST,
+    graphql: {
+      query: 'mutation (\n        $type: String,\n        $title: String,\n        $details: String,\n        $linkPreviewId: String,\n        $communityIds: [String],\n        $imageUrls: [String],\n        $fileUrls: [String]\n      ) {\n        createPost(data: {\n          type: $type,\n          title: $title,\n          details: $details,\n          linkPreviewId: $linkPreviewId,\n          communityIds: $communityIds,\n          imageUrls: $imageUrls,\n          fileUrls: $fileUrls\n        }) {\n          id\n          type\n          title\n          details\n          commentersTotal\n          communities {\n            id\n            name\n            slug\n          }\n          creator {\n            id\n          }\n          linkPreview {\n            id\n          }\n          attachments {\n            id\n            type\n            url\n            position\n          }\n        }\n      }',
+      variables: {
+        type: type,
+        title: title,
+        details: details,
+        linkPreviewId: linkPreviewId,
+        communityIds: communityIds,
+        imageUrls: imageUrls,
+        fileUrls: fileUrls
+      }
+    },
+    meta: { extractModel: 'Post' }
+  };
+}
+
+function updatePost(post) {
+  var id = post.id,
+      type = post.type,
+      title = post.title,
+      details = post.details,
+      communities = post.communities,
+      linkPreview = post.linkPreview,
+      imageUrls = post.imageUrls,
+      fileUrls = post.fileUrls;
+
+  var linkPreviewId = linkPreview && linkPreview.id;
+  var communityIds = communities.map(function (c) {
+    return c.id;
+  });
+  return {
+    type: UPDATE_POST,
+    graphql: {
+      query: 'mutation (\n        $id: ID,\n        $type: String,\n        $title: String,\n        $details: String,\n        $linkPreviewId: String,\n        $communityIds: [String],\n        $imageUrls: [String],\n        $fileUrls: [String]\n      ) {\n        updatePost(id: $id, data: {\n          type: $type,\n          title: $title,\n          details: $details,\n          linkPreviewId: $linkPreviewId,\n          communityIds: $communityIds,\n          imageUrls: $imageUrls,\n          fileUrls: $fileUrls\n        }) {\n          id\n          type\n          title\n          details\n          linkPreview {\n            id\n          }\n          communities {\n            id\n            name\n            slug\n          }\n          attachments {\n            id\n            type\n            url\n            position\n          }\n        }\n      }',
+      variables: {
+        id: id,
+        type: type,
+        title: title,
+        details: details,
+        linkPreviewId: linkPreviewId,
+        communityIds: communityIds,
+        imageUrls: imageUrls,
+        fileUrls: fileUrls
+      }
+    },
+    meta: {
+      id: id,
+      extractModel: {
+        modelName: 'Post',
+        getRoot: (0, _fp.get)('updatePost'),
+        append: false
+      },
+      optimistic: true
+    }
+  };
+}
+
+function fetchLinkPreview(url) {
+  return {
+    type: FETCH_LINK_PREVIEW,
+    graphql: {
+      query: 'mutation ($url: String) {\n        findOrCreateLinkPreviewByUrl(data: {url: $url}) {\n          id\n          url\n          imageUrl\n          title\n          description\n          imageWidth\n          imageHeight\n          status\n        }\n      }',
+      variables: {
+        url: url
+      }
+    },
+    meta: {
+      extractModel: {
+        modelName: 'LinkPreview',
+        getRoot: (0, _fp.get)('findOrCreateLinkPreviewByUrl')
+      }
+    }
+  };
+}
+
+function pollingFetchLinkPreview(dispatch, htmlContent) {
+  var poll = function poll(url, delay) {
+    if (delay > 4) return;
+    dispatch(fetchLinkPreview(url)).then(function (value) {
+      if (!value) return;
+      var linkPreviewFound = value.meta.extractModel.getRoot(value.payload.data);
+      if (!linkPreviewFound) {
+        setTimeout(function () {
+          return poll(url, delay * 2);
+        }, delay * 1000);
+      }
+    });
+  };
+  if (_linkMatcher2.default.test(htmlContent)) {
+    var urlMatch = _linkMatcher2.default.match(htmlContent)[0].url;
+    poll(urlMatch, 0.5);
+  }
+}
+
+function removeLinkPreview() {
+  return { type: REMOVE_LINK_PREVIEW };
+}
+
+function clearLinkPreview() {
+  return { type: CLEAR_LINK_PREVIEW };
+}
+
+// Selectors
+
+var getLinkPreview = exports.getLinkPreview = (0, _reduxOrm.createSelector)(_models2.default, function (state) {
+  return state.orm;
+}, function (state) {
+  return state[MODULE_NAME];
+}, function (_ref, _ref2) {
+  var LinkPreview = _ref.LinkPreview;
+  var linkPreviewId = _ref2.linkPreviewId;
+  return LinkPreview.hasId(linkPreviewId) ? LinkPreview.withId(linkPreviewId).ref : null;
+});
+
+// Reducer
+
+var defaultState = exports.defaultState = {
+  linkPreviewId: null,
+  linkPreviewStatus: null
+};
+
+function reducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
+  var action = arguments[1];
+  var error = action.error,
+      type = action.type,
+      payload = action.payload,
+      meta = action.meta;
+
+  if (error) return state;
+
+  switch (type) {
+    case FETCH_LINK_PREVIEW:
+      var linkPreview = meta.extractModel.getRoot(payload.data);
+      if (linkPreview && !linkPreview.title) {
+        return Object.assign({}, state, { linkPreviewId: null, linkPreviewStatus: 'invalid' });
+      }
+      return Object.assign({}, state, { linkPreviewId: (0, _fp.get)('id')(linkPreview), linkPreviewStatus: null });
+    case REMOVE_LINK_PREVIEW:
+      return Object.assign({}, state, { linkPreviewId: null, linkPreviewStatus: 'removed' });
+    case CLEAR_LINK_PREVIEW:
+      return Object.assign({}, state, { linkPreviewId: null, linkPreviewStatus: 'cleared' });
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.orm = undefined;
+
+var _reduxOrm = __webpack_require__(0);
+
+__webpack_require__(18);
+
+var _Activity = __webpack_require__(22);
+
+var _Activity2 = _interopRequireDefault(_Activity);
+
+var _Attachment = __webpack_require__(23);
+
+var _Attachment2 = _interopRequireDefault(_Attachment);
+
+var _Comment = __webpack_require__(24);
+
+var _Comment2 = _interopRequireDefault(_Comment);
+
+var _Community = __webpack_require__(25);
+
+var _Community2 = _interopRequireDefault(_Community);
+
+var _CommunityTopic = __webpack_require__(26);
+
+var _CommunityTopic2 = _interopRequireDefault(_CommunityTopic);
+
+var _Invitation = __webpack_require__(27);
+
+var _Invitation2 = _interopRequireDefault(_Invitation);
+
+var _LinkPreview = __webpack_require__(28);
+
+var _LinkPreview2 = _interopRequireDefault(_LinkPreview);
+
+var _Me = __webpack_require__(29);
+
+var _Me2 = _interopRequireDefault(_Me);
+
+var _Membership = __webpack_require__(30);
+
+var _Membership2 = _interopRequireDefault(_Membership);
+
+var _Message = __webpack_require__(31);
+
+var _Message2 = _interopRequireDefault(_Message);
+
+var _MessageThread = __webpack_require__(32);
+
+var _MessageThread2 = _interopRequireDefault(_MessageThread);
+
+var _Network = __webpack_require__(33);
+
+var _Network2 = _interopRequireDefault(_Network);
+
+var _Notification = __webpack_require__(34);
+
+var _Notification2 = _interopRequireDefault(_Notification);
+
+var _Person = __webpack_require__(35);
+
+var _Person2 = _interopRequireDefault(_Person);
+
+var _PersonConnection = __webpack_require__(36);
+
+var _PersonConnection2 = _interopRequireDefault(_PersonConnection);
+
+var _Post = __webpack_require__(37);
+
+var _Post2 = _interopRequireDefault(_Post);
+
+var _PostMembership = __webpack_require__(38);
+
+var _PostMembership2 = _interopRequireDefault(_PostMembership);
+
+var _SearchResult = __webpack_require__(39);
+
+var _SearchResult2 = _interopRequireDefault(_SearchResult);
+
+var _Skill = __webpack_require__(40);
+
+var _Skill2 = _interopRequireDefault(_Skill);
+
+var _Topic = __webpack_require__(41);
+
+var _Topic2 = _interopRequireDefault(_Topic);
+
+var _Vote = __webpack_require__(42);
+
+var _Vote2 = _interopRequireDefault(_Vote);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var orm = exports.orm = new _reduxOrm.ORM();
+orm.register(_Activity2.default, _Attachment2.default, _Comment2.default, _Community2.default, _Community.CommunityModerator, _CommunityTopic2.default, _Invitation2.default, _LinkPreview2.default, _Me2.default, _Membership2.default, _Message2.default, _MessageThread2.default, _Network2.default, _Network.NetworkModerator, _Notification2.default, _Person2.default, _PersonConnection2.default, _Post2.default, _Post.PostCommenter, _Post.PostFollower, _PostMembership2.default, _SearchResult2.default, _Skill2.default, _Topic2.default, _Vote2.default);
+
+exports.default = orm;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _reduxOrm = __webpack_require__(0);
+
+var _fields = __webpack_require__(19);
+
+var _utils = __webpack_require__(20);
+
+var _lodash = __webpack_require__(21);
+
+_reduxOrm.Model.safeGet = function (matchObj) {
+  var result = void 0;
+  try {
+    result = this.get(matchObj);
+  } catch (e) {
+    result = null;
+  }
+  return result;
+};
+
+_reduxOrm.Model.prototype.updateAppending = function (attrs) {
+  var _this = this;
+
+  return this.update((0, _lodash.mapValues)(attrs, function (val, key) {
+    if (!val) return val;
+    var field = _this.constructor.fields[key];
+    if (!(field && field instanceof _fields.ManyToMany)) return val;
+
+    var existingIds = _this[key].toRefArray().map(function (x) {
+      return x.id;
+    });
+    return (0, _lodash.uniq)(existingIds.concat(val.map(_utils.normalizeEntity)));
+  }));
+};
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+module.exports = require("redux-orm/lib/fields");
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+module.exports = require("redux-orm/lib/utils");
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash");
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reduxOrm = __webpack_require__(0);
+
+var Activity = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'Message: ' + this.id;
+  }
+});
+
+exports.default = Activity;
+
+
+Activity.modelName = 'Activity';
+
+Activity.fields = {
+  id: (0, _reduxOrm.attr)(),
+  actor: (0, _reduxOrm.fk)('Person'),
+  post: (0, _reduxOrm.fk)('Post'),
+  comment: (0, _reduxOrm.fk)('Comment'),
+  unread: (0, _reduxOrm.attr)(),
+  action: (0, _reduxOrm.attr)(),
+  meta: (0, _reduxOrm.attr)()
+};
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reduxOrm = __webpack_require__(0);
+
+var Attachment = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'Attachment (' + this.type + '): ' + this.name;
+  }
+});
+
+exports.default = Attachment;
+
+
+Attachment.modelName = 'Attachment';
+
+Attachment.fields = {
+  id: (0, _reduxOrm.attr)(),
+  type: (0, _reduxOrm.attr)(),
+  position: (0, _reduxOrm.attr)(),
+  url: (0, _reduxOrm.attr)(),
+  thumbnailUrl: (0, _reduxOrm.attr)(),
+  post: (0, _reduxOrm.fk)('Post', 'attachments'),
+  comment: (0, _reduxOrm.fk)('Comment', 'attachments'),
+  createdAt: (0, _reduxOrm.attr)()
+};
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reduxOrm = __webpack_require__(0);
+
+var Comment = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'Comment: ' + this.name;
+  }
+});
+
+exports.default = Comment;
+
+
+Comment.modelName = 'Comment';
+
+Comment.fields = {
+  id: (0, _reduxOrm.attr)(),
+  text: (0, _reduxOrm.attr)(),
+  creator: (0, _reduxOrm.fk)('Person', 'comments'),
+  post: (0, _reduxOrm.fk)('Post', 'comments'),
+  createdAt: (0, _reduxOrm.attr)()
+};
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ALL_COMMUNITIES_AVATAR_PATH = exports.ALL_COMMUNITIES_ID = exports.DEFAULT_AVATAR = exports.DEFAULT_BANNER = exports.CommunityModerator = undefined;
+
+var _reduxOrm = __webpack_require__(0);
+
+var CommunityModerator = exports.CommunityModerator = _reduxOrm.Model.createClass({});
+CommunityModerator.modelName = 'CommunityModerator';
+CommunityModerator.fields = {
+  community: (0, _reduxOrm.fk)('Community', 'communitymoderators'),
+  moderator: (0, _reduxOrm.fk)('Person', 'communitymoderators')
+};
+
+var Community = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'Community: ' + this.name;
+  }
+});
+
+exports.default = Community;
+
+
+Community.modelName = 'Community';
+
+Community.fields = {
+  id: (0, _reduxOrm.attr)(),
+  name: (0, _reduxOrm.attr)(),
+  members: (0, _reduxOrm.many)('Person'),
+  moderators: (0, _reduxOrm.many)({
+    to: 'Person',
+    relatedName: 'moderatedCommunities',
+    through: 'CommunityModerator',
+    throughFields: ['community', 'moderator']
+  }),
+  network: (0, _reduxOrm.fk)('Network'),
+  posts: (0, _reduxOrm.many)('Post'),
+  postCount: (0, _reduxOrm.attr)(),
+  feedOrder: (0, _reduxOrm.attr)()
+};
+
+var DEFAULT_BANNER = exports.DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg';
+var DEFAULT_AVATAR = exports.DEFAULT_AVATAR = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png';
+
+var ALL_COMMUNITIES_ID = exports.ALL_COMMUNITIES_ID = 'all-communities';
+
+var ALL_COMMUNITIES_AVATAR_PATH = exports.ALL_COMMUNITIES_AVATAR_PATH = '/assets/white-merkaba.png';
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reduxOrm = __webpack_require__(0);
+
+var CommunityTopic = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'CommunityTopic: ' + this.topic;
+  }
+});
+
+exports.default = CommunityTopic;
+
+
+CommunityTopic.modelName = 'CommunityTopic';
+
+CommunityTopic.fields = {
+  id: (0, _reduxOrm.attr)(),
+  topic: (0, _reduxOrm.fk)('Topic', 'communityTopics'),
+  community: (0, _reduxOrm.fk)('Community', 'communityTopics'),
+  postsTotal: (0, _reduxOrm.attr)(),
+  followersTotal: (0, _reduxOrm.attr)()
+};
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reduxOrm = __webpack_require__(0);
+
+var Invitation = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'Invitation: ' + this.id;
+  }
+});
+
+exports.default = Invitation;
+
+
+Invitation.modelName = 'Invitation';
+Invitation.fields = {
+  id: (0, _reduxOrm.attr)(),
+  email: (0, _reduxOrm.attr)(),
+  createdAt: (0, _reduxOrm.attr)(),
+  lastSentAt: (0, _reduxOrm.attr)(),
+  resent: (0, _reduxOrm.attr)(),
+  community: (0, _reduxOrm.fk)('Community', 'pendingInvitations')
+};
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reduxOrm = __webpack_require__(0);
+
+var LinkPreview = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'LinkPreview: ' + this.title;
+  }
+});
+
+exports.default = LinkPreview;
+
+
+LinkPreview.modelName = 'LinkPreview';
+
+LinkPreview.fields = {
+  id: (0, _reduxOrm.attr)()
+};
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DEFAULT_BANNER = undefined;
+
+var _reduxOrm = __webpack_require__(0);
+
+var _fp = __webpack_require__(1);
+
+var Me = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'Me: ' + this.name;
+  },
+  firstName: function firstName() {
+    return this.name ? this.name.split(' ')[0] : null;
+  },
+  canModerate: function canModerate(community) {
+    var memberships = this.memberships.toRefArray ? this.memberships.toRefArray() : this.memberships;
+    var membership = (0, _fp.find)(function (m) {
+      return m.community === (0, _fp.get)('id', community);
+    }, memberships);
+    return (0, _fp.get)('hasModeratorRole', membership);
+  }
+});
+
+exports.default = Me;
+
+
+Me.modelName = 'Me';
+Me.fields = {
+  isAdmin: (0, _reduxOrm.attr)(),
+  name: (0, _reduxOrm.attr)(),
+  posts: (0, _reduxOrm.many)('Post'),
+
+  // strictly speaking, a membership belongs to a single person, so it's not a
+  // many-to-many relationship. but putting this here ensures that when we have
+  // a query on the current user that contains memberships, the data will be
+  // properly extracted and stored for the user.
+  memberships: (0, _reduxOrm.many)('Membership'),
+
+  messageThreads: (0, _reduxOrm.many)('MessageThread'),
+  notifications: (0, _reduxOrm.many)('Notification'),
+  skills: (0, _reduxOrm.many)('Skill')
+};
+
+var DEFAULT_BANNER = exports.DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_user_banner.jpg';
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reduxOrm = __webpack_require__(0);
+
+var Membership = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'Membership: ' + this.id;
+  }
+});
+
+exports.default = Membership;
+
+
+Membership.modelName = 'Membership';
+Membership.fields = {
+  id: (0, _reduxOrm.attr)(),
+  community: (0, _reduxOrm.fk)('Community', 'memberships'),
+  person: (0, _reduxOrm.fk)('Person', 'memberships'),
+  newPostCount: (0, _reduxOrm.attr)()
+};
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reduxOrm = __webpack_require__(0);
+
+var Message = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'Message: ' + this.id;
+  }
+});
+
+exports.default = Message;
+
+
+Message.modelName = 'Message';
+
+Message.fields = {
+  id: (0, _reduxOrm.attr)(),
+  text: (0, _reduxOrm.attr)(),
+  creator: (0, _reduxOrm.fk)('Person'),
+  createdAt: (0, _reduxOrm.attr)(),
+  messageThread: (0, _reduxOrm.fk)('MessageThread', 'messages')
+};
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.others = others;
+exports.formatNames = formatNames;
+
+var _reduxOrm = __webpack_require__(0);
+
+var _fp = __webpack_require__(1);
+
+var MessageThread = _reduxOrm.Model.createClass({
+  isUnread: function isUnread() {
+    return new Date(this.lastReadAt) < new Date(this.updatedAt);
+  },
+  isUpdatedSince: function isUpdatedSince(date) {
+    return new Date(this.updatedAt) > date;
+  },
+  toString: function toString() {
+    return 'MessageThread: ' + this.id;
+  },
+  newMessageReceived: function newMessageReceived(bumpUnreadCount) {
+    var update = bumpUnreadCount ? { unreadCount: this.unreadCount + 1, updatedAt: new Date().toString() } : { updatedAt: new Date().toString() };
+    this.update(update);
+    return this;
+  },
+  markAsRead: function markAsRead() {
+    this.update({
+      unreadCount: 0,
+      lastReadAt: new Date().toString()
+    });
+    return this;
+  },
+  participantAttributes: function participantAttributes(currentUser, maxShown) {
+    var currentUserId = (0, _fp.get)('id', currentUser);
+    var participants = this.participants.toRefArray().filter(function (p) {
+      return p.id !== currentUserId;
+    });
+    var names, avatarUrls;
+
+    if ((0, _fp.isEmpty)(participants)) {
+      avatarUrls = [(0, _fp.get)('avatarUrl', currentUser)];
+      names = 'You';
+    } else {
+      avatarUrls = participants.map(function (p) {
+        return p.avatarUrl;
+      });
+      names = formatNames(participants.map(function (p) {
+        return p.name;
+      }), maxShown);
+    }
+
+    return { names: names, avatarUrls: avatarUrls };
+  }
+});
+
+function others(n) {
+  if (n < 0) {
+    return '';
+  } else if (n === 1) {
+    return '1 other';
+  } else {
+    return n + ' others';
+  }
+}
+
+function formatNames(names, maxShown) {
+  var length = names.length;
+  var truncatedNames = maxShown && maxShown < length ? names.slice(0, maxShown).concat([others(length - maxShown)]) : names;
+
+  var last = truncatedNames.pop();
+  if ((0, _fp.isEmpty)(truncatedNames)) {
+    return last;
+  } else {
+    return truncatedNames.join(', ') + (' and ' + last);
+  }
+}
+
+exports.default = MessageThread;
+
+
+MessageThread.modelName = 'MessageThread';
+
+MessageThread.fields = {
+  id: (0, _reduxOrm.attr)(),
+  unreadCount: (0, _reduxOrm.attr)(),
+  participants: (0, _reduxOrm.many)('Person'),
+  updatedAt: (0, _reduxOrm.attr)(),
+  lastReadAt: (0, _reduxOrm.attr)()
+};
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DEFAULT_AVATAR = exports.DEFAULT_BANNER = exports.NetworkModerator = undefined;
+
+var _reduxOrm = __webpack_require__(0);
+
+var NetworkModerator = exports.NetworkModerator = _reduxOrm.Model.createClass({});
+NetworkModerator.modelName = 'NetworkModerator';
+NetworkModerator.fields = {
+  network: (0, _reduxOrm.fk)('Network', 'networkmoderators'),
+  moderator: (0, _reduxOrm.fk)('Person', 'networkmoderators')
+};
+
+var Network = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'Network: ' + this.name;
+  }
+});
+
+exports.default = Network;
+
+
+Network.modelName = 'Network';
+
+Network.fields = {
+  id: (0, _reduxOrm.attr)(),
+  name: (0, _reduxOrm.attr)(),
+  description: (0, _reduxOrm.attr)(),
+  avatarUrl: (0, _reduxOrm.attr)(),
+  bannerUrl: (0, _reduxOrm.attr)(),
+  members: (0, _reduxOrm.many)('Person'),
+  moderators: (0, _reduxOrm.many)({
+    to: 'Person',
+    relatedName: 'moderatedNetworks',
+    through: 'NetworkModerator',
+    throughFields: ['network', 'moderator']
+  }),
+  communities: (0, _reduxOrm.many)('Community'),
+  posts: (0, _reduxOrm.many)('Post')
+};
+
+var DEFAULT_BANNER = exports.DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg';
+var DEFAULT_AVATAR = exports.DEFAULT_AVATAR = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png';
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ACTION_COMMENT_MENTION = exports.ACTION_MENTION = exports.ACTION_APPROVED_JOIN_REQUEST = exports.ACTION_JOIN_REQUEST = exports.ACTION_TAG = exports.ACTION_NEW_COMMENT = undefined;
+
+var _reduxOrm = __webpack_require__(0);
+
+var Notification = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'Message: ' + this.id;
+  }
+});
+
+exports.default = Notification;
+
+
+Notification.modelName = 'Notification';
+
+Notification.fields = {
+  id: (0, _reduxOrm.attr)(),
+  activity: (0, _reduxOrm.fk)('Activity'),
+  createdAt: (0, _reduxOrm.attr)()
+};
+
+var ACTION_NEW_COMMENT = exports.ACTION_NEW_COMMENT = 'newComment';
+var ACTION_TAG = exports.ACTION_TAG = 'tag';
+var ACTION_JOIN_REQUEST = exports.ACTION_JOIN_REQUEST = 'joinRequest';
+var ACTION_APPROVED_JOIN_REQUEST = exports.ACTION_APPROVED_JOIN_REQUEST = 'approvedJoinRequest';
+var ACTION_MENTION = exports.ACTION_MENTION = 'mention';
+var ACTION_COMMENT_MENTION = exports.ACTION_COMMENT_MENTION = 'commentMention';
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.firstName = undefined;
+
+var _reduxOrm = __webpack_require__(0);
+
+var Person = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'Person: ' + this.name;
+  }
+});
+
+exports.default = Person;
+
+
+Person.modelName = 'Person';
+
+Person.fields = {
+  id: (0, _reduxOrm.attr)(),
+  name: (0, _reduxOrm.attr)(),
+  bio: (0, _reduxOrm.attr)(),
+  avatarUrl: (0, _reduxOrm.attr)(),
+  bannerUrl: (0, _reduxOrm.attr)(),
+  twitterName: (0, _reduxOrm.attr)(),
+  facebookUrl: (0, _reduxOrm.attr)(),
+  linkedinUrl: (0, _reduxOrm.attr)(),
+  url: (0, _reduxOrm.attr)(),
+  location: (0, _reduxOrm.attr)(),
+  skills: (0, _reduxOrm.many)('Skill'),
+  postsTotal: (0, _reduxOrm.attr)(),
+  votesTotal: (0, _reduxOrm.attr)()
+};
+
+var firstName = exports.firstName = function firstName(person) {
+  return person.name.split(' ')[0];
+};
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reduxOrm = __webpack_require__(0);
+
+var PersonConnection = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'PersonConnection: ' + this.type;
+  }
+});
+
+exports.default = PersonConnection;
+
+
+PersonConnection.modelName = 'PersonConnection';
+PersonConnection.fields = {
+  person: (0, _reduxOrm.fk)('Person'),
+  type: (0, _reduxOrm.attr)(),
+  createdAt: (0, _reduxOrm.attr)(),
+  updatedAt: (0, _reduxOrm.attr)()
+};
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.PostCommenter = exports.PostFollower = undefined;
+
+var _reduxOrm = __webpack_require__(0);
+
+var PostFollower = exports.PostFollower = _reduxOrm.Model.createClass({});
+PostFollower.modelName = 'PostFollower';
+PostFollower.fields = {
+  post: (0, _reduxOrm.fk)('Post', 'postfollowers'),
+  follower: (0, _reduxOrm.fk)('Person', 'postfollowers')
+};
+
+var PostCommenter = exports.PostCommenter = _reduxOrm.Model.createClass({});
+PostCommenter.modelName = 'PostCommenter';
+PostCommenter.fields = {
+  post: (0, _reduxOrm.fk)('Post', 'postcommenters'),
+  commenter: (0, _reduxOrm.fk)('Person', 'postcommenters')
+};
+
+var Post = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'Post: ' + this.name;
+  }
+});
+
+exports.default = Post;
+
+
+Post.modelName = 'Post';
+Post.fields = {
+  id: (0, _reduxOrm.attr)(),
+  title: (0, _reduxOrm.attr)(),
+  type: (0, _reduxOrm.attr)(),
+  details: (0, _reduxOrm.attr)(),
+  linkPreview: (0, _reduxOrm.fk)('LinkPreview', 'posts'),
+  creator: (0, _reduxOrm.fk)('Person', 'posts'),
+  followers: (0, _reduxOrm.many)({
+    to: 'Person',
+    relatedName: 'postsFollowing',
+    through: 'PostFollower',
+    throughFields: ['post', 'follower']
+  }),
+  communities: (0, _reduxOrm.many)('Community'),
+  postMemberships: (0, _reduxOrm.many)('PostMembership'),
+  communitiesTotal: (0, _reduxOrm.attr)(),
+  commenters: (0, _reduxOrm.many)({
+    to: 'Person',
+    relatedName: 'postsCommented',
+    through: 'PostCommenter',
+    throughFields: ['post', 'commenter']
+  }),
+  commentersTotal: (0, _reduxOrm.attr)(),
+  createdAt: (0, _reduxOrm.attr)(),
+  startsAt: (0, _reduxOrm.attr)(),
+  endsAt: (0, _reduxOrm.attr)(),
+  fulfilledAt: (0, _reduxOrm.attr)(),
+  votesTotal: (0, _reduxOrm.attr)(),
+  myVote: (0, _reduxOrm.attr)()
+};
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reduxOrm = __webpack_require__(0);
+
+var PostMembership = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'PostMembership: ' + this.id;
+  }
+});
+
+exports.default = PostMembership;
+
+
+PostMembership.modelName = 'PostMembership';
+PostMembership.fields = {
+  id: (0, _reduxOrm.attr)(),
+  pinned: (0, _reduxOrm.attr)(),
+  community: (0, _reduxOrm.fk)('Community', 'postMemberships')
+};
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _reduxOrm = __webpack_require__(0);
+
+var SearchResult = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'SearchResult: ' + this.id;
+  },
+  getContent: function getContent(session) {
+    var _content$split = this.content.split('-'),
+        _content$split2 = _slicedToArray(_content$split, 2),
+        type = _content$split2[0],
+        id = _content$split2[1];
+
+    return session[type].withId(id);
+  }
+});
+
+exports.default = SearchResult;
+
+
+SearchResult.modelName = 'SearchResult';
+SearchResult.fields = {
+  id: (0, _reduxOrm.attr)(),
+  // this is a polymorphicId, see getContent above
+  content: (0, _reduxOrm.attr)()
+};
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reduxOrm = __webpack_require__(0);
+
+var Skill = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'Skill: ' + this.name;
+  }
+});
+
+exports.default = Skill;
+
+
+Skill.modelName = 'Skill';
+
+Skill.fields = {
+  id: (0, _reduxOrm.attr)(),
+  name: (0, _reduxOrm.attr)()
+};
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reduxOrm = __webpack_require__(0);
+
+var Topic = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'Topic: ' + this.name;
+  }
+});
+
+exports.default = Topic;
+
+
+Topic.modelName = 'Topic';
+
+Topic.fields = {
+  id: (0, _reduxOrm.attr)(),
+  name: (0, _reduxOrm.attr)(),
+  postsTotal: (0, _reduxOrm.attr)(),
+  followersTotal: (0, _reduxOrm.attr)()
+};
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reduxOrm = __webpack_require__(0);
+
+var Vote = _reduxOrm.Model.createClass({
+  toString: function toString() {
+    return 'Vote: ' + this.id;
+  }
+});
+
+exports.default = Vote;
+
+
+Vote.modelName = 'Vote';
+
+Vote.fields = {
+  id: (0, _reduxOrm.attr)(),
+  post: (0, _reduxOrm.fk)('Post', 'votes'),
+  voter: (0, _reduxOrm.fk)('Person', 'votes'),
+  dateVoted: (0, _reduxOrm.attr)()
+};
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _linkifyIt = __webpack_require__(44);
+
+var _linkifyIt2 = _interopRequireDefault(_linkifyIt);
+
+var _tlds = __webpack_require__(45);
+
+var _tlds2 = _interopRequireDefault(_tlds);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var linkMatcher = (0, _linkifyIt2.default)();
+linkMatcher.tlds(_tlds2.default);
+
+exports.default = linkMatcher;
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports) {
+
+module.exports = require("linkify-it");
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports) {
+
+module.exports = require("tlds");
+
+/***/ }),
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = users;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_faker__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_faker__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_faker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_faker__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_fp__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_fp__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_fp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash_fp__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__api__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_routes_Signup_AddSkills_AddSkills_store__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__api__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_routes_Signup_AddSkills_AddSkills_store__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_routes_Signup_AddSkills_AddSkills_store___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_routes_Signup_AddSkills_AddSkills_store__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_routes_CreateCommunity_Review_Review_store__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_routes_CreateCommunity_Review_Review_store__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_routes_CreateCommunity_Review_Review_store___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_routes_CreateCommunity_Review_Review_store__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_store_actions_updateUserSettings__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_store_actions_updateUserSettings__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_store_actions_updateUserSettings___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_store_actions_updateUserSettings__);
 /* global USER_COUNT, USER_COMMUNITY_CHANCE */
 
@@ -396,7 +1949,7 @@ const fakeUser = () => {
     name: `${__WEBPACK_IMPORTED_MODULE_0_faker___default.a.name.firstName()} ${__WEBPACK_IMPORTED_MODULE_0_faker___default.a.name.lastName()}`,
     password: 'hylo',
     settings: { signupInProgress: false },
-    skills: [ ...new Array(Object(__WEBPACK_IMPORTED_MODULE_3__util__["c" /* oneTo */])(5)) ].map(__WEBPACK_IMPORTED_MODULE_0_faker___default.a.hacker.ingverb),
+    skills: [ ...new Array(Object(__WEBPACK_IMPORTED_MODULE_3__utils__["d" /* oneTo */])(5)) ].map(__WEBPACK_IMPORTED_MODULE_0_faker___default.a.hacker.ingverb),
     twitterName: __WEBPACK_IMPORTED_MODULE_0_faker___default.a.internet.userName(),
     work: __WEBPACK_IMPORTED_MODULE_0_faker___default.a.lorem.paragraph(),
     url: __WEBPACK_IMPORTED_MODULE_0_faker___default.a.internet.url()
@@ -423,10 +1976,10 @@ async function users (page) {
   ]
 
   for (let user of userBatch) {
-    process.stdout.write('\n  Creating user and logging in, ')
+    process.stdout.write('\n  Creating user, logging in, ')
     await api.request('/noo/user', user)
 
-    process.stdout.write('faking their data, ')
+    process.stdout.write('faking data, ')
     const fields = Object(__WEBPACK_IMPORTED_MODULE_1_lodash_fp__["pick"])([
       'avatarUrl',
       'bannerUrl',
@@ -442,98 +1995,27 @@ async function users (page) {
     const person = await api.graphql(Object(__WEBPACK_IMPORTED_MODULE_6_store_actions_updateUserSettings__["updateUserSettings"])(fields))
     user.id = person.data.updateMe.id
 
-    process.stdout.write('adding skills, ')
+    process.stdout.write('skills, ')
     for (let skill of user.skills || []) {
       await api.graphql(Object(__WEBPACK_IMPORTED_MODULE_4_routes_Signup_AddSkills_AddSkills_store__["addSkill"])(skill))
     }
 
     if (Math.random() < 0.3 || user.email.endsWith('@hylo.com')) {
-      process.stdout.write('creating community, ')
-      await api.graphql(Object(__WEBPACK_IMPORTED_MODULE_5_routes_CreateCommunity_Review_Review_store__["createCommunity"])(user.community.name, user.community.slug))
+      process.stdout.write('community, ')
+      const community = await api.graphql(Object(__WEBPACK_IMPORTED_MODULE_5_routes_CreateCommunity_Review_Review_store__["createCommunity"])(user.community.name, user.community.slug))
+      user.community.id = community.data.createCommunity.community.id
     }
 
-    process.stdout.write('and logging out.')
+    process.stdout.write('logging out. ✓')
     await api.logout()
   }
 
-  // Now we need to update the rest. Relevant files:
-  //  - Signup/AddSkills/AddSkills.store
-  //  - store/updateUserSettings
-  // for (let user of userBatch) {
-  //   const fields = pick([
-  //     'avatarUrl',
-  //     'bannerUrl',
-  //     'bio',
-  //     'extraInfo',
-  //     'facebookUrl',
-  //     'firstName',
-  //     'intention',
-  //     'linkedinUrl',
-  //     'location',
-  //     'twitterName',
-  //     'work',
-  //     'url'
-  //   ], user)
-  //   const encodedQuery = encodeUriComponent(updateUserSettings(
-  //   query(
-  // }
-  //
   return userBatch
 }
 
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-module.exports = require("faker");
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-module.exports = require("lodash/fp");
-
-/***/ }),
-/* 11 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* global API_URI, GRAPHQL_URI */
-
-const api = page => ({
-  async apiRequest (uri, payload) {
-    await page.setRequestInterception(true)
-    page.once('request', request =>
-      request.continue({
-        headers: { 'Content-Type': 'application/json' },
-        method: 'POST',
-        postData: JSON.stringify(payload)
-      })
-    )
-    const res = await page.goto(uri)
-    await page.setRequestInterception(false)
-    return JSON.parse(await res.text())
-  },
-
-  async graphql (action) {
-    return this.apiRequest('http://localhost:3001/noo/graphql', action.graphql)
-  },
-
-  async logout () {
-    return page.goto(`${'http://localhost:3001'}/noo/logout`)
-  },
-
-  async request (endpoint, json) {
-    return this.apiRequest(`${'http://localhost:3001'}${endpoint}`, json)
-  }
-})
-
-/* harmony default export */ __webpack_exports__["a"] = (api);
-
-
-/***/ }),
-/* 12 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -582,7 +2064,7 @@ function removeSkill(skillId) {
 }
 
 /***/ }),
-/* 13 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -616,7 +2098,7 @@ function createCommunity(name, slug) {
 }
 
 /***/ }),
-/* 14 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -627,7 +2109,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.updateUserSettings = updateUserSettings;
 
-var _constants = __webpack_require__(15);
+var _constants = __webpack_require__(50);
 
 function updateUserSettings(changes) {
   return {
@@ -646,7 +2128,7 @@ function updateUserSettings(changes) {
 }
 
 /***/ }),
-/* 15 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
