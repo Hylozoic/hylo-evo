@@ -1,0 +1,49 @@
+.container {
+  padding-top: 10%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.speech-bubble {
+  background-color: #FFFFFF;
+  border: 1px solid #946DDD;
+  border-radius: 50px;
+  max-width: 270px;
+  text-align: center;
+  padding: 20px;
+  position: absolute;
+  color: #946DDD
+}
+
+.arrow {
+  border-style: solid;
+  position: absolute;
+  border-color: #946DDD transparent transparent transparent;
+  border-width: 16px 16px 0px 16px;
+  bottom: -16px;
+  left: 44%;
+
+  &:after {
+    border-color: #FFFFFF transparent transparent transparent;
+    border-style: solid;
+    border-width: 15px 15px 0px 15px;
+    bottom: 1px;
+    content: "";
+    position: absolute;
+    left: -15px;
+  }
+}
+
+.axolotl {
+  @include fluid-height(107%);
+  display: block;
+  background-image: url(/assets/puzzled-axolotl.jpg);
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 50%;
+  margin: 130px auto;
+  max-width: 270px;
+}

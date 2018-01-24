@@ -23,16 +23,18 @@ exports[`TopNavDropdown renders correctly 1`] = `
           }
         }
       />
-      <li
-        data-stylename="header"
-      >
+      <ErrorBoundary>
+        <li
+          data-stylename="header"
+        >
+          <div>
+            header
+          </div>
+        </li>
         <div>
-          header
+          body
         </div>
-      </li>
-      <div>
-        body
-      </div>
+      </ErrorBoundary>
     </ul>
   </div>
 </div>
