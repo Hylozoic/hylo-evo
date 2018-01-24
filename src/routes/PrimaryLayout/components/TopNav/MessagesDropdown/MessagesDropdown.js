@@ -90,7 +90,6 @@ export default class MessagesDropdown extends Component {
       className={className}
       onToggle={this.onToggle}
       toggleChildren={renderToggleChildren(this.hasUnread())}
-      onFirstOpen={fetchThreads}
       header={
         <div styleName='header-content'>
           <Link to={firstThreadUrl} styleName='open'>

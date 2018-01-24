@@ -12,8 +12,7 @@ export default class TopNavDropdown extends Component {
     className: string,
     header: object,
     items: object,
-    onToggle: func,
-    onFirstOpen: func
+    onToggle: func
   }
 
   constructor (props) {
@@ -27,7 +26,6 @@ export default class TopNavDropdown extends Component {
     if (this.props.onToggle) this.props.onToggle(active)
     if (this.state.neverOpened && active) {
       this.setState({neverOpened: false})
-      if (this.props.onFirstOpen) this.props.onFirstOpen()
     }
   }
 

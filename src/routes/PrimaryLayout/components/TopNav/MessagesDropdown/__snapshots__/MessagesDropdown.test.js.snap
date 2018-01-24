@@ -64,7 +64,6 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
       </Link>
     </div>
   }
-  onFirstOpen={[Function]}
   onToggle={[Function]}
   toggleChildren={
     <span>
@@ -101,7 +100,6 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
       </Link>
     </div>
   }
-  onFirstOpen={[Function]}
   onToggle={[Function]}
   toggleChildren={
     <span>
