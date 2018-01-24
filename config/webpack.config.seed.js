@@ -48,6 +48,9 @@ module.exports = {
       // These values can be altered to suit. Remember, the seed process might
       // be quite slow with large numbers since it's one API request at a time.
 
+      // Comments to add per post per member
+      COMMENT_COUNT: 2,
+
       // Sample size of total users to put in each community
       MEMBER_COUNT: 5,
 

@@ -38,7 +38,9 @@ export default async function seedPosts (page, userBatch) {
           details: faker.lorem.paragraph(),
           communities: [ community ]
         }))
-        posts.push(post)
+        if (!post.errors) {
+          posts.push(post)
+        }
         await api.logout()
       }
     }
