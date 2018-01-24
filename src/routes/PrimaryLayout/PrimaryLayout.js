@@ -288,6 +288,7 @@ export default class PrimaryLayout extends Component {
 const postEditorRoutes = [
   {path: '/all/p/new', forNew: true},
   {path: '/c/:slug/p/new', forNew: true},
+  {path: '/c/:slug/:topicName/p/new', forNew: true},
   {path: '/all/p/:postId/edit'},
   {path: '/c/:slug/p/:postId/edit'},
   {path: '/c/:slug/m/:id/p/:postId/edit'},
@@ -312,6 +313,8 @@ const signupRoutes = [
   {path: '/signup/review', child: Review}
 ]
 const createCommunityRoutes = [
+  // order matters here, or it matches the non param version
+  {path: '/create-community/name/:networkId', component: Name},
   {path: '/create-community/name', component: Name},
   {path: '/create-community/domain', component: Domain},
   // TODO: Implement create community privacy component when implemented on the server

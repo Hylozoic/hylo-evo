@@ -3,6 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
+import { PostPrompt } from 'components/FeedBanner/FeedBanner'
 import { pluralize, communityUrl, allCommunitiesUrl } from 'utils/index'
 import './TopicFeedHeader.scss'
 
@@ -14,7 +15,9 @@ export default function TopicFeedHeader ({
   followersTotal,
   community,
   communityTopic,
-  toggleSubscribe
+  toggleSubscribe,
+  currentUser,
+  newPost
 }) {
   const url = community ? communityUrl(community.slug) : allCommunitiesUrl()
   const name = community ? community.name : 'All Communities'
@@ -31,6 +34,7 @@ export default function TopicFeedHeader ({
     {community && <Button styleName='subscribe' onClick={toggleSubscribe}>
       {communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
     </Button>}
+    <PostPrompt currentUser={currentUser} newPost={newPost} styleName='post-prompt' />
   </div>
 }
 TopicFeedHeader.propTypes = {

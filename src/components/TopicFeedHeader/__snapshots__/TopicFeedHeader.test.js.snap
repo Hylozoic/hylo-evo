@@ -29,5 +29,8 @@ exports[`matches the latest snapshot 1`] = `
      • 
     3 followers
   </div>
+  <PostPrompt
+    data-stylename="post-prompt"
+  />
 </div>
 `;

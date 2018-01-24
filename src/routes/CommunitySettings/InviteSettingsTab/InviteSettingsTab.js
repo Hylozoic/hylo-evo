@@ -28,11 +28,18 @@ export default class InviteSettingsTab extends Component {
 
   constructor (props) {
     super(props)
+
+    const defaultMessage = `Hi!
+
+I'm inviting you to join ${props.community.name} community on Hylo.
+
+${props.community.name} is using Hylo for our online community: this is our dedicated space for communication & collaboration.`
+
     this.state = {
       copied: false,
       reset: false,
       emails: '',
-      message: `Hey! Here’s an invite to the ${props.community.name} community on Hylo.`
+      message: defaultMessage
     }
   }
 
