@@ -19,7 +19,6 @@ export default async function seedPosts (page, userBatch) {
   for (let community of communities) {
     process.stdout.write(`\n  Adding posts to ${community.name}...`)
     const members = userBatch.reduce((acc, user) => {
-      console.log('u', user)
       if (user.memberships.includes(community.id) || user.community.id === community.id) {
         return [ ...acc, user ]
       }

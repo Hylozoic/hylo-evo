@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -85,9 +85,9 @@ module.exports = require("lodash/fp");
 /* unused harmony export hitEnter */
 /* harmony export (immutable) */ __webpack_exports__["a"] = fatalErrorMsg;
 /* harmony export (immutable) */ __webpack_exports__["d"] = oneTo;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_readline__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_readline__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_readline___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_readline__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_stream__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_stream__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_stream___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_stream__);
 /* global API_URI, GRAPHQL_URI */
 
@@ -210,14 +210,121 @@ module.exports = require("faker");
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.orm = undefined;
+
+var _reduxOrm = __webpack_require__(0);
+
+__webpack_require__(18);
+
+var _Activity = __webpack_require__(22);
+
+var _Activity2 = _interopRequireDefault(_Activity);
+
+var _Attachment = __webpack_require__(23);
+
+var _Attachment2 = _interopRequireDefault(_Attachment);
+
+var _Comment = __webpack_require__(24);
+
+var _Comment2 = _interopRequireDefault(_Comment);
+
+var _Community = __webpack_require__(25);
+
+var _Community2 = _interopRequireDefault(_Community);
+
+var _CommunityTopic = __webpack_require__(26);
+
+var _CommunityTopic2 = _interopRequireDefault(_CommunityTopic);
+
+var _Invitation = __webpack_require__(27);
+
+var _Invitation2 = _interopRequireDefault(_Invitation);
+
+var _LinkPreview = __webpack_require__(28);
+
+var _LinkPreview2 = _interopRequireDefault(_LinkPreview);
+
+var _Me = __webpack_require__(29);
+
+var _Me2 = _interopRequireDefault(_Me);
+
+var _Membership = __webpack_require__(30);
+
+var _Membership2 = _interopRequireDefault(_Membership);
+
+var _Message = __webpack_require__(31);
+
+var _Message2 = _interopRequireDefault(_Message);
+
+var _MessageThread = __webpack_require__(32);
+
+var _MessageThread2 = _interopRequireDefault(_MessageThread);
+
+var _Network = __webpack_require__(33);
+
+var _Network2 = _interopRequireDefault(_Network);
+
+var _Notification = __webpack_require__(34);
+
+var _Notification2 = _interopRequireDefault(_Notification);
+
+var _Person = __webpack_require__(35);
+
+var _Person2 = _interopRequireDefault(_Person);
+
+var _PersonConnection = __webpack_require__(36);
+
+var _PersonConnection2 = _interopRequireDefault(_PersonConnection);
+
+var _Post = __webpack_require__(37);
+
+var _Post2 = _interopRequireDefault(_Post);
+
+var _PostMembership = __webpack_require__(38);
+
+var _PostMembership2 = _interopRequireDefault(_PostMembership);
+
+var _SearchResult = __webpack_require__(39);
+
+var _SearchResult2 = _interopRequireDefault(_SearchResult);
+
+var _Skill = __webpack_require__(40);
+
+var _Skill2 = _interopRequireDefault(_Skill);
+
+var _Topic = __webpack_require__(41);
+
+var _Topic2 = _interopRequireDefault(_Topic);
+
+var _Vote = __webpack_require__(42);
+
+var _Vote2 = _interopRequireDefault(_Vote);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var orm = exports.orm = new _reduxOrm.ORM();
+orm.register(_Activity2.default, _Attachment2.default, _Comment2.default, _Community2.default, _Community.CommunityModerator, _CommunityTopic2.default, _Invitation2.default, _LinkPreview2.default, _Me2.default, _Membership2.default, _Message2.default, _MessageThread2.default, _Network2.default, _Network.NetworkModerator, _Notification2.default, _Person2.default, _PersonConnection2.default, _Post2.default, _Post.PostCommenter, _Post.PostFollower, _PostMembership2.default, _SearchResult2.default, _Skill2.default, _Topic2.default, _Vote2.default);
+
+exports.default = orm;
+
+/***/ }),
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_minimist__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_minimist__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_minimist___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_minimist__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__seeder__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__seeder__ = __webpack_require__(10);
 // Populate a development database with faked data using the same GraphQL the client uses.
 //
 // Motivation: our previous seed script... kind of worked, but quickly became out of date
@@ -288,36 +395,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = require("minimist");
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = require("readline");
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 module.exports = require("stream");
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = seeder;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_puppeteer__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_puppeteer__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_puppeteer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_puppeteer__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__admin__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__comments__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__communities__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__admin__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__comments__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__communities__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__posts__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__posts__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__users__ = __webpack_require__(46);
 
 
@@ -370,13 +477,13 @@ async function seeder () {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = require("puppeteer");
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -417,7 +524,7 @@ async function admin (page) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -425,7 +532,7 @@ async function admin (page) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_faker__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_faker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_faker__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_routes_PostDetail_Comments_Comment_Comment_store__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_routes_PostDetail_Comments_Comment_Comment_store__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_routes_PostDetail_Comments_Comment_Comment_store___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_routes_PostDetail_Comments_Comment_Comment_store__);
 /* global COMMENT_COUNT */
 
@@ -444,11 +551,8 @@ async function seedComments (page, userBatch, postBatch) {
   }, [])
 
   for (let community of communities) {
-    const posts = postBatch.filter(p => {
-      console.log(p.communities)
-      return true
-    })
-    // process.stdout.write(`\n  Adding posts to ${community.name}...`)
+    const posts = postBatch.filter(p => p.data.createPost.communities[0].id === community.id)
+    process.stdout.write(`\n  Adding comments to ${posts.length} posts in ${community.name}...`)
     // const members = userBatch.reduce((acc, user) => {
     //   if (user.memberships.includes(community.id) || user.community.id === community.id) {
     //     return [ ...acc, user ]
@@ -482,7 +586,7 @@ async function seedComments (page, userBatch, postBatch) {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -513,7 +617,7 @@ function deleteComment(id) {
 }
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -575,7 +679,7 @@ async function seedCommunities (page, userBatch) {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -583,7 +687,7 @@ async function seedCommunities (page, userBatch) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_faker__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_faker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_faker__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_components_PostEditor_PostEditor_store__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_components_PostEditor_PostEditor_store__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_components_PostEditor_PostEditor_store___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_components_PostEditor_PostEditor_store__);
 /* global POST_COUNT */
 
@@ -606,7 +710,6 @@ async function seedPosts (page, userBatch) {
   for (let community of communities) {
     process.stdout.write(`\n  Adding posts to ${community.name}...`)
     const members = userBatch.reduce((acc, user) => {
-      console.log('u', user)
       if (user.memberships.includes(community.id) || user.community.id === community.id) {
         return [ ...acc, user ]
       }
@@ -639,7 +742,7 @@ async function seedPosts (page, userBatch) {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -661,7 +764,7 @@ var _fp = __webpack_require__(1);
 
 var _reduxOrm = __webpack_require__(0);
 
-var _models = __webpack_require__(17);
+var _models = __webpack_require__(5);
 
 var _models2 = _interopRequireDefault(_models);
 
@@ -681,7 +784,7 @@ var CLEAR_LINK_PREVIEW = exports.CLEAR_LINK_PREVIEW = MODULE_NAME + '/CLEAR_LINK
 
 // Actions
 
-function createPost(post) {
+function createPost(post, topic) {
   var type = post.type,
       title = post.title,
       details = post.details,
@@ -708,7 +811,10 @@ function createPost(post) {
         fileUrls: fileUrls
       }
     },
-    meta: { extractModel: 'Post' }
+    meta: {
+      extractModel: 'Post',
+      topic: topic
+    }
   };
 }
 
@@ -842,113 +948,6 @@ function reducer() {
       return state;
   }
 }
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.orm = undefined;
-
-var _reduxOrm = __webpack_require__(0);
-
-__webpack_require__(18);
-
-var _Activity = __webpack_require__(22);
-
-var _Activity2 = _interopRequireDefault(_Activity);
-
-var _Attachment = __webpack_require__(23);
-
-var _Attachment2 = _interopRequireDefault(_Attachment);
-
-var _Comment = __webpack_require__(24);
-
-var _Comment2 = _interopRequireDefault(_Comment);
-
-var _Community = __webpack_require__(25);
-
-var _Community2 = _interopRequireDefault(_Community);
-
-var _CommunityTopic = __webpack_require__(26);
-
-var _CommunityTopic2 = _interopRequireDefault(_CommunityTopic);
-
-var _Invitation = __webpack_require__(27);
-
-var _Invitation2 = _interopRequireDefault(_Invitation);
-
-var _LinkPreview = __webpack_require__(28);
-
-var _LinkPreview2 = _interopRequireDefault(_LinkPreview);
-
-var _Me = __webpack_require__(29);
-
-var _Me2 = _interopRequireDefault(_Me);
-
-var _Membership = __webpack_require__(30);
-
-var _Membership2 = _interopRequireDefault(_Membership);
-
-var _Message = __webpack_require__(31);
-
-var _Message2 = _interopRequireDefault(_Message);
-
-var _MessageThread = __webpack_require__(32);
-
-var _MessageThread2 = _interopRequireDefault(_MessageThread);
-
-var _Network = __webpack_require__(33);
-
-var _Network2 = _interopRequireDefault(_Network);
-
-var _Notification = __webpack_require__(34);
-
-var _Notification2 = _interopRequireDefault(_Notification);
-
-var _Person = __webpack_require__(35);
-
-var _Person2 = _interopRequireDefault(_Person);
-
-var _PersonConnection = __webpack_require__(36);
-
-var _PersonConnection2 = _interopRequireDefault(_PersonConnection);
-
-var _Post = __webpack_require__(37);
-
-var _Post2 = _interopRequireDefault(_Post);
-
-var _PostMembership = __webpack_require__(38);
-
-var _PostMembership2 = _interopRequireDefault(_PostMembership);
-
-var _SearchResult = __webpack_require__(39);
-
-var _SearchResult2 = _interopRequireDefault(_SearchResult);
-
-var _Skill = __webpack_require__(40);
-
-var _Skill2 = _interopRequireDefault(_Skill);
-
-var _Topic = __webpack_require__(41);
-
-var _Topic2 = _interopRequireDefault(_Topic);
-
-var _Vote = __webpack_require__(42);
-
-var _Vote2 = _interopRequireDefault(_Vote);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var orm = exports.orm = new _reduxOrm.ORM();
-orm.register(_Activity2.default, _Attachment2.default, _Comment2.default, _Community2.default, _Community.CommunityModerator, _CommunityTopic2.default, _Invitation2.default, _LinkPreview2.default, _Me2.default, _Membership2.default, _Message2.default, _MessageThread2.default, _Network2.default, _Network.NetworkModerator, _Notification2.default, _Person2.default, _PersonConnection2.default, _Post2.default, _Post.PostCommenter, _Post.PostFollower, _PostMembership2.default, _SearchResult2.default, _Skill2.default, _Topic2.default, _Vote2.default);
-
-exports.default = orm;
 
 /***/ }),
 /* 18 */
@@ -1391,7 +1390,7 @@ var _fp = __webpack_require__(1);
 
 var MessageThread = _reduxOrm.Model.createClass({
   isUnread: function isUnread() {
-    return new Date(this.lastReadAt) < new Date(this.updatedAt);
+    return this.lastReadAt === undefined || new Date(this.lastReadAt) < new Date(this.updatedAt);
   },
   isUpdatedSince: function isUpdatedSince(date) {
     return new Date(this.updatedAt) > date;
@@ -2073,29 +2072,56 @@ function removeSkill(skillId) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.getNetwork = exports.CREATE_COMMUNITY = exports.MODULE_NAME = undefined;
 exports.createCommunity = createCommunity;
+
+var _models = __webpack_require__(5);
+
+var _models2 = _interopRequireDefault(_models);
+
+var _reduxOrm = __webpack_require__(0);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var MODULE_NAME = exports.MODULE_NAME = 'Review';
 var CREATE_COMMUNITY = exports.CREATE_COMMUNITY = MODULE_NAME + '/CREATE_COMMUNITY';
 
-function createCommunity(name, slug) {
+function createCommunity(name, slug, networkId) {
+  var data = {
+    name: name,
+    slug: slug
+  };
+
+  if (networkId) {
+    data.networkId = networkId;
+  }
+
   return {
     type: CREATE_COMMUNITY,
     graphql: {
-      query: 'mutation ($data: CommunityInput) {\n        createCommunity(data: $data) {\n          id\n          hasModeratorRole\n          community {\n            id\n            name\n            slug\n          }\n        }\n      }\n      ',
+      query: 'mutation ($data: CommunityInput) {\n        createCommunity(data: $data) {\n          id\n          hasModeratorRole\n          community {\n            id\n            name\n            slug\n            network {\n              id\n            }\n          }\n        }\n      }\n      ',
       variables: {
-        data: {
-          name: name,
-          slug: slug
-        }
+        data: data
       }
     },
-    meta: {
-      extractModel: 'Membership',
-      slug: slug,
-      name: name
-    }
+    meta: Object.assign({
+      extractModel: 'Membership'
+    }, data)
   };
 }
+
+var getNetwork = exports.getNetwork = (0, _reduxOrm.createSelector)(_models2.default, function (state) {
+  return state.orm;
+}, function (state, _ref) {
+  var networkId = _ref.networkId;
+  return networkId;
+}, function (session, networkId) {
+  var network = session.Network.safeGet({ id: networkId });
+  if (network) {
+    return network;
+  }
+  return null;
+});
 
 /***/ }),
 /* 49 */

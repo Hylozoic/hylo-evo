@@ -15,11 +15,8 @@ export default async function seedComments (page, userBatch, postBatch) {
   }, [])
 
   for (let community of communities) {
-    const posts = postBatch.filter(p => {
-      console.log(p.communities)
-      return true
-    })
-    // process.stdout.write(`\n  Adding posts to ${community.name}...`)
+    const posts = postBatch.filter(p => p.data.createPost.communities[0].id === community.id)
+    process.stdout.write(`\n  Adding comments to ${posts.length} posts in ${community.name}...`)
     // const members = userBatch.reduce((acc, user) => {
     //   if (user.memberships.includes(community.id) || user.community.id === community.id) {
     //     return [ ...acc, user ]
