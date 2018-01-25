@@ -29,14 +29,15 @@ export default class Header extends React.Component {
     const { others } = this.props
     return isEmpty(others)
       ? 'You'
-      : formatNames(others, maxShown)
+      : formatNames([...others], maxShown)
   }
 
   render () {
     const { showAll } = this.state
     const { others } = this.props
     const maxShown = showAll ? undefined : calculateMaxShown(others, MAX_CHARACTERS)
-    const showArrow = maxShown ? maxShown !== others.length : false
+    const showArrow = true
+
     return <div styleName='header' id='thread-header'>
       <div styleName='header-text'>
         {this.generateHeaderText(maxShown)}
