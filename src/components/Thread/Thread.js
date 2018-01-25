@@ -1,12 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { filter, get, map, isEmpty } from 'lodash/fp'
 import MessageSection from 'components/MessageSection'
 import MessageForm from 'components/MessageForm'
 import PeopleTyping from 'components/PeopleTyping'
-import CloseMessages from './CloseMessages'
 import SocketSubscriber from 'components/SocketSubscriber'
-import { formatNames } from 'store/models/MessageThread'
+import Header from './Header'
 import './Thread.scss'
 
 const { func, object } = PropTypes
@@ -52,19 +50,29 @@ export default class Thread extends React.Component {
   }
 }
 
-export function Header ({ thread, currentUser }) {
-  const participants = get('participants', thread) || []
-  const id = get('id', currentUser)
-  const others = map('name', filter(f => f.id !== id, participants))
-
-  const headerText = isEmpty(others)
-    ? 'You'
-    : formatNames(others)
-
-  return <div styleName='header' id='thread-header'>
-    <div styleName='header-text'>
-      {headerText}
-    </div>
-    <CloseMessages />
-  </div>
-}
+// export function Header ({ thread, currentUser, showAll }) {
+//   const participants = get('participants', thread) || []
+//   const id = get('id', currentUser)
+//   const others = map('name', filter(f => f.id !== id, participants))
+//   const maxCharacters = 60
+//   const maxShown = showAll ? undefined : calculateMaxShown(others, maxCharacters)
+//   const headerText = isEmpty(others)
+//     ? 'You'
+//     : formatNames(others, maxShown)
+//
+//   return <div styleName='header' id='thread-header'>
+//     <div styleName='header-text'>
+//       {headerText}
+//     </div>
+//     <div>show</div>
+//     <CloseMessages />
+//   </div>
+// }
+//
+// export function calculateMaxShown (names, maxCharacters) {
+//   let count = 0
+//   for (let i = 0; i < names.length; i++) {
+//     count += names[i].length
+//     if (count > maxCharacters) return i
+//   }
+// }
