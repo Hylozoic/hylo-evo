@@ -18,11 +18,12 @@ export default class Header extends React.Component {
   }
 
   render () {
-    const maxCharacters = 60
     const { thread, currentUser } = this.props
     const { showAll } = this.state
     const participants = get('participants', thread) || []
-    const others = map('name', filter(f => f.id !== currentUser.id, participants))
+    const id = get('id', currentUser)
+    const others = map('name', filter(f => f.id !== id, participants))
+    const maxCharacters = 60
     const maxShown = showAll ? undefined : calculateMaxShown(others, maxCharacters)
     const headerText = isEmpty(others)
       ? 'You'
