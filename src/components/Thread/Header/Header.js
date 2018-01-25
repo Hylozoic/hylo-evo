@@ -19,21 +19,13 @@ export default class Header extends React.Component {
 
   toggleShowAll = () => {
     const { showAll } = this.state
-    const { others } = this.props
-    const maxShown = showAll ? undefined : calculateMaxShown(others, MAX_CHARACTERS)
-    const showArrow =
-      maxShown
-        ? maxShown !== others.length
-        : false
     this.setState({
-      showAll: !showAll,
-      maxShown,
-      showArrow
+      ...this.state,
+      showAll: !showAll
     })
   }
 
-  generateHeaderText = () => {
-    const { maxShown } = this.state.maxShown
+  generateHeaderText = (maxShown) => {
     const { others } = this.props
     return isEmpty(others)
       ? 'You'
@@ -41,10 +33,13 @@ export default class Header extends React.Component {
   }
 
   render () {
-    const { showAll, showArrow } = this.state
+    const { showAll } = this.state
+    const { others } = this.props
+    const maxShown = showAll ? undefined : calculateMaxShown(others, MAX_CHARACTERS)
+    const showArrow = maxShown ? maxShown !== others.length : false
     return <div styleName='header' id='thread-header'>
       <div styleName='header-text'>
-        {this.generateHeaderText()}
+        {this.generateHeaderText(maxShown)}
       </div>
       {showArrow && !showAll && <Icon name='ArrowDown' styleName='arrow-down' onClick={this.toggleShowAll} />}
       {showArrow && showAll && <Icon name='ArrowUp' styleName='arrow-up' onClick={this.toggleShowAll} />}
@@ -58,6 +53,8 @@ export function calculateMaxShown (names, maxCharacters) {
   let count = 0
   for (let i = 0; i < names.length; i++) {
     count += names[i].length
-    if (count > maxCharacters) return i
+    if (count > maxCharacters) {
+      return i
+    }
   }
 }
