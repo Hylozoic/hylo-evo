@@ -8,7 +8,13 @@ exports[`should match the latest snapshot 1`] = `
   <div
     data-stylename="header-text"
   >
-    one, two and three
+    one, two
+    <span
+      data-stylename="toggle-link"
+      onClick={[Function]}
+    >
+       three
+    </span>
   </div>
   <Icon
     data-stylename="arrow-down"
