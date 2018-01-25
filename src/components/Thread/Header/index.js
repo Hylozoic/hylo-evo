@@ -1,2 +1,3 @@
 import Header from './Header'
-export default Header
+import connector from './Header.connector'
+export default connector(Header)

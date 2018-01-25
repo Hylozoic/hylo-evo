@@ -1,40 +1,50 @@
 import React from 'react'
-import { filter, get, map, isEmpty } from 'lodash/fp'
+import { isEmpty } from 'lodash/fp'
 import Icon from 'components/Icon'
 import CloseMessages from '../CloseMessages'
 import { formatNames } from 'store/models/MessageThread'
 import '../Thread.scss'
 
+const MAX_CHARACTERS = 60
+
 export default class Header extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {showAll: false}
+    this.state = {
+      showAll: false,
+      maxShown: 0,
+      showArrow: false
+    }
   }
 
   toggleShowAll = () => {
-    this.setState({
-      showAll: !this.state.showAll
-    })
-  }
-
-  render () {
-    const { thread, currentUser } = this.props
     const { showAll } = this.state
-    const participants = get('participants', thread) || []
-    const id = get('id', currentUser)
-    const others = map('name', filter(f => f.id !== id, participants))
-    const maxCharacters = 60
-    const maxShown = showAll ? undefined : calculateMaxShown(others, maxCharacters)
-    const headerText = isEmpty(others)
-      ? 'You'
-      : formatNames(others, maxShown)
+    const { others } = this.props
+    const maxShown = showAll ? undefined : calculateMaxShown(others, MAX_CHARACTERS)
     const showArrow =
       maxShown
         ? maxShown !== others.length
         : false
+    this.setState({
+      showAll: !showAll,
+      maxShown,
+      showArrow
+    })
+  }
+
+  generateHeaderText = () => {
+    const { maxShown } = this.state.maxShown
+    const { others } = this.props
+    return isEmpty(others)
+      ? 'You'
+      : formatNames(others, maxShown)
+  }
+
+  render () {
+    const { showAll, showArrow } = this.state
     return <div styleName='header' id='thread-header'>
       <div styleName='header-text'>
-        {headerText}
+        {this.generateHeaderText()}
       </div>
       {showArrow && !showAll && <Icon name='ArrowDown' styleName='arrow-down' onClick={this.toggleShowAll} />}
       {showArrow && showAll && <Icon name='ArrowUp' styleName='arrow-up' onClick={this.toggleShowAll} />}
@@ -44,6 +54,7 @@ export default class Header extends React.Component {
 }
 
 export function calculateMaxShown (names, maxCharacters) {
+  if (!names) return 0
   let count = 0
   for (let i = 0; i < names.length; i++) {
     count += names[i].length
