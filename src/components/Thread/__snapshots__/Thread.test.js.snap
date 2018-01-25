@@ -4,7 +4,7 @@ exports[`Thread matches the last snapshot 1`] = `
 <div
   data-stylename="thread"
 >
-  <Header
+  <Connect(Header)
     thread={
       Object {
         "id": "1",
