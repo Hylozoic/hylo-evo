@@ -36,14 +36,14 @@ export default class Header extends React.Component {
     const { showAll } = this.state
     const { others } = this.props
     const maxShown = showAll ? undefined : calculateMaxShown(others, MAX_CHARACTERS)
-    const showArrow = true
+    const showArrow = others && maxShown !== others.length
 
     return <div styleName='header' id='thread-header'>
       <div styleName='header-text'>
         {this.generateHeaderText(maxShown)}
       </div>
       {showArrow && !showAll && <Icon name='ArrowDown' styleName='arrow-down' onClick={this.toggleShowAll} />}
-      {showArrow && showAll && <Icon name='ArrowUp' styleName='arrow-up' onClick={this.toggleShowAll} />}
+      {showAll && <Icon name='ArrowUp' styleName='arrow-up' onClick={this.toggleShowAll} />}
       <CloseMessages />
     </div>
   }
