@@ -2,7 +2,7 @@ import React from 'react'
 import { isEmpty } from 'lodash/fp'
 import Icon from 'components/Icon'
 import CloseMessages from '../CloseMessages'
-import { formatNames } from 'store/models/MessageThread'
+import { others } from 'store/models/MessageThread'
 import '../Thread.scss'
 
 const MAX_CHARACTERS = 60
@@ -28,12 +28,13 @@ export default class Header extends React.Component {
   render () {
     const { showAll } = this.state
     const { others } = this.props
-    const maxShown = showAll ? undefined : calculateMaxShown(others, MAX_CHARACTERS)
+    const maxShown = showAll ? others.length : calculateMaxShown(others, MAX_CHARACTERS)
     const showArrow = others && maxShown !== others.length
-
+    const {displayNames, andOthers} = generateHeaderText(maxShown, others)
     return <div styleName='header' id='thread-header'>
       <div styleName='header-text'>
-        {generateHeaderText(maxShown, others)}
+        {displayNames}
+        {andOthers && 'and' && <span styleName='toggle-link' onClick={this.toggleShowAll}>{andOthers}</span>}
       </div>
       {showArrow && !showAll && <Icon name='ArrowDown' styleName='arrow-down' onClick={this.toggleShowAll} />}
       {showAll && <Icon name='ArrowUp' styleName='arrow-up' onClick={this.toggleShowAll} />}
@@ -60,4 +61,20 @@ export function generateHeaderText (maxShown, others) {
   return isEmpty(others)
     ? 'You'
     : formatNames([...others], maxShown)
+}
+
+export function formatNames (names, maxShown) {
+  const length = names.length
+  let andOthers = null
+  const truncatedNames = (maxShown && maxShown < length)
+    ? names.slice(0, maxShown).concat([others(length - maxShown)])
+    : names
+
+  if (maxShown !== length) andOthers = truncatedNames.pop()
+
+  if (andOthers) {
+    return {displayNames: truncatedNames.join(', '), andOthers: ` ${andOthers}`}
+  } else {
+    return {displayNames: truncatedNames.join(', ')}
+  }
 }
