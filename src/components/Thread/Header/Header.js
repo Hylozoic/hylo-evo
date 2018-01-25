@@ -28,13 +28,16 @@ export default class Header extends React.Component {
     const headerText = isEmpty(others)
       ? 'You'
       : formatNames(others, maxShown)
-
+    const showArrow =
+      maxShown
+        ? maxShown !== others.length
+        : false
     return <div styleName='header' id='thread-header'>
       <div styleName='header-text'>
         {headerText}
       </div>
-      {!showAll && <Icon name='ArrowDown' styleName='arrow-down' onClick={this.toggleShowAll} />}
-      {showAll && <Icon name='ArrowUp' styleName='arrow-up' onClick={this.toggleShowAll} />}
+      {showArrow && !showAll && <Icon name='ArrowDown' styleName='arrow-down' onClick={this.toggleShowAll} />}
+      {showArrow && showAll && <Icon name='ArrowUp' styleName='arrow-up' onClick={this.toggleShowAll} />}
       <CloseMessages />
     </div>
   }
