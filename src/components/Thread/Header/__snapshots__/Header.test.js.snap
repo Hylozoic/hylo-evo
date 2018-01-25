@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match the latest snapshot 1`] = `
+<div
+  data-stylename="header"
+  id="thread-header"
+>
+  <div
+    data-stylename="header-text"
+  >
+    one, two and three
+  </div>
+  <CloseMessages />
+</div>
+`;
