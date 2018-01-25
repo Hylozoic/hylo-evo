@@ -25,13 +25,6 @@ export default class Header extends React.Component {
     })
   }
 
-  generateHeaderText = (maxShown) => {
-    const { others } = this.props
-    return isEmpty(others)
-      ? 'You'
-      : formatNames([...others], maxShown)
-  }
-
   render () {
     const { showAll } = this.state
     const { others } = this.props
@@ -40,7 +33,7 @@ export default class Header extends React.Component {
 
     return <div styleName='header' id='thread-header'>
       <div styleName='header-text'>
-        {this.generateHeaderText(maxShown)}
+        {generateHeaderText(maxShown, others)}
       </div>
       {showArrow && !showAll && <Icon name='ArrowDown' styleName='arrow-down' onClick={this.toggleShowAll} />}
       {showAll && <Icon name='ArrowUp' styleName='arrow-up' onClick={this.toggleShowAll} />}
@@ -58,4 +51,13 @@ export function calculateMaxShown (names, maxCharacters) {
       return i
     }
   }
+}
+
+export function generateHeaderText (maxShown, others) {
+  if (isEmpty(others)) {
+    return 'You'
+  }
+  return isEmpty(others)
+    ? 'You'
+    : formatNames([...others], maxShown)
 }
