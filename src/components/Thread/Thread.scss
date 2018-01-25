@@ -49,3 +49,17 @@ $messages-inner-padding: $space-6x;
   left: $messages-inner-padding;
   background: $color-white;
 }
+
+.arrow-down {
+  margin-right: 30px;
+  margin-top: 10px;
+  color: $color-caribbean-green;
+  cursor: pointer;
+}
+
+.arrow-up {
+  margin-right: 30px;
+  margin-top: 10px;
+  color: $color-rhino-80;
+  cursor: pointer;
+}
