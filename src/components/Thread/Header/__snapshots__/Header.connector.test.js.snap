@@ -6,19 +6,5 @@ Object {
     "two",
     "three",
   ],
-  "participants": Array [
-    Object {
-      "id": 1,
-      "name": "one",
-    },
-    Object {
-      "id": 2,
-      "name": "two",
-    },
-    Object {
-      "id": 3,
-      "name": "three",
-    },
-  ],
 }
 `;

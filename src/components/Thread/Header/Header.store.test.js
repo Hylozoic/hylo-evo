@@ -1,22 +1,4 @@
-import { getParticipants, getOthers } from './Header.store'
-
-describe('getParticipants', () => {
-  it('gets the participants from props.thread', () => {
-    const participants = ['first', 'second', 'third']
-    const props = {
-      thread: {
-        participants
-      }
-    }
-    expect(getParticipants(props)).toEqual(participants)
-  })
-  it('returns an empty array if a thread does not exist', () => {
-    const props = {
-      thread: null
-    }
-    expect(getParticipants(props)).toEqual([])
-  })
-})
+import { getOthers } from './Header.store'
 
 describe('getOthers', () => {
   it('returns null without a currentUser', () => {
@@ -31,8 +13,12 @@ describe('getOthers', () => {
       {name: 'two', id: 2},
       {name: 'three', id: 3}
     ]
+    const thread = {
+      participants
+    }
     const props = {
-      currentUser: {id: 1}
+      currentUser: {id: 1},
+      thread
     }
     expect(getOthers(props, participants)).toEqual(['two', 'three'])
   })
