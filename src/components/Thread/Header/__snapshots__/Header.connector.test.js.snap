@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapStateToProps returns the right keys 1`] = `
+Object {
+  "others": Array [
+    "two",
+    "three",
+  ],
+  "participants": Array [
+    Object {
+      "id": 1,
+      "name": "one",
+    },
+    Object {
+      "id": 2,
+      "name": "two",
+    },
+    Object {
+      "id": 3,
+      "name": "three",
+    },
+  ],
+}
+`;
