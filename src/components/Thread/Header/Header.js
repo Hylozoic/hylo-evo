@@ -53,23 +53,21 @@ export function calculateMaxShown (showAll, otherParticipants, maxCharacters) {
       return i
     }
   }
+  return otherParticipants.length
 }
 
-export function generateHeaderText (maxShown, others) {
-  if (isEmpty(others)) {
-    return 'You'
-  }
-  return isEmpty(others)
+export function generateHeaderText (maxShown, otherParticipants) {
+  return isEmpty(otherParticipants)
     ? 'You'
-    : formatNames([...others], maxShown)
+    : formatNames([...otherParticipants], maxShown)
 }
 
-export function formatNames (names, maxShown) {
+export function formatNames (otherParticipants, maxShown) {
   let andOthers = null
-  const length = names.length
+  const length = otherParticipants.length
   const truncatedNames = (maxShown && maxShown < length)
-    ? names.slice(0, maxShown).concat([others(length - maxShown)])
-    : names
+    ? otherParticipants.slice(0, maxShown).concat([others(length - maxShown)])
+    : otherParticipants
   if (maxShown && maxShown !== length) andOthers = truncatedNames.pop()
 
   if (andOthers) {

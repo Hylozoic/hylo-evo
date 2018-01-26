@@ -2,7 +2,7 @@
 
 exports[`mapStateToProps returns the right keys 1`] = `
 Object {
-  "others": Array [
+  "otherParticipants": Array [
     "two",
     "three",
   ],

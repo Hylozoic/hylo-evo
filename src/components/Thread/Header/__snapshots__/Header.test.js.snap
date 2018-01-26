@@ -1,25 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should match the latest snapshot 1`] = `
+exports[`Header should match the latest snapshot 1`] = `
 <div
   data-stylename="header"
   id="thread-header"
 >
   <div
     data-stylename="header-text"
-  >
-    one, two
-    <span
-      data-stylename="toggle-link"
-      onClick={[Function]}
-    >
-       three
-    </span>
-  </div>
-  <Icon
-    data-stylename="arrow-down"
-    name="ArrowDown"
-    onClick={[Function]}
   />
   <CloseMessages />
 </div>
