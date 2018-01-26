@@ -1,12 +1,12 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import Header, { calculateMaxShown, generateHeaderText, formatNames} from './Header'
 
 describe('Header', () => {
   it('should match the latest snapshot', () => {
-    const others = ['one', 'two', 'three']
+    const otherParticipants = ['one', 'two', 'three']
     const props = {
-      others
+      otherParticipants
     }
     const wrapper = shallow(<Header {...props} />)
     expect(wrapper).toMatchSnapshot()
