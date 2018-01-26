@@ -28,7 +28,7 @@ export default class MessagesDropdown extends Component {
     this.state = {}
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.props.fetchThreads()
   }
 
