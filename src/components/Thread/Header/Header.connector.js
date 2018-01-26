@@ -3,7 +3,7 @@ import { getOthers } from './Header.store'
 
 export function mapStateToProps (state, props) {
   return {
-    others: getOthers(props)
+    otherParticipants: getOthers(props)
   }
 }
 

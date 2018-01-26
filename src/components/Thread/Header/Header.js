@@ -27,10 +27,10 @@ export default class Header extends React.Component {
 
   render () {
     const { showAll } = this.state
-    const { others } = this.props
-    const maxShown = showAll ? others.length : calculateMaxShown(others, MAX_CHARACTERS)
-    const showArrow = others && maxShown !== others.length
-    const {displayNames, andOthers} = generateHeaderText(maxShown, others)
+    const { otherParticipants } = this.props
+    const maxShown = calculateMaxShown(showAll, otherParticipants, MAX_CHARACTERS)
+    const showArrow = otherParticipants && maxShown !== otherParticipants.length
+    const { displayNames, andOthers } = generateHeaderText(maxShown, otherParticipants)
     return <div styleName='header' id='thread-header'>
       <div styleName='header-text'>
         {displayNames}
@@ -43,11 +43,12 @@ export default class Header extends React.Component {
   }
 }
 
-export function calculateMaxShown (names, maxCharacters) {
-  if (!names) return 0
+export function calculateMaxShown (showAll, otherParticipants, maxCharacters) {
+  if (showAll) return otherParticipants.length
+  if (!otherParticipants) return 0
   let count = 0
-  for (let i = 0; i < names.length; i++) {
-    count += names[i].length
+  for (let i = 0; i < otherParticipants.length; i++) {
+    count += otherParticipants[i].length
     if (count > maxCharacters) {
       return i
     }
@@ -64,13 +65,12 @@ export function generateHeaderText (maxShown, others) {
 }
 
 export function formatNames (names, maxShown) {
-  const length = names.length
   let andOthers = null
+  const length = names.length
   const truncatedNames = (maxShown && maxShown < length)
     ? names.slice(0, maxShown).concat([others(length - maxShown)])
     : names
-
-  if (maxShown !== length) andOthers = truncatedNames.pop()
+  if (maxShown && maxShown !== length) andOthers = truncatedNames.pop()
 
   if (andOthers) {
     return {displayNames: truncatedNames.join(', '), andOthers: ` ${andOthers}`}
