@@ -41,8 +41,10 @@ export default class FlagContent extends PureComponent {
     }
 
     if (!this.isExplanationOptional() && isEmpty(trim(explanation))) {
-      this.setState({highlightRequired: true})
-      this.updateSelected(selectedCategory)
+      this.setState(
+        { highlightRequired: true },
+        () => this.updateSelected(selectedCategory)
+      )
     } else {
       submitFlagContent(selectedCategory, trim(explanation), linkData)
       this.closeModal()
@@ -64,10 +66,10 @@ export default class FlagContent extends PureComponent {
     const {type = 'content'} = this.props
     const {highlightRequired} = this.state
 
-    var subtitle = `Why was this ${type} ${selectedCategory}?`
-    if (!this.isExplanationOptional(selectedCategory) && highlightRequired) {
-      subtitle += ' (explanation required)'
-    }
+    const required = !this.isExplanationOptional(selectedCategory) && highlightRequired
+      ? ' (explanation required)'
+      : ''
+    const subtitle = `Why was this ${type} '${selectedCategory}'${required}?`
     this.setState({subtitle})
   }
 
