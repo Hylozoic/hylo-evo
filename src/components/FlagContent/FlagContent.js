@@ -64,7 +64,7 @@ export default class FlagContent extends PureComponent {
     const {type = 'content'} = this.props
     const {highlightRequired} = this.state
 
-    var subtitle = `Why was this ${type} '${selectedCategory}'`
+    var subtitle = `Why was this ${type} ${selectedCategory}?`
     if (!this.isExplanationOptional(selectedCategory) && highlightRequired) {
       subtitle += ' (explanation required)'
     }
@@ -81,7 +81,7 @@ export default class FlagContent extends PureComponent {
     ]
 
     const {
-      subtitle = 'Select a reason',
+      subtitle = 'What was wrong?',
       reasonRequired,
       selectedCategory = '', explanation} = this.state
 
@@ -99,7 +99,7 @@ export default class FlagContent extends PureComponent {
               fullWidth
               styleName={reasonRequired ? 'reason-required' : ''}
               selected={selectedCategory}
-              placeholder='What was wrong?'
+              placeholder='Select a reason'
               options={options} />
           </div>
           <TextareaAutosize
