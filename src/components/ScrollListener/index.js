@@ -1,2 +1,2 @@
-import component from './component'
+import component from './ScrollListener'
 export default component
