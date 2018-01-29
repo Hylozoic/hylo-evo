@@ -6,6 +6,10 @@
   display: inline-block;
   cursor: pointer;
   user-select: none;
+
+  &:focus {
+    outline: 0;
+  }
 }
 
 .small {

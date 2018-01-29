@@ -9,7 +9,7 @@ export default function Button ({
   label,
   color = 'green',
   hover,
-  active,
+  active = null,
   narrow,
   small,
   disabled = false,
@@ -39,7 +39,6 @@ Button.propTypes = {
   active: bool,
   narrow: bool,
   small: bool,
-  children: string,
   onClick: func,
   disabled: bool,
   className: string
