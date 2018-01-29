@@ -1,16 +1,22 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import Icon from 'components/Icon'
-import Badge from 'components/Badge'
-import { Link, NavLink, matchPath } from 'react-router-dom'
-import { tagUrl, topicsUrl } from 'util/index'
-import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
-import badgeHoverStyles from '../../../../../components/Badge/component.scss'
 import cx from 'classnames'
+import PropTypes from 'prop-types'
+import { Link, NavLink, matchPath } from 'react-router-dom'
+
+import Badge from 'components/Badge'
+import CreateTopic from 'components/CreateTopic'
+import Icon from 'components/Icon'
+import { tagUrl, topicsUrl } from 'util/index'
+import badgeHoverStyles from '../../../../../components/Badge/component.scss'
+import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
 
 const { array, string, bool, func } = PropTypes
 
 export default class TopicNavigation extends Component {
+  state = {
+    createTopicModalVisible: false
+  }
+
   static propTypes = {
     communityTopics: array,
     communitySlug: string,
@@ -20,6 +26,11 @@ export default class TopicNavigation extends Component {
     collapsed: bool,
     expand: func
   }
+
+  toggleTopicModal = () =>
+    this.setState({
+      createTopicModalVisible: !this.state.createTopicModalVisible
+    })
 
   render () {
     const {
@@ -34,7 +45,8 @@ export default class TopicNavigation extends Component {
       <div styleName={cx('s.header', {'s.header-link': collapsed})}
         onClick={expand}>
         <Icon name='Topics' styleName='s.icon' />
-        Topics
+        <span styleName='s.title'>Topics</span>
+        <Icon name='Plus' styleName='s.create-button' onClick={this.toggleTopicModal} />
       </div>
       <ul styleName='s.topics'>
         {communityTopics.map(({ id, topic, newPostCount }) =>
@@ -60,6 +72,8 @@ export default class TopicNavigation extends Component {
       {communitySlug && <div styleName='s.addTopic'>
         <Link to={topicsUrl(communitySlug)}>see all</Link>
       </div>}
+      {this.state.createTopicModalVisible && <CreateTopic
+        closeModal={this.toggleTopicModal} />}
     </div>
   }
 }
