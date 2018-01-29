@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Header, { calculateMaxShown, generateHeaderText, formatNames} from './Header'
+import Header, { calculateMaxShown, generateDisplayNames, formatNames } from './Header'
 
 describe('Header', () => {
   it('should match the latest snapshot', () => {
@@ -41,14 +41,6 @@ describe('calculateMaxShown', () => {
   })
 })
 
-describe('generateHeaderText', () => {
-  it("returns 'You' if there aren't otherParticipants ", () => {
-    const otherParticipants = []
-    const expected = 'You'
-    expect(generateHeaderText(null, otherParticipants)).toEqual(expected)
-  })
-})
-
 describe('formatNames', () => {
   it('returns an object with a joined array of all participants of participants.length is equal to maxShown', () => {
     const maxShown = 3
@@ -66,5 +58,14 @@ describe('formatNames', () => {
       andOthers: ' 2 others'
     }
     expect(formatNames(otherParticipants, maxShown)).toEqual(expected)
+  })
+})
+
+describe('generateDisplayNames', () => {
+  it('returns default if otherParticipants paramater isEmpty', () => {
+    const expected = {
+      displayNames: 'You'
+    }
+    expect(generateDisplayNames(null, [])).toEqual(expected)
   })
 })

@@ -2,10 +2,13 @@ import { getOthers } from './Header.store'
 
 describe('getOthers', () => {
   it('returns null without a currentUser', () => {
+    const participants = [1, 2, 3]
     const props = {
-      currentUser: null
+      thread: {
+        participants
+      }
     }
-    expect(getOthers(props)).toEqual(null)
+    expect(getOthers(props)).toEqual(participants)
   })
   it("returns a full list of names except the currentUser's", () => {
     const participants = [
