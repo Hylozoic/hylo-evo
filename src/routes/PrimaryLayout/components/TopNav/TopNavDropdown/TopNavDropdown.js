@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import './TopNavDropdown.scss'
 import cx from 'classnames'
 import { position } from 'util/scrolling'
+import ErrorBoundary from 'components/ErrorBoundary'
 
 const { func, object, string } = PropTypes
 
@@ -46,10 +47,12 @@ export default class TopNavDropdown extends Component {
       <div styleName={cx('wrapper', {active})}>
         <ul styleName='menu'>
           <li styleName='triangle' style={triangleStyle} />
-          <li styleName='header'>
-            {header}
-          </li>
-          {body}
+          <ErrorBoundary>
+            <li styleName='header'>
+              {header}
+            </li>
+            {body}
+          </ErrorBoundary>
         </ul>
       </div>
     </div>
