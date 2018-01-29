@@ -5,6 +5,24 @@
   flex-direction: column;
 }
 
+.controls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.create-topic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 38px;
+  margin-left: $space-1x;
+
+  .plus {
+    margin-right: $space-2x;
+  }
+}
+
 .title {
   text-align: center;
   composes: hdr-display from 'css/typography.scss';
@@ -19,8 +37,8 @@
 
 // SearchBar
 .search-bar {
-  margin-bottom: 32px;
   display: flex;
+  flex: 1;
   align-items: center;
 }
 

@@ -1,15 +1,17 @@
-import PropTypes from 'prop-types'
+import { find } from 'lodash/fp'
+import { boolean, arrayOf, func, number, shape, string } from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import './AllTopics.scss'
-import FullPageModal from 'routes/FullPageModal'
+
+import Button from 'components/Button'
+import CreateTopic from 'components/CreateTopic'
 import Dropdown from 'components/Dropdown'
+import FullPageModal from 'routes/FullPageModal'
 import Icon from 'components/Icon'
+import ScrollListener from 'components/ScrollListener'
 import TextInput from 'components/TextInput'
 import { pluralize, tagUrl } from 'util/index'
-import { find } from 'lodash/fp'
-import ScrollListener from 'components/ScrollListener'
-const { boolean, arrayOf, func, number, shape, string } = PropTypes
+import './AllTopics.scss'
 
 const sortOptions = [
   {id: 'num_followers', label: 'Popular'},
@@ -19,6 +21,10 @@ const sortOptions = [
 const TOPIC_LIST_ID = 'topic-list'
 
 export default class AllTopics extends Component {
+  state = {
+    createTopicModalVisible: false
+  }
+
   static propTypes = {
     communityTopics: arrayOf(shape({
       topic: shape({
@@ -38,11 +44,6 @@ export default class AllTopics extends Component {
     toggleSubscribe: func.isRequired
   }
 
-  constructor (props) {
-    super(props)
-    this.state = {}
-  }
-
   componentDidMount () {
     this.props.fetchCommunityTopics()
     // Caching totalTopics because the total returned in the queryset
@@ -59,6 +60,11 @@ export default class AllTopics extends Component {
       this.props.fetchCommunityTopics()
     }
   }
+
+  toggleTopicModal = () =>
+    this.setState({
+      createTopicModalVisible: !this.state.createTopicModalVisible
+    })
 
   render () {
     const {
@@ -79,7 +85,12 @@ export default class AllTopics extends Component {
       <div styleName='all-topics'>
         <div styleName='title'>Topics</div>
         <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
-        <SearchBar {...{search, setSearch, selectedSort, setSort, fetchIsPending}} />
+        <div styleName='controls'>
+          <SearchBar {...{search, setSearch, selectedSort, setSort, fetchIsPending}} />
+          <Button styleName='create-topic' color='green-white-green-border' narrow onClick={this.toggleTopicModal}>
+            <Icon styleName='plus' name='Plus' green />Add a Topic
+          </Button>
+        </div>
         <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {communityTopics.map(ct =>
             <CommunityTopicListItem key={ct.id} item={ct} slug={slug}
@@ -89,6 +100,8 @@ export default class AllTopics extends Component {
             elementId={TOPIC_LIST_ID} />
         </div>
       </div>
+      {this.state.createTopicModalVisible && <CreateTopic
+        closeModal={this.toggleTopicModal} />}
     </FullPageModal>
   }
 }
