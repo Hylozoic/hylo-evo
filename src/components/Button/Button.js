@@ -9,7 +9,7 @@ export default function Button ({
   label,
   color = 'green',
   hover,
-  active = null,
+  active,
   narrow,
   small,
   disabled = false,
