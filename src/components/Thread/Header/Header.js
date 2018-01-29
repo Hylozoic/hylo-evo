@@ -25,6 +25,10 @@ export default class Header extends React.Component {
     })
   }
 
+  componentWillReceiveProps = () => {
+    this.setState({showAll: false})
+  }
+
   render () {
     const { showAll } = this.state
     const { otherParticipants } = this.props
