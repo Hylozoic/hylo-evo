@@ -11,22 +11,25 @@ export default class Header extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      showAll: false,
-      maxShown: 0,
-      showArrow: false
+      showAll: false
     }
   }
 
   toggleShowAll = () => {
     const { showAll } = this.state
     this.setState({
-      ...this.state,
       showAll: !showAll
     })
   }
 
+  resetState = () => {
+    this.setState({
+      showAll: false
+    })
+  }
+
   componentWillReceiveProps = () => {
-    this.setState({showAll: false})
+    this.resetState()
   }
 
   render () {
