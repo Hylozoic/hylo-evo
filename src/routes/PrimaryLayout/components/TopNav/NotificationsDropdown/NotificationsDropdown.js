@@ -39,9 +39,12 @@ export default class NotificationsDropdown extends Component {
     }
   }
 
+  componentDidMount = () => {
+    this.props.fetchNotifications()
+  }
+
   render () {
     const {
-      fetchNotifications,
       renderToggleChildren,
       className,
       goToNotification,
@@ -84,7 +87,6 @@ export default class NotificationsDropdown extends Component {
 
     return <TopNavDropdown ref='dropdown'
       className={className}
-      onFirstOpen={fetchNotifications}
       toggleChildren={renderToggleChildren(showBadge)}
       header={
         <div styleName='header-content'>
