@@ -8,11 +8,13 @@ describe('mapStateToProps', () => {
     ]
 
     const thread = {
+      id: 1,
       participants
     }
     const props = {
       currentUser: {id: 1},
-      thread
+      thread,
+      threadId: thread.id
     }
     expect(mapStateToProps({}, props)).toMatchSnapshot()
   })

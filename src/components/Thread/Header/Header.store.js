@@ -6,3 +6,7 @@ export function getOthers ({currentUser, thread}) {
   const id = get('id', currentUser)
   return currentUser && map('name', filter(f => f.id !== id, participants))
 }
+
+export function getThreadId ({thread}) {
+  return get('id', thread)
+}

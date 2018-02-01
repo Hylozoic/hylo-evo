@@ -11,25 +11,31 @@ export default class Header extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      showAll: false
+      showAll: false,
+      threadId: null
     }
   }
 
   toggleShowAll = () => {
     const { showAll } = this.state
     this.setState({
+      ...this.state,
       showAll: !showAll
     })
   }
 
-  resetState = () => {
+  resetStateWithNewId = (threadId) => {
     this.setState({
-      showAll: false
+      showAll: false,
+      threadId
     })
   }
 
   componentWillReceiveProps = () => {
-    this.resetState()
+    const { threadId } = this.props
+    if (this.state.threadId !== threadId) {
+      this.resetStateWithNewId(threadId)
+    }
   }
 
   render () {
