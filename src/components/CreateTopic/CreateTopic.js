@@ -1,49 +1,58 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { isEmpty, trim } from 'lodash/fp'
 import { sanitize } from 'hylo-utils/text'
 
-import Button from 'components/Button'
 import Icon from 'components/Icon'
+import ModalDialog from 'components/ModalDialog'
 import TextInput from 'components/TextInput'
 
 import './CreateTopic.scss'
 
-export default class CreateTopic extends PureComponent {
+export default class CreateTopic extends Component {
   state = {
+    modalVisible: false,
     nameRequiredError: false,
     topicName: ''
   }
 
-  submit = () => {
-    const topicName = sanitize(trim(this.state.topicName))
-    if (isEmpty(topicName)) {
-      return this.setState({ topicNameRequired: true })
-    }
-    this.props.createTopic(topicName)
-    this.props.closeModal()
+  updateTopicName = ({ target }) => {
+    this.setState({ topicName: target.value })
   }
 
-  render () {
-    return <div styleName='popup'>
-      <div styleName='popup-inner'>
-        <h1>Create a Topic</h1>
-        <span onClick={this.props.closeModal} styleName='close-btn'>
-          <Icon name='Ex' styleName='icon' />
-        </span>
+  toggleTopicModal = () =>
+    this.setState({
+      modalVisible: !this.state.modalVisible
+    })
 
-        <div styleName='content'>
-          <TextInput
-            aria-label='topic-name'
-            label='topic-name'
-            name='topic-name'
-            styleName='topic-name'
-            placeholder='Enter a topic name:' />
-          <Button
-            styleName='submit-btn'
-            onClick={this.submit}
-            disabled={isEmpty(this.state.topicName)}>Add Topic</Button>
-        </div>
-      </div>
-    </div>
+  submitButtonAction = topicName => {
+    const name = sanitize(trim(this.state.topicName))
+    if (isEmpty(name)) {
+      return this.setState({ topicNameRequired: true })
+    }
+    this.props.createTopic(name)
+  }
+
+  submitButtonIsDisabled = () => isEmpty(this.state.topicName)
+
+  render () {
+    const { modalVisible } = this.state
+    return [
+      <Icon name='Plus' styleName='create-button' onClick={this.toggleTopicModal} />,
+      modalVisible && <ModalDialog
+        closeModal={this.toggleTopicModal}
+        modalTitle='Create a Topic'
+        submitButtonAction={this.submitButtonAction}
+        submitButtonIsDisabled={this.submitButtonIsDisabled}
+        submitButtonText='Add Topic'>
+        <TextInput
+          aria-label='topic-name'
+          label='topic-name'
+          name='topic-name'
+          onChange={this.updateTopicName}
+          styleName='topic-name'
+          placeholder='Enter a topic name:'
+          value={this.state.topicName} />
+      </ModalDialog>
+    ]
   }
 }
