@@ -29,7 +29,7 @@ export default class CreateTopic extends Component {
     if (isEmpty(name)) {
       return this.setState({ topicNameRequired: true })
     }
-    this.props.createTopic(name)
+    this.props.createTopic(name, this.props.communityId)
   }
 
   submitButtonIsDisabled = () => isEmpty(this.state.topicName)

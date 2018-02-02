@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
-// import { createTopic } from './CreateTopic.store'
 
-// const mapDispatchToProps = {submitFlagContent}
+import { createTopic } from './CreateTopic.store'
 
-export default connect(null, {})
+export default connect(null, { createTopic })

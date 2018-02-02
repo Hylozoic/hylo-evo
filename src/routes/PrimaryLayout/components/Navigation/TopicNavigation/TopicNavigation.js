@@ -25,7 +25,7 @@ export default class TopicNavigation extends Component {
 
   render () {
     const {
-      communityTopics, goBack, communitySlug,
+      communityTopics, goBack, communityId, communitySlug,
       clearBadge, clearFeedList, expand, collapsed, location
     } = this.props
 
@@ -37,7 +37,7 @@ export default class TopicNavigation extends Component {
         onClick={expand}>
         <Icon name='Topics' styleName='s.icon' />
         <span styleName='s.title'>Topics</span>
-        <CreateTopic />
+        <CreateTopic communityId={communityId} />
       </div>
       <ul styleName='s.topics'>
         {communityTopics.map(({ id, topic, newPostCount }) =>

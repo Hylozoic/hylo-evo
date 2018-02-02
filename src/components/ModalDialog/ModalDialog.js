@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { func, node, bool, string } from 'prop-types'
 
 import Button from 'components/Button'
 import Icon from 'components/Icon'
@@ -6,6 +7,16 @@ import Icon from 'components/Icon'
 import './ModalDialog.scss'
 
 export default class ModalDialog extends Component {
+  static propTypes = {
+    cancelButtonAction: bool,
+    children: node,
+    modalTitle: string,
+    showCancelButton: bool,
+    submitButtonAction: func,
+    submitButtonIsDisabled: func,
+    submitButtonText: string
+  }
+
   static defaultProps = {
     modalTitle: 'Notice',
     showCancelButton: true,

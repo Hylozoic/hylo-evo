@@ -12,8 +12,9 @@ import { makeDropQueryResults } from 'store/reducers/queryResults'
 export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
   const network = getNetworkForCurrentRoute(state, props)
-  let rootSlug, rootPath, membersPath, communityMembership, badge
+  let rootId, rootSlug, rootPath, membersPath, communityMembership, badge
   if (community) {
+    rootId = community.id
     rootSlug = get('slug', community)
     rootPath = communityUrl(rootSlug)
     membersPath = `${rootPath}/members`
@@ -24,6 +25,7 @@ export function mapStateToProps (state, props) {
     communityMembership = getCommunityMembership(state, {communityId: community.id})
     badge = get('newPostCount', communityMembership)
   } else if (network) {
+    rootId = network.id
     rootSlug = get('slug', network)
     rootPath = networkUrl(rootSlug)
     membersPath = `${rootPath}/members`
@@ -33,6 +35,7 @@ export function mapStateToProps (state, props) {
   }
 
   return {
+    rootId,
     rootSlug,
     rootPath,
     membersPath,
@@ -53,6 +56,7 @@ export function mapDispatchToProps (dispatch, props) {
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const {
+    rootId,
     rootSlug,
     rootPath,
     membersPath,
@@ -63,6 +67,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
 
   return {
     ...ownProps,
+    rootId,
     rootSlug,
     rootPath,
     membersPath,

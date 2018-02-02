@@ -43,6 +43,10 @@ import {
 import {
   USE_INVITATION
 } from 'routes/JoinCommunity/JoinCommunity.store'
+import {
+  CREATE_TOPIC,
+  CREATE_TOPIC_PENDING
+} from 'components/CreateTopic/CreateTopic.store'
 
 import orm from 'store/models'
 import { find, values } from 'lodash/fp'
@@ -65,7 +69,8 @@ export default function ormReducer (state = {}, action) {
     Person,
     Post,
     PostCommenter,
-    Skill
+    Skill,
+    Topic
   } = session
 
   if (payload && !isPromise(payload) && meta && meta.extractModel) {
@@ -109,6 +114,30 @@ export default function ormReducer (state = {}, action) {
       MessageThread.withId(message.messageThread.id).newMessageReceived()
       break
 
+    case CREATE_TOPIC_PENDING:
+      const topic = Topic.create({
+        id: meta.tempId,
+        name: meta.topicName,
+        postsTotal: 0,
+        followersTotal: 1
+      })
+      community = Community.withId(meta.communityId)
+      CommunityTopic.create({
+        id: meta.communityTopicTempId,
+        community,
+        topic,
+        postsTotal: 0,
+        followersTotal: 1
+      })
+      break
+
+    case CREATE_TOPIC:
+      Topic.withId(meta.tempId).delete()
+      Topic.create(payload.data.createTopic)
+      CommunityTopic.withId(meta.communityTopicTempId).delete()
+      CommunityTopic.create(payload.data.createTopic.communityTopics.items[0])
+      break
+
     case FETCH_MESSAGES_PENDING:
       if (meta.reset) {
         // this is so that after websocket reconnect events, pagination
@@ -122,7 +151,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case LEAVE_COMMUNITY:
-      var me = Me.first()
+      let me = Me.first()
       membership = find(m => m.community.id === meta.id, me.memberships.toModelArray())
       if (membership) membership.delete()
       break

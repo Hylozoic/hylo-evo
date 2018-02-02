@@ -8,6 +8,7 @@ export default function Navigation (props) {
   const {
     className,
     collapsed,
+    rootId,
     rootSlug,
     rootPath,
     membersPath,
@@ -48,7 +49,7 @@ export default function Navigation (props) {
           <NavLink key={link.label} {...link} collapsed={collapsed}
             onClick={link.onClick} />)}
       </ul>
-      {showTopics && <TopicNavigation backUrl={rootPath} communitySlug={rootSlug} collapsed={collapsed} />}
+      {showTopics && <TopicNavigation backUrl={rootPath} communityId={rootId} communitySlug={rootSlug} collapsed={collapsed} />}
     </div>
   </div>
 }
