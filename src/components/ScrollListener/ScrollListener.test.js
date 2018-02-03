@@ -1,4 +1,4 @@
-import ScrollListener from './component'
+import ScrollListener from './ScrollListener'
 import { shallow } from 'enzyme'
 import React from 'react'
 

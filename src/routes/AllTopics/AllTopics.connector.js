@@ -85,13 +85,14 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
 
   const offset = get('length', communityTopics, 0)
   const first = 10
+  const initialLoad = 20
 
   const fetchMoreCommunityTopics = fetchIsPending || !hasMore
     ? () => { }
     : () => dispatchProps.fetchCommunityTopics(community.id, {offset, sortBy: selectedSort, search, first})
 
   const fetchCommunityTopics = () =>
-    dispatchProps.fetchCommunityTopics(community.id, { search, first, sortBy: selectedSort })
+    dispatchProps.fetchCommunityTopics(community.id, { search, first: initialLoad, sortBy: selectedSort })
 
   return {
     ...omit(stateProps, 'community'),

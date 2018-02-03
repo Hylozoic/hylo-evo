@@ -25,7 +25,7 @@ describe('mergeProps', () => {
       {
         sortBy: stateProps.selectedSort,
         search: stateProps.search,
-        first: 10
+        first: 20
       })
     fetchCommunityTopics.mockClear()
 
