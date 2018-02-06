@@ -57,7 +57,6 @@ export default class MessagesDropdown extends Component {
       className,
       goToThread,
       currentUser,
-      fetchThreads,
       pending
     } = this.props
 
