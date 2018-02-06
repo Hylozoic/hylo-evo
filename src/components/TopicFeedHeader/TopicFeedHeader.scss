@@ -34,8 +34,9 @@
 
 .meta {
   composes: caption-lt-lg from 'css/typography.scss';
-  color: $color-white;
+  color: $color-white-60;
   margin-left: 24px;
+  display: flex;
 }
 
 .subscribe {
@@ -63,4 +64,15 @@
   background-position: center;
   background-size: cover;
   overflow: hidden;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: $space-1x;
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+  color: $color-white-60;
 }

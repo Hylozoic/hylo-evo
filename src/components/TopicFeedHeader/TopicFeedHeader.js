@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { get } from 'lodash/fp'
+import Icon from 'components/Icon'
 import Button from 'components/Button'
 import { PostPrompt } from 'components/FeedBanner/FeedBanner'
 import { pluralize, bgImageStyle } from 'util/index'
@@ -27,7 +28,10 @@ export default function TopicFeedHeader ({
     <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
       <div styleName='topic-name'>#{topic.name}</div>
       <div styleName='meta'>
-        {pluralize(followersTotal, 'subscriber')} {pluralize(postsTotal, 'post')}
+        <Icon name='Star' styleName='icon' />
+        {pluralize(followersTotal, 'subscriber')}
+        <Icon name='Post' styleName='icon' />
+        {pluralize(postsTotal, 'post')}
       </div>
       {community && <Button styleName='subscribe' onClick={toggleSubscribe}>
         {communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
