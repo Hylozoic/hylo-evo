@@ -22,7 +22,7 @@ exports[`matches the latest snapshot 1`] = `
       data-stylename="meta"
     >
       <Icon
-        data-stylename="icon"
+        data-stylename="star-icon"
         name="Star"
       />
       3 subscribers
