@@ -21,8 +21,15 @@ exports[`matches the latest snapshot 1`] = `
     <div
       data-stylename="meta"
     >
+      <Icon
+        data-stylename="icon"
+        name="Star"
+      />
       3 subscribers
-       
+      <Icon
+        data-stylename="icon"
+        name="Post"
+      />
       11 posts
     </div>
     <Button
