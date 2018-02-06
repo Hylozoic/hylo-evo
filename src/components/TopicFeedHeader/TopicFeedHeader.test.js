@@ -1,6 +1,5 @@
 import TopicFeedHeader from './TopicFeedHeader'
-import { MemoryRouter } from 'react-router'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import React from 'react'
 
 const topic = {name: 'cats'}
