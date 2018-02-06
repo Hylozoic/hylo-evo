@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { get } from 'lodash/fp'
 import Button from 'components/Button'
 import { PostPrompt } from 'components/FeedBanner/FeedBanner'
 import { pluralize, bgImageStyle } from 'util/index'
@@ -19,7 +20,7 @@ export default function TopicFeedHeader ({
   currentUser,
   newPost
 }) {
-  const { bannerUrl } = community
+  const bannerUrl = get('bannerUrl', community)
   postsTotal = postsTotal || 0
   followersTotal = followersTotal || 0
   return <div styleName='topic-feed-header'>

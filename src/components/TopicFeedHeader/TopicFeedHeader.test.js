@@ -4,42 +4,19 @@ import { shallow, mount } from 'enzyme'
 import React from 'react'
 
 const topic = {name: 'cats'}
-
+const bannerUrl = 'some.url'
 it('matches the latest snapshot', () => {
-  const wrapper = shallow(<TopicFeedHeader topic={topic} postsTotal={11} followersTotal={3} />)
+  const props = {
+    topic,
+    community: {
+      bannerUrl
+    },
+    communityTopic: {
+      isSubscribed: true
+    }
+  }
+  const wrapper = shallow(<TopicFeedHeader {...props} postsTotal={11} followersTotal={3} />)
   expect(wrapper).toMatchSnapshot()
-})
-
-it('links to the main community feed if community is passed in', () => {
-  const props = {
-    topic,
-    communityTopic: {},
-    community: {
-      slug: 'monkeys',
-      name: 'Monkey Gang'
-    }
-  }
-  const wrapper = shallow(<TopicFeedHeader {...props} />)
-  expect(wrapper.find('Link').prop('to')).toEqual('/c/monkeys')
-})
-
-it('links to the All Communities feed if no community is passed in', () => {
-  const props = {topic}
-  const wrapper = shallow(<TopicFeedHeader {...props} />)
-  expect(wrapper.find('Link').prop('to')).toEqual('/all')
-})
-
-it('uses the community name if community is passed in', () => {
-  const props = {
-    topic,
-    communityTopic: {},
-    community: {
-      slug: 'monkeys',
-      name: 'Monkey Gang'
-    }
-  }
-  const wrapper = mount(<MemoryRouter><TopicFeedHeader {...props} /></MemoryRouter>)
-  expect(wrapper.find('Link').text()).toEqual(' back to Monkey Gang')
 })
 
 it('displays the topic name', () => {
@@ -54,7 +31,7 @@ describe('meta', () => {
   it('uses values of 0 if the meta info is not passed in', () => {
     const props = {topic}
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('0 posts • 0 followers')
+    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('0 subscribers 0 posts')
   })
 
   it('correctly pluralizes meta counts when count is 0', () => {
@@ -64,7 +41,7 @@ describe('meta', () => {
       postsTotal: 0
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('0 posts • 0 followers')
+    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('0 subscribers 0 posts')
   })
 
   it('correctly pluralizes counts when count is 1', () => {
@@ -74,7 +51,7 @@ describe('meta', () => {
       postsTotal: 1
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('1 post • 1 follower')
+    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('1 subscriber 1 post')
   })
 
   it('correctly pluralizes counts when count is greater than 1', () => {
@@ -84,7 +61,7 @@ describe('meta', () => {
       postsTotal: 10
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('10 posts • 2 followers')
+    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('2 subscribers 10 posts')
   })
 })
 
@@ -95,7 +72,8 @@ describe('subscribe', () => {
       communityTopic: {},
       community: {
         slug: 'monkeys',
-        name: 'Monkey Gang'
+        name: 'Monkey Gang',
+        bannerUrl
       }
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
@@ -103,7 +81,12 @@ describe('subscribe', () => {
   })
 
   it('does not show sub/unsub if community prop is not present', () => {
-    const props = {topic}
+    const props = {
+      topic,
+      communityTopic: {
+        isSubscribed: false
+      }
+    }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-stylename="subscribe"]')).toHaveLength(0)
   })
@@ -121,7 +104,7 @@ describe('subscribe', () => {
   it('should say Unsubscribe when subscribed', () => {
     const props = {
       topic,
-      community: {},
+      community: {bannerUrl},
       communityTopic: {isSubscribed: true}
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
@@ -132,7 +115,7 @@ describe('subscribe', () => {
     const props = {
       topic,
       communityTopic: {},
-      community: {},
+      community: {bannerUrl},
       toggleSubscribe: jest.fn()
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
