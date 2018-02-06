@@ -39,7 +39,6 @@ Button.propTypes = {
   active: bool,
   narrow: bool,
   small: bool,
-  children: string,
   onClick: func,
   disabled: bool,
   className: string
