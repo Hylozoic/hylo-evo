@@ -41,8 +41,20 @@
 
 .subscribe {
   position: absolute;
-  right: 0;
-  top: 78px;
+  right: 15px;
+  top: 90px;
+}
+
+.unsubscribe {
+  position: absolute;
+  right: 14px;
+  top: 90px;
+  background-color: $color-white;
+  color: $color-caribbean-green;
+  &:hover {
+    background-color: $color-white-80;
+  }
+  border-width: 0px;
 }
 
 .post-prompt {
@@ -71,6 +83,19 @@
   font-size: 11px;
   color: $color-white-60;
 }
+
+.subscribe-star-icon {
+  margin: $space-1x;
+  font-size: 14px;
+  color: $color-white;
+}
+
+.subscribe-star-icon-green {
+  margin: $space-1x;
+  font-size: 14px;
+  color: $color-caribbean-green;
+}
+
 
 .post-icon {
   margin: $space-1x;

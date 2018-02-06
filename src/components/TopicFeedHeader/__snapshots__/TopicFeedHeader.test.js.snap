@@ -33,8 +33,12 @@ exports[`matches the latest snapshot 1`] = `
       11 posts
     </div>
     <Button
-      data-stylename="subscribe"
+      data-stylename="unsubscribe"
     >
+      <Icon
+        data-stylename="subscribe-star-icon-green"
+        name="Star"
+      />
       Unsubscribe
     </Button>
     <PostPrompt />

@@ -22,6 +22,10 @@ export default function TopicFeedHeader ({
   newPost
 }) {
   const bannerUrl = get('bannerUrl', community)
+  const buttonText = communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'
+  const iconStyle = communityTopic.isSubscribed ? 'subscribe-star-icon-green' : 'subscribe-star-icon'
+  const buttonStyle = communityTopic.isSubscribed ? 'unsubscribe' : 'subscribe'
+
   postsTotal = postsTotal || 0
   followersTotal = followersTotal || 0
   return <div styleName='topic-feed-header'>
@@ -33,8 +37,8 @@ export default function TopicFeedHeader ({
         <Icon name='Post' styleName='post-icon' />
         {pluralize(postsTotal, 'post')}
       </div>
-      {community && <Button styleName='subscribe' onClick={toggleSubscribe}>
-        {communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+      {community && <Button styleName={buttonStyle} onClick={toggleSubscribe}>
+        <Icon name='Star' styleName={iconStyle} />{buttonText}
       </Button>}
       <PostPrompt currentUser={currentUser} newPost={newPost} />
     </div>
