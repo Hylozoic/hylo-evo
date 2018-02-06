@@ -37,8 +37,11 @@ export default class CreateTopic extends Component {
   render () {
     const { modalVisible } = this.state
     return [
-      <Icon name='Plus' styleName='create-button' onClick={this.toggleTopicModal} />,
-      modalVisible && <ModalDialog
+      <Icon key='create-button'
+        name='Plus'
+        styleName='create-button'
+        onClick={this.toggleTopicModal} />,
+      modalVisible && <ModalDialog key='create-dialog'
         closeModal={this.toggleTopicModal}
         modalTitle='Create a Topic'
         submitButtonAction={this.submitButtonAction}

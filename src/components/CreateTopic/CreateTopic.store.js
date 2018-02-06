@@ -12,15 +12,15 @@ export function createTopic (topicName, communityId) {
         createTopic(topicName: $topicName, communityId: $communityId) {
           id
           name
-          postsTotal
           communityTopics {
             items {
-              community {
-                id
-                name
-              }
+              id
+              postsTotal
+              followersTotal
             }
           }
+          followersTotal
+          postsTotal
         }
       }`,
       variables: {

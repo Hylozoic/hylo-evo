@@ -77,7 +77,7 @@ export default function ormReducer (state = {}, action) {
     extractModelsFromAction(action, session)
   }
 
-  let membership, community, person, post
+  let membership, community, person, post, topic
 
   switch (type) {
     case CREATE_COMMENT_PENDING:
@@ -115,7 +115,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case CREATE_TOPIC_PENDING:
-      const topic = Topic.create({
+      topic = Topic.create({
         id: meta.tempId,
         name: meta.topicName,
         postsTotal: 0,
@@ -125,17 +125,24 @@ export default function ormReducer (state = {}, action) {
       CommunityTopic.create({
         id: meta.communityTopicTempId,
         community,
-        topic,
+        followersTotal: 1,
+        isSubscribed: true,
         postsTotal: 0,
-        followersTotal: 1
+        topic
       })
       break
 
     case CREATE_TOPIC:
       Topic.withId(meta.tempId).delete()
-      Topic.create(payload.data.createTopic)
+      topic = Topic.create(payload.data.createTopic)
+      community = Community.withId(meta.communityId)
       CommunityTopic.withId(meta.communityTopicTempId).delete()
-      CommunityTopic.create(payload.data.createTopic.communityTopics.items[0])
+      CommunityTopic.create({
+        ...payload.data.createTopic.communityTopics.items[0],
+        community,
+        topic,
+        isSubscribed: true
+      })
       break
 
     case FETCH_MESSAGES_PENDING:
