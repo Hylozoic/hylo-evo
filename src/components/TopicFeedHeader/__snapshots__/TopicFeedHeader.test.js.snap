@@ -5,6 +5,13 @@ exports[`matches the latest snapshot 1`] = `
   data-stylename="topic-feed-header"
 >
   <div
+    data-stylename="fade"
+  >
+    <div
+      data-stylename="fade2"
+    />
+  </div>
+  <div
     data-stylename="image"
     style={
       Object {
