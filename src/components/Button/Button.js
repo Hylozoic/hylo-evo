@@ -3,7 +3,7 @@ import React from 'react'
 import cx from 'classnames'
 import './Button.scss'
 
-const { string, bool, func, object, oneOfType } = PropTypes
+const { string, bool, func, object, oneOfType, array } = PropTypes
 
 export default function Button ({
   label,
@@ -39,7 +39,11 @@ Button.propTypes = {
   active: bool,
   narrow: bool,
   small: bool,
-  children: string,
+  children: oneOfType([
+    string,
+    object,
+    array
+  ]),
   onClick: func,
   disabled: bool,
   className: string

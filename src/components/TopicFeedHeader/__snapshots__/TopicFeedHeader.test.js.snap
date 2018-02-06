@@ -4,33 +4,51 @@ exports[`matches the latest snapshot 1`] = `
 <div
   data-stylename="topic-feed-header"
 >
-  <Link
-    data-stylename="back"
-    replace={false}
-    to="/all"
+  <div
+    data-stylename="fade"
   >
-    <Icon
-      data-stylename="back-icon"
-      name="Back"
+    <div
+      data-stylename="fade2"
     />
-     back to 
-    All Communities
-  </Link>
-  <div
-    data-stylename="topic-name"
-  >
-    #
-    cats
   </div>
   <div
-    data-stylename="meta"
+    data-stylename="image"
+    style={
+      Object {
+        "backgroundImage": "url(some.url)",
+      }
+    }
   >
-    11 posts
-     • 
-    3 followers
+    <div
+      data-stylename="topic-name"
+    >
+      #
+      cats
+    </div>
+    <div
+      data-stylename="meta"
+    >
+      <Icon
+        data-stylename="star-icon"
+        name="Star"
+      />
+      3 subscribers
+      <Icon
+        data-stylename="post-icon"
+        name="Post"
+      />
+      11 posts
+    </div>
+    <Button
+      data-stylename="unsubscribe"
+    >
+      <Icon
+        data-stylename="subscribe-star-icon-green"
+        name="Star"
+      />
+      Unsubscribe
+    </Button>
+    <PostPrompt />
   </div>
-  <PostPrompt
-    data-stylename="post-prompt"
-  />
 </div>
 `;
