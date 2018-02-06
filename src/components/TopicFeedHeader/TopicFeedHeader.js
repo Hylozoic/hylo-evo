@@ -28,9 +28,9 @@ export default function TopicFeedHeader ({
     <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
       <div styleName='topic-name'>#{topic.name}</div>
       <div styleName='meta'>
-        <Icon name='Star' styleName='icon' />
+        <Icon name='Star' styleName='star-icon' />
         {pluralize(followersTotal, 'subscriber')}
-        <Icon name='Post' styleName='icon' />
+        <Icon name='Post' styleName='post-icon' />
         {pluralize(postsTotal, 'post')}
       </div>
       {community && <Button styleName='subscribe' onClick={toggleSubscribe}>

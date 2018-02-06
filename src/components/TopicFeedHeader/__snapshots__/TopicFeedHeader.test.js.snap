@@ -27,7 +27,7 @@ exports[`matches the latest snapshot 1`] = `
       />
       3 subscribers
       <Icon
-        data-stylename="icon"
+        data-stylename="post-icon"
         name="Post"
       />
       11 posts

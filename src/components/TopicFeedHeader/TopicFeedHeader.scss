@@ -66,13 +66,14 @@
   overflow: hidden;
 }
 
-.icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.star-icon {
   margin: $space-1x;
-  font-size: 14px;
-  width: 14px;
-  height: 14px;
+  font-size: 11px;
+  color: $color-white-60;
+}
+
+.post-icon {
+  margin: $space-1x;
+  font-size: 12px;
   color: $color-white-60;
 }
