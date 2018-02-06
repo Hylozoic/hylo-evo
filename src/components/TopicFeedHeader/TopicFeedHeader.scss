@@ -29,14 +29,17 @@
   letter-spacing: -0.47px;
   text-shadow: 0 2px 4px rgba(0,0,0,0.50);
   margin-top: 32px;
-  margin-left: 24px;
+  margin-left: 18px;
+  position: absolute;
 }
 
 .meta {
   composes: caption-lt-lg from 'css/typography.scss';
-  color: $color-white-60;
-  margin-left: 24px;
+  color: $color-white-80;
+  margin-left: 18px;
   display: flex;
+  position: absolute;
+  top: 105px;
 }
 
 .subscribe {
@@ -75,13 +78,14 @@
   composes: imageShape;
   background-position: center;
   background-size: cover;
+  z-index: 2000 !important;
   overflow: hidden;
 }
 
 .star-icon {
   margin: $space-1x;
   font-size: 11px;
-  color: $color-white-60;
+  color: $color-white-80;
 }
 
 .subscribe-star-icon {
@@ -96,9 +100,20 @@
   color: $color-caribbean-green;
 }
 
-
 .post-icon {
   margin: $space-1x;
   font-size: 12px;
-  color: $color-white-60;
+  color: $color-white-80;
+}
+
+.fade {
+  // TODO: replace these with pseudo elements
+  composes: imageShape;
+  position: absolute;
+  background-image: linear-gradient(180deg, $color-cod-gray-0, $color-cod-gray-0 30%, $color-cod-gray-dark);
+}
+
+.fade2 {
+  composes: imageShape;
+  background-color: $color-rhino-30;
 }
