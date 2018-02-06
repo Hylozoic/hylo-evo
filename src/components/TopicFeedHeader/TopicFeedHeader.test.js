@@ -30,7 +30,7 @@ describe('meta', () => {
   it('uses values of 0 if the meta info is not passed in', () => {
     const props = {topic}
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('0 subscribers 0 posts')
+    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('<Icon />0 subscribers<Icon />0 posts')
   })
 
   it('correctly pluralizes meta counts when count is 0', () => {
@@ -40,7 +40,7 @@ describe('meta', () => {
       postsTotal: 0
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('0 subscribers 0 posts')
+    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('<Icon />0 subscribers<Icon />0 posts')
   })
 
   it('correctly pluralizes counts when count is 1', () => {
@@ -50,7 +50,7 @@ describe('meta', () => {
       postsTotal: 1
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('1 subscriber 1 post')
+    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('<Icon />1 subscriber<Icon />1 post')
   })
 
   it('correctly pluralizes counts when count is greater than 1', () => {
@@ -60,7 +60,7 @@ describe('meta', () => {
       postsTotal: 10
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
-    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('2 subscribers 10 posts')
+    expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('<Icon />2 subscribers<Icon />10 posts')
   })
 })
 
