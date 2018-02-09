@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import NetworkSettingsTab from './NetworkSettingsTab'
 import NetworkModeratorsTab from './NetworkModeratorsTab'
 import NetworkCommunitiesTab from './NetworkCommunitiesTab'
+import NetworkCommunitySettings from './NetworkCommunitySettings'
 import { pullAt } from 'lodash'
 import FullPageModal from 'routes/FullPageModal'
 import Loading from 'components/Loading'
@@ -71,7 +72,12 @@ export default class NetworkSettings extends Component {
         name: 'Communities',
         path: `/n/${network.slug}/settings/communities`,
         component: <NetworkCommunitiesTab network={network} isModerator={isModerator} isAdmin={isAdmin} />
-      }
+      },
+      {
+        path: `/n/${network.slug}/settings/communities/:communitySlug`,
+        render: props => (
+          <NetworkCommunitySettings network={network} isModerator={isModerator} isAdmin={isAdmin} match={props.match} />
+        )}
     ]
 
     // Remove the moderators tab when not a HyloAdmin

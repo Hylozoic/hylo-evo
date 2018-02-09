@@ -21,7 +21,7 @@ export default class FullPageModal extends Component {
       <div styleName='content'>
         <div styleName='left-sidebar'>
           <div styleName={cx('left-sidebar-fixed', {border: multipleTabs})}>
-            {multipleTabs && content.map(tab =>
+            {multipleTabs && content.filter(tab => !!tab.name).map(tab =>
               <NavLink to={tab.path}
                 exact
                 replace
@@ -36,7 +36,7 @@ export default class FullPageModal extends Component {
           {content.map(tab =>
             <Route path={tab.path}
               exact
-              render={() => tab.component}
+              render={tab.render ? tab.render : () => tab.component}
               key={tab.path} />)}
         </div>}
         {!multipleTabs && <div styleName={cx('center', {narrow})}>{content || children}</div>}
