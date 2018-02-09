@@ -29,7 +29,8 @@ export default class MessagesDropdown extends Component {
   }
 
   componentDidMount = () => {
-    this.props.fetchThreads()
+    const { currentUser, fetchThreads } = this.props
+    currentUser && fetchThreads()
   }
 
   onToggle = nowActive => {
