@@ -820,6 +820,7 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
       </span>
     </div>
   }
+  onToggle={[Function]}
   toggleChildren={
     <span>
       click me
@@ -859,6 +860,7 @@ exports[`NotificationsDropdown renders correctly with an empty list 1`] = `
       </span>
     </div>
   }
+  onToggle={[Function]}
   toggleChildren={
     <span>
       click me
