@@ -49,7 +49,7 @@ export default class NotificationsDropdown extends Component {
       return currentUser && currentUser.newNotificationCount > 0
     }
 
-    return some(n => n.isUnread(), this.props.notifications)
+    return some(n => n.activity && n.activity.unread, this.props.notifications)
   }
 
   render () {

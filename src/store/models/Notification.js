@@ -3,10 +3,6 @@ import { attr, fk, Model } from 'redux-orm'
 const Notification = Model.createClass({
   toString () {
     return `Message: ${this.id}`
-  },
-
-  isUnread () {
-    return this.activity && this.activity.unread
   }
 })
 
