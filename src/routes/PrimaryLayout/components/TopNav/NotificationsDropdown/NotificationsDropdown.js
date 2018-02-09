@@ -39,6 +39,10 @@ export default class NotificationsDropdown extends Component {
     }
   }
 
+  onToggle = nowActive => {
+    if (nowActive) this.setState({lastOpenedAt: new Date()})
+  }
+
   componentDidMount = () => {
     this.props.fetchNotifications()
   }
@@ -49,7 +53,11 @@ export default class NotificationsDropdown extends Component {
       return currentUser && currentUser.newNotificationCount > 0
     }
 
-    return some(n => n.activity && n.activity.unread, this.props.notifications)
+    const { lastOpenedAt } = this.state
+    const isUnread = n =>
+      n.activity && n.activity.unread && (!lastOpenedAt || new Date(n.createdAt) > lastOpenedAt)
+
+    return some(isUnread, this.props.notifications)
   }
 
   render () {
@@ -71,6 +79,8 @@ export default class NotificationsDropdown extends Component {
       notifications = notifications.filter(n => n.activity.unread)
     }
 
+    const message = `No ${showingUnread ? 'unread ' : ''}notifications`
+
     const onClick = notification => {
       if (notification.activity.unread) markActivityRead(notification.activity.id)
       goToNotification(notification)
@@ -81,7 +91,7 @@ export default class NotificationsDropdown extends Component {
     if (pending) {
       body = <LoadingItems />
     } else if (isEmpty(notifications)) {
-      body = <NoItems message='No notifications' />
+      body = <NoItems message={message} />
     } else {
       body = <div styleName='notifications'>
         {notifications.map(notification => <Notification
@@ -93,6 +103,7 @@ export default class NotificationsDropdown extends Component {
 
     return <TopNavDropdown ref='dropdown'
       className={className}
+      onToggle={this.onToggle}
       toggleChildren={renderToggleChildren(this.hasUnread())}
       header={
         <div styleName='header-content'>
