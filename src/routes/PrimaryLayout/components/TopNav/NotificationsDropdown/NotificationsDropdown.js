@@ -6,7 +6,7 @@ import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
 import { firstName } from 'store/models/Person'
 import TopNavDropdown from '../TopNavDropdown'
-import { find, isEmpty } from 'lodash/fp'
+import { find, isEmpty, some } from 'lodash/fp'
 import {
   ACTION_NEW_COMMENT,
   ACTION_TAG,
@@ -43,6 +43,15 @@ export default class NotificationsDropdown extends Component {
     this.props.fetchNotifications()
   }
 
+  hasUnread () {
+    if (isEmpty(this.props.notifications)) {
+      const { currentUser } = this.props
+      return currentUser && currentUser.newNotificationCount > 0
+    }
+
+    return some(n => n.isUnread(), this.props.notifications)
+  }
+
   render () {
     const {
       renderToggleChildren,
@@ -50,7 +59,6 @@ export default class NotificationsDropdown extends Component {
       goToNotification,
       markActivityRead,
       markAllActivitiesRead,
-      currentUser,
       pending
     } = this.props
     var { notifications } = this.props
@@ -69,8 +77,6 @@ export default class NotificationsDropdown extends Component {
       this.refs.dropdown.toggle(false)
     }
 
-    const showBadge = currentUser && currentUser.newNotificationCount > 0
-
     let body
     if (pending) {
       body = <LoadingItems />
@@ -87,7 +93,7 @@ export default class NotificationsDropdown extends Component {
 
     return <TopNavDropdown ref='dropdown'
       className={className}
-      toggleChildren={renderToggleChildren(showBadge)}
+      toggleChildren={renderToggleChildren(this.hasUnread())}
       header={
         <div styleName='header-content'>
           <span onClick={showRecent} styleName={cx('tab', {active: !showingUnread})}>
