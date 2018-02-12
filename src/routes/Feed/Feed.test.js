@@ -8,7 +8,8 @@ describe('Feed', () => {
       filter='request'
       community={{}}
       selectedPostId='5'
-      sortBy='votes' />)
+      sortBy='votes'
+      currentUserHasMemberships />)
 
     const feed = wrapper.find('Connect(FeedList)')
     expect(feed).toHaveLength(1)
@@ -29,7 +30,8 @@ describe('Feed', () => {
       network={{id: 2}}
       fetchNetwork={jest.fn()}
       networkSlug='bar'
-      sortBy='votes' />)
+      sortBy='votes'
+      currentUserHasMemberships />)
 
     expect(wrapper).toMatchSnapshot()
 

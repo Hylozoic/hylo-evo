@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
+import { isEmpty } from 'lodash'
 import { FETCH_POSTS } from 'store/constants'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
@@ -7,6 +8,8 @@ import getCommunityTopicForCurrentRoute from 'store/selectors/getCommunityTopicF
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
+import getMemberships from 'store/selectors/getMemberships'
+
 import changeQueryParam from 'store/actions/changeQueryParam'
 import getQueryParam from 'store/selectors/getQueryParam'
 import { push } from 'react-router-redux'
@@ -16,6 +19,9 @@ import { fetchTopic, fetchCommunityTopic, fetchNetwork } from './Feed.store'
 
 export function mapStateToProps (state, props) {
   let community, communityTopic, topic, network
+
+  const currentUser = getMe(state)
+  const currentUserHasMemberships = !isEmpty(getMemberships(state))
   const communitySlug = getParam('slug', state, props)
   const topicName = getParam('topicName', state, props)
   const networkSlug = getParam('networkSlug', state, props)
@@ -48,9 +54,10 @@ export function mapStateToProps (state, props) {
     community,
     postCount: get('postCount', community),
     pending: state.pending[FETCH_POSTS],
-    currentUser: getMe(state, props),
+    currentUser,
     networkSlug,
-    network
+    network,
+    currentUserHasMemberships
   }
 }
 

@@ -59,7 +59,7 @@ export default class Feed extends Component {
   render () {
     const {
       topic, community, currentUser, topicName, postsTotal, followersTotal,
-      communityTopic, newPost, network, networkSlug
+      communityTopic, newPost, network, networkSlug, currentUserHasMemberships
     } = this.props
 
     if (topicName && !topic) return <Loading />
@@ -77,8 +77,9 @@ export default class Feed extends Component {
           currentUser={currentUser}
           newPost={newPost} />
         : <FeedBanner community={community || network} currentUser={currentUser}
-          all={!community && !networkSlug} newPost={newPost} />}
-      <FeedList {...this.getFeedProps()} />
+          all={!community && !networkSlug} newPost={newPost}
+          currentUserHasMemberships={currentUserHasMemberships} />}
+      {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}
     </div>
   }
 }

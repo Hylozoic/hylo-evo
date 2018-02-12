@@ -58,47 +58,6 @@ exports[`renders for all communities 1`] = `
         </div>
       </div>
     </div>
-    <PostPrompt
-      currentUser={
-        Object {
-          "avatarUrl": "me.png",
-          "firstName": [Function],
-          "memberships": Object {
-            "count": [Function],
-          },
-        }
-      }
-    >
-      <div
-        onMouseEnter={[Function]}
-        onMouseLeave={[Function]}
-      >
-        <div
-          data-stylename="postPrompt"
-        >
-          <RoundImage
-            data-stylename="prompt-image"
-            small={true}
-            url="me.png"
-          >
-            <div
-              data-stylename="image small"
-              style={
-                Object {
-                  "backgroundImage": "url(me.png)",
-                }
-              }
-            />
-          </RoundImage>
-          Hi 
-          Bob
-          , what's on your mind?
-        </div>
-        <div
-          data-stylename="shadow"
-        />
-      </div>
-    </PostPrompt>
   </div>
 </FeedBanner>
 `;
@@ -168,7 +127,6 @@ exports[`renders with a community 1`] = `
         </div>
       </div>
     </div>
-    <PostPrompt />
   </div>
 </FeedBanner>
 `;

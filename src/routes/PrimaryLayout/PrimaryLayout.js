@@ -131,7 +131,7 @@ export default class PrimaryLayout extends Component {
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToSignupFlow currentUser={currentUser}
             pathname={this.props.location.pathname} />
-          <RedirectToCreateCommunityFlow
+          <RedirectOrphanUser
             hasMemberships={hasMemberships}
             pathname={this.props.location.pathname}
             currentUser={currentUser}
@@ -354,12 +354,12 @@ export function RedirectToSignupFlow ({ currentUser, pathname }) {
   return <Redirect to={destination} />
 }
 
-export function RedirectToCreateCommunityFlow ({ hasMemberships, pathname, returnToURL, currentUser }) {
+export function RedirectOrphanUser ({ hasMemberships, pathname, returnToURL, currentUser }) {
   if (returnToURL && isJoinCommunityPath(returnToURL)) return null
   if (!currentUser || !currentUser.settings || currentUser.settings.signupInProgress) return null
   if (hasMemberships) return null
-  if (isCreateCommunityPath(pathname) || isSignupPath(pathname)) return null
-  const destination = '/create-community/name'
+  if (isCreateCommunityPath(pathname) || isSignupPath(pathname) || isAllCommunitiesPath(pathname)) return null
+  const destination = '/all'
   return <Redirect to={destination} />
 }
 

@@ -1,21 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RedirectToCreateCommunityFlow redirects to create community if: signup is complete, a user does not have memberships, and is not already on /signup or /create-community 1`] = `
+exports[`RedirectOrphanUser redirects to all communities if: signup is complete, a user does not have memberships, and is not already on /signup or /create-community or /all 1`] = `
 <Redirect
   push={false}
-  to="/create-community/name"
+  to="/all"
 />
 `;
 
-exports[`RedirectToCreateCommunityFlow returns null if a signup is in progress 1`] = `""`;
+exports[`RedirectOrphanUser returns null if a signup is in progress 1`] = `""`;
 
-exports[`RedirectToCreateCommunityFlow returns null if pathname starts with /create-community 1`] = `""`;
+exports[`RedirectOrphanUser returns null if pathname starts with /all 1`] = `""`;
 
-exports[`RedirectToCreateCommunityFlow returns null if pathname starts with /signup 1`] = `""`;
+exports[`RedirectOrphanUser returns null if pathname starts with /create-community 1`] = `""`;
 
-exports[`RedirectToCreateCommunityFlow returns null if returnToURL is /h/use-invitation 1`] = `""`;
+exports[`RedirectOrphanUser returns null if pathname starts with /signup 1`] = `""`;
 
-exports[`RedirectToCreateCommunityFlow returns null if there are memberships 1`] = `""`;
+exports[`RedirectOrphanUser returns null if returnToURL is /h/use-invitation 1`] = `""`;
+
+exports[`RedirectOrphanUser returns null if there are memberships 1`] = `""`;
 
 exports[`shows DownloadAppModal if the user is on mobile 1`] = `
 <DownloadAppPortal
