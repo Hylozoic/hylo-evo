@@ -83,7 +83,8 @@ export const mapDispatchToProps = function (dispatch, props) {
         return dispatch(fetchTopic(topicName))
       }
     },
-    fetchNetwork: () => dispatch(fetchNetwork(networkSlug))
+    fetchNetwork: () => dispatch(fetchNetwork(networkSlug)),
+    goToCreateCommunity: () => dispatch(push('/create-community/name'))
   }
 }
 

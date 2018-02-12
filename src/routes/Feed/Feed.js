@@ -7,6 +7,7 @@ import FeedList from 'components/FeedList'
 import Loading from 'components/Loading'
 import FeedBanner from 'components/FeedBanner'
 import TopicFeedHeader from 'components/TopicFeedHeader'
+import Button from 'components/Button'
 import { bgImageStyle } from 'util/index'
 
 export default class Feed extends Component {
@@ -61,7 +62,8 @@ export default class Feed extends Component {
   render () {
     const {
       topic, community, currentUser, topicName, postsTotal, followersTotal,
-      communityTopic, newPost, network, networkSlug, currentUserHasMemberships
+      communityTopic, newPost, network, networkSlug, currentUserHasMemberships,
+      goToCreateCommunity
     } = this.props
 
     if (topicName && !topic) return <Loading />
@@ -82,14 +84,21 @@ export default class Feed extends Component {
           all={!community && !networkSlug} newPost={newPost}
           currentUserHasMemberships={currentUserHasMemberships} />}
       {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}
-      {!currentUserHasMemberships && <CreateCommunityPrompt />}
+      {!currentUserHasMemberships && <CreateCommunityPrompt
+        goToCreateCommunity={goToCreateCommunity}
+      />}
     </div>
   }
 }
 
-export function CreateCommunityPrompt () {
+export function CreateCommunityPrompt ({goToCreateCommunity}) {
   return <div styleName='create-community-prompt'>
     <p>Theres no posts yet, try starting a community!</p>
+    <Button
+      styleName='button'
+      label='Create a Community'
+      onClick={goToCreateCommunity}
+    />
     <div style={bgImageStyle('/assets/hey-axolotl.png')} styleName='sidebar-image' />
   </div>
 }
