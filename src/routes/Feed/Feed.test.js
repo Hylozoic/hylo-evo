@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Feed from './Feed'
+import Feed, {CreateCommunityPrompt} from './Feed'
 
 describe('Feed', () => {
   it('renders a Feed with correct props', () => {
@@ -62,5 +62,14 @@ describe('Feed', () => {
     const wrapper = shallow(<Feed {...props} fetchTopic={jest.fn()} />)
     expect(wrapper.find('FeedBanner')).toHaveLength(0)
     expect(wrapper.find('Connect(TopicFeedHeader)')).toHaveLength(1)
+  })
+})
+
+describe('CreateCommunityPrompt', () => {
+  it('matches the latest snapshot', () => {
+    const wrapper = shallow(<CreateCommunityPrompt
+      goToCreateCommunity={jest.fn()}
+    />)
+    expect(wrapper).toMatchSnapshot()
   })
 })

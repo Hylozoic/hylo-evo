@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders for all communities 1`] = `
+exports[`matches the snapshot for an orphan user 1`] = `
 <FeedBanner
   all={true}
   currentUser={
@@ -12,6 +12,7 @@ exports[`renders for all communities 1`] = `
       },
     }
   }
+  currentUserHasMemberships={false}
 >
   <div
     data-stylename="banner all-communities"
@@ -58,6 +59,110 @@ exports[`renders for all communities 1`] = `
         </div>
       </div>
     </div>
+  </div>
+</FeedBanner>
+`;
+
+exports[`renders for all communities 1`] = `
+<FeedBanner
+  all={true}
+  currentUser={
+    Object {
+      "avatarUrl": "me.png",
+      "firstName": [Function],
+      "memberships": Object {
+        "count": [Function],
+      },
+    }
+  }
+  currentUserHasMemberships={true}
+>
+  <div
+    data-stylename="banner all-communities"
+  >
+    <div
+      data-stylename="image"
+      style={
+        Object {
+          "backgroundImage": "url(/all-communities-banner.png)",
+        }
+      }
+    >
+      <div
+        data-stylename="fade"
+      >
+        <div
+          data-stylename="fade2"
+        />
+      </div>
+      <div
+        data-stylename="header"
+      >
+        <div
+          data-stylename="logo all-logo"
+          style={
+            Object {
+              "backgroundImage": "url(/white-merkaba.png)",
+            }
+          }
+        />
+        <div
+          data-stylename="header-text"
+        >
+          <span
+            data-stylename="header-name"
+          >
+            All Communities
+          </span>
+          <div
+            data-stylename="header-subtitle"
+          >
+            18 Communities
+          </div>
+        </div>
+      </div>
+    </div>
+    <PostPrompt
+      currentUser={
+        Object {
+          "avatarUrl": "me.png",
+          "firstName": [Function],
+          "memberships": Object {
+            "count": [Function],
+          },
+        }
+      }
+    >
+      <div
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <div
+          data-stylename="postPrompt"
+        >
+          <RoundImage
+            data-stylename="prompt-image"
+            small={true}
+            url="me.png"
+          >
+            <div
+              data-stylename="image small"
+              style={
+                Object {
+                  "backgroundImage": "url(me.png)",
+                }
+              }
+            />
+          </RoundImage>
+          Hi 
+          Bob
+          , what's on your mind?
+        </div>
+        <div
+          data-stylename="shadow"
+        />
+      </div>
+    </PostPrompt>
   </div>
 </FeedBanner>
 `;
