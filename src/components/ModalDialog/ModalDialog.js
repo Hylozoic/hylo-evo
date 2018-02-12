@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { func, node, bool, string } from 'prop-types'
+import { bool, func, node, string } from 'prop-types'
 
+import { bgImageStyle } from 'util/index'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 
@@ -8,18 +9,48 @@ import './ModalDialog.scss'
 
 export default class ModalDialog extends Component {
   static propTypes = {
-    cancelButtonAction: bool,
+    // Any image in assets (filename or path relative to /assets).
+    // Will be shown at bottom left of dialog.
+    backgroundImage: string,
+
+    // Cancel always closes the dialog, but will invoke this first if present
+    cancelButtonAction: func,
+
+    // Default: true. Set to false if you need to show a notification afterward
+    closeOnSubmit: bool,
+
+    // Content to render in the body of the dialog
     children: node,
+
+    // Only visible when `useNotificationFormat` is false
     modalTitle: string,
+
+    // Only shown if `useNotificationFormat` is true
+    notificationIconName: node,
+
+    // Default: true
     showCancelButton: bool,
+
+    // Default: true
+    showSubmitButton: bool,
+
+    // Submit will invoke this if present
     submitButtonAction: func,
+
+    // Function should return truthy if Submit should show greyed out.
     submitButtonIsDisabled: func,
-    submitButtonText: string
+
+    submitButtonText: string,
+
+    // Uses alternate format with green bolded text, +/- an icon
+    useNotificationFormat: bool
   }
 
   static defaultProps = {
+    closeOnSubmit: true,
     modalTitle: 'Notice',
     showCancelButton: true,
+    showSubmitButton: true,
     submitButtonIsDisabled: () => false,
     submitButtonText: 'Ok'
   }
@@ -31,36 +62,61 @@ export default class ModalDialog extends Component {
 
   submit = () => {
     if (this.props.submitButtonAction) this.props.submitButtonAction()
-    this.props.closeModal()
+    if (this.props.closeOnSubmit) this.props.closeModal()
   }
 
   render () {
     const {
+      backgroundImage,
       children,
+      modalTitle,
+      notificationIconName,
       showCancelButton,
+      showSubmitButton,
       submitButtonIsDisabled,
       submitButtonText,
-      modalTitle
+      useNotificationFormat
     } = this.props
+
+    const backgroundStyle = backgroundImage && useNotificationFormat
+      ? {
+        ...bgImageStyle(`/assets/${backgroundImage}`),
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'bottom left',
+        backgroundSize: '180px',
+        paddingBottom: '60px'
+      }
+      : null
+
     return <div styleName='popup'>
-      <div styleName='popup-inner'>
-        <h1>{modalTitle}</h1>
+      <div
+        styleName='popup-inner'
+        style={backgroundStyle}>
         <span onClick={this.cancel} styleName='close-btn'>
           <Icon name='Ex' styleName='icon' />
         </span>
 
+        <div styleName='title-block'>
+          {useNotificationFormat &&
+            <Icon green name={notificationIconName} styleName='notification-icon' />}
+          <h1 styleName={useNotificationFormat ? 'notification-title' : ''}>
+            {modalTitle}
+          </h1>
+        </div>
+
         <div styleName='content'>
           {children}
         </div>
+
         <div styleName='controls'>
           {showCancelButton && <Button
             color='green-white-green-border'
             styleName='cancel-btn'
             onClick={this.cancel}>Cancel</Button>}
-          <Button
+          {showSubmitButton && <Button
             styleName='submit-btn'
             onClick={this.submit}
-            disabled={submitButtonIsDisabled()}>{submitButtonText}</Button>
+            disabled={submitButtonIsDisabled()}>{submitButtonText}</Button>}
         </div>
       </div>
     </div>
