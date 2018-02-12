@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { get, pick } from 'lodash/fp'
+
 import './Feed.scss'
 import FeedList from 'components/FeedList'
 import Loading from 'components/Loading'
 import FeedBanner from 'components/FeedBanner'
 import TopicFeedHeader from 'components/TopicFeedHeader'
-import { get, pick } from 'lodash/fp'
+import { bgImageStyle } from 'util/index'
 
 export default class Feed extends Component {
   static propTypes = {
@@ -80,6 +82,14 @@ export default class Feed extends Component {
           all={!community && !networkSlug} newPost={newPost}
           currentUserHasMemberships={currentUserHasMemberships} />}
       {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}
+      {!currentUserHasMemberships && <CreateCommunityPrompt />}
     </div>
   }
+}
+
+export function CreateCommunityPrompt () {
+  return <div styleName='create-community-prompt'>
+    <p>Theres no posts yet, try starting a community!</p>
+    <div style={bgImageStyle('/assets/hey-axolotl.png')} styleName='sidebar-image' />
+  </div>
 }
