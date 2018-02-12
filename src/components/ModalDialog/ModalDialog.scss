@@ -33,6 +33,7 @@
     display: flex;
     flex-direction: row;
     padding-top: $space-14x;
+    padding-bottom: $space-2x;
   }
 
   h1 {
@@ -61,16 +62,17 @@
 
   .controls {
     display: flex;
+    flex-direction: row;
+    flex: 1;
     justify-content: flex-end;
-    padding-bottom: $space-5x;
-    margin-right: $space-5x;
+    padding-bottom: $space-8x;
+    margin-right: $space-10x;
+    width: 100%;
 
     .cancel-btn {
-      display: flex;
     }
 
     .submit-btn {
-      display: flex;
       margin-left: $space-2x;
     }
   }
@@ -80,6 +82,7 @@
     display: flex;
     flex-flow: column;
     padding: 0 31px 31px 31px;
+    width: 100%;
   }
 
   .reason {
