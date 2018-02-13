@@ -16,17 +16,16 @@ export function partitionCommunities (memberships) {
     newPostCount: m.newPostCount
   }))
 
-  return allCommunities.reduce((acc, community) => {
+  const reduced = allCommunities.reduce((acc, community) => {
     if (community.network) {
       if (acc[community.network.id]) {
         acc[community.network.id].communities = acc[community.network.id].communities.concat([community])
         return acc
       } else {
-        let allNetworkCommunities = community.network.communities
         acc[community.network.id] = {
           ...community.network,
           communities: [community],
-          nonMemberCommunities: allNetworkCommunities
+          nonMemberCommunities: community.network.communities
         }
         return acc
       }
@@ -37,10 +36,8 @@ export function partitionCommunities (memberships) {
   }, {
     independent: []
   })
-}
 
-export function mapStateToProps (state, props) {
-  const paritionedCommunities = partitionCommunities(getMemberships(state))
+  // add ALL_COMMUNITIES
   const networks = [
     {
       id: ALL_COMMUNITIES_ID,
@@ -49,18 +46,23 @@ export function mapStateToProps (state, props) {
       path: '/all',
       avatarUrl: ALL_COMMUNITIES_AVATAR_PATH
     }
-  ].concat(values(omit('independent', paritionedCommunities)))
+  ].concat(values(omit('independent', reduced)))
 
   // pulls out the communities we are already a member of from the nonMemberCommunities array
   each(n => {
     pullAllBy(n.nonMemberCommunities, n.communities, 'id')
   })(networks)
 
-  const communities = paritionedCommunities.independent
   return {
-    communities,
-    networks
+    networks,
+    communities: reduced.independent
   }
+}
+
+export function mapStateToProps (state, props) {
+  const paritionedCommunities = partitionCommunities(getMemberships(state))
+
+  return paritionedCommunities
 }
 
 export function mapDispatchToProps (dispatch, props) {
