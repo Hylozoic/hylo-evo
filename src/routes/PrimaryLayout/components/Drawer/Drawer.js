@@ -93,7 +93,7 @@ export class NetworkRow extends React.Component {
 
     this.state = {
       expanded,
-      showMoreExpanded: false
+      seeAllExpanded: false
     }
   }
 
@@ -104,17 +104,17 @@ export class NetworkRow extends React.Component {
     })
   }
 
-  toggleShowMore = e => {
+  toggleSeeAll = e => {
     e.preventDefault()
     this.setState({
-      showMoreExpanded: !this.state.showMoreExpanded
+      seeAllExpanded: !this.state.seeAllExpanded
     })
   }
 
   render () {
     const { network } = this.props
-    const { communities, name, slug, avatarUrl } = network
-    const { expanded, showMoreExpanded } = this.state
+    const { communities, name, slug, avatarUrl, nonMemberCommunities } = network
+    const { expanded, seeAllExpanded } = this.state
     const newPostCount = sum(network.communities.map(c => c.newPostCount))
     const imageStyle = bgImageStyle(avatarUrl)
     const showCommunities = !isEmpty(communities)
@@ -138,11 +138,11 @@ export class NetworkRow extends React.Component {
       {showCommunities && expanded && <ul styleName='s.networkCommunitiesList'>
         {communities.map(community =>
           <CommunityRow {...community} key={community.id} />)}
-        {showMoreExpanded && !isEmpty(nonMemberCommunities) && nonMemberCommunities.map(community =>
+        {(seeAllExpanded && !isEmpty(nonMemberCommunities)) && nonMemberCommunities.map(community =>
           <CommunityRow {...community} key={community.id} isMember={false} />)}
-        <li styleName='s.showAllBtn' onClick={this.toggleShowMore}>
-          {showMoreExpanded ? 'See less' : 'See all'}
-        </li>
+        {!isEmpty(nonMemberCommunities) && <li styleName='s.seeAllBtn' onClick={this.toggleSeeAll}>
+          {seeAllExpanded ? 'See less' : 'See all'}
+        </li>}
       </ul>}
     </li>
   }
