@@ -6,18 +6,15 @@ import {
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import {
 } from '../NetworkSettings.store'
-import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
   const slug = props.network.slug
-  const me = getMe(state)
 
   const communitySlug = getParam('slug', state, props)
   const community = getCommunityForCurrentRoute(state, props)
   const moderators = community ? community.moderators.toModelArray() : []
 
   return {
-    isAdmin: me ? me.isAdmin : false,
     slug,
     communitySlug,
     community,
@@ -31,15 +28,19 @@ export const mapDispatchToProps = {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { communitySlug } = stateProps
+  const { communitySlug, community: { id } } = stateProps
   const fetchCommunitySettings = () =>
     dispatchProps.fetchCommunitySettings(communitySlug)
+
+  const updateCommunitySettings = changes =>
+    dispatchProps.updateCommunitySettings(id, changes)
 
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    fetchCommunitySettings
+    fetchCommunitySettings,
+    updateCommunitySettings
   }
 }
 

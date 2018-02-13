@@ -7,34 +7,27 @@ import Avatar from 'components/Avatar'
 import { personUrl } from 'util/index'
 
 export default class NetworkCommunitySettings extends Component {
-  state = {
-    switchOn: false
-  }
-
   componentDidMount () {
     this.props.fetchCommunitySettings()
   }
 
   render () {
     const {
-      // isModerator,
-      // isAdmin,
       communitySlug,
-      // network,
       moderators,
       community
     } = this.props
 
     if (!community) return <Loading />
 
-    const { switchOn } = this.state
+    const { hidden } = community
     const toggleSwitch = () => {
-      this.setState({
-        switchOn: !switchOn
+      this.props.updateCommunitySettings({
+        hidden: !hidden
       })
     }
 
-    const helpText = switchOn
+    const helpText = hidden
       ? 'Turning this off means this community will appear in the network list for all network members and will let all network members see posts from this community.'
       : 'Turning this on means this community will not appear in the network list and only members of this communtiy (not the wider network) will be able to see posts from this community.'
 
@@ -43,7 +36,7 @@ export default class NetworkCommunitySettings extends Component {
         <div styleName='switch-label'>
           Hide community from network
         </div>
-        <Switch styleName='switch' value={switchOn} onClick={toggleSwitch} />
+        <Switch styleName='switch' value={hidden} onClick={toggleSwitch} />
       </div>
       <div styleName='help-text'>{helpText}</div>
       <CommunityModeratorSection leaders={moderators} slug={communitySlug} />
