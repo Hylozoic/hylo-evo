@@ -12,14 +12,16 @@ export function mapStateToProps (state, props) {
   const slug = props.network.slug
   const me = getMe(state)
 
-  const communitySlug = getParam('communitySlug', state, props)
+  const communitySlug = getParam('slug', state, props)
   const community = getCommunityForCurrentRoute(state, props)
+  const moderators = community ? community.moderators.toModelArray() : []
 
   return {
     isAdmin: me ? me.isAdmin : false,
     slug,
     communitySlug,
-    community
+    community,
+    moderators
   }
 }
 
@@ -30,9 +32,9 @@ export const mapDispatchToProps = {
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { communitySlug } = stateProps
-  const fetchCommunitySettings = () => 
+  const fetchCommunitySettings = () =>
     dispatchProps.fetchCommunitySettings(communitySlug)
-    
+
   return {
     ...stateProps,
     ...dispatchProps,

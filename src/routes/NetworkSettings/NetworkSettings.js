@@ -74,7 +74,7 @@ export default class NetworkSettings extends Component {
         component: <NetworkCommunitiesTab network={network} isModerator={isModerator} isAdmin={isAdmin} />
       },
       {
-        path: `/n/${network.slug}/settings/communities/c/:communitySlug`,
+        path: `/n/${network.slug}/settings/communities/:slug`,
         render: props => (
           <NetworkCommunitySettings network={network} isModerator={isModerator} isAdmin={isAdmin} match={props.match} />
         )}

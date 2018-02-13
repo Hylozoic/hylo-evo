@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button renders correctly 1`] = `
+<div
+  className="login"
+  data-stylename="button blue hover active narrow small"
+  onClick={[Function]}
+  role="button"
+  tabIndex={0}
+>
+  Log in
+</div>
+`;

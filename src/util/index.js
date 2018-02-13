@@ -61,7 +61,7 @@ export function networkSettingsUrl (slug) {
 }
 
 export function networkCommunitySettingsUrl (nslug, cslug) {
-  return `/n/${nslug}/settings/communities/c/${cslug}`
+  return `/n/${nslug}/settings/communities/${cslug}`
 }
 
 export function threadUrl (id) {
