@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { isEmpty, trim } from 'lodash/fp'
-import { sanitize } from 'hylo-utils/text'
+import { debounce, isEmpty, trim } from 'lodash/fp'
 
+import { sanitize } from 'hylo-utils/text'
+import { validateTopicName } from 'hylo-utils/validators'
 import Icon from 'components/Icon'
 import ModalDialog from 'components/ModalDialog'
 import TextInput from 'components/TextInput'
@@ -10,9 +11,9 @@ import './CreateTopic.scss'
 
 export default class CreateTopic extends Component {
   defaultState = {
-    modalVisible: false,
-    nameRequiredError: false,
     modalTitle: 'Create a Topic',
+    modalVisible: false,
+    nameError: null,
     showCancelButton: true,
     showSubmitButton: true,
     topicName: '',
@@ -21,7 +22,10 @@ export default class CreateTopic extends Component {
 
   state = this.defaultState
 
+  ignoreHash = name => name[0] === '#' ? name.slice(1) : name
+
   updateTopicName = ({ target }) => {
+    if (target.value !== '') this.validate(target.value)
     this.setState({ topicName: target.value })
   }
 
@@ -30,9 +34,11 @@ export default class CreateTopic extends Component {
   )
 
   submitButtonAction = topicName => {
-    const name = sanitize(trim(this.state.topicName))
+    const name = sanitize(
+      trim(this.ignoreHash(this.state.topicName))
+    )
     if (isEmpty(name)) {
-      return this.setState({ topicNameRequired: true })
+      return this.setState({ nameError: 'Topic name is required.' })
     }
     this.props.createTopic(name, this.props.communityId)
     this.setState({
@@ -43,12 +49,21 @@ export default class CreateTopic extends Component {
     })
   }
 
-  submitButtonIsDisabled = () => isEmpty(this.state.topicName)
+  submitButtonIsDisabled = () => {
+    const { nameError, topicName } = this.state
+    return isEmpty(topicName) || nameError
+  }
+
+  // Debounce allows the user to type/correct typos
+  validate = debounce(1000, name => this.setState({
+    nameError: validateTopicName(this.ignoreHash(name))
+  }))
 
   render () {
     const {
       modalTitle,
       modalVisible,
+      nameError,
       showCancelButton,
       showSubmitButton,
       topicName,
@@ -73,15 +88,18 @@ export default class CreateTopic extends Component {
         submitButtonText='Add Topic'
         useNotificationFormat={useNotificationFormat}>
         {useNotificationFormat
-          ? <div>you're subscribed to #{topicName}</div>
-          : <TextInput
-            aria-label='topic-name'
-            label='topic-name'
-            name='topic-name'
-            onChange={this.updateTopicName}
-            styleName='topic-name'
-            placeholder='Enter a topic name:'
-            value={this.state.topicName} />}
+          ? <div styleName='dialog-content'>you're subscribed to #{this.ignoreHash(topicName)}</div>
+          : <div>
+            <TextInput
+              aria-label='topic-name'
+              autoFocus
+              label='topic-name'
+              name='topic-name'
+              onChange={this.updateTopicName}
+              placeholder='Enter a topic name:'
+              value={this.state.topicName} />
+            {nameError && <div styleName='topic-error'>{nameError}</div>}
+          </div>}
       </ModalDialog>
     ]
   }

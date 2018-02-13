@@ -2,6 +2,14 @@
   cursor: pointer;
 }
 
-.topic-name {
+.dialog-content {
+}
 
+.topic-error {
+  color: $color-amaranth;
+  background-color: transparentize($color-amaranth, 0.9);
+  border: 1px solid $color-amaranth;
+  border-radius: 4px;
+  padding: 9px 16px;
+  margin: $space-1x 0;
 }

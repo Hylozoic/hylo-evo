@@ -25,20 +25,21 @@
 
   .notification-icon {
     font-size: 18px;
-    margin-top: $space-2x;
+    line-height: 18px;
     margin-right: $space-2x;
   }
 
   .title-block {
     display: flex;
     flex-direction: row;
+    align-items: center;
     padding-top: $space-14x;
     padding-bottom: $space-2x;
   }
 
   h1 {
     font-size: 24px;
-    color: #2C405A;
+    color: $color-rhino-darker;
     font-weight: normal;
     font-family: "Circular Bold";
     margin: 0;
@@ -83,6 +84,13 @@
     flex-flow: column;
     padding: 0 31px 31px 31px;
     width: 100%;
+
+    /* This forces flex child elements to respect the overflow boundaries of
+       the dialog. Otherwise, we risk long topic names going off the edge. */
+    &, & > * {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   .reason {
