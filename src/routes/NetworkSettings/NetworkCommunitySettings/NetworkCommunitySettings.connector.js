@@ -1,22 +1,18 @@
 import { connect } from 'react-redux'
-import getParam from 'store/selectors/getParam'
 import {
   fetchCommunitySettings, updateCommunitySettings
 } from '../../CommunitySettings/CommunitySettings.store'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import {
-} from '../NetworkSettings.store'
+import { get } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
   const slug = props.network.slug
 
-  const communitySlug = getParam('slug', state, props)
   const community = getCommunityForCurrentRoute(state, props)
   const moderators = community ? community.moderators.toModelArray() : []
 
   return {
     slug,
-    communitySlug,
     community,
     moderators
   }
@@ -28,12 +24,12 @@ export const mapDispatchToProps = {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { communitySlug, community: { id } } = stateProps
+  const { community } = stateProps
   const fetchCommunitySettings = () =>
-    dispatchProps.fetchCommunitySettings(communitySlug)
+    dispatchProps.fetchCommunitySettings(get('slug', community))
 
   const updateCommunitySettings = changes =>
-    dispatchProps.updateCommunitySettings(id, changes)
+    dispatchProps.updateCommunitySettings(get('id', community), changes)
 
   return {
     ...stateProps,

@@ -1,20 +1,13 @@
-import Switch from './Button'
+import Switch from './Switch'
 import { shallow } from 'enzyme'
 import React from 'react'
 
 describe('Switch', () => {
   it('renders correctly', () => {
     const props = {
-      label: 'Log in',
-      color: 'blue',
-      hover: true,
-      active: true,
-      narrow: true,
-      small: true,
-      children: null,
+      value: true,
       onClick: () => {},
-      disabled: false,
-      className: 'login'
+      className: 'switch-class'
     }
     const wrapper = shallow(<Switch {...props} />)
     expect(wrapper).toMatchSnapshot()

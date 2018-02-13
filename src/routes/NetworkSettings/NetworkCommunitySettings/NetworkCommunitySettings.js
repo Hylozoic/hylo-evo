@@ -5,6 +5,7 @@ import './NetworkCommunitySettings.scss'
 import Switch from 'components/Switch'
 import Avatar from 'components/Avatar'
 import { personUrl } from 'util/index'
+import { get } from 'lodash'
 
 export default class NetworkCommunitySettings extends Component {
   componentDidMount () {
@@ -13,7 +14,6 @@ export default class NetworkCommunitySettings extends Component {
 
   render () {
     const {
-      communitySlug,
       moderators,
       community
     } = this.props
@@ -29,7 +29,7 @@ export default class NetworkCommunitySettings extends Component {
 
     const helpText = hidden
       ? 'Turning this off means this community will appear in the network list for all network members and will let all network members see posts from this community.'
-      : 'Turning this on means this community will not appear in the network list and only members of this communtiy (not the wider network) will be able to see posts from this community.'
+      : 'Turning this on means this community will not appear in the network list and only members of this community (not the wider network) will be able to see posts from this community.'
 
     return <div >
       <div styleName='switch-row'>
@@ -39,7 +39,7 @@ export default class NetworkCommunitySettings extends Component {
         <Switch styleName='switch' value={hidden} onClick={toggleSwitch} />
       </div>
       <div styleName='help-text'>{helpText}</div>
-      <CommunityModeratorSection leaders={moderators} slug={communitySlug} />
+      <CommunityModeratorSection leaders={moderators} slug={get('slug', community)} />
     </div>
   }
 }

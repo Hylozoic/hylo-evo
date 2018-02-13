@@ -1,45 +1,53 @@
-import { mapDispatchToProps, mergeProps } from './NetworkCommunitySettings.connector'
+import { mapStateToProps, mapDispatchToProps, mergeProps } from './NetworkCommunitySettings.connector'
+
+describe('mapStateToProps', () => {
+  it('returns the right keys', () => {
+    const props = {
+      network: {
+        slug: 'nslug'
+      }
+    }
+    expect(mapStateToProps({}, props)).toMatchSnapshot()
+  })
+})
 
 describe('mapDispatchToProps', () => {
-  it('returns the right keys', () => {
-    const dispatch = jest.fn()
-    const props = mapDispatchToProps(dispatch)
-    expect(props).toMatchSnapshot()
-    const networkId = 123
-    props.createCommunity(networkId)()
-    expect(dispatch.mock.calls).toMatchSnapshot()
+  it('matches snapshot', () => {
+    expect(mapDispatchToProps).toMatchSnapshot()
   })
 })
 
 describe('mergeProps', () => {
-  it('returns no-ops for addCommunityToNetwork and createCommunity with no network', () => {
+  it('binds community.slug to fetchCommunitySettings', () => {
     const dispatchProps = {
-      addCommunityToNetwork: jest.fn(),
-      createCommunity: jest.fn()
+      fetchCommunitySettings: jest.fn()
     }
-    const ownProps = {
-      network: {}
-    }
-    const mergedProps = mergeProps({}, dispatchProps, ownProps)
-    mergedProps.addCommunityToNetwork()
-    mergedProps.createCommunity()
-    expect(dispatchProps.addCommunityToNetwork).not.toHaveBeenCalled()
-    expect(dispatchProps.createCommunity).not.toHaveBeenCalled()
-  })
-
-  it('returns maps network id for addCommunityToNetwork and createCommunity with a network', () => {
-    const dispatchProps = {
-      addCommunityToNetwork: jest.fn(),
-      createCommunity: jest.fn()
-    }
-    const networkId = 321
-    const ownProps = {
-      network: {
-        id: networkId
+    const slug = 'seaslug'
+    const stateProps = {
+      community: {
+        slug
       }
     }
-    mergeProps({}, dispatchProps, ownProps)
-    expect(dispatchProps.addCommunityToNetwork).toHaveBeenCalledWith(networkId)
-    expect(dispatchProps.createCommunity).toHaveBeenCalledWith(networkId)
+
+    const mergedProps = mergeProps(stateProps, dispatchProps)
+    mergedProps.fetchCommunitySettings()
+    expect(dispatchProps.fetchCommunitySettings).toHaveBeenCalledWith(slug)
+  })
+
+  it('binds community.id to updateCommunitySettings', () => {
+    const dispatchProps = {
+      updateCommunitySettings: jest.fn()
+    }
+    const id = 456
+    const stateProps = {
+      community: {
+        id
+      }
+    }
+
+    const mergedProps = mergeProps(stateProps, dispatchProps)
+    const changes = {hidden: true}
+    mergedProps.updateCommunitySettings(changes)
+    expect(dispatchProps.updateCommunitySettings).toHaveBeenCalledWith(id, changes)
   })
 })

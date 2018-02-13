@@ -40,7 +40,7 @@ export default class PaginatedList extends Component {
       pending,
       removeItem,
       setPage,
-      titleUrl
+      titleUrl = () => {}
     } = this.props
     const { prevItems } = this.state
     const visibleItems = pending ? prevItems : items
