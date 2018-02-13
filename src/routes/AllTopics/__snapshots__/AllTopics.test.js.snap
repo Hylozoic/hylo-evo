@@ -15,7 +15,24 @@ exports[`AllTopics matches the latest snapshot 1`] = `
     >
        Total Topics
     </div>
-    <SearchBar />
+    <div
+      data-stylename="controls"
+    >
+      <SearchBar />
+      <Button
+        color="green-white-green-border"
+        data-stylename="create-topic"
+        narrow={true}
+        onClick={[Function]}
+      >
+        <Icon
+          data-stylename="plus"
+          green={true}
+          name="Plus"
+        />
+        Add a Topic
+      </Button>
+    </div>
     <div
       data-stylename="topic-list"
       id="topic-list"

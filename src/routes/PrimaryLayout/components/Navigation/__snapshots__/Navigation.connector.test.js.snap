@@ -8,6 +8,7 @@ Object {
   "clearFeedList": undefined,
   "foo": 1,
   "membersPath": undefined,
+  "rootId": undefined,
   "rootPath": undefined,
   "rootSlug": undefined,
 }

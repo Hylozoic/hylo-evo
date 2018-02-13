@@ -74,7 +74,7 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
                 },
               ]
             }
-            placeholder="What was wrong?"
+            placeholder="Select a reason"
             selected=""
           >
             <span
@@ -94,7 +94,7 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
                   disabled={true}
                   value=""
                 >
-                  What was wrong?
+                  Select a reason
                 </option>
                 <option
                   key="inappropriate"
@@ -144,14 +144,14 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
           minRows={6}
           onChange={[Function]}
           onHeightChange={[Function]}
-          placeholder="Select a reason"
+          placeholder="What was wrong?"
           useCacheForDOMMeasurements={false}
           value=""
         >
           <textarea
             data-stylename="explanation-textbox"
             onChange={[Function]}
-            placeholder="Select a reason"
+            placeholder="What was wrong?"
             style={
               Object {
                 "height": 0,
@@ -232,7 +232,7 @@ exports[`FlagContent changes title based on type 1`] = `
               },
             ]
           }
-          placeholder="What was wrong?"
+          placeholder="Select a reason"
           selected=""
         />
       </div>
@@ -241,7 +241,7 @@ exports[`FlagContent changes title based on type 1`] = `
         minRows={6}
         onChange={[Function]}
         onHeightChange={[Function]}
-        placeholder="Select a reason"
+        placeholder="What was wrong?"
         useCacheForDOMMeasurements={false}
         value=""
       />
@@ -310,7 +310,7 @@ exports[`FlagContent matches the last snapshot 1`] = `
               },
             ]
           }
-          placeholder="What was wrong?"
+          placeholder="Select a reason"
           selected=""
         />
       </div>
@@ -319,7 +319,7 @@ exports[`FlagContent matches the last snapshot 1`] = `
         minRows={6}
         onChange={[Function]}
         onHeightChange={[Function]}
-        placeholder="Select a reason"
+        placeholder="What was wrong?"
         useCacheForDOMMeasurements={false}
         value=""
       />
