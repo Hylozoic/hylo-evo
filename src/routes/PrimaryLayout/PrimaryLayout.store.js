@@ -132,6 +132,12 @@ me {
         communities(first: 100) {
           items {
             id
+            name
+            slug
+            avatarUrl
+            network {
+              id
+            }
           }
         }
       }

@@ -140,12 +140,27 @@ $new-community-spacing: 16px;
   }
 }
 
+.nonMember {
+  color: $color-iceberg;
+}
+
 .communityRowLink {
   display: flex;
   align-items: center;
   &:hover {
     text-decoration: none;
   }
+}
+
+.showAllBtn {
+  font-size: 14px;
+  cursor: pointer;
+  padding: 6px $ul-horizontal-spacing 6px 28px;
+  &:hover {
+    background: $color-black-10;
+  }
+  color: $color-white;
+  text-align: center;
 }
 
 .networkRow {

@@ -2,13 +2,17 @@ import { connect } from 'react-redux'
 import { toggleDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
 import getMemberships from 'store/selectors/getMemberships'
 import { push } from 'react-router-redux'
-import { get, values, omit } from 'lodash/fp'
+import { get, values, omit, each } from 'lodash/fp'
+import { pullAllBy } from 'lodash'
 import { ALL_COMMUNITIES_ID, ALL_COMMUNITIES_AVATAR_PATH } from 'store/models/Community'
 
 export function partitionCommunities (memberships) {
   const allCommunities = memberships.map(m => ({
     ...m.community.ref,
-    network: get('network.ref', m.community),
+    network: m.community.network && {
+      ...get('network.ref', m.community),
+      communities: get('network.communities', m.community).toRefArray()
+    },
     newPostCount: m.newPostCount
   }))
 
@@ -18,9 +22,11 @@ export function partitionCommunities (memberships) {
         acc[community.network.id].communities = acc[community.network.id].communities.concat([community])
         return acc
       } else {
+        let allNetworkCommunities = community.network.communities
         acc[community.network.id] = {
           ...community.network,
-          communities: [community]
+          communities: [community],
+          nonMemberCommunities: allNetworkCommunities
         }
         return acc
       }
@@ -44,6 +50,11 @@ export function mapStateToProps (state, props) {
       avatarUrl: ALL_COMMUNITIES_AVATAR_PATH
     }
   ].concat(values(omit('independent', paritionedCommunities)))
+
+  // pulls out the communities we are already a member of from the nonMemberCommunities array
+  each(n => {
+    pullAllBy(n.nonMemberCommunities, n.communities, 'id')
+  })(networks)
 
   const communities = paritionedCommunities.independent
   return {

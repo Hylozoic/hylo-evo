@@ -74,7 +74,7 @@ export default class Drawer extends Component {
   }
 }
 
-export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount }) {
+export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount, isMember }) {
   const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
   const showBadge = newPostCount > 0
   return <li styleName='s.communityRow'>
@@ -92,7 +92,8 @@ export class NetworkRow extends React.Component {
     const expanded = !!sum(props.network.communities.map(c => c.newPostCount))
 
     this.state = {
-      expanded
+      expanded,
+      showMoreExpanded: false
     }
   }
 
@@ -103,10 +104,17 @@ export class NetworkRow extends React.Component {
     })
   }
 
+  toggleShowMore = e => {
+    e.preventDefault()
+    this.setState({
+      showMoreExpanded: !this.state.showMoreExpanded
+    })
+  }
+
   render () {
     const { network } = this.props
     const { communities, name, slug, avatarUrl } = network
-    const { expanded } = this.state
+    const { expanded, showMoreExpanded } = this.state
     const newPostCount = sum(network.communities.map(c => c.newPostCount))
     const imageStyle = bgImageStyle(avatarUrl)
     const showCommunities = !isEmpty(communities)
@@ -130,6 +138,11 @@ export class NetworkRow extends React.Component {
       {showCommunities && expanded && <ul styleName='s.networkCommunitiesList'>
         {communities.map(community =>
           <CommunityRow {...community} key={community.id} />)}
+        {showMoreExpanded && !isEmpty(nonMemberCommunities) && nonMemberCommunities.map(community =>
+          <CommunityRow {...community} key={community.id} isMember={false} />)}
+        <li styleName='s.showAllBtn' onClick={this.toggleShowMore}>
+          {showMoreExpanded ? 'See less' : 'See all'}
+        </li>
       </ul>}
     </li>
   }
