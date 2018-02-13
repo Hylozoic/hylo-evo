@@ -77,7 +77,7 @@ export default function ormReducer (state = {}, action) {
     extractModelsFromAction(action, session)
   }
 
-  let membership, community, person, post, topic
+  let me, membership, community, person, post, topic
 
   switch (type) {
     case CREATE_COMMENT_PENDING:
@@ -185,7 +185,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case LEAVE_COMMUNITY:
-      let me = Me.first()
+      me = Me.first()
       membership = find(m => m.community.id === meta.id, me.memberships.toModelArray())
       if (membership) membership.delete()
       break
