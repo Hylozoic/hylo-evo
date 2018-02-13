@@ -34,7 +34,7 @@ describe('mergeProps', () => {
     expect(dispatchProps.fetchCommunitySettings).toHaveBeenCalledWith(slug)
   })
 
-  it('binds community.id to updateCommunitySettings', () => {
+  it('binds community.id to updateCommunitySettingss', () => {
     const dispatchProps = {
       updateCommunitySettings: jest.fn()
     }
