@@ -26,7 +26,7 @@ export default class ModalDialog extends Component {
     modalTitle: string,
 
     // Only shown if `useNotificationFormat` is true
-    notificationIconName: node,
+    notificationIconName: string,
 
     // Default: true
     showCancelButton: bool,
