@@ -10,8 +10,11 @@ $messages-inner-padding: $space-6x;
 
 .header {
   display: flex;
-  height: $messages-header-height;
-  padding: $space-5x $space-6x;
+  min-height: $messages-header-height;
+  // padding: $space-5x $space-6x;
+  padding-top: $space-5x;
+  padding-left: $space-6x;
+  padding-right: $space-6x;
   border-bottom: $light-border;
   border-left: $light-border;
   border-right: $light-border;
@@ -23,11 +26,9 @@ $messages-inner-padding: $space-6x;
 
 .header-text {
   composes: bdy-drk-lg from 'css/typography.scss';
-  padding: $space-2x $space-2x $space-2x 0;
+  padding: $space-2x $space-2x $space-7x 0;
   flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  word-wrap: break-word;
 }
 
 .more-icon {
@@ -48,4 +49,23 @@ $messages-inner-padding: $space-6x;
   vertical-align: middle;
   left: $messages-inner-padding;
   background: $color-white;
+}
+
+.arrow-down {
+  margin-right: 30px;
+  margin-top: 10px;
+  color: $color-caribbean-green;
+  cursor: pointer;
+}
+
+.arrow-up {
+  margin-right: 30px;
+  margin-top: 10px;
+  color: $color-rhino-80;
+  cursor: pointer;
+}
+
+.toggle-link {
+  color: $color-caribbean-green;
+  cursor: pointer;
 }

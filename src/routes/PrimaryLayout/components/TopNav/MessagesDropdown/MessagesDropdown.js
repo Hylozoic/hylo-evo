@@ -28,6 +28,11 @@ export default class MessagesDropdown extends Component {
     this.state = {}
   }
 
+  componentDidMount = () => {
+    const { currentUser, fetchThreads } = this.props
+    currentUser && fetchThreads()
+  }
+
   onToggle = nowActive => {
     // TODO this is not quite sufficient -- this value should also be bumped
     // if the current user is in the messages UI, receiving new messages.
@@ -53,7 +58,6 @@ export default class MessagesDropdown extends Component {
       className,
       goToThread,
       currentUser,
-      fetchThreads,
       pending
     } = this.props
 
@@ -86,7 +90,6 @@ export default class MessagesDropdown extends Component {
       className={className}
       onToggle={this.onToggle}
       toggleChildren={renderToggleChildren(this.hasUnread())}
-      onFirstOpen={fetchThreads}
       header={
         <div styleName='header-content'>
           <Link to={firstThreadUrl} styleName='open'>

@@ -33,6 +33,7 @@ const threads = [
 describe('MessagesDropdown', () => {
   it('renders correctly with an empty list', () => {
     const wrapper = shallow(<MessagesDropdown
+      fetchThreads={jest.fn()}
       renderToggleChildren={() => <span>click me</span>}
       threads={[]}
       currentUser={u1} />)
@@ -41,6 +42,7 @@ describe('MessagesDropdown', () => {
 
   it('renders correctly with a list of threads', () => {
     const wrapper = shallow(<MessagesDropdown
+      fetchThreads={jest.fn()}
       renderToggleChildren={() => <span>click me</span>}
       threads={threads}
       currentUser={u1} />)

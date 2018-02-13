@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Link } from 'react-router-dom'
-import Button from 'components/Button'
+import { get } from 'lodash/fp'
 import Icon from 'components/Icon'
+import Button from 'components/Button'
 import { PostPrompt } from 'components/FeedBanner/FeedBanner'
-import { pluralize, communityUrl, allCommunitiesUrl } from 'util/index'
+import { pluralize, bgImageStyle } from 'util/index'
+import { DEFAULT_BANNER } from 'store/models/Community'
+
 import './TopicFeedHeader.scss'
 
 const { string, number, object, shape, func } = PropTypes
@@ -19,22 +21,28 @@ export default function TopicFeedHeader ({
   currentUser,
   newPost
 }) {
-  const url = community ? communityUrl(community.slug) : allCommunitiesUrl()
-  const name = community ? community.name : 'All Communities'
+  const bannerUrl = get('bannerUrl', community)
+  const buttonText = communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'
+  const iconStyle = communityTopic.isSubscribed ? 'subscribe-star-icon-green' : 'subscribe-star-icon'
+  const buttonStyle = communityTopic.isSubscribed ? 'unsubscribe' : 'subscribe'
+
   postsTotal = postsTotal || 0
   followersTotal = followersTotal || 0
   return <div styleName='topic-feed-header'>
-    <Link to={url} styleName='back'>
-      <Icon name='Back' styleName='back-icon' /> back to {name}
-    </Link>
-    <div styleName='topic-name'>#{topic.name}</div>
-    <div styleName='meta'>
-      {pluralize(postsTotal, 'post')} • {pluralize(followersTotal, 'follower')}
+    <div styleName='fade'><div styleName='fade2' /></div>
+    <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
+      <div styleName='topic-name'>#{topic.name}</div>
+      <div styleName='meta'>
+        <Icon name='Star' styleName='star-icon' />
+        {pluralize(followersTotal, 'subscriber')}
+        <Icon name='Post' styleName='post-icon' />
+        {pluralize(postsTotal, 'post')}
+      </div>
+      {community && <Button styleName={buttonStyle} onClick={toggleSubscribe}>
+        <Icon name='Star' styleName={iconStyle} />{buttonText}
+      </Button>}
+      <PostPrompt currentUser={currentUser} newPost={newPost} />
     </div>
-    {community && <Button styleName='subscribe' onClick={toggleSubscribe}>
-      {communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
-    </Button>}
-    <PostPrompt currentUser={currentUser} newPost={newPost} styleName='post-prompt' />
   </div>
 }
 TopicFeedHeader.propTypes = {

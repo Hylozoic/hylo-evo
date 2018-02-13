@@ -108,7 +108,9 @@ describe('NotificationsDropdown', () => {
     const wrapper = shallow(<NotificationsDropdown
       renderToggleChildren={() => <span>click me</span>}
       notifications={[]}
-      currentUser={u1} />)
+      currentUser={u1}
+      fetchNotifications={jest.fn()}
+    />)
     expect(wrapper).toMatchSnapshot()
   })
 
@@ -116,7 +118,9 @@ describe('NotificationsDropdown', () => {
     const wrapper = shallow(<NotificationsDropdown
       renderToggleChildren={() => <span>click me</span>}
       notifications={notifications}
-      currentUser={u1} />)
+      currentUser={u1}
+      fetchNotifications={jest.fn()}
+      />)
     expect(wrapper).toMatchSnapshot()
   })
 })
