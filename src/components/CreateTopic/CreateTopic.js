@@ -16,6 +16,7 @@ export default class CreateTopic extends Component {
     nameError: null,
     showCancelButton: true,
     showSubmitButton: true,
+    submitButtonText: 'Add Topic',
     topicName: '',
     useNotificationFormat: false
   }
@@ -44,7 +45,7 @@ export default class CreateTopic extends Component {
     this.setState({
       modalTitle: 'Topic Created',
       showCancelButton: false,
-      showSubmitButton: false,
+      submitButtonText: 'Ok',
       useNotificationFormat: true
     })
   }
@@ -66,6 +67,7 @@ export default class CreateTopic extends Component {
       nameError,
       showCancelButton,
       showSubmitButton,
+      submitButtonText,
       topicName,
       useNotificationFormat
     } = this.state
@@ -85,7 +87,7 @@ export default class CreateTopic extends Component {
         showSubmitButton={showSubmitButton}
         submitButtonAction={this.submitButtonAction}
         submitButtonIsDisabled={this.submitButtonIsDisabled}
-        submitButtonText='Add Topic'
+        submitButtonText={submitButtonText}
         useNotificationFormat={useNotificationFormat}>
         {useNotificationFormat
           ? <div styleName='dialog-content'>you're subscribed to #{this.ignoreHash(topicName)}</div>

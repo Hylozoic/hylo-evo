@@ -83,8 +83,7 @@ export default class ModalDialog extends Component {
         ...bgImageStyle(`/assets/${backgroundImage}`),
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'bottom left',
-        backgroundSize: '180px',
-        paddingBottom: '60px'
+        backgroundSize: '180px'
       }
       : null
 

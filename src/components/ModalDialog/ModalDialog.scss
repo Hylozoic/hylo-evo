@@ -67,7 +67,7 @@
     flex: 1;
     justify-content: flex-end;
     padding-bottom: $space-8x;
-    margin-right: $space-10x;
+    padding-right: $space-10x;
     width: 100%;
 
     .cancel-btn {
@@ -82,7 +82,8 @@
     color: $color-rhino-60;
     display: flex;
     flex-flow: column;
-    padding: 0 31px 31px 31px;
+    padding: $space-10x $space-6x;
+    padding-top: 0;
     width: 100%;
 
     /* This forces flex child elements to respect the overflow boundaries of
@@ -91,27 +92,5 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-  }
-
-  .reason {
-    flex: 1;
-  }
-
-  .explanation-textbox {
-    flex: 1;
-    border: 1px solid $color-ghost;
-    margin-top: 20px;
-    padding: 14px;
-    border-radius: 2px;
-    @include font-regular;
-    font-size: 14px;
-
-    &:focus {
-      outline: 0;
-    }
-  }
-
-  .reason-required {
-    color: red;
   }
 }
