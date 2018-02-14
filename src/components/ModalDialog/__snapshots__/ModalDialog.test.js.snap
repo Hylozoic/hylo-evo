@@ -12,7 +12,6 @@ exports[`ModalDialog matches the last snapshot (useNotificationFormat) 1`] = `
         "backgroundPosition": "bottom left",
         "backgroundRepeat": "no-repeat",
         "backgroundSize": "180px",
-        "paddingBottom": "60px",
       }
     }
   >

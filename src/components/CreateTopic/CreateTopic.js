@@ -78,7 +78,6 @@ export default class CreateTopic extends Component {
     return isEmpty(topicName) || !!nameError
   }
 
-  // Debounce allows the user to type/correct typos
   validate = debounce(500, name => this.setState({
     nameError: validateTopicName(this.ignoreHash(name))
   }))

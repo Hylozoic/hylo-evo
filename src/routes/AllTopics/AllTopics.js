@@ -87,7 +87,9 @@ export default class AllTopics extends Component {
         <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
         <div styleName='controls'>
           <SearchBar {...{search, setSearch, selectedSort, setSort, fetchIsPending}} />
-          <CreateTopic buttonText='Add a Topic' communityId={communityId} />
+          <CreateTopic
+            buttonText='Add a Topic'
+            communityId={communityId} />
         </div>
         <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {communityTopics.map(ct =>
