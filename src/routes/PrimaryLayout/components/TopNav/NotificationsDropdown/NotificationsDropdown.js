@@ -40,21 +40,8 @@ export default class NotificationsDropdown extends Component {
   }
 
   componentDidMount = () => {
-    const { currentUser, fetchNotifications } = this.props
-    currentUser && fetchNotifications()
-    this.interval = setInterval(this.retryFetch(), 5000)
-  }
-
-  retryFetch = () => {
-    if (isEmpty(this.props.notifications)) {
-      this.props.fetchNotifications()
-    } else {
-      clearInterval(this.interval)
-    }
-  }
-
-  componentWillUnmount = () => {
-    clearInterval(this.interval)
+    const { fetchNotifications } = this.props
+    fetchNotifications()
   }
 
   render () {
