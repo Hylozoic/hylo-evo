@@ -2,6 +2,18 @@
   cursor: pointer;
 }
 
+.create-topic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 38px;
+  margin-left: $space-1x;
+
+  .plus {
+    margin-right: $space-2x;
+  }
+}
+
 .dialog-content {
 }
 

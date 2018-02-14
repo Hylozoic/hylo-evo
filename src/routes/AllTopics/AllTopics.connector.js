@@ -47,6 +47,7 @@ export function mapStateToProps (state, props) {
 
   return {
     community,
+    communityId: community.id,
     communityTopics,
     slug: getParam('slug', state, props),
     totalTopics: total,

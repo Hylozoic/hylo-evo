@@ -3,6 +3,7 @@ import { debounce, isEmpty, trim } from 'lodash/fp'
 
 import { sanitize } from 'hylo-utils/text'
 import { validateTopicName } from 'hylo-utils/validators'
+import Button from 'components/Button'
 import Icon from 'components/Icon'
 import ModalDialog from 'components/ModalDialog'
 import TextInput from 'components/TextInput'
@@ -11,6 +12,7 @@ import './CreateTopic.scss'
 
 export default class CreateTopic extends Component {
   defaultState = {
+    closeOnSubmit: false,
     modalTitle: 'Create a Topic',
     modalVisible: false,
     nameError: null,
@@ -22,6 +24,19 @@ export default class CreateTopic extends Component {
   }
 
   state = this.defaultState
+
+  // No text for use with TopicNavigation, text on AllTopics
+  buttonChooser = () => this.props.buttonText
+    ? <Button
+      color='green-white-green-border'
+      key='create-button'
+      narrow
+      onClick={this.toggleTopicModal}
+      styleName='create-topic'>{this.props.buttonText}</Button>
+    : <Icon key='create-button'
+      name='Plus'
+      styleName='create-button'
+      onClick={this.toggleTopicModal} />
 
   ignoreHash = name => name[0] === '#' ? name.slice(1) : name
 
@@ -35,6 +50,12 @@ export default class CreateTopic extends Component {
   )
 
   submitButtonAction = topicName => {
+    // Just close if we're already at the notification stage
+    if (this.state.useNotificationFormat) {
+      this.toggleTopicModal()
+      return
+    }
+
     const name = sanitize(
       trim(this.ignoreHash(this.state.topicName))
     )
@@ -42,7 +63,9 @@ export default class CreateTopic extends Component {
       return this.setState({ nameError: 'Topic name is required.' })
     }
     this.props.createTopic(name, this.props.communityId)
+
     this.setState({
+      closeOnSubmit: true,
       modalTitle: 'Topic Created',
       showCancelButton: false,
       submitButtonText: 'Ok',
@@ -52,11 +75,11 @@ export default class CreateTopic extends Component {
 
   submitButtonIsDisabled = () => {
     const { nameError, topicName } = this.state
-    return isEmpty(topicName) || nameError
+    return isEmpty(topicName) || !!nameError
   }
 
   // Debounce allows the user to type/correct typos
-  validate = debounce(1000, name => this.setState({
+  validate = debounce(500, name => this.setState({
     nameError: validateTopicName(this.ignoreHash(name))
   }))
 
@@ -71,11 +94,9 @@ export default class CreateTopic extends Component {
       topicName,
       useNotificationFormat
     } = this.state
+
     return [
-      <Icon key='create-button'
-        name='Plus'
-        styleName='create-button'
-        onClick={this.toggleTopicModal} />,
+      this.buttonChooser(),
 
       modalVisible && <ModalDialog key='create-dialog'
         backgroundImage='axolotl-corner.png'

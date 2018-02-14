@@ -3,7 +3,6 @@ import { boolean, arrayOf, func, number, shape, string } from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-import Button from 'components/Button'
 import CreateTopic from 'components/CreateTopic'
 import Dropdown from 'components/Dropdown'
 import FullPageModal from 'routes/FullPageModal'
@@ -68,6 +67,7 @@ export default class AllTopics extends Component {
 
   render () {
     const {
+      communityId,
       communityTopics,
       slug,
       search,
@@ -87,9 +87,7 @@ export default class AllTopics extends Component {
         <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
         <div styleName='controls'>
           <SearchBar {...{search, setSearch, selectedSort, setSort, fetchIsPending}} />
-          <Button styleName='create-topic' color='green-white-green-border' narrow onClick={this.toggleTopicModal}>
-            <Icon styleName='plus' name='Plus' green />Add a Topic
-          </Button>
+          <CreateTopic buttonText='Add a Topic' communityId={communityId} />
         </div>
         <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {communityTopics.map(ct =>
@@ -100,8 +98,6 @@ export default class AllTopics extends Component {
             elementId={TOPIC_LIST_ID} />
         </div>
       </div>
-      {this.state.createTopicModalVisible && <CreateTopic
-        closeModal={this.toggleTopicModal} />}
     </FullPageModal>
   }
 }
