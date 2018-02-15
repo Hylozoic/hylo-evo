@@ -40,8 +40,8 @@ export default class NotificationsDropdown extends Component {
   }
 
   componentDidMount = () => {
-    const { currentUser, fetchNotifications } = this.props
-    currentUser && fetchNotifications()
+    const { fetchNotifications } = this.props
+    fetchNotifications()
   }
 
   render () {
