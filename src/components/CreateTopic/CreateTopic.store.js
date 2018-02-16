@@ -1,4 +1,4 @@
-import { uniqueId } from 'lodash/fp'
+import { get } from 'lodash/fp'
 
 const MODULE_NAME = 'CreateTopic'
 export const CREATE_TOPIC = `${MODULE_NAME}/CREATE_TOPIC`
@@ -15,6 +15,11 @@ export function createTopic (topicName, communityId) {
           communityTopics {
             items {
               id
+              community {
+                id
+              }
+              isSubscribed
+              newPostCount
               postsTotal
               followersTotal
             }
@@ -29,11 +34,16 @@ export function createTopic (topicName, communityId) {
       }
     },
     meta: {
-      communityId,
-      communityTopicTempId: uniqueId(`communityTopic${communityId}_`),
-      topicName,
-      optimistic: true,
-      tempId: uniqueId(`topic${communityId}_`)
+      extractModel: [
+        {
+          modelName: 'Topic',
+          getRoot: get('createTopic')
+        },
+        {
+          modelName: 'CommunityTopic',
+          getRoot: get('createTopic.communityTopics')
+        }
+      ]
     }
   }
 }

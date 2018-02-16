@@ -43,10 +43,6 @@ import {
 import {
   USE_INVITATION
 } from 'routes/JoinCommunity/JoinCommunity.store'
-import {
-  CREATE_TOPIC,
-  CREATE_TOPIC_PENDING
-} from 'components/CreateTopic/CreateTopic.store'
 
 import orm from 'store/models'
 import { find, values } from 'lodash/fp'
@@ -69,15 +65,14 @@ export default function ormReducer (state = {}, action) {
     Person,
     Post,
     PostCommenter,
-    Skill,
-    Topic
+    Skill
   } = session
 
   if (payload && !isPromise(payload) && meta && meta.extractModel) {
     extractModelsFromAction(action, session)
   }
 
-  let me, membership, community, person, post, topic
+  let me, membership, community, person, post
 
   switch (type) {
     case CREATE_COMMENT_PENDING:
@@ -112,64 +107,6 @@ export default function ormReducer (state = {}, action) {
       Message.withId(meta.tempId).delete()
       const message = payload.data.createMessage
       MessageThread.withId(message.messageThread.id).newMessageReceived()
-      break
-
-    case CREATE_TOPIC_PENDING:
-      // Current backend is a "find or create", so we need to check if we
-      // already have it on the front end to avoid duplicates
-      // TODO: review when topics are a group
-      const topicQuery = Topic.all().filter({ name: meta.topicName })
-      topic = topicQuery.count() === 0
-        ? Topic.create({
-          id: meta.tempId,
-          name: meta.topicName,
-          postsTotal: 0,
-          followersTotal: 1
-        })
-        : topicQuery.first()
-
-      community = Community.withId(meta.communityId)
-      // Also check for an existing CommunityTopic for the same reason
-      const ctQueryPending = CommunityTopic.all().filter({ community, topic })
-      if (ctQueryPending.count() === 0) {
-        CommunityTopic.create({
-          id: meta.communityTopicTempId,
-          community,
-          followersTotal: 1,
-          isSubscribed: true,
-          postsTotal: 0,
-          topic
-        })
-      }
-      break
-
-    case CREATE_TOPIC:
-      // Scenarios we need to handle here:
-      //  - the Topic may or may not exist in the client (temp or actual)
-      //  - the CommunityTopic may or may not exist in the client (temp or actual)
-      // TODO: review when topics are a group
-      const { createTopic } = payload.data
-      const communityTopic = createTopic.communityTopics.items[0]
-      community = Community.withId(meta.communityId)
-      topic = Topic.hasId(createTopic.id)
-        ? Topic.withId(createTopic.id)
-        : Topic.create(createTopic)
-
-      if (Topic.hasId(meta.tempId)) {
-        Topic.withId(meta.tempId).delete()
-      }
-      if (CommunityTopic.hasId(meta.communityTopicTempId)) {
-        CommunityTopic.withId(meta.communityTopicTempId).delete()
-      }
-
-      if (!CommunityTopic.hasId(communityTopic.id)) {
-        CommunityTopic.create({
-          ...communityTopic,
-          community,
-          topic,
-          isSubscribed: true
-        })
-      }
       break
 
     case FETCH_MESSAGES_PENDING:
