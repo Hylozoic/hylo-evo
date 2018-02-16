@@ -159,7 +159,7 @@ $new-community-spacing: 16px;
   &:hover {
     background: $color-black-10;
   }
-  color: $color-white;
+  color: $color-white-80;
   text-align: center;
 }
 
@@ -193,6 +193,11 @@ $new-community-spacing: 16px;
   text-overflow: ellipsis;
   white-space: nowrap;
   display: inline-block;
+}
+
+.is-member {
+  @include font-bold;
+  color: $color-white;
 }
 
 .network-name-wrapper {
@@ -234,11 +239,6 @@ $new-community-spacing: 16px;
 .community-name {
   font-size: $community-list-font-size;
   opacity: 0.9;
-}
-
-.highlight {
-  @include font-bold;
-  color: $color-white;
 }
 
 .newCommunity {
