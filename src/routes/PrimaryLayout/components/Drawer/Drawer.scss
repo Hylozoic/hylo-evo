@@ -197,6 +197,7 @@ $new-community-spacing: 16px;
 
 .is-member {
   @include font-bold;
+  opacity: 1 !important;
   color: $color-white;
 }
 
@@ -209,7 +210,8 @@ $new-community-spacing: 16px;
 
 .network-name {
   font-weight: 600;
-  opacity: unset;
+  opacity: 1;
+  color: $color-white;
 }
 
 .communitiesButton {
