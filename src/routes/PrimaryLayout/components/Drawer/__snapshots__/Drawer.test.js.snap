@@ -18,7 +18,7 @@ exports[`CommunityRow renders with new posts 1`] = `
       }
     />
     <span
-      data-stylename="s.community-name"
+      data-stylename="s.community-name s.is-member"
     />
   </Link>
 </li>
@@ -42,7 +42,7 @@ exports[`CommunityRow renders with zero new posts 1`] = `
       }
     />
     <span
-      data-stylename="s.community-name"
+      data-stylename="s.community-name s.is-member"
     />
   </Link>
 </li>
