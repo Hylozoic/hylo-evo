@@ -1,7 +1,10 @@
 import { connect } from 'react-redux'
 import {
-  fetchCommunitySettings, updateCommunitySettings
+  fetchCommunitySettings
 } from '../../CommunitySettings/CommunitySettings.store'
+import {
+  updateCommunityHiddenSetting
+} from '../NetworkSettings.store'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import { get } from 'lodash/fp'
 
@@ -20,7 +23,7 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = {
   fetchCommunitySettings,
-  updateCommunitySettings
+  updateCommunityHiddenSetting
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
@@ -28,15 +31,15 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const fetchCommunitySettings = () =>
     dispatchProps.fetchCommunitySettings(get('slug', community))
 
-  const updateCommunitySettings = changes =>
-    dispatchProps.updateCommunitySettings(get('id', community), changes)
+  const updateCommunityHiddenSetting = hidden =>
+    dispatchProps.updateCommunityHiddenSetting(get('id', community), hidden)
 
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
     fetchCommunitySettings,
-    updateCommunitySettings
+    updateCommunityHiddenSetting
   }
 }
 

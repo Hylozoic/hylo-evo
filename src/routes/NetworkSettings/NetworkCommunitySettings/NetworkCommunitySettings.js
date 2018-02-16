@@ -22,9 +22,7 @@ export default class NetworkCommunitySettings extends Component {
 
     const { hidden } = community
     const toggleSwitch = () => {
-      this.props.updateCommunitySettings({
-        hidden: !hidden
-      })
+      this.props.updateCommunityHiddenSetting(!hidden)
     }
 
     const helpText = hidden
