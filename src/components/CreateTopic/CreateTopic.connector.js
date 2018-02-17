@@ -1,5 +1,11 @@
 import { connect } from 'react-redux'
 
-import { createTopic } from './CreateTopic.store'
+import { MODULE_NAME, fetchCommunityTopic, createTopic } from './CreateTopic.store'
 
-export default connect(null, { createTopic })
+const mapStateToProps = (state, props) => {
+  return {
+    communityTopicExists: state[MODULE_NAME]
+  }
+}
+
+export default connect(mapStateToProps, { createTopic, fetchCommunityTopic })

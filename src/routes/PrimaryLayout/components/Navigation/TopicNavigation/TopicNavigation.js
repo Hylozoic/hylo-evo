@@ -37,7 +37,10 @@ export default class TopicNavigation extends Component {
         onClick={expand}>
         <Icon name='Topics' styleName='s.icon' />
         <span styleName='s.title'>Topics</span>
-        <CreateTopic communityId={communityId} />
+        <CreateTopic
+          communityId={communityId}
+          communitySlug={communitySlug}
+          communityTopics={communityTopics} />
       </div>
       <ul styleName='s.topics'>
         {communityTopics.map(({ id, topic, newPostCount }) =>

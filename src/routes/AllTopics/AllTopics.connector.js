@@ -5,7 +5,6 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { createSelector } from 'reselect'
-import { omit } from 'lodash'
 import { get, includes, isEmpty, debounce } from 'lodash/fp'
 import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
 import fetchCommunityTopics, { FETCH_COMMUNITY_TOPICS } from 'store/actions/fetchCommunityTopics'
@@ -47,7 +46,6 @@ export function mapStateToProps (state, props) {
 
   return {
     community,
-    communityId: community.id,
     communityTopics,
     slug: getParam('slug', state, props),
     totalTopics: total,
@@ -96,7 +94,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     dispatchProps.fetchCommunityTopics(community.id, { search, first: initialLoad, sortBy: selectedSort })
 
   return {
-    ...omit(stateProps, 'community'),
+    ...stateProps,
     ...ownProps,
     setSort,
     setSearch,

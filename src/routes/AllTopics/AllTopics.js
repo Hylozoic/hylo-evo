@@ -67,7 +67,7 @@ export default class AllTopics extends Component {
 
   render () {
     const {
-      communityId,
+      community,
       communityTopics,
       slug,
       search,
@@ -89,7 +89,9 @@ export default class AllTopics extends Component {
           <SearchBar {...{search, setSearch, selectedSort, setSort, fetchIsPending}} />
           <CreateTopic
             buttonText='Add a Topic'
-            communityId={communityId} />
+            communityId={community.id}
+            communitySlug={community.slug}
+            communityTopics={communityTopics} />
         </div>
         <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {communityTopics.map(ct =>
