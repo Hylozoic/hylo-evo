@@ -131,12 +131,6 @@ export default class PrimaryLayout extends Component {
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToSignupFlow currentUser={currentUser}
             pathname={this.props.location.pathname} />
-          <RedirectOrphanUser
-            hasMemberships={hasMemberships}
-            pathname={this.props.location.pathname}
-            currentUser={currentUser}
-            returnToURL={returnToURL}
-          />
           <RedirectToCommunity path='/' currentUser={currentUser} />
           <RedirectToCommunity path='/app' currentUser={currentUser} />
           <Switch>
@@ -354,22 +348,14 @@ export function RedirectToSignupFlow ({ currentUser, pathname }) {
   return <Redirect to={destination} />
 }
 
-export function RedirectOrphanUser ({ hasMemberships, pathname, returnToURL, currentUser }) {
-  if (returnToURL && isJoinCommunityPath(returnToURL)) return null
-  if (!currentUser || !currentUser.settings || currentUser.settings.signupInProgress) return null
-  if (hasMemberships) return null
-  if (isCreateCommunityPath(pathname) || isSignupPath(pathname) || isAllCommunitiesPath(pathname)) return null
-  const destination = '/all'
-  return <Redirect to={destination} />
-}
-
 export function RedirectToCommunity ({ path, currentUser }) {
   return <Route path={path} exact render={redirectIfCommunity(currentUser)} />
 }
 
 export function redirectIfCommunity (currentUser) {
   return () => {
-    if (!currentUser || currentUser.memberships.count() === 0) return <Loading type='top' />
+    if (!currentUser) return <Loading type='top' />
+    if (currentUser.memberships.count() === 0) return <Redirect to={`/all`} />
     const mostRecentCommunity = currentUser.memberships
     .orderBy(m => new Date(m.lastViewedAt), 'desc')
     .first()
