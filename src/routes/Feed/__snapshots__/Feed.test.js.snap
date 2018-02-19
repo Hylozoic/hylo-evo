@@ -5,7 +5,7 @@ exports[`CreateCommunityPrompt matches the latest snapshot 1`] = `
   data-stylename="create-community-prompt"
 >
   <p>
-    Theres no posts yet, try starting a community!
+    There's no posts yet, try starting a community!
   </p>
   <Button
     data-stylename="button"
