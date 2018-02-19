@@ -48,8 +48,9 @@ export default class AddLocation extends Component {
     Object.keys(edits).forEach((key) => (edits[key] == null) && delete edits[key])
     const changes = Object.assign(edits, {settings: {signupInProgress: false}})
     this.props.updateUserSettings(changes)
-    // FIXME: Race conditions with signupInProgress updating...
-    setTimeout(this.props.goToNextStep, 1000)
+    .then(() => {
+      setTimeout(this.props.goToNextStep)
+    })
   }
 
   previous = () => {
