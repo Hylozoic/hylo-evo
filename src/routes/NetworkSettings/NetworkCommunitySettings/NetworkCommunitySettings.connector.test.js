@@ -34,9 +34,9 @@ describe('mergeProps', () => {
     expect(dispatchProps.fetchCommunitySettings).toHaveBeenCalledWith(slug)
   })
 
-  it('binds community.id to updateCommunitySettingss', () => {
+  it('binds community.id to updateCommunityHiddenSetting', () => {
     const dispatchProps = {
-      updateCommunitySettings: jest.fn()
+      updateCommunityHiddenSetting: jest.fn()
     }
     const id = 456
     const stateProps = {
@@ -46,8 +46,8 @@ describe('mergeProps', () => {
     }
 
     const mergedProps = mergeProps(stateProps, dispatchProps)
-    const changes = {hidden: true}
-    mergedProps.updateCommunitySettings(changes)
-    expect(dispatchProps.updateCommunitySettings).toHaveBeenCalledWith(id, changes)
+    const hidden = true
+    mergedProps.updateCommunityHiddenSetting(hidden)
+    expect(dispatchProps.updateCommunityHiddenSetting).toHaveBeenCalledWith(id, hidden)
   })
 })

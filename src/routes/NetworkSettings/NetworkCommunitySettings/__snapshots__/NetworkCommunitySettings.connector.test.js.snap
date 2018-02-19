@@ -3,7 +3,7 @@
 exports[`mapDispatchToProps matches snapshot 1`] = `
 Object {
   "fetchCommunitySettings": [Function],
-  "updateCommunitySettings": [Function],
+  "updateCommunityHiddenSetting": [Function],
 }
 `;
 
