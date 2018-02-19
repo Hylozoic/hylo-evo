@@ -129,9 +129,15 @@ me {
         slug
         name
         avatarUrl
-        communities(first: 100) {
+        communities(first: 300) {
           items {
             id
+            name
+            slug
+            avatarUrl
+            network {
+              id
+            }
           }
         }
       }
@@ -151,7 +157,7 @@ community(slug: $slug, updateLastViewed: $updateLastViewed) {
     slug
     name
     avatarUrl
-    communities(first: 100) {
+    communities(first: 300) {
       items {
         id
       }
