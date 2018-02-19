@@ -37,22 +37,22 @@ export default class NetworkCommunitySettings extends Component {
         <Switch styleName='switch' value={hidden} onClick={toggleSwitch} />
       </div>
       <div styleName='help-text'>{helpText}</div>
-      <CommunityModeratorSection leaders={moderators} slug={get('slug', community)} />
+      <CommunityModeratorSection moderators={moderators} slug={get('slug', community)} />
     </div>
   }
 }
 
-export function CommunityModeratorSection ({ leaders, slug }) {
+export function CommunityModeratorSection ({ moderators, slug }) {
   return <div styleName='moderators-section'>
     <div styleName='moderators-header'>Community Moderators</div>
-    {leaders.map(l => <CommunityModerator leader={l} slug={slug} key={l.id} />)}
+    {moderators.map(l => <CommunityModerator moderator={l} slug={slug} key={l.id} />)}
   </div>
 }
 
-export function CommunityModerator ({ leader, slug }) {
-  const { name, avatarUrl } = leader
+export function CommunityModerator ({ moderator, slug }) {
+  const { name, avatarUrl } = moderator
   return <div styleName='moderator'>
-    <Avatar url={personUrl(leader.id, slug)} avatarUrl={avatarUrl} styleName='moderator-image' medium />
-    <Link to={personUrl(leader.id, slug)} styleName='moderator-name'>{name}</Link>
+    <Avatar url={personUrl(moderator.id, slug)} avatarUrl={avatarUrl} styleName='moderator-image' medium />
+    <Link to={personUrl(moderator.id, slug)} styleName='moderator-name'>{name}</Link>
   </div>
 }
