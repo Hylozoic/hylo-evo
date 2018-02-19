@@ -74,14 +74,14 @@ export default class Drawer extends Component {
   }
 }
 
-export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount }) {
+export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount, isMember = true }) {
   const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
   const showBadge = newPostCount > 0
   return <li styleName='s.communityRow'>
-    <Link to={path || `/c/${slug}`} styleName='s.communityRowLink' title={name} className={badgeHoverStyles.parent}>
+    <Link to={path || `/c/${slug}`} styleName='s.communityRowLink' title={name}>
       <div styleName='s.communityRowAvatar' style={imageStyle} />
-      <span styleName={cx('s.community-name', {'s.highlight': showBadge})}>{name}</span>
-      {showBadge && <Badge number={newPostCount} />}
+      <span styleName={cx('s.community-name', {'s.is-member': isMember})}>{name}</span>
+      {showBadge && <Badge expanded number={newPostCount} />}
     </Link>
   </li>
 }
@@ -92,7 +92,8 @@ export class NetworkRow extends React.Component {
     const expanded = !!sum(props.network.communities.map(c => c.newPostCount))
 
     this.state = {
-      expanded
+      expanded,
+      seeAllExpanded: false
     }
   }
 
@@ -103,10 +104,17 @@ export class NetworkRow extends React.Component {
     })
   }
 
+  toggleSeeAll = e => {
+    e.preventDefault()
+    this.setState({
+      seeAllExpanded: !this.state.seeAllExpanded
+    })
+  }
+
   render () {
     const { network } = this.props
-    const { communities, name, slug, avatarUrl } = network
-    const { expanded } = this.state
+    const { communities, name, slug, avatarUrl, nonMemberCommunities } = network
+    const { expanded, seeAllExpanded } = this.state
     const newPostCount = sum(network.communities.map(c => c.newPostCount))
     const imageStyle = bgImageStyle(avatarUrl)
     const showCommunities = !isEmpty(communities)
@@ -130,6 +138,11 @@ export class NetworkRow extends React.Component {
       {showCommunities && expanded && <ul styleName='s.networkCommunitiesList'>
         {communities.map(community =>
           <CommunityRow {...community} key={community.id} />)}
+        {(seeAllExpanded && !isEmpty(nonMemberCommunities)) && nonMemberCommunities.map(community =>
+          <CommunityRow {...community} key={community.id} isMember={false} />)}
+        {!isEmpty(nonMemberCommunities) && <li styleName='s.seeAllBtn' onClick={this.toggleSeeAll}>
+          {seeAllExpanded ? 'See less' : 'See all'}
+        </li>}
       </ul>}
     </li>
   }

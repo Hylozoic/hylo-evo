@@ -14,7 +14,7 @@ export function handleNotificationActions (session, action) {
     case FETCH_NOTIFICATIONS:
       if (meta.resetCount) {
         const me = Me.first()
-        if (me) me.update({newNotificationCount: 0})
+        me && me.update({newNotificationCount: 0})
       }
       break
 
