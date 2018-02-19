@@ -101,4 +101,42 @@ describe('NetworkRow', () => {
       expect(e.preventDefault).toHaveBeenCalled()
     })
   })
+
+  describe('see all button', () => {
+    const seeAllProps = {
+      network: {
+        ...defaultProps.network,
+        nonMemberCommunities: [
+          {
+            id: 3,
+            name: 'non member 1'
+          }
+        ]
+      }
+    }
+
+    it('shows "see all" button when there are non member communities', () => {
+      const wrapper = shallow(<NetworkRow {...seeAllProps} />)
+      expect(wrapper).toMatchSnapshot()
+      expect(wrapper.state('expanded')).toEqual(true)
+    })
+
+    it('calls preventDefault and sets the state', () => {
+      const wrapper = shallow(<NetworkRow {...seeAllProps} />)
+      const e = {
+        preventDefault: jest.fn()
+      }
+
+      expect(wrapper).toMatchSnapshot()
+      expect(wrapper.state('seeAllExpanded')).toEqual(false)
+      expect(wrapper.find(CommunityRow).length).toEqual(2)
+      expect(wrapper.find('[data-stylename="s.seeAllBtn"]').text()).toEqual('See all')
+      wrapper.instance().toggleSeeAll(e)
+      wrapper.update()
+      expect(wrapper.state('seeAllExpanded')).toEqual(true)
+      expect(wrapper.find(CommunityRow).length).toEqual(3)
+      expect(wrapper.find('[data-stylename="s.seeAllBtn"]').text()).toEqual('See less')
+      expect(e.preventDefault).toHaveBeenCalled()
+    })
+  })
 })

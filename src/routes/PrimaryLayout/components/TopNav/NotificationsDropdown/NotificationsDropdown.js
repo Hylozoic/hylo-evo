@@ -6,7 +6,7 @@ import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
 import { firstName } from 'store/models/Person'
 import TopNavDropdown from '../TopNavDropdown'
-import { find, isEmpty } from 'lodash/fp'
+import { find, isEmpty, some } from 'lodash/fp'
 import {
   ACTION_NEW_COMMENT,
   ACTION_TAG,
@@ -39,9 +39,26 @@ export default class NotificationsDropdown extends Component {
     }
   }
 
+  onToggle = nowActive => {
+    if (nowActive) this.setState({lastOpenedAt: new Date()})
+  }
+
   componentDidMount = () => {
-    const { currentUser, fetchNotifications } = this.props
-    currentUser && fetchNotifications()
+    const { fetchNotifications } = this.props
+    fetchNotifications()
+  }
+
+  hasUnread () {
+    if (isEmpty(this.props.notifications)) {
+      const { currentUser } = this.props
+      return currentUser && currentUser.newNotificationCount > 0
+    }
+
+    const { lastOpenedAt } = this.state
+    const isUnread = n =>
+      n.activity && n.activity.unread && (!lastOpenedAt || new Date(n.createdAt) > lastOpenedAt)
+
+    return some(isUnread, this.props.notifications)
   }
 
   render () {
@@ -51,7 +68,6 @@ export default class NotificationsDropdown extends Component {
       goToNotification,
       markActivityRead,
       markAllActivitiesRead,
-      currentUser,
       pending
     } = this.props
     var { notifications } = this.props
@@ -64,19 +80,19 @@ export default class NotificationsDropdown extends Component {
       notifications = notifications.filter(n => n.activity.unread)
     }
 
+    const message = `No ${showingUnread ? 'unread ' : ''}notifications`
+
     const onClick = notification => {
       if (notification.activity.unread) markActivityRead(notification.activity.id)
       goToNotification(notification)
       this.refs.dropdown.toggle(false)
     }
 
-    const showBadge = currentUser && currentUser.newNotificationCount > 0
-
     let body
     if (pending) {
       body = <LoadingItems />
     } else if (isEmpty(notifications)) {
-      body = <NoItems message='No notifications' />
+      body = <NoItems message={message} />
     } else {
       body = <div styleName='notifications'>
         {notifications.map(notification => <Notification
@@ -88,7 +104,8 @@ export default class NotificationsDropdown extends Component {
 
     return <TopNavDropdown ref='dropdown'
       className={className}
-      toggleChildren={renderToggleChildren(showBadge)}
+      onToggle={this.onToggle}
+      toggleChildren={renderToggleChildren(this.hasUnread())}
       header={
         <div styleName='header-content'>
           <span onClick={showRecent} styleName={cx('tab', {active: !showingUnread})}>

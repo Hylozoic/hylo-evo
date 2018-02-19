@@ -140,12 +140,27 @@ $new-community-spacing: 16px;
   }
 }
 
+.nonMember {
+  color: $color-iceberg;
+}
+
 .communityRowLink {
   display: flex;
   align-items: center;
   &:hover {
     text-decoration: none;
   }
+}
+
+.seeAllBtn {
+  font-size: 14px;
+  cursor: pointer;
+  padding: 6px $ul-horizontal-spacing 6px 28px;
+  &:hover {
+    background: $color-black-10;
+  }
+  color: $color-white-80;
+  text-align: center;
 }
 
 .networkRow {
@@ -180,6 +195,12 @@ $new-community-spacing: 16px;
   display: inline-block;
 }
 
+.is-member {
+  @include font-bold;
+  opacity: 1 !important;
+  color: $color-white;
+}
+
 .network-name-wrapper {
   display: flex;
   align-items: center;
@@ -189,7 +210,8 @@ $new-community-spacing: 16px;
 
 .network-name {
   font-weight: 600;
-  opacity: unset;
+  opacity: 1;
+  color: $color-white;
 }
 
 .communitiesButton {
@@ -219,11 +241,6 @@ $new-community-spacing: 16px;
 .community-name {
   font-size: $community-list-font-size;
   opacity: 0.9;
-}
-
-.highlight {
-  @include font-bold;
-  color: $color-white;
 }
 
 .newCommunity {
