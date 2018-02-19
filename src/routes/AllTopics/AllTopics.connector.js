@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import getParam from 'store/selectors/getParam'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
@@ -47,7 +46,6 @@ export function mapStateToProps (state, props) {
   return {
     community,
     communityTopics,
-    slug: getParam('slug', state, props),
     totalTopics: total,
     selectedSort,
     search,

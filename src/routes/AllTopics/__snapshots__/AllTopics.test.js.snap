@@ -21,6 +21,22 @@ exports[`AllTopics matches the latest snapshot 1`] = `
       <SearchBar />
       <Connect(CreateTopic)
         buttonText="Add a Topic"
+        communityId="1"
+        communitySlug="goteam"
+        communityTopics={
+          Array [
+            Object {
+              "followersTotal": 52,
+              "id": "1",
+              "isSubscribed": false,
+              "postsTotal": 24,
+              "topic": Object {
+                "id": "2",
+                "name": "petitions",
+              },
+            },
+          ]
+        }
       />
     </div>
     <div

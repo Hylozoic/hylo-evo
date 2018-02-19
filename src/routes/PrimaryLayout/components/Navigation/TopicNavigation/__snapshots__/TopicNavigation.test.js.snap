@@ -16,7 +16,36 @@ exports[`renders correctly for All Communities 1`] = `
     >
       Topics
     </span>
-    <Connect(CreateTopic) />
+    <Connect(CreateTopic)
+      communitySlug="foo"
+      communityTopics={
+        Array [
+          Object {
+            "newPostCount": 3,
+            "topic": Object {
+              "name": "t1",
+            },
+          },
+          Object {
+            "newPostCount": 0,
+            "topic": Object {
+              "name": "t2",
+            },
+          },
+          Object {
+            "topic": Object {
+              "name": "t3",
+            },
+          },
+          Object {
+            "newPostCount": 2,
+            "topic": Object {
+              "name": "t4",
+            },
+          },
+        ]
+      }
+    />
   </div>
   <ul
     data-stylename="s.topics"
@@ -135,7 +164,36 @@ exports[`renders correctly for a community 1`] = `
     >
       Topics
     </span>
-    <Connect(CreateTopic) />
+    <Connect(CreateTopic)
+      communitySlug="foo"
+      communityTopics={
+        Array [
+          Object {
+            "newPostCount": 3,
+            "topic": Object {
+              "name": "t1",
+            },
+          },
+          Object {
+            "newPostCount": 0,
+            "topic": Object {
+              "name": "t2",
+            },
+          },
+          Object {
+            "topic": Object {
+              "name": "t3",
+            },
+          },
+          Object {
+            "newPostCount": 2,
+            "topic": Object {
+              "name": "t4",
+            },
+          },
+        ]
+      }
+    />
   </div>
   <ul
     data-stylename="s.topics"

@@ -69,7 +69,6 @@ export default class AllTopics extends Component {
     const {
       community,
       communityTopics,
-      slug,
       search,
       setSearch,
       selectedSort,
@@ -95,7 +94,7 @@ export default class AllTopics extends Component {
         </div>
         <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {communityTopics.map(ct =>
-            <CommunityTopicListItem key={ct.id} item={ct} slug={slug}
+            <CommunityTopicListItem key={ct.id} item={ct} slug={community.slug}
               toggleSubscribe={() =>
                 toggleSubscribe(ct.topic.id, !ct.isSubscribed)} />)}
           <ScrollListener onBottom={() => fetchMoreCommunityTopics()}

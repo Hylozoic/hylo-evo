@@ -58,6 +58,21 @@ describe('ModalDialog', () => {
     expect(props.submitButtonAction).toHaveBeenCalled()
   })
 
+  it('closes the dialog', () => {
+    props.showCancelButton = false
+    const wrapper = shallow(<ModalDialog {...props} />)
+    wrapper.find('Button').simulate('click')
+    expect(props.closeModal).toHaveBeenCalled()
+  })
+
+  it('does not close if closeOnSubmit is false', () => {
+    props.closeOnSubmit = false
+    props.showCancelButton = false
+    const wrapper = shallow(<ModalDialog {...props} />)
+    wrapper.find('Button').simulate('click')
+    expect(props.closeModal).not.toHaveBeenCalled()
+  })
+
   it('does not show an icon without useNotificationFormat', () => {
     const wrapper = shallow(<ModalDialog {...props} />)
     expect(wrapper.find('Icon[name="Star"]').length).toBe(0)

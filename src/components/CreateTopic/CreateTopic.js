@@ -138,7 +138,6 @@ export default class CreateTopic extends Component {
   updateTopicName = ({ target }) => {
     if (target.value !== '') this.validate(target.value)
     this.setState({ topicName: target.value })
-    console.log(this.state.topicName)
   }
 
   validate = debounce(500, name => this.setState({
