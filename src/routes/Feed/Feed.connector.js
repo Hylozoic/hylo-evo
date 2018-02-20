@@ -22,6 +22,8 @@ export function mapStateToProps (state, props) {
 
   const currentUser = getMe(state)
   const currentUserHasMemberships = !isEmpty(getMemberships(state))
+  console.log({currentUser})
+  console.log({currentUserHasMemberships})
   const communitySlug = getParam('slug', state, props)
   const topicName = getParam('topicName', state, props)
   const networkSlug = getParam('networkSlug', state, props)
