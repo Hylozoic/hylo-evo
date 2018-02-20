@@ -79,7 +79,7 @@
     "express": "^4.15.2",
     "faker": "^4.1.0",
     "global": "^4.3.2",
-    "hylo-utils": "https://github.com/Hylozoic/hylo-utils#1e003d3",
+    "hylo-utils": "https://github.com/Hylozoic/hylo-utils#52154a8",
     "immutable": "^3.8.1",
     "inquirer": "^4.0.1",
     "ismobilejs": "^0.4.1",
