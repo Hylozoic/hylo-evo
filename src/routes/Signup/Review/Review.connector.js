@@ -33,7 +33,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    goToNextStep: (defaultPath = '/') => {
+    goToNextStep: (defaultPath = '/all') => {
       dispatchProps.resetReturnToURL()
       dispatchProps.push(stateProps.returnToURL || defaultPath)
     }

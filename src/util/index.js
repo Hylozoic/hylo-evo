@@ -60,6 +60,10 @@ export function networkSettingsUrl (slug) {
   return `/n/${slug}/settings`
 }
 
+export function networkCommunitySettingsUrl (nslug, cslug) {
+  return `/n/${nslug}/settings/communities/${cslug}`
+}
+
 export function threadUrl (id) {
   return `/t/${id}`
 }

@@ -1,0 +1,51 @@
+.switch-container {
+  height: 38px;
+  width: 60px;
+}
+
+@mixin circle {
+  position: absolute;
+  height: 34px;  
+  width: 34px;  
+  border-radius: 50%;
+}
+
+@mixin switch {
+  position: absolute;
+  height: 31px;  
+  width: 31px;  
+  border-radius: 50%;
+  margin-top: 1px;
+  box-shadow: 2px 2px 2px 1px $color-cape-cod-50;
+}
+
+.circle-gray-1 {
+  @include circle();
+  background-color: $color-athens-gray-dark;
+}
+
+.connect-gray {
+  @include circle();
+  margin-left: 18px;
+  border-radius: 0;
+  width: 28px;
+  background-color: $color-athens-gray-dark;  
+}
+
+.circle-gray-2 {
+  @include circle();
+  margin-left: 27px;
+  background-color: $color-athens-gray-dark;
+}
+
+.switch-on {
+  @include switch();
+  margin-left: 27px;
+  background-color: $color-caribbean-green;
+}
+
+.switch-off {
+  @include switch();
+  margin-left: 3px;
+  background-color: white;
+}

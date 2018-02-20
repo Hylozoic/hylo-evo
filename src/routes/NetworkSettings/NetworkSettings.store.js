@@ -23,6 +23,8 @@ export const REMOVE_NETWORK_MODERATOR_ROLE_PENDING = `${REMOVE_NETWORK_MODERATOR
 export const SET_COMMUNITIES_PAGE = `${MODULE_NAME}/SET_COMMUNITIES_PAGE`
 export const SET_MODERATORS_PAGE = `${MODULE_NAME}/SET_MODERATORS_PAGE`
 export const UPDATE_NETWORK_SETTINGS = `${MODULE_NAME}/UPDATE_NETWORK_SETTINGS`
+export const UPDATE_COMMUNITY_HIDDEN_SETTING = `${MODULE_NAME}/UPDATE_COMMUNITY_HIDDEN_SETTING`
+export const UPDATE_COMMUNITY_HIDDEN_SETTING_PENDING = `${UPDATE_COMMUNITY_HIDDEN_SETTING}_PENDING`
 
 export const AUTOCOMPLETE_SIZE = 20
 export const PAGE_SIZE = 1000
@@ -104,6 +106,13 @@ export function ormSessionReducer ({ Network, Community, Person }, { meta, type 
       const community = Community.withId(meta.communityId)
       network.updateAppending({communities: [community]})
       community.update({ network: network })
+    }
+  }
+
+  if (type === UPDATE_COMMUNITY_HIDDEN_SETTING_PENDING) {
+    if (Community.hasId(meta.id)) {
+      const community = Community.withId(meta.id)
+      community.update({hidden: meta.hidden})
     }
   }
 }
@@ -425,6 +434,29 @@ export function removeNetworkModeratorRole (personId, networkId) {
       extractModel: 'Network',
       personId,
       networkId
+    }
+  }
+}
+
+export function updateCommunityHiddenSetting (id, hidden) {
+  return {
+    type: UPDATE_COMMUNITY_HIDDEN_SETTING,
+    graphql: {
+      query: `mutation ($id: ID, $hidden: Boolean) {
+        updateCommunityHiddenSetting(id: $id, hidden: $hidden) {
+          id
+          hidden
+        }
+      }`,
+      variables: {
+        id, hidden
+      }
+    },
+    meta: {
+      extractModel: 'Community',
+      id,
+      hidden,
+      optimistic: true
     }
   }
 }

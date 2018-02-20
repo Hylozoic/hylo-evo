@@ -18,11 +18,26 @@ const community = {
 }
 
 it('renders with a community', () => {
-  const node = mount(<FeedBanner community={community} />)
+  const node = mount(<FeedBanner
+    community={community}
+  />)
   expect(node).toMatchSnapshot()
 })
 
 it('renders for all communities', () => {
-  const node = mount(<FeedBanner all currentUser={currentUser} />)
+  const node = mount(<FeedBanner
+    all
+    currentUser={currentUser}
+    currentUserHasMemberships
+  />)
+  expect(node).toMatchSnapshot()
+})
+
+it('matches the snapshot for an orphan user', () => {
+  const node = mount(<FeedBanner
+    all
+    currentUser={currentUser}
+    currentUserHasMemberships={false}
+  />)
   expect(node).toMatchSnapshot()
 })

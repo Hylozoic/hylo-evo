@@ -1,5 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`CreateCommunityPrompt matches the latest snapshot 1`] = `
+<div
+  data-stylename="create-community-prompt"
+>
+  <p>
+    There's no posts yet, try starting a community!
+  </p>
+  <Button
+    data-stylename="button"
+    label="Create a Community"
+    onClick={[Function]}
+  />
+  <div
+    data-stylename="sidebar-image"
+    style={
+      Object {
+        "backgroundImage": "url(/assets/hey-axolotl.png)",
+      }
+    }
+  />
+</div>
+`;
+
 exports[`Feed with a network it renders a Feed with correct props 1`] = `
 <div>
   <FeedBanner
@@ -9,6 +32,8 @@ exports[`Feed with a network it renders a Feed with correct props 1`] = `
         "id": 2,
       }
     }
+    currentUser={true}
+    currentUserHasMemberships={true}
   />
   <Connect(FeedList)
     filter="request"

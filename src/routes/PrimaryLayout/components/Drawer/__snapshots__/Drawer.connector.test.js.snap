@@ -17,57 +17,68 @@ Object {
 
 exports[`partitionCommunities separates independent communities from networked communities 1`] = `
 Object {
-  "1": Object {
-    "communities": Array [
-      Object {
-        "id": "1",
-        "name": "one",
-        "network": Object {
-          "id": "1",
-          "name": "networkOne",
-        },
-        "newPostCount": undefined,
-      },
-      Object {
-        "id": "4",
-        "name": "four",
-        "network": Object {
-          "id": "1",
-          "name": "networkOne",
-        },
-        "newPostCount": undefined,
-      },
-    ],
-    "id": "1",
-    "name": "networkOne",
-  },
-  "2": Object {
-    "communities": Array [
-      Object {
-        "id": "3",
-        "name": "three",
-        "network": Object {
-          "id": "2",
-          "name": "networkTwo",
-        },
-        "newPostCount": undefined,
-      },
-    ],
-    "id": "2",
-    "name": "networkTwo",
-  },
-  "independent": Array [
+  "communities": Array [
     Object {
       "id": "2",
+      "members": undefined,
+      "moderators": undefined,
       "name": "two",
       "network": undefined,
-      "newPostCount": undefined,
+      "newPostCount": 3,
+      "posts": undefined,
+    },
+  ],
+  "networks": Array [
+    Object {
+      "avatarUrl": "/assets/white-merkaba.png",
+      "communities": Array [],
+      "id": "all-communities",
+      "name": "All Communities",
+      "path": "/all",
     },
     Object {
-      "id": "5",
-      "name": "five",
-      "network": undefined,
-      "newPostCount": undefined,
+      "communities": Array [
+        Object {
+          "id": "1",
+          "members": undefined,
+          "moderators": undefined,
+          "name": "one",
+          "network": Object {
+            "communities": Array [
+              Object {
+                "id": "100",
+                "members": undefined,
+                "moderators": undefined,
+                "name": "nonMemberCommunity",
+                "network": "1111",
+                "posts": undefined,
+              },
+            ],
+            "id": "1111",
+            "members": undefined,
+            "moderators": undefined,
+            "name": "networkOne",
+            "posts": undefined,
+          },
+          "newPostCount": 5,
+          "posts": undefined,
+        },
+      ],
+      "id": "1111",
+      "members": undefined,
+      "moderators": undefined,
+      "name": "networkOne",
+      "nonMemberCommunities": Array [
+        Object {
+          "id": "100",
+          "members": undefined,
+          "moderators": undefined,
+          "name": "nonMemberCommunity",
+          "network": "1111",
+          "posts": undefined,
+        },
+      ],
+      "posts": undefined,
     },
   ],
 }

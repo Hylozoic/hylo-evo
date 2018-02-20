@@ -8,7 +8,13 @@ import { whiteMerkaba, allCommunitiesBanner } from 'util/assets'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 
-export default function FeedBanner ({ all, community, currentUser, newPost }) {
+export default function FeedBanner ({
+  all,
+  community,
+  currentUser,
+  newPost,
+  currentUserHasMemberships
+}) {
   let bannerUrl, avatarUrl, name, location, subtitle
 
   if (all) {
@@ -39,7 +45,7 @@ export default function FeedBanner ({ all, community, currentUser, newPost }) {
         </div>
       </div>
     </div>
-    <PostPrompt currentUser={currentUser} newPost={newPost} />
+    {currentUserHasMemberships && <PostPrompt currentUser={currentUser} newPost={newPost} /> }
   </div>
 }
 

@@ -7,8 +7,7 @@ import
 PrimaryLayout,
 {
   redirectIfCommunity,
-  RedirectToCommunity,
-  RedirectToCreateCommunityFlow
+  RedirectToCommunity
 } from './PrimaryLayout'
 
 it('shows DownloadAppModal if the user is on mobile', () => {
@@ -57,10 +56,15 @@ describe('RedirectToCommunity', () => {
     expect(renderWrapper.find('[data-stylename="loading-top"]').length).toBe(1)
   })
 
-  it('shows a Loading component if currentUser has no memberships', () => {
+  it('sets `to` prop of Redirect correctly if currentUser has no memberships', () => {
     const me = session.Me.first()
-    const wrapper = shallow(redirectIfCommunity(me)())
-    expect(wrapper.find('[data-stylename="loading-top"]').length).toBe(1)
+    const wrapper = shallow(<MemoryRouter>
+      {redirectIfCommunity(me)()}
+    </MemoryRouter>)
+
+    const expected = '/all'
+    const actual = wrapper.find(Redirect).props().to
+    expect(actual).toBe(expected)
   })
 
   it('sets `to` prop of Redirect correctly', () => {
@@ -76,54 +80,5 @@ describe('RedirectToCommunity', () => {
     const expected = '/c/foo'
     const actual = wrapper.find(Redirect).props().to
     expect(actual).toBe(expected)
-  })
-})
-
-describe('RedirectToCreateCommunityFlow', () => {
-  it('returns null if a signup is in progress', () => {
-    const currentUser = {settings: {signupInProgress: true}}
-    const wrapper = shallow(<RedirectToCreateCommunityFlow currentUser={currentUser} />)
-    expect(wrapper).toMatchSnapshot()
-  })
-  it('returns null if there are memberships', () => {
-    const hasMemberships = true
-    const wrapper = shallow(<RedirectToCreateCommunityFlow hasMemberships={hasMemberships} />)
-    expect(wrapper).toMatchSnapshot()
-  })
-  it('returns null if pathname starts with /signup', () => {
-    const pathname = '/signup/any-path-here'
-    const wrapper = shallow(<RedirectToCreateCommunityFlow pathname={pathname} />)
-    expect(wrapper).toMatchSnapshot()
-  })
-  it('returns null if pathname starts with /create-community', () => {
-    const pathname = '/create-community/any-path-here'
-    const wrapper = shallow(<RedirectToCreateCommunityFlow pathname={pathname} />)
-    expect(wrapper).toMatchSnapshot()
-  })
-  it('returns null if returnToURL is /h/use-invitation', () => {
-    const currentUser = {settings: {signupInProgress: false}}
-    const pathname = '/'
-    const returnToURL = '/h/use-invitation'
-    const wrapper = shallow(<RedirectToCreateCommunityFlow
-      pathname={pathname}
-      returnToURL={returnToURL}
-      currentUser={currentUser}
-    />)
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  it('redirects to create community if: signup is complete, a user does not have memberships, and is not already on /signup or /create-community', () => {
-    const currentUser = {settings: {signupInProgress: false}}
-    const hasMemberships = false
-    const pathname = '/'
-    const wrapper = shallow(<RedirectToCreateCommunityFlow
-      pathname={pathname}
-      hasMemberships={hasMemberships}
-      currentUser={currentUser}
-    />)
-    const expected = '/create-community/name'
-    const actual = wrapper.find(Redirect).props().to
-    expect(actual).toBe(expected)
-    expect(wrapper).toMatchSnapshot()
   })
 })

@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { get, pick } from 'lodash/fp'
+
 import './Feed.scss'
 import FeedList from 'components/FeedList'
 import Loading from 'components/Loading'
 import FeedBanner from 'components/FeedBanner'
 import TopicFeedHeader from 'components/TopicFeedHeader'
-import { get, pick } from 'lodash/fp'
+import Button from 'components/Button'
+import { bgImageStyle } from 'util/index'
 
 export default class Feed extends Component {
   static propTypes = {
@@ -59,11 +62,13 @@ export default class Feed extends Component {
   render () {
     const {
       topic, community, currentUser, topicName, postsTotal, followersTotal,
-      communityTopic, newPost, network, networkSlug
+      communityTopic, newPost, network, networkSlug, currentUserHasMemberships,
+      goToCreateCommunity, membershipsPending
     } = this.props
-
     if (topicName && !topic) return <Loading />
     if (community && topicName && !communityTopic) return <Loading />
+    if (!currentUser) return <Loading />
+    if (membershipsPending) return <Loading />
 
     return <div>
       {topicName
@@ -77,8 +82,24 @@ export default class Feed extends Component {
           currentUser={currentUser}
           newPost={newPost} />
         : <FeedBanner community={community || network} currentUser={currentUser}
-          all={!community && !networkSlug} newPost={newPost} />}
-      <FeedList {...this.getFeedProps()} />
+          all={!community && !networkSlug} newPost={newPost}
+          currentUserHasMemberships={currentUserHasMemberships} />}
+      {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}
+      {!membershipsPending && !currentUserHasMemberships && <CreateCommunityPrompt
+        goToCreateCommunity={goToCreateCommunity}
+      />}
     </div>
   }
+}
+
+export function CreateCommunityPrompt ({goToCreateCommunity}) {
+  return <div styleName='create-community-prompt'>
+    <p>There's no posts yet, try starting a community!</p>
+    <Button
+      styleName='button'
+      label='Create a Community'
+      onClick={goToCreateCommunity}
+    />
+    <div style={bgImageStyle('/assets/hey-axolotl.png')} styleName='sidebar-image' />
+  </div>
 }
