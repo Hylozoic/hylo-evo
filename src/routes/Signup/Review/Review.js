@@ -49,7 +49,7 @@ export default class AddLocation extends Component {
     const changes = Object.assign(edits, {settings: {signupInProgress: false}})
     this.props.updateUserSettings(changes)
     .then(() => {
-      setTimeout(this.props.goToNextStep)
+      this.props.goToNextStep()
     })
   }
 
