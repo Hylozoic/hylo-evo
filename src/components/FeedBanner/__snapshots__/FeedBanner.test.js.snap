@@ -1,5 +1,68 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`matches the snapshot for an orphan user 1`] = `
+<FeedBanner
+  all={true}
+  currentUser={
+    Object {
+      "avatarUrl": "me.png",
+      "firstName": [Function],
+      "memberships": Object {
+        "count": [Function],
+      },
+    }
+  }
+  currentUserHasMemberships={false}
+>
+  <div
+    data-stylename="banner all-communities"
+  >
+    <div
+      data-stylename="image"
+      style={
+        Object {
+          "backgroundImage": "url(/all-communities-banner.png)",
+        }
+      }
+    >
+      <div
+        data-stylename="fade"
+      >
+        <div
+          data-stylename="fade2"
+        />
+      </div>
+      <div
+        data-stylename="header"
+      >
+        <div
+          data-stylename="logo all-logo"
+          style={
+            Object {
+              "backgroundImage": "url(/white-merkaba.png)",
+            }
+          }
+        />
+        <div
+          data-stylename="header-text"
+        >
+          <span
+            data-stylename="header-name"
+          >
+            All Communities
+          </span>
+          <div
+            data-stylename="header-subtitle"
+          >
+            18 Communities
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</FeedBanner>
+`;
+
 exports[`renders for all communities 1`] = `
 <FeedBanner
   all={true}
@@ -12,6 +75,7 @@ exports[`renders for all communities 1`] = `
       },
     }
   }
+  currentUserHasMemberships={true}
 >
   <div
     data-stylename="banner all-communities"
@@ -168,7 +232,6 @@ exports[`renders with a community 1`] = `
         </div>
       </div>
     </div>
-    <PostPrompt />
   </div>
 </FeedBanner>
 `;
