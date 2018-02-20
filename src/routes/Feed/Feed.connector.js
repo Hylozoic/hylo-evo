@@ -8,6 +8,7 @@ import getCommunityTopicForCurrentRoute from 'store/selectors/getCommunityTopicF
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
+import getMemberships from 'store/selectors/getMemberships'
 
 import changeQueryParam from 'store/actions/changeQueryParam'
 import getQueryParam from 'store/selectors/getQueryParam'
@@ -20,9 +21,7 @@ export function mapStateToProps (state, props) {
   let community, communityTopic, topic, network
 
   const currentUser = getMe(state)
-  const currentUserHasMemberships = currentUser
-    ? !isEmpty(currentUser.memberships.toModelArray())
-    : false
+  const currentUserHasMemberships = getMemberships(state)
   const communitySlug = getParam('slug', state, props)
   const topicName = getParam('topicName', state, props)
   const networkSlug = getParam('networkSlug', state, props)
