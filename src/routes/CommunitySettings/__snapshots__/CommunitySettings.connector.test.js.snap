@@ -31,6 +31,7 @@ Object {
           location
           settings
           invitePath
+          hidden
           pendingInvitations (first: 100) {
             hasMore
             items {

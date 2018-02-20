@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Switch renders correctly 1`] = `
+<div
+  className="switch-class"
+  data-stylename="switch-container"
+  onClick={[Function]}
+>
+  <div
+    data-stylename="circle-gray-1"
+  />
+  <div
+    data-stylename="connect-gray"
+  />
+  <div
+    data-stylename="circle-gray-2"
+  />
+  <div
+    data-stylename="switch-on"
+  />
+</div>
+`;

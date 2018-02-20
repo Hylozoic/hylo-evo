@@ -36,6 +36,9 @@ import {
 import {
   REMOVE_MEMBER_PENDING
 } from 'routes/Members/Members.store'
+import {
+  UPDATE_COMMUNITY_HIDDEN_SETTING_PENDING
+} from 'routes/NetworkSettings/NetworkSettings.store'
 
 import deep from 'deep-diff'
 
@@ -587,5 +590,24 @@ describe('on REMOVE_MEMBER_PENDING', () => {
     const members = community.members.toRefArray()
     expect(members.length).toBe(1)
     expect(members[0].name).toBe('Foo')
+  })
+})
+
+describe('on UPDATE_COMMUNITY_HIDDEN_SETTING_PENDING', () => {
+  it('sets the community.hidden property', () => {
+    const communityId = 34
+    const action = {
+      type: UPDATE_COMMUNITY_HIDDEN_SETTING_PENDING,
+      meta: {
+        id: communityId,
+        hidden: true
+      }
+    }
+    const session = orm.session(orm.getEmptyState())
+    session.Community.create({id: communityId, hidden: false})
+
+    const newState = ormReducer(session.state, action)
+    const community = orm.session(newState).Community.withId(communityId)
+    expect(community.hidden).toBe(true)
   })
 })
