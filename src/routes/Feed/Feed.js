@@ -63,9 +63,8 @@ export default class Feed extends Component {
     const {
       topic, community, currentUser, topicName, postsTotal, followersTotal,
       communityTopic, newPost, network, networkSlug, currentUserHasMemberships,
-      goToCreateCommunity
+      goToCreateCommunity, membershipsPending
     } = this.props
-
     if (topicName && !topic) return <Loading />
     if (community && topicName && !communityTopic) return <Loading />
     if (!currentUser) return <Loading />
@@ -85,7 +84,7 @@ export default class Feed extends Component {
           all={!community && !networkSlug} newPost={newPost}
           currentUserHasMemberships={currentUserHasMemberships} />}
       {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}
-      {currentUser && !currentUserHasMemberships && <CreateCommunityPrompt
+      {!membershipsPending && !currentUserHasMemberships && <CreateCommunityPrompt
         goToCreateCommunity={goToCreateCommunity}
       />}
     </div>

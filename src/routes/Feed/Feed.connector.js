@@ -16,12 +16,12 @@ import { push } from 'react-router-redux'
 import { postUrl } from 'util/index'
 import { makeUrl } from 'util/navigation'
 import { fetchTopic, fetchCommunityTopic, fetchNetwork } from './Feed.store'
-
+import { FETCH_FOR_CURRENT_USER } from '../PrimaryLayout/PrimaryLayout.store'
 export function mapStateToProps (state, props) {
   let community, communityTopic, topic, network
 
   const currentUser = getMe(state)
-  const currentUserHasMemberships = getMemberships(state)
+  const currentUserHasMemberships = isEmpty(getMemberships(state))
   const communitySlug = getParam('slug', state, props)
   const topicName = getParam('topicName', state, props)
   const networkSlug = getParam('networkSlug', state, props)
@@ -52,6 +52,7 @@ export function mapStateToProps (state, props) {
     followersTotal: get('followersTotal', communitySlug ? communityTopic : topic),
     selectedPostId: getParam('postId', state, props),
     community,
+    membershipsPending: state.pending[FETCH_FOR_CURRENT_USER],
     postCount: get('postCount', community),
     pending: state.pending[FETCH_POSTS],
     currentUser,
