@@ -45,7 +45,7 @@ export default class NetworkCommunitySettings extends Component {
 export function CommunityModeratorSection ({ moderators, slug }) {
   return <div styleName='moderators-section'>
     <div styleName='moderators-header'>Community Moderators</div>
-    {moderators.map(l => <CommunityModerator moderator={l} slug={slug} key={l.id} />)}
+    {moderators.map(m => <CommunityModerator moderator={m} slug={slug} key={m.id} />)}
   </div>
 }
 
