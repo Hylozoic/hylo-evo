@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches the last snapshot for createTopic 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($topicName: String, $communityId: ID) {
+        createTopic(topicName: $topicName, communityId: $communityId) {
+          id
+          name
+          communityTopics {
+            items {
+              id
+              community {
+                id
+              }
+              isSubscribed
+              newPostCount
+              postsTotal
+              followersTotal
+            }
+          }
+          followersTotal
+          postsTotal
+        }
+      }",
+    "variables": Object {
+      "communityId": "1",
+      "topicName": "wombats",
+    },
+  },
+  "meta": Object {
+    "extractModel": Array [
+      Object {
+        "getRoot": [Function],
+        "modelName": "Topic",
+      },
+      Object {
+        "getRoot": [Function],
+        "modelName": "CommunityTopic",
+      },
+    ],
+  },
+  "type": "CreateTopic/CREATE_TOPIC",
+}
+`;
+
+exports[`matches the last snapshot for fetchCommunityTopic 1`] = `
+Object {
+  "graphql": Object {
+    "query": "query ($topicName: String, $communitySlug: String) {
+        communityTopic (topicName: $topicName, communitySlug: $communitySlug) {
+          id
+        }
+      }",
+    "variables": Object {
+      "communitySlug": "wombat-community",
+      "topicName": "wombats",
+    },
+  },
+  "meta": Object {
+    "communitySlug": "wombat-community",
+    "topicName": "wombats",
+  },
+  "type": "CreateTopic/FETCH_COMMUNITY_TOPIC",
+}
+`;

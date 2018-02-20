@@ -76,7 +76,7 @@ export default function reducer (state = {}, action) {
       const topicName = get('data.createTopic.name', payload)
       // Once '#foo' is created, reset store['foo'], even if it wipes out checks
       // on the same topic for other communities... safer to start fresh.
-      return omit(topicName, state)
+      return omit(encodeURI(topicName), state)
 
     case FETCH_COMMUNITY_TOPIC:
       return {

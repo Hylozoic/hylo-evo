@@ -15,6 +15,7 @@ import './CreateTopic.scss'
 
 export default class CreateTopic extends Component {
   static propTypes = {
+    buttonText: string,
     communityId: any,
     communitySlug: string,
     communityTopicExists: object,
@@ -82,7 +83,7 @@ export default class CreateTopic extends Component {
 
   safeTopicName = () => sanitize(trim(this.ignoreHash(this.state.topicName)))
 
-  submitButtonAction = topicName => {
+  submitButtonAction = () => {
     const {
       communitySlug,
       communityTopicExists,
