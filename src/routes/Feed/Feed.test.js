@@ -9,6 +9,7 @@ describe('Feed', () => {
       community={{}}
       selectedPostId='5'
       sortBy='votes'
+      currentUser
       currentUserHasMemberships />)
 
     const feed = wrapper.find('Connect(FeedList)')
@@ -31,6 +32,7 @@ describe('Feed', () => {
       fetchNetwork={jest.fn()}
       networkSlug='bar'
       sortBy='votes'
+      currentUser
       currentUserHasMemberships />)
 
     expect(wrapper).toMatchSnapshot()
@@ -48,7 +50,9 @@ describe('Feed', () => {
   })
 
   it('displays the regular FeedBanner if on the main feed', () => {
-    const props = {}
+    const props = {
+      currentUser: {id: 1}
+    }
     const wrapper = shallow(<Feed {...props} />)
     expect(wrapper.find('FeedBanner')).toHaveLength(1)
     expect(wrapper.find('Connect(TopicFeedHeader)')).toHaveLength(0)
@@ -57,7 +61,8 @@ describe('Feed', () => {
   it('displays the TopicFeedHeader if on a topic feed', () => {
     const props = {
       topicName: 'petitions',
-      topic: {id: '5', name: 'petitions'}
+      topic: {id: '5', name: 'petitions'},
+      currentUser: {id: 1}
     }
     const wrapper = shallow(<Feed {...props} fetchTopic={jest.fn()} />)
     expect(wrapper.find('FeedBanner')).toHaveLength(0)

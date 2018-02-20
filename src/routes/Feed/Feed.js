@@ -68,6 +68,7 @@ export default class Feed extends Component {
 
     if (topicName && !topic) return <Loading />
     if (community && topicName && !communityTopic) return <Loading />
+    if (!currentUser) return <Loading />
 
     return <div>
       {topicName
@@ -84,7 +85,7 @@ export default class Feed extends Component {
           all={!community && !networkSlug} newPost={newPost}
           currentUserHasMemberships={currentUserHasMemberships} />}
       {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}
-      {!currentUserHasMemberships && <CreateCommunityPrompt
+      {currentUser && !currentUserHasMemberships && <CreateCommunityPrompt
         goToCreateCommunity={goToCreateCommunity}
       />}
     </div>
