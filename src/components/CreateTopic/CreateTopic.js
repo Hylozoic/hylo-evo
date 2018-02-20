@@ -46,7 +46,8 @@ export default class CreateTopic extends Component {
       key='create-button'
       narrow
       onClick={this.toggleTopicModal}
-      styleName='create-topic'>{this.props.buttonText}</Button>
+      styleName='create-topic'>
+      <Icon name='Plus' green styleName='plus' />{this.props.buttonText}</Button>
     : <Icon
       key='create-button'
       name='Plus'
