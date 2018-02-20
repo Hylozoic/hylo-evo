@@ -68,6 +68,7 @@ export default class Feed extends Component {
     if (topicName && !topic) return <Loading />
     if (community && topicName && !communityTopic) return <Loading />
     if (!currentUser) return <Loading />
+    if (membershipsPending) return <Loading />
 
     return <div>
       {topicName
