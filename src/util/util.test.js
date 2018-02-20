@@ -1,4 +1,4 @@
-import { postUrl } from './index'
+import { postUrl, networkCommunitySettingsUrl } from './index'
 
 describe('postUrl', () => {
   it('should default to displaying the all communities context', () => {
@@ -40,6 +40,14 @@ describe('postUrl', () => {
   it('should concatenate an action path parameter when action is passed in opts', () => {
     const expected = '/all/p/123/action'
     const actual = postUrl('123', null, {action: 'action'})
+    expect(actual).toEqual(expected)
+  })
+})
+
+describe('networkCommunitySettingsUrl', () => {
+  it('should default to displaying the all communities context', () => {
+    const expected = '/n/nslug/settings/communities/cslug'
+    const actual = networkCommunitySettingsUrl('nslug', 'cslug')
     expect(actual).toEqual(expected)
   })
 })

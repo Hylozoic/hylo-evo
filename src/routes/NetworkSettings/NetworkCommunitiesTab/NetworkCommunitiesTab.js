@@ -5,6 +5,7 @@ import Loading from 'components/Loading'
 import Autocomplete from 'react-autocomplete'
 import { isEmpty } from 'lodash/fp'
 import PaginatedList from '../PaginatedList'
+import { networkCommunitySettingsUrl } from 'util/index'
 import '../NetworkSettings.scss'
 
 const { any, array, bool, func, number, object } = PropTypes
@@ -88,7 +89,8 @@ export default class NetworkCommunitiesTab extends Component {
         pageCount={communitiesPageCount}
         pending={communitiesPending}
         removeItem={isAdmin && removeCommunityFromNetwork(network.id)}
-        setPage={setCommunitiesPage} />
+        setPage={setCommunitiesPage}
+        titleUrl={c => networkCommunitySettingsUrl(network.slug, c.slug)} />
       {isAdmin && <div styleName='autocomplete'>
         <Autocomplete
           getItemValue={community => community.name}

@@ -36,6 +36,10 @@ exports[`NetworkSettings doesnt have the moderators tab if only a moderator 1`] 
         "name": "Communities",
         "path": "/n/mycelium/settings/communities",
       },
+      Object {
+        "path": "/n/mycelium/settings/communities/:slug",
+        "render": [Function],
+      },
     ]
   }
   goToOnClose="/n/mycelium"
@@ -92,6 +96,10 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
         />,
         "name": "Communities",
         "path": "/n/mycelium/settings/communities",
+      },
+      Object {
+        "path": "/n/mycelium/settings/communities/:slug",
+        "render": [Function],
       },
     ]
   }

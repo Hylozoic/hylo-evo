@@ -16,7 +16,6 @@ exports[`PaginatedList renders correctly 1`] = `
     key="2"
     size={40}
     square={true}
-    url="/all"
   />
   <RemovableListItem
     item={
@@ -27,7 +26,6 @@ exports[`PaginatedList renders correctly 1`] = `
     key="3"
     size={40}
     square={true}
-    url="/all"
   />
   <PaginationLinks
     page={3}

@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import cx from 'classnames'
 import { times, isEmpty } from 'lodash/fp'
 import RemovableListItem from 'components/RemovableListItem'
-import { communityUrl } from 'util/index'
 
 import '../NetworkSettings.scss'
 
@@ -40,7 +39,8 @@ export default class PaginatedList extends Component {
       pageCount,
       pending,
       removeItem,
-      setPage
+      setPage,
+      titleUrl = () => {}
     } = this.props
     const { prevItems } = this.state
     const visibleItems = pending ? prevItems : items
@@ -49,7 +49,7 @@ export default class PaginatedList extends Component {
       <div styleName='section-label'>{label}</div>
       {visibleItems.map(m => <RemovableListItem
         item={m}
-        url={communityUrl(m.slug)}
+        url={titleUrl(m)}
         key={m.id}
         removeItem={removeItem}
         {...itemProps} />)}
