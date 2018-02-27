@@ -39,7 +39,7 @@ export default class CreateTopic extends Component {
 
   state = this.defaultState
 
-  // No text for use with TopicNavigation, text on AllTopics
+  // No text for use with TopicNavigation, text on AllTopics.
   buttonChooser = () => this.props.buttonText
     ? <Button
       color='green-white-green-border'
