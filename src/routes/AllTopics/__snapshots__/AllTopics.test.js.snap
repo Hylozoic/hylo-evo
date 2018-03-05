@@ -15,7 +15,30 @@ exports[`AllTopics matches the latest snapshot 1`] = `
     >
        Total Topics
     </div>
-    <SearchBar />
+    <div
+      data-stylename="controls"
+    >
+      <SearchBar />
+      <Connect(CreateTopic)
+        buttonText="Add a Topic"
+        communityId="1"
+        communitySlug="goteam"
+        communityTopics={
+          Array [
+            Object {
+              "followersTotal": 52,
+              "id": "1",
+              "isSubscribed": false,
+              "postsTotal": 24,
+              "topic": Object {
+                "id": "2",
+                "name": "petitions",
+              },
+            },
+          ]
+        }
+      />
+    </div>
     <div
       data-stylename="topic-list"
       id="topic-list"

@@ -11,7 +11,41 @@ exports[`renders correctly for All Communities 1`] = `
       data-stylename="s.icon"
       name="Topics"
     />
-    Topics
+    <span
+      data-stylename="s.title"
+    >
+      Topics
+    </span>
+    <Connect(CreateTopic)
+      communitySlug="foo"
+      communityTopics={
+        Array [
+          Object {
+            "newPostCount": 3,
+            "topic": Object {
+              "name": "t1",
+            },
+          },
+          Object {
+            "newPostCount": 0,
+            "topic": Object {
+              "name": "t2",
+            },
+          },
+          Object {
+            "topic": Object {
+              "name": "t3",
+            },
+          },
+          Object {
+            "newPostCount": 2,
+            "topic": Object {
+              "name": "t4",
+            },
+          },
+        ]
+      }
+    />
   </div>
   <ul
     data-stylename="s.topics"
@@ -125,7 +159,41 @@ exports[`renders correctly for a community 1`] = `
       data-stylename="s.icon"
       name="Topics"
     />
-    Topics
+    <span
+      data-stylename="s.title"
+    >
+      Topics
+    </span>
+    <Connect(CreateTopic)
+      communitySlug="foo"
+      communityTopics={
+        Array [
+          Object {
+            "newPostCount": 3,
+            "topic": Object {
+              "name": "t1",
+            },
+          },
+          Object {
+            "newPostCount": 0,
+            "topic": Object {
+              "name": "t2",
+            },
+          },
+          Object {
+            "topic": Object {
+              "name": "t3",
+            },
+          },
+          Object {
+            "newPostCount": 2,
+            "topic": Object {
+              "name": "t4",
+            },
+          },
+        ]
+      }
+    />
   </div>
   <ul
     data-stylename="s.topics"

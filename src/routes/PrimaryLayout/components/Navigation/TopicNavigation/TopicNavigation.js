@@ -1,12 +1,14 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import Icon from 'components/Icon'
-import Badge from 'components/Badge'
-import { Link, NavLink, matchPath } from 'react-router-dom'
-import { tagUrl, topicsUrl } from 'util/index'
-import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
-import badgeHoverStyles from '../../../../../components/Badge/component.scss'
 import cx from 'classnames'
+import PropTypes from 'prop-types'
+import { Link, NavLink, matchPath } from 'react-router-dom'
+
+import Badge from 'components/Badge'
+import CreateTopic from 'components/CreateTopic'
+import Icon from 'components/Icon'
+import { tagUrl, topicsUrl } from 'util/index'
+import badgeHoverStyles from '../../../../../components/Badge/component.scss'
+import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
 
 const { array, string, bool, func } = PropTypes
 
@@ -23,7 +25,7 @@ export default class TopicNavigation extends Component {
 
   render () {
     const {
-      communityTopics, goBack, communitySlug,
+      communityTopics, goBack, communityId, communitySlug,
       clearBadge, clearFeedList, expand, collapsed, location
     } = this.props
 
@@ -34,7 +36,11 @@ export default class TopicNavigation extends Component {
       <div styleName={cx('s.header', {'s.header-link': collapsed})}
         onClick={expand}>
         <Icon name='Topics' styleName='s.icon' />
-        Topics
+        <span styleName='s.title'>Topics</span>
+        <CreateTopic
+          communityId={communityId}
+          communitySlug={communitySlug}
+          communityTopics={communityTopics} />
       </div>
       <ul styleName='s.topics'>
         {communityTopics.map(({ id, topic, newPostCount }) =>

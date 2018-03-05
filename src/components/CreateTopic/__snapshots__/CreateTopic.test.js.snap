@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateTopic snapshots (various states) matches the last snapshot (modal visible) 1`] = `
+Array [
+  <Icon
+    data-stylename="create-button"
+    key="create-button"
+    name="Plus"
+    onClick={[Function]}
+  />,
+  <ModalDialogPortal
+    backgroundImage="axolotl-corner.png"
+    closeModal={[Function]}
+    closeOnSubmit={false}
+    key="create-dialog"
+    modalTitle="Create a Topic"
+    notificationIconName="Star"
+    showCancelButton={true}
+    showSubmitButton={true}
+    submitButtonAction={[Function]}
+    submitButtonIsDisabled={[Function]}
+    submitButtonText="Add Topic"
+    useNotificationFormat={false}
+  />,
+]
+`;
+
+exports[`CreateTopic snapshots (various states) matches the last snapshot for a redirect 1`] = `
+<RedirectRoute
+  to="/c/wombat-community/ecological-implications-wombat-migration"
+/>
+`;
+
+exports[`CreateTopic snapshots (various states) matches the last snapshot for no buttonText 1`] = `
+Array [
+  <Icon
+    data-stylename="create-button"
+    key="create-button"
+    name="Plus"
+    onClick={[Function]}
+  />,
+  "",
+]
+`;
+
+exports[`CreateTopic snapshots (various states) matches the last snapshot for notification (modal visible) 1`] = `
+Array [
+  <Icon
+    data-stylename="create-button"
+    key="create-button"
+    name="Plus"
+    onClick={[Function]}
+  />,
+  <ModalDialogPortal
+    backgroundImage="axolotl-corner.png"
+    closeModal={[Function]}
+    closeOnSubmit={false}
+    key="create-dialog"
+    modalTitle="Topic Created"
+    notificationIconName="Star"
+    showCancelButton={false}
+    showSubmitButton={true}
+    submitButtonAction={[Function]}
+    submitButtonIsDisabled={[Function]}
+    submitButtonText="Ok"
+    useNotificationFormat={true}
+  />,
+]
+`;
+
+exports[`CreateTopic snapshots (various states) matches the last snapshot with buttonText 1`] = `
+Array [
+  <Button
+    color="green-white-green-border"
+    data-stylename="create-topic"
+    key="create-button"
+    narrow={true}
+    onClick={[Function]}
+  />,
+  "",
+]
+`;

@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModalDialog matches the last snapshot (useNotificationFormat) 1`] = `
+<div
+  data-stylename="popup"
+>
+  <div
+    data-stylename="popup-inner"
+    style={
+      Object {
+        "backgroundImage": "url(/assets/foo.png)",
+        "backgroundPosition": "bottom left",
+        "backgroundRepeat": "no-repeat",
+        "backgroundSize": "180px",
+      }
+    }
+  >
+    <span
+      data-stylename="close-btn"
+      onClick={[Function]}
+    >
+      <Icon
+        data-stylename="icon"
+        name="Ex"
+      />
+    </span>
+    <div
+      data-stylename="title-block"
+    >
+      <Icon
+        data-stylename="notification-icon"
+        green={true}
+        name="Star"
+      />
+      <h1
+        data-stylename="notification-title"
+      >
+        Wombats
+      </h1>
+    </div>
+    <div
+      data-stylename="content"
+    >
+      <div>
+        Yep, they're awesome alright.
+      </div>
+    </div>
+    <div
+      data-stylename="controls"
+    >
+      <Button
+        color="green-white-green-border"
+        data-stylename="cancel-btn"
+        onClick={[Function]}
+      >
+        Cancel
+      </Button>
+      <Button
+        data-stylename="submit-btn"
+        disabled={false}
+        onClick={[Function]}
+      >
+        Square Poop
+      </Button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ModalDialog matches the last snapshot 1`] = `
+<div
+  data-stylename="popup"
+>
+  <div
+    data-stylename="popup-inner"
+    style={null}
+  >
+    <span
+      data-stylename="close-btn"
+      onClick={[Function]}
+    >
+      <Icon
+        data-stylename="icon"
+        name="Ex"
+      />
+    </span>
+    <div
+      data-stylename="title-block"
+    >
+      <h1
+        data-stylename=""
+      >
+        Wombats
+      </h1>
+    </div>
+    <div
+      data-stylename="content"
+    >
+      <div>
+        Describe how awesome wombats are:
+      </div>
+      <input
+        autofocus={true}
+      />
+    </div>
+    <div
+      data-stylename="controls"
+    >
+      <Button
+        color="green-white-green-border"
+        data-stylename="cancel-btn"
+        onClick={[Function]}
+      >
+        Cancel
+      </Button>
+      <Button
+        data-stylename="submit-btn"
+        disabled={false}
+        onClick={[Function]}
+      >
+        Square Poop
+      </Button>
+    </div>
+  </div>
+</div>
+`;

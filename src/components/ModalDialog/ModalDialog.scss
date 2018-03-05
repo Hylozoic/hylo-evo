@@ -1,0 +1,96 @@
+.popup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgba(0,0,0, 0.5);
+  z-index: 200000;
+}
+
+.popup-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 500px;
+  top: 10%;
+  background: white;
+  margin: auto;
+  text-align: center;
+  border-radius: 4px;
+
+  .notification-icon {
+    font-size: 18px;
+    line-height: 18px;
+    margin-right: $space-2x;
+  }
+
+  .title-block {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: $space-14x;
+    padding-bottom: $space-2x;
+  }
+
+  h1 {
+    font-size: 24px;
+    color: $color-rhino-darker;
+    font-weight: normal;
+    font-family: "Circular Bold";
+    margin: 0;
+
+    &.notification-title {
+      color: $color-caribbean-green;
+    }
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    padding: 10px;
+
+    .icon {
+      font-size: 26px;
+    }
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: flex-end;
+    padding-bottom: $space-8x;
+    padding-right: $space-10x;
+    width: 100%;
+
+    .cancel-btn {
+    }
+
+    .submit-btn {
+      margin-left: $space-2x;
+    }
+  }
+
+  .content {
+    color: $color-rhino-60;
+    display: flex;
+    flex-flow: column;
+    padding: $space-10x $space-6x;
+    padding-top: 0;
+    width: 100%;
+
+    /* This forces flex child elements to respect the overflow boundaries of
+       the dialog. Otherwise, we risk long topic names going off the edge. */
+    &, & > * {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

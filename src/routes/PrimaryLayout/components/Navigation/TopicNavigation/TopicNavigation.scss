@@ -13,10 +13,15 @@
   align-items: center;
   color: $color-rhino-60;
   margin-bottom: 14px;
+  padding-right: $space-2x;
 }
 
 .header-link {
   cursor: pointer;
+}
+
+.title {
+  flex: 1;
 }
 
 .topics {

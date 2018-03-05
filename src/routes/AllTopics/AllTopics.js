@@ -1,15 +1,16 @@
-import PropTypes from 'prop-types'
+import { find } from 'lodash/fp'
+import { boolean, arrayOf, func, number, shape, string } from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import './AllTopics.scss'
-import FullPageModal from 'routes/FullPageModal'
+
+import CreateTopic from 'components/CreateTopic'
 import Dropdown from 'components/Dropdown'
+import FullPageModal from 'routes/FullPageModal'
 import Icon from 'components/Icon'
+import ScrollListener from 'components/ScrollListener'
 import TextInput from 'components/TextInput'
 import { pluralize, tagUrl } from 'util/index'
-import { find } from 'lodash/fp'
-import ScrollListener from 'components/ScrollListener'
-const { boolean, arrayOf, func, number, shape, string } = PropTypes
+import './AllTopics.scss'
 
 const sortOptions = [
   {id: 'num_followers', label: 'Popular'},
@@ -19,6 +20,10 @@ const sortOptions = [
 const TOPIC_LIST_ID = 'topic-list'
 
 export default class AllTopics extends Component {
+  state = {
+    createTopicModalVisible: false
+  }
+
   static propTypes = {
     communityTopics: arrayOf(shape({
       topic: shape({
@@ -38,11 +43,6 @@ export default class AllTopics extends Component {
     toggleSubscribe: func.isRequired
   }
 
-  constructor (props) {
-    super(props)
-    this.state = {}
-  }
-
   componentDidMount () {
     this.props.fetchCommunityTopics()
     // Caching totalTopics because the total returned in the queryset
@@ -60,10 +60,15 @@ export default class AllTopics extends Component {
     }
   }
 
+  toggleTopicModal = () =>
+    this.setState({
+      createTopicModalVisible: !this.state.createTopicModalVisible
+    })
+
   render () {
     const {
+      community,
       communityTopics,
-      slug,
       search,
       setSearch,
       selectedSort,
@@ -79,10 +84,17 @@ export default class AllTopics extends Component {
       <div styleName='all-topics'>
         <div styleName='title'>Topics</div>
         <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
-        <SearchBar {...{search, setSearch, selectedSort, setSort, fetchIsPending}} />
+        <div styleName='controls'>
+          <SearchBar {...{search, setSearch, selectedSort, setSort, fetchIsPending}} />
+          <CreateTopic
+            buttonText='Add a Topic'
+            communityId={community.id}
+            communitySlug={community.slug}
+            communityTopics={communityTopics} />
+        </div>
         <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {communityTopics.map(ct =>
-            <CommunityTopicListItem key={ct.id} item={ct} slug={slug}
+            <CommunityTopicListItem key={ct.id} item={ct} slug={community.slug}
               toggleSubscribe={() =>
                 toggleSubscribe(ct.topic.id, !ct.isSubscribed)} />)}
           <ScrollListener onBottom={() => fetchMoreCommunityTopics()}

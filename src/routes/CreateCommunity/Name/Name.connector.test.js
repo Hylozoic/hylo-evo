@@ -1,7 +1,7 @@
 import { mapDispatchToProps, mapStateToProps } from './Name.connector'
 
 const dispatch = jest.fn(x => x)
-const props = {}
+const props = { match: { params: { networkId: '1' } } }
 const dispatchProps = mapDispatchToProps(dispatch, props)
 
 describe('Domain', () => {

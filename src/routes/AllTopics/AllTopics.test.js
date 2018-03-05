@@ -17,8 +17,8 @@ describe('AllTopics', () => {
       }
     ]
     const wrapper = shallow(<AllTopics
+      community={{ id: '1', slug: 'goteam' }}
       communityTopics={ct}
-      slug='goteam'
       topicsTotal='10'
       fetchCommunityTopics={jest.fn()}
       toggleSubscribe={() => {}} />)
@@ -28,6 +28,7 @@ describe('AllTopics', () => {
 
   it('caches totalTopics', () => {
     const wrapper = shallow(<AllTopics
+      community={{ id: '1', slug: 'goteam' }}
       fetchCommunityTopics={() => {}}
       toggleSubscribe={() => {}}
       communityTopics={[]}
