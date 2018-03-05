@@ -91,12 +91,6 @@ export default class CreateTopic extends Component {
       communityTopics,
       fetchCommunityTopic } = this.props
 
-    // Just close if we're already at the notification stage
-    if (this.state.useNotificationFormat) {
-      this.toggleTopicModal()
-      return
-    }
-
     const name = this.safeTopicName()
     if (isEmpty(name)) {
       return this.setState({ nameError: 'Topic name is required.' })
@@ -114,6 +108,9 @@ export default class CreateTopic extends Component {
       this.setState({ loading: true })
       return fetchCommunityTopic(name, communitySlug)
     }
+
+    // Just close if no topic exists by this stage.
+    this.toggleTopicModal()
   }
 
   submitButtonIsDisabled = () => {
