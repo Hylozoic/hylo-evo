@@ -1,5 +1,6 @@
 .create-button {
   cursor: pointer;
+  font-size: 16px;
 }
 
 .create-topic {
@@ -10,7 +11,7 @@
   margin-left: $space-1x;
 
   .plus {
-    font-size: 18px;
+    font-size: 14px;
     margin-right: $space-2x;
   }
 }
