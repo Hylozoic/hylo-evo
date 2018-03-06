@@ -7,7 +7,7 @@ import {
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 
-export const MODULE_NAME = 'CommunitySettings'
+export const MODULE_NAME = 'ModeratorsSettingsTab'
 
 const defaultState = []
 

@@ -117,6 +117,7 @@ exports[`ModeratorsList renders correctly 1`] = `
         }
       }
       key="1"
+      removeItem={true}
       skipConfirm={true}
       url="/c/foocommunity/m/1"
     />
@@ -127,6 +128,7 @@ exports[`ModeratorsList renders correctly 1`] = `
         }
       }
       key="2"
+      removeItem={true}
       skipConfirm={true}
       url="/c/foocommunity/m/2"
     />
@@ -137,6 +139,7 @@ exports[`ModeratorsList renders correctly 1`] = `
         }
       }
       key="3"
+      removeItem={true}
       skipConfirm={true}
       url="/c/foocommunity/m/3"
     />
@@ -147,6 +150,7 @@ exports[`ModeratorsList renders correctly 1`] = `
         }
       }
       key="4"
+      removeItem={true}
       skipConfirm={true}
       url="/c/foocommunity/m/4"
     />
@@ -174,7 +178,7 @@ Array [
         },
       ]
     }
-    removeModerator={[Function]}
+    removeItem={[Function]}
   />,
   "",
 ]

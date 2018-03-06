@@ -1,4 +1,4 @@
-import { mapStateToProps, mapDispatchToProps, mergeProps } from './ModeratorsSettingsTab.connector'
+import { mapStateToProps } from './ModeratorsSettingsTab.connector'
 import orm from 'store/models'
 
 let state

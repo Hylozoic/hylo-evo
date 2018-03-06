@@ -3,6 +3,19 @@
 exports[`mapStateToProps works 1`] = `
 Object {
   "moderatorSuggestions": Array [],
-  "moderators": Array [],
+  "moderators": Array [
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "1",
+        "skills": undefined,
+      },
+    },
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "2",
+        "skills": undefined,
+      },
+    },
+  ],
 }
 `;
