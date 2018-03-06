@@ -1,7 +1,7 @@
 import reducer, { fetchModeratorSuggestions, clearModeratorSuggestions, addModerator, removeModerator } from './ModeratorsSettingsTab.store'
 import {
   CLEAR_MODERATOR_SUGGESTIONS,
-  FETCH_MODERATOR_SUGGESTIONS,
+  FETCH_MODERATOR_SUGGESTIONS
 } from 'store/constants'
 
 it('fetchModeratorSuggestions', () => {
@@ -24,7 +24,7 @@ describe('reducer', () => {
   it('should handle CLEAR_MODERATOR_SUGGESTIONS', () => {
     const expected = []
     const actual = reducer({}, {
-      type: CLEAR_MODERATOR_SUGGESTIONS,
+      type: CLEAR_MODERATOR_SUGGESTIONS
     })
     expect(actual).toEqual(expected)
   })
