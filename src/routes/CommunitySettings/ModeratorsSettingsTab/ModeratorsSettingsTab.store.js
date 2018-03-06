@@ -84,12 +84,12 @@ export function addModerator (personId, communityId) {
   }
 }
 
-export function removeModerator (personId, communityId) {
+export function removeModerator (personId, communityId, isRemoveFromCommunity) {
   return {
     type: REMOVE_MODERATOR,
     graphql: {
-      query: `mutation ($personId: ID, $communityId: ID) {
-        removeModerator(personId: $personId, communityId: $communityId) {
+      query: `mutation ($personId: ID, $communityId: ID, $isRemoveFromCommunity: Boolean) {
+        removeModerator(personId: $personId, communityId: $communityId, isRemoveFromCommunity: $isRemoveFromCommunity) {
           id
           moderators (first: 100) {
             items {
@@ -100,11 +100,12 @@ export function removeModerator (personId, communityId) {
           }
         }
       }`,
-      variables: {personId, communityId}
+      variables: {personId, communityId, isRemoveFromCommunity}
     },
     meta: {
       personId,
       communityId,
+      isRemoveFromCommunity,
       optimistic: true
     }
   }
