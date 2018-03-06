@@ -29,7 +29,6 @@ export default class ModeratorsSettingsTab extends Component {
   }
 
   submitRemoveModerator = () => {
-    console.log(this.state.moderatorToRemove, this.state.isRemoveFromCommunity)
     this.props.removeModerator(this.state.moderatorToRemove, this.state.isRemoveFromCommunity)
   }
 
