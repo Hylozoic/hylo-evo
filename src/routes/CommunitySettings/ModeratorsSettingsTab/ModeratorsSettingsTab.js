@@ -34,12 +34,7 @@ export default class ModeratorsSettingsTab extends Component {
 
   render () {
     const {
-      moderators,
-      fetchModeratorSuggestions,
-      addModerator,
-      moderatorSuggestions,
-      clearModeratorSuggestions,
-      slug
+      moderators
     } = this.props
 
     const {
@@ -49,22 +44,7 @@ export default class ModeratorsSettingsTab extends Component {
 
     if (!moderators) return <Loading />
 
-    return [<div>
-      <div>
-        {moderators.map(m =>
-          <RemovableListItem
-            item={m}
-            url={personUrl(m.id, slug)}
-            skipConfirm
-            removeItem={id => this.setState({modalVisible: true, moderatorToRemove: id})}
-            key={m.id} />)}
-      </div>
-      <AddModerator
-        fetchModeratorSuggestions={fetchModeratorSuggestions}
-        addModerator={addModerator}
-        moderatorSuggestions={moderatorSuggestions}
-        clearModeratorSuggestions={clearModeratorSuggestions} />
-    </div>,
+    return [<ModeratorsList {...this.props} removeModerator={(id) => this.setState({modalVisible: true, moderatorToRemove: id})} />,
       modalVisible && <ModalDialog key='remove-moderator-dialog'
         closeModal={() => this.setState({modalVisible: false})}
         closeOnSubmit
@@ -80,6 +60,25 @@ export default class ModeratorsSettingsTab extends Component {
       </ModalDialog>
     ]
   }
+}
+
+export function ModeratorsList ({moderators, slug, removeModerator, fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions}) {
+  return <div>
+    <div>
+      {moderators.map(m =>
+        <RemovableListItem
+          item={m}
+          url={personUrl(m.id, slug)}
+          skipConfirm
+          removeItem={removeModerator}
+          key={m.id} />)}
+    </div>
+    <AddModerator
+      fetchModeratorSuggestions={fetchModeratorSuggestions}
+      addModerator={addModerator}
+      moderatorSuggestions={moderatorSuggestions}
+      clearModeratorSuggestions={clearModeratorSuggestions} />
+  </div>
 }
 
 export class AddModerator extends Component {
