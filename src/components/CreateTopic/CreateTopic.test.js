@@ -131,13 +131,6 @@ describe('CreateTopic', () => {
   })
 
   describe('submitButtonAction', () => {
-    it('closes dialog if at notification stage', () => {
-      instance.createAndNotify('wombats')
-      const toggleTopicModal = jest.spyOn(instance, 'toggleTopicModal')
-      instance.submitButtonAction()
-      expect(toggleTopicModal).toHaveBeenCalled()
-    })
-
     it('requires a non-empty topic name', () => {
       instance.submitButtonAction('')
       expect(wrapper.state().nameError).toMatch(/name is required/)
