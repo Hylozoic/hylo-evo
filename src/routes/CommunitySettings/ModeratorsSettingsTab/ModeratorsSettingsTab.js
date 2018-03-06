@@ -44,7 +44,7 @@ export default class ModeratorsSettingsTab extends Component {
 
     if (!moderators) return <Loading />
 
-    return [<ModeratorsList {...this.props} removeModerator={(id) => this.setState({modalVisible: true, moderatorToRemove: id})} />,
+    return [<ModeratorsList {...this.props} removeItem={(id) => this.setState({modalVisible: true, moderatorToRemove: id})} />,
       modalVisible && <ModalDialog key='remove-moderator-dialog'
         closeModal={() => this.setState({modalVisible: false})}
         closeOnSubmit
@@ -62,7 +62,7 @@ export default class ModeratorsSettingsTab extends Component {
   }
 }
 
-export function ModeratorsList ({moderators, slug, removeModerator, fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions}) {
+export function ModeratorsList ({moderators, slug, removeItem, fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions}) {
   return <div>
     <div>
       {moderators.map(m =>
@@ -70,7 +70,7 @@ export function ModeratorsList ({moderators, slug, removeModerator, fetchModerat
           item={m}
           url={personUrl(m.id, slug)}
           skipConfirm
-          removeItem={removeModerator}
+          removeItem
           key={m.id} />)}
     </div>
     <AddModerator

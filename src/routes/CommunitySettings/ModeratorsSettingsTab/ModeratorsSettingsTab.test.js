@@ -20,6 +20,24 @@ describe('ModeratorsSettingsTab', () => {
     const wrapper = shallow(<ModeratorsSettingsTab moderators={moderators} />)
     expect(wrapper).toMatchSnapshot()
   })
+
+  it('calls removeModerator', () => {
+    const props = {
+      moderators: [
+        {id: 1},
+        {id: 2},
+        {id: 3},
+        {id: 4}
+      ],
+      slug: 'foocommunity',
+      removeModerator: jest.fn()
+    }
+
+    const wrapper = shallow(<ModeratorsSettingsTab {...props} />)
+    wrapper.setState({moderatorToRemove: 3, isRemoveFromCommunity: false})
+    wrapper.instance().submitRemoveModerator()
+    expect(props.removeModerator).toHaveBeenCalledWith(3, false)
+  })
 })
 
 describe('ModeratorsList', () => {
