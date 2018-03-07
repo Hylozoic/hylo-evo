@@ -1,4 +1,4 @@
-import { mapStateToProps } from './ModeratorsSettingsTab.connector'
+import { mapStateToProps, mapDispatchToProps } from './ModeratorsSettingsTab.connector'
 import orm from 'store/models'
 
 let state
@@ -46,5 +46,20 @@ describe('mapStateToProps', () => {
     }
 
     expect(mapStateToProps(state, props)).toMatchSnapshot()
+  })
+})
+
+describe('mapDispatchToProps', () => {
+  it('correctly sets up dispatches', () => {
+    const dispatch = jest.fn(x => x)
+    const props = {
+      communityId: 11
+    }
+
+    const dispatchProps = mapDispatchToProps(dispatch, props)
+    expect(dispatchProps.addModerator(10)).toMatchSnapshot()
+    expect(dispatchProps.removeModerator(10, true)).toMatchSnapshot()
+    expect(dispatchProps.fetchModeratorSuggestions('autocomplete')).toMatchSnapshot()
+    expect(dispatchProps.clearModeratorSuggestions()).toMatchSnapshot()
   })
 })
