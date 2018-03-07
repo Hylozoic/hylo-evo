@@ -9,6 +9,13 @@ describe('ModeratorsSettingsTab', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
+  it('clears moderators on unmount', () => {
+    const clearModeratorSuggestions = jest.fn()
+    const wrapper = shallow(<ModeratorsSettingsTab clearModeratorSuggestions={clearModeratorSuggestions} />)
+    wrapper.unmount()
+    expect(clearModeratorSuggestions).toHaveBeenCalled()
+  })
+
   it('renders a list of RemovableListItems and AddModerator', () => {
     const moderators = [
       {id: 1},
