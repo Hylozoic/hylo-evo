@@ -47,10 +47,7 @@ export default class ModeratorsSettingsTab extends Component {
     return [<ModeratorsList {...this.props} removeItem={(id) => this.setState({modalVisible: true, moderatorToRemove: id})} />,
       modalVisible && <ModalDialog key='remove-moderator-dialog'
         closeModal={() => this.setState({modalVisible: false})}
-        closeOnSubmit
         showModalTitle={false}
-        showCancelButton
-        showSubmitButton
         submitButtonAction={this.submitRemoveModerator}
         submitButtonText='Remove' >
         <div styleName='content'>
@@ -70,7 +67,7 @@ export function ModeratorsList ({moderators, slug, removeItem, fetchModeratorSug
           item={m}
           url={personUrl(m.id, slug)}
           skipConfirm
-          removeItem
+          removeItem={removeItem}
           key={m.id} />)}
     </div>
     <AddModerator
