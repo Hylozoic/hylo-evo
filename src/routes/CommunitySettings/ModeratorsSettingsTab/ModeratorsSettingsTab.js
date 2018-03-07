@@ -44,7 +44,7 @@ export default class ModeratorsSettingsTab extends Component {
 
     if (!moderators) return <Loading />
 
-    return [<ModeratorsList {...this.props} removeItem={(id) => this.setState({modalVisible: true, moderatorToRemove: id})} />,
+    return [<ModeratorsList key='mList' {...this.props} removeItem={(id) => this.setState({modalVisible: true, moderatorToRemove: id})} />,
       modalVisible && <ModalDialog key='remove-moderator-dialog'
         closeModal={() => this.setState({modalVisible: false})}
         showModalTitle={false}
