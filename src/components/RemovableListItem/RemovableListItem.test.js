@@ -32,4 +32,47 @@ describe('RemovableListItem', () => {
     const wrapper = shallow(<RemovableListItem item={item} url={'/happy/place'} />)
     expect(wrapper).toMatchSnapshot()
   })
+
+  describe('remove item', () => {
+    it('calls remove', () => {
+      const props = {
+        item: {
+          id: 7,
+          name: 'Zeus',
+          avatarUrl: 'zeus.png'
+        },
+        url: '/happy/place',
+        removeItem: jest.fn(),
+        confirmMessage: 'Are you sure?'
+      }
+
+      global.confirm = jest.fn(() => true)
+
+      const wrapper = shallow(<RemovableListItem {...props} />)
+      wrapper.find('[data-stylename="remove-button"]').simulate('click')
+      expect(global.confirm).toHaveBeenCalledWith(props.confirmMessage)
+      expect(props.removeItem).toHaveBeenCalledWith(props.item.id)
+    })
+
+    it('skips confirm', () => {
+      const props = {
+        item: {
+          id: 7,
+          name: 'Zeus',
+          avatarUrl: 'zeus.png'
+        },
+        skipConfirm: true,
+        url: '/happy/place',
+        removeItem: jest.fn(),
+        confirmMessage: 'Are you sure?'
+      }
+
+      global.confirm = jest.fn(() => true)
+
+      const wrapper = shallow(<RemovableListItem {...props} />)
+      wrapper.find('[data-stylename="remove-button"]').simulate('click')
+      expect(global.confirm).not.toHaveBeenCalledWith(props.confirmMessage)
+      expect(props.removeItem).toHaveBeenCalledWith(props.item.id)
+    })
+  })
 })
