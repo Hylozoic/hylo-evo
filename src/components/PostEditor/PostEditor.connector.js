@@ -7,11 +7,13 @@ import getMe from 'store/selectors/getMe'
 import getPost, { presentPost } from 'store/selectors/getPost'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getAnnouncementSelected from 'store/selectors/getAnnouncementSelected'
 import { FETCH_POST, UPLOAD_ATTACHMENT } from 'store/constants'
 import {
   CREATE_POST,
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
+  ANNOUNCEMENT,
   createPost,
   updatePost,
   pollingFetchLinkPreview,
@@ -50,6 +52,8 @@ export function mapStateToProps (state, props) {
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
 
+  const announcementSelected = getAnnouncementSelected(state, ANNOUNCEMENT)
+  console.log({announcementSelected})
   return {
     currentUser,
     currentCommunity,
@@ -67,7 +71,8 @@ export function mapStateToProps (state, props) {
     files,
     topic,
     topicName,
-    slug
+    slug,
+    announcementSelected
   }
 }
 

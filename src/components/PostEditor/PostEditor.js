@@ -13,7 +13,7 @@ import LinkPreview from './LinkPreview'
 import ChangeImageButton from 'components/ChangeImageButton'
 import AttachmentManager from './AttachmentManager'
 import { uploadSettings } from './AttachmentManager/AttachmentManager'
-
+import { ANNOUNCEMENT } from './PostEditor.store'
 export default class PostEditor extends React.Component {
   static propTypes = {
     initialPrompt: PropTypes.string,
@@ -217,7 +217,7 @@ export default class PostEditor extends React.Component {
     const {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
-      showImages, addFile, showFiles, setPostType
+      showImages, addFile, showFiles, setPostType, announcementSelected
     } = this.props
 
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
@@ -289,13 +289,14 @@ export default class PostEditor extends React.Component {
           submitButtonLabel={this.buttonLabel()}
           save={() => this.save()}
           setPostType={setPostType}
+          announcementSelected={announcementSelected}
         />
       </div>
     </div>
   }
 }
 
-export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid, loading, submitButtonLabel, save, setPostType}) {
+export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid, loading, submitButtonLabel, save, setPostType, announcementSelected}) {
   return <div styleName='actionsBar'>
     <div styleName='actions'>
       <ChangeImageButton update={addImage}
@@ -313,8 +314,8 @@ export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid
           styleName={cx('action-icon', {'highlight-icon': showFiles})} />
       </ChangeImageButton>
       <Icon name='Paperclip'
-        onClick={() => setPostType('announcement')}
-        styleName={cx('action-icon', {'highlight-icon': showFiles})} />
+        onClick={() => setPostType(announcementSelected ? null : ANNOUNCEMENT)}
+        styleName={cx('action-icon', {'highlight-icon': announcementSelected})} />
     </div>
     <Button
       onClick={save}

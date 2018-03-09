@@ -203,8 +203,11 @@ export function clearLinkPreview () {
   return {type: CLEAR_LINK_PREVIEW}
 }
 
-export function setPostType () {
-  return {type: SET_POST_TYPE}
+export function setPostType (postType) {
+  return {
+    type: SET_POST_TYPE,
+    payload: postType
+  }
 }
 
 // Selectors
@@ -226,6 +229,7 @@ export const defaultState = {
 
 export default function reducer (state = defaultState, action) {
   const { error, type, payload, meta } = action
+  console.log({payload})
   if (error) return state
 
   switch (type) {
@@ -240,7 +244,7 @@ export default function reducer (state = defaultState, action) {
     case CLEAR_LINK_PREVIEW:
       return {...state, linkPreviewId: null, linkPreviewStatus: 'cleared'}
     case SET_POST_TYPE:
-      return {...state, postType: ANNOUNCEMENT}
+      return {...state, postType: payload}
     default:
       return state
   }
