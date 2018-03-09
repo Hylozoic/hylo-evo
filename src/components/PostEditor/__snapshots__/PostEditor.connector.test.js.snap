@@ -9,6 +9,7 @@ Object {
   "goToUrl": [Function],
   "pollingFetchLinkPreviewRaw": [Function],
   "removeLinkPreview": [Function],
+  "setPostType": [Function],
   "updatePost": [Function],
 }
 `;

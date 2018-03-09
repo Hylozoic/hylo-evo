@@ -17,7 +17,8 @@ import {
   pollingFetchLinkPreview,
   removeLinkPreview,
   clearLinkPreview,
-  getLinkPreview
+  getLinkPreview,
+  setPostType
 } from './PostEditor.store'
 import {
   addAttachment,
@@ -79,7 +80,8 @@ export const mapDispatchToProps = (dispatch, props) => {
     createPost: (postParams, topic) => dispatch(createPost(postParams, topic)),
     goToUrl: url => dispatch(push(url)),
     addImage: url => dispatch(addAttachment(url, 'image')),
-    addFile: url => dispatch(addAttachment(url, 'file'))
+    addFile: url => dispatch(addAttachment(url, 'file')),
+    setPostType: type => dispatch(setPostType(type))
   }
 }
 

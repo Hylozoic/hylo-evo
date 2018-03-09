@@ -217,7 +217,7 @@ export default class PostEditor extends React.Component {
     const {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
-      showImages, addFile, showFiles
+      showImages, addFile, showFiles, setPostType
     } = this.props
 
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
@@ -287,13 +287,15 @@ export default class PostEditor extends React.Component {
           valid={valid}
           loading={loading}
           submitButtonLabel={this.buttonLabel()}
-          save={() => this.save()} />
+          save={() => this.save()}
+          setPostType={setPostType}
+        />
       </div>
     </div>
   }
 }
 
-export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid, loading, submitButtonLabel, save}) {
+export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid, loading, submitButtonLabel, save, setPostType}) {
   return <div styleName='actionsBar'>
     <div styleName='actions'>
       <ChangeImageButton update={addImage}
@@ -310,6 +312,9 @@ export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid
         <Icon name='Paperclip'
           styleName={cx('action-icon', {'highlight-icon': showFiles})} />
       </ChangeImageButton>
+      <Icon name='Paperclip'
+        onClick={() => setPostType('announcement')}
+        styleName={cx('action-icon', {'highlight-icon': showFiles})} />
     </div>
     <Button
       onClick={save}

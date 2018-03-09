@@ -36,6 +36,11 @@ exports[`ActionsBar matches last snapshot 1`] = `
         name="Paperclip"
       />
     </Connect(ChangeImageButton)>
+    <Icon
+      data-stylename="action-icon"
+      name="Paperclip"
+      onClick={[Function]}
+    />
   </div>
   <Button
     color="green"
@@ -83,6 +88,11 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
         name="Paperclip"
       />
     </Connect(ChangeImageButton)>
+    <Icon
+      data-stylename="action-icon"
+      name="Paperclip"
+      onClick={[Function]}
+    />
   </div>
   <Button
     color="green"

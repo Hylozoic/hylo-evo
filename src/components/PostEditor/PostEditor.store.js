@@ -10,7 +10,8 @@ export const UPDATE_POST_PENDING = `${UPDATE_POST}_PENDING`
 export const FETCH_LINK_PREVIEW = `${MODULE_NAME}/FETCH_LINK_PREVIEW`
 export const REMOVE_LINK_PREVIEW = `${MODULE_NAME}/REMOVE_LINK_PREVIEW`
 export const CLEAR_LINK_PREVIEW = `${MODULE_NAME}/CLEAR_LINK_PREVIEW`
-
+export const SET_POST_TYPE = `${MODULE_NAME}/SET_POST_TYPE`
+export const ANNOUNCEMENT = `${MODULE_NAME}/ANNOUNCEMENT`
 // Actions
 
 export function createPost (post, topic) {
@@ -202,6 +203,10 @@ export function clearLinkPreview () {
   return {type: CLEAR_LINK_PREVIEW}
 }
 
+export function setPostType () {
+  return {type: SET_POST_TYPE}
+}
+
 // Selectors
 
 export const getLinkPreview = ormCreateSelector(
@@ -234,6 +239,8 @@ export default function reducer (state = defaultState, action) {
       return {...state, linkPreviewId: null, linkPreviewStatus: 'removed'}
     case CLEAR_LINK_PREVIEW:
       return {...state, linkPreviewId: null, linkPreviewStatus: 'cleared'}
+    case SET_POST_TYPE:
+      return {...state, postType: ANNOUNCEMENT}
     default:
       return state
   }
