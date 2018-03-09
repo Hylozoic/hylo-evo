@@ -229,7 +229,6 @@ export const defaultState = {
 
 export default function reducer (state = defaultState, action) {
   const { error, type, payload, meta } = action
-  console.log({payload})
   if (error) return state
 
   switch (type) {

@@ -53,7 +53,6 @@ export function mapStateToProps (state, props) {
   const topicName = get('name', topic)
 
   const announcementSelected = getAnnouncementSelected(state, ANNOUNCEMENT)
-  console.log({announcementSelected})
   return {
     currentUser,
     currentCommunity,
