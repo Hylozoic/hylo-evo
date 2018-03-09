@@ -217,7 +217,8 @@ export default class PostEditor extends React.Component {
     const {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
-      showImages, addFile, showFiles, setPostType, announcementSelected
+      showImages, addFile, showFiles, setPostType, announcementSelected,
+      communityMembersCount
     } = this.props
 
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>

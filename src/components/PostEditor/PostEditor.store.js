@@ -12,6 +12,8 @@ export const REMOVE_LINK_PREVIEW = `${MODULE_NAME}/REMOVE_LINK_PREVIEW`
 export const CLEAR_LINK_PREVIEW = `${MODULE_NAME}/CLEAR_LINK_PREVIEW`
 export const SET_POST_TYPE = `${MODULE_NAME}/SET_POST_TYPE`
 export const ANNOUNCEMENT = `${MODULE_NAME}/ANNOUNCEMENT`
+export const SHOW_ANNOUNCEMENT_CONFIRMATION = `${MODULE_NAME}/SHOW_ANNOUNCEMENT_CONFIRMATION`
+
 // Actions
 
 export function createPost (post, topic) {
@@ -210,6 +212,13 @@ export function setPostType (postType) {
   }
 }
 
+export function showAnnouncementConfirmation (bool) {
+  return {
+    type: SHOW_ANNOUNCEMENT_CONFIRMATION,
+    payload: bool
+  }
+}
+
 // Selectors
 
 export const getLinkPreview = ormCreateSelector(
@@ -244,6 +253,8 @@ export default function reducer (state = defaultState, action) {
       return {...state, linkPreviewId: null, linkPreviewStatus: 'cleared'}
     case SET_POST_TYPE:
       return {...state, postType: payload}
+    case SHOW_ANNOUNCEMENT_CONFIRMATION:
+      return {...state, showAnnouncementConfirmation: payload}
     default:
       return state
   }
