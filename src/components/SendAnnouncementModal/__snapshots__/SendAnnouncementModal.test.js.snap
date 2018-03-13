@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  data-stylename="modal"
+>
+  <div
+    data-stylename="modal-container"
+  >
+    <h1
+      data-stylename="modal-header"
+    >
+      MAKE AN ANNOUNCEMENT
+    </h1>
+    <p
+      data-stylename="modal-paragraph"
+    >
+      Send an email and push notif to the entire community of ___ members along with this announcement.
+    </p>
+    <a>
+      <Button
+        data-stylename="close-button"
+        onClick={[Function]}
+        small={true}
+      >
+        Go Back
+      </Button>
+      <Button
+        data-stylename="send-button"
+        onClick={[Function]}
+        small={true}
+      >
+        Send It
+      </Button>
+    </a>
+  </div>
+</div>
+`;
