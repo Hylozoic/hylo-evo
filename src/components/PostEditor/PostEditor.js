@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { get } from 'lodash/fp'
+import ReactTooltip from 'react-tooltip'
 import cx from 'classnames'
 import styles from './PostEditor.scss'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
@@ -314,9 +315,16 @@ export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid
         <Icon name='Paperclip'
           styleName={cx('action-icon', {'highlight-icon': showFiles})} />
       </ChangeImageButton>
-      <Icon name='Paperclip'
-        onClick={() => setPostType(announcementSelected ? null : ANNOUNCEMENT)}
-        styleName={cx('action-icon', {'highlight-icon': announcementSelected})} />
+      <span data-tip='Send Annoucnment' data-for='announcement-tt'>
+        <Icon name='Paperclip'
+          onClick={() => setPostType(announcementSelected ? null : ANNOUNCEMENT)}
+          styleName={cx('action-icon', {'highlight-icon': announcementSelected})}
+        />
+      </span>
+      <ReactTooltip
+        effect={'solid'}
+        delayShow={550}
+        id='announcement-tt' />
     </div>
     <Button
       onClick={save}

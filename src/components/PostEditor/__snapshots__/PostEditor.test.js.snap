@@ -36,10 +36,23 @@ exports[`ActionsBar matches last snapshot 1`] = `
         name="Paperclip"
       />
     </Connect(ChangeImageButton)>
-    <Icon
-      data-stylename="action-icon"
-      name="Paperclip"
-      onClick={[Function]}
+    <span
+      data-for="announcement-tt"
+      data-tip="Send Annoucnment"
+    >
+      <Icon
+        data-stylename="action-icon"
+        name="Paperclip"
+        onClick={[Function]}
+      />
+    </span>
+    <ReactTooltip
+      delayShow={550}
+      effect="solid"
+      id="announcement-tt"
+      insecure={true}
+      resizeHide={true}
+      wrapper="div"
     />
   </div>
   <Button
@@ -88,10 +101,23 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
         name="Paperclip"
       />
     </Connect(ChangeImageButton)>
-    <Icon
-      data-stylename="action-icon"
-      name="Paperclip"
-      onClick={[Function]}
+    <span
+      data-for="announcement-tt"
+      data-tip="Send Annoucnment"
+    >
+      <Icon
+        data-stylename="action-icon"
+        name="Paperclip"
+        onClick={[Function]}
+      />
+    </span>
+    <ReactTooltip
+      delayShow={550}
+      effect="solid"
+      id="announcement-tt"
+      insecure={true}
+      resizeHide={true}
+      wrapper="div"
     />
   </div>
   <Button
