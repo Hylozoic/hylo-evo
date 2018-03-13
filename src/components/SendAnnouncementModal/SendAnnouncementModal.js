@@ -1,7 +1,6 @@
 import React from 'react'
 import './SendAnnouncementModal.scss'
 import Button from '../Button'
-import { pluralize } from 'util/index'
 
 export default function SendAnnouncementModal ({closeModal, save, communityMembersCount}) {
   const members = communityMembersCount === 1 ? 'member' : 'members'
