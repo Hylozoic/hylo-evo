@@ -230,6 +230,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       loading={false}
       save={[Function]}
       submitButtonLabel="Save"
+      toggleAnnouncementModal={[Function]}
       valid={true}
     />
   </div>
@@ -372,6 +373,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       loading={false}
       save={[Function]}
       submitButtonLabel="Save"
+      toggleAnnouncementModal={[Function]}
       valid={true}
     />
   </div>
@@ -493,6 +495,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
+      toggleAnnouncementModal={[Function]}
       valid={false}
     />
   </div>
@@ -614,6 +617,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
+      toggleAnnouncementModal={[Function]}
       valid={false}
     />
   </div>
@@ -735,6 +739,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
+      toggleAnnouncementModal={[Function]}
       valid={false}
     />
   </div>
@@ -857,6 +862,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
+      toggleAnnouncementModal={[Function]}
       valid={false}
     />
   </div>
@@ -979,6 +985,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       loading={true}
       save={[Function]}
       submitButtonLabel="Save"
+      toggleAnnouncementModal={[Function]}
       valid={true}
     />
   </div>
@@ -1101,6 +1108,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       loading={true}
       save={[Function]}
       submitButtonLabel="Post"
+      toggleAnnouncementModal={[Function]}
       valid={false}
     />
   </div>
@@ -1223,6 +1231,7 @@ exports[`PostEditor renders with min props 1`] = `
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
+      toggleAnnouncementModal={[Function]}
       valid={false}
     />
   </div>

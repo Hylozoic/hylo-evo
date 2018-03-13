@@ -62,7 +62,7 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ editing, loading, currentCommunity, post, topicName }) => {
+  buildStateFromProps = ({ editing, loading, currentCommunity, post, topicName, announcementSelected }) => {
     const defaultPost = topicName
       ? {...PostEditor.defaultProps.post, details: `<p><a data-entity-type="#mention">#${topicName}</a> </p>`}
       : PostEditor.defaultProps.post
@@ -75,7 +75,8 @@ export default class PostEditor extends React.Component {
     return {
       post: currentPost,
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
-      valid: editing === true // if we're editing, than it's already valid upon entry.
+      valid: editing === true, // if we're editing, than it's already valid upon entry.
+      announcementSelected: announcementSelected
     }
   }
 
@@ -213,6 +214,14 @@ export default class PostEditor extends React.Component {
     return 'Post'
   }
 
+  toggleAnnouncementModal = () => {
+    const { showAnnouncementModal } = this.state
+    this.setState({
+      ...this.state,
+      showAnnouncementModal: !showAnnouncementModal
+    })
+  }
+
   render () {
     const { titlePlaceholder, valid, post } = this.state
     const { id, title, details, communities, linkPreview } = post
@@ -223,7 +232,7 @@ export default class PostEditor extends React.Component {
       communityMembersCount, canModerate
     } = this.props
 
-    return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
+    return <div styleName={announcementSelected ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
       <div styleName='header'>
         <div styleName='initial'>
           <div styleName='initial-prompt'>{initialPrompt}</div>
@@ -294,6 +303,7 @@ export default class PostEditor extends React.Component {
           setPostType={setPostType}
           announcementSelected={announcementSelected}
           canModerate={canModerate}
+          toggleAnnouncementModal={this.toggleAnnouncementModal}
         />
       </div>
     </div>
@@ -339,7 +349,10 @@ export function ActionsBar ({id,
           delayShow={550}
           id='announcement-tt' />
       </span>}
-      {false && <SendAnnouncementModal />}
+      {announcementSelected && <SendAnnouncementModal
+        closeModal={() => setPostType(null)}
+        save={save}
+      />}
 
     </div>
     <Button
