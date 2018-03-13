@@ -219,7 +219,7 @@ export default class PostEditor extends React.Component {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
       showImages, addFile, showFiles, setPostType, announcementSelected,
-      communityMembersCount
+      communityMembersCount, canModerate
     } = this.props
 
     return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
@@ -292,13 +292,26 @@ export default class PostEditor extends React.Component {
           save={() => this.save()}
           setPostType={setPostType}
           announcementSelected={announcementSelected}
+          canModerate={canModerate}
         />
       </div>
     </div>
   }
 }
 
-export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid, loading, submitButtonLabel, save, setPostType, announcementSelected}) {
+export function ActionsBar ({id,
+  addImage,
+  showImages,
+  addFile,
+  showFiles,
+  valid,
+  loading,
+  submitButtonLabel,
+  save,
+  setPostType,
+  announcementSelected,
+  canModerate
+}) {
   return <div styleName='actionsBar'>
     <div styleName='actions'>
       <ChangeImageButton update={addImage}
@@ -315,16 +328,17 @@ export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid
         <Icon name='Paperclip'
           styleName={cx('action-icon', {'highlight-icon': showFiles})} />
       </ChangeImageButton>
-      <span data-tip='Send Annoucnment' data-for='announcement-tt'>
+      {canModerate && <span data-tip='Send Annoucnment' data-for='announcement-tt'>
         <Icon name='Paperclip'
           onClick={() => setPostType(announcementSelected ? null : ANNOUNCEMENT)}
           styleName={cx('action-icon', {'highlight-icon': announcementSelected})}
         />
-      </span>
-      <ReactTooltip
-        effect={'solid'}
-        delayShow={550}
-        id='announcement-tt' />
+        <ReactTooltip
+          effect={'solid'}
+          delayShow={550}
+          id='announcement-tt' />
+      </span>}
+
     </div>
     <Button
       onClick={save}

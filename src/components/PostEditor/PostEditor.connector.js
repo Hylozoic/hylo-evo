@@ -56,6 +56,9 @@ export function mapStateToProps (state, props) {
 
   const announcementSelected = getAnnouncementSelected(state, ANNOUNCEMENT)
   const communityMembersCount = getCommunityMembersCount(state)
+
+  const canModerate = currentUser && currentUser.canModerate(currentCommunity)
+
   return {
     currentUser,
     currentCommunity,
@@ -75,7 +78,8 @@ export function mapStateToProps (state, props) {
     topicName,
     slug,
     announcementSelected,
-    communityMembersCount
+    communityMembersCount,
+    canModerate
   }
 }
 
