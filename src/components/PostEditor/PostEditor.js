@@ -307,6 +307,7 @@ export default class PostEditor extends React.Component {
           canModerate={canModerate}
           toggleAnnouncementModal={this.toggleAnnouncementModal}
           showAnnouncementModal={showAnnouncementModal}
+          communityMembersCount={40000000000000}
         />
       </div>
     </div>
@@ -326,7 +327,8 @@ export function ActionsBar ({id,
   announcementSelected,
   canModerate,
   toggleAnnouncementModal,
-  showAnnouncementModal
+  showAnnouncementModal,
+  communityMembersCount
 }) {
   return <div styleName='actionsBar'>
     <div styleName='actions'>
@@ -357,6 +359,7 @@ export function ActionsBar ({id,
       {showAnnouncementModal && <SendAnnouncementModal
         closeModal={toggleAnnouncementModal}
         save={save}
+        communityMembersCount={communityMembersCount}
       />}
 
     </div>

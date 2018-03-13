@@ -15,7 +15,11 @@ exports[`renders correctly 1`] = `
     <p
       data-stylename="modal-paragraph"
     >
-      Send an email and push notif to the entire community of ___ members along with this announcement.
+      Send an email and push notif to the entire community of 
+      100
+       
+      members
+       along with this announcement.
     </p>
     <a>
       <Button

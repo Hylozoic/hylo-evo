@@ -15,10 +15,11 @@
 .modal-container {
   background-color: $color-white;
   width: 390px;
-  height: 170px;
+  min-height: 150px;
   border-radius: 5px;
   text-align: center;
   padding-top: 12px;
+  padding-bottom: 20px;
 }
 
 .modal-header {
