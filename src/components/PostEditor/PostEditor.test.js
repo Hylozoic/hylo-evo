@@ -65,7 +65,8 @@ describe('PostEditor', () => {
             {id: '2', name: 'test community 2'}
           ]
         },
-        createPost: jest.fn(() => new Promise(() => {}))
+        createPost: jest.fn(() => new Promise(() => {})),
+        setPostType: jest.fn()
       }
       const editorMock = {
         getContentHTML: () => props.post.details,
@@ -98,7 +99,8 @@ describe('PostEditor', () => {
         ]
       },
       updatePost: jest.fn(() => new Promise(() => {})),
-      showImagePreviews: true
+      showImagePreviews: true,
+      setPostType: jest.fn()
     }
 
     test('form in editing mode', () => {
@@ -197,7 +199,8 @@ describe('PostEditor', () => {
           {id: '2', name: 'test community 2'}
         ]
       },
-      updatePost: jest.fn(() => new Promise(() => {}))
+      updatePost: jest.fn(() => new Promise(() => {})),
+      setPostType: jest.fn()
     }
     const editorMock = {
       getContentHTML: () => props.post.details,
