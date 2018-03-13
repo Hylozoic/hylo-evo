@@ -307,7 +307,7 @@ export default class PostEditor extends React.Component {
           canModerate={canModerate}
           toggleAnnouncementModal={this.toggleAnnouncementModal}
           showAnnouncementModal={showAnnouncementModal}
-          communityMembersCount={40000000000000}
+          communityMembersCount={communityMembersCount}
         />
       </div>
     </div>

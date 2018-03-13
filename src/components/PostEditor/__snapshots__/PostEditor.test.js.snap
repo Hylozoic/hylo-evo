@@ -226,7 +226,6 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       </div>
     </div>
     <ActionsBar
-      communityMembersCount={40000000000000}
       id="test"
       loading={false}
       save={[Function]}
@@ -371,7 +370,6 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       </div>
     </div>
     <ActionsBar
-      communityMembersCount={40000000000000}
       id="test"
       loading={false}
       save={[Function]}
@@ -496,7 +494,6 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
     </div>
     <ActionsBar
-      communityMembersCount={40000000000000}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -619,7 +616,6 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
     </div>
     <ActionsBar
-      communityMembersCount={40000000000000}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -742,7 +738,6 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
     </div>
     <ActionsBar
-      communityMembersCount={40000000000000}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -866,7 +861,6 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       </div>
     </div>
     <ActionsBar
-      communityMembersCount={40000000000000}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -990,7 +984,6 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       </div>
     </div>
     <ActionsBar
-      communityMembersCount={40000000000000}
       loading={true}
       save={[Function]}
       submitButtonLabel="Save"
@@ -1114,7 +1107,6 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       </div>
     </div>
     <ActionsBar
-      communityMembersCount={40000000000000}
       loading={true}
       save={[Function]}
       submitButtonLabel="Post"
@@ -1238,7 +1230,6 @@ exports[`PostEditor renders with min props 1`] = `
       </div>
     </div>
     <ActionsBar
-      communityMembersCount={40000000000000}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
