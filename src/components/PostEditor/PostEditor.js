@@ -198,11 +198,20 @@ export default class PostEditor extends React.Component {
   setValid = () => this.setState({valid: this.isValid()})
 
   save = () => {
-    const { editing, createPost, updatePost, onClose, goToPost, images, files, setPostType } = this.props
+    const { editing, createPost, updatePost, onClose, goToPost, images, files, setPostType, announcementSelected } = this.props
     const { id, type, title, communities, linkPreview } = this.state.post
     const details = this.editor.getContentHTML()
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files
+      id,
+      type,
+      title,
+      details,
+      communities,
+      linkPreview,
+      imageUrls:
+      images,
+      fileUrls: files,
+      sendAnnouncement: announcementSelected
     }
     const saveFunc = editing ? updatePost : createPost
     setPostType(null)
@@ -233,7 +242,6 @@ export default class PostEditor extends React.Component {
       showImages, addFile, showFiles, setPostType, announcementSelected,
       communityMembersCount, canModerate
     } = this.props
-
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
       <div styleName='header'>
         <div styleName='initial'>

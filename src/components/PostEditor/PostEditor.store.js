@@ -17,7 +17,7 @@ export const SHOW_ANNOUNCEMENT_CONFIRMATION = `${MODULE_NAME}/SHOW_ANNOUNCEMENT_
 // Actions
 
 export function createPost (post, topic) {
-  const { type, title, details, communities, linkPreview, imageUrls, fileUrls } = post
+  const { type, title, details, communities, linkPreview, imageUrls, fileUrls, sendAnnouncement } = post
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
@@ -72,7 +72,8 @@ export function createPost (post, topic) {
         linkPreviewId,
         communityIds,
         imageUrls,
-        fileUrls
+        fileUrls,
+        sendAnnouncement
       }
     },
     meta: {
