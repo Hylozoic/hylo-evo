@@ -76,7 +76,8 @@ export default class PostEditor extends React.Component {
       post: currentPost,
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
       valid: editing === true, // if we're editing, than it's already valid upon entry.
-      announcementSelected: announcementSelected
+      announcementSelected: announcementSelected,
+      toggleAnnouncementModal: false
     }
   }
 
@@ -223,7 +224,7 @@ export default class PostEditor extends React.Component {
   }
 
   render () {
-    const { titlePlaceholder, valid, post } = this.state
+    const { titlePlaceholder, valid, post, showAnnouncementModal } = this.state
     const { id, title, details, communities, linkPreview } = post
     const {
       onClose, initialPrompt, detailsPlaceholder,
@@ -232,7 +233,7 @@ export default class PostEditor extends React.Component {
       communityMembersCount, canModerate
     } = this.props
 
-    return <div styleName={announcementSelected ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
+    return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
       <div styleName='header'>
         <div styleName='initial'>
           <div styleName='initial-prompt'>{initialPrompt}</div>
@@ -304,6 +305,7 @@ export default class PostEditor extends React.Component {
           announcementSelected={announcementSelected}
           canModerate={canModerate}
           toggleAnnouncementModal={this.toggleAnnouncementModal}
+          showAnnouncementModal={showAnnouncementModal}
         />
       </div>
     </div>
@@ -321,7 +323,9 @@ export function ActionsBar ({id,
   save,
   setPostType,
   announcementSelected,
-  canModerate
+  canModerate,
+  toggleAnnouncementModal,
+  showAnnouncementModal
 }) {
   return <div styleName='actionsBar'>
     <div styleName='actions'>
@@ -349,14 +353,14 @@ export function ActionsBar ({id,
           delayShow={550}
           id='announcement-tt' />
       </span>}
-      {announcementSelected && <SendAnnouncementModal
+      {showAnnouncementModal && <SendAnnouncementModal
         closeModal={() => setPostType(null)}
         save={save}
       />}
 
     </div>
     <Button
-      onClick={save}
+      onClick={announcementSelected ? toggleAnnouncementModal : save}
       disabled={!valid || loading}
       styleName='postButton'
       label={submitButtonLabel}
