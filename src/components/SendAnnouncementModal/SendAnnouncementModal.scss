@@ -1,0 +1,41 @@
+.modal {
+  background-color: rgba(0,0,0,0.5);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200000;
+  margin: auto;
+}
+
+.modal-container {
+  background-color: $color-white;
+  width: 390px;
+  height: 30%;
+  border-radius: 5px;
+  text-align: center;
+  padding-top: 12px;
+}
+
+.modal-header {
+  font-size: 80%;
+  color: $color-rhino-50;
+  text-align: left;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid $color-rhino-30;
+  font-weight: bold;
+}
+
+.modal-paragraph {
+  font-size: 90%;
+  color: $color-rhino-60;
+  text-align: left;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 8px;
+}

@@ -12,6 +12,7 @@ import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 import LinkPreview from './LinkPreview'
 import ChangeImageButton from 'components/ChangeImageButton'
+import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import AttachmentManager from './AttachmentManager'
 import { uploadSettings } from './AttachmentManager/AttachmentManager'
 import { ANNOUNCEMENT } from './PostEditor.store'
@@ -338,6 +339,7 @@ export function ActionsBar ({id,
           delayShow={550}
           id='announcement-tt' />
       </span>}
+      {false && <SendAnnouncementModal />}
 
     </div>
     <Button
