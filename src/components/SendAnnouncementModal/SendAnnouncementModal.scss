@@ -15,7 +15,7 @@
 .modal-container {
   background-color: $color-white;
   width: 390px;
-  height: 30%;
+  height: 170px;
   border-radius: 5px;
   text-align: center;
   padding-top: 12px;
@@ -38,4 +38,22 @@
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 8px;
+}
+
+.close-button {
+  margin-right: 10px;
+  background-color: $color-white;
+  &:hover {
+    background-color: $color-white-80;
+  }
+  border-color: $color-rhino-30;
+  color: $color-rhino-30;
+  font-size: 14px;
+  height: 35px;
+}
+
+.send-button {
+  margin-left: 10px;
+  font-size: 14px;
+  height: 35px;
 }
