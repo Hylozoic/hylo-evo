@@ -117,4 +117,4 @@ export function isPromise (value) {
   return value && typeof value.then === 'function'
 }
 
-export const pluralize = (count, word) => `${count} ${word}${count === 1 ? '' : 's'}`
+export const pluralize = (count, word) => `${count.toLocaleString()} ${word}${count === 1 ? '' : 's'}`
