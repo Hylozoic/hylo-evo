@@ -354,7 +354,7 @@ export function ActionsBar ({id,
           id='announcement-tt' />
       </span>}
       {showAnnouncementModal && <SendAnnouncementModal
-        closeModal={() => setPostType(null)}
+        closeModal={toggleAnnouncementModal}
         save={save}
       />}
 
