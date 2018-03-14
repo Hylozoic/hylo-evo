@@ -13,8 +13,10 @@ export const CLEAR_LINK_PREVIEW = `${MODULE_NAME}/CLEAR_LINK_PREVIEW`
 
 // Actions
 
-export function createPost (post, topic) {
-  const { type, title, details, communities, linkPreview, imageUrls, fileUrls } = post
+export function createPost (post) {
+  const {
+    type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames
+  } = post
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
@@ -27,7 +29,8 @@ export function createPost (post, topic) {
         $linkPreviewId: String,
         $communityIds: [String],
         $imageUrls: [String],
-        $fileUrls: [String]
+        $fileUrls: [String],
+        $topicNames: [String]
       ) {
         createPost(data: {
           type: $type,
@@ -36,7 +39,8 @@ export function createPost (post, topic) {
           linkPreviewId: $linkPreviewId,
           communityIds: $communityIds,
           imageUrls: $imageUrls,
-          fileUrls: $fileUrls
+          fileUrls: $fileUrls,
+          topicNames: $topicNames
         }) {
           id
           type
@@ -69,18 +73,20 @@ export function createPost (post, topic) {
         linkPreviewId,
         communityIds,
         imageUrls,
-        fileUrls
+        fileUrls,
+        topicNames
       }
     },
     meta: {
-      extractModel: 'Post',
-      topic
+      extractModel: 'Post'
     }
   }
 }
 
 export function updatePost (post) {
-  const { id, type, title, details, communities, linkPreview, imageUrls, fileUrls } = post
+  const {
+    id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames
+  } = post
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
@@ -94,7 +100,8 @@ export function updatePost (post) {
         $linkPreviewId: String,
         $communityIds: [String],
         $imageUrls: [String],
-        $fileUrls: [String]
+        $fileUrls: [String],
+        $topicNames: [String]
       ) {
         updatePost(id: $id, data: {
           type: $type,
@@ -103,7 +110,8 @@ export function updatePost (post) {
           linkPreviewId: $linkPreviewId,
           communityIds: $communityIds,
           imageUrls: $imageUrls,
-          fileUrls: $fileUrls
+          fileUrls: $fileUrls,
+          topicNames: $topicNames
         }) {
           id
           type
@@ -133,7 +141,8 @@ export function updatePost (post) {
         linkPreviewId,
         communityIds,
         imageUrls,
-        fileUrls
+        fileUrls,
+        topicNames
       }
     },
     meta: {

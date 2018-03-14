@@ -9,6 +9,7 @@ import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
+import TopicSelector from 'components/TopicSelector'
 import LinkPreview from './LinkPreview'
 import ChangeImageButton from 'components/ChangeImageButton'
 import AttachmentManager from './AttachmentManager'
@@ -197,8 +198,9 @@ export default class PostEditor extends React.Component {
     const { editing, createPost, updatePost, onClose, goToPost, images, files } = this.props
     const { id, type, title, communities, linkPreview } = this.state.post
     const details = this.editor.getContentHTML()
+    const topicNames = this.topicSelector.getSelected().map(t => t.name)
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames
     }
     const saveFunc = editing ? updatePost : createPost
     saveFunc(postToSave).then(editing ? onClose : goToPost)
@@ -266,9 +268,16 @@ export default class PostEditor extends React.Component {
       <AttachmentManager postId={id || 'new'} type='image' />
       <AttachmentManager postId={id || 'new'} type='file' />
       <div styleName='footer'>
-        <div styleName='postIn'>
-          <div styleName='postIn-label'>Post in</div>
-          <div styleName='postIn-communities'>
+        <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Topics</div>
+          <div styleName='footerSection-communities'>
+            <TopicSelector
+              ref={component => { this.topicSelector = component && component.getWrappedInstance() }} />
+          </div>
+        </div>
+        <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Post in</div>
+          <div styleName='footerSection-communities'>
             <CommunitiesSelector
               options={communityOptions}
               selected={communities}
