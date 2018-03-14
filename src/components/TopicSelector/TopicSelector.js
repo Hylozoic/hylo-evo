@@ -2,6 +2,8 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import TagInput from 'components/TagInput'
 import styles from './TopicSelector.scss'
+import { isEmpty } from 'lodash/fp'
+import { validateTopicName } from 'hylo-utils/validators'
 
 export default class TopicSelector extends Component {
   static propTypes = {
@@ -17,12 +19,17 @@ export default class TopicSelector extends Component {
   }
 
   static defaultState = {
-    selected: []
+    selected: [],
+    input: ''
   }
 
   constructor (props) {
     super(props)
     this.state = TopicSelector.defaultState
+  }
+
+  componentDidMount() {
+    
   }
 
   getSelected = () => {
@@ -34,7 +41,8 @@ export default class TopicSelector extends Component {
   }
 
   handleInputChange = input => {
-    if (input && input.length > 0) {
+    this.setState({input})
+    if (!isEmpty(input)) {
       this.props.findTopics(input)
     } else {
       this.props.clearTopics()
@@ -56,13 +64,17 @@ export default class TopicSelector extends Component {
 
   render () {
     const { placeholder, readOnly, topicResults } = this.props
-    const { selected } = this.state
+    const { selected, input } = this.state
+
+    const suggestions = !validateTopicName(input)
+      ? [{id: -1, name: input}].concat(topicResults)
+      : topicResults
 
     return (
       <TagInput
         placeholder={placeholder}
         tags={selected}
-        suggestions={topicResults}
+        suggestions={suggestions}
         handleInputChange={this.handleInputChange}
         handleAddition={this.handleAddition}
         handleDelete={this.handleDelete}
