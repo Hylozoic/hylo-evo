@@ -51,5 +51,6 @@ Post.fields = {
   endsAt: attr(),
   fulfilledAt: attr(),
   votesTotal: attr(),
-  myVote: attr()
+  myVote: attr(),
+  topics: many('Topic')
 }

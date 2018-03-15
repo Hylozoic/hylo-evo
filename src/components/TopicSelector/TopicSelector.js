@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import TagInput from 'components/TagInput'
 import styles from './TopicSelector.scss'
@@ -6,13 +5,6 @@ import { isEmpty } from 'lodash/fp'
 import { validateTopicName } from 'hylo-utils/validators'
 
 export default class TopicSelector extends Component {
-  static propTypes = {
-    placeholder: PropTypes.string,
-    selected: PropTypes.array,
-    options: PropTypes.array.isRequired,
-    onChange: PropTypes.func
-  }
-
   static defaultProps = {
     placeholder: 'Type topic name...',
     selected: []
@@ -28,8 +20,18 @@ export default class TopicSelector extends Component {
     this.state = TopicSelector.defaultState
   }
 
-  componentDidMount() {
-    
+  componentDidMount () {
+    this.setState({
+      selected: this.props.selectedTopics
+    })
+  }
+
+  componentDidUpdate (prevProps) {
+    if (prevProps.selectedTopics !== this.props.selectedTopics) {
+      this.setState({
+        selected: this.props.selectedTopics
+      })
+    }
   }
 
   getSelected = () => {

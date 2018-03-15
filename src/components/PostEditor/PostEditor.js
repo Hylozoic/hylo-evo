@@ -215,7 +215,7 @@ export default class PostEditor extends React.Component {
 
   render () {
     const { titlePlaceholder, valid, post } = this.state
-    const { id, title, details, communities, linkPreview } = post
+    const { id, title, details, communities, linkPreview, topics } = post
     const {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
@@ -272,6 +272,7 @@ export default class PostEditor extends React.Component {
           <div styleName='footerSection-label'>Topics</div>
           <div styleName='footerSection-communities'>
             <TopicSelector
+              selectedTopics={topics}
               ref={component => { this.topicSelector = component && component.getWrappedInstance() }} />
           </div>
         </div>

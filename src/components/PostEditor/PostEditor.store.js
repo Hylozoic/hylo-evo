@@ -131,6 +131,10 @@ export function updatePost (post) {
             url
             position
           }
+          topics {
+            id
+            name
+          }
         }
       }`,
       variables: {

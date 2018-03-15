@@ -65,6 +65,12 @@ export const getPostFieldsFragment = withComments => `
     community {
       id
     }
+  }
+  topics {
+    id
+    name
+    postsTotal
+    followersTotal
   }`
 
 export default function fetchPost (id, opts = {}) {

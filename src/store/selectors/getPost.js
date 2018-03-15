@@ -28,7 +28,8 @@ export const presentPost = (post, communityId) => {
     commenters: post.commenters.toModelArray(),
     communities: post.communities.toModelArray(),
     fileAttachments: post.attachments.filter(a => a.type === 'file').toModelArray(),
-    pinned
+    pinned,
+    topics: post.topics.toModelArray()
   }
 }
 
