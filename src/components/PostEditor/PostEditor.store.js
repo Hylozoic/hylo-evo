@@ -18,6 +18,9 @@ export const SHOW_ANNOUNCEMENT_CONFIRMATION = `${MODULE_NAME}/SHOW_ANNOUNCEMENT_
 
 export function createPost (post, topic) {
   const { type, title, details, communities, linkPreview, imageUrls, fileUrls, sendAnnouncement } = post
+
+  console.log('createPost', post)
+
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
@@ -30,7 +33,8 @@ export function createPost (post, topic) {
         $linkPreviewId: String,
         $communityIds: [String],
         $imageUrls: [String],
-        $fileUrls: [String]
+        $fileUrls: [String],
+        $announcement: Boolean
       ) {
         createPost(data: {
           type: $type,
@@ -39,7 +43,8 @@ export function createPost (post, topic) {
           linkPreviewId: $linkPreviewId,
           communityIds: $communityIds,
           imageUrls: $imageUrls,
-          fileUrls: $fileUrls
+          fileUrls: $fileUrls,
+          announcement: $announcement
         }) {
           id
           type
@@ -73,7 +78,7 @@ export function createPost (post, topic) {
         communityIds,
         imageUrls,
         fileUrls,
-        sendAnnouncement
+        announcement: sendAnnouncement
       }
     },
     meta: {
