@@ -21,17 +21,24 @@ export default class TopicSelector extends Component {
   }
 
   componentDidMount () {
-    this.setState({
-      selected: this.props.selectedTopics
-    })
+    this.updateSelected()
   }
 
   componentDidUpdate (prevProps) {
-    if (prevProps.selectedTopics !== this.props.selectedTopics) {
-      this.setState({
-        selected: this.props.selectedTopics
-      })
+    if (prevProps.selectedTopics !== this.props.selectedTopics ||
+      prevProps.detailsTopics !== this.props.detailsTopics) {
+      this.updateSelected()
     }
+  }
+
+  updateSelected () {
+    console.log('updating selected')
+    console.log('selectedTopics', this.props.selectedTopics)
+    console.log('detailsTopics', this.props.detailsTopics)
+    console.log('concat slice', this.props.selectedTopics.concat(this.props.detailsTopics).slice(0, 3))
+    this.setState({
+      selected: this.props.selectedTopics.concat(this.props.detailsTopics).slice(0, 3)
+    })
   }
 
   getSelected = () => {
@@ -71,6 +78,8 @@ export default class TopicSelector extends Component {
     const suggestions = !validateTopicName(input)
       ? [{id: -1, name: input}].concat(topicResults)
       : topicResults
+
+    console.log('selected', selected)
 
     return (
       <TagInput

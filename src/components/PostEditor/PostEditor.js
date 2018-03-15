@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { get } from 'lodash/fp'
+import { get, isEqual } from 'lodash/fp'
 import cx from 'classnames'
 import styles from './PostEditor.scss'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
@@ -14,6 +14,8 @@ import LinkPreview from './LinkPreview'
 import ChangeImageButton from 'components/ChangeImageButton'
 import AttachmentManager from './AttachmentManager'
 import { uploadSettings } from './AttachmentManager/AttachmentManager'
+import cheerio from 'cheerio'
+import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
@@ -64,7 +66,8 @@ export default class PostEditor extends React.Component {
   buildStateFromProps = ({ editing, loading, currentCommunity, post, topic }) => {
     const defaultPostWithCommunitiesAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
       communities: currentCommunity ? [currentCommunity] : [],
-      topics: topic ? [topic] : []
+      topics: topic ? [topic] : [],
+      detailsTopics: []
     })
 
     const currentPost = post || defaultPostWithCommunitiesAndTopic
@@ -154,7 +157,11 @@ export default class PostEditor extends React.Component {
   }
 
   handleDetailsChange = (editorState, contentChanged) => {
-    if (contentChanged) this.setLinkPreview(editorState.getCurrentContent())
+    if (contentChanged) {
+      const contentState = editorState.getCurrentContent()
+      this.setLinkPreview(contentState)
+      this.updateTopics(contentState)
+    }
   }
 
   setLinkPreview = (contentState) => {
@@ -164,6 +171,20 @@ export default class PostEditor extends React.Component {
     if (linkPreviewStatus === 'invalid' || linkPreviewStatus === 'removed') return
     if (linkPreview) return
     pollingFetchLinkPreview(contentStateToHTML(contentState))
+  }
+
+  updateTopics = (contentState) => {
+    const html = contentStateToHTML(contentState)
+    const $ = cheerio.load(html)
+    var topicNames = []
+    $(`a[data-entity-type=${TOPIC_ENTITY_TYPE}]`).map((i, el) =>
+      topicNames.push($(el).text().replace('#', '')))
+    const hasChanged = !isEqual(this.state.detailsTopics, topicNames)
+    if (hasChanged) {
+      this.setState({
+        detailsTopics: topicNames.map(tn => ({name: tn, id: tn}))
+      })
+    }
   }
 
   removeLinkPreview = () => {
@@ -211,7 +232,7 @@ export default class PostEditor extends React.Component {
   }
 
   render () {
-    const { titlePlaceholder, valid, post } = this.state
+    const { titlePlaceholder, valid, post, detailsTopics = [] } = this.state
     const { id, title, details, communities, linkPreview, topics } = post
     const {
       onClose, initialPrompt, detailsPlaceholder,
@@ -270,6 +291,7 @@ export default class PostEditor extends React.Component {
           <div styleName='footerSection-communities'>
             <TopicSelector
               selectedTopics={topics}
+              detailsTopics={detailsTopics}
               ref={component => { this.topicSelector = component && component.getWrappedInstance() }} />
           </div>
         </div>
