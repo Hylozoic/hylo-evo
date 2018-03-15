@@ -61,16 +61,13 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ editing, loading, currentCommunity, post, topicName }) => {
-    const defaultPost = topicName
-      ? {...PostEditor.defaultProps.post, details: `<p><a data-entity-type="#mention">#${topicName}</a> </p>`}
-      : PostEditor.defaultProps.post
-
-    const defaultPostWithCommunities = Object.assign({}, defaultPost, {
-      communities: currentCommunity ? [currentCommunity] : []
+  buildStateFromProps = ({ editing, loading, currentCommunity, post, topic }) => {
+    const defaultPostWithCommunitiesAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
+      communities: currentCommunity ? [currentCommunity] : [],
+      topics: topic ? [topic] : []
     })
 
-    const currentPost = post || defaultPostWithCommunities
+    const currentPost = post || defaultPostWithCommunitiesAndTopic
     return {
       post: currentPost,
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
