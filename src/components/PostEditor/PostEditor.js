@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { get, isEqual } from 'lodash/fp'
+import { get, isEqual, throttle } from 'lodash/fp'
 import cx from 'classnames'
 import styles from './PostEditor.scss'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
@@ -173,7 +173,7 @@ export default class PostEditor extends React.Component {
     pollingFetchLinkPreview(contentStateToHTML(contentState))
   }
 
-  updateTopics = (contentState) => {
+  updateTopics = throttle(2000, (contentState) => {
     const html = contentStateToHTML(contentState)
     const $ = cheerio.load(html)
     var topicNames = []
@@ -185,7 +185,7 @@ export default class PostEditor extends React.Component {
         detailsTopics: topicNames.map(tn => ({name: tn, id: tn}))
       })
     }
-  }
+  })
 
   removeLinkPreview = () => {
     this.props.removeLinkPreview()

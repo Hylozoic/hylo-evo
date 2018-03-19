@@ -32,13 +32,11 @@ export default class TopicSelector extends Component {
   }
 
   updateSelected () {
-    console.log('updating selected')
-    console.log('selectedTopics', this.props.selectedTopics)
-    console.log('detailsTopics', this.props.detailsTopics)
-    console.log('concat slice', this.props.selectedTopics.concat(this.props.detailsTopics).slice(0, 3))
-    this.setState({
-      selected: this.props.selectedTopics.concat(this.props.detailsTopics).slice(0, 3)
-    })
+    if (!this.state.topicsEdited) {
+      this.setState({
+        selected: this.props.selectedTopics.concat(this.props.detailsTopics).slice(0, 3)
+      })
+    }
   }
 
   getSelected = () => {
@@ -67,7 +65,8 @@ export default class TopicSelector extends Component {
 
   handleDelete = topic => {
     this.setState({
-      selected: this.state.selected.filter(t => t.name !== topic.name)
+      selected: this.state.selected.filter(t => t.name !== topic.name),
+      topicsEdited: true
     })
   }
 
@@ -85,7 +84,7 @@ export default class TopicSelector extends Component {
       <TagInput
         placeholder={placeholder}
         tags={selected}
-        suggestions={suggestions}
+        suggestions={!isEmpty(input) && suggestions}
         handleInputChange={this.handleInputChange}
         handleAddition={this.handleAddition}
         handleDelete={this.handleDelete}
