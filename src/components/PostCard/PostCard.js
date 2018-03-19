@@ -67,6 +67,7 @@ export default class PostCard extends React.Component {
         slug={slug}
         id={post.id}
         pinned={post.pinned}
+        topics={post.topics}
         highlightProps={highlightProps} />
       <PostImage postId={post.id} styleName='image' />
       <PostBody title={post.title}

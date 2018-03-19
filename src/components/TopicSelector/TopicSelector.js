@@ -75,10 +75,8 @@ export default class TopicSelector extends Component {
     const { selected, input } = this.state
 
     const suggestions = !validateTopicName(input)
-      ? [{id: -1, name: input}].concat(topicResults)
+      ? [{id: input, name: input}].concat(topicResults)
       : topicResults
-
-    console.log('selected', selected)
 
     return (
       <TagInput
