@@ -22,6 +22,7 @@ const ICON_NAMES = [
   'Flag',
   'Google',
   'Home',
+  'Invite',
   'LinkedIn',
   'Location',
   'Members',
