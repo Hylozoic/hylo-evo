@@ -195,8 +195,6 @@ export default class PostEditor extends React.Component {
       communities.length > 0)
   }
 
-  setValid = () => this.setState({valid: this.isValid()})
-
   save = () => {
     const { editing, createPost, updatePost, onClose, goToPost, images, files, setPostType, announcementSelected } = this.props
     const { id, type, title, communities, linkPreview } = this.state.post
