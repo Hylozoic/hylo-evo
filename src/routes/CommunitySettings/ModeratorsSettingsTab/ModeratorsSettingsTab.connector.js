@@ -27,7 +27,7 @@ export function mapDispatchToProps (dispatch, props) {
 
   return {
     addModerator: id => dispatch(addModerator(id, communityId)),
-    removeModerator: id => dispatch(removeModerator(id, communityId)),
+    removeModerator: (id, isRemoveFromCommunity) => dispatch(removeModerator(id, communityId, isRemoveFromCommunity)),
     fetchModeratorSuggestions: autocomplete => dispatch(fetchModeratorSuggestions(communityId, autocomplete)),
     clearModeratorSuggestions: () => dispatch(clearModeratorSuggestions())
   }
