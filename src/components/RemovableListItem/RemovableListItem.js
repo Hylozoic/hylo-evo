@@ -4,8 +4,10 @@ import { DEFAULT_AVATAR } from 'store/models/Community'
 import RoundImage from 'components/RoundImage'
 import './RemovableListItem.scss'
 
-export default function RemovableListItem ({ item, removeItem, square, size, confirmMessage, url }) {
+export default function RemovableListItem ({ item, removeItem, skipConfirm = false, square, size, confirmMessage, url }) {
   const remove = () => {
+    if (skipConfirm) return removeItem(item.id)
+
     confirmMessage = confirmMessage || `Are you sure you want to remove ${item.name}?`
     if (window.confirm(confirmMessage)) {
       removeItem(item.id)

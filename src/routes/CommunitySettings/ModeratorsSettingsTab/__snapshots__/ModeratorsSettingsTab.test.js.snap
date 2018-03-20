@@ -107,52 +107,78 @@ exports[`AddModerator renders correctly, and transitions from not adding to addi
 </div>
 `;
 
-exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModerator 1`] = `
+exports[`ModeratorsList renders correctly 1`] = `
 <div>
   <div>
     <RemovableListItem
-      confirmMessage="Are you sure you want to remove undefined's moderator powers?"
       item={
         Object {
           "id": 1,
         }
       }
       key="1"
-      url="/m/1"
+      skipConfirm={true}
+      url="/c/foocommunity/m/1"
     />
     <RemovableListItem
-      confirmMessage="Are you sure you want to remove undefined's moderator powers?"
       item={
         Object {
           "id": 2,
         }
       }
       key="2"
-      url="/m/2"
+      skipConfirm={true}
+      url="/c/foocommunity/m/2"
     />
     <RemovableListItem
-      confirmMessage="Are you sure you want to remove undefined's moderator powers?"
       item={
         Object {
           "id": 3,
         }
       }
       key="3"
-      url="/m/3"
+      skipConfirm={true}
+      url="/c/foocommunity/m/3"
     />
     <RemovableListItem
-      confirmMessage="Are you sure you want to remove undefined's moderator powers?"
       item={
         Object {
           "id": 4,
         }
       }
       key="4"
-      url="/m/4"
+      skipConfirm={true}
+      url="/c/foocommunity/m/4"
     />
   </div>
   <AddModerator />
 </div>
+`;
+
+exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModerator 1`] = `
+Array [
+  <ModeratorsList
+    key="mList"
+    moderators={
+      Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ]
+    }
+    removeItem={[Function]}
+  />,
+  "",
+]
 `;
 
 exports[`ModeratorsSettingsTab renders loading if no moderators 1`] = `<Loading />`;
