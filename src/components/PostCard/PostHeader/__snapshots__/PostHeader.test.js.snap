@@ -1,5 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`TopicsLine matches last snapshot 1`] = `
+<div
+  data-stylename="topicsLine newLineForTopics"
+>
+  <Link
+    data-stylename="topic"
+    key="one"
+    replace={false}
+    to="/c/hay/one"
+  >
+    #
+    one
+  </Link>
+  <Link
+    data-stylename="topic"
+    key="two"
+    replace={false}
+    to="/c/hay/two"
+  >
+    #
+    two
+  </Link>
+</div>
+`;
+
 exports[`matches snapshot 1`] = `
 <div
   data-stylename="header"
