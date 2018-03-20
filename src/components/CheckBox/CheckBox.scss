@@ -1,5 +1,6 @@
 .checkbox {
   visibility: hidden;
+  width: 0;
 }
 
 .label {
@@ -7,9 +8,15 @@
   cursor: pointer;
 }
 
+.label-left {
+  padding-left: 8px;
+}
+
 .icon {
   color: $color-caribbean-green;
   &:hover {
     color: $color-gossamer;
   }
+  vertical-align: sub;
+  padding-right: 8px;
 }

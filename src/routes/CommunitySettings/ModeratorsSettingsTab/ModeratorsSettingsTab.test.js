@@ -1,4 +1,4 @@
-import ModeratorsSettingsTab, { AddModerator } from './ModeratorsSettingsTab'
+import ModeratorsSettingsTab, { AddModerator, ModeratorsList } from './ModeratorsSettingsTab'
 import { shallow } from 'enzyme'
 import React from 'react'
 import { keyMap } from 'util/textInput'
@@ -9,6 +9,13 @@ describe('ModeratorsSettingsTab', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
+  it('clears moderators on unmount', () => {
+    const clearModeratorSuggestions = jest.fn()
+    const wrapper = shallow(<ModeratorsSettingsTab clearModeratorSuggestions={clearModeratorSuggestions} />)
+    wrapper.unmount()
+    expect(clearModeratorSuggestions).toHaveBeenCalled()
+  })
+
   it('renders a list of RemovableListItems and AddModerator', () => {
     const moderators = [
       {id: 1},
@@ -16,7 +23,43 @@ describe('ModeratorsSettingsTab', () => {
       {id: 3},
       {id: 4}
     ]
+
     const wrapper = shallow(<ModeratorsSettingsTab moderators={moderators} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('calls removeModerator', () => {
+    const props = {
+      moderators: [
+        {id: 1},
+        {id: 2},
+        {id: 3},
+        {id: 4}
+      ],
+      slug: 'foocommunity',
+      removeModerator: jest.fn()
+    }
+
+    const wrapper = shallow(<ModeratorsSettingsTab {...props} />)
+    wrapper.setState({moderatorToRemove: 3, isRemoveFromCommunity: false})
+    wrapper.instance().submitRemoveModerator()
+    expect(props.removeModerator).toHaveBeenCalledWith(3, false)
+  })
+})
+
+describe('ModeratorsList', () => {
+  it('renders correctly', () => {
+    const props = {
+      moderators: [
+        {id: 1},
+        {id: 2},
+        {id: 3},
+        {id: 4}
+      ],
+      slug: 'foocommunity'
+    }
+
+    const wrapper = shallow(<ModeratorsList {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

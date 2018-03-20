@@ -7,6 +7,8 @@ import RemovableListItem from 'components/RemovableListItem'
 import { isEmpty, get } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
 import { personUrl } from 'util/index'
+import ModalDialog from 'components/ModalDialog'
+import CheckBox from 'components/CheckBox'
 
 const { array, func, string } = PropTypes
 
@@ -18,40 +20,62 @@ export default class ModeratorsSettingsTab extends Component {
     slug: string
   }
 
+  state = {
+    modalVisible: false
+  }
+
   componentWillUnmount () {
     this.props.clearModeratorSuggestions()
   }
 
+  submitRemoveModerator = () => {
+    this.props.removeModerator(this.state.moderatorToRemove, this.state.isRemoveFromCommunity)
+  }
+
   render () {
     const {
-      moderators,
-      removeModerator,
-      fetchModeratorSuggestions,
-      addModerator,
-      moderatorSuggestions,
-      clearModeratorSuggestions,
-      slug
+      moderators
     } = this.props
+
+    const {
+      modalVisible,
+      isRemoveFromCommunity
+    } = this.state
 
     if (!moderators) return <Loading />
 
-    return <div>
-      <div>
-        {moderators.map(m =>
-          <RemovableListItem
-            item={m}
-            url={personUrl(m.id, slug)}
-            removeModerator={removeModerator}
-            confirmMessage={`Are you sure you want to remove ${m.name}'s moderator powers?`}
-            key={m.id} />)}
-      </div>
-      <AddModerator
-        fetchModeratorSuggestions={fetchModeratorSuggestions}
-        addModerator={addModerator}
-        moderatorSuggestions={moderatorSuggestions}
-        clearModeratorSuggestions={clearModeratorSuggestions} />
-    </div>
+    return [<ModeratorsList key='mList' {...this.props} removeItem={(id) => this.setState({modalVisible: true, moderatorToRemove: id})} />,
+      modalVisible && <ModalDialog key='remove-moderator-dialog'
+        closeModal={() => this.setState({modalVisible: false})}
+        showModalTitle={false}
+        submitButtonAction={this.submitRemoveModerator}
+        submitButtonText='Remove' >
+        <div styleName='content'>
+          <div styleName='modal-text'>Are you sure you wish to remove this moderator?</div>
+          <CheckBox checked={isRemoveFromCommunity} label='Remove from community as well' onChange={value => this.setState({isRemoveFromCommunity: value})} />
+        </div>
+      </ModalDialog>
+    ]
   }
+}
+
+export function ModeratorsList ({moderators, slug, removeItem, fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions}) {
+  return <div>
+    <div>
+      {moderators.map(m =>
+        <RemovableListItem
+          item={m}
+          url={personUrl(m.id, slug)}
+          skipConfirm
+          removeItem={removeItem}
+          key={m.id} />)}
+    </div>
+    <AddModerator
+      fetchModeratorSuggestions={fetchModeratorSuggestions}
+      addModerator={addModerator}
+      moderatorSuggestions={moderatorSuggestions}
+      clearModeratorSuggestions={clearModeratorSuggestions} />
+  </div>
 }
 
 export class AddModerator extends Component {

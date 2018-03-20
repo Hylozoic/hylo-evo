@@ -43,12 +43,16 @@ export default class ModalDialog extends Component {
     submitButtonText: string,
 
     // Uses alternate format with green bolded text, +/- an icon
-    useNotificationFormat: bool
+    useNotificationFormat: bool,
+
+    // Default: true
+    showModalTitle: bool
   }
 
   static defaultProps = {
     closeOnSubmit: true,
     modalTitle: 'Notice',
+    showModalTitle: true,
     showCancelButton: true,
     showSubmitButton: true,
     submitButtonIsDisabled: () => false,
@@ -75,6 +79,7 @@ export default class ModalDialog extends Component {
       showSubmitButton,
       submitButtonIsDisabled,
       submitButtonText,
+      showModalTitle,
       useNotificationFormat
     } = this.props
 
@@ -98,9 +103,9 @@ export default class ModalDialog extends Component {
         <div styleName='title-block'>
           {useNotificationFormat &&
             <Icon green name={notificationIconName} styleName='notification-icon' />}
-          <h1 styleName={useNotificationFormat ? 'notification-title' : ''}>
+          {showModalTitle && <h1 styleName={useNotificationFormat ? 'notification-title' : ''}>
             {modalTitle}
-          </h1>
+          </h1>}
         </div>
 
         <div styleName='content'>
