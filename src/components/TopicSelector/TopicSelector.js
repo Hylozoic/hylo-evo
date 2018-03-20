@@ -7,12 +7,14 @@ import { validateTopicName } from 'hylo-utils/validators'
 export default class TopicSelector extends Component {
   static defaultProps = {
     placeholder: 'Type topic name...',
-    selected: []
+    selectedTopics: [],
+    detailsTopics: []
   }
 
   static defaultState = {
     selected: [],
-    input: ''
+    input: '',
+    topicsEdited: false
   }
 
   constructor (props) {
@@ -75,7 +77,6 @@ export default class TopicSelector extends Component {
   render () {
     const { placeholder, readOnly, topicResults } = this.props
     const { selected, input } = this.state
-
     const suggestions = !validateTopicName(input)
       ? [{id: input, name: input}].concat(topicResults)
       : topicResults
