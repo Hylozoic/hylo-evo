@@ -4,35 +4,41 @@ exports[`matches snapshot 1`] = `
 <div
   data-stylename="header"
 >
-  <Avatar
-    avatarUrl="foo.png"
-    data-stylename="avatar"
-    url="/m/123"
-  />
   <div
-    data-stylename="headerText"
+    data-stylename="headerMainRow"
   >
-    <Highlight
-      component="span"
-      highlightClassName="highlight"
+    <Avatar
+      avatarUrl="foo.png"
+      data-stylename="avatar"
+      url="/m/123"
+    />
+    <div
+      data-stylename="headerText"
     >
-      <Link
-        data-stylename="userName"
-        replace={false}
-        to="/m/123"
+      <Highlight
+        component="span"
+        highlightClassName="highlight"
       >
-        JJ
-      </Link>
-    </Highlight>
-    <div>
-      <span
-        data-stylename="timestamp"
-      />
+        <Link
+          data-stylename="userName"
+          replace={false}
+          to="/m/123"
+        >
+          JJ
+        </Link>
+      </Highlight>
+      <div
+        data-stylename="timestampRow"
+      >
+        <span
+          data-stylename="timestamp"
+        />
+      </div>
     </div>
+    <div
+      data-stylename="upperRight"
+    />
   </div>
-  <div
-    data-stylename="upperRight"
-  />
 </div>
 `;
 
@@ -40,52 +46,59 @@ exports[`matches snapshot 2`] = `
 <div
   data-stylename="header"
 >
-  <Avatar
-    avatarUrl="foo.png"
-    data-stylename="avatar"
-    url="/m/123"
-  />
   <div
-    data-stylename="headerText"
+    data-stylename="headerMainRow"
   >
-    <Highlight
-      component="span"
-      highlightClassName="highlight"
+    <Avatar
+      avatarUrl="foo.png"
+      data-stylename="avatar"
+      url="/m/123"
+    />
+    <div
+      data-stylename="headerText"
     >
-      <Link
-        data-stylename="userName"
-        replace={false}
-        to="/m/123"
+      <Highlight
+        component="span"
+        highlightClassName="highlight"
       >
-        JJ
-      </Link>
-    </Highlight>
-    <div>
-      <span
-        data-stylename="timestamp"
+        <Link
+          data-stylename="userName"
+          replace={false}
+          to="/m/123"
+        >
+          JJ
+        </Link>
+      </Highlight>
+      <div
+        data-stylename="timestampRow"
       >
         <span
-          data-stylename="spacer"
-        >
-          •
+          data-stylename="timestamp"
+        />
+        <span>
+          <span
+            data-stylename="spacer"
+          >
+            •
+          </span>
+          <Link
+            data-stylename="context"
+            replace={false}
+            to="/c/fooc"
+          >
+            FooC
+          </Link>
         </span>
-      </span>
-      <Link
-        data-stylename="context"
-        replace={false}
-        to="/c/fooc"
-      >
-        FooC
-      </Link>
+      </div>
     </div>
-  </div>
-  <div
-    data-stylename="upperRight"
-  >
-    <PostLabel
-      data-stylename="label"
-      type="request"
-    />
+    <div
+      data-stylename="upperRight"
+    >
+      <PostLabel
+        data-stylename="label"
+        type="request"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -94,73 +107,80 @@ exports[`matches snapshot 3`] = `
 <div
   data-stylename="header"
 >
-  <Avatar
-    avatarUrl="foo.png"
-    data-stylename="avatar"
-    url="/m/123"
-  />
   <div
-    data-stylename="headerText"
+    data-stylename="headerMainRow"
   >
-    <Highlight
-      component="span"
-      highlightClassName="highlight"
+    <Avatar
+      avatarUrl="foo.png"
+      data-stylename="avatar"
+      url="/m/123"
+    />
+    <div
+      data-stylename="headerText"
     >
-      <Link
-        data-stylename="userName"
-        replace={false}
-        to="/m/123"
+      <Highlight
+        component="span"
+        highlightClassName="highlight"
       >
-        JJ
-      </Link>
-    </Highlight>
-    <div>
-      <span
-        data-stylename="timestamp"
+        <Link
+          data-stylename="userName"
+          replace={false}
+          to="/m/123"
+        >
+          JJ
+        </Link>
+      </Highlight>
+      <div
+        data-stylename="timestampRow"
       >
         <span
-          data-stylename="spacer"
-        >
-          •
-        </span>
-      </span>
-      <Link
-        data-stylename="context"
-        replace={false}
-        to="/c/fooc"
-      >
-        FooC
-      </Link>
-    </div>
-  </div>
-  <div
-    data-stylename="upperRight"
-  >
-    <PostLabel
-      data-stylename="label"
-      type="request"
-    />
-    <Dropdown
-      items={
-        Array [
-          Object {
-            "icon": "Edit",
-            "label": "Edit",
-            "onClick": [Function],
-          },
-          Object {
-            "icon": "Trash",
-            "label": "Delete",
-            "onClick": [Function],
-          },
-        ]
-      }
-      toggleChildren={
-        <Icon
-          name="More"
+          data-stylename="timestamp"
         />
-      }
-    />
+        <span>
+          <span
+            data-stylename="spacer"
+          >
+            •
+          </span>
+          <Link
+            data-stylename="context"
+            replace={false}
+            to="/c/fooc"
+          >
+            FooC
+          </Link>
+        </span>
+      </div>
+    </div>
+    <div
+      data-stylename="upperRight"
+    >
+      <PostLabel
+        data-stylename="label"
+        type="request"
+      />
+      <Dropdown
+        items={
+          Array [
+            Object {
+              "icon": "Edit",
+              "label": "Edit",
+              "onClick": [Function],
+            },
+            Object {
+              "icon": "Trash",
+              "label": "Delete",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
+      />
+    </div>
   </div>
 </div>
 `;

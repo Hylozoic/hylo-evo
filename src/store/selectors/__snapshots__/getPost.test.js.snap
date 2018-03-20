@@ -8,6 +8,7 @@ SessionBoundModel {
     "followers": undefined,
     "id": 31,
     "postMemberships": undefined,
+    "topics": undefined,
   },
 }
 `;
@@ -22,5 +23,6 @@ Object {
   "id": 324,
   "linkPreview": undefined,
   "pinned": true,
+  "topics": Array [],
 }
 `;
