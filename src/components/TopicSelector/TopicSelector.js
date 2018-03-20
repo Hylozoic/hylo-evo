@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import TagInput from 'components/TagInput'
 import styles from './TopicSelector.scss'
-import { isEmpty } from 'lodash/fp'
+import { isEmpty, uniqBy } from 'lodash/fp'
 import { validateTopicName } from 'hylo-utils/validators'
 
 export default class TopicSelector extends Component {
@@ -33,8 +33,10 @@ export default class TopicSelector extends Component {
 
   updateSelected () {
     if (!this.state.topicsEdited) {
+      const selected = uniqBy(t => t.name,
+        this.state.selected.concat(this.props.selectedTopics.concat(this.props.detailsTopics))).slice(0, 3)
       this.setState({
-        selected: this.props.selectedTopics.concat(this.props.detailsTopics).slice(0, 3)
+        selected
       })
     }
   }
@@ -82,12 +84,13 @@ export default class TopicSelector extends Component {
       <TagInput
         placeholder={placeholder}
         tags={selected}
-        suggestions={!isEmpty(input) && suggestions}
+        suggestions={isEmpty(input) ? [] : suggestions}
         handleInputChange={this.handleInputChange}
         handleAddition={this.handleAddition}
         handleDelete={this.handleDelete}
         readOnly={readOnly}
         theme={styles}
+        maxTags={3}
       />
     )
   }
