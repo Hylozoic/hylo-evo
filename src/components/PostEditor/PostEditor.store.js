@@ -19,8 +19,6 @@ export const SHOW_ANNOUNCEMENT_CONFIRMATION = `${MODULE_NAME}/SHOW_ANNOUNCEMENT_
 export function createPost (post, topic) {
   const { type, title, details, communities, linkPreview, imageUrls, fileUrls, sendAnnouncement } = post
 
-  console.log('createPost', post)
-
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
