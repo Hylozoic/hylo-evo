@@ -5,7 +5,9 @@ import reducer, {
   REMOVE_LINK_PREVIEW,
   CLEAR_LINK_PREVIEW,
   defaultState,
-  fetchLinkPreview
+  fetchLinkPreview,
+  setPostType,
+  showAnnouncementConfirmation
 } from './PostEditor.store'
 
 describe('PostEditor store', () => {
@@ -62,5 +64,13 @@ describe('PostEditor store', () => {
         expect(finalState).toMatchSnapshot()
       })
     })
+  })
+  test('setPostType', () => {
+    const type = 'type'
+    expect(setPostType(type)).toMatchSnapshot()
+  })
+  test('showAnnouncementConfirmation', () => {
+    const bool = true
+    expect(showAnnouncementConfirmation(bool)).toMatchSnapshot()
   })
 })

@@ -27,3 +27,17 @@ Object {
   "linkPreviewStatus": "removed",
 }
 `;
+
+exports[`PostEditor store setPostType 1`] = `
+Object {
+  "payload": "type",
+  "type": "PostEditor/SET_POST_TYPE",
+}
+`;
+
+exports[`PostEditor store showAnnouncementConfirmation 1`] = `
+Object {
+  "payload": true,
+  "type": "PostEditor/SHOW_ANNOUNCEMENT_CONFIRMATION",
+}
+`;
