@@ -34,7 +34,7 @@ export function mapStateToProps (state, props) {
   const communityOptions = props.communityOptions ||
     (currentUser && currentUser.memberships.toModelArray().map(m => m.community))
 
-  const myModeratedCommunities = (currentUser && communityOptions.filter(c => currentUser.canModerate(currentCommunity)))
+  const myModeratedCommunities = (currentUser && communityOptions.filter(c => currentUser.canModerate(c)))
   let post = props.post || presentPost(getPost(state, props))
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
