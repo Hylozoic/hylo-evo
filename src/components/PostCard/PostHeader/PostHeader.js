@@ -90,13 +90,13 @@ export default class PostHeader extends PureComponent {
             <span styleName='timestamp'>
               {humanDate(date)}
             </span>
-            {!topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={slug} />}
             {context && <span>
               <span styleName='spacer'>•</span>
               <Link to={context.url} styleName='context'>
                 {context.label}
               </Link>
             </span>}
+            {!topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={slug} />}
           </div>
         </div>
         <div styleName='upperRight'>
@@ -119,7 +119,7 @@ export default class PostHeader extends PureComponent {
 export function TopicsLine ({ topics, slug, className, newLine }) {
   return <div styleName={cx('topicsLine', {'newLineForTopics': newLine})}>
     {!newLine && <span styleName='spacer'>•</span>}
-    {topics.map(t =>
+    {topics.slice(0, 3).map(t =>
       <Link styleName='topic' to={tagUrl(t.name, slug)} key={t.name}>#{t.name}</Link>)}
   </div>
 }
