@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TagInput renders correctly (with min props) 1`] = `
+<div
+  className="root"
+  onClick={[Function]}
+>
+  <ul
+    className="selected"
+  />
+  <div
+    className="search"
+  >
+    <div
+      className="searchInput"
+    >
+      <input
+        className="searchInput"
+        data-stylename=""
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder="Type..."
+        spellCheck={false}
+        type="text"
+      />
+    </div>
+  </div>
+</div>
+`;

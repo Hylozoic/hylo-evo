@@ -76,6 +76,12 @@ posts(
       id
     }
   }
+  topics {
+    id
+    name
+    postsTotal
+    followersTotal
+  }
   }
 }
   }
@@ -168,6 +174,12 @@ posts(
     community {
       id
     }
+  }
+  topics {
+    id
+    name
+    postsTotal
+    followersTotal
   }
   }
 }

@@ -63,7 +63,8 @@ describe('PostEditor', () => {
           communities: [
             {id: '1', name: 'test community 1'},
             {id: '2', name: 'test community 2'}
-          ]
+          ],
+          topicNames: ['design']
         },
         createPost: jest.fn(() => new Promise(() => {}))
       }
@@ -71,12 +72,16 @@ describe('PostEditor', () => {
         getContentHTML: () => props.post.details,
         reset: jest.fn()
       }
+      const topicSelectorMock = {
+        getSelected: () => [{id: 1, name: 'design'}]
+      }
       const communitiesSelectorMock = {
         reset: jest.fn()
       }
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
       testInstance.editor = editorMock
+      testInstance.topicSelector = topicSelectorMock
       testInstance.communitiesSelector = communitiesSelectorMock
       testInstance.save()
       expect(props.createPost.mock.calls).toHaveLength(1)
@@ -95,7 +100,8 @@ describe('PostEditor', () => {
         communities: [
           {id: '1', name: 'test community 1'},
           {id: '2', name: 'test community 2'}
-        ]
+        ],
+        topicNames: ['design']
       },
       updatePost: jest.fn(() => new Promise(() => {})),
       showImagePreviews: true
@@ -116,12 +122,16 @@ describe('PostEditor', () => {
         getContentHTML: () => props.post.details,
         reset: jest.fn()
       }
+      const topicSelectorMock = {
+        getSelected: () => [{id: 1, name: 'design'}]
+      }
       const communitiesSelectorMock = {
         reset: jest.fn()
       }
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
       testInstance.editor = editorMock
+      testInstance.topicSelector = topicSelectorMock
       testInstance.communitiesSelector = communitiesSelectorMock
       testInstance.save()
       expect(props.updatePost.mock.calls).toHaveLength(1)
@@ -195,7 +205,8 @@ describe('PostEditor', () => {
         communities: [
           {id: '1', name: 'test community 1'},
           {id: '2', name: 'test community 2'}
-        ]
+        ],
+        topicNames: ['design']
       },
       updatePost: jest.fn(() => new Promise(() => {}))
     }
@@ -203,12 +214,16 @@ describe('PostEditor', () => {
       getContentHTML: () => props.post.details,
       reset: jest.fn()
     }
+    const topicSelectorMock = {
+      getSelected: () => [{id: 1, name: 'design'}]
+    }
     const communitiesSelectorMock = {
       reset: jest.fn()
     }
     const wrapper = shallow(<PostEditor {...props} />)
     const testInstance = wrapper.instance()
     testInstance.editor = editorMock
+    testInstance.topicSelector = topicSelectorMock
     testInstance.communitiesSelector = communitiesSelectorMock
     testInstance.save()
     expect(props.updatePost.mock.calls).toHaveLength(1)

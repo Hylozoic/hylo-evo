@@ -165,8 +165,10 @@ function WrappedPostHeader ({post, showCommunity, onClose, slug}) {
     close={onClose}
     slug={slug}
     pinned={post.pinned}
+    topics={post.topics}
     styleName='header'
-    id={post.id} />
+    id={post.id}
+    topicsOnNewline />
 }
 
 export function PostTags ({ tags, slug }) {

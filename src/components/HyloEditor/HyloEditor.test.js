@@ -16,7 +16,7 @@ const defaultMinProps = {
 
 function renderComponent (renderFunc, props = {}) {
   return renderFunc(
-    <HyloEditor {...Object.assign({}, props, defaultMinProps)} />
+    <HyloEditor {...Object.assign({}, defaultMinProps, props)} />
   )
 }
 
@@ -72,6 +72,17 @@ describe('HyloEditor', () => {
       const result = wrapper.instance().handleReturn({shiftKey: true})
       expect(submitOnReturnHandler.mock.calls).toHaveLength(0)
       expect(result).toEqual('not-handled')
+    })
+  })
+
+  describe('#handleTopicSearch', () => {
+    it('runs props.findTopics and sets the state', () => {
+      const theSearch = 'awes'
+      const findTopics = jest.fn()
+      const wrapper = renderComponent(mount, { findTopics })
+      wrapper.instance().handleTopicSearch({value: theSearch})
+      expect(findTopics).toHaveBeenCalledWith(theSearch)
+      expect(wrapper.instance().state.topicSearch).toEqual(theSearch)
     })
   })
 })
