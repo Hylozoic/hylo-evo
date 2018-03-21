@@ -520,6 +520,8 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
     </div>
     <ActionsBar
+      communities={Array []}
+      communityCount={0}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -642,6 +644,8 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
     </div>
     <ActionsBar
+      communities={Array []}
+      communityCount={0}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -764,6 +768,8 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
     </div>
     <ActionsBar
+      communities={Array []}
+      communityCount={0}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"

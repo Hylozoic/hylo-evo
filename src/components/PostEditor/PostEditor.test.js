@@ -44,7 +44,7 @@ describe('PostEditor', () => {
     }
     const renderForType = (type) => {
       const props = {
-        post: { type },
+        post: { type, communities: [] },
         titlePlaceholderForPostType
       }
       return shallow(<PostEditor {...props} />)
@@ -168,7 +168,9 @@ describe('PostEditor', () => {
     it('is invalid when required values are missing', () => {
       const props = {
         post: {
-          title: 'valid title'
+          title: 'valid title',
+          communities: [],
+          type: 'Request'
         }
       }
       const testInstance = shallow(<PostEditor {...props} />).instance()
@@ -222,7 +224,7 @@ describe('PostEditor', () => {
     let baseProps, contentStateMock
     beforeEach(() => {
       baseProps = {
-        post: {},
+        post: { communities: [] },
         pollingFetchLinkPreview: jest.fn(),
         clearLinkPreview: jest.fn()
       }
@@ -243,7 +245,8 @@ describe('PostEditor', () => {
     it('should not fetch for linkPreview when a post.linkPreview is present', () => {
       const props = merge(baseProps, {
         post: {
-          linkPreview: {}
+          linkPreview: {},
+          communities: []
         }
       })
       const wrapper = shallow(<PostEditor {...props} />)
