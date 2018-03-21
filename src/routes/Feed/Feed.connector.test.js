@@ -169,7 +169,7 @@ describe('mapDispatchToProps', () => {
 
   describe('fetchTopic', () => {
     it('will call fetchCommunityTopic if communitySlug and topicName are in the url', () => {
-      const dispatch = jest.fn(x => x)
+      const dispatch = jest.fn(x => Promise.resolve(x))
       const props = {
         location: {
           search: '?s=votes&t=offer',

@@ -36,34 +36,7 @@ Object {
 }
 `;
 
-exports[`mapDispatchToProps fetchTopic will call fetchCommunityTopic if communitySlug and topicName are in the url 1`] = `
-Object {
-  "graphql": Object {
-    "query": "query ($communitySlug: String, $topicName: String) {
-  communityTopic(communitySlug: $communitySlug, topicName: $topicName) {
-    id
-    postsTotal
-    followersTotal
-    topic {
-      id
-      name
-    }
-    community {
-      id
-    }
-  }
-}",
-    "variables": Object {
-      "communitySlug": "foo",
-      "topicName": "petitions",
-    },
-  },
-  "meta": Object {
-    "extractModel": "CommunityTopic",
-  },
-  "type": "FETCH_COMMUNITY_TOPIC",
-}
-`;
+exports[`mapDispatchToProps fetchTopic will call fetchCommunityTopic if communitySlug and topicName are in the url 1`] = `Promise {}`;
 
 exports[`mapDispatchToProps fetchTopic will call fetchTopic if only topicName is in the url 1`] = `
 Object {
