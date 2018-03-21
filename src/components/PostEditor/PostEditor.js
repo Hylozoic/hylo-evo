@@ -239,7 +239,7 @@ export default class PostEditor extends React.Component {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
       showImages, addFile, showFiles, setPostType, announcementSelected,
-      canModerate, communityMods
+      canModerate, myModeratedCommunities
     } = this.props
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
       <div styleName='header'>
@@ -315,7 +315,7 @@ export default class PostEditor extends React.Component {
           toggleAnnouncementModal={this.toggleAnnouncementModal}
           showAnnouncementModal={showAnnouncementModal}
           communityCount={post.communities.length}
-          communityMods={communityMods}
+          myModeratedCommunities={myModeratedCommunities}
           communities={post.communities}
         />
       </div>
@@ -338,7 +338,7 @@ export function ActionsBar ({id,
   toggleAnnouncementModal,
   showAnnouncementModal,
   communityCount,
-  communityMods,
+  myModeratedCommunities,
   communities
 }) {
   return <div styleName='actionsBar'>
@@ -371,7 +371,7 @@ export function ActionsBar ({id,
         closeModal={toggleAnnouncementModal}
         save={save}
         communityCount={communityCount}
-        communityMods={communityMods}
+        myModeratedCommunities={myModeratedCommunities}
         communities={communities}
       />}
 

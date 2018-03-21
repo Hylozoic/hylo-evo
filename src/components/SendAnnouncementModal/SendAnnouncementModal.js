@@ -6,12 +6,12 @@ export default function SendAnnouncementModal ({
   closeModal,
   save,
   communityCount,
-  communityMods,
+  myModeratedCommunities,
   communities
 }) {
   const communityLabel = communityCount > 1 ? `${communityCount} communities` : 'this community'
   const communityIds = communities.map(c => c.id)
-  const communityModIds = communityMods.map(c => c.id)
+  const communityModIds = myModeratedCommunities.map(c => c.id)
   const canModerateAllCommunities = communityIds.every(val => communityModIds.indexOf(val) >= 0)
 
   return <div styleName='modal'>
