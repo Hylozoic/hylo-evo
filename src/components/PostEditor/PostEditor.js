@@ -352,8 +352,8 @@ export function ActionsBar ({id,
         <Icon name='Paperclip'
           styleName={cx('action-icon', {'highlight-icon': showFiles})} />
       </ChangeImageButton>
-      {canModerate && <span data-tip='Send Annoucnment' data-for='announcement-tt'>
-        <Icon name='Paperclip'
+      {canModerate && <span data-tip='Send Announcement' data-for='announcement-tt'>
+        <Icon name='Announcement'
           onClick={() => setPostType(announcementSelected ? null : ANNOUNCEMENT)}
           styleName={cx('action-icon', {'highlight-icon': announcementSelected})}
         />

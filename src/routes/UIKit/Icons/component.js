@@ -4,6 +4,7 @@ import './component.scss'
 
 const ICON_NAMES = [
   'AddImage',
+  'Announcement',
   'ArrowDown',
   'ArrowForward',
   'ArrowUp',
