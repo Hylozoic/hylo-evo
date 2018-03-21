@@ -15,10 +15,6 @@ export const ANNOUNCEMENT = `${MODULE_NAME}/ANNOUNCEMENT`
 export const SHOW_ANNOUNCEMENT_CONFIRMATION = `${MODULE_NAME}/SHOW_ANNOUNCEMENT_CONFIRMATION`
 
 // Actions
-
-export function createPost (post, topic) {
-  const { type, title, details, communities, linkPreview, imageUrls, fileUrls, sendAnnouncement } = post
-
 export function createPost (post) {
   const {
     type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement
@@ -82,7 +78,7 @@ export function createPost (post) {
         communityIds,
         imageUrls,
         fileUrls,
-        announcement: sendAnnouncement
+        announcement: sendAnnouncement,
         topicNames
       }
     },
