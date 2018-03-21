@@ -29,6 +29,16 @@ Object {
       },
       "slug": "foo",
     },
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "100",
+        "members": undefined,
+        "moderators": undefined,
+        "posts": undefined,
+        "slug": "bar",
+      },
+      "slug": "bar",
+    },
   ],
   "currentCommunity": SessionBoundModel {
     "_fields": Object {
@@ -93,6 +103,16 @@ Object {
         "slug": "foo",
       },
       "slug": "foo",
+    },
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "100",
+        "members": undefined,
+        "moderators": undefined,
+        "posts": undefined,
+        "slug": "bar",
+      },
+      "slug": "bar",
     },
   ],
   "currentCommunity": SessionBoundModel {
