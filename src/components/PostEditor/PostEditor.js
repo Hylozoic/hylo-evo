@@ -180,6 +180,7 @@ export default class PostEditor extends React.Component {
   }
 
   setSelectedCommunities = communities => {
+    console.log('communities', communities)
     this.setState({
       post: {...this.state.post, communities},
       valid: this.isValid({ communities })
@@ -234,11 +235,12 @@ export default class PostEditor extends React.Component {
   render () {
     const { titlePlaceholder, valid, post, showAnnouncementModal } = this.state
     const { id, title, details, communities, linkPreview } = post
+
     const {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
       showImages, addFile, showFiles, setPostType, announcementSelected,
-      communityMembersCount, canModerate
+      canModerate
     } = this.props
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
       <div styleName='header'>
@@ -313,7 +315,7 @@ export default class PostEditor extends React.Component {
           canModerate={canModerate}
           toggleAnnouncementModal={this.toggleAnnouncementModal}
           showAnnouncementModal={showAnnouncementModal}
-          communityMembersCount={communityMembersCount}
+          communityCount={post.communities.length}
         />
       </div>
     </div>
@@ -334,7 +336,7 @@ export function ActionsBar ({id,
   canModerate,
   toggleAnnouncementModal,
   showAnnouncementModal,
-  communityMembersCount
+  communityCount
 }) {
   return <div styleName='actionsBar'>
     <div styleName='actions'>
@@ -365,7 +367,7 @@ export function ActionsBar ({id,
       {showAnnouncementModal && <SendAnnouncementModal
         closeModal={toggleAnnouncementModal}
         save={save}
-        communityMembersCount={communityMembersCount}
+        communityCount={communityCount}
       />}
 
     </div>

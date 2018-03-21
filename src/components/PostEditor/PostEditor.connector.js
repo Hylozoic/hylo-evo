@@ -8,7 +8,6 @@ import getPost, { presentPost } from 'store/selectors/getPost'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getAnnouncementSelected from 'store/selectors/getAnnouncementSelected'
-import getCommunityMembersCount from 'store/selectors/getCommunityMembersCount'
 
 import { FETCH_POST, UPLOAD_ATTACHMENT } from 'store/constants'
 import {
@@ -55,7 +54,6 @@ export function mapStateToProps (state, props) {
   const topicName = get('name', topic)
 
   const announcementSelected = getAnnouncementSelected(state, ANNOUNCEMENT)
-  const communityMembersCount = getCommunityMembersCount(state)
 
   const canModerate = currentUser && currentUser.canModerate(currentCommunity)
 
@@ -78,7 +76,6 @@ export function mapStateToProps (state, props) {
     topicName,
     slug,
     announcementSelected,
-    communityMembersCount,
     canModerate
   }
 }
