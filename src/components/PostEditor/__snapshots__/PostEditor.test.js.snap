@@ -226,6 +226,18 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       </div>
     </div>
     <ActionsBar
+      communities={
+        Array [
+          Object {
+            "id": "1",
+            "name": "test community 1",
+          },
+          Object {
+            "id": "2",
+            "name": "test community 2",
+          },
+        ]
+      }
       communityCount={2}
       id="test"
       loading={false}
@@ -371,6 +383,18 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       </div>
     </div>
     <ActionsBar
+      communities={
+        Array [
+          Object {
+            "id": "1",
+            "name": "test community 1",
+          },
+          Object {
+            "id": "2",
+            "name": "test community 2",
+          },
+        ]
+      }
       communityCount={2}
       id="test"
       loading={false}
@@ -863,6 +887,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       </div>
     </div>
     <ActionsBar
+      communities={Array []}
       communityCount={0}
       loading={false}
       save={[Function]}
@@ -987,6 +1012,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       </div>
     </div>
     <ActionsBar
+      communities={Array []}
       communityCount={0}
       loading={true}
       save={[Function]}
@@ -1111,6 +1137,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       </div>
     </div>
     <ActionsBar
+      communities={Array []}
       communityCount={0}
       loading={true}
       save={[Function]}
@@ -1235,6 +1262,7 @@ exports[`PostEditor renders with min props 1`] = `
       </div>
     </div>
     <ActionsBar
+      communities={Array []}
       communityCount={0}
       loading={false}
       save={[Function]}

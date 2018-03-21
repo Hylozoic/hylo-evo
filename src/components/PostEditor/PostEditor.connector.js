@@ -33,6 +33,8 @@ export function mapStateToProps (state, props) {
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const communityOptions = props.communityOptions ||
     (currentUser && currentUser.memberships.toModelArray().map(m => m.community))
+
+  const communityMods = (currentUser && communityOptions.filter(c => currentUser.canModerate(currentCommunity)))
   let post = props.post || presentPost(getPost(state, props))
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
@@ -56,7 +58,6 @@ export function mapStateToProps (state, props) {
   const announcementSelected = getAnnouncementSelected(state, ANNOUNCEMENT)
 
   const canModerate = currentUser && currentUser.canModerate(currentCommunity)
-
   return {
     currentUser,
     currentCommunity,
@@ -76,7 +77,8 @@ export function mapStateToProps (state, props) {
     topicName,
     slug,
     announcementSelected,
-    canModerate
+    canModerate,
+    communityMods
   }
 }
 
