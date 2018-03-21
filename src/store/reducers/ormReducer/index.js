@@ -223,9 +223,10 @@ export default function ormReducer (state = {}, action) {
       break
 
     case UPDATE_POST_PENDING:
-      // deleting all attachments here because we restore them from the result of the UPDATE_POST action
+      // deleting all attachments and removing topics here because we restore them from the result of the UPDATE_POST action
       post = Post.withId(meta.id)
       post.attachments.toModelArray().map(a => a.delete())
+      post.update({topics: []})
       break
 
     case CREATE_COMMUNITY:

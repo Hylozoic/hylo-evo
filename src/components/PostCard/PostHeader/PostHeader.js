@@ -6,10 +6,11 @@ import PostLabel from 'components/PostLabel'
 import Highlight from 'components/Highlight'
 import FlagContent from 'components/FlagContent'
 import Icon from 'components/Icon'
-import { communityUrl, personUrl } from 'util/index'
+import { communityUrl, personUrl, tagUrl } from 'util/index'
 import { humanDate } from 'hylo-utils/text'
 import './PostHeader.scss'
 import { filter, isFunction, isEmpty } from 'lodash'
+import cx from 'classnames'
 
 export default class PostHeader extends PureComponent {
   state = {
@@ -27,6 +28,7 @@ export default class PostHeader extends PureComponent {
       type,
       id,
       pinned,
+      topics,
       communities,
       close,
       className,
@@ -37,7 +39,9 @@ export default class PostHeader extends PureComponent {
       deletePost,
       removePost,
       pinPost,
-      highlightProps } = this.props
+      highlightProps,
+      topicsOnNewline
+    } = this.props
     if (!creator) return null
 
     let context
@@ -75,32 +79,47 @@ export default class PostHeader extends PureComponent {
     ], item => isFunction(item.onClick))
 
     return <div styleName='header' className={className}>
-      <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
-      <div styleName='headerText'>
-        <Highlight {...highlightProps}>
-          <Link to={personUrl(creator.id, slug)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
-        </Highlight>
-        {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
-        <div>
-          <span styleName='timestamp'>
-            {humanDate(date)}{context && <span styleName='spacer'>•</span>}
-          </span>
-          {context && <Link to={context.url} styleName='context'>
-            {context.label}
-          </Link>}
+      <div styleName='headerMainRow'>
+        <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
+        <div styleName='headerText'>
+          <Highlight {...highlightProps}>
+            <Link to={personUrl(creator.id, slug)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
+          </Highlight>
+          {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
+          <div styleName='timestampRow'>
+            <span styleName='timestamp'>
+              {humanDate(date)}
+            </span>
+            {context && <span>
+              <span styleName='spacer'>•</span>
+              <Link to={context.url} styleName='context'>
+                {context.label}
+              </Link>
+            </span>}
+            {!topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={slug} />}
+          </div>
         </div>
+        <div styleName='upperRight'>
+          {pinned && <Icon name='Pin' styleName='pinIcon' />}
+          {type && <PostLabel type={type} styleName='label' />}
+          {dropdownItems.length > 0 &&
+          <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} />}
+          {close && <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
+        </div>
+        {flaggingVisible && <FlagContent type='post'
+          linkData={linkData}
+          onClose={() => this.setState({flaggingVisible: false})} />
+        }
       </div>
-      <div styleName='upperRight'>
-        {pinned && <Icon name='Pin' styleName='pinIcon' />}
-        {type && <PostLabel type={type} styleName='label' />}
-        {dropdownItems.length > 0 &&
-        <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} />}
-        {close && <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
-      </div>
-      {flaggingVisible && <FlagContent type='post'
-        linkData={linkData}
-        onClose={() => this.setState({flaggingVisible: false})} />
-      }
+      {topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={slug} newLine />}
     </div>
   }
+}
+
+export function TopicsLine ({ topics, slug, className, newLine }) {
+  return <div styleName={cx('topicsLine', {'newLineForTopics': newLine})}>
+    {!newLine && <span styleName='spacer'>•</span>}
+    {topics.slice(0, 3).map(t =>
+      <Link styleName='topic' to={tagUrl(t.name, slug)} key={t.name}>#{t.name}</Link>)}
+  </div>
 }

@@ -6,6 +6,7 @@ import cx from 'classnames'
 import { getKeyCode, keyMap } from 'util/textInput'
 import { KeyControlledItemList } from 'components/KeyControlledList'
 import Avatar from 'components/Avatar'
+import styles from './TagInput.scss'
 
 const { object, array, bool, string, func } = PropTypes
 
@@ -44,8 +45,8 @@ export default class TagInput extends Component {
     }
   }
 
-  resetInput () {
-    this.input.value = ''
+  resetInput = () => {
+    if (this.input) this.input.value = ''
     this.props.handleInputChange('')
   }
 
@@ -98,7 +99,7 @@ export default class TagInput extends Component {
 
   render () {
     let { tags, placeholder } = this.props
-    const { suggestions, className, theme, readOnly } = this.props
+    const { suggestions, className, theme, readOnly, maxTags } = this.props
     if (!tags) tags = []
     if (!placeholder) placeholder = 'Type...'
 
@@ -110,6 +111,15 @@ export default class TagInput extends Component {
       </li>
     )
 
+    const maxReached = maxTags && selectedItems.length >= maxTags
+
+    // this is so the suggestion list can do double duty as an error message
+    const suggestionsOrError = maxReached
+      ? isEmpty(this.input.value)
+        ? []
+        : [{name: `no more than ${maxTags} allowed`}]
+      : suggestions
+
     return <div className={cx(theme.root, {[theme.readOnly]: readOnly}, className)} onClick={this.focus}>
       <ul className={theme.selected}>
         {selectedItems}
@@ -118,6 +128,7 @@ export default class TagInput extends Component {
         <div className={theme.searchInput}>
           <input
             className={theme.searchInput}
+            styleName={cx({'error': maxReached})}
             ref={component => { this.input = component }}
             type='text'
             placeholder={placeholder}
@@ -126,14 +137,14 @@ export default class TagInput extends Component {
             onKeyDown={this.handleKeys}
             disabled={readOnly} />
         </div>
-        {!isEmpty(suggestions) &&
+        {!isEmpty(suggestionsOrError) &&
           <div className={theme.suggestions}>
             <KeyControlledItemList
-              items={suggestions}
-              onChange={this.select}
+              items={suggestionsOrError}
+              onChange={maxReached ? this.resetInput : this.select}
               theme={{
                 items: theme.suggestions,
-                item: theme.suggestion,
+                item: cx(theme.suggestion, {[styles.error]: maxReached}),
                 'item-active': theme['suggestion-active']
               }}
               ref={component => { this.list = component }} />

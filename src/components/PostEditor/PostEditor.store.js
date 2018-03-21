@@ -19,6 +19,10 @@ export const SHOW_ANNOUNCEMENT_CONFIRMATION = `${MODULE_NAME}/SHOW_ANNOUNCEMENT_
 export function createPost (post, topic) {
   const { type, title, details, communities, linkPreview, imageUrls, fileUrls, sendAnnouncement } = post
 
+export function createPost (post) {
+  const {
+    type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement
+  } = post
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
@@ -33,6 +37,7 @@ export function createPost (post, topic) {
         $imageUrls: [String],
         $fileUrls: [String],
         $announcement: Boolean
+        $topicNames: [String]
       ) {
         createPost(data: {
           type: $type,
@@ -43,6 +48,7 @@ export function createPost (post, topic) {
           imageUrls: $imageUrls,
           fileUrls: $fileUrls,
           announcement: $announcement
+          topicNames: $topicNames
         }) {
           id
           type
@@ -77,17 +83,19 @@ export function createPost (post, topic) {
         imageUrls,
         fileUrls,
         announcement: sendAnnouncement
+        topicNames
       }
     },
     meta: {
-      extractModel: 'Post',
-      topic
+      extractModel: 'Post'
     }
   }
 }
 
 export function updatePost (post) {
-  const { id, type, title, details, communities, linkPreview, imageUrls, fileUrls } = post
+  const {
+    id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames
+  } = post
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
   return {
@@ -101,7 +109,8 @@ export function updatePost (post) {
         $linkPreviewId: String,
         $communityIds: [String],
         $imageUrls: [String],
-        $fileUrls: [String]
+        $fileUrls: [String],
+        $topicNames: [String]
       ) {
         updatePost(id: $id, data: {
           type: $type,
@@ -110,7 +119,8 @@ export function updatePost (post) {
           linkPreviewId: $linkPreviewId,
           communityIds: $communityIds,
           imageUrls: $imageUrls,
-          fileUrls: $fileUrls
+          fileUrls: $fileUrls,
+          topicNames: $topicNames
         }) {
           id
           type
@@ -130,6 +140,10 @@ export function updatePost (post) {
             url
             position
           }
+          topics {
+            id
+            name
+          }
         }
       }`,
       variables: {
@@ -140,7 +154,8 @@ export function updatePost (post) {
         linkPreviewId,
         communityIds,
         imageUrls,
-        fileUrls
+        fileUrls,
+        topicNames
       }
     },
     meta: {

@@ -8,7 +8,9 @@ import cx from 'classnames'
 import contentStateToHTML from './contentStateToHTML'
 import contentStateFromHTML from './contentStateFromHTML'
 import 'draft-js/dist/Draft.css'
+import { validateTopicName } from 'hylo-utils/validators'
 import styles from './HyloEditor.scss'
+
 export default class HyloEditor extends Component {
   static propTypes = {
     contentHTML: PropTypes.string,
@@ -127,6 +129,9 @@ export default class HyloEditor extends Component {
   }
 
   handleTopicSearch = ({ value }) => {
+    this.setState({
+      topicSearch: value
+    })
     return this.props.findTopics(value)
   }
 
@@ -175,6 +180,10 @@ export default class HyloEditor extends Component {
       this._linkifyPlugin
     ]
     const { placeholder, mentionResults, topicResults, className, readOnly } = this.props
+    const { topicSearch } = this.state
+    const topicSuggestions = !validateTopicName(topicSearch)
+      ? [{id: -1, name: topicSearch}].concat(topicResults)
+      : topicResults
     const { editorState } = this.state
     const styleNames = cx('wrapper', { readOnly })
     return <div styleName={styleNames} className={className}>
@@ -194,7 +203,7 @@ export default class HyloEditor extends Component {
         onClose={this.handleMentionsClose} />
       <TopicSuggestions
         onSearchChange={this.handleTopicSearch}
-        suggestions={topicResults}
+        suggestions={topicSuggestions}
         onOpen={this.disableSubmitOnReturn}
         onClose={this.handleTopicsClose} />
     </div>

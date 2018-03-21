@@ -195,15 +195,31 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
     data-stylename="footer"
   >
     <div
-      data-stylename="postIn"
+      data-stylename="footerSection"
     >
       <div
-        data-stylename="postIn-label"
+        data-stylename="footerSection-label"
+      >
+        Topics
+      </div>
+      <div
+        data-stylename="footerSection-communities"
+      >
+        <Connect(TopicSelector)
+          detailsTopics={Array []}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        data-stylename="postIn-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -352,15 +368,31 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
     data-stylename="footer"
   >
     <div
-      data-stylename="postIn"
+      data-stylename="footerSection"
     >
       <div
-        data-stylename="postIn-label"
+        data-stylename="footerSection-label"
+      >
+        Topics
+      </div>
+      <div
+        data-stylename="footerSection-communities"
+      >
+        <Connect(TopicSelector)
+          detailsTopics={Array []}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        data-stylename="postIn-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -500,15 +532,31 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     data-stylename="footer"
   >
     <div
-      data-stylename="postIn"
+      data-stylename="footerSection"
     >
       <div
-        data-stylename="postIn-label"
+        data-stylename="footerSection-label"
+      >
+        Topics
+      </div>
+      <div
+        data-stylename="footerSection-communities"
+      >
+        <Connect(TopicSelector)
+          detailsTopics={Array []}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        data-stylename="postIn-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -624,15 +672,31 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     data-stylename="footer"
   >
     <div
-      data-stylename="postIn"
+      data-stylename="footerSection"
     >
       <div
-        data-stylename="postIn-label"
+        data-stylename="footerSection-label"
+      >
+        Topics
+      </div>
+      <div
+        data-stylename="footerSection-communities"
+      >
+        <Connect(TopicSelector)
+          detailsTopics={Array []}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        data-stylename="postIn-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -748,15 +812,31 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     data-stylename="footer"
   >
     <div
-      data-stylename="postIn"
+      data-stylename="footerSection"
     >
       <div
-        data-stylename="postIn-label"
+        data-stylename="footerSection-label"
+      >
+        Topics
+      </div>
+      <div
+        data-stylename="footerSection-communities"
+      >
+        <Connect(TopicSelector)
+          detailsTopics={Array []}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        data-stylename="postIn-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -873,15 +953,31 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
     data-stylename="footer"
   >
     <div
-      data-stylename="postIn"
+      data-stylename="footerSection"
     >
       <div
-        data-stylename="postIn-label"
+        data-stylename="footerSection-label"
+      >
+        Topics
+      </div>
+      <div
+        data-stylename="footerSection-communities"
+      >
+        <Connect(TopicSelector)
+          detailsTopics={Array []}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        data-stylename="postIn-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -998,15 +1094,31 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
     data-stylename="footer"
   >
     <div
-      data-stylename="postIn"
+      data-stylename="footerSection"
     >
       <div
-        data-stylename="postIn-label"
+        data-stylename="footerSection-label"
+      >
+        Topics
+      </div>
+      <div
+        data-stylename="footerSection-communities"
+      >
+        <Connect(TopicSelector)
+          detailsTopics={Array []}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        data-stylename="postIn-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -1123,15 +1235,31 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
     data-stylename="footer"
   >
     <div
-      data-stylename="postIn"
+      data-stylename="footerSection"
     >
       <div
-        data-stylename="postIn-label"
+        data-stylename="footerSection-label"
+      >
+        Topics
+      </div>
+      <div
+        data-stylename="footerSection-communities"
+      >
+        <Connect(TopicSelector)
+          detailsTopics={Array []}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        data-stylename="postIn-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -1248,15 +1376,31 @@ exports[`PostEditor renders with min props 1`] = `
     data-stylename="footer"
   >
     <div
-      data-stylename="postIn"
+      data-stylename="footerSection"
     >
       <div
-        data-stylename="postIn-label"
+        data-stylename="footerSection-label"
+      >
+        Topics
+      </div>
+      <div
+        data-stylename="footerSection-communities"
+      >
+        <Connect(TopicSelector)
+          detailsTopics={Array []}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        data-stylename="postIn-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}

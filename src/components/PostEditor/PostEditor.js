@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { get } from 'lodash/fp'
 import ReactTooltip from 'react-tooltip'
+import { get, isEqual, throttle } from 'lodash/fp'
 import cx from 'classnames'
 import styles from './PostEditor.scss'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
@@ -10,12 +10,16 @@ import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
+import TopicSelector from 'components/TopicSelector'
 import LinkPreview from './LinkPreview'
 import ChangeImageButton from 'components/ChangeImageButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import AttachmentManager from './AttachmentManager'
 import { uploadSettings } from './AttachmentManager/AttachmentManager'
 import { ANNOUNCEMENT } from './PostEditor.store'
+import cheerio from 'cheerio'
+import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
+
 export default class PostEditor extends React.Component {
   static propTypes = {
     initialPrompt: PropTypes.string,
@@ -62,16 +66,14 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ editing, loading, currentCommunity, post, topicName, announcementSelected }) => {
-    const defaultPost = topicName
-      ? {...PostEditor.defaultProps.post, details: `<p><a data-entity-type="#mention">#${topicName}</a> </p>`}
-      : PostEditor.defaultProps.post
-
-    const defaultPostWithCommunities = Object.assign({}, defaultPost, {
-      communities: currentCommunity ? [currentCommunity] : []
+  buildStateFromProps = ({ editing, loading, currentCommunity, post, topic, announcementSelected }) => {
+    const defaultPostWithCommunitiesAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
+      communities: currentCommunity ? [currentCommunity] : [],
+      topics: topic ? [topic] : [],
+      detailsTopics: []
     })
 
-    const currentPost = post || defaultPostWithCommunities
+    const currentPost = post || defaultPostWithCommunitiesAndTopic
     return {
       post: currentPost,
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
@@ -160,7 +162,11 @@ export default class PostEditor extends React.Component {
   }
 
   handleDetailsChange = (editorState, contentChanged) => {
-    if (contentChanged) this.setLinkPreview(editorState.getCurrentContent())
+    if (contentChanged) {
+      const contentState = editorState.getCurrentContent()
+      this.setLinkPreview(contentState)
+      this.updateTopics(contentState)
+    }
   }
 
   setLinkPreview = (contentState) => {
@@ -171,6 +177,20 @@ export default class PostEditor extends React.Component {
     if (linkPreview) return
     pollingFetchLinkPreview(contentStateToHTML(contentState))
   }
+
+  updateTopics = throttle(2000, (contentState) => {
+    const html = contentStateToHTML(contentState)
+    const $ = cheerio.load(html)
+    var topicNames = []
+    $(`a[data-entity-type=${TOPIC_ENTITY_TYPE}]`).map((i, el) =>
+      topicNames.push($(el).text().replace('#', '')))
+    const hasChanged = !isEqual(this.state.detailsTopics, topicNames)
+    if (hasChanged) {
+      this.setState({
+        detailsTopics: topicNames.map(tn => ({name: tn, id: tn}))
+      })
+    }
+  })
 
   removeLinkPreview = () => {
     this.props.removeLinkPreview()
@@ -199,17 +219,9 @@ export default class PostEditor extends React.Component {
     const { editing, createPost, updatePost, onClose, goToPost, images, files, setPostType, announcementSelected } = this.props
     const { id, type, title, communities, linkPreview } = this.state.post
     const details = this.editor.getContentHTML()
+    const topicNames = this.topicSelector.getSelected().map(t => t.name)
     const postToSave = {
-      id,
-      type,
-      title,
-      details,
-      communities,
-      linkPreview,
-      imageUrls:
-      images,
-      fileUrls: files,
-      sendAnnouncement: announcementSelected
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected
     }
     const saveFunc = editing ? updatePost : createPost
     setPostType(null)
@@ -232,9 +244,8 @@ export default class PostEditor extends React.Component {
   }
 
   render () {
-    const { titlePlaceholder, valid, post, showAnnouncementModal } = this.state
-    const { id, title, details, communities, linkPreview } = post
-
+    const { titlePlaceholder, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
+    const { id, title, details, communities, linkPreview, topics } = post
     const {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
@@ -287,9 +298,18 @@ export default class PostEditor extends React.Component {
       <AttachmentManager postId={id || 'new'} type='image' />
       <AttachmentManager postId={id || 'new'} type='file' />
       <div styleName='footer'>
-        <div styleName='postIn'>
-          <div styleName='postIn-label'>Post in</div>
-          <div styleName='postIn-communities'>
+        <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Topics</div>
+          <div styleName='footerSection-communities'>
+            <TopicSelector
+              selectedTopics={topics}
+              detailsTopics={detailsTopics}
+              ref={component => { this.topicSelector = component && component.getWrappedInstance() }} />
+          </div>
+        </div>
+        <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Post in</div>
+          <div styleName='footerSection-communities'>
             <CommunitiesSelector
               options={communityOptions}
               selected={communities}
