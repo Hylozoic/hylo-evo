@@ -103,6 +103,18 @@ const notifications = [
   commentMentionNotification
 ]
 
+const announcementNotification = {
+  id: 10,
+  activity: {
+    actor: u2,
+    action: ACTION_MENTION,
+    meta: {},
+    post: {title: 'Announcement'},
+    unread: true
+  },
+  createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
+}
+
 describe('NotificationsDropdown', () => {
   it('renders correctly with an empty list', () => {
     const wrapper = shallow(<NotificationsDropdown
@@ -216,6 +228,11 @@ describe('NotificationBody', () => {
 
   it('renders correctly with a comment mention notification', () => {
     const wrapper = shallow(<NotificationBody notification={commentMentionNotification} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('renders correctly with an announcement notification', () => {
+    const wrapper = shallow(<NotificationBody notification={announcementNotification} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

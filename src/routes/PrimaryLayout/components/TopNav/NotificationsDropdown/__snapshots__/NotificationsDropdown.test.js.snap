@@ -496,6 +496,21 @@ exports[`NotificationBody renders correctly with a tag notification 1`] = `
 </div>
 `;
 
+exports[`NotificationBody renders correctly with an announcement notification 1`] = `
+<div
+  data-stylename="body"
+>
+  <span
+    data-stylename="bold"
+  >
+    Marie
+  </span>
+   wrote: "
+  Announcement
+  "
+</div>
+`;
+
 exports[`NotificationBody renders correctly with an approved join request notification 1`] = `
 <div
   data-stylename="body"
