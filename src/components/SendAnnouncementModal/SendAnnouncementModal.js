@@ -17,10 +17,10 @@ export default function SendAnnouncementModal ({
     <div styleName='modal-container'>
       <h1 styleName='modal-header'>MAKE AN ANNOUNCEMENT</h1>
       {communityCount === 1 && canModerateAllCommunities &&
-        <p styleName='modal-paragraph'>This means that all members of this community will receive an instant email and push notification about this Post. (Community Moderators only)</p>
+        <p styleName='modal-paragraph'>This means that all members of this community will receive an instant email and push notification about this Post. (This feature is available to moderators only.)</p>
       }
       {communityCount > 1 && canModerateAllCommunities &&
-        <p styleName='modal-paragraph'>This means that all members of the {communityCount} communities selected will receive instant email and push notifications about this Post. (Community Moderators only)</p>
+        <p styleName='modal-paragraph'>This means that all members of the {communityCount} communities selected will receive instant email and push notifications about this Post. (This feature is available to moderators only.)</p>
       }
 
       {!canModerateAllCommunities &&
