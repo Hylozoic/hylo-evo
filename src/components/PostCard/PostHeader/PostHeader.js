@@ -40,7 +40,8 @@ export default class PostHeader extends PureComponent {
       removePost,
       pinPost,
       highlightProps,
-      topicsOnNewline
+      topicsOnNewline,
+      announcement
     } = this.props
     if (!creator) return null
 
@@ -89,6 +90,11 @@ export default class PostHeader extends PureComponent {
           <div styleName='timestampRow'>
             <span styleName='timestamp'>
               {humanDate(date)}
+            </span>
+            <span>
+              <span styleName='announcementSpacer'>•</span>
+              <Icon name='Announcement' styleName='announcementIcon' />
+              <span styleName='announcementLabel'>Announcement</span>
             </span>
             {context && <span>
               <span styleName='spacer'>•</span>

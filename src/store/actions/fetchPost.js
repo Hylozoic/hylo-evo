@@ -6,6 +6,7 @@ import {
 
 export const getPostFieldsFragment = withComments => `
   id
+  announcement
   title
   details
   type
