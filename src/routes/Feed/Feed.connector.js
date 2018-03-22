@@ -12,7 +12,7 @@ import getMemberships from 'store/selectors/getMemberships'
 
 import changeQueryParam from 'store/actions/changeQueryParam'
 import getQueryParam from 'store/selectors/getQueryParam'
-import { push } from 'react-router-redux'
+import { push, replace } from 'react-router-redux'
 import { postUrl, topicsUrl } from 'util/index'
 import { makeUrl } from 'util/navigation'
 import { fetchTopic, fetchCommunityTopic, fetchNetwork } from './Feed.store'
@@ -83,7 +83,7 @@ export const mapDispatchToProps = function (dispatch, props) {
         .then(action => {
           // redirect if no topic found
           if (!action.payload.data.communityTopic) {
-            dispatch(push(topicsUrl(slug)))
+            dispatch(replace(topicsUrl(slug)))
           }
         })
       } else if (topicName) {
