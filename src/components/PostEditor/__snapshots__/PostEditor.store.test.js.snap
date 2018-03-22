@@ -28,10 +28,10 @@ Object {
 }
 `;
 
-exports[`PostEditor store setPostType 1`] = `
+exports[`PostEditor store setAnnouncement 1`] = `
 Object {
   "payload": "type",
-  "type": "PostEditor/SET_POST_TYPE",
+  "type": "PostEditor/SET_ANNOUNCEMENT",
 }
 `;
 

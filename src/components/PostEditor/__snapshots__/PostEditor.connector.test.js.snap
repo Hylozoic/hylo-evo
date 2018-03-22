@@ -9,14 +9,14 @@ Object {
   "goToUrl": [Function],
   "pollingFetchLinkPreviewRaw": [Function],
   "removeLinkPreview": [Function],
-  "setPostType": [Function],
+  "setAnnouncement": [Function],
   "updatePost": [Function],
 }
 `;
 
 exports[`mapStateToProps returns the right keys for a new post 1`] = `
 Object {
-  "announcementSelected": false,
+  "announcementSelected": undefined,
   "canModerate": true,
   "communityOptions": Array [
     SessionBoundModel {
@@ -91,7 +91,7 @@ Object {
 
 exports[`mapStateToProps returns the right keys for a new post while pending 1`] = `
 Object {
-  "announcementSelected": false,
+  "announcementSelected": undefined,
   "canModerate": true,
   "communityOptions": Array [
     SessionBoundModel {

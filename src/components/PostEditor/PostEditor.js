@@ -216,7 +216,7 @@ export default class PostEditor extends React.Component {
   }
 
   save = () => {
-    const { editing, createPost, updatePost, onClose, goToPost, images, files, setPostType, announcementSelected } = this.props
+    const { editing, createPost, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected } = this.props
     const { id, type, title, communities, linkPreview } = this.state.post
     const details = this.editor.getContentHTML()
     const topicNames = this.topicSelector.getSelected().map(t => t.name)
@@ -224,7 +224,7 @@ export default class PostEditor extends React.Component {
       id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected
     }
     const saveFunc = editing ? updatePost : createPost
-    setPostType(null)
+    setAnnouncement(false)
     saveFunc(postToSave).then(editing ? onClose : goToPost)
   }
 
@@ -249,7 +249,7 @@ export default class PostEditor extends React.Component {
     const {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
-      showImages, addFile, showFiles, setPostType, announcementSelected,
+      showImages, addFile, showFiles, setAnnouncement, announcementSelected,
       canModerate, myModeratedCommunities
     } = this.props
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
@@ -329,7 +329,7 @@ export default class PostEditor extends React.Component {
           loading={loading}
           submitButtonLabel={this.buttonLabel()}
           save={() => this.save()}
-          setPostType={setPostType}
+          setAnnouncement={setAnnouncement}
           announcementSelected={announcementSelected}
           canModerate={canModerate}
           toggleAnnouncementModal={this.toggleAnnouncementModal}
@@ -352,7 +352,7 @@ export function ActionsBar ({id,
   loading,
   submitButtonLabel,
   save,
-  setPostType,
+  setAnnouncement,
   announcementSelected,
   canModerate,
   toggleAnnouncementModal,
@@ -379,7 +379,7 @@ export function ActionsBar ({id,
       </ChangeImageButton>
       {canModerate && <span data-tip='Send Announcement' data-for='announcement-tt'>
         <Icon name='Announcement'
-          onClick={() => setPostType(announcementSelected ? null : ANNOUNCEMENT)}
+          onClick={() => setAnnouncement(!announcementSelected)}
           styleName={cx('action-icon', {'highlight-icon': announcementSelected})}
         />
         <ReactTooltip

@@ -7,8 +7,6 @@ import getMe from 'store/selectors/getMe'
 import getPost, { presentPost } from 'store/selectors/getPost'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import getAnnouncementSelected from 'store/selectors/getAnnouncementSelected'
-
 import { FETCH_POST, UPLOAD_ATTACHMENT } from 'store/constants'
 import {
   CREATE_POST,
@@ -21,7 +19,7 @@ import {
   removeLinkPreview,
   clearLinkPreview,
   getLinkPreview,
-  setPostType
+  setAnnouncement
 } from './PostEditor.store'
 import {
   addAttachment,
@@ -55,7 +53,7 @@ export function mapStateToProps (state, props) {
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
 
-  const announcementSelected = getAnnouncementSelected(state, ANNOUNCEMENT)
+  const announcementSelected = state[MODULE_NAME].announcement
 
   const canModerate = currentUser && currentUser.canModerate(currentCommunity)
   return {
@@ -92,7 +90,7 @@ export const mapDispatchToProps = (dispatch, props) => {
     goToUrl: url => dispatch(push(url)),
     addImage: url => dispatch(addAttachment(url, 'image')),
     addFile: url => dispatch(addAttachment(url, 'file')),
-    setPostType: type => dispatch(setPostType(type))
+    setAnnouncement: bool => dispatch(setAnnouncement(bool))
   }
 }
 
