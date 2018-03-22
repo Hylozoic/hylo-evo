@@ -28,6 +28,14 @@ Object {
 }
 `;
 
+exports[`PostEditor store reducer when PostEditor/SET_ANNOUNCEMENT announcement is set approrpiately 1`] = `
+Object {
+  "announcement": true,
+  "linkPreviewId": null,
+  "linkPreviewStatus": null,
+}
+`;
+
 exports[`PostEditor store setAnnouncement 1`] = `
 Object {
   "payload": "type",
