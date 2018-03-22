@@ -12,18 +12,6 @@ exports[`renders correctly 1`] = `
     >
       MAKE AN ANNOUNCEMENT
     </h1>
-    <p
-      data-stylename="modal-paragraph"
-    >
-      Send an email and push notification to the each member of 
-      this community
-       along with this announcement.
-    </p>
-    <p
-      data-stylename="modal-paragraph"
-    >
-      This will only be sent as an announcement to the communities where you are are a moderator. For other communities it will be shared as a regular post.
-    </p>
     <a>
       <Button
         data-stylename="close-button"
