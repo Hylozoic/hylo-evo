@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
+import ReactTooltip from 'react-tooltip'
 import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import PostLabel from 'components/PostLabel'
@@ -93,8 +94,13 @@ export default class PostHeader extends PureComponent {
             </span>
             {announcement && <span>
               <span styleName='announcementSpacer'>•</span>
-              <Icon name='Announcement' styleName='announcementIcon' />
-              <span styleName='announcementLabel'>Announcement</span>
+              <span data-tip='Announcement' data-for='announcement-tt'>
+                <Icon name='Announcement' styleName='announcementIcon' />
+              </span>
+              <ReactTooltip
+                effect={'solid'}
+                delayShow={550}
+                id='announcement-tt' />
             </span>}
             {context && <span>
               <span styleName='spacer'>•</span>
