@@ -12,19 +12,6 @@ exports[`renders correctly with multiple communities 1`] = `
     >
       MAKE AN ANNOUNCEMENT
     </h1>
-    <span>
-      <p
-        data-stylename="modal-paragraph"
-      >
-        This means that all members of the 
-         communities selected will receive an instant email and push notification about this Post.
-      </p>
-      <p
-        data-stylename="modal-paragraph"
-      >
-        This will only be sent as an Announcement to the communities where you are a Moderator. For other communities it will be shared as a regular Post.
-      </p>
-    </span>
     <a>
       <Button
         data-stylename="close-button"
@@ -57,6 +44,19 @@ exports[`renders correctly with multiple communities, where the current user is 
     >
       MAKE AN ANNOUNCEMENT
     </h1>
+    <span>
+      <p
+        data-stylename="modal-paragraph"
+      >
+        This means that all members of the 
+         communities selected will receive an instant email and push notification about this Post.
+      </p>
+      <p
+        data-stylename="modal-paragraph"
+      >
+        This will only be sent as an Announcement to the communities where you are a Moderator. For other communities it will be shared as a regular Post.
+      </p>
+    </span>
     <a>
       <Button
         data-stylename="close-button"
@@ -89,19 +89,6 @@ exports[`renders correctly with one community 1`] = `
     >
       MAKE AN ANNOUNCEMENT
     </h1>
-    <span>
-      <p
-        data-stylename="modal-paragraph"
-      >
-        This means that all members of the 
-         communities selected will receive an instant email and push notification about this Post.
-      </p>
-      <p
-        data-stylename="modal-paragraph"
-      >
-        This will only be sent as an Announcement to the communities where you are a Moderator. For other communities it will be shared as a regular Post.
-      </p>
-    </span>
     <a>
       <Button
         data-stylename="close-button"
