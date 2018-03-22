@@ -11,7 +11,7 @@ export default function SendAnnouncementModal ({
 }) {
   const communityIds = communities.map(c => c.id)
   const communityModIds = myModeratedCommunities.map(c => c.id)
-  const canModerateAllCommunities = !communityIds.every(val => communityModIds.indexOf(val) >= 0)
+  const canModerateAllCommunities = communityIds.every(val => communityModIds.indexOf(val) >= 0)
 
   return <div styleName='modal'>
     <div styleName='modal-container'>
