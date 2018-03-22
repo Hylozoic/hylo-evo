@@ -62,14 +62,6 @@
   top: -6px;
 }
 
-.announcementLabel {
-  composes: timestamp from 'css/typography.scss';
-  margin-left: -6px;
-  top: -5px;
-  position: relative;
-  color: $color-caribbean-green;
-}
-
 .timestampRow {
   align-items: center;
   display: flex;
@@ -102,10 +94,14 @@
 
 .announcementIcon {
   top: 1px;
-  margin-right: 12px;
+  margin-right: -3px;
   margin-left: -4px;
   font-size: 24px;
   color: $color-caribbean-green;
+}
+
+.announcementSection {
+  margin-top: -2px;
 }
 
 .label {

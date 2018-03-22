@@ -92,7 +92,7 @@ export default class PostHeader extends PureComponent {
             <span styleName='timestamp'>
               {humanDate(date)}
             </span>
-            {announcement && <span>
+            {announcement && <span styleName='announcementSection'>
               <span styleName='announcementSpacer'>•</span>
               <span data-tip='Announcement' data-for='announcement-tt'>
                 <Icon name='Announcement' styleName='announcementIcon' />
