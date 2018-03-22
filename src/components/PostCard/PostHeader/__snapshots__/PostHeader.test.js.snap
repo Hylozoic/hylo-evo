@@ -58,22 +58,6 @@ exports[`matches snapshot 1`] = `
         <span
           data-stylename="timestamp"
         />
-        <span>
-          <span
-            data-stylename="announcementSpacer"
-          >
-            •
-          </span>
-          <Icon
-            data-stylename="announcementIcon"
-            name="Announcement"
-          />
-          <span
-            data-stylename="announcementLabel"
-          >
-            Announcement
-          </span>
-        </span>
       </div>
     </div>
     <div
@@ -116,22 +100,6 @@ exports[`matches snapshot 2`] = `
         <span
           data-stylename="timestamp"
         />
-        <span>
-          <span
-            data-stylename="announcementSpacer"
-          >
-            •
-          </span>
-          <Icon
-            data-stylename="announcementIcon"
-            name="Announcement"
-          />
-          <span
-            data-stylename="announcementLabel"
-          >
-            Announcement
-          </span>
-        </span>
         <span>
           <span
             data-stylename="spacer"
@@ -193,22 +161,6 @@ exports[`matches snapshot 3`] = `
         <span
           data-stylename="timestamp"
         />
-        <span>
-          <span
-            data-stylename="announcementSpacer"
-          >
-            •
-          </span>
-          <Icon
-            data-stylename="announcementIcon"
-            name="Announcement"
-          />
-          <span
-            data-stylename="announcementLabel"
-          >
-            Announcement
-          </span>
-        </span>
         <span>
           <span
             data-stylename="spacer"

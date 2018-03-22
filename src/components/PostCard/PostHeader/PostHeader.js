@@ -91,11 +91,11 @@ export default class PostHeader extends PureComponent {
             <span styleName='timestamp'>
               {humanDate(date)}
             </span>
-            <span>
+            {announcement && <span>
               <span styleName='announcementSpacer'>•</span>
               <Icon name='Announcement' styleName='announcementIcon' />
               <span styleName='announcementLabel'>Announcement</span>
-            </span>
+            </span>}
             {context && <span>
               <span styleName='spacer'>•</span>
               <Link to={context.url} styleName='context'>
