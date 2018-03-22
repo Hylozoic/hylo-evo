@@ -7,7 +7,8 @@ import {
   ACTION_JOIN_REQUEST,
   ACTION_APPROVED_JOIN_REQUEST,
   ACTION_MENTION,
-  ACTION_COMMENT_MENTION
+  ACTION_COMMENT_MENTION,
+  ACTION_ANNOUNCEMENT
  } from 'store/models/Notification'
 
 const u1 = {id: 1, name: 'Charles Darwin', avatarUrl: 'foo.png'}
@@ -107,7 +108,7 @@ const announcementNotification = {
   id: 10,
   activity: {
     actor: u2,
-    action: ACTION_MENTION,
+    action: ACTION_ANNOUNCEMENT,
     meta: {},
     post: {title: 'Announcement'},
     unread: true
