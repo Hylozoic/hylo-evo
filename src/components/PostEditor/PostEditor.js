@@ -16,7 +16,6 @@ import ChangeImageButton from 'components/ChangeImageButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import AttachmentManager from './AttachmentManager'
 import { uploadSettings } from './AttachmentManager/AttachmentManager'
-import { ANNOUNCEMENT } from './PostEditor.store'
 import cheerio from 'cheerio'
 import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
 
@@ -377,7 +376,8 @@ export function ActionsBar ({id,
         <Icon name='Paperclip'
           styleName={cx('action-icon', {'highlight-icon': showFiles})} />
       </ChangeImageButton>
-      {canModerate && <span data-tip='Send Announcement' data-for='announcement-tt'>
+      {/* FIXME: coordinate announcement release with mobile.
+      canModerate && <span data-tip='Send Announcement' data-for='announcement-tt'>
         <Icon name='Announcement'
           onClick={() => setAnnouncement(!announcementSelected)}
           styleName={cx('action-icon', {'highlight-icon': announcementSelected})}
@@ -386,7 +386,7 @@ export function ActionsBar ({id,
           effect={'solid'}
           delayShow={550}
           id='announcement-tt' />
-      </span>}
+      </span> */}
       {showAnnouncementModal && <SendAnnouncementModal
         closeModal={toggleAnnouncementModal}
         save={save}
