@@ -68,6 +68,10 @@ export function createPost (post) {
             url
             position
           }
+          topics {
+            id
+            name
+          }
         }
       }`,
       variables: {
