@@ -95,7 +95,8 @@ export default class TagInput extends Component {
   }
 
   handleChange = debounce(value => {
-    this.props.handleInputChange(value)
+    const strippedValue = this.props.stripInputHashtag ? value.replace(/^#/, '') : value
+    this.props.handleInputChange(strippedValue)
   }, 200)
 
   render () {

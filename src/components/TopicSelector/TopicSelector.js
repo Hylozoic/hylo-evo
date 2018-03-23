@@ -93,6 +93,7 @@ export default class TopicSelector extends Component {
         theme={styles}
         maxTags={3}
         addLeadingHashtag
+        stripInputHashtag
       />
     )
   }
