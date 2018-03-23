@@ -26,7 +26,8 @@ export default class TagInput extends Component {
     filter: func,
     readOnly: bool,
     className: string,
-    theme: object
+    theme: object,
+    addLeadingHashtag: bool
   }
 
   static defaultProps = {
@@ -99,14 +100,16 @@ export default class TagInput extends Component {
 
   render () {
     let { tags, placeholder } = this.props
-    const { suggestions, className, theme, readOnly, maxTags } = this.props
+    const { suggestions, className, theme, readOnly, maxTags, addLeadingHashtag } = this.props
     if (!tags) tags = []
     if (!placeholder) placeholder = 'Type...'
+
+    const optionalHashtag = addLeadingHashtag ? '#' : ''
 
     const selectedItems = uniqBy('id', tags).map(t =>
       <li key={t.id} className={theme.selectedTag}>
         {t.avatar_url && <Avatar person={t} isLink={false} />}
-        <span className={theme.selectedTagName}>{t.label || t.name}</span>
+        <span className={theme.selectedTagName}>{optionalHashtag}{t.label || t.name}</span>
         <a onClick={!readOnly ? this.remove(t) : undefined} className={theme.selectedTagRemove}>&times;</a>
       </li>
     )

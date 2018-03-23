@@ -2,6 +2,7 @@
 
 exports[`TopicSelector renders correctly (with min props) 1`] = `
 <TagInput
+  addLeadingHashtag={true}
   handleAddition={[Function]}
   handleDelete={[Function]}
   handleInputChange={[Function]}

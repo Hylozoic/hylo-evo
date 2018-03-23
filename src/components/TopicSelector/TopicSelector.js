@@ -92,6 +92,7 @@ export default class TopicSelector extends Component {
         readOnly={readOnly}
         theme={styles}
         maxTags={3}
+        addLeadingHashtag
       />
     )
   }
