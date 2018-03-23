@@ -33,6 +33,7 @@ posts(
   items {
     
   id
+  announcement
   title
   details
   type
@@ -132,6 +133,7 @@ posts(
   items {
     
   id
+  announcement
   title
   details
   type

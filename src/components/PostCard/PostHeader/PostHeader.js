@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
+import ReactTooltip from 'react-tooltip'
 import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import PostLabel from 'components/PostLabel'
@@ -40,7 +41,8 @@ export default class PostHeader extends PureComponent {
       removePost,
       pinPost,
       highlightProps,
-      topicsOnNewline
+      topicsOnNewline,
+      announcement
     } = this.props
     if (!creator) return null
 
@@ -90,6 +92,16 @@ export default class PostHeader extends PureComponent {
             <span styleName='timestamp'>
               {humanDate(date)}
             </span>
+            {announcement && <span styleName='announcementSection'>
+              <span styleName='announcementSpacer'>•</span>
+              <span data-tip='Announcement' data-for='announcement-tt'>
+                <Icon name='Announcement' styleName='announcementIcon' />
+              </span>
+              <ReactTooltip
+                effect={'solid'}
+                delayShow={550}
+                id='announcement-tt' />
+            </span>}
             {context && <span>
               <span styleName='spacer'>•</span>
               <Link to={context.url} styleName='context'>

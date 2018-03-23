@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly with multiple communities 1`] = `
+<div
+  data-stylename="modal"
+>
+  <div
+    data-stylename="modal-container"
+  >
+    <h1
+      data-stylename="modal-header"
+    >
+      MAKE AN ANNOUNCEMENT
+    </h1>
+    <a>
+      <Button
+        data-stylename="close-button"
+        onClick={[Function]}
+        small={true}
+      >
+        Go Back
+      </Button>
+      <Button
+        data-stylename="send-button"
+        onClick={[Function]}
+        small={true}
+      >
+        Send It
+      </Button>
+    </a>
+  </div>
+</div>
+`;
+
+exports[`renders correctly with multiple communities, where the current user is not always a moderator 1`] = `
+<div
+  data-stylename="modal"
+>
+  <div
+    data-stylename="modal-container"
+  >
+    <h1
+      data-stylename="modal-header"
+    >
+      MAKE AN ANNOUNCEMENT
+    </h1>
+    <span>
+      <p
+        data-stylename="modal-paragraph"
+      >
+        This means that all members of the 
+         communities selected will receive an instant email and push notification about this Post.
+      </p>
+      <p
+        data-stylename="modal-paragraph"
+      >
+        This will only be sent as an Announcement to the communities where you are a Moderator. For other communities it will be shared as a regular Post.
+      </p>
+    </span>
+    <a>
+      <Button
+        data-stylename="close-button"
+        onClick={[Function]}
+        small={true}
+      >
+        Go Back
+      </Button>
+      <Button
+        data-stylename="send-button"
+        onClick={[Function]}
+        small={true}
+      >
+        Send It
+      </Button>
+    </a>
+  </div>
+</div>
+`;
+
+exports[`renders correctly with one community 1`] = `
+<div
+  data-stylename="modal"
+>
+  <div
+    data-stylename="modal-container"
+  >
+    <h1
+      data-stylename="modal-header"
+    >
+      MAKE AN ANNOUNCEMENT
+    </h1>
+    <a>
+      <Button
+        data-stylename="close-button"
+        onClick={[Function]}
+        small={true}
+      >
+        Go Back
+      </Button>
+      <Button
+        data-stylename="send-button"
+        onClick={[Function]}
+        small={true}
+      >
+        Send It
+      </Button>
+    </a>
+  </div>
+</div>
+`;

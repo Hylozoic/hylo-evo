@@ -8,7 +8,8 @@ import {
   ACTION_JOIN_REQUEST,
   ACTION_APPROVED_JOIN_REQUEST,
   ACTION_MENTION,
-  ACTION_COMMENT_MENTION
+  ACTION_COMMENT_MENTION,
+  ACTION_ANNOUNCEMENT
 } from 'store/models/Notification'
 import {
   commentUrl,
@@ -111,6 +112,8 @@ export function urlForNotification ({ activity, activity: { action, post, commen
       return communitySettingsUrl(community.slug)
     case ACTION_APPROVED_JOIN_REQUEST:
       return communityUrl(community.slug)
+    case ACTION_ANNOUNCEMENT:
+      return postUrl(post.id)
   }
 }
 

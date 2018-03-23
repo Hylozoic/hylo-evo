@@ -6,6 +6,8 @@ let state
 beforeAll(() => {
   const session = orm.session(orm.getEmptyState())
   const community = session.Community.create({id: '99', slug: 'foo'})
+  const community2 = session.Community.create({id: '100', slug: 'bar'})
+
   session.LinkPreview.create({
     id: 1
   })
@@ -16,7 +18,13 @@ beforeAll(() => {
       id: '345',
       community: community.id,
       hasModeratorRole: true
-    })]
+    }),
+      session.Membership.create({
+        id: '678',
+        community: community2.id,
+        hasModeratorRole: false
+      })
+    ]
   })
 
   state = {
@@ -46,6 +54,11 @@ describe('mapStateToProps', () => {
     }
     expect(mapStateToProps(state, props)).toMatchSnapshot()
   })
+
+  it('sets myModeratedCommunities appropriately', () => {
+    expect(mapStateToProps(state, {}).myModeratedCommunities.length).toEqual(1)
+  })
+
   it('returns the right keys for a new post while pending', () => {
     const props = {
       forNew: true,

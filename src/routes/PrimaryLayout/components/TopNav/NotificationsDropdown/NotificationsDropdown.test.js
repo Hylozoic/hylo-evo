@@ -7,7 +7,8 @@ import {
   ACTION_JOIN_REQUEST,
   ACTION_APPROVED_JOIN_REQUEST,
   ACTION_MENTION,
-  ACTION_COMMENT_MENTION
+  ACTION_COMMENT_MENTION,
+  ACTION_ANNOUNCEMENT
  } from 'store/models/Notification'
 
 const u1 = {id: 1, name: 'Charles Darwin', avatarUrl: 'foo.png'}
@@ -102,6 +103,18 @@ const notifications = [
   mentionNotification,
   commentMentionNotification
 ]
+
+const announcementNotification = {
+  id: 10,
+  activity: {
+    actor: u2,
+    action: ACTION_ANNOUNCEMENT,
+    meta: {},
+    post: {title: 'Announcement'},
+    unread: true
+  },
+  createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
+}
 
 describe('NotificationsDropdown', () => {
   it('renders correctly with an empty list', () => {
@@ -216,6 +229,11 @@ describe('NotificationBody', () => {
 
   it('renders correctly with a comment mention notification', () => {
     const wrapper = shallow(<NotificationBody notification={commentMentionNotification} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('renders correctly with an announcement notification', () => {
+    const wrapper = shallow(<NotificationBody notification={announcementNotification} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

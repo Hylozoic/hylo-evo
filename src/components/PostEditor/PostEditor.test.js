@@ -44,7 +44,7 @@ describe('PostEditor', () => {
     }
     const renderForType = (type) => {
       const props = {
-        post: { type },
+        post: { type, communities: [] },
         titlePlaceholderForPostType
       }
       return shallow(<PostEditor {...props} />)
@@ -66,7 +66,8 @@ describe('PostEditor', () => {
           ],
           topicNames: ['design']
         },
-        createPost: jest.fn(() => new Promise(() => {}))
+        createPost: jest.fn(() => new Promise(() => {})),
+        setAnnouncement: jest.fn()
       }
       const editorMock = {
         getContentHTML: () => props.post.details,
@@ -104,7 +105,8 @@ describe('PostEditor', () => {
         topicNames: ['design']
       },
       updatePost: jest.fn(() => new Promise(() => {})),
-      showImagePreviews: true
+      showImagePreviews: true,
+      setAnnouncement: jest.fn()
     }
 
     test('form in editing mode', () => {
@@ -176,7 +178,9 @@ describe('PostEditor', () => {
     it('is invalid when required values are missing', () => {
       const props = {
         post: {
-          title: 'valid title'
+          title: 'valid title',
+          communities: [],
+          type: 'Request'
         }
       }
       const testInstance = shallow(<PostEditor {...props} />).instance()
@@ -208,7 +212,8 @@ describe('PostEditor', () => {
         ],
         topicNames: ['design']
       },
-      updatePost: jest.fn(() => new Promise(() => {}))
+      updatePost: jest.fn(() => new Promise(() => {})),
+      setAnnouncement: jest.fn()
     }
     const editorMock = {
       getContentHTML: () => props.post.details,
@@ -234,7 +239,7 @@ describe('PostEditor', () => {
     let baseProps, contentStateMock
     beforeEach(() => {
       baseProps = {
-        post: {},
+        post: { communities: [] },
         pollingFetchLinkPreview: jest.fn(),
         clearLinkPreview: jest.fn()
       }
@@ -255,7 +260,8 @@ describe('PostEditor', () => {
     it('should not fetch for linkPreview when a post.linkPreview is present', () => {
       const props = merge(baseProps, {
         post: {
-          linkPreview: {}
+          linkPreview: {},
+          communities: []
         }
       })
       const wrapper = shallow(<PostEditor {...props} />)

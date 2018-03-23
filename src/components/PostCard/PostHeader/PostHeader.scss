@@ -54,6 +54,14 @@
   top: -2px;
 }
 
+.announcementSpacer {
+  composes: timestamp from 'css/typography.scss';
+  margin: 0 7px;
+  font-size: 8px;
+  position: relative;
+  top: -6px;
+}
+
 .timestampRow {
   align-items: center;
   display: flex;
@@ -82,6 +90,18 @@
   top: 1px;
   margin-right: 12px;
   font-size: 24px;
+}
+
+.announcementIcon {
+  top: 1px;
+  margin-right: -3px;
+  margin-left: -4px;
+  font-size: 24px;
+  color: $color-caribbean-green;
+}
+
+.announcementSection {
+  margin-top: -2px;
 }
 
 .label {

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import ReactTooltip from 'react-tooltip'
 import { get, isEqual, throttle } from 'lodash/fp'
 import cx from 'classnames'
 import styles from './PostEditor.scss'
@@ -12,8 +13,10 @@ import CommunitiesSelector from 'components/CommunitiesSelector'
 import TopicSelector from 'components/TopicSelector'
 import LinkPreview from './LinkPreview'
 import ChangeImageButton from 'components/ChangeImageButton'
+import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import AttachmentManager from './AttachmentManager'
 import { uploadSettings } from './AttachmentManager/AttachmentManager'
+import { ANNOUNCEMENT } from './PostEditor.store'
 import cheerio from 'cheerio'
 import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
 
@@ -63,7 +66,7 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ editing, loading, currentCommunity, post, topic }) => {
+  buildStateFromProps = ({ editing, loading, currentCommunity, post, topic, announcementSelected }) => {
     const defaultPostWithCommunitiesAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
       communities: currentCommunity ? [currentCommunity] : [],
       topics: topic ? [topic] : [],
@@ -74,7 +77,9 @@ export default class PostEditor extends React.Component {
     return {
       post: currentPost,
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
-      valid: editing === true // if we're editing, than it's already valid upon entry.
+      valid: editing === true, // if we're editing, than it's already valid upon entry.
+      announcementSelected: announcementSelected,
+      toggleAnnouncementModal: false
     }
   }
 
@@ -210,17 +215,16 @@ export default class PostEditor extends React.Component {
       communities.length > 0)
   }
 
-  setValid = () => this.setState({valid: this.isValid()})
-
   save = () => {
-    const { editing, createPost, updatePost, onClose, goToPost, images, files } = this.props
+    const { editing, createPost, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected } = this.props
     const { id, type, title, communities, linkPreview } = this.state.post
     const details = this.editor.getContentHTML()
     const topicNames = this.topicSelector.getSelected().map(t => t.name)
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected
     }
     const saveFunc = editing ? updatePost : createPost
+    setAnnouncement(false)
     saveFunc(postToSave).then(editing ? onClose : goToPost)
   }
 
@@ -231,16 +235,24 @@ export default class PostEditor extends React.Component {
     return 'Post'
   }
 
+  toggleAnnouncementModal = () => {
+    const { showAnnouncementModal } = this.state
+    this.setState({
+      ...this.state,
+      showAnnouncementModal: !showAnnouncementModal
+    })
+  }
+
   render () {
-    const { titlePlaceholder, valid, post, detailsTopics = [] } = this.state
+    const { titlePlaceholder, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
     const { id, title, details, communities, linkPreview, topics } = post
     const {
       onClose, initialPrompt, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
-      showImages, addFile, showFiles
+      showImages, addFile, showFiles, setAnnouncement, announcementSelected,
+      canModerate, myModeratedCommunities
     } = this.props
-
-    return <div styleName='wrapper' ref={element => { this.wrapper = element }}>
+    return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
       <div styleName='header'>
         <div styleName='initial'>
           <div styleName='initial-prompt'>{initialPrompt}</div>
@@ -316,13 +328,39 @@ export default class PostEditor extends React.Component {
           valid={valid}
           loading={loading}
           submitButtonLabel={this.buttonLabel()}
-          save={() => this.save()} />
+          save={() => this.save()}
+          setAnnouncement={setAnnouncement}
+          announcementSelected={announcementSelected}
+          canModerate={canModerate}
+          toggleAnnouncementModal={this.toggleAnnouncementModal}
+          showAnnouncementModal={showAnnouncementModal}
+          communityCount={get('communities', post).length}
+          myModeratedCommunities={myModeratedCommunities}
+          communities={post.communities}
+        />
       </div>
     </div>
   }
 }
 
-export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid, loading, submitButtonLabel, save}) {
+export function ActionsBar ({id,
+  addImage,
+  showImages,
+  addFile,
+  showFiles,
+  valid,
+  loading,
+  submitButtonLabel,
+  save,
+  setAnnouncement,
+  announcementSelected,
+  canModerate,
+  toggleAnnouncementModal,
+  showAnnouncementModal,
+  communityCount,
+  myModeratedCommunities,
+  communities
+}) {
   return <div styleName='actionsBar'>
     <div styleName='actions'>
       <ChangeImageButton update={addImage}
@@ -339,9 +377,27 @@ export function ActionsBar ({id, addImage, showImages, addFile, showFiles, valid
         <Icon name='Paperclip'
           styleName={cx('action-icon', {'highlight-icon': showFiles})} />
       </ChangeImageButton>
+      {canModerate && <span data-tip='Send Announcement' data-for='announcement-tt'>
+        <Icon name='Announcement'
+          onClick={() => setAnnouncement(!announcementSelected)}
+          styleName={cx('action-icon', {'highlight-icon': announcementSelected})}
+        />
+        <ReactTooltip
+          effect={'solid'}
+          delayShow={550}
+          id='announcement-tt' />
+      </span>}
+      {showAnnouncementModal && <SendAnnouncementModal
+        closeModal={toggleAnnouncementModal}
+        save={save}
+        communityCount={communityCount}
+        myModeratedCommunities={myModeratedCommunities}
+        communities={communities}
+      />}
+
     </div>
     <Button
-      onClick={save}
+      onClick={announcementSelected ? toggleAnnouncementModal : save}
       disabled={!valid || loading}
       styleName='postButton'
       label={submitButtonLabel}

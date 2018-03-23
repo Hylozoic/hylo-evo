@@ -12,12 +12,14 @@ import {
   CREATE_POST,
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
+  ANNOUNCEMENT,
   createPost,
   updatePost,
   pollingFetchLinkPreview,
   removeLinkPreview,
   clearLinkPreview,
-  getLinkPreview
+  getLinkPreview,
+  setAnnouncement
 } from './PostEditor.store'
 import {
   addAttachment,
@@ -29,6 +31,8 @@ export function mapStateToProps (state, props) {
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const communityOptions = props.communityOptions ||
     (currentUser && currentUser.memberships.toModelArray().map(m => m.community))
+
+  const myModeratedCommunities = (currentUser && communityOptions.filter(c => currentUser.canModerate(c)))
   let post = props.post || presentPost(getPost(state, props))
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
@@ -49,6 +53,9 @@ export function mapStateToProps (state, props) {
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
 
+  const announcementSelected = state[MODULE_NAME].announcement
+
+  const canModerate = currentUser && currentUser.canModerate(currentCommunity)
   return {
     currentUser,
     currentCommunity,
@@ -66,7 +73,10 @@ export function mapStateToProps (state, props) {
     files,
     topic,
     topicName,
-    slug
+    slug,
+    announcementSelected,
+    canModerate,
+    myModeratedCommunities
   }
 }
 
@@ -79,7 +89,8 @@ export const mapDispatchToProps = (dispatch, props) => {
     createPost: (postParams, topic) => dispatch(createPost(postParams, topic)),
     goToUrl: url => dispatch(push(url)),
     addImage: url => dispatch(addAttachment(url, 'image')),
-    addFile: url => dispatch(addAttachment(url, 'file'))
+    addFile: url => dispatch(addAttachment(url, 'file')),
+    setAnnouncement: bool => dispatch(setAnnouncement(bool))
   }
 }
 

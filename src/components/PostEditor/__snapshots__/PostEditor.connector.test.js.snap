@@ -9,12 +9,15 @@ Object {
   "goToUrl": [Function],
   "pollingFetchLinkPreviewRaw": [Function],
   "removeLinkPreview": [Function],
+  "setAnnouncement": [Function],
   "updatePost": [Function],
 }
 `;
 
 exports[`mapStateToProps returns the right keys for a new post 1`] = `
 Object {
+  "announcementSelected": undefined,
+  "canModerate": true,
   "communityOptions": Array [
     SessionBoundModel {
       "_fields": Object {
@@ -25,6 +28,16 @@ Object {
         "slug": "foo",
       },
       "slug": "foo",
+    },
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "100",
+        "members": undefined,
+        "moderators": undefined,
+        "posts": undefined,
+        "slug": "bar",
+      },
+      "slug": "bar",
     },
   ],
   "currentCommunity": SessionBoundModel {
@@ -54,6 +67,18 @@ Object {
   "linkPreview": null,
   "linkPreviewStatus": false,
   "loading": false,
+  "myModeratedCommunities": Array [
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "99",
+        "members": undefined,
+        "moderators": undefined,
+        "posts": undefined,
+        "slug": "foo",
+      },
+      "slug": "foo",
+    },
+  ],
   "post": null,
   "postPending": false,
   "showFiles": false,
@@ -66,6 +91,8 @@ Object {
 
 exports[`mapStateToProps returns the right keys for a new post while pending 1`] = `
 Object {
+  "announcementSelected": undefined,
+  "canModerate": true,
   "communityOptions": Array [
     SessionBoundModel {
       "_fields": Object {
@@ -76,6 +103,16 @@ Object {
         "slug": "foo",
       },
       "slug": "foo",
+    },
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "100",
+        "members": undefined,
+        "moderators": undefined,
+        "posts": undefined,
+        "slug": "bar",
+      },
+      "slug": "bar",
     },
   ],
   "currentCommunity": SessionBoundModel {
@@ -105,6 +142,18 @@ Object {
   "linkPreview": null,
   "linkPreviewStatus": false,
   "loading": true,
+  "myModeratedCommunities": Array [
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "99",
+        "members": undefined,
+        "moderators": undefined,
+        "posts": undefined,
+        "slug": "foo",
+      },
+      "slug": "foo",
+    },
+  ],
   "post": null,
   "postPending": true,
   "showFiles": false,

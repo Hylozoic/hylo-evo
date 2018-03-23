@@ -4,8 +4,11 @@ import reducer, {
   FETCH_LINK_PREVIEW,
   REMOVE_LINK_PREVIEW,
   CLEAR_LINK_PREVIEW,
+  SET_ANNOUNCEMENT,
   defaultState,
-  fetchLinkPreview
+  fetchLinkPreview,
+  setAnnouncement,
+  showAnnouncementConfirmation
 } from './PostEditor.store'
 
 describe('PostEditor store', () => {
@@ -62,5 +65,25 @@ describe('PostEditor store', () => {
         expect(finalState).toMatchSnapshot()
       })
     })
+
+    describe(`when ${SET_ANNOUNCEMENT}`, () => {
+      const action = {
+        type: SET_ANNOUNCEMENT,
+        payload: true
+      }
+      test('announcement is set approrpiately', () => {
+        const finalState = reducer(defaultState, action)
+        expect(finalState.announcement).toEqual(true)
+        expect(finalState).toMatchSnapshot()
+      })
+    })
+  })
+  test('setAnnouncement', () => {
+    const type = 'type'
+    expect(setAnnouncement(type)).toMatchSnapshot()
+  })
+  test('showAnnouncementConfirmation', () => {
+    const bool = true
+    expect(showAnnouncementConfirmation(bool)).toMatchSnapshot()
   })
 })
