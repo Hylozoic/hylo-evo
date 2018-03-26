@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`KeyControlledItemList renders correctly (with items and renderListItem func) 1`] = `
+<KeyControlledList
+  items={
+    Array [
+      Object {
+        "id": 1,
+        "title": "one",
+      },
+      Object {
+        "id": 2,
+        "title": "two",
+      },
+    ]
+  }
+  onChange={[Function]}
+  renderListItem={[Function]}
+  selectedIndex={-1}
+  tabChooses={true}
+  theme={
+    Object {
+      "item": null,
+      "item-active": null,
+      "items": null,
+    }
+  }
+>
+  <span>
+    one
+  </span>
+  <span>
+    two
+  </span>
+</KeyControlledList>
+`;
+
+exports[`KeyControlledItemList renders correctly (with items) 1`] = `
+<KeyControlledList
+  items={
+    Array [
+      Object {
+        "id": 1,
+        "name": "one",
+      },
+      Object {
+        "id": 2,
+        "name": "two",
+      },
+    ]
+  }
+  onChange={[Function]}
+  selectedIndex={-1}
+  tabChooses={true}
+  theme={
+    Object {
+      "item": null,
+      "item-active": null,
+      "items": null,
+    }
+  }
+>
+  <li
+    className={null}
+    key="1"
+  >
+    <a
+      onClick={[Function]}
+    >
+      one
+    </a>
+  </li>
+  <li
+    className={null}
+    key="2"
+  >
+    <a
+      onClick={[Function]}
+    >
+      two
+    </a>
+  </li>
+</KeyControlledList>
+`;
+
+exports[`KeyControlledItemList renders correctly (with min props) 1`] = `
+<KeyControlledList
+  items={Array []}
+  onChange={[Function]}
+  selectedIndex={-1}
+  tabChooses={true}
+  theme={
+    Object {
+      "item": null,
+      "item-active": null,
+      "items": null,
+    }
+  }
+/>
+`;

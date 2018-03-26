@@ -3,7 +3,6 @@ import { shallow } from 'enzyme'
 import TopicSelector, { Suggestion } from './TopicSelector'
 
 describe('TopicSelector', () => {
-
   const defaultMinProps = { }
 
   function renderComponent (renderFunc, props = {}) {
@@ -129,8 +128,7 @@ describe('TopicSelector', () => {
   })
 })
 
-describe.only('Suggestion', () => {
-
+describe('Suggestion', () => {
   const defaultMinProps = {
     item: {}
   }
