@@ -27,7 +27,8 @@ export default class TagInput extends Component {
     readOnly: bool,
     className: string,
     theme: object,
-    addLeadingHashtag: bool
+    addLeadingHashtag: bool,
+    renderSuggestion: func
   }
 
   static defaultProps = {
@@ -101,7 +102,7 @@ export default class TagInput extends Component {
 
   render () {
     let { tags, placeholder } = this.props
-    const { suggestions, className, theme, readOnly, maxTags, addLeadingHashtag } = this.props
+    const { suggestions, className, theme, readOnly, maxTags, addLeadingHashtag, renderSuggestion } = this.props
     if (!tags) tags = []
     if (!placeholder) placeholder = 'Type...'
 
@@ -145,6 +146,7 @@ export default class TagInput extends Component {
           <div className={theme.suggestions}>
             <KeyControlledItemList
               items={suggestionsOrError}
+              renderListItem={renderSuggestion}
               onChange={maxReached ? this.resetInput : this.select}
               theme={{
                 items: theme.suggestions,
