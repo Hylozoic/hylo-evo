@@ -166,7 +166,7 @@ export class KeyControlledItemList extends React.Component {
     const selectedIndex = indexOf(selected, items)
 
     const renderListItem = this.props.renderListItem
-      ? topic => this.props.renderListItem(topic, this.change)
+      ? item => this.props.renderListItem({item, handleChoice: this.change})
       : item => <li className={theme.item} key={item.id || 'blank'}>
         <a onClick={event => this.change(item, event)}>{item.name}</a>
       </li>

@@ -126,6 +126,7 @@ export function updatePost (post) {
           type
           title
           details
+          updatedAt
           linkPreview {
             id
           }

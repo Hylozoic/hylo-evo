@@ -41,10 +41,6 @@ export default class PostCard extends React.Component {
       post, className, expanded, showDetails, showCommunity, highlightProps, slug
     } = this.props
 
-    if (post.id === 23988) {
-      console.log('post', post)
-    }
-
     const shouldShowDetails = element => {
       if (element === this.refs.postCard) return true
       if (element.tagName === 'A' || element.tagName === 'LI') return false

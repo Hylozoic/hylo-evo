@@ -18,6 +18,7 @@ const getPost = createSelector(
 
 export const presentPost = (post, communityId) => {
   if (!post) return null
+  post.refreshFromState()
   const postMembership = post.postMemberships.filter(p =>
     Number(p.community) === Number(communityId)).toRefArray()[0]
   const pinned = postMembership && postMembership.pinned

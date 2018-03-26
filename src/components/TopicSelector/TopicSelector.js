@@ -107,8 +107,9 @@ export default class TopicSelector extends Component {
   }
 }
 
-export function Suggestion (topic, handleChoice) {
-  const {id, name, isNew, isError, postsTotal, followersTotal} = topic
+// this should take an object. fix here and call site
+export function Suggestion ({item, handleChoice}) {
+  const {id, name, isNew, isError, postsTotal, followersTotal} = item
   const formatCount = count => isNaN(count)
     ? 0
     : count < 1000
