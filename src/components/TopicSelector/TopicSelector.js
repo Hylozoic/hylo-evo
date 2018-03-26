@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import TagInput from 'components/TagInput'
 import styles from './TopicSelector.scss'
-import { isEmpty, uniqBy, sortBy } from 'lodash/fp'
+import { isEmpty, uniqBy, sortBy, find } from 'lodash/fp'
 import { validateTopicName } from 'hylo-utils/validators'
 import Icon from 'components/Icon'
 
@@ -78,9 +78,13 @@ export default class TopicSelector extends Component {
   render () {
     const { placeholder, readOnly, topicResults } = this.props
     const { selected, input } = this.state
-    const sortedTopicResults = sortBy(['followersTotal', 'postsTotal'], topicResults).reverse()
 
-    const suggestions = !validateTopicName(input)
+    // add a 'create new' row
+    const addNew = !validateTopicName(input) && !find(topic => topic.name === input, topicResults)
+
+    const sortedTopicResults = sortBy([t => t.name === input ? -1 : 1, 'followersTotal', 'postsTotal'], topicResults)
+
+    const suggestions = addNew
       ? [{id: input, name: input, isNew: true}].concat(sortedTopicResults)
       : sortedTopicResults
 
@@ -104,7 +108,7 @@ export default class TopicSelector extends Component {
 }
 
 export function Suggestion (topic, handleChoice) {
-  const {id, name, isNew, postsTotal, followersTotal} = topic
+  const {id, name, isNew, isError, postsTotal, followersTotal} = topic
   const formatCount = count => isNaN(count)
     ? 0
     : count < 1000
@@ -113,13 +117,14 @@ export function Suggestion (topic, handleChoice) {
 
   return <li className={styles.item} key={id || 'blank'}>
     <a onClick={event => handleChoice(topic, event)}>
-      <div>#{name}</div>
-      {isNew
+      {isError && <div>{name}</div>}
+      {!isError && <div>#{name}</div>}
+      {!isError && (isNew
         ? <div styleName='suggestionMeta'>create new</div>
         : <div styleName='suggestionMeta'>
           <span styleName='column'><Icon name='Star' styleName='icon' />{formatCount(followersTotal)} subscribers</span>
           <span styleName='column'><Icon name='Events' styleName='icon' />{formatCount(postsTotal)} posts</span>
-        </div>}
+        </div>)}
     </a>
   </li>
 }

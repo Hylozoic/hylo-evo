@@ -122,7 +122,7 @@ export default class TagInput extends Component {
     const suggestionsOrError = maxReached
       ? isEmpty(this.input.value)
         ? []
-        : [{name: `no more than ${maxTags} allowed`}]
+        : [{name: `no more than ${maxTags} allowed`, isError: true}]
       : suggestions
 
     return <div className={cx(theme.root, {[theme.readOnly]: readOnly}, className)} onClick={this.focus}>
