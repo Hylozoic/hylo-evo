@@ -113,6 +113,10 @@ export default function (state = {}, action) {
   return state
 }
 
+const isIterable = object =>
+  object != null && typeof object[Symbol.iterator] === 'function'
+
+
 export function matchNewPostIntoQueryResults (state, {id, type, communities, topics}) {
   /* about this:
       we add the post id into queryResult sets that are based on time of
@@ -129,8 +133,10 @@ export function matchNewPostIntoQueryResults (state, {id, type, communities, top
       {slug: community.slug, sortBy: 'updated', filter: type}
     ]
 
-    for (let topic of topics) {
-      queriesToMatch.push({slug: community.slug, topic: topic.id})
+    if (isIterable(topics)) {
+      for (let topic of topics) {
+        queriesToMatch.push({slug: community.slug, topic: topic.id})
+      }
     }
 
     return reduce((innerMemo, params) => {
