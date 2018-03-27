@@ -92,12 +92,11 @@
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%;
 }
 
 @media screen and (min-width: 30em) {
   .suggestions {
-    width: 240px;
+    min-width: 240px;
   }
 }
 
@@ -118,8 +117,7 @@
 
 .suggestion a {
   color: $color-caribbean-green;
-  border-bottom: 1px solid #ddd;
-  padding: 6px 8px;
+  padding: 4px 8px;
   display: block;
 }
 
@@ -135,4 +133,21 @@
 .suggestion .disabled {
   opacity: 0.5;
   cursor: auto;
+}
+
+.suggestionMeta {
+  composes: faint-lt-sm from 'css/typography.scss';
+  font-size: 12px;
+  margin-top: 5px;
+  display: flex;
+}
+
+.column {
+  flex: 1
+}
+
+.icon {
+  composes: faint-lt-sm from 'css/typography.scss';
+  font-size: 12px;
+  margin-right: 3px;
 }
