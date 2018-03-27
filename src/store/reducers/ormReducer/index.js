@@ -35,7 +35,7 @@ import {
   DELETE_COMMENT_PENDING
 } from 'routes/PostDetail/Comments/Comment/Comment.store'
 import {
-  UPDATE_POST_PENDING, UPDATE_POST
+  UPDATE_POST_PENDING
 } from 'components/PostEditor/PostEditor.store'
 import {
   CREATE_COMMUNITY
@@ -226,7 +226,6 @@ export default function ormReducer (state = {}, action) {
       // deleting all attachments and removing topics here because we restore them from the result of the UPDATE_POST action
       post = Post.withId(meta.id)
       post.attachments.toModelArray().map(a => a.delete())
-      // updating description to itself here is a horrible hack. It tells selectors not to cache the post so topics update
       post.update({topics: []})
       break
 

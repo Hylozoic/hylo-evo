@@ -72,10 +72,6 @@ export default function (state = {}, action) {
   switch (type) {
     case CREATE_POST:
       root = payload.data.createPost
-      // TODO: passing topic throught the meta is a temporary hack to avoid parsing
-      // the post details here. Once we implement the topic line in the post editor we
-      // can remove this because we'll have the topics. At that time we can remove
-      // the topic param in PostEditor.store#createPost
       return matchNewPostIntoQueryResults(state, root)
 
     case FIND_OR_CREATE_THREAD:
