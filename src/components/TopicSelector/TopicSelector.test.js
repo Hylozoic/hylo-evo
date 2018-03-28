@@ -1,16 +1,16 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import TopicSelector, { Suggestion } from './TopicSelector'
+import TopicSelector from './TopicSelector'
+
+const defaultMinProps = { }
+
+function renderComponent (renderFunc, props = {}) {
+  return renderFunc(
+    <TopicSelector {...{...defaultMinProps, ...props}} />
+  )
+}
 
 describe('TopicSelector', () => {
-  const defaultMinProps = { }
-
-  function renderComponent (renderFunc, props = {}) {
-    return renderFunc(
-      <TopicSelector {...{...defaultMinProps, ...props}} />
-    )
-  }
-
   it('renders correctly (with min props)', () => {
     const wrapper = renderComponent(shallow)
     expect(wrapper).toMatchSnapshot()
@@ -125,50 +125,5 @@ describe('TopicSelector', () => {
       expect(wrapper.instance().state.selected).toEqual([{name: 'zero'}])
       expect(wrapper.instance().state.topicsEdited).toEqual(true)
     })
-  })
-})
-
-describe('Suggestion', () => {
-  const defaultMinProps = {
-    item: {}
-  }
-
-  function renderComponent (renderFunc, props = {}) {
-    return renderFunc(
-      <Suggestion {...{...defaultMinProps, ...props}} />
-    )
-  }
-
-  it('renders correctly (with min props)', () => {
-    const wrapper = renderComponent(shallow)
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  it('renders correctly (with a topic)', () => {
-    const item = {
-      name: 'design',
-      postsTotal: 250,
-      followersTotal: 1200
-    }
-    const wrapper = renderComponent(shallow, { item })
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  it('renders correctly (with a new topic)', () => {
-    const item = {
-      name: 'design',
-      isNew: true
-    }
-    const wrapper = renderComponent(shallow, { item })
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  it('renders correctly (with an error)', () => {
-    const item = {
-      name: 'there was an error',
-      isError: true
-    }
-    const wrapper = renderComponent(shallow, { item })
-    expect(wrapper).toMatchSnapshot()
   })
 })

@@ -132,8 +132,7 @@ export class KeyControlledItemList extends React.Component {
     selected: object,
     tabChooses: bool,
     theme: object,
-    className: string,
-    renderListItem: func
+    className: string
   }
 
   static defaultProps = {
@@ -165,14 +164,11 @@ export class KeyControlledItemList extends React.Component {
     const { items, selected, theme } = this.props
     const selectedIndex = indexOf(selected, items)
 
-    const renderListItem = this.props.renderListItem
-      ? item => this.props.renderListItem({item, handleChoice: this.change})
-      : item => <li className={theme.item} key={item.id || 'blank'}>
-        <a onClick={event => this.change(item, event)}>{item.name}</a>
+    const listItems = items.map((c, i) =>
+      <li className={theme.item} key={c.id || 'blank'}>
+        <a onClick={event => this.change(c, event)}>{c.name}</a>
       </li>
-
-    const listItems = items.map(renderListItem)
-
+    )
     return <KeyControlledList
       theme={theme}
       children={listItems}

@@ -51,8 +51,6 @@ export function findTopics (topicsSearchTerm) {
             topic {
               id
               name
-              followersTotal
-              postsTotal
             }
           }
         }

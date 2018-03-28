@@ -1,126 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Suggestion renders correctly (with a new topic) 1`] = `
-<li
-  key="blank"
->
-  <a
-    onClick={[Function]}
-  >
-    <div>
-      #
-      design
-    </div>
-    <div
-      data-stylename="suggestionMeta"
-    >
-      create new
-    </div>
-  </a>
-</li>
-`;
-
-exports[`Suggestion renders correctly (with a topic) 1`] = `
-<li
-  key="blank"
->
-  <a
-    onClick={[Function]}
-  >
-    <div>
-      #
-      design
-    </div>
-    <div
-      data-stylename="suggestionMeta"
-    >
-      <span
-        data-stylename="column"
-      >
-        <Icon
-          data-stylename="icon"
-          name="Star"
-        />
-        1.2k
-         subscribers
-      </span>
-      <span
-        data-stylename="column"
-      >
-        <Icon
-          data-stylename="icon"
-          name="Events"
-        />
-        250
-         posts
-      </span>
-    </div>
-  </a>
-</li>
-`;
-
-exports[`Suggestion renders correctly (with an error) 1`] = `
-<li
-  key="blank"
->
-  <a
-    onClick={[Function]}
-  >
-    <div>
-      there was an error
-    </div>
-  </a>
-</li>
-`;
-
-exports[`Suggestion renders correctly (with min props) 1`] = `
-<li
-  key="blank"
->
-  <a
-    onClick={[Function]}
-  >
-    <div>
-      #
-    </div>
-    <div
-      data-stylename="suggestionMeta"
-    >
-      <span
-        data-stylename="column"
-      >
-        <Icon
-          data-stylename="icon"
-          name="Star"
-        />
-        0
-         subscribers
-      </span>
-      <span
-        data-stylename="column"
-      >
-        <Icon
-          data-stylename="icon"
-          name="Events"
-        />
-        0
-         posts
-      </span>
-    </div>
-  </a>
-</li>
-`;
-
 exports[`TopicSelector renders correctly (with min props) 1`] = `
 <TagInput
-  addLeadingHashtag={true}
   handleAddition={[Function]}
   handleDelete={[Function]}
   handleInputChange={[Function]}
   maxTags={3}
   placeholder="Type topic name..."
-  renderSuggestion={[Function]}
-  stripInputHashtag={true}
   suggestions={Array []}
   tags={Array []}
   theme={Object {}}

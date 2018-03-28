@@ -68,10 +68,6 @@ export function createPost (post) {
             url
             position
           }
-          topics {
-            id
-            name
-          }
         }
       }`,
       variables: {
@@ -126,7 +122,6 @@ export function updatePost (post) {
           type
           title
           details
-          updatedAt
           linkPreview {
             id
           }

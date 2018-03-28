@@ -92,11 +92,12 @@
   position: absolute;
   top: 100%;
   left: 0;
+  width: 100%;
 }
 
 @media screen and (min-width: 30em) {
   .suggestions {
-    min-width: 240px;
+    width: 240px;
   }
 }
 

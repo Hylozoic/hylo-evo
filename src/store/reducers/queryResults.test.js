@@ -257,8 +257,9 @@ describe('matchNewPostIntoQueryResults', () => {
       }
     }
     const communities = [{slug: 'foo'}, {slug: 'bar'}]
-    const post = {id: '17', type: 'request', communities, topics: [{name: 'a', id: '123'}]}
-    expect(matchNewPostIntoQueryResults(state, post)).toEqual({
+    const post = {id: '17', type: 'request', communities}
+    const topic = {id: '123'}
+    expect(matchNewPostIntoQueryResults(state, post, topic)).toEqual({
       '{"type":"FETCH_POSTS","params":{"slug":"bar","topic":"123"}}': {
         hasMore: true,
         ids: ['17', '18', '11']

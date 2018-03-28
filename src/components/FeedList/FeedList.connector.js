@@ -11,10 +11,8 @@ export function mapStateToProps (state, props) {
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const communityId = currentCommunity && currentCommunity.id
 
-  const posts = getPosts(state, props).map(p => presentPost(p, communityId))
-
   return {
-    posts,
+    posts: getPosts(state, props).map(p => presentPost(p, communityId)),
     hasMore: getHasMorePosts(state, props),
     pending: state.pending[FETCH_POSTS]
   }

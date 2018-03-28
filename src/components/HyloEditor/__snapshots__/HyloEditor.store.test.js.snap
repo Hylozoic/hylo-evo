@@ -9,8 +9,6 @@ Object {
             topic {
               id
               name
-              followersTotal
-              postsTotal
             }
           }
         }
