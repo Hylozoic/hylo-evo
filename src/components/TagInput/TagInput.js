@@ -26,7 +26,9 @@ export default class TagInput extends Component {
     filter: func,
     readOnly: bool,
     className: string,
-    theme: object
+    theme: object,
+    addLeadingHashtag: bool,
+    renderSuggestion: func
   }
 
   static defaultProps = {
@@ -94,19 +96,22 @@ export default class TagInput extends Component {
   }
 
   handleChange = debounce(value => {
-    this.props.handleInputChange(value)
+    const strippedValue = this.props.stripInputHashtag ? value.replace(/^#/, '') : value
+    this.props.handleInputChange(strippedValue)
   }, 200)
 
   render () {
     let { tags, placeholder } = this.props
-    const { suggestions, className, theme, readOnly, maxTags } = this.props
+    const { suggestions, className, theme, readOnly, maxTags, addLeadingHashtag, renderSuggestion } = this.props
     if (!tags) tags = []
     if (!placeholder) placeholder = 'Type...'
+
+    const optionalHashtag = addLeadingHashtag ? '#' : ''
 
     const selectedItems = uniqBy('id', tags).map(t =>
       <li key={t.id} className={theme.selectedTag}>
         {t.avatar_url && <Avatar person={t} isLink={false} />}
-        <span className={theme.selectedTagName}>{t.label || t.name}</span>
+        <span className={theme.selectedTagName}>{optionalHashtag}{t.label || t.name}</span>
         <a onClick={!readOnly ? this.remove(t) : undefined} className={theme.selectedTagRemove}>&times;</a>
       </li>
     )
@@ -117,7 +122,7 @@ export default class TagInput extends Component {
     const suggestionsOrError = maxReached
       ? isEmpty(this.input.value)
         ? []
-        : [{name: `no more than ${maxTags} allowed`}]
+        : [{name: `no more than ${maxTags} allowed`, isError: true}]
       : suggestions
 
     return <div className={cx(theme.root, {[theme.readOnly]: readOnly}, className)} onClick={this.focus}>
@@ -141,6 +146,7 @@ export default class TagInput extends Component {
           <div className={theme.suggestions}>
             <KeyControlledItemList
               items={suggestionsOrError}
+              renderListItem={renderSuggestion}
               onChange={maxReached ? this.resetInput : this.select}
               theme={{
                 items: theme.suggestions,

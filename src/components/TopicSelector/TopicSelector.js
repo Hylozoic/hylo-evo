@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import TagInput from 'components/TagInput'
 import styles from './TopicSelector.scss'
-import { isEmpty, uniqBy } from 'lodash/fp'
+import { isEmpty, uniqBy, sortBy, find } from 'lodash/fp'
 import { validateTopicName } from 'hylo-utils/validators'
+import Icon from 'components/Icon'
 
 export default class TopicSelector extends Component {
   static defaultProps = {
@@ -77,9 +78,15 @@ export default class TopicSelector extends Component {
   render () {
     const { placeholder, readOnly, topicResults } = this.props
     const { selected, input } = this.state
-    const suggestions = !validateTopicName(input)
-      ? [{id: input, name: input}].concat(topicResults)
-      : topicResults
+
+    // add a 'create new' row
+    const addNew = !validateTopicName(input) && !find(topic => topic.name === input, topicResults)
+
+    const sortedTopicResults = sortBy([t => t.name === input ? -1 : 1, 'followersTotal', 'postsTotal'], topicResults)
+
+    const suggestions = addNew
+      ? [{id: input, name: input, isNew: true}].concat(sortedTopicResults)
+      : sortedTopicResults
 
     return (
       <TagInput
@@ -92,7 +99,33 @@ export default class TopicSelector extends Component {
         readOnly={readOnly}
         theme={styles}
         maxTags={3}
+        addLeadingHashtag
+        stripInputHashtag
+        renderSuggestion={Suggestion}
       />
     )
   }
+}
+
+// this should take an object. fix here and call site
+export function Suggestion ({item, handleChoice}) {
+  const {id, name, isNew, isError, postsTotal, followersTotal} = item
+  const formatCount = count => isNaN(count)
+    ? 0
+    : count < 1000
+      ? count
+      : (count / 1000).toFixed(1) + 'k'
+
+  return <li className={styles.item} key={id || 'blank'}>
+    <a onClick={event => handleChoice(item, event)}>
+      {isError && <div>{name}</div>}
+      {!isError && <div>#{name}</div>}
+      {!isError && (isNew
+        ? <div styleName='suggestionMeta'>create new</div>
+        : <div styleName='suggestionMeta'>
+          <span styleName='column'><Icon name='Star' styleName='icon' />{formatCount(followersTotal)} subscribers</span>
+          <span styleName='column'><Icon name='Events' styleName='icon' />{formatCount(postsTotal)} posts</span>
+        </div>)}
+    </a>
+  </li>
 }
