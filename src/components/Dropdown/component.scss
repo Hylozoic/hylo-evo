@@ -83,6 +83,14 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
   user-select: none;
 }
 
+.redItem {
+  color: $color-amaranth;
+  // get the icon as well
+  span {
+    color: $color-amaranth;
+  }
+}
+
 .triangle {
   min-width: 0 !important;
   @include is-top-triangle(#fff, $dropdown-border-color, 7px);

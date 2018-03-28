@@ -75,8 +75,8 @@ export default class PostHeader extends PureComponent {
       {icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost},
       {icon: 'Edit', label: 'Edit', onClick: editPost},
       {icon: 'Flag', label: 'Flag', onClick: flagPostFn},
-      {icon: 'Trash', label: 'Delete', onClick: deletePost},
-      {icon: 'Trash', label: 'Remove From Community', onClick: removePost}
+      {icon: 'Trash', label: 'Delete', onClick: deletePost, red: true},
+      {icon: 'Trash', label: 'Remove From Community', onClick: removePost, red: true}
       // {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
     ], item => isFunction(item.onClick))
 
