@@ -9,6 +9,7 @@ import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
 import fetchCommunityTopics, { FETCH_COMMUNITY_TOPICS } from 'store/actions/fetchCommunityTopics'
 import { setSort, setSearch, getSort, getSearch } from './AllTopics.store'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
+import getMe from 'store/selectors/getMe'
 
 const getCommunityTopicResults = makeGetQueryResults(FETCH_COMMUNITY_TOPICS)
 
@@ -33,6 +34,10 @@ export function mapStateToProps (state, props) {
   const selectedSort = getSort(state)
   const search = getSearch(state)
   const fetchIsPending = state.pending[FETCH_COMMUNITY_TOPICS]
+  const currentUser = getMe(state, props)
+  console.log('community', community)
+  const canModerate = currentUser && currentUser.canModerate(community)
+  console.log('canModerate', canModerate)
 
   const queryResultParams = {
     id: get('id', community),
@@ -50,7 +55,8 @@ export function mapStateToProps (state, props) {
     selectedSort,
     search,
     hasMore,
-    fetchIsPending
+    fetchIsPending,
+    canModerate
   }
 }
 
@@ -62,7 +68,12 @@ export function mapDispatchToProps (dispatch, props) {
       setSearch
     }, dispatch),
     fetchCommunityTopics: (communityId, { search, first, sortBy, offset } = {}) =>
-      debouncedFetch(dispatch, communityId, {search, first, sortBy, offset})
+      debouncedFetch(dispatch, communityId, {search, first, sortBy, offset}),
+    deleteTopic: topic => {
+      if (window.confirm('Are you sure you want to delete this topic?')) {
+        console.log('deleting topic', topic)
+      }
+    }
   }
 }
 
@@ -94,6 +105,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   return {
     ...stateProps,
     ...ownProps,
+    ...dispatchProps,
     setSort,
     setSearch,
     fetchCommunityTopics,

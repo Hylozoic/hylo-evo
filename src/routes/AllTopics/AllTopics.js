@@ -75,7 +75,9 @@ export default class AllTopics extends Component {
       setSort,
       toggleSubscribe,
       fetchIsPending,
-      fetchMoreCommunityTopics
+      fetchMoreCommunityTopics,
+      canModerate,
+      deleteTopic
     } = this.props
 
     const { totalTopicsCached } = this.state
@@ -95,8 +97,8 @@ export default class AllTopics extends Component {
         <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {communityTopics.map(ct =>
             <CommunityTopicListItem key={ct.id} item={ct} slug={community.slug}
-              canModerate
-              deleteTopic={() => console.log('deleting topic', ct)}
+              canModerate={canModerate}
+              deleteTopic={() => deleteTopic(ct)}
               toggleSubscribe={() =>
                 toggleSubscribe(ct.topic.id, !ct.isSubscribed)} />)}
           <ScrollListener onBottom={() => fetchMoreCommunityTopics()}
