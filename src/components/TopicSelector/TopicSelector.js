@@ -117,7 +117,7 @@ export function Suggestion ({item, handleChoice}) {
       : (count / 1000).toFixed(1) + 'k'
 
   return <li className={styles.item} key={id || 'blank'}>
-    <a onClick={event => handleChoice(topic, event)}>
+    <a onClick={event => handleChoice(item, event)}>
       {isError && <div>{name}</div>}
       {!isError && <div>#{name}</div>}
       {!isError && (isNew
