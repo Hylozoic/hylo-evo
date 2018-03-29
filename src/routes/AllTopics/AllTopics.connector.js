@@ -7,7 +7,7 @@ import { createSelector } from 'reselect'
 import { get, includes, isEmpty, debounce } from 'lodash/fp'
 import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
 import fetchCommunityTopics, { FETCH_COMMUNITY_TOPICS } from 'store/actions/fetchCommunityTopics'
-import { setSort, setSearch, getSort, getSearch } from './AllTopics.store'
+import { setSort, setSearch, getSort, getSearch, deleteCommunityTopic } from './AllTopics.store'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 import getMe from 'store/selectors/getMe'
 
@@ -35,9 +35,7 @@ export function mapStateToProps (state, props) {
   const search = getSearch(state)
   const fetchIsPending = state.pending[FETCH_COMMUNITY_TOPICS]
   const currentUser = getMe(state, props)
-  console.log('community', community)
   const canModerate = currentUser && currentUser.canModerate(community)
-  console.log('canModerate', canModerate)
 
   const queryResultParams = {
     id: get('id', community),
@@ -71,7 +69,7 @@ export function mapDispatchToProps (dispatch, props) {
       debouncedFetch(dispatch, communityId, {search, first, sortBy, offset}),
     deleteTopic: topic => {
       if (window.confirm('Are you sure you want to delete this topic?')) {
-        console.log('deleting topic', topic)
+        dispatch(deleteCommunityTopic(topic.id))
       }
     }
   }

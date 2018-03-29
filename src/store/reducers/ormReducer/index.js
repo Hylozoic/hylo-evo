@@ -44,6 +44,10 @@ import {
   USE_INVITATION
 } from 'routes/JoinCommunity/JoinCommunity.store'
 
+import {
+  DELETE_COMMUNITY_TOPIC_PENDING
+} from 'routes/AllTopics/AllTopics.store'
+
 import orm from 'store/models'
 import { find, values } from 'lodash/fp'
 import extractModelsFromAction from '../ModelExtractor/extractModelsFromAction'
@@ -237,6 +241,10 @@ export default function ormReducer (state = {}, action) {
     case USE_INVITATION:
       Me.first().updateAppending({memberships: [payload.data.useInvitation.membership.id]})
       break
+
+    case DELETE_COMMUNITY_TOPIC_PENDING:
+      const communityTopic = CommunityTopic.withId(meta.id)
+      communityTopic.delete()
   }
 
   values(sessionReducers).forEach(fn => fn(session, action))
