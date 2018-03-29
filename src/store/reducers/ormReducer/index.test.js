@@ -39,6 +39,9 @@ import {
 import {
   UPDATE_COMMUNITY_HIDDEN_SETTING_PENDING
 } from 'routes/NetworkSettings/NetworkSettings.store'
+import {
+  DELETE_COMMUNITY_TOPIC_PENDING
+} from 'routes/AllTopics/AllTopics.store'
 
 import deep from 'deep-diff'
 
@@ -609,5 +612,22 @@ describe('on UPDATE_COMMUNITY_HIDDEN_SETTING_PENDING', () => {
     const newState = ormReducer(session.state, action)
     const community = orm.session(newState).Community.withId(communityId)
     expect(community.hidden).toBe(true)
+  })
+})
+
+describe('on DELETE_COMMUNITY_TOPIC_PENDING', () => {
+  const session = orm.session(orm.getEmptyState())
+  session.CommunityTopic.create({id: '1'})
+  session.CommunityTopic.create({id: '2'})
+
+  it('removes the communityTopic', () => {
+    const action = {
+      type: DELETE_COMMUNITY_TOPIC_PENDING,
+      meta: {id: '1'}
+    }
+    const newState = ormReducer(session.state, action)
+    const newSession = orm.session(newState)
+    expect(newSession.CommunityTopic.hasId('1')).toBeFalsy()
+    expect(newSession.CommunityTopic.hasId('2')).toBeTruthy()
   })
 })
