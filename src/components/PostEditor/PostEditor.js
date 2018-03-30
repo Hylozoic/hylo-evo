@@ -376,8 +376,7 @@ export function ActionsBar ({id,
         <Icon name='Paperclip'
           styleName={cx('action-icon', {'highlight-icon': showFiles})} />
       </ChangeImageButton>
-      {/* FIXME: coordinate announcement release with mobile.
-      canModerate && <span data-tip='Send Announcement' data-for='announcement-tt'>
+      {canModerate && <span data-tip='Send Announcement' data-for='announcement-tt'>
         <Icon name='Announcement'
           onClick={() => setAnnouncement(!announcementSelected)}
           styleName={cx('action-icon', {'highlight-icon': announcementSelected})}
@@ -386,7 +385,7 @@ export function ActionsBar ({id,
           effect={'solid'}
           delayShow={550}
           id='announcement-tt' />
-      </span> */}
+      </span>}
       {showAnnouncementModal && <SendAnnouncementModal
         closeModal={toggleAnnouncementModal}
         save={save}
