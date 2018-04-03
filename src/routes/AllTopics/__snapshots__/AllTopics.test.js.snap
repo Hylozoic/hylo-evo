@@ -44,6 +44,7 @@ exports[`AllTopics matches the latest snapshot 1`] = `
       id="topic-list"
     >
       <CommunityTopicListItem
+        deleteTopic={[Function]}
         item={
           Object {
             "followersTotal": 52,

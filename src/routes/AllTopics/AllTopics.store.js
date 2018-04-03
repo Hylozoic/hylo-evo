@@ -1,7 +1,9 @@
 export const MODULE_NAME = 'AllTopics'
 
-const SET_SORT = `${MODULE_NAME}/SET_SORT`
-const SET_SEARCH = `${MODULE_NAME}/SET_SEARCH`
+export const SET_SORT = `${MODULE_NAME}/SET_SORT`
+export const SET_SEARCH = `${MODULE_NAME}/SET_SEARCH`
+export const DELETE_COMMUNITY_TOPIC = `${MODULE_NAME}/DELETE_COMMUNITY_TOPIC`
+export const DELETE_COMMUNITY_TOPIC_PENDING = `${DELETE_COMMUNITY_TOPIC}_PENDING`
 
 const defaultState = {
   sort: 'updated_at',
@@ -48,4 +50,24 @@ export function getSort (state) {
 
 export function getSearch (state) {
   return state[MODULE_NAME].search
+}
+
+export function deleteCommunityTopic (communityTopicId) {
+  return {
+    type: DELETE_COMMUNITY_TOPIC,
+    graphql: {
+      query: `mutation ($id: ID) {
+        deleteCommunityTopic(id: $id) {
+          success
+        }
+      }`,
+      variables: {
+        id: communityTopicId
+      }
+    },
+    meta: {
+      id: communityTopicId,
+      optimistic: true
+    }
+  }
 }

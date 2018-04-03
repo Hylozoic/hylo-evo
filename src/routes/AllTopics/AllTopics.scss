@@ -52,6 +52,7 @@
 .topic-list {
   flex: 1;
   overflow-y: auto;
+  padding-bottom: 35px;
 }
 
 // TopicListItem
@@ -86,4 +87,8 @@
   composes: text-button from 'css/typography.scss';
   font-size: 16px;
   margin-left: 15px;
+}
+
+.topic-dropdown {
+  margin-left: 10px;
 }

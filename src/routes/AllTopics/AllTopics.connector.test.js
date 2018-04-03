@@ -1,4 +1,19 @@
-import { mergeProps } from './AllTopics.connector'
+import { mapStateToProps, mergeProps } from './AllTopics.connector'
+import { MODULE_NAME } from './AllTopics.store'
+
+describe('mapStateToProps', () => {
+  it('returns the right keys', () => {
+    const state = {
+      [MODULE_NAME]: {},
+      pending: {},
+      queryResults: {}
+    }
+    const props = {
+      navigation: {}
+    }
+    expect(mapStateToProps(state, props)).toMatchSnapshot()
+  })
+})
 
 describe('mergeProps', () => {
   it('populates fetchCommunityTopics and fetchMoreCommunityTopics', () => {

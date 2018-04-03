@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapStateToProps returns the right keys 1`] = `
+Object {
+  "canModerate": undefined,
+  "community": null,
+  "communityTopics": Array [],
+  "fetchIsPending": undefined,
+  "hasMore": undefined,
+  "search": undefined,
+  "selectedSort": undefined,
+  "totalTopics": undefined,
+}
+`;
