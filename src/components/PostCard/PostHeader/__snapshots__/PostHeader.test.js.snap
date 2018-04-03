@@ -274,6 +274,7 @@ exports[`matches announcement snapshot 3`] = `
               "icon": "Trash",
               "label": "Delete",
               "onClick": [Function],
+              "red": true,
             },
           ]
         }
