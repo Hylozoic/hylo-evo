@@ -44,6 +44,7 @@ export default class PostHeader extends PureComponent {
       topicsOnNewline,
       announcement
     } = this.props
+
     if (!creator) return null
 
     let context

@@ -168,7 +168,9 @@ function WrappedPostHeader ({post, showCommunity, onClose, slug}) {
     topics={post.topics}
     styleName='header'
     id={post.id}
-    topicsOnNewline />
+    topicsOnNewline
+    announcement={post.announcement}
+  />
 }
 
 export function PostTags ({ tags, slug }) {
