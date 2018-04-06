@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
+import PostCommunities from './PostCommunities'
 import PostImage from './PostImage'
 import PostBody from './PostBody'
 import './PostCard.scss'
@@ -79,6 +80,9 @@ export default class PostCard extends React.Component {
         slug={slug}
         highlightProps={highlightProps}
         fileAttachments={post.fileAttachments} />
+      <PostCommunities
+        communities={post.communities}
+        slug={slug} />
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}

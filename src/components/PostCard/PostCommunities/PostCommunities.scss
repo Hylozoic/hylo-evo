@@ -1,0 +1,47 @@
+.communities {
+  padding-left: $space-4x;
+  padding-right: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-top: 1px solid $color-cape-cod-10;
+  overflow: hidden;
+  min-height: 40px;
+}
+
+.expanded {
+  border: red;
+}
+
+.collapsedRow {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.label {
+  composes: timestamp from 'css/typography.scss';
+}
+
+.communityList {
+  composes: timestamp from 'css/typography.scss';
+}
+
+.communityLink {
+  color: $color-caribbean-green !important;
+  font-size: 12px;
+  &:hover {
+    text-decoration: none;
+    color: $color-gossamer !important;
+  }
+}
+
+.expandLink {
+  margin-left: auto;
+  margin-right: 22px;
+}
+
+.expandIcon {
+  composes: timestamp from 'css/typography.scss';
+  font-size: 20px;
+}
