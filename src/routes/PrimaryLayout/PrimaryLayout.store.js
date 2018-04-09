@@ -113,6 +113,9 @@ me {
   email
   settings {
     signupInProgress
+    digestFrequency
+    dmNotifications
+    commentNotifications
   }
   memberships {
     id

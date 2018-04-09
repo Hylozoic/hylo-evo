@@ -22,7 +22,7 @@ export default class NotificationSettingsTab extends Component {
 
     if (!currentUser) return <Loading />
 
-    const { settings, hasDevice } = currentUser
+    const { settings = {}, hasDevice } = currentUser
 
     const updateSetting = setting => value => {
       updateUserSettings({settings: {[setting]: value}})
@@ -34,6 +34,11 @@ export default class NotificationSettingsTab extends Component {
       hasDevice && {id: 'push', label: 'Mobile App'},
       hasDevice && {id: 'both', label: 'Both'}
     ])
+
+    const getSetting = setting => {
+      if (!hasDevice && settings[setting] === 'both') return 'email'
+      return settings[setting]
+    }
 
     return <div>
       <div styleName='title'>Notifications</div>
@@ -51,13 +56,13 @@ export default class NotificationSettingsTab extends Component {
         new direct messages?</div>
       <Select
         onChange={updateSetting('dmNotifications')}
-        selected={settings['dmNotifications']}
+        selected={getSetting('dmNotifications')}
         options={notificationOptions} />
       <div styleName='prompt'>How would you like to receive notifications about
       new comments on posts you're following?</div>
       <Select
         onChange={updateSetting('commentNotifications')}
-        selected={settings['commentNotifications']}
+        selected={getSetting('commentNotifications')}
         options={notificationOptions} />
       <div styleName='help'>
         <p styleName='help-paragraph'>
