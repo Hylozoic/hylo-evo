@@ -10,10 +10,10 @@
 }
 
 .expanded {
-  border: red;
+  padding-top: 7px;
 }
 
-.collapsedRow {
+.row {
   display: flex;
   align-items: center;
   width: 100%;
@@ -44,4 +44,34 @@
 .expandIcon {
   composes: timestamp from 'css/typography.scss';
   font-size: 20px;
+}
+
+.expandedSection {
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.communityRow {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.communityCell {
+  flex: 1;
+}
+
+.communityCellAvatar {
+  @include image(20px);
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.communityCellName {
+  composes: text-button from 'css/typography.scss';
+  &:hover {
+    text-decoration: none;
+  }
+  font-size: 12px;
 }

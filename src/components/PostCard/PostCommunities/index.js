@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import './PostCommunities.scss'
 import cx from 'classnames'
-import { communityUrl } from 'util/index'
+import { communityUrl, bgImageStyle } from 'util/index'
 import { Link } from 'react-router-dom'
-import { get, isEmpty } from 'lodash/fp'
+import { get, isEmpty, chunk } from 'lodash/fp'
 import Icon from 'components/Icon'
+import { DEFAULT_AVATAR } from 'store/models/Community'
 
 export default class PostCommunities extends Component {
   static defaultState = {
-    expanded: false
+    expanded: true
   }
 
   constructor (props) {
@@ -32,14 +33,18 @@ export default class PostCommunities extends Component {
     const { expanded } = this.state
 
     const content = expanded
-      ? <span onClick={this.toggleExpanded}>
-        Expanded!
+      ? <span styleName='expandedSection' onClick={this.toggleExpanded}>
+        <div styleName='row'>
+          <span styleName='label'>Posted In:&nbsp;</span>
+          <a onClick={this.toggleExpanded} styleName='expandLink'><Icon name='ArrowUp' styleName='expandIcon' /></a>
+        </div>
+        {chunk(2, communities).map(pair => <CommunityRow communities={pair} key={pair[0].id} />)}
       </span>
-      : <span styleName='collapsedRow'>
+      : <div styleName='row'>
         <span styleName='label'>Posted In:&nbsp;</span>
         <CommunityList communities={communities} expandFunc={this.toggleExpanded} />
         <a onClick={this.toggleExpanded} styleName='expandLink'><Icon name='ArrowDown' styleName='expandIcon' /></a>
-      </span>
+      </div>
 
     return <div styleName={cx('communities', {expanded})}>
       {content}
@@ -79,4 +84,20 @@ export function CommunityList ({communities, expandFunc}) {
   return <span styleName='communityList'>
     {elements.map(e => e)}
   </span>
+}
+
+export function CommunityRow ({ communities }) {
+  return <div styleName='communityRow'>
+    {communities.map(community => <CommunityCell key={community.id} community={community} />)}
+  </div>
+}
+
+export function CommunityCell ({ community }) {
+  const { name, avatarUrl } = community
+  const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
+
+  return <Link to={communityUrl(community.slug)} styleName='communityCell'>
+    <div styleName='communityCellAvatar' style={imageStyle} />
+    <span styleName='communityCellName'>{name}</span>
+  </Link>
 }
