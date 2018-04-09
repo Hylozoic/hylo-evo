@@ -9,7 +9,7 @@ import { DEFAULT_AVATAR } from 'store/models/Community'
 
 export default class PostCommunities extends Component {
   static defaultState = {
-    expanded: true
+    expanded: false
   }
 
   constructor (props) {
@@ -17,7 +17,7 @@ export default class PostCommunities extends Component {
     this.state = PostCommunities.defaultState
   }
 
-  toggleExpanded = e => {
+  toggleExpanded = () => {
     this.setState({
       expanded: !this.state.expanded
     })
@@ -63,15 +63,15 @@ function others (n, expandFunc) {
 }
 
 export function CommunityList ({communities, expandFunc}) {
-  const renderCommunity = community => {
-    return <span key={community.id}><Link to={communityUrl(community.slug)} styleName='communityLink'>{community.name}</Link>, </span>
+  const renderCommunity = (community, comma) => {
+    return <span key={community.id}><Link to={communityUrl(community.slug)} styleName='communityLink'>{community.name}</Link>{comma ? ' ,' : ''}</span>
   }
 
   const maxShown = 2
   const length = communities.length
   const truncatedNames = (maxShown && maxShown < length)
-    ? communities.slice(0, maxShown).map(renderCommunity).concat([others(length - maxShown, expandFunc)])
-    : communities.map(renderCommunity)
+    ? communities.slice(0, maxShown).map(c => renderCommunity(c, true)).concat([others(length - maxShown, expandFunc)])
+    : communities.map((c, i) => renderCommunity(c, i !== communities.length - 1 && communities.length !== 2))
 
   const last = truncatedNames.pop()
   var elements
