@@ -20,7 +20,6 @@ describe('Feed', () => {
       filter: 'request',
       sortBy: 'votes',
       selectedPostId: '5',
-      showCommunities: false,
       topic: undefined
     })
   })
@@ -44,7 +43,6 @@ describe('Feed', () => {
       networkSlug: 'bar',
       filter: 'request',
       sortBy: 'votes',
-      showCommunities: true,
       topic: undefined
     })
   })

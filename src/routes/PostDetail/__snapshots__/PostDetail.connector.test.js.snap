@@ -6,7 +6,6 @@ Object {
   "id": undefined,
   "pending": undefined,
   "post": null,
-  "showCommunity": true,
   "slug": undefined,
 }
 `;

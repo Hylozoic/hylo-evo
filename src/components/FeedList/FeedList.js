@@ -77,7 +77,6 @@ export default class FeedList extends React.Component {
       changeTab,
       changeSort,
       posts,
-      showCommunities,
       pending,
       slug
     } = this.props
@@ -109,7 +108,6 @@ export default class FeedList extends React.Component {
           return <PostCard
             post={post}
             slug={slug}
-            showCommunity={showCommunities}
             styleName={cx('FeedListItem', {expanded})}
             expanded={expanded}
             showDetails={() => showPostDetails(post.id)}

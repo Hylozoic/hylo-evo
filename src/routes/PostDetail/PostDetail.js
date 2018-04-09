@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { throttle, isEmpty } from 'lodash/fp'
 import './PostDetail.scss'
-import { PostImage, PostBody, PostFooter, PostHeader } from 'components/PostCard'
+import { PostImage, PostBody, PostFooter, PostHeader, PostCommunities } from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
 import Comments from './Comments'
 import { tagUrl } from 'util/index'
@@ -24,8 +24,7 @@ export default class PostDetail extends Component {
     id: string,
     currentUser: object,
     slug: string,
-    fetchPost: func,
-    showCommunity: bool
+    fetchPost: func
   }
 
   constructor (props) {
@@ -136,6 +135,10 @@ export default class PostDetail extends Component {
         expanded
         styleName='body'
         fileAttachments={post.fileAttachments} />
+      <PostCommunities
+        communities={post.communities}
+        slug={slug}
+        showBottomBorder />
       <div styleName='activity-header' ref={this.setActivityStateFromDOM}>ACTIVITY</div>
       <PostFooter id={post.id}
         commenters={post.commenters}
@@ -156,12 +159,11 @@ export default class PostDetail extends Component {
   }
 }
 
-function WrappedPostHeader ({post, showCommunity, onClose, slug}) {
+function WrappedPostHeader ({post, onClose, slug}) {
   return <PostHeader creator={post.creator}
     date={post.createdAt}
     type={post.type}
     communities={post.communities}
-    showCommunity={showCommunity}
     close={onClose}
     slug={slug}
     pinned={post.pinned}

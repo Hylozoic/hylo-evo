@@ -18,17 +18,17 @@ export default class PostCommunities extends Component {
   }
 
   toggleExpanded = e => {
-    console.log('toggleExpanded, new', !this.state.expanded)
     this.setState({
       expanded: !this.state.expanded
     })
   }
 
   render () {
-    const { communities, slug } = this.props
+    const { communities, slug, showBottomBorder } = this.props
 
     // don't show if there are no communities or this isn't cross posted
-    if (isEmpty(communities) || (communities.length === 1 && get('1.slug', communities) === slug)) return null
+
+    if (isEmpty(communities) || (communities.length === 1 && get('0.slug', communities) === slug)) return null
 
     const { expanded } = this.state
 
@@ -46,7 +46,7 @@ export default class PostCommunities extends Component {
         <a onClick={this.toggleExpanded} styleName='expandLink'><Icon name='ArrowDown' styleName='expandIcon' /></a>
       </div>
 
-    return <div styleName={cx('communities', {expanded})}>
+    return <div styleName={cx('communities', {expanded, bottomBorder: showBottomBorder})}>
       {content}
     </div>
   }

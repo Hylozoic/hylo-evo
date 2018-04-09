@@ -47,7 +47,6 @@ export default class Feed extends Component {
       slug: communitySlug,
       networkSlug,
       topic: get('id', topic),
-      showCommunities: !communitySlug,
       ...pick([
         'filter',
         'sortBy',

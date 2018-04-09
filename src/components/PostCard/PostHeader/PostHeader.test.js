@@ -24,7 +24,7 @@ it('matches snapshot', () => {
 
   const wrapper = shallow(<PostHeader communities={communities} creator={creator} />)
   expect(wrapper).toMatchSnapshot()
-  wrapper.setProps({context, type: 'request', communities, showCommunity: true})
+  wrapper.setProps({context, type: 'request', communities})
   expect(wrapper).toMatchSnapshot()
   wrapper.setProps({deletePost: () => {}, editPost: () => {}})
   expect(wrapper).toMatchSnapshot()
@@ -52,7 +52,7 @@ it('matches announcement snapshot', () => {
 
   const wrapper = shallow(<PostHeader communities={communities} creator={creator} announcement />)
   expect(wrapper).toMatchSnapshot()
-  wrapper.setProps({context, type: 'request', communities, showCommunity: true})
+  wrapper.setProps({context, type: 'request', communities})
   expect(wrapper).toMatchSnapshot()
   wrapper.setProps({deletePost: () => {}, editPost: () => {}})
   expect(wrapper).toMatchSnapshot()
