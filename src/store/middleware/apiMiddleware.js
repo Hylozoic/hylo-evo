@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch'
+import { apiHost } from '../../config'
 
 export default function apiMiddleware (req) {
   return store => next => action => {
@@ -17,23 +18,18 @@ export default function apiMiddleware (req) {
   }
 }
 
-export const HOST = typeof window === 'undefined'
-  ? process.env.API_HOST
-  : window.location.origin
-
 export function fetchJSON (path, params, options = {}) {
-  const fetchURL = (options.host || HOST) + path
-  const fetchOptions = {
+  return fetch((options.host || apiHost) + path, {
     method: options.method || 'get',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'Cookie': options.cookie
     },
-    credentials: 'same-origin',
+    credentials: 'include',
     body: JSON.stringify(params)
-  }
-  const processResults = (resp) => {
+  })
+  .then(resp => {
     let { status, statusText, url } = resp
     if (status === 200) return resp.json()
     return resp.text().then(body => {
@@ -41,6 +37,5 @@ export function fetchJSON (path, params, options = {}) {
       error.response = {status, statusText, url, body}
       throw error
     })
-  }
-  return fetch(fetchURL, fetchOptions).then(processResults)
+  })
 }

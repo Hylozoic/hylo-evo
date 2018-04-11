@@ -15,6 +15,7 @@ export const filepickerKey = process.env.FILEPICKER_API_KEY
 export const logLevel = process.env.LOG_LEVEL
 export const socketHost = process.env.SOCKET_HOST
 export const host = process.env.HOST
+export const apiHost = process.env.API_HOST
 export const slack = {
   clientId: process.env.SLACK_APP_CLIENT_ID
 }
@@ -55,6 +56,7 @@ const config = {
   filepickerKey,
   logLevel,
   host,
+  apiHost,
   slack,
   s3,
   google,
