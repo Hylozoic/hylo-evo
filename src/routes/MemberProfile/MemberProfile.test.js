@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 
-import MemberProfile, { SocialButtons, TabContentSwitcher } from './MemberProfile'
+import MemberProfile, { SocialButtons, TabContentSwitcher, addProtocol } from './MemberProfile'
 import denormalized from './MemberProfile.test.json'
 
 describe('MemberProfile', () => {
@@ -25,12 +25,33 @@ describe('MemberProfile', () => {
   })
 })
 
+describe('addProtocol', () => {
+  it('adds "https://" to the start of a url if absent', () => {
+    expect(addProtocol('hylo.com')).toEqual('https://hylo.com')
+  })
+
+  it('returns url unchanged if protocol is present', () => {
+    expect(addProtocol('http://hylo.com')).toEqual('http://hylo.com')
+  })
+})
+
 describe('SocialButtons', () => {
   it('only renders buttons where there is a set value', () => {
     const wrapper = shallow(
       <SocialButtons facebookUrl='foo' twitterName={'bar'} />
     )
     expect(wrapper.find('Icon').length).toBe(2)
+  })
+
+  it('calls addProtocol to add missing protocols', () => {
+    const wrapper = shallow(
+      <SocialButtons
+        facebookUrl='foo.com'
+        twitterName={'bar'}
+        linkedinUrl='http://linkedin.com/user/id'
+        url='myawesomesite.com' />
+    )
+    expect(wrapper).toMatchSnapshot()
   })
 })
 
