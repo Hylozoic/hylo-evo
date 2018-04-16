@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 
-import MemberProfile, { SocialButtons, TabContentSwitcher } from './MemberProfile'
+import MemberProfile, { SocialButtons, TabContentSwitcher, addProtocol } from './MemberProfile'
 import denormalized from './MemberProfile.test.json'
 
 describe('MemberProfile', () => {
@@ -22,6 +22,16 @@ describe('MemberProfile', () => {
     }
     const wrapper = shallow(<MemberProfile {...props} />)
     expect(wrapper.contains(props.error)).toBe(true)
+  })
+})
+
+describe('addProtocol', () => {
+  it('adds "https://" to the start of a url if absent', () => {
+    expect(addProtocol('hylo.com')).toEqual('https://hylo.com')
+  })
+
+  it('returns url unchanged if protocol is present', () => {
+    expect(addProtocol('http://hylo.com')).toEqual('http://hylo.com')
   })
 })
 
