@@ -42,6 +42,17 @@ describe('SocialButtons', () => {
     )
     expect(wrapper.find('Icon').length).toBe(2)
   })
+
+  it('calls addProtocol to add missing protocols', () => {
+    const wrapper = shallow(
+      <SocialButtons
+        facebookUrl='foo.com'
+        twitterName={'bar'}
+        linkedinUrl='http://linkedin.com/user/id'
+        url='myawesomesite.com' />
+    )
+    expect(wrapper).toMatchSnapshot()
+  })
 })
 
 describe('TabContentSwitcher', () => {

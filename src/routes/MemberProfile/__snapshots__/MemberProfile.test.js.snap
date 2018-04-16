@@ -36,3 +36,51 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
   </div>
 </div>
 `;
+
+exports[`SocialButtons calls addProtocol to add missing protocols 1`] = `
+<div
+  data-stylename="social-buttons"
+>
+  <a
+    data-stylename="social-link"
+    href="https://twitter.com/bar"
+    target="_blank"
+  >
+    <Icon
+      data-stylename="icon icon-twitter"
+      name="ProfileTwitter"
+    />
+  </a>
+  <a
+    data-stylename="social-link"
+    href="https://foo.com"
+    target="_blank"
+  >
+    <Icon
+      data-stylename="icon icon-facebook"
+      name="ProfileFacebook"
+    />
+  </a>
+  <a
+    data-stylename="social-link"
+    href="https://linkedin.com/user/id"
+    target="_blank"
+  >
+    <Icon
+      data-stylename="icon icon-linkedin"
+      name="ProfileLinkedin"
+    />
+  </a>
+  <a
+    data-stylename="social-link"
+    href="https://myawesomesite.com"
+    target="_blank"
+  >
+    <Icon
+      data-stylename="icon"
+      green={true}
+      name="ProfileUrl"
+    />
+  </a>
+</div>
+`;
