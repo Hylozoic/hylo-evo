@@ -57,17 +57,6 @@ exports[`Drawer renders a community list if networks are present 1`] = `
     name="Ex"
   />
   <Logo />
-  <Link
-    data-stylename="s.settingsLink"
-    replace={false}
-    to="/settings"
-  >
-    <Icon
-      data-stylename="s.settingsIcon"
-      name="Settings"
-    />
-     Settings
-  </Link>
   <ul
     data-stylename="s.communitiesList"
   >
@@ -151,17 +140,6 @@ exports[`Drawer renders with a current community 1`] = `
       }
     }
   />
-  <Link
-    data-stylename="s.settingsLink"
-    replace={false}
-    to="/settings"
-  >
-    <Icon
-      data-stylename="s.settingsIcon"
-      name="Settings"
-    />
-     Settings
-  </Link>
   <Button
     color="white"
     data-stylename="s.newCommunity"
@@ -179,17 +157,6 @@ exports[`Drawer renders without a current community 1`] = `
     name="Ex"
   />
   <Logo />
-  <Link
-    data-stylename="s.settingsLink"
-    replace={false}
-    to="/settings"
-  >
-    <Icon
-      data-stylename="s.settingsIcon"
-      name="Settings"
-    />
-     Settings
-  </Link>
   <Button
     color="white"
     data-stylename="s.newCommunity"
