@@ -23,7 +23,6 @@ exports[`PostDetail renders correctly 1`] = `
         "votesTotal": 7,
       }
     }
-    showCommunity={true}
     slug="foo"
   />
   <Connect(PostImage)
@@ -44,6 +43,10 @@ exports[`PostDetail renders correctly 1`] = `
     details="the body of the post"
     expanded={true}
     id="91"
+    slug="foo"
+  />
+  <PostCommunities
+    showBottomBorder={true}
     slug="foo"
   />
   <div

@@ -7,7 +7,7 @@ import PostLabel from 'components/PostLabel'
 import Highlight from 'components/Highlight'
 import FlagContent from 'components/FlagContent'
 import Icon from 'components/Icon'
-import { communityUrl, personUrl, tagUrl } from 'util/index'
+import { personUrl, tagUrl } from 'util/index'
 import { humanDate } from 'hylo-utils/text'
 import './PostHeader.scss'
 import { filter, isFunction, isEmpty } from 'lodash'
@@ -30,11 +30,9 @@ export default class PostHeader extends PureComponent {
       id,
       pinned,
       topics,
-      communities,
       close,
       className,
       slug,
-      showCommunity,
       editPost,
       canFlag,
       deletePost,
@@ -46,16 +44,6 @@ export default class PostHeader extends PureComponent {
     } = this.props
 
     if (!creator) return null
-
-    let context
-
-    if (showCommunity && !isEmpty(communities) && communities[0]) {
-      const {name, slug} = communities[0]
-      context = {
-        label: name,
-        url: communityUrl(slug)
-      }
-    }
 
     const flagPostFn = canFlag ? () => {
       this.setState({ flaggingVisible: true })
@@ -102,12 +90,6 @@ export default class PostHeader extends PureComponent {
                 effect={'solid'}
                 delayShow={550}
                 id='announcement-tt' />
-            </span>}
-            {context && <span>
-              <span styleName='spacer'>•</span>
-              <Link to={context.url} styleName='context'>
-                {context.label}
-              </Link>
             </span>}
             {!topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={slug} />}
           </div>

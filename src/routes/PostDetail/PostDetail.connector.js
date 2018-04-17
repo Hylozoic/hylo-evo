@@ -16,7 +16,6 @@ export function mapStateToProps (state, props) {
     id: getParam('postId', state, props),
     currentUser: getMe(state),
     slug,
-    showCommunity: !slug,
     pending: state.pending[FETCH_POST]
   }
 }

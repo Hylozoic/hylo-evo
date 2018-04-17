@@ -152,20 +152,6 @@ exports[`matches announcement snapshot 2`] = `
             wrapper="div"
           />
         </span>
-        <span>
-          <span
-            data-stylename="spacer"
-          >
-            •
-          </span>
-          <Link
-            data-stylename="context"
-            replace={false}
-            to="/c/fooc"
-          >
-            FooC
-          </Link>
-        </span>
       </div>
     </div>
     <div
@@ -238,20 +224,6 @@ exports[`matches announcement snapshot 3`] = `
             resizeHide={true}
             wrapper="div"
           />
-        </span>
-        <span>
-          <span
-            data-stylename="spacer"
-          >
-            •
-          </span>
-          <Link
-            data-stylename="context"
-            replace={false}
-            to="/c/fooc"
-          >
-            FooC
-          </Link>
         </span>
       </div>
     </div>
@@ -364,20 +336,6 @@ exports[`matches snapshot 2`] = `
         <span
           data-stylename="timestamp"
         />
-        <span>
-          <span
-            data-stylename="spacer"
-          >
-            •
-          </span>
-          <Link
-            data-stylename="context"
-            replace={false}
-            to="/c/fooc"
-          >
-            FooC
-          </Link>
-        </span>
       </div>
     </div>
     <div
@@ -425,20 +383,6 @@ exports[`matches snapshot 3`] = `
         <span
           data-stylename="timestamp"
         />
-        <span>
-          <span
-            data-stylename="spacer"
-          >
-            •
-          </span>
-          <Link
-            data-stylename="context"
-            replace={false}
-            to="/c/fooc"
-          >
-            FooC
-          </Link>
-        </span>
       </div>
     </div>
     <div

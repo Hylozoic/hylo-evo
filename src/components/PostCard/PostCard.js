@@ -4,13 +4,14 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
+import PostCommunities from './PostCommunities'
 import PostImage from './PostImage'
 import PostBody from './PostBody'
 import './PostCard.scss'
 import samplePost from './samplePost'
 import cx from 'classnames'
 
-export { PostHeader, PostFooter, PostImage, PostBody }
+export { PostHeader, PostFooter, PostImage, PostBody, PostCommunities }
 
 const { shape, any, object, string, func, array, bool } = PropTypes
 
@@ -28,8 +29,7 @@ export default class PostCard extends React.Component {
     }),
     fetchPost: func,
     expanded: bool,
-    showDetails: func,
-    showCommunity: bool
+    showDetails: func
   }
 
   static defaultProps = {
@@ -38,7 +38,7 @@ export default class PostCard extends React.Component {
 
   render () {
     const {
-      post, className, expanded, showDetails, showCommunity, highlightProps, slug
+      post, className, expanded, showDetails, highlightProps, slug
     } = this.props
 
     const shouldShowDetails = element => {
@@ -62,7 +62,6 @@ export default class PostCard extends React.Component {
       <PostHeader creator={post.creator}
         date={post.createdAt}
         type={post.type}
-        showCommunity={showCommunity}
         communities={post.communities}
         slug={slug}
         id={post.id}
@@ -79,6 +78,9 @@ export default class PostCard extends React.Component {
         slug={slug}
         highlightProps={highlightProps}
         fileAttachments={post.fileAttachments} />
+      <PostCommunities
+        communities={post.communities}
+        slug={slug} />
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}

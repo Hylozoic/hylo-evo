@@ -37,6 +37,18 @@ exports[`renders as expected 1`] = `
     slug="foom"
     title="We put this together as a PDF for hand-out at your next event or university class"
   />
+  <PostCommunities
+    communities={
+      Array [
+        Object {
+          "id": "1",
+          "name": "Great Cause",
+          "slug": "great",
+        },
+      ]
+    }
+    slug="foom"
+  />
   <Connect(PostFooter)
     commenters={
       Array [

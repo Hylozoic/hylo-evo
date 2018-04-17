@@ -63,7 +63,7 @@ export default function PostTypes (props) {
         <h4>with image</h4>
         <PostCard post={SAMPLE_POST_WITH_IMAGE} styleName='postCard' />
         <h4>with description and community link</h4>
-        <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='postCard' showCommunity />
+        <PostCard post={SAMPLE_POST_WITH_DESCRIPTION} styleName='postCard' />
         <h4>with long description</h4>
         <PostCard post={SAMPLE_POST_WITH_LONG_DESCRIPTION} styleName='postCard' />
         <h4>with link preview</h4>

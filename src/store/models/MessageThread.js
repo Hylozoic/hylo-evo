@@ -49,6 +49,18 @@ const MessageThread = Model.createClass({
   }
 })
 
+export default MessageThread
+
+MessageThread.modelName = 'MessageThread'
+
+MessageThread.fields = {
+  id: attr(),
+  unreadCount: attr(),
+  participants: many('Person'),
+  updatedAt: attr(),
+  lastReadAt: attr()
+}
+
 export function others (n) {
   if (n < 0) {
     return ''
@@ -71,16 +83,4 @@ export function formatNames (names, maxShown) {
   } else {
     return truncatedNames.join(', ') + ` and ${last}`
   }
-}
-
-export default MessageThread
-
-MessageThread.modelName = 'MessageThread'
-
-MessageThread.fields = {
-  id: attr(),
-  unreadCount: attr(),
-  participants: many('Person'),
-  updatedAt: attr(),
-  lastReadAt: attr()
 }
