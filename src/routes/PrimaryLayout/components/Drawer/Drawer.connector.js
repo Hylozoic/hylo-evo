@@ -5,6 +5,7 @@ import { push } from 'react-router-redux'
 import { get, values, omit, each } from 'lodash/fp'
 import { pullAllBy } from 'lodash'
 import { ALL_COMMUNITIES_ID, ALL_COMMUNITIES_AVATAR_PATH } from 'store/models/Community'
+import getMe from 'store/selectors/getMe'
 
 export function partitionCommunities (memberships) {
   const allCommunities = memberships.map(m => ({
@@ -61,8 +62,12 @@ export function partitionCommunities (memberships) {
 
 export function mapStateToProps (state, props) {
   const paritionedCommunities = partitionCommunities(getMemberships(state))
+  const canModerate = props.community && getMe(state, props).canModerate(props.community)
 
-  return paritionedCommunities
+  return {
+    ...paritionedCommunities,
+    canModerate
+  }
 }
 
 export function mapDispatchToProps (dispatch, props) {
