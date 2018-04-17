@@ -25,6 +25,18 @@ describe('partitionCommunities', () => {
 describe('mapStateToProps', () => {
   it('returns the right keys, adding All Communities link', () => {
     const session = orm.session(orm.getEmptyState())
-    expect(mapStateToProps({orm: session.state})).toMatchSnapshot()
+    const community = session.Community.create({id: '99', slug: 'foo'})
+    session.Community.create({id: '88', slug: 'bar'})
+
+    session.Me.create({
+      id: '1',
+      memberships: [session.Membership.create({
+        id: '345',
+        community: community.id,
+        hasModeratorRole: true
+      })]
+    })
+
+    expect(mapStateToProps({orm: session.state}, {community})).toMatchSnapshot()
   })
 })

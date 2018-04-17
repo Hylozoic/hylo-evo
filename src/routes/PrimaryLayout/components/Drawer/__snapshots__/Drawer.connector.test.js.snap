@@ -2,7 +2,18 @@
 
 exports[`mapStateToProps returns the right keys, adding All Communities link 1`] = `
 Object {
-  "communities": Array [],
+  "canModerate": true,
+  "communities": Array [
+    Object {
+      "id": "99",
+      "members": undefined,
+      "moderators": undefined,
+      "network": undefined,
+      "newPostCount": undefined,
+      "posts": undefined,
+      "slug": "foo",
+    },
+  ],
   "networks": Array [
     Object {
       "avatarUrl": "/assets/white-merkaba.png",
