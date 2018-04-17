@@ -64,7 +64,7 @@ function others (n, expandFunc) {
 
 export function CommunityList ({communities, expandFunc}) {
   const renderCommunity = (community, comma) => {
-    return <span key={community.id}><Link to={communityUrl(community.slug)} styleName='communityLink'>{community.name}</Link>{comma ? ' ,' : ''}</span>
+    return <span key={community.id}><Link to={communityUrl(community.slug)} styleName='communityLink'>{community.name}</Link>{comma ? ', ' : ''}</span>
   }
 
   const maxShown = 2
@@ -78,7 +78,7 @@ export function CommunityList ({communities, expandFunc}) {
   if (isEmpty(truncatedNames)) {
     elements = [last]
   } else {
-    elements = truncatedNames.concat([<span key='and'>and </span>, last])
+    elements = truncatedNames.concat([<span key='and'> and </span>, last])
   }
 
   return <span styleName='communityList'>

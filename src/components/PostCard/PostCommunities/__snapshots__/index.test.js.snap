@@ -56,7 +56,7 @@ exports[`CommunityList matches last snapshot with 2 communities 1`] = `
   <span
     key="and"
   >
-    and 
+     and 
   </span>
   <span
     key="2"
@@ -86,7 +86,7 @@ exports[`CommunityList matches last snapshot with 5 community 1`] = `
     >
       One
     </Link>
-     ,
+    , 
   </span>
   <span
     key="2"
@@ -98,12 +98,12 @@ exports[`CommunityList matches last snapshot with 5 community 1`] = `
     >
       Two
     </Link>
-     ,
+    , 
   </span>
   <span
     key="and"
   >
-    and 
+     and 
   </span>
   <a
     data-stylename="communityLink"
