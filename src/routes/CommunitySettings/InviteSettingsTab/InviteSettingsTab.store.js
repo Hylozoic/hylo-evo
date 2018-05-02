@@ -137,7 +137,7 @@ export function ormSessionReducer (session, { type, meta, payload }) {
       payload.data.createInvitation.invitations.forEach(i =>
         Invitation.create({
           email: i.email,
-          id: Math.random().toString().substring(2, 7),
+          id: i.id,
           createdAt: new Date().toString(),
           community: meta.communityId
         }))
