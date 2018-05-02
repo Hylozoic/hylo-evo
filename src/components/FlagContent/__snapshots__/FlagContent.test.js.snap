@@ -77,8 +77,13 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
             placeholder="Select a reason"
             selected=""
           >
-            <span
+            <label
               data-stylename="select-wrapper"
+              style={
+                Object {
+                  "width": "100%",
+                }
+              }
             >
               <select
                 data-stylename="select"
@@ -127,16 +132,7 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
                   Other
                 </option>
               </select>
-              <Icon
-                data-stylename="icon"
-                name="ArrowDown"
-              >
-                <span
-                  className="icon-ArrowDown"
-                  data-stylename="icon"
-                />
-              </Icon>
-            </span>
+            </label>
           </Select>
         </div>
         <TextareaAutosize
