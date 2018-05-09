@@ -174,7 +174,7 @@ exports[`SettingsIcon renders correctly 1`] = `
 
 exports[`SettingsRow renders correctly 1`] = `
 <div
-  data-stylename="settingsRow expanded"
+  data-stylename="settingsRow"
 >
   <div
     data-stylename="nameRow"
@@ -188,30 +188,8 @@ exports[`SettingsRow renders correctly 1`] = `
     />
     <Icon
       data-stylename="arrowIcon"
-      name="ArrowUp"
+      name="ArrowDown"
       onClick={[Function]}
-    />
-  </div>
-  <div
-    data-stylename="iconRow"
-  >
-    <SettingsIcon
-      name="PushNotification"
-      settingKey="sendPushNotifications"
-      settings={
-        Object {
-          "sendEmail": true,
-        }
-      }
-    />
-    <SettingsIcon
-      name="EmailNotification"
-      settingKey="sendEmail"
-      settings={
-        Object {
-          "sendEmail": true,
-        }
-      }
     />
   </div>
 </div>

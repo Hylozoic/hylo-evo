@@ -162,7 +162,7 @@ export function MembershipSettingsRow ({ membership, updateMembershipSettings })
 
 export class SettingsRow extends React.Component {
   state = {
-    expanded: true
+    expanded: false
   }
 
   toggleExpand = () => {
