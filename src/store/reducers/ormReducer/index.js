@@ -16,7 +16,8 @@ import {
 } from 'store/constants'
 import {
   UPDATE_MEMBERSHIP_SETTINGS_PENDING,
-  UPDATE_USER_SETTINGS_PENDING
+  UPDATE_USER_SETTINGS_PENDING,
+  UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING
 } from 'routes/UserSettings/UserSettings.store'
 
 // FIXME these should not be using different constants and getting handled in
@@ -183,6 +184,18 @@ export default function ormReducer (state = {}, action) {
           ...membership.settings,
           ...meta.settings
         }
+      })
+      break
+
+    case UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING:
+      const memberships = session.Membership.all()
+      memberships.toModelArray().map(membership => {
+        membership.update({
+          settings: {
+            ...membership.settings,
+            ...meta.settings
+          }
+        })
       })
       break
 

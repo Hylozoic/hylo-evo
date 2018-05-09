@@ -63,7 +63,10 @@ export default class NotificationSettingsTab extends Component {
   }
 
   render () {
-    const { currentUser, updateUserSettings, memberships, updateMembershipSettings } = this.props
+    const {
+      currentUser, updateUserSettings, memberships, updateMembershipSettings, allCommunitiesSettings,
+      messageSettings
+     } = this.props
 
     if (!currentUser) return <Loading />
 
@@ -83,16 +86,6 @@ export default class NotificationSettingsTab extends Component {
     const getSetting = setting => {
       if (!hasDevice && settings[setting] === 'both') return 'email'
       return settings[setting]
-    }
-
-    const messageSettings = {
-      sendPushNotifications: true,
-      sendEmail: false
-    }
-
-    const allCommunitiesSettings = {
-      sendPushNotifications: false,
-      sendEmail: true
     }
 
     return <div>
@@ -169,7 +162,7 @@ export function MembershipSettingsRow ({ membership, updateMembershipSettings })
 
 export class SettingsRow extends React.Component {
   state = {
-    expanded: Math.random() > 0.5
+    expanded: true
   }
 
   toggleExpand = () => {

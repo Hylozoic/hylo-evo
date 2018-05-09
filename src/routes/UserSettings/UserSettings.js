@@ -29,6 +29,9 @@ export default class UserSettings extends Component {
       unlinkAccount,
       setConfirm,
       updateMembershipSettings,
+      updateAllMemberships,
+      messageSettings,
+      allCommunitiesSettings,
       fetchPending
     } = this.props
 
@@ -60,7 +63,10 @@ export default class UserSettings extends Component {
             currentUser={currentUser}
             updateUserSettings={updateUserSettings}
             memberships={memberships}
-            updateMembershipSettings={updateMembershipSettings} />
+            updateMembershipSettings={updateMembershipSettings}
+            updateAllMemberships={updateAllMemberships}
+            messageSettings={messageSettings}
+            allCommunitiesSettings={allCommunitiesSettings} />
         },
         {
           name: 'Password',
