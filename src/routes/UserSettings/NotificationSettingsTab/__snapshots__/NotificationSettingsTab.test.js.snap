@@ -1,5 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`AllCommunitiesSettingsRow renders correctly 1`] = `
+<SettingsRow
+  imageUrl="/hylo-merkaba.png"
+  name="All Communities"
+  settings={
+    Object {
+      "sendEmail": true,
+    }
+  }
+  update={[Function]}
+/>
+`;
+
+exports[`MembershipSettingsRow renders correctly 1`] = `
+<SettingsRow
+  imageUrl="foo.png"
+  name="Foomunity"
+  settings={
+    Object {
+      "sendEmail": true,
+    }
+  }
+  update={[Function]}
+/>
+`;
+
+exports[`MessageSettingsRow renders correctly 1`] = `
+<SettingsRow
+  iconName="Messages"
+  name="Messages"
+  settings={
+    Object {
+      "sendEmail": true,
+    }
+  }
+  update={[Function]}
+/>
+`;
+
 exports[`NotificationSettingsTab renders correctly 1`] = `
 <div>
   <div
@@ -121,6 +160,59 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
       </Link>
        section to change notifications for an individual community.
     </p>
+  </div>
+</div>
+`;
+
+exports[`SettingsIcon renders correctly 1`] = `
+<Icon
+  data-stylename="icon highlightIcon"
+  name="EmailNotification"
+  onClick={[Function]}
+/>
+`;
+
+exports[`SettingsRow renders correctly 1`] = `
+<div
+  data-stylename="settingsRow expanded"
+>
+  <div
+    data-stylename="nameRow"
+  >
+    <div
+      data-stylename="communityAvatar"
+      style={Object {}}
+    />
+    <span
+      data-stylename="name"
+    />
+    <Icon
+      data-stylename="arrowIcon"
+      name="ArrowUp"
+      onClick={[Function]}
+    />
+  </div>
+  <div
+    data-stylename="iconRow"
+  >
+    <SettingsIcon
+      name="PushNotification"
+      settingKey="sendPushNotifications"
+      settings={
+        Object {
+          "sendEmail": true,
+        }
+      }
+    />
+    <SettingsIcon
+      name="EmailNotification"
+      settingKey="sendEmail"
+      settings={
+        Object {
+          "sendEmail": true,
+        }
+      }
+    />
   </div>
 </div>
 `;
