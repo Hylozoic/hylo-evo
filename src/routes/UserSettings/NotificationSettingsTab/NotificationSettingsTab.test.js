@@ -15,12 +15,13 @@ describe('NotificationSettingsTab', () => {
   it('renders correctly', () => {
     const wrapper = shallow(<NotificationSettingsTab
       currentUser={currentUser}
-      updateUserSettings={() => {}} />)
+      updateUserSettings={() => {}}
+      memberships={[{id: 1}, {id: 2}]} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it("hides mobile options if user doesn't have device", () => {
-    const wrapper = shallow(<NotificationSettingsTab currentUser={{
+    const wrapper = shallow(<NotificationSettingsTab memberships={[]} currentUser={{
       ...currentUser,
       hasDevice: false
     }} />)
@@ -28,7 +29,7 @@ describe('NotificationSettingsTab', () => {
   })
 
   it("does the right thing with 'both' if user doesn't have device", () => {
-    const wrapper = shallow(<NotificationSettingsTab currentUser={{
+    const wrapper = shallow(<NotificationSettingsTab memberships={[]} currentUser={{
       ...currentUser,
       settings: {
         ...currentUser.settings,
