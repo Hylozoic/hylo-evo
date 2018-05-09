@@ -58,7 +58,9 @@ export default class UserSettings extends Component {
           path: '/settings/notifications',
           component: <NotificationSettingsTab
             currentUser={currentUser}
-            updateUserSettings={updateUserSettings} />
+            updateUserSettings={updateUserSettings}
+            memberships={memberships}
+            updateMembershipSettings={updateMembershipSettings} />
         },
         {
           name: 'Password',
