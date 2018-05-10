@@ -167,7 +167,7 @@ export class SettingsRow extends React.Component {
 
   toggleExpand = () => {
     this.setState({
-      expanded: true
+      expanded: !this.state.expanded
     })
   }
 
