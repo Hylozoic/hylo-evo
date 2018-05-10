@@ -173,6 +173,9 @@ export default function ormReducer (state = {}, action) {
     case UPDATE_COMMUNITY_SETTINGS_PENDING:
       community = Community.withId(meta.id)
       community.update(meta.changes)
+
+      // Triggers an update to redux-orm for the membership
+      membership = session.Membership.safeGet({community: meta.id}).update({forceUpdate: new Date()})
       break
 
     case UPDATE_MEMBERSHIP_SETTINGS_PENDING:
