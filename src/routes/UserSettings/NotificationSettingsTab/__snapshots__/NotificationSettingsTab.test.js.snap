@@ -148,18 +148,6 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
       </a>
        app to receive push notifications.
     </p>
-    <p
-      data-stylename="help-paragraph"
-    >
-      See the 
-      <Link
-        replace={true}
-        to="/settings/communities"
-      >
-        Communities
-      </Link>
-       section to change notifications for an individual community.
-    </p>
   </div>
 </div>
 `;

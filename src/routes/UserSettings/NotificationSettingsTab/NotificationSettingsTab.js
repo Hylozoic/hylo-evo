@@ -127,10 +127,6 @@ export default class NotificationSettingsTab extends Component {
           or <a href={androidAppURL} target='_blank'>Android</a> app to
           receive push notifications.
         </p>
-        <p styleName='help-paragraph'>
-          See the <Link to='/settings/communities' replace>Communities</Link> section
-          to change notifications for an individual community.
-        </p>
       </div>
     </div>
   }
