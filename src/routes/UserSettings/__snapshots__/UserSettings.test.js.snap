@@ -33,7 +33,6 @@ exports[`UserSettings renders correctly 1`] = `
               },
             ]
           }
-          updateMembershipSettings={[Function]}
         />,
         "name": "Communities",
         "path": "/settings/communities",

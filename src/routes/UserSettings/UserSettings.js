@@ -53,8 +53,7 @@ export default class UserSettings extends Component {
           path: '/settings/communities',
           component: <CommunitySettingsTab
             memberships={memberships}
-            leaveCommunity={leaveCommunity}
-            updateMembershipSettings={updateMembershipSettings} />
+            leaveCommunity={leaveCommunity} />
         },
         {
           name: 'Notifications',
