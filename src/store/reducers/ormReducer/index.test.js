@@ -330,10 +330,17 @@ describe('on PIN_POST_PENDING', () => {
 describe('on UPDATE_COMMUNITY_SETTINGS_PENDING', () => {
   const id = '1'
   const session = orm.session(orm.getEmptyState())
-  session.Community.create({
+  const community = session.Community.create({
     id,
     name: 'Old Name',
     description: 'Old description'
+  })
+  session.Membership.create({
+    community: community.id,
+    settings: {
+      sendFoo: true,
+      sendEmail: false
+    }
   })
 
   it('updates the community settings', () => {
