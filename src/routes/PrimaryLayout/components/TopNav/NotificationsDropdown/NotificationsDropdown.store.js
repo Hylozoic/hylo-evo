@@ -125,6 +125,9 @@ export const getNotifications = ormCreateSelector(
   orm,
   state => state.orm,
   (session) => {
-    return session.Notification.all().toModelArray()
+    return session.Notification
+    .all()
+    .orderBy(m => Number(m.id), 'desc')
+    .toModelArray()
   }
 )
