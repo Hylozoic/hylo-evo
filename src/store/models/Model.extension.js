@@ -1,12 +1,15 @@
 import { Model } from 'redux-orm'
 import { ManyToMany } from 'redux-orm/lib/fields'
 import { normalizeEntity } from 'redux-orm/lib/utils'
-import { mapValues, uniq } from 'lodash'
+import { mapValues, uniq, isEmpty, isNull, isUndefined, omitBy, overSome } from 'lodash'
 
 Model.safeGet = function (matchObj) {
+  const omittedMatchObj = omitBy(matchObj, overSome([isNull, isUndefined]))
+  if (isEmpty(omittedMatchObj)) return null
+
   let result
   try {
-    result = this.get(matchObj)
+    result = this.get(omittedMatchObj)
   } catch (e) {
     result = null
   }
