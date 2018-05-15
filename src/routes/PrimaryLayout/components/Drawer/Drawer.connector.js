@@ -6,6 +6,7 @@ import { get, values, omit, each } from 'lodash/fp'
 import { pullAllBy } from 'lodash'
 import { ALL_COMMUNITIES_ID, ALL_COMMUNITIES_AVATAR_PATH } from 'store/models/Community'
 import getMe from 'store/selectors/getMe'
+import { createSelector } from 'reselect'
 
 export function partitionCommunities (memberships) {
   const allCommunities = memberships.map(m => ({
@@ -60,12 +61,18 @@ export function partitionCommunities (memberships) {
   }
 }
 
+const getPartitionCommunities = createSelector(
+  getMemberships,
+  (memberships) => partitionCommunities(memberships)
+)
+
 export function mapStateToProps (state, props) {
-  const paritionedCommunities = partitionCommunities(getMemberships(state))
+  const { networks, communities } = getPartitionCommunities(state)
   const canModerate = props.community && getMe(state, props).canModerate(props.community)
 
   return {
-    ...paritionedCommunities,
+    networks,
+    communities,
     canModerate
   }
 }
