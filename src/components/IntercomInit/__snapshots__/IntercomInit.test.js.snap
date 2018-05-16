@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches the last snapshot 1`] = `
+<Intercom
+  appID="wwelodje"
+  email="jo@mo.com"
+  user_hash="abc"
+  user_id={123}
+/>
+`;
