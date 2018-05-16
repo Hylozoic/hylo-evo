@@ -17,9 +17,7 @@ export default function apiMiddleware (req) {
   }
 }
 
-export const HOST = typeof window === 'undefined'
-  ? process.env.API_HOST
-  : window.location.origin
+export const HOST = process.env.API_HOST || (typeof window === 'undefined' ? '' : window.location.origin)
 
 export function fetchJSON (path, params, options = {}) {
   const fetchURL = (options.host || HOST) + path
