@@ -111,6 +111,7 @@ me {
   unseenThreadCount
   location
   email
+  intercomHash
   settings {
     signupInProgress
     digestFrequency
