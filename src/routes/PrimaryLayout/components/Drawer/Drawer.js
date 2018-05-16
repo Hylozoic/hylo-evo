@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { bgImageStyle } from 'util/index'
 import Badge from 'components/Badge'
@@ -13,7 +13,7 @@ import { isEmpty, sum } from 'lodash/fp'
 
 const { string, number, arrayOf, shape } = PropTypes
 
-export default class Drawer extends Component {
+export default class Drawer extends React.PureComponent {
   static propTypes = {
     community: shape({
       id: string,
