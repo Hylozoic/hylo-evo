@@ -1,4 +1,14 @@
-import { mergeProps } from './UserSettings.connector'
+import { mapStateToProps, mergeProps } from './UserSettings.connector'
+
+describe('mapStateToProps', () => {
+  it('returns the right keys', () => {
+    const state = {
+      FullPageModal: {},
+      pending: {}
+    }
+    expect(mapStateToProps(state, {})).toMatchSnapshot()
+  })
+})
 
 describe('mergeProps', () => {
   it("setConfirm only fires if it's a change", () => {

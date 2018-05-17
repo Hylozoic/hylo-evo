@@ -10,6 +10,8 @@ export const UPDATE_USER_SETTINGS_PENDING = UPDATE_USER_SETTINGS + '_PENDING'
 export const FETCH_USER_SETTINGS = `${MODULE_NAME}/FETCH_USER_SETTINGS`
 export const UPDATE_MEMBERSHIP_SETTINGS = `${MODULE_NAME}/UPDATE_MEMBERSHIP_SETTINGS`
 export const UPDATE_MEMBERSHIP_SETTINGS_PENDING = UPDATE_MEMBERSHIP_SETTINGS + '_PENDING'
+export const UPDATE_ALL_MEMBERSHIP_SETTINGS = `${MODULE_NAME}/UPDATE_ALL_MEMBERSHIP_SETTINGS`
+export const UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING = `${UPDATE_ALL_MEMBERSHIP_SETTINGS}_PENDING`
 
 export function fetchUserSettings () {
   return {
@@ -125,6 +127,27 @@ export function updateMembershipSettings (communityId, settings) {
     },
     meta: {
       communityId,
+      settings,
+      optimistic: true
+    }
+  }
+}
+
+export function updateAllMemberships (communityIds, settings) {
+  const subqueries = communityIds.map(communityId => `
+    alias${communityId}: updateMembership(communityId: ${communityId}, data: {settings: ${JSON.stringify(settings).replace(/"/g, '')}}) {
+      id
+    }
+  `).join()
+  const query = `mutation {
+    ${subqueries}
+  }`
+  return {
+    type: UPDATE_ALL_MEMBERSHIP_SETTINGS,
+    graphql: {
+      query
+    },
+    meta: {
       settings,
       optimistic: true
     }

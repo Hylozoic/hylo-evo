@@ -2,12 +2,14 @@ import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import {
   fetchUserSettings, updateUserSettings, leaveCommunity,
-  unlinkAccount, updateMembershipSettings, FETCH_USER_SETTINGS
+  unlinkAccount, updateMembershipSettings, FETCH_USER_SETTINGS, updateAllMemberships
 } from './UserSettings.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
+import { createSelector } from 'reselect'
 import orm from 'store/models'
+import { every, includes } from 'lodash/fp'
 
 // this selector assumes that all Memberships belong to the currentUser
 // using this instead of currentUser.memberships to avoid a memoization issue
@@ -19,9 +21,27 @@ export const getCurrentUserMemberships = ormCreateSelector(
     session.Membership.all().toModelArray()
 )
 
+export const getAllCommunitiesSettings = createSelector(
+  getCurrentUserMemberships,
+  memberships => ({
+    sendEmail: every(m => m.settings.sendEmail, memberships),
+    sendPushNotifications: every(m => m.settings.sendPushNotifications, memberships)
+  })
+)
+
+export const getMessageSettings = createSelector(
+  getMe,
+  me => me && ({
+    sendEmail: includes(me.settings.dmNotifications, ['email', 'both']),
+    sendPushNotifications: includes(me.settings.dmNotifications, ['push', 'both'])
+  })
+)
+
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const memberships = getCurrentUserMemberships(state, props)
+  const allCommunitiesSettings = getAllCommunitiesSettings(state, props)
+  const messageSettings = getMessageSettings(state, props)
 
   const confirm = state.FullPageModal.confirm
   const fetchPending = state.pending[FETCH_USER_SETTINGS]
@@ -30,7 +50,9 @@ export function mapStateToProps (state, props) {
     currentUser,
     memberships,
     confirm,
-    fetchPending
+    fetchPending,
+    allCommunitiesSettings,
+    messageSettings
   }
 }
 
@@ -41,7 +63,8 @@ export const mapDispatchToProps = {
   loginWithService,
   unlinkAccount,
   setConfirmBeforeClose,
-  updateMembershipSettings
+  updateMembershipSettings,
+  updateAllMemberships
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {

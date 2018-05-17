@@ -82,40 +82,59 @@
   margin: 0 auto;
 }
 
-// Control
-.control {
-  margin-bottom: $space-4x;
-}
+// go through above to remove dead code
 
-.control-input {
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid $color-ghost;
-  composes: bdy-drk-sm from 'css/typography.scss';
-  font-size: 16px;
-  padding-bottom: $space-2x;
-  resize: none;
-  &:focus {
-    outline: none;
-  }
-}
-
-textarea.control-input {
-  resize: vertical;
-  height: $space-20x;
-}
-
-// SocialControl
-.linked {
-  border-bottom: 1px solid $color-caribbean-green;
-}
-
-.social-control-label {
-  composes: control-input;
+// SettingsRow
+.settingsRow {
   display: flex;
+  align-items: center;
+  border-bottom: $light-border;
+  height: 65px;
 }
 
-.link-button {
-  margin-left: auto;
-  composes: text-button from 'css/typography.scss';
+.expanded {
+  height: 112px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  padding-top: 10px;
 }
+
+.nameRow {
+  display: flex;
+  width: 100%;
+}
+
+.avatarIcon {
+  font-size: 28px;
+  margin-right: 8px;
+}
+
+.name {
+  /* empty */
+}
+
+.arrowIcon {
+  margin-left: auto;
+}
+
+.iconRow {
+  padding-left: 36px;
+}
+
+.communityAvatar {
+  @include image(24px);  
+  margin-right: 13px;
+}
+
+// SettingsIcon 
+.icon {
+  font-size: 44px;
+  margin-right: 21px;
+  color: $color-cape-cod-20;
+}
+
+.highlightIcon {
+  color: $color-tree-poppy
+}
+
