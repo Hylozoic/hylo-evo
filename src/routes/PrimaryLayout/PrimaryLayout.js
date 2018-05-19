@@ -39,6 +39,7 @@ import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
 import DownloadAppModal from 'components/DownloadAppModal'
+import IntercomInit from 'components/IntercomInit'
 
 // TODO: Implement create community privacy component when implemented on the server
 // import Privacy from 'routes/CreateCommunity/Privacy'
@@ -267,6 +268,7 @@ export default class PrimaryLayout extends Component {
       <Route path='/t' component={Messages} />
       <SocketListener location={location} />
       <SocketSubscriber type='community' id={get('slug', community)} />
+      <IntercomInit />
       {postEditorRoutes.map(({path, forNew}) =>
         <Route
           key={path}
