@@ -16,7 +16,8 @@ import {
  } from 'components/PostCard/PostHeader/PostHeader.store'
 import {
   UPDATE_MEMBERSHIP_SETTINGS_PENDING,
-  UPDATE_USER_SETTINGS_PENDING
+  UPDATE_USER_SETTINGS_PENDING,
+  UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING
 } from 'routes/UserSettings/UserSettings.store'
 import {
   FETCH_FOR_COMMUNITY_PENDING
@@ -636,5 +637,31 @@ describe('on DELETE_COMMUNITY_TOPIC_PENDING', () => {
     const newSession = orm.session(newState)
     expect(newSession.CommunityTopic.hasId('1')).toBeFalsy()
     expect(newSession.CommunityTopic.hasId('2')).toBeTruthy()
+  })
+})
+
+describe('on UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING', () => {
+  it('should update all the memberships settings', () => {
+    const session = orm.mutableSession(orm.getEmptyState())
+    const meId = 'meId'
+    session.Me.create({id: meId})
+    session.Membership.create({person: meId, settings: {}})
+    session.Membership.create({person: meId, settings: {}})
+    session.Membership.create({person: meId, settings: {}})
+
+    const action = {
+      type: UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING,
+      meta: {
+        settings: {
+          sendEmail: true
+        }
+      }
+    }
+
+    const newSession = orm.session(ormReducer(session.state, action))
+    const membershipsAfterAction = newSession.Membership.all().toModelArray()
+    membershipsAfterAction.map(membership => {
+      expect(membership.settings.sendEmail).toEqual(true)
+    })
   })
 })

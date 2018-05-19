@@ -29,6 +29,9 @@ export default class UserSettings extends Component {
       unlinkAccount,
       setConfirm,
       updateMembershipSettings,
+      updateAllMemberships,
+      messageSettings,
+      allCommunitiesSettings,
       fetchPending
     } = this.props
 
@@ -50,15 +53,19 @@ export default class UserSettings extends Component {
           path: '/settings/communities',
           component: <CommunitySettingsTab
             memberships={memberships}
-            leaveCommunity={leaveCommunity}
-            updateMembershipSettings={updateMembershipSettings} />
+            leaveCommunity={leaveCommunity} />
         },
         {
           name: 'Notifications',
           path: '/settings/notifications',
           component: <NotificationSettingsTab
             currentUser={currentUser}
-            updateUserSettings={updateUserSettings} />
+            updateUserSettings={updateUserSettings}
+            memberships={memberships}
+            updateMembershipSettings={updateMembershipSettings}
+            updateAllMemberships={updateAllMemberships}
+            messageSettings={messageSettings}
+            allCommunitiesSettings={allCommunitiesSettings} />
         },
         {
           name: 'Password',

@@ -18,7 +18,7 @@ export function formatError (error, action) {
     }[option])))
 
     return <div styleName='error'>
-      Your account has no password set. <a href='/set-password'>Set your password here.</a>
+      Your account has no password set. <a href='/reset-password'>Set your password here.</a>
       {options[0] && <span><br />Or log in with {options.join(' or ')}.</span>}
     </div>
   }

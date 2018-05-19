@@ -31,37 +31,6 @@ exports[`CommunityControl renders correctly 1`] = `
       Leave
     </span>
   </div>
-  <div
-    data-stylename="settings-row"
-  >
-    <span
-      data-stylename="settings-label"
-    >
-      Receive Notifications:
-    </span>
-    <span
-      data-stylename="settings"
-    >
-      <span
-        data-stylename="checkbox-label"
-      >
-        Email
-      </span>
-      <CheckBox
-        checked={false}
-        onChange={[Function]}
-      />
-      <span
-        data-stylename="checkbox-label"
-      >
-        Mobile
-      </span>
-      <CheckBox
-        checked={true}
-        onChange={[Function]}
-      />
-    </span>
-  </div>
 </div>
 `;
 

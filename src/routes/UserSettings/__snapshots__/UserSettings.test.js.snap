@@ -33,18 +33,31 @@ exports[`UserSettings renders correctly 1`] = `
               },
             ]
           }
-          updateMembershipSettings={[Function]}
         />,
         "name": "Communities",
         "path": "/settings/communities",
       },
       Object {
         "component": <NotificationSettingsTab
+          allCommunitiesSettings={undefined}
           currentUser={
             Object {
               "id": 1,
             }
           }
+          memberships={
+            Array [
+              Object {
+                "id": 2,
+              },
+              Object {
+                "id": 3,
+              },
+            ]
+          }
+          messageSettings={undefined}
+          updateAllMemberships={undefined}
+          updateMembershipSettings={[Function]}
           updateUserSettings={[Function]}
         />,
         "name": "Notifications",
