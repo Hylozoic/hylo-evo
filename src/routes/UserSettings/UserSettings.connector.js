@@ -24,16 +24,16 @@ export const getCurrentUserMemberships = ormCreateSelector(
 export const getAllCommunitiesSettings = createSelector(
   getCurrentUserMemberships,
   memberships => ({
-    sendEmail: every(m => m.settings.sendEmail, memberships),
-    sendPushNotifications: every(m => m.settings.sendPushNotifications, memberships)
+    sendEmail: every(m => m.settings && m.settings.sendEmail, memberships),
+    sendPushNotifications: every(m => m.settings && m.settings.sendPushNotifications, memberships)
   })
 )
 
 export const getMessageSettings = createSelector(
   getMe,
   me => me && ({
-    sendEmail: includes(me.settings.dmNotifications, ['email', 'both']),
-    sendPushNotifications: includes(me.settings.dmNotifications, ['push', 'both'])
+    sendEmail: includes(me.settings && me.settings.dmNotifications, ['email', 'both']),
+    sendPushNotifications: includes(me.settings && me.settings.dmNotifications, ['push', 'both'])
   })
 )
 
