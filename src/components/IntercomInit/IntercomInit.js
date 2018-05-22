@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import IntercomComponent from 'react-intercom'
 import { intercom } from 'config'
+import { get } from 'lodash/fp'
 
 export default class IntercomInit extends Component {
   render () {
     const { currentUser } = this.props
 
-    if (!currentUser) return null
+    if (!get('intercomHash', currentUser)) return null
 
     const appID = intercom.appId
     const user = {
