@@ -23,6 +23,17 @@ exports[`renders correctly 1`] = `
         src="/axolotl-phone.png"
       />
     </a>
+    <a
+      href="HyloApp://test/"
+    >
+      <Button>
+        Go to the app
+      </Button>
+      <img
+        data-stylename="axolotl-phone-image"
+        src="/axolotl-phone.png"
+      />
+    </a>
   </div>
 </div>
 `;
