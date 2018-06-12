@@ -101,7 +101,9 @@ export default class PrimaryLayout extends Component {
     } = this.props
 
     if (downloadAppUrl) {
-      return <DownloadAppModal url={downloadAppUrl} header={'Download the app to log in!'} />
+      return <DownloadAppModal
+        url={downloadAppUrl}
+      />
     }
 
     if (isCommunityRoute && !currentUser) {

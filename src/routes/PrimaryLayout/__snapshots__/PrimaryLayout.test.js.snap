@@ -2,7 +2,6 @@
 
 exports[`shows DownloadAppModal if the user is on mobile 1`] = `
 <DownloadAppPortal
-  header="Download the app to log in!"
   url="some.url"
 />
 `;
