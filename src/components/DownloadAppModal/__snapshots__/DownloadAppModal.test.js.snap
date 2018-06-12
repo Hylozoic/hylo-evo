@@ -7,36 +7,30 @@ exports[`renders correctly 1`] = `
   <div
     data-stylename="modal-container"
   >
-    <p
-      data-stylename="modal-message"
-    >
-      Click to view in Hylo mobile.
-    </p>
-    <p
-      data-stylename="modal-message"
-    >
-      If you see an error, click the download link to start using our mobile app.
-    </p>
     <a
       href="HyloApp://home/"
     >
       <Button
         data-stylename="deep-link-button"
       >
-        View in Hylo mobile
+        View in Hylo app
       </Button>
     </a>
-    <a
-      href="some.url"
+    <p
+      data-stylename="modal-message"
     >
-      <Button>
-        Download Hylo mobile
-      </Button>
-      <img
-        data-stylename="axolotl-phone-image"
-        src="/axolotl-phone.png"
-      />
-    </a>
+      First-time user, please download the Hylo app from the 
+      <a
+        href="some.url"
+      >
+        Apple App Store
+      </a>
+      .
+    </p>
+    <img
+      data-stylename="axolotl-phone-image"
+      src="/axolotl-phone.png"
+    />
   </div>
 </div>
 `;

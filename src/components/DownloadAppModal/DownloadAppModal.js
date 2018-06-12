@@ -6,18 +6,14 @@ import { axolotlPhone } from 'util/assets'
 export default function DownloadAppModal ({url}) {
   const deepLinkOrigin = 'HyloApp://home'
   const deepLinkPath = deepLinkOrigin + window.location.pathname
+  const appStoreName = url.indexOf('android') === -1 ? 'Apple App Store' : 'Google Play Store'
   return <div styleName='modal'>
     <div styleName='modal-container'>
-      <p styleName='modal-message'>Click to view in Hylo mobile.</p>
-      <p styleName='modal-message'>If you see an error, click the download link to start using our mobile app.</p>
-
       <a href={deepLinkPath}>
-        <Button styleName='deep-link-button'>View in Hylo mobile</Button>
+        <Button styleName='deep-link-button'>View in Hylo app</Button>
       </a>
-      <a href={url}>
-        <Button>Download Hylo mobile</Button>
-        <img styleName='axolotl-phone-image' src={axolotlPhone} />
-      </a>
+      <p styleName='modal-message'>First-time user, please download the Hylo app from the <a href={url}>{appStoreName}</a>.</p>
+      <img styleName='axolotl-phone-image' src={axolotlPhone} />
     </div>
   </div>
 }
