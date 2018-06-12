@@ -24,7 +24,7 @@ exports[`renders correctly 1`] = `
       />
     </a>
     <a
-      href="HyloApp://test/"
+      href="HyloApp://c/hylo"
     >
       <Button>
         Go to the app
