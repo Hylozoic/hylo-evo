@@ -4,9 +4,8 @@ import Button from '../Button'
 import { axolotlPhone } from 'util/assets'
 
 export default function DownloadAppModal ({url, header = 'Download the app to use Hylo on mobile!'}) {
-  // const origin = 'HyloApp://test'
-  // const deepLinkPath = origin + window.location.pathname
-  const deepLinkPath = 'HyloApp://c/hylo'
+  const deepLinkOrigin = 'HyloApp://home'
+  const deepLinkPath = deepLinkOrigin + window.location.pathname
   return <div styleName='modal'>
     <div styleName='modal-container'>
       <h1 styleName='modal-header'>{header}</h1>
