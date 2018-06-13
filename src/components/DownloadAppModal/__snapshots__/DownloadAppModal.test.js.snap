@@ -8,7 +8,7 @@ exports[`renders correctly 1`] = `
     data-stylename="modal-container"
   >
     <a
-      href="HyloApp://home/"
+      href="hyloapp://home/"
     >
       <Button
         data-stylename="deep-link-button"

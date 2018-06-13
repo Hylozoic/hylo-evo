@@ -4,7 +4,7 @@ import Button from '../Button'
 import { axolotlPhone } from 'util/assets'
 
 export default function DownloadAppModal ({url}) {
-  const deepLinkOrigin = 'HyloApp://home'
+  const deepLinkOrigin = 'hyloapp://home'
   const deepLinkPath = deepLinkOrigin + window.location.pathname
   const appStoreName = url.indexOf('android') === -1 ? 'Apple App Store' : 'Google Play Store'
   return <div styleName='modal'>
