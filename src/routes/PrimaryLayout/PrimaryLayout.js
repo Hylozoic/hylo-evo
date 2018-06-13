@@ -38,7 +38,6 @@ import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
-import DownloadAppModal from 'components/DownloadAppModal'
 import IntercomInit from 'components/IntercomInit'
 
 // TODO: Implement create community privacy component when implemented on the server
@@ -99,12 +98,6 @@ export default class PrimaryLayout extends Component {
       returnToURL,
       downloadAppUrl
     } = this.props
-
-    if (downloadAppUrl) {
-      return <DownloadAppModal
-        url={downloadAppUrl}
-      />
-    }
 
     if (isCommunityRoute && !currentUser) {
       return <Loading />
