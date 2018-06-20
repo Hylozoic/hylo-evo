@@ -14,6 +14,9 @@ export const RESEND_INVITATION_PENDING = `${MODULE_NAME}/RESEND_INVITATION_PENDI
 export const REINVITE_ALL = `${MODULE_NAME}/REINVITE_ALL`
 export const REINVITE_ALL_PENDING = `${MODULE_NAME}/REINVITE_ALL_PENDING`
 
+export const ALLOW_COMMUNITY_INVITES = `${MODULE_NAME}/ALLOW_COMMUNITY_INVITES`
+export const DISALLOW_COMMUNITY_INVITES = `${MODULE_NAME}/DISALLOW_COMMUNITY_INVITES`
+
 const defaultState = []
 
 export default function reducer (state = defaultState, action) {
@@ -112,6 +115,26 @@ export function resendInvitation (invitationToken) {
     },
     meta: {
       invitationToken,
+      optimistic: true
+    }
+  }
+}
+
+export function allowCommunityInvites (communityId) {
+  return {
+    type: ALLOW_COMMUNITY_INVITES,
+    graphql: {
+      query: `mutation ($communityId: ID) {
+        allowCommunityInvites(communityId: $communityId) {
+          success
+        }
+      }`,
+      variables: {
+        communityId
+      }
+    },
+    meta: {
+      communityId,
       optimistic: true
     }
   }

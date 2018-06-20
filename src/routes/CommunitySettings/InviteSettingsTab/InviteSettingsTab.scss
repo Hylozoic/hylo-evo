@@ -8,6 +8,16 @@ $rowHeight: 60px;
   margin-top: $space-6x;
 }
 
+.switch-header {
+  border-radius: 4px;
+  background-color: $color-athens-gray;
+  padding: $space-7x $space-6x;
+  margin-bottom: $space-8x;
+  margin-top: $space-6x;
+  display: flex;
+  max-height: 80px;
+}
+
 .title {
   composes: hdr-display from 'css/typography.scss';
 }
@@ -192,4 +202,14 @@ $rowHeight: 60px;
 
 .success {
   color: $color-mountain-meadow;
+}
+
+.switch {
+  float: right;
+  margin-left: 180px;
+  margin-top: -6px;
+}
+
+.switch-label {
+  composes: caption-lt-lg from 'css/typography.scss';
 }

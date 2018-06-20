@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import styles from './InviteSettingsTab.scss'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
+import Switch from 'components/Switch'
 import TextareaAutosize from 'react-textarea-autosize'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { humanDate } from 'hylo-utils/text'
@@ -39,7 +40,8 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
       copied: false,
       reset: false,
       emails: '',
-      message: defaultMessage
+      message: defaultMessage,
+      switchValue: false
     }
   }
 
@@ -85,6 +87,11 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
     })
   }
 
+  toggleSwitch = () => {
+    const switchValue = !this.state.switchValue
+    this.setState({switchValue})
+  }
+
   render () {
     const {
       community,
@@ -95,10 +102,11 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
       pendingInvites = [],
       expireInvitation,
       resendInvitation,
-      reinviteAll
+      reinviteAll,
+      canModerate
     } = this.props
     const { name } = community
-    const { copied, reset, emails, errorMessage, successMessage } = this.state
+    const { copied, reset, emails, errorMessage, successMessage, switchValue } = this.state
 
     const onReset = () => {
       if (window.confirm("Are you sure you want to create a new join link? The current link won't work anymore if you do.")) {
@@ -137,6 +145,10 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
         </div>
       </div>
       {pending && <Loading />}
+      {!pending && canModerate && <div styleName='styles.switch-header'>
+        <span styleName='styles.switch-label'>Let anyone in this community send invites</span>
+        <Switch styleName='styles.switch' value={switchValue} onClick={this.toggleSwitch} />
+      </div>}
       {!pending && <div styleName='styles.invite-link-settings'>
         <div styleName='styles.invite-link-text'>
           <div styleName='styles.help'>Anyone with this link can join the community</div>

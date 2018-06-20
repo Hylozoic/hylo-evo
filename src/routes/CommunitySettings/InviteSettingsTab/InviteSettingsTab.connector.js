@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { origin } from 'util/index'
 import { regenerateAccessCode, FETCH_COMMUNITY_SETTINGS } from '../CommunitySettings.store'
-// import getMe from 'store/selectors/getMe'
+import getMe from 'store/selectors/getMe'
 import {
   createInvitations,
   getPendingInvites,
@@ -15,11 +15,14 @@ export function mapStateToProps (state, props) {
   const pending = state.pending[FETCH_COMMUNITY_SETTINGS]
   const inviteLink = origin() + community.invitePath
   const pendingInvites = getPendingInvites(state, { communityId: community.id })
+  const currentUser = getMe(state, props)
+  const canModerate = currentUser && currentUser.canModerate(community)
 
   return {
     inviteLink,
     pending,
-    pendingInvites
+    pendingInvites,
+    canModerate
   }
 }
 
