@@ -41,7 +41,7 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
       reset: false,
       emails: '',
       message: defaultMessage,
-      invitesByMembersAllowed: this.props.community.invitesByMembersAllowed
+      allMembersCanInvite: this.props.community.allMembersCanInvite
     }
   }
 
@@ -88,8 +88,8 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
   }
 
   toggleSwitch = () => {
-    const invitesByMembersAllowed = !this.state.invitesByMembersAllowed
-    this.setState({invitesByMembersAllowed})
+    const allMembersCanInvite = !this.state.allMembersCanInvite
+    this.setState({allMembersCanInvite})
   }
 
   render () {
@@ -106,7 +106,7 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
       canModerate
     } = this.props
     const { name } = community
-    const { copied, reset, emails, errorMessage, successMessage, invitesByMembersAllowed } = this.state
+    const { copied, reset, emails, errorMessage, successMessage, allMembersCanInvite } = this.state
 
     const onReset = () => {
       if (window.confirm("Are you sure you want to create a new join link? The current link won't work anymore if you do.")) {
@@ -147,7 +147,7 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
       {pending && <Loading />}
       {!pending && canModerate && <div styleName='styles.switch-header'>
         <span styleName='styles.switch-label'>Let anyone in this community send invites</span>
-        <Switch styleName='styles.switch' value={invitesByMembersAllowed} onClick={this.toggleSwitch} />
+        <Switch styleName='styles.switch' value={allMembersCanInvite} onClick={this.toggleSwitch} />
       </div>}
       {!pending && <div styleName='styles.invite-link-settings'>
         <div styleName='styles.invite-link-text'>
