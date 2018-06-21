@@ -120,12 +120,12 @@ export function resendInvitation (invitationToken) {
   }
 }
 
-export function allowCommunityInvites (communityId) {
+export function allowCommunityInvites (communityId, data) {
   return {
     type: ALLOW_COMMUNITY_INVITES,
     graphql: {
-      query: `mutation ($communityId: ID) {
-        allowCommunityInvites(communityId: $communityId) {
+      query: `mutation ($communityId: ID, $data: Boolean) {
+        allowCommunityInvites(communityId: $communityId, data: $data) {
           id
         }
       }`,

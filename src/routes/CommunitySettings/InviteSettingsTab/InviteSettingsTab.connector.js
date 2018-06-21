@@ -36,7 +36,7 @@ export function mapDispatchToProps (dispatch, props) {
     expireInvitation: (invitationToken) => dispatch(expireInvitation(invitationToken)),
     resendInvitation: (invitationToken) => dispatch(resendInvitation(invitationToken)),
     reinviteAll: () => dispatch(reinviteAll(communityId)),
-    allowCommunityInvites: (communityId) => dispatch(allowCommunityInvites(communityId))
+    allowCommunityInvites: (communityId, settingBoolean) => dispatch(allowCommunityInvites(communityId, settingBoolean))
   }
 }
 
