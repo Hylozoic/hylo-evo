@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InviteSettingsTab.store.ormSessionReducer matches the last snapshot for allowCommunityInvites 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($communityId: ID, $data: Boolean) {
+        allowCommunityInvites(communityId: $communityId, data: $data) {
+          id
+        }
+      }",
+    "variables": Object {
+      "communityId": "1",
+    },
+  },
+  "meta": Object {
+    "communityId": "1",
+    "optimistic": true,
+  },
+  "type": "InviteSettingsTab/ALLOW_COMMUNITY_INVITES",
+}
+`;

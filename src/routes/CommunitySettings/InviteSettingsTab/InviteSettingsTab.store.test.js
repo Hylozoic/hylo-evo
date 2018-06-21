@@ -3,7 +3,8 @@ import {
   CREATE_INVITATIONS,
   RESEND_INVITATION_PENDING,
   EXPIRE_INVITATION_PENDING,
-  REINVITE_ALL_PENDING
+  REINVITE_ALL_PENDING,
+  allowCommunityInvites
 } from './InviteSettingsTab.store'
 import orm from 'store/models'
 
@@ -82,5 +83,9 @@ describe('InviteSettingsTab.store.ormSessionReducer', () => {
       .toRefArray().map(i => i.resent)
     ).toEqual([true, true, true])
     expect(session.Invitation.withId('5').resent).toBeFalsy()
+  })
+
+  it('matches the last snapshot for allowCommunityInvites', () => {
+    expect(allowCommunityInvites('1', false)).toMatchSnapshot()
   })
 })
