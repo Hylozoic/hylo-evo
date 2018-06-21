@@ -3,6 +3,7 @@ import { origin } from 'util/index'
 import { regenerateAccessCode, FETCH_COMMUNITY_SETTINGS } from '../CommunitySettings.store'
 import getMe from 'store/selectors/getMe'
 import {
+  allowCommunityInvites,
   createInvitations,
   getPendingInvites,
   expireInvitation,
@@ -34,7 +35,8 @@ export function mapDispatchToProps (dispatch, props) {
     createInvitations: (emails, message) => dispatch(createInvitations(communityId, emails, message)),
     expireInvitation: (invitationToken) => dispatch(expireInvitation(invitationToken)),
     resendInvitation: (invitationToken) => dispatch(resendInvitation(invitationToken)),
-    reinviteAll: () => dispatch(reinviteAll(communityId))
+    reinviteAll: () => dispatch(reinviteAll(communityId)),
+    allowCommunityInvites: (communityId) => dispatch(allowCommunityInvites(communityId))
   }
 }
 

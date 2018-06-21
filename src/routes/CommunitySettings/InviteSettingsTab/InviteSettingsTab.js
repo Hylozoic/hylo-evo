@@ -88,7 +88,9 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
   }
 
   toggleSwitch = () => {
+    const communityId = this.props.community.id
     const allMembersCanInvite = !this.state.allMembersCanInvite
+    this.props.allowCommunityInvites(communityId)
     this.setState({allMembersCanInvite})
   }
 

@@ -126,7 +126,7 @@ export function allowCommunityInvites (communityId) {
     graphql: {
       query: `mutation ($communityId: ID) {
         allowCommunityInvites(communityId: $communityId) {
-          success
+          id
         }
       }`,
       variables: {
