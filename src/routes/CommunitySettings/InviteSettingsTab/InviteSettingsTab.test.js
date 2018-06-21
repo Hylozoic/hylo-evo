@@ -35,3 +35,23 @@ it('toggles allowCommunityInvites and calls the function to make the request on 
   expect(allowCommunityInvites).toBeCalled()
   expect(wrapper.instance().state.allMembersCanInvite).toBeTruthy()
 })
+
+it('handles allowCommunityInvites error', () => {
+  const community = {
+    id: 1,
+    name: 'Hylo'
+  }
+  const allMembersCanInvite = false
+  const allowCommunityInvites = jest.fn(() => Promise.resolve({error: 'some error'}))
+
+  const wrapper = shallow(<InviteSettingsTab
+    community={community}
+    regenerateAccessCode={() => {}}
+    inviteLink='http://www.hylo.com/c/hylo/join/lalala'
+    allMembersCanInvite={allMembersCanInvite}
+    allowCommunityInvites={allowCommunityInvites}
+    />)
+  wrapper.instance().toggleSwitch()
+  expect(allowCommunityInvites).toBeCalled()
+  expect(wrapper.instance().state.allMembersCanInvite).toBeTruthy()
+})
