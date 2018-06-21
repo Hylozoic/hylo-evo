@@ -91,6 +91,11 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
     const communityId = this.props.community.id
     const allMembersCanInvite = !this.state.allMembersCanInvite
     this.props.allowCommunityInvites(communityId, allMembersCanInvite)
+      .then(({error}) => {
+        if (error) {
+          this.setState({allMembersCanInvite: !allMembersCanInvite})
+        }
+      })
     this.setState({allMembersCanInvite})
   }
 
