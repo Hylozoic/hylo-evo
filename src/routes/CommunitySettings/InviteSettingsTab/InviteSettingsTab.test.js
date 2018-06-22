@@ -55,3 +55,17 @@ it('handles allowCommunityInvites error', () => {
   expect(allowCommunityInvites).toBeCalled()
   expect(wrapper.instance().state.allMembersCanInvite).toBeTruthy()
 })
+
+it('changes state when nextProps has a new value for community.allowCommunityInvites', () => {
+  const community = {
+    allowCommunityInvites: false
+  }
+
+  const nextCommunity = {
+    allowCommunityInvites: true
+  }
+
+  const wrapper = shallow(<InviteSettingsTab community={community} />)
+  wrapper.setProps({community: nextCommunity})
+  expect(wrapper.instance().state.allMembersCanInvite).toBeTruthy()
+})
