@@ -20,6 +20,7 @@ export function fetchCommunitySettings (slug) {
           settings
           invitePath
           hidden
+          allowCommunityInvites
           pendingInvitations (first: 100) {
             hasMore
             items {

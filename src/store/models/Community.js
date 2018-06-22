@@ -30,7 +30,8 @@ Community.fields = {
   network: fk('Network'),
   posts: many('Post'),
   postCount: attr(),
-  feedOrder: attr()
+  feedOrder: attr(),
+  allowCommunityInvites: attr()
 }
 
 export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg'
