@@ -35,7 +35,6 @@ export default class InviteSettingsTab extends Component {
 I'm inviting you to join ${props.community.name} community on Hylo.
 
 ${props.community.name} is using Hylo for our online community: this is our dedicated space for communication & collaboration.`
-    console.log('constructor community.allowCommunityInvites', this.props.community.allowCommunityInvites)
     this.state = {
       copied: false,
       reset: false,
@@ -98,7 +97,6 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
   toggleSwitch = () => {
     const communityId = this.props.community.id
     const allMembersCanInvite = !this.state.allMembersCanInvite
-    console.log('allMembersCanInvite', allMembersCanInvite)
     this.props.allowCommunityInvites(communityId, allMembersCanInvite)
       .then(({error}) => {
         if (error) {
@@ -121,7 +119,6 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
       reinviteAll,
       canModerate
     } = this.props
-    console.log('render() community.allowCommunityInvites', community.allowCommunityInvites)
     const { name } = community
     const { copied, reset, emails, errorMessage, successMessage, allMembersCanInvite } = this.state
 

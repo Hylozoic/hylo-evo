@@ -130,7 +130,8 @@ export function allowCommunityInvites (communityId, data) {
         }
       }`,
       variables: {
-        communityId
+        communityId,
+        data
       }
     },
     meta: {

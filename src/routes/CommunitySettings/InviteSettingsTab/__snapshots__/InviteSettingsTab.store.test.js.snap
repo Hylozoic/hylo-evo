@@ -10,6 +10,7 @@ Object {
       }",
     "variables": Object {
       "communityId": "1",
+      "data": false,
     },
   },
   "meta": Object {
