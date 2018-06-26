@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { deleteComment } from './Comment.store'
+import { deleteComment, updateComment } from './Comment.store'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getMe from 'store/selectors/getMe'
 
@@ -17,7 +17,8 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = {
-  deleteComment
+  deleteComment,
+  updateComment
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
@@ -33,12 +34,17 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     dispatchProps.deleteComment(comment.id)
     : null
 
+  const updateComment = isCreator
+    ? text => dispatchProps.updateComment(comment.id, text)
+    : null
+
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
     deleteComment: deleteCommentWithConfirm,
-    removeComment: removeCommentWithConfirm
+    removeComment: removeCommentWithConfirm,
+    updateComment
   }
 }
 

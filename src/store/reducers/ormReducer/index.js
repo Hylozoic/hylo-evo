@@ -33,7 +33,8 @@ import {
   UPDATE_COMMUNITY_SETTINGS_PENDING
 } from 'routes/CommunitySettings/CommunitySettings.store'
 import {
-  DELETE_COMMENT_PENDING
+  DELETE_COMMENT_PENDING,
+  UPDATE_COMMENT_PENDING
 } from 'routes/PostDetail/Comments/Comment/Comment.store'
 import {
   UPDATE_POST_PENDING
@@ -77,7 +78,7 @@ export default function ormReducer (state = {}, action) {
     extractModelsFromAction(action, session)
   }
 
-  let me, membership, community, person, post
+  let me, membership, community, person, post, comment
 
   switch (type) {
     case CREATE_COMMENT_PENDING:
@@ -238,7 +239,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case DELETE_COMMENT_PENDING:
-      const comment = Comment.withId(meta.id)
+      comment = Comment.withId(meta.id)
       comment.delete()
       break
 
@@ -261,6 +262,12 @@ export default function ormReducer (state = {}, action) {
     case DELETE_COMMUNITY_TOPIC_PENDING:
       const communityTopic = CommunityTopic.withId(meta.id)
       communityTopic.delete()
+      break
+
+    case UPDATE_COMMENT_PENDING:
+      comment = Comment.withId(meta.id)
+      comment.update(meta.data)
+      break
   }
 
   values(sessionReducers).forEach(fn => fn(session, action))

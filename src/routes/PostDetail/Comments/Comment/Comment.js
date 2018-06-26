@@ -6,6 +6,7 @@ import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
+import HyloEditor from 'components/HyloEditor'
 import { personUrl } from 'util/index'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import { filter, isFunction } from 'lodash'
@@ -17,12 +18,28 @@ export default class Comment extends Component {
     comment: object
   }
 
+  state = {
+    editing: false
+  }
+
+  editComment = () => {
+    this.setState({editing: true})
+  }
+
+  saveComment = text => {
+    this.setState({editing: false})
+    this.props.updateComment(text)
+  }
+
   render () {
-    const { comment, slug, deleteComment, removeComment } = this.props
+    const { comment, slug, isCreator, deleteComment, removeComment } = this.props
+    const { editing } = this.state
     const { creator, createdAt, text, image } = comment
     const profileUrl = personUrl(creator.id, slug)
 
     const dropdownItems = filter([
+      {},
+      {icon: 'Edit', label: 'Edit', onClick: isCreator && this.editComment},
       {icon: 'Trash', label: 'Delete', onClick: deleteComment},
       {icon: 'Trash', label: 'Remove', onClick: removeComment}
     ], item => isFunction(item.onClick))
@@ -44,7 +61,13 @@ export default class Comment extends Component {
         <img src={image.url} styleName='image' />
       </a>}
       {!image && <ClickCatcher>
-        <div id='text' styleName='text' dangerouslySetInnerHTML={{__html: presentedText}} />
+        {editing && <HyloEditor
+          styleName='editor'
+          onChange={this.startTyping}
+          contentHTML={text}
+          parentComponent={'CommentForm'}
+          submitOnReturnHandler={this.saveComment} />}
+        {!editing && <div id='text' styleName='text' dangerouslySetInnerHTML={{__html: presentedText}} />}
         {/* <div styleName='reply'><Icon name='Reply' styleName='icon' />Reply</div> */}
       </ClickCatcher>}
     </div>
