@@ -94,7 +94,7 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
     }
   }
 
-  toggleSwitch = () => {
+  toggleAllMembersCanInvite = () => {
     const communityId = this.props.community.id
     const allMembersCanInvite = !this.state.allMembersCanInvite
     this.props.allowCommunityInvites(communityId, allMembersCanInvite)
@@ -161,7 +161,7 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
       {pending && <Loading />}
       {!pending && canModerate && <div styleName='styles.switch-header'>
         <span styleName='styles.switch-label'>Let anyone in this community send invites</span>
-        <Switch styleName='styles.switch' value={allMembersCanInvite} onClick={this.toggleSwitch} />
+        <Switch styleName='styles.switch' value={allMembersCanInvite} onClick={this.toggleAllMembersCanInvite} />
       </div>}
       {!pending && <div styleName='styles.invite-link-settings'>
         <div styleName='styles.invite-link-text'>

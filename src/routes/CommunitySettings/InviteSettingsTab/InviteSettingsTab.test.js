@@ -31,7 +31,7 @@ it('toggles allowCommunityInvites and calls the function to make the request on 
     allMembersCanInvite={allMembersCanInvite}
     allowCommunityInvites={allowCommunityInvites}
     />)
-  wrapper.instance().toggleSwitch()
+  wrapper.instance().toggleAllMembersCanInvite()
   expect(allowCommunityInvites).toBeCalled()
   expect(wrapper.instance().state.allMembersCanInvite).toBeTruthy()
 })
@@ -51,7 +51,7 @@ it('handles allowCommunityInvites error', () => {
     allMembersCanInvite={allMembersCanInvite}
     allowCommunityInvites={allowCommunityInvites}
     />)
-  wrapper.instance().toggleSwitch()
+  wrapper.instance().toggleAllMembersCanInvite()
   expect(allowCommunityInvites).toBeCalled()
   expect(wrapper.instance().state.allMembersCanInvite).toBeTruthy()
 })
