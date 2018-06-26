@@ -52,7 +52,8 @@ export default class Comment extends Component {
         <Link to={profileUrl} styleName='userName'>{creator.name}</Link>
         <div styleName='upperRight'>
           <span styleName='timestamp'>
-            {humanDate(createdAt)}
+            {editing && 'Editing now'}
+            {!editing && humanDate(createdAt)}
           </span>
           {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
         </div>
