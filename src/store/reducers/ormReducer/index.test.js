@@ -26,7 +26,7 @@ import {
   UPDATE_COMMUNITY_SETTINGS_PENDING
 } from 'routes/CommunitySettings/CommunitySettings.store'
 import {
-  DELETE_COMMENT_PENDING
+  DELETE_COMMENT_PENDING, UPDATE_COMMENT_PENDING
 } from 'routes/PostDetail/Comments/Comment/Comment.store'
 import {
   UPDATE_POST_PENDING
@@ -663,5 +663,33 @@ describe('on UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING', () => {
     membershipsAfterAction.map(membership => {
       expect(membership.settings.sendEmail).toEqual(true)
     })
+  })
+})
+
+describe('on UPDATE_COMMENT_PENDING', () => {
+  const commentId = '123'
+  const session = orm.session(orm.getEmptyState())
+  const theNewText = 'lalala'
+
+  session.Comment.create({
+    id: commentId,
+    text: 'ufufuf'
+  })
+
+  const action = {
+    type: UPDATE_COMMENT_PENDING,
+    meta: {
+      id: commentId,
+      data: {
+        text: theNewText
+      }
+    }
+  }
+
+  it('updates the text', () => {
+    const newState = ormReducer(session.state, action)
+    const newSession = orm.session(newState)
+    const comment = newSession.Comment.withId(commentId)
+    expect(comment.text).toEqual(theNewText)
   })
 })
