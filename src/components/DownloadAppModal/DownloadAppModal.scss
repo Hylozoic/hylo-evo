@@ -22,8 +22,8 @@
 }
 
 .axolotl-phone-image {
-  max-width: 80%;
-  max-height: 60%;
+  max-width: 60%;
+  max-height: 45%;
   display: block;
   margin: 0 auto;
   margin-top: 20px;
@@ -32,4 +32,13 @@
 .modal-header {
   font-size: 140%;
   color: $color-rhino-60;
+}
+
+.modal-message {
+  color: $color-rhino-60;
+  padding: 10px;
+}
+
+.deep-link-button {
+  margin-bottom: 10px;
 }

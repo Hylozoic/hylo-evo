@@ -26,9 +26,9 @@ export default class Login extends React.Component {
 
   render () {
     const setState = key => event => this.setState({[key]: event.target.value})
-    const { downloadAppUrl } = this.props
+    const { downloadAppUrl, returnToURL } = this.props
     return <div className={this.props.className}>
-      {downloadAppUrl && <DownloadAppModal url={downloadAppUrl} />}
+      {downloadAppUrl && <DownloadAppModal url={downloadAppUrl} returnToURL={returnToURL} />}
       <h1 styleName='title'>Log in to Hylo</h1>
       {this.props.error && formatError(this.props.error, 'Login')}
       <div styleName='field'>

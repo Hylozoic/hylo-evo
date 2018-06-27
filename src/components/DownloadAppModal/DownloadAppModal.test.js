@@ -4,7 +4,6 @@ import React from 'react'
 
 it('renders correctly', () => {
   const url = 'some.url'
-  const header = 'modal header'
-  const wrapper = shallow(<DownloadAppModal url={url} header={header} />)
+  const wrapper = shallow(<DownloadAppModal url={url} />)
   expect(wrapper).toMatchSnapshot()
 })

@@ -7,22 +7,30 @@ exports[`renders correctly 1`] = `
   <div
     data-stylename="modal-container"
   >
-    <h1
-      data-stylename="modal-header"
-    >
-      modal header
-    </h1>
     <a
-      href="some.url"
+      href="hyloapp://homeundefined"
     >
-      <Button>
-        Go to the App Store
+      <Button
+        data-stylename="deep-link-button"
+      >
+        View in Hylo app
       </Button>
-      <img
-        data-stylename="axolotl-phone-image"
-        src="/axolotl-phone.png"
-      />
     </a>
+    <p
+      data-stylename="modal-message"
+    >
+      First-time user, please download the Hylo app from the 
+      <a
+        href="some.url"
+      >
+        Apple App Store
+      </a>
+      .
+    </p>
+    <img
+      data-stylename="axolotl-phone-image"
+      src="/axolotl-phone.png"
+    />
   </div>
 </div>
 `;
