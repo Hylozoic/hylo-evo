@@ -21,6 +21,13 @@ describe('Comment', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
+  it('renders correctly when editing', () => {
+    const wrapper = shallow(<Comment {...props} />)
+    wrapper.instance().setState({editing: true})
+    wrapper.update()
+    expect(wrapper).toMatchSnapshot()
+  })
+
   it('displays an image', () => {
     const comment = {
       ...props.comment,
@@ -49,5 +56,28 @@ describe('Comment', () => {
   it('displays the remove menu when removeComment is defined', () => {
     const wrapper = shallow(<Comment {...props} removeComment={() => {}} />)
     expect(wrapper).toMatchSnapshot()
+  })
+
+  describe('editComment', () => {
+    it('sets state.editing to true', () => {
+      const wrapper = shallow(<Comment {...props} />)
+      const instance = wrapper.instance()
+      expect(instance.state.editing).toEqual(false)
+      instance.editComment()
+      expect(instance.state.editing).toEqual(true)
+    })
+  })
+
+  describe('saveComment', () => {
+    it('sets state.editing to false and calls props.updateComment', () => {
+      const updateComment = jest.fn()
+      const wrapper = shallow(<Comment {...props} updateComment={updateComment} />)
+      const theText = 'lalala'
+      const instance = wrapper.instance()
+      instance.setState({editing: true})
+      instance.saveComment(theText)
+      expect(instance.state.editing).toEqual(false)
+      expect(updateComment).toHaveBeenCalledWith(theText)
+    })
   })
 })

@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import styles from './InviteSettingsTab.scss'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
+import Switch from 'components/Switch'
 import TextareaAutosize from 'react-textarea-autosize'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { humanDate } from 'hylo-utils/text'
@@ -34,12 +35,12 @@ export default class InviteSettingsTab extends Component {
 I'm inviting you to join ${props.community.name} community on Hylo.
 
 ${props.community.name} is using Hylo for our online community: this is our dedicated space for communication & collaboration.`
-
     this.state = {
       copied: false,
       reset: false,
       emails: '',
-      message: defaultMessage
+      message: defaultMessage,
+      allMembersCanInvite: undefined
     }
   }
 
@@ -85,6 +86,26 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
     })
   }
 
+  componentWillReceiveProps (nextProps) {
+    const { community } = this.props
+    const nextPropsCommunity = nextProps.community
+    if (community && nextPropsCommunity && community !== nextPropsCommunity) {
+      this.setState({allMembersCanInvite: nextPropsCommunity.allowCommunityInvites})
+    }
+  }
+
+  toggleAllMembersCanInvite = () => {
+    const communityId = this.props.community.id
+    const allMembersCanInvite = !this.state.allMembersCanInvite
+    this.props.allowCommunityInvites(communityId, allMembersCanInvite)
+      .then(({error}) => {
+        if (error) {
+          this.setState({allMembersCanInvite: !allMembersCanInvite})
+        }
+      })
+    this.setState({allMembersCanInvite})
+  }
+
   render () {
     const {
       community,
@@ -95,10 +116,11 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
       pendingInvites = [],
       expireInvitation,
       resendInvitation,
-      reinviteAll
+      reinviteAll,
+      canModerate
     } = this.props
     const { name } = community
-    const { copied, reset, emails, errorMessage, successMessage } = this.state
+    const { copied, reset, emails, errorMessage, successMessage, allMembersCanInvite } = this.state
 
     const onReset = () => {
       if (window.confirm("Are you sure you want to create a new join link? The current link won't work anymore if you do.")) {
@@ -137,6 +159,10 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
         </div>
       </div>
       {pending && <Loading />}
+      {!pending && canModerate && <div styleName='styles.switch-header'>
+        <span styleName='styles.switch-label'>Let anyone in this community send invites</span>
+        <Switch styleName='styles.switch' value={allMembersCanInvite} onClick={this.toggleAllMembersCanInvite} />
+      </div>}
       {!pending && <div styleName='styles.invite-link-settings'>
         <div styleName='styles.invite-link-text'>
           <div styleName='styles.help'>Anyone with this link can join the community</div>
