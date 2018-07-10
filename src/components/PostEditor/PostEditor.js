@@ -210,14 +210,13 @@ export default class PostEditor extends React.Component {
 
   isValid = (postUpdates = {}) => {
     const { type, title, communities } = Object.assign({}, this.state.post, postUpdates)
-    const thing = !!(this.editor &&
+    return !!(this.editor &&
       communities &&
       type.length > 0 &&
       title.length > 0 &&
       communities.length > 0 &&
       title.length <= MAX_TITLE_LENGTH
     )
-    return thing
   }
 
   save = () => {
