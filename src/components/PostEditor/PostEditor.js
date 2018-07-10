@@ -18,6 +18,7 @@ import AttachmentManager from './AttachmentManager'
 import { uploadSettings } from './AttachmentManager/AttachmentManager'
 import cheerio from 'cheerio'
 import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
+import { MAX_TITLE_LENGTH } from './PostEditor.store'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
@@ -154,10 +155,19 @@ export default class PostEditor extends React.Component {
 
   handleTitleChange = (event) => {
     const title = event.target.value
-    this.setState({
-      post: {...this.state.post, title},
-      valid: this.isValid({ title })
-    })
+    switch (title.length >= MAX_TITLE_LENGTH) {
+      case true:
+        this.setState({
+          valid: this.isValid({ title })
+        })
+        break
+      case false:
+        this.setState({
+          post: {...this.state.post, title},
+          valid: this.isValid({ title })
+        })
+        break
+    }
   }
 
   handleDetailsChange = (editorState, contentChanged) => {
@@ -211,7 +221,9 @@ export default class PostEditor extends React.Component {
       communities &&
       type.length > 0 &&
       title.length > 0 &&
-      communities.length > 0)
+      communities.length > 0 &&
+      title.length <= MAX_TITLE_LENGTH
+    )
   }
 
   save = () => {
@@ -280,6 +292,7 @@ export default class PostEditor extends React.Component {
             onChange={this.handleTitleChange}
             disabled={loading}
             ref={x => { this.titleInput = x }}
+            maxLength={MAX_TITLE_LENGTH}
           />
           <HyloEditor
             styleName='editor'

@@ -14,7 +14,10 @@ export const ANNOUNCEMENT = `${MODULE_NAME}/ANNOUNCEMENT`
 export const SHOW_ANNOUNCEMENT_CONFIRMATION = `${MODULE_NAME}/SHOW_ANNOUNCEMENT_CONFIRMATION`
 export const SET_ANNOUNCEMENT = `${MODULE_NAME}/SET_ANNOUNCEMENT`
 
+export const MAX_TITLE_LENGTH = 100
+
 // Actions
+
 export function createPost (post) {
   const {
     type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement
