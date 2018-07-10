@@ -156,11 +156,7 @@ export default class PostEditor extends React.Component {
 
   handleTitleChange = (event) => {
     const title = event.target.value
-    if (title.length >= MAX_TITLE_LENGTH) {
-      this.setState({titleLengthError: true})
-    } else {
-      this.setState({titleLengthError: false})
-    }
+    title.length >= MAX_TITLE_LENGTH ? this.setState({titleLengthError: true}) : this.setState({titleLengthError: false})
     this.setState({
       post: {...this.state.post, title},
       valid: this.isValid({ title })
