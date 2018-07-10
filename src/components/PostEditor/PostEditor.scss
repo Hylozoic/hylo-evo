@@ -194,3 +194,14 @@ $wrapperBorderRadius: 8px;
 .hide {
   display: none;
 }
+
+.title-error {
+  color: white;
+  background-color: $color-amaranth;
+  float: right;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 10px;
+}

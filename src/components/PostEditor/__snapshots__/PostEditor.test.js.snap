@@ -160,7 +160,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={100}
+        maxLength={50}
         onChange={[Function]}
         placeholder="What are you looking for help with?"
         type="text"
@@ -334,7 +334,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={100}
+        maxLength={50}
         onChange={[Function]}
         placeholder="What are you looking for help with?"
         type="text"
@@ -508,7 +508,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={100}
+        maxLength={50}
         onChange={[Function]}
         placeholder="discussion placeholder"
         type="text"
@@ -649,7 +649,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={100}
+        maxLength={50}
         onChange={[Function]}
         placeholder="offer placeholder"
         type="text"
@@ -790,7 +790,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={100}
+        maxLength={50}
         onChange={[Function]}
         placeholder="request placeholder"
         type="text"
@@ -931,7 +931,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={100}
+        maxLength={50}
         onChange={[Function]}
         placeholder="a test title placeholder"
         type="text"
@@ -1073,7 +1073,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       <input
         data-stylename="titleInput"
         disabled={true}
-        maxLength={100}
+        maxLength={50}
         onChange={[Function]}
         placeholder="What’s on your mind?"
         type="text"
@@ -1215,7 +1215,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       <input
         data-stylename="titleInput"
         disabled={true}
-        maxLength={100}
+        maxLength={50}
         onChange={[Function]}
         placeholder="What’s on your mind?"
         type="text"
@@ -1357,7 +1357,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={100}
+        maxLength={50}
         onChange={[Function]}
         placeholder="What’s on your mind?"
         type="text"
@@ -1500,7 +1500,7 @@ exports[`PostEditor renders with min props 1`] = `
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={100}
+        maxLength={50}
         onChange={[Function]}
         placeholder="What’s on your mind?"
         type="text"
