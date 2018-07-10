@@ -18,6 +18,7 @@ import AttachmentManager from './AttachmentManager'
 import { uploadSettings } from './AttachmentManager/AttachmentManager'
 import cheerio from 'cheerio'
 import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
+import { MAX_TITLE_LENGTH } from './PostEditor.store'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
@@ -78,7 +79,8 @@ export default class PostEditor extends React.Component {
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
       valid: editing === true, // if we're editing, than it's already valid upon entry.
       announcementSelected: announcementSelected,
-      toggleAnnouncementModal: false
+      toggleAnnouncementModal: false,
+      titleLengthError: false
     }
   }
 
@@ -154,6 +156,7 @@ export default class PostEditor extends React.Component {
 
   handleTitleChange = (event) => {
     const title = event.target.value
+    title.length >= MAX_TITLE_LENGTH ? this.setState({titleLengthError: true}) : this.setState({titleLengthError: false})
     this.setState({
       post: {...this.state.post, title},
       valid: this.isValid({ title })
@@ -211,7 +214,9 @@ export default class PostEditor extends React.Component {
       communities &&
       type.length > 0 &&
       title.length > 0 &&
-      communities.length > 0)
+      communities.length > 0 &&
+      title.length <= MAX_TITLE_LENGTH
+    )
   }
 
   save = () => {
@@ -243,7 +248,7 @@ export default class PostEditor extends React.Component {
   }
 
   render () {
-    const { titlePlaceholder, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
+    const { titlePlaceholder, titleLengthError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
     const { id, title, details, communities, linkPreview, topics } = post
     const {
       onClose, initialPrompt, detailsPlaceholder,
@@ -280,7 +285,9 @@ export default class PostEditor extends React.Component {
             onChange={this.handleTitleChange}
             disabled={loading}
             ref={x => { this.titleInput = x }}
+            maxLength={MAX_TITLE_LENGTH}
           />
+          {titleLengthError && <span styleName='title-error'>{`Title can't have more than ${MAX_TITLE_LENGTH} characters`}</span>}
           <HyloEditor
             styleName='editor'
             placeholder={detailsPlaceholder}
