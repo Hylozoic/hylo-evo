@@ -79,7 +79,8 @@ export default class PostEditor extends React.Component {
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
       valid: editing === true, // if we're editing, than it's already valid upon entry.
       announcementSelected: announcementSelected,
-      toggleAnnouncementModal: false
+      toggleAnnouncementModal: false,
+      titleLengthError: false
     }
   }
 
@@ -155,6 +156,11 @@ export default class PostEditor extends React.Component {
 
   handleTitleChange = (event) => {
     const title = event.target.value
+    if (title.length >= MAX_TITLE_LENGTH - 1) {
+      this.setState({titleLengthError: true})
+    } else {
+      this.setState({titleLengthError: false})
+    }
     this.setState({
       post: {...this.state.post, title},
       valid: this.isValid({ title })
