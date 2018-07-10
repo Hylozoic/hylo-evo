@@ -155,19 +155,10 @@ export default class PostEditor extends React.Component {
 
   handleTitleChange = (event) => {
     const title = event.target.value
-    switch (title.length >= MAX_TITLE_LENGTH) {
-      case true:
-        this.setState({
-          valid: this.isValid({ title })
-        })
-        break
-      case false:
-        this.setState({
-          post: {...this.state.post, title},
-          valid: this.isValid({ title })
-        })
-        break
-    }
+    this.setState({
+      post: {...this.state.post, title},
+      valid: this.isValid({ title })
+    })
   }
 
   handleDetailsChange = (editorState, contentChanged) => {
@@ -217,13 +208,14 @@ export default class PostEditor extends React.Component {
 
   isValid = (postUpdates = {}) => {
     const { type, title, communities } = Object.assign({}, this.state.post, postUpdates)
-    return !!(this.editor &&
+    const thing = !!(this.editor &&
       communities &&
       type.length > 0 &&
       title.length > 0 &&
       communities.length > 0 &&
       title.length <= MAX_TITLE_LENGTH
     )
+    return thing
   }
 
   save = () => {
