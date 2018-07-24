@@ -38,11 +38,11 @@ jobs:
     # setup self referential env vars
     - run: echo $HOME
     - run: echo $CIRCLE_PROJECT_REPONAME
-    - run: echo $PATH     
+    - run: echo $PATH
     - run:
-      name: Update PATH Environment Variable at Runtime
-      command: |
-        export PATH=$PATH:$HOME/$CIRCLE_PROJECT_REPONAME/node_modules/.bin
+        name: Update PATH Environment Variable at Runtime
+        command: |
+          export PATH=$PATH:$HOME/$CIRCLE_PROJECT_REPONAME/node_modules/.bin
     # Prepare for artifact and test results  collection equivalent to how it was done on 1.0.
     # In many cases you can simplify this from what is generated here.
     # 'See docs on artifact collection here https://circleci.com/docs/2.0/artifacts/'
