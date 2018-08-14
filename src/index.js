@@ -12,7 +12,7 @@ const store = createStore(history)
 
 ReactDOM.render(
   <Provider store={store}>
-      { clientRouter(history) }
+    { clientRouter(history) }
   </Provider>,
   document.getElementById(rootDomId)
 )

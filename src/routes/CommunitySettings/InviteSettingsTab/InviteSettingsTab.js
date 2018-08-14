@@ -66,21 +66,17 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
       const badEmails = invitations.filter(email => email.error).map(e => e.email)
 
       const numBad = badEmails.length
-      let errorMessage
+      let errorMessage, successMessage
       if (numBad === 1) {
         errorMessage = 'The address below is invalid.'
       } else if (numBad > 1) {
         errorMessage = `The ${numBad} addresses below are invalid.`
       }
-      
       const numGood = invitations.length - badEmails.length
-      
-      trackAnalyticsEvent('Community Invitations Sent', { numGood })
-      
-      const successMessage = numGood > 0
-        ? `Sent ${numGood} ${numGood === 1 ? 'email' : 'emails'}.`
-        : null
-
+      if (numGood > 0) {
+        successMessage = `Sent ${numGood} ${numGood === 1 ? 'email' : 'emails'}.`
+        trackAnalyticsEvent('Community Invitations Sent', { numGood })
+      }
       this.setState({
         emails: badEmails.join('\n'),
         errorMessage,

@@ -38,7 +38,8 @@ export function createCommunity (name, slug, networkId) {
     },
     meta: {
       extractModel: 'Membership',
-      ...data
+      ...data,
+      analytics: 'Community Created'
     }
   }
 }

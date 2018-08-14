@@ -229,8 +229,7 @@ export default class PostEditor extends React.Component {
     }
     const saveFunc = editing ? updatePost : createPost
     setAnnouncement(false)
-    saveFunc(postToSave)
-      .then(editing ? onClose : goToPost)
+    saveFunc(postToSave).then(editing ? onClose : goToPost)
   }
 
   buttonLabel = () => {

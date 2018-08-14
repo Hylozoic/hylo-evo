@@ -1,4 +1,3 @@
-import mixpanel from 'mixpanel-browser'
 import { TRACK_ANALYTICS_EVENT } from 'store/constants'
 
 export default function trackAnalyticsEvent (eventName, data) {

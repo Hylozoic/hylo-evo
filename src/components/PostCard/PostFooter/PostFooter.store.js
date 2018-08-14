@@ -13,6 +13,7 @@ export function voteOnPost (postId, isUpvote) {
       variables: {postId, isUpvote}
     },
     meta: {
+      analytics: 'Voted on Post',
       postId,
       isUpvote,
       optimistic: true

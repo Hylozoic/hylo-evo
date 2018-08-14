@@ -40,7 +40,7 @@ export function createMessage (messageThreadId, text, forNewThread) {
       messageThreadId,
       text,
       forNewThread,
-      analytics: 'Direct Message written'
+      analytics: 'Direct Message sent'
     }
   }
 }

@@ -53,7 +53,8 @@ export function useInvitation (userId, inviteCodes = {}) {
           modelName: 'Membership',
           getRoot: get('useInvitation.membership')
         }
-      ]
+      ],
+      analytics: 'Community Invitation Accepted'
     }
   }
 }
