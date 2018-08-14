@@ -41,6 +41,7 @@ Object {
     },
   },
   "meta": Object {
+    "analytics": "Community Invitation Accepted",
     "extractModel": Array [
       Object {
         "getRoot": [Function],

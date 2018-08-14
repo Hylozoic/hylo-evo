@@ -27,6 +27,7 @@ Object {
     },
   },
   "meta": Object {
+    "analytics": "Community Created",
     "extractModel": "Membership",
     "name": "thename",
     "networkId": 123,
@@ -62,6 +63,7 @@ Object {
     },
   },
   "meta": Object {
+    "analytics": "Community Created",
     "extractModel": "Membership",
     "name": "thename",
     "slug": "theslug",
