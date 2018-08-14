@@ -87,6 +87,7 @@
     "lodash": "^4.17.4",
     "lru-cache": "^4.1.1",
     "mime": "^2.0.3",
+    "mixpanel-browser": "^2.22.4",
     "newrelic": "^2.4.1",
     "node-sass": "^4.7.2",
     "normalize.css": "^7.0.0",

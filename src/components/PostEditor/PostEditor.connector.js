@@ -12,7 +12,6 @@ import {
   CREATE_POST,
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
-  ANNOUNCEMENT,
   createPost,
   updatePost,
   pollingFetchLinkPreview,

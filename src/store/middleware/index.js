@@ -6,7 +6,8 @@ import graphqlMiddleware from './graphql'
 import apiMiddleware from './apiMiddleware'
 import pendingMiddleware from './pendingMiddleware'
 import optimisticMiddleware from './optimisticMiddleware'
-import errorMiddleware from 'store/middleware/errorMiddleware'
+import mixpanelMiddleware from './mixpanelMiddleware'
+import errorMiddleware from './errorMiddleware'
 import { routerMiddleware } from 'react-router-redux'
 
 export default function createMiddleware (history, req) {
@@ -18,6 +19,7 @@ export default function createMiddleware (history, req) {
     optimisticMiddleware,
     pendingMiddleware,
     promiseMiddleware,
+    mixpanelMiddleware,
     !req && process.env.NODE_ENV === 'development' && createLogger({collapsed: true})
   ])
 

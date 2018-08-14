@@ -60,7 +60,8 @@ const combinedReducers = combineReducers({
   FeedList,
   JoinCommunity,
   CreateCommunity,
-  CreateTopic
+  CreateTopic,
+  mixpanel: (state = {}) => state
 })
 
 export default composeReducers(combinedReducers, handleSetState)

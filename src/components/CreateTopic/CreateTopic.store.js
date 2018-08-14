@@ -64,7 +64,8 @@ export function createTopic (topicName, communityId) {
           modelName: 'CommunityTopic',
           getRoot: get('createTopic.communityTopics')
         }
-      ]
+      ],
+      analytics: 'Topic Created'
     }
   }
 }

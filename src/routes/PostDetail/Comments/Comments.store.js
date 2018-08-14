@@ -72,7 +72,8 @@ export function createComment (postId, text) {
       extractModel: 'Comment',
       tempId: uniqueId(`post${postId}_`),
       postId,
-      text
+      text,
+      analytics: 'Comment Created'
     }
   }
 }

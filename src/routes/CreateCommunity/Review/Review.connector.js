@@ -2,7 +2,7 @@ import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import getMe from 'store/selectors/getMe'
-import { updateUserSettings } from 'store/actions/updateUserSettings'
+import updateUserSettings from 'store/actions/updateUserSettings'
 import { addCommunityName, addCommunityDomain, fetchCommunityExists } from '../CreateCommunity.store'
 import { createCommunity, getNetwork } from './Review.store'
 

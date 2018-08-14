@@ -90,7 +90,8 @@ export function createPost (post) {
       }
     },
     meta: {
-      extractModel: 'Post'
+      extractModel: 'Post',
+      analytics: 'Post Created'
     }
   }
 }
@@ -169,7 +170,8 @@ export function updatePost (post) {
         getRoot: get('updatePost'),
         append: false
       },
-      optimistic: true
+      optimistic: true,
+      analytics: 'Post Updated'
     }
   }
 }

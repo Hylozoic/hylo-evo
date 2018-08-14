@@ -29,6 +29,7 @@ Object {
     },
   },
   "meta": Object {
+    "analytics": "Topic Created",
     "extractModel": Array [
       Object {
         "getRoot": [Function],

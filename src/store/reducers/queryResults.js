@@ -112,7 +112,6 @@ export default function (state = {}, action) {
 const isIterable = object =>
   object != null && typeof object[Symbol.iterator] === 'function'
 
-
 export function matchNewPostIntoQueryResults (state, {id, type, communities, topics}) {
   /* about this:
       we add the post id into queryResult sets that are based on time of

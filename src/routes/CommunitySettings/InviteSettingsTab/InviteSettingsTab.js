@@ -56,7 +56,7 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
     if (this.sending) return
     this.sending = true
 
-    const { createInvitations } = this.props
+    const { createInvitations, trackAnalyticsEvent } = this.props
     const { emails, message } = this.state
 
     createInvitations(parseEmailList(emails), message)
@@ -72,8 +72,11 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
       } else if (numBad > 1) {
         errorMessage = `The ${numBad} addresses below are invalid.`
       }
-
+      
       const numGood = invitations.length - badEmails.length
+      
+      trackAnalyticsEvent('Community Invitations Sent', { numGood })
+      
       const successMessage = numGood > 0
         ? `Sent ${numGood} ${numGood === 1 ? 'email' : 'emails'}.`
         : null

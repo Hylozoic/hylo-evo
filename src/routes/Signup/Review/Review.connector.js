@@ -2,7 +2,8 @@ import { connect } from 'react-redux'
 import { push, goBack } from 'react-router-redux'
 import getMe from 'store/selectors/getMe'
 import { UPLOAD_ATTACHMENT } from 'store/constants'
-import { updateUserSettings } from 'store/actions/updateUserSettings'
+import updateUserSettings from 'store/actions/updateUserSettings'
+import trackAnalyticsEvent from 'store/actions/trackAnalyticsEvent'
 import fetchMySkills from 'store/actions/fetchMySkills'
 import getMySkills from 'store/selectors/getMySkills'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
@@ -20,6 +21,7 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     updateUserSettings: (changes) => dispatch(updateUserSettings(changes)),
+    trackAnalyticsEvent: (name, data) => dispatch(trackAnalyticsEvent(name, data)),
     goToPreviousStep: () => dispatch(push('/signup/add-skills')),
     goBack: () => dispatch(goBack()),
     push: (path) => dispatch(push(path)),

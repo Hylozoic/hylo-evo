@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { origin } from 'util/index'
 import { regenerateAccessCode, FETCH_COMMUNITY_SETTINGS } from '../CommunitySettings.store'
+import trackAnalyticsEvent from 'store/actions/trackAnalyticsEvent'
 import getMe from 'store/selectors/getMe'
 import {
   allowCommunityInvites,
@@ -36,7 +37,8 @@ export function mapDispatchToProps (dispatch, props) {
     expireInvitation: (invitationToken) => dispatch(expireInvitation(invitationToken)),
     resendInvitation: (invitationToken) => dispatch(resendInvitation(invitationToken)),
     reinviteAll: () => dispatch(reinviteAll(communityId)),
-    allowCommunityInvites: (communityId, settingBoolean) => dispatch(allowCommunityInvites(communityId, settingBoolean))
+    allowCommunityInvites: (communityId, settingBoolean) => dispatch(allowCommunityInvites(communityId, settingBoolean)),
+    trackAnalyticsEvent: (eventNames, analyticsData) => dispatch(trackAnalyticsEvent(eventNames, analyticsData))
   }
 }
 

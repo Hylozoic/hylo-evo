@@ -13,7 +13,7 @@ import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
 
-const { bool, func, object, string } = PropTypes
+const { func, object, string } = PropTypes
 
 // the height of the header plus the padding-top
 const STICKY_HEADER_SCROLL_OFFSET = 78
