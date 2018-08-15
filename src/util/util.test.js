@@ -1,10 +1,10 @@
 import { postUrl, networkCommunitySettingsUrl } from './index'
 
-describe.only('postUrl', () => {
+describe('postUrl', () => {
   it('should default to displaying the all communities context', () => {
     const expected = '/all/p/123'
     const actual = postUrl('123')
-    expect(actual).toEqual(expected)
+    expect(actual).toEqual('amazingamazing')
   })
 
   it('should show a community context when community slug is passed', () => {
