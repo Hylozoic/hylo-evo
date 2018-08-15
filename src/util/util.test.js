@@ -4,7 +4,7 @@ describe('postUrl', () => {
   it('should default to displaying the all communities context', () => {
     const expected = '/all/p/123'
     const actual = postUrl('123')
-    expect(actual).toEqual('amazingamazing')
+    expect(actual).toEqual(expected)
   })
 
   it('should show a community context when community slug is passed', () => {
