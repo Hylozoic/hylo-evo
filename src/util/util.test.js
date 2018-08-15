@@ -1,6 +1,6 @@
 import { postUrl, networkCommunitySettingsUrl } from './index'
 
-describe('postUrl', () => {
+describe.only('postUrl', () => {
   it('should default to displaying the all communities context', () => {
     const expected = '/all/p/123'
     const actual = postUrl('123')
