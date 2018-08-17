@@ -1,6 +1,7 @@
 import { FETCH_COMMENTS, CREATE_COMMENT } from 'store/constants'
 import { get, uniqueId } from 'lodash/fp'
 import { createSelector } from 'reselect'
+import { AnalyticsEvents } from 'hylo-utils/constants'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 import orm from 'store/models'
 
@@ -73,7 +74,7 @@ export function createComment (postId, text) {
       tempId: uniqueId(`post${postId}_`),
       postId,
       text,
-      analytics: 'Comment Created'
+      analytics: AnalyticsEvents.COMMENT_CREATED
     }
   }
 }

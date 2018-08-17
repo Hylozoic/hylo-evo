@@ -1,5 +1,6 @@
 import { uniqueId } from 'lodash/fp'
 import { createSelector } from 'reselect'
+import { AnalyticsEvents } from 'hylo-utils/constants'
 import { CREATE_MESSAGE, CREATE_MESSAGE_PENDING } from 'store/constants'
 import {
   NEW_THREAD_ID
@@ -40,7 +41,7 @@ export function createMessage (messageThreadId, text, forNewThread) {
       messageThreadId,
       text,
       forNewThread,
-      analytics: 'Direct Message sent'
+      analytics: AnalyticsEvents.DIRECT_MESSAGE_SENT
     }
   }
 }

@@ -1,4 +1,5 @@
 import { get, omit } from 'lodash/fp'
+import { AnalyticsEvents } from 'hylo-utils/constants'
 
 export const MODULE_NAME = 'CreateTopic'
 export const CREATE_TOPIC = `${MODULE_NAME}/CREATE_TOPIC`
@@ -65,7 +66,7 @@ export function createTopic (topicName, communityId) {
           getRoot: get('createTopic.communityTopics')
         }
       ],
-      analytics: 'Topic Created'
+      analytics: AnalyticsEvents.TOPIC_CREATED
     }
   }
 }

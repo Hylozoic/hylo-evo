@@ -1,4 +1,5 @@
 import { VOTE_ON_POST } from 'store/constants'
+import { AnalyticsEvents } from 'hylo-utils/constants'
 
 export function voteOnPost (postId, isUpvote) {
   return {
@@ -13,10 +14,10 @@ export function voteOnPost (postId, isUpvote) {
       variables: {postId, isUpvote}
     },
     meta: {
-      analytics: 'Voted on Post',
       postId,
       isUpvote,
-      optimistic: true
+      optimistic: true,
+      analytics: AnalyticsEvents.VOTED_ON_POST
     }
   }
 }

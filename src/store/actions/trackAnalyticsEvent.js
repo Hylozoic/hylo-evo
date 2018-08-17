@@ -5,7 +5,7 @@ export default function trackAnalyticsEvent (eventName, data) {
     type: TRACK_ANALYTICS_EVENT,
     meta: {
       analytics: {
-        eventName: eventName,
+        eventName,
         ...data
       }
     }
