@@ -117,6 +117,7 @@ export default class PrimaryLayout extends Component {
 
     // TODO move FullPageModals
     return <div styleName='container'>
+      Just some text.
       <Drawer community={community} network={network}
         styleName={cx('drawer', {hidden: !isDrawerOpen})} />
       <TopNav {...{community, network, currentUser, showLogoBadge}}
