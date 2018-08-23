@@ -4,6 +4,7 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
 <div
   data-stylename="container"
 >
+  Just some text.
   <Connect(Drawer)
     data-stylename="drawer hidden"
   />
