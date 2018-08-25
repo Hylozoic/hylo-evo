@@ -1,6 +1,8 @@
 import { get } from 'lodash/fp'
+import { textLength } from 'hylo-utils/text'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
+import { AnalyticsEvents } from 'hylo-utils/constants'
 import linkMatcher from 'util/linkMatcher'
 
 export const MODULE_NAME = 'PostEditor'
@@ -90,7 +92,12 @@ export function createPost (post) {
       }
     },
     meta: {
-      extractModel: 'Post'
+      extractModel: 'Post',
+      analytics: {
+        eventName: AnalyticsEvents.POST_CREATED,
+        detailsLength: textLength(details),
+        isAnnouncement: sendAnnouncement
+      }
     }
   }
 }
@@ -169,7 +176,11 @@ export function updatePost (post) {
         getRoot: get('updatePost'),
         append: false
       },
-      optimistic: true
+      optimistic: true,
+      analytics: {
+        eventName: AnalyticsEvents.POST_UPDATED,
+        detailsLength: textLength(details)
+      }
     }
   }
 }

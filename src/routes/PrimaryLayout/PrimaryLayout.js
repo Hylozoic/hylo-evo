@@ -93,10 +93,7 @@ export default class PrimaryLayout extends Component {
       location,
       toggleDrawer,
       isCommunityRoute,
-      showLogoBadge,
-      hasMemberships,
-      returnToURL,
-      downloadAppUrl
+      showLogoBadge
     } = this.props
 
     if (isCommunityRoute && !currentUser) {

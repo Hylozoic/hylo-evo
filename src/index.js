@@ -11,6 +11,8 @@ const history = createHistory()
 const store = createStore(history)
 
 ReactDOM.render(
-  <Provider store={store}>{ clientRouter(history) }</Provider>,
+  <Provider store={store}>
+    { clientRouter(history) }
+  </Provider>,
   document.getElementById(rootDomId)
 )

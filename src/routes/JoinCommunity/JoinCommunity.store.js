@@ -1,4 +1,5 @@
 import { get } from 'lodash/fp'
+import { AnalyticsEvents } from 'hylo-utils/constants'
 
 export const MODULE_NAME = 'JoinCommunity'
 export const USE_INVITATION = `${MODULE_NAME}/USE_INVITATION`
@@ -53,7 +54,8 @@ export function useInvitation (userId, inviteCodes = {}) {
           modelName: 'Membership',
           getRoot: get('useInvitation.membership')
         }
-      ]
+      ],
+      analytics: AnalyticsEvents.COMMUNITY_INVITATION_ACCEPTED
     }
   }
 }

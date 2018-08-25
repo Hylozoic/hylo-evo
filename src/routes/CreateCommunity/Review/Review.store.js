@@ -1,5 +1,6 @@
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
+import { AnalyticsEvents } from 'hylo-utils/constants'
 
 export const MODULE_NAME = `Review`
 export const CREATE_COMMUNITY = `${MODULE_NAME}/CREATE_COMMUNITY`
@@ -38,7 +39,8 @@ export function createCommunity (name, slug, networkId) {
     },
     meta: {
       extractModel: 'Membership',
-      ...data
+      ...data,
+      analytics: AnalyticsEvents.COMMUNITY_CREATED
     }
   }
 }

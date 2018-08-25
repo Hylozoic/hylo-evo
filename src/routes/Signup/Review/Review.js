@@ -49,6 +49,7 @@ export default class AddLocation extends Component {
     const changes = Object.assign(edits, {settings: {signupInProgress: false}})
     this.props.updateUserSettings(changes)
     .then(() => {
+      this.props.trackAnalyticsEvent('Signup Complete')
       this.props.goToNextStep()
     })
   }

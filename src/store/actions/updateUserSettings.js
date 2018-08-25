@@ -1,6 +1,6 @@
 import { UPDATE_USER_SETTINGS } from 'store/constants'
 
-export function updateUserSettings (changes) {
+export default function updateUserSettings (changes) {
   return {
     type: UPDATE_USER_SETTINGS,
     graphql: {

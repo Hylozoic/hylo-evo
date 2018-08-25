@@ -2,11 +2,13 @@ import { compact } from 'lodash'
 import { applyMiddleware, compose } from 'redux'
 import { createLogger } from 'redux-logger'
 import promiseMiddleware from 'redux-promise'
+import { isDev } from 'util/testing'
 import graphqlMiddleware from './graphql'
 import apiMiddleware from './apiMiddleware'
 import pendingMiddleware from './pendingMiddleware'
 import optimisticMiddleware from './optimisticMiddleware'
-import errorMiddleware from 'store/middleware/errorMiddleware'
+import mixpanelMiddleware from './mixpanelMiddleware'
+import errorMiddleware from './errorMiddleware'
 import { routerMiddleware } from 'react-router-redux'
 
 export default function createMiddleware (history, req) {
@@ -18,7 +20,8 @@ export default function createMiddleware (history, req) {
     optimisticMiddleware,
     pendingMiddleware,
     promiseMiddleware,
-    !req && process.env.NODE_ENV === 'development' && createLogger({collapsed: true})
+    !isDev && mixpanelMiddleware,
+    !req && isDev && createLogger({collapsed: true})
   ])
 
   const composeFn = typeof __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined'
