@@ -19,7 +19,7 @@ export default function mixpanelMiddleware (store) {
       const trackingEventName = get('eventName', analytics) ||
         (isString(analytics) && analytics) ||
         type
-      const analyticsData = isObject(analytics) ? omit('eventName', analytics) : null
+      const analyticsData = isObject(analytics) ? omit('eventName', analytics) : {}
       if (isLoggedIn) mixpanel.identify(getMe(state).id)
       mixpanel.track(trackingEventName, analyticsData)
     }

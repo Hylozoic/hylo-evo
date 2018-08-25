@@ -3,6 +3,8 @@ import { routerReducer } from 'react-router-redux'
 import orm from './ormReducer'
 import login from 'store/reducers/login'
 import pending from './pending'
+import mixpanel from './mixpanel'
+
 // Local store
 // generator-marker-local-store-import
 import AuthRoute from 'router/AuthRoute/AuthRoute.store'
@@ -37,6 +39,7 @@ const combinedReducers = combineReducers({
   login,
   pending,
   queryResults,
+  mixpanel,
 
   // Local store (Component)
   // generator-marker-local-store-reducer
@@ -60,8 +63,7 @@ const combinedReducers = combineReducers({
   FeedList,
   JoinCommunity,
   CreateCommunity,
-  CreateTopic,
-  mixpanel: (state = {}) => state
+  CreateTopic
 })
 
 export default composeReducers(combinedReducers, handleSetState)
