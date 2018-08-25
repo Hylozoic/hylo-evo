@@ -6,6 +6,7 @@ import { readFileSync } from 'fs'
 import { Provider } from 'react-redux'
 import createStore from '../store'
 import { once } from 'lodash'
+import root from 'root-path'
 import createHistory from 'history/createMemoryHistory'
 
 export default function appMiddleware (req, res, next) {
