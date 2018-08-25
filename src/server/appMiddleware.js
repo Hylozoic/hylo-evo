@@ -5,17 +5,20 @@ import { renderToString } from 'react-dom/server'
 import { readFileSync } from 'fs'
 import { Provider } from 'react-redux'
 import createStore from '../store'
-import { once } from 'lodash'
 import root from 'root-path'
+import { once } from 'lodash'
 import createHistory from 'history/createMemoryHistory'
 
 export default function appMiddleware (req, res, next) {
   // TODO: async data loading
+
   const history = createHistory()
   const store = createStore(history)
   const context = {}
-  const markup = renderToString(
-    <Provider store={store}>{serverRouter(req, context)}</Provider>)
+  const markup = renderToString(<Provider store={store}>
+    {serverRouter(req, context)}
+  </Provider>)
+
   // context may now have been mutated; check its values and redirect,
   // show an error, etc. as appropriate
   // https://reacttraining.com/react-router/web/guides/server-rendering
