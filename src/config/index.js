@@ -4,6 +4,8 @@ export const environment = process.env.NODE_ENV || 'development'
 
 const isServer = typeof window === 'undefined'
 
+export const isDev = process.env.NODE_ENV === 'development'
+
 // FIXME: The following is from hylo-redux used for SSR only
 //        but our create-react-app heritages manages
 //        the loading of .env in the relevant scripts (build and start)
@@ -35,6 +37,9 @@ export const segment = {
 export const intercom = {
   appId: process.env.INTERCOM_APP_ID
 }
+export const mixpanel = {
+  token: process.env.MIXPANEL_TOKEN
+}
 
 export const featureFlags = () => {
   if (isServer) {
@@ -61,7 +66,8 @@ const config = {
   facebook,
   segment,
   featureFlags,
-  intercom
+  intercom,
+  mixpanel
 }
 
 if (!isServer) window.__appConfig = config

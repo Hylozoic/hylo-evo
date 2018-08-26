@@ -2,11 +2,12 @@ import { compact } from 'lodash'
 import { applyMiddleware, compose } from 'redux'
 import { createLogger } from 'redux-logger'
 import promiseMiddleware from 'redux-promise'
-import { isDev } from 'util/testing'
+import { isDev } from 'config'
 import graphqlMiddleware from './graphql'
 import apiMiddleware from './apiMiddleware'
 import pendingMiddleware from './pendingMiddleware'
 import optimisticMiddleware from './optimisticMiddleware'
+import userFetchedMiddleware from './userFetchedMiddleware'
 import mixpanelMiddleware from './mixpanelMiddleware'
 import errorMiddleware from './errorMiddleware'
 import { routerMiddleware } from 'react-router-redux'
@@ -20,6 +21,7 @@ export default function createMiddleware (history, req) {
     optimisticMiddleware,
     pendingMiddleware,
     promiseMiddleware,
+    userFetchedMiddleware,
     !isDev && mixpanelMiddleware,
     !req && isDev && createLogger({collapsed: true})
   ])

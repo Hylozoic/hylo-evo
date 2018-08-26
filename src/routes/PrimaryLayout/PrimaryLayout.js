@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import Intercom from 'react-intercom'
 import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
 import cx from 'classnames'
 import { get, some } from 'lodash/fp'
-
+import config from 'config'
 import AddLocation from 'routes/Signup/AddLocation'
 import AddSkills from 'routes/Signup/AddSkills'
 import AllTopics from 'routes/AllTopics'
@@ -38,7 +39,6 @@ import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
-import IntercomInit from 'components/IntercomInit'
 
 // TODO: Implement create community privacy component when implemented on the server
 // import Privacy from 'routes/CreateCommunity/Privacy'
@@ -260,7 +260,7 @@ export default class PrimaryLayout extends Component {
       <Route path='/t' component={Messages} />
       <SocketListener location={location} />
       <SocketSubscriber type='community' id={get('slug', community)} />
-      <IntercomInit />
+      <Intercom appID={config.intercom.appId} />
       {postEditorRoutes.map(({path, forNew}) =>
         <Route
           key={path}
