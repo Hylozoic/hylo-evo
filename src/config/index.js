@@ -1,10 +1,10 @@
 import { once } from 'lodash'
 
 export const environment = process.env.NODE_ENV || 'development'
+export const isDev = environment === 'development'
+export const isProduction = environment === 'production'
 
 const isServer = typeof window === 'undefined'
-
-export const isDev = process.env.NODE_ENV === 'development'
 
 // FIXME: The following is from hylo-redux used for SSR only
 //        but our create-react-app heritages manages
