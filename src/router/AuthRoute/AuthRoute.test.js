@@ -8,9 +8,7 @@ export const defaultProps = {
   isLoggedIn: false,
   currentUser: null,
   returnToOnAuth: false,
-  returnToURL: null,
   setReturnToURL: () => {},
-  resetReturnToURL: () => {},
   location: {
     pathname: '/'
   }

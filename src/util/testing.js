@@ -21,5 +21,3 @@ export function mockRouterMountOptions () {
 export function mountWithMockRouter (component) {
   return mount(component, mockRouterMountOptions())
 }
-
-export const isDev = process.env.NODE_ENV === 'development'
