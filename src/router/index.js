@@ -10,6 +10,7 @@ import NonAuthLayout from 'routes/NonAuthLayout'
 import UIKit from 'routes/UIKit'
 import '../css/global/index.scss'
 import ErrorBoundary from 'components/ErrorBoundary'
+import mobileRedirect from 'util/mobileRedirect'
 
 export function clientRouter (history) {
   require('client/rollbar') // set up handling of uncaught errors
@@ -27,12 +28,14 @@ export function serverRouter (req, context) {
 }
 
 function rootRoutes () {
+  const isMobile = mobileRedirect()
+
   return <ErrorBoundary>
     <LoginCheck>
       <Switch>
         <Route path='/ui-kit' component={UIKit} />
-        <AuthRoute returnToOnAuth path='/c/:slug/join/:accessCode' component={JoinCommunity} />
-        <AuthRoute returnToOnAuth path='/h/use-invitation' component={JoinCommunity} />
+        {!isMobile && <AuthRoute returnToOnAuth path='/c/:slug/join/:accessCode' component={JoinCommunity} />}
+        {!isMobile && <AuthRoute returnToOnAuth path='/h/use-invitation' component={JoinCommunity} />}
         <AuthRoute path='/login' component={NonAuthLayout} />
         <AuthRoute path='/signup' exact component={NonAuthLayout} />
         <AuthRoute path='/reset-password' exact component={NonAuthLayout} />
