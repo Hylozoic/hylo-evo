@@ -1,7 +1,7 @@
 import getMe from '../selectors/getMe'
 import getMixpanel from '../selectors/getMixpanel'
 import { IntercomAPI } from 'react-intercom'
-import { isProduction } from 'config'
+import { isProduction } from '../../config'
 
 export default function userFetchedMiddleware ({ getState }) {
   return next => action => {
