@@ -3,6 +3,8 @@ import { Route } from 'react-router'
 import RedirectRoute from 'router/RedirectRoute'
 import mobileRedirect from 'util/mobileRedirect'
 
+console.log(mobileRedirect())
+
 export default function AuthRoute ({
   component,
   requireAuth,
