@@ -1,5 +1,5 @@
 import mixpanel from 'mixpanel-browser'
-import config from '../../config'
+import config from 'config'
 
 mixpanel.init(config.mixpanel.token)
 
