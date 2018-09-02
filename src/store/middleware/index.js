@@ -2,7 +2,7 @@ import { compact } from 'lodash'
 import { applyMiddleware, compose } from 'redux'
 import { createLogger } from 'redux-logger'
 import promiseMiddleware from 'redux-promise'
-import { isDev, isProduction } from 'config'
+import { isDev } from 'config'
 import graphqlMiddleware from './graphql'
 import apiMiddleware from './apiMiddleware'
 import pendingMiddleware from './pendingMiddleware'
@@ -22,7 +22,7 @@ export default function createMiddleware (history, req) {
     pendingMiddleware,
     promiseMiddleware,
     userFetchedMiddleware,
-    isProduction && mixpanelMiddleware,
+    mixpanelMiddleware,
     !req && isDev && createLogger({collapsed: true})
   ])
 
