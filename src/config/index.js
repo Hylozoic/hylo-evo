@@ -1,6 +1,8 @@
 import { once } from 'lodash'
 
 export const environment = process.env.NODE_ENV || 'development'
+export const isDev = environment === 'development'
+export const isProduction = environment === 'production'
 
 const isServer = typeof window === 'undefined'
 
@@ -35,6 +37,9 @@ export const segment = {
 export const intercom = {
   appId: process.env.INTERCOM_APP_ID
 }
+export const mixpanel = {
+  token: process.env.MIXPANEL_TOKEN
+}
 
 export const featureFlags = () => {
   if (isServer) {
@@ -61,7 +66,8 @@ const config = {
   facebook,
   segment,
   featureFlags,
-  intercom
+  intercom,
+  mixpanel
 }
 
 if (!isServer) window.__appConfig = config

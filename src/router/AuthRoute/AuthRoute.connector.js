@@ -1,14 +1,15 @@
 import { connect } from 'react-redux'
+import mobileRedirect from 'util/mobileRedirect'
 import getIsLoggedIn from 'store/selectors/getIsLoggedIn'
 import getMe from 'store/selectors/getMe'
 import {
   setReturnToURL,
-  resetReturnToURL,
   getReturnToURL
 } from './AuthRoute.store'
 
 export function mapStateToProps (state, props) {
   return {
+    isMobile: mobileRedirect(),
     isLoggedIn: getIsLoggedIn(state),
     currentUser: getMe(state),
     returnToURL: getReturnToURL(state)
@@ -16,8 +17,7 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = {
-  setReturnToURL,
-  resetReturnToURL
+  setReturnToURL
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
