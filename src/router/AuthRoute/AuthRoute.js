@@ -5,7 +5,7 @@ import RedirectRoute from 'router/RedirectRoute'
 export default function AuthRoute ({
   component,
   requireAuth,
-  isMobileBrowser,
+  isMobile,
   isLoggedIn,
   currentUser,
   returnToOnAuth,
@@ -23,13 +23,13 @@ export default function AuthRoute ({
   // to auth the user with a token and send them into sign-up.
   if (
       (!isLoggedIn && (requireAuth || returnToOnAuth)) ||
-      (isMobileBrowser && location.pathname !== '/login')
+      (isMobile && location.pathname !== '/login')
   ) {
     setReturnToURL(location.pathname + location.search)
   }
   if (
     (!isLoggedIn && requireAuth) ||
-    (isMobileBrowser && location.pathname !== '/login')
+    (isMobile && location.pathname !== '/login')
   ) {
     return <RedirectRoute to={'/login'} />
   }
