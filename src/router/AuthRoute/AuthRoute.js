@@ -15,7 +15,9 @@ export default function AuthRoute ({
   location,
   ...rest
 }) {
-  const isMobile = mobileRedirect()
+  // NOTE: Must not assign to isMobile as that is a global used (and then reassigned by
+  // ismobilejs npm module.
+  const isMobileBrowser = mobileRedirect()
   if (isLoggedIn && location.pathname === '/signup') {
     return <RedirectRoute to={'/signup/upload-photo'} />
   }
@@ -24,7 +26,7 @@ export default function AuthRoute ({
   // Specifically we don't want any components to do any work but this,
   // namely JoinCommunity which utilizes returnToOnAuth) and may attempt
   // to auth the user with a token and send them into sign-up.
-  if ((isMobile && requireAuth) || (!isMobile && !isLoggedIn && (requireAuth || returnToOnAuth))) {
+  if ((isMobileBrowser && requireAuth) || (!isMobileBrowser && !isLoggedIn && (requireAuth || returnToOnAuth))) {
     setReturnToURL(location.pathname + location.search)
   }
   if (!isLoggedIn && requireAuth) {

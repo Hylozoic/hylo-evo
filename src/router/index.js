@@ -28,14 +28,16 @@ export function serverRouter (req, context) {
 }
 
 function rootRoutes () {
-  const isMobile = mobileRedirect()
+  // NOTE: Must not assign to isMobile as that is a global used (and then reassigned by
+  // ismobilejs npm module.
+  const isMobileBrowser = mobileRedirect()
 
   return <ErrorBoundary>
     <LoginCheck>
       <Switch>
         <Route path='/ui-kit' component={UIKit} />
-        {!isMobile && <AuthRoute returnToOnAuth path='/c/:slug/join/:accessCode' component={JoinCommunity} />}
-        {!isMobile && <AuthRoute returnToOnAuth path='/h/use-invitation' component={JoinCommunity} />}
+        {!isMobileBrowser && <AuthRoute returnToOnAuth path='/c/:slug/join/:accessCode' component={JoinCommunity} />}
+        {!isMobileBrowser && <AuthRoute returnToOnAuth path='/h/use-invitation' component={JoinCommunity} />}
         <AuthRoute path='/login' component={NonAuthLayout} />
         <AuthRoute path='/signup' exact component={NonAuthLayout} />
         <AuthRoute path='/reset-password' exact component={NonAuthLayout} />
