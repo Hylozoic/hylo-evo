@@ -22,14 +22,14 @@ export default function AuthRoute ({
   // namely JoinCommunity which utilizes returnToOnAuth) and may attempt
   // to auth the user with a token and send them into sign-up.
   if (
-      (isMobileBrowser && (requireAuth || returnToOnAuth)) ||
-      (!isMobileBrowser && !isLoggedIn && (requireAuth || returnToOnAuth)
-  )) {
+      (!isLoggedIn && (requireAuth || returnToOnAuth)) ||
+      (isMobileBrowser && location.pathname !== '/login')
+  ) {
     setReturnToURL(location.pathname + location.search)
   }
   if (
     (!isLoggedIn && requireAuth) ||
-    (isMobileBrowser && (requireAuth || returnToOnAuth))
+    (isMobileBrowser && location.pathname !== '/login')
   ) {
     return <RedirectRoute to={'/login'} />
   }
