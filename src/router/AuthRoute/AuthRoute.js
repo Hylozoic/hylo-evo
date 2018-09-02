@@ -1,11 +1,11 @@
 import React from 'react'
 import { Route } from 'react-router'
 import RedirectRoute from 'router/RedirectRoute'
-import mobileRedirect from 'util/mobileRedirect'
 
 export default function AuthRoute ({
   component,
   requireAuth,
+  isMobileBrowser,
   isLoggedIn,
   currentUser,
   returnToOnAuth,
@@ -13,9 +13,6 @@ export default function AuthRoute ({
   location,
   ...rest
 }) {
-  // NOTE: Must not assign to isMobile as that is a global used (and then reassigned by
-  // ismobilejs npm module.
-  const isMobileBrowser = mobileRedirect()
   if (isLoggedIn && location.pathname === '/signup') {
     return <RedirectRoute to={'/signup/upload-photo'} />
   }
