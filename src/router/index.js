@@ -10,7 +10,6 @@ import NonAuthLayout from 'routes/NonAuthLayout'
 import UIKit from 'routes/UIKit'
 import '../css/global/index.scss'
 import ErrorBoundary from 'components/ErrorBoundary'
-import mobileRedirect from 'util/mobileRedirect'
 
 export function clientRouter (history) {
   require('client/rollbar') // set up handling of uncaught errors
@@ -28,10 +27,6 @@ export function serverRouter (req, context) {
 }
 
 function rootRoutes () {
-  // NOTE: Must not assign to isMobile as that is a global used (and then reassigned by
-  // ismobilejs npm module.
-  const isMobileBrowser = mobileRedirect()
-
   return <ErrorBoundary>
     <LoginCheck>
       <Switch>
