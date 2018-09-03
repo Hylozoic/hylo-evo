@@ -1,19 +1,19 @@
+import { get } from 'lodash/fp'
 import getMe from '../selectors/getMe'
 import getMixpanel from '../selectors/getMixpanel'
-import { IntercomAPI } from 'react-intercom'
-import { isProduction } from 'config'
+import getIntercom from '../selectors/getIntercom'
 
 export default function userFetchedMiddleware ({ getState }) {
   return next => action => {
     const wasMe = getMe(getState())
     const result = next(action)
     const isMe = getMe(getState())
-    const userFetched = !wasMe && isMe
+    const userFetched = !get('name', wasMe) && get('name', isMe)
     if (userFetched) {
       const state = getState()
       // Do these things with the currentUser the first time it's fetched in a session
-      isProduction && identifyMixpanelUser(state)
-      isProduction && registerIntercomUser(state)
+      identifyMixpanelUser(state)
+      registerIntercomUser(state)
     }
     return result
   }
@@ -32,9 +32,9 @@ export function identifyMixpanelUser (state) {
 
 export function registerIntercomUser (state) {
   const user = getMe(state)
-  IntercomAPI('update', {
+  const intercom = getIntercom(state)
+  intercom('update', {
     user_hash: user.intercomHash,
-    userId: user.id,
     email: user.email,
     name: user.name,
     user_id: user.id

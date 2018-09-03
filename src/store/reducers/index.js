@@ -4,6 +4,7 @@ import orm from './ormReducer'
 import login from 'store/reducers/login'
 import pending from './pending'
 import mixpanel from './mixpanel'
+import intercom from './intercom'
 
 // Local store
 // generator-marker-local-store-import
@@ -40,6 +41,7 @@ const combinedReducers = combineReducers({
   pending,
   queryResults,
   mixpanel,
+  intercom,
 
   // Local store (Component)
   // generator-marker-local-store-reducer

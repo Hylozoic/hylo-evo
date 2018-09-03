@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import Intercom from 'react-intercom'
 import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
 import cx from 'classnames'
 import { get, some } from 'lodash/fp'
-import config from 'config'
 import AddLocation from 'routes/Signup/AddLocation'
 import AddSkills from 'routes/Signup/AddSkills'
 import AllTopics from 'routes/AllTopics'
@@ -260,7 +258,6 @@ export default class PrimaryLayout extends Component {
       <Route path='/t' component={Messages} />
       <SocketListener location={location} />
       <SocketSubscriber type='community' id={get('slug', community)} />
-      <Intercom appID={config.intercom.appId} />
       {postEditorRoutes.map(({path, forNew}) =>
         <Route
           key={path}

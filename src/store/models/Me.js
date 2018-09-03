@@ -27,6 +27,7 @@ Me.fields = {
   isAdmin: attr(),
   name: attr(),
   posts: many('Post'),
+  intercomHash: attr(),
 
   // strictly speaking, a membership belongs to a single person, so it's not a
   // many-to-many relationship. but putting this here ensures that when we have
