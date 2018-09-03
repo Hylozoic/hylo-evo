@@ -32,9 +32,8 @@ export function identifyMixpanelUser (state) {
 
 export function registerIntercomUser (state) {
   const user = getMe(state)
-  console.log(IntercomAPI)
   IntercomAPI('update', {
-    user_hash: user.hash,
+    user_hash: user.intercomHash,
     userId: user.id,
     email: user.email,
     name: user.name,
