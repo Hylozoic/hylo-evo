@@ -1,6 +1,7 @@
 import { once } from 'lodash'
 
 export const environment = process.env.NODE_ENV || 'development'
+export const isTest = environment === 'test'
 export const isDev = environment === 'development'
 export const isProduction = environment === 'production'
 
@@ -35,8 +36,7 @@ export const segment = {
   writeKey: process.env.SEGMENT_KEY
 }
 export const intercom = {
-  appId: process.env.INTERCOM_APP_ID,
-  debugAppId: process.env.INTERCOM_DEBUG_APP_ID
+  appId: process.env.INTERCOM_APP_ID
 }
 export const mixpanel = {
   token: process.env.MIXPANEL_TOKEN

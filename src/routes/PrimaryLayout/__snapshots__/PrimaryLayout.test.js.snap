@@ -315,6 +315,9 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
   <Connect(SocketSubscriber)
     type="community"
   />
+  <Intercom
+    appID={null}
+  />
   <Route
     exact={true}
     key="/all/p/new"
