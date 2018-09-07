@@ -10,6 +10,6 @@ exports[`Header should match the latest snapshot 1`] = `
   >
     one, two, three
   </div>
-  <Connect(CloseMessages) />
+  <CloseMessages />
 </div>
 `;
