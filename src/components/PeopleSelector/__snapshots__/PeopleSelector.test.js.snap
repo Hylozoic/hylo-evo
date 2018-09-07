@@ -21,7 +21,7 @@ exports[`PeopleSelector matches the last snapshot 1`] = `
         type="text"
       />
     </div>
-    <CloseMessages />
+    <Connect(CloseMessages) />
   </div>
   <PeopleSelectorContacts
     addParticipant={[Function]}

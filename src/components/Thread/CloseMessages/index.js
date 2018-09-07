@@ -1,3 +1,4 @@
 import component from './CloseMessages'
+import connector from './CloseMessages.connector'
 
-export default component
+export default connector(component)
