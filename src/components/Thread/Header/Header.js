@@ -40,7 +40,7 @@ export default class Header extends React.Component {
 
   render () {
     const { showAll } = this.state
-    const { otherParticipants } = this.props
+    const { otherParticipants, onCloseURL } = this.props
     const maxShown = calculateMaxShown(showAll, otherParticipants, MAX_CHARACTERS)
     const { displayNames, andOthers } = generateDisplayNames(maxShown, otherParticipants)
     const showArrow = !!andOthers
@@ -51,7 +51,7 @@ export default class Header extends React.Component {
       </div>
       {showArrow && !showAll && <Icon name='ArrowDown' styleName='arrow-down' onClick={this.toggleShowAll} />}
       {showAll && <Icon name='ArrowUp' styleName='arrow-up' onClick={this.toggleShowAll} />}
-      <CloseMessages />
+      <CloseMessages onCloseURL={onCloseURL} />
     </div>
   }
 }

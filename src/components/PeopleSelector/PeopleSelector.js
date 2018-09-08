@@ -115,7 +115,10 @@ export default class PeopleSelector extends React.Component {
   setCurrentMatch = id => this.setState({ currentMatch: id })
 
   render () {
-    const { contacts, matches, participants, recentContacts, removeParticipant, findOrCreateThread } = this.props
+    const {
+      contacts, matches, participants, recentContacts,
+      removeParticipant, findOrCreateThread, onCloseURL
+    } = this.props
     const { currentMatch } = this.state
     return <div styleName='people-selector'>
       <div styleName='thread-header' tabIndex='0'>
@@ -136,7 +139,7 @@ export default class PeopleSelector extends React.Component {
             onKeyDown={evt => this.onKeyDown(evt)}
             placeholder={participants.length ? '' : 'Type in the names of people to message'} />
         </div>
-        <CloseMessages />
+        <CloseMessages onCloseURL={onCloseURL} />
       </div>
       {currentMatch
         ? <PeopleSelectorMatches

@@ -14,7 +14,8 @@ describe('PeopleSelector', () => {
         fetchPeople={() => {}}
         matches={[]}
         fetchRecentContacts={jest.fn()}
-        participants={[]} />
+        participants={[]}
+        onCloseURL='' />
     )
     expect(wrapper).toMatchSnapshot()
   })
@@ -40,7 +41,8 @@ describe('PeopleSelector', () => {
             participants={[]}
             fetchContacts={() => {}} fetchPeople={fetchPeople} fetchRecentContacts={() => {}}
             removeParticipant={removeParticipant}
-            setAutocomplete={setAutocomplete} />
+            setAutocomplete={setAutocomplete}
+            onCloseURL='' />
         </MemoryRouter>
       )
       wrapper.find(PeopleSelector).instance().setState({ currentMatch: '1' })
@@ -141,7 +143,8 @@ describe('PeopleSelector', () => {
           <PeopleSelector
             fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
             participants={[]}
-            setAutocomplete={setAutocomplete} />
+            setAutocomplete={setAutocomplete}
+            onCloseURL='' />
         </MemoryRouter>
       )
     })
@@ -177,7 +180,8 @@ describe('PeopleSelector', () => {
             addParticipant={addParticipant}
             participants={[]}
             fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
-            setAutocomplete={() => {}} />
+            setAutocomplete={() => {}}
+            onCloseURL='' />
         </MemoryRouter>
       )
       wrapper.find(PeopleSelector).instance().addParticipant('1')
@@ -192,7 +196,8 @@ describe('PeopleSelector', () => {
             addParticipant={() => {}}
             participants={[]}
             fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
-            setAutocomplete={setAutocomplete} />
+            setAutocomplete={setAutocomplete}
+            onCloseURL='' />
         </MemoryRouter>
       )
       const input = wrapper.find('input').first()
@@ -212,7 +217,8 @@ describe('PeopleSelector', () => {
           participants={[]}
           fetchContacts={jest.fn()}
           fetchRecentContacts={jest.fn()}
-          removeParticipant={removeParticipant} />
+          removeParticipant={removeParticipant}
+          onCloseURL='' />
       )
       const ps = wrapper.instance()
       ps.autocomplete = { value: '' }
@@ -227,7 +233,8 @@ describe('PeopleSelector', () => {
           participants={[]}
           fetchContacts={jest.fn()}
           fetchRecentContacts={jest.fn()}
-          removeParticipant={() => {}} />
+          removeParticipant={() => {}}
+          onCloseURL='' />
       )
       const ps = wrapper.instance()
       ps.autocomplete = { value: '' }
@@ -243,7 +250,8 @@ describe('PeopleSelector', () => {
           participants={[]}
           fetchContacts={jest.fn()}
           fetchRecentContacts={jest.fn()}
-          removeParticipant={() => {}} />
+          removeParticipant={() => {}}
+          onCloseURL='' />
       )
       const ps = wrapper.instance()
       ps.autocomplete = { value: 'abc' }
@@ -264,7 +272,8 @@ describe('PeopleSelector', () => {
             participants={[]}
             participantSearch={[ '1', '2' ]}
             fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
-            changeQueryParam={changeQueryParam} />
+            changeQueryParam={changeQueryParam}
+            onCloseURL='' />
         </MemoryRouter>
       )
       expect(addParticipant).toBeCalledWith('1')
