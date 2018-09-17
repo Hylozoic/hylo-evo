@@ -4,12 +4,13 @@ import cx from 'classnames'
 import Avatar from 'components/Avatar'
 import { personUrl } from 'util/index'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
+import { BLOCKED_USER } from 'store/models/Person'
 import './Message.scss'
 
 const { bool, object } = PropTypes
 
 export default function Message ({ message, isHeader }) {
-  const person = message.creator
+  const person = message.creator || BLOCKED_USER
   const pending = message.id.slice(0, 13) === 'messageThread'
   let text = present(sanitize(message.text).replace(/\n/g, '<br />'), {noP: true})
   const sName = cx('message', {messageHeader: isHeader})

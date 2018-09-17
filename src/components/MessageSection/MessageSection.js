@@ -27,7 +27,7 @@ export function createMessageList (messages, lastSeenAt) {
       messageDate = new Date(m.createdAt)
       diff = Math.abs(headerDate - messageDate)
       greaterThanMax = Math.floor(diff / 60000) > MAX_MINS_TO_BATCH
-      isHeader = greaterThanMax || m.creator.id !== currentHeader.creator.id
+      isHeader = greaterThanMax || get('creator.id', m) !== get('creator.id', currentHeader)
       currentHeader = isHeader ? m : currentHeader
     }
     /* on hold
