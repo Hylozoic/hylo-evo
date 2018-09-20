@@ -3,7 +3,7 @@ import getPreviousLocation from 'store/selectors/getPreviousLocation'
 
 export function mapStateToProps (state, props) {
   return {
-    onCloseURL: getPreviousLocation(state) || ''
+    onCloseURL: getPreviousLocation(state) || '/'
   }
 }
 
