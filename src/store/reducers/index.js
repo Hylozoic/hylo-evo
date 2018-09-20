@@ -3,6 +3,7 @@ import { routerReducer } from 'react-router-redux'
 import orm from './ormReducer'
 import login from 'store/reducers/login'
 import pending from './pending'
+import locationHistory from './locationHistory'
 import mixpanel from './mixpanel'
 import intercom from './intercom'
 
@@ -40,6 +41,7 @@ const combinedReducers = combineReducers({
   login,
   pending,
   queryResults,
+  locationHistory,
   mixpanel,
   intercom,
 
@@ -50,8 +52,8 @@ const combinedReducers = combineReducers({
   NetworkCommunities,
   NetworkSettings,
   PrimaryLayout,
-  PeopleSelector,
   MessageForm,
+  PeopleSelector,
   PeopleTyping,
   HyloEditor,
   PostEditor,

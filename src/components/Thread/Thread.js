@@ -34,9 +34,9 @@ export default class Thread extends React.Component {
   }
 
   render () {
-    const { thread, currentUser, id } = this.props
+    const { thread, currentUser, id, onCloseURL } = this.props
     return <div styleName='thread'>
-      <Header thread={thread} currentUser={currentUser} />
+      <Header thread={thread} currentUser={currentUser} onCloseURL={onCloseURL} />
       <MessageSection thread={thread} messageThreadId={id} />
       <div styleName='message-form'>
         <MessageForm

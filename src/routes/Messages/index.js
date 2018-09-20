@@ -1,2 +1,4 @@
-import Messages from './Messages'
-export default Messages
+import component from './Messages'
+import connector from './Messages.connector'
+
+export default connector(component)
