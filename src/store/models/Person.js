@@ -27,3 +27,10 @@ Person.fields = {
 }
 
 export const firstName = person => person.name.split(' ')[0]
+export const DEFAULT_AVATAR = 'https://www.gravatar.com/avatar/1f3347b940681f7fa199fc0aae113371?d=mm&s=140'
+
+export const BLOCKED_USER = {
+  id: -1,
+  name: 'A Hylo User',
+  avatarUrl: DEFAULT_AVATAR
+}

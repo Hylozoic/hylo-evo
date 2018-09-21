@@ -8,6 +8,7 @@ import { newMessageUrl, threadUrl } from 'util/index'
 import RoundImageRow from 'components/RoundImageRow'
 import TopNavDropdown from '../TopNavDropdown'
 import { get, isEmpty, some, find } from 'lodash/fp'
+import { BLOCKED_USER } from 'store/models/Person'
 
 import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
 import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
@@ -134,5 +135,6 @@ export function MessagesDropdownItem ({ thread, onClick, currentUser }) {
 export function lastMessageCreator (message, currentUser, participants) {
   if (get('id', message.creator) === currentUser.id) return 'You: '
   if (participants.length <= 2) return ''
-  return find(p => p.id === get('id', message.creator), participants).name + ': '
+  const creator = find(p => p.id === get('id', message.creator), participants) || BLOCKED_USER
+  return creator.name + ': '
 }
