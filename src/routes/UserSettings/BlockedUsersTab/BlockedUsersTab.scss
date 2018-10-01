@@ -1,11 +1,10 @@
 .unblock-user-control {
-  min-height: 52px;
   border-bottom: 1px solid $color-ghost;
 }
 
 .row {
   display: flex;
-  align-items: center;
+  align-items: space-between;
   margin: 8px 0px;
 }
 
@@ -28,8 +27,8 @@
 }
 
 .unblock-button {
-  margin-left: auto;
   composes: text-button from 'css/typography.scss';
+  margin-left: auto;
   color: $color-amaranth;
   @include font-regular;
   &:hover {

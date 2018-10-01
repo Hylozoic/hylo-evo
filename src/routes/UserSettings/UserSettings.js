@@ -72,7 +72,7 @@ export default class UserSettings extends Component {
         },
         {
           name: 'Blocked Users',
-          path: '/settings/block-users',
+          path: '/settings/blocked-users',
           component: <BlockedUsersTab
             blockedUsers={blockedUsers}
             unBlockUser={unBlockUser} />

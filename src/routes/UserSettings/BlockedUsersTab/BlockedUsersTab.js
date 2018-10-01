@@ -30,8 +30,8 @@ export function UnBlockUserControl ({ blockedUser, unBlockUser }) {
 
   return <div styleName='unblock-user-control'>
     <div styleName='row'>
-      <span styleName='name'>{blockedUser.name}</span>
-      <span onClick={unBlockUserFun} styleName='unblock-button'>Unblock</span>
+      <div styleName='name'>{blockedUser.name}</div>
+      <div onClick={unBlockUserFun} styleName='unblock-button'>Unblock</div>
     </div>
   </div>
 }
