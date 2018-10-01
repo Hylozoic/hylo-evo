@@ -37,6 +37,10 @@ export function fetchUserSettings () {
             dmNotifications
             commentNotifications
           }
+          blockedUsers {
+            id
+            name
+          }
           memberships {
             id
             settings {

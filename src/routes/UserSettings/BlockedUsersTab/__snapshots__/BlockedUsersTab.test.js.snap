@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlockedUsersTab renders a list of UnBlockUserControls 1`] = `
+<div>
+  <UnBlockUserControl
+    blockedUser={
+      Object {
+        "id": 1,
+      }
+    }
+    key="1"
+  />
+  <UnBlockUserControl
+    blockedUser={
+      Object {
+        "id": 2,
+      }
+    }
+    key="2"
+  />
+  <UnBlockUserControl
+    blockedUser={
+      Object {
+        "id": 3,
+      }
+    }
+    key="3"
+  />
+  <UnBlockUserControl
+    blockedUser={
+      Object {
+        "id": 4,
+      }
+    }
+    key="4"
+  />
+</div>
+`;
+
+exports[`UnBlockUserControl renders correctly 1`] = `
+<div
+  data-stylename="unblock-user-control"
+>
+  <div
+    data-stylename="row"
+  >
+    <span
+      data-stylename="name"
+    >
+      Test User
+    </span>
+    <span
+      data-stylename="unblock-button"
+      onClick={[Function]}
+    >
+      Unblock
+    </span>
+  </div>
+</div>
+`;

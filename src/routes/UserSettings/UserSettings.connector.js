@@ -9,6 +9,8 @@ import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { createSelector } from 'reselect'
 import orm from 'store/models'
+import unBlockUser from 'store/actions/unBlockUser'
+import getBlockedUsers from 'store/selectors/getBlockedUsers'
 import { every, includes } from 'lodash/fp'
 
 // this selector assumes that all Memberships belong to the currentUser
@@ -40,6 +42,7 @@ export const getMessageSettings = createSelector(
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const memberships = getCurrentUserMemberships(state, props)
+  const blockedUsers = getBlockedUsers(state, props)
   const allCommunitiesSettings = getAllCommunitiesSettings(state, props)
   const messageSettings = getMessageSettings(state, props)
 
@@ -49,6 +52,7 @@ export function mapStateToProps (state, props) {
   return {
     currentUser,
     memberships,
+    blockedUsers,
     confirm,
     fetchPending,
     allCommunitiesSettings,
@@ -59,6 +63,7 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = {
   fetchUserSettings,
   updateUserSettings,
+  unBlockUser,
   leaveCommunity,
   loginWithService,
   unlinkAccount,

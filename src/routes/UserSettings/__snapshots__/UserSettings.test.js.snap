@@ -64,6 +64,14 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings/notifications",
       },
       Object {
+        "component": <BlockedUsersTab
+          blockedUsers={undefined}
+          unBlockUser={undefined}
+        />,
+        "name": "Blocked Users",
+        "path": "/settings/block-users",
+      },
+      Object {
         "component": <PasswordSettingsTab
           currentUser={
             Object {

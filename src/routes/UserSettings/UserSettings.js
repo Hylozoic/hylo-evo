@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import './UserSettings.scss'
 import AccountSettingsTab from './AccountSettingsTab/AccountSettingsTab'
 import CommunitySettingsTab from './CommunitySettingsTab/CommunitySettingsTab'
+import BlockedUsersTab from './BlockedUsersTab/BlockedUsersTab'
 import NotificationSettingsTab from './NotificationSettingsTab/NotificationSettingsTab'
 import PasswordSettingsTab from './PasswordSettingsTab/PasswordSettingsTab'
 import FullPageModal from 'routes/FullPageModal'
@@ -23,6 +24,8 @@ export default class UserSettings extends Component {
     const {
       currentUser,
       memberships,
+      blockedUsers,
+      unBlockUser,
       updateUserSettings,
       leaveCommunity,
       loginWithService,
@@ -66,6 +69,13 @@ export default class UserSettings extends Component {
             updateAllMemberships={updateAllMemberships}
             messageSettings={messageSettings}
             allCommunitiesSettings={allCommunitiesSettings} />
+        },
+        {
+          name: 'Blocked Users',
+          path: '/settings/block-users',
+          component: <BlockedUsersTab
+            blockedUsers={blockedUsers}
+            unBlockUser={unBlockUser} />
         },
         {
           name: 'Password',

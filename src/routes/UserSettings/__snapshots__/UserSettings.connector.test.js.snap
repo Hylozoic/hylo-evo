@@ -6,6 +6,7 @@ Object {
     "sendEmail": true,
     "sendPushNotifications": true,
   },
+  "blockedUsers": Array [],
   "confirm": undefined,
   "currentUser": undefined,
   "fetchPending": undefined,

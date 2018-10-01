@@ -1,0 +1,54 @@
+.unblock-user-control {
+  min-height: 52px;
+  border-bottom: 1px solid $color-ghost;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin: 8px 0px;
+}
+
+.settings-row {
+  composes: row;
+  margin-bottom: 16px;
+}
+
+.avatar {
+  margin-right: $space-4x;
+}
+
+.name {
+  composes: bdy-drk-sm from 'css/typography.scss';
+  font-size: 16px;
+  &:hover {
+    color: $color-rhino;
+    text-decoration: none;
+  }
+}
+
+.unblock-button {
+  margin-left: auto;
+  composes: text-button from 'css/typography.scss';
+  color: $color-amaranth;
+  @include font-regular;
+  &:hover {
+    color: $color-maroon-flush;
+  }
+}
+
+.settings-label {
+  composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.settings {
+  composes: caption-lt-lg from 'css/typography.scss';
+  margin-left: auto;
+  margin-right: -12px;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-label {
+  margin-right: 5px;
+}
