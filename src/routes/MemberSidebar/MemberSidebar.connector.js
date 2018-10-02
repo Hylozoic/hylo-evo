@@ -7,9 +7,8 @@ import getPreviousLocation from 'store/selectors/getPreviousLocation'
 
 export function mapStateToProps (state, props) {
   return {
-    currentUser: getMe(state, props),
     memberId: getParam('id', state, props),
-    previousLocation: getPreviousLocation(state) || '/'
+    previousLocation: getPreviousLocation(state)
   }
 }
 
@@ -18,16 +17,15 @@ const mapDispatchToProps = {
   push
 }
 
-export function mergeProps(stateProps, dispatchProps, ownProps) {
-  const blockUser = () => dispatchProps
-    .blockUser(stateProps.memberId)
-    .then(() => dispatchProps.push(stateProps.previousLocation))
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const goToPreviousLocation = () =>
+    dispatchProps.push(stateProps.previousLocation)
 
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    blockUser
+    goToPreviousLocation
   }
 }
 
