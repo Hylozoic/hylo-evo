@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import blockUser from 'store/actions/blockUser'
 import getParam from 'store/selectors/getParam'
-import getMe from 'store/selectors/getMe'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 
 export function mapStateToProps (state, props) {
