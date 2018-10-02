@@ -16,11 +16,11 @@ export function setThreadSearch (threadSearch) {
   }
 }
 
-const defaultState = {
+const initialState = {
   threadSearch: ''
 }
 
-export default function reducer (state = defaultState, action) {
+export default function reducer (state = initialState, action) {
   const { error, type, payload } = action
   if (error) return state
 
@@ -38,7 +38,7 @@ export const moduleSelector = (state) => {
 
 export const getThreadSearch = createSelector(
   moduleSelector,
-  (state, props) => state.threadSearch
+  (state, props) => get('threadSearch', state)
 )
 
 export const getThreadResults = makeGetQueryResults(FETCH_THREADS)

@@ -12,8 +12,8 @@ export default class BlockedUsersTab extends Component {
   }
 
   render () {
-    const { blockedUsers, unBlockUser } = this.props
-    if (!blockedUsers) return <Loading />
+    const { blockedUsers, unBlockUser, loading } = this.props
+    if (loading || !blockedUsers) return <Loading />
 
     return <div>
       {blockedUsers.map(blockedUser =>

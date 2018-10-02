@@ -182,7 +182,7 @@ export function makeGetQueryResults (actionType) {
     // cases?
 
     const key = buildKey(actionType, props)
-    return state.queryResults[key]
+    return get(`queryResults[${key}]`, state)
   }
 }
 

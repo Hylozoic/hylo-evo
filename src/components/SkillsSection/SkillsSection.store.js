@@ -173,5 +173,5 @@ export function setAutocomplete (autocomplete) {
 }
 
 export function getAutocomplete (state) {
-  return state[MODULE_NAME].autocomplete
+  return get(`[${MODULE_NAME}].autocomplete`, state)
 }

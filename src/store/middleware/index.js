@@ -8,6 +8,7 @@ import apiMiddleware from './apiMiddleware'
 import pendingMiddleware from './pendingMiddleware'
 import optimisticMiddleware from './optimisticMiddleware'
 import userFetchedMiddleware from './userFetchedMiddleware'
+import userBlockingMiddleware from './userBlockingMiddleware'
 import mixpanelMiddleware from './mixpanelMiddleware'
 import errorMiddleware from './errorMiddleware'
 import { routerMiddleware } from 'react-router-redux'
@@ -22,6 +23,7 @@ export default function createMiddleware (history, req) {
     pendingMiddleware,
     promiseMiddleware,
     userFetchedMiddleware,
+    userBlockingMiddleware,
     mixpanelMiddleware,
     !req && isDev && createLogger({collapsed: true})
   ])

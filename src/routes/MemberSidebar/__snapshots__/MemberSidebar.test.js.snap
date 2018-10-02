@@ -6,5 +6,11 @@ exports[`does something 1`] = `
 >
   <Connect(MessageMember) />
   <Connect(SkillsSection) />
+  <button
+    onClick={[Function]}
+    type="reset"
+  >
+    Block this Member
+  </button>
 </div>
 `;

@@ -69,7 +69,7 @@ exports[`UserSettings renders correctly 1`] = `
           unBlockUser={undefined}
         />,
         "name": "Blocked Users",
-        "path": "/settings/block-users",
+        "path": "/settings/blocked-users",
       },
       Object {
         "component": <PasswordSettingsTab

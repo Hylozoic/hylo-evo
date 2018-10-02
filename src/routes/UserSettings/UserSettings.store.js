@@ -7,61 +7,10 @@ export const MODULE_NAME = 'UserSettings'
 
 export const UPDATE_USER_SETTINGS = `${MODULE_NAME}/UPDATE_USER_SETTINGS`
 export const UPDATE_USER_SETTINGS_PENDING = UPDATE_USER_SETTINGS + '_PENDING'
-export const FETCH_USER_SETTINGS = `${MODULE_NAME}/FETCH_USER_SETTINGS`
 export const UPDATE_MEMBERSHIP_SETTINGS = `${MODULE_NAME}/UPDATE_MEMBERSHIP_SETTINGS`
 export const UPDATE_MEMBERSHIP_SETTINGS_PENDING = UPDATE_MEMBERSHIP_SETTINGS + '_PENDING'
 export const UPDATE_ALL_MEMBERSHIP_SETTINGS = `${MODULE_NAME}/UPDATE_ALL_MEMBERSHIP_SETTINGS`
 export const UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING = `${UPDATE_ALL_MEMBERSHIP_SETTINGS}_PENDING`
-
-export function fetchUserSettings () {
-  return {
-    type: FETCH_USER_SETTINGS,
-    graphql: {
-      query: `{
-        me {
-          id
-          name
-          email
-          avatarUrl
-          bannerUrl
-          bio
-          twitterName
-          linkedinUrl
-          facebookUrl
-          url
-          location
-          tagline
-          hasDevice
-          settings {
-            digestFrequency
-            dmNotifications
-            commentNotifications
-          }
-          blockedUsers {
-            id
-            name
-          }
-          memberships {
-            id
-            settings {
-              sendEmail
-              sendPushNotifications
-            }
-            community {
-              id
-              name
-              slug
-              avatarUrl
-            }
-          }
-        }
-      }`
-    },
-    meta: {
-      extractModel: 'Me'
-    }
-  }
-}
 
 export function updateUserSettings (changes) {
   return {

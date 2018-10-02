@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+import { get } from 'lodash/fp'
 import { getSubscribedCommunityTopics } from './TopicNavigation.store'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { removePostFromUrl } from 'util/index'
@@ -8,7 +9,7 @@ import { makeDropQueryResults } from 'store/reducers/queryResults'
 
 export function mapStateToProps (state, props) {
   return {
-    feedListProps: state.FeedList.feedListProps,
+    feedListProps: get('FeedList.feedListProps', state),
     communityTopics: getSubscribedCommunityTopics(state, props)
   }
 }

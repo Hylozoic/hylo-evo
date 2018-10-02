@@ -5,7 +5,7 @@ import getQueryParam from 'store/selectors/getQueryParam'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getIsLoggedIn from 'store/selectors/getIsLoggedIn'
-import { fetchForCurrentUser } from 'routes/PrimaryLayout/PrimaryLayout.store'
+import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import {
   getNewMembership, getValidInvite, useInvitation, checkInvitation
 } from './JoinCommunity.store'

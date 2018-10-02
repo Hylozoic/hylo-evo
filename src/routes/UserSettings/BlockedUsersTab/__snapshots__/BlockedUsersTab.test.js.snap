@@ -44,17 +44,17 @@ exports[`UnBlockUserControl renders correctly 1`] = `
   <div
     data-stylename="row"
   >
-    <span
+    <div
       data-stylename="name"
     >
       Test User
-    </span>
-    <span
+    </div>
+    <div
       data-stylename="unblock-button"
       onClick={[Function]}
     >
       Unblock
-    </span>
+    </div>
   </div>
 </div>
 `;

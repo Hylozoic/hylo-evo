@@ -17,7 +17,7 @@ export default class UserSettings extends Component {
   }
 
   componentDidMount () {
-    this.props.fetchUserSettings()
+    this.props.fetchForCurrentUser()
   }
 
   render () {
@@ -75,7 +75,8 @@ export default class UserSettings extends Component {
           path: '/settings/blocked-users',
           component: <BlockedUsersTab
             blockedUsers={blockedUsers}
-            unBlockUser={unBlockUser} />
+            unBlockUser={unBlockUser}
+            loading={fetchPending} />
         },
         {
           name: 'Password',
