@@ -16,7 +16,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
           items={
             Array [
               Object {
-                "hide": undefined,
+                "hide": false,
                 "icon": "Ex",
                 "label": "Block this Member",
                 "onClick": [Function],

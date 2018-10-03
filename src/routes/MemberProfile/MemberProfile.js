@@ -1,15 +1,13 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { get } from 'lodash/fp'
-
 import { filter, isFunction } from 'lodash'
-import Dropdown from 'components/Dropdown'
-
+import { AXOLOTL_ID } from 'store/models/Person'
+import { bgImageStyle } from 'util/index'
 import './MemberProfile.scss'
+import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
-import { bgImageStyle } from 'util/index'
-
 import Loading from 'components/Loading'
 import SimpleTabBar from 'components/SimpleTabBar'
 import RecentActivity from './RecentActivity'
@@ -85,9 +83,11 @@ export default class MemberProfile extends React.Component {
       tagline
     } = person
     const { id, slug } = match.params
-    const isMe = currentUser && id && currentUser.id === id
+    const isMe = currentUser && currentUser.id === id
+    const isAxolotl = AXOLOTL_ID === id
+
     const itemsMenuItems = [
-      {icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(id), hide: isMe}
+      {icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(id), hide: isMe || isAxolotl}
     ]
 
     return <div styleName='member-profile'>
