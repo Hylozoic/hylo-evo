@@ -1,11 +1,11 @@
 import { getEmptyState } from 'store'
-import resetStore, { PRESERVE_STATE_ON_RESET } from './resetStore'
+import resetStore, { KEYS_PRESERVED_ON_RESET } from './resetStore'
 import {
   LOGOUT,
   RESET_STORE
 } from 'store/constants'
 
-describe('store', () => {
+describe('resetStore', () => {
   it('resets to initial state on logout', () => {
     const fullInitialState = resetStore(getEmptyState(), {})
     const state = {foo: 'bar'}
@@ -16,13 +16,18 @@ describe('store', () => {
 
   it('preserves necessary state on reset', () => {
     const fullInitialState = resetStore(getEmptyState(), {})
-    const state = {}
-    state[PRESERVE_STATE_ON_RESET[0]] = 'foo'
+    const preservedState = {[KEYS_PRESERVED_ON_RESET[0]]: 'foo'}
+    const notPreservedState = {'randomkey': 'foo'}
     const action = {type: RESET_STORE}
-    const newState = resetStore(state, action)
+    const newState = resetStore({
+      ...preservedState,
+      ...notPreservedState
+    }, action)
+    expect(newState).toMatchObject(preservedState)
+    expect(newState).not.toMatchObject(notPreservedState)
     expect(newState).toEqual({
       ...fullInitialState,
-      ...state
+      ...preservedState
     })
   })
 })
