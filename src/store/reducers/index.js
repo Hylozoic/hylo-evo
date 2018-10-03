@@ -35,7 +35,7 @@ import CreateTopic from 'components/CreateTopic/CreateTopic.store'
 
 import { handleSetState, composeReducers } from './util'
 
-const combinedReducers = combineReducers({
+export const combinedReducers = combineReducers({
   // Global store
   orm,
   router: routerReducer,

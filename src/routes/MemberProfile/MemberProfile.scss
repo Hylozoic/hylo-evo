@@ -21,16 +21,20 @@
   align-items: center;
 }
 
-.name-plate {
+.name-plate-container {
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
   background-color: $color-athens-gray;
   height: 2 * $space-20x;
   border-radius: $space-1x;
   padding: $space-7x $space-4x;
+}
+
+.name-plate {
+  display: flex;
 }
 
 .details {
@@ -63,6 +67,10 @@
 
 .name {
   composes: hdr-display from 'css/typography.scss';
+}
+
+.name-plate-right-side {
+  padding-top: 0.25rem;
 }
 
 .location {

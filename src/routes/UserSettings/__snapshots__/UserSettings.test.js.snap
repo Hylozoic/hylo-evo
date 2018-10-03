@@ -66,6 +66,7 @@ exports[`UserSettings renders correctly 1`] = `
       Object {
         "component": <BlockedUsersTab
           blockedUsers={undefined}
+          loading={true}
           unBlockUser={undefined}
         />,
         "name": "Blocked Users",

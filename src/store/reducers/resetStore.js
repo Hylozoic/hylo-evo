@@ -1,28 +1,28 @@
 import { pick } from 'lodash/fp'
-import { initialState } from '..'
-import { LOGOUT } from 'routes/NonAuthLayout/Login/Login.store.js'
-import { RESET_STORE } from '../constants'
+import { getEmptyState } from '..'
+import login from './login'
+import {
+  LOGOUT,
+  RESET_STORE
+} from '../constants'
+
+export const PRESERVE_STATE_ON_RESET = [
+  'login',
+  'pending',
+  'locationHistory',
+  'intercom',
+  'mixpanel'
+]
 
 export default function (state, action) {
   if (action.type === LOGOUT && !action.error) {
-    return {
-      ...initialState,
-      login: {
-        isLoggedIn: false
-      }
-    }
+    return getEmptyState()
   }
 
   if (action.type === RESET_STORE && !action.error) {
     return {
-      ...initialState,
-      ...pick([
-        'login',
-        'pending',
-        'locationHistory',
-        'intercom',
-        'mixpanel'
-      ], state)
+      ...getEmptyState(),
+      ...pick(PRESERVE_STATE_ON_RESET, state)
     }
   }
 

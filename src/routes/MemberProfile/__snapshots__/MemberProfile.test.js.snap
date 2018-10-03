@@ -11,6 +11,20 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       avatarUrl="https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
       location="Auckland, New Zealand"
       name="Rich Churcher"
+      rightSideContent={
+        <MemberActionsMenu
+          items={
+            Array [
+              Object {
+                "hide": undefined,
+                "icon": "Ex",
+                "label": "Block this Member",
+                "onClick": [Function],
+              },
+            ]
+          }
+        />
+      }
     />
   </ProfileBanner>
   <div

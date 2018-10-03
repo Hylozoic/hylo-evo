@@ -22,7 +22,7 @@ describe('UserSettings', () => {
       loginWithService={loginWithService}
       unlinkAccount={unlinkAccount}
       setConfirm={setConfirm}
-      fetchUserSettings={jest.fn()}
+      fetchForCurrentUser={jest.fn()}
       updateMembershipSettings={updateMembershipSettings}
       fetchPending={fetchPending} />)
     expect(wrapper).toMatchSnapshot()

@@ -1,5 +1,8 @@
 import { connect } from 'react-redux'
-
+import { push } from 'react-router-redux'
+import blockUser from 'store/actions/blockUser'
+import getPreviousLocation from 'store/selectors/getPreviousLocation'
+import getMe from 'store/selectors/getMe'
 import { fetchPerson, personSelector } from './MemberProfile.store'
 
 // TODO: this sort of thing belongs in an i18n module
@@ -14,8 +17,27 @@ export function mapStateToProps (state, props) {
   return {
     currentTab: 'Overview',
     error,
-    person
+    person,
+    currentUser: getMe(state),
+    previousLocation: getPreviousLocation(state)
   }
 }
 
-export default connect(mapStateToProps, { fetchPerson })
+const mapDispatchToProps = {
+  fetchPerson,
+  blockUser,
+  push
+}
+
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const goToPreviousLocation = () => dispatchProps.push(stateProps.previousLocation)
+
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    goToPreviousLocation
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)

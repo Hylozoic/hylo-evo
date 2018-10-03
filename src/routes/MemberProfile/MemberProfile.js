@@ -2,6 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { get } from 'lodash/fp'
 
+import { filter, isFunction } from 'lodash'
+import Dropdown from 'components/Dropdown'
+
 import './MemberProfile.scss'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
@@ -57,10 +60,17 @@ export default class MemberProfile extends React.Component {
     </div>
   }
 
+  blockUser = (memberId) => () => {
+    const { blockUser, goToPreviousLocation } = this.props
+
+    if (window.confirm(blockConfirmMessage)) blockUser(memberId).then(goToPreviousLocation)
+  }
+
   render () {
     if (this.props.error) return this.displayError(this.props.error)
     if (!this.props.person) return <Loading />
 
+    const { person, currentUser, match } = this.props
     const {
       avatarUrl,
       bannerUrl,
@@ -73,12 +83,21 @@ export default class MemberProfile extends React.Component {
       twitterName,
       url,
       tagline
-    } = this.props.person
-    const { id, slug } = this.props.match.params
+    } = person
+    const { id, slug } = match.params
+    const isMe = currentUser && id && currentUser.id === id
+    const itemsMenuItems = [
+      {icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(id), hide: isMe}
+    ]
 
     return <div styleName='member-profile'>
       <ProfileBanner bannerUrl={bannerUrl}>
-        <ProfileNamePlate avatarUrl={avatarUrl} location={location} name={name} role={role} />
+        <ProfileNamePlate
+          avatarUrl={avatarUrl}
+          location={location}
+          name={name}
+          role={role}
+          rightSideContent={<MemberActionsMenu items={itemsMenuItems} />} />
       </ProfileBanner>
       <div styleName='content'>
         <ProfileControls currentTab={this.state.currentTab} selectTab={this.selectTab}>
@@ -99,6 +118,21 @@ export default class MemberProfile extends React.Component {
   }
 }
 
+const blockConfirmMessage = `Are you sure you want to block this member?
+You will no longer see this member's activity
+and they won't see yours.
+
+You can unblock this member at any time.
+Go to Settings > Blocked Users.`
+
+export function MemberActionsMenu ({ items }) {
+  const activeItems = filter(items, item =>
+    isFunction(item.onClick) && !item.hide)
+
+  return activeItems.length > 0 &&
+    <Dropdown items={activeItems} toggleChildren={<Icon name='More' />} />
+}
+
 export function ProfileBanner ({ bannerUrl, children }) {
   return <div styleName='banner'>
     {children}
@@ -106,20 +140,23 @@ export function ProfileBanner ({ bannerUrl, children }) {
   </div>
 }
 
-export function ProfileNamePlate ({ avatarUrl, name, location, role }) {
-  return <div styleName='name-plate'>
-    <RoundImage styleName='avatar' url={avatarUrl} xlarge />
-    <div styleName='details'>
-      <h1 styleName='name'>{name}</h1>
-      <div styleName='fine-details'>
-        {location && <span styleName='location'>{location}</span>}
-        {role && <span styleName='role-bling'>
-          {location && <span styleName='spacer'>•</span>}
-          <Icon styleName='star' name='StarCircle' />
-          <span styleName='role'>{role}</span>
-        </span>}
+export function ProfileNamePlate ({ avatarUrl, name, location, role, rightSideContent }) {
+  return <div styleName='name-plate-container'>
+    <div styleName='name-plate'>
+      <RoundImage styleName='avatar' url={avatarUrl} xlarge />
+      <div styleName='details'>
+        <h1 styleName='name'>{name}</h1>
+        <div styleName='fine-details'>
+          {location && <span styleName='location'>{location}</span>}
+          {role && <span styleName='role-bling'>
+            {location && <span styleName='spacer'>•</span>}
+            <Icon styleName='star' name='StarCircle' />
+            <span styleName='role'>{role}</span>
+          </span>}
+        </div>
       </div>
     </div>
+    {rightSideContent && <div styleName='name-plate-right-side'>{rightSideContent}</div>}
   </div>
 }
 
