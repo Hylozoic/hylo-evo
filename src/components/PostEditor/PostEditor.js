@@ -11,6 +11,7 @@ import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 import TopicSelector from 'components/TopicSelector'
+import MemberSelector from 'components/MemberSelector'
 import LinkPreview from './LinkPreview'
 import ChangeImageButton from 'components/ChangeImageButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
@@ -49,7 +50,6 @@ export default class PostEditor extends React.Component {
   }
 
   static defaultProps = {
-    initialPrompt: 'What are you looking to post?',
     titlePlaceholderForPostType: {
       offer: 'What super powers can you offer?',
       request: 'What are you looking for help with?',
@@ -247,26 +247,38 @@ export default class PostEditor extends React.Component {
     })
   }
 
+  initialPrompt = () => {
+    // FIXME: there must be a better way of doing this. In the constructor or component did mount
+    const { isProject, initialPrompt } = this.props
+    if (!!initialPrompt) return initialPrompt
+    if (isProject) return "What's the project you want to begin?"
+
+    return 'What are you looking to post?'
+  }
+
   render () {
     const { titlePlaceholder, titleLengthError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
-    const { id, title, details, communities, linkPreview, topics } = post
+    const { id, title, details, communities, linkPreview, topics, members } = post
     const {
-      onClose, initialPrompt, detailsPlaceholder,
+      onClose, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
       showImages, addFile, showFiles, setAnnouncement, announcementSelected,
-      canModerate, myModeratedCommunities
+      canModerate, myModeratedCommunities, isProject
     } = this.props
+
+    const hidePostTypes = isProject
+
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
       <div styleName='header'>
         <div styleName='initial'>
-          <div styleName='initial-prompt'>{initialPrompt}</div>
+          <div styleName='initial-prompt'>{this.initialPrompt()}</div>
           <a styleName='initial-closeButton' onClick={onClose}><Icon name='Ex' /></a>
         </div>
-        <div styleName='postTypes'>
+        {!hidePostTypes && <div styleName='postTypes'>
           <Button {...this.postTypeButtonProps('discussion')} />
           <Button {...this.postTypeButtonProps('request')} />
           <Button {...this.postTypeButtonProps('offer')} />
-        </div>
+        </div>}
       </div>
       <div styleName='body'>
         <div styleName='body-column'>
@@ -325,6 +337,17 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>
+        {isProject && <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Project Members</div>
+          <div styleName='footerSection-communities'>
+            <MemberSelector
+              members={members}
+              onChange={this.setupdateProjectMembers}
+              readOnly={loading}
+              ref={component => { this.membersSelector = component }}
+            />
+          </div>
+        </div>}
         <ActionsBar
           id={id}
           addImage={addImage}

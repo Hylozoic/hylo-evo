@@ -13,7 +13,7 @@ import getMemberships from 'store/selectors/getMemberships'
 import changeQueryParam from 'store/actions/changeQueryParam'
 import getQueryParam from 'store/selectors/getQueryParam'
 import { push, replace } from 'react-router-redux'
-import { postUrl, topicsUrl } from 'util/index'
+import { projectUrl, postUrl, topicsUrl } from 'util/index'
 import { makeUrl } from 'util/navigation'
 import { fetchTopic, fetchCommunityTopic, fetchNetwork } from './Feed.store'
 import { FETCH_FOR_CURRENT_USER } from '../PrimaryLayout/PrimaryLayout.store'
@@ -75,8 +75,9 @@ export const mapDispatchToProps = function (dispatch, props) {
     // or the center column will revert to its default sort & filter settings
     showPostDetails: postId =>
       dispatch(push(makeUrl(postUrl(postId, slug, {topicName, networkSlug}), params))),
+    // FIXME: temporarily changed to project link for testing
     newPost: () =>
-      dispatch(push(makeUrl(postUrl('new', slug, {topicName}), params))),
+      dispatch(push(makeUrl(projectUrl('new', slug, {topicName}), params))),
     fetchTopic: () => {
       if (slug && topicName) {
         return dispatch(fetchCommunityTopic(topicName, slug))

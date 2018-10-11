@@ -261,13 +261,13 @@ export default class PrimaryLayout extends Component {
       <SocketListener location={location} />
       <SocketSubscriber type='community' id={get('slug', community)} />
       <Intercom appID={isTest ? null : config.intercom.appId} />
-      {postEditorRoutes.map(({path, forNew}) =>
+      {postEditorRoutes.map(({path, forNew, isProject}) =>
         <Route
           key={path}
           path={path}
           exact
           children={({match}) => {
-            return <PostEditorModal match={match} forNew={forNew} />
+            return <PostEditorModal match={match} forNew={forNew} isProject={isProject} />
           }} />)}
     </div>
   }
@@ -277,6 +277,7 @@ const postEditorRoutes = [
   {path: '/all/p/new', forNew: true},
   {path: '/c/:slug/p/new', forNew: true},
   {path: '/c/:slug/:topicName/p/new', forNew: true},
+  {path: '/c/:slug/project/new', forNew: true, isProject: true},
   {path: '/all/p/:postId/edit'},
   {path: '/c/:slug/p/:postId/edit'},
   {path: '/c/:slug/m/:id/p/:postId/edit'},
