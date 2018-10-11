@@ -15,7 +15,7 @@ import Network, { NetworkModerator } from './Network'
 import Notification from './Notification'
 import Person from './Person'
 import PersonConnection from './PersonConnection'
-import Post, { PostFollower, PostCommenter } from './Post'
+import Post, { PostFollower, PostCommenter, ProjectMember } from './Post'
 import PostMembership from './PostMembership'
 import SearchResult from './SearchResult'
 import Skill from './Skill'
@@ -45,6 +45,7 @@ orm.register(
   PostCommenter,
   PostFollower,
   PostMembership,
+  ProjectMember,
   SearchResult,
   Skill,
   Topic,

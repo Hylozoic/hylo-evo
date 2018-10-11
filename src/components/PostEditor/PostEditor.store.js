@@ -4,9 +4,11 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 import { AnalyticsEvents } from 'hylo-utils/constants'
 import linkMatcher from 'util/linkMatcher'
+import { getPostFieldsFragment } from 'store/actions/fetchPost'
 
 export const MODULE_NAME = 'PostEditor'
 export const CREATE_POST = `${MODULE_NAME}/CREATE_POST`
+export const CREATE_PROJECT = `${MODULE_NAME}/CREATE_PROJECT`
 export const UPDATE_POST = `${MODULE_NAME}/UPDATE_POST`
 export const UPDATE_POST_PENDING = `${UPDATE_POST}_PENDING`
 export const FETCH_LINK_PREVIEW = `${MODULE_NAME}/FETCH_LINK_PREVIEW`
@@ -96,6 +98,67 @@ export function createPost (post) {
       analytics: {
         eventName: AnalyticsEvents.POST_CREATED,
         detailsLength: textLength(details),
+        isAnnouncement: sendAnnouncement
+      }
+    }
+  }
+}
+
+export function createProject (post) {
+  const {
+    title,
+    details,
+    communities,
+    imageUrls = [],
+    fileUrls = [],
+    topicNames = [],
+    memberIds = [],
+    sendAnnouncement
+  } = post
+  const communityIds = communities.map(c => c.id)
+  const preprocessedDetails = divToP(details)
+  return {
+    type: CREATE_PROJECT,
+    graphql: {
+      query: `mutation (
+        $title: String
+        $details: String
+        $communityIds: [String]
+        $imageUrls: [String]
+        $fileUrls: [String]
+        $announcement: Boolean
+        $topicNames: [String]
+        $memberIds: [ID]        
+      ) {
+        createProject(data: {
+          title: $title
+          details: $details
+          communityIds: $communityIds
+          imageUrls: $imageUrls
+          fileUrls: $fileUrls
+          announcement: $announcement
+          topicNames: $topicNames
+          memberIds: $memberIds
+        }) {
+          ${getPostFieldsFragment(false)}
+        }
+      }`,
+      variables: {
+        title,
+        details: preprocessedDetails,
+        communityIds,
+        imageUrls,
+        fileUrls,
+        announcement: sendAnnouncement,
+        topicNames,
+        memberIds
+      }
+    },
+    meta: {
+      extractModel: 'Post',
+      analytics: {
+        eventName: AnalyticsEvents.POST_CREATED,
+        detailsLength: textLength(preprocessedDetails),
         isAnnouncement: sendAnnouncement
       }
     }
