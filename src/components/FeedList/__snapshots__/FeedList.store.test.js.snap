@@ -83,6 +83,15 @@ posts(
     postsTotal
     followersTotal
   }
+  members {
+    total
+    hasMore
+    items {
+      id
+      name
+      avatarUrl
+    }
+  }
   }
 }
   }
@@ -182,6 +191,15 @@ posts(
     name
     postsTotal
     followersTotal
+  }
+  members {
+    total
+    hasMore
+    items {
+      id
+      name
+      avatarUrl
+    }
   }
   }
 }
