@@ -52,6 +52,7 @@ Object {
   },
   "currentUser": SessionBoundModel {
     "_fields": Object {
+      "blockedUsers": undefined,
       "id": "1",
       "messageThreads": undefined,
       "notifications": undefined,
@@ -127,6 +128,7 @@ Object {
   },
   "currentUser": SessionBoundModel {
     "_fields": Object {
+      "blockedUsers": undefined,
       "id": "1",
       "messageThreads": undefined,
       "notifications": undefined,

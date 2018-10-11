@@ -4,7 +4,7 @@ import cx from 'classnames'
 import { isEmpty } from 'lodash'
 import { position } from 'util/scrolling'
 import Icon from 'components/Icon'
-import './component.scss'
+import './Dropdown.scss'
 const { array, object, string, bool } = PropTypes
 
 export default class Dropdown extends React.Component {

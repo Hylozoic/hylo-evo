@@ -1,3 +1,3 @@
-import component from './component'
+import component from './Dropdown'
 
 export default component

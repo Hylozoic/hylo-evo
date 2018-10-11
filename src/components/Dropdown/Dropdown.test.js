@@ -1,4 +1,4 @@
-import Dropdown from './component'
+import Dropdown from './Dropdown'
 import { shallow } from 'enzyme'
 import React from 'react'
 

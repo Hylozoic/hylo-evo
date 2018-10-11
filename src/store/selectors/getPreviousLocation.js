@@ -1,1 +1,3 @@
-export default (state) => state.locationHistory.previousLocation
+import { get } from 'lodash/fp'
+
+export default (state) => get('locationHistory.previousLocation', state) || '/'

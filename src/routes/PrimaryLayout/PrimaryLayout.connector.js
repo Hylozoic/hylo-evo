@@ -1,14 +1,15 @@
 import { connect } from 'react-redux'
-import {
-  fetchForCurrentUser, fetchForCommunity, toggleDrawer, FETCH_FOR_COMMUNITY
-} from './PrimaryLayout.store'
+import { toggleDrawer } from './PrimaryLayout.store'
+import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
+import fetchForCommunity from 'store/actions/fetchForCommunity'
+import { FETCH_FOR_COMMUNITY } from 'store/constants'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import getMemberships from 'store/selectors/getMemberships'
 import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommunityRoute'
 import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
-import { some } from 'lodash/fp'
+import { get, some } from 'lodash/fp'
 import mobileRedirect from 'util/mobileRedirect'
 
 export function mapStateToProps (state, props) {
@@ -20,7 +21,7 @@ export function mapStateToProps (state, props) {
     community: getCommunityForCurrentRoute(state, props),
     network: getNetworkForCurrentRoute(state, props),
     currentUser: getMe(state),
-    isDrawerOpen: state.PrimaryLayout.isDrawerOpen,
+    isDrawerOpen: get('PrimaryLayout.isDrawerOpen', state),
     showLogoBadge,
     hasMemberships,
     communityPending: state.pending[FETCH_FOR_COMMUNITY],

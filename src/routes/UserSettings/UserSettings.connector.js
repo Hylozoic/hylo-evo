@@ -1,15 +1,19 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import {
-  fetchUserSettings, updateUserSettings, leaveCommunity,
-  unlinkAccount, updateMembershipSettings, FETCH_USER_SETTINGS, updateAllMemberships
+  updateUserSettings, leaveCommunity, unlinkAccount,
+  updateMembershipSettings, updateAllMemberships
 } from './UserSettings.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { createSelector } from 'reselect'
 import orm from 'store/models'
-import { every, includes } from 'lodash/fp'
+import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
+import unBlockUser from 'store/actions/unBlockUser'
+import getBlockedUsers from 'store/selectors/getBlockedUsers'
+import { FETCH_FOR_CURRENT_USER } from 'store/constants'
+import { get, every, includes } from 'lodash/fp'
 
 // this selector assumes that all Memberships belong to the currentUser
 // using this instead of currentUser.memberships to avoid a memoization issue
@@ -40,15 +44,17 @@ export const getMessageSettings = createSelector(
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const memberships = getCurrentUserMemberships(state, props)
+  const blockedUsers = getBlockedUsers(state, props)
   const allCommunitiesSettings = getAllCommunitiesSettings(state, props)
   const messageSettings = getMessageSettings(state, props)
 
-  const confirm = state.FullPageModal.confirm
-  const fetchPending = state.pending[FETCH_USER_SETTINGS]
+  const confirm = get('FullPageModal.confirm', state)
+  const fetchPending = state.pending[FETCH_FOR_CURRENT_USER]
 
   return {
     currentUser,
     memberships,
+    blockedUsers,
     confirm,
     fetchPending,
     allCommunitiesSettings,
@@ -57,8 +63,9 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = {
-  fetchUserSettings,
+  fetchForCurrentUser,
   updateUserSettings,
+  unBlockUser,
   leaveCommunity,
   loginWithService,
   unlinkAccount,

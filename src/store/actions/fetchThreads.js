@@ -2,7 +2,7 @@ import { get } from 'lodash/fp'
 
 import { FETCH_THREADS } from 'store/constants'
 
-export function fetchThreads (first = 10, offset = 0) {
+export default function (first = 10, offset = 0) {
   return {
     type: FETCH_THREADS,
     graphql: {

@@ -40,7 +40,7 @@ export function mapStateToProps (state, props) {
     rootPath,
     membersPath,
     badge,
-    feedListProps: state.FeedList.feedListProps,
+    feedListProps: get('FeedList.feedListProps', state),
     communityMembership
   }
 }

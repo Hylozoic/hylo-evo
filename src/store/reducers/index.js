@@ -4,6 +4,7 @@ import orm from './ormReducer'
 import login from 'store/reducers/login'
 import pending from './pending'
 import locationHistory from './locationHistory'
+import resetStore from './resetStore'
 import mixpanel from './mixpanel'
 import intercom from './intercom'
 
@@ -34,7 +35,7 @@ import CreateTopic from 'components/CreateTopic/CreateTopic.store'
 
 import { handleSetState, composeReducers } from './util'
 
-const combinedReducers = combineReducers({
+export const combinedReducers = combineReducers({
   // Global store
   orm,
   router: routerReducer,
@@ -70,4 +71,8 @@ const combinedReducers = combineReducers({
   CreateTopic
 })
 
-export default composeReducers(combinedReducers, handleSetState)
+export default composeReducers(
+  combinedReducers,
+  resetStore,
+  handleSetState
+)

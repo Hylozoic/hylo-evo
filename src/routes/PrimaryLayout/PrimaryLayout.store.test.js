@@ -1,5 +1,6 @@
 /* eslint-env jest */
-import reducer, { ormSessionReducer, FETCH_FOR_CURRENT_USER } from './PrimaryLayout.store'
+import reducer, { ormSessionReducer } from './PrimaryLayout.store'
+import { FETCH_FOR_CURRENT_USER } from 'store/constants'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import rollbar from 'client/rollbar'
 import orm from 'store/models'

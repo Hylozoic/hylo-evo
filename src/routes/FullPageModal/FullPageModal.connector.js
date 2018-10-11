@@ -2,10 +2,11 @@ import { connect } from 'react-redux'
 import { goBack, push } from 'react-router-redux'
 import { withRouter } from 'react-router-dom'
 import { setConfirmBeforeClose } from './FullPageModal.store'
+import { get } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
   return {
-    confirmMessage: state.FullPageModal.confirm
+    confirmMessage: get('FullPageModal.confirm', state)
   }
 }
 
