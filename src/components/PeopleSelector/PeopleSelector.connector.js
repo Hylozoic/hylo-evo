@@ -7,7 +7,6 @@ import {
   removeParticipant,
   fetchContacts,
   fetchRecentContacts,
-  fetchPeople,
   contactsSelector,
   findOrCreateThread,
   matchesSelector,
@@ -15,6 +14,8 @@ import {
   recentContactsSelector,
   setAutocomplete
 } from './PeopleSelector.store'
+
+import fetchPeople from 'store/actions/fetchPeople'
 import changeQueryParam from 'store/actions/changeQueryParam'
 
 export function getParticipantSearch (props, participantsFromStore) {
