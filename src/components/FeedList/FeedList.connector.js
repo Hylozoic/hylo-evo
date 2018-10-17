@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
-import { get } from 'lodash/fp'
+import { get, pick } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
 import { presentPost } from 'store/selectors/getPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
@@ -21,18 +21,17 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = function (dispatch, props) {
-  const { slug, networkSlug, sortBy, filter, subject, topic } = props
-  const search = null // placeholder; no need for this yet
   return {
     fetchPosts: offset => dispatch(fetchPosts({
-      subject,
-      slug,
-      networkSlug,
-      sortBy,
       offset,
-      search,
-      filter,
-      topic
+      ...pick([
+        'subject',
+        'slug',
+        'networkSlug',
+        'sortBy',
+        'filter',
+        'topic'
+      ], props)
     })),
     // We are putting a the feedListProps into appstate so components (ie Navigation,
     // TopicNav) can drop the queryResults and re-fetch posts
@@ -42,6 +41,7 @@ export const mapDispatchToProps = function (dispatch, props) {
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { storeFeedListPropsMaker } = dispatchProps
+
   return {
     ...ownProps,
     ...stateProps,

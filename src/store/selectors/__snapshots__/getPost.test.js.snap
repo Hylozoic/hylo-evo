@@ -23,7 +23,7 @@ Object {
   "followers": undefined,
   "id": 324,
   "linkPreview": undefined,
-  "members": undefined,
+  "members": Array [],
   "pinned": true,
   "topics": Array [],
 }

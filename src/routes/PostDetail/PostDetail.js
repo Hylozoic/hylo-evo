@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { throttle, isEmpty } from 'lodash/fp'
+import { get, throttle, isEmpty } from 'lodash/fp'
 import './PostDetail.scss'
 import { PostImage, PostBody, PostFooter, PostHeader, PostCommunities } from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
@@ -10,6 +10,7 @@ import Comments from './Comments'
 import { tagUrl } from 'util/index'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import SocketSubscriber from 'components/SocketSubscriber'
+import Button from 'components/Button'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
 
@@ -94,9 +95,8 @@ export default class PostDetail extends Component {
   })
 
   render () {
-    const { post, slug, pending } = this.props
+    const { post, slug, pending, isProjectMember, joinProject, leaveProject } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
-
     if (!post && !pending) {
       return <NotFound />
     }
@@ -104,6 +104,8 @@ export default class PostDetail extends Component {
     if (pending) {
       return <Loading />
     }
+
+    const isProject = get('type', post) === 'project'
 
     const scrollToBottom = () => {
       const detail = document.getElementById(DETAIL_COLUMN_ID)
@@ -139,12 +141,15 @@ export default class PostDetail extends Component {
         communities={post.communities}
         slug={slug}
         showBottomBorder />
+      {isProject && <JoinProjectButton joinProject={joinProject} leaveProject={leaveProject} leaving={isProjectMember} />}
       <div styleName='activity-header' ref={this.setActivityStateFromDOM}>ACTIVITY</div>
       <PostFooter id={post.id}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
         votesTotal={post.votesTotal}
-        myVote={post.myVote} />
+        myVote={post.myVote}
+        type={post.type}
+        members={post.members} />
       {atActivity && <div styleName='activity-sticky' style={activityStyle}>
         <div styleName='activity-header'>ACTIVITY</div>
         <PostFooter id={post.id}
@@ -183,4 +188,18 @@ export function PostTags ({ tags, slug }) {
       #{tag}
     </Link>)}
   </div>
+}
+
+export function JoinProjectButton ({ leaving, joinProject, leaveProject }) {
+  const buttonText = leaving ? 'Leave Project' : 'Join Project'
+  const onClick = leaving ? leaveProject : joinProject
+
+  return <Button
+    color='purple'
+    key='join-project-button'
+    narrow
+    onClick={onClick}
+    styleName='join-project-button'>
+    {buttonText}
+  </Button>
 }
