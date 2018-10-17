@@ -70,7 +70,7 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ editing, currentCommunity, post, topic, announcementSelected, postTypeContext }) => {
+  buildStateFromProps = ({ editing, currentCommunity, post, topic, initialPrompt, announcementSelected, postTypeContext }) => {
     const defaultPostWithCommunitiesAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
       type: postTypeContext || PostEditor.defaultProps.post.type,
       communities: currentCommunity ? [currentCommunity] : PostEditor.defaultProps.post.communities,
@@ -82,7 +82,7 @@ export default class PostEditor extends React.Component {
 
     return {
       post: currentPost,
-      initialPrompt: this.initialPromptForPostType(currentPost.type),
+      initialPrompt: initialPrompt || this.initialPromptForPostType(currentPost.type),
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
       valid: editing === true, // if we're editing, than it's already valid upon entry.
       announcementSelected: announcementSelected,

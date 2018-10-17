@@ -27,7 +27,7 @@ export default function PostFooter ({
     caption = commentCaption(commenters, commentersTotal, get('id', currentUser))
   } else {
     imageUrls = (members).map(p => p.avatarUrl)
-    caption = commentCaption(members, members.length, get('id', currentUser), 'No project members')
+    caption = commentCaption(members, members.length, get('id', currentUser), 'No project members', 'are a member')
   }
 
   return <div styleName='footer'>
@@ -53,7 +53,7 @@ PostFooter.propTypes = {
   currentUser: object
 }
 
-export const commentCaption = (commenters, commentersTotal, meId, emptyMessage = 'Be the first to comment') => {
+export const commentCaption = (commenters, commentersTotal, meId, emptyMessage = 'Be the first to comment', meVerb = 'commented') => {
   commenters = find(c => c.id === meId, commenters) && commenters.length === 2
     ? sortBy(c => c.id !== meId, commenters) // me first
     : sortBy(c => c.id === meId, commenters) // me last
@@ -68,5 +68,5 @@ export const commentCaption = (commenters, commentersTotal, meId, emptyMessage =
   } else {
     names = `${firstName(commenters[0])}, ${firstName(commenters[1])} and ${commentersTotal - 2} other${commentersTotal - 2 > 1 ? 's' : ''}`
   }
-  return `${names} commented`
+  return `${names} ${meVerb}`
 }

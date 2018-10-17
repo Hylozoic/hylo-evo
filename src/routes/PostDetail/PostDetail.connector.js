@@ -1,30 +1,29 @@
 import { connect } from 'react-redux'
+import { get, find } from 'lodash/fp'
 import { push } from 'react-router-redux'
 import fetchPost from 'store/actions/fetchPost'
 import getParam from 'store/selectors/getParam'
 import getPost, { presentPost } from 'store/selectors/getPost'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import joinProject from 'store/actions/joinProject'
+import leaveProject from 'store/actions/leaveProject'
 import { FETCH_POST } from 'store/constants'
 
 export function mapStateToProps (state, props) {
-  const slug = getParam('slug', state, props)
+  const id = getParam('postId', state, props)
   const currentCommunity = getCommunityForCurrentRoute(state, props)
-  const communityId = currentCommunity && currentCommunity.id
+  const post = presentPost(getPost(state, props), get('id', currentCommunity))
+  const slug = getParam('slug', state, props)
   const currentUser = getMe(state)
-  const post = presentPost(getPost(state, props), (communityId))
-
-  // FIXME: send in currentUser and actions from Feed
-  // const isMember = currentUser.id  === post.members.filter(p => p.id === currrentUser.id)
-
-  const joinProject = () => {}
-  const leaveProject = () => {}
+  const isProjectMember = find(() => currentUser.id, get('members', post) || [])
 
   return {
+    id,
     post,
-    id: getParam('postId', state, props),
     currentUser,
     slug,
+    isProjectMember,
     pending: state.pending[FETCH_POST]
   }
 }

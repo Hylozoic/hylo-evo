@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { throttle, isEmpty } from 'lodash/fp'
+import { get, throttle, isEmpty } from 'lodash/fp'
 import './PostDetail.scss'
 import { PostImage, PostBody, PostFooter, PostHeader, PostCommunities } from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
@@ -95,9 +95,8 @@ export default class PostDetail extends Component {
   })
 
   render () {
-    const { post, slug, pending, isMember, joinProject, leaveProject } = this.props
+    const { post, slug, pending, isProjectMember, joinProject, leaveProject } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
-
     if (!post && !pending) {
       return <NotFound />
     }
@@ -105,6 +104,8 @@ export default class PostDetail extends Component {
     if (pending) {
       return <Loading />
     }
+
+    const isProject = get('type', post) === 'project'
 
     const scrollToBottom = () => {
       const detail = document.getElementById(DETAIL_COLUMN_ID)
@@ -140,7 +141,7 @@ export default class PostDetail extends Component {
         communities={post.communities}
         slug={slug}
         showBottomBorder />
-      <JoinProjectButton joinProject={joinProject} leaveProject={leaveProject} leaving={isMember} />
+      {isProject && <JoinProjectButton joinProject={joinProject} leaveProject={leaveProject} leaving={isProjectMember} />}
       <div styleName='activity-header' ref={this.setActivityStateFromDOM}>ACTIVITY</div>
       <PostFooter id={post.id}
         commenters={post.commenters}
@@ -202,4 +203,3 @@ export function JoinProjectButton ({ leaving, joinProject, leaveProject }) {
     {buttonText}
   </Button>
 }
-

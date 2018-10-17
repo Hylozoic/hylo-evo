@@ -7,7 +7,9 @@ import {
   CREATE_MESSAGE,
   CREATE_MESSAGE_PENDING,
   FETCH_MESSAGES_PENDING,
+  JOIN_PROJECT_PENDING,
   LEAVE_COMMUNITY,
+  LEAVE_PROJECT_PENDING,
   RESET_NEW_POST_COUNT_PENDING,
   TOGGLE_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_THREAD_READ_TIME,
@@ -51,6 +53,7 @@ import {
 } from 'routes/AllTopics/AllTopics.store'
 
 import orm from 'store/models'
+import clearCacheFor from './clearCacheFor'
 import { find, values } from 'lodash/fp'
 import extractModelsFromAction from '../ModelExtractor/extractModelsFromAction'
 import { isPromise } from 'util/index'
@@ -71,6 +74,7 @@ export default function ormReducer (state = {}, action) {
     Person,
     Post,
     PostCommenter,
+    ProjectMember,
     Skill
   } = session
 
@@ -253,6 +257,24 @@ export default function ormReducer (state = {}, action) {
     case CREATE_COMMUNITY:
       me = Me.withId(Me.first().id)
       me.updateAppending({memberships: [payload.data.createCommunity.id]})
+      break
+
+    case JOIN_PROJECT_PENDING:
+      me = Me.first()
+      ProjectMember.create({post: meta.id, member: me.id})
+      clearCacheFor(Post, meta.id)
+      break
+
+    case LEAVE_PROJECT_PENDING:
+      me = Me.first()
+      const projectMember = find(
+        m => String(m.member.id) === String(me.id) && String(m.post.id) === String(meta.id),
+        ProjectMember.all().toModelArray()
+      )
+      if (projectMember) {
+        projectMember.delete()
+        clearCacheFor(Post, meta.id)
+      }
       break
 
     case USE_INVITATION:
