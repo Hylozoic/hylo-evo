@@ -102,6 +102,9 @@ export default class TagInput extends Component {
 
   render () {
     let { tags, placeholder } = this.props
+
+    console.log('TagInput, tags', tags)
+
     const { suggestions, className, theme, readOnly, maxTags, addLeadingHashtag, renderSuggestion } = this.props
     if (!tags) tags = []
     if (!placeholder) placeholder = 'Type...'

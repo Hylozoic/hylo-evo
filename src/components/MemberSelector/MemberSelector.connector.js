@@ -1,19 +1,19 @@
 import { connect } from 'react-redux'
-import {
-  findTopics,
-  clearTopics,
-  getTopicResults
-} from '../HyloEditor/HyloEditor.store'
+
+import fetchPeople from 'store/actions/fetchPeople'
+import { matchesSelector, setAutocomplete, getAutocomplete } from '../MemberSelector/MemberSelector.store'
 
 export function mapStateToProps (state, props) {
+  const people = matchesSelector(state, props)
+  const autocomplete = getAutocomplete(state, props)
   return {
-    topicResults: getTopicResults(state, props)
+    people,
+    autocomplete
   }
 }
 
 export const mapDispatchToProps = {
-  findTopics,
-  clearTopics
+  fetchPeople, setAutocomplete
 }
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})
