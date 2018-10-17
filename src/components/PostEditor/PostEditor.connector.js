@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { postUrl } from 'util/index'
 import getParam from 'store/selectors/getParam'
+import getQueryParam from 'store/selectors/getQueryParam'
 import getMe from 'store/selectors/getMe'
 import getPost, { presentPost } from 'store/selectors/getPost'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
@@ -47,10 +48,13 @@ export function mapStateToProps (state, props) {
     get('attachmentType', uploadAttachmentPending) === 'image'
   const showFiles = !isEmpty(files) ||
     get('attachmentType', uploadAttachmentPending) === 'file'
-
   const slug = getParam('slug', null, props)
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
+  const postTypeContext = getQueryParam('t', null, props)
+  const isProject = postTypeContext === 'project'
+
+  console.log('postTypeContext', postTypeContext)
 
   const announcementSelected = state[MODULE_NAME].announcement
 
@@ -59,6 +63,8 @@ export function mapStateToProps (state, props) {
     currentUser,
     currentCommunity,
     communityOptions,
+    postTypeContext,
+    isProject,
     post,
     loading,
     postPending,

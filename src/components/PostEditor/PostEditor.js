@@ -23,8 +23,8 @@ import { MAX_TITLE_LENGTH } from './PostEditor.store'
 
 export default class PostEditor extends React.Component {
   static propTypes = {
-    initialPrompt: PropTypes.string,
     onClose: PropTypes.func,
+    initialPromptForPostType: PropTypes.object,
     titlePlaceholderForPostType: PropTypes.object,
     detailsPlaceholder: PropTypes.string,
     communityOptions: PropTypes.array,
@@ -50,6 +50,10 @@ export default class PostEditor extends React.Component {
   }
 
   static defaultProps = {
+    initialPromptForPostType: {
+      project: "What's the project you want to begin?",
+      default: 'What are you looking to post?'
+    },
     titlePlaceholderForPostType: {
       offer: 'What super powers can you offer?',
       request: 'What are you looking for help with?',
@@ -66,16 +70,19 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ editing, loading, currentCommunity, post, topic, announcementSelected }) => {
+  buildStateFromProps = ({ editing, currentCommunity, post, topic, announcementSelected, postTypeContext }) => {
     const defaultPostWithCommunitiesAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
-      communities: currentCommunity ? [currentCommunity] : [],
+      type: postTypeContext || PostEditor.defaultProps.post.type,
+      communities: currentCommunity ? [currentCommunity] : PostEditor.defaultProps.post.communities,
       topics: topic ? [topic] : [],
       detailsTopics: []
     })
 
     const currentPost = post || defaultPostWithCommunitiesAndTopic
+
     return {
       post: currentPost,
+      initialPrompt: this.initialPromptForPostType(currentPost.type),
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
       valid: editing === true, // if we're editing, than it's already valid upon entry.
       announcementSelected: announcementSelected,
@@ -130,7 +137,13 @@ export default class PostEditor extends React.Component {
 
   titlePlaceholderForPostType (type) {
     const { titlePlaceholderForPostType } = this.props
+    if (type === 'project') return ''
     return titlePlaceholderForPostType[type] || titlePlaceholderForPostType['default']
+  }
+
+  initialPromptForPostType (type) {
+    const { initialPromptForPostType } = this.props
+    return initialPromptForPostType[type] || initialPromptForPostType['default']
   }
 
   postTypeButtonProps = (forPostType) => {
@@ -247,17 +260,8 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  initialPrompt = () => {
-    // FIXME: there must be a better way of doing this. In the constructor or component did mount
-    const { isProject, initialPrompt } = this.props
-    if (!!initialPrompt) return initialPrompt
-    if (isProject) return "What's the project you want to begin?"
-
-    return 'What are you looking to post?'
-  }
-
   render () {
-    const { titlePlaceholder, titleLengthError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
+    const { initialPrompt, titlePlaceholder, titleLengthError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
     const { id, title, details, communities, linkPreview, topics, members } = post
     const {
       onClose, detailsPlaceholder,
@@ -266,15 +270,13 @@ export default class PostEditor extends React.Component {
       canModerate, myModeratedCommunities, isProject
     } = this.props
 
-    const hidePostTypes = isProject
-
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
       <div styleName='header'>
         <div styleName='initial'>
-          <div styleName='initial-prompt'>{this.initialPrompt()}</div>
+          <div styleName='initial-prompt'>{initialPrompt}</div>
           <a styleName='initial-closeButton' onClick={onClose}><Icon name='Ex' /></a>
         </div>
-        {!hidePostTypes && <div styleName='postTypes'>
+        {!isProject && <div styleName='postTypes'>
           <Button {...this.postTypeButtonProps('discussion')} />
           <Button {...this.postTypeButtonProps('request')} />
           <Button {...this.postTypeButtonProps('offer')} />
