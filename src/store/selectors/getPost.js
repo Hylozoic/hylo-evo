@@ -1,15 +1,16 @@
 import { createSelector } from 'reselect'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import { get } from 'lodash/fp'
 import orm from 'store/models'
 import getParam from 'store/selectors/getParam'
 
-// FIXME why isn't this ormCreateSelector?
-const getPost = createSelector(
-  state => state,
-  state => orm.session(state.orm),
+const getPost = ormCreateSelector(
+  orm,
+  state => state.orm,
   (state, props) => getParam('postId', state, props),
-  (state, session, id) => {
+  ({ Post }, id) => {
     try {
-      return session.Post.get({id})
+      return Post.get({id})
     } catch (e) {
       return null
     }
@@ -29,7 +30,8 @@ export const presentPost = (post, communityId) => {
     communities: post.communities.toModelArray(),
     fileAttachments: post.attachments.filter(a => a.type === 'file').toModelArray(),
     pinned,
-    topics: post.topics.toModelArray()
+    topics: post.topics.toModelArray(),
+    members: post.members.toRefArray()
   }
 }
 

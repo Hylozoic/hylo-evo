@@ -335,11 +335,6 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
   />
   <Route
     exact={true}
-    key="/c/:slug/project/new"
-    path="/c/:slug/project/new"
-  />
-  <Route
-    exact={true}
     key="/all/p/:postId/edit"
     path="/all/p/:postId/edit"
   />

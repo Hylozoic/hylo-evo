@@ -1,7 +1,5 @@
-/* eslint-disable camelcase */
-import PropTypes from 'prop-types'
-
 import React from 'react'
+import PropTypes from 'prop-types'
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
 import PostCommunities from './PostCommunities'
@@ -68,8 +66,7 @@ export default class PostCard extends React.Component {
         pinned={post.pinned}
         topics={post.topics}
         highlightProps={highlightProps}
-        announcement={post.announcement}
-      />
+        announcement={post.announcement} />
       <PostImage postId={post.id} styleName='image' />
       <PostBody title={post.title}
         id={post.id}
@@ -85,7 +82,9 @@ export default class PostCard extends React.Component {
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
         votesTotal={post.votesTotal}
-        myVote={post.myVote} />
+        myVote={post.myVote}
+        type={post.type}
+        members={post.members} />
     </div>
   }
 }

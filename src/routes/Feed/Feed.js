@@ -33,7 +33,6 @@ export default class Feed extends Component {
     const { communitySlug, topic, networkSlug } = this.props
 
     var subject
-
     if (communitySlug) {
       subject = 'community'
     } else if (networkSlug) {
@@ -80,9 +79,12 @@ export default class Feed extends Component {
           community={community}
           currentUser={currentUser}
           newPost={newPost} />
-        : <FeedBanner community={community || network} currentUser={currentUser}
-          all={!community && !networkSlug} newPost={newPost}
-          currentUserHasMemberships={currentUserHasMemberships} />}
+        : <FeedBanner
+            community={community || network}
+            currentUser={currentUser}
+            all={!community && !networkSlug}
+            newPost={newPost}
+            currentUserHasMemberships={currentUserHasMemberships} />}
       {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}
       {!membershipsPending && !currentUserHasMemberships && <CreateCommunityPrompt
         goToCreateCommunity={goToCreateCommunity}

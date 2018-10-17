@@ -9,14 +9,14 @@ import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 import getMemberships from 'store/selectors/getMemberships'
-
 import changeQueryParam from 'store/actions/changeQueryParam'
 import getQueryParam from 'store/selectors/getQueryParam'
 import { push, replace } from 'react-router-redux'
-import { projectUrl, postUrl, topicsUrl } from 'util/index'
+import { postUrl, topicsUrl } from 'util/index'
 import { makeUrl } from 'util/navigation'
 import { fetchTopic, fetchCommunityTopic, fetchNetwork } from './Feed.store'
 import { FETCH_FOR_CURRENT_USER } from '../PrimaryLayout/PrimaryLayout.store'
+
 export function mapStateToProps (state, props) {
   let community, communityTopic, topic, network
 
@@ -41,6 +41,7 @@ export function mapStateToProps (state, props) {
 
   const filter = getQueryParam('t', state, props)
   const sortBy = getQueryParam('s', state, props)
+
   return {
     filter,
     sortBy,
@@ -75,9 +76,8 @@ export const mapDispatchToProps = function (dispatch, props) {
     // or the center column will revert to its default sort & filter settings
     showPostDetails: postId =>
       dispatch(push(makeUrl(postUrl(postId, slug, {topicName, networkSlug}), params))),
-    // FIXME: temporarily changed to project link for testing
     newPost: () =>
-      dispatch(push(makeUrl(projectUrl('new', slug, {topicName}), params))),
+      dispatch(push(makeUrl(postUrl('new', slug, {topicName}), params))),
     fetchTopic: () => {
       if (slug && topicName) {
         return dispatch(fetchCommunityTopic(topicName, slug))

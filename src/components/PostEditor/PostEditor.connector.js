@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { postUrl } from 'util/index'
 import getParam from 'store/selectors/getParam'
+import getQueryParam from 'store/selectors/getQueryParam'
 import getMe from 'store/selectors/getMe'
 import getPost, { presentPost } from 'store/selectors/getPost'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
@@ -30,7 +31,6 @@ export function mapStateToProps (state, props) {
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const communityOptions = props.communityOptions ||
     (currentUser && currentUser.memberships.toModelArray().map(m => m.community))
-
   const myModeratedCommunities = (currentUser && communityOptions.filter(c => currentUser.canModerate(c)))
   let post = props.post || presentPost(getPost(state, props))
   const linkPreview = getLinkPreview(state, props)
@@ -47,18 +47,20 @@ export function mapStateToProps (state, props) {
     get('attachmentType', uploadAttachmentPending) === 'image'
   const showFiles = !isEmpty(files) ||
     get('attachmentType', uploadAttachmentPending) === 'file'
-
   const slug = getParam('slug', null, props)
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
-
+  const postTypeContext = getQueryParam('t', null, props)
+  const isProject = postTypeContext === 'project' || get('type', post) === 'project'
   const announcementSelected = state[MODULE_NAME].announcement
-
   const canModerate = currentUser && currentUser.canModerate(currentCommunity)
+
   return {
     currentUser,
     currentCommunity,
     communityOptions,
+    postTypeContext,
+    isProject,
     post,
     loading,
     postPending,
