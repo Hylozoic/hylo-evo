@@ -11,10 +11,19 @@ export function mapStateToProps (state, props) {
   const slug = getParam('slug', state, props)
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const communityId = currentCommunity && currentCommunity.id
+  const currentUser = getMe(state)
+  const post = presentPost(getPost(state, props), (communityId))
+
+  // FIXME: send in currentUser and actions from Feed
+  // const isMember = currentUser.id  === post.members.filter(p => p.id === currrentUser.id)
+
+  const joinProject = () => {}
+  const leaveProject = () => {}
+
   return {
-    post: presentPost(getPost(state, props), (communityId)),
+    post,
     id: getParam('postId', state, props),
-    currentUser: getMe(state),
+    currentUser,
     slug,
     pending: state.pending[FETCH_POST]
   }
@@ -36,7 +45,9 @@ export const mapDispatchToProps = (dispatch, props) => {
   return {
     fetchPost: () => dispatch(fetchPost(postId)),
     onClose: () => dispatch(push(closeLocation)),
-    editPost: () => dispatch(push(`${postId}/edit`))
+    editPost: () => dispatch(push(`${postId}/edit`)),
+    joinProject: () => dispatch(joinProject(postId)),
+    leaveProject: () => dispatch(leaveProject(postId))
   }
 }
 

@@ -9,10 +9,30 @@ import ReactTooltip from 'react-tooltip'
 
 const { string, array, number, func, object } = PropTypes
 
-export default function PostFooter ({ id, currentUser, commenters, commentersTotal, votesTotal, myVote, vote }) {
+export default function PostFooter ({
+  id,
+  currentUser,
+  commenters,
+  commentersTotal,
+  votesTotal,
+  myVote,
+  vote,
+  type,
+  members
+}) {
+  let imageUrls, caption
+
+  if (type !== 'project') {
+    imageUrls = (commenters).map(p => p.avatarUrl)
+    caption = commentCaption(commenters, commentersTotal, get('id', currentUser))
+  } else {
+    imageUrls = (members).map(p => p.avatarUrl)
+    caption = commentCaption(members, members.length, get('id', currentUser), 'No project members')
+  }
+
   return <div styleName='footer'>
-    <RoundImageRow imageUrls={(commenters).map(c => c.avatarUrl)} styleName='people' />
-    <span styleName='caption'>{commentCaption(commenters, commentersTotal, get('id', currentUser))}</span>
+    <RoundImageRow imageUrls={imageUrls} styleName='people' />
+    <span styleName='caption'>{caption}</span>
     <a onClick={vote} styleName={cx('vote-button', {voted: myVote})}
       data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for='postfooter-tt'>
       <Icon name='ArrowUp' styleName='arrowIcon' />
@@ -33,14 +53,14 @@ PostFooter.propTypes = {
   currentUser: object
 }
 
-export const commentCaption = (commenters, commentersTotal, meId) => {
+export const commentCaption = (commenters, commentersTotal, meId, emptyMessage = 'Be the first to comment') => {
   commenters = find(c => c.id === meId, commenters) && commenters.length === 2
     ? sortBy(c => c.id !== meId, commenters) // me first
     : sortBy(c => c.id === meId, commenters) // me last
   var names = ''
   const firstName = person => person.id === meId ? 'You' : person.name.split(' ')[0]
   if (commenters.length === 0) {
-    return 'Be the first to comment'
+    return emptyMessage
   } else if (commenters.length === 1) {
     names = firstName(commenters[0])
   } else if (commenters.length === 2) {
