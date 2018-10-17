@@ -149,7 +149,7 @@ export default class PostDetail extends Component {
         votesTotal={post.votesTotal}
         myVote={post.myVote}
         type={post.type}
-        members={post.members || []} />
+        members={post.members} />
       {atActivity && <div styleName='activity-sticky' style={activityStyle}>
         <div styleName='activity-header'>ACTIVITY</div>
         <PostFooter id={post.id}
