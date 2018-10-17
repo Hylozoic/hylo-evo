@@ -56,7 +56,6 @@ exports[`PostDetail renders correctly 1`] = `
   </div>
   <Connect(PostFooter)
     id="91"
-    members={Array []}
     myVote={true}
     votesTotal={7}
   />

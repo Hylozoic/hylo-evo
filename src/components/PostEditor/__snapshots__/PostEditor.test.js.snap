@@ -878,7 +878,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       <div
         data-stylename="initial-prompt"
       >
-        What are you looking to post?
+        a test prompt
       </div>
       <a
         data-stylename="initial-closeButton"
