@@ -2,7 +2,7 @@ import { mapStateToProps, mapDispatchToProps, mergeProps } from './PostEditor.co
 import orm from 'store/models'
 import { CREATE_POST } from './PostEditor.store'
 
-let state
+let state, requiredProps
 beforeAll(() => {
   const session = orm.session(orm.getEmptyState())
   const community = session.Community.create({id: '99', slug: 'foo'})
@@ -40,11 +40,17 @@ beforeAll(() => {
       file: []
     }
   }
+  requiredProps = {
+    location: {
+      search: ''
+    }
+  }
 })
 
 describe('mapStateToProps', () => {
   it('returns the right keys for a new post', () => {
     const props = {
+      ...requiredProps,
       forNew: true,
       match: {
         params: {
@@ -56,11 +62,12 @@ describe('mapStateToProps', () => {
   })
 
   it('sets myModeratedCommunities appropriately', () => {
-    expect(mapStateToProps(state, {}).myModeratedCommunities.length).toEqual(1)
+    expect(mapStateToProps(state, requiredProps).myModeratedCommunities.length).toEqual(1)
   })
 
   it('returns the right keys for a new post while pending', () => {
     const props = {
+      ...requiredProps,
       forNew: true,
       match: {
         params: {

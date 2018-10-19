@@ -1,19 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`getPost returns the post 1`] = `
-SessionBoundModel {
-  "_fields": Object {
-    "commenters": undefined,
-    "communities": undefined,
-    "followers": undefined,
-    "id": 31,
-    "members": undefined,
-    "postMemberships": undefined,
-    "topics": undefined,
-  },
-}
-`;
-
 exports[`true 1`] = `
 Object {
   "commenters": Array [],
