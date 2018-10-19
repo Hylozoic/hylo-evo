@@ -156,7 +156,8 @@ export default class PostDetail extends Component {
           commenters={post.commenters}
           commentersTotal={post.commentersTotal}
           votesTotal={post.votesTotal}
-          myVote={post.myVote} />
+          myVote={post.myVote}
+          slug={slug} />
       </div>}
       <Comments postId={post.id} slug={slug} scrollToBottom={scrollToBottom} />
       <SocketSubscriber type='post' id={post.id} />

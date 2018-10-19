@@ -1,6 +1,6 @@
 // Footer Height
-
 $footer-height: 56px;
+$member-spacing: 16px;
 
 .footer {
   padding-left: $space-4x;
@@ -62,5 +62,21 @@ $footer-height: 56px;
     &, .arrowIcon {
       color: white !important;
     }
+  }
+}
+
+.member-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: $member-spacing;
+
+  > * {
+    flex-grow: 1;
+    flex-basis: 100px;
+    display: block;
+  }
+
+  > *:first-child {
+    margin-right: $member-spacing;
   }
 }
