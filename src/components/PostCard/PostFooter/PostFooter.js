@@ -1,14 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { find, filter, get, sortBy, times } from 'lodash/fp'
+import { find, get, sortBy } from 'lodash/fp'
 import './PostFooter.scss'
 import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
 import cx from 'classnames'
 import ReactTooltip from 'react-tooltip'
-import ModalDialog from 'components/ModalDialog'
-import TextInput from 'components/TextInput'
-import Member from 'components/Member'
+import ProjectMembersDialog from 'components/ProjectMembersDialog'
 
 const { string, array, number, func, object } = PropTypes
 
@@ -51,11 +49,8 @@ export default class PostFooter extends React.PureComponent {
       <span styleName='caption' onClick={this.toggleMembersDialog}>
         {caption}
       </span>
-      {this.state.showMembersDialog && <ProjectMembersDialog
-        onClose={this.toggleMembersDialog}
-        members={members}
-        slug={slug}
-      />}
+      {this.state.showMembersDialog &&
+        <ProjectMembersDialog onClose={this.toggleMembersDialog} members={members} slug={slug} />}
       <a onClick={vote} styleName={cx('vote-button', {voted: myVote})}
         data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for='postfooter-tt'>
         <Icon name='ArrowUp' styleName='arrowIcon' />
@@ -76,65 +71,6 @@ PostFooter.propTypes = {
   votesTotal: number,
   vote: func,
   currentUser: object
-}
-
-export class ProjectMembersDialog extends React.PureComponent {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      searchString: '',
-      members: this.props.members
-    }
-  }
-  
-  search = ({ target }) => {
-    const searchString = target.value
-    const membersFilter = (m) => m.name.toLowerCase().includes(searchString.toLowerCase())
-
-    this.setState({
-      searchString,
-      members: filter(membersFilter, this.props.members)}
-    )
-  }
-  
-  render () {
-    const { members, searchString } = this.state
-    const { onClose, slug } = this.props
-    const loading = false
-
-    return <ModalDialog key='members-dialog'
-      closeModal={onClose}
-      modalTitle='Project Members'
-      notificationIconName='Star'
-      showCancelButton={false}
-      showSubmitButton={false}
-      useNotificationFormat={false}>
-        <div>
-          <TextInput
-            aria-label='members-search'
-            autoFocus
-            label='members-search'
-            name='members-search'
-            onChange={this.search}
-            loading={loading}
-            value={searchString}
-            placeholder='Find a member'
-          />
-        </div>
-        <div>
-          {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
-            {pair.map(m => <Member
-              styleName='member-card'
-              member={m}
-              slug={slug}
-              subject={'project'}
-              key={m.id}
-            />)}
-          </div>)}
-        </div>
-    </ModalDialog>
-  }
 }
 
 export const commentCaption = (
@@ -161,6 +97,3 @@ export const commentCaption = (
   return `${names} ${meVerb}`
 }
 
-export function twoByTwo (list) {
-  return times(i => list.slice(i * 2, i * 2 + 2), (list.length + 1) / 2)
-}

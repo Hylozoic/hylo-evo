@@ -1,0 +1,25 @@
+$member-spacing: 16px;
+
+.members-search-input {
+  margin-bottom: $member-spacing;
+}
+
+.member-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: $member-spacing;
+
+  > * {
+    flex-grow: 1;
+    flex-basis: 100px;
+    display: block;
+  }
+
+  > *:first-child {
+    margin-right: $member-spacing;
+  }
+}
+
+.member-card {
+  max-width: 218px !important;
+}

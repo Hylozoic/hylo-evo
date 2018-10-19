@@ -1,6 +1,5 @@
 // Footer Height
 $footer-height: 56px;
-$member-spacing: 16px;
 
 .footer {
   padding-left: $space-4x;
@@ -63,24 +62,4 @@ $member-spacing: 16px;
       color: white !important;
     }
   }
-}
-
-.member-row {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: $member-spacing;
-
-  > * {
-    flex-grow: 1;
-    flex-basis: 100px;
-    display: block;
-  }
-
-  > *:first-child {
-    margin-right: $member-spacing;
-  }
-}
-
-.member-card {
-  max-width: 218px !important;
 }
