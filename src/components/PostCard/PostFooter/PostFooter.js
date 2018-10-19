@@ -125,6 +125,7 @@ export class ProjectMembersDialog extends React.PureComponent {
         <div>
           {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
             {pair.map(m => <Member
+              styleName='member-card'
               member={m}
               slug={slug}
               subject={'project'}
