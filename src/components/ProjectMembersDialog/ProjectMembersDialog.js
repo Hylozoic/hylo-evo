@@ -2,7 +2,7 @@ import React from 'react'
 import { filter, times } from 'lodash/fp'
 import ModalDialog from 'components/ModalDialog'
 import TextInput from 'components/TextInput'
-import Member from 'components/Member'
+import { bgImageStyle } from 'util/index'
 import './ProjectMembersDialog.scss'
 
 export default class ProjectMembersDialog extends React.PureComponent {
@@ -32,11 +32,9 @@ export default class ProjectMembersDialog extends React.PureComponent {
 
     return <ModalDialog key='members-dialog'
       closeModal={onClose}
-      modalTitle='Project Members'
-      notificationIconName='Star'
+      modalTitle={`Project Members (${this.props.members.length})`}
       showCancelButton={false}
-      showSubmitButton={false}
-      useNotificationFormat={false}>
+      showSubmitButton={false}>
         <TextInput
           styleName='members-search-input'
           aria-label='members-search'
@@ -48,21 +46,25 @@ export default class ProjectMembersDialog extends React.PureComponent {
           value={searchString}
           placeholder='Find a member'
         />
-        <div>
-          {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
-            {pair.map(m => <Member
-              styleName='member-card'
-              member={m}
-              slug={slug}
-              subject={'project'}
-              key={m.id}
-            />)}
-          </div>)}
-        </div>
+        <section>
+          {members.map(member => <MemberRow member={member} key={member.id} />)}
+        </section>
     </ModalDialog>
   }
 }
 
-export function twoByTwo (list) {
-  return times(i => list.slice(i * 2, i * 2 + 2), (list.length + 1) / 2)
+function MemberRow ({
+  member: {
+    name,
+    avatarUrl
+  }
+}) {
+  return <div styleName='row'>
+    <div styleName='col'>
+      <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
+    </div>
+    <div styleName='col'>
+      {name}
+    </div>
+  </div>
 }

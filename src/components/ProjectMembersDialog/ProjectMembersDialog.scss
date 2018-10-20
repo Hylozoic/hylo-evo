@@ -1,25 +1,33 @@
 $member-spacing: 16px;
+$avatar-size: 40px;
 
 .members-search-input {
   margin-bottom: $member-spacing;
 }
 
-.member-row {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: $member-spacing;
-
-  > * {
-    flex-grow: 1;
-    flex-basis: 100px;
-    display: block;
-  }
-
-  > *:first-child {
-    margin-right: $member-spacing;
-  }
+.avatar {
+  @include image($avatar-size);
+  border-radius: $avatar-size/2;
 }
 
-.member-card {
-  max-width: 218px !important;
+section {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  overflow-y: scroll !important;
+  height: 200px;
+}
+
+section > .row {
+  display: flex;
+  align-items: left;
+  border-bottom: solid 1px rgb(240,240,240);
+  width: 100%;
+}
+
+section .col {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding: 5px;
 }

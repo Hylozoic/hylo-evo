@@ -91,6 +91,7 @@ export default class ModalDialog extends Component {
         backgroundSize: '180px'
       }
       : null
+    const showControls = showCancelButton || showSubmitButton
 
     return <div styleName='popup'>
       <div
@@ -112,7 +113,7 @@ export default class ModalDialog extends Component {
           {children}
         </div>
 
-        <div styleName='controls'>
+        {showControls && <div styleName='controls'>
           {showCancelButton && <Button
             color='green-white-green-border'
             styleName='cancel-btn'
@@ -121,7 +122,7 @@ export default class ModalDialog extends Component {
             styleName='submit-btn'
             onClick={this.submit}
             disabled={submitButtonIsDisabled()}>{submitButtonText}</Button>}
-        </div>
+        </div>}
       </div>
     </div>
   }
