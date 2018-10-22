@@ -221,6 +221,12 @@ export default class PostEditor extends React.Component {
     })
   }
 
+  updateProjectMembers = members => {
+    this.setState({
+      post: {...this.state.post, members}
+    })
+  }
+
   isValid = (postUpdates = {}) => {
     const { type, title, communities } = Object.assign({}, this.state.post, postUpdates)
     return !!(this.editor &&
@@ -233,14 +239,18 @@ export default class PostEditor extends React.Component {
   }
 
   save = () => {
-    const { editing, createPost, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected } = this.props
-    const { id, type, title, communities, linkPreview } = this.state.post
+    const {
+      editing, createPost, createProject, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected, isProject
+    } = this.props
+    const {
+      id, type, title, communities, linkPreview, members
+    } = this.state.post
     const details = this.editor.getContentHTML()
     const topicNames = this.topicSelector.getSelected().map(t => t.name)
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, members
     }
-    const saveFunc = editing ? updatePost : createPost
+    const saveFunc = editing ? updatePost : isProject ? createProject : createPost
     setAnnouncement(false)
     saveFunc(postToSave).then(editing ? onClose : goToPost)
   }
@@ -344,7 +354,7 @@ export default class PostEditor extends React.Component {
           <div styleName='footerSection-communities'>
             <MemberSelector
               members={members}
-              onChange={this.setupdateProjectMembers}
+              onChange={this.updateProjectMembers}
               readOnly={loading}
               ref={component => { this.membersSelector = component }}
             />

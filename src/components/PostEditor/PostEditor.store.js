@@ -52,34 +52,7 @@ export function createPost (post) {
           fileUrls: $fileUrls,
           announcement: $announcement
           topicNames: $topicNames
-        }) {
-          id
-          type
-          title
-          details
-          commentersTotal
-          communities {
-            id
-            name
-            slug
-          }
-          creator {
-            id
-          }
-          linkPreview {
-            id
-          }
-          attachments {
-            id
-            type
-            url
-            position
-          }
-          topics {
-            id
-            name
-          }
-        }
+        }) {${getPostFieldsFragment(false)}}
       }`,
       variables: {
         type,
@@ -106,46 +79,50 @@ export function createPost (post) {
 
 export function createProject (post) {
   const {
+    type,
     title,
     details,
     communities,
-    imageUrls = [],
-    fileUrls = [],
-    topicNames = [],
-    memberIds = [],
-    sendAnnouncement
+    linkPreview,
+    imageUrls,
+    fileUrls,
+    topicNames,
+    sendAnnouncement,
+    memberIds = []
   } = post
+  const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
-  const preprocessedDetails = divToP(details)
   return {
     type: CREATE_PROJECT,
     graphql: {
       query: `mutation (
-        $title: String
-        $details: String
-        $communityIds: [String]
-        $imageUrls: [String]
-        $fileUrls: [String]
+        $title: String,
+        $details: String,
+        $linkPreviewId: String,
+        $communityIds: [String],
+        $imageUrls: [String],
+        $fileUrls: [String],
         $announcement: Boolean
         $topicNames: [String]
         $memberIds: [ID]        
       ) {
         createProject(data: {
-          title: $title
-          details: $details
-          communityIds: $communityIds
-          imageUrls: $imageUrls
-          fileUrls: $fileUrls
+          title: $title,
+          details: $details,
+          linkPreviewId: $linkPreviewId,
+          communityIds: $communityIds,
+          imageUrls: $imageUrls,
+          fileUrls: $fileUrls,
           announcement: $announcement
           topicNames: $topicNames
           memberIds: $memberIds
-        }) {
-          ${getPostFieldsFragment(false)}
-        }
+        }) {${getPostFieldsFragment(false)}}
       }`,
       variables: {
+        type,
         title,
-        details: preprocessedDetails,
+        details,
+        linkPreviewId,
         communityIds,
         imageUrls,
         fileUrls,
@@ -158,7 +135,7 @@ export function createProject (post) {
       extractModel: 'Post',
       analytics: {
         eventName: AnalyticsEvents.POST_CREATED,
-        detailsLength: textLength(preprocessedDetails),
+        detailsLength: textLength(details),
         isAnnouncement: sendAnnouncement
       }
     }

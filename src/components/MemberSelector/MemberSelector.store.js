@@ -12,17 +12,17 @@ export const SET_AUTOCOMPLETE = `${MODULE_NAME}/SET_AUTOCOMPLETE`
 export const ADD_MEMBER = `${MODULE_NAME}/ADD_MEMBER`
 export const REMOVE_MEMBER = `${MODULE_NAME}/REMOVE_MEMBER`
 
-export function addMember (id) {
+export function addMember (member) {
   return {
     type: ADD_MEMBER,
-    payload: id
+    payload: member
   }
 }
 
-export function removeMember (id) {
+export function removeMember (member) {
   return {
     type: REMOVE_MEMBER,
-    payload: id
+    payload: member
   }
 }
 
@@ -54,10 +54,14 @@ export function personListItemSelector (session, members, currentUser, search = 
 
 export const getAutocomplete = (state, _) => state[MODULE_NAME].autocomplete
 
+export const getMembers = (state, props) => {
+  return state[MODULE_NAME].members
+}
+
 export const matchesSelector = createSelector(
   orm,
   state => state.orm,
-  state => state[MODULE_NAME].members,
+  state => state[MODULE_NAME].members.map(m => m.id),
   getMe,
   state => p => {
     const { autocomplete } = state[MODULE_NAME]
@@ -94,7 +98,7 @@ export default function reducer (state = defaultState, action) {
       if (payload) {
         return {
           ...state,
-          members: state.members.filter(p => p !== payload)
+          members: state.members.filter(p => p.id !== payload.id)
         }
       }
   }

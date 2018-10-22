@@ -118,7 +118,6 @@
 .suggestion a {
   color: $color-caribbean-green;
   padding: 4px 8px;
-  display: block;
 }
 
 .suggestion:hover {
@@ -140,6 +139,18 @@
   font-size: 12px;
   margin-top: 5px;
   display: flex;
+}
+
+.suggestionLink {
+  display: flex;
+}
+
+.suggestionAvatar {
+  /* empty */
+}
+
+.suggestionName {
+    /* empty */
 }
 
 .column {

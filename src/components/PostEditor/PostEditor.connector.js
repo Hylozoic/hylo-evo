@@ -14,6 +14,7 @@ import {
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
   createPost,
+  createProject,
   updatePost,
   pollingFetchLinkPreview,
   removeLinkPreview,
@@ -88,6 +89,7 @@ export const mapDispatchToProps = (dispatch, props) => {
     clearLinkPreview: () => dispatch(clearLinkPreview()),
     updatePost: postParams => dispatch(updatePost(postParams)),
     createPost: (postParams, topic) => dispatch(createPost(postParams, topic)),
+    createProject: (postParams, topic) => dispatch(createProject(postParams, topic)),
     goToUrl: url => dispatch(push(url)),
     addImage: url => dispatch(addAttachment(url, 'image')),
     addFile: url => dispatch(addAttachment(url, 'file')),
@@ -100,7 +102,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
 
   const goToPost = createPostAction => {
-    const id = createPostAction.payload.data.createPost.id
+    const id = get('payload.data.createPost.id', createPostAction) || get('payload.data.createProject.id', createPostAction)
     const url = topicName
       ? postUrl(id, slug, {topicName})
       : postUrl(id, slug)

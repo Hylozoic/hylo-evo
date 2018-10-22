@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import TagInput from 'components/TagInput'
+import RoundImage from 'components/RoundImage'
 import styles from './MemberSelector.scss'
-import { isEmpty } from 'lodash/fp'
+import { isEmpty, isEqual } from 'lodash/fp'
 
 export default class MemberSelector extends Component {
   static defaultProps = {
@@ -12,6 +13,11 @@ export default class MemberSelector extends Component {
   }
 
   componentDidUpdate (prevProps) {
+    // if member list has changed
+    if (!isEqual(this.props.members.map(m => m.id), prevProps.members.map(m => m.id))) {
+      // update in the parent component
+      this.props.onChange(this.props.members)
+    }
   }
 
   handleInputChange = input => {
@@ -19,28 +25,19 @@ export default class MemberSelector extends Component {
     if (!isEmpty(input)) {
       // this fetched should be debounced or throttled, maybe here, or in the connector
       this.props.fetchPeople(input)
-    } else {
-      this.props.clearPeople()
     }
   }
 
   handleAddition = person => {
-    this.setState({
-      selected: this.state.selected.concat([person])
-    })
-    this.props.clearPeople()
+    this.props.addMember(person)
   }
 
   handleDelete = person => {
-    this.setState({
-      selected: this.state.selected.filter(p => p.id !== person.id)
-    })
+    this.props.removeMember(person)
   }
 
   render () {
     const { placeholder, readOnly, people, autocomplete, members = [] } = this.props
-
-    console.log('render, propel', people)
 
     return (
       <TagInput
@@ -53,8 +50,6 @@ export default class MemberSelector extends Component {
         readOnly={readOnly}
         theme={styles}
         maxTags={3}
-        addLeadingHashtag
-        stripInputHashtag
         renderSuggestion={Suggestion}
       />
     )
@@ -62,10 +57,11 @@ export default class MemberSelector extends Component {
 }
 
 export function Suggestion ({item, handleChoice}) {
-  const { id, name } = item
-  return <li className={styles.item} key={id || 'blank'}>
-    <a onClick={event => handleChoice(item, event)}>
-      <div>{name}</div>
+  const { id, name, avatarUrl } = item
+  return <li key={id || 'blank'}>
+    <a onClick={event => handleChoice(item, event)} styleName='suggestionLink'>
+      <RoundImage url={avatarUrl} styleName='suggestionAvatar' small />
+      <div styleName='suggestionName'>{name}</div>
     </a>
   </li>
 }
