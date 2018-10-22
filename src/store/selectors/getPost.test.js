@@ -7,13 +7,6 @@ describe('getPost', () => {
     expect(getPost(session.state, {match: {params: {postId: '1'}}})).toEqual(null)
   })
 
-  it('returns the post', () => {
-    const postId = 31
-    const session = orm.session(orm.getEmptyState())
-    session.Post.create({id: postId})
-    const result = getPost({orm: session.state}, {match: {params: {postId}}})
-    expect(result).toMatchSnapshot()
-  })
 })
 
 describe('presentPost', () => {

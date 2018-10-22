@@ -84,7 +84,8 @@ export default class PostCard extends React.Component {
         votesTotal={post.votesTotal}
         myVote={post.myVote}
         type={post.type}
-        members={post.members} />
+        members={post.members}
+        slug={slug} />
     </div>
   }
 }

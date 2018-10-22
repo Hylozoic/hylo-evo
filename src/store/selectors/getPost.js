@@ -1,6 +1,4 @@
-import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { get } from 'lodash/fp'
 import orm from 'store/models'
 import getParam from 'store/selectors/getParam'
 

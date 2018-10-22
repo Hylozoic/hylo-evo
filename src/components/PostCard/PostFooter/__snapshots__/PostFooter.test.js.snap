@@ -14,9 +14,11 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
         undefined,
       ]
     }
+    onClick={[Function]}
   />
   <span
     data-stylename="caption"
+    onClick={[Function]}
   >
     Joe, Sue and 2 others commented
   </span>
@@ -57,9 +59,11 @@ exports[`PostFooter matches the latest snapshot 1`] = `
         undefined,
       ]
     }
+    onClick={[Function]}
   />
   <span
     data-stylename="caption"
+    onClick={[Function]}
   >
     Joe, Sue and 2 others commented
   </span>

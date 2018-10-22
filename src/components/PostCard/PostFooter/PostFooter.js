@@ -6,44 +6,69 @@ import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
 import cx from 'classnames'
 import ReactTooltip from 'react-tooltip'
+import ProjectMembersDialog from 'components/ProjectMembersDialog'
 
 const { string, array, number, func, object } = PropTypes
 
-export default function PostFooter ({
-  id,
-  currentUser,
-  commenters,
-  commentersTotal,
-  votesTotal,
-  myVote,
-  vote,
-  type,
-  members
-}) {
-  let imageUrls, caption
+export default class PostFooter extends React.PureComponent {
+  constructor (props) {
+    super(props)
 
-  if (type !== 'project') {
-    imageUrls = (commenters).map(p => p.avatarUrl)
-    caption = commentCaption(commenters, commentersTotal, get('id', currentUser))
-  } else {
-    imageUrls = (members).map(p => p.avatarUrl)
-    caption = commentCaption(members, members.length, get('id', currentUser), 'No project members', 'are a member')
+    this.state = {
+      showMembersDialog: false,
+      isProject: this.props.type === 'project'
+    }
   }
 
-  return <div styleName='footer'>
-    <RoundImageRow imageUrls={imageUrls} styleName='people' />
-    <span styleName='caption'>{caption}</span>
-    <a onClick={vote} styleName={cx('vote-button', {voted: myVote})}
-      data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for='postfooter-tt'>
-      <Icon name='ArrowUp' styleName='arrowIcon' />
-      {votesTotal}
-    </a>
-    <ReactTooltip
-      effect={'solid'}
-      delayShow={550}
-      id='postfooter-tt' />
-  </div>
+  toggleMembersDialog = () =>
+    this.state.isProject && this.setState({showMembersDialog: !this.state.showMembersDialog})
+
+  render () {
+    const {
+      isProject,
+      showMembersDialog
+    } = this.state
+    const {
+      id,
+      currentUser,
+      commenters,
+      commentersTotal,
+      votesTotal,
+      myVote,
+      vote,
+      members,
+      slug
+    } = this.props
+    let imageUrls, caption
+
+    if (isProject) {
+      imageUrls = (members || []).map(p => p.avatarUrl)
+      caption = commentCaption(members || [], members && members.length, get('id', currentUser), 'No project members', 'are members')
+    } else {
+      imageUrls = (commenters).map(p => p.avatarUrl)
+      caption = commentCaption(commenters, commentersTotal, get('id', currentUser))
+    }
+
+    return <div styleName='footer'>
+      <RoundImageRow imageUrls={imageUrls} styleName='people' onClick={this.toggleMembersDialog} />
+      <span styleName='caption' onClick={this.toggleMembersDialog} style={{cursor: isProject ? 'pointer' : 'initial'}}>
+        {caption}
+      </span>
+      {showMembersDialog &&
+        <ProjectMembersDialog onClose={this.toggleMembersDialog} members={members} slug={slug} />}
+      <a onClick={vote} styleName={cx('vote-button', {voted: myVote})}
+        data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for='postfooter-tt'>
+        <Icon name='ArrowUp' styleName='arrowIcon' />
+        {votesTotal}
+      </a>
+      <ReactTooltip
+        effect={'solid'}
+        delayShow={550}
+        id='postfooter-tt' />
+    </div>
+  }
 }
+
 PostFooter.propTypes = {
   id: string,
   commenters: array,
@@ -53,7 +78,13 @@ PostFooter.propTypes = {
   currentUser: object
 }
 
-export const commentCaption = (commenters, commentersTotal, meId, emptyMessage = 'Be the first to comment', meVerb = 'commented') => {
+export const commentCaption = (
+  commenters,
+  commentersTotal,
+  meId,
+  emptyMessage = 'Be the first to comment',
+  meVerb = 'commented'
+) => {
   commenters = find(c => c.id === meId, commenters) && commenters.length === 2
     ? sortBy(c => c.id !== meId, commenters) // me first
     : sortBy(c => c.id === meId, commenters) // me last
@@ -70,3 +101,4 @@ export const commentCaption = (commenters, commentersTotal, meId, emptyMessage =
   }
   return `${names} ${meVerb}`
 }
+

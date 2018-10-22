@@ -74,7 +74,7 @@ exports[`renders as expected 1`] = `
     }
     commentersTotal={76572}
     id="FAKE_29222"
-    members={Array []}
+    slug="foom"
     type="offer"
     votesTotal={11519}
   />

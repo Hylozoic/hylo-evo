@@ -259,6 +259,7 @@ export default function ormReducer (state = {}, action) {
       me.updateAppending({memberships: [payload.data.createCommunity.id]})
       break
 
+    // TODO: Can we just query for Project and delete a ProjectMembership and not have to clearCache?
     case JOIN_PROJECT_PENDING:
       me = Me.first()
       ProjectMember.create({post: meta.id, member: me.id})

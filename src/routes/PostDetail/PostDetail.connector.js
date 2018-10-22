@@ -16,7 +16,7 @@ export function mapStateToProps (state, props) {
   const post = presentPost(getPost(state, props), get('id', currentCommunity))
   const slug = getParam('slug', state, props)
   const currentUser = getMe(state)
-  const isProjectMember = find(() => currentUser.id, get('members', post) || [])
+  const isProjectMember = find(({id}) => id === currentUser.id, get('members', post))
 
   return {
     id,
