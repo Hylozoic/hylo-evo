@@ -51,12 +51,14 @@ export default class ModalDialog extends Component {
 
   static defaultProps = {
     closeOnSubmit: true,
+    style: {width: '500px'},
     modalTitle: 'Notice',
     showModalTitle: true,
     showCancelButton: true,
     showSubmitButton: true,
     submitButtonIsDisabled: () => false,
-    submitButtonText: 'Ok'
+    submitButtonText: 'Ok',
+    useNotificationFormat: false
   }
 
   cancel = () => {
@@ -80,7 +82,8 @@ export default class ModalDialog extends Component {
       submitButtonIsDisabled,
       submitButtonText,
       showModalTitle,
-      useNotificationFormat
+      useNotificationFormat,
+      style
     } = this.props
 
     const backgroundStyle = backgroundImage && useNotificationFormat
@@ -90,13 +93,12 @@ export default class ModalDialog extends Component {
         backgroundPosition: 'bottom left',
         backgroundSize: '180px'
       }
-      : null
+      : {}
+    const innerStyle = {...backgroundStyle, ...style}
     const showControls = showCancelButton || showSubmitButton
 
     return <div styleName='popup'>
-      <div
-        styleName='popup-inner'
-        style={backgroundStyle}>
+      <div styleName='popup-inner' style={innerStyle}>
         <span onClick={this.cancel} styleName='close-btn'>
           <Icon name='Ex' styleName='icon' />
         </span>

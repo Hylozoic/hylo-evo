@@ -1,8 +1,10 @@
 $member-spacing: 16px;
 $avatar-size: 40px;
+$right-side-width: 500px;
 
-.members-search-input {
-  margin-bottom: $member-spacing;
+.container {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .avatar {
@@ -23,7 +25,12 @@ section > .row {
   align-items: left;
   border-bottom: solid 1px rgb(240,240,240);
   width: 100%;
+  cursor: pointer;
+  &.selected {
+    background-color: rgb(200,200,200);
+  }
 }
+
 
 section .col {
   display: flex;
@@ -31,3 +38,22 @@ section .col {
   justify-content: left;
   padding: 5px;
 }
+
+.members-search-input {
+  margin-bottom: $member-spacing;
+  width: 100%;
+}
+
+.members-list {
+  width: 50%;
+}
+
+.member-detail {
+  width: 50%;
+}
+
+.member {
+  width: 100%;
+  border: none !important;
+}
+

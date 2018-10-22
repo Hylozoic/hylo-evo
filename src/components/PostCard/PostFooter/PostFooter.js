@@ -15,13 +15,19 @@ export default class PostFooter extends React.PureComponent {
     super(props)
 
     this.state = {
-      showMembersDialog: false
+      showMembersDialog: false,
+      isProject: this.props.type === 'project'
     }
   }
 
-  toggleMembersDialog = () => this.setState({showMembersDialog: !this.state.showMembersDialog})
+  toggleMembersDialog = () =>
+    this.state.isProject && this.setState({showMembersDialog: !this.state.showMembersDialog})
 
   render () {
+    const {
+      isProject,
+      showMembersDialog
+    } = this.state
     const {
       id,
       currentUser,
@@ -30,26 +36,25 @@ export default class PostFooter extends React.PureComponent {
       votesTotal,
       myVote,
       vote,
-      type,
       members,
       slug
     } = this.props
     let imageUrls, caption
 
-    if (type !== 'project') {
-      imageUrls = (commenters).map(p => p.avatarUrl)
-      caption = commentCaption(commenters, commentersTotal, get('id', currentUser))
-    } else {
+    if (isProject) {
       imageUrls = (members || []).map(p => p.avatarUrl)
       caption = commentCaption(members || [], members && members.length, get('id', currentUser), 'No project members', 'are members')
+    } else {
+      imageUrls = (commenters).map(p => p.avatarUrl)
+      caption = commentCaption(commenters, commentersTotal, get('id', currentUser))
     }
 
     return <div styleName='footer'>
       <RoundImageRow imageUrls={imageUrls} styleName='people' onClick={this.toggleMembersDialog} />
-      <span styleName='caption' onClick={this.toggleMembersDialog}>
+      <span styleName='caption' onClick={this.toggleMembersDialog} style={{cursor: isProject ? 'pointer' : 'initial'}}>
         {caption}
       </span>
-      {this.state.showMembersDialog &&
+      {showMembersDialog &&
         <ProjectMembersDialog onClose={this.toggleMembersDialog} members={members} slug={slug} />}
       <a onClick={vote} styleName={cx('vote-button', {voted: myVote})}
         data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for='postfooter-tt'>
