@@ -11,6 +11,7 @@ export const FETCH_RECENT_CONTACTS = 'FETCH_RECENT_CONTACTS'
 export const SET_AUTOCOMPLETE = `${MODULE_NAME}/SET_AUTOCOMPLETE`
 export const ADD_MEMBER = `${MODULE_NAME}/ADD_MEMBER`
 export const REMOVE_MEMBER = `${MODULE_NAME}/REMOVE_MEMBER`
+export const SET_MEMBERS = `${MODULE_NAME}/SET_MEMBERS`
 
 export function addMember (member) {
   return {
@@ -23,6 +24,13 @@ export function removeMember (member) {
   return {
     type: REMOVE_MEMBER,
     payload: member
+  }
+}
+
+export function setMembers (members) {
+  return {
+    type: SET_MEMBERS,
+    payload: members
   }
 }
 
@@ -100,6 +108,12 @@ export default function reducer (state = defaultState, action) {
           ...state,
           members: state.members.filter(p => p.id !== payload.id)
         }
+      }
+
+    case SET_MEMBERS:
+      return {
+        ...state,
+        members: payload
       }
   }
 

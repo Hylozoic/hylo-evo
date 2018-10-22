@@ -7,7 +7,8 @@ import {
   getAutocomplete,
   addMember,
   removeMember,
-  getMembers
+  getMembers,
+  setMembers
  } from '../MemberSelector/MemberSelector.store'
 
 export function mapStateToProps (state, props) {
@@ -22,7 +23,19 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = {
-  fetchPeople, setAutocomplete, addMember, removeMember
+  fetchPeople, setAutocomplete, addMember, removeMember, setMembers
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  // note, this is members being passed in as a prop, not the one that gets set in state from the store
+  const { initialMembers = [] } = ownProps
+  const setMembers = () => dispatchProps.setMembers(initialMembers)
+  return {
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
+    setMembers
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps, {withRef: true})

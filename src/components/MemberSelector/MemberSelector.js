@@ -10,6 +10,7 @@ export default class MemberSelector extends Component {
   }
 
   componentDidMount () {
+    this.props.setMembers()
   }
 
   componentDidUpdate (prevProps) {
@@ -17,6 +18,10 @@ export default class MemberSelector extends Component {
     if (!isEqual(this.props.members.map(m => m.id), prevProps.members.map(m => m.id))) {
       // update in the parent component
       this.props.onChange(this.props.members)
+    }
+    // if initial member list has changed
+    if ((this.props.initialMembers && !prevProps.initialMembers) || !isEqual(this.props.initialMembers.map(m => m.id), prevProps.initialMembers.map(m => m.id))) {
+      this.props.setMembers()
     }
   }
 
