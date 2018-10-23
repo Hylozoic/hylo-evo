@@ -80,8 +80,7 @@ export const getPostFieldsFragment = withComments => `
       id
       name
       avatarUrl
-      skills {
-        hasMore
+      skills (first: 100) {
         items {
           id
           name
