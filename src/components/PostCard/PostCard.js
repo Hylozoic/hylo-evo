@@ -55,6 +55,8 @@ export default class PostCard extends React.Component {
       if (shouldShowDetails(target)) showDetails()
     }
 
+    const vote = () => voteOnPost(post.id, !post.myVote)
+
     return <div ref='postCard'
       onClick={onClick}
       styleName={cx('card', {expanded})}
@@ -81,7 +83,7 @@ export default class PostCard extends React.Component {
         communities={post.communities}
         slug={slug} />
       <PostFooter
-        vote={() => voteOnPost(post.id, !post.myVote)}
+        vote={vote}
         myVote={post.myVote}
         votesTotal={post.votesTotal}
         commenters={post.commenters}
