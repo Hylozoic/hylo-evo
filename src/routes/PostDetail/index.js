@@ -1,3 +1,4 @@
-import PostDetail from './PostDetail'
+import component from './PostDetail'
 import connector from './PostDetail.connector'
-export default connector(PostDetail)
+
+export default connector(component)

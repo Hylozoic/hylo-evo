@@ -1,9 +1,9 @@
 import React from 'react'
 import { filter, get } from 'lodash/fp'
 import cx from 'classnames'
+import { bgImageStyle } from 'util/index'
 import ModalDialog from 'components/ModalDialog'
 import TextInput from 'components/TextInput'
-import { bgImageStyle } from 'util/index'
 import Member from 'components/Member'
 import './ProjectMembersDialog.scss'
 
@@ -13,7 +13,7 @@ export default class ProjectMembersDialog extends React.PureComponent {
 
     this.state = {
       searchString: '',
-      selectedMember: null,
+      selectedMember: this.props.members[0],
       members: this.props.members
     }
   }
@@ -34,7 +34,7 @@ export default class ProjectMembersDialog extends React.PureComponent {
   
   render () {
     const { members, searchString, selectedMember } = this.state
-    const { onClose, slug } = this.props
+    const { onClose } = this.props
     const loading = false
 
     return <ModalDialog key='members-dialog'
@@ -55,6 +55,12 @@ export default class ProjectMembersDialog extends React.PureComponent {
             value={searchString}
             placeholder='Find a member'
           />
+          {/* 
+            TODO: Can make memberDetails optional by adding a `withDetails` flag
+            sending in `goToMember` and switchin the onClick on a `MemberRow` to
+            go there instead of showing detail and making adding a conditional
+            style to make width of members-list be 100% in that case.
+          */}
           <div styleName='members-list'>
             <section>
               {members.map(member => 
@@ -62,8 +68,7 @@ export default class ProjectMembersDialog extends React.PureComponent {
                   member={member}
                   selected={member.id === get('id', selectedMember)}
                   onClick={this.selectMember(member)}
-                  key={member.id}
-                />
+                  key={member.id} />
               )}
             </section>
           </div>
@@ -71,12 +76,6 @@ export default class ProjectMembersDialog extends React.PureComponent {
         </div>
     </ModalDialog>
   }
-}
-
-function MemberDetail ({member}) {
-  return <div styleName='member-detail'>
-    <Member member={member} styleName='member' />
-  </div>
 }
 
 function MemberRow ({member, selected, onClick}) {
@@ -89,5 +88,11 @@ function MemberRow ({member, selected, onClick}) {
     <div styleName='col'>
       {name}
     </div>
+  </div>
+}
+
+function MemberDetail ({member}) {
+  return <div styleName='member-detail'>
+    <Member member={member} styleName='member' />
   </div>
 }

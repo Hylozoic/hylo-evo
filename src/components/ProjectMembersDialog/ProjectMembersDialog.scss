@@ -23,14 +23,14 @@ section {
 section > .row {
   display: flex;
   align-items: left;
-  border-bottom: solid 1px rgb(240,240,240);
+  border-bottom: solid 1px $color-cape-cod-10;
   width: 100%;
   cursor: pointer;
   &.selected {
-    background-color: rgb(200,200,200);
+    color: $color-rhino;
+    background-color: $color-polar;
   }
 }
-
 
 section .col {
   display: flex;

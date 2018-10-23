@@ -80,6 +80,13 @@ export const getPostFieldsFragment = withComments => `
       id
       name
       avatarUrl
+      skills {
+        hasMore
+        items {
+          id
+          name
+        }
+      }
     }
   }`
 

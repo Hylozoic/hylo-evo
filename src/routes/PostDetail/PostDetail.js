@@ -3,16 +3,17 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { get, throttle, isEmpty } from 'lodash/fp'
-import './PostDetail.scss'
+import { tagUrl } from 'util/index'
+import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import { PostImage, PostBody, PostFooter, PostHeader, PostCommunities } from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
 import Comments from './Comments'
-import { tagUrl } from 'util/index'
-import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
+import ProjectMembersDialog from 'components/ProjectMembersDialog'
+import './PostDetail.scss'
 
 const { func, object, string } = PropTypes
 
@@ -36,7 +37,8 @@ export default class PostDetail extends Component {
       headerScrollOffset: 0,
       atActivity: false,
       activityWidth: 0,
-      activityScrollOffset: 0
+      activityScrollOffset: 0,
+      showMembersDialog: false
     }
   }
 
@@ -94,24 +96,22 @@ export default class PostDetail extends Component {
     }
   })
 
-  render () {
-    const { post, slug, pending, isProjectMember, joinProject, leaveProject } = this.props
-    const { atHeader, atActivity, headerWidth, activityWidth } = this.state
-    if (!post && !pending) {
-      return <NotFound />
-    }
+  toggleMembersDialog = () => this.setState({showMembersDialog: !this.state.showMembersDialog})
 
-    if (pending) {
-      return <Loading />
-    }
+  render () {
+    const {
+      post, slug, voteOnPost, isProjectMember, joinProject, leaveProject, pending
+    } = this.props
+    const { atHeader, atActivity, headerWidth, activityWidth } = this.state
+
+    if (!post && !pending) return <NotFound />
+    if (pending) return <Loading />
 
     const isProject = get('type', post) === 'project'
-
     const scrollToBottom = () => {
       const detail = document.getElementById(DETAIL_COLUMN_ID)
       detail.scrollTop = detail.scrollHeight
     }
-
     const headerStyle = {
       width: headerWidth + 'px'
     }
@@ -119,6 +119,21 @@ export default class PostDetail extends Component {
       width: activityWidth + 'px',
       marginTop: STICKY_HEADER_SCROLL_OFFSET + 'px'
     }
+    const hasMembers = post.members.length > 0
+    let { showMembersDialog } = this.state
+    let { toggleMembersDialog } = this
+    showMembersDialog = hasMembers && showMembersDialog
+    toggleMembersDialog = hasMembers && toggleMembersDialog
+
+    const postFooter = <PostFooter
+      vote={() => voteOnPost(post.id, !post.myVote)}
+      myVote={post.myVote}
+      votesTotal={post.votesTotal}
+      commenters={post.commenters}
+      commentersTotal={post.commentersTotal}
+      type={post.type}
+      members={post.members}
+      onClick={toggleMembersDialog} />
 
     return <div styleName='post' ref={this.setHeaderStateFromDOM}>
       <ScrollListener elementId={DETAIL_COLUMN_ID}
@@ -136,29 +151,26 @@ export default class PostDetail extends Component {
         slug={slug}
         expanded
         styleName='body'
-        fileAttachments={post.fileAttachments} />
+        fileAttachments={post.fileAttachments}>
+      </PostBody>
+      {isProject && <div styleName='join-project-button-container'>
+        <JoinProjectButton
+          joinProject={joinProject}
+          leaveProject={leaveProject}
+          leaving={isProjectMember} />
+      </div>}
       <PostCommunities
         communities={post.communities}
         slug={slug}
         showBottomBorder />
-      {isProject && <JoinProjectButton joinProject={joinProject} leaveProject={leaveProject} leaving={isProjectMember} />}
       <div styleName='activity-header' ref={this.setActivityStateFromDOM}>ACTIVITY</div>
-      <PostFooter id={post.id}
-        commenters={post.commenters}
-        commentersTotal={post.commentersTotal}
-        votesTotal={post.votesTotal}
-        myVote={post.myVote}
-        type={post.type}
+      {postFooter}
+      {showMembersDialog && <ProjectMembersDialog
         members={post.members}
-        slug={slug} />
+        onClose={toggleMembersDialog} />}
       {atActivity && <div styleName='activity-sticky' style={activityStyle}>
         <div styleName='activity-header'>ACTIVITY</div>
-        <PostFooter id={post.id}
-          commenters={post.commenters}
-          commentersTotal={post.commentersTotal}
-          votesTotal={post.votesTotal}
-          myVote={post.myVote}
-          slug={slug} />
+        {postFooter}
       </div>}
       <Comments postId={post.id} slug={slug} scrollToBottom={scrollToBottom} />
       <SocketSubscriber type='post' id={post.id} />
@@ -197,7 +209,7 @@ export function JoinProjectButton ({ leaving, joinProject, leaveProject }) {
   const onClick = leaving ? leaveProject : joinProject
 
   return <Button
-    color='purple'
+    color='green'
     key='join-project-button'
     narrow
     onClick={onClick}
