@@ -90,6 +90,13 @@ posts(
       id
       name
       avatarUrl
+      skills {
+        hasMore
+        items {
+          id
+          name
+        }
+      }
     }
   }
   }
@@ -199,6 +206,13 @@ posts(
       id
       name
       avatarUrl
+      skills {
+        hasMore
+        items {
+          id
+          name
+        }
+      }
     }
   }
   }

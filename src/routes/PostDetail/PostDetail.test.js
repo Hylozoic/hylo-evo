@@ -17,7 +17,8 @@ describe('PostDetail', () => {
       tags,
       details,
       votesTotal,
-      myVote
+      myVote,
+      members: []
     }
 
     const wrapper = shallow(<PostDetail post={post} fetchPost={jest.fn()} slug={slug} />)

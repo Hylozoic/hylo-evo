@@ -73,7 +73,12 @@ export const peopleCaption = (
   people,
   peopleTotal,
   meId,
-  phrases
+  phrases = {
+    emptyMessage: 'Be the first to comment',
+    phraseSingular: 'commented',
+    mePhraseSingular: 'commented',
+    pluralPhrase: 'commented'
+  }
 ) => {
   const currentUserIsMember = find(c => c.id === meId, people)
   const sortedPeople = currentUserIsMember && people.length === 2

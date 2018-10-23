@@ -6,6 +6,7 @@ Object {
   "addImage": [Function],
   "clearLinkPreview": [Function],
   "createPost": [Function],
+  "createProject": [Function],
   "goToUrl": [Function],
   "pollingFetchLinkPreviewRaw": [Function],
   "removeLinkPreview": [Function],
