@@ -15,6 +15,7 @@ exports[`PostDetail renders correctly 1`] = `
         "details": "the body of the post",
         "id": "91",
         "imageUrl": "foo.jpg",
+        "members": Array [],
         "myVote": true,
         "tags": Array [
           "singing",
@@ -54,9 +55,11 @@ exports[`PostDetail renders correctly 1`] = `
   >
     ACTIVITY
   </div>
-  <Connect(PostFooter)
-    id="91"
+  <PostFooter
+    members={Array []}
     myVote={true}
+    onClick={false}
+    vote={[Function]}
     votesTotal={7}
   />
   <Connect(Comments)

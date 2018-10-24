@@ -6,6 +6,7 @@ import getParam from 'store/selectors/getParam'
 import getPost, { presentPost } from 'store/selectors/getPost'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import voteOnPost from 'store/actions/voteOnPost.js'
 import joinProject from 'store/actions/joinProject'
 import leaveProject from 'store/actions/leaveProject'
 import { FETCH_POST } from 'store/constants'
@@ -16,7 +17,7 @@ export function mapStateToProps (state, props) {
   const post = presentPost(getPost(state, props), get('id', currentCommunity))
   const slug = getParam('slug', state, props)
   const currentUser = getMe(state)
-  const isProjectMember = find(({id}) => id === currentUser.id, get('members', post))
+  const isProjectMember = find(({id}) => id === get('id', currentUser), get('members', post))
 
   return {
     id,
@@ -28,25 +29,23 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = (dispatch, props) => {
+export function mapDispatchToProps (dispatch, props) {
   const { location } = props
-
+  const id = getParam('postId', {}, props)
   const removePostDetailFromPath = pathname =>
     pathname.replace(/\/p\/(.+)/, '')
-
   const closeLocation = {
     ...props.location,
     pathname: removePostDetailFromPath(location.pathname)
   }
 
-  const postId = getParam('postId', {}, props)
-
   return {
-    fetchPost: () => dispatch(fetchPost(postId)),
+    fetchPost: () => dispatch(fetchPost(id)),
     onClose: () => dispatch(push(closeLocation)),
-    editPost: () => dispatch(push(`${postId}/edit`)),
-    joinProject: () => dispatch(joinProject(postId)),
-    leaveProject: () => dispatch(leaveProject(postId))
+    editPost: () => dispatch(push(`${id}/edit`)),
+    joinProject: () => dispatch(joinProject(id)),
+    leaveProject: () => dispatch(leaveProject(id)),
+    voteOnPost: (id, myVote) => dispatch(voteOnPost(id, myVote))  
   }
 }
 

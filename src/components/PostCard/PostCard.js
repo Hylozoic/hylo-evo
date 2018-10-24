@@ -36,7 +36,7 @@ export default class PostCard extends React.Component {
 
   render () {
     const {
-      post, className, expanded, showDetails, highlightProps, slug
+      post, className, expanded, showDetails, highlightProps, slug, voteOnPost
     } = this.props
 
     const shouldShowDetails = element => {
@@ -55,8 +55,12 @@ export default class PostCard extends React.Component {
       if (shouldShowDetails(target)) showDetails()
     }
 
-    return <div ref='postCard' styleName={cx('card', {expanded})} className={className}
-      onClick={onClick}>
+    const vote = () => voteOnPost(post.id, !post.myVote)
+
+    return <div ref='postCard'
+      onClick={onClick}
+      styleName={cx('card', {expanded})}
+      className={className}>
       <PostHeader creator={post.creator}
         date={post.createdAt}
         type={post.type}
@@ -78,14 +82,14 @@ export default class PostCard extends React.Component {
       <PostCommunities
         communities={post.communities}
         slug={slug} />
-      <PostFooter id={post.id}
+      <PostFooter
+        vote={vote}
+        myVote={post.myVote}
+        votesTotal={post.votesTotal}
         commenters={post.commenters}
         commentersTotal={post.commentersTotal}
-        votesTotal={post.votesTotal}
-        myVote={post.myVote}
         type={post.type}
-        members={post.members}
-        slug={slug} />
+        members={post.members} />
     </div>
   }
 }

@@ -6,7 +6,7 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
     data-stylename="activity-item"
     key="30003"
   >
-    <PostCard
+    <Connect(PostCard)
       editPost={[Function]}
       post={
         Object {
@@ -36,7 +36,7 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
     data-stylename="activity-item"
     key="30002"
   >
-    <PostCard
+    <Connect(PostCard)
       editPost={[Function]}
       post={
         Object {

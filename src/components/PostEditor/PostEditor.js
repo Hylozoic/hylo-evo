@@ -247,7 +247,7 @@ export default class PostEditor extends React.Component {
     } = this.state.post
     const details = this.editor.getContentHTML()
     const topicNames = this.topicSelector.getSelected().map(t => t.name)
-    const memberIds = members.map(m => m.id)
+    const memberIds = members && members.map(m => m.id)
     const postToSave = {
       id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds
     }

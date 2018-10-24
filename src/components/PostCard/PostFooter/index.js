@@ -1,3 +1,3 @@
-import PostFooter from './PostFooter'
-import connector from './PostFooter.connector'
-export default connector(PostFooter)
+import component from './PostFooter'
+
+export default component

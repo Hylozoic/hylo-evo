@@ -1,7 +1,7 @@
 import { VOTE_ON_POST } from 'store/constants'
 import { AnalyticsEvents } from 'hylo-utils/constants'
 
-export function voteOnPost (postId, isUpvote) {
+export default function voteOnPost (postId, isUpvote) {
   return {
     type: VOTE_ON_POST,
     graphql: {

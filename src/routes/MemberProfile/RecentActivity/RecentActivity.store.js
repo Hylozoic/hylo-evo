@@ -78,12 +78,14 @@ export const activitySelector = createSelector(
         image: comment.attachments.toModelArray()[0],
         slug
       }))
+      // TODO: Why not use presentPosts for consistency?
       const posts = person.posts.toModelArray().map(post => ({
         ...post.ref,
         creator: post.creator,
         linkPreview: post.linkPreview,
         commenters: post.commenters.toRefArray(),
         communities: post.communities.toRefArray(),
+        members: post.members.toRefArray(),
         fileAttachments: post.attachments.filter(a => a.type === 'file').toModelArray()
       }))
       return indexActivityItems(comments, posts)

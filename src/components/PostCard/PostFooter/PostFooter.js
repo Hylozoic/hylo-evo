@@ -6,30 +6,10 @@ import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
 import cx from 'classnames'
 import ReactTooltip from 'react-tooltip'
-import ProjectMembersDialog from 'components/ProjectMembersDialog'
-
-const { string, array, number, func, object } = PropTypes
 
 export default class PostFooter extends React.PureComponent {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      showMembersDialog: false,
-      isProject: this.props.type === 'project'
-    }
-  }
-
-  toggleMembersDialog = () =>
-    this.state.isProject && this.setState({showMembersDialog: !this.state.showMembersDialog})
-
   render () {
     const {
-      isProject,
-      showMembersDialog
-    } = this.state
-    const {
-      id,
       currentUser,
       commenters,
       commentersTotal,
@@ -37,25 +17,45 @@ export default class PostFooter extends React.PureComponent {
       myVote,
       vote,
       members,
-      slug
+      onClick,
+      type
     } = this.props
-    let imageUrls, caption
-
+    const isProject = type === 'project'
+    let avatarUrls, caption
+    
     if (isProject) {
-      imageUrls = (members || []).map(p => p.avatarUrl)
-      caption = commentCaption(members || [], members && members.length, get('id', currentUser), 'No project members', 'are members')
+      avatarUrls = members.map(p => p.avatarUrl)
+      caption = peopleCaption(
+        members,
+        members.length,
+        get('id', currentUser),
+        {
+          emptyMessage: 'No project members',
+          phraseSingular: 'is a member',
+          mePhraseSingular: 'are a member',
+          pluralPhrase: 'are members'
+        }      
+      )
     } else {
-      imageUrls = (commenters).map(p => p.avatarUrl)
-      caption = commentCaption(commenters, commentersTotal, get('id', currentUser))
+      avatarUrls = commenters.map(p => p.avatarUrl)
+      caption = peopleCaption(
+        commenters,
+        commentersTotal,
+        get('id', currentUser),
+        {
+          emptyMessage: 'Be the first to comment',
+          phraseSingular: 'commented',
+          mePhraseSingular: 'commented',
+          pluralPhrase: 'commented'
+        }      
+      )
     }
 
     return <div styleName='footer'>
-      <RoundImageRow imageUrls={imageUrls} styleName='people' onClick={this.toggleMembersDialog} />
-      <span styleName='caption' onClick={this.toggleMembersDialog} style={{cursor: isProject ? 'pointer' : 'initial'}}>
+      <RoundImageRow imageUrls={avatarUrls} styleName='people' onClick={onClick} />
+      <span styleName='caption' onClick={onClick} style={{cursor: onClick ? 'pointer' : 'inherit'}}>
         {caption}
       </span>
-      {showMembersDialog &&
-        <ProjectMembersDialog onClose={this.toggleMembersDialog} members={members} slug={slug} />}
       <a onClick={vote} styleName={cx('vote-button', {voted: myVote})}
         data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for='postfooter-tt'>
         <Icon name='ArrowUp' styleName='arrowIcon' />
@@ -69,36 +69,40 @@ export default class PostFooter extends React.PureComponent {
   }
 }
 
-PostFooter.propTypes = {
-  id: string,
-  commenters: array,
-  commentersTotal: number,
-  votesTotal: number,
-  vote: func,
-  currentUser: object
-}
-
-export const commentCaption = (
-  commenters,
-  commentersTotal,
+export const peopleCaption = (
+  people,
+  peopleTotal,
   meId,
-  emptyMessage = 'Be the first to comment',
-  meVerb = 'commented'
-) => {
-  commenters = find(c => c.id === meId, commenters) && commenters.length === 2
-    ? sortBy(c => c.id !== meId, commenters) // me first
-    : sortBy(c => c.id === meId, commenters) // me last
-  var names = ''
-  const firstName = person => person.id === meId ? 'You' : person.name.split(' ')[0]
-  if (commenters.length === 0) {
-    return emptyMessage
-  } else if (commenters.length === 1) {
-    names = firstName(commenters[0])
-  } else if (commenters.length === 2) {
-    names = `${firstName(commenters[0])} and ${firstName(commenters[1])}`
-  } else {
-    names = `${firstName(commenters[0])}, ${firstName(commenters[1])} and ${commentersTotal - 2} other${commentersTotal - 2 > 1 ? 's' : ''}`
+  phrases = {
+    emptyMessage: 'Be the first to comment',
+    phraseSingular: 'commented',
+    mePhraseSingular: 'commented',
+    pluralPhrase: 'commented'
   }
-  return `${names} ${meVerb}`
-}
+) => {
+  const currentUserIsMember = find(c => c.id === meId, people)
+  const sortedPeople = currentUserIsMember && people.length === 2
+    ? sortBy(c => c.id !== meId, people) // me first
+    : sortBy(c => c.id === meId, people) // me last
+  const firstName = person => person.id === meId ? 'You' : person.name.split(' ')[0]
+  const {
+    emptyMessage,
+    phraseSingular,
+    mePhraseSingular,
+    pluralPhrase
+  } = phrases
+  let names = ''
+  let phrase = pluralPhrase
 
+  if (sortedPeople.length === 0) return emptyMessage
+
+  if (sortedPeople.length === 1) {
+    phrase = currentUserIsMember ? mePhraseSingular : phraseSingular
+    names = firstName(sortedPeople[0])
+  } else if (sortedPeople.length === 2) {
+    names = `${firstName(sortedPeople[0])} and ${firstName(sortedPeople[1])}`
+  } else {
+    names = `${firstName(sortedPeople[0])}, ${firstName(sortedPeople[1])} and ${peopleTotal - 2} other${peopleTotal - 2 > 1 ? 's' : ''}`
+  }
+  return `${names} ${phrase}`
+}
