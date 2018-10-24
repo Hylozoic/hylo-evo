@@ -21,7 +21,8 @@
 
 .selectedTag {
   color: $color-caribbean-green;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   padding: $space-2x $space-3x 0 0;
   border: 0px;
   background: transparent;
@@ -46,6 +47,10 @@
 .selectedTag:hover,
 .selectedTag:focus {
   border: none;
+}
+
+.selectedTagImage {
+  margin-right: 5px;
 }
 
 .search {
@@ -143,10 +148,11 @@
 
 .suggestionLink {
   display: flex;
+  align-items: center;
 }
 
 .suggestionAvatar {
-  /* empty */
+  margin-right: 5px;
 }
 
 .suggestionName {

@@ -144,7 +144,7 @@ export function createProject (post) {
 
 export function updatePost (post) {
   const {
-    id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames
+    id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, memberIds
   } = post
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
@@ -160,7 +160,8 @@ export function updatePost (post) {
         $communityIds: [String],
         $imageUrls: [String],
         $fileUrls: [String],
-        $topicNames: [String]
+        $topicNames: [String],
+        $memberIds: [ID]
       ) {
         updatePost(id: $id, data: {
           type: $type,
@@ -170,32 +171,9 @@ export function updatePost (post) {
           communityIds: $communityIds,
           imageUrls: $imageUrls,
           fileUrls: $fileUrls,
-          topicNames: $topicNames
-        }) {
-          id
-          type
-          title
-          details
-          updatedAt
-          linkPreview {
-            id
-          }
-          communities {
-            id
-            name
-            slug
-          }
-          attachments {
-            id
-            type
-            url
-            position
-          }
-          topics {
-            id
-            name
-          }
-        }
+          topicNames: $topicNames,
+          memberIds: $memberIds
+        }) {${getPostFieldsFragment(false)}}
       }`,
       variables: {
         id,
@@ -206,7 +184,8 @@ export function updatePost (post) {
         communityIds,
         imageUrls,
         fileUrls,
-        topicNames
+        topicNames,
+        memberIds
       }
     },
     meta: {

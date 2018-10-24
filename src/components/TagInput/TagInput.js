@@ -111,7 +111,7 @@ export default class TagInput extends Component {
 
     const selectedItems = uniqBy('id', tags).map(t =>
       <li key={t.id} className={theme.selectedTag}>
-        {t.avatarUrl && <RoundImage url={t.avatarUrl} small />}
+        {t.avatarUrl && <RoundImage url={t.avatarUrl} small className={theme.selectedTagImage} />}
         <span className={theme.selectedTagName}>{optionalHashtag}{t.label || t.name}</span>
         <a onClick={!readOnly ? this.remove(t) : undefined} className={theme.selectedTagRemove}>&times;</a>
       </li>
