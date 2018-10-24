@@ -49,7 +49,7 @@ describe('MemberSelector', () => {
       expect(onChange).toHaveBeenCalledWith(props.members)
     })
 
-    it.only('calls setMembers when it should', () => {
+    it('calls setMembers when it should', () => {
       const setMembers = jest.fn()
       const props = {
         ...defaultMinProps,
@@ -66,6 +66,7 @@ describe('MemberSelector', () => {
         initialMembers: [{id: 1}, {id: 2}]
       }
       const wrapper = renderComponent(shallow, props)
+      setMembers.mockClear()
       wrapper.instance().componentDidUpdate(noChangePrevProps)
       expect(setMembers).not.toHaveBeenCalled()
       wrapper.instance().componentDidUpdate(yesChangePrevProps)
@@ -73,96 +74,43 @@ describe('MemberSelector', () => {
     })
   })
 
-  describe('updateSelected', () => {
-    it('does nothing if topicsEdited = true', () => {
-      const props = {
-        selectedTopics: [{name: 'one'}],
-        detailsTopics: [{name: 'two'}]
-      }
-      const wrapper = renderComponent(shallow, props)
-      wrapper.instance().setState({topicsEdited: true, selected: []})
-      wrapper.instance().updateSelected()
-      expect(wrapper.instance().state.selected).toEqual([])
-    })
-
-    it('combines selected, props.selectedTopics and props.detailsTopics, truncating at 3', () => {
-      const props = {
-        selectedTopics: [{name: 'one'}],
-        detailsTopics: [{name: 'two'}, {name: 'three'}]
-      }
-      const wrapper = renderComponent(shallow, props)
-      wrapper.instance().setState({selected: [{name: 'zero'}]})
-      wrapper.instance().updateSelected()
-      expect(wrapper.instance().state.selected).toEqual([{name: 'zero'}, {name: 'one'}, {name: 'two'}])
-    })
-  })
-
-  describe('getSelected', () => {
-    it('returns state.selected', () => {
-      const wrapper = renderComponent(shallow)
-      const selected = ['one', 'two']
-      wrapper.instance().setState({selected})
-      expect(wrapper.instance().getSelected()).toEqual(selected)
-    })
-  })
-
-  describe('reset', () => {
-    it('resets the state to defaultState', () => {
-      const wrapper = renderComponent(shallow)
-      wrapper.instance().setState({topicsEdited: true, selected: [{name: 'one'}]})
-      wrapper.instance().reset()
-      expect(wrapper.instance().state).toEqual(MemberSelector.defaultState)
-    })
-  })
-
   describe('handleInputChange', () => {
-    it('sets state and calls findTopics on a non empty input', () => {
-      const findTopics = jest.fn()
-      const wrapper = renderComponent(shallow, { findTopics })
+    it('calls setAutocomplete and fetches people', () => {
+      const setAutocomplete = jest.fn()
+      const fetchPeople = jest.fn()
+      const wrapper = renderComponent(shallow, { setAutocomplete, fetchPeople })
       const theInput = 'hithere'
       wrapper.instance().handleInputChange(theInput)
-      expect(wrapper.instance().state.input).toEqual(theInput)
-      expect(findTopics).toHaveBeenCalledWith(theInput)
-    })
-
-    it('sets state and calls clearTopics on empty input', () => {
-      const clearTopics = jest.fn()
-      const wrapper = renderComponent(shallow, { clearTopics })
-      const theInput = ''
-      wrapper.instance().handleInputChange(theInput)
-      expect(wrapper.instance().state.input).toEqual(theInput)
-      expect(clearTopics).toHaveBeenCalled()
+      expect(setAutocomplete).toHaveBeenCalledWith(theInput)
+      expect(fetchPeople).toHaveBeenCalledWith(theInput)
     })
   })
 
   describe('handleAddition', () => {
-    it('sets state and calls clearTopics', () => {
-      const clearTopics = jest.fn()
-      const wrapper = renderComponent(shallow, { clearTopics })
-      const topic = {name: 'one'}
-      wrapper.setState({selected: [{name: 'zero'}]})
-      wrapper.instance().handleAddition(topic)
-      expect(wrapper.instance().state.selected).toEqual([{name: 'zero'}, {name: 'one'}])
-      expect(clearTopics).toHaveBeenCalledWith()
+    it('calls addMember', () => {
+      const addMember = jest.fn()
+      const wrapper = renderComponent(shallow, { addMember })
+      const person = {name: 'one'}
+      wrapper.instance().handleAddition(person)
+      expect(addMember).toHaveBeenCalledWith(person)
     })
   })
 
   describe('handleDelete', () => {
-    it('sets state and calls clearTopics', () => {
-      const clearTopics = jest.fn()
-      const wrapper = renderComponent(shallow, { clearTopics })
-      const topic = {name: 'one'}
-      wrapper.setState({selected: [{name: 'zero'}, {name: 'one'}]})
-      wrapper.instance().handleDelete(topic)
-      expect(wrapper.instance().state.selected).toEqual([{name: 'zero'}])
-      expect(wrapper.instance().state.topicsEdited).toEqual(true)
+    it('calls removeMember', () => {
+      const removeMember = jest.fn()
+      const wrapper = renderComponent(shallow, { removeMember })
+      const person = {name: 'one'}
+      wrapper.instance().handleDelete(person)
+      expect(removeMember).toHaveBeenCalledWith(person)
     })
   })
 })
 
 describe('Suggestion', () => {
   const defaultMinProps = {
-    item: {}
+    item: {},
+    handleChoice: () => {}
   }
 
   function renderComponent (renderFunc, props = {}) {
@@ -176,29 +124,11 @@ describe('Suggestion', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('renders correctly (with a topic)', () => {
+  it('renders correctly (with a user)', () => {
     const item = {
-      name: 'design',
-      postsTotal: 250,
-      followersTotal: 1200
-    }
-    const wrapper = renderComponent(shallow, { item })
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  it('renders correctly (with a new topic)', () => {
-    const item = {
-      name: 'design',
-      isNew: true
-    }
-    const wrapper = renderComponent(shallow, { item })
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  it('renders correctly (with an error)', () => {
-    const item = {
-      name: 'there was an error',
-      isError: true
+      id: 1,
+      name: 'Joe Joe',
+      avatarUrl: 'face.png'
     }
     const wrapper = renderComponent(shallow, { item })
     expect(wrapper).toMatchSnapshot()
