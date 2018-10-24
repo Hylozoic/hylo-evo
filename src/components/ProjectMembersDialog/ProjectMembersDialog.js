@@ -44,6 +44,13 @@ export default class ProjectMembersDialog extends React.PureComponent {
       showSubmitButton={false}
       style={{width: '100%', maxWidth: '600px'}}>
         <div styleName='container'>
+          {/* 
+            TODO: Can make memberDetails optional by adding a `withDetails` flag
+            sending in `goToMember` and switchin the onClick on a `MemberRow` to
+            go there instead of showing detail and making adding a conditional
+            style to make width of members-list be 100% in that case.
+          */}
+          <div styleName='members-list'>
           <TextInput
             styleName='members-search-input'
             aria-label='members-search'
@@ -55,13 +62,6 @@ export default class ProjectMembersDialog extends React.PureComponent {
             value={searchString}
             placeholder='Find a member'
           />
-          {/* 
-            TODO: Can make memberDetails optional by adding a `withDetails` flag
-            sending in `goToMember` and switchin the onClick on a `MemberRow` to
-            go there instead of showing detail and making adding a conditional
-            style to make width of members-list be 100% in that case.
-          */}
-          <div styleName='members-list'>
             <section>
               {members.map(member => 
                 <MemberRow

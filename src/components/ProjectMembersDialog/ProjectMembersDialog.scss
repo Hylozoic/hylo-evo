@@ -5,6 +5,18 @@ $right-side-width: 500px;
 .container {
   display: flex;
   flex-wrap: wrap;
+  height: 380x;
+}
+
+.members-list {
+  width: 50%;
+  padding-right: 8px;
+  border-right: solid 1px $color-cape-cod-10; 
+  overflow-y: auto;
+}
+
+.member-detail {
+  width: 50%;
 }
 
 .avatar {
@@ -16,8 +28,6 @@ section {
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  overflow-y: scroll !important;
-  height: 200px;
 }
 
 section > .row {
@@ -44,16 +54,12 @@ section .col {
   width: 100%;
 }
 
-.members-list {
-  width: 50%;
-}
-
-.member-detail {
-  width: 50%;
-}
-
 .member {
   width: 100%;
   border: none !important;
+  padding: 0px;
+  margin: 0px;
+  & > * > * {
+    max-width: unset;
+  }
 }
-
