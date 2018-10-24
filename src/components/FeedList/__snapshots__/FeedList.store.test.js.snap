@@ -90,8 +90,10 @@ posts(
       id
       name
       avatarUrl
-      skills {
-        hasMore
+      bio
+      tagline
+      location  
+      skills (first: 100) {
         items {
           id
           name
@@ -206,8 +208,10 @@ posts(
       id
       name
       avatarUrl
-      skills {
-        hasMore
+      bio
+      tagline
+      location  
+      skills (first: 100) {
         items {
           id
           name

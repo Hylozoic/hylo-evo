@@ -354,7 +354,7 @@ export default class PostEditor extends React.Component {
           <div styleName='footerSection-label'>Project Members</div>
           <div styleName='footerSection-communities'>
             <MemberSelector
-              initialMembers={members}
+              initialMembers={members || []}
               onChange={this.updateProjectMembers}
               readOnly={loading}
               ref={component => { this.membersSelector = component }}

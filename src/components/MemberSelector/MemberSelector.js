@@ -20,7 +20,11 @@ export default class MemberSelector extends Component {
       this.props.onChange(this.props.members)
     }
     // if initial member list has changed
-    if ((this.props.initialMembers && !prevProps.initialMembers) || !isEqual(this.props.initialMembers.map(m => m.id), prevProps.initialMembers.map(m => m.id))) {
+
+    console.log('props', this.props)
+    console.log('props', prevProps)    
+
+    if (this.props.initialMembers && (!prevProps.initialMembers || !isEqual(this.props.initialMembers.map(m => m.id), prevProps.initialMembers.map(m => m.id)))) {
       this.props.setMembers()
     }
   }
@@ -54,7 +58,6 @@ export default class MemberSelector extends Component {
         handleDelete={this.handleDelete}
         readOnly={readOnly}
         theme={styles}
-        maxTags={3}
         renderSuggestion={Suggestion}
       />
     )

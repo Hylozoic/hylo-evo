@@ -1,5 +1,3 @@
-import { pick } from 'lodash/fp'
-
 import orm from 'store/models'
 import reducer, * as store from './PeopleSelector.store'
 import people from './PeopleSelector.test.json'
@@ -7,19 +5,6 @@ import { mapStateToProps, getParticipantSearch } from './PeopleSelector.connecto
 import {
   CREATE_MESSAGE
 } from 'store/constants'
-
-it('matches the last snapshot for fetchPeople', () => {
-  const graphql = {
-    query: 'All the lonely people / Where do they all come from?',
-    variables: {
-      autocomplete: 'Tchaikovs',
-      first: 100
-    }
-  }
-  const { query, variables } = graphql
-  const actual = store.fetchPeople(variables.autocomplete, query, variables.first)
-  expect(actual).toMatchSnapshot()
-})
 
 it('matches the last snapshot for findOrCreateThread', () => {
   const graphql = {

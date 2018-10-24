@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches the last snapshot 1`] = `
+Object {
+  "graphql": Object {
+    "query": "All the lonely people / Where do they all come from?",
+    "variables": Object {
+      "autocomplete": "Tchaikovs",
+      "first": 100,
+    },
+  },
+  "meta": Object {
+    "extractModel": "Person",
+  },
+  "type": "FETCH_PEOPLE",
+}
+`;

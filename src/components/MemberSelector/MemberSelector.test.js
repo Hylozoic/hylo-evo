@@ -3,7 +3,10 @@ import { shallow } from 'enzyme'
 import MemberSelector, { Suggestion } from './MemberSelector'
 
 describe('MemberSelector', () => {
-  const defaultMinProps = { }
+  const defaultMinProps = {
+    setMembers: () => {},
+    members: []
+  }
 
   function renderComponent (renderFunc, props = {}) {
     return renderFunc(
@@ -17,27 +20,56 @@ describe('MemberSelector', () => {
   })
 
   describe('componentDidMount', () => {
-    it('calls updateSelected', () => {
+    it('calls setMembers', () => {
+      const setMembers = jest.fn()
       const wrapper = renderComponent(shallow, {
         selectedTopics: [{name: 'one'}],
-        detailsTopics: [{name: 'two'}]
+        detailsTopics: [{name: 'two'}],
+        setMembers
       })
-      expect(wrapper.instance().state.selected).toEqual([{name: 'one'}, {name: 'two'}])
+      // expect(wrapper.instance().state.selected).toEqual([{name: 'one'}, {name: 'two'}])
+      expect(setMembers).toHaveBeenCalled()
     })
   })
 
   describe('componentDidUpdate', () => {
-    it('calls updateSelected if selectedTopics has changed', () => {
+    it('calls onChange if members changed', () => {
+      const onChange = jest.fn()
       const props = {
-        selectedTopics: [{name: 'one'}],
-        detailsTopics: [{name: 'two'}]
+        ...defaultMinProps,
+        members: [{id: 1}, {id: 2}, {id: 3}],
+        onChange
+      }
+      const prevProps = {
+        ...defaultMinProps,
+        members: [{id: 1}, {id: 2}]
       }
       const wrapper = renderComponent(shallow, props)
-      wrapper.instance().updateSelected = jest.fn()
-      wrapper.instance().componentDidUpdate({...defaultMinProps, ...props})
-      expect(wrapper.instance().updateSelected).not.toHaveBeenCalled()
-      wrapper.instance().componentDidUpdate({...defaultMinProps, ...props, selectedTopics: []})
-      expect(wrapper.instance().updateSelected).toHaveBeenCalled()
+      wrapper.instance().componentDidUpdate(prevProps)
+      expect(onChange).toHaveBeenCalledWith(props.members)
+    })
+
+    it.only('calls setMembers when it should', () => {
+      const setMembers = jest.fn()
+      const props = {
+        ...defaultMinProps,
+        initialMembers: [{id: 1}, {id: 2}, {id: 3}],
+        setMembers
+      }
+      const noChangePrevProps = {
+        ...defaultMinProps,
+        initialMembers: [{id: 1}, {id: 2}, {id: 3}]
+      }
+
+      const yesChangePrevProps = {
+        ...defaultMinProps,
+        initialMembers: [{id: 1}, {id: 2}]
+      }
+      const wrapper = renderComponent(shallow, props)
+      wrapper.instance().componentDidUpdate(noChangePrevProps)
+      expect(setMembers).not.toHaveBeenCalled()
+      wrapper.instance().componentDidUpdate(yesChangePrevProps)
+      expect(setMembers).toHaveBeenCalled()
     })
   })
 
