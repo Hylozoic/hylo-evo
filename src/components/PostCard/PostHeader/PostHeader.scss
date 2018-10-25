@@ -84,6 +84,10 @@
 
 .upperRight {
   margin-left: auto;
+  display: flex;
+  vertical-align: top;
+  justify-content: right;
+  align-items: baseline;
 }
 
 .pinIcon {
