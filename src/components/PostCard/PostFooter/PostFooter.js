@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import { find, get, sortBy } from 'lodash/fp'
 import './PostFooter.scss'
@@ -52,7 +51,7 @@ export default class PostFooter extends React.PureComponent {
     }
 
     return <div styleName='footer'>
-      <RoundImageRow imageUrls={avatarUrls} styleName='people' onClick={onClick} />
+      <RoundImageRow imageUrls={avatarUrls.slice(0,3)} styleName='people' onClick={onClick} />
       <span styleName='caption' onClick={onClick} style={{cursor: onClick ? 'pointer' : 'inherit'}}>
         {caption}
       </span>
