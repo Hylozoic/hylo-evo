@@ -188,28 +188,26 @@ export default class PrimaryLayout extends Component {
               )}
             />
 
-            {/* TODO this route should probably redirect to the communities projects page when it's implemented (or remove this if the URLS are the same) */}
-            <Route
-              exact
-              path='/c/:slug/projects'
-              render={props => (
-                <Redirect to={`/c/${props.match.params.slug}?project`} />
-              )}
-            />
             <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
             <Route path='/all' exact component={Feed} />
+            <Route path='/all/:postType(project)' exact component={Feed} />
             <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
+            <Route path='/all/:postType(project)/:postId' component={Feed} />
             <Route path='/all/p/:postId' component={Feed} />
             <Route path='/c/:slug' exact component={Feed} />
+            <Route path='/c/:slug/:postType(project)' exact component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
             <Route path='/c/:slug/m/:id' component={MemberProfile} />
             <Route path='/m/:id' component={MemberProfile} />
+            <Route path='/c/:slug/:postType(project)/:postId' component={Feed} />
             <Route path='/c/:slug/p/:postId' component={Feed} />
             <Route path='/c/:slug/topics' component={AllTopics} />
             <Route path='/c/:slug/settings' component={CommunitySettings} />
             <Route path='/c/:slug/:topicName/p/:postId' component={Feed} />
             <Route path='/c/:slug/:topicName' component={Feed} />
             <Route path='/n/:networkSlug' exact component={Feed} />
+            <Route path='/n/:networkSlug/:postType(project)' exact component={Feed} />
+            <Route path='/n/:networkSlug/:postType(project)/:postId' component={Feed} />
             <Route path='/n/:networkSlug/p/:postId' component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
             <Route path='/n/:networkSlug/m/:id' component={MemberProfile} />
@@ -237,6 +235,7 @@ export default class PrimaryLayout extends Component {
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
+          <Route path='/c/:slug/:postType(project)/new' exact component={CommunitySidebar} />
           <Route path='/c/:slug/p/new' exact component={CommunitySidebar} />
           <Route path='/c/:slug' exact component={CommunitySidebar} />
           <Route path='/c/:slug/:topicName/p/new' exact component={CommunitySidebar} />
@@ -275,23 +274,34 @@ export default class PrimaryLayout extends Component {
 
 const postEditorRoutes = [
   {path: '/all/p/new', forNew: true},
+  {path: '/all/:postType(project)/new', forNew: true},
   {path: '/c/:slug/p/new', forNew: true},
+  {path: '/c/:slug/:postType(project)/new', forNew: true},
   {path: '/c/:slug/:topicName/p/new', forNew: true},
+  {path: '/all/:postType(project)/edit'},
   {path: '/all/p/:postId/edit'},
   {path: '/c/:slug/p/:postId/edit'},
+  {path: '/c/:postType(project)/:postId/edit'},
   {path: '/c/:slug/m/:id/p/:postId/edit'},
+  {path: '/c/:slug/m/:id/:postType(project)/:postId/edit'},
   {path: '/c/:slug/:topicName/p/:postId/edit'},
+  {path: '/n/:slug/m/:id/:postType(project)/:postId/edit'},
   {path: '/n/:slug/m/:id/p/:postId/edit'}
 ]
 
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
+  {path: `/all/:postType(project)/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/all/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/c/:slug/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/c/:slug/:postType(project)/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/n/:networkSlug/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/n/:networkSlug/:postType(project)/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/c/:slug/m/:id/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/c/:slug/m/:id/:postType(project)/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/c/:slug/:topicName/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/n/:slug/m/:id/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail}
+  {path: `/n/:slug/m/:id/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/n/:slug/m/:id/:postType(project)/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail}
 ]
 
 const signupRoutes = [

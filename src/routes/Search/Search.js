@@ -130,7 +130,7 @@ export function SearchResult ({ searchResult, term = '', showPostDetails, showPe
       component = <PostCard
         styleName='postcard-expand'
         post={content}
-        showDetails={() => showPostDetails(content.id)} highlightProps={highlightProps} />
+        showDetails={() => showPostDetails(content.id, content.type)} highlightProps={highlightProps} />
       break
     case 'Comment':
       component = <CommentCard comment={content} expanded={false} highlightProps={highlightProps} />

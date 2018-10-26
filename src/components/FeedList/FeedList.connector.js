@@ -10,7 +10,6 @@ import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reduce
 export function mapStateToProps (state, props) {
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const communityId = currentCommunity && currentCommunity.id
-
   const posts = getPosts(state, props).map(p => presentPost(p, communityId))
 
   return {
@@ -50,8 +49,6 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
-
 const getPostResults = makeGetQueryResults(FETCH_POSTS)
 
 export const getPosts = makeQueryResultsModelSelector(
@@ -60,3 +57,5 @@ export const getPosts = makeQueryResultsModelSelector(
 )
 
 const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)

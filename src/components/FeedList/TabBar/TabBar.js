@@ -12,8 +12,8 @@ const tabs = [
   {id: 'all', label: 'All'},
   {id: 'discussion', label: 'Discussions'},
   {id: 'request', label: 'Requests'},
-  {id: 'offer', label: 'Offers'},
-  {id: 'project', label: 'Projects'}
+  {id: 'offer', label: 'Offers'}
+  // {id: 'project', label: 'Projects'}
 ]
 
 const sortOptions = [

@@ -33,12 +33,14 @@ export function mapStateToProps (state, props) {
     rootSlug = ''
     rootPath = communityUrl()
   }
+  const projectsPath = `${rootPath}/project`
 
   return {
     rootId,
     rootSlug,
     rootPath,
     membersPath,
+    projectsPath,
     badge,
     feedListProps: get('FeedList.feedListProps', state),
     communityMembership
@@ -56,10 +58,6 @@ export function mapDispatchToProps (dispatch, props) {
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const {
-    rootId,
-    rootSlug,
-    rootPath,
-    membersPath,
     badge,
     feedListProps,
     communityMembership
@@ -67,11 +65,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
 
   return {
     ...ownProps,
-    rootId,
-    rootSlug,
-    rootPath,
-    membersPath,
-    badge,
+    ...stateProps,
+    ...dispatchProps,
     clearFeedList: dispatchProps.dropPostResultsMaker(feedListProps),
     clearBadge: badge
       ? () => dispatchProps.resetNewPostCount(communityMembership.community.id, 'Membership')

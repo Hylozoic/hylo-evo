@@ -101,8 +101,8 @@ export function mapDispatchToProps (dispatch, props) {
     setSearchFilter: filter => dispatch(setSearchFilter(filter)),
     fetchSearchResultsDebounced: debounce(500, opts =>
       dispatch(fetchSearchResults(opts))),
-    showPostDetails: postId =>
-      dispatch(push(postUrl(postId))),
+    showPostDetails: (postId, type = null) =>
+      dispatch(push(postUrl(postId, null, {postType: type}))),
     showPerson: personId =>
       dispatch(push(personUrl(personId)))
   }

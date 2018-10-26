@@ -77,6 +77,7 @@ export default class FeedList extends React.Component {
       changeTab,
       changeSort,
       posts,
+      postType,
       pending,
       slug
     } = this.props
@@ -84,19 +85,20 @@ export default class FeedList extends React.Component {
     const style = {
       width: tabBarWidth + 'px'
     }
+    const isProject = postType === 'project'
 
     return <div styleName='FeedList-container'>
       <ScrollListener
         elementId={CENTER_COLUMN_ID}
         onScroll={this.handleScrollEvents} />
-      <div>
+      {!isProject && <div>
         <TabBar ref={this.setStateFromDOM}
           onChangeTab={changeTab}
           selectedTab={filter}
           onChangeSort={changeSort}
           selectedSort={sortBy} />
-      </div>
-      {atTabBar && <div styleName='tabbar-sticky' style={style}>
+      </div>}
+      {!isProject && atTabBar && <div styleName='tabbar-sticky' style={style}>
         <TabBar onChangeTab={changeTab}
           selectedTab={filter}
           onChangeSort={changeSort}
@@ -110,7 +112,7 @@ export default class FeedList extends React.Component {
             slug={slug}
             styleName={cx('FeedListItem', {expanded})}
             expanded={expanded}
-            showDetails={() => showPostDetails(post.id)}
+            showDetails={() => showPostDetails(post.id, post.type)}
             key={post.id} />
         })}
       </div>

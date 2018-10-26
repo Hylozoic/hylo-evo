@@ -23,6 +23,7 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const currentUserHasMemberships = !isEmpty(getMemberships(state))
   const communitySlug = getParam('slug', state, props)
+  const postType = getParam('postType', state, props)
   const topicName = getParam('topicName', state, props)
   const networkSlug = getParam('networkSlug', state, props)
 
@@ -39,7 +40,7 @@ export function mapStateToProps (state, props) {
     network = getNetworkForCurrentRoute(state, props)
   }
 
-  const filter = getQueryParam('t', state, props)
+  const filter = postType || getQueryParam('t', state, props)
   const sortBy = getQueryParam('s', state, props)
 
   return {
@@ -47,6 +48,7 @@ export function mapStateToProps (state, props) {
     sortBy,
     communityTopic,
     communitySlug,
+    postType,
     topicName,
     topic,
     postsTotal: get('postsTotal', communitySlug ? communityTopic : topic),
@@ -67,6 +69,7 @@ export const mapDispatchToProps = function (dispatch, props) {
   const slug = getParam('slug', null, props)
   const topicName = getParam('topicName', null, props)
   const params = getQueryParam(['s', 't'], null, props)
+  const postType = getParam('postType', null, props)
   const networkSlug = getParam('networkSlug', null, props)
 
   return {
@@ -74,10 +77,10 @@ export const mapDispatchToProps = function (dispatch, props) {
     changeSort: sort => dispatch(changeQueryParam(props, 's', sort, 'all')),
     // we need to preserve url parameters when opening the details for a post,
     // or the center column will revert to its default sort & filter settings
-    showPostDetails: postId =>
-      dispatch(push(makeUrl(postUrl(postId, slug, {topicName, networkSlug}), params))),
+    showPostDetails: (id, type = null) =>
+      dispatch(push(makeUrl(postUrl(id, slug, {postType: type, topicName, networkSlug}), params))),
     newPost: () =>
-      dispatch(push(makeUrl(postUrl('new', slug, {topicName}), params))),
+      dispatch(push(makeUrl(postUrl('new', slug, {postType, topicName}), params))),
     fetchTopic: () => {
       if (slug && topicName) {
         return dispatch(fetchCommunityTopic(topicName, slug))

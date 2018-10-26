@@ -36,25 +36,10 @@ export function postUrl (id, slug, opts = {}) {
   } else {
     base = allCommunitiesUrl()
   }
-  let result = `${base}/p/${id}`
-  return opts.action ? `${result}/${opts.action}` : result
-}
-
-// FIXME: refactor this and postUrl to reuse code
-export function projectUrl (id, slug, opts = {}) {
-  let base = ''
-  if (opts.memberId) {
-    base = personUrl(opts.memberId, slug)
-  } else if (opts.topicName) {
-    base = tagUrl(opts.topicName, slug)
-  } else if (opts.networkSlug) {
-    base = networkUrl(opts.networkSlug)
-  } else if (slug) {
-    base = communityUrl(slug)
-  } else {
-    base = allCommunitiesUrl()
-  }
-  let result = `${base}/project/${id}`
+  // NOTE: If expand postType queryParam usage remove this
+  //       static case
+  let postType = get('postType', opts) === 'project' ? 'project' : 'p'
+  let result = `${base}/${postType}/${id}`
   return opts.action ? `${result}/${opts.action}` : result
 }
 

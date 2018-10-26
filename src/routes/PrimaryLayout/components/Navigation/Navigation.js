@@ -12,6 +12,7 @@ export default function Navigation (props) {
     rootSlug,
     rootPath,
     membersPath,
+    projectsPath,
     badge,
     clearBadge,
     clearFeedList,
@@ -38,6 +39,11 @@ export default function Navigation (props) {
       label: 'Members',
       icon: 'Members',
       to: membersPath
+    },
+    projectsPath && {
+      label: 'Projects',
+      icon: 'Projects',
+      to: projectsPath
     }
   ])
 

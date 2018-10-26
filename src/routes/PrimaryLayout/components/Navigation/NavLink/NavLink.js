@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import BadgedIcon from 'components/BadgedIcon'
 import Badge from 'components/Badge'
 import cx from 'classnames'
-import './component.scss'
+import './NavLink.scss'
 
 export default function NavLink (
   { to, exact, label, icon, badge, onClick, collapsed = false }
