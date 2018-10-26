@@ -75,11 +75,6 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
           render={[Function]}
         />
         <Route
-          exact={true}
-          path="/c/:slug/projects"
-          render={[Function]}
-        />
-        <Route
           component={[Function]}
           exact={true}
           path="/tag/:topicName"
@@ -92,7 +87,16 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
         <Route
           component={[Function]}
           exact={true}
+          path="/all/:postType(project)"
+        />
+        <Route
+          component={[Function]}
+          exact={true}
           path="/all/:topicName"
+        />
+        <Route
+          component={[Function]}
+          path="/all/:postType(project)/:postId"
         />
         <Route
           component={[Function]}
@@ -105,6 +109,11 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
         />
         <Route
           component={[Function]}
+          exact={true}
+          path="/c/:slug/:postType(project)"
+        />
+        <Route
+          component={[Function]}
           path="/c/:slug/members"
         />
         <Route
@@ -114,6 +123,10 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
         <Route
           component={[Function]}
           path="/m/:id"
+        />
+        <Route
+          component={[Function]}
+          path="/c/:slug/:postType(project)/:postId"
         />
         <Route
           component={[Function]}
@@ -139,6 +152,15 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
           component={[Function]}
           exact={true}
           path="/n/:networkSlug"
+        />
+        <Route
+          component={[Function]}
+          exact={true}
+          path="/n/:networkSlug/:postType(project)"
+        />
+        <Route
+          component={[Function]}
+          path="/n/:networkSlug/:postType(project)/:postId"
         />
         <Route
           component={[Function]}
@@ -225,6 +247,11 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
       <Route
         component={[Function]}
         exact={true}
+        path="/c/:slug/:postType(project)/new"
+      />
+      <Route
+        component={[Function]}
+        exact={true}
         path="/c/:slug/p/new"
       />
       <Route
@@ -271,6 +298,11 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
       />
       <Route
         component={[Function]}
+        key="/all/:postType(project)/:postId(\\\\d+)"
+        path="/all/:postType(project)/:postId(\\\\d+)"
+      />
+      <Route
+        component={[Function]}
         key="/all/p/:postId(\\\\d+)"
         path="/all/p/:postId(\\\\d+)"
       />
@@ -281,13 +313,28 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
       />
       <Route
         component={[Function]}
+        key="/c/:slug/:postType(project)/:postId(\\\\d+)"
+        path="/c/:slug/:postType(project)/:postId(\\\\d+)"
+      />
+      <Route
+        component={[Function]}
         key="/n/:networkSlug/p/:postId(\\\\d+)"
         path="/n/:networkSlug/p/:postId(\\\\d+)"
       />
       <Route
         component={[Function]}
+        key="/n/:networkSlug/:postType(project)/:postId(\\\\d+)"
+        path="/n/:networkSlug/:postType(project)/:postId(\\\\d+)"
+      />
+      <Route
+        component={[Function]}
         key="/c/:slug/m/:id/p/:postId(\\\\d+)"
         path="/c/:slug/m/:id/p/:postId(\\\\d+)"
+      />
+      <Route
+        component={[Function]}
+        key="/c/:slug/m/:id/:postType(project)/:postId(\\\\d+)"
+        path="/c/:slug/m/:id/:postType(project)/:postId(\\\\d+)"
       />
       <Route
         component={[Function]}
@@ -298,6 +345,11 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
         component={[Function]}
         key="/n/:slug/m/:id/p/:postId(\\\\d+)"
         path="/n/:slug/m/:id/p/:postId(\\\\d+)"
+      />
+      <Route
+        component={[Function]}
+        key="/n/:slug/m/:id/:postType(project)/:postId(\\\\d+)"
+        path="/n/:slug/m/:id/:postType(project)/:postId(\\\\d+)"
       />
     </div>
   </div>
@@ -325,13 +377,28 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
   />
   <Route
     exact={true}
+    key="/all/:postType(project)/new"
+    path="/all/:postType(project)/new"
+  />
+  <Route
+    exact={true}
     key="/c/:slug/p/new"
     path="/c/:slug/p/new"
   />
   <Route
     exact={true}
+    key="/c/:slug/:postType(project)/new"
+    path="/c/:slug/:postType(project)/new"
+  />
+  <Route
+    exact={true}
     key="/c/:slug/:topicName/p/new"
     path="/c/:slug/:topicName/p/new"
+  />
+  <Route
+    exact={true}
+    key="/all/:postType(project)/edit"
+    path="/all/:postType(project)/edit"
   />
   <Route
     exact={true}
@@ -345,13 +412,28 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
   />
   <Route
     exact={true}
+    key="/c/:postType(project)/:postId/edit"
+    path="/c/:postType(project)/:postId/edit"
+  />
+  <Route
+    exact={true}
     key="/c/:slug/m/:id/p/:postId/edit"
     path="/c/:slug/m/:id/p/:postId/edit"
   />
   <Route
     exact={true}
+    key="/c/:slug/m/:id/:postType(project)/:postId/edit"
+    path="/c/:slug/m/:id/:postType(project)/:postId/edit"
+  />
+  <Route
+    exact={true}
     key="/c/:slug/:topicName/p/:postId/edit"
     path="/c/:slug/:topicName/p/:postId/edit"
+  />
+  <Route
+    exact={true}
+    key="/n/:slug/m/:id/:postType(project)/:postId/edit"
+    path="/n/:slug/m/:id/:postType(project)/:postId/edit"
   />
   <Route
     exact={true}

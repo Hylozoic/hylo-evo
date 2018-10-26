@@ -154,9 +154,7 @@ exports[`renders for all communities 1`] = `
               }
             />
           </RoundImage>
-          Hi 
-          Bob
-          , what's on your mind?
+          Hi Bob, what's on your mind?
         </div>
         <div
           data-stylename="shadow"

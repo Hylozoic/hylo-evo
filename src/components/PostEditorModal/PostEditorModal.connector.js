@@ -7,7 +7,8 @@ export const mapDispatchToProps = (dispatch, props) => {
   if (match && forNew) {
     // go back to the feed
     closeUrl = match.url.replace('/p/new', '')
-    closeUrl = match.url.replace('/project/new', '/project')
+    // TODO: Hackety
+    closeUrl = closeUrl.replace('/project/new', '/project')
   } else if (match) {
     // go back to the feed + expanded post
     closeUrl = match.url.replace('/edit', '')

@@ -6,10 +6,14 @@ Object {
   "bar": 2,
   "clearBadge": [Function],
   "clearFeedList": undefined,
+  "communityMembership": Object {
+    "community": Object {
+      "id": 2,
+    },
+    "id": 77,
+  },
+  "dropPostResultsMaker": [Function],
   "foo": 1,
-  "membersPath": undefined,
-  "rootId": undefined,
-  "rootPath": undefined,
-  "rootSlug": undefined,
+  "resetNewPostCount": [Function],
 }
 `;
