@@ -73,22 +73,22 @@ export default class Feed extends Component {
     return <div>
       {topicName
         ? <TopicFeedHeader
-            communityTopic={communityTopic}
-            topicName={topicName}
-            postsTotal={postsTotal}
-            followersTotal={followersTotal}
-            topic={topic}
-            postType={postType}
-            community={community}
-            currentUser={currentUser}
-            newPost={newPost} />
+          communityTopic={communityTopic}
+          topicName={topicName}
+          postsTotal={postsTotal}
+          followersTotal={followersTotal}
+          topic={topic}
+          postType={postType}
+          community={community}
+          currentUser={currentUser}
+          newPost={newPost} />
         : <FeedBanner
-            community={community || network}
-            currentUser={currentUser}
-            postType={postType}
-            all={!community && !networkSlug}
-            newPost={newPost}
-            currentUserHasMemberships={currentUserHasMemberships} />}
+          community={community || network}
+          currentUser={currentUser}
+          postType={postType}
+          all={!community && !networkSlug}
+          newPost={newPost}
+          currentUserHasMemberships={currentUserHasMemberships} />}
       {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}
       {!membershipsPending && !currentUserHasMemberships && <CreateCommunityPrompt
         goToCreateCommunity={goToCreateCommunity}

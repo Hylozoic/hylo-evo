@@ -47,6 +47,7 @@ import './PrimaryLayout.scss'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 
 export const POST_ID_MATCH_REGEX = '\\d+'
+export const POST_TYPES_ALLOWED_REGEX = 'project'
 
 export default class PrimaryLayout extends Component {
   static propTypes = {
@@ -190,24 +191,24 @@ export default class PrimaryLayout extends Component {
 
             <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
             <Route path='/all' exact component={Feed} />
-            <Route path='/all/:postType(project)' exact component={Feed} />
+            <Route path={`/all/:postType(${POST_TYPES_ALLOWED_REGEX})`} exact component={Feed} />
             <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
-            <Route path='/all/:postType(project)/:postId' component={Feed} />
+            <Route path={`/all/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId`} component={Feed} />
             <Route path='/all/p/:postId' component={Feed} />
             <Route path='/c/:slug' exact component={Feed} />
-            <Route path='/c/:slug/:postType(project)' exact component={Feed} />
+            <Route path={`/c/:slug/:postType(${POST_TYPES_ALLOWED_REGEX})`} exact component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
             <Route path='/c/:slug/m/:id' component={MemberProfile} />
             <Route path='/m/:id' component={MemberProfile} />
-            <Route path='/c/:slug/:postType(project)/:postId' component={Feed} />
+            <Route path={`/c/:slug/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId`} component={Feed} />
             <Route path='/c/:slug/p/:postId' component={Feed} />
             <Route path='/c/:slug/topics' component={AllTopics} />
             <Route path='/c/:slug/settings' component={CommunitySettings} />
             <Route path='/c/:slug/:topicName/p/:postId' component={Feed} />
             <Route path='/c/:slug/:topicName' component={Feed} />
             <Route path='/n/:networkSlug' exact component={Feed} />
-            <Route path='/n/:networkSlug/:postType(project)' exact component={Feed} />
-            <Route path='/n/:networkSlug/:postType(project)/:postId' component={Feed} />
+            <Route path={`/n/:networkSlug/:postType(${POST_TYPES_ALLOWED_REGEX})`} exact component={Feed} />
+            <Route path={`/n/:networkSlug/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId`} component={Feed} />
             <Route path='/n/:networkSlug/p/:postId' component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
             <Route path='/n/:networkSlug/m/:id' component={MemberProfile} />
@@ -235,7 +236,7 @@ export default class PrimaryLayout extends Component {
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
-          <Route path='/c/:slug/:postType(project)/new' exact component={CommunitySidebar} />
+          <Route path={`/c/:slug/:postType(${POST_TYPES_ALLOWED_REGEX})/new`} exact component={CommunitySidebar} />
           <Route path='/c/:slug/p/new' exact component={CommunitySidebar} />
           <Route path='/c/:slug' exact component={CommunitySidebar} />
           <Route path='/c/:slug/:topicName/p/new' exact component={CommunitySidebar} />
@@ -274,34 +275,34 @@ export default class PrimaryLayout extends Component {
 
 const postEditorRoutes = [
   {path: '/all/p/new', forNew: true},
-  {path: '/all/:postType(project)/new', forNew: true},
+  {path: `/all/:postType(${POST_TYPES_ALLOWED_REGEX})/new`, forNew: true},
   {path: '/c/:slug/p/new', forNew: true},
-  {path: '/c/:slug/:postType(project)/new', forNew: true},
+  {path: `/c/:slug/:postType(${POST_TYPES_ALLOWED_REGEX})/new`, forNew: true},
   {path: '/c/:slug/:topicName/p/new', forNew: true},
-  {path: '/all/:postType(project)/edit'},
+  {path: `/all/:postType(${POST_TYPES_ALLOWED_REGEX})/edit`},
   {path: '/all/p/:postId/edit'},
   {path: '/c/:slug/p/:postId/edit'},
-  {path: '/c/:postType(project)/:postId/edit'},
+  {path: `/c/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId/edit`},
   {path: '/c/:slug/m/:id/p/:postId/edit'},
-  {path: '/c/:slug/m/:id/:postType(project)/:postId/edit'},
+  {path: `/c/:slug/m/:id/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId/edit`},
   {path: '/c/:slug/:topicName/p/:postId/edit'},
-  {path: '/n/:slug/m/:id/:postType(project)/:postId/edit'},
+  {path: `/n/:slug/m/:id/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId/edit`},
   {path: '/n/:slug/m/:id/p/:postId/edit'}
 ]
 
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
-  {path: `/all/:postType(project)/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/all/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/all/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/c/:slug/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/c/:slug/:postType(project)/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/c/:slug/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/n/:networkSlug/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/n/:networkSlug/:postType(project)/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/n/:networkSlug/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/c/:slug/m/:id/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/c/:slug/m/:id/:postType(project)/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/c/:slug/m/:id/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/c/:slug/:topicName/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
   {path: `/n/:slug/m/:id/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/n/:slug/m/:id/:postType(project)/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail}
+  {path: `/n/:slug/m/:id/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail}
 ]
 
 const signupRoutes = [

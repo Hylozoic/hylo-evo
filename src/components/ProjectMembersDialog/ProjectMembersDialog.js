@@ -21,7 +21,7 @@ export default class ProjectMembersDialog extends React.PureComponent {
   selectMember = member => () => this.setState({
     selectedMember: member
   })
-  
+
   search = ({ target }) => {
     const searchString = target.value
     const membersFilter = (m) => m.name.toLowerCase().includes(searchString.toLowerCase())
@@ -31,7 +31,7 @@ export default class ProjectMembersDialog extends React.PureComponent {
       members: filter(membersFilter, this.props.members)}
     )
   }
-  
+
   render () {
     const { members, searchString, selectedMember } = this.state
     const { onClose } = this.props
@@ -43,14 +43,14 @@ export default class ProjectMembersDialog extends React.PureComponent {
       showCancelButton={false}
       showSubmitButton={false}
       style={{width: '100%', maxWidth: '600px'}}>
-        <div styleName='container'>
-          {/* 
-            TODO: Can make memberDetails optional by adding a `withDetails` flag
-            sending in `goToMember` and switchin the onClick on a `MemberRow` to
-            go there instead of showing detail and making adding a conditional
-            style to make width of members-list be 100% in that case.
-          */}
-          <div styleName='members-list'>
+      <div styleName='container'>
+        {/*
+          TODO: Can make memberDetails optional by adding a `withDetails` flag
+          sending in `goToMember` and switchin the onClick on a `MemberRow` to
+          go there instead of showing detail and making adding a conditional
+          style to make width of members-list be 100% in that case.
+        */}
+        <div styleName='members-list'>
           <TextInput
             styleName='members-search-input'
             aria-label='members-search'
@@ -62,18 +62,18 @@ export default class ProjectMembersDialog extends React.PureComponent {
             value={searchString}
             placeholder='Find a member'
           />
-            <section>
-              {members.map(member => 
-                <MemberRow
-                  member={member}
-                  selected={member.id === get('id', selectedMember)}
-                  onClick={this.selectMember(member)}
-                  key={member.id} />
-              )}
-            </section>
-          </div>
-          {selectedMember && <MemberDetail member={selectedMember} />}
+          <section>
+            {members.map(member =>
+              <MemberRow
+                member={member}
+                selected={member.id === get('id', selectedMember)}
+                onClick={this.selectMember(member)}
+                key={member.id} />
+            )}
+          </section>
         </div>
+        {selectedMember && <MemberDetail member={selectedMember} />}
+      </div>
     </ModalDialog>
   }
 }

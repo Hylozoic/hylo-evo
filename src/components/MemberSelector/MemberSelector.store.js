@@ -109,6 +109,7 @@ export default function reducer (state = defaultState, action) {
           members: state.members.filter(p => p.id !== payload.id)
         }
       }
+      break
 
     case SET_MEMBERS:
       return {

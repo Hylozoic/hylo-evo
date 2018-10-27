@@ -32,8 +32,10 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   const { location } = props
   const id = getParam('postId', {}, props)
-  const removePostDetailFromPath = pathname =>
-    pathname.replace(/\/p\/(.+)/, '')
+  const removePostDetailFromPath = pathname => {
+    pathname
+      .replace(/\/project\/(.+)/, '')
+  }
   const closeLocation = {
     ...props.location,
     pathname: removePostDetailFromPath(location.pathname)
@@ -45,7 +47,7 @@ export function mapDispatchToProps (dispatch, props) {
     editPost: () => dispatch(push(`${id}/edit`)),
     joinProject: () => dispatch(joinProject(id)),
     leaveProject: () => dispatch(leaveProject(id)),
-    voteOnPost: (id, myVote) => dispatch(voteOnPost(id, myVote))  
+    voteOnPost: (id, myVote) => dispatch(voteOnPost(id, myVote))
   }
 }
 

@@ -51,7 +51,7 @@ export function mapStateToProps (state, props) {
   const slug = getParam('slug', null, props)
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
-  const postTypeContext = getParam('postType', null, props) || getQueryParam('t', null, props) 
+  const postTypeContext = getParam('postType', null, props) || getQueryParam('t', null, props)
   const isProject = postTypeContext === 'project' || get('type', post) === 'project'
   const announcementSelected = state[MODULE_NAME].announcement
   const canModerate = currentUser && currentUser.canModerate(currentCommunity)

@@ -151,8 +151,7 @@ export default class PostDetail extends Component {
         slug={slug}
         expanded
         styleName='body'
-        fileAttachments={post.fileAttachments}>
-      </PostBody>
+        fileAttachments={post.fileAttachments} />
       {isProject && <div styleName='join-project-button-container'>
         <JoinProjectButton
           joinProject={joinProject}

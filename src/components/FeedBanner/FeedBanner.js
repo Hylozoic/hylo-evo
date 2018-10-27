@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
 import { bgImageStyle } from 'util/index'
@@ -46,7 +45,7 @@ export default function FeedBanner ({
         </div>
       </div>
     </div>
-    {currentUserHasMemberships && <PostPrompt currentUser={currentUser} postType={postType} newPost={newPost} /> }
+    {currentUserHasMemberships && <PostPrompt currentUser={currentUser} postType={postType} newPost={newPost} />}
   </div>
 }
 
@@ -63,7 +62,7 @@ export class PostPrompt extends React.Component {
   render () {
     const { currentUser, newPost, postType, className } = this.props
     const { hover } = this.state
-    
+
     if (!currentUser) return null
 
     const prompt = postType === 'project'

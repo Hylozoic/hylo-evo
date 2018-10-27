@@ -29,7 +29,7 @@ export const presentPost = (post, communityId) => {
     fileAttachments: post.attachments.filter(a => a.type === 'file').toModelArray(),
     pinned,
     topics: post.topics.toModelArray(),
-    members:  post.members.toModelArray().map(person => {
+    members: post.members.toModelArray().map(person => {
       return {
         ...person.ref,
         skills: person.skills.toRefArray()

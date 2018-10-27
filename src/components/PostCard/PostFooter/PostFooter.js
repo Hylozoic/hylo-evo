@@ -21,7 +21,7 @@ export default class PostFooter extends React.PureComponent {
     } = this.props
     const isProject = type === 'project'
     let avatarUrls, caption
-    
+
     if (isProject) {
       avatarUrls = members.map(p => p.avatarUrl)
       caption = peopleCaption(
@@ -33,7 +33,7 @@ export default class PostFooter extends React.PureComponent {
           phraseSingular: 'is a member',
           mePhraseSingular: 'are a member',
           pluralPhrase: 'are members'
-        }      
+        }
       )
     } else {
       avatarUrls = commenters.map(p => p.avatarUrl)
@@ -46,12 +46,12 @@ export default class PostFooter extends React.PureComponent {
           phraseSingular: 'commented',
           mePhraseSingular: 'commented',
           pluralPhrase: 'commented'
-        }      
+        }
       )
     }
 
     return <div styleName='footer'>
-      <RoundImageRow imageUrls={avatarUrls.slice(0,3)} styleName='people' onClick={onClick} />
+      <RoundImageRow imageUrls={avatarUrls.slice(0, 3)} styleName='people' onClick={onClick} />
       <span styleName='caption' onClick={onClick} style={{cursor: onClick ? 'pointer' : 'inherit'}}>
         {caption}
       </span>
