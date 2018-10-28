@@ -21,13 +21,13 @@ export function mapDispatchToProps (dispatch) {
       .then(() => dispatch(push(closeUrl)))
     }
   }
-  const editPost = (id, slug, opts = {}) =>
-    dispatch(push(postUrl(id, slug, {action: 'edit', ...opts})))
+  const editPost = (id, opts = {}) =>
+    dispatch(push(postUrl(id, {action: 'edit', ...opts})))
 
   return {
     deletePost: deletePostWithConfirm,
     editPost,
-    removePost: (postId, slug) => dispatch(removePost(postId, slug)),
+    removePost: (postId, communitySlug) => dispatch(removePost(postId, communitySlug)),
     pinPost: (postId, communityId) => dispatch(pinPost(postId, communityId))
   }
 }
@@ -45,7 +45,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...dispatchProps,
     ...ownProps,
     deletePost: isCreator ? () => deletePost(id) : null,
-    editPost: canEdit ? () => editPost(id, slug, {networkSlug, postTypeContext: type}) : null,
+    editPost: canEdit ? () => editPost(id, {communitySlug: slug, networkSlug, postTypeContext: type}) : null,
     canFlag: !isCreator,
     pinPost: canModerate && community ? () => pinPost(id, community.id) : null,
     removePost: !isCreator && canModerate ? () => removePost(id, slug) : null,

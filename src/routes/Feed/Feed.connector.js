@@ -23,8 +23,8 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const currentUserHasMemberships = !isEmpty(getMemberships(state))
   const communitySlug = getParam('slug', state, props)
-  const topicName = getParam('topicName', state, props)
   const networkSlug = getParam('networkSlug', state, props)
+  const topicName = getParam('topicName', state, props)
   const postTypeContext = getPostTypeContext(state, props)
 
   if (communitySlug) {
@@ -67,7 +67,7 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = function (dispatch, props) {
-  const slug = getParam('slug', null, props)
+  const communitySlug = getParam('slug', null, props)
   const topicName = getParam('topicName', null, props)
   const params = getQueryParam(['s', 't'], null, props)
   const postTypeContext = getPostTypeContext(null, props)
@@ -79,16 +79,16 @@ export const mapDispatchToProps = function (dispatch, props) {
     // we need to preserve url parameters when opening the details for a post,
     // or the center column will revert to its default sort & filter settings
     showPostDetails: (id, postTypeContext = null) =>
-      dispatch(push(makeUrl(postUrl(id, slug, {postTypeContext, topicName, networkSlug}), params))),
+      dispatch(push(makeUrl(postUrl(id, {communitySlug, postTypeContext, topicName, networkSlug}), params))),
     newPost: () =>
-      dispatch(push(makeUrl(postUrl('new', slug, {postTypeContext, topicName, networkSlug}), params))),
+      dispatch(push(makeUrl(postUrl('new', {communitySlug, postTypeContext, topicName, networkSlug}), params))),
     fetchTopic: () => {
-      if (slug && topicName) {
-        return dispatch(fetchCommunityTopic(topicName, slug))
+      if (communitySlug && topicName) {
+        return dispatch(fetchCommunityTopic(topicName, communitySlug))
         .then(action => {
           // redirect if no topic found
           if (!action.payload.data.communityTopic) {
-            dispatch(replace(topicsUrl(slug)))
+            dispatch(replace(topicsUrl(communitySlug)))
           }
         })
       } else if (topicName) {

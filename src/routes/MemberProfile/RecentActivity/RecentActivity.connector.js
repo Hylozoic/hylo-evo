@@ -12,8 +12,8 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = {
   fetchRecentActivity,
-  showDetails: (id, slug, memberId) => push(postUrl(id, slug, {memberId})),
-  editPost: (id, slug, memberId) => push(postUrl(id, slug, {action: 'edit', memberId}))
+  showDetails: (id, communitySlug, memberId) => push(postUrl(id, {communitySlug, memberId})),
+  editPost: (id, communitySlug, memberId) => push(postUrl(id, {communitySlug, action: 'edit', memberId}))
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)

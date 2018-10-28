@@ -41,6 +41,7 @@ Object {
       "slug": "bar",
     },
   ],
+  "communitySlug": "foo",
   "currentCommunity": SessionBoundModel {
     "_fields": Object {
       "id": "99",
@@ -87,7 +88,6 @@ Object {
   "postTypeContext": undefined,
   "showFiles": false,
   "showImages": false,
-  "slug": "foo",
   "topic": null,
   "topicName": undefined,
 }
@@ -119,6 +119,7 @@ Object {
       "slug": "bar",
     },
   ],
+  "communitySlug": "foo",
   "currentCommunity": SessionBoundModel {
     "_fields": Object {
       "id": "99",
@@ -165,7 +166,6 @@ Object {
   "postTypeContext": undefined,
   "showFiles": false,
   "showImages": false,
-  "slug": "foo",
   "topic": null,
   "topicName": undefined,
 }

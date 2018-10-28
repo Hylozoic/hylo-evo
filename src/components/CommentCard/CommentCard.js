@@ -18,7 +18,7 @@ export default function CommentCard ({ comment, shouldShowReply, expanded = true
   }
   const commentText = present(sanitize(comment.text), commentPresentOpts)
 
-  return <Link to={postUrl(post.id, slug, {memberId: slug ? creator.id : null})} styleName='link'>
+  return <Link to={postUrl(post.id, {communitySlug: slug, memberId: slug ? creator.id : null})} styleName='link'>
     <div styleName='comment-card'>
       <div styleName='comment-header'>
         <RoundImage url={creator.avatarUrl} large />

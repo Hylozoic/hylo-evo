@@ -97,7 +97,7 @@ describe('mergeProps', () => {
   it('goToPost redirects to topic with topicName', () => {
     const stateProps = {
       topicName: 'thetopicname',
-      slug: 'theslug'
+      communitySlug: 'theslug'
     }
     const dispatchProps = {
       goToUrl: jest.fn()
@@ -119,7 +119,7 @@ describe('mergeProps', () => {
 
   it('goToPost redirects to community feed with no topicName', () => {
     const stateProps = {
-      slug: 'theslug'
+      communitySlug: 'theslug'
     }
     const dispatchProps = {
       goToUrl: jest.fn()

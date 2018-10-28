@@ -4,8 +4,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
-import { capitalize, sortBy } from 'lodash/fp'
-import cx from 'classnames'
 import './TabBar.scss'
 
 const tabs = [
@@ -13,7 +11,6 @@ const tabs = [
   {id: 'discussion', label: 'Discussions'},
   {id: 'request', label: 'Requests'},
   {id: 'offer', label: 'Offers'}
-  // {id: 'project', label: 'Projects'}
 ]
 
 const sortOptions = [

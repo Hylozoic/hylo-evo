@@ -16,7 +16,6 @@ describe('getPostTypeContext', () => {
         }
       }
     }
-    console.log(props)
 
     expect(getPostTypeContext(null, props)).toEqual(POST_TYPE_CONTEXTS[0])
   })

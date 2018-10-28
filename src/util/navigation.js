@@ -1,6 +1,6 @@
 import { matchPath } from 'react-router'
 import qs from 'querystring'
-import { get, isEmpty, omitBy } from 'lodash'
+import { get, isEmpty, omitBy } from 'lodash/fp'
 import { host } from 'config'
 
 // post type / post context related
@@ -35,6 +35,9 @@ export function messagesUrl () {
   return `/t`
 }
 
+export const origin = () =>
+  typeof window !== 'undefined' ? window.location.origin : host
+
 export function baseUrl ({
   memberId,
   topicName,
@@ -55,9 +58,6 @@ export function baseUrl ({
   }
 }
 
-export const origin = () =>
-  typeof window !== 'undefined' ? window.location.origin : host
-
 // derived URL paths
 
 export function personUrl (id, slug) {
@@ -66,27 +66,27 @@ export function personUrl (id, slug) {
   return id ? base + `/m/${id}` : '/'
 }
 
-export function tagUrl (tagName, slug) {
-  const base = baseUrl({communitySlug: slug, defaultUrl: allCommunitiesUrl()})
+export function tagUrl (tagName, communitySlug) {
+  const base = baseUrl({communitySlug, defaultUrl: allCommunitiesUrl()})
 
   return `${base}/${tagName}`
 }
 
-export function postUrl (id, slug, opts = {}) {
-  let postTypeContext = get('postTypeContext', opts)
-  postTypeContext = POST_TYPE_CONTEXTS.includes(postTypeContext) ? postTypeContext : DEFAULT_POST_TYPE_CONTEXT
-  const base = baseUrl({
+export function postUrl (id, opts = {}) {
+  const optsWithDefaults = {
     defaultUrl: allCommunitiesUrl(),
-    ...opts,
-    communitySlug: slug
-  })
+    ...opts
+  }
+  let postTypeContext = get('postTypeContext', optsWithDefaults)
+  postTypeContext = POST_TYPE_CONTEXTS.includes(postTypeContext) ? postTypeContext : DEFAULT_POST_TYPE_CONTEXT
+  const base = baseUrl(optsWithDefaults)
   const result = `${base}/${postTypeContext}/${id}`
 
-  return opts.action ? `${result}/${opts.action}` : result
+  return optsWithDefaults.action ? `${result}/${optsWithDefaults.action}` : result
 }
 
-export function commentUrl (postId, commentId, slug) {
-  return `${postUrl(postId, slug)}#comment_${commentId}`
+export function commentUrl (postId, commentId, communitySlug) {
+  return `${postUrl(postId, {communitySlug})}#comment_${commentId}`
 }
 
 export function communitySettingsUrl (slug) {
@@ -115,7 +115,7 @@ export const communityJoinUrl = ({slug, accessCode}) =>
 // URL utility functions
 
 export function makeUrl (path, params) {
-  params = omitBy(params, x => !x)
+  params = omitBy(x => !x, params)
   return `${path}${!isEmpty(params) ? '?' + qs.stringify(params) : ''}`
 }
 

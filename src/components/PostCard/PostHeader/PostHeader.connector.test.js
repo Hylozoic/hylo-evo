@@ -31,7 +31,7 @@ describe('mapDispatchToProps', () => {
     const dispatchProps = mapDispatchToProps(dispatch)
     expect(dispatchProps).toMatchSnapshot()
     dispatchProps.removePost(10, 'mycommunity')
-    dispatchProps.editPost(10, 'mycommunity')
+    dispatchProps.editPost(10, {communitySlug: 'mycommunity'})
     expect(dispatch).toHaveBeenCalledTimes(2)
 
     dispatchProps.deletePost(1)
@@ -85,7 +85,7 @@ describe('mergeProps', () => {
       expect(dispatchProps.deletePost).toHaveBeenCalledWith(20)
 
       editPost()
-      expect(dispatchProps.editPost).toHaveBeenCalledWith(20, 'mycommunity', expect.any(Object))
+      expect(dispatchProps.editPost).toHaveBeenCalledWith(20, expect.any(Object))
 
       pinPost()
       expect(dispatchProps.pinPost).toHaveBeenCalledWith(20, 33)

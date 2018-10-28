@@ -13,6 +13,7 @@ export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
   const network = getNetworkForCurrentRoute(state, props)
   let rootId, rootSlug, rootPath, membersPath, communityMembership, badge
+
   if (community) {
     rootId = community.id
     rootSlug = get('slug', community)
