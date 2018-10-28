@@ -133,7 +133,6 @@ export const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
 // reducer
 export default function (state = {}, action) {
   if (action.type === STORE_FETCH_POSTS_PARAM) {
-
     return {
       ...state,
       fetchPostsParam: action.payload

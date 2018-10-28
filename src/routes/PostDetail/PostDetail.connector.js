@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { get, find } from 'lodash/fp'
 import { push } from 'react-router-redux'
-import { removePostFromUrl } from 'util/index'
+import { removePostFromUrl } from 'util/navigation'
 import fetchPost from 'store/actions/fetchPost'
 import getParam from 'store/selectors/getParam'
 import getPost, { presentPost } from 'store/selectors/getPost'

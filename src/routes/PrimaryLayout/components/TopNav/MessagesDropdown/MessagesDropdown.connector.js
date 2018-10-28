@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { threadUrl } from 'util/index'
+import { threadUrl } from 'util/navigation'
 import fetchThreads from 'store/actions/fetchThreads'
 import { getThreads } from 'components/ThreadList/ThreadList.store'
 import getMe from 'store/selectors/getMe'

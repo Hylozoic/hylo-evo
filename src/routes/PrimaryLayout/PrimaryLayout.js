@@ -42,7 +42,7 @@ import UserSettings from 'routes/UserSettings'
 import {
   POST_ID_MATCH_REGEX,
   VALID_POST_TYPE_CONTEXTS_MATCH_REGEX
-} from 'util/index'
+} from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 // TODO: Implement create community privacy component when implemented on the server
 // import Privacy from 'routes/CreateCommunity/Privacy'

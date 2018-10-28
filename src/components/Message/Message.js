@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
 import Avatar from 'components/Avatar'
-import { personUrl } from 'util/index'
+import { personUrl } from 'util/navigation'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import './Message.scss'
 

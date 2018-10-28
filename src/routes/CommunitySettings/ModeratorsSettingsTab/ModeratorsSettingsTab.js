@@ -6,7 +6,7 @@ import { KeyControlledItemList } from 'components/KeyControlledList'
 import RemovableListItem from 'components/RemovableListItem'
 import { isEmpty, get } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
-import { personUrl } from 'util/index'
+import { personUrl } from 'util/navigation'
 import ModalDialog from 'components/ModalDialog'
 import CheckBox from 'components/CheckBox'
 

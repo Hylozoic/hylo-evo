@@ -6,7 +6,7 @@ import { Link, NavLink, matchPath } from 'react-router-dom'
 import Badge from 'components/Badge'
 import CreateTopic from 'components/CreateTopic'
 import Icon from 'components/Icon'
-import { tagUrl, topicsUrl } from 'util/index'
+import { tagUrl, topicsUrl } from 'util/navigation'
 import badgeHoverStyles from '../../../../../components/Badge/component.scss'
 import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
 

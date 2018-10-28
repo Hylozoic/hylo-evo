@@ -1,7 +1,7 @@
 import { get, isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { postUrl } from 'util/index'
+import { postUrl } from 'util/navigation'
 import getParam from 'store/selectors/getParam'
 import getPostTypeContext from 'store/selectors/getPostTypeContext'
 import getQueryParam from 'store/selectors/getQueryParam'
@@ -105,8 +105,8 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) || get('payload.data.createProject.id', createPostAction)
     const url = topicName
-      ? postUrl(id, slug, {topicName})
-      : postUrl(id, slug)
+    ? postUrl(id, slug, {topicName})
+    : postUrl(id, slug)
     return goToUrl(url)
   }
 

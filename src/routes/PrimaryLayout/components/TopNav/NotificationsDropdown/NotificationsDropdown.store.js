@@ -16,7 +16,7 @@ import {
   postUrl,
   communityUrl,
   communitySettingsUrl
-} from 'util/index'
+} from 'util/navigation'
 
 export function fetchNotifications () {
   return {

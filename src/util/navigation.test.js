@@ -1,4 +1,8 @@
-import { postUrl, networkCommunitySettingsUrl } from './index'
+import {
+  removePostFromUrl,
+  postUrl,
+  networkCommunitySettingsUrl
+} from './navigation'
 
 describe('postUrl', () => {
   it('should default to displaying the all communities context', () => {
@@ -49,5 +53,17 @@ describe('networkCommunitySettingsUrl', () => {
     const expected = '/n/nslug/settings/communities/cslug'
     const actual = networkCommunitySettingsUrl('nslug', 'cslug')
     expect(actual).toEqual(expected)
+  })
+})
+
+describe('removePostFromUrl', () => {
+  it('should keep Post Module in URL', () => {
+    const result = removePostFromUrl('/c/somecommunity/project/1234')
+    expect(result).toEqual('/c/somecommunity/project')
+  })
+
+  it('should remove default Post route', () => {
+    const result = removePostFromUrl('/c/somecommunity/p/1234')
+    expect(result).toEqual('/c/somecommunity')
   })
 })

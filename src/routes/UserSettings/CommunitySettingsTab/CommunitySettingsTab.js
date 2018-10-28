@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import './CommunitySettingsTab.scss'
 import { Link } from 'react-router-dom'
 import { DEFAULT_AVATAR } from 'store/models/Community'
-import { communityUrl } from 'util/index'
+import { communityUrl } from 'util/navigation'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
 

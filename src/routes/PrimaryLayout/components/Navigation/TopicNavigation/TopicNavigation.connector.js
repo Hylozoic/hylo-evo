@@ -3,7 +3,7 @@ import { push } from 'react-router-redux'
 import { get } from 'lodash/fp'
 import { getSubscribedCommunityTopics } from './TopicNavigation.store'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
-import { removePostFromUrl } from 'util/index'
+import { removePostFromUrl } from 'util/navigation'
 import { FETCH_POSTS } from 'store/constants'
 import { makeDropQueryResults } from 'store/reducers/queryResults'
 

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { getSlugInPath } from 'util/index'
+import { getCommunitySlugInPath } from 'util/navigation'
 import getParam from './getParam'
 
 const isCommunityRoute = createSelector(
@@ -20,5 +20,5 @@ export function getSlugFromLocation (state, props) {
 // slug is a parameter
 function tryLocation (props) {
   if (!props.location) return null
-  return getSlugInPath(props.location.pathname)
+  return getCommunitySlugInPath(props.location.pathname)
 }

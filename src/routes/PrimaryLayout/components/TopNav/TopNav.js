@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { bgImageStyle, personUrl } from 'util/index'
+import { bgImageStyle } from 'util/index'
+import { personUrl } from 'util/navigation'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
 import BadgedIcon from 'components/BadgedIcon'

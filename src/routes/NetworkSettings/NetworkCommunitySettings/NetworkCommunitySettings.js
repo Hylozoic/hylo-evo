@@ -4,7 +4,7 @@ import Loading from 'components/Loading'
 import './NetworkCommunitySettings.scss'
 import Switch from 'components/Switch'
 import Avatar from 'components/Avatar'
-import { personUrl } from 'util/index'
+import { personUrl } from 'util/navigation'
 import { get } from 'lodash'
 
 export default class NetworkCommunitySettings extends Component {

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { origin } from 'util/index'
+import { origin } from 'util/navigation'
 import { regenerateAccessCode, FETCH_COMMUNITY_SETTINGS } from '../CommunitySettings.store'
 import trackAnalyticsEvent from 'store/actions/trackAnalyticsEvent'
 import getMe from 'store/selectors/getMe'

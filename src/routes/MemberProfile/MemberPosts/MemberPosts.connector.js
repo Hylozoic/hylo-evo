@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { postUrl } from 'util/index'
+import { postUrl } from 'util/navigation'
 
 import { memberPostsSelector, fetchMemberPosts } from './MemberPosts.store'
 

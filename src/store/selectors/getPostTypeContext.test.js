@@ -2,7 +2,7 @@ import getPostTypeContext from './getPostTypeContext'
 import {
   POST_TYPE_CONTEXTS,
   DEFAULT_POST_TYPE_CONTEXT
-} from 'util/index'
+} from 'util/navigation'
 // NOTE: getParam can also be mocked as follows to bypass testing getParam
 //       at the same time.
 // jest.mock('./getParam', () => (key, state, props) => 'projects')

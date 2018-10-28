@@ -9,7 +9,8 @@ import FullPageModal from 'routes/FullPageModal'
 import Icon from 'components/Icon'
 import ScrollListener from 'components/ScrollListener'
 import TextInput from 'components/TextInput'
-import { inflectedTotal, tagUrl } from 'util/index'
+import { inflectedTotal } from 'util/index'
+import { tagUrl } from 'util/navigation'
 import './AllTopics.scss'
 
 const sortOptions = [

@@ -1,5 +1,5 @@
 import { find } from 'lodash/fp'
-import { POST_TYPE_CONTEXTS } from 'util/index'
+import { POST_TYPE_CONTEXTS } from 'util/navigation'
 import getParam from './getParam'
 
 export default function (state, props) {

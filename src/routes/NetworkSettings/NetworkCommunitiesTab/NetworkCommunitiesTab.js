@@ -5,7 +5,7 @@ import Loading from 'components/Loading'
 import Autocomplete from 'react-autocomplete'
 import { isEmpty } from 'lodash/fp'
 import PaginatedList from '../PaginatedList'
-import { networkCommunitySettingsUrl } from 'util/index'
+import { networkCommunitySettingsUrl } from 'util/navigation'
 import '../NetworkSettings.scss'
 
 const { any, array, bool, func, number, object } = PropTypes

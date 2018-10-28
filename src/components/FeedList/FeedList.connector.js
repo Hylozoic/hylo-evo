@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { pick, omitBy, isEmpty } from 'lodash/fp'
+import { pick } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
 import { presentPost } from 'store/selectors/getPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
@@ -7,7 +7,7 @@ import {
   fetchPosts,
   storeFetchPostsParam,
   getPosts,
-  getHasMorePosts,
+  getHasMorePosts
 } from './FeedList.store.js'
 
 export function mapStateToProps (state, props) {
@@ -23,7 +23,7 @@ export function mapStateToProps (state, props) {
       'topic'
     ], props)
   }
-  // NOTE: In effort to better seperate the query caching from component details 
+  // NOTE: In effort to better seperate the query caching from component details
   //       it's better (and necessary) in this case to send the fetch param then
   //       the raw props of the component.
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, communityId))
