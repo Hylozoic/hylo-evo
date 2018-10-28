@@ -42,7 +42,7 @@ export function mapStateToProps (state, props) {
     membersPath,
     projectsPath,
     badge,
-    feedListProps: get('FeedList.feedListProps', state),
+    feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),
     communityMembership
   }
 }
@@ -52,14 +52,14 @@ const dropPostResults = makeDropQueryResults(FETCH_POSTS)
 export function mapDispatchToProps (dispatch, props) {
   return {
     resetNewPostCount: (id, type) => dispatch(resetNewPostCount(id, type)),
-    dropPostResultsMaker: feedListProps => () => dispatch(dropPostResults(feedListProps))
+    dropPostResultsMaker: feedListFetchPostsParam => () => dispatch(dropPostResults(feedListFetchPostsParam))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const {
     badge,
-    feedListProps,
+    feedListFetchPostsParam,
     communityMembership
   } = stateProps
 
@@ -67,7 +67,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    clearFeedList: dispatchProps.dropPostResultsMaker(feedListProps),
+    clearFeedList: dispatchProps.dropPostResultsMaker(feedListFetchPostsParam),
     clearBadge: badge
       ? () => dispatchProps.resetNewPostCount(communityMembership.community.id, 'Membership')
       : () => {}

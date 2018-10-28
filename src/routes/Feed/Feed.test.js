@@ -5,7 +5,7 @@ import Feed, {CreateCommunityPrompt} from './Feed'
 describe('Feed', () => {
   it('renders a Feed with correct props', () => {
     const wrapper = shallow(<Feed communitySlug={'foo'}
-      filter='request'
+      postTypeFilter='request'
       community={{}}
       selectedPostId='5'
       sortBy='votes'
@@ -17,7 +17,7 @@ describe('Feed', () => {
     expect(feed.props()).toEqual({
       subject: 'community',
       slug: 'foo',
-      filter: 'request',
+      postTypeFilter: 'request',
       sortBy: 'votes',
       selectedPostId: '5',
       topic: undefined
@@ -26,7 +26,7 @@ describe('Feed', () => {
 
   it('with a network it renders a Feed with correct props', () => {
     const wrapper = shallow(<Feed
-      filter='request'
+      postTypeFilter='request'
       network={{id: 2}}
       fetchNetwork={jest.fn()}
       networkSlug='bar'
@@ -41,7 +41,7 @@ describe('Feed', () => {
     expect(feed.props()).toEqual({
       subject: 'network',
       networkSlug: 'bar',
-      filter: 'request',
+      postTypeFilter: 'request',
       sortBy: 'votes',
       topic: undefined
     })

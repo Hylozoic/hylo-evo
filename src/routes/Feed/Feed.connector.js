@@ -24,9 +24,9 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const currentUserHasMemberships = !isEmpty(getMemberships(state))
   const communitySlug = getParam('slug', state, props)
-  const postTypeContext = getPostTypeContext(state, props)
   const topicName = getParam('topicName', state, props)
   const networkSlug = getParam('networkSlug', state, props)
+  const postTypeContext = getPostTypeContext(state, props)
 
   if (communitySlug) {
     community = getCommunityForCurrentRoute(state, props)
@@ -41,29 +41,29 @@ export function mapStateToProps (state, props) {
     network = getNetworkForCurrentRoute(state, props)
   }
 
-  // TODO: Can probably consolidate the getQueryParam into getPostTypeContext
-  const filter = postTypeContext || getQueryParam('t', state, props)
+  // TODO: TBD - consolidate this getQueryParam('t', ...) into getPostTypeContext
+  const postTypeFilter = postTypeContext || getQueryParam('t', state, props)
   const sortBy = getQueryParam('s', state, props)
 
   return {
-    filter,
+    postTypeContext,
+    postTypeFilter,
     sortBy,
+    currentUser,
+    currentUserHasMemberships,
     communityTopic,
     communitySlug,
-    postTypeContext,
+    community,
     topicName,
     topic,
     postsTotal: get('postsTotal', communitySlug ? communityTopic : topic),
     followersTotal: get('followersTotal', communitySlug ? communityTopic : topic),
     selectedPostId: getParam('postId', state, props),
-    community,
     membershipsPending: state.pending[FETCH_FOR_CURRENT_USER],
     postCount: get('postCount', community),
     pending: state.pending[FETCH_POSTS],
-    currentUser,
     networkSlug,
-    network,
-    currentUserHasMemberships
+    network
   }
 }
 

@@ -34,7 +34,7 @@ describe('mapStateToProps', () => {
     }
   })
 
-  it('sets filter, and sortBy from the router props', () => {
+  it('sets post type filter, and sortBy from the router props', () => {
     const props = {
       match: matchProps,
       location: {
@@ -42,7 +42,7 @@ describe('mapStateToProps', () => {
       }
     }
     expect(mapStateToProps(state, props)).toMatchObject({
-      filter: 'request',
+      postTypeFilter: 'request',
       sortBy: 'votes'
     })
   })

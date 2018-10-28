@@ -13,7 +13,7 @@ describe('mapStateToProps', () => {
       }
     }
 
-    const FeedList = {feedListProps: {}}
+    const FeedList = {fetchPostsParam: {}}
 
     const stateProps = mapStateToProps({orm: s1.state, FeedList}, props)
     expect(stateProps.badge).toEqual(5)

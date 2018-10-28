@@ -57,9 +57,9 @@ export default class FeedList extends React.Component {
   }
 
   fetchOrShowCached () {
-    const { hasMore, posts, fetchPosts, storeFeedListProps } = this.props
+    const { hasMore, posts, fetchPosts, storeFetchPostsParam } = this.props
     if (isEmpty(posts) && hasMore !== false) fetchPosts()
-    storeFeedListProps()
+    storeFetchPostsParam()
   }
 
   fetchMorePosts () {
@@ -70,7 +70,7 @@ export default class FeedList extends React.Component {
 
   render () {
     const {
-      filter,
+      postTypeFilter,
       sortBy,
       showPostDetails,
       selectedPostId,
@@ -94,13 +94,13 @@ export default class FeedList extends React.Component {
       {!isProject && <div>
         <TabBar ref={this.setStateFromDOM}
           onChangeTab={changeTab}
-          selectedTab={filter}
+          selectedTab={postTypeFilter}
           onChangeSort={changeSort}
           selectedSort={sortBy} />
       </div>}
       {!isProject && atTabBar && <div styleName='tabbar-sticky' style={style}>
         <TabBar onChangeTab={changeTab}
-          selectedTab={filter}
+          selectedTab={postTypeFilter}
           onChangeSort={changeSort}
           selectedSort={sortBy} />
       </div>}
