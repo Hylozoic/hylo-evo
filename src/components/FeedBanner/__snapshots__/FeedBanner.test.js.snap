@@ -63,6 +63,10 @@ exports[`matches the snapshot for an orphan user 1`] = `
 </FeedBanner>
 `;
 
+exports[`postPromptString renders a post prompt string 1`] = `"Create a project, make a team!"`;
+
+exports[`postPromptString renders a post prompt string 2`] = `"Hi anybody, what's on your mind?"`;
+
 exports[`renders for all communities 1`] = `
 <FeedBanner
   all={true}
@@ -123,15 +127,8 @@ exports[`renders for all communities 1`] = `
       </div>
     </div>
     <PostPrompt
-      currentUser={
-        Object {
-          "avatarUrl": "me.png",
-          "firstName": [Function],
-          "memberships": Object {
-            "count": [Function],
-          },
-        }
-      }
+      avatarUrl="me.png"
+      promptString="Hi Bob, what's on your mind?"
     >
       <div
         onMouseEnter={[Function]}

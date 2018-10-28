@@ -46,10 +46,19 @@ export default function FeedBanner ({
       </div>
     </div>
     {currentUserHasMemberships && <PostPrompt
-      currentUser={currentUser}
-      postTypeContext={postTypeContext}
+      avatarUrl={currentUser.avatarUrl}
+      promptString={postPromptString(postTypeContext, {currentUser})}
       newPost={newPost} />}
   </div>
+}
+
+export function postPromptString (postType = '', { currentUser }) {
+  switch (postType) {
+    case 'project':
+      return `Create a project, make a team!`
+    default:
+      return `Hi ${currentUser.firstName()}, what's on your mind?`
+  }
 }
 
 export class PostPrompt extends React.Component {
@@ -63,19 +72,13 @@ export class PostPrompt extends React.Component {
   onMouseLeaveHandler = () => this.setState({hover: false})
 
   render () {
-    const { currentUser, newPost, postTypeContext, className } = this.props
+    const { avatarUrl, newPost, promptString, className } = this.props
     const { hover } = this.state
-
-    if (!currentUser) return null
-
-    const prompt = postTypeContext === 'project'
-      ? `Create a project, make a team!`
-      : `Hi ${currentUser.firstName()}, what's on your mind?`
 
     return <div onMouseEnter={this.onMouseEnterHandler} onMouseLeave={this.onMouseLeaveHandler}>
       <div styleName='postPrompt' className={className} onClick={newPost}>
-        <RoundImage url={currentUser.avatarUrl} small styleName='prompt-image' />
-        {prompt}
+        <RoundImage url={avatarUrl} small styleName='prompt-image' />
+        {promptString}
       </div>
       <div styleName={cx('shadow', { hover })} />
     </div>

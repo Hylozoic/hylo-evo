@@ -1,5 +1,5 @@
 import React from 'react'
-import FeedBanner from './FeedBanner'
+import FeedBanner, { postPromptString } from './FeedBanner'
 import { mount } from 'enzyme'
 
 const currentUser = {
@@ -40,4 +40,13 @@ it('matches the snapshot for an orphan user', () => {
     currentUserHasMemberships={false}
   />)
   expect(node).toMatchSnapshot()
+})
+
+describe('postPromptString', () => {
+  it('renders a post prompt string', () => {
+    const currentUser = {firstName: () => 'anybody'}
+
+    expect(postPromptString('project', {currentUser})).toMatchSnapshot()
+    expect(postPromptString('', {currentUser})).toMatchSnapshot()
+  })
 })
