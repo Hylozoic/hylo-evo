@@ -46,22 +46,29 @@ export default function FeedBanner ({
       </div>
     </div>
     {currentUserHasMemberships && <PostPrompt
+      type={postTypeContext}
+      firstName={currentUser.firstName()}
       avatarUrl={currentUser.avatarUrl}
-      promptString={postPromptString(postTypeContext, {currentUser})}
       newPost={newPost} />}
   </div>
 }
 
-export function postPromptString (postType = '', { currentUser }) {
+export function postPromptString (type = '', { firstName }) {
   const postPrompts = {
     project: `Create a project, make a team!`,
-    default: `Hi ${currentUser.firstName()}, what's on your mind?`
+    default: `Hi ${firstName}, what's on your mind?`
   }
 
-  return postPrompts[postType] || postPrompts['default']
+  return postPrompts[type] || postPrompts['default']
 }
 
 export class PostPrompt extends React.Component {
+  static defaultProps = {
+    type: '',
+    firstName: '',
+    promptStringFunc: postPromptString
+  }
+
   constructor (props) {
     super(props)
     this.state = {hover: false}
@@ -72,13 +79,13 @@ export class PostPrompt extends React.Component {
   onMouseLeaveHandler = () => this.setState({hover: false})
 
   render () {
-    const { avatarUrl, newPost, promptString, className } = this.props
+    const { type, avatarUrl, firstName, newPost, promptStringFunc, className } = this.props
     const { hover } = this.state
 
     return <div onMouseEnter={this.onMouseEnterHandler} onMouseLeave={this.onMouseLeaveHandler}>
       <div styleName='postPrompt' className={className} onClick={newPost}>
         <RoundImage url={avatarUrl} small styleName='prompt-image' />
-        {promptString}
+        {promptStringFunc(type, {firstName})}
       </div>
       <div styleName={cx('shadow', { hover })} />
     </div>

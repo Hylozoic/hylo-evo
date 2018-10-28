@@ -41,7 +41,10 @@ export default function TopicFeedHeader ({
       {community && <Button styleName={buttonStyle} onClick={toggleSubscribe}>
         <Icon name='Star' styleName={iconStyle} />{buttonText}
       </Button>}
-      <PostPrompt currentUser={currentUser} newPost={newPost} />
+      <PostPrompt
+        firstName={currentUser.firstName()}
+        avatarUrl={currentUser.avatarUrl}
+        newPost={newPost} />}
     </div>
   </div>
 }

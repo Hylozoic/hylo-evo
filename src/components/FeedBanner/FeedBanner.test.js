@@ -44,9 +44,9 @@ it('matches the snapshot for an orphan user', () => {
 
 describe('postPromptString', () => {
   it('renders a post prompt string', () => {
-    const currentUser = {firstName: () => 'anybody'}
+    const firstName = 'anybody'
 
-    expect(postPromptString('project', {currentUser})).toMatchSnapshot()
-    expect(postPromptString('', {currentUser})).toMatchSnapshot()
+    expect(postPromptString('project', {firstName})).toMatchSnapshot()
+    expect(postPromptString('', {firstName})).toMatchSnapshot()
   })
 })

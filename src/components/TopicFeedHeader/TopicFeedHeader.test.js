@@ -2,11 +2,19 @@ import TopicFeedHeader from './TopicFeedHeader'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-const topic = {name: 'cats'}
+const topic = {name: 'Petitions'}
 const bannerUrl = 'some.url'
+
+const defaultTestProps = {
+  topic,
+  currentUser: {
+    firstName: () => 'anybody'
+  }
+}
+
 it('matches the latest snapshot', () => {
   const props = {
-    topic,
+    ...defaultTestProps,
     community: {
       bannerUrl
     },
@@ -20,19 +28,19 @@ it('matches the latest snapshot', () => {
 
 it('displays the topic name', () => {
   const props = {
-    topic: {name: 'Petitions'},
+    ...defaultTestProps,
     communityTopic: {
       isSubscribed: true
     }
   }
   const wrapper = shallow(<TopicFeedHeader {...props} />)
-  expect(wrapper.find('[data-stylename="topic-name"]').text()).toEqual('#Petitions')
+  expect(wrapper.find('[data-stylename="topic-name"]').text()).toEqual('#' + defaultTestProps.topic.name)
 })
 
 describe('meta', () => {
   it('uses values of 0 if the meta info is not passed in', () => {
     const props = {
-      topic,
+      ...defaultTestProps,
       communityTopic: {
         isSubscribed: true
       }
@@ -43,7 +51,7 @@ describe('meta', () => {
 
   it('correctly pluralizes meta counts when count is 0', () => {
     const props = {
-      topic,
+      ...defaultTestProps,
       followersTotal: 0,
       postsTotal: 0,
       communityTopic: {
@@ -56,7 +64,7 @@ describe('meta', () => {
 
   it('correctly pluralizes counts when count is 1', () => {
     const props = {
-      topic,
+      ...defaultTestProps,
       followersTotal: 1,
       postsTotal: 1,
       communityTopic: {
@@ -69,7 +77,7 @@ describe('meta', () => {
 
   it('correctly pluralizes counts when count is greater than 1', () => {
     const props = {
-      topic,
+      ...defaultTestProps,
       followersTotal: 2,
       postsTotal: 10,
       communityTopic: {
@@ -84,7 +92,7 @@ describe('meta', () => {
 describe('subscribe', () => {
   it('shows sub/unsub if community prop is present', () => {
     const props = {
-      topic,
+      ...defaultTestProps,
       communityTopic: {},
       community: {
         slug: 'monkeys',
@@ -98,7 +106,7 @@ describe('subscribe', () => {
 
   it('does not show sub/unsub if community prop is not present', () => {
     const props = {
-      topic,
+      ...defaultTestProps,
       communityTopic: {
         isSubscribed: false
       }
@@ -109,7 +117,7 @@ describe('subscribe', () => {
 
   it('should say Subscribe when not subscribed', () => {
     const props = {
-      topic,
+      ...defaultTestProps,
       community: {},
       communityTopic: {isSubscribed: false}
     }
@@ -119,7 +127,7 @@ describe('subscribe', () => {
 
   it('should say Unsubscribe when subscribed', () => {
     const props = {
-      topic,
+      ...defaultTestProps,
       community: {},
       communityTopic: {isSubscribed: true}
     }
@@ -129,7 +137,7 @@ describe('subscribe', () => {
 
   it('calls toggleSubscribe when sub/unsub button is clicked', () => {
     const props = {
-      topic,
+      ...defaultTestProps,
       communityTopic: {},
       community: {bannerUrl},
       toggleSubscribe: jest.fn()

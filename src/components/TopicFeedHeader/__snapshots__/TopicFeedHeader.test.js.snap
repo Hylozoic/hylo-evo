@@ -23,7 +23,7 @@ exports[`matches the latest snapshot 1`] = `
       data-stylename="topic-name"
     >
       #
-      cats
+      Petitions
     </div>
     <div
       data-stylename="meta"
@@ -48,7 +48,12 @@ exports[`matches the latest snapshot 1`] = `
       />
       Unsubscribe
     </Button>
-    <PostPrompt />
+    <PostPrompt
+      firstName="anybody"
+      promptStringFunc={[Function]}
+      type=""
+    />
+    }
   </div>
 </div>
 `;

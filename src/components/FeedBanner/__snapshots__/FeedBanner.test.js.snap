@@ -128,7 +128,9 @@ exports[`renders for all communities 1`] = `
     </div>
     <PostPrompt
       avatarUrl="me.png"
-      promptString="Hi Bob, what's on your mind?"
+      firstName="Bob"
+      promptStringFunc={[Function]}
+      type=""
     >
       <div
         onMouseEnter={[Function]}
