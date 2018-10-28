@@ -16,9 +16,9 @@ export default class PostFooter extends React.PureComponent {
       myVote,
       vote,
       members,
-      onClick,
       type
     } = this.props
+    const onClick = this.props.onClick ? this.props.onClick : undefined
     const isProject = type === 'project'
     let avatarUrls, caption
 
