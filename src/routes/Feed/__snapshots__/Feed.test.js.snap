@@ -36,8 +36,8 @@ exports[`Feed with a network it renders a Feed with correct props 1`] = `
     currentUserHasMemberships={true}
   />
   <Connect(FeedList)
-    filter="request"
     networkSlug="bar"
+    postTypeFilter="request"
     sortBy="votes"
     subject="network"
   />

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { pick } from 'lodash/fp'
+import { pick, omitBy, isEmpty } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
 import { presentPost } from 'store/selectors/getPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
@@ -13,7 +13,6 @@ import {
 export function mapStateToProps (state, props) {
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const communityId = currentCommunity && currentCommunity.id
-  const posts = getPosts(state, props).map(p => presentPost(p, communityId))
   const fetchPostsParam = {
     filter: props.postTypeFilter,
     ...pick([
@@ -24,11 +23,16 @@ export function mapStateToProps (state, props) {
       'topic'
     ], props)
   }
+  // NOTE: In effort to better seperate the query caching from component details 
+  //       it's better (and necessary) in this case to send the fetch param then
+  //       the raw props of the component.
+  const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, communityId))
+  const hasMore = getHasMorePosts(state, fetchPostsParam)
 
   return {
     posts,
+    hasMore,
     fetchPostsParam,
-    hasMore: getHasMorePosts(state, props),
     pending: state.pending[FETCH_POSTS]
   }
 }

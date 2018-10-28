@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import Feed, {CreateCommunityPrompt} from './Feed'
 
 describe('Feed', () => {
-  it('renders a Feed with correct props', () => {
+  it('renders a FeedList with correct props', () => {
     const wrapper = shallow(<Feed communitySlug={'foo'}
       postTypeFilter='request'
       community={{}}

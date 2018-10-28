@@ -18,7 +18,7 @@ describe('mapStateToProps', () => {
       orm: session.state,
       pending: {},
       queryResults: {
-        [buildKey(FETCH_POSTS, {id: 'foo'})]: {
+        [buildKey(FETCH_POSTS, {filter: 'foo'})]: {
           ids: ['1', '3', '2'],
           hasMore: true
         }
@@ -27,21 +27,21 @@ describe('mapStateToProps', () => {
   })
 
   it('returns empty posts if no results exist', () => {
-    expect(mapStateToProps(state, {id: 'bar'})).toEqual({
-      posts: []
-    })
+    expect(mapStateToProps(state, {postTypeFilter: 'bar'})).toHaveProperty('posts', [])
   })
 
   it('returns posts in the correct order', () => {
-    expect(mapStateToProps(state, {id: 'foo'})).toEqual({
-      posts: [
-        expect.objectContaining({id: '1'}),
-        expect.objectContaining({id: '3'}),
-        expect.objectContaining({id: '2'})
-      ],
-      hasMore: true,
-      pending: undefined
-    })
+    expect(mapStateToProps(state, {postTypeFilter: 'foo'})).toEqual(
+      expect.objectContaining({
+        hasMore: true,
+        pending: undefined,
+        posts: [
+          expect.objectContaining({id: '1'}),
+          expect.objectContaining({id: '3'}),
+          expect.objectContaining({id: '2'})
+        ]
+      })
+    )
   })
 
   it('checks if FETCH_POSTS is pending', () => {
