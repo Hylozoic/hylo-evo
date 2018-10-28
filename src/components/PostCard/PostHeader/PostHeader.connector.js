@@ -6,13 +6,14 @@ import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
   const community = getCommunity(state, props)
+
   return {
     currentUser: getMe(state, props),
     community
   }
 }
 
-export function mapDispatchToProps (dispatch, props) {
+export function mapDispatchToProps (dispatch) {
   const closeUrl = removePostFromUrl(window.location.pathname)
   const deletePostWithConfirm = id => {
     if (window.confirm('Are you sure you want to delete this post?')) {
@@ -20,8 +21,8 @@ export function mapDispatchToProps (dispatch, props) {
       .then(() => dispatch(push(closeUrl)))
     }
   }
-
-  const editPost = (id, slug) => dispatch(push(postUrl(id, slug, {action: 'edit'})))
+  const editPost = (id, slug, opts = {}) =>
+    dispatch(push(postUrl(id, slug, {action: 'edit', ...opts})))
 
   return {
     deletePost: deletePostWithConfirm,
@@ -33,17 +34,18 @@ export function mapDispatchToProps (dispatch, props) {
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { currentUser, community } = stateProps
-  const { id, creator, slug } = ownProps
+  const { id, creator, slug, type, networkSlug } = ownProps
   const { deletePost, editPost, removePost, pinPost } = dispatchProps
   const isCreator = currentUser && creator && currentUser.id === creator.id
   const canEdit = isCreator
   const canModerate = currentUser && currentUser.canModerate(community)
+
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
     deletePost: isCreator ? () => deletePost(id) : null,
-    editPost: canEdit ? () => editPost(id, slug) : null,
+    editPost: canEdit ? () => editPost(id, slug, {networkSlug, postTypeContext: type}) : null,
     canFlag: !isCreator,
     pinPost: canModerate && community ? () => pinPost(id, community.id) : null,
     removePost: !isCreator && canModerate ? () => removePost(id, slug) : null,

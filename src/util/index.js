@@ -1,6 +1,14 @@
 import { get } from 'lodash/fp'
 import { matchPath } from 'react-router'
+import inflection from 'inflection'
 import { host } from 'config'
+
+export const POST_ID_MATCH_REGEX = '\\d+'
+export const DEFAULT_POST_TYPE_CONTEXT = 'p'
+// Post Contexts have their own area if not default
+export const POST_TYPE_CONTEXTS = ['project']
+export const VALID_POST_TYPE_CONTEXTS = [...POST_TYPE_CONTEXTS, DEFAULT_POST_TYPE_CONTEXT]
+export const VALID_POST_TYPE_CONTEXTS_MATCH_REGEX = VALID_POST_TYPE_CONTEXTS.join('|')
 
 export const origin = () =>
   typeof window !== 'undefined' ? window.location.origin : host
@@ -36,10 +44,10 @@ export function postUrl (id, slug, opts = {}) {
   } else {
     base = allCommunitiesUrl()
   }
-  // NOTE: If expand postType queryParam usage remove this
-  //       static case
-  let postType = get('postType', opts) === 'project' ? 'project' : 'p'
-  let result = `${base}/${postType}/${id}`
+  let postTypeContext = get('postTypeContext', opts)
+  postTypeContext = POST_TYPE_CONTEXTS.includes(postTypeContext) ? postTypeContext : DEFAULT_POST_TYPE_CONTEXT
+  let result = `${base}/${postTypeContext}/${id}`
+
   return opts.action ? `${result}/${opts.action}` : result
 }
 
@@ -91,7 +99,18 @@ export const communityJoinUrl = ({slug, accessCode}) =>
   slug && accessCode && `${origin()}/c/${slug}/join/${accessCode}`
 
 export function removePostFromUrl (url) {
-  return url.replace(/\/p\/[0-9]+/, '')
+  let matchForReplaceRegex
+
+  // Remove default context and post id otherwise
+  // remove current post id and stay in the current post
+  // context.
+  if (url.match(`/${DEFAULT_POST_TYPE_CONTEXT}/`)) {
+    matchForReplaceRegex = `/${DEFAULT_POST_TYPE_CONTEXT}/${POST_ID_MATCH_REGEX}`
+  } else {
+    matchForReplaceRegex = `/${POST_ID_MATCH_REGEX}`
+  }
+
+  return url.replace(new RegExp(matchForReplaceRegex), '')
 }
 
 // n.b.: use getParam instead of this where possible.
@@ -120,4 +139,4 @@ export function isPromise (value) {
   return value && typeof value.then === 'function'
 }
 
-export const pluralize = (count, word) => `${count.toLocaleString()} ${word}${count === 1 ? '' : 's'}`
+export const inflectedTotal = (word, count) => `${count.toLocaleString()} ${inflection.inflect(word, count)}`

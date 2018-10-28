@@ -12,7 +12,7 @@ export default function FeedBanner ({
   community,
   currentUser,
   newPost,
-  postType,
+  postTypeContext,
   currentUserHasMemberships
 }) {
   let bannerUrl, avatarUrl, name, location, subtitle
@@ -45,7 +45,10 @@ export default function FeedBanner ({
         </div>
       </div>
     </div>
-    {currentUserHasMemberships && <PostPrompt currentUser={currentUser} postType={postType} newPost={newPost} />}
+    {currentUserHasMemberships && <PostPrompt
+      currentUser={currentUser}
+      postTypeContext={postTypeContext}
+      newPost={newPost} />}
   </div>
 }
 
@@ -60,12 +63,12 @@ export class PostPrompt extends React.Component {
   onMouseLeaveHandler = () => this.setState({hover: false})
 
   render () {
-    const { currentUser, newPost, postType, className } = this.props
+    const { currentUser, newPost, postTypeContext, className } = this.props
     const { hover } = this.state
 
     if (!currentUser) return null
 
-    const prompt = postType === 'project'
+    const prompt = postTypeContext === 'project'
       ? `Create a project, make a team!`
       : `Hi ${currentUser.firstName()}, what's on your mind?`
 

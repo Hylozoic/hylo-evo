@@ -39,15 +39,14 @@ import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
-
+import {
+  POST_ID_MATCH_REGEX,
+  VALID_POST_TYPE_CONTEXTS_MATCH_REGEX
+} from 'util/index'
+import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 // TODO: Implement create community privacy component when implemented on the server
 // import Privacy from 'routes/CreateCommunity/Privacy'
-
 import './PrimaryLayout.scss'
-import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
-
-export const POST_ID_MATCH_REGEX = '\\d+'
-export const POST_TYPES_ALLOWED_REGEX = 'project'
 
 export default class PrimaryLayout extends Component {
   static propTypes = {
@@ -191,31 +190,27 @@ export default class PrimaryLayout extends Component {
 
             <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
             <Route path='/all' exact component={Feed} />
-            <Route path={`/all/:postType(${POST_TYPES_ALLOWED_REGEX})`} exact component={Feed} />
+            <Route path={`/all/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})`} exact component={Feed} />
+            <Route path={`/all/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId`} component={Feed} />
             <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
-            <Route path={`/all/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId`} component={Feed} />
-            <Route path='/all/p/:postId' component={Feed} />
             <Route path='/c/:slug' exact component={Feed} />
-            <Route path={`/c/:slug/:postType(${POST_TYPES_ALLOWED_REGEX})`} exact component={Feed} />
+            <Route path={`/c/:slug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})`} exact component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
             <Route path='/c/:slug/m/:id' component={MemberProfile} />
-            <Route path='/m/:id' component={MemberProfile} />
-            <Route path={`/c/:slug/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId`} component={Feed} />
-            <Route path='/c/:slug/p/:postId' component={Feed} />
-            <Route path='/c/:slug/topics' component={AllTopics} />
+            <Route path={`/c/:slug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId`} component={Feed} />
             <Route path='/c/:slug/settings' component={CommunitySettings} />
-            <Route path='/c/:slug/:topicName/p/:postId' component={Feed} />
+            <Route path='/c/:slug/topics' component={AllTopics} />
+            <Route path={`/c/:slug/:topicName/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId`} component={Feed} />
             <Route path='/c/:slug/:topicName' component={Feed} />
             <Route path='/n/:networkSlug' exact component={Feed} />
-            <Route path={`/n/:networkSlug/:postType(${POST_TYPES_ALLOWED_REGEX})`} exact component={Feed} />
-            <Route path={`/n/:networkSlug/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId`} component={Feed} />
-            <Route path='/n/:networkSlug/p/:postId' component={Feed} />
+            <Route path={`/n/:networkSlug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})`} exact component={Feed} />
+            <Route path={`/n/:networkSlug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId`} component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
             <Route path='/n/:networkSlug/m/:id' component={MemberProfile} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
             <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />
             <Route path='/n/:networkSlug/:topicName' exact component={TopicSupportComingSoon} />
-
+            <Route path='/m/:id' component={MemberProfile} />
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
@@ -236,15 +231,14 @@ export default class PrimaryLayout extends Component {
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
-          <Route path={`/c/:slug/:postType(${POST_TYPES_ALLOWED_REGEX})/new`} exact component={CommunitySidebar} />
-          <Route path='/c/:slug/p/new' exact component={CommunitySidebar} />
           <Route path='/c/:slug' exact component={CommunitySidebar} />
-          <Route path='/c/:slug/:topicName/p/new' exact component={CommunitySidebar} />
-          <Route path='/c/:slug/:topicName' exact component={CommunitySidebar} />
+          <Route path={`/c/:slug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/new`} exact component={CommunitySidebar} />
           <Route path='/c/:slug/m/:id' component={MemberSidebar} />
-          <Route path='/n/:slug/m/:id' component={MemberSidebar} />
+          <Route path='/c/:slug/:topicName' exact component={CommunitySidebar} />
+          <Route path={`/c/:slug/:topicName/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/new`} exact component={CommunitySidebar} />
+          <Route path='/n/:networkSlug' exact component={NetworkSidebar} />
+          <Route path='/n/:networkSlug/m/:id' component={MemberSidebar} />
           <Route path='/m/:id' component={MemberSidebar} />
-          <Route path='/n/:slug' exact component={NetworkSidebar} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>
           {/*
@@ -274,35 +268,26 @@ export default class PrimaryLayout extends Component {
 }
 
 const postEditorRoutes = [
-  {path: '/all/p/new', forNew: true},
-  {path: `/all/:postType(${POST_TYPES_ALLOWED_REGEX})/new`, forNew: true},
-  {path: '/c/:slug/p/new', forNew: true},
-  {path: `/c/:slug/:postType(${POST_TYPES_ALLOWED_REGEX})/new`, forNew: true},
-  {path: '/c/:slug/:topicName/p/new', forNew: true},
-  {path: `/all/:postType(${POST_TYPES_ALLOWED_REGEX})/edit`},
-  {path: '/all/p/:postId/edit'},
-  {path: '/c/:slug/p/:postId/edit'},
-  {path: `/c/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId/edit`},
-  {path: '/c/:slug/m/:id/p/:postId/edit'},
-  {path: `/c/:slug/m/:id/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId/edit`},
-  {path: '/c/:slug/:topicName/p/:postId/edit'},
-  {path: `/n/:slug/m/:id/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId/edit`},
-  {path: '/n/:slug/m/:id/p/:postId/edit'}
+  {path: `/all/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/new`, forNew: true},
+  {path: `/c/:slug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/new`, forNew: true},
+  {path: `/c/:slug/:topicName/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/new`, forNew: true},
+  {path: `/all/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId/edit`},
+  {path: `/c/:slug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId/edit`},
+  {path: `/c/:slug/m/:id/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId/edit`},
+  {path: `/c/:slug/:topicName/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId/edit`},
+  {path: `/n/:networkSlug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/new`, forNew: true},
+  {path: `/n/:networkSlug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId/edit`},
+  {path: `/n/:networkSlug/m/:id/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId/edit`}
 ]
 
 const detailRoutes = [
   {path: '/events/:eventId', component: EventDetail},
-  {path: `/all/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/all/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/c/:slug/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/c/:slug/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/n/:networkSlug/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/n/:networkSlug/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/c/:slug/m/:id/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/c/:slug/m/:id/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/c/:slug/:topicName/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/n/:slug/m/:id/p/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/n/:slug/m/:id/:postType(${POST_TYPES_ALLOWED_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail}
+  {path: `/all/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/c/:slug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/n/:networkSlug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/c/:slug/m/:id/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/c/:slug/:topicName/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
+  {path: `/n/:networkSlug/m/:id/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail}
 ]
 
 const signupRoutes = [

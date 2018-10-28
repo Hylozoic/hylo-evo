@@ -77,7 +77,7 @@ export default class FeedList extends React.Component {
       changeTab,
       changeSort,
       posts,
-      postType,
+      postTypeContext,
       pending,
       slug
     } = this.props
@@ -85,7 +85,7 @@ export default class FeedList extends React.Component {
     const style = {
       width: tabBarWidth + 'px'
     }
-    const isProject = postType === 'project'
+    const isProject = postTypeContext === 'project'
 
     return <div styleName='FeedList-container'>
       <ScrollListener

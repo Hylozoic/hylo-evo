@@ -47,7 +47,7 @@ export default class Feed extends Component {
       networkSlug,
       topic: get('id', topic),
       ...pick([
-        'postType',
+        'postTypeContext',
         'filter',
         'sortBy',
         'changeSort',
@@ -61,7 +61,7 @@ export default class Feed extends Component {
   render () {
     const {
       topic, community, currentUser, topicName, postsTotal, followersTotal,
-      communityTopic, newPost, postType, network, networkSlug, currentUserHasMemberships,
+      communityTopic, newPost, postTypeContext, network, networkSlug, currentUserHasMemberships,
       goToCreateCommunity, membershipsPending
     } = this.props
 
@@ -78,14 +78,14 @@ export default class Feed extends Component {
           postsTotal={postsTotal}
           followersTotal={followersTotal}
           topic={topic}
-          postType={postType}
+          postTypeContext={postTypeContext}
           community={community}
           currentUser={currentUser}
           newPost={newPost} />
         : <FeedBanner
           community={community || network}
           currentUser={currentUser}
-          postType={postType}
+          postTypeContext={postTypeContext}
           all={!community && !networkSlug}
           newPost={newPost}
           currentUserHasMemberships={currentUserHasMemberships} />}

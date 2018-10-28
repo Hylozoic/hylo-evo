@@ -85,7 +85,7 @@ describe('mergeProps', () => {
       expect(dispatchProps.deletePost).toHaveBeenCalledWith(20)
 
       editPost()
-      expect(dispatchProps.editPost).toHaveBeenCalledWith(20, 'mycommunity')
+      expect(dispatchProps.editPost).toHaveBeenCalledWith(20, 'mycommunity', expect.any(Object))
 
       pinPost()
       expect(dispatchProps.pinPost).toHaveBeenCalledWith(20, 33)

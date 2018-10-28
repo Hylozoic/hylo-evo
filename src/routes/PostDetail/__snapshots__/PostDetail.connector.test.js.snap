@@ -5,6 +5,7 @@ Object {
   "currentUser": undefined,
   "id": undefined,
   "isProjectMember": undefined,
+  "networkSlug": undefined,
   "pending": undefined,
   "post": null,
   "slug": undefined,

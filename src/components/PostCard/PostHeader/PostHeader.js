@@ -98,8 +98,9 @@ export default class PostHeader extends PureComponent {
           {pinned && <Icon name='Pin' styleName='pinIcon' />}
           {type && <PostLabel type={type} styleName='label' />}
           {dropdownItems.length > 0 &&
-          <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} />}
-          {close && <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
+            <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} />}
+          {close &&
+            <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
         </div>
         {flaggingVisible && <FlagContent type='post'
           linkData={linkData}

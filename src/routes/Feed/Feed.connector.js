@@ -7,6 +7,7 @@ import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute
 import getCommunityTopicForCurrentRoute from 'store/selectors/getCommunityTopicForCurrentRoute'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getParam from 'store/selectors/getParam'
+import getPostTypeContext from 'store/selectors/getPostTypeContext'
 import getMe from 'store/selectors/getMe'
 import getMemberships from 'store/selectors/getMemberships'
 import changeQueryParam from 'store/actions/changeQueryParam'
@@ -23,7 +24,7 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const currentUserHasMemberships = !isEmpty(getMemberships(state))
   const communitySlug = getParam('slug', state, props)
-  const postType = getParam('postType', state, props)
+  const postTypeContext = getPostTypeContext(state, props)
   const topicName = getParam('topicName', state, props)
   const networkSlug = getParam('networkSlug', state, props)
 
@@ -40,7 +41,8 @@ export function mapStateToProps (state, props) {
     network = getNetworkForCurrentRoute(state, props)
   }
 
-  const filter = postType || getQueryParam('t', state, props)
+  // TODO: Can probably consolidate the getQueryParam into getPostTypeContext
+  const filter = postTypeContext || getQueryParam('t', state, props)
   const sortBy = getQueryParam('s', state, props)
 
   return {
@@ -48,7 +50,7 @@ export function mapStateToProps (state, props) {
     sortBy,
     communityTopic,
     communitySlug,
-    postType,
+    postTypeContext,
     topicName,
     topic,
     postsTotal: get('postsTotal', communitySlug ? communityTopic : topic),
@@ -69,7 +71,7 @@ export const mapDispatchToProps = function (dispatch, props) {
   const slug = getParam('slug', null, props)
   const topicName = getParam('topicName', null, props)
   const params = getQueryParam(['s', 't'], null, props)
-  const postType = getParam('postType', null, props)
+  const postTypeContext = getPostTypeContext(null, props)
   const networkSlug = getParam('networkSlug', null, props)
 
   return {
@@ -77,10 +79,10 @@ export const mapDispatchToProps = function (dispatch, props) {
     changeSort: sort => dispatch(changeQueryParam(props, 's', sort, 'all')),
     // we need to preserve url parameters when opening the details for a post,
     // or the center column will revert to its default sort & filter settings
-    showPostDetails: (id, type = null) =>
-      dispatch(push(makeUrl(postUrl(id, slug, {postType: type, topicName, networkSlug}), params))),
+    showPostDetails: (id, postTypeContext = null) =>
+      dispatch(push(makeUrl(postUrl(id, slug, {postTypeContext, topicName, networkSlug}), params))),
     newPost: () =>
-      dispatch(push(makeUrl(postUrl('new', slug, {postType, topicName}), params))),
+      dispatch(push(makeUrl(postUrl('new', slug, {postTypeContext, topicName, networkSlug}), params))),
     fetchTopic: () => {
       if (slug && topicName) {
         return dispatch(fetchCommunityTopic(topicName, slug))
