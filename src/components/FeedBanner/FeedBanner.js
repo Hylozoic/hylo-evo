@@ -53,12 +53,12 @@ export default function FeedBanner ({
 }
 
 export function postPromptString (postType = '', { currentUser }) {
-  switch (postType) {
-    case 'project':
-      return `Create a project, make a team!`
-    default:
-      return `Hi ${currentUser.firstName()}, what's on your mind?`
+  const postPrompts = {
+    project: `Create a project, make a team!`,
+    default: `Hi ${currentUser.firstName()}, what's on your mind?`
   }
+
+  return postPrompts[postType] || postPrompts['default']
 }
 
 export class PostPrompt extends React.Component {
