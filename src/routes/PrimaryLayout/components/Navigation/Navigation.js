@@ -35,15 +35,15 @@ export default function Navigation (props) {
       onClick: homeOnClick,
       exact: true
     },
-    membersPath && {
-      label: 'Members',
-      icon: 'Members',
-      to: membersPath
-    },
     projectsPath && {
       label: 'Projects',
       icon: 'Projects',
       to: projectsPath
+    },
+    membersPath && {
+      label: 'Members',
+      icon: 'Members',
+      to: membersPath
     }
   ])
 

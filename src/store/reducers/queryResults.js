@@ -125,7 +125,8 @@ export function matchNewPostIntoQueryResults (state, {id, type, communities, top
       {slug: community.slug},
       {slug: community.slug, filter: type},
       {slug: community.slug, sortBy: 'updated'},
-      {slug: community.slug, sortBy: 'updated', filter: type}
+      {slug: community.slug, sortBy: 'updated', filter: type},
+      {}
     ]
 
     if (isIterable(topics)) {
