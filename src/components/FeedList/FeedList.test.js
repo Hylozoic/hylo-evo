@@ -10,7 +10,7 @@ describe('FeedList', () => {
 
   it('renders a post list', () => {
     const posts = [{id: 1}, {id: 2}, {id: 3}]
-    const wrapper = shallow(<FeedList storeFetchPostsParam={jest.fn()} posts={posts} />)
-    expect(wrapper.find('Connect(PostCard)').length).toEqual(3)
+    const wrapper = shallow(<FeedList storeFetchPostsParam={jest.fn()} posts={posts} voteInPost={() => {}} />)
+    expect(wrapper.find('PostCard').length).toEqual(3)
   })
 })

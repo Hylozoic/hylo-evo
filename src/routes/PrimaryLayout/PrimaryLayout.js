@@ -194,17 +194,20 @@ export default class PrimaryLayout extends Component {
 
             <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
             <Route path='/all' exact component={Feed} />
-            <Route path={`/all/${POST_TYPE_CONTEXT_MATCH}`} component={Feed} />
+            <Route path={`/all/${POST_TYPE_CONTEXT_MATCH}`} exact component={Feed} />
+            <Route path={`/all/${POST_DETAIL_MATCH}`} component={Feed} />
             <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
             <Route path='/n/:networkSlug' exact component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
             <Route path='/n/:networkSlug/m/:id' component={MemberProfile} />
-            <Route path={`/n/:networkSlug/${POST_TYPE_CONTEXT_MATCH}`} component={Feed} />
+            <Route path={`/n/:networkSlug/${POST_TYPE_CONTEXT_MATCH}`} exact component={Feed} />
+            <Route path={`/n/:networkSlug/${POST_DETAIL_MATCH}`} component={Feed} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
             <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />
             <Route path='/n/:networkSlug/:topicName' exact component={TopicSupportComingSoon} />
             <Route path='/c/:slug' exact component={Feed} />
-            <Route path={`/c/:slug/${POST_TYPE_CONTEXT_MATCH}`} component={Feed} />
+            <Route path={`/c/:slug/${POST_TYPE_CONTEXT_MATCH}`} exact component={Feed} />
+            <Route path={`/c/:slug/${POST_DETAIL_MATCH}`} component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
             <Route path='/c/:slug/m/:id' component={MemberProfile} />
             <Route path='/c/:slug/settings' component={CommunitySettings} />

@@ -86,7 +86,12 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
         />
         <Route
           component={[Function]}
+          exact={true}
           path="/all/:postTypeContext(project|p)"
+        />
+        <Route
+          component={[Function]}
+          path="/all/:postTypeContext(project|p)/:postId(\\\\d+)"
         />
         <Route
           component={[Function]}
@@ -108,7 +113,12 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
         />
         <Route
           component={[Function]}
+          exact={true}
           path="/n/:networkSlug/:postTypeContext(project|p)"
+        />
+        <Route
+          component={[Function]}
+          path="/n/:networkSlug/:postTypeContext(project|p)/:postId(\\\\d+)"
         />
         <Route
           component={[Function]}
@@ -130,7 +140,12 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
         />
         <Route
           component={[Function]}
+          exact={true}
           path="/c/:slug/:postTypeContext(project|p)"
+        />
+        <Route
+          component={[Function]}
+          path="/c/:slug/:postTypeContext(project|p)/:postId(\\\\d+)"
         />
         <Route
           component={[Function]}
