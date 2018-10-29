@@ -160,11 +160,13 @@ describe('mapDispatchToProps', () => {
         pathname: '/c/foo'
       },
       match: {
-        params: {slug: 'foo'}
+        params: {
+          slug: 'foo'
+        }
       }
     }
     const dispatchProps = mapDispatchToProps(dispatch, props)
-    expect(dispatchProps.showPostDetails('5')).toMatchSnapshot()
+    expect(dispatchProps.showPostDetails('5')()).toMatchSnapshot()
   })
 
   describe('fetchTopic', () => {

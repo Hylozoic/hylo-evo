@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { pick } from 'lodash/fp'
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
 import PostCommunities from './PostCommunities'
@@ -36,7 +37,7 @@ export default class PostCard extends React.Component {
 
   render () {
     const {
-      post, className, expanded, showDetails, highlightProps, slug, networkSlug, voteOnPost
+      post, className, expanded, showDetails, highlightProps, slug, networkSlug, postTypeContext, voteOnPost
     } = this.props
     const shouldShowDetails = element => {
       if (element === this.refs.postCard) return true
@@ -58,17 +59,21 @@ export default class PostCard extends React.Component {
       onClick={onClick}
       styleName={cx('card', {expanded})}
       className={className}>
-      <PostHeader creator={post.creator}
-        date={post.createdAt}
-        type={post.type}
-        communities={post.communities}
+      <PostHeader
         slug={slug}
         networkSlug={networkSlug}
-        id={post.id}
-        pinned={post.pinned}
-        topics={post.topics}
+        postTypeContext={postTypeContext}
+        date={post.createdAt}
         highlightProps={highlightProps}
-        announcement={post.announcement} />
+        {...pick([
+          'id',
+          'type',
+          'creator',
+          'communities',
+          'pinned',
+          'topics',
+          'announcement'
+        ], post)} />
       <PostImage postId={post.id} styleName='image' />
       <PostBody title={post.title}
         id={post.id}

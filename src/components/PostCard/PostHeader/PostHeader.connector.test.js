@@ -28,10 +28,13 @@ describe('mapDispatchToProps', () => {
   it('maps the action generators', () => {
     window.confirm = jest.fn()
     const dispatch = jest.fn(val => val)
-    const dispatchProps = mapDispatchToProps(dispatch)
+    const props = {
+      slug: 'mycommunity'
+    }
+    const dispatchProps = mapDispatchToProps(dispatch, props)
     expect(dispatchProps).toMatchSnapshot()
-    dispatchProps.removePost(10, 'mycommunity')
-    dispatchProps.editPost(10, {communitySlug: 'mycommunity'})
+    dispatchProps.removePost(10)
+    dispatchProps.editPost(10)
     expect(dispatch).toHaveBeenCalledTimes(2)
 
     dispatchProps.deletePost(1)
@@ -85,7 +88,7 @@ describe('mergeProps', () => {
       expect(dispatchProps.deletePost).toHaveBeenCalledWith(20)
 
       editPost()
-      expect(dispatchProps.editPost).toHaveBeenCalledWith(20, expect.any(Object))
+      expect(dispatchProps.editPost).toHaveBeenCalledWith(20)
 
       pinPost()
       expect(dispatchProps.pinPost).toHaveBeenCalledWith(20, 33)
@@ -115,7 +118,7 @@ describe('mergeProps', () => {
       expect(removePost).toBeTruthy()
 
       removePost()
-      expect(dispatchProps.removePost).toHaveBeenCalledWith(20, 'mycommunity')
+      expect(dispatchProps.removePost).toHaveBeenCalledWith(20)
     })
   })
 
