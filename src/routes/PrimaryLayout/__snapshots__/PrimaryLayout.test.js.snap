@@ -86,12 +86,7 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
         />
         <Route
           component={[Function]}
-          exact={true}
           path="/all/:postTypeContext(project|p)"
-        />
-        <Route
-          component={[Function]}
-          path="/all/:postTypeContext(project|p)/:postId"
         />
         <Route
           component={[Function]}
@@ -101,54 +96,7 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
         <Route
           component={[Function]}
           exact={true}
-          path="/c/:slug"
-        />
-        <Route
-          component={[Function]}
-          exact={true}
-          path="/c/:slug/:postTypeContext(project|p)"
-        />
-        <Route
-          component={[Function]}
-          path="/c/:slug/members"
-        />
-        <Route
-          component={[Function]}
-          path="/c/:slug/m/:id"
-        />
-        <Route
-          component={[Function]}
-          path="/c/:slug/:postTypeContext(project|p)/:postId"
-        />
-        <Route
-          component={[Function]}
-          path="/c/:slug/settings"
-        />
-        <Route
-          component={[Function]}
-          path="/c/:slug/topics"
-        />
-        <Route
-          component={[Function]}
-          path="/c/:slug/:topicName/:postTypeContext(project|p)/:postId"
-        />
-        <Route
-          component={[Function]}
-          path="/c/:slug/:topicName"
-        />
-        <Route
-          component={[Function]}
-          exact={true}
           path="/n/:networkSlug"
-        />
-        <Route
-          component={[Function]}
-          exact={true}
-          path="/n/:networkSlug/:postTypeContext(project|p)"
-        />
-        <Route
-          component={[Function]}
-          path="/n/:networkSlug/:postTypeContext(project|p)/:postId"
         />
         <Route
           component={[Function]}
@@ -157,6 +105,10 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
         <Route
           component={[Function]}
           path="/n/:networkSlug/m/:id"
+        />
+        <Route
+          component={[Function]}
+          path="/n/:networkSlug/:postTypeContext(project|p)"
         />
         <Route
           component={[Function]}
@@ -170,6 +122,35 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
           component={[Function]}
           exact={true}
           path="/n/:networkSlug/:topicName"
+        />
+        <Route
+          component={[Function]}
+          exact={true}
+          path="/c/:slug"
+        />
+        <Route
+          component={[Function]}
+          path="/c/:slug/:postTypeContext(project|p)"
+        />
+        <Route
+          component={[Function]}
+          path="/c/:slug/members"
+        />
+        <Route
+          component={[Function]}
+          path="/c/:slug/m/:id"
+        />
+        <Route
+          component={[Function]}
+          path="/c/:slug/settings"
+        />
+        <Route
+          component={[Function]}
+          path="/c/:slug/topics"
+        />
+        <Route
+          component={[Function]}
+          path="/c/:slug/:topicName"
         />
         <Route
           component={[Function]}
@@ -239,12 +220,12 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
       />
       <Route
         component={[Function]}
-        exact={true}
-        path="/c/:slug/:postTypeContext(project|p)/new"
+        path="/c/:slug/m/:id"
       />
       <Route
         component={[Function]}
-        path="/c/:slug/m/:id"
+        exact={true}
+        path="/c/:slug/:postTypeContext(project|p)/:action(new)"
       />
       <Route
         component={[Function]}
@@ -254,7 +235,7 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
       <Route
         component={[Function]}
         exact={true}
-        path="/c/:slug/:topicName/:postTypeContext(project|p)/new"
+        path="/c/:slug/:topicName/:postTypeContext(project|p)/:action(new)"
       />
       <Route
         component={[Function]}
@@ -276,18 +257,13 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
     >
       <Route
         component={[Function]}
-        key="/events/:eventId"
-        path="/events/:eventId"
-      />
-      <Route
-        component={[Function]}
         key="/all/:postTypeContext(project|p)/:postId(\\\\d+)"
         path="/all/:postTypeContext(project|p)/:postId(\\\\d+)"
       />
       <Route
         component={[Function]}
-        key="/c/:slug/:postTypeContext(project|p)/:postId(\\\\d+)"
-        path="/c/:slug/:postTypeContext(project|p)/:postId(\\\\d+)"
+        key="/n/:networkSlug/m/:id/:postTypeContext(project|p)/:postId(\\\\d+)"
+        path="/n/:networkSlug/m/:id/:postTypeContext(project|p)/:postId(\\\\d+)"
       />
       <Route
         component={[Function]}
@@ -301,13 +277,18 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
       />
       <Route
         component={[Function]}
+        key="/c/:slug/:postTypeContext(project|p)/:postId(\\\\d+)"
+        path="/c/:slug/:postTypeContext(project|p)/:postId(\\\\d+)"
+      />
+      <Route
+        component={[Function]}
         key="/c/:slug/:topicName/:postTypeContext(project|p)/:postId(\\\\d+)"
         path="/c/:slug/:topicName/:postTypeContext(project|p)/:postId(\\\\d+)"
       />
       <Route
         component={[Function]}
-        key="/n/:networkSlug/m/:id/:postTypeContext(project|p)/:postId(\\\\d+)"
-        path="/n/:networkSlug/m/:id/:postTypeContext(project|p)/:postId(\\\\d+)"
+        key="/events/:eventId"
+        path="/events/:eventId"
       />
     </div>
   </div>
@@ -330,53 +311,53 @@ exports[`shows DownloadAppModal if the user is on mobile 1`] = `
   />
   <Route
     exact={true}
-    key="/all/:postTypeContext(project|p)/new"
-    path="/all/:postTypeContext(project|p)/new"
+    key="/all/:postTypeContext(project|p)/:action(new)"
+    path="/all/:postTypeContext(project|p)/:action(new)"
   />
   <Route
     exact={true}
-    key="/c/:slug/:postTypeContext(project|p)/new"
-    path="/c/:slug/:postTypeContext(project|p)/new"
+    key="/all/:postTypeContext(project|p)/:postId(\\\\d+)/:action(edit)"
+    path="/all/:postTypeContext(project|p)/:postId(\\\\d+)/:action(edit)"
   />
   <Route
     exact={true}
-    key="/c/:slug/:topicName/:postTypeContext(project|p)/new"
-    path="/c/:slug/:topicName/:postTypeContext(project|p)/new"
+    key="/n/:networkSlug/m/:id/:postTypeContext(project|p)/:postId(\\\\d+)/:action(edit)"
+    path="/n/:networkSlug/m/:id/:postTypeContext(project|p)/:postId(\\\\d+)/:action(edit)"
   />
   <Route
     exact={true}
-    key="/all/:postTypeContext(project|p)/:postId/edit"
-    path="/all/:postTypeContext(project|p)/:postId/edit"
+    key="/n/:networkSlug/:postTypeContext(project|p)/:action(new)"
+    path="/n/:networkSlug/:postTypeContext(project|p)/:action(new)"
   />
   <Route
     exact={true}
-    key="/c/:slug/:postTypeContext(project|p)/:postId/edit"
-    path="/c/:slug/:postTypeContext(project|p)/:postId/edit"
+    key="/n/:networkSlug/:postTypeContext(project|p)/:postId(\\\\d+)/:action(edit)"
+    path="/n/:networkSlug/:postTypeContext(project|p)/:postId(\\\\d+)/:action(edit)"
   />
   <Route
     exact={true}
-    key="/c/:slug/m/:id/:postTypeContext(project|p)/:postId/edit"
-    path="/c/:slug/m/:id/:postTypeContext(project|p)/:postId/edit"
+    key="/c/:slug/:postTypeContext(project|p)/:action(new)"
+    path="/c/:slug/:postTypeContext(project|p)/:action(new)"
   />
   <Route
     exact={true}
-    key="/c/:slug/:topicName/:postTypeContext(project|p)/:postId/edit"
-    path="/c/:slug/:topicName/:postTypeContext(project|p)/:postId/edit"
+    key="/c/:slug/m/:id/:postTypeContext(project|p)/:postId(\\\\d+)/:action(edit)"
+    path="/c/:slug/m/:id/:postTypeContext(project|p)/:postId(\\\\d+)/:action(edit)"
   />
   <Route
     exact={true}
-    key="/n/:networkSlug/:postTypeContext(project|p)/new"
-    path="/n/:networkSlug/:postTypeContext(project|p)/new"
+    key="/c/:slug/:postTypeContext(project|p)/:postId(\\\\d+)/:action(edit)"
+    path="/c/:slug/:postTypeContext(project|p)/:postId(\\\\d+)/:action(edit)"
   />
   <Route
     exact={true}
-    key="/n/:networkSlug/:postTypeContext(project|p)/:postId/edit"
-    path="/n/:networkSlug/:postTypeContext(project|p)/:postId/edit"
+    key="/c/:slug/:topicName/:postTypeContext(project|p)/:action(new)"
+    path="/c/:slug/:topicName/:postTypeContext(project|p)/:action(new)"
   />
   <Route
     exact={true}
-    key="/n/:networkSlug/m/:id/:postTypeContext(project|p)/:postId/edit"
-    path="/n/:networkSlug/m/:id/:postTypeContext(project|p)/:postId/edit"
+    key="/c/:slug/:topicName/:postTypeContext(project|p)/:postId(\\\\d+)/:action(edit)"
+    path="/c/:slug/:topicName/:postTypeContext(project|p)/:postId(\\\\d+)/:action(edit)"
   />
 </div>
 `;

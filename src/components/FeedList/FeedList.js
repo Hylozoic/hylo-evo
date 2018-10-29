@@ -79,7 +79,8 @@ export default class FeedList extends React.Component {
       posts,
       postTypeContext,
       pending,
-      slug
+      slug,
+      networkSlug
     } = this.props
     const { atTabBar, tabBarWidth } = this.state
     const style = {
@@ -110,6 +111,7 @@ export default class FeedList extends React.Component {
           return <PostCard
             post={post}
             slug={slug}
+            networkSlug={networkSlug}
             styleName={cx('FeedListItem', {expanded})}
             expanded={expanded}
             showDetails={() => showPostDetails(post.id, post.type)}

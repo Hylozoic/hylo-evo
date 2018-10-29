@@ -77,17 +77,26 @@ export function postsUrl (opts = {}) {
     defaultUrl: allCommunitiesUrl(),
     ...opts
   }
-  let postTypeContext = get('postTypeContext', optsWithDefaults)
-  postTypeContext = POST_TYPE_CONTEXTS.includes(postTypeContext) ? postTypeContext : DEFAULT_POST_TYPE_CONTEXT
+  const postTypeContext = get('postTypeContext', opts)
+  const inPostTypeContext = POST_TYPE_CONTEXTS.includes(postTypeContext)
   const base = baseUrl(optsWithDefaults)
-  
-  return `${base}/${postTypeContext}`
+
+  return inPostTypeContext
+    ? `${base}/${postTypeContext}`
+    : `${base}`
 }
 
 export function postUrl (id, opts = {}) {
-  const result = `${postsUrl(opts)}/${id}`
+  const action = get('action', opts)
+  const postTypeContext = get('postTypeContext', opts)
+  const inPostTypeContext = POST_TYPE_CONTEXTS.includes(postTypeContext)
+  let result = postsUrl(opts)
 
-  return opts.action ? `${result}/${opts.action}` : result
+  if (!inPostTypeContext) result = `${result}/${DEFAULT_POST_TYPE_CONTEXT}`
+  result = `${result}/${id}`
+  if (action) result = `${result}/${action}`
+
+  return result
 }
 
 export function commentUrl (postId, commentId, communitySlug) {
@@ -153,4 +162,30 @@ export function getNetworkSlugInPath (pathname) {
     path: '/n/:networkSlug'
   })
   return get('params.networkSlug', match)
+}
+
+// more utility path functions (relocated from PrimaryLayout)
+
+export function isSignupPath (path) {
+  return (path.startsWith('/signup'))
+}
+
+export function isCreateCommunityPath (path) {
+  return (path.startsWith('/create-community'))
+}
+
+export function isJoinCommunityPath (path) {
+  return (path.startsWith('/h/use-invitation'))
+}
+
+export function isAllCommunitiesPath (path) {
+  return (path.startsWith('/all'))
+}
+
+export function isNetworkPath (path) {
+  return (path.startsWith('/n/'))
+}
+
+export function isTagPath (path) {
+  return (path.startsWith('/tag/'))
 }

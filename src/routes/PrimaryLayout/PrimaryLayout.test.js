@@ -1,11 +1,8 @@
 import { MemoryRouter, Redirect } from 'react-router'
 import React from 'react'
 import { shallow } from 'enzyme'
-
 import orm from 'store/models'
-import
-PrimaryLayout,
-{
+import PrimaryLayout, {
   redirectIfCommunity,
   RedirectToCommunity
 } from './PrimaryLayout'

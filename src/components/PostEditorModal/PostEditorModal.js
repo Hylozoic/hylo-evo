@@ -6,19 +6,20 @@ import './PostEditorModal.scss'
 export default class PostEditorModal extends Component {
   render () {
     const { match, hidePostEditor } = this.props
+
+    if (!match) return null
+
     return <CSSTransitionGroup
       transitionName='post-editor'
       transitionAppear
       transitionAppearTimeout={400}
       transitionEnterTimeout={400}
       transitionLeaveTimeout={300}>
-      {match && <div
-        styleName='post-editor-modal'
-        key='post-editor-modal'>
+      <div styleName='post-editor-modal' key='post-editor-modal'>
         <div styleName='post-editor-wrapper' className='post-editor-wrapper'>
           <PostEditor onClose={hidePostEditor} {...this.props} />
         </div>
-      </div>}
+      </div>
     </CSSTransitionGroup>
   }
 }

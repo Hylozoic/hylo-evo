@@ -36,7 +36,7 @@ export default class PostCard extends React.Component {
 
   render () {
     const {
-      post, className, expanded, showDetails, highlightProps, slug, voteOnPost
+      post, className, expanded, showDetails, highlightProps, slug, networkSlug, voteOnPost
     } = this.props
 
     const shouldShowDetails = element => {
@@ -66,6 +66,7 @@ export default class PostCard extends React.Component {
         type={post.type}
         communities={post.communities}
         slug={slug}
+        networkSlug={networkSlug}
         id={post.id}
         pinned={post.pinned}
         topics={post.topics}

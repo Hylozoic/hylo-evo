@@ -41,7 +41,11 @@ import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
 import {
   POST_ID_MATCH_REGEX,
-  VALID_POST_TYPE_CONTEXTS_MATCH_REGEX
+  VALID_POST_TYPE_CONTEXTS_MATCH_REGEX,
+  isSignupPath,
+  isAllCommunitiesPath,
+  isNetworkPath,
+  isTagPath
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 // TODO: Implement create community privacy component when implemented on the server
@@ -190,26 +194,22 @@ export default class PrimaryLayout extends Component {
 
             <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
             <Route path='/all' exact component={Feed} />
-            <Route path={`/all/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})`} exact component={Feed} />
-            <Route path={`/all/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId`} component={Feed} />
+            <Route path={`/all/${POST_TYPE_CONTEXT_MATCH}`} component={Feed} />
             <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
-            <Route path='/c/:slug' exact component={Feed} />
-            <Route path={`/c/:slug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})`} exact component={Feed} />
-            <Route path='/c/:slug/members' component={Members} />
-            <Route path='/c/:slug/m/:id' component={MemberProfile} />
-            <Route path={`/c/:slug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId`} component={Feed} />
-            <Route path='/c/:slug/settings' component={CommunitySettings} />
-            <Route path='/c/:slug/topics' component={AllTopics} />
-            <Route path={`/c/:slug/:topicName/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId`} component={Feed} />
-            <Route path='/c/:slug/:topicName' component={Feed} />
             <Route path='/n/:networkSlug' exact component={Feed} />
-            <Route path={`/n/:networkSlug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})`} exact component={Feed} />
-            <Route path={`/n/:networkSlug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId`} component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
             <Route path='/n/:networkSlug/m/:id' component={MemberProfile} />
+            <Route path={`/n/:networkSlug/${POST_TYPE_CONTEXT_MATCH}`} component={Feed} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
             <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />
             <Route path='/n/:networkSlug/:topicName' exact component={TopicSupportComingSoon} />
+            <Route path='/c/:slug' exact component={Feed} />
+            <Route path={`/c/:slug/${POST_TYPE_CONTEXT_MATCH}`} component={Feed} />
+            <Route path='/c/:slug/members' component={Members} />
+            <Route path='/c/:slug/m/:id' component={MemberProfile} />
+            <Route path='/c/:slug/settings' component={CommunitySettings} />
+            <Route path='/c/:slug/topics' component={AllTopics} />
+            <Route path='/c/:slug/:topicName' component={Feed} />
             <Route path='/m/:id' component={MemberProfile} />
             <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
@@ -232,10 +232,12 @@ export default class PrimaryLayout extends Component {
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
           <Route path='/c/:slug' exact component={CommunitySidebar} />
-          <Route path={`/c/:slug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/new`} exact component={CommunitySidebar} />
           <Route path='/c/:slug/m/:id' component={MemberSidebar} />
+          {/* Test if this route is necessary  */}
+          <Route path={`/c/:slug/${NEW_POST_MATCH}`} exact component={CommunitySidebar} />
           <Route path='/c/:slug/:topicName' exact component={CommunitySidebar} />
-          <Route path={`/c/:slug/:topicName/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/new`} exact component={CommunitySidebar} />
+          {/* Test if this route is necessary  */}
+          <Route path={`/c/:slug/:topicName/${NEW_POST_MATCH}`} exact component={CommunitySidebar} />
           <Route path='/n/:networkSlug' exact component={NetworkSidebar} />
           <Route path='/n/:networkSlug/m/:id' component={MemberSidebar} />
           <Route path='/m/:id' component={MemberSidebar} />
@@ -255,39 +257,44 @@ export default class PrimaryLayout extends Component {
       <SocketListener location={location} />
       <SocketSubscriber type='community' id={get('slug', community)} />
       <Intercom appID={isTest ? null : config.intercom.appId} />
-      {postEditorRoutes.map(({path, forNew}) =>
+      {postEditorRoutes.map(({path}) => 
         <Route
           key={path}
           path={path}
           exact
           children={({ match, location }) => {
-            return <PostEditorModal match={match} location={location} forNew={forNew} />
+            return <PostEditorModal match={match} location={location} />
           }} />)}
     </div>
   }
 }
 
+const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})`
+const NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:action(new)`
+const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH_REGEX})`
+const EDIT_POST_MATCH = `${POST_DETAIL_MATCH}/:action(edit)`
+
 const postEditorRoutes = [
-  {path: `/all/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/new`, forNew: true},
-  {path: `/c/:slug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/new`, forNew: true},
-  {path: `/c/:slug/:topicName/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/new`, forNew: true},
-  {path: `/all/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId/edit`},
-  {path: `/c/:slug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId/edit`},
-  {path: `/c/:slug/m/:id/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId/edit`},
-  {path: `/c/:slug/:topicName/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId/edit`},
-  {path: `/n/:networkSlug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/new`, forNew: true},
-  {path: `/n/:networkSlug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId/edit`},
-  {path: `/n/:networkSlug/m/:id/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId/edit`}
+  {path: `/all/${NEW_POST_MATCH}`},
+  {path: `/all/${EDIT_POST_MATCH}`},
+  {path: `/n/:networkSlug/m/:id/${EDIT_POST_MATCH}`},
+  {path: `/n/:networkSlug/${NEW_POST_MATCH}`},
+  {path: `/n/:networkSlug/${EDIT_POST_MATCH}`},
+  {path: `/c/:slug/${NEW_POST_MATCH}`},
+  {path: `/c/:slug/m/:id/${EDIT_POST_MATCH}`},
+  {path: `/c/:slug/${EDIT_POST_MATCH}`},
+  {path: `/c/:slug/:topicName/${NEW_POST_MATCH}`},
+  {path: `/c/:slug/:topicName/${EDIT_POST_MATCH}`}
 ]
 
 const detailRoutes = [
-  {path: '/events/:eventId', component: EventDetail},
-  {path: `/all/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/c/:slug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/n/:networkSlug/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/c/:slug/m/:id/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/c/:slug/:topicName/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail},
-  {path: `/n/:networkSlug/m/:id/:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})/:postId(${POST_ID_MATCH_REGEX})`, component: PostDetail}
+  {path: `/all/${POST_DETAIL_MATCH}`, component: PostDetail},
+  {path: `/n/:networkSlug/m/:id/${POST_DETAIL_MATCH}`, component: PostDetail},
+  {path: `/n/:networkSlug/${POST_DETAIL_MATCH}`, component: PostDetail},
+  {path: `/c/:slug/m/:id/${POST_DETAIL_MATCH}`, component: PostDetail},
+  {path: `/c/:slug/${POST_DETAIL_MATCH}`, component: PostDetail},
+  {path: `/c/:slug/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail},
+  {path: '/events/:eventId', component: EventDetail}
 ]
 
 const signupRoutes = [
@@ -297,7 +304,6 @@ const signupRoutes = [
   {path: '/signup/review', child: Review}
 ]
 const createCommunityRoutes = [
-  // order matters here, or it matches the non param version
   {path: '/create-community/name/:networkId', component: Name},
   {path: '/create-community/name', component: Name},
   {path: '/create-community/domain', component: Domain},
@@ -306,30 +312,6 @@ const createCommunityRoutes = [
   // {path: '/create-community/privacy', component: Privacy},
   {path: '/create-community/review', component: CommunityReview}
 ]
-
-export function isSignupPath (path) {
-  return (path.startsWith('/signup'))
-}
-
-export function isCreateCommunityPath (path) {
-  return (path.startsWith('/create-community'))
-}
-
-export function isJoinCommunityPath (path) {
-  return (path.startsWith('/h/use-invitation'))
-}
-
-export function isAllCommunitiesPath (path) {
-  return (path.startsWith('/all'))
-}
-
-export function isNetworkPath (path) {
-  return (path.startsWith('/n/'))
-}
-
-export function isTagPath (path) {
-  return (path.startsWith('/tag/'))
-}
 
 export function RedirectToSignupFlow ({ currentUser, pathname }) {
   if (!currentUser || !currentUser.settings || !currentUser.settings.signupInProgress) return null

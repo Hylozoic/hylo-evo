@@ -44,9 +44,9 @@ export default class Feed extends Component {
     return {
       subject,
       slug: communitySlug,
-      networkSlug,
       topic: get('id', topic),
       ...pick([
+        'networkSlug',
         'postTypeFilter',
         'postTypeContext',
         'sortBy',
