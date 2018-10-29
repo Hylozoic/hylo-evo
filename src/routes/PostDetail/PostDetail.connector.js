@@ -7,6 +7,7 @@ import getParam from 'store/selectors/getParam'
 import getPost, { presentPost } from 'store/selectors/getPost'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getPostTypeContext from 'store/selectors/getPostTypeContext'
 import voteOnPost from 'store/actions/voteOnPost.js'
 import joinProject from 'store/actions/joinProject'
 import leaveProject from 'store/actions/leaveProject'
@@ -18,6 +19,7 @@ export function mapStateToProps (state, props) {
   const post = presentPost(getPost(state, props), get('id', currentCommunity))
   const slug = getParam('slug', state, props)
   const networkSlug = getParam('networkSlug', state, props)
+  const postTypeContext = getPostTypeContext(state, props)
   const currentUser = getMe(state)
   const isProjectMember = find(({id}) => id === get('id', currentUser), get('members', post))
 
@@ -25,6 +27,7 @@ export function mapStateToProps (state, props) {
     id,
     post,
     currentUser,
+    postTypeContext,
     slug,
     networkSlug,
     isProjectMember,

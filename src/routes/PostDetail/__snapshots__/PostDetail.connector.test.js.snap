@@ -8,6 +8,7 @@ Object {
   "networkSlug": undefined,
   "pending": undefined,
   "post": null,
+  "postTypeContext": undefined,
   "slug": undefined,
 }
 `;

@@ -6,7 +6,7 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
     data-stylename="activity-item"
     key="2"
   >
-    <Connect(PostCard)
+    <PostCard
       post={
         Object {
           "createdAt": "Tue Apr 18 2017 09:50:25 GMT+1200 (NZST)",
@@ -50,7 +50,7 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
     data-stylename="activity-item"
     key="1"
   >
-    <Connect(PostCard)
+    <PostCard
       post={
         Object {
           "createdAt": "Tue Apr 18 2017 09:20:39 GMT+1200 (NZST)",

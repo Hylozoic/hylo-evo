@@ -177,12 +177,13 @@ export default class PostDetail extends Component {
   }
 }
 
-function WrappedPostHeader ({ post, onClose, slug, networkSlug }) {
+function WrappedPostHeader ({ post, onClose, postTypeContext, slug, networkSlug }) {
   return <PostHeader creator={post.creator}
     date={post.createdAt}
     type={post.type}
     communities={post.communities}
     close={onClose}
+    postTypeContext={postTypeContext}
     slug={slug}
     networkSlug={networkSlug}
     pinned={post.pinned}

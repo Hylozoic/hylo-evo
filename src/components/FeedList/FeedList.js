@@ -113,9 +113,10 @@ export default class FeedList extends React.Component {
             post={post}
             slug={slug}
             networkSlug={networkSlug}
+            postTypeContext={postTypeContext}
             styleName={cx('FeedListItem', {expanded})}
             expanded={expanded}
-            showDetails={() => showPostDetails(post.id, post.type)}
+            showDetails={showPostDetails(post.id)}
             voteOnPost={voteOnPost(post.id)}
             key={post.id} />
         })}

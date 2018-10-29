@@ -133,6 +133,8 @@ export function makeUrl (path, params) {
   return `${path}${!isEmpty(params) ? '?' + qs.stringify(params) : ''}`
 }
 
+// TODO: refactor to utilize react-navigation matcher and params
+//       or potentially replace this in all cases with postsUrl
 export function removePostFromUrl (url) {
   let matchForReplaceRegex
 

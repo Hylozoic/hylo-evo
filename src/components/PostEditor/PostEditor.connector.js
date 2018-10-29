@@ -102,12 +102,12 @@ export const mapDispatchToProps = (dispatch, props) => {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { fetchLinkPreviewPending, topicName, communitySlug, networkSlug, topic } = stateProps
+  const { fetchLinkPreviewPending, topicName, communitySlug, networkSlug, postTypeContext, topic } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
 
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) || get('payload.data.createProject.id', createPostAction)
-    const url = postUrl(id, {communitySlug, networkSlug, topicName})
+    const url = postUrl(id, {communitySlug, networkSlug, postTypeContext, topicName})
 
     return goToUrl(url)
   }
