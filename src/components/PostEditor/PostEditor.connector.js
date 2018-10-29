@@ -12,6 +12,7 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import { FETCH_POST, UPLOAD_ATTACHMENT } from 'store/constants'
 import {
   CREATE_POST,
+  CREATE_PROJECT,
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
   createPost,
@@ -39,7 +40,7 @@ export function mapStateToProps (state, props) {
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
   const uploadAttachmentPending = state.pending[UPLOAD_ATTACHMENT]
-  const postPending = !!state.pending[CREATE_POST]
+  const postPending = !!state.pending[CREATE_POST] || !!state.pending[CREATE_PROJECT]
   const loading = !!state.pending[FETCH_POST] || !!uploadAttachmentPending || postPending
   const editing = !!post || loading
   const images = getAttachments(state, {type: 'image'})
