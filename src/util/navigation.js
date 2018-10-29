@@ -72,7 +72,7 @@ export function tagUrl (tagName, communitySlug) {
   return `${base}/${tagName}`
 }
 
-export function postUrl (id, opts = {}) {
+export function postsUrl (opts = {}) {
   const optsWithDefaults = {
     defaultUrl: allCommunitiesUrl(),
     ...opts
@@ -80,9 +80,14 @@ export function postUrl (id, opts = {}) {
   let postTypeContext = get('postTypeContext', optsWithDefaults)
   postTypeContext = POST_TYPE_CONTEXTS.includes(postTypeContext) ? postTypeContext : DEFAULT_POST_TYPE_CONTEXT
   const base = baseUrl(optsWithDefaults)
-  const result = `${base}/${postTypeContext}/${id}`
+  
+  return `${base}/${postTypeContext}`
+}
 
-  return optsWithDefaults.action ? `${result}/${optsWithDefaults.action}` : result
+export function postUrl (id, opts = {}) {
+  const result = `${postsUrl(opts)}/${id}`
+
+  return opts.action ? `${result}/${opts.action}` : result
 }
 
 export function commentUrl (postId, commentId, communitySlug) {
