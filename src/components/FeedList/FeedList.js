@@ -1,14 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { throttle, isEmpty, some } from 'lodash/fp'
+import cx from 'classnames'
+import { CENTER_COLUMN_ID, position } from 'util/scrolling'
+import { queryParamWhitelist } from 'store/reducers/queryResults'
 import TabBar from './TabBar'
 import PostCard from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
-import { CENTER_COLUMN_ID, position } from 'util/scrolling'
-import cx from 'classnames'
-import './FeedList.scss'
-import { throttle, isEmpty, some } from 'lodash/fp'
-import { queryParamWhitelist } from 'store/reducers/queryResults'
 import Loading from 'components/Loading'
+import './FeedList.scss'
 
 export default class FeedList extends React.Component {
   static defaultProps = {
