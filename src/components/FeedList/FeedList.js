@@ -73,6 +73,7 @@ export default class FeedList extends React.Component {
       postTypeFilter,
       sortBy,
       showPostDetails,
+      voteOnPost,
       selectedPostId,
       changeTab,
       changeSort,
@@ -115,6 +116,7 @@ export default class FeedList extends React.Component {
             styleName={cx('FeedListItem', {expanded})}
             expanded={expanded}
             showDetails={() => showPostDetails(post.id, post.type)}
+            voteOnPost={voteOnPost(post.id)}
             key={post.id} />
         })}
       </div>

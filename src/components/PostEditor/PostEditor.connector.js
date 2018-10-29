@@ -107,7 +107,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) || get('payload.data.createProject.id', createPostAction)
     const url = postUrl(id, {communitySlug, networkSlug, topicName})
-    
+
     return goToUrl(url)
   }
 

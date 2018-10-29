@@ -38,7 +38,6 @@ export default class PostCard extends React.Component {
     const {
       post, className, expanded, showDetails, highlightProps, slug, networkSlug, voteOnPost
     } = this.props
-
     const shouldShowDetails = element => {
       if (element === this.refs.postCard) return true
       if (element.tagName === 'A' || element.tagName === 'LI') return false
@@ -48,14 +47,12 @@ export default class PostCard extends React.Component {
 
       return true
     }
-
     const onClick = event => {
       const { target } = event
 
       if (shouldShowDetails(target)) showDetails()
     }
-
-    const vote = () => voteOnPost(post.id, !post.myVote)
+    const vote = () => voteOnPost(!post.myVote)
 
     return <div ref='postCard'
       onClick={onClick}

@@ -3,6 +3,7 @@ import { pick } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
 import { presentPost } from 'store/selectors/getPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import voteOnPost from 'store/actions/voteOnPost.js'
 import {
   fetchPosts,
   storeFetchPostsParam,
@@ -39,8 +40,9 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = function (dispatch) {
   return {
-    fetchPosts: param => (offset) => dispatch(fetchPosts({offset, ...param})),
-    storeFetchPostsParam: param => () => dispatch(storeFetchPostsParam(param))
+    fetchPosts: param => offset => dispatch(fetchPosts({offset, ...param})),
+    storeFetchPostsParam: param => () => dispatch(storeFetchPostsParam(param)),
+    voteOnPost: postId => myVote => dispatch(voteOnPost(postId, myVote))
   }
 }
 
