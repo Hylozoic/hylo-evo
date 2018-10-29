@@ -50,6 +50,7 @@ export function mapStateToProps (state, props) {
   const showFiles = !isEmpty(files) ||
     get('attachmentType', uploadAttachmentPending) === 'file'
   const communitySlug = getParam('slug', null, props)
+  const networkSlug = getParam('networkSlug', null, props)
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
   const postTypeContext = getPostTypeContext(null, props) || getQueryParam('t', null, props)
@@ -77,6 +78,7 @@ export function mapStateToProps (state, props) {
     topic,
     topicName,
     communitySlug,
+    networkSlug,
     announcementSelected,
     canModerate,
     myModeratedCommunities
@@ -99,14 +101,13 @@ export const mapDispatchToProps = (dispatch, props) => {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { fetchLinkPreviewPending, topicName, communitySlug, topic } = stateProps
+  const { fetchLinkPreviewPending, topicName, communitySlug, networkSlug, topic } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
 
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) || get('payload.data.createProject.id', createPostAction)
-    const url = topicName
-    ? postUrl(id, {communitySlug, topicName})
-    : postUrl(id, {communitySlug})
+    const url = postUrl(id, {communitySlug, networkSlug, topicName})
+    
     return goToUrl(url)
   }
 
