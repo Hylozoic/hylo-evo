@@ -92,7 +92,7 @@ export default class PrimaryLayout extends Component {
       postDetailRoutes
     )
     const showTopics = !isAllCommunitiesPath(location.pathname) && !isNetworkPath(location.pathname) && !isTagPath(location.pathname)
-    
+
     return <div styleName='container'>
       <Drawer styleName={cx('drawer', {hidden: !isDrawerOpen})} {...{community, network}} />
       <TopNav styleName='top' onClick={closeDrawer} {...{community, network, currentUser, showLogoBadge}} />
@@ -128,8 +128,8 @@ export default class PrimaryLayout extends Component {
             <Route path='/m/:id' component={MemberProfile} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
-            {signupRoutes.map(({ path, child }) => 
-              <Route path={path} key={path} component={props => 
+            {signupRoutes.map(({ path, child }) =>
+              <Route path={path} key={path} component={props =>
                 <SignupModal {...props} child={child} />} />)}
             {createCommunityRoutes.map(({ path, component }) =>
               <Route path={path} key={path} component={props =>

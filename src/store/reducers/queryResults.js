@@ -123,10 +123,11 @@ export function matchNewPostIntoQueryResults (state, {id, type, networkSlug, com
 
   // All Communities feed w/ topics
   queriesToMatch.push({})
-  for (let topic of topics) queriesToMatch.push(
-    {topic: topic.id}
-  )
-
+  for (let topic of topics) {
+    queriesToMatch.push(
+      {topic: topic.id}
+    )
+  }
   // Network feeds w/ topics
   if (networkSlug) {
     queriesToMatch.push(
@@ -135,9 +136,11 @@ export function matchNewPostIntoQueryResults (state, {id, type, networkSlug, com
       {networkSlug, sortBy: 'updated'},
       {networkSlug, sortBy: 'updated', filter: type}
     )
-    for (let topic of topics) queriesToMatch.push(
-      {networkSlug: networkSlug, topic: topic.id}
-    )
+    for (let topic of topics) {
+      queriesToMatch.push(
+        {networkSlug: networkSlug, topic: topic.id}
+      )
+    }
   }
 
   // Network feeds w/ topics
@@ -148,9 +151,11 @@ export function matchNewPostIntoQueryResults (state, {id, type, networkSlug, com
       {slug: community.slug, sortBy: 'updated'},
       {slug: community.slug, sortBy: 'updated', filter: type}
     )
-    for (let topic of topics) queriesToMatch.push(
-      {slug: community.slug, topic: topic.id}
-    )
+    for (let topic of topics) {
+      queriesToMatch.push(
+        {slug: community.slug, topic: topic.id}
+      )
+    }
     return reduce((innerMemo, params) => {
       return prependIdForCreate(innerMemo, FETCH_POSTS, params, id)
     }, memo, queriesToMatch)

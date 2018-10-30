@@ -63,7 +63,7 @@ export default function createProject (postParams) {
     meta: {
       extractModel: {
         modelName: 'Post',
-        getRoot: get('createProject'),
+        getRoot: get('createProject')
       },
       networkSlug,
       analytics: {
