@@ -1,6 +1,10 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
+import {
+  matchPath,
+  Redirect,
+  Route,
+  Switch
+} from 'react-router-dom'
 import cx from 'classnames'
 import { get, some } from 'lodash/fp'
 import Intercom from 'react-intercom'
@@ -15,8 +19,6 @@ import CommunitySidebar from 'routes/CommunitySidebar'
 import Domain from 'routes/CreateCommunity/Domain'
 import Drawer from './components/Drawer'
 import Feed from 'routes/Feed'
-import Events from 'routes/Events'
-import EventDetail from 'routes/Events/EventDetail'
 import Loading from 'components/Loading'
 import MemberProfile from 'routes/MemberProfile'
 import MemberSidebar from 'routes/MemberSidebar'
@@ -53,14 +55,6 @@ import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import './PrimaryLayout.scss'
 
 export default class PrimaryLayout extends Component {
-  static propTypes = {
-    community: PropTypes.object,
-    currentUser: PropTypes.object,
-    location: PropTypes.object,
-    isDrawerOpen: PropTypes.bool,
-    toggleDrawer: PropTypes.func
-  }
-
   componentDidMount () {
     // avoid fetching topics for All Communities if we're just going to redirect
     // to a single community
@@ -74,20 +68,6 @@ export default class PrimaryLayout extends Component {
     }
   }
 
-  communityExists () {
-    const {
-      isCommunityRoute,
-      community,
-      currentUser,
-      communityPending
-    } = this.props
-
-    if (isCommunityRoute && !community && currentUser && !communityPending) {
-      return false
-    }
-    return true
-  }
-
   render () {
     const {
       community,
@@ -97,101 +77,33 @@ export default class PrimaryLayout extends Component {
       location,
       toggleDrawer,
       isCommunityRoute,
+      communityPending,
       showLogoBadge
     } = this.props
 
-    if (isCommunityRoute && !currentUser) {
-      return <Loading />
-    }
-
-    if (!this.communityExists()) {
-      return <NotFound />
+    if (isCommunityRoute) {
+      if (!currentUser) return <Loading />
+      if (!community && !communityPending) return <NotFound />
     }
 
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
     const hasDetail = some(
       ({ path }) => matchPath(location.pathname, {path}),
-      detailRoutes
+      postDetailRoutes
     )
-
     const showTopics = !isAllCommunitiesPath(location.pathname) && !isNetworkPath(location.pathname) && !isTagPath(location.pathname)
-
-    // TODO move FullPageModals
+    
     return <div styleName='container'>
-      <Drawer community={community} network={network}
-        styleName={cx('drawer', {hidden: !isDrawerOpen})} />
-      <TopNav {...{community, network, currentUser, showLogoBadge}}
-        styleName='top'
-        onClick={closeDrawer} />
+      <Drawer styleName={cx('drawer', {hidden: !isDrawerOpen})} {...{community, network}} />
+      <TopNav styleName='top' onClick={closeDrawer} {...{community, network, currentUser, showLogoBadge}} />
       <div styleName='main' onClick={closeDrawer}>
         <Navigation collapsed={hasDetail} styleName='left' showTopics={showTopics} />
         <div styleName='center' id={CENTER_COLUMN_ID}>
-          <RedirectToSignupFlow currentUser={currentUser}
-            pathname={this.props.location.pathname} />
+          <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
           <RedirectToCommunity path='/' currentUser={currentUser} />
           <RedirectToCommunity path='/app' currentUser={currentUser} />
           <Switch>
-            {/* Redirect from->to with params doesn't work as expected, so I had to do this
-            'hack'. from https://stackoverflow.com/a/46064986/2141561 */}
-            <Route
-              exact
-              path='/c/:slug/tag/:topicName'
-              render={props => (
-                <Redirect to={`/c/${props.match.params.slug}/${props.match.params.topicName}`} />
-                )}
-            />
-            <Route
-              exact
-              path='/c/:slug/join/:accessCode/tag/:topicName'
-              render={props => (
-                <Redirect to={`/c/${props.match.params.slug}/join/${props.match.params.accessCode}/${props.match.params.topicName}`} />
-              )}
-            />
-            <Route
-              exact
-              path='/p/:postId'
-              render={props => (
-                <Redirect to={`/all/p/${props.match.params.postId}`} />
-              )}
-            />
-            <Route
-              exact
-              path='/u/:id'
-              render={props => (
-                <Redirect to={`/m/${props.match.params.id}`} />
-              )}
-            />
-            <Route
-              exact
-              path='/c/:slug/about'
-              render={props => (
-                <Redirect to={`/c/${props.match.params.slug}`} />
-              )}
-            />
-            <Route
-              exact
-              path='/c/:slug/people'
-              render={props => (
-                <Redirect to={`/c/${props.match.params.slug}/members`} />
-              )}
-            />
-            <Route
-              exact
-              path='/c/:slug/invite'
-              render={props => (
-                <Redirect to={`/c/${props.match.params.slug}/settings/invite`} />
-              )}
-            />
-
-            {/* TODO this route should probably redirect to the communities events page when it's implemented (or remove this if the URLS are the same) */}
-            <Route
-              exact
-              path='/c/:slug/events'
-              render={props => (
-                <Redirect to={`/c/${props.match.params.slug}`} />
-              )}
-            />
-
+            {redirectRoutes.map(({from, to}) => <Redirect from={from} to={to} exact key={from} />)}
             <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
             <Route path='/all' exact component={Feed} />
             <Route path={`/all/${POST_TYPE_CONTEXT_MATCH}`} component={Feed} />
@@ -214,23 +126,14 @@ export default class PrimaryLayout extends Component {
             <Route path='/c/:slug/topics' component={AllTopics} />
             <Route path='/c/:slug/:topicName' component={Feed} />
             <Route path='/m/:id' component={MemberProfile} />
-            <Route path='/events' component={Events} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
-            {signupRoutes.map(({ path, child }) =>
-              <Route
-                path={path}
-                key={path}
-                component={(props) => <SignupModal {...props} child={child} />}
-              />
-            )}
+            {signupRoutes.map(({ path, child }) => 
+              <Route path={path} key={path} component={props => 
+                <SignupModal {...props} child={child} />} />)}
             {createCommunityRoutes.map(({ path, component }) =>
-              <Route
-                path={path}
-                key={path}
-                component={(props) => <CreateCommunity {...props} component={component} />}
-                />
-            )}
+              <Route path={path} key={path} component={props =>
+                <CreateCommunity {...props} component={component} />} />)}
           </Switch>
         </div>
         <div styleName={cx('sidebar', {hidden: hasDetail})}>
@@ -246,28 +149,19 @@ export default class PrimaryLayout extends Component {
           <Route path='/m/:id' component={MemberSidebar} />
         </div>
         <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>
-          {/*
-            TODO: Display content of last detail page on '/' so that the
-            animation transitions correctly.
-            Best guess is to replace these routes with a render function
-            defined above, and store the previous detail component in state
-          */}
-          {detailRoutes.map(({ path, component }) =>
-            <Route key={path} {...{path, component}} />)}
+          {postDetailRoutes.map(({ path }) =>
+            <Route path={path} component={PostDetail} key={path} />)}
         </div>
       </div>
       <Route path='/t' component={Messages} />
       <SocketListener location={location} />
       <SocketSubscriber type='community' id={get('slug', community)} />
       <Intercom appID={isTest ? null : config.intercom.appId} />
-      {postEditorRoutes.map(({path}) =>
-        <Route
-          key={path}
-          path={path}
-          exact
-          children={({ match, location }) => {
-            return <PostEditorModal match={match} location={location} />
-          }} />)}
+      <Switch>
+        {postEditorRoutes.map(({path}) =>
+          <Route path={path} exact key={path} children={({ match, location }) =>
+            <PostEditorModal match={match} location={location} />} />)}
+      </Switch>
     </div>
   }
 }
@@ -276,7 +170,6 @@ const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MAT
 const NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:action(new)`
 const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH_REGEX})`
 const EDIT_POST_MATCH = `${POST_DETAIL_MATCH}/:action(edit)`
-
 const postEditorRoutes = [
   {path: `/all/${NEW_POST_MATCH}`},
   {path: `/all/${EDIT_POST_MATCH}`},
@@ -289,17 +182,14 @@ const postEditorRoutes = [
   {path: `/c/:slug/:topicName/${NEW_POST_MATCH}`},
   {path: `/c/:slug/:topicName/${EDIT_POST_MATCH}`}
 ]
-
-const detailRoutes = [
-  {path: `/all/${POST_DETAIL_MATCH}`, component: PostDetail},
-  {path: `/n/:networkSlug/m/:id/${POST_DETAIL_MATCH}`, component: PostDetail},
-  {path: `/n/:networkSlug/${POST_DETAIL_MATCH}`, component: PostDetail},
-  {path: `/c/:slug/m/:id/${POST_DETAIL_MATCH}`, component: PostDetail},
-  {path: `/c/:slug/${POST_DETAIL_MATCH}`, component: PostDetail},
-  {path: `/c/:slug/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail},
-  {path: '/events/:eventId', component: EventDetail}
+const postDetailRoutes = [
+  {path: `/all/${POST_DETAIL_MATCH}`},
+  {path: `/n/:networkSlug/m/:id/${POST_DETAIL_MATCH}`},
+  {path: `/n/:networkSlug/${POST_DETAIL_MATCH}`},
+  {path: `/c/:slug/m/:id/${POST_DETAIL_MATCH}`},
+  {path: `/c/:slug/${POST_DETAIL_MATCH}`},
+  {path: `/c/:slug/:topicName/${POST_DETAIL_MATCH}`}
 ]
-
 const signupRoutes = [
   {path: '/signup/upload-photo', child: UploadPhoto},
   {path: '/signup/add-location', child: AddLocation},
@@ -314,6 +204,16 @@ const createCommunityRoutes = [
   // TODO: Don't forget to change 'step' values
   // {path: '/create-community/privacy', component: Privacy},
   {path: '/create-community/review', component: CommunityReview}
+]
+const redirectRoutes = [
+  {from: '/c/:slug/tag/:topicName', to: '/c/:slug/:topicName'},
+  {from: '/c/:slug/join/:accessCode/tag/:topicName', to: '/c/:slug/join/:accessCode/:topicName'},
+  {from: '/p/:postId', to: '/all/p/:postId'},
+  {from: '/u/:id', to: '/m/:id'},
+  {from: '/c/:slug/about', to: '/c/:slug'},
+  {from: '/c/:slug/people', to: '/c/:slug/members'},
+  {from: '/c/:slug/invite', to: '/c/:slug/settings/invite'},
+  {from: '/c/:slug/events', to: '/c/:slug'}
 ]
 
 export function RedirectToSignupFlow ({ currentUser, pathname }) {

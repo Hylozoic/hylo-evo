@@ -61,7 +61,7 @@ export default function createPost (postParams) {
     meta: {
       extractModel: {
         modelName: 'Post',
-        getRoot: get('createPost'),
+        getRoot: get('createPost')
       },
       networkSlug,
       analytics: {

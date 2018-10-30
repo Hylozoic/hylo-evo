@@ -7,26 +7,18 @@ import PrimaryLayout, {
   RedirectToCommunity
 } from './PrimaryLayout'
 
-it('shows DownloadAppModal if the user is on mobile', () => {
-  const url = 'some.url'
-  const location = {
-    pathname: 'path'
-  }
-  const wrapper = shallow(<PrimaryLayout
-    downloadAppUrl={url}
-    location={location}
-    fetchForCurrentUser={jest.fn}
-  />)
-  expect(wrapper).toMatchSnapshot()
-})
-
 it('shows NotFound if a currentUser is loaded and the community does not exist', () => {
-  const wrapper = shallow(<PrimaryLayout isCommunityRoute currentUser={{}} />, { disableLifecycleMethods: true })
+  const wrapper = shallow(<PrimaryLayout
+    isCommunityRoute
+    currentUser={{}}
+    location={{pathname: ''}} />, { disableLifecycleMethods: true })
   expect(wrapper).toMatchSnapshot()
 })
 
 it('shows nothing for a community route if the community and currentUser are not loaded', () => {
-  const wrapper = shallow(<PrimaryLayout isCommunityRoute />, { disableLifecycleMethods: true })
+  const wrapper = shallow(<PrimaryLayout
+    isCommunityRoute
+    communityPending />, { disableLifecycleMethods: true })
   expect(wrapper.name()).toEqual('Loading')
 })
 

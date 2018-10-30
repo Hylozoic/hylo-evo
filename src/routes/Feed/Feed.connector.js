@@ -66,7 +66,7 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = function (dispatch, props) {
+export function mapDispatchToProps (dispatch, props) {
   const communitySlug = getParam('slug', null, props)
   const topicName = getParam('topicName', null, props)
   const params = getQueryParam(['s', 't'], null, props)
