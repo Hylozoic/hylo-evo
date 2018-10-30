@@ -339,6 +339,17 @@ export default class PostEditor extends React.Component {
               ref={component => { this.topicSelector = component && component.getWrappedInstance() }} />
           </div>
         </div>
+        {isProject && <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Project Members</div>
+          <div styleName='footerSection-communities'>
+            <MemberSelector
+              initialMembers={members || []}
+              onChange={this.updateProjectMembers}
+              readOnly={loading}
+              ref={component => { this.membersSelector = component }}
+            />
+          </div>
+        </div>}
         <div styleName='footerSection'>
           <div styleName='footerSection-label'>Post in</div>
           <div styleName='footerSection-communities'>
@@ -351,17 +362,6 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>
-        {isProject && <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Project Members</div>
-          <div styleName='footerSection-communities'>
-            <MemberSelector
-              initialMembers={members || []}
-              onChange={this.updateProjectMembers}
-              readOnly={loading}
-              ref={component => { this.membersSelector = component }}
-            />
-          </div>
-        </div>}
         <ActionsBar
           id={id}
           addImage={addImage}
