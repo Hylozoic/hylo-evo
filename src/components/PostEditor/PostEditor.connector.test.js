@@ -1,6 +1,6 @@
 import { mapStateToProps, mapDispatchToProps, mergeProps } from './PostEditor.connector'
 import orm from 'store/models'
-import { CREATE_POST } from './PostEditor.store'
+import { CREATE_POST } from 'store/constants'
 
 let state, requiredProps
 beforeAll(() => {
@@ -41,6 +41,7 @@ beforeAll(() => {
     }
   }
   requiredProps = {
+    match: {},
     location: {
       search: ''
     }
@@ -51,7 +52,6 @@ describe('mapStateToProps', () => {
   it('returns the right keys for a new post', () => {
     const props = {
       ...requiredProps,
-      forNew: true,
       match: {
         params: {
           slug: 'foo'
@@ -68,7 +68,6 @@ describe('mapStateToProps', () => {
   it('returns the right keys for a new post while pending', () => {
     const props = {
       ...requiredProps,
-      forNew: true,
       match: {
         params: {
           slug: 'foo'

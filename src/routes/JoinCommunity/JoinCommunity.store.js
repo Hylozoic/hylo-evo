@@ -49,12 +49,10 @@ export function useInvitation (userId, inviteCodes = {}) {
       }
     },
     meta: {
-      extractModel: [
-        {
-          modelName: 'Membership',
-          getRoot: get('useInvitation.membership')
-        }
-      ],
+      extractModel: {
+        modelName: 'Membership',
+        getRoot: get('useInvitation.membership')
+      },
       analytics: AnalyticsEvents.COMMUNITY_INVITATION_ACCEPTED
     }
   }

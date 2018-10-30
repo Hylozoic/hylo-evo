@@ -142,12 +142,10 @@ export function addCommunityToNetwork (communityId, networkId) {
       }
     },
     meta: {
-      extractModel: [
-        {
-          modelName: 'Community',
-          getRoot: get('addCommunityToNetwork.communities.items')
-        }
-      ],
+      extractModel: {
+        modelName: 'Community',
+        getRoot: get('addCommunityToNetwork.communities.items')
+      },
       networkId,
       communityId
     }
@@ -176,12 +174,10 @@ export function addNetworkModeratorRole (personId, networkId) {
       }
     },
     meta: {
-      extractModel: [
-        {
-          modelName: 'Person',
-          getRoot: get('addNetworkModeratorRole.moderators.items')
-        }
-      ],
+      extractModel: {
+        modelName: 'Person',
+        getRoot: get('addNetworkModeratorRole.moderators.items')
+      },
       networkId,
       personId
     }

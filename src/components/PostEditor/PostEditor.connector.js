@@ -9,15 +9,18 @@ import getMe from 'store/selectors/getMe'
 import getPost, { presentPost } from 'store/selectors/getPost'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import { FETCH_POST, UPLOAD_ATTACHMENT } from 'store/constants'
 import {
   CREATE_POST,
   CREATE_PROJECT,
+  FETCH_POST,
+  UPLOAD_ATTACHMENT
+} from 'store/constants'
+import createPost from 'store/actions/createPost'
+import createProject from 'store/actions/createProject'
+import updatePost from 'store/actions/updatePost'
+import {
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
-  createPost,
-  createProject,
-  updatePost,
   pollingFetchLinkPreview,
   removeLinkPreview,
   clearLinkPreview,
@@ -92,8 +95,8 @@ export const mapDispatchToProps = (dispatch, props) => {
     removeLinkPreview: () => dispatch(removeLinkPreview()),
     clearLinkPreview: () => dispatch(clearLinkPreview()),
     updatePost: postParams => dispatch(updatePost(postParams)),
-    createPost: (postParams, topic) => dispatch(createPost(postParams, topic)),
-    createProject: (postParams, topic) => dispatch(createProject(postParams, topic)),
+    createPost: postParams => dispatch(createPost(postParams)),
+    createProject: postParams => dispatch(createProject(postParams)),
     goToUrl: url => dispatch(push(url)),
     addImage: url => dispatch(addAttachment(url, 'image')),
     addFile: url => dispatch(addAttachment(url, 'file')),
@@ -102,21 +105,19 @@ export const mapDispatchToProps = (dispatch, props) => {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { fetchLinkPreviewPending, topicName, communitySlug, networkSlug, postTypeContext, topic } = stateProps
+  const { fetchLinkPreviewPending, topicName, communitySlug, networkSlug, postTypeContext } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
-
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) || get('payload.data.createProject.id', createPostAction)
     const url = postUrl(id, {communitySlug, networkSlug, postTypeContext, topicName})
 
     return goToUrl(url)
   }
-
   const pollingFetchLinkPreview = fetchLinkPreviewPending
       ? () => Promise.resolve()
       : url => pollingFetchLinkPreviewRaw(url)
-
-  const createPost = postParams => dispatchProps.createPost(postParams, topic)
+  const createPost = postParams => dispatchProps.createPost({networkSlug, ...postParams})
+  const createProject = projectParams => dispatchProps.createProject({networkSlug, ...projectParams})
 
   return {
     ...stateProps,
@@ -124,7 +125,8 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...ownProps,
     goToPost,
     pollingFetchLinkPreview,
-    createPost
+    createPost,
+    createProject
   }
 }
 

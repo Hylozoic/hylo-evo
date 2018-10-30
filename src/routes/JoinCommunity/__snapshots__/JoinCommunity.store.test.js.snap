@@ -42,12 +42,10 @@ Object {
   },
   "meta": Object {
     "analytics": "Community Invitation Accepted",
-    "extractModel": Array [
-      Object {
-        "getRoot": [Function],
-        "modelName": "Membership",
-      },
-    ],
+    "extractModel": Object {
+      "getRoot": [Function],
+      "modelName": "Membership",
+    },
   },
   "type": "JoinCommunity/USE_INVITATION",
 }

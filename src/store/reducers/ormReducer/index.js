@@ -14,6 +14,7 @@ import {
   TOGGLE_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_THREAD_READ_TIME,
   VOTE_ON_POST_PENDING,
+  UPDATE_POST_PENDING,
   UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING
 } from 'store/constants'
 import {
@@ -38,9 +39,6 @@ import {
   DELETE_COMMENT_PENDING,
   UPDATE_COMMENT_PENDING
 } from 'routes/PostDetail/Comments/Comment/Comment.store'
-import {
-  UPDATE_POST_PENDING
-} from 'components/PostEditor/PostEditor.store'
 import {
   CREATE_COMMUNITY
 } from 'routes/CreateCommunity/Review/Review.store'

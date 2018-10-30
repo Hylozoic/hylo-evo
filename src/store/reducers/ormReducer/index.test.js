@@ -8,7 +8,8 @@ import {
   MARK_ALL_ACTIVITIES_READ_PENDING,
   TOGGLE_TOPIC_SUBSCRIBE_PENDING,
   FETCH_NOTIFICATIONS,
-  FETCH_FOR_COMMUNITY_PENDING
+  FETCH_FOR_COMMUNITY_PENDING,
+  UPDATE_POST_PENDING
 } from 'store/constants'
 import {
    DELETE_POST_PENDING,
@@ -26,9 +27,6 @@ import {
 import {
   DELETE_COMMENT_PENDING, UPDATE_COMMENT_PENDING
 } from 'routes/PostDetail/Comments/Comment/Comment.store'
-import {
-  UPDATE_POST_PENDING
-} from 'components/PostEditor/PostEditor.store'
 import {
   CREATE_COMMUNITY
 } from 'routes/CreateCommunity/Review/Review.store'

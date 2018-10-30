@@ -2,8 +2,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
 import { get, isEqual, throttle } from 'lodash/fp'
+import cheerio from 'cheerio'
 import cx from 'classnames'
-import styles from './PostEditor.scss'
+import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
+import AttachmentManager from './AttachmentManager'
+import { uploadSettings } from './AttachmentManager/AttachmentManager'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
@@ -15,11 +18,9 @@ import MemberSelector from 'components/MemberSelector'
 import LinkPreview from './LinkPreview'
 import ChangeImageButton from 'components/ChangeImageButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
-import AttachmentManager from './AttachmentManager'
-import { uploadSettings } from './AttachmentManager/AttachmentManager'
-import cheerio from 'cheerio'
-import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
-import { MAX_TITLE_LENGTH } from './PostEditor.store'
+import styles from './PostEditor.scss'
+
+export const MAX_TITLE_LENGTH = 50
 
 export default class PostEditor extends React.Component {
   static propTypes = {
