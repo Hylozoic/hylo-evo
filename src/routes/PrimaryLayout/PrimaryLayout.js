@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import {
   matchPath,
   Redirect,
@@ -42,7 +42,7 @@ import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
 import {
-  POST_ID_MATCH_REGEX,
+  ID_MATCH_REGEX,
   VALID_POST_TYPE_CONTEXTS_MATCH_REGEX,
   isSignupPath,
   isAllCommunitiesPath,
@@ -88,7 +88,7 @@ export default class PrimaryLayout extends Component {
 
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
     const hasDetail = some(
-      ({ path }) => matchPath(location.pathname, {path}),
+      ({ path }) => matchPath(location.pathname, {path, exact: true}),
       postDetailRoutes
     )
     const showTopics = !isAllCommunitiesPath(location.pathname) && !isNetworkPath(location.pathname) && !isTagPath(location.pathname)
@@ -105,26 +105,20 @@ export default class PrimaryLayout extends Component {
           <Switch>
             {redirectRoutes.map(({from, to}) => <Redirect from={from} to={to} exact key={from} />)}
             <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
-            <Route path='/all' exact component={Feed} />
-            <Route path={`/all/${POST_TYPE_CONTEXT_MATCH}`} component={Feed} />
-            <Route path={`/all/${POST_DETAIL_MATCH}`} component={Feed} />
+            <Route path={`/all/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
-            <Route path='/n/:networkSlug' exact component={Feed} />
+            <Route path={`/n/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
             <Route path='/n/:networkSlug/m/:id' component={MemberProfile} />
-            <Route path={`/n/:networkSlug/${POST_TYPE_CONTEXT_MATCH}`} component={Feed} />
-            <Route path={`/n/:networkSlug/${POST_DETAIL_MATCH}`} component={Feed} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
             <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />
             <Route path='/n/:networkSlug/:topicName' exact component={TopicSupportComingSoon} />
-            <Route path='/c/:slug' exact component={Feed} />
-            <Route path={`/c/:slug/${POST_TYPE_CONTEXT_MATCH}`} component={Feed} />
-            <Route path={`/c/:slug/${POST_DETAIL_MATCH}`} component={Feed} />
+            <Route path={`/c/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
             <Route path='/c/:slug/m/:id' component={MemberProfile} />
             <Route path='/c/:slug/settings' component={CommunitySettings} />
             <Route path='/c/:slug/topics' component={AllTopics} />
-            <Route path='/c/:slug/:topicName' component={Feed} />
+            <Route path={`/c/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path='/m/:id' component={MemberProfile} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
@@ -136,39 +130,51 @@ export default class PrimaryLayout extends Component {
                 <CreateCommunity {...props} component={component} />} />)}
           </Switch>
         </div>
-        <div styleName={cx('sidebar', {hidden: hasDetail})}>
-          <Route path='/c/:slug' exact component={CommunitySidebar} />
-          <Route path='/c/:slug/m/:id' component={MemberSidebar} />
-          {/* Test if this route is necessary  */}
-          <Route path={`/c/:slug/${NEW_POST_MATCH}`} exact component={CommunitySidebar} />
-          <Route path='/c/:slug/:topicName' exact component={CommunitySidebar} />
-          {/* Test if this route is necessary  */}
-          <Route path={`/c/:slug/:topicName/${NEW_POST_MATCH}`} exact component={CommunitySidebar} />
-          <Route path='/n/:networkSlug' exact component={NetworkSidebar} />
-          <Route path='/n/:networkSlug/m/:id' component={MemberSidebar} />
-          <Route path='/m/:id' component={MemberSidebar} />
-        </div>
-        <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>
-          {postDetailRoutes.map(({ path }) =>
-            <Route path={path} component={PostDetail} key={path} />)}
-        </div>
+        <Switch>
+          <Fragment>
+            <div styleName={cx('sidebar', {hidden: hasDetail})}>
+              <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
+              <Route path={`/c/:slug/m/:id/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
+              <Route path={`/c/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
+              <Route path={`/n/:networkSlug/${OPTIONAL_NEW_POST_MATCH}`} exact component={NetworkSidebar} />
+              <Route path={`/n/:networkSlug/m/:id/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
+              <Route path={`/m/:id/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
+            </div>
+            <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>
+              {postDetailRoutes.map(({ path }) =>
+                <Route path={path} component={PostDetail} key={path} />)}
+            </div>
+          </Fragment>
+        </Switch>
       </div>
       <Route path='/t' component={Messages} />
-      <SocketListener location={location} />
-      <SocketSubscriber type='community' id={get('slug', community)} />
-      <Intercom appID={isTest ? null : config.intercom.appId} />
       <Switch>
         {postEditorRoutes.map(({path}) =>
           <Route path={path} exact key={path} children={({ match, location }) =>
             <PostEditorModal match={match} location={location} />} />)}
       </Switch>
+      <SocketListener location={location} />
+      <SocketSubscriber type='community' id={get('slug', community)} />
+      <Intercom appID={isTest ? null : config.intercom.appId} />
     </div>
   }
 }
 
 const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})`
+const OPTIONAL_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:postId(${ID_MATCH_REGEX})?/:action(new|edit)?`
+const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
+
+const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${ID_MATCH_REGEX})/:action(edit)?`
+const postDetailRoutes = [
+  {path: `/all/${POST_DETAIL_MATCH}`},
+  {path: `/n/:networkSlug/m/:id/${POST_DETAIL_MATCH}`},
+  {path: `/n/:networkSlug/${POST_DETAIL_MATCH}`},
+  {path: `/c/:slug/m/:id/${POST_DETAIL_MATCH}`},
+  {path: `/c/:slug/${POST_DETAIL_MATCH}`},
+  {path: `/c/:slug/:topicName/${POST_DETAIL_MATCH}`}
+]
+
 const NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:action(new)`
-const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH_REGEX})`
 const EDIT_POST_MATCH = `${POST_DETAIL_MATCH}/:action(edit)`
 const postEditorRoutes = [
   {path: `/all/${NEW_POST_MATCH}`},
@@ -182,20 +188,14 @@ const postEditorRoutes = [
   {path: `/c/:slug/:topicName/${NEW_POST_MATCH}`},
   {path: `/c/:slug/:topicName/${EDIT_POST_MATCH}`}
 ]
-const postDetailRoutes = [
-  {path: `/all/${POST_DETAIL_MATCH}`},
-  {path: `/n/:networkSlug/m/:id/${POST_DETAIL_MATCH}`},
-  {path: `/n/:networkSlug/${POST_DETAIL_MATCH}`},
-  {path: `/c/:slug/m/:id/${POST_DETAIL_MATCH}`},
-  {path: `/c/:slug/${POST_DETAIL_MATCH}`},
-  {path: `/c/:slug/:topicName/${POST_DETAIL_MATCH}`}
-]
+
 const signupRoutes = [
   {path: '/signup/upload-photo', child: UploadPhoto},
   {path: '/signup/add-location', child: AddLocation},
   {path: '/signup/add-skills', child: AddSkills},
   {path: '/signup/review', child: Review}
 ]
+
 const createCommunityRoutes = [
   {path: '/create-community/name/:networkId', component: Name},
   {path: '/create-community/name', component: Name},
@@ -205,6 +205,7 @@ const createCommunityRoutes = [
   // {path: '/create-community/privacy', component: Privacy},
   {path: '/create-community/review', component: CommunityReview}
 ]
+
 const redirectRoutes = [
   {from: '/c/:slug/tag/:topicName', to: '/c/:slug/:topicName'},
   {from: '/c/:slug/join/:accessCode/tag/:topicName', to: '/c/:slug/join/:accessCode/:topicName'},

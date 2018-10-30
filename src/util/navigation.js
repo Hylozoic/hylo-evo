@@ -7,7 +7,7 @@ import { host } from 'config'
 //
 // note: post Contexts have their own area if not default
 
-export const POST_ID_MATCH_REGEX = '\\d+'
+export const ID_MATCH_REGEX = '\\d+'
 export const DEFAULT_POST_TYPE_CONTEXT = 'p'
 export const POST_TYPE_CONTEXTS = ['project']
 export const VALID_POST_TYPE_CONTEXTS = [...POST_TYPE_CONTEXTS, DEFAULT_POST_TYPE_CONTEXT]
@@ -153,9 +153,9 @@ export function removePostFromUrl (url) {
   // remove current post id and stay in the current post
   // context.
   if (url.match(`/${DEFAULT_POST_TYPE_CONTEXT}/`)) {
-    matchForReplaceRegex = `/${DEFAULT_POST_TYPE_CONTEXT}/${POST_ID_MATCH_REGEX}`
+    matchForReplaceRegex = `/${DEFAULT_POST_TYPE_CONTEXT}/${ID_MATCH_REGEX}`
   } else {
-    matchForReplaceRegex = `/${POST_ID_MATCH_REGEX}`
+    matchForReplaceRegex = `/${ID_MATCH_REGEX}`
   }
 
   return url.replace(new RegExp(matchForReplaceRegex), '')
