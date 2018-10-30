@@ -43,16 +43,19 @@ export function baseUrl ({
   topicName,
   networkSlug,
   communitySlug,
+  slug,
   defaultUrl = ''
 }) {
+  const safeCommunitySlug = communitySlug || slug
+
   if (memberId) {
-    return personUrl(memberId, communitySlug)
+    return personUrl(memberId, safeCommunitySlug)
   } else if (topicName) {
-    return tagUrl(topicName, communitySlug)
+    return tagUrl(topicName, safeCommunitySlug)
   } else if (networkSlug) {
     return networkUrl(networkSlug)
-  } else if (communitySlug) {
-    return communityUrl(communitySlug)
+  } else if (safeCommunitySlug) {
+    return communityUrl(safeCommunitySlug)
   } else {
     return defaultUrl
   }
@@ -60,8 +63,8 @@ export function baseUrl ({
 
 // derived URL paths
 
-export function personUrl (id, slug) {
-  const base = baseUrl({communitySlug: slug})
+export function personUrl (id, communitySlug) {
+  const base = baseUrl({communitySlug})
 
   return id ? base + `/m/${id}` : '/'
 }
@@ -99,16 +102,24 @@ export function postUrl (id, opts = {}) {
   return result
 }
 
+export function editPostUrl (id, opts = {}) {
+  return postUrl(id, {...opts, action: 'edit'})
+}
+
+export function newPostUrl (id, opts = {}) {
+  return postUrl(id, {...opts, action: 'new'})
+}
+
 export function commentUrl (postId, commentId, communitySlug) {
   return `${postUrl(postId, {communitySlug})}#comment_${commentId}`
 }
 
-export function communitySettingsUrl (slug) {
-  return `${communityUrl(slug)}/settings`
+export function communitySettingsUrl (communitySlug) {
+  return `${communityUrl(communitySlug)}/settings`
 }
 
-export function networkSettingsUrl (slug) {
-  return `${networkUrl(slug)}/settings`
+export function networkSettingsUrl (networkSlug) {
+  return `${networkUrl(networkSlug)}/settings`
 }
 
 export function networkCommunitySettingsUrl (networkSlug, communitySlug) {
@@ -119,8 +130,8 @@ export function newMessageUrl () {
   return `${messagesUrl()}/new`
 }
 
-export function topicsUrl (slug) {
-  return communityUrl(slug) + '/topics'
+export function topicsUrl (communitySlug) {
+  return communityUrl(communitySlug) + '/topics'
 }
 
 export const communityJoinUrl = ({slug, accessCode}) =>
