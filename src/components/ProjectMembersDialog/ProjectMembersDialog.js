@@ -42,7 +42,7 @@ export default class ProjectMembersDialog extends React.PureComponent {
       modalTitle={`Project Members (${this.props.members.length})`}
       showCancelButton={false}
       showSubmitButton={false}
-      style={{width: '100%', maxWidth: '600px'}}>
+      style={{width: '100%', maxWidth: '620px', backgroundColor: '#CCD1D7'}}>
       <div styleName='container'>
         {/*
           TODO: Can make memberDetails optional by adding a `withDetails` flag
@@ -51,7 +51,7 @@ export default class ProjectMembersDialog extends React.PureComponent {
           style to make width of members-list be 100% in that case.
         */}
         <div styleName='members-list'>
-          <TextInput
+          {this.props.members.length > 7 && <TextInput
             styleName='members-search-input'
             aria-label='members-search'
             autoFocus
@@ -61,15 +61,13 @@ export default class ProjectMembersDialog extends React.PureComponent {
             loading={loading}
             value={searchString}
             placeholder='Find a member'
-          />
+          />}
           <section>
-            {members.map(member =>
-              <MemberRow
-                member={member}
-                selected={member.id === get('id', selectedMember)}
-                onClick={this.selectMember(member)}
-                key={member.id} />
-            )}
+            {members.map(member => <MemberRow
+              member={member}
+              selected={member.id === get('id', selectedMember)}
+              onClick={this.selectMember(member)}
+              key={member.id} />)}
           </section>
         </div>
         {selectedMember && <MemberDetail member={selectedMember} />}

@@ -6,28 +6,33 @@ $right-side-width: 500px;
   display: flex;
   flex-wrap: wrap;
   height: 380px;
+  align-content: flex-start;
 }
 
 .members-list {
   width: 50%;
-  padding-right: 8px;
-  border-right: solid 1px $color-cape-cod-10; 
-  overflow-y: auto;
+  padding-right: 0px;
+  display: flex;
+  flex-direction: column;
 }
 
 .member-detail {
   width: 50%;
 }
 
-.avatar {
-  @include image($avatar-size);
-  border-radius: $avatar-size/2;
+.members-search-input {
+  margin-bottom: 5px;
+  width: 100%;
+  display: flex;
+  background-color: $color-white;
 }
 
 section {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
+  flex: 1;
+  overflow-y: auto;
+  border: solid 1px $color-cape-cod-10;
+  background-color: $color-white;
+  border-radius: 4px;
 }
 
 section > .row {
@@ -38,7 +43,7 @@ section > .row {
   cursor: pointer;
   &.selected {
     color: $color-rhino;
-    background-color: $color-polar;
+    background-color: $color-seashell;
   }
 }
 
@@ -49,17 +54,18 @@ section .col {
   padding: 5px;
 }
 
-.members-search-input {
-  margin-bottom: $member-spacing;
-  width: 100%;
-}
-
 .member {
   width: 100%;
   border: none !important;
-  padding: 0px;
+  padding: 0 0 10px 10px;
   margin: 0px;
   & > * > * {
     max-width: unset;
   }
 }
+
+.avatar {
+  @include image($avatar-size);
+  border-radius: $avatar-size/2;
+}
+

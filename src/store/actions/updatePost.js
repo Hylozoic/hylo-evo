@@ -1,3 +1,4 @@
+import { get } from 'lodash/fp'
 import { textLength } from 'hylo-utils/text'
 import { AnalyticsEvents } from 'hylo-utils/constants'
 import { getPostFieldsFragment } from 'store/actions/fetchPost'
