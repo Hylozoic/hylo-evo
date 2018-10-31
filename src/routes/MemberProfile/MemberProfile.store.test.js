@@ -34,12 +34,12 @@ describe('connector', () => {
     session.Person.create(person)
     session.Community.create(communities[0])
     state = { orm: session.state }
-    props = { match: { params: { id: '46816', slug: 'wombats' } } }
+    props = { match: { params: { personId: '46816', slug: 'wombats' } } }
   })
 
   describe('personSelector', () => {
     it('returns null for a non-existent person', () => {
-      props.match.params.id = '1'
+      props.match.params.personId = '1'
       const actual = personSelector(state, props)
       expect(actual).toBe(null)
     })
@@ -64,13 +64,13 @@ describe('connector', () => {
 
   describe('mapStateToProps', () => {
     it('sets an error when id missing from route params', () => {
-      props.match.params.id = undefined
+      props.match.params.personId = undefined
       const actual = mapStateToProps(state, props)
       expect(actual.error).toBeTruthy()
     })
 
     it('sets an error when id non-numeric', () => {
-      props.match.params.id = 'flargle'
+      props.match.params.personId = 'flargle'
       const actual = mapStateToProps(state, props)
       expect(actual.error).toBeTruthy()
     })

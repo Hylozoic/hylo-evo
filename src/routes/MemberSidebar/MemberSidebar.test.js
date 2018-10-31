@@ -3,6 +3,11 @@ import { shallow } from 'enzyme'
 import React from 'react'
 
 it('does something', () => {
-  const wrapper = shallow(<MemberSide />)
+  const props = {
+    match: {
+      params: {}
+    }
+  }
+  const wrapper = shallow(<MemberSide {...props} />)
   expect(wrapper).toMatchSnapshot()
 })
