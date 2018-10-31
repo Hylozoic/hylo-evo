@@ -1,5 +1,5 @@
 import React from 'react'
-import { find, get, sortBy } from 'lodash/fp'
+import { find, get, sortBy, isFunction } from 'lodash/fp'
 import './PostFooter.scss'
 import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
@@ -18,8 +18,8 @@ export default class PostFooter extends React.PureComponent {
       members,
       type
     } = this.props
-    const onClick = this.props.onClick ? this.props.onClick : undefined
-    const vote = () => this.props.vote(postId, !myVote)
+    const onClick = isFunction(this.props.onClick) ? this.props.onClick : undefined
+    const vote = isFunction(this.props.vote) ? () => this.props.vote(postId, !myVote) : undefined
     const isProject = type === 'project'
     let avatarUrls, caption
 

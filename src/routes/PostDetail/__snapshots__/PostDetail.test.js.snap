@@ -59,7 +59,7 @@ exports[`PostDetail renders correctly 1`] = `
     members={Array []}
     myVote={true}
     onClick={false}
-    vote={[Function]}
+    postId="91"
     votesTotal={7}
   />
   <Connect(Comments)

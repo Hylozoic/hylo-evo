@@ -73,8 +73,8 @@ exports[`renders as expected 1`] = `
       ]
     }
     commentersTotal={76572}
+    postId="FAKE_29222"
     type="offer"
-    vote={[Function]}
     votesTotal={11519}
   />
 </div>

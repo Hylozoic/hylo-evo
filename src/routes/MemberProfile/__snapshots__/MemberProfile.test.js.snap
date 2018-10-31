@@ -45,7 +45,11 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
     </ProfileControls>
     <TabContentSwitcher
       bio="I like wombats."
-      personId="1"
+      matchParams={
+        Object {
+          "id": "1",
+        }
+      }
     />
   </div>
 </div>

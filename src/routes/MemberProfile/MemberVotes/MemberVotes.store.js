@@ -1,6 +1,7 @@
-import { createSelector } from 'redux-orm'
-
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import { compact } from 'lodash/fp'
 import orm from 'store/models'
+import { presentPost } from 'store/selectors/getPost'
 import { FETCH_MEMBER_VOTES } from '../MemberProfile.store'
 
 const memberVotesQuery =
@@ -50,21 +51,16 @@ export function fetchMemberVotes (id, order = 'desc', limit = 20, query = member
   }
 }
 
-export const memberVotesSelector = createSelector(
+export const getMemberVotes = ormCreateSelector(
   orm,
   state => state.orm,
   (_, { personId }) => personId,
-  (_, { slug }) => slug,
-  (session, personId, slug) => {
-    if (session.Person.hasId(personId)) {
-      const person = session.Person.withId(personId)
-      return person.votes.toModelArray().map(({ post }) => ({
-        ...post.ref,
-        creator: post.creator.ref,
-        commenters: post.commenters.toRefArray(),
-        communities: post.communities.toRefArray()
-      }))
-    }
-    return null
+  ({ Vote }, personId) => {
+    const votes = Vote.filter(v => String(v.voter) === String(personId)).toModelArray()
+    if (!votes) return []
+    return compact(votes.map(({ post }) => {
+      if (!post) return
+      return presentPost(post)
+    }))
   }
 )

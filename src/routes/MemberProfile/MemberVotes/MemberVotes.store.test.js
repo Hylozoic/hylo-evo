@@ -1,7 +1,7 @@
 import orm from 'store/models'
 import payload from '../MemberProfile.test.json'
 import normalized from '../MemberProfile.normalized.test.json'
-import { fetchMemberVotes, memberVotesSelector } from './MemberVotes.store'
+import { fetchMemberVotes, getMemberVotes } from './MemberVotes.store'
 import { mapStateToProps } from './MemberVotes.connector'
 
 describe('fetchMemberVotes', () => {
@@ -41,10 +41,10 @@ describe('connector', () => {
     props = { personId: '46816', slug: 'wombats' }
   })
 
-  describe('memberVotesSelector', () => {
+  describe('getMemberVotes', () => {
     it('populates votes correctly (returning the post fk)', () => {
       const expected = payload.data.person.votes[0].post
-      const actual = memberVotesSelector(state, props)[0]
+      const actual = getMemberVotes(state, props)[0]
 
       expect(actual.id).toEqual(expected.id)
       expect(actual.creator.id).toEqual(expected.creator.id)
@@ -54,7 +54,7 @@ describe('connector', () => {
 
   describe('mapStateToProps', () => {
     it('returns a votes property of the correct length', () => {
-      const actual = mapStateToProps(state, props).votes.length
+      const actual = mapStateToProps(state, props).posts.length
       expect(actual).toBe(1)
     })
   })

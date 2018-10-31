@@ -166,7 +166,7 @@ describe('mapDispatchToProps', () => {
       }
     }
     const dispatchProps = mapDispatchToProps(dispatch, props)
-    expect(dispatchProps.showPostDetails('5')()).toMatchSnapshot()
+    expect(dispatchProps.showPostDetails('5')).toMatchSnapshot()
   })
 
   describe('fetchTopic', () => {

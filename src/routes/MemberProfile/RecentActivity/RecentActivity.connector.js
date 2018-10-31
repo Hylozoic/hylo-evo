@@ -1,8 +1,7 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { postUrl, editPostUrl} from 'util/navigation'
+import { postUrl, editPostUrl } from 'util/navigation'
 import voteOnPost from 'store/actions/voteOnPost'
-
 import { activitySelector, fetchRecentActivity } from './RecentActivity.store'
 
 export function mapStateToProps (state, props) {
