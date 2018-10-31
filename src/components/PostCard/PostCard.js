@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { pick } from 'lodash/fp'
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
@@ -12,25 +11,7 @@ import cx from 'classnames'
 
 export { PostHeader, PostFooter, PostImage, PostBody, PostCommunities }
 
-const { shape, any, object, string, func, array, bool } = PropTypes
-
 export default class PostCard extends React.Component {
-  static propTypes = {
-    post: shape({
-      id: any,
-      type: string,
-      creator: object,
-      name: string,
-      details: string,
-      commenters: array,
-      upVotes: string,
-      updatedAt: string
-    }),
-    fetchPost: func,
-    expanded: bool,
-    showDetails: func
-  }
-
   static defaultProps = {
     post: samplePost()
   }
@@ -51,9 +32,8 @@ export default class PostCard extends React.Component {
     const onClick = event => {
       const { target } = event
 
-      if (shouldShowDetails(target)) showDetails()
+      if (shouldShowDetails(target)) showDetails(post.id)
     }
-    const vote = () => voteOnPost(!post.myVote)
 
     return <div ref='postCard'
       onClick={onClick}
@@ -72,7 +52,8 @@ export default class PostCard extends React.Component {
           'communities',
           'pinned',
           'topics',
-          'announcement'
+          'announcement',
+          'editPost'
         ], post)} />
       <PostImage postId={post.id} styleName='image' />
       <PostBody title={post.title}
@@ -86,7 +67,8 @@ export default class PostCard extends React.Component {
         communities={post.communities}
         slug={slug} />
       <PostFooter
-        vote={vote}
+        postId={post.id}
+        vote={voteOnPost}
         myVote={post.myVote}
         votesTotal={post.votesTotal}
         commenters={post.commenters}

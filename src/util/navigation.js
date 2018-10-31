@@ -39,17 +39,17 @@ export const origin = () =>
   typeof window !== 'undefined' ? window.location.origin : host
 
 export function baseUrl ({
-  memberId,
+  personId, memberId,
   topicName,
   networkSlug,
-  communitySlug,
-  slug,
+  communitySlug, slug,
   defaultUrl = ''
 }) {
+  const safeMemberId = memberId || personId
   const safeCommunitySlug = communitySlug || slug
 
-  if (memberId) {
-    return personUrl(memberId, safeCommunitySlug)
+  if (safeMemberId) {
+    return personUrl(safeMemberId, safeCommunitySlug)
   } else if (topicName) {
     return tagUrl(topicName, safeCommunitySlug)
   } else if (networkSlug) {
@@ -106,8 +106,8 @@ export function editPostUrl (id, opts = {}) {
   return postUrl(id, {...opts, action: 'edit'})
 }
 
-export function newPostUrl (id, opts = {}) {
-  return postUrl(id, {...opts, action: 'new'})
+export function newPostUrl (opts = {}) {
+  return postUrl('new', {...opts})
 }
 
 export function commentUrl (postId, commentId, communitySlug) {

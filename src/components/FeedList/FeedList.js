@@ -116,8 +116,8 @@ export default class FeedList extends React.Component {
             postTypeContext={postTypeContext}
             styleName={cx('FeedListItem', {expanded})}
             expanded={expanded}
-            showDetails={showPostDetails(post.id)}
-            voteOnPost={voteOnPost(post.id)}
+            showDetails={showPostDetails}
+            voteOnPost={voteOnPost}
             key={post.id} />
         })}
       </div>

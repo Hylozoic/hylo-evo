@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { get, throttle, isEmpty } from 'lodash/fp'
+import { get, pick, throttle, isEmpty } from 'lodash/fp'
 import { tagUrl } from 'util/navigation'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import { PostImage, PostBody, PostFooter, PostHeader, PostCommunities } from 'components/PostCard'
@@ -124,15 +124,16 @@ export default class PostDetail extends Component {
     let { toggleMembersDialog } = this
     showMembersDialog = hasMembers && showMembersDialog
     toggleMembersDialog = hasMembers && toggleMembersDialog
-
     const postFooter = <PostFooter
-      vote={() => voteOnPost(post.id, !post.myVote)}
-      myVote={post.myVote}
-      votesTotal={post.votesTotal}
-      commenters={post.commenters}
-      commentersTotal={post.commentersTotal}
-      type={post.type}
-      members={post.members}
+      {...pick([
+        'myVote',
+        'votesTotal',
+        'commenters',
+        'commentersTotal',
+        'type',
+        'members'], post)}
+      postId={post.id}
+      vote={voteOnPost}
       onClick={toggleMembersDialog} />
 
     return <div styleName='post' ref={this.setHeaderStateFromDOM}>
@@ -156,7 +157,8 @@ export default class PostDetail extends Component {
         <JoinProjectButton
           joinProject={joinProject}
           leaveProject={leaveProject}
-          leaving={isProjectMember} />
+          leaving={isProjectMember}
+          postId={post.id} />
       </div>}
       <PostCommunities
         communities={post.communities}
@@ -205,9 +207,9 @@ export function PostTags ({ tags, slug }) {
   </div>
 }
 
-export function JoinProjectButton ({ leaving, joinProject, leaveProject }) {
+export function JoinProjectButton ({ leaving, joinProject, leaveProject, postId }) {
   const buttonText = leaving ? 'Leave Project' : 'Join Project'
-  const onClick = leaving ? leaveProject : joinProject
+  const onClick = () => leaving ? leaveProject(postId) : joinProject(postId)
 
   return <Button
     color='green'

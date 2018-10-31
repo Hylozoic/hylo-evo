@@ -64,10 +64,9 @@ export const personSelector = createSelector(
   orm,
   state => state.orm,
   (_, props) => props.match.params,
-  (session, params) => {
-    const { id, slug } = params
-    if (session.Person.hasId(id)) {
-      const person = session.Person.withId(id)
+  ({ Person }, { personId, slug }) => {
+    if (Person.hasId(personId)) {
+      const person = Person.withId(personId)
       const memberships = person.memberships.toModelArray().map(membership => ({
         ...membership.ref,
         community: membership.community.ref

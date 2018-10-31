@@ -9,16 +9,17 @@ import ReactTooltip from 'react-tooltip'
 export default class PostFooter extends React.PureComponent {
   render () {
     const {
+      postId,
       currentUser,
       commenters,
       commentersTotal,
       votesTotal,
       myVote,
-      vote,
       members,
       type
     } = this.props
     const onClick = this.props.onClick ? this.props.onClick : undefined
+    const vote = () => this.props.vote(postId, !myVote)
     const isProject = type === 'project'
     let avatarUrls, caption
 

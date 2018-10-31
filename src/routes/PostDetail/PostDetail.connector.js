@@ -8,7 +8,7 @@ import getPost, { presentPost } from 'store/selectors/getPost'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getPostTypeContext from 'store/selectors/getPostTypeContext'
-import voteOnPost from 'store/actions/voteOnPost.js'
+import voteOnPost from 'store/actions/voteOnPost'
 import joinProject from 'store/actions/joinProject'
 import leaveProject from 'store/actions/leaveProject'
 import { FETCH_POST } from 'store/constants'
@@ -37,18 +37,18 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   const { location } = props
-  const id = getParam('postId', {}, props)
+  const postId = getParam('postId', {}, props)
   const closeLocation = {
     ...props.location,
     pathname: removePostFromUrl(location.pathname)
   }
 
   return {
-    fetchPost: () => dispatch(fetchPost(id)),
+    fetchPost: () => dispatch(fetchPost(postId)),
     onClose: () => dispatch(push(closeLocation)),
-    joinProject: () => dispatch(joinProject(id)),
-    leaveProject: () => dispatch(leaveProject(id)),
-    voteOnPost: (id, myVote) => dispatch(voteOnPost(id, myVote))
+    joinProject: postId => dispatch(joinProject(postId)),
+    leaveProject: postId => dispatch(leaveProject(postId)),
+    voteOnPost: (postId, myVote) => dispatch(voteOnPost(postId, myVote))
   }
 }
 

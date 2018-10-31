@@ -11,7 +11,7 @@ const messages = {
 }
 
 export function mapStateToProps (state, props) {
-  const error = Number.isSafeInteger(Number(props.match.params.id)) ? null : messages.invalid
+  const error = Number.isSafeInteger(Number(props.match.params.personId)) ? null : messages.invalid
   const person = personSelector(state, props)
 
   return {

@@ -124,16 +124,23 @@ export function SearchResult ({ searchResult, term = '', showPostDetails, showPe
   var component
   switch (type) {
     case 'Person':
-      component = <PersonCard person={content} showPerson={showPerson} highlightProps={highlightProps} />
+      component = <PersonCard
+        person={content}
+        showPerson={showPerson}
+        highlightProps={highlightProps} />
       break
     case 'Post':
       component = <PostCard
         styleName='postcard-expand'
         post={content}
-        showDetails={() => showPostDetails(content.id, content.type)} highlightProps={highlightProps} />
+        showDetails={() => showPostDetails(content.id, content.type)}
+        highlightProps={highlightProps} />
       break
     case 'Comment':
-      component = <CommentCard comment={content} expanded={false} highlightProps={highlightProps} />
+      component = <CommentCard
+        comment={content}
+        expanded={false}
+        highlightProps={highlightProps} />
       break
   }
   return <div styleName='search-result'>

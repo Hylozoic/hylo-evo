@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import {
   matchPath,
   Redirect,
@@ -109,17 +109,17 @@ export default class PrimaryLayout extends Component {
             <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/n/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
-            <Route path='/n/:networkSlug/m/:id' component={MemberProfile} />
+            <Route path='/n/:networkSlug/m/:personId' component={MemberProfile} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
             <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />
             <Route path='/n/:networkSlug/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/c/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
-            <Route path='/c/:slug/m/:id' component={MemberProfile} />
+            <Route path='/c/:slug/m/:personId' component={MemberProfile} />
             <Route path='/c/:slug/settings' component={CommunitySettings} />
             <Route path='/c/:slug/topics' component={AllTopics} />
             <Route path={`/c/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
-            <Route path='/m/:id' component={MemberProfile} />
+            <Route path='/m/:personId' component={MemberProfile} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
             {signupRoutes.map(({ path, child }) =>
@@ -130,22 +130,22 @@ export default class PrimaryLayout extends Component {
                 <CreateCommunity {...props} component={component} />} />)}
           </Switch>
         </div>
-        <Switch>
-          <Fragment>
-            <div styleName={cx('sidebar', {hidden: hasDetail})}>
-              <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
-              <Route path={`/c/:slug/m/:id/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
-              <Route path={`/c/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
-              <Route path={`/n/:networkSlug/${OPTIONAL_NEW_POST_MATCH}`} exact component={NetworkSidebar} />
-              <Route path={`/n/:networkSlug/m/:id/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
-              <Route path={`/m/:id/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
-            </div>
-            <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>
-              {postDetailRoutes.map(({ path }) =>
-                <Route path={path} component={PostDetail} key={path} />)}
-            </div>
-          </Fragment>
-        </Switch>
+        <div styleName={cx('sidebar', {hidden: hasDetail})}>
+          <Switch>
+            <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
+            <Route path={`/c/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
+            <Route path={`/c/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
+            <Route path={`/n/:networkSlug/${OPTIONAL_NEW_POST_MATCH}`} exact component={NetworkSidebar} />
+            <Route path={`/n/:networkSlug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
+            <Route path={`/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
+          </Switch>
+        </div>
+        <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>
+          <Switch>
+            {postDetailRoutes.map(({ path }) =>
+              <Route path={path} component={PostDetail} key={path} />)}
+          </Switch>
+        </div>
       </div>
       <Route path='/t' component={Messages} />
       <Switch>
@@ -167,9 +167,9 @@ const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
 const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${ID_MATCH_REGEX})/:action(edit)?`
 const postDetailRoutes = [
   {path: `/all/${POST_DETAIL_MATCH}`},
-  {path: `/n/:networkSlug/m/:id/${POST_DETAIL_MATCH}`},
+  {path: `/n/:networkSlug/m/:personId/${POST_DETAIL_MATCH}`},
   {path: `/n/:networkSlug/${POST_DETAIL_MATCH}`},
-  {path: `/c/:slug/m/:id/${POST_DETAIL_MATCH}`},
+  {path: `/c/:slug/m/:personId/${POST_DETAIL_MATCH}`},
   {path: `/c/:slug/${POST_DETAIL_MATCH}`},
   {path: `/c/:slug/:topicName/${POST_DETAIL_MATCH}`}
 ]
@@ -179,11 +179,11 @@ const EDIT_POST_MATCH = `${POST_DETAIL_MATCH}/:action(edit)`
 const postEditorRoutes = [
   {path: `/all/${NEW_POST_MATCH}`},
   {path: `/all/${EDIT_POST_MATCH}`},
-  {path: `/n/:networkSlug/m/:id/${EDIT_POST_MATCH}`},
+  {path: `/n/:networkSlug/m/:personId/${EDIT_POST_MATCH}`},
   {path: `/n/:networkSlug/${NEW_POST_MATCH}`},
   {path: `/n/:networkSlug/${EDIT_POST_MATCH}`},
   {path: `/c/:slug/${NEW_POST_MATCH}`},
-  {path: `/c/:slug/m/:id/${EDIT_POST_MATCH}`},
+  {path: `/c/:slug/m/:personId/${EDIT_POST_MATCH}`},
   {path: `/c/:slug/${EDIT_POST_MATCH}`},
   {path: `/c/:slug/:topicName/${NEW_POST_MATCH}`},
   {path: `/c/:slug/:topicName/${EDIT_POST_MATCH}`}
@@ -210,7 +210,7 @@ const redirectRoutes = [
   {from: '/c/:slug/tag/:topicName', to: '/c/:slug/:topicName'},
   {from: '/c/:slug/join/:accessCode/tag/:topicName', to: '/c/:slug/join/:accessCode/:topicName'},
   {from: '/p/:postId', to: '/all/p/:postId'},
-  {from: '/u/:id', to: '/m/:id'},
+  {from: '/u/:personId', to: '/m/:personId'},
   {from: '/c/:slug/about', to: '/c/:slug'},
   {from: '/c/:slug/people', to: '/c/:slug/members'},
   {from: '/c/:slug/invite', to: '/c/:slug/settings/invite'},

@@ -39,7 +39,7 @@ export default class MemberProfile extends React.Component {
   }
 
   componentDidMount () {
-    const id = get('match.params.id', this.props)
+    const id = get('match.params.personId', this.props)
     if (id) this.props.fetchPerson(id)
   }
 
@@ -58,10 +58,10 @@ export default class MemberProfile extends React.Component {
     </div>
   }
 
-  blockUser = (memberId) => () => {
+  blockUser = (personId) => () => {
     const { blockUser, goToPreviousLocation } = this.props
 
-    if (window.confirm(blockConfirmMessage)) blockUser(memberId).then(goToPreviousLocation)
+    if (window.confirm(blockConfirmMessage)) blockUser(personId).then(goToPreviousLocation)
   }
 
   render () {
@@ -82,7 +82,7 @@ export default class MemberProfile extends React.Component {
       url,
       tagline
     } = person
-    const { id, slug } = match.params
+    const { personId: id } = match.params
     const isMe = currentUser && currentUser.id === id
     const isAxolotl = AXOLOTL_ID === id
 
@@ -111,8 +111,7 @@ export default class MemberProfile extends React.Component {
         <TabContentSwitcher
           bio={bio}
           currentTab={this.state.currentTab}
-          personId={id}
-          slug={slug} />
+          matchParams={match.params} />
       </div>
     </div>
   }
@@ -194,22 +193,22 @@ export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
   </div>
 }
 
-export function TabContentSwitcher ({ bio, currentTab, navigate, personId, slug }) {
+export function TabContentSwitcher ({ bio, currentTab, matchParams }) {
   switch (currentTab) {
     case 'Overview':
       return <div>
         <h2 styleName='subhead'>About Me</h2>
         <div styleName='bio'>{bio}</div>
-        <RecentActivity personId={personId} slug={slug} />
+        <RecentActivity {...matchParams} />
       </div>
 
     case 'Posts':
-      return <MemberPosts personId={personId} slug={slug} />
+      return <MemberPosts {...matchParams} />
 
     case 'Comments':
-      return <MemberComments personId={personId} slug={slug} />
+      return <MemberComments {...matchParams} />
 
     case 'Upvotes':
-      return <MemberVotes personId={personId} slug={slug} />
+      return <MemberVotes {...matchParams} />
   }
 }

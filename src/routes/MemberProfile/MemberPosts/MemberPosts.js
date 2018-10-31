@@ -41,15 +41,19 @@ export default class MemberPosts extends React.Component {
   }
 
   render () {
-    const { personId, posts, showDetails, editPost } = this.props
+    const { personId, posts, selectedPostId, showDetails, editPost, voteOnPost } = this.props
+
     return <div>
       {posts && posts.map(post => {
         const slug = get('communities.0.slug', post)
+
         return <div styleName='activity-item' key={post.id}>
           <PostCard
             post={post}
-            showDetails={() => showDetails(post.id, slug, personId)}
-            editPost={() => editPost(post.id, slug, personId)} />
+            expanded={post.id === selectedPostId}
+            voteOnPost={voteOnPost}
+            showDetails={postId => showDetails(postId, {slug, personId})}
+            editPost={postId => editPost(postId, {slug, personId})} />
         </div>
       }
 

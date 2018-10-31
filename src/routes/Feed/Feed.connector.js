@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { push, replace } from 'react-router-redux'
 import { get } from 'lodash/fp'
 import { isEmpty } from 'lodash'
 import { FETCH_POSTS } from 'store/constants'
@@ -10,10 +11,10 @@ import getParam from 'store/selectors/getParam'
 import getPostTypeContext from 'store/selectors/getPostTypeContext'
 import getMe from 'store/selectors/getMe'
 import getMemberships from 'store/selectors/getMemberships'
-import changeQueryParam from 'store/actions/changeQueryParam'
 import getQueryParam from 'store/selectors/getQueryParam'
-import { push, replace } from 'react-router-redux'
-import { postUrl, topicsUrl, makeUrl } from 'util/navigation'
+import changeQueryParam from 'store/actions/changeQueryParam'
+import voteOnPost from 'store/actions/voteOnPost'
+import { postUrl, newPostUrl, topicsUrl, makeUrl } from 'util/navigation'
 import { fetchTopic, fetchCommunityTopic, fetchNetwork } from './Feed.store'
 import { FETCH_FOR_CURRENT_USER } from '../PrimaryLayout/PrimaryLayout.store'
 
@@ -69,19 +70,13 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   const communitySlug = getParam('slug', null, props)
   const topicName = getParam('topicName', null, props)
-  const params = getQueryParam(['s', 't'], null, props)
-  const postTypeContext = getPostTypeContext(null, props)
+  const matchParams = get('match.params', props)
+  const queryStringParams = getQueryParam(['s', 't'], null, props)
   const networkSlug = getParam('networkSlug', null, props)
 
   return {
     changeTab: tab => dispatch(changeQueryParam(props, 't', tab, 'all')),
     changeSort: sort => dispatch(changeQueryParam(props, 's', sort, 'all')),
-    // we need to preserve url parameters when opening the details for a post,
-    // or the center column will revert to its default sort & filter settings
-    showPostDetails: (id) => () =>
-      dispatch(push(makeUrl(postUrl(id, {communitySlug, networkSlug, postTypeContext, topicName}), params))),
-    newPost: () =>
-      dispatch(push(makeUrl(postUrl('new', {communitySlug, networkSlug, postTypeContext, topicName}), params))),
     fetchTopic: () => {
       if (communitySlug && topicName) {
         return dispatch(fetchCommunityTopic(topicName, communitySlug))
@@ -96,7 +91,10 @@ export function mapDispatchToProps (dispatch, props) {
       }
     },
     fetchNetwork: () => dispatch(fetchNetwork(networkSlug)),
-    goToCreateCommunity: () => dispatch(push('/create-community/name'))
+    goToCreateCommunity: () => dispatch(push('/create-community/name')),
+    voteOnPost: (postId, myVote) => dispatch(voteOnPost(postId, myVote)),
+    newPost: () => dispatch(push(makeUrl(newPostUrl(matchParams), queryStringParams))),
+    showPostDetails: postId => dispatch(push(makeUrl(postUrl(postId, matchParams), queryStringParams)))
   }
 }
 
