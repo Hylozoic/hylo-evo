@@ -115,11 +115,11 @@ export default class PrimaryLayout extends Component {
             <Route path='/n/:networkSlug/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/c/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
-            <Route path='/c/:slug/m/:personId' component={MemberProfile} />
+            <Route path={`/c/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path='/c/:slug/settings' component={CommunitySettings} />
             <Route path='/c/:slug/topics' component={AllTopics} />
             <Route path={`/c/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
-            <Route path='/m/:personId' component={MemberProfile} />
+            <Route path={`/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
             {signupRoutes.map(({ path, child }) =>
@@ -149,7 +149,7 @@ export default class PrimaryLayout extends Component {
       </div>
       <Route path='/t' component={Messages} />
       <Switch>
-        {postEditorRoutes.map(({path}) =>
+        {postEditorRoutes.map(({ path }) =>
           <Route path={path} exact key={path} children={({ match, location }) =>
             <PostEditorModal match={match} location={location} />} />)}
       </Switch>
@@ -171,7 +171,8 @@ const postDetailRoutes = [
   {path: `/n/:networkSlug/${POST_DETAIL_MATCH}`},
   {path: `/c/:slug/m/:personId/${POST_DETAIL_MATCH}`},
   {path: `/c/:slug/${POST_DETAIL_MATCH}`},
-  {path: `/c/:slug/:topicName/${POST_DETAIL_MATCH}`}
+  {path: `/c/:slug/:topicName/${POST_DETAIL_MATCH}`},
+  {path: `/m/:personId/${POST_DETAIL_MATCH}`}
 ]
 
 const NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:action(new)`
@@ -179,14 +180,15 @@ const EDIT_POST_MATCH = `${POST_DETAIL_MATCH}/:action(edit)`
 const postEditorRoutes = [
   {path: `/all/${NEW_POST_MATCH}`},
   {path: `/all/${EDIT_POST_MATCH}`},
-  {path: `/n/:networkSlug/m/:personId/${EDIT_POST_MATCH}`},
   {path: `/n/:networkSlug/${NEW_POST_MATCH}`},
   {path: `/n/:networkSlug/${EDIT_POST_MATCH}`},
+  {path: `/n/:networkSlug/m/:personId/${EDIT_POST_MATCH}`},
   {path: `/c/:slug/${NEW_POST_MATCH}`},
-  {path: `/c/:slug/m/:personId/${EDIT_POST_MATCH}`},
   {path: `/c/:slug/${EDIT_POST_MATCH}`},
+  {path: `/c/:slug/m/:personId/${EDIT_POST_MATCH}`},
   {path: `/c/:slug/:topicName/${NEW_POST_MATCH}`},
-  {path: `/c/:slug/:topicName/${EDIT_POST_MATCH}`}
+  {path: `/c/:slug/:topicName/${EDIT_POST_MATCH}`},
+  {path: `/m/:personId/${EDIT_POST_MATCH}`}
 ]
 
 const signupRoutes = [

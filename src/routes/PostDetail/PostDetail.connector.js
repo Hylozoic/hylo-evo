@@ -14,22 +14,26 @@ import leaveProject from 'store/actions/leaveProject'
 import { FETCH_POST } from 'store/constants'
 
 export function mapStateToProps (state, props) {
+  // match params
   const id = getParam('postId', state, props)
-  const currentCommunity = getCommunityForCurrentRoute(state, props)
-  const post = presentPost(getPost(state, props), get('id', currentCommunity))
+  const personId = getParam('personId', state, props)
   const slug = getParam('slug', state, props)
   const networkSlug = getParam('networkSlug', state, props)
+  // everything else
+  const currentCommunity = getCommunityForCurrentRoute(state, props)
+  const post = presentPost(getPost(state, props), get('id', currentCommunity))
   const postTypeContext = getPostTypeContext(state, props)
   const currentUser = getMe(state)
   const isProjectMember = find(({id}) => id === get('id', currentUser), get('members', post))
 
   return {
     id,
-    post,
-    currentUser,
-    postTypeContext,
+    personId,
     slug,
     networkSlug,
+    postTypeContext,
+    post,
+    currentUser,
     isProjectMember,
     pending: state.pending[FETCH_POST]
   }

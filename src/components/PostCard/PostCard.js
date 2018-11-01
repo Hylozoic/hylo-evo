@@ -18,7 +18,19 @@ export default class PostCard extends React.Component {
 
   render () {
     const {
-      post, className, expanded, showDetails, highlightProps, slug, networkSlug, postTypeContext, voteOnPost
+      post,
+      className,
+      expanded,
+      showDetails,
+      highlightProps,
+      slug,
+      networkSlug,
+      postTypeContext,
+      voteOnPost,
+      editPost,
+      deletePost,
+      removePost,
+      pinPost
     } = this.props
     const shouldShowDetails = element => {
       if (element === this.refs.postCard) return true
@@ -43,8 +55,12 @@ export default class PostCard extends React.Component {
         slug={slug}
         networkSlug={networkSlug}
         postTypeContext={postTypeContext}
-        date={post.createdAt}
         highlightProps={highlightProps}
+        date={post.createdAt}
+        editPost={editPost}
+        deletePost={deletePost}
+        removePost={removePost}
+        pinPost={pinPost}
         {...pick([
           'id',
           'type',
@@ -52,15 +68,15 @@ export default class PostCard extends React.Component {
           'communities',
           'pinned',
           'topics',
-          'announcement',
-          'editPost'
+          'announcement'
         ], post)} />
       <PostImage postId={post.id} styleName='image' />
-      <PostBody title={post.title}
+      <PostBody
+        slug={slug}
         id={post.id}
+        title={post.title}
         details={post.details}
         linkPreview={post.linkPreview}
-        slug={slug}
         highlightProps={highlightProps}
         fileAttachments={post.fileAttachments} />
       <PostCommunities
@@ -68,7 +84,7 @@ export default class PostCard extends React.Component {
         slug={slug} />
       <PostFooter
         postId={post.id}
-        vote={voteOnPost}
+        voteOnPost={voteOnPost}
         myVote={post.myVote}
         votesTotal={post.votesTotal}
         commenters={post.commenters}

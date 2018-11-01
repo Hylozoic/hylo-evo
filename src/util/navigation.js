@@ -49,7 +49,7 @@ export function baseUrl ({
   const safeCommunitySlug = communitySlug || slug
 
   if (safeMemberId) {
-    return personUrl(safeMemberId, safeCommunitySlug)
+    return personUrl(safeMemberId, safeCommunitySlug, networkSlug)
   } else if (topicName) {
     return tagUrl(topicName, safeCommunitySlug)
   } else if (networkSlug) {
@@ -63,10 +63,11 @@ export function baseUrl ({
 
 // derived URL paths
 
-export function personUrl (id, communitySlug) {
-  const base = baseUrl({communitySlug})
+export function personUrl (id, communitySlug, networkSlug) {
+  if (!id) return '/'
+  const base = baseUrl({networkSlug, communitySlug})
 
-  return id ? base + `/m/${id}` : '/'
+  return `${base}/m/${id}`
 }
 
 export function tagUrl (tagName, communitySlug) {

@@ -1,5 +1,7 @@
-import { createSelector } from 'redux-orm'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import { compact } from 'lodash/fp'
 import orm from 'store/models'
+import { presentPost } from 'store/selectors/getPost'
 import { postsQueryFragment } from 'components/FeedList/FeedList.store'
 
 export const FETCH_RECENT_ACTIVITY = 'FETCH_RECENT_ACTIVITY'
@@ -63,33 +65,28 @@ export function indexActivityItems (comments, posts) {
     })
 }
 
-export const activitySelector = createSelector(
+export function presentComment (comment, communitySlug) {
+  if (!comment || !comment.post) return
+  return {
+    ...comment.ref,
+    creator: comment.creator.ref,
+    post: comment.post.ref,
+    image: comment.attachments.toModelArray()[0],
+    slug: communitySlug
+  }
+}
+
+export const activitySelector = ormCreateSelector(
   orm,
   state => state.orm,
   (_, { personId }) => personId,
   (_, { slug }) => slug,
-  (session, personId, slug) => {
-    if (session.Person.hasId(personId)) {
-      const person = session.Person.withId(personId)
-      const comments = person.comments.toModelArray().map(comment => ({
-        ...comment.ref,
-        creator: comment.creator.ref,
-        post: comment.post.ref,
-        image: comment.attachments.toModelArray()[0],
-        slug
-      }))
-      // TODO: Why not use presentPosts for consistency?
-      const posts = person.posts.toModelArray().map(post => ({
-        ...post.ref,
-        creator: post.creator,
-        linkPreview: post.linkPreview,
-        commenters: post.commenters.toRefArray(),
-        communities: post.communities.toRefArray(),
-        members: post.members.toRefArray(),
-        fileAttachments: post.attachments.filter(a => a.type === 'file').toModelArray()
-      }))
-      return indexActivityItems(comments, posts)
-    }
-    return null
-  }
-)
+  ({ Person }, personId, slug) => {
+    if (!Person.hasId(personId)) return
+    const person = Person.withId(personId)
+    const comments = compact(person.comments.toModelArray().map(comment =>
+      presentComment(comment, slug)))
+    const posts = compact(person.posts.toModelArray().map(post =>
+      presentPost(post)))
+    return indexActivityItems(comments, posts)
+  })

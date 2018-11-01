@@ -1,5 +1,5 @@
 import React from 'react'
-import PostCommunities, { CommunityList, CommunityRow, CommunityCell } from './index'
+import PostCommunities, { CommunityList, CommunityRow, CommunityCell } from './PostCommunities'
 import { shallow } from 'enzyme'
 
 describe('PostCommunities', () => {

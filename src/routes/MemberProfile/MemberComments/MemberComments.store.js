@@ -1,5 +1,4 @@
 import { createSelector } from 'redux-orm'
-
 import orm from 'store/models'
 
 export const FETCH_MEMBER_COMMENTS = 'FETCH_MEMBER_COMMENTS'

@@ -1,8 +1,13 @@
-import { deletePost, removePost, pinPost, getCommunity } from './PostHeader.store'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { removePostFromUrl, editPostUrl } from 'util/navigation'
 import getMe from 'store/selectors/getMe'
+import {
+  deletePost,
+  removePost,
+  pinPost,
+  getCommunity
+} from './PostHeader.store'
 
 export function mapStateToProps (state, props) {
   const community = getCommunity(state, props)
@@ -16,18 +21,26 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   const { slug } = props
   const closeUrl = removePostFromUrl(window.location.pathname)
-  const deletePostWithConfirm = id => {
+  const deletePostWithConfirm = postId => {
     if (window.confirm('Are you sure you want to delete this post?')) {
-      dispatch(deletePost(id))
+      dispatch(deletePost(postId))
       .then(() => dispatch(push(closeUrl)))
     }
   }
 
   return {
-    deletePost: deletePostWithConfirm,
-    editPost: postId => dispatch(push(editPostUrl(postId, props))),
-    removePost: postId => dispatch(removePost(postId, slug)),
-    pinPost: (postId, communityId) => dispatch(pinPost(postId, communityId))
+    editPost: postId => props.editPost
+      ? props.editPost(postId)
+      : dispatch(push(editPostUrl(postId, props))),
+    deletePost: postId => props.deletePost
+      ? props.deletePost(postId)
+      : deletePostWithConfirm(postId),
+    removePost: postId => props.editPost
+      ? props.removePost(postId)
+      : dispatch(removePost(postId, slug)),
+    pinPost: (postId, communityId) => props.pinPost
+      ? props.pinPost(postId)
+      : dispatch(pinPost(postId, communityId))
   }
 }
 

@@ -11,8 +11,9 @@
   }
 }
 
-.expanded {
-  box-shadow: 0px 2px 6px 0px $color-black-10;
+.expanded,
+.expanded:hover {
+  box-shadow: 0px 4px 6px 0px $color-black-10;
 }
 
 .image {

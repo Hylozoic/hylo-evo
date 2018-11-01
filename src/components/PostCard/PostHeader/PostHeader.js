@@ -33,6 +33,7 @@ export default class PostHeader extends PureComponent {
       close,
       className,
       slug,
+      networkSlug,
       editPost,
       canFlag,
       deletePost,
@@ -71,10 +72,10 @@ export default class PostHeader extends PureComponent {
 
     return <div styleName='header' className={className}>
       <div styleName='headerMainRow'>
-        <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug)} styleName='avatar' />
+        <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug, networkSlug)} styleName='avatar' />
         <div styleName='headerText'>
           <Highlight {...highlightProps}>
-            <Link to={personUrl(creator.id, slug)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
+            <Link to={personUrl(creator.id, slug, networkSlug)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
           </Highlight>
           {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
           <div styleName='timestampRow'>

@@ -100,7 +100,13 @@ export default class PostDetail extends Component {
 
   render () {
     const {
-      post, slug, voteOnPost, isProjectMember, joinProject, leaveProject, pending
+      post,
+      slug,
+      voteOnPost,
+      isProjectMember,
+      joinProject,
+      leaveProject,
+      pending
     } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
 
@@ -131,9 +137,10 @@ export default class PostDetail extends Component {
         'commenters',
         'commentersTotal',
         'type',
-        'members'], post)}
+        'members'
+      ], post)}
+      voteOnPost={voteOnPost}
       postId={post.id}
-      vote={voteOnPost}
       onClick={toggleMembersDialog} />
 
     return <div styleName='post' ref={this.setHeaderStateFromDOM}>
@@ -179,22 +186,26 @@ export default class PostDetail extends Component {
   }
 }
 
-function WrappedPostHeader ({ post, onClose, postTypeContext, slug, networkSlug }) {
-  return <PostHeader creator={post.creator}
-    date={post.createdAt}
-    type={post.type}
-    communities={post.communities}
-    close={onClose}
-    postTypeContext={postTypeContext}
-    slug={slug}
-    networkSlug={networkSlug}
-    pinned={post.pinned}
-    topics={post.topics}
-    styleName='header'
-    id={post.id}
-    topicsOnNewline
-    announcement={post.announcement}
-  />
+function WrappedPostHeader (props) {
+  const headerProps = {
+    date: props.post.createdAt,
+    ...pick([
+      'id',
+      'creator',
+      'type',
+      'communities',
+      'pinned',
+      'topics',
+      'announcement'
+    ], props.post),
+    ...pick([
+      'personId',
+      'slug',
+      'networkSlug',
+      'postTypeContext'
+    ], props)
+  }
+  return <PostHeader styleName='header' topicsOnNewline {...headerProps} />
 }
 
 export function PostTags ({ tags, slug }) {
