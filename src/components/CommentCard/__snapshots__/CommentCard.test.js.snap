@@ -128,7 +128,7 @@ exports[`matches last snapshot with different config 1`] = `
   to="/all/p/77"
 >
   <div
-    data-stylename="comment-card"
+    data-stylename="comment-card expanded"
   >
     <div
       data-stylename="comment-header"
