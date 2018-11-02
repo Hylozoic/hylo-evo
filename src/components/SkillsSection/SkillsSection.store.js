@@ -1,22 +1,16 @@
-// import { combineReducers } from 'redux'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
+import { get, includes, isEmpty, difference, map } from 'lodash/fp'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
-import { get, includes, isEmpty } from 'lodash/fp'
-import { difference, map } from 'lodash'
 
 export const MODULE_NAME = 'SkillsSection'
-
-// Constants
+export const FETCH_MEMBER_SKILLS = `${MODULE_NAME}/FETCH_MEMBER_SKILLS`
+export const SET_SEARCH = `${MODULE_NAME}/SET_SEARCH`
+export const FETCH_SKILL_SUGGESTIONS = `${MODULE_NAME}/FETCH_SKILL_SUGGESTIONS`
 export const ADD_SKILL = `${MODULE_NAME}/ADD_SKILL`
 export const ADD_SKILL_PENDING = `${ADD_SKILL}_PENDING`
-
 export const REMOVE_SKILL = `${MODULE_NAME}/REMOVE_SKILL`
 export const REMOVE_SKILL_PENDING = `${REMOVE_SKILL}_PENDING`
-
-export const FETCH_MEMBER_SKILLS = `${MODULE_NAME}/FETCH_MEMBER_SKILLS`
-export const FETCH_SKILLS_AUTOCOMPLETE = `${MODULE_NAME}/FETCH_SKILLS_AUTOCOMPLETE`
-export const SET_AUTOCOMPLETE = `${MODULE_NAME}/SET_AUTOCOMPLETE`
 
 // Action Creators
 
@@ -61,6 +55,13 @@ export function removeSkill (skillId) {
   }
 }
 
+export function setSearch (search) {
+  return {
+    type: SET_SEARCH,
+    payload: search
+  }
+}
+
 export function fetchMemberSkills (id, limit = 20) {
   return {
     type: FETCH_MEMBER_SKILLS,
@@ -84,12 +85,12 @@ export function fetchMemberSkills (id, limit = 20) {
   }
 }
 
-export function fetchSkills (autocomplete) {
+export function fetchSkillSuggestions (search) {
   return {
-    type: FETCH_SKILLS_AUTOCOMPLETE,
+    type: FETCH_SKILL_SUGGESTIONS,
     graphql: {
-      query: `query ($autocomplete: String) {
-        skills (first: 10, autocomplete: $autocomplete) {
+      query: `query ($search: String) {
+        skills (first: 10, autocomplete: $search) {
           items {
             id
             name
@@ -97,7 +98,7 @@ export function fetchSkills (autocomplete) {
         }
       }`,
       variables: {
-        autocomplete
+        search
       }
     },
     meta: {
@@ -110,8 +111,9 @@ export function fetchSkills (autocomplete) {
 }
 
 // Reducer
+
 const defaultState = {
-  skills: []
+  search: ''
 }
 
 export default function reducer (state = defaultState, action) {
@@ -119,10 +121,10 @@ export default function reducer (state = defaultState, action) {
   if (error) return state
 
   switch (type) {
-    case SET_AUTOCOMPLETE:
+    case SET_SEARCH:
       return {
         ...state,
-        autocomplete: payload
+        search: payload
       }
     default:
       return state
@@ -131,20 +133,20 @@ export default function reducer (state = defaultState, action) {
 
 // Selectors
 
-const getSkillsResults = makeGetQueryResults(FETCH_SKILLS_AUTOCOMPLETE)
+export const getSearch = state => get(`[${MODULE_NAME}].search`, state)
 
-export const getSkills = ormCreateSelector(
+const getSkillSuggestionsFromCache = makeGetQueryResults(FETCH_SKILL_SUGGESTIONS)
+
+export const getSkillSuggestions = ormCreateSelector(
   orm,
   state => state.orm,
-  getSkillsResults,
-  (_, props) => props.memberId,
-  (session, results, memberId) => {
+  getSkillSuggestionsFromCache,
+  (_, props) => props.personId,
+  (session, results, personId) => {
     if (isEmpty(results) || isEmpty(results.ids)) return []
-
-    const person = session.Person.withId(memberId)
-    const alreadySelectedIds = map(person.skills.toRefArray(), 'id')
+    const person = session.Person.withId(personId)
+    const alreadySelectedIds = map('id', person.skills.toRefArray())
     const ids = difference(results.ids, alreadySelectedIds)
-
     return session.Skill.all()
       .filter(x => includes(x.id, ids))
       .orderBy(x => ids.indexOf(x.id))
@@ -155,23 +157,12 @@ export const getSkills = ormCreateSelector(
 export const getMemberSkills = ormCreateSelector(
   orm,
   state => state.orm,
-  (_, props) => props.memberId,
-  (session, memberId) => {
-    if (session.Person.hasId(memberId)) {
-      const person = session.Person.withId(memberId)
+  (_, props) => props.personId,
+  (session, personId) => {
+    if (session.Person.hasId(personId)) {
+      const person = session.Person.withId(personId)
       return person.skills.toRefArray()
     }
     return null
   }
 )
-
-export function setAutocomplete (autocomplete) {
-  return {
-    type: SET_AUTOCOMPLETE,
-    payload: autocomplete
-  }
-}
-
-export function getAutocomplete (state) {
-  return get(`[${MODULE_NAME}].autocomplete`, state)
-}
