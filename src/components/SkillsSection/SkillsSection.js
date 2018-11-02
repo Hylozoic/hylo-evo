@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './SkillsSection.scss'
 import Pillbox from 'components/Pillbox'
-import { isEmpty, map, size } from 'lodash'
+import { isEmpty, map } from 'lodash'
 import cx from 'classnames'
 import Loading from 'components/Loading'
 
