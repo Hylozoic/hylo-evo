@@ -1,4 +1,5 @@
 import React from 'react'
+import Loading from 'components/Loading'
 import PostCard from 'components/PostCard'
 import CommentCard from 'components/CommentCard'
 import './RecentActivity.scss'
@@ -11,6 +12,8 @@ export default class RecentActivity extends React.Component {
   itemSelected = selectedItemId => selectedItemId === this.props.postId
 
   render () {
+    if (this.props.loading) return <Loading />
+
     const {
       activityItems,
       showDetails,
@@ -32,12 +35,11 @@ export default class RecentActivity extends React.Component {
               editPost={editPost}
               voteOnPost={voteOnPost}
               slug={slug}
-              networkSlug={networkSlug}
-              key={i} />
+              networkSlug={networkSlug} />
             : <CommentCard
-              expanded={this.itemSelected(item.post.id)}
               comment={item}
-              key={i} />}
+              expanded={this.itemSelected(item.post.id)}
+              showDetails={showDetails} />}
         </div>
       })}
     </div>

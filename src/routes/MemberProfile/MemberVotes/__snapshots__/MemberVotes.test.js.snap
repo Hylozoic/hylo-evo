@@ -7,6 +7,7 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
     key="2"
   >
     <PostCard
+      expanded={false}
       post={
         Object {
           "createdAt": "Tue Apr 18 2017 09:50:25 GMT+1200 (NZST)",
@@ -43,7 +44,6 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
           },
         }
       }
-      showDetails={[Function]}
     />
   </div>
   <div
@@ -51,6 +51,7 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
     key="1"
   >
     <PostCard
+      expanded={false}
       post={
         Object {
           "createdAt": "Tue Apr 18 2017 09:20:39 GMT+1200 (NZST)",
@@ -79,7 +80,6 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
           },
         }
       }
-      showDetails={[Function]}
     />
   </div>
 </div>

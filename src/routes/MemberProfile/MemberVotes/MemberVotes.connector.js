@@ -1,6 +1,4 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
-import { postUrl } from 'util/navigation'
 import {
   getMemberVotes,
   fetchMemberVotes
@@ -14,8 +12,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    fetchMemberVotes: personId => dispatch(fetchMemberVotes(personId)),
-    showDetails: postId => push(postUrl(postId, props))
+    fetchMemberVotes: personId => dispatch(fetchMemberVotes(personId))
   }
 }
 

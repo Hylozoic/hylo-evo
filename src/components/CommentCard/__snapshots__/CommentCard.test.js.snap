@@ -1,10 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`displays an image 1`] = `
-<Link
+<a
   data-stylename="link"
-  replace={false}
-  to="/all/p/77"
+  onClick={[Function]}
 >
   <div
     data-stylename="comment-card"
@@ -52,14 +51,13 @@ exports[`displays an image 1`] = `
       data-stylename="comment-footer"
     />
   </div>
-</Link>
+</a>
 `;
 
 exports[`matches last snapshot 1`] = `
-<Link
+<a
   data-stylename="link"
-  replace={false}
-  to="/all/p/77"
+  onClick={[Function]}
 >
   <div
     data-stylename="comment-card"
@@ -118,14 +116,13 @@ exports[`matches last snapshot 1`] = `
       data-stylename="comment-footer"
     />
   </div>
-</Link>
+</a>
 `;
 
 exports[`matches last snapshot with different config 1`] = `
-<Link
+<a
   data-stylename="link"
-  replace={false}
-  to="/all/p/77"
+  onClick={[Function]}
 >
   <div
     data-stylename="comment-card expanded"
@@ -193,5 +190,5 @@ exports[`matches last snapshot with different config 1`] = `
       </span>
     </div>
   </div>
-</Link>
+</a>
 `;

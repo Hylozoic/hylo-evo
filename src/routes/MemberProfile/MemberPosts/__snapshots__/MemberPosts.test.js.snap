@@ -7,7 +7,6 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
     key="30003"
   >
     <PostCard
-      editPost={[Function]}
       expanded={false}
       post={
         Object {
@@ -30,7 +29,6 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
           "type": "discussion",
         }
       }
-      showDetails={[Function]}
     />
   </div>
   <div
@@ -38,7 +36,6 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
     key="30002"
   >
     <PostCard
-      editPost={[Function]}
       expanded={false}
       post={
         Object {
@@ -69,7 +66,6 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
           "type": "discussion",
         }
       }
-      showDetails={[Function]}
     />
   </div>
 </div>

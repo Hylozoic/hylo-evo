@@ -1,9 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
-import { postUrl } from 'util/navigation'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import Highlight from 'components/Highlight'
 import ClickCatcher from 'components/ClickCatcher'
@@ -11,6 +9,7 @@ import './CommentCard.scss'
 
 export default function CommentCard ({
   comment,
+  showDetails = () => {},
   shouldShowReply,
   expanded = true,
   highlightProps
@@ -24,7 +23,7 @@ export default function CommentCard ({
   }
   const commentText = present(sanitize(comment.text), commentPresentOpts)
 
-  return <Link to={postUrl(post.id, {communitySlug: slug, memberId: slug ? creator.id : null})} styleName='link'>
+  return <a onClick={() => showDetails(comment.post.id)} styleName='link'>
     <div styleName={cx('comment-card', {expanded})}>
       <div styleName='comment-header'>
         <RoundImage url={creator.avatarUrl} large />
@@ -48,5 +47,5 @@ export default function CommentCard ({
         {shouldShowReply && <span><Icon styleName='reply-button' name='Reply' green /> Reply</span>}
       </div>
     </div>
-  </Link>
+  </a>
 }

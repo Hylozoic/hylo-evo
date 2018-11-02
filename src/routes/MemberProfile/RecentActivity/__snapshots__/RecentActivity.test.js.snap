@@ -27,7 +27,6 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
         }
       }
       expanded={false}
-      key="0"
     />
   </div>
   <div
@@ -50,7 +49,6 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
         }
       }
       expanded={false}
-      key="1"
     />
   </div>
   <div
@@ -59,7 +57,6 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
   >
     <PostCard
       expanded={false}
-      key="2"
       post={
         Object {
           "commenters": Array [],
@@ -89,7 +86,6 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
   >
     <PostCard
       expanded={false}
-      key="3"
       post={
         Object {
           "commenters": Array [

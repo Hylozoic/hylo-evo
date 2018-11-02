@@ -2,6 +2,7 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import { compact } from 'lodash/fp'
 import orm from 'store/models'
 import { presentPost } from 'store/selectors/getPost'
+import { getPostFieldsFragment } from 'store/actions/fetchPost'
 import { FETCH_MEMBER_VOTES } from '../MemberProfile.store'
 
 const memberVotesQuery =
@@ -12,24 +13,7 @@ const memberVotesQuery =
       items {
         id
         post {
-          id
-          title
-          details
-          type
-          creator {
-            id
-          }
-          commenters {
-            id,
-            name,
-            avatarUrl
-          }
-          commentersTotal
-          communities {
-            id
-            name
-          }
-          createdAt
+          ${getPostFieldsFragment(false)}
         }
         voter {
           id
@@ -47,7 +31,7 @@ export function fetchMemberVotes (id, order = 'desc', limit = 20, query = member
       query,
       variables: { id, limit, order }
     },
-    meta: { extractModel: 'Person' }
+    meta: {extractModel: 'Person'}
   }
 }
 

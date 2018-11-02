@@ -54,9 +54,9 @@ export function fetchRecentActivity (id, first = 3, query = recentActivityQuery)
 }
 
 // Deliberately preserves object references
-// Used to display interspersed posts and comments on 'Recent Activity'
+// Intersperses posts and comments
 export function indexActivityItems (comments, posts) {
-  // TODO: support something other than descending order
+  // descending order
   return comments.concat(posts)
     .sort((a, b) => {
       const aDate = new Date(a.createdAt)
@@ -76,7 +76,7 @@ export function presentComment (comment, communitySlug) {
   }
 }
 
-export const activitySelector = ormCreateSelector(
+export const getRecentActivity = ormCreateSelector(
   orm,
   state => state.orm,
   (_, { personId }) => personId,

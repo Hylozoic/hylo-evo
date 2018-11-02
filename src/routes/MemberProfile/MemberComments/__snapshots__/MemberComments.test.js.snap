@@ -21,6 +21,7 @@ exports[`MemberComments renders the same as the last snapshot 1`] = `
           "text": "<p>So much more to say.</p>",
         }
       }
+      expanded={false}
     />
   </div>
   <div
@@ -42,6 +43,7 @@ exports[`MemberComments renders the same as the last snapshot 1`] = `
           "text": "<p>Here's a comment!</p>",
         }
       }
+      expanded={false}
     />
   </div>
 </div>

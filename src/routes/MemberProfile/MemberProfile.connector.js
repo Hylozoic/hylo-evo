@@ -1,42 +1,66 @@
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+import { postUrl, editPostUrl } from 'util/navigation'
 import blockUser from 'store/actions/blockUser'
+import isPendingFor from 'store/selectors/isPendingFor'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import getMe from 'store/selectors/getMe'
-import { fetchPerson, personSelector } from './MemberProfile.store'
+import fetchPerson from 'store/actions/fetchPerson'
+import voteOnPost from 'store/actions/voteOnPost'
+import {
+  FETCH_RECENT_ACTIVITY,
+  FETCH_MEMBER_POSTS,
+  FETCH_MEMBER_COMMENTS,
+  FETCH_MEMBER_VOTES,
+  getPresentedPerson
+} from './MemberProfile.store'
 
-// TODO: this sort of thing belongs in an i18n module
-const messages = {
+const MESSAGES = {
   invalid: "That doesn't seem to be a valid person ID."
 }
 
 export function mapStateToProps (state, props) {
-  const error = Number.isSafeInteger(Number(props.match.params.personId)) ? null : messages.invalid
-  const person = personSelector(state, props)
+  const error = Number.isSafeInteger(Number(props.match.params.personId)) ? null : MESSAGES.invalid
+  const matchParams = props.match.params
+  const person = getPresentedPerson(state, {...matchParams, ...props})
+  const loading = isPendingFor([
+    FETCH_RECENT_ACTIVITY,
+    FETCH_MEMBER_POSTS,
+    FETCH_MEMBER_COMMENTS,
+    FETCH_MEMBER_VOTES
+  ], state)
 
   return {
-    currentTab: 'Overview',
     error,
+    loading,
     person,
     currentUser: getMe(state),
     previousLocation: getPreviousLocation(state)
   }
 }
 
-const mapDispatchToProps = {
-  fetchPerson,
-  blockUser,
-  push
+export function mapDispatchToProps (dispatch, props) {
+  return {
+    ...bindActionCreators({
+      fetchPerson,
+      blockUser,
+      push
+    }, dispatch),
+    feedItemActions: {
+      showDetails: postId => dispatch(push(postUrl(postId, props.match.params))),
+      editPost: postId => dispatch(push(editPostUrl(postId, props.match.params))),
+      voteOnPost: (postId, myVote) => dispatch(voteOnPost(postId, myVote))
+    }
+  }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const goToPreviousLocation = () => dispatchProps.push(stateProps.previousLocation)
-
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    goToPreviousLocation
+    goToPreviousLocation: () => dispatchProps.push(stateProps.previousLocation)
   }
 }
 

@@ -8,8 +8,8 @@ export default class MemberSidebar extends Component {
     const { personId } = this.props.match.params
 
     return <div styleName='member-sidebar'>
-      <MessageMember id={personId} />
-      <SkillsSection memberId={personId} />
+      <MessageMember personId={personId} />
+      <SkillsSection personId={personId} />
     </div>
   }
 }

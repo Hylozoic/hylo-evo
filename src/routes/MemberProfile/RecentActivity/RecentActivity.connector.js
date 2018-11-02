@@ -1,21 +1,18 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
-import { postUrl, editPostUrl } from 'util/navigation'
-import voteOnPost from 'store/actions/voteOnPost'
-import { activitySelector, fetchRecentActivity } from './RecentActivity.store'
+import {
+  getRecentActivity,
+  fetchRecentActivity
+} from './RecentActivity.store'
 
 export function mapStateToProps (state, props) {
   return {
-    activityItems: activitySelector(state, props)
+    activityItems: getRecentActivity(state, props)
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    fetchRecentActivity: () => dispatch(fetchRecentActivity(props.personId)),
-    showDetails: postId => dispatch(push(postUrl(postId, props))),
-    editPost: postId => dispatch(push(editPostUrl(postId, props))),
-    voteOnPost: (postId, myVote) => dispatch(voteOnPost(postId, myVote))
+    fetchRecentActivity: () => dispatch(fetchRecentActivity(props.personId))
   }
 }
 
