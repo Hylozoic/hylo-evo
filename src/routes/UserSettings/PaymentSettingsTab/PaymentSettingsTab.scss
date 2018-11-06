@@ -1,0 +1,30 @@
+// PaymentSettingsTab
+.title {
+  composes: title from 'routes/UserSettings/NotificationSettingsTab/NotificationSettingsTab.scss';
+}
+
+.button-row {
+  display: flex;
+  width: 100%;
+  margin-top: $space-9x;
+}
+
+.save-button {
+  margin: 0 auto;
+}
+
+.help {
+  composes: bdy-lt-sm from 'css/typography.scss';
+  font-size: 12px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.error {
+  composes: caption-lt-lg from 'css/typography.scss';
+  font-size: 12px;
+  border: 1px solid $color-amaranth;
+  color: $color-amaranth;
+  padding: 5px;
+  margin-bottom: 25px;
+}

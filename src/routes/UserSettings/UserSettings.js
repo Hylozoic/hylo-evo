@@ -6,6 +6,7 @@ import CommunitySettingsTab from './CommunitySettingsTab/CommunitySettingsTab'
 import BlockedUsersTab from './BlockedUsersTab/BlockedUsersTab'
 import NotificationSettingsTab from './NotificationSettingsTab/NotificationSettingsTab'
 import PasswordSettingsTab from './PasswordSettingsTab/PasswordSettingsTab'
+import PaymentSettingsTab from './PaymentSettingsTab/PaymentSettingsTab'
 import FullPageModal from 'routes/FullPageModal'
 
 const { object, func } = PropTypes
@@ -35,7 +36,8 @@ export default class UserSettings extends Component {
       updateAllMemberships,
       messageSettings,
       allCommunitiesSettings,
-      fetchPending
+      fetchPending,
+      stripeQueryParams
     } = this.props
 
     return <FullPageModal
@@ -85,6 +87,15 @@ export default class UserSettings extends Component {
             currentUser={currentUser}
             updateUserSettings={updateUserSettings}
             setConfirm={setConfirm} />
+        },
+        {
+          name: 'Payment',
+          path: '/settings/payment',
+          component: <PaymentSettingsTab
+            currentUser={currentUser}
+            updateUserSettings={updateUserSettings}
+            setConfirm={setConfirm}
+            stripeQueryParams={stripeQueryParams} />
         }
       ]} />
   }

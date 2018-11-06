@@ -14,6 +14,7 @@ import unBlockUser from 'store/actions/unBlockUser'
 import getBlockedUsers from 'store/selectors/getBlockedUsers'
 import { FETCH_FOR_CURRENT_USER } from 'store/constants'
 import { get, every, includes } from 'lodash/fp'
+import getQueryParam from 'store/selectors/getQueryParam'
 
 // this selector assumes that all Memberships belong to the currentUser
 // using this instead of currentUser.memberships to avoid a memoization issue
@@ -50,6 +51,11 @@ export function mapStateToProps (state, props) {
 
   const confirm = get('FullPageModal.confirm', state)
   const fetchPending = state.pending[FETCH_FOR_CURRENT_USER]
+  const stripeQueryParams = {
+    scope: getQueryParam('scope', null, props),
+    state: getQueryParam('state', null, props),
+    code: getQueryParam('code', null, props)
+  }
 
   return {
     currentUser,
@@ -58,7 +64,8 @@ export function mapStateToProps (state, props) {
     confirm,
     fetchPending,
     allCommunitiesSettings,
-    messageSettings
+    messageSettings,
+    stripeQueryParams
   }
 }
 
