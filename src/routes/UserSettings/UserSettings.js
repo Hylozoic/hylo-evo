@@ -37,7 +37,8 @@ export default class UserSettings extends Component {
       messageSettings,
       allCommunitiesSettings,
       fetchPending,
-      stripeQueryParams
+      stripeQueryParams,
+      registerStripeAccount
     } = this.props
 
     return <FullPageModal
@@ -95,7 +96,8 @@ export default class UserSettings extends Component {
             currentUser={currentUser}
             updateUserSettings={updateUserSettings}
             setConfirm={setConfirm}
-            stripeQueryParams={stripeQueryParams} />
+            stripeQueryParams={stripeQueryParams}
+            registerStripeAccount={registerStripeAccount} />
         }
       ]} />
   }

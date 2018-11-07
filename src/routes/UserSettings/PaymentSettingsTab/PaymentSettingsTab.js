@@ -17,13 +17,20 @@ export default class PaymentSettingsTab extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      registeredStripeCode: false
+      registeredStripeCode: false,
+      registeredSuccessfully: false
     }
   }
 
   componentDidMount () {
-    if (this.props.stripeQueryParams) {
-            
+    if (this.props.stripeQueryParams.code) {
+      this.props.registerStripeAccount(this.props.stripeQueryParams.code)
+      .then(() => {
+        this.setState({
+          registeredStripeCode: true,
+          registeredSuccessfully: true
+        })
+      })
     }
   }
 
@@ -33,6 +40,10 @@ export default class PaymentSettingsTab extends Component {
       stripeQueryParams
      } = this.props
 
+    const {
+      registeredSuccessfully
+    } = this.state
+
     console.log('stripeQueryParams', stripeQueryParams)
 
     if (!currentUser) return <Loading />
@@ -41,6 +52,7 @@ export default class PaymentSettingsTab extends Component {
     return <div>
       <div styleName='title'>Connect Stripe Account</div>
       <a href={stripeUrl}>Link stripe account</a>
+      {registeredSuccessfully && <div>Okay, your account is registered, you're good to go.</div>}
     </div>
   }
 }

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import {
   updateUserSettings, leaveCommunity, unlinkAccount,
-  updateMembershipSettings, updateAllMemberships
+  updateMembershipSettings, updateAllMemberships, registerStripeAccount
 } from './UserSettings.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
@@ -78,7 +78,8 @@ export const mapDispatchToProps = {
   unlinkAccount,
   setConfirmBeforeClose,
   updateMembershipSettings,
-  updateAllMemberships
+  updateAllMemberships,
+  registerStripeAccount
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
