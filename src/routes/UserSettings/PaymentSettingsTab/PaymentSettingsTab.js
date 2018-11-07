@@ -51,6 +51,7 @@ export default class PaymentSettingsTab extends Component {
 
     return <div>
       <div styleName='title'>Connect Stripe Account</div>
+      {hasStripeAccount && <div>You already have a stripe account linked to this account. If you would like to link a different account, click the button below</div>}
       <a href={stripeUrl}>Link stripe account</a>
       {registeredSuccessfully && <div>Okay, your account is registered, you're good to go.</div>}
     </div>

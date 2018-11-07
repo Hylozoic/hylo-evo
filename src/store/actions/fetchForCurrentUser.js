@@ -61,6 +61,7 @@ me {
   url
   hasDevice
   intercomHash
+  hasStripeAccount
   blockedUsers {
     id
     name
