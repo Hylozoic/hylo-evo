@@ -15,7 +15,8 @@ export default function createPost (postParams) {
     fileUrls,
     topicNames,
     sendAnnouncement,
-    networkSlug
+    networkSlug,
+    acceptContributions
   } = postParams
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
@@ -32,7 +33,8 @@ export default function createPost (postParams) {
         $imageUrls: [String],
         $fileUrls: [String],
         $announcement: Boolean
-        $topicNames: [String]
+        $topicNames: [String],
+        $acceptContributions: Boolean
       ) {
         createPost(data: {
           type: $type,
@@ -43,7 +45,8 @@ export default function createPost (postParams) {
           imageUrls: $imageUrls,
           fileUrls: $fileUrls,
           announcement: $announcement
-          topicNames: $topicNames
+          topicNames: $topicNames,
+          acceptContributions: $acceptContributions
         }) {${getPostFieldsFragment(false)}}
       }`,
       variables: {
@@ -55,7 +58,8 @@ export default function createPost (postParams) {
         imageUrls,
         fileUrls,
         announcement: sendAnnouncement,
-        topicNames
+        topicNames,
+        acceptContributions
       }
     },
     meta: {

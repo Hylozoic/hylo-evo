@@ -6,7 +6,7 @@ import { UPDATE_POST } from 'store/constants'
 
 export default function updatePost (post) {
   const {
-    id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, memberIds
+    id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, memberIds,     acceptContributions
   } = post
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
@@ -24,7 +24,8 @@ export default function updatePost (post) {
         $imageUrls: [String],
         $fileUrls: [String],
         $topicNames: [String],
-        $memberIds: [ID]
+        $memberIds: [ID],
+        $acceptContributions: Boolean
       ) {
         updatePost(id: $id, data: {
           type: $type,
@@ -35,7 +36,8 @@ export default function updatePost (post) {
           imageUrls: $imageUrls,
           fileUrls: $fileUrls,
           topicNames: $topicNames,
-          memberIds: $memberIds
+          memberIds: $memberIds,
+          acceptContributions: $acceptContributions
         }) {${getPostFieldsFragment(false)}}
       }`,
       variables: {
@@ -48,7 +50,8 @@ export default function updatePost (post) {
         imageUrls,
         fileUrls,
         topicNames,
-        memberIds
+        memberIds,
+        acceptContributions
       }
     },
     meta: {

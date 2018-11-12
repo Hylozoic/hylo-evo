@@ -12,6 +12,7 @@ import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
+import Switch from 'components/Switch'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 import TopicSelector from 'components/TopicSelector'
 import MemberSelector from 'components/MemberSelector'
@@ -76,7 +77,8 @@ export default class PostEditor extends React.Component {
       type: postTypeContext || PostEditor.defaultProps.post.type,
       communities: currentCommunity ? [currentCommunity] : PostEditor.defaultProps.post.communities,
       topics: topic ? [topic] : [],
-      detailsTopics: []
+      detailsTopics: [],
+      acceptContributions: false
     })
 
     const currentPost = post || defaultPostWithCommunitiesAndTopic
@@ -185,6 +187,13 @@ export default class PostEditor extends React.Component {
     }
   }
 
+  toggleContributions = () => {
+    const { post, post: { acceptContributions } } = this.state
+    this.setState({
+      post: {...post, acceptContributions: !acceptContributions}
+    })
+  }
+
   setLinkPreview = (contentState) => {
     const { pollingFetchLinkPreview, linkPreviewStatus, clearLinkPreview } = this.props
     const { linkPreview } = this.state.post
@@ -244,13 +253,13 @@ export default class PostEditor extends React.Component {
       editing, createPost, createProject, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected, isProject
     } = this.props
     const {
-      id, type, title, communities, linkPreview, members
+      id, type, title, communities, linkPreview, members, acceptContributions
     } = this.state.post
     const details = this.editor.getContentHTML()
     const topicNames = this.topicSelector.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions
     }
     const saveFunc = editing ? updatePost : isProject ? createProject : createPost
     setAnnouncement(false)
@@ -274,13 +283,15 @@ export default class PostEditor extends React.Component {
 
   render () {
     const { initialPrompt, titlePlaceholder, titleLengthError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
-    const { id, title, details, communities, linkPreview, topics, members } = post
+    const { id, title, details, communities, linkPreview, topics, members, acceptContributions } = post
     const {
       onClose, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
       showImages, addFile, showFiles, setAnnouncement, announcementSelected,
       canModerate, myModeratedCommunities, isProject
     } = this.props
+
+    const hasStripeAccount = get('hasStripeAccount', currentUser)
 
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
       <div styleName='header'>
@@ -349,6 +360,15 @@ export default class PostEditor extends React.Component {
               ref={component => { this.membersSelector = component }}
             />
           </div>
+        </div>}
+        {isProject && <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Accept Contributions</div>
+          {hasStripeAccount && <div styleName='footerSection-communities'>
+            <Switch value={acceptContributions} onClick={this.toggleContributions} />
+          </div>}
+          {!hasStripeAccount && <div styleName='footerSection-communities'>
+            To accept financial contributions for this project, you have to connect a Stripe account. Go to <a href='/settings/payment'>Settings</a> to set it up. (Remember to save your changes before leaving this form)
+          </div>}
         </div>}
         <div styleName='footerSection'>
           <div styleName='footerSection-label'>Post in</div>
