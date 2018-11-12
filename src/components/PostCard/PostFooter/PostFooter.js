@@ -1,4 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { POST_PROP_TYPES } from 'store/models/Post'
+import { CURRENT_USER_PROP_TYPES } from 'store/models/Me'
+import { PERSON_PROP_TYPES } from 'store/models/Person'
 import { find, get, sortBy, isFunction } from 'lodash/fp'
 import './PostFooter.scss'
 import Icon from 'components/Icon'
@@ -7,6 +11,19 @@ import cx from 'classnames'
 import ReactTooltip from 'react-tooltip'
 
 export default class PostFooter extends React.PureComponent {
+  static propTypes= {
+    postId: POST_PROP_TYPES.id,
+    type: PropTypes.string,
+    currentUser: PropTypes.shape(CURRENT_USER_PROP_TYPES),
+    commenters: PropTypes.array,
+    commentersTotal: PropTypes.number,
+    votesTotal: PropTypes.number,
+    myVote: PropTypes.bool,
+    members: PropTypes.arrayOf(PropTypes.shape(PERSON_PROP_TYPES)),
+    voteOnPost: PropTypes.func.isRequired,
+    onClick: PropTypes.func
+  }
+
   render () {
     const {
       postId,

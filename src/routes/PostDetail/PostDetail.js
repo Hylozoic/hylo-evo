@@ -29,17 +29,14 @@ export default class PostDetail extends Component {
     fetchPost: func
   }
 
-  constructor (props) {
-    super(props)
-    this.state = {
-      atHeader: false,
-      headerWidth: 0,
-      headerScrollOffset: 0,
-      atActivity: false,
-      activityWidth: 0,
-      activityScrollOffset: 0,
-      showMembersDialog: false
-    }
+  state = {
+    atHeader: false,
+    headerWidth: 0,
+    headerScrollOffset: 0,
+    atActivity: false,
+    activityWidth: 0,
+    activityScrollOffset: 0,
+    showMembersDialog: false
   }
 
   setHeaderStateFromDOM = () => {
@@ -96,7 +93,7 @@ export default class PostDetail extends Component {
     }
   })
 
-  toggleMembersDialog = () => this.setState({showMembersDialog: !this.state.showMembersDialog})
+  toggleMembersDialog = () => this.setState(state => ({showMembersDialog: !state.showMembersDialog}))
 
   render () {
     const {
@@ -127,9 +124,8 @@ export default class PostDetail extends Component {
     }
     const hasMembers = post.members.length > 0
     let { showMembersDialog } = this.state
-    let { toggleMembersDialog } = this
     showMembersDialog = hasMembers && showMembersDialog
-    toggleMembersDialog = hasMembers && toggleMembersDialog
+    const toggleMembersDialog = hasMembers && this.toggleMembersDialog ? this.toggleMembersDialog : undefined
     const postFooter = <PostFooter
       {...pick([
         'myVote',

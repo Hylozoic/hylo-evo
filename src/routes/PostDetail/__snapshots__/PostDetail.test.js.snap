@@ -25,6 +25,7 @@ exports[`PostDetail renders correctly 1`] = `
       }
     }
     slug="foo"
+    voteOnPost={[Function]}
   />
   <Connect(PostImage)
     data-stylename="image"
@@ -58,8 +59,8 @@ exports[`PostDetail renders correctly 1`] = `
   <PostFooter
     members={Array []}
     myVote={true}
-    onClick={false}
     postId="91"
+    voteOnPost={[Function]}
     votesTotal={7}
   />
   <Connect(Comments)

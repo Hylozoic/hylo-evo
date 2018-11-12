@@ -55,6 +55,7 @@ export default class Search extends Component {
       showPostDetails,
       setSearchFilter,
       showPerson,
+      voteOnPost,
       filter
     } = this.props
 
@@ -69,7 +70,8 @@ export default class Search extends Component {
               searchResult={sr}
               term={searchForInput}
               showPostDetails={showPostDetails}
-              showPerson={showPerson} />)}
+              showPerson={showPerson}
+              voteOnPost={voteOnPost} />)}
           {pending && <Loading type='bottom' />}
           <ScrollListener onBottom={() => fetchMoreSearchResults()}
             elementId={SEARCH_RESULTS_ID} />
@@ -113,7 +115,7 @@ export function TabBar ({ filter, setSearchFilter }) {
   </div>
 }
 
-export function SearchResult ({ searchResult, term = '', showPostDetails, showPerson }) {
+export function SearchResult ({ searchResult, term = '', showPostDetails, showPerson, voteOnPost, myVote }) {
   const { type, content } = searchResult
 
   const highlightProps = {
@@ -130,10 +132,12 @@ export function SearchResult ({ searchResult, term = '', showPostDetails, showPe
         highlightProps={highlightProps} />
       break
     case 'Post':
+      console.log('Post', content)
       component = <PostCard
         styleName='postcard-expand'
         post={content}
-        showDetails={() => showPostDetails(content.id, content.type)}
+        voteOnPost={() => voteOnPost(content.id, content.myVote)}
+        showDetails={() => showPostDetails(content.id)}
         highlightProps={highlightProps} />
       break
     case 'Comment':

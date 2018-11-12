@@ -1,5 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { pick } from 'lodash/fp'
+import { POST_PROP_TYPES } from 'store/models/Post'
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
 import PostCommunities from './PostCommunities'
@@ -12,6 +14,22 @@ import cx from 'classnames'
 export { PostHeader, PostFooter, PostImage, PostBody, PostCommunities }
 
 export default class PostCard extends React.Component {
+  static propTypes = {
+    post: PropTypes.shape(POST_PROP_TYPES),
+    className: PropTypes.string,
+    expanded: PropTypes.bool,
+    highlightProps: PropTypes.object,
+    slug: PropTypes.string,
+    networkSlug: PropTypes.string,
+    postTypeContext: PropTypes.string,
+    showDetails: PropTypes.func,
+    voteOnPost: PropTypes.func.isRequired,
+    editPost: PropTypes.func,
+    deletePost: PropTypes.func,
+    removePost: PropTypes.func,
+    pinPost: PropTypes.func
+  }
+
   static defaultProps = {
     post: samplePost()
   }

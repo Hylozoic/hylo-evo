@@ -1,5 +1,10 @@
-import { get } from 'lodash/fp'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import { createSelector } from 'reselect'
+import orm from 'store/models'
+import { isEmpty, includes, get } from 'lodash/fp'
+import { makeGetQueryResults } from 'store/reducers/queryResults'
 import { getPostFieldsFragment } from 'store/actions/fetchPost'
+import { presentPost } from 'store/selectors/getPost'
 
 export const MODULE_NAME = 'Search'
 
@@ -91,8 +96,7 @@ export function fetchSearchResults ({search, offset = 0, filter}) {
                   avatarUrl
                 }
                 post {
-                  id
-                  title
+                  ${getPostFieldsFragment(false)}
                 }
                 attachments {
                   id
@@ -118,3 +122,54 @@ export function fetchSearchResults ({search, offset = 0, filter}) {
     }
   }
 }
+
+// Selectors
+
+const getSearchResultResults = makeGetQueryResults(FETCH_SEARCH)
+
+export function presentSearchResult (searchResult, session) {
+  const contentRaw = searchResult.getContent(session)
+  const type = contentRaw.constructor.modelName
+
+  var content = contentRaw
+
+  if (type === 'Post') {
+    content = presentPost(content)
+  }
+  if (type === 'Person') {
+    content = {
+      ...content.ref,
+      skills: content.skills.toModelArray()
+    }
+  }
+
+  if (type === 'Comment') {
+    content = {
+      ...content.ref,
+      creator: content.creator,
+      image: content.attachments.toModelArray()[0]
+    }
+  }
+
+  return {
+    ...searchResult.ref,
+    content,
+    type
+  }
+}
+
+export const getSearchResults = ormCreateSelector(
+  orm,
+  state => state.orm,
+  getSearchResultResults,
+  (session, results) => {
+    if (isEmpty(results) || isEmpty(results.ids)) return []
+    return session.SearchResult.all()
+    .filter(x => includes(x.id, results.ids))
+    .orderBy(x => results.ids.indexOf(x.id))
+    .toModelArray()
+    .map(searchResults => presentSearchResult(searchResults, session))
+  }
+)
+
+export const getHasMoreSearchResults = createSelector(getSearchResultResults, get('hasMore'))

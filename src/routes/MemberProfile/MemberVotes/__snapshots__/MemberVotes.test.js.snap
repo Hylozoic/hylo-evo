@@ -44,6 +44,7 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
           },
         }
       }
+      voteOnPost={[Function]}
     />
   </div>
   <div
@@ -80,6 +81,7 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
           },
         }
       }
+      voteOnPost={[Function]}
     />
   </div>
 </div>

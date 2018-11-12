@@ -1,78 +1,20 @@
 import { connect } from 'react-redux'
-import orm from 'store/models'
-import { createSelector as ormCreateSelector } from 'redux-orm'
-import { createSelector } from 'reselect'
-import { isEmpty, includes, get, debounce } from 'lodash/fp'
+import { get, debounce } from 'lodash/fp'
 import {
   fetchSearchResults,
   getSearchTerm,
   FETCH_SEARCH,
   setSearchTerm,
   setSearchFilter,
-  getSearchFilter
+  getSearchFilter,
+  getSearchResults,
+  getHasMoreSearchResults
 } from './Search.store'
 import changeQueryParam from 'store/actions/changeQueryParam'
 import getQueryParam from 'store/selectors/getQueryParam'
-import { makeGetQueryResults } from 'store/reducers/queryResults'
 import { push } from 'react-router-redux'
+import voteOnPost from 'store/actions/voteOnPost'
 import { postUrl, personUrl } from 'util/navigation'
-
-const getSearchResultResults = makeGetQueryResults(FETCH_SEARCH)
-
-export function presentSearchResult (searchResult, session) {
-  const contentRaw = searchResult.getContent(session)
-  const type = contentRaw.constructor.modelName
-
-  var content = contentRaw
-
-  if (type === 'Post') {
-    content = {
-      ...content.ref,
-      creator: content.creator,
-      commenters: content.commenters.toModelArray(),
-      communities: content.communities.toModelArray(),
-      linkPreview: content.linkPreview,
-      fileAttachments: content.attachments.filter(a => a.type === 'file').toModelArray()
-    }
-  }
-
-  if (type === 'Person') {
-    content = {
-      ...content.ref,
-      skills: content.skills.toModelArray()
-    }
-  }
-
-  if (type === 'Comment') {
-    content = {
-      ...content.ref,
-      creator: content.creator,
-      image: content.attachments.toModelArray()[0]
-    }
-  }
-
-  return {
-    ...searchResult.ref,
-    content,
-    type
-  }
-}
-
-export const getSearchResults = ormCreateSelector(
-  orm,
-  state => state.orm,
-  getSearchResultResults,
-  (session, results) => {
-    if (isEmpty(results) || isEmpty(results.ids)) return []
-    return session.SearchResult.all()
-    .filter(x => includes(x.id, results.ids))
-    .orderBy(x => results.ids.indexOf(x.id))
-    .toModelArray()
-    .map(searchResults => presentSearchResult(searchResults, session))
-  }
-)
-
-const getHasMoreSearchResults = createSelector(getSearchResultResults, get('hasMore'))
 
 export function mapStateToProps (state, props) {
   const searchFromQueryString = getQueryParam('t', state, props)
@@ -94,17 +36,16 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
+  const matchParams = get('match.params', props)
   return {
     updateQueryParam: debounce(500, search =>
       dispatch(changeQueryParam(props, 't', search, null, true))),
     setSearchTerm: search => dispatch(setSearchTerm(search)),
     setSearchFilter: filter => dispatch(setSearchFilter(filter)),
-    fetchSearchResultsDebounced: debounce(500, opts =>
-      dispatch(fetchSearchResults(opts))),
-    showPostDetails: (postId, type = null) =>
-      dispatch(push(postUrl(postId, {postTypeContext: type}))),
-    showPerson: personId =>
-      dispatch(push(personUrl(personId)))
+    fetchSearchResultsDebounced: debounce(500, opts => dispatch(fetchSearchResults(opts))),
+    showPostDetails: postId => dispatch(push(postUrl(postId, matchParams))),
+    showPerson: personId => dispatch(push(personUrl(personId))),
+    voteOnPost: (postId, myVote) => dispatch(voteOnPost(postId, myVote))
   }
 }
 

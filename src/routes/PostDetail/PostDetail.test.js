@@ -21,7 +21,7 @@ describe('PostDetail', () => {
       members: []
     }
 
-    const wrapper = shallow(<PostDetail post={post} fetchPost={jest.fn()} slug={slug} />)
+    const wrapper = shallow(<PostDetail post={post} fetchPost={jest.fn()} voteOnPost={jest.fn()} slug={slug} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
