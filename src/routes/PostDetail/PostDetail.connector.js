@@ -11,6 +11,7 @@ import getPostTypeContext from 'store/selectors/getPostTypeContext'
 import voteOnPost from 'store/actions/voteOnPost'
 import joinProject from 'store/actions/joinProject'
 import leaveProject from 'store/actions/leaveProject'
+import processStripeToken from 'store/actions/processStripeToken'
 import { FETCH_POST } from 'store/constants'
 
 export function mapStateToProps (state, props) {
@@ -52,7 +53,8 @@ export function mapDispatchToProps (dispatch, props) {
     onClose: () => dispatch(push(closeLocation)),
     joinProject: postId => dispatch(joinProject(postId)),
     leaveProject: postId => dispatch(leaveProject(postId)),
-    voteOnPost: (postId, myVote) => dispatch(voteOnPost(postId, myVote))
+    voteOnPost: (postId, myVote) => dispatch(voteOnPost(postId, myVote)),
+    processStripeToken: (postId, token, amount) => dispatch(processStripeToken(postId, token, amount))
   }
 }
 

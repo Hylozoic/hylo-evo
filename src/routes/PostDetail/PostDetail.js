@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import StripeCheckout from 'react-stripe-checkout'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
@@ -106,7 +107,8 @@ export default class PostDetail extends Component {
       isProjectMember,
       joinProject,
       leaveProject,
-      pending
+      pending,
+      processStripeToken
     } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
 
@@ -114,6 +116,7 @@ export default class PostDetail extends Component {
     if (pending) return <Loading />
 
     const isProject = get('type', post) === 'project'
+    const { acceptContributions, totalContributions } = post || {}
     const scrollToBottom = () => {
       const detail = document.getElementById(DETAIL_COLUMN_ID)
       detail.scrollTop = detail.scrollHeight
@@ -167,6 +170,11 @@ export default class PostDetail extends Component {
           leaving={isProjectMember}
           postId={post.id} />
       </div>}
+      {isProject && acceptContributions &&
+        <ProjectContributions
+          postId={post.id}
+          totalContributions={totalContributions}
+          processStripeToken={processStripeToken} />}
       <PostCommunities
         communities={post.communities}
         slug={slug}
@@ -230,4 +238,38 @@ export function JoinProjectButton ({ leaving, joinProject, leaveProject, postId 
     styleName='join-project-button'>
     {buttonText}
   </Button>
+}
+
+export class ProjectContributions extends Component {
+  state = {
+    expanded: false,
+    contributionAmount: ''
+  }
+
+  toggleExpand = () => {
+    this.setState({
+      expanded: !this.state.expanded
+    })
+  }
+
+  setAmount = (event) => {
+    this.setState({
+      contributionAmount: event.target.value
+    })
+  }
+
+  render () {
+    const { postId, totalContributions, processStripeToken } = this.props
+    const { expanded, contributionAmount } = this.state
+    return <div styleName='project-contributions'>
+      <div>Contributions so far: ${totalContributions}</div>
+      <div onClick={this.toggleExpand}>Contirbute</div>
+      {expanded && <div>
+        <div>Amount: $<input type='text' onChange={this.setAmount} /></div>
+        <StripeCheckout
+          token={token => processStripeToken(postId, token.id, contributionAmount)}
+          stripeKey={process.env.STRIPE_PUBLISHABLE_KEY} />
+      </div>}
+    </div>
+  }
 }
