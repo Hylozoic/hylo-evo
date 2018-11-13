@@ -49,7 +49,7 @@ exports[`matches the last snapshot for fetchCommunityTopic 1`] = `
 Object {
   "graphql": Object {
     "query": "query ($topicName: String, $communitySlug: String) {
-        communityTopic (topicName: $topicName, communitySlug: $communitySlug) {
+        communityTopic(communitySlug: $communitySlug, topicName: $topicName) {
           id
         }
       }",

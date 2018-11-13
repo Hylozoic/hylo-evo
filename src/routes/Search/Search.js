@@ -81,7 +81,13 @@ export default class Search extends Component {
   }
 }
 
-export function SearchBar ({searchForInput, setSearchTerm, updateQueryParam, setSearchFilter, filter}) {
+export function SearchBar ({
+  searchForInput,
+  setSearchTerm,
+  updateQueryParam,
+  setSearchFilter,
+  filter
+}) {
   const onSearchChange = event => {
     const { value } = event.target
     setSearchTerm(value) // no debounce
@@ -115,7 +121,13 @@ export function TabBar ({ filter, setSearchFilter }) {
   </div>
 }
 
-export function SearchResult ({ searchResult, term = '', showPostDetails, showPerson, voteOnPost, myVote }) {
+export function SearchResult ({
+  searchResult,
+  term = '',
+  showPostDetails,
+  showPerson,
+  voteOnPost
+}) {
   const { type, content } = searchResult
 
   const highlightProps = {

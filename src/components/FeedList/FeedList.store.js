@@ -1,9 +1,8 @@
 import { createSelector } from 'reselect'
 import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
+import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
-import { getPostFieldsFragment } from 'store/actions/fetchPost'
-
 export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
 
@@ -50,22 +49,6 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search
     }
   }
 }
-
-export const postsQueryFragment = `
-posts(
-  first: $first,
-  offset: $offset,
-  sortBy: $sortBy,
-  search: $search,
-  filter: $filter,
-  topic: $topic,
-  order: "desc"
-) {
-  hasMore
-  items {
-    ${getPostFieldsFragment(false)}
-  }
-}`
 
 const communityQuery = `query (
   $slug: String,

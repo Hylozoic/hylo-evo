@@ -1,8 +1,8 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { compact } from 'lodash/fp'
 import orm from 'store/models'
+import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import { presentPost } from 'store/selectors/getPost'
-import { postsQueryFragment } from 'components/FeedList/FeedList.store'
 
 export const FETCH_RECENT_ACTIVITY = 'FETCH_RECENT_ACTIVITY'
 

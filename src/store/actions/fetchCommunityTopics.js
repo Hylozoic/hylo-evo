@@ -1,30 +1,7 @@
 import { get } from 'lodash/fp'
-export const FETCH_COMMUNITY_TOPICS = 'FETCH_COMMUNITY_TOPICS'
+import communityTopicsQueryFragment from 'graphql/fragments/communityTopicsQueryFragment'
 
-export const communityTopicsQueryFragment = `
-communityTopics(
-  first: $first,
-  offset: $offset,
-  sortBy: $sortBy,
-  order: $order,
-  subscribed: $subscribed,
-  autocomplete: $autocomplete
-) {
-  hasMore
-  total
-  items {
-    id
-    postsTotal
-    followersTotal
-    isSubscribed
-    newPostCount
-    topic {
-      id
-      name
-    }
-  }
-}
-`
+export const FETCH_COMMUNITY_TOPICS = 'FETCH_COMMUNITY_TOPICS'
 
 const communityQuery = `
 query (

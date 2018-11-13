@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 import orm from 'store/models'
 import { isEmpty, includes, get } from 'lodash/fp'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
-import { getPostFieldsFragment } from 'store/actions/fetchPost'
+import searchQuery from 'graphql/queries/searchQuery'
 import { presentPost } from 'store/selectors/getPost'
 
 export const MODULE_NAME = 'Search'
@@ -11,6 +11,30 @@ export const MODULE_NAME = 'Search'
 export const SET_SEARCH_TERM = `${MODULE_NAME}/SET_SEARCH_TERM`
 export const SET_SEARCH_FILTER = `${MODULE_NAME}/SET_SEARCH_FILTER`
 export const FETCH_SEARCH = `${MODULE_NAME}/FETCH_SEARCH`
+
+// Actions
+
+export function fetchSearchResults ({search, offset = 0, filter, query = searchQuery}) {
+  return {
+    type: FETCH_SEARCH,
+    graphql: {
+      query,
+      variables: {
+        search,
+        offset,
+        type: filter
+      }
+    },
+    meta: {
+      extractModel: 'SearchResult',
+      extractQueryResults: {
+        getItems: get('payload.data.search')
+      }
+    }
+  }
+}
+
+// Reducer
 
 const defaultState = {
   search: '',
@@ -57,70 +81,6 @@ export function getSearchTerm (state) {
 
 export function getSearchFilter (state) {
   return state[MODULE_NAME].filter
-}
-
-export function fetchSearchResults ({search, offset = 0, filter}) {
-  return {
-    type: FETCH_SEARCH,
-    graphql: {
-      query: `query ($search: String, $type: String, $offset: Int) {
-        search(term: $search, first: 10, type: $type, offset: $offset) {
-          total
-          hasMore
-          items {
-            id
-            content {
-              __typename
-              ... on Person {
-                id
-                name
-                location
-                avatarUrl
-                skills {
-                  items {
-                    id
-                    name
-                  }
-                }
-              }
-              ... on Post {
-                ${getPostFieldsFragment(false)}
-              }
-              ... on Comment {
-                id
-                text
-                createdAt
-                creator {
-                  id
-                  name
-                  avatarUrl
-                }
-                post {
-                  ${getPostFieldsFragment(false)}
-                }
-                attachments {
-                  id
-                  url
-                  type
-                }
-              }
-            }
-          }
-        }
-      }`,
-      variables: {
-        search,
-        offset,
-        type: filter
-      }
-    },
-    meta: {
-      extractModel: 'SearchResult',
-      extractQueryResults: {
-        getItems: get('payload.data.search')
-      }
-    }
-  }
 }
 
 // Selectors

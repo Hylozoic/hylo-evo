@@ -10,7 +10,7 @@ export function fetchCommunityTopic (topicName, communitySlug) {
     type: FETCH_COMMUNITY_TOPIC,
     graphql: {
       query: `query ($topicName: String, $communitySlug: String) {
-        communityTopic (topicName: $topicName, communitySlug: $communitySlug) {
+        communityTopic(communitySlug: $communitySlug, topicName: $topicName) {
           id
         }
       }`,

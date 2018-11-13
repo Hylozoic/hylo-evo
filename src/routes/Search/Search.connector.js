@@ -24,6 +24,7 @@ export function mapStateToProps (state, props) {
   const queryResultProps = {search: searchForInput, type: filter}
 
   const searchResults = getSearchResults(state, queryResultProps)
+  console.log('!!!!!!!!!', searchResults)
   const hasMore = getHasMoreSearchResults(state, queryResultProps)
   return {
     pending: !!state.pending[FETCH_SEARCH],

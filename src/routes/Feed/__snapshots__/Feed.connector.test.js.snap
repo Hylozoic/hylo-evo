@@ -42,13 +42,13 @@ exports[`mapDispatchToProps fetchTopic will call fetchTopic if only topicName is
 Object {
   "graphql": Object {
     "query": "query ($name: String, $id: ID) {
-  topic(name: $name, id: $id) {
-    id
-    name
-    postsTotal
-    followersTotal
-  }
-}",
+        topic(name: $name, id: $id) {
+          id
+          name
+          postsTotal
+          followersTotal
+        }
+      }",
     "variables": Object {
       "id": undefined,
       "name": "petitions",

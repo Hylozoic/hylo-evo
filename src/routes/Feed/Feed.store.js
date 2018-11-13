@@ -1,34 +1,29 @@
 import { FETCH_TOPIC, FETCH_COMMUNITY_TOPIC } from 'store/constants'
 
 export const MODULE_NAME = 'Feed'
-
-// Constants
 export const FETCH_NETWORK = `${MODULE_NAME}/FETCH_NETWORK`
-
-const communityTopicQuery =
-`query ($communitySlug: String, $topicName: String) {
-  communityTopic(communitySlug: $communitySlug, topicName: $topicName) {
-    id
-    postsTotal
-    followersTotal
-    topic {
-      id
-      name
-    }
-    community {
-      id
-    }
-  }
-}`
 
 export function fetchCommunityTopic (topicName, communitySlug) {
   return {
     type: FETCH_COMMUNITY_TOPIC,
     graphql: {
-      query: communityTopicQuery,
+      query: `query ($communitySlug: String, $topicName: String) {
+        communityTopic(communitySlug: $communitySlug, topicName: $topicName) {
+          id
+          postsTotal
+          followersTotal
+          topic {
+            id
+            name
+          }
+          community {
+            id
+          }
+        }
+      }`,
       variables: {
-        topicName,
-        communitySlug
+        communitySlug,
+        topicName
       }
     },
     meta: {
@@ -37,21 +32,18 @@ export function fetchCommunityTopic (topicName, communitySlug) {
   }
 }
 
-const topicQuery =
-`query ($name: String, $id: ID) {
-  topic(name: $name, id: $id) {
-    id
-    name
-    postsTotal
-    followersTotal
-  }
-}`
-
 export function fetchTopic (name, id) {
   return {
     type: FETCH_TOPIC,
     graphql: {
-      query: topicQuery,
+      query: `query ($name: String, $id: ID) {
+        topic(name: $name, id: $id) {
+          id
+          name
+          postsTotal
+          followersTotal
+        }
+      }`,
       variables: {
         name,
         id

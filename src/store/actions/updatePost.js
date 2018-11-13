@@ -1,10 +1,10 @@
 import { get } from 'lodash/fp'
 import { textLength } from 'hylo-utils/text'
 import { AnalyticsEvents } from 'hylo-utils/constants'
-import { getPostFieldsFragment } from 'store/actions/fetchPost'
+import updatePostMutation from 'graphql/mutations/updatePostMutation'
 import { UPDATE_POST } from 'store/constants'
 
-export default function updatePost (post) {
+export default function updatePost (post, query = updatePostMutation) {
   const {
     id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, memberIds
   } = post
@@ -14,30 +14,7 @@ export default function updatePost (post) {
   return {
     type: UPDATE_POST,
     graphql: {
-      query: `mutation (
-        $id: ID,
-        $type: String,
-        $title: String,
-        $details: String,
-        $linkPreviewId: String,
-        $communityIds: [String],
-        $imageUrls: [String],
-        $fileUrls: [String],
-        $topicNames: [String],
-        $memberIds: [ID]
-      ) {
-        updatePost(id: $id, data: {
-          type: $type,
-          title: $title,
-          details: $details,
-          linkPreviewId: $linkPreviewId,
-          communityIds: $communityIds,
-          imageUrls: $imageUrls,
-          fileUrls: $fileUrls,
-          topicNames: $topicNames,
-          memberIds: $memberIds
-        }) {${getPostFieldsFragment(false)}}
-      }`,
+      query,
       variables: {
         id,
         type,
