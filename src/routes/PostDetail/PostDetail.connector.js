@@ -53,7 +53,7 @@ export function mapDispatchToProps (dispatch, props) {
     onClose: () => dispatch(push(closeLocation)),
     joinProject: () => dispatch(joinProject(postId)),
     leaveProject: () => dispatch(leaveProject(postId)),
-    voteOnPost: (myVote) => dispatch(voteOnPost(postId, !myVote))
+    voteOnPost: (myVote) => dispatch(voteOnPost(postId, myVote))
   }
 }
 
@@ -64,7 +64,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...stateProps,
     ...dispatchProps,
     voteOnPost: () =>
-        dispatchProps.voteOnPost(ownProps.match.params.postId, post.myVote)
+        dispatchProps.voteOnPost(!post.myVote)
   }
 }
 

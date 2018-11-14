@@ -10,6 +10,13 @@ exports[`PostDetail renders correctly 1`] = `
   />
   <WrappedPostHeader
     fetchPost={[Function]}
+    match={
+      Object {
+        "params": Object {
+          "slug": "foo",
+        },
+      }
+    }
     post={
       Object {
         "details": "the body of the post",
@@ -24,7 +31,6 @@ exports[`PostDetail renders correctly 1`] = `
         "votesTotal": 7,
       }
     }
-    slug="foo"
     voteOnPost={[Function]}
   />
   <Connect(PostImage)
@@ -45,11 +51,20 @@ exports[`PostDetail renders correctly 1`] = `
     details="the body of the post"
     expanded={true}
     id="91"
+    imageUrl="foo.jpg"
+    members={Array []}
+    myVote={true}
     slug="foo"
+    tags={
+      Array [
+        "singing",
+        "dancing",
+      ]
+    }
+    votesTotal={7}
   />
   <PostCommunities
     showBottomBorder={true}
-    slug="foo"
   />
   <div
     data-stylename="activity-header"
@@ -57,16 +72,23 @@ exports[`PostDetail renders correctly 1`] = `
     ACTIVITY
   </div>
   <PostFooter
+    details="the body of the post"
+    id="91"
+    imageUrl="foo.jpg"
     members={Array []}
     myVote={true}
-    postId="91"
+    tags={
+      Array [
+        "singing",
+        "dancing",
+      ]
+    }
     voteOnPost={[Function]}
     votesTotal={7}
   />
   <Connect(Comments)
     postId="91"
     scrollToBottom={[Function]}
-    slug="foo"
   />
   <Connect(SocketSubscriber)
     id="91"

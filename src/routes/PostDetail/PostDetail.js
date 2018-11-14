@@ -128,7 +128,7 @@ export default class PostDetail extends Component {
     const toggleMembersDialog = hasMembers && this.toggleMembersDialog ? this.toggleMembersDialog : undefined
     const postFooter = <PostFooter
       {...post}
-      voteOnPost={() => voteOnPost(post.myVote)}
+      voteOnPost={voteOnPost}
       onClick={toggleMembersDialog} />
 
     return <div styleName='post' ref={this.setHeaderStateFromDOM}>

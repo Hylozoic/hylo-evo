@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { pick } from 'lodash/fp'
 import { POST_PROP_TYPES } from 'store/models/Post'
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'

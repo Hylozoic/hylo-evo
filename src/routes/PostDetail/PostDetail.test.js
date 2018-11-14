@@ -8,7 +8,11 @@ describe('PostDetail', () => {
     const tags = ['singing', 'dancing']
     const details = 'the body of the post'
     const votesTotal = 7
-    const slug = 'foo'
+    const match = {
+      params: {
+        slug: 'foo'
+      }
+    }
     const myVote = true
 
     const post = {
@@ -21,7 +25,11 @@ describe('PostDetail', () => {
       members: []
     }
 
-    const wrapper = shallow(<PostDetail post={post} fetchPost={jest.fn()} voteOnPost={jest.fn()} slug={slug} />)
+    const wrapper = shallow(<PostDetail
+        post={post}
+        match={match}
+        fetchPost={jest.fn()}
+        voteOnPost={jest.fn()} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
