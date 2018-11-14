@@ -60,7 +60,7 @@ export default class PostFooter extends React.PureComponent {
         }
       )
     }
-    const { avatarUrls, caption } = peopleRowResult
+    const { caption, avatarUrls } = peopleRowResult
 
     return <div styleName='footer'>
       <RoundImageRow imageUrls={avatarUrls.slice(0, 3)} styleName='people' onClick={onClick} />
@@ -105,7 +105,7 @@ export const peopleSetup = (
   let names = ''
   let phrase = pluralPhrase
 
-  if (sortedPeople.length === 0) return emptyMessage
+  if (sortedPeople.length === 0) return { caption: emptyMessage, avatarUrls: [] }
   if (sortedPeople.length === 1) {
     phrase = currentUserIsMember ? mePhraseSingular : phraseSingular
     names = firstName(sortedPeople[0])
