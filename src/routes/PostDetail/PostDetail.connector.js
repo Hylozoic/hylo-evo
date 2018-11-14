@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { get, find } from 'lodash/fp'
 import { push } from 'react-router-redux'
-import { removePostFromUrl } from 'util/navigation'
+import { editPostUrl, removePostFromUrl } from 'util/navigation'
 import fetchPost from 'store/actions/fetchPost'
 import getParam from 'store/selectors/getParam'
 import getPost, { presentPost } from 'store/selectors/getPost'
@@ -49,11 +49,23 @@ export function mapDispatchToProps (dispatch, props) {
 
   return {
     fetchPost: () => dispatch(fetchPost(postId)),
+    editPost: () => dispatch(push(editPostUrl(postId, props.match.params))),
     onClose: () => dispatch(push(closeLocation)),
-    joinProject: postId => dispatch(joinProject(postId)),
-    leaveProject: postId => dispatch(leaveProject(postId)),
-    voteOnPost: (postId, myVote) => dispatch(voteOnPost(postId, myVote))
+    joinProject: () => dispatch(joinProject(postId)),
+    leaveProject: () => dispatch(leaveProject(postId)),
+    voteOnPost: (myVote) => dispatch(voteOnPost(postId, !myVote))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { post } = stateProps
+  return {
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
+    voteOnPost: () =>
+        dispatchProps.voteOnPost(ownProps.match.params.postId, post.myVote)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)

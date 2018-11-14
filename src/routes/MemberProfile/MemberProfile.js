@@ -48,7 +48,7 @@ export default class MemberProfile extends React.Component {
       currentUser,
       match: {params: routeParams},
       loading,
-      feedItemActions
+      showPostDetail
     } = this.props
     const {
       bannerUrl,
@@ -75,14 +75,14 @@ export default class MemberProfile extends React.Component {
         {currentTab === 'Overview' && <div>
           <h2 styleName='subhead'>About Me</h2>
           <div styleName='bio'>{bio}</div>
-          <RecentActivity {...feedItemActions} {...routeParams} loading={loading} />
+          <RecentActivity showPostDetail={showPostDetail} {...routeParams} loading={loading} />
         </div>}
         {currentTab === 'Posts' &&
-          <MemberPosts {...feedItemActions} {...routeParams} loading={loading} />}
+          <MemberPosts {...routeParams} loading={loading} />}
         {currentTab === 'Comments' &&
-          <MemberComments {...feedItemActions} {...routeParams} loading={loading} />}
+          <MemberComments showPostDetail={showPostDetail} {...routeParams} loading={loading} />}
         {currentTab === 'Upvotes' &&
-          <MemberVotes {...feedItemActions} {...routeParams} loading={loading} />}
+          <MemberVotes {...routeParams} loading={loading} />}
       </div>
     </div>
   }

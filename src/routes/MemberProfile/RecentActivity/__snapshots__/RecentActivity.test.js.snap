@@ -55,7 +55,7 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
     data-stylename="activity-item"
     key="2"
   >
-    <PostCard
+    <Connect(PostCard)
       expanded={false}
       post={
         Object {
@@ -84,7 +84,7 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
     data-stylename="activity-item"
     key="3"
   >
-    <PostCard
+    <Connect(PostCard)
       expanded={false}
       post={
         Object {

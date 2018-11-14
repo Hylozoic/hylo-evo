@@ -13,8 +13,7 @@ import getMe from 'store/selectors/getMe'
 import getMemberships from 'store/selectors/getMemberships'
 import getQueryParam from 'store/selectors/getQueryParam'
 import changeQueryParam from 'store/actions/changeQueryParam'
-import voteOnPost from 'store/actions/voteOnPost'
-import { postUrl, newPostUrl, topicsUrl, makeUrl } from 'util/navigation'
+import { newPostUrl, topicsUrl, makeUrl } from 'util/navigation'
 import { fetchTopic, fetchCommunityTopic, fetchNetwork } from './Feed.store'
 import { FETCH_FOR_CURRENT_USER } from '../PrimaryLayout/PrimaryLayout.store'
 
@@ -92,9 +91,7 @@ export function mapDispatchToProps (dispatch, props) {
     },
     fetchNetwork: () => dispatch(fetchNetwork(networkSlug)),
     goToCreateCommunity: () => dispatch(push('/create-community/name')),
-    voteOnPost: (postId, myVote) => dispatch(voteOnPost(postId, myVote)),
-    newPost: () => dispatch(push(makeUrl(newPostUrl(matchParams), queryStringParams))),
-    showPostDetails: postId => dispatch(push(makeUrl(postUrl(postId, matchParams), queryStringParams)))
+    newPost: () => dispatch(push(makeUrl(newPostUrl(matchParams), queryStringParams)))
   }
 }
 

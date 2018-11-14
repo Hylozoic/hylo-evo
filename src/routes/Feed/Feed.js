@@ -52,8 +52,6 @@ export default class Feed extends Component {
         'sortBy',
         'changeSort',
         'changeTab',
-        'showPostDetails',
-        'voteOnPost',
         'selectedPostId'
       ], this.props)
     }

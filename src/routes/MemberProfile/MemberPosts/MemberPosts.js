@@ -13,21 +13,14 @@ export default class MemberPosts extends React.Component {
   render () {
     if (this.props.loading) return <Loading />
 
-    const {
-      posts,
-      showDetails,
-      editPost,
-      voteOnPost
-    } = this.props
+    const { posts } = this.props
 
     return <div>
       {posts && posts.map(post =>
         <div styleName='activity-item' key={post.id}>
           <PostCard
+            {...this.props}
             post={post}
-            showDetails={showDetails}
-            voteOnPost={voteOnPost}
-            editPost={editPost}
             expanded={this.itemSelected(post.id)} />
         </div>
       )}

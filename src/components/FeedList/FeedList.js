@@ -72,8 +72,6 @@ export default class FeedList extends React.Component {
     const {
       postTypeFilter,
       sortBy,
-      showPostDetails,
-      voteOnPost,
       selectedPostId,
       changeTab,
       changeSort,
@@ -110,14 +108,13 @@ export default class FeedList extends React.Component {
         {posts.map(post => {
           const expanded = post.id === selectedPostId
           return <PostCard
+            {...this.props}
             post={post}
             slug={slug}
             networkSlug={networkSlug}
             postTypeContext={postTypeContext}
             styleName={cx('FeedListItem', {expanded})}
             expanded={expanded}
-            showDetails={showPostDetails}
-            voteOnPost={voteOnPost}
             key={post.id} />
         })}
       </div>

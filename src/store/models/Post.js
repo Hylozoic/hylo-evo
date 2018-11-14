@@ -75,10 +75,12 @@ export const POST_PROP_TYPES = {
     PropTypes.number
   ]),
   type: PropTypes.string,
-  imageUrl: PropTypes.string,
-  name: PropTypes.string,
+  title: PropTypes.string,
   details: PropTypes.string,
+  name: PropTypes.string,
   upVotes: PropTypes.string,
   updatedAt: PropTypes.string,
-  linkPreview: PropTypes.object
+  imageUrl: PropTypes.string,
+  linkPreview: PropTypes.object,
+  communities: PropTypes.array
 }

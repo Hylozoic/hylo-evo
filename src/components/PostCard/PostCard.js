@@ -22,9 +22,6 @@ export default class PostCard extends React.Component {
     slug: PropTypes.string,
     networkSlug: PropTypes.string,
     postTypeContext: PropTypes.string,
-    showDetails: PropTypes.func,
-    voteOnPost: PropTypes.func.isRequired,
-    editPost: PropTypes.func,
     deletePost: PropTypes.func,
     removePost: PropTypes.func,
     pinPost: PropTypes.func
@@ -39,15 +36,15 @@ export default class PostCard extends React.Component {
       post,
       className,
       expanded,
-      showDetails,
       highlightProps,
       slug,
       networkSlug,
       postTypeContext,
-      voteOnPost,
+      showDetails,
       editPost,
       deletePost,
       removePost,
+      voteOnPost,
       pinPost
     } = this.props
     const shouldShowDetails = element => {

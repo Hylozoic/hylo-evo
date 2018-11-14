@@ -14,10 +14,7 @@ export default class MemberVotes extends React.Component {
     if (this.props.loading) return <Loading />
 
     const {
-      posts,
-      showDetails,
-      editPost,
-      voteOnPost
+      posts
     } = this.props
 
     return <div>
@@ -25,9 +22,6 @@ export default class MemberVotes extends React.Component {
         <div styleName='activity-item' key={post.id}>
           <PostCard
             post={post}
-            showDetails={showDetails}
-            voteOnPost={voteOnPost}
-            editPost={editPost}
             expanded={this.itemSelected(post.id)} />
         </div>
       )}

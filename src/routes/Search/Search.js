@@ -144,21 +144,24 @@ export function SearchResult ({
         highlightProps={highlightProps} />
       break
     case 'Post':
-      console.log('Post', content)
       component = <PostCard
         styleName='postcard-expand'
         post={content}
-        voteOnPost={() => voteOnPost(content.id, content.myVote)}
-        showDetails={() => showPostDetails(content.id)}
         highlightProps={highlightProps} />
       break
     case 'Comment':
+      // FIX: DEV-395 - explore why search results is returning empty entities
+      if (!content.post || !content.creator) {
+        console.log('!!! comment without data', content)
+        break
+      }
       component = <CommentCard
         comment={content}
         expanded={false}
         highlightProps={highlightProps} />
       break
   }
+  if (!component) return null
   return <div styleName='search-result'>
     {component}
   </div>

@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 import { get, debounce } from 'lodash/fp'
 import {
   fetchSearchResults,
@@ -10,21 +11,16 @@ import {
   getSearchResults,
   getHasMoreSearchResults
 } from './Search.store'
+import { personUrl } from 'util/navigation'
 import changeQueryParam from 'store/actions/changeQueryParam'
 import getQueryParam from 'store/selectors/getQueryParam'
-import { push } from 'react-router-redux'
-import voteOnPost from 'store/actions/voteOnPost'
-import { postUrl, personUrl } from 'util/navigation'
 
 export function mapStateToProps (state, props) {
   const searchFromQueryString = getQueryParam('t', state, props)
   const searchForInput = getSearchTerm(state, props)
   const filter = getSearchFilter(state, props)
-
   const queryResultProps = {search: searchForInput, type: filter}
-
   const searchResults = getSearchResults(state, queryResultProps)
-  console.log('!!!!!!!!!', searchResults)
   const hasMore = getHasMoreSearchResults(state, queryResultProps)
   return {
     pending: !!state.pending[FETCH_SEARCH],
@@ -37,16 +33,13 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const matchParams = get('match.params', props)
   return {
     updateQueryParam: debounce(500, search =>
       dispatch(changeQueryParam(props, 't', search, null, true))),
     setSearchTerm: search => dispatch(setSearchTerm(search)),
     setSearchFilter: filter => dispatch(setSearchFilter(filter)),
     fetchSearchResultsDebounced: debounce(500, opts => dispatch(fetchSearchResults(opts))),
-    showPostDetails: postId => dispatch(push(postUrl(postId, matchParams))),
-    showPerson: personId => dispatch(push(personUrl(personId))),
-    voteOnPost: (postId, myVote) => dispatch(voteOnPost(postId, myVote))
+    showPerson: personId => dispatch(push(personUrl(personId)))
   }
 }
 

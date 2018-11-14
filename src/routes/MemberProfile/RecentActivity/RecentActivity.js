@@ -16,9 +16,7 @@ export default class RecentActivity extends React.Component {
 
     const {
       activityItems,
-      showDetails,
-      editPost,
-      voteOnPost,
+      showPostDetail,
       slug,
       networkSlug
     } = this.props
@@ -31,15 +29,12 @@ export default class RecentActivity extends React.Component {
             ? <PostCard
               expanded={this.itemSelected(item.id)}
               post={item}
-              showDetails={showDetails}
-              editPost={editPost}
-              voteOnPost={voteOnPost}
               slug={slug}
               networkSlug={networkSlug} />
             : <CommentCard
               comment={item}
               expanded={this.itemSelected(item.post.id)}
-              showDetails={showDetails} />}
+              showDetails={showPostDetail} />}
         </div>
       })}
     </div>

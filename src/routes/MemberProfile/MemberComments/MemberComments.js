@@ -15,7 +15,7 @@ export default class MemberComments extends React.Component {
 
     const {
       comments,
-      showDetails
+      showPostDetail
     } = this.props
 
     return <div>
@@ -23,7 +23,7 @@ export default class MemberComments extends React.Component {
         <div styleName='activity-item' key={comment.id}>
           <CommentCard
             comment={comment}
-            showDetails={showDetails}
+            showDetails={showPostDetail}
             expanded={this.itemSelected(comment.post.id)} />
         </div>
       )}

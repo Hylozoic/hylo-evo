@@ -6,7 +6,7 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
     data-stylename="activity-item"
     key="2"
   >
-    <PostCard
+    <Connect(PostCard)
       expanded={false}
       post={
         Object {
@@ -44,14 +44,13 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
           },
         }
       }
-      voteOnPost={[Function]}
     />
   </div>
   <div
     data-stylename="activity-item"
     key="1"
   >
-    <PostCard
+    <Connect(PostCard)
       expanded={false}
       post={
         Object {
@@ -81,7 +80,6 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
           },
         }
       }
-      voteOnPost={[Function]}
     />
   </div>
 </div>

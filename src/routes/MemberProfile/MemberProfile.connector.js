@@ -1,13 +1,12 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { postUrl, editPostUrl } from 'util/navigation'
+import { postUrl } from 'util/navigation'
 import blockUser from 'store/actions/blockUser'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import getMe from 'store/selectors/getMe'
 import fetchPerson from 'store/actions/fetchPerson'
-import voteOnPost from 'store/actions/voteOnPost'
 import {
   FETCH_RECENT_ACTIVITY,
   FETCH_MEMBER_POSTS,
@@ -47,11 +46,7 @@ export function mapDispatchToProps (dispatch, props) {
       blockUser,
       push
     }, dispatch),
-    feedItemActions: {
-      showDetails: postId => dispatch(push(postUrl(postId, props.match.params))),
-      editPost: postId => dispatch(push(editPostUrl(postId, props.match.params))),
-      voteOnPost: (postId, myVote) => dispatch(voteOnPost(postId, myVote))
-    }
+    showPostDetail: postId => dispatch(push(postUrl(postId, props.match.params)))
   }
 }
 

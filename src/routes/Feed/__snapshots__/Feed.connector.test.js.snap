@@ -24,18 +24,6 @@ Object {
 }
 `;
 
-exports[`mapDispatchToProps correctly sets up showPostDetails 1`] = `
-Object {
-  "payload": Object {
-    "args": Array [
-      "/c/foo/p/5?s=votes&t=offer",
-    ],
-    "method": "push",
-  },
-  "type": "@@router/CALL_HISTORY_METHOD",
-}
-`;
-
 exports[`mapDispatchToProps fetchTopic will call fetchCommunityTopic if communitySlug and topicName are in the url 1`] = `Promise {}`;
 
 exports[`mapDispatchToProps fetchTopic will call fetchTopic if only topicName is in the url 1`] = `

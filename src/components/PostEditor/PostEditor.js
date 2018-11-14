@@ -5,6 +5,7 @@ import { get, isEqual, throttle } from 'lodash/fp'
 import cheerio from 'cheerio'
 import cx from 'classnames'
 import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
+import { POST_PROP_TYPES } from 'store/models/Post'
 import AttachmentManager from './AttachmentManager'
 import { uploadSettings } from './AttachmentManager/AttachmentManager'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
@@ -31,14 +32,7 @@ export default class PostEditor extends React.Component {
     communityOptions: PropTypes.array,
     currentUser: PropTypes.object,
     currentCommunity: PropTypes.object,
-    post: PropTypes.shape({
-      id: PropTypes.string,
-      type: PropTypes.string,
-      title: PropTypes.string,
-      details: PropTypes.string,
-      linkPreview: PropTypes.object,
-      communities: PropTypes.array
-    }),
+    post: PropTypes.shape(POST_PROP_TYPES),
     linkPreviewStatus: PropTypes.string,
     createPost: PropTypes.func,
     updatePost: PropTypes.func,

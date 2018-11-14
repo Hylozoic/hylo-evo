@@ -135,7 +135,7 @@ export default class PostDetail extends Component {
         'type',
         'members'
       ], post)}
-      voteOnPost={voteOnPost}
+      voteOnPost={() => voteOnPost(post.myVote)}
       postId={post.id}
       onClick={toggleMembersDialog} />
 
@@ -160,8 +160,7 @@ export default class PostDetail extends Component {
         <JoinProjectButton
           joinProject={joinProject}
           leaveProject={leaveProject}
-          leaving={isProjectMember}
-          postId={post.id} />
+          leaving={isProjectMember} />
       </div>}
       <PostCommunities
         communities={post.communities}
@@ -199,8 +198,9 @@ function WrappedPostHeader (props) {
       'slug',
       'networkSlug',
       'postTypeContext'
-    ], props)
+    ], props.match.params)
   }
+
   return <PostHeader styleName='header' topicsOnNewline {...headerProps} />
 }
 
@@ -214,9 +214,9 @@ export function PostTags ({ tags, slug }) {
   </div>
 }
 
-export function JoinProjectButton ({ leaving, joinProject, leaveProject, postId }) {
+export function JoinProjectButton ({ leaving, joinProject, leaveProject }) {
   const buttonText = leaving ? 'Leave Project' : 'Join Project'
-  const onClick = () => leaving ? leaveProject(postId) : joinProject(postId)
+  const onClick = () => leaving ? leaveProject() : joinProject()
 
   return <Button
     color='green'
