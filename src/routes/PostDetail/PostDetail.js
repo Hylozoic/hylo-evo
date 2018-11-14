@@ -127,35 +127,23 @@ export default class PostDetail extends Component {
     showMembersDialog = hasMembers && showMembersDialog
     const toggleMembersDialog = hasMembers && this.toggleMembersDialog ? this.toggleMembersDialog : undefined
     const postFooter = <PostFooter
-      {...pick([
-        'myVote',
-        'votesTotal',
-        'commenters',
-        'commentersTotal',
-        'type',
-        'members'
-      ], post)}
+      {...post}
       voteOnPost={() => voteOnPost(post.myVote)}
-      postId={post.id}
       onClick={toggleMembersDialog} />
 
     return <div styleName='post' ref={this.setHeaderStateFromDOM}>
-      <ScrollListener elementId={DETAIL_COLUMN_ID}
-        onScroll={this.handleScroll} />
+      <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
       <WrappedPostHeader {...this.props} />
       {atHeader && <div styleName='header-sticky' style={headerStyle}>
         <WrappedPostHeader {...this.props} />
       </div>}
       <PostImage postId={post.id} styleName='image' linked />
       <PostTags tags={post.tags} />
-      <PostBody title={post.title}
-        id={post.id}
-        details={post.details}
-        linkPreview={post.linkPreview}
-        slug={slug}
-        expanded
+      <PostBody
         styleName='body'
-        fileAttachments={post.fileAttachments} />
+        {...post}
+        {...this.props.match.params}
+        expanded />
       {isProject && <div styleName='join-project-button-container'>
         <JoinProjectButton
           joinProject={joinProject}
@@ -183,16 +171,7 @@ export default class PostDetail extends Component {
 
 function WrappedPostHeader (props) {
   const headerProps = {
-    date: props.post.createdAt,
-    ...pick([
-      'id',
-      'creator',
-      'type',
-      'communities',
-      'pinned',
-      'topics',
-      'announcement'
-    ], props.post),
+    ...props.post,
     ...pick([
       'personId',
       'slug',

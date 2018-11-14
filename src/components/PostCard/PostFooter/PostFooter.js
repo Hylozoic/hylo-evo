@@ -34,12 +34,9 @@ export default class PostFooter extends React.PureComponent {
     } = this.props
     const onClick = isFunction(this.props.onClick) ? this.props.onClick : undefined
     const vote = isFunction(this.props.voteOnPost) ? () => this.props.voteOnPost() : undefined
-    const isProject = type === 'project'
-    let avatarUrls, caption
-
-    if (isProject) {
-      avatarUrls = members.map(p => p.avatarUrl)
-      caption = peopleCaption(
+    let peopleRowResult
+    if (type === 'project') {
+      peopleRowResult = peopleSetup(
         members,
         members.length,
         get('id', currentUser),
@@ -51,8 +48,7 @@ export default class PostFooter extends React.PureComponent {
         }
       )
     } else {
-      avatarUrls = commenters.map(p => p.avatarUrl)
-      caption = peopleCaption(
+      peopleRowResult = peopleSetup(
         commenters,
         commentersTotal,
         get('id', currentUser),
@@ -64,6 +60,7 @@ export default class PostFooter extends React.PureComponent {
         }
       )
     }
+    const { avatarUrls, caption } = peopleRowResult
 
     return <div styleName='footer'>
       <RoundImageRow imageUrls={avatarUrls.slice(0, 3)} styleName='people' onClick={onClick} />
@@ -83,10 +80,10 @@ export default class PostFooter extends React.PureComponent {
   }
 }
 
-export const peopleCaption = (
+export const peopleSetup = (
   people,
   peopleTotal,
-  meId,
+  excludePersonId,
   phrases = {
     emptyMessage: 'Be the first to comment',
     phraseSingular: 'commented',
@@ -94,11 +91,11 @@ export const peopleCaption = (
     pluralPhrase: 'commented'
   }
 ) => {
-  const currentUserIsMember = find(c => c.id === meId, people)
+  const currentUserIsMember = find(c => c.id === excludePersonId, people)
   const sortedPeople = currentUserIsMember && people.length === 2
-    ? sortBy(c => c.id !== meId, people) // me first
-    : sortBy(c => c.id === meId, people) // me last
-  const firstName = person => person.id === meId ? 'You' : person.name.split(' ')[0]
+    ? sortBy(c => c.id !== excludePersonId, people) // me first
+    : sortBy(c => c.id === excludePersonId, people) // me last
+  const firstName = person => person.id === excludePersonId ? 'You' : person.name.split(' ')[0]
   const {
     emptyMessage,
     phraseSingular,
@@ -109,7 +106,6 @@ export const peopleCaption = (
   let phrase = pluralPhrase
 
   if (sortedPeople.length === 0) return emptyMessage
-
   if (sortedPeople.length === 1) {
     phrase = currentUserIsMember ? mePhraseSingular : phraseSingular
     names = firstName(sortedPeople[0])
@@ -118,5 +114,7 @@ export const peopleCaption = (
   } else {
     names = `${firstName(sortedPeople[0])}, ${firstName(sortedPeople[1])} and ${peopleTotal - 2} other${peopleTotal - 2 > 1 ? 's' : ''}`
   }
-  return `${names} ${phrase}`
+  const caption = `${names} ${phrase}`
+  const avatarUrls = people.map(p => p.avatarUrl)
+  return { caption, avatarUrls }
 }

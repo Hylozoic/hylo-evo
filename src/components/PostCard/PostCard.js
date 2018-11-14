@@ -37,9 +37,11 @@ export default class PostCard extends React.Component {
       className,
       expanded,
       highlightProps,
+      // routeParams
       slug,
       networkSlug,
       postTypeContext,
+      //
       showDetails,
       editPost,
       deletePost,
@@ -67,45 +69,19 @@ export default class PostCard extends React.Component {
       styleName={cx('card', {expanded})}
       className={className}>
       <PostHeader
+        {...post}
         slug={slug}
         networkSlug={networkSlug}
         postTypeContext={postTypeContext}
         highlightProps={highlightProps}
-        date={post.createdAt}
         editPost={editPost}
         deletePost={deletePost}
         removePost={removePost}
-        pinPost={pinPost}
-        {...pick([
-          'id',
-          'type',
-          'creator',
-          'communities',
-          'pinned',
-          'topics',
-          'announcement'
-        ], post)} />
-      <PostImage postId={post.id} styleName='image' />
-      <PostBody
-        slug={slug}
-        id={post.id}
-        title={post.title}
-        details={post.details}
-        linkPreview={post.linkPreview}
-        highlightProps={highlightProps}
-        fileAttachments={post.fileAttachments} />
-      <PostCommunities
-        communities={post.communities}
-        slug={slug} />
-      <PostFooter
-        postId={post.id}
-        voteOnPost={voteOnPost}
-        myVote={post.myVote}
-        votesTotal={post.votesTotal}
-        commenters={post.commenters}
-        commentersTotal={post.commentersTotal}
-        type={post.type}
-        members={post.members} />
+        pinPost={pinPost} />
+      <PostImage styleName='image' postId={post.id} />
+      <PostBody {...post} slug={slug} />
+      <PostCommunities communities={post.communities} slug={slug} />
+      <PostFooter {...post} voteOnPost={voteOnPost} />
     </div>
   }
 }

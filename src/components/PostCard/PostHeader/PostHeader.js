@@ -25,7 +25,7 @@ export default class PostHeader extends PureComponent {
   render () {
     const {
       creator,
-      date,
+      createdAt,
       type,
       id,
       pinned,
@@ -80,7 +80,7 @@ export default class PostHeader extends PureComponent {
           {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
           <div styleName='timestampRow'>
             <span styleName='timestamp'>
-              {humanDate(date)}
+              {humanDate(createdAt)}
             </span>
             {announcement && <span styleName='announcementSection'>
               <span styleName='announcementSpacer'>•</span>
