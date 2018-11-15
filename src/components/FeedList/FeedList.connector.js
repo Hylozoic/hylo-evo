@@ -16,9 +16,11 @@ export function mapStateToProps (state, props) {
   const fetchPostsParam = {
     filter: props.postTypeFilter,
     ...pick([
-      'subject',
       'slug',
       'networkSlug',
+    ], props.routeParams),
+    ...pick([
+      'subject',
       'sortBy',
       'topic'
     ], props)

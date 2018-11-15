@@ -5,22 +5,24 @@ import './MemberVotes.scss'
 
 export default class MemberVotes extends React.Component {
   componentDidMount () {
-    this.props.fetchMemberVotes(this.props.personId)
+    this.props.fetchMemberVotes()
   }
 
-  itemSelected = selectedItemId => selectedItemId === this.props.postId
+  itemSelected = selectedItemId => selectedItemId === this.props.routeParams.postId
 
   render () {
     if (this.props.loading) return <Loading />
 
     const {
-      posts
+      posts,
+      routeParams
     } = this.props
 
     return <div>
       {posts && posts.map(post =>
         <div styleName='activity-item' key={post.id}>
           <PostCard
+            routeParams={routeParams}
             post={post}
             expanded={this.itemSelected(post.id)} />
         </div>

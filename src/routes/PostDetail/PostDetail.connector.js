@@ -7,7 +7,6 @@ import getParam from 'store/selectors/getParam'
 import getPost, { presentPost } from 'store/selectors/getPost'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import getPostTypeContext from 'store/selectors/getPostTypeContext'
 import voteOnPost from 'store/actions/voteOnPost'
 import joinProject from 'store/actions/joinProject'
 import leaveProject from 'store/actions/leaveProject'
@@ -16,22 +15,16 @@ import { FETCH_POST } from 'store/constants'
 export function mapStateToProps (state, props) {
   // match params
   const id = getParam('postId', state, props)
-  const personId = getParam('personId', state, props)
-  const slug = getParam('slug', state, props)
-  const networkSlug = getParam('networkSlug', state, props)
+  const routeParams = props.match.params
   // everything else
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const post = presentPost(getPost(state, props), get('id', currentCommunity))
-  const postTypeContext = getPostTypeContext(state, props)
   const currentUser = getMe(state)
   const isProjectMember = find(({id}) => id === get('id', currentUser), get('members', post))
 
   return {
     id,
-    personId,
-    slug,
-    networkSlug,
-    postTypeContext,
+    routeParams,
     post,
     currentUser,
     isProjectMember,

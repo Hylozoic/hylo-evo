@@ -1,4 +1,3 @@
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { postUrl } from 'util/navigation'
@@ -21,16 +20,16 @@ const MESSAGES = {
 
 export function mapStateToProps (state, props) {
   const error = Number.isSafeInteger(Number(props.match.params.personId)) ? null : MESSAGES.invalid
-  const matchParams = props.match.params
-  const person = getPresentedPerson(state, {...matchParams, ...props})
+  const routeParams = props.match.params
+  const person = getPresentedPerson(state, {...routeParams, ...props})
   const loading = isPendingFor([
     FETCH_RECENT_ACTIVITY,
     FETCH_MEMBER_POSTS,
     FETCH_MEMBER_COMMENTS,
     FETCH_MEMBER_VOTES
   ], state)
-
   return {
+    routeParams,
     error,
     loading,
     person,
@@ -39,15 +38,10 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export function mapDispatchToProps (dispatch, props) {
-  return {
-    ...bindActionCreators({
-      fetchPerson,
-      blockUser,
-      push
-    }, dispatch),
-    showPostDetail: postId => dispatch(push(postUrl(postId, props.match.params)))
-  }
+export const mapDispatchToProps = {
+  fetchPerson,
+  blockUser,
+  push
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
@@ -55,7 +49,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    goToPreviousLocation: () => dispatchProps.push(stateProps.previousLocation)
+    goToPreviousLocation: () => dispatchProps.push(stateProps.previousLocation),
+    showPostDetail: postId => dispatchProps.push(postUrl(postId, stateProps.routeParams))
   }
 }
 

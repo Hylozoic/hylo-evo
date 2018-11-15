@@ -45,9 +45,8 @@ export function fetchMemberComments (id, order = 'desc', limit = 20, query = mem
 export const getMemberComments = ormCreateSelector(
   orm,
   state => state.orm,
-  (_, { personId }) => personId,
-  (_, { slug }) => slug,
-  ({ Person }, personId, slug) => {
+  (_, { routeParams }) => routeParams,
+  ({ Person }, { personId, slug }) => {
     if (!Person.hasId(personId)) return
     const person = Person.withId(personId)
     return compact(person.comments.toModelArray().map(comment => presentComment(comment, slug)))

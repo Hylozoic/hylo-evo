@@ -23,7 +23,7 @@ export default class Search extends Component {
     })),
     pending: bool,
     searchForInput: string,
-    searchFromQueryString: string,
+    searchFromQuerystring: string,
     setSearchTerm: func,
     updateQueryParam: func,
     fetchSearchResults: func,
@@ -31,9 +31,9 @@ export default class Search extends Component {
   }
 
   componentDidMount () {
-    const { searchForInput, searchFromQueryString, setSearchTerm } = this.props
-    if (!searchForInput && searchFromQueryString) {
-      setSearchTerm(searchFromQueryString)
+    const { searchForInput, searchFromQuerystring, setSearchTerm } = this.props
+    if (!searchForInput && searchFromQuerystring) {
+      setSearchTerm(searchFromQuerystring)
     }
   }
 
@@ -146,12 +146,13 @@ export function SearchResult ({
     case 'Post':
       component = <PostCard
         styleName='postcard-expand'
+        
         post={content}
         highlightProps={highlightProps} />
       break
     case 'Comment':
-      // FIX: DEV-395 - explore why search results is returning empty entities
       if (!content.post || !content.creator) {
+        // TODO: DEV-395 - explore why search results is returning empty entities
         console.log('!!! comment without data', content)
         break
       }

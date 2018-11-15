@@ -12,11 +12,11 @@ import {
   getHasMoreSearchResults
 } from './Search.store'
 import { personUrl } from 'util/navigation'
-import changeQueryParam from 'store/actions/changeQueryParam'
+import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getQueryParam from 'store/selectors/getQueryParam'
 
 export function mapStateToProps (state, props) {
-  const searchFromQueryString = getQueryParam('t', state, props)
+  const searchFromQuerystring = getQueryParam('t', state, props)
   const searchForInput = getSearchTerm(state, props)
   const filter = getSearchFilter(state, props)
   const queryResultProps = {search: searchForInput, type: filter}
@@ -26,7 +26,7 @@ export function mapStateToProps (state, props) {
     pending: !!state.pending[FETCH_SEARCH],
     searchResults,
     searchForInput,
-    searchFromQueryString,
+    searchFromQuerystring,
     filter,
     hasMore
   }
@@ -35,7 +35,7 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     updateQueryParam: debounce(500, search =>
-      dispatch(changeQueryParam(props, 't', search, null, true))),
+      dispatch(changeQuerystringParam(props, 't', search, null, true))),
     setSearchTerm: search => dispatch(setSearchTerm(search)),
     setSearchFilter: filter => dispatch(setSearchFilter(filter)),
     fetchSearchResultsDebounced: debounce(500, opts => dispatch(fetchSearchResults(opts))),

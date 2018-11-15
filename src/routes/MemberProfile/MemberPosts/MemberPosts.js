@@ -5,21 +5,21 @@ import './MemberPosts.scss'
 
 export default class MemberPosts extends React.Component {
   componentDidMount () {
-    this.props.fetchMemberPosts(this.props.personId)
+    this.props.fetchMemberPosts()
   }
 
-  itemSelected = selectedItemId => selectedItemId === this.props.postId
+  itemSelected = selectedItemId => selectedItemId === this.props.routeParams.postId
 
   render () {
     if (this.props.loading) return <Loading />
 
-    const { posts } = this.props
+    const { posts, routeParams } = this.props
 
     return <div>
       {posts && posts.map(post =>
         <div styleName='activity-item' key={post.id}>
           <PostCard
-            {...this.props}
+            routeParams={routeParams}
             post={post}
             expanded={this.itemSelected(post.id)} />
         </div>

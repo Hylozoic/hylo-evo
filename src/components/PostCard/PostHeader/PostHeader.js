@@ -24,6 +24,7 @@ export default class PostHeader extends PureComponent {
 
   render () {
     const {
+      routeParams,
       creator,
       createdAt,
       type,
@@ -32,8 +33,6 @@ export default class PostHeader extends PureComponent {
       topics,
       close,
       className,
-      slug,
-      networkSlug,
       editPost,
       canFlag,
       deletePost,
@@ -46,36 +45,31 @@ export default class PostHeader extends PureComponent {
 
     if (!creator) return null
 
+    const creatorUrl = personUrl(creator.id, routeParams.slug, routeParams.networkSlug)
     const flagPostFn = canFlag ? () => {
       this.setState({ flaggingVisible: true })
     } : null
-
     const { flaggingVisible } = this.state
-
     // Used to generate a link to this post from the backend.
-    const linkData = {
-      slug,
+    const flagPostData = {
+      slug: routeParams.slug,
       id: id,
       type: 'post'
     }
-
     const dropdownItems = filter([
-      // Leaving these here as they will be implemented in the future
-      // {icon: 'Flag', label: 'Flag', onClick: () => console.log('Flag')},
       {icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost},
       {icon: 'Edit', label: 'Edit', onClick: editPost},
       {icon: 'Flag', label: 'Flag', onClick: flagPostFn},
       {icon: 'Trash', label: 'Delete', onClick: deletePost, red: true},
       {icon: 'Trash', label: 'Remove From Community', onClick: removePost, red: true}
-      // {icon: 'Complete', label: 'Accept and mark complete', onClick: () => console.log('Accept and mark complete')}
     ], item => isFunction(item.onClick))
 
     return <div styleName='header' className={className}>
       <div styleName='headerMainRow'>
-        <Avatar avatarUrl={creator.avatarUrl} url={personUrl(creator.id, slug, networkSlug)} styleName='avatar' />
+        <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' />
         <div styleName='headerText'>
           <Highlight {...highlightProps}>
-            <Link to={personUrl(creator.id, slug, networkSlug)} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
+            <Link to={creatorUrl} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
           </Highlight>
           {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
           <div styleName='timestampRow'>
@@ -92,7 +86,7 @@ export default class PostHeader extends PureComponent {
                 delayShow={550}
                 id='announcement-tt' />
             </span>}
-            {!topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={slug} />}
+            {!topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.slug} />}
           </div>
         </div>
         <div styleName='upperRight'>
@@ -104,16 +98,16 @@ export default class PostHeader extends PureComponent {
             <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
         </div>
         {flaggingVisible && <FlagContent type='post'
-          linkData={linkData}
+          linkData={flagPostData}
           onClose={() => this.setState({flaggingVisible: false})} />
         }
       </div>
-      {topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={slug} newLine />}
+      {topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.slug} newLine />}
     </div>
   }
 }
 
-export function TopicsLine ({ topics, slug, className, newLine }) {
+export function TopicsLine ({ topics, slug, newLine }) {
   return <div styleName={cx('topicsLine', {'newLineForTopics': newLine})}>
     {!newLine && <span styleName='spacer'>•</span>}
     {topics.slice(0, 3).map(t =>

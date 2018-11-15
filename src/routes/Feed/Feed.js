@@ -22,18 +22,20 @@ export default class Feed extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    const { communitySlug, topicName, fetchTopic, networkSlug, fetchNetwork } = this.props
-    const topicChanged = topicName && get('topicName', prevProps) !== topicName
-    const slugChanged = communitySlug && get('communitySlug', prevProps) !== communitySlug
+    const { routeParams, fetchTopic, fetchNetwork } = this.props
+    const { slug, topicName, networkSlug } = routeParams
+    const topicChanged = topicName && get('routeParams.topicName', prevProps) !== topicName
+    const slugChanged = slug && get('routeParams.slug', prevProps) !== slug
     if (topicChanged || (topicName && slugChanged)) fetchTopic()
-    if (networkSlug && networkSlug !== prevProps.networkSlug) fetchNetwork()
+    if (networkSlug && networkSlug !== prevProps.routeParams.networkSlug) fetchNetwork()
   }
 
   getFeedProps () {
-    const { communitySlug, topic, networkSlug } = this.props
+    const { routeParams, querystringParams } = this.props
+    const { slug, networkSlug } = routeParams
 
     var subject
-    if (communitySlug) {
+    if (slug) {
       subject = 'community'
     } else if (networkSlug) {
       subject = 'network'
@@ -43,12 +45,11 @@ export default class Feed extends Component {
 
     return {
       subject,
-      slug: communitySlug,
-      topic: get('id', topic),
+      routeParams,
+      querystringParams,
+      topic: get('id', this.props.topic),
       ...pick([
-        'networkSlug',
         'postTypeFilter',
-        'postTypeContext',
         'sortBy',
         'changeSort',
         'changeTab',
@@ -59,10 +60,11 @@ export default class Feed extends Component {
 
   render () {
     const {
-      topic, community, currentUser, topicName, postsTotal, followersTotal,
-      communityTopic, newPost, postTypeContext, network, networkSlug, currentUserHasMemberships,
+      routeParams, topic, community, currentUser, postsTotal, followersTotal,
+      communityTopic, newPost, network, currentUserHasMemberships,
       goToCreateCommunity, membershipsPending
     } = this.props
+    const { networkSlug, postTypeContext, topicName } = routeParams
 
     if (topicName && !topic) return <Loading />
     if (community && topicName && !communityTopic) return <Loading />

@@ -42,7 +42,7 @@ export default class ProjectMembersDialog extends React.PureComponent {
       modalTitle={`Project Members (${this.props.members.length})`}
       showCancelButton={false}
       showSubmitButton={false}
-      style={{width: '100%', maxWidth: '620px', backgroundColor: '#CCD1D7'}}>
+      style={{width: '100%', maxWidth: '620px'}}>
       <div styleName='container'>
         {/*
           TODO: Can make memberDetails optional by adding a `withDetails` flag

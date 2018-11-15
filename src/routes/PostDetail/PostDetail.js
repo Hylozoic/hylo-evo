@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { get, pick, throttle, isEmpty } from 'lodash/fp'
+import { get, throttle, isEmpty } from 'lodash/fp'
 import { tagUrl } from 'util/navigation'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import { PostImage, PostBody, PostFooter, PostHeader, PostCommunities } from 'components/PostCard'
@@ -15,18 +15,15 @@ import NotFound from 'components/NotFound'
 import ProjectMembersDialog from 'components/ProjectMembersDialog'
 import './PostDetail.scss'
 
-const { func, object, string } = PropTypes
-
 // the height of the header plus the padding-top
 const STICKY_HEADER_SCROLL_OFFSET = 78
 
 export default class PostDetail extends Component {
   static propTypes = {
-    post: object,
-    id: string,
-    currentUser: object,
-    slug: string,
-    fetchPost: func
+    post: PropTypes.object,
+    routeParams: PropTypes.object,
+    currentUser: PropTypes.object,
+    fetchPost: PropTypes.func
   }
 
   state = {
@@ -97,8 +94,8 @@ export default class PostDetail extends Component {
 
   render () {
     const {
+      routeParams,
       post,
-      slug,
       voteOnPost,
       isProjectMember,
       joinProject,
@@ -133,17 +130,17 @@ export default class PostDetail extends Component {
 
     return <div styleName='post' ref={this.setHeaderStateFromDOM}>
       <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
-      <WrappedPostHeader {...this.props} />
+      <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} />
       {atHeader && <div styleName='header-sticky' style={headerStyle}>
-        <WrappedPostHeader {...this.props} />
+        <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} />
       </div>}
       <PostImage postId={post.id} styleName='image' linked />
       <PostTags tags={post.tags} />
       <PostBody
         styleName='body'
-        {...post}
-        {...this.props.match.params}
-        expanded />
+        expanded
+        slug={routeParams.slug}
+        {...post} />
       {isProject && <div styleName='join-project-button-container'>
         <JoinProjectButton
           joinProject={joinProject}
@@ -152,7 +149,7 @@ export default class PostDetail extends Component {
       </div>}
       <PostCommunities
         communities={post.communities}
-        slug={slug}
+        slug={routeParams.slug}
         showBottomBorder />
       <div styleName='activity-header' ref={this.setActivityStateFromDOM}>ACTIVITY</div>
       {postFooter}
@@ -163,24 +160,10 @@ export default class PostDetail extends Component {
         <div styleName='activity-header'>ACTIVITY</div>
         {postFooter}
       </div>}
-      <Comments postId={post.id} slug={slug} scrollToBottom={scrollToBottom} />
+      <Comments postId={post.id} slug={routeParams.slug} scrollToBottom={scrollToBottom} />
       <SocketSubscriber type='post' id={post.id} />
     </div>
   }
-}
-
-function WrappedPostHeader (props) {
-  const headerProps = {
-    ...props.post,
-    ...pick([
-      'personId',
-      'slug',
-      'networkSlug',
-      'postTypeContext'
-    ], props.match.params)
-  }
-
-  return <PostHeader styleName='header' topicsOnNewline {...headerProps} />
 }
 
 export function PostTags ({ tags, slug }) {

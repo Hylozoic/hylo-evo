@@ -8,20 +8,18 @@ export default class MemberComments extends React.Component {
     this.props.fetchMemberComments()
   }
 
-  itemSelected = selectedItemId => selectedItemId === this.props.postId
+  itemSelected = selectedItemId => selectedItemId === this.props.routeParams.postId
 
   render () {
     if (this.props.loading) return <Loading />
 
-    const {
-      comments,
-      showPostDetail
-    } = this.props
+    const { comments, showPostDetail, routeParams } = this.props
 
     return <div>
       {comments && comments.map(comment =>
         <div styleName='activity-item' key={comment.id}>
           <CommentCard
+            routeParams={routeParams}
             comment={comment}
             showDetails={showPostDetail}
             expanded={this.itemSelected(comment.post.id)} />

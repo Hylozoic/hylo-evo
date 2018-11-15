@@ -6,7 +6,7 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import { get } from 'lodash/fp'
 import getQueryParam from 'store/selectors/getQueryParam'
-import changeQueryParam from 'store/actions/changeQueryParam'
+import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getParam from 'store/selectors/getParam'
 import getMe from 'store/selectors/getMe'
 
@@ -46,8 +46,8 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     fetchMembers: params => dispatch(fetchMembers(params)),
-    changeSearch: term => dispatch(changeQueryParam(props, 'q', term)),
-    changeSort: sort => dispatch(changeQueryParam(props, 's', sort, 'name')),
+    changeSearch: term => dispatch(changeQuerystringParam(props, 'q', term)),
+    changeSort: sort => dispatch(changeQuerystringParam(props, 's', sort, 'name')),
     removeMember: (personId, communityId) => dispatch(removeMember(personId, communityId))
   }
 }

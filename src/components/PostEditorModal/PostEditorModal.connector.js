@@ -4,14 +4,14 @@ import { get, omit } from 'lodash/fp'
 import { postsUrl, postUrl } from 'util/navigation'
 
 export const mapDispatchToProps = (dispatch, props) => {
-  const matchParams = get('match.params', props)
+  const routeParams = get('match.params', props)
 
-  if (!matchParams) return {}
+  if (!routeParams) return {}
 
-  const { postId, slug } = matchParams
+  const { postId, slug } = routeParams
   const urlParams = {
     communitySlug: slug,
-    ...omit(['postId', 'action', 'slug'], matchParams)
+    ...omit(['postId', 'action', 'slug'], routeParams)
   }
   const closeUrl = postId
     ? postUrl(postId, urlParams)

@@ -16,7 +16,7 @@ import {
 } from './PeopleSelector.store'
 
 import fetchPeople from 'store/actions/fetchPeople'
-import changeQueryParam from 'store/actions/changeQueryParam'
+import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 
 export function getParticipantSearch (props, participantsFromStore) {
   const participants = getQueryParam('participants', null, props)
@@ -43,7 +43,7 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = {
   addParticipant,
   removeParticipant,
-  changeQueryParam,
+  changeQuerystringParam,
   fetchContacts,
   fetchRecentContacts,
   fetchPeople,

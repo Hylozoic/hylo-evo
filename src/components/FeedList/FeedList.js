@@ -50,7 +50,10 @@ export default class FeedList extends React.Component {
 
   componentDidUpdate (prevProps) {
     if (!prevProps) return
-    if (some(key => this.props[key] !== prevProps[key], queryParamWhitelist) ||
+    const updateCheckFunc = key =>
+      this.props[key] !== prevProps[key] ||
+      this.props.routeParams[key] !== prevProps.routeParams[key]
+    if (some(key => updateCheckFunc(key), queryParamWhitelist) ||
       (this.props.posts.length === 0 && prevProps.posts.length !== 0)) {
       this.fetchOrShowCached()
     }
@@ -70,49 +73,47 @@ export default class FeedList extends React.Component {
 
   render () {
     const {
+      routeParams,
+      querystringParams,
       postTypeFilter,
       sortBy,
-      selectedPostId,
       changeTab,
       changeSort,
       posts,
-      postTypeContext,
-      pending,
-      slug,
-      networkSlug
+      pending
     } = this.props
     const { atTabBar, tabBarWidth } = this.state
     const style = {
       width: tabBarWidth + 'px'
     }
-    const isProject = postTypeContext === 'project'
+    const isProject = routeParams.postTypeContext === 'project'
 
     return <div styleName='FeedList-container'>
       <ScrollListener
         elementId={CENTER_COLUMN_ID}
         onScroll={this.handleScrollEvents} />
-      {!isProject && <div>
-        <TabBar ref={this.setStateFromDOM}
-          onChangeTab={changeTab}
-          selectedTab={postTypeFilter}
-          onChangeSort={changeSort}
-          selectedSort={sortBy} />
-      </div>}
-      {!isProject && atTabBar && <div styleName='tabbar-sticky' style={style}>
-        <TabBar onChangeTab={changeTab}
-          selectedTab={postTypeFilter}
-          onChangeSort={changeSort}
-          selectedSort={sortBy} />
-      </div>}
+      {!isProject && <React.Fragment>
+        <div>
+          <TabBar ref={this.setStateFromDOM}
+            onChangeTab={changeTab}
+            selectedTab={postTypeFilter}
+            onChangeSort={changeSort}
+            selectedSort={sortBy} />
+        </div>
+        {atTabBar && <div styleName='tabbar-sticky' style={style}>
+          <TabBar onChangeTab={changeTab}
+            selectedTab={postTypeFilter}
+            onChangeSort={changeSort}
+            selectedSort={sortBy} />
+        </div>}
+      </React.Fragment>}
       <div styleName='FeedListItems'>
         {posts.map(post => {
-          const expanded = post.id === selectedPostId
+          const expanded = post.id === routeParams.postId
           return <PostCard
-            {...this.props}
+            routeParams={routeParams}
+            querystringParams={querystringParams}
             post={post}
-            slug={slug}
-            networkSlug={networkSlug}
-            postTypeContext={postTypeContext}
             styleName={cx('FeedListItem', {expanded})}
             expanded={expanded}
             key={post.id} />

@@ -12,14 +12,16 @@ import getPostTypeContext from 'store/selectors/getPostTypeContext'
 import getMe from 'store/selectors/getMe'
 import getMemberships from 'store/selectors/getMemberships'
 import getQueryParam from 'store/selectors/getQueryParam'
-import changeQueryParam from 'store/actions/changeQueryParam'
-import { newPostUrl, topicsUrl, makeUrl } from 'util/navigation'
+import changeQuerystringParam from 'store/actions/changeQuerystringParam'
+import { newPostUrl, topicsUrl } from 'util/navigation'
 import { fetchTopic, fetchCommunityTopic, fetchNetwork } from './Feed.store'
 import { FETCH_FOR_CURRENT_USER } from '../PrimaryLayout/PrimaryLayout.store'
 
 export function mapStateToProps (state, props) {
   let community, communityTopic, topic, network
 
+  const routeParams = get('match.params', props)
+  const querystringParams = getQueryParam(['s', 't'], null, props) 
   const currentUser = getMe(state)
   const currentUserHasMemberships = !isEmpty(getMemberships(state))
   const communitySlug = getParam('slug', state, props)
@@ -45,7 +47,8 @@ export function mapStateToProps (state, props) {
   const sortBy = getQueryParam('s', state, props)
 
   return {
-    postTypeContext,
+    routeParams,
+    querystringParams,
     postTypeFilter,
     sortBy,
     currentUser,
@@ -69,13 +72,13 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   const communitySlug = getParam('slug', null, props)
   const topicName = getParam('topicName', null, props)
-  const matchParams = get('match.params', props)
-  const queryStringParams = getQueryParam(['s', 't'], null, props)
+  const routeParams = get('match.params', props)
+  const querystringParams = getQueryParam(['s', 't'], null, props)
   const networkSlug = getParam('networkSlug', null, props)
 
   return {
-    changeTab: tab => dispatch(changeQueryParam(props, 't', tab, 'all')),
-    changeSort: sort => dispatch(changeQueryParam(props, 's', sort, 'all')),
+    changeTab: tab => dispatch(changeQuerystringParam(props, 't', tab, 'all')),
+    changeSort: sort => dispatch(changeQuerystringParam(props, 's', sort, 'all')),
     fetchTopic: () => {
       if (communitySlug && topicName) {
         return dispatch(fetchCommunityTopic(topicName, communitySlug))
@@ -91,7 +94,7 @@ export function mapDispatchToProps (dispatch, props) {
     },
     fetchNetwork: () => dispatch(fetchNetwork(networkSlug)),
     goToCreateCommunity: () => dispatch(push('/create-community/name')),
-    newPost: () => dispatch(push(makeUrl(newPostUrl(matchParams), queryStringParams)))
+    newPost: () => dispatch(push(newPostUrl(routeParams, querystringParams)))
   }
 }
 

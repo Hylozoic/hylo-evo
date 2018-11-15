@@ -16,9 +16,8 @@ export default class RecentActivity extends React.Component {
 
     const {
       activityItems,
-      showPostDetail,
-      slug,
-      networkSlug
+      routeParams,
+      showPostDetail
     } = this.props
 
     return <div>
@@ -27,11 +26,11 @@ export default class RecentActivity extends React.Component {
         return <div styleName='activity-item' key={i}>
           {item.hasOwnProperty('title')
             ? <PostCard
+              routeParams={routeParams}
               expanded={this.itemSelected(item.id)}
-              post={item}
-              slug={slug}
-              networkSlug={networkSlug} />
+              post={item} />
             : <CommentCard
+              routeParams={routeParams}
               comment={item}
               expanded={this.itemSelected(item.post.id)}
               showDetails={showPostDetail} />}
