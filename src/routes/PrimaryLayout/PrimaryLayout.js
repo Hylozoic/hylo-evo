@@ -109,7 +109,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/n/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
-            <Route path='/n/:networkSlug/m/:personId' component={MemberProfile} />
+            <Route path={`/n/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
             <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />
             <Route path='/n/:networkSlug/:topicName' exact component={TopicSupportComingSoon} />
