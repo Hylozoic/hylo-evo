@@ -13,15 +13,14 @@ export default class MemberComments extends React.Component {
   render () {
     if (this.props.loading) return <Loading />
 
-    const { comments, showPostDetail, routeParams } = this.props
+    const { comments, routeParams } = this.props
 
     return <div>
       {comments && comments.map(comment =>
         <div styleName='activity-item' key={comment.id}>
           <CommentCard
-            routeParams={routeParams}
             comment={comment}
-            showDetails={showPostDetail}
+            routeParams={routeParams}
             expanded={this.itemSelected(comment.post.id)} />
         </div>
       )}

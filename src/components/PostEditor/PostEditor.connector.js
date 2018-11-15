@@ -4,7 +4,7 @@ import { push } from 'react-router-redux'
 import { postUrl } from 'util/navigation'
 import getParam from 'store/selectors/getParam'
 import getPostTypeContext from 'store/selectors/getPostTypeContext'
-import getQueryParam from 'store/selectors/getQueryParam'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import getMe from 'store/selectors/getMe'
 import getPost, { presentPost } from 'store/selectors/getPost'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
@@ -57,7 +57,7 @@ export function mapStateToProps (state, props) {
   const networkSlug = getParam('networkSlug', null, props)
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
-  const postTypeContext = getPostTypeContext(null, props) || getQueryParam('t', null, props)
+  const postTypeContext = getPostTypeContext(null, props) || getQuerystringParam('t', null, props)
   const isProject = postTypeContext === 'project' || get('type', post) === 'project'
   const announcementSelected = state[MODULE_NAME].announcement
   const canModerate = currentUser && currentUser.canModerate(currentCommunity)

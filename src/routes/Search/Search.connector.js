@@ -13,10 +13,10 @@ import {
 } from './Search.store'
 import { personUrl } from 'util/navigation'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
-import getQueryParam from 'store/selectors/getQueryParam'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
 export function mapStateToProps (state, props) {
-  const searchFromQuerystring = getQueryParam('t', state, props)
+  const searchFromQuerystring = getQuerystringParam('t', state, props)
   const searchForInput = getSearchTerm(state, props)
   const filter = getSearchFilter(state, props)
   const queryResultProps = {search: searchForInput, type: filter}

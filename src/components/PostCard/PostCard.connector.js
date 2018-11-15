@@ -10,13 +10,6 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   const { post, routeParams, querystringParams } = props
 
-  console.log('!!! editPostUrl',
-    editPostUrl(post.id, routeParams, querystringParams),
-    post.id,
-    routeParams,
-    querystringParams
-  )
-
   return {
     showDetails: () => dispatch(push(postUrl(post.id, routeParams, querystringParams))),
     editPost: () => dispatch(push(editPostUrl(post.id, routeParams, querystringParams))),

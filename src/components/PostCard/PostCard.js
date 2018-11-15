@@ -25,7 +25,8 @@ export default class PostCard extends React.Component {
   }
 
   static defaultProps = {
-    post: samplePost()
+    post: samplePost(),
+    routeParams: {}
   }
 
   shouldShowDetails = element => {

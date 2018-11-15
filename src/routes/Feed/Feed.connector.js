@@ -11,7 +11,7 @@ import getParam from 'store/selectors/getParam'
 import getPostTypeContext from 'store/selectors/getPostTypeContext'
 import getMe from 'store/selectors/getMe'
 import getMemberships from 'store/selectors/getMemberships'
-import getQueryParam from 'store/selectors/getQueryParam'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import { newPostUrl, topicsUrl } from 'util/navigation'
 import { fetchTopic, fetchCommunityTopic, fetchNetwork } from './Feed.store'
@@ -21,7 +21,7 @@ export function mapStateToProps (state, props) {
   let community, communityTopic, topic, network
 
   const routeParams = get('match.params', props)
-  const querystringParams = getQueryParam(['s', 't'], null, props) 
+  const querystringParams = getQuerystringParam(['s', 't'], null, props)
   const currentUser = getMe(state)
   const currentUserHasMemberships = !isEmpty(getMemberships(state))
   const communitySlug = getParam('slug', state, props)
@@ -42,9 +42,9 @@ export function mapStateToProps (state, props) {
     network = getNetworkForCurrentRoute(state, props)
   }
 
-  // TODO: TBD - consolidate this getQueryParam('t', ...) into getPostTypeContext
-  const postTypeFilter = postTypeContext || getQueryParam('t', state, props)
-  const sortBy = getQueryParam('s', state, props)
+  // TODO: TBD - consolidate this getQuerystringParam('t', ...) into getPostTypeContext
+  const postTypeFilter = postTypeContext || getQuerystringParam('t', state, props)
+  const sortBy = getQuerystringParam('s', state, props)
 
   return {
     routeParams,
@@ -73,7 +73,7 @@ export function mapDispatchToProps (dispatch, props) {
   const communitySlug = getParam('slug', null, props)
   const topicName = getParam('topicName', null, props)
   const routeParams = get('match.params', props)
-  const querystringParams = getQueryParam(['s', 't'], null, props)
+  const querystringParams = getQuerystringParam(['s', 't'], null, props)
   const networkSlug = getParam('networkSlug', null, props)
 
   return {

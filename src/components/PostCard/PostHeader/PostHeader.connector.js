@@ -19,7 +19,7 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const { slug } = props
+  const { slug } = props.routeParams
   const closeUrl = removePostFromUrl(window.location.pathname)
   const deletePostWithConfirm = postId => {
     if (window.confirm('Are you sure you want to delete this post?')) {
@@ -31,7 +31,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     editPost: postId => props.editPost
       ? props.editPost(postId)
-      : dispatch(push(editPostUrl(postId, props))),
+      : dispatch(push(editPostUrl(postId, props.routeParams))),
     deletePost: postId => props.deletePost
       ? props.deletePost(postId)
       : deletePostWithConfirm(postId),

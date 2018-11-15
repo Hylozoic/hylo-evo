@@ -23,7 +23,7 @@ export default class Search extends Component {
     })),
     pending: bool,
     searchForInput: string,
-    searchFromQuerystring: string,
+    searchFromQueryString: string,
     setSearchTerm: func,
     updateQueryParam: func,
     fetchSearchResults: func,
@@ -31,9 +31,9 @@ export default class Search extends Component {
   }
 
   componentDidMount () {
-    const { searchForInput, searchFromQuerystring, setSearchTerm } = this.props
-    if (!searchForInput && searchFromQuerystring) {
-      setSearchTerm(searchFromQuerystring)
+    const { searchForInput, searchFromQueryString, setSearchTerm } = this.props
+    if (!searchForInput && searchFromQueryString) {
+      setSearchTerm(searchFromQueryString)
     }
   }
 
@@ -52,10 +52,8 @@ export default class Search extends Component {
       setSearchTerm,
       updateQueryParam,
       fetchMoreSearchResults,
-      showPostDetails,
       setSearchFilter,
       showPerson,
-      voteOnPost,
       filter
     } = this.props
 
@@ -69,9 +67,7 @@ export default class Search extends Component {
             <SearchResult key={sr.id}
               searchResult={sr}
               term={searchForInput}
-              showPostDetails={showPostDetails}
-              showPerson={showPerson}
-              voteOnPost={voteOnPost} />)}
+              showPerson={showPerson} />)}
           {pending && <Loading type='bottom' />}
           <ScrollListener onBottom={() => fetchMoreSearchResults()}
             elementId={SEARCH_RESULTS_ID} />
@@ -124,9 +120,7 @@ export function TabBar ({ filter, setSearchFilter }) {
 export function SearchResult ({
   searchResult,
   term = '',
-  showPostDetails,
-  showPerson,
-  voteOnPost
+  showPerson
 }) {
   const { type, content } = searchResult
 
@@ -146,7 +140,6 @@ export function SearchResult ({
     case 'Post':
       component = <PostCard
         styleName='postcard-expand'
-        
         post={content}
         highlightProps={highlightProps} />
       break

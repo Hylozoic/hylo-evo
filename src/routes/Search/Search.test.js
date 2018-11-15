@@ -7,7 +7,6 @@ describe('Search', () => {
     const props = {
       searchForInput: 'cat',
       fetchMoreSearchResults: () => {},
-      showPostDetails: () => {},
       setSearchTerm: () => {},
       updateQueryParam: () => {},
       setSearchFilter: () => {},

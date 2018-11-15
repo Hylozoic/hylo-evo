@@ -45,7 +45,6 @@ export default class MemberProfile extends React.Component {
       loading,
       person,
       currentUser,
-      showPostDetail,
       routeParams
     } = this.props
     const {
@@ -56,7 +55,6 @@ export default class MemberProfile extends React.Component {
     const { currentTab } = this.state
     const isMe = currentUser && currentUser.id === routeParams.personId
     const isAxolotl = AXOLOTL_ID === routeParams.personId
-
     const itemsMenuItems = [
       {icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(routeParams.personId), hide: isMe || isAxolotl}
     ]
@@ -78,7 +76,7 @@ export default class MemberProfile extends React.Component {
         {currentTab === 'Posts' &&
           <MemberPosts routeParams={routeParams} loading={loading} />}
         {currentTab === 'Comments' &&
-          <MemberComments routeParams={routeParams} loading={loading} showPostDetail={showPostDetail} />}
+          <MemberComments routeParams={routeParams} loading={loading} />}
         {currentTab === 'Upvotes' &&
           <MemberVotes routeParams={routeParams} loading={loading} />}
       </div>

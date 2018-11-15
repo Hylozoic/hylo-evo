@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { postUrl } from 'util/navigation'
 import blockUser from 'store/actions/blockUser'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
@@ -49,8 +48,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    goToPreviousLocation: () => dispatchProps.push(stateProps.previousLocation),
-    showPostDetail: postId => dispatchProps.push(postUrl(postId, stateProps.routeParams))
+    goToPreviousLocation: () => dispatchProps.push(stateProps.previousLocation)
   }
 }
 

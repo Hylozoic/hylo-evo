@@ -9,16 +9,12 @@ export default class RecentActivity extends React.Component {
     this.props.fetchRecentActivity()
   }
 
-  itemSelected = selectedItemId => selectedItemId === this.props.postId
+  itemSelected = selectedItemId => selectedItemId === this.props.routeParams.postId
 
   render () {
     if (this.props.loading) return <Loading />
 
-    const {
-      activityItems,
-      routeParams,
-      showPostDetail
-    } = this.props
+    const { activityItems, routeParams } = this.props
 
     return <div>
       <h2 styleName='subhead'>Recent Activity</h2>
@@ -26,14 +22,13 @@ export default class RecentActivity extends React.Component {
         return <div styleName='activity-item' key={i}>
           {item.hasOwnProperty('title')
             ? <PostCard
+              post={item}
               routeParams={routeParams}
-              expanded={this.itemSelected(item.id)}
-              post={item} />
+              expanded={this.itemSelected(item.id)} />
             : <CommentCard
-              routeParams={routeParams}
               comment={item}
-              expanded={this.itemSelected(item.post.id)}
-              showDetails={showPostDetail} />}
+              routeParams={routeParams}
+              expanded={this.itemSelected(item.post.id)} />}
         </div>
       })}
     </div>

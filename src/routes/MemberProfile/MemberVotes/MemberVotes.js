@@ -13,10 +13,7 @@ export default class MemberVotes extends React.Component {
   render () {
     if (this.props.loading) return <Loading />
 
-    const {
-      posts,
-      routeParams
-    } = this.props
+    const { posts, routeParams } = this.props
 
     return <div>
       {posts && posts.map(post =>

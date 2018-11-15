@@ -17,7 +17,7 @@ export function mapStateToProps (state, props) {
     filter: props.postTypeFilter,
     ...pick([
       'slug',
-      'networkSlug',
+      'networkSlug'
     ], props.routeParams),
     ...pick([
       'subject',
