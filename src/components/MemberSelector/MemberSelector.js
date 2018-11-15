@@ -20,9 +20,7 @@ export default class MemberSelector extends Component {
       this.props.onChange(this.props.members)
     }
     // if initial member list has changed
-
     if (this.props.initialMembers && (!prevProps.initialMembers || !isEqual(this.props.initialMembers.map(m => m.id), prevProps.initialMembers.map(m => m.id)))) {
-      console.log('called this time')
       this.props.setMembers()
     }
   }

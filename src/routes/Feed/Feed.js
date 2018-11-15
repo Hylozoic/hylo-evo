@@ -12,11 +12,20 @@ import { bgImageStyle } from 'util/index'
 
 export default class Feed extends Component {
   static propTypes = {
-    newPost: PropTypes.func
+    newPost: PropTypes.func,
+    routeParams: PropTypes.object,
+    querystringParams: PropTypes.object
+  }
+
+  static defaultProps = {
+    routeParams: {},
+    querystringParams: {}
   }
 
   componentDidMount () {
-    const { topicName, fetchTopic, networkSlug, fetchNetwork } = this.props
+    const { routeParams, fetchTopic, fetchNetwork } = this.props
+    const { networkSlug, topicName } = routeParams
+
     if (topicName) fetchTopic()
     if (networkSlug) fetchNetwork()
   }

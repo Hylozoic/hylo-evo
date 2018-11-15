@@ -28,6 +28,7 @@ export default function TopicFeedHeader ({
 
   postsTotal = postsTotal || 0
   followersTotal = followersTotal || 0
+
   return <div styleName='topic-feed-header'>
     <div styleName='fade'><div styleName='fade2' /></div>
     <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>

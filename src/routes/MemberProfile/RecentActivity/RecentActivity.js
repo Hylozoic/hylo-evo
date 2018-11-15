@@ -5,6 +5,10 @@ import CommentCard from 'components/CommentCard'
 import './RecentActivity.scss'
 
 export default class RecentActivity extends React.Component {
+  static defaultProps = {
+    routeParams: {}
+  }
+
   componentDidMount () {
     this.props.fetchRecentActivity()
   }

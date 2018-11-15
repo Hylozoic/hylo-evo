@@ -1,11 +1,11 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
-import getParam from 'store/selectors/getParam'
+import getRouteParam from 'store/selectors/getRouteParam'
 
 const getPost = ormCreateSelector(
   orm,
   state => state.orm,
-  (state, props) => getParam('postId', state, props),
+  (state, props) => getRouteParam('postId', state, props),
   ({ Post }, id) => {
     try {
       return Post.get({id})

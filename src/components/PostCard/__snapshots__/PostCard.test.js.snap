@@ -49,7 +49,11 @@ exports[`renders as expected 1`] = `
     }
     details="Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!"
     id="FAKE_29222"
-    slug="foom"
+    routeParams={
+      Object {
+        "slug": "foom",
+      }
+    }
     tags={
       Array [
         "activism",

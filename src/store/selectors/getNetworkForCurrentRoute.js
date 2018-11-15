@@ -1,10 +1,10 @@
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import getParam from './getParam'
+import getRouteParam from './getRouteParam'
 import { getNetworkSlugInPath } from 'util/navigation'
 
 export function getNetworkSlugFromLocation (state, props) {
-  const result = getParam('networkSlug', state, props, false) ||
+  const result = getRouteParam('networkSlug', state, props, false) ||
     tryLocation(props) ||
     props.networkSlug
   return result

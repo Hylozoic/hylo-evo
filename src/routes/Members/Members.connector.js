@@ -7,7 +7,7 @@ import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute
 import { get } from 'lodash/fp'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
-import getParam from 'store/selectors/getParam'
+import getRouteParam from 'store/selectors/getRouteParam'
 import getMe from 'store/selectors/getMe'
 
 const defaultSortBy = 'name'
@@ -15,8 +15,8 @@ const defaultSortBy = 'name'
 export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
   const network = getNetworkForCurrentRoute(state, props)
-  const communitySlug = getParam('slug', state, props)
-  const networkSlug = getParam('networkSlug', state, props)
+  const communitySlug = getRouteParam('slug', state, props)
+  const networkSlug = getRouteParam('networkSlug', state, props)
   const subject = networkSlug ? 'network' : 'community'
   const slug = communitySlug || networkSlug
   const sortBy = getQuerystringParam('s', state, props) || defaultSortBy

@@ -12,7 +12,9 @@ import './FeedList.scss'
 
 export default class FeedList extends React.Component {
   static defaultProps = {
-    posts: []
+    posts: [],
+    routeParams: {},
+    querystringParams: {}
   }
 
   constructor (props) {

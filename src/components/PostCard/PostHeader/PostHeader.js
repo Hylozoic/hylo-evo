@@ -14,13 +14,16 @@ import { filter, isFunction, isEmpty } from 'lodash'
 import cx from 'classnames'
 
 export default class PostHeader extends PureComponent {
+  static defaultProps = {
+    routeParams: {}
+  }
+
   state = {
     flaggingVisible: false
   }
 
-  static defaultProps = {
-    flaggingVisible: false
-  }
+  flagPostFunc = () =>
+    this.props.canFlag ? () => { this.setState({ flaggingVisible: true }) } : undefined
 
   render () {
     const {
@@ -46,9 +49,6 @@ export default class PostHeader extends PureComponent {
     if (!creator) return null
 
     const creatorUrl = personUrl(creator.id, routeParams.slug, routeParams.networkSlug)
-    const flagPostFn = canFlag ? () => {
-      this.setState({ flaggingVisible: true })
-    } : null
     const { flaggingVisible } = this.state
     // Used to generate a link to this post from the backend.
     const flagPostData = {
@@ -59,7 +59,7 @@ export default class PostHeader extends PureComponent {
     const dropdownItems = filter([
       {icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost},
       {icon: 'Edit', label: 'Edit', onClick: editPost},
-      {icon: 'Flag', label: 'Flag', onClick: flagPostFn},
+      {icon: 'Flag', label: 'Flag', onClick: this.flagPostFunc()},
       {icon: 'Trash', label: 'Delete', onClick: deletePost, red: true},
       {icon: 'Trash', label: 'Remove From Community', onClick: removePost, red: true}
     ], item => isFunction(item.onClick))

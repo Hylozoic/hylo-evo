@@ -38,7 +38,7 @@ describe('connector', () => {
     session.Community.create(communities[0])
     posts.forEach(post => session.Post.create(post))
     state = { orm: session.state }
-    props = { personId: '46816', slug: 'wombats' }
+    props = { routeParams: { personId: '46816', slug: 'wombats' } }
   })
 
   describe('getMemberPots', () => {

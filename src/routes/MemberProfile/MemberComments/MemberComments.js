@@ -4,6 +4,10 @@ import CommentCard from 'components/CommentCard'
 import './MemberComments.scss'
 
 export default class MemberComments extends React.Component {
+  static defaultProps = {
+    routeParams: {}
+  }
+
   componentDidMount () {
     this.props.fetchMemberComments()
   }

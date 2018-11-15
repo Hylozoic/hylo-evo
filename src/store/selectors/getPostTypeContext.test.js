@@ -3,9 +3,9 @@ import {
   POST_TYPE_CONTEXTS,
   DEFAULT_POST_TYPE_CONTEXT
 } from 'util/navigation'
-// NOTE: getParam can also be mocked as follows to bypass testing getParam
+// NOTE: getRouteParam can also be mocked as follows to bypass testing getRouteParam
 //       at the same time.
-// jest.mock('./getParam', () => (key, state, props) => 'projects')
+// jest.mock('./getRouteParam', () => (key, state, props) => 'projects')
 
 describe('getPostTypeContext', () => {
   it('gets post type context ', () => {

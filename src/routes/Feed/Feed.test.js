@@ -4,7 +4,8 @@ import Feed, {CreateCommunityPrompt} from './Feed'
 
 describe('Feed', () => {
   it('renders a FeedList with correct props', () => {
-    const wrapper = shallow(<Feed communitySlug={'foo'}
+    const wrapper = shallow(<Feed
+      routeParams={{ slug: 'foo' }}
       postTypeFilter='request'
       community={{}}
       selectedPostId='5'
@@ -15,8 +16,11 @@ describe('Feed', () => {
     const feed = wrapper.find('Connect(FeedList)')
     expect(feed).toHaveLength(1)
     expect(feed.props()).toEqual({
+      routeParams: {
+        slug: 'foo'
+      },
+      querystringParams: {},
       subject: 'community',
-      slug: 'foo',
       postTypeFilter: 'request',
       sortBy: 'votes',
       selectedPostId: '5',
@@ -26,10 +30,10 @@ describe('Feed', () => {
 
   it('with a network it renders a Feed with correct props', () => {
     const wrapper = shallow(<Feed
+      routeParams={{ networkSlug: 'bar' }}
       postTypeFilter='request'
       network={{id: 2}}
       fetchNetwork={jest.fn()}
-      networkSlug='bar'
       sortBy='votes'
       currentUser
       currentUserHasMemberships />)
@@ -39,8 +43,11 @@ describe('Feed', () => {
     const feed = wrapper.find('Connect(FeedList)')
     expect(feed).toHaveLength(1)
     expect(feed.props()).toEqual({
+      routeParams: {
+        networkSlug: 'bar'
+      },
+      querystringParams: {},
       subject: 'network',
-      networkSlug: 'bar',
       postTypeFilter: 'request',
       sortBy: 'votes',
       topic: undefined
@@ -58,7 +65,9 @@ describe('Feed', () => {
 
   it('displays the TopicFeedHeader if on a topic feed', () => {
     const props = {
-      topicName: 'petitions',
+      routeParams: {
+        topicName: 'petitions'
+      },
       topic: {id: '5', name: 'petitions'},
       currentUser: {id: 1}
     }

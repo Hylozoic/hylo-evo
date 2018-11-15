@@ -4,6 +4,10 @@ import PostCard from 'components/PostCard'
 import './MemberVotes.scss'
 
 export default class MemberVotes extends React.Component {
+  static defaultProps = {
+    routeParams: {}
+  }
+
   componentDidMount () {
     this.props.fetchMemberVotes()
   }

@@ -3,7 +3,7 @@ import { get, find } from 'lodash/fp'
 import { push } from 'react-router-redux'
 import { editPostUrl, removePostFromUrl } from 'util/navigation'
 import fetchPost from 'store/actions/fetchPost'
-import getParam from 'store/selectors/getParam'
+import getRouteParam from 'store/selectors/getRouteParam'
 import getPost, { presentPost } from 'store/selectors/getPost'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
@@ -14,7 +14,7 @@ import { FETCH_POST } from 'store/constants'
 
 export function mapStateToProps (state, props) {
   // match params
-  const id = getParam('postId', state, props)
+  const id = getRouteParam('postId', state, props)
   const routeParams = props.match.params
   // everything else
   const currentCommunity = getCommunityForCurrentRoute(state, props)
@@ -34,7 +34,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   const { location } = props
-  const postId = getParam('postId', {}, props)
+  const postId = getRouteParam('postId', {}, props)
   const closeLocation = {
     ...props.location,
     pathname: removePostFromUrl(location.pathname)

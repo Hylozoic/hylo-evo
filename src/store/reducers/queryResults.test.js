@@ -148,7 +148,7 @@ describe('using extractQueryResults', () => {
     )
   })
 
-  it('uses params in key returned by getParams', () => {
+  it('uses params in key returned by getRouteParams', () => {
     const initialState = {}
 
     const action = {
@@ -161,14 +161,14 @@ describe('using extractQueryResults', () => {
         },
         extractQueryResults: {
           getItems: get('payload.data.test'),
-          getParams: get('meta.customVariables')
+          getRouteParams: get('meta.customVariables')
         }
       }
     }
 
     const expectedKey = JSON.stringify({
       type: action.type,
-      params: action.meta.extractQueryResults.getParams(action)
+      params: action.meta.extractQueryResults.getRouteParams(action)
     })
 
     expect(queryResults(initialState, action)).toEqual(

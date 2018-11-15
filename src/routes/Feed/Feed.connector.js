@@ -7,7 +7,7 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import getCommunityTopicForCurrentRoute from 'store/selectors/getCommunityTopicForCurrentRoute'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
-import getParam from 'store/selectors/getParam'
+import getRouteParam from 'store/selectors/getRouteParam'
 import getPostTypeContext from 'store/selectors/getPostTypeContext'
 import getMe from 'store/selectors/getMe'
 import getMemberships from 'store/selectors/getMemberships'
@@ -24,9 +24,9 @@ export function mapStateToProps (state, props) {
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
   const currentUser = getMe(state)
   const currentUserHasMemberships = !isEmpty(getMemberships(state))
-  const communitySlug = getParam('slug', state, props)
-  const networkSlug = getParam('networkSlug', state, props)
-  const topicName = getParam('topicName', state, props)
+  const communitySlug = getRouteParam('slug', state, props)
+  const networkSlug = getRouteParam('networkSlug', state, props)
+  const topicName = getRouteParam('topicName', state, props)
   const postTypeContext = getPostTypeContext(state, props)
 
   if (communitySlug) {
@@ -60,7 +60,7 @@ export function mapStateToProps (state, props) {
     topic,
     postsTotal: get('postsTotal', communitySlug ? communityTopic : topic),
     followersTotal: get('followersTotal', communitySlug ? communityTopic : topic),
-    selectedPostId: getParam('postId', state, props),
+    selectedPostId: getRouteParam('postId', state, props),
     membershipsPending: state.pending[FETCH_FOR_CURRENT_USER],
     postCount: get('postCount', community),
     pending: state.pending[FETCH_POSTS],
@@ -70,11 +70,11 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const communitySlug = getParam('slug', null, props)
-  const topicName = getParam('topicName', null, props)
+  const communitySlug = getRouteParam('slug', null, props)
+  const topicName = getRouteParam('topicName', null, props)
   const routeParams = get('match.params', props)
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
-  const networkSlug = getParam('networkSlug', null, props)
+  const networkSlug = getRouteParam('networkSlug', null, props)
 
   return {
     changeTab: tab => dispatch(changeQuerystringParam(props, 't', tab, 'all')),

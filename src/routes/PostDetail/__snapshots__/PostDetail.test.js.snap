@@ -8,30 +8,26 @@ exports[`PostDetail renders correctly 1`] = `
     elementId="detail-column"
     onScroll={[Function]}
   />
-  <WrappedPostHeader
-    fetchPost={[Function]}
-    match={
+  <Connect(PostHeader)
+    data-stylename="header"
+    details="the body of the post"
+    id="91"
+    imageUrl="foo.jpg"
+    members={Array []}
+    myVote={true}
+    routeParams={
       Object {
-        "params": Object {
-          "slug": "foo",
-        },
+        "slug": "foo",
       }
     }
-    post={
-      Object {
-        "details": "the body of the post",
-        "id": "91",
-        "imageUrl": "foo.jpg",
-        "members": Array [],
-        "myVote": true,
-        "tags": Array [
-          "singing",
-          "dancing",
-        ],
-        "votesTotal": 7,
-      }
+    tags={
+      Array [
+        "singing",
+        "dancing",
+      ]
     }
-    voteOnPost={[Function]}
+    topicsOnNewline={true}
+    votesTotal={7}
   />
   <Connect(PostImage)
     data-stylename="image"
@@ -65,6 +61,7 @@ exports[`PostDetail renders correctly 1`] = `
   />
   <PostCommunities
     showBottomBorder={true}
+    slug="foo"
   />
   <div
     data-stylename="activity-header"
@@ -89,6 +86,7 @@ exports[`PostDetail renders correctly 1`] = `
   <Connect(Comments)
     postId="91"
     scrollToBottom={[Function]}
+    slug="foo"
   />
   <Connect(SocketSubscriber)
     id="91"

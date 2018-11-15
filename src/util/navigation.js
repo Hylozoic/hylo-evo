@@ -164,7 +164,7 @@ export function removePostFromUrl (url) {
   return url.replace(new RegExp(matchForReplaceRegex), '')
 }
 
-// n.b.: use getParam instead of this where possible.
+// n.b.: use getRouteParam instead of this where possible.
 
 export function getCommunitySlugInPath (pathname) {
   const match = matchPath(pathname, {

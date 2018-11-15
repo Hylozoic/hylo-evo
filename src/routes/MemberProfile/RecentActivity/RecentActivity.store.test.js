@@ -24,9 +24,9 @@ describe('fetchRecentActivity', () => {
 })
 
 describe('connector', () => {
-  let session = null
+  let session = undefined
   let state = null
-  let props = null
+  let props = undefined
 
   beforeEach(() => {
     session = orm.mutableSession(orm.getEmptyState())
@@ -35,7 +35,7 @@ describe('connector', () => {
     session.Post.create(normalized.posts[1])
     session.Comment.create(normalized.comments[0])
     state = { orm: session.state }
-    props = { personId: '46816', slug: 'wombats' }
+    props = { routeParams: { personId: '46816', slug: 'wombats' } }
   })
 
   describe('getRecentActivity', () => {

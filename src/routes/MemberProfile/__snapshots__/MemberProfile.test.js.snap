@@ -387,7 +387,11 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         I like wombats.
       </div>
       <Connect(RecentActivity)
-        personId="1"
+        routeParams={
+          Object {
+            "personId": "1",
+          }
+        }
       />
     </div>
   </div>

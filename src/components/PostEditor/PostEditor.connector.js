@@ -2,7 +2,7 @@ import { get, isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { postUrl } from 'util/navigation'
-import getParam from 'store/selectors/getParam'
+import getRouteParam from 'store/selectors/getRouteParam'
 import getPostTypeContext from 'store/selectors/getPostTypeContext'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import getMe from 'store/selectors/getMe'
@@ -53,8 +53,8 @@ export function mapStateToProps (state, props) {
     get('attachmentType', uploadAttachmentPending) === 'image'
   const showFiles = !isEmpty(files) ||
     get('attachmentType', uploadAttachmentPending) === 'file'
-  const communitySlug = getParam('slug', null, props)
-  const networkSlug = getParam('networkSlug', null, props)
+  const communitySlug = getRouteParam('slug', null, props)
+  const networkSlug = getRouteParam('networkSlug', null, props)
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
   const postTypeContext = getPostTypeContext(null, props) || getQuerystringParam('t', null, props)
