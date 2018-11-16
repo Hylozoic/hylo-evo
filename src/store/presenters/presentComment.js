@@ -8,4 +8,3 @@ export default function presentComment (comment, communitySlug = undefined) {
     slug: communitySlug
   }
 }
-
