@@ -1,7 +1,7 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { compact } from 'lodash/fp'
 import orm from 'store/models'
-import { presentPost } from 'store/selectors/getPost'
+import presentPost from 'store/presenters/presentPost'
 import getPostFieldsFragment from 'graphql/fragments/getPostFieldsFragment'
 import { FETCH_MEMBER_VOTES } from '../MemberProfile.store'
 

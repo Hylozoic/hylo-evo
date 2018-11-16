@@ -1,6 +1,6 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
-import { presentPost } from 'store/selectors/getPost'
+import presentPost from 'store/presenters/presentPost'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import { FETCH_MEMBER_POSTS } from '../MemberProfile.store'
 

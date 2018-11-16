@@ -3,12 +3,10 @@
 exports[`presentSearchResult presents a Comment SearchResult 1`] = `
 Object {
   "content": Object {
-    "creator": SessionBoundModel {
-      "_fields": Object {
-        "id": 0,
-        "name": "Ron",
-        "skills": undefined,
-      },
+    "creator": Object {
+      "id": 0,
+      "name": "Ron",
+      "skills": undefined,
     },
     "id": 21,
     "image": SessionBoundModel {
@@ -18,6 +16,16 @@ Object {
         "url": "foo.png",
       },
     },
+    "post": Object {
+      "commenters": undefined,
+      "communities": undefined,
+      "followers": undefined,
+      "id": "commentpost",
+      "members": undefined,
+      "postMemberships": undefined,
+      "topics": undefined,
+    },
+    "slug": undefined,
   },
   "id": 0,
   "type": "Comment",

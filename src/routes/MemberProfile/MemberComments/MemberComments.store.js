@@ -1,7 +1,7 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 import { compact } from 'lodash/fp'
-import { presentComment } from 'routes/MemberProfile/RecentActivity/RecentActivity.store'
+import presentComment from 'store/presenters/presentComment'
 
 export const FETCH_MEMBER_COMMENTS = 'FETCH_MEMBER_COMMENTS'
 

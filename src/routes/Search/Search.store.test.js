@@ -1,5 +1,4 @@
 import { presentSearchResult } from './Search.store'
-import { mergeProps } from './Search.connector'
 import orm from 'store/models'
 
 describe('presentSearchResult', () => {
@@ -8,9 +7,13 @@ describe('presentSearchResult', () => {
   const creator = session.Person.create({
     name: 'Ron'
   })
+  session.Post.create({
+    id: 'commentpost'
+  })
   session.Comment.create({
     id: commentId,
-    creator: creator.id
+    creator: creator.id,
+    post: 'commentpost'
   })
   session.Attachment.create({
     url: 'foo.png',

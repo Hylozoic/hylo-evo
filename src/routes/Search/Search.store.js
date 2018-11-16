@@ -4,7 +4,8 @@ import orm from 'store/models'
 import { isEmpty, includes, get } from 'lodash/fp'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 import getPostFieldsFragment from 'graphql/fragments/getPostFieldsFragment'
-import { presentPost } from 'store/selectors/getPost'
+import presentPost from 'store/presenters/presentPost'
+import presentComment from 'store/presenters/presentComment'
 
 export const MODULE_NAME = 'Search'
 
@@ -143,6 +144,7 @@ export function presentSearchResult (searchResult, session) {
   if (type === 'Post') {
     content = presentPost(content)
   }
+
   if (type === 'Person') {
     content = {
       ...content.ref,
@@ -151,11 +153,7 @@ export function presentSearchResult (searchResult, session) {
   }
 
   if (type === 'Comment') {
-    content = {
-      ...content.ref,
-      creator: content.creator,
-      image: content.attachments.toModelArray()[0]
-    }
+    content = presentComment(content)
   }
 
   return {

@@ -2,7 +2,8 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import { compact } from 'lodash/fp'
 import orm from 'store/models'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
-import { presentPost } from 'store/selectors/getPost'
+import presentPost from 'store/presenters/presentPost'
+import presentComment from 'store/presenters/presentComment'
 
 export const FETCH_RECENT_ACTIVITY = 'FETCH_RECENT_ACTIVITY'
 
@@ -63,17 +64,6 @@ export function indexActivityItems (comments, posts) {
       const bDate = new Date(b.createdAt)
       return aDate < bDate ? 1 : aDate > bDate ? -1 : 0
     })
-}
-
-export function presentComment (comment, communitySlug) {
-  if (!comment || !comment.post) return
-  return {
-    ...comment.ref,
-    creator: comment.creator.ref,
-    post: comment.post.ref,
-    image: comment.attachments.toModelArray()[0],
-    slug: communitySlug
-  }
 }
 
 export const getRecentActivity = ormCreateSelector(

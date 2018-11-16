@@ -123,6 +123,10 @@ export function SearchResult ({
   showPerson
 }) {
   const { type, content } = searchResult
+  if (!content) {
+    console.log(`Search Result of "${type}" without data (see DEV-395):`, content)
+    return null
+  }
 
   const highlightProps = {
     terms: term.split(' '),
@@ -144,11 +148,6 @@ export function SearchResult ({
         highlightProps={highlightProps} />
       break
     case 'Comment':
-      if (!content.post || !content.creator) {
-        // TODO: DEV-395 - explore why search results is returning empty entities
-        console.log('!!! comment without data', content)
-        break
-      }
       component = <CommentCard
         comment={content}
         expanded={false}

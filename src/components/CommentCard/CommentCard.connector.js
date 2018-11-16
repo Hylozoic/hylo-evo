@@ -3,7 +3,9 @@ import { push } from 'react-router-redux'
 import { postUrl } from 'util/navigation'
 
 export function mapStateToProps (state, props) {
-  return {}
+  return {
+    routeParams: props.routeParams || {}
+  }
 }
 
 export function mapDispatchToProps (dispatch, props) {
