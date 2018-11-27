@@ -13,6 +13,7 @@ import SocketSubscriber from 'components/SocketSubscriber'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
+import TextInput from 'components/TextInput'
 import ProjectMembersDialog from 'components/ProjectMembersDialog'
 import './PostDetail.scss'
 
@@ -248,7 +249,8 @@ export class ProjectContributions extends Component {
 
   toggleExpand = () => {
     this.setState({
-      expanded: !this.state.expanded
+      expanded: !this.state.expanded,
+      received: false
     })
   }
 
@@ -260,15 +262,36 @@ export class ProjectContributions extends Component {
 
   render () {
     const { postId, totalContributions, processStripeToken } = this.props
-    const { expanded, contributionAmount } = this.state
+    const { expanded, contributionAmount, received } = this.state
+
+    const onToken = token => {
+      processStripeToken(postId, token.id, contributionAmount)
+      .then(() => {
+        this.amountInput.value = ''
+        this.setAmount({target: {value: 0}})
+        this.setState({received: true})
+      })
+    }
+
     return <div styleName='project-contributions'>
       <div>Contributions so far: ${totalContributions}</div>
-      <div onClick={this.toggleExpand}>Contirbute</div>
+      <Button
+        color='green'
+        onClick={this.toggleExpand}
+        label='Contribute' />
       {expanded && <div>
-        <div>Amount: $<input type='text' onChange={this.setAmount} /></div>
+        <div>Amount: $<TextInput
+          onChange={this.setAmount}
+          inputRef={input => { this.amountInput = input }}
+          noClearButton /></div>
+        {received && <div>Thanks for your contribution!</div>}
         <StripeCheckout
-          token={token => processStripeToken(postId, token.id, contributionAmount)}
+          token={onToken}
           stripeKey={process.env.STRIPE_PUBLISHABLE_KEY} />
+        <Button
+          color='gray'
+          onClick={this.toggleExpand}
+          label='Cancel' />
       </div>}
     </div>
   }

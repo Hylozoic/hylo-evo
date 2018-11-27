@@ -35,7 +35,7 @@ export default function createProject (postParams) {
         $announcement: Boolean
         $topicNames: [String]
         $memberIds: [ID],
-        acceptContributions: Boolean
+        $acceptContributions: Boolean
       ) {
         createProject(data: {
           title: $title,

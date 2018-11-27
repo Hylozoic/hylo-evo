@@ -16,44 +16,27 @@ export default class PaymentSettingsTab extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {
-      registeredStripeCode: false,
-      registeredSuccessfully: false
-    }
-  }
-
-  componentDidMount () {
-    if (this.props.stripeQueryParams.code) {
-      this.props.registerStripeAccount(this.props.stripeQueryParams.code)
-      .then(() => {
-        this.setState({
-          registeredStripeCode: true,
-          registeredSuccessfully: true
-        })
-      })
-    }
+    this.state = {}
   }
 
   render () {
     const {
       currentUser,
-      stripeQueryParams
+      queryParams
      } = this.props
-
-    const {
-      registeredSuccessfully
-    } = this.state
-
-    console.log('stripeQueryParams', stripeQueryParams)
 
     if (!currentUser) return <Loading />
     const { hasStripeAccount } = currentUser
+    const { registered } = queryParams
+    const registerSuccess = registered === 'success'
+    const registerError = registered === 'error'
 
     return <div>
       <div styleName='title'>Connect Stripe Account</div>
       {hasStripeAccount && <div>You already have a stripe account linked to this account. If you would like to link a different account, click the button below</div>}
       <a href={stripeUrl}>Link stripe account</a>
-      {registeredSuccessfully && <div>Okay, your account is registered, you're good to go.</div>}
+      {registerSuccess && <div>Okay, your account is registered, you're good to go.</div>}
+      {registerError && <div>There was an issue registering your stripe account. Please try again. If problems persists, contact us.</div>}      
     </div>
   }
 }

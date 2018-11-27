@@ -16,7 +16,9 @@ export default function (postId, token, amount) {
       }
     },
     meta: {
-      postId
+      optimistic: true,
+      postId,
+      amount
     }
   }
 }

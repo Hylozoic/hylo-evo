@@ -51,10 +51,8 @@ export function mapStateToProps (state, props) {
 
   const confirm = get('FullPageModal.confirm', state)
   const fetchPending = state.pending[FETCH_FOR_CURRENT_USER]
-  const stripeQueryParams = {
-    scope: getQueryParam('scope', null, props),
-    state: getQueryParam('state', null, props),
-    code: getQueryParam('code', null, props)
+  const queryParams = {
+    registered: getQueryParam('registered', null, props),
   }
 
   return {
@@ -65,7 +63,7 @@ export function mapStateToProps (state, props) {
     fetchPending,
     allCommunitiesSettings,
     messageSettings,
-    stripeQueryParams
+    queryParams
   }
 }
 
