@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
 import { isEmpty } from 'lodash'
-import { FETCH_POSTS } from 'store/constants'
+import { FETCH_POSTS, FETCH_FOR_CURRENT_USER } from 'store/constants'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import getCommunityTopicForCurrentRoute from 'store/selectors/getCommunityTopicForCurrentRoute'
@@ -16,7 +16,7 @@ import { push, replace } from 'react-router-redux'
 import { postUrl, topicsUrl } from 'util/index'
 import { makeUrl } from 'util/navigation'
 import { fetchTopic, fetchCommunityTopic, fetchNetwork } from './Feed.store'
-import { FETCH_FOR_CURRENT_USER } from '../PrimaryLayout/PrimaryLayout.store'
+
 export function mapStateToProps (state, props) {
   let community, communityTopic, topic, network
 
