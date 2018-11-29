@@ -86,7 +86,7 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
       >
         <NavLink
           activeClassName="active"
-          aria-current="page"
+          ariaCurrent="true"
           data-stylename="nav-link"
           exact={true}
           key="/settings"
@@ -97,7 +97,7 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
         </NavLink>
         <NavLink
           activeClassName="active"
-          aria-current="page"
+          ariaCurrent="true"
           data-stylename="nav-link"
           exact={true}
           key="/settings/communities"
