@@ -12,7 +12,7 @@ export default function FeedBanner ({
   community,
   currentUser,
   newPost,
-  postTypeContext,
+  type,
   currentUserHasMemberships
 }) {
   let bannerUrl, avatarUrl, name, location, subtitle
@@ -46,7 +46,7 @@ export default function FeedBanner ({
       </div>
     </div>
     {currentUserHasMemberships && <PostPrompt
-      type={postTypeContext}
+      type={type}
       firstName={currentUser.firstName()}
       avatarUrl={currentUser.avatarUrl}
       newPost={newPost} />}
@@ -55,7 +55,9 @@ export default function FeedBanner ({
 
 export function postPromptString (type = '', { firstName }) {
   const postPrompts = {
-    project: `Create a project, make a team!`,
+    offer: `Hi ${firstName}, what would you like to share?`,
+    request: `Hi ${firstName}, what are you looking for?`,
+    project: `Hi ${firstName}, what would you like to create?`,
     default: `Hi ${firstName}, what's on your mind?`
   }
 

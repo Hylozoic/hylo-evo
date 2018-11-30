@@ -71,9 +71,9 @@ export default class Feed extends Component {
     const {
       routeParams, topic, community, currentUser, postsTotal, followersTotal,
       communityTopic, newPost, network, currentUserHasMemberships,
-      goToCreateCommunity, membershipsPending
+      goToCreateCommunity, membershipsPending, postTypeFilter
     } = this.props
-    const { networkSlug, postTypeContext, topicName } = routeParams
+    const { networkSlug, topicName } = routeParams
 
     if (topicName && !topic) return <Loading />
     if (community && topicName && !communityTopic) return <Loading />
@@ -88,14 +88,14 @@ export default class Feed extends Component {
           postsTotal={postsTotal}
           followersTotal={followersTotal}
           topic={topic}
-          postTypeContext={postTypeContext}
+          type={postTypeFilter}
           community={community}
           currentUser={currentUser}
           newPost={newPost} />
         : <FeedBanner
           community={community || network}
           currentUser={currentUser}
-          postTypeContext={postTypeContext}
+          type={postTypeFilter}
           all={!community && !networkSlug}
           newPost={newPost}
           currentUserHasMemberships={currentUserHasMemberships} />}
@@ -103,6 +103,7 @@ export default class Feed extends Component {
       {!membershipsPending && !currentUserHasMemberships && <CreateCommunityPrompt
         goToCreateCommunity={goToCreateCommunity}
       />}
+      {membershipsPending && <Loading />}
     </div>
   }
 }

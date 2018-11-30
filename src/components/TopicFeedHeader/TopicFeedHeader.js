@@ -19,7 +19,8 @@ export default function TopicFeedHeader ({
   communityTopic,
   toggleSubscribe,
   currentUser,
-  newPost
+  newPost,
+  type
 }) {
   const bannerUrl = get('bannerUrl', community)
   const buttonText = communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'
@@ -44,6 +45,7 @@ export default function TopicFeedHeader ({
       </Button>}
       <PostPrompt
         firstName={currentUser.firstName()}
+        type={type}
         avatarUrl={currentUser.avatarUrl}
         newPost={newPost} />}
     </div>
