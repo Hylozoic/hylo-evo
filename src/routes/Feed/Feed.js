@@ -64,10 +64,12 @@ export default class Feed extends Component {
       communityTopic, newPost, network, networkSlug, currentUserHasMemberships,
       goToCreateCommunity, membershipsPending
     } = this.props
+
     if (topicName && !topic) return <Loading />
     if (community && topicName && !communityTopic) return <Loading />
     if (!currentUser) return <Loading />
     if (membershipsPending) return <Loading />
+
 
     return <div>
       {topicName
@@ -87,6 +89,7 @@ export default class Feed extends Component {
       {!membershipsPending && !currentUserHasMemberships && <CreateCommunityPrompt
         goToCreateCommunity={goToCreateCommunity}
       />}
+      {membershipsPending && <Loading />}
     </div>
   }
 }
