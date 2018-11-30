@@ -80,6 +80,7 @@ export default class Feed extends Component {
     if (!currentUser) return <Loading />
     if (membershipsPending) return <Loading />
 
+
     return <div>
       {topicName
         ? <TopicFeedHeader
@@ -103,6 +104,7 @@ export default class Feed extends Component {
       {!membershipsPending && !currentUserHasMemberships && <CreateCommunityPrompt
         goToCreateCommunity={goToCreateCommunity}
       />}
+      {membershipsPending && <Loading />}
     </div>
   }
 }
