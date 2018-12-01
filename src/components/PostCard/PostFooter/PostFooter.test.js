@@ -1,4 +1,4 @@
-import PostFooter, { commentCaption } from './PostFooter'
+import PostFooter, { peopleSetup } from './PostFooter'
 import { shallow } from 'enzyme'
 import React from 'react'
 
@@ -37,25 +37,25 @@ describe('PostFooter', () => {
 describe('commentCaption', () => {
   it('returns the correct text', () => {
     const currentUserId = '1'
-    expect(commentCaption([], 0)).toEqual('Be the first to comment')
-    expect(commentCaption(commenters.slice(0, 1), 1)).toEqual('Joe commented')
-    expect(commentCaption(commenters.slice(0, 2), 2)).toEqual('Joe and Sue commented')
-    expect(commentCaption(commenters.slice(0, 3), 3)).toEqual('Joe, Sue and 1 other commented')
-    expect(commentCaption(commenters.slice(0, 4), 4)).toEqual('Joe, Sue and 2 others commented')
+    expect(peopleSetup([], 0).caption).toEqual('Be the first to comment')
+    expect(peopleSetup(commenters.slice(0, 1), 1).caption).toEqual('Joe commented')
+    expect(peopleSetup(commenters.slice(0, 2), 2).caption).toEqual('Joe and Sue commented')
+    expect(peopleSetup(commenters.slice(0, 3), 3).caption).toEqual('Joe, Sue and 1 other commented')
+    expect(peopleSetup(commenters.slice(0, 4), 4).caption).toEqual('Joe, Sue and 2 others commented')
   })
 
   it('uses phrase You if commenter id is the currentUser id', () => {
     const currentUserId = '1'
-    expect(commentCaption(commenters.slice(0, 1), 1, currentUserId)).toEqual('You commented')
+    expect(peopleSetup(commenters.slice(0, 1), 1, currentUserId).caption).toEqual('You commented')
   })
 
   it('will sort them so that the currentUser is listed first, if only 2 have commented', () => {
     const currentUserId = '1'
-    expect(commentCaption(commentersUnsorted, 2, currentUserId)).toEqual('You and Sue commented')
+    expect(peopleSetup(commentersUnsorted, 2, currentUserId).caption).toEqual('You and Sue commented')
   })
 
   it('will sort them so that the names of others come first, if more than 2 total have commented', () => {
     const currentUserId = '1'
-    expect(commentCaption(commenters, 4, currentUserId)).toEqual('Sue, Scary and 2 others commented')
+    expect(peopleSetup(commenters, 4, currentUserId).caption).toEqual('Sue, Scary and 2 others commented')
   })
 })

@@ -5,7 +5,7 @@ import { uniqBy } from 'lodash/fp'
 import cx from 'classnames'
 import { getKeyCode, keyMap } from 'util/textInput'
 import { KeyControlledItemList } from 'components/KeyControlledList'
-import Avatar from 'components/Avatar'
+import RoundImage from 'components/RoundImage'
 import styles from './TagInput.scss'
 
 const { object, array, bool, string, func } = PropTypes
@@ -102,6 +102,7 @@ export default class TagInput extends Component {
 
   render () {
     let { tags, placeholder } = this.props
+
     const { suggestions, className, theme, readOnly, maxTags, addLeadingHashtag, renderSuggestion } = this.props
     if (!tags) tags = []
     if (!placeholder) placeholder = 'Type...'
@@ -110,7 +111,7 @@ export default class TagInput extends Component {
 
     const selectedItems = uniqBy('id', tags).map(t =>
       <li key={t.id} className={theme.selectedTag}>
-        {t.avatar_url && <Avatar person={t} isLink={false} />}
+        {t.avatarUrl && <RoundImage url={t.avatarUrl} small className={theme.selectedTagImage} />}
         <span className={theme.selectedTagName}>{optionalHashtag}{t.label || t.name}</span>
         <a onClick={!readOnly ? this.remove(t) : undefined} className={theme.selectedTagRemove}>&times;</a>
       </li>

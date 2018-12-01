@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { bgImageStyle, personUrl } from 'util/index'
+import { bgImageStyle } from 'util/index'
+import { personUrl } from 'util/navigation'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
 import BadgedIcon from 'components/BadgedIcon'
@@ -15,7 +16,7 @@ import NotificationsDropdown from './NotificationsDropdown'
 export default class TopNav extends Component {
   render () {
     const { className, community, network, currentUser, logout, toggleDrawer, showLogoBadge, onClick } = this.props
-    const profileUrl = personUrl(get('id', currentUser), get('slug', community))
+    const profileUrl = personUrl(get('id', currentUser))
 
     return <div styleName='topNavWrapper' className={className} onClick={onClick}>
       <div styleName='topNav' ref='topNav'>

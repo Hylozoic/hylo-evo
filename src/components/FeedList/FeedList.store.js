@@ -1,11 +1,12 @@
-import { FETCH_POSTS } from 'store/constants'
+import { createSelector } from 'reselect'
 import { get } from 'lodash/fp'
-import { getPostFieldsFragment } from 'store/actions/fetchPost'
-
+import { FETCH_POSTS } from 'store/constants'
+import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
+import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 export const MODULE_NAME = 'FeedList'
+export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
 
-export const STORE_FEED_LIST_PROPS = `${MODULE_NAME}/STORE_FEED_LIST_PROPS`
-
+// actions
 export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search, filter, topic }) {
   var query, extractModel, getItems
 
@@ -49,22 +50,6 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search
   }
 }
 
-export const postsQueryFragment = `
-posts(
-  first: $first,
-  offset: $offset,
-  sortBy: $sortBy,
-  search: $search,
-  filter: $filter,
-  topic: $topic,
-  order: "desc"
-) {
-  hasMore
-  items {
-    ${getPostFieldsFragment(false)}
-  }
-}`
-
 const communityQuery = `query (
   $slug: String,
   $sortBy: String,
@@ -74,7 +59,7 @@ const communityQuery = `query (
   $topic: ID,
   $first: Int
 ) {
-  community(slug: $slug) {
+  community(slug: $slug, updateLastViewed: true) {
     id
     slug
     name
@@ -111,18 +96,29 @@ const allCommunitiesQuery = `query (
   ${postsQueryFragment}
 }`
 
-export function storeFeedListProps (props) {
+export function storeFetchPostsParam (props) {
   return {
-    type: STORE_FEED_LIST_PROPS,
+    type: STORE_FETCH_POSTS_PARAM,
     payload: props
   }
 }
 
+// selectors
+const getPostResults = makeGetQueryResults(FETCH_POSTS)
+
+export const getPosts = makeQueryResultsModelSelector(
+  getPostResults,
+  'Post'
+)
+
+export const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
+
+// reducer
 export default function (state = {}, action) {
-  if (action.type === STORE_FEED_LIST_PROPS) {
+  if (action.type === STORE_FETCH_POSTS_PARAM) {
     return {
       ...state,
-      feedListProps: action.payload
+      fetchPostsParam: action.payload
     }
   }
   return state

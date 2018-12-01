@@ -7,7 +7,7 @@ import RoundImageRow from 'components/RoundImageRow'
 import Button from 'components/Button'
 import './CommunitySidebar.scss'
 import cx from 'classnames'
-import { personUrl, communitySettingsUrl } from 'util/index'
+import { personUrl, communitySettingsUrl } from 'util/navigation'
 import { markdown } from 'hylo-utils/text'
 import { isEmpty } from 'lodash/fp'
 

@@ -1,8 +1,8 @@
 import { mapStateToProps, mapDispatchToProps, mergeProps } from './PostEditor.connector'
 import orm from 'store/models'
-import { CREATE_POST } from './PostEditor.store'
+import { CREATE_POST } from 'store/constants'
 
-let state
+let state, requiredProps
 beforeAll(() => {
   const session = orm.session(orm.getEmptyState())
   const community = session.Community.create({id: '99', slug: 'foo'})
@@ -40,12 +40,18 @@ beforeAll(() => {
       file: []
     }
   }
+  requiredProps = {
+    match: {},
+    location: {
+      search: ''
+    }
+  }
 })
 
 describe('mapStateToProps', () => {
   it('returns the right keys for a new post', () => {
     const props = {
-      forNew: true,
+      ...requiredProps,
       match: {
         params: {
           slug: 'foo'
@@ -56,12 +62,12 @@ describe('mapStateToProps', () => {
   })
 
   it('sets myModeratedCommunities appropriately', () => {
-    expect(mapStateToProps(state, {}).myModeratedCommunities.length).toEqual(1)
+    expect(mapStateToProps(state, requiredProps).myModeratedCommunities.length).toEqual(1)
   })
 
   it('returns the right keys for a new post while pending', () => {
     const props = {
-      forNew: true,
+      ...requiredProps,
       match: {
         params: {
           slug: 'foo'
@@ -90,7 +96,7 @@ describe('mergeProps', () => {
   it('goToPost redirects to topic with topicName', () => {
     const stateProps = {
       topicName: 'thetopicname',
-      slug: 'theslug'
+      communitySlug: 'theslug'
     }
     const dispatchProps = {
       goToUrl: jest.fn()
@@ -112,7 +118,7 @@ describe('mergeProps', () => {
 
   it('goToPost redirects to community feed with no topicName', () => {
     const stateProps = {
-      slug: 'theslug'
+      communitySlug: 'theslug'
     }
     const dispatchProps = {
       goToUrl: jest.fn()

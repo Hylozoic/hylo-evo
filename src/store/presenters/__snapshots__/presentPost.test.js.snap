@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`true 1`] = `
+Object {
+  "commenters": Array [],
+  "communities": Array [],
+  "creator": undefined,
+  "fileAttachments": Array [],
+  "followers": undefined,
+  "id": 324,
+  "linkPreview": undefined,
+  "members": Array [],
+  "pinned": true,
+  "topics": Array [],
+}
+`;

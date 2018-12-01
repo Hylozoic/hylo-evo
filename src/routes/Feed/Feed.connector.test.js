@@ -34,7 +34,7 @@ describe('mapStateToProps', () => {
     }
   })
 
-  it('sets filter, and sortBy from the router props', () => {
+  it('sets post type filter, and sortBy from the router props', () => {
     const props = {
       match: matchProps,
       location: {
@@ -42,7 +42,7 @@ describe('mapStateToProps', () => {
       }
     }
     expect(mapStateToProps(state, props)).toMatchObject({
-      filter: 'request',
+      postTypeFilter: 'request',
       sortBy: 'votes'
     })
   })
@@ -151,22 +151,7 @@ describe('mapDispatchToProps', () => {
     expect(dispatchProps.changeTab('request')).toMatchSnapshot()
     expect(dispatchProps.changeSort('updated')).toMatchSnapshot()
   })
-
-  it('correctly sets up showPostDetails', () => {
-    const dispatch = jest.fn(x => x)
-    const props = {
-      location: {
-        search: '?s=votes&t=offer',
-        pathname: '/c/foo'
-      },
-      match: {
-        params: {slug: 'foo'}
-      }
-    }
-    const dispatchProps = mapDispatchToProps(dispatch, props)
-    expect(dispatchProps.showPostDetails('5')).toMatchSnapshot()
-  })
-
+  
   describe('fetchTopic', () => {
     it('will call fetchCommunityTopic if communitySlug and topicName are in the url', () => {
       const dispatch = jest.fn(x => Promise.resolve(x))

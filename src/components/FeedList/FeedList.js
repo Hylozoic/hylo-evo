@@ -1,18 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { throttle, isEmpty, some } from 'lodash/fp'
+import cx from 'classnames'
+import { CENTER_COLUMN_ID, position } from 'util/scrolling'
+import { queryParamWhitelist } from 'store/reducers/queryResults'
 import TabBar from './TabBar'
 import PostCard from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
-import { CENTER_COLUMN_ID, position } from 'util/scrolling'
-import cx from 'classnames'
-import './FeedList.scss'
-import { throttle, isEmpty, some } from 'lodash/fp'
-import { queryParamWhitelist } from 'store/reducers/queryResults'
 import Loading from 'components/Loading'
+import './FeedList.scss'
 
 export default class FeedList extends React.Component {
   static defaultProps = {
-    posts: []
+    posts: [],
+    routeParams: {},
+    querystringParams: {}
   }
 
   constructor (props) {
@@ -50,16 +52,19 @@ export default class FeedList extends React.Component {
 
   componentDidUpdate (prevProps) {
     if (!prevProps) return
-    if (some(key => this.props[key] !== prevProps[key], queryParamWhitelist) ||
+    const updateCheckFunc = key =>
+      this.props[key] !== prevProps[key] ||
+      this.props.routeParams[key] !== prevProps.routeParams[key]
+    if (some(key => updateCheckFunc(key), queryParamWhitelist) ||
       (this.props.posts.length === 0 && prevProps.posts.length !== 0)) {
       this.fetchOrShowCached()
     }
   }
 
   fetchOrShowCached () {
-    const { hasMore, posts, fetchPosts, storeFeedListProps } = this.props
+    const { hasMore, posts, fetchPosts, storeFetchPostsParam } = this.props
     if (isEmpty(posts) && hasMore !== false) fetchPosts()
-    storeFeedListProps()
+    storeFetchPostsParam()
   }
 
   fetchMorePosts () {
@@ -70,47 +75,49 @@ export default class FeedList extends React.Component {
 
   render () {
     const {
-      filter,
+      routeParams,
+      querystringParams,
+      postTypeFilter,
       sortBy,
-      showPostDetails,
-      selectedPostId,
       changeTab,
       changeSort,
       posts,
-      pending,
-      slug
+      pending
     } = this.props
     const { atTabBar, tabBarWidth } = this.state
     const style = {
       width: tabBarWidth + 'px'
     }
+    const isProject = routeParams.postTypeContext === 'project'
 
     return <div styleName='FeedList-container'>
       <ScrollListener
         elementId={CENTER_COLUMN_ID}
         onScroll={this.handleScrollEvents} />
-      <div>
-        <TabBar ref={this.setStateFromDOM}
-          onChangeTab={changeTab}
-          selectedTab={filter}
-          onChangeSort={changeSort}
-          selectedSort={sortBy} />
-      </div>
-      {atTabBar && <div styleName='tabbar-sticky' style={style}>
-        <TabBar onChangeTab={changeTab}
-          selectedTab={filter}
-          onChangeSort={changeSort}
-          selectedSort={sortBy} />
-      </div>}
+      {!isProject && <React.Fragment>
+        <div>
+          <TabBar ref={this.setStateFromDOM}
+            onChangeTab={changeTab}
+            selectedTab={postTypeFilter}
+            onChangeSort={changeSort}
+            selectedSort={sortBy} />
+        </div>
+        {atTabBar && <div styleName='tabbar-sticky' style={style}>
+          <TabBar onChangeTab={changeTab}
+            selectedTab={postTypeFilter}
+            onChangeSort={changeSort}
+            selectedSort={sortBy} />
+        </div>}
+      </React.Fragment>}
       <div styleName='FeedListItems'>
         {posts.map(post => {
-          const expanded = post.id === selectedPostId
+          const expanded = post.id === routeParams.postId
           return <PostCard
+            routeParams={routeParams}
+            querystringParams={querystringParams}
             post={post}
-            slug={slug}
             styleName={cx('FeedListItem', {expanded})}
             expanded={expanded}
-            showDetails={() => showPostDetails(post.id)}
             key={post.id} />
         })}
       </div>

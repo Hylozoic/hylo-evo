@@ -42,7 +42,7 @@ export default class PeopleSelector extends React.Component {
     const { participantSearch } = this.props
     if (participantSearch) {
       participantSearch.forEach(p => this.props.addParticipant(p))
-      this.props.changeQueryParam(this.props, 'participants', null)
+      this.props.changeQuerystringParam(this.props, 'participants', null)
     }
   }
 

@@ -6,18 +6,17 @@
 // to "Location". And both of these lists are different from what should be
 // shown when something has been typed into the search field.
 import { get, isNull, omitBy, pick, reduce, uniq, isEmpty, includes } from 'lodash/fp'
-import { mapValues } from 'lodash'
+import { mapValues, camelCase } from 'lodash'
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import {
   FETCH_POSTS,
+  CREATE_POST,
+  CREATE_PROJECT,
   DROP_QUERY_RESULTS,
   FIND_OR_CREATE_THREAD,
   FETCH_THREADS
 } from 'store/constants'
-import {
-  CREATE_POST
-} from 'components/PostEditor/PostEditor.store'
 import {
   FETCH_NETWORK_SETTINGS,
   FETCH_MODERATORS,
@@ -57,10 +56,10 @@ export default function (state = {}, action) {
 
   const { extractQueryResults } = meta || {}
   if (extractQueryResults && payload) {
-    const { getItems, getParams, getType } = extractQueryResults
+    const { getItems, getRouteParams, getType } = extractQueryResults
     return appendIds(state,
       getType ? getType(action) : action.type,
-      getParams ? getParams(action) : meta.graphql.variables,
+      getRouteParams ? getRouteParams(action) : meta.graphql.variables,
       getItems(action)
     )
   }
@@ -70,8 +69,12 @@ export default function (state = {}, action) {
   //
 
   switch (type) {
+    case CREATE_PROJECT:
     case CREATE_POST:
-      root = payload.data.createPost
+      root = {
+        networkSlug: meta.networkSlug,
+        ...payload.data[camelCase(type)]
+      }
       return matchNewPostIntoQueryResults(state, root)
 
     case FIND_OR_CREATE_THREAD:
@@ -109,31 +112,50 @@ export default function (state = {}, action) {
   return state
 }
 
-const isIterable = object =>
-  object != null && typeof object[Symbol.iterator] === 'function'
-
-export function matchNewPostIntoQueryResults (state, {id, type, communities, topics}) {
+export function matchNewPostIntoQueryResults (state, {id, type, networkSlug, communities, topics = []}) {
   /* about this:
       we add the post id into queryResult sets that are based on time of
       creation because we know that the post just created is the latest
       so we can prepend it. we have to match the different variations which
       can be implicit or explicit about sorting by 'updated'.
   */
+  const queriesToMatch = []
 
+  // All Communities feed w/ topics
+  queriesToMatch.push({})
+  for (let topic of topics) {
+    queriesToMatch.push(
+      {topic: topic.id}
+    )
+  }
+  // Network feeds w/ topics
+  if (networkSlug) {
+    queriesToMatch.push(
+      {networkSlug},
+      {networkSlug, filter: type},
+      {networkSlug, sortBy: 'updated'},
+      {networkSlug, sortBy: 'updated', filter: type}
+    )
+    for (let topic of topics) {
+      queriesToMatch.push(
+        {networkSlug: networkSlug, topic: topic.id}
+      )
+    }
+  }
+
+  // Network feeds w/ topics
   return reduce((memo, community) => {
-    const queriesToMatch = [
+    queriesToMatch.push(
       {slug: community.slug},
       {slug: community.slug, filter: type},
       {slug: community.slug, sortBy: 'updated'},
       {slug: community.slug, sortBy: 'updated', filter: type}
-    ]
-
-    if (isIterable(topics)) {
-      for (let topic of topics) {
-        queriesToMatch.push({slug: community.slug, topic: topic.id})
-      }
+    )
+    for (let topic of topics) {
+      queriesToMatch.push(
+        {slug: community.slug, topic: topic.id}
+      )
     }
-
     return reduce((innerMemo, params) => {
       return prependIdForCreate(innerMemo, FETCH_POSTS, params, id)
     }, memo, queriesToMatch)
@@ -180,7 +202,6 @@ export function makeGetQueryResults (actionType) {
     // URL, in which case they are in e.g. props.match.params.id; and sometimes
     // they are passed directly to a component. Should buildKey handle both
     // cases?
-
     const key = buildKey(actionType, props)
     return get(`queryResults[${key}]`, state)
   }

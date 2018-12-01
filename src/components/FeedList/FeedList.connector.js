@@ -1,62 +1,62 @@
 import { connect } from 'react-redux'
-import { createSelector } from 'reselect'
-import { get } from 'lodash/fp'
+import { pick } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
-import { presentPost } from 'store/selectors/getPost'
+import presentPost from 'store/presenters/presentPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import { fetchPosts, storeFeedListProps } from './FeedList.store.js'
-import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
+import {
+  fetchPosts,
+  storeFetchPostsParam,
+  getPosts,
+  getHasMorePosts
+} from './FeedList.store.js'
 
 export function mapStateToProps (state, props) {
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const communityId = currentCommunity && currentCommunity.id
-
-  const posts = getPosts(state, props).map(p => presentPost(p, communityId))
+  const fetchPostsParam = {
+    filter: props.postTypeFilter,
+    ...pick([
+      'slug',
+      'networkSlug'
+    ], props.routeParams),
+    ...pick([
+      'subject',
+      'sortBy',
+      'topic'
+    ], props)
+  }
+  // NOTE: In effort to better seperate the query caching from component details
+  //       it's better (and necessary) in this case to send the fetch param then
+  //       the raw props of the component.
+  const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, communityId))
+  const hasMore = getHasMorePosts(state, fetchPostsParam)
 
   return {
     posts,
-    hasMore: getHasMorePosts(state, props),
+    hasMore,
+    fetchPostsParam,
     pending: state.pending[FETCH_POSTS]
   }
 }
 
-export const mapDispatchToProps = function (dispatch, props) {
-  const { slug, networkSlug, sortBy, filter, subject, topic } = props
-  const search = null // placeholder; no need for this yet
+export function mapDispatchToProps (dispatch) {
   return {
-    fetchPosts: offset => dispatch(fetchPosts({
-      subject,
-      slug,
-      networkSlug,
-      sortBy,
-      offset,
-      search,
-      filter,
-      topic
-    })),
-    // We are putting a the feedListProps into appstate so components (ie Navigation,
-    // TopicNav) can drop the queryResults and re-fetch posts
-    storeFeedListPropsMaker: props => () => dispatch(storeFeedListProps(props))
+    fetchPosts: param => offset => dispatch(fetchPosts({offset, ...param})),
+    storeFetchPostsParam: param => () => dispatch(storeFetchPostsParam(param))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { storeFeedListPropsMaker } = dispatchProps
+  const { fetchPostsParam } = stateProps
+  const { fetchPosts, storeFetchPostsParam } = dispatchProps
+
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    storeFeedListProps: storeFeedListPropsMaker(ownProps)
+    fetchPosts: fetchPosts(fetchPostsParam),
+    storeFetchPostsParam: storeFetchPostsParam(fetchPostsParam)
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
-
-const getPostResults = makeGetQueryResults(FETCH_POSTS)
-
-export const getPosts = makeQueryResultsModelSelector(
-  getPostResults,
-  'Post'
-)
-
-const getHasMorePosts = createSelector(getPostResults, get('hasMore'))

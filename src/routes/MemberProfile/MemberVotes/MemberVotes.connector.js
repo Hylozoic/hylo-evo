@@ -1,17 +1,19 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
-
-import { memberVotesSelector, fetchMemberVotes } from './MemberVotes.store'
+import {
+  getMemberVotes,
+  fetchMemberVotes
+} from './MemberVotes.store'
 
 export function mapStateToProps (state, props) {
   return {
-    votes: memberVotesSelector(state, props)
+    posts: getMemberVotes(state, props)
   }
 }
 
-export const mapDispatchToProps = {
-  fetchMemberVotes,
-  showDetails: (id, slug) => push(`/c/${slug}/p/${id}`)
+export function mapDispatchToProps (dispatch, props) {
+  return {
+    fetchMemberVotes: () => dispatch(fetchMemberVotes(props.routeParams.personId))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)

@@ -12,11 +12,11 @@ import {
 } from './NetworkSettings.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import getMe from 'store/selectors/getMe'
-import getParam from 'store/selectors/getParam'
+import getRouteParam from 'store/selectors/getRouteParam'
 import { FETCH_NETWORK_SETTINGS } from 'routes/NetworkSettings/NetworkSettings.store'
 
 export function mapStateToProps (state, props) {
-  const slug = getParam('networkSlug', state, props)
+  const slug = getRouteParam('networkSlug', state, props)
   const network = getNetwork(state, {slug})
 
   const moderatorsPage = getModeratorsPage(state, props)

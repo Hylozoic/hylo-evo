@@ -5,11 +5,11 @@ import SkillsSection from 'components/SkillsSection'
 
 export default class MemberSidebar extends Component {
   render () {
-    const { memberId } = this.props
+    const { personId } = this.props.match.params
 
     return <div styleName='member-sidebar'>
-      <MessageMember id={memberId} />
-      <SkillsSection memberId={memberId} />
+      <MessageMember personId={personId} />
+      <SkillsSection personId={personId} />
     </div>
   }
 }

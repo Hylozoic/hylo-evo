@@ -1,6 +1,9 @@
-import { createSelector } from 'redux-orm'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import { compact } from 'lodash/fp'
 import orm from 'store/models'
-import { postsQueryFragment } from 'components/FeedList/FeedList.store'
+import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
+import presentPost from 'store/presenters/presentPost'
+import presentComment from 'store/presenters/presentComment'
 
 export const FETCH_RECENT_ACTIVITY = 'FETCH_RECENT_ACTIVITY'
 
@@ -52,9 +55,9 @@ export function fetchRecentActivity (id, first = 3, query = recentActivityQuery)
 }
 
 // Deliberately preserves object references
-// Used to display interspersed posts and comments on 'Recent Activity'
+// Intersperses posts and comments
 export function indexActivityItems (comments, posts) {
-  // TODO: support something other than descending order
+  // descending order
   return comments.concat(posts)
     .sort((a, b) => {
       const aDate = new Date(a.createdAt)
@@ -63,31 +66,16 @@ export function indexActivityItems (comments, posts) {
     })
 }
 
-export const activitySelector = createSelector(
+export const getRecentActivity = ormCreateSelector(
   orm,
   state => state.orm,
-  (_, { personId }) => personId,
-  (_, { slug }) => slug,
-  (session, personId, slug) => {
-    if (session.Person.hasId(personId)) {
-      const person = session.Person.withId(personId)
-      const comments = person.comments.toModelArray().map(comment => ({
-        ...comment.ref,
-        creator: comment.creator.ref,
-        post: comment.post.ref,
-        image: comment.attachments.toModelArray()[0],
-        slug
-      }))
-      const posts = person.posts.toModelArray().map(post => ({
-        ...post.ref,
-        creator: post.creator,
-        linkPreview: post.linkPreview,
-        commenters: post.commenters.toRefArray(),
-        communities: post.communities.toRefArray(),
-        fileAttachments: post.attachments.filter(a => a.type === 'file').toModelArray()
-      }))
-      return indexActivityItems(comments, posts)
-    }
-    return null
-  }
-)
+  (_, { routeParams }) => routeParams,
+  ({ Person }, { personId, slug }) => {
+    if (!Person.hasId(personId)) return
+    const person = Person.withId(personId)
+    const comments = compact(person.comments.toModelArray().map(comment =>
+      presentComment(comment, slug)))
+    const posts = compact(person.posts.toModelArray().map(post =>
+      presentPost(post)))
+    return indexActivityItems(comments, posts)
+  })

@@ -6,6 +6,7 @@ Object {
   "addImage": [Function],
   "clearLinkPreview": [Function],
   "createPost": [Function],
+  "createProject": [Function],
   "goToUrl": [Function],
   "pollingFetchLinkPreviewRaw": [Function],
   "removeLinkPreview": [Function],
@@ -40,6 +41,7 @@ Object {
       "slug": "bar",
     },
   ],
+  "communitySlug": "foo",
   "currentCommunity": SessionBoundModel {
     "_fields": Object {
       "id": "99",
@@ -65,6 +67,7 @@ Object {
   "fetchLinkPreviewPending": undefined,
   "files": Array [],
   "images": Array [],
+  "isProject": false,
   "linkPreview": null,
   "linkPreviewStatus": false,
   "loading": false,
@@ -80,11 +83,12 @@ Object {
       "slug": "foo",
     },
   ],
+  "networkSlug": undefined,
   "post": null,
   "postPending": false,
+  "postTypeContext": undefined,
   "showFiles": false,
   "showImages": false,
-  "slug": "foo",
   "topic": null,
   "topicName": undefined,
 }
@@ -116,6 +120,7 @@ Object {
       "slug": "bar",
     },
   ],
+  "communitySlug": "foo",
   "currentCommunity": SessionBoundModel {
     "_fields": Object {
       "id": "99",
@@ -141,6 +146,7 @@ Object {
   "fetchLinkPreviewPending": undefined,
   "files": Array [],
   "images": Array [],
+  "isProject": false,
   "linkPreview": null,
   "linkPreviewStatus": false,
   "loading": true,
@@ -156,11 +162,12 @@ Object {
       "slug": "foo",
     },
   ],
+  "networkSlug": undefined,
   "post": null,
   "postPending": true,
+  "postTypeContext": undefined,
   "showFiles": false,
   "showImages": false,
-  "slug": "foo",
   "topic": null,
   "topicName": undefined,
 }

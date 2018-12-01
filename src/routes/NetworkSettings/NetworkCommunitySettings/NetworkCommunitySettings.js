@@ -4,7 +4,7 @@ import Loading from 'components/Loading'
 import './NetworkCommunitySettings.scss'
 import Switch from 'components/Switch'
 import Avatar from 'components/Avatar'
-import { personUrl } from 'util/index'
+import { personUrl } from 'util/navigation'
 import { get } from 'lodash'
 
 export default class NetworkCommunitySettings extends Component {
@@ -45,7 +45,7 @@ export default class NetworkCommunitySettings extends Component {
 export function CommunityModeratorSection ({ moderators, slug }) {
   return <div styleName='moderators-section'>
     <div styleName='moderators-header'>Community Moderators</div>
-    {moderators.map(m => <CommunityModerator moderator={m} slug={slug} key={m.id} />)}
+    {moderators.map((m, index) => <CommunityModerator moderator={m} slug={slug} key={index} />)}
   </div>
 }
 

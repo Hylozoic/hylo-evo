@@ -1,6 +1,7 @@
-import { createSelector } from 'redux-orm'
-
+import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
+import { compact } from 'lodash/fp'
+import presentComment from 'store/presenters/presentComment'
 
 export const FETCH_MEMBER_COMMENTS = 'FETCH_MEMBER_COMMENTS'
 
@@ -37,26 +38,18 @@ export function fetchMemberComments (id, order = 'desc', limit = 20, query = mem
       query,
       variables: { id, limit, order }
     },
-    meta: { extractModel: 'Person' }
+    meta: {extractModel: 'Person'}
   }
 }
 
-export const memberCommentsSelector = createSelector(
+export const getMemberComments = ormCreateSelector(
   orm,
   state => state.orm,
-  (_, { personId }) => personId,
-  (_, { slug }) => slug,
-  (session, personId, slug) => {
-    if (session.Person.hasId(personId)) {
-      const person = session.Person.withId(personId)
-      return person.comments.toModelArray().map(comment => ({
-        ...comment.ref,
-        creator: comment.creator.ref,
-        post: comment.post.ref,
-        image: comment.attachments.toModelArray()[0],
-        slug
-      }))
-    }
-    return null
+  (_, { routeParams }) => routeParams,
+  ({ Person }, { personId, slug }) => {
+    if (!Person.hasId(personId)) return
+    const person = Person.withId(personId)
+    return compact(person.comments.toModelArray().map(comment => presentComment(comment, slug)))
+      .sort(c => c.createdAt)
   }
 )

@@ -6,8 +6,8 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
     data-stylename="activity-item"
     key="30003"
   >
-    <PostCard
-      editPost={[Function]}
+    <Connect(PostCard)
+      expanded={false}
       post={
         Object {
           "commenters": Array [],
@@ -29,15 +29,15 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
           "type": "discussion",
         }
       }
-      showDetails={[Function]}
+      routeParams={Object {}}
     />
   </div>
   <div
     data-stylename="activity-item"
     key="30002"
   >
-    <PostCard
-      editPost={[Function]}
+    <Connect(PostCard)
+      expanded={false}
       post={
         Object {
           "commenters": Array [
@@ -67,7 +67,7 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
           "type": "discussion",
         }
       }
-      showDetails={[Function]}
+      routeParams={Object {}}
     />
   </div>
 </div>

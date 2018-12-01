@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
 import { bgImageStyle } from 'util/index'
@@ -13,6 +12,7 @@ export default function FeedBanner ({
   community,
   currentUser,
   newPost,
+  type,
   currentUserHasMemberships
 }) {
   let bannerUrl, avatarUrl, name, location, subtitle
@@ -45,14 +45,30 @@ export default function FeedBanner ({
         </div>
       </div>
     </div>
-    {currentUserHasMemberships && <PostPrompt currentUser={currentUser} newPost={newPost} /> }
+    {currentUserHasMemberships && <PostPrompt
+      type={type}
+      firstName={currentUser.firstName()}
+      avatarUrl={currentUser.avatarUrl}
+      newPost={newPost} />}
   </div>
 }
 
+export function postPromptString (type = '', { firstName }) {
+  const postPrompts = {
+    offer: `Hi ${firstName}, what would you like to share?`,
+    request: `Hi ${firstName}, what are you looking for?`,
+    project: `Hi ${firstName}, what would you like to create?`,
+    default: `Hi ${firstName}, what's on your mind?`
+  }
+
+  return postPrompts[type] || postPrompts['default']
+}
+
 export class PostPrompt extends React.Component {
-  static propTypes = {
-    currentUser: PropTypes.object,
-    newPost: PropTypes.func
+  static defaultProps = {
+    type: '',
+    firstName: '',
+    promptStringFunc: postPromptString
   }
 
   constructor (props) {
@@ -65,13 +81,13 @@ export class PostPrompt extends React.Component {
   onMouseLeaveHandler = () => this.setState({hover: false})
 
   render () {
-    const { currentUser, newPost, className } = this.props
+    const { type, avatarUrl, firstName, newPost, promptStringFunc, className } = this.props
     const { hover } = this.state
-    if (!currentUser) return null
+
     return <div onMouseEnter={this.onMouseEnterHandler} onMouseLeave={this.onMouseLeaveHandler}>
       <div styleName='postPrompt' className={className} onClick={newPost}>
-        <RoundImage url={currentUser.avatarUrl} small styleName='prompt-image' />
-          Hi {currentUser.firstName()}, what's on your mind?
+        <RoundImage url={avatarUrl} small styleName='prompt-image' />
+        {promptStringFunc(type, {firstName})}
       </div>
       <div styleName={cx('shadow', { hover })} />
     </div>

@@ -6,7 +6,8 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
     data-stylename="activity-item"
     key="2"
   >
-    <PostCard
+    <Connect(PostCard)
+      expanded={false}
       post={
         Object {
           "createdAt": "Tue Apr 18 2017 09:50:25 GMT+1200 (NZST)",
@@ -43,14 +44,15 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
           },
         }
       }
-      showDetails={[Function]}
+      routeParams={Object {}}
     />
   </div>
   <div
     data-stylename="activity-item"
     key="1"
   >
-    <PostCard
+    <Connect(PostCard)
+      expanded={false}
       post={
         Object {
           "createdAt": "Tue Apr 18 2017 09:20:39 GMT+1200 (NZST)",
@@ -79,7 +81,7 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
           },
         }
       }
-      showDetails={[Function]}
+      routeParams={Object {}}
     />
   </div>
 </div>

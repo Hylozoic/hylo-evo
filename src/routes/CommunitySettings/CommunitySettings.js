@@ -8,7 +8,7 @@ import Loading from 'components/Loading'
 import FullPageModal from 'routes/FullPageModal'
 import { get } from 'lodash/fp'
 import { Redirect } from 'react-router'
-import { communityUrl } from 'util/index'
+import { communityUrl } from 'util/navigation'
 
 const { object, func } = PropTypes
 

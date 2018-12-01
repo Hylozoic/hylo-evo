@@ -1,51 +1,31 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-
+import Loading from 'components/Loading'
 import PostCard from 'components/PostCard'
 import './MemberVotes.scss'
 
-const { any, arrayOf, func, number, shape, string } = PropTypes
-
-const personShape = shape({
-  id: any,
-  name: string,
-  avatarUrl: string
-})
-const communityShape = shape({
-  id: any,
-  name: string,
-  slug: string
-})
-
 export default class MemberVotes extends React.Component {
-  static propTypes = {
-    showDetails: func,
-    votes: arrayOf(shape({
-      id: any,
-      commenters: arrayOf(personShape),
-      communities: arrayOf(communityShape),
-      commentersTotal: number,
-      creator: personShape,
-      createdAt: string,
-      details: string,
-      followers: arrayOf(personShape),
-      title: string,
-      type: string
-    }))
+  static defaultProps = {
+    routeParams: {}
   }
 
   componentDidMount () {
-    this.props.fetchMemberVotes(this.props.personId)
+    this.props.fetchMemberVotes()
   }
 
+  itemSelected = selectedItemId => selectedItemId === this.props.routeParams.postId
+
   render () {
-    const { showDetails, votes } = this.props
+    if (this.props.loading) return <Loading />
+
+    const { posts, routeParams } = this.props
+
     return <div>
-      {votes && votes.map(post =>
+      {posts && posts.map(post =>
         <div styleName='activity-item' key={post.id}>
           <PostCard
+            routeParams={routeParams}
             post={post}
-            showDetails={() => showDetails(post.id, post.communities[0].slug)} />
+            expanded={this.itemSelected(post.id)} />
         </div>
       )}
     </div>

@@ -3,13 +3,13 @@ import { push } from 'react-router-redux'
 import { get } from 'lodash/fp'
 import { getSubscribedCommunityTopics } from './TopicNavigation.store'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
-import { removePostFromUrl } from 'util/index'
+import { removePostFromUrl } from 'util/navigation'
 import { FETCH_POSTS } from 'store/constants'
 import { makeDropQueryResults } from 'store/reducers/queryResults'
 
 export function mapStateToProps (state, props) {
   return {
-    feedListProps: get('FeedList.feedListProps', state),
+    feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),
     communityTopics: getSubscribedCommunityTopics(state, props)
   }
 }
@@ -35,7 +35,7 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { feedListProps, communityTopics } = stateProps
+  const { feedListFetchPostsParam, communityTopics } = stateProps
   const { clearBadge, expand, dropPostResultsMaker, goBack } = dispatchProps
   return {
     ...ownProps,
@@ -43,7 +43,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     clearBadge,
     expand,
     goBack,
-    clearFeedList: dropPostResultsMaker(feedListProps)
+    clearFeedList: dropPostResultsMaker(feedListFetchPostsParam)
   }
 }
 

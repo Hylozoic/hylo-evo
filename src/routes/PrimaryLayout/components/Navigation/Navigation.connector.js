@@ -3,7 +3,7 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { communityUrl, networkUrl } from 'util/index'
+import { communityUrl, networkUrl } from 'util/navigation'
 import orm from 'store/models'
 import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
@@ -13,6 +13,7 @@ export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
   const network = getNetworkForCurrentRoute(state, props)
   let rootId, rootSlug, rootPath, membersPath, communityMembership, badge
+
   if (community) {
     rootId = community.id
     rootSlug = get('slug', community)
@@ -33,14 +34,16 @@ export function mapStateToProps (state, props) {
     rootSlug = ''
     rootPath = communityUrl()
   }
+  const projectsPath = `${rootPath}/project`
 
   return {
     rootId,
     rootSlug,
     rootPath,
     membersPath,
+    projectsPath,
     badge,
-    feedListProps: get('FeedList.feedListProps', state),
+    feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),
     communityMembership
   }
 }
@@ -50,29 +53,22 @@ const dropPostResults = makeDropQueryResults(FETCH_POSTS)
 export function mapDispatchToProps (dispatch, props) {
   return {
     resetNewPostCount: (id, type) => dispatch(resetNewPostCount(id, type)),
-    dropPostResultsMaker: feedListProps => () => dispatch(dropPostResults(feedListProps))
+    dropPostResultsMaker: feedListFetchPostsParam => () => dispatch(dropPostResults(feedListFetchPostsParam))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const {
-    rootId,
-    rootSlug,
-    rootPath,
-    membersPath,
     badge,
-    feedListProps,
+    feedListFetchPostsParam,
     communityMembership
   } = stateProps
 
   return {
     ...ownProps,
-    rootId,
-    rootSlug,
-    rootPath,
-    membersPath,
-    badge,
-    clearFeedList: dispatchProps.dropPostResultsMaker(feedListProps),
+    ...stateProps,
+    ...dispatchProps,
+    clearFeedList: dispatchProps.dropPostResultsMaker(feedListFetchPostsParam),
     clearBadge: badge
       ? () => dispatchProps.resetNewPostCount(communityMembership.community.id, 'Membership')
       : () => {}

@@ -2,8 +2,12 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
 import { get, isEqual, throttle } from 'lodash/fp'
+import cheerio from 'cheerio'
 import cx from 'classnames'
-import styles from './PostEditor.scss'
+import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
+import { POST_PROP_TYPES } from 'store/models/Post'
+import AttachmentManager from './AttachmentManager'
+import { uploadSettings } from './AttachmentManager/AttachmentManager'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
@@ -11,32 +15,24 @@ import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 import TopicSelector from 'components/TopicSelector'
+import MemberSelector from 'components/MemberSelector'
 import LinkPreview from './LinkPreview'
 import ChangeImageButton from 'components/ChangeImageButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
-import AttachmentManager from './AttachmentManager'
-import { uploadSettings } from './AttachmentManager/AttachmentManager'
-import cheerio from 'cheerio'
-import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
-import { MAX_TITLE_LENGTH } from './PostEditor.store'
+import styles from './PostEditor.scss'
+
+export const MAX_TITLE_LENGTH = 50
 
 export default class PostEditor extends React.Component {
   static propTypes = {
-    initialPrompt: PropTypes.string,
     onClose: PropTypes.func,
+    initialPromptForPostType: PropTypes.object,
     titlePlaceholderForPostType: PropTypes.object,
     detailsPlaceholder: PropTypes.string,
     communityOptions: PropTypes.array,
     currentUser: PropTypes.object,
     currentCommunity: PropTypes.object,
-    post: PropTypes.shape({
-      id: PropTypes.string,
-      type: PropTypes.string,
-      title: PropTypes.string,
-      details: PropTypes.string,
-      linkPreview: PropTypes.object,
-      communities: PropTypes.array
-    }),
+    post: PropTypes.shape(POST_PROP_TYPES),
     linkPreviewStatus: PropTypes.string,
     createPost: PropTypes.func,
     updatePost: PropTypes.func,
@@ -49,10 +45,14 @@ export default class PostEditor extends React.Component {
   }
 
   static defaultProps = {
-    initialPrompt: 'What are you looking to post?',
+    initialPromptForPostType: {
+      project: <span styleName='postType postType-project'>CREATE PROJECT</span>,
+      default: 'What are you looking to post?'
+    },
     titlePlaceholderForPostType: {
       offer: 'What super powers can you offer?',
       request: 'What are you looking for help with?',
+      project: 'What would you like to call your project?',
       default: 'What’s on your mind?'
     },
     detailsPlaceholder: 'Add a description',
@@ -66,16 +66,18 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ editing, loading, currentCommunity, post, topic, announcementSelected }) => {
+  buildStateFromProps = ({ editing, currentCommunity, post, topic, initialPrompt, announcementSelected, postTypeContext }) => {
     const defaultPostWithCommunitiesAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
-      communities: currentCommunity ? [currentCommunity] : [],
+      type: postTypeContext || PostEditor.defaultProps.post.type,
+      communities: currentCommunity ? [currentCommunity] : PostEditor.defaultProps.post.communities,
       topics: topic ? [topic] : [],
       detailsTopics: []
     })
-
     const currentPost = post || defaultPostWithCommunitiesAndTopic
+
     return {
       post: currentPost,
+      initialPrompt: initialPrompt || this.initialPromptForPostType(currentPost.type),
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
       valid: editing === true, // if we're editing, than it's already valid upon entry.
       announcementSelected: announcementSelected,
@@ -131,6 +133,11 @@ export default class PostEditor extends React.Component {
   titlePlaceholderForPostType (type) {
     const { titlePlaceholderForPostType } = this.props
     return titlePlaceholderForPostType[type] || titlePlaceholderForPostType['default']
+  }
+
+  initialPromptForPostType (type) {
+    const { initialPromptForPostType } = this.props
+    return initialPromptForPostType[type] || initialPromptForPostType['default']
   }
 
   postTypeButtonProps = (forPostType) => {
@@ -208,6 +215,12 @@ export default class PostEditor extends React.Component {
     })
   }
 
+  updateProjectMembers = members => {
+    this.setState({
+      post: {...this.state.post, members}
+    })
+  }
+
   isValid = (postUpdates = {}) => {
     const { type, title, communities } = Object.assign({}, this.state.post, postUpdates)
     return !!(this.editor &&
@@ -220,14 +233,19 @@ export default class PostEditor extends React.Component {
   }
 
   save = () => {
-    const { editing, createPost, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected } = this.props
-    const { id, type, title, communities, linkPreview } = this.state.post
+    const {
+      editing, createPost, createProject, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected, isProject
+    } = this.props
+    const {
+      id, type, title, communities, linkPreview, members
+    } = this.state.post
     const details = this.editor.getContentHTML()
     const topicNames = this.topicSelector.getSelected().map(t => t.name)
+    const memberIds = members && members.map(m => m.id)
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds
     }
-    const saveFunc = editing ? updatePost : createPost
+    const saveFunc = editing ? updatePost : isProject ? createProject : createPost
     setAnnouncement(false)
     saveFunc(postToSave).then(editing ? onClose : goToPost)
   }
@@ -248,25 +266,26 @@ export default class PostEditor extends React.Component {
   }
 
   render () {
-    const { titlePlaceholder, titleLengthError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
-    const { id, title, details, communities, linkPreview, topics } = post
+    const { initialPrompt, titlePlaceholder, titleLengthError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
+    const { id, title, details, communities, linkPreview, topics, members } = post
     const {
-      onClose, initialPrompt, detailsPlaceholder,
+      onClose, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
       showImages, addFile, showFiles, setAnnouncement, announcementSelected,
-      canModerate, myModeratedCommunities
+      canModerate, myModeratedCommunities, isProject
     } = this.props
+
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
       <div styleName='header'>
         <div styleName='initial'>
           <div styleName='initial-prompt'>{initialPrompt}</div>
           <a styleName='initial-closeButton' onClick={onClose}><Icon name='Ex' /></a>
         </div>
-        <div styleName='postTypes'>
+        {!isProject && <div styleName='postTypes'>
           <Button {...this.postTypeButtonProps('discussion')} />
           <Button {...this.postTypeButtonProps('request')} />
           <Button {...this.postTypeButtonProps('offer')} />
-        </div>
+        </div>}
       </div>
       <div styleName='body'>
         <div styleName='body-column'>
@@ -313,6 +332,17 @@ export default class PostEditor extends React.Component {
               ref={component => { this.topicSelector = component && component.getWrappedInstance() }} />
           </div>
         </div>
+        {isProject && <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Project Members</div>
+          <div styleName='footerSection-communities'>
+            <MemberSelector
+              initialMembers={members || []}
+              onChange={this.updateProjectMembers}
+              readOnly={loading}
+              ref={component => { this.membersSelector = component }}
+            />
+          </div>
+        </div>}
         <div styleName='footerSection'>
           <div styleName='footerSection-label'>Post in</div>
           <div styleName='footerSection-communities'>

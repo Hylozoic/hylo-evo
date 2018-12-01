@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
 import { isNil } from 'lodash'
-import getQueryParam from 'store/selectors/getQueryParam'
-import getParam from 'store/selectors/getParam'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import getRouteParam from 'store/selectors/getRouteParam'
 import getMe from 'store/selectors/getMe'
 import getIsLoggedIn from 'store/selectors/getIsLoggedIn'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
@@ -15,8 +15,8 @@ export function mapStateToProps (state, props) {
   const isValidInvite = getValidInvite(state)
   return {
     currentUser: getMe(state),
-    invitationToken: getQueryParam('token', state, props),
-    accessCode: getParam('accessCode', state, props),
+    invitationToken: getQuerystringParam('token', state, props),
+    accessCode: getRouteParam('accessCode', state, props),
     communitySlug: get('community.slug', newMembership),
     isLoggedIn: getIsLoggedIn(state),
     hasCheckedValidInvite: !isNil(isValidInvite),

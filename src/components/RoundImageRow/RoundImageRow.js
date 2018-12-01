@@ -5,7 +5,7 @@ import './RoundImageRow.scss'
 
 const { array, string, bool } = PropTypes
 
-export default function RoundImageRow ({ imageUrls = [], className, vertical, cap, ascending }) {
+export default function RoundImageRow ({ imageUrls = [], className, vertical, cap, ascending, ...rest }) {
   var capped
   var extra
   if (cap && cap < imageUrls.length) {
@@ -30,7 +30,7 @@ export default function RoundImageRow ({ imageUrls = [], className, vertical, ca
     +{extra}
   </div>
 
-  return <div className={className}>
+  return <div className={className} {...rest} >
     {capped ? images.concat([plus]) : images}
   </div>
 }

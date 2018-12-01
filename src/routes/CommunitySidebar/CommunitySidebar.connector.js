@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import getParam from 'store/selectors/getParam'
+import getRouteParam from 'store/selectors/getRouteParam'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getCanModerate from 'store/selectors/getCanModerate'
 
@@ -12,7 +12,7 @@ export function mapStateToProps (state, props) {
     community: community ? community.ref : null,
     members,
     leaders,
-    slug: getParam('slug', state, props),
+    slug: getRouteParam('slug', state, props),
     canModerate
   }
 }

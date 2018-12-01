@@ -73,7 +73,7 @@ exports[`ModalDialog matches the last snapshot 1`] = `
 >
   <div
     data-stylename="popup-inner"
-    style={null}
+    style={Object {}}
   >
     <span
       data-stylename="close-btn"

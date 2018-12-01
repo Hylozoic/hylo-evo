@@ -9,7 +9,8 @@ import FullPageModal from 'routes/FullPageModal'
 import Icon from 'components/Icon'
 import ScrollListener from 'components/ScrollListener'
 import TextInput from 'components/TextInput'
-import { pluralize, tagUrl } from 'util/index'
+import { inflectedTotal } from 'util/index'
+import { tagUrl } from 'util/navigation'
 import './AllTopics.scss'
 
 const sortOptions = [
@@ -143,7 +144,7 @@ export function CommunityTopicListItem ({ item, slug, toggleSubscribe, deleteTop
   return <div styleName='topic'>
     <Link styleName='topic-details' to={tagUrl(name, slug)}>
       <div styleName='topic-name'>#{name}</div>
-      <div styleName='topic-stats'>{pluralize(postsTotal, 'post')} • {pluralize(followersTotal, 'follower')}</div>
+      <div styleName='topic-stats'>{inflectedTotal('post', postsTotal)} • {inflectedTotal('follower', followersTotal)}</div>
     </Link>
     <span onClick={toggleSubscribe} styleName='topic-subscribe'>
       {isSubscribed ? 'Unsubscribe' : 'Subscribe'}

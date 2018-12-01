@@ -1,7 +1,10 @@
 import orm from 'store/models'
 import payload from '../MemberProfile.test.json'
 import normalized from '../MemberProfile.normalized.test.json'
-import { fetchMemberPosts, memberPostsSelector } from './MemberPosts.store'
+import {
+  fetchMemberPosts,
+  getMemberPosts
+} from './MemberPosts.store'
 import { mapStateToProps } from './MemberPosts.connector'
 
 describe('fetchMemberPosts', () => {
@@ -35,13 +38,13 @@ describe('connector', () => {
     session.Community.create(communities[0])
     posts.forEach(post => session.Post.create(post))
     state = { orm: session.state }
-    props = { personId: '46816', slug: 'wombats' }
+    props = { routeParams: { personId: '46816', slug: 'wombats' } }
   })
 
-  describe('memberPostsSelector', () => {
+  describe('getMemberPots', () => {
     it('populates posts correctly', () => {
       const expected = payload.data.person.posts[0]
-      const actual = memberPostsSelector(state, props)[0]
+      const actual = getMemberPosts(state, props)[0]
 
       expect(actual.id).toEqual(expected.id)
       expect(actual.creator.id).toEqual(expected.creator.id)

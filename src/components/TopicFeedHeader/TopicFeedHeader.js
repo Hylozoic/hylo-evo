@@ -4,7 +4,7 @@ import { get } from 'lodash/fp'
 import Icon from 'components/Icon'
 import Button from 'components/Button'
 import { PostPrompt } from 'components/FeedBanner/FeedBanner'
-import { pluralize, bgImageStyle } from 'util/index'
+import { inflectedTotal, bgImageStyle } from 'util/index'
 import { DEFAULT_BANNER } from 'store/models/Community'
 
 import './TopicFeedHeader.scss'
@@ -19,7 +19,8 @@ export default function TopicFeedHeader ({
   communityTopic,
   toggleSubscribe,
   currentUser,
-  newPost
+  newPost,
+  type
 }) {
   const bannerUrl = get('bannerUrl', community)
   const buttonText = communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'
@@ -28,20 +29,25 @@ export default function TopicFeedHeader ({
 
   postsTotal = postsTotal || 0
   followersTotal = followersTotal || 0
+
   return <div styleName='topic-feed-header'>
     <div styleName='fade'><div styleName='fade2' /></div>
     <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
       <div styleName='topic-name'>#{topic.name}</div>
       <div styleName='meta'>
         <Icon name='Star' styleName='star-icon' />
-        {pluralize(followersTotal, 'subscriber')}
+        {inflectedTotal('subscriber', followersTotal)}
         <Icon name='Post' styleName='post-icon' />
-        {pluralize(postsTotal, 'post')}
+        {inflectedTotal('post', postsTotal)}
       </div>
       {community && <Button styleName={buttonStyle} onClick={toggleSubscribe}>
         <Icon name='Star' styleName={iconStyle} />{buttonText}
       </Button>}
-      <PostPrompt currentUser={currentUser} newPost={newPost} />
+      <PostPrompt
+        firstName={currentUser.firstName()}
+        type={type}
+        avatarUrl={currentUser.avatarUrl}
+        newPost={newPost} />}
     </div>
   </div>
 }

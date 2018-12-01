@@ -1,7 +1,6 @@
-/* eslint-disable camelcase */
-import PropTypes from 'prop-types'
-
 import React from 'react'
+import PropTypes from 'prop-types'
+import { POST_PROP_TYPES } from 'store/models/Post'
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
 import PostCommunities from './PostCommunities'
@@ -13,79 +12,59 @@ import cx from 'classnames'
 
 export { PostHeader, PostFooter, PostImage, PostBody, PostCommunities }
 
-const { shape, any, object, string, func, array, bool } = PropTypes
-
 export default class PostCard extends React.Component {
   static propTypes = {
-    post: shape({
-      id: any,
-      type: string,
-      creator: object,
-      name: string,
-      details: string,
-      commenters: array,
-      upVotes: string,
-      updatedAt: string
-    }),
-    fetchPost: func,
-    expanded: bool,
-    showDetails: func
+    routeParams: PropTypes.object,
+    post: PropTypes.shape(POST_PROP_TYPES),
+    editPost: PropTypes.func,
+    showDetails: PropTypes.func,
+    voteOnPost: PropTypes.func,
+    highlightProps: PropTypes.object,
+    expanded: PropTypes.bool,
+    className: PropTypes.string
   }
 
   static defaultProps = {
-    post: samplePost()
+    post: samplePost(),
+    routeParams: {}
+  }
+
+  shouldShowDetails = element => {
+    if (element === this.refs.postCard) return true
+    if (element.tagName === 'A' || element.tagName === 'LI') return false
+    const parent = element.parentElement
+    if (parent) return this.shouldShowDetails(parent)
+    return true
+  }
+
+  onClick = event => {
+    if (this.shouldShowDetails(event.target)) this.props.showDetails()
   }
 
   render () {
     const {
-      post, className, expanded, showDetails, highlightProps, slug
+      routeParams,
+      post,
+      editPost,
+      voteOnPost,
+      highlightProps,
+      expanded,
+      className
     } = this.props
 
-    const shouldShowDetails = element => {
-      if (element === this.refs.postCard) return true
-      if (element.tagName === 'A' || element.tagName === 'LI') return false
-
-      const parent = element.parentElement
-      if (parent) return shouldShowDetails(parent)
-
-      return true
-    }
-
-    const onClick = event => {
-      const { target } = event
-
-      if (shouldShowDetails(target)) showDetails()
-    }
-
-    return <div ref='postCard' styleName={cx('card', {expanded})} className={className}
-      onClick={onClick}>
-      <PostHeader creator={post.creator}
-        date={post.createdAt}
-        type={post.type}
-        communities={post.communities}
-        slug={slug}
-        id={post.id}
-        pinned={post.pinned}
-        topics={post.topics}
+    return <div ref='postCard'
+      onClick={this.onClick}
+      styleName={cx('card', {expanded})}
+      className={className}>
+      <PostHeader
+        {...post}
+        routeParams={routeParams}
         highlightProps={highlightProps}
-        announcement={post.announcement}
-      />
-      <PostImage postId={post.id} styleName='image' />
-      <PostBody title={post.title}
-        id={post.id}
-        details={post.details}
-        linkPreview={post.linkPreview}
-        slug={slug}
-        highlightProps={highlightProps}
-        fileAttachments={post.fileAttachments} />
-      <PostCommunities
-        communities={post.communities}
-        slug={slug} />
-      <PostFooter id={post.id}
-        commenters={post.commenters}
-        commentersTotal={post.commentersTotal}
-        votesTotal={post.votesTotal}
-        myVote={post.myVote} />
+        editPost={editPost} />
+      <PostImage styleName='image' postId={post.id} />
+      <PostBody {...post} slug={routeParams.slug} />
+      <PostCommunities communities={post.communities} slug={routeParams.slug} />
+      <PostFooter {...post} voteOnPost={voteOnPost} />
     </div>
   }
 }

@@ -1,12 +1,12 @@
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import getParam from './getParam'
+import getRouteParam from './getRouteParam'
 
 const getCommunityTopicForCurrentRoute = ormCreateSelector(
   orm,
   state => state.orm,
-  (state, props) => getParam('slug', state, props),
-  (state, props) => getParam('topicName', state, props),
+  (state, props) => getRouteParam('slug', state, props),
+  (state, props) => getRouteParam('topicName', state, props),
   (session, slug, topicName) => {
     try {
       const community = session.Community.get({slug})

@@ -16,6 +16,7 @@ describe('ModalDialog', () => {
       showCancelButton: true,
       showSubmitButton: true,
       submitButtonAction: jest.fn(),
+      style: {},
       submitButtonText: 'Square Poop',
       useNotificationFormat: false
     }
@@ -87,7 +88,7 @@ describe('ModalDialog', () => {
   it('does not show an image without useNotificationFormat', () => {
     const wrapper = shallow(<ModalDialog {...props} />)
     const { style } = wrapper.find('[data-stylename="popup-inner"]').first().props()
-    expect(style).toBe(null)
+    expect(style).toEqual(props.style)
   })
 
   it('shows an image with useNotificationFormat', () => {

@@ -4,8 +4,9 @@ exports[`mapStateToProps returns the right keys 1`] = `
 Object {
   "currentUser": undefined,
   "id": undefined,
+  "isProjectMember": undefined,
   "pending": undefined,
   "post": null,
-  "slug": undefined,
+  "routeParams": undefined,
 }
 `;

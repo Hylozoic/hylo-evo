@@ -16,7 +16,7 @@ describe('mapStateToProps', () => {
       orm: session.state
     }
 
-    const ownProps = {creator: {id: 20}, slug: 'mycommunity'}
+    const ownProps = {creator: {id: 20}, routeParams: { slug: 'mycommunity' }}
     const { community, currentUser } = mapStateToProps(state, ownProps)
 
     expect(community.id).toBe(33)
@@ -28,10 +28,15 @@ describe('mapDispatchToProps', () => {
   it('maps the action generators', () => {
     window.confirm = jest.fn()
     const dispatch = jest.fn(val => val)
-    const dispatchProps = mapDispatchToProps(dispatch)
+    const props = {
+      routeParams: {
+        slug: 'mycommunity'
+      }
+    }
+    const dispatchProps = mapDispatchToProps(dispatch, props)
     expect(dispatchProps).toMatchSnapshot()
-    dispatchProps.removePost(10, 'mycommunity')
-    dispatchProps.editPost(10, 'mycommunity')
+    dispatchProps.removePost(10)
+    dispatchProps.editPost(10)
     expect(dispatch).toHaveBeenCalledTimes(2)
 
     dispatchProps.deletePost(1)
@@ -66,15 +71,12 @@ describe('mergeProps', () => {
           community: community.id,
           hasModeratorRole: true
         })]})
-
       const state = {
         orm: session.state
       }
-
-      const ownProps = {id: 20, slug: 'mycommunity', creator: {id: 20}}
+      const ownProps = {id: 20, routeParams: { slug: 'mycommunity' }, creator: {id: 20}}
       const stateProps = mapStateToProps(state, ownProps)
-
-      const {deletePost, removePost, editPost, canEdit, pinPost} = mergeProps(stateProps, dispatchProps, ownProps)
+      const { deletePost, removePost, editPost, canEdit, pinPost } = mergeProps(stateProps, dispatchProps, ownProps)
 
       expect(canEdit).toBeTruthy()
       expect(deletePost).toBeTruthy()
@@ -85,7 +87,7 @@ describe('mergeProps', () => {
       expect(dispatchProps.deletePost).toHaveBeenCalledWith(20)
 
       editPost()
-      expect(dispatchProps.editPost).toHaveBeenCalledWith(20, 'mycommunity')
+      expect(dispatchProps.editPost).toHaveBeenCalledWith(20)
 
       pinPost()
       expect(dispatchProps.pinPost).toHaveBeenCalledWith(20, 33)
@@ -105,7 +107,7 @@ describe('mergeProps', () => {
         orm: session.state
       }
 
-      const ownProps = {id: 20, slug: 'mycommunity', creator: {id: 33}}
+      const ownProps = {id: 20, routeParams: { slug: 'mycommunity' }, creator: {id: 33}}
       const stateProps = mapStateToProps(state, ownProps)
 
       const {deletePost, removePost, editPost} = mergeProps(stateProps, dispatchProps, ownProps)
@@ -115,7 +117,7 @@ describe('mergeProps', () => {
       expect(removePost).toBeTruthy()
 
       removePost()
-      expect(dispatchProps.removePost).toHaveBeenCalledWith(20, 'mycommunity')
+      expect(dispatchProps.removePost).toHaveBeenCalledWith(20)
     })
   })
 
@@ -134,7 +136,7 @@ describe('mergeProps', () => {
         orm: session.state
       }
 
-      const ownProps = {id: 20, slug: 'mycommunity', creator: {id: 20}}
+      const ownProps = {id: 20, routeParams: { slug: 'mycommunity' }, creator: {id: 20}}
       const stateProps = mapStateToProps(state, ownProps)
 
       const {deletePost, removePost, editPost, pinPost} = mergeProps(stateProps, dispatchProps, ownProps)
@@ -163,7 +165,7 @@ describe('mergeProps', () => {
       orm: session.state
     }
 
-    const ownProps = {id: 20, slug: 'mycommunity', creator: {id: 33}}
+    const ownProps = {id: 20, routeParams: { slug: 'mycommunity' }, creator: {id: 33}}
     const stateProps = mapStateToProps(state, ownProps)
 
     const {deletePost, removePost, editPost} = mergeProps(stateProps, dispatchProps, ownProps)

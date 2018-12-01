@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MemberSelector renders correctly (with min props) 1`] = `
+<TagInput
+  handleAddition={[Function]}
+  handleDelete={[Function]}
+  handleInputChange={[Function]}
+  placeholder="Type persons name..."
+  renderSuggestion={[Function]}
+  suggestions={Array []}
+  tags={Array []}
+  theme={Object {}}
+/>
+`;
+
+exports[`Suggestion renders correctly (with a user) 1`] = `
+<li
+  key="1"
+>
+  <a
+    data-stylename="suggestionLink"
+    onClick={[Function]}
+  >
+    <RoundImage
+      data-stylename="suggestionAvatar"
+      small={true}
+      url="face.png"
+    />
+    <div
+      data-stylename="suggestionName"
+    >
+      Joe Joe
+    </div>
+  </a>
+</li>
+`;
+
+exports[`Suggestion renders correctly (with min props) 1`] = `
+<li
+  key="blank"
+>
+  <a
+    data-stylename="suggestionLink"
+    onClick={[Function]}
+  >
+    <RoundImage
+      data-stylename="suggestionAvatar"
+      small={true}
+    />
+    <div
+      data-stylename="suggestionName"
+    />
+  </a>
+</li>
+`;

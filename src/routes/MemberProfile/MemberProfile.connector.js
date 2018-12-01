@@ -1,42 +1,54 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import blockUser from 'store/actions/blockUser'
+import isPendingFor from 'store/selectors/isPendingFor'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import getMe from 'store/selectors/getMe'
-import { fetchPerson, personSelector } from './MemberProfile.store'
+import fetchPerson from 'store/actions/fetchPerson'
+import {
+  FETCH_RECENT_ACTIVITY,
+  FETCH_MEMBER_POSTS,
+  FETCH_MEMBER_COMMENTS,
+  FETCH_MEMBER_VOTES,
+  getPresentedPerson
+} from './MemberProfile.store'
 
-// TODO: this sort of thing belongs in an i18n module
-const messages = {
+const MESSAGES = {
   invalid: "That doesn't seem to be a valid person ID."
 }
 
 export function mapStateToProps (state, props) {
-  const error = Number.isSafeInteger(Number(props.match.params.id)) ? null : messages.invalid
-  const person = personSelector(state, props)
-
+  const error = Number.isSafeInteger(Number(props.match.params.personId)) ? null : MESSAGES.invalid
+  const routeParams = props.match.params
+  const person = getPresentedPerson(state, {...routeParams, ...props})
+  const loading = isPendingFor([
+    FETCH_RECENT_ACTIVITY,
+    FETCH_MEMBER_POSTS,
+    FETCH_MEMBER_COMMENTS,
+    FETCH_MEMBER_VOTES
+  ], state)
   return {
-    currentTab: 'Overview',
+    routeParams,
     error,
+    loading,
     person,
     currentUser: getMe(state),
     previousLocation: getPreviousLocation(state)
   }
 }
 
-const mapDispatchToProps = {
+export const mapDispatchToProps = {
   fetchPerson,
   blockUser,
   push
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const goToPreviousLocation = () => dispatchProps.push(stateProps.previousLocation)
-
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    goToPreviousLocation
+    goToPreviousLocation: () => dispatchProps.push(stateProps.previousLocation)
   }
 }
 

@@ -1,10 +1,7 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import { get } from 'lodash/fp'
 import { filter, isFunction } from 'lodash'
 import { AXOLOTL_ID } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
-import './MemberProfile.scss'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
@@ -14,33 +11,11 @@ import RecentActivity from './RecentActivity'
 import MemberPosts from './MemberPosts'
 import MemberComments from './MemberComments'
 import MemberVotes from './MemberVotes'
-
-const { any, arrayOf, object, string, shape } = PropTypes
+import './MemberProfile.scss'
 
 export default class MemberProfile extends React.Component {
-  static propTypes = {
-    currentTab: string,
-    error: any,
-    person: shape({
-      id: any,
-      avatarUrl: string,
-      bannerUrl: string,
-      bio: string,
-      facebookUrl: string,
-      linkedinUrl: string,
-      tagline: string,
-      memberships: arrayOf(object),
-      skills: arrayOf(object),
-      name: string,
-      role: string,
-      twitterName: string,
-      url: string
-    })
-  }
-
-  componentDidMount () {
-    const id = get('match.params.id', this.props)
-    if (id) this.props.fetchPerson(id)
+  static defaultProps = {
+    currentTab: 'Overview'
   }
 
   constructor (props) {
@@ -50,75 +25,66 @@ export default class MemberProfile extends React.Component {
     }
   }
 
-  selectTab = tab => this.setState({ currentTab: tab })
-
-  displayError (error) {
-    return <div styleName='member-profile'>
-      <span styleName='error'>{ error }</span>
-    </div>
+  componentDidMount () {
+    const { personId } = this.props.routeParams
+    if (personId) this.props.fetchPerson(personId)
   }
 
-  blockUser = (memberId) => () => {
-    const { blockUser, goToPreviousLocation } = this.props
+  selectTab = currentTab => this.setState({currentTab})
 
-    if (window.confirm(blockConfirmMessage)) blockUser(memberId).then(goToPreviousLocation)
+  blockUser = (personId) => () => {
+    if (window.confirm(BLOCK_CONFIRM_MESSAGE)) {
+      this.props.blockUser(personId).then(this.props.goToPreviousLocation)
+    }
   }
 
   render () {
-    if (this.props.error) return this.displayError(this.props.error)
+    if (this.props.error) return <Error>this.props.error</Error>
     if (!this.props.person) return <Loading />
-
-    const { person, currentUser, match } = this.props
     const {
-      avatarUrl,
+      loading,
+      person,
+      currentUser,
+      routeParams
+    } = this.props
+    const {
       bannerUrl,
       bio,
-      facebookUrl,
-      linkedinUrl,
-      location,
-      name,
-      role,
-      twitterName,
-      url,
       tagline
     } = person
-    const { id, slug } = match.params
-    const isMe = currentUser && currentUser.id === id
-    const isAxolotl = AXOLOTL_ID === id
-
+    const { currentTab } = this.state
+    const isMe = currentUser && currentUser.id === routeParams.personId
+    const isAxolotl = AXOLOTL_ID === routeParams.personId
     const itemsMenuItems = [
-      {icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(id), hide: isMe || isAxolotl}
+      {icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(routeParams.personId), hide: isMe || isAxolotl}
     ]
 
     return <div styleName='member-profile'>
       <ProfileBanner bannerUrl={bannerUrl}>
-        <ProfileNamePlate
-          avatarUrl={avatarUrl}
-          location={location}
-          name={name}
-          role={role}
-          rightSideContent={<MemberActionsMenu items={itemsMenuItems} />} />
+        <ProfileNamePlate {...person} rightSideContent={<MemberActionsMenu items={itemsMenuItems} />} />
       </ProfileBanner>
       <div styleName='content'>
-        <ProfileControls currentTab={this.state.currentTab} selectTab={this.selectTab}>
+        <ProfileControls currentTab={currentTab} selectTab={this.selectTab}>
           <span styleName='tagline'>{tagline}</span>
-          <SocialButtons
-            facebookUrl={facebookUrl}
-            linkedinUrl={linkedinUrl}
-            twitterName={twitterName}
-            url={url} />
+          <SocialButtons {...person} />
         </ProfileControls>
-        <TabContentSwitcher
-          bio={bio}
-          currentTab={this.state.currentTab}
-          personId={id}
-          slug={slug} />
+        {currentTab === 'Overview' && <div>
+          <h2 styleName='subhead'>About Me</h2>
+          <div styleName='bio'>{bio}</div>
+          <RecentActivity routeParams={routeParams} loading={loading} />
+        </div>}
+        {currentTab === 'Posts' &&
+          <MemberPosts routeParams={routeParams} loading={loading} />}
+        {currentTab === 'Comments' &&
+          <MemberComments routeParams={routeParams} loading={loading} />}
+        {currentTab === 'Upvotes' &&
+          <MemberVotes routeParams={routeParams} loading={loading} />}
       </div>
     </div>
   }
 }
 
-const blockConfirmMessage = `Are you sure you want to block this member?
+const BLOCK_CONFIRM_MESSAGE = `Are you sure you want to block this member?
 You will no longer see this member's activity
 and they won't see yours.
 
@@ -194,22 +160,8 @@ export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
   </div>
 }
 
-export function TabContentSwitcher ({ bio, currentTab, navigate, personId, slug }) {
-  switch (currentTab) {
-    case 'Overview':
-      return <div>
-        <h2 styleName='subhead'>About Me</h2>
-        <div styleName='bio'>{bio}</div>
-        <RecentActivity personId={personId} slug={slug} />
-      </div>
-
-    case 'Posts':
-      return <MemberPosts personId={personId} slug={slug} />
-
-    case 'Comments':
-      return <MemberComments personId={personId} slug={slug} />
-
-    case 'Upvotes':
-      return <MemberVotes personId={personId} slug={slug} />
-  }
+export function Error ({ children }) {
+  return <div styleName='member-profile'>
+    <span styleName='error'>{children}</span>
+  </div>
 }

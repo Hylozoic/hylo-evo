@@ -11,12 +11,16 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
         undefined,
         undefined,
         undefined,
-        undefined,
       ]
     }
   />
   <span
     data-stylename="caption"
+    style={
+      Object {
+        "cursor": "inherit",
+      }
+    }
   >
     Joe, Sue and 2 others commented
   </span>
@@ -54,12 +58,16 @@ exports[`PostFooter matches the latest snapshot 1`] = `
         undefined,
         undefined,
         undefined,
-        undefined,
       ]
     }
   />
   <span
     data-stylename="caption"
+    style={
+      Object {
+        "cursor": "inherit",
+      }
+    }
   >
     Joe, Sue and 2 others commented
   </span>

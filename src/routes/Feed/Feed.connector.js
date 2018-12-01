@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { push, replace } from 'react-router-redux'
 import { get } from 'lodash/fp'
 import { isEmpty } from 'lodash'
 import { FETCH_POSTS, FETCH_FOR_CURRENT_USER } from 'store/constants'
@@ -6,25 +7,26 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import getCommunityTopicForCurrentRoute from 'store/selectors/getCommunityTopicForCurrentRoute'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
-import getParam from 'store/selectors/getParam'
+import getRouteParam from 'store/selectors/getRouteParam'
+import getPostTypeContext from 'store/selectors/getPostTypeContext'
 import getMe from 'store/selectors/getMe'
 import getMemberships from 'store/selectors/getMemberships'
-
-import changeQueryParam from 'store/actions/changeQueryParam'
-import getQueryParam from 'store/selectors/getQueryParam'
-import { push, replace } from 'react-router-redux'
-import { postUrl, topicsUrl } from 'util/index'
-import { makeUrl } from 'util/navigation'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import changeQuerystringParam from 'store/actions/changeQuerystringParam'
+import { newPostUrl, topicsUrl } from 'util/navigation'
 import { fetchTopic, fetchCommunityTopic, fetchNetwork } from './Feed.store'
 
 export function mapStateToProps (state, props) {
   let community, communityTopic, topic, network
 
+  const routeParams = get('match.params', props)
+  const querystringParams = getQuerystringParam(['s', 't'], null, props)
   const currentUser = getMe(state)
   const currentUserHasMemberships = !isEmpty(getMemberships(state))
-  const communitySlug = getParam('slug', state, props)
-  const topicName = getParam('topicName', state, props)
-  const networkSlug = getParam('networkSlug', state, props)
+  const communitySlug = getRouteParam('slug', state, props)
+  const networkSlug = getRouteParam('networkSlug', state, props)
+  const topicName = getRouteParam('topicName', state, props)
+  const postTypeContext = getPostTypeContext(state, props)
 
   if (communitySlug) {
     community = getCommunityForCurrentRoute(state, props)
@@ -39,51 +41,50 @@ export function mapStateToProps (state, props) {
     network = getNetworkForCurrentRoute(state, props)
   }
 
-  const filter = getQueryParam('t', state, props)
-  const sortBy = getQueryParam('s', state, props)
+  // TODO: TBD - consolidate this getQuerystringParam('t', ...) into getPostTypeContext
+  const postTypeFilter = postTypeContext || getQuerystringParam('t', state, props)
+  const sortBy = getQuerystringParam('s', state, props)
+
   return {
-    filter,
+    routeParams,
+    querystringParams,
+    postTypeFilter,
     sortBy,
+    currentUser,
+    currentUserHasMemberships,
     communityTopic,
     communitySlug,
+    community,
     topicName,
     topic,
     postsTotal: get('postsTotal', communitySlug ? communityTopic : topic),
     followersTotal: get('followersTotal', communitySlug ? communityTopic : topic),
-    selectedPostId: getParam('postId', state, props),
-    community,
+    selectedPostId: getRouteParam('postId', state, props),
     membershipsPending: state.pending[FETCH_FOR_CURRENT_USER],
     postCount: get('postCount', community),
     pending: state.pending[FETCH_POSTS],
-    currentUser,
     networkSlug,
-    network,
-    currentUserHasMemberships
+    network
   }
 }
 
-export const mapDispatchToProps = function (dispatch, props) {
-  const slug = getParam('slug', null, props)
-  const topicName = getParam('topicName', null, props)
-  const params = getQueryParam(['s', 't'], null, props)
-  const networkSlug = getParam('networkSlug', null, props)
+export function mapDispatchToProps (dispatch, props) {
+  const communitySlug = getRouteParam('slug', null, props)
+  const topicName = getRouteParam('topicName', null, props)
+  const routeParams = get('match.params', props)
+  const querystringParams = getQuerystringParam(['s', 't'], null, props)
+  const networkSlug = getRouteParam('networkSlug', null, props)
 
   return {
-    changeTab: tab => dispatch(changeQueryParam(props, 't', tab, 'all')),
-    changeSort: sort => dispatch(changeQueryParam(props, 's', sort, 'all')),
-    // we need to preserve url parameters when opening the details for a post,
-    // or the center column will revert to its default sort & filter settings
-    showPostDetails: postId =>
-      dispatch(push(makeUrl(postUrl(postId, slug, {topicName, networkSlug}), params))),
-    newPost: () =>
-      dispatch(push(makeUrl(postUrl('new', slug, {topicName}), params))),
+    changeTab: tab => dispatch(changeQuerystringParam(props, 't', tab, 'all')),
+    changeSort: sort => dispatch(changeQuerystringParam(props, 's', sort, 'all')),
     fetchTopic: () => {
-      if (slug && topicName) {
-        return dispatch(fetchCommunityTopic(topicName, slug))
+      if (communitySlug && topicName) {
+        return dispatch(fetchCommunityTopic(topicName, communitySlug))
         .then(action => {
           // redirect if no topic found
           if (!action.payload.data.communityTopic) {
-            dispatch(replace(topicsUrl(slug)))
+            dispatch(replace(topicsUrl(communitySlug)))
           }
         })
       } else if (topicName) {
@@ -91,7 +92,8 @@ export const mapDispatchToProps = function (dispatch, props) {
       }
     },
     fetchNetwork: () => dispatch(fetchNetwork(networkSlug)),
-    goToCreateCommunity: () => dispatch(push('/create-community/name'))
+    goToCreateCommunity: () => dispatch(push('/create-community/name')),
+    newPost: () => dispatch(push(newPostUrl(routeParams, querystringParams)))
   }
 }
 

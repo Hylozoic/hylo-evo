@@ -7,7 +7,7 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import HyloEditor from 'components/HyloEditor'
-import { personUrl } from 'util/index'
+import { personUrl } from 'util/navigation'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import { filter, isFunction } from 'lodash'
 

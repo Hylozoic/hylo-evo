@@ -12,7 +12,7 @@ Object {
   $topic: ID,
   $first: Int
 ) {
-  community(slug: $slug) {
+  community(slug: $slug, updateLastViewed: true) {
     id
     slug
     name
@@ -82,6 +82,24 @@ posts(
     name
     postsTotal
     followersTotal
+  }
+  members {
+    total
+    hasMore
+    items {
+      id
+      name
+      avatarUrl
+      bio
+      tagline
+      location
+      skills (first: 100) {
+        items {
+          id
+          name
+        }
+      }
+    }
   }
   }
 }
@@ -182,6 +200,24 @@ posts(
     name
     postsTotal
     followersTotal
+  }
+  members {
+    total
+    hasMore
+    items {
+      id
+      name
+      avatarUrl
+      bio
+      tagline
+      location
+      skills (first: 100) {
+        items {
+          id
+          name
+        }
+      }
+    }
   }
   }
 }

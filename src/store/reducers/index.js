@@ -32,6 +32,7 @@ import FeedList from 'components/FeedList/FeedList.store'
 import JoinCommunity from 'routes/JoinCommunity/JoinCommunity.store'
 import CreateCommunity from 'routes/CreateCommunity/CreateCommunity.store'
 import CreateTopic from 'components/CreateTopic/CreateTopic.store'
+import MemberSelector from 'components/MemberSelector/MemberSelector.store'
 
 import { handleSetState, composeReducers } from './util'
 
@@ -68,7 +69,8 @@ export const combinedReducers = combineReducers({
   FeedList,
   JoinCommunity,
   CreateCommunity,
-  CreateTopic
+  CreateTopic,
+  MemberSelector
 })
 
 export default composeReducers(

@@ -1,7 +1,7 @@
 import orm from 'store/models'
 import payload from '../MemberProfile.test.json'
 import normalized from '../MemberProfile.normalized.test.json'
-import { fetchMemberComments, memberCommentsSelector } from './MemberComments.store'
+import { fetchMemberComments, getMemberComments } from './MemberComments.store'
 import { mapStateToProps } from './MemberComments.connector'
 
 describe('fetchMemberComments', () => {
@@ -37,13 +37,13 @@ describe('connector', () => {
     session.Comment.create(normalized.comments[0])
     session.Comment.create(normalized.comments[1])
     state = { orm: session.state }
-    props = { personId: '46816', slug: 'wombats' }
+    props = { routeParams: { personId: '46816', slug: 'wombats' } }
   })
 
   describe('memberPostsSelector', () => {
     it('populates comments correctly', () => {
       const expected = payload.data.person.comments[0]
-      const actual = memberCommentsSelector(state, props)[0]
+      const actual = getMemberComments(state, props)[0]
 
       expect(actual.id).toEqual(expected.id)
       expect(actual.creator.id).toEqual(expected.creator.id)

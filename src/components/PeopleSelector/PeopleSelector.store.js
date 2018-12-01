@@ -10,7 +10,6 @@ import {
 
 export const MODULE_NAME = 'PeopleSelector'
 
-export const FETCH_PEOPLE = 'FETCH_PEOPLE'
 export const FETCH_CONTACTS = 'FETCH_CONTACTS'
 export const FETCH_RECENT_CONTACTS = 'FETCH_RECENT_CONTACTS'
 export const SET_AUTOCOMPLETE = 'PeopleSelector/SET_AUTOCOMPLETE'
@@ -39,35 +38,6 @@ export function findOrCreateThread (participantIds, query = findOrCreateThreadQu
       variables: {participantIds}
     },
     meta: { extractModel: 'MessageThread' }
-  }
-}
-
-const fetchPeopleQuery =
-`query PeopleAutocomplete ($autocomplete: String, $first: Int) {
-  people (autocomplete: $autocomplete, first: $first) {
-    items {
-      id
-      name
-      avatarUrl
-      memberships {
-        id
-        community {
-          id
-          name
-        }
-      }
-    }
-  }
-}`
-
-export function fetchPeople (autocomplete, query = fetchPeopleQuery, first = 20) {
-  return {
-    type: FETCH_PEOPLE,
-    graphql: {
-      query,
-      variables: { autocomplete, first }
-    },
-    meta: { extractModel: 'Person' }
   }
 }
 

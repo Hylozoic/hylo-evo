@@ -1,3 +1,4 @@
-import Member from './Member'
+import component from './Member'
 import connector from './Member.connector'
-export default connector(Member)
+
+export default connector(component)

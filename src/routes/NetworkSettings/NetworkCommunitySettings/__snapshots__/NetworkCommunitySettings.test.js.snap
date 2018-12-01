@@ -30,14 +30,17 @@ exports[`CommunityModeratorSection matches the previous snapshot 1`] = `
     Community Moderators
   </div>
   <CommunityModerator
+    key="0"
     moderator={1}
     slug="cslug"
   />
   <CommunityModerator
+    key="1"
     moderator={2}
     slug="cslug"
   />
   <CommunityModerator
+    key="2"
     moderator={3}
     slug="cslug"
   />

@@ -1,16 +1,22 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+import { get, omit } from 'lodash/fp'
+import { postsUrl, postUrl } from 'util/navigation'
 
 export const mapDispatchToProps = (dispatch, props) => {
-  const { match, forNew } = props
-  let closeUrl
-  if (match && forNew) {
-    // go back to the feed
-    closeUrl = match.url.replace('/p/new', '')
-  } else if (match) {
-    // go back to the feed + expanded post
-    closeUrl = match.url.replace('/edit', '')
+  const routeParams = get('match.params', props)
+
+  if (!routeParams) return {}
+
+  const { postId, slug } = routeParams
+  const urlParams = {
+    communitySlug: slug,
+    ...omit(['postId', 'action', 'slug'], routeParams)
   }
+  const closeUrl = postId
+    ? postUrl(postId, urlParams)
+    : postsUrl(urlParams)
+
   return {
     hidePostEditor: () => dispatch(push(closeUrl))
   }

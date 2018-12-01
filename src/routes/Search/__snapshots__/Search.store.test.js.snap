@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`presentSearchResult presents a Comment SearchResult 1`] = `
+Object {
+  "content": Object {
+    "creator": Object {
+      "id": 0,
+      "name": "Ron",
+      "skills": undefined,
+    },
+    "id": 21,
+    "image": SessionBoundModel {
+      "_fields": Object {
+        "comment": 21,
+        "id": 0,
+        "url": "foo.png",
+      },
+    },
+    "post": Object {
+      "commenters": undefined,
+      "communities": undefined,
+      "followers": undefined,
+      "id": "commentpost",
+      "members": undefined,
+      "postMemberships": undefined,
+      "topics": undefined,
+    },
+    "slug": undefined,
+  },
+  "id": 0,
+  "type": "Comment",
+}
+`;

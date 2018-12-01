@@ -1,44 +1,49 @@
 import { connect } from 'react-redux'
-import { addSkill, removeSkill, fetchMemberSkills, getMemberSkills,
-  fetchSkills, getSkills, setAutocomplete, getAutocomplete, FETCH_MEMBER_SKILLS } from './SkillsSection.store'
+import isPendingFor from 'store/selectors/isPendingFor'
 import getMe from 'store/selectors/getMe'
 import getPerson from 'store/selectors/getPerson'
+import {
+  FETCH_MEMBER_SKILLS,
+  addSkill,
+  removeSkill,
+  fetchMemberSkills,
+  getMemberSkills,
+  fetchSkillSuggestions,
+  getSkillSuggestions,
+  getSearch,
+  setSearch
+} from './SkillsSection.store'
 
 export function mapStateToProps (state, props) {
-  const member = getPerson(state, {personId: props.memberId})
+  const person = getPerson(state, props)
   const currentUser = getMe(state, props)
-  const isMe = currentUser && member && currentUser.id === member.id
-  const autocomplete = getAutocomplete(state)
+  const search = getSearch(state)
 
   return {
-    skills: getMemberSkills(state, {memberId: props.memberId}),
-    isMe,
+    loading: isPendingFor(FETCH_MEMBER_SKILLS, state),
+    search,
+    skillSuggestions: getSkillSuggestions(state, {search, ...props}),
+    skills: getMemberSkills(state, props),
     currentUser,
-    suggestions: getSkills(state, {autocomplete, memberId: props.memberId}),
-    pending: !!state.pending[FETCH_MEMBER_SKILLS],
-    autocomplete: getAutocomplete(state)
+    isMe: currentUser && person && currentUser.id === person.id
   }
 }
 
 export const mapDispatchToProps = {
   addSkill,
   removeSkill,
+  fetchSkillSuggestions,
   fetchMemberSkills,
-  setAutocomplete,
-  fetchSkills
+  setSearch
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const {
-    autocomplete
-  } = stateProps
-
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    fetchMemberSkills: () => dispatchProps.fetchMemberSkills(ownProps.memberId),
-    fetchSkills: () => dispatchProps.fetchSkills(autocomplete)
+    fetchMemberSkills: () => dispatchProps.fetchMemberSkills(ownProps.personId),
+    fetchSkillSuggestions: () => dispatchProps.fetchSkillSuggestions(stateProps.search)
   }
 }
 
