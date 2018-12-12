@@ -54,6 +54,7 @@ export function fetchNotifications () {
               }
               action
               unread
+              contributionAmount
             }
           }
         }
