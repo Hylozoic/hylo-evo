@@ -196,8 +196,6 @@ export function NotificationHeader ({ notification }) {
 export function NotificationBody ({ notification }) {
   const { activity: { action, actor, post, comment, community, contributionAmount } } = notification
 
-  console.log('NotificationBody', notification)
-
   const truncateForBody = text =>
     text && textLength(text) > 76 ? truncate(text, 76) : text
 

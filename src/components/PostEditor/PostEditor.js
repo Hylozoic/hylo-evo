@@ -363,10 +363,11 @@ export default class PostEditor extends React.Component {
         </div>}
         {isProject && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Accept Contributions</div>
-          {hasStripeAccount && <div styleName='footerSection-communities'>
-            <Switch value={acceptContributions} onClick={this.toggleContributions} />
+          {hasStripeAccount && <div styleName={cx('footerSection-communities', 'accept-contributions')}>
+            <Switch value={acceptContributions} onClick={this.toggleContributions} styleName='accept-contributions-switch' />
+            {!acceptContributions && <div styleName='accept-contributions-help'>If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.</div>}
           </div>}
-          {!hasStripeAccount && <div styleName='footerSection-communities'>
+          {!hasStripeAccount && <div styleName={cx('footerSection-communities', 'accept-contributions-help')}>
             To accept financial contributions for this project, you have to connect a Stripe account. Go to <a href='/settings/payment'>Settings</a> to set it up. (Remember to save your changes before leaving this form)
           </div>}
         </div>}

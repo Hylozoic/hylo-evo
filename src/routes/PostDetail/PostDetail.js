@@ -256,43 +256,61 @@ export class ProjectContributions extends Component {
 
   setAmount = (event) => {
     this.setState({
-      contributionAmount: event.target.value
+      contributionAmount: event.target.value.replace('$', '')
     })
   }
 
   render () {
     const { postId, totalContributions, processStripeToken } = this.props
-    const { expanded, contributionAmount, received } = this.state
+    const { expanded, contributionAmount, received, error } = this.state
 
     const onToken = token => {
+      this.setState({
+        expanded: false,
+        received: false,
+        error: false
+      })
       processStripeToken(postId, token.id, contributionAmount)
-      .then(() => {
-        this.amountInput.value = ''
-        this.setAmount({target: {value: 0}})
-        this.setState({received: true})
+      .then(({ error }) => {
+        this.setAmount({target: {value: '0'}})
+        if (error) {
+          this.setState({error: true})
+        } else {
+          this.setState({received: true})
+        }
       })
     }
 
     return <div styleName='project-contributions'>
-      <div>Contributions so far: ${totalContributions}</div>
-      <Button
+      {received && <div styleName='success-notification'>Thanks for your contribution!</div>}
+      {error && <div styleName='error-notification'>There was a problem processing your payment. Please check your card details and try again.</div>}
+      {!expanded && !received && <Button
         color='green'
         onClick={this.toggleExpand}
-        label='Contribute' />
+        label='Contribute'
+        small
+        narrow />}
       {expanded && <div>
-        <div>Amount: $<TextInput
-          onChange={this.setAmount}
-          inputRef={input => { this.amountInput = input }}
-          noClearButton /></div>
-        {received && <div>Thanks for your contribution!</div>}
+        <div styleName='amount-row'>
+          <span styleName='amount-label'>Amount</span>
+          <TextInput
+            onChange={this.setAmount}
+            inputRef={input => { this.amountInput = input }}
+            value={'$' + contributionAmount}
+            noClearButton />
+        </div>
         <StripeCheckout
           token={onToken}
           stripeKey={process.env.STRIPE_PUBLISHABLE_KEY} />
         <Button
+          styleName='cancel-button'
           color='gray'
           onClick={this.toggleExpand}
-          label='Cancel' />
+          label='Cancel'
+          small
+          narrow />
       </div>}
+      <div styleName='project-contributions-total'>Contributions so far: ${totalContributions}</div>
     </div>
   }
 }
