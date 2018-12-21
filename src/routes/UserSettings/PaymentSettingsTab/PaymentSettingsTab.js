@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import './PaymentSettingsTab.scss'
 import Loading from 'components/Loading'
+import Button from 'components/Button'
 const { object, func } = PropTypes
 
 const clientId = 'ca_DrLirWk9SU9LkAwouYdEu0J9aidD1sDo'
@@ -31,12 +32,18 @@ export default class PaymentSettingsTab extends Component {
     const registerSuccess = registered === 'success'
     const registerError = registered === 'error'
 
+    const goToStripe = () => window.open(stripeUrl)
+
     return <div>
       <div styleName='title'>Connect Stripe Account</div>
-      {hasStripeAccount && <div>You already have a stripe account linked to this account. If you would like to link a different account, click the button below</div>}
-      <a href={stripeUrl}>Link stripe account</a>
-      {registerSuccess && <div>Okay, your account is registered, you're good to go.</div>}
-      {registerError && <div>There was an issue registering your stripe account. Please try again. If problems persists, contact us.</div>}      
+      {!hasStripeAccount && <div styleName='prompt'>Click the button below to create a free Stripe account (or connect an existing account). Once you've done that you will be able to accept contributions to Projects.</div>}
+      {hasStripeAccount && <div styleName='prompt'>You already have a stripe account linked to this account. If you would like to link a different account, click the button below.</div>}
+      {registerSuccess && <div styleName='success-notification'>Your account is registered, you're ready to accept contributions to projects.</div>}
+      {registerError && <div styleName='error-notification'>There was an issue registering your stripe account. Please try again. If the problem persists, contact us.</div>}      
+      <Button
+        label='Link Stripe Account'
+        onClick={goToStripe}
+      />
     </div>
   }
 }

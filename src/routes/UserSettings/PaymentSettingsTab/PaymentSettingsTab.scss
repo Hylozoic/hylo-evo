@@ -20,11 +20,25 @@
   margin-bottom: 20px;
 }
 
-.error {
+.error-notification {
   composes: caption-lt-lg from 'css/typography.scss';
-  font-size: 12px;
   border: 1px solid $color-amaranth;
   color: $color-amaranth;
-  padding: 5px;
+  padding: 5px 10px;
   margin-bottom: 25px;
+  border-radius: 4px;
+}
+
+.success-notification {
+  composes: caption-lt-lg from 'css/typography.scss';
+  border: 1px solid $color-mountain-meadow;
+  color: $color-mountain-meadow;
+  padding: 5px 10px;
+  margin-bottom: 25px;
+  border-radius: 4px;
+}
+
+.prompt {
+  composes: bdy-drk-sm from 'css/typography.scss';
+  margin-bottom: 20px;
 }
