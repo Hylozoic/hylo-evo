@@ -5,11 +5,8 @@ Object {
   "currentUser": undefined,
   "id": undefined,
   "isProjectMember": undefined,
-  "networkSlug": undefined,
   "pending": undefined,
-  "personId": undefined,
   "post": null,
-  "postTypeContext": undefined,
-  "slug": undefined,
+  "routeParams": undefined,
 }
 `;

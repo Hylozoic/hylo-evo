@@ -5,6 +5,7 @@ import { get, isEqual, throttle } from 'lodash/fp'
 import cheerio from 'cheerio'
 import cx from 'classnames'
 import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
+import { POST_PROP_TYPES } from 'store/models/Post'
 import AttachmentManager from './AttachmentManager'
 import { uploadSettings } from './AttachmentManager/AttachmentManager'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
@@ -32,14 +33,7 @@ export default class PostEditor extends React.Component {
     communityOptions: PropTypes.array,
     currentUser: PropTypes.object,
     currentCommunity: PropTypes.object,
-    post: PropTypes.shape({
-      id: PropTypes.string,
-      type: PropTypes.string,
-      title: PropTypes.string,
-      details: PropTypes.string,
-      linkPreview: PropTypes.object,
-      communities: PropTypes.array
-    }),
+    post: PropTypes.shape(POST_PROP_TYPES),
     linkPreviewStatus: PropTypes.string,
     createPost: PropTypes.func,
     updatePost: PropTypes.func,
@@ -53,12 +47,13 @@ export default class PostEditor extends React.Component {
 
   static defaultProps = {
     initialPromptForPostType: {
-      project: "What's the project you want to begin?",
+      project: <span styleName='postType postType-project'>CREATE PROJECT</span>,
       default: 'What are you looking to post?'
     },
     titlePlaceholderForPostType: {
       offer: 'What super powers can you offer?',
       request: 'What are you looking for help with?',
+      project: 'What would you like to call your project?',
       default: 'What’s on your mind?'
     },
     detailsPlaceholder: 'Add a description',
@@ -80,7 +75,6 @@ export default class PostEditor extends React.Component {
       detailsTopics: [],
       acceptContributions: false
     })
-
     const currentPost = post || defaultPostWithCommunitiesAndTopic
 
     return {
@@ -140,7 +134,6 @@ export default class PostEditor extends React.Component {
 
   titlePlaceholderForPostType (type) {
     const { titlePlaceholderForPostType } = this.props
-    if (type === 'project') return ''
     return titlePlaceholderForPostType[type] || titlePlaceholderForPostType['default']
   }
 

@@ -12,7 +12,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    fetchMemberComments: () => dispatch(fetchMemberComments(props.personId))
+    fetchMemberComments: () => dispatch(fetchMemberComments(props.routeParams.personId))
   }
 }
 

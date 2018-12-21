@@ -12,7 +12,6 @@ import './PostBody.scss'
 const maxDetailsLength = 144
 
 export default function PostBody ({
-  id,
   title,
   details,
   linkPreview,

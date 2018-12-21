@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { getCommunitySlugInPath } from 'util/navigation'
-import getParam from './getParam'
+import getRouteParam from './getRouteParam'
 
 const isCommunityRoute = createSelector(
   getSlugFromLocation,
@@ -10,7 +10,7 @@ const isCommunityRoute = createSelector(
 export default isCommunityRoute
 
 export function getSlugFromLocation (state, props) {
-  return getParam('slug', state, props, false) ||
+  return getRouteParam('slug', state, props, false) ||
     tryLocation(props) ||
     props.slug
 }

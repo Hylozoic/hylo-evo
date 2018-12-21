@@ -1,4 +1,5 @@
 import component from './PostCard'
+import connector from './PostCard.connector'
 
 export { PostHeader, PostImage, PostBody, PostFooter, PostCommunities } from './PostCard'
-export default component
+export default connector(component)

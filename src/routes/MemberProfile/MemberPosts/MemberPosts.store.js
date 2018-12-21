@@ -1,8 +1,8 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
-import { presentPost } from 'store/selectors/getPost'
+import presentPost from 'store/presenters/presentPost'
+import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import { FETCH_MEMBER_POSTS } from '../MemberProfile.store'
-import { postsQueryFragment } from 'components/FeedList/FeedList.store'
 
 const memberPostsQuery =
 `query MemberPosts (
@@ -34,8 +34,8 @@ export function fetchMemberPosts (id, first = 20, query = memberPostsQuery) {
 export const getMemberPosts = ormCreateSelector(
   orm,
   state => state.orm,
-  (_, { personId }) => personId,
-  ({ Person }, personId) => {
+  (_, { routeParams }) => routeParams,
+  ({ Person }, { personId }) => {
     if (!Person.hasId(personId)) return
     return Person.withId(personId).posts.toModelArray().map(post =>
       presentPost(post))

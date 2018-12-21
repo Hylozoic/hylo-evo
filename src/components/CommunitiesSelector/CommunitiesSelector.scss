@@ -21,7 +21,8 @@
 
 .selectedTag {
   color: $color-caribbean-green;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   padding: $space-2x $space-3x 0 0;
   border: 0px;
   background: transparent;
@@ -32,6 +33,10 @@
 
 .selectedTagName {
   /* !empty */
+}
+
+.selectedTagImage {
+  margin-right: 5px;
 }
 
 .selectedTagRemove {

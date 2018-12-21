@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import getQueryParam from 'store/selectors/getQueryParam'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
 import {
   addParticipant,
@@ -16,10 +16,10 @@ import {
 } from './PeopleSelector.store'
 
 import fetchPeople from 'store/actions/fetchPeople'
-import changeQueryParam from 'store/actions/changeQueryParam'
+import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 
 export function getParticipantSearch (props, participantsFromStore) {
-  const participants = getQueryParam('participants', null, props)
+  const participants = getQuerystringParam('participants', null, props)
   if (participants) {
     return participants
       .split(',')
@@ -43,7 +43,7 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = {
   addParticipant,
   removeParticipant,
-  changeQueryParam,
+  changeQuerystringParam,
   fetchContacts,
   fetchRecentContacts,
   fetchPeople,

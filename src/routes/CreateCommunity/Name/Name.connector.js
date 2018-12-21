@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { addCommunityName, addNetworkId } from '../CreateCommunity.store'
-import getParam from 'store/selectors/getParam'
+import getRouteParam from 'store/selectors/getRouteParam'
 import { get } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
-  const networkId = getParam('networkId', state, props)
+  const networkId = getRouteParam('networkId', state, props)
   return {
     networkId,
     communityName: get('name', state.CreateCommunity)

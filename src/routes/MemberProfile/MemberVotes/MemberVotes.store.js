@@ -1,30 +1,29 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { compact } from 'lodash/fp'
 import orm from 'store/models'
-import { presentPost } from 'store/selectors/getPost'
-import { getPostFieldsFragment } from 'store/actions/fetchPost'
+import presentPost from 'store/presenters/presentPost'
+import getPostFieldsFragment from 'graphql/fragments/getPostFieldsFragment'
 import { FETCH_MEMBER_VOTES } from '../MemberProfile.store'
 
-const memberVotesQuery =
-`query MemberVotes ($id: ID, $order: String, $limit: Int) {
-  person (id: $id) {
-    id
-    votes (first: $limit, order: $order) {
-      items {
-        id
-        post {
-          ${getPostFieldsFragment(false)}
-        }
-        voter {
+export function fetchMemberVotes (id, order = 'desc', limit = 20, providedQuery) {
+  const query = providedQuery ||
+  `query MemberVotes ($id: ID, $order: String, $limit: Int) {
+    person (id: $id) {
+      id
+      votes (first: $limit, order: $order) {
+        items {
           id
+          post {
+            ${getPostFieldsFragment(false)}
+          }
+          voter {
+            id
+          }
+          createdAt
         }
-        createdAt
       }
     }
-  }
-}`
-
-export function fetchMemberVotes (id, order = 'desc', limit = 20, query = memberVotesQuery) {
+  }`
   return {
     type: FETCH_MEMBER_VOTES,
     graphql: {
@@ -38,8 +37,8 @@ export function fetchMemberVotes (id, order = 'desc', limit = 20, query = member
 export const getMemberVotes = ormCreateSelector(
   orm,
   state => state.orm,
-  (_, { personId }) => personId,
-  ({ Vote }, personId) => {
+  (_, { routeParams }) => routeParams,
+  ({ Vote }, { personId }) => {
     const votes = Vote.filter(v => String(v.voter) === String(personId)).toModelArray()
     if (!votes) return []
     return compact(votes.map(({ post }) => {

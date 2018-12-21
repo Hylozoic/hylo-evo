@@ -56,10 +56,10 @@ export default function (state = {}, action) {
 
   const { extractQueryResults } = meta || {}
   if (extractQueryResults && payload) {
-    const { getItems, getParams, getType } = extractQueryResults
+    const { getItems, getRouteParams, getType } = extractQueryResults
     return appendIds(state,
       getType ? getType(action) : action.type,
-      getParams ? getParams(action) : meta.graphql.variables,
+      getRouteParams ? getRouteParams(action) : meta.graphql.variables,
       getItems(action)
     )
   }

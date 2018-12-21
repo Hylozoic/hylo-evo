@@ -4,30 +4,27 @@ import PostCard from 'components/PostCard'
 import './MemberPosts.scss'
 
 export default class MemberPosts extends React.Component {
-  componentDidMount () {
-    this.props.fetchMemberPosts(this.props.personId)
+  static defaultProps = {
+    routeParams: {}
   }
 
-  itemSelected = selectedItemId => selectedItemId === this.props.postId
+  componentDidMount () {
+    this.props.fetchMemberPosts()
+  }
+
+  itemSelected = selectedItemId => selectedItemId === this.props.routeParams.postId
 
   render () {
     if (this.props.loading) return <Loading />
 
-    const {
-      posts,
-      showDetails,
-      editPost,
-      voteOnPost
-    } = this.props
+    const { posts, routeParams } = this.props
 
     return <div>
       {posts && posts.map(post =>
         <div styleName='activity-item' key={post.id}>
           <PostCard
+            routeParams={routeParams}
             post={post}
-            showDetails={showDetails}
-            voteOnPost={voteOnPost}
-            editPost={editPost}
             expanded={this.itemSelected(post.id)} />
         </div>
       )}

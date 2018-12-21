@@ -37,7 +37,7 @@ describe('connector', () => {
     session.Comment.create(normalized.comments[0])
     session.Comment.create(normalized.comments[1])
     state = { orm: session.state }
-    props = { personId: '46816', slug: 'wombats' }
+    props = { routeParams: { personId: '46816', slug: 'wombats' } }
   })
 
   describe('memberPostsSelector', () => {

@@ -12,7 +12,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    fetchRecentActivity: () => dispatch(fetchRecentActivity(props.personId))
+    fetchRecentActivity: () => dispatch(fetchRecentActivity(props.routeParams.personId))
   }
 }
 

@@ -9,7 +9,7 @@ import './CommentCard.scss'
 
 export default function CommentCard ({
   comment,
-  showDetails = () => {},
+  showDetails,
   shouldShowReply,
   expanded = true,
   highlightProps

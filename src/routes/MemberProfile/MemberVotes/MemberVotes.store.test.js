@@ -38,7 +38,7 @@ describe('connector', () => {
     session.Post.create(normalized.posts[1])
     session.Vote.create(normalized.votes[0])
     state = { orm: session.state }
-    props = { personId: '46816', slug: 'wombats' }
+    props = { routeParams: { personId: '46816', slug: 'wombats' } }
   })
 
   describe('getMemberVotes', () => {

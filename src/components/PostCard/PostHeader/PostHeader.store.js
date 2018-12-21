@@ -79,8 +79,8 @@ export function pinPost (postId, communityId) {
 export const getCommunity = ormCreateSelector(
   orm,
   state => state.orm,
-  (_, { slug }) => slug,
-  (session, slug) => session.Community.safeGet({slug})
+  (_, { routeParams }) => routeParams,
+  (session, { slug }) => session.Community.safeGet({slug})
 )
 
 export function ormSessionReducer ({ Post }, { type, meta }) {

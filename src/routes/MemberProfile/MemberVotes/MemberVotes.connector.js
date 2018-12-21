@@ -12,7 +12,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    fetchMemberVotes: personId => dispatch(fetchMemberVotes(personId))
+    fetchMemberVotes: () => dispatch(fetchMemberVotes(props.routeParams.personId))
   }
 }
 

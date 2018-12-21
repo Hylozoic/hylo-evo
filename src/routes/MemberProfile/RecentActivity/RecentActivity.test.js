@@ -9,7 +9,7 @@ describe.only('RecentActivity', () => {
 
   it('renders the same as the last snapshot', () => {
     const wrapper = shallow(
-      <RecentActivity fetchRecentActivity={jest.fn()} activityItems={person.comments.concat(person.posts)} />
+      <RecentActivity fetchRecentActivity={jest.fn()} routeParams={{}} activityItems={person.comments.concat(person.posts)} />
     )
     expect(wrapper).toMatchSnapshot()
   })

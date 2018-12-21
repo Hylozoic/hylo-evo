@@ -1,4 +1,5 @@
 import { attr, fk, many, Model } from 'redux-orm'
+import PropTypes from 'prop-types'
 
 export const PostFollower = Model.createClass({})
 PostFollower.modelName = 'PostFollower'
@@ -66,4 +67,20 @@ Post.fields = {
   votesTotal: attr(),
   myVote: attr(),
   topics: many('Topic')
+}
+
+export const POST_PROP_TYPES = {
+  id: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  type: PropTypes.string,
+  title: PropTypes.string,
+  details: PropTypes.string,
+  name: PropTypes.string,
+  upVotes: PropTypes.string,
+  updatedAt: PropTypes.string,
+  imageUrl: PropTypes.string,
+  linkPreview: PropTypes.object,
+  communities: PropTypes.array
 }

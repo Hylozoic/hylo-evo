@@ -5,7 +5,7 @@ import MemberProfile, { SocialButtons } from './MemberProfile'
 
 describe('MemberProfile', () => {
   const defaultTestProps = {
-    match: {params: {personId: '1' }},
+    routeParams: {personId: '1' },
     person: denormalized.data.person,
     fetchPerson: jest.fn()
   }

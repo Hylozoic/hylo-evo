@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { attr, many, Model } from 'redux-orm'
 
 const Person = Model.createClass({
@@ -24,6 +25,15 @@ Person.fields = {
   skills: many('Skill'),
   postsTotal: attr(),
   votesTotal: attr()
+}
+
+export const PersonPropTypes = {
+  id: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired,
+  name: PropTypes.string.isRequired,
+  avatarUrl: PropTypes.string.isRequired
 }
 
 export const firstName = person => person.name.split(' ')[0]

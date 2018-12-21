@@ -6,7 +6,7 @@ exports[`MemberComments renders the same as the last snapshot 1`] = `
     data-stylename="activity-item"
     key="2"
   >
-    <CommentCard
+    <Connect(CommentCard)
       comment={
         Object {
           "createdAt": "Sat Apr 15 2017 16:27:55 GMT+1200 (NZST)",
@@ -22,13 +22,14 @@ exports[`MemberComments renders the same as the last snapshot 1`] = `
         }
       }
       expanded={false}
+      routeParams={Object {}}
     />
   </div>
   <div
     data-stylename="activity-item"
     key="1"
   >
-    <CommentCard
+    <Connect(CommentCard)
       comment={
         Object {
           "createdAt": "Fri Mar 24 2017 10:39:41 GMT+1300 (NZDT)",
@@ -44,6 +45,7 @@ exports[`MemberComments renders the same as the last snapshot 1`] = `
         }
       }
       expanded={false}
+      routeParams={Object {}}
     />
   </div>
 </div>

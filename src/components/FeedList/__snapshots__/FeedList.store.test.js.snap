@@ -92,7 +92,7 @@ posts(
       avatarUrl
       bio
       tagline
-      location  
+      location
       skills (first: 100) {
         items {
           id
@@ -210,7 +210,7 @@ posts(
       avatarUrl
       bio
       tagline
-      location  
+      location
       skills (first: 100) {
         items {
           id

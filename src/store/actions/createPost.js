@@ -1,10 +1,10 @@
 import { get } from 'lodash/fp'
 import { textLength } from 'hylo-utils/text'
 import { AnalyticsEvents } from 'hylo-utils/constants'
-import { getPostFieldsFragment } from 'store/actions/fetchPost'
+import createPostMutation from 'graphql/mutations/createPostMutation'
 import { CREATE_POST } from 'store/constants'
 
-export default function createPost (postParams) {
+export default function createPost (postParams, query = createPostMutation) {
   const {
     type,
     title,
@@ -24,31 +24,7 @@ export default function createPost (postParams) {
   return {
     type: CREATE_POST,
     graphql: {
-      query: `mutation (
-        $type: String,
-        $title: String,
-        $details: String,
-        $linkPreviewId: String,
-        $communityIds: [String],
-        $imageUrls: [String],
-        $fileUrls: [String],
-        $announcement: Boolean
-        $topicNames: [String],
-        $acceptContributions: Boolean
-      ) {
-        createPost(data: {
-          type: $type,
-          title: $title,
-          details: $details,
-          linkPreviewId: $linkPreviewId,
-          communityIds: $communityIds,
-          imageUrls: $imageUrls,
-          fileUrls: $fileUrls,
-          announcement: $announcement
-          topicNames: $topicNames,
-          acceptContributions: $acceptContributions
-        }) {${getPostFieldsFragment(false)}}
-      }`,
+      query,
       variables: {
         type,
         title,

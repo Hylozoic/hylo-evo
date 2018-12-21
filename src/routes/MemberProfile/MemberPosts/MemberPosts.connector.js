@@ -10,9 +10,9 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export function mapDispatchToProps (dispatch) {
+export function mapDispatchToProps (dispatch, props) {
   return {
-    fetchMemberPosts: (memberId) => dispatch(fetchMemberPosts(memberId))
+    fetchMemberPosts: () => dispatch(fetchMemberPosts(props.routeParams.personId))
   }
 }
 

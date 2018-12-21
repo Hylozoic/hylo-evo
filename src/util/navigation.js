@@ -76,7 +76,7 @@ export function tagUrl (tagName, communitySlug) {
   return `${base}/${tagName}`
 }
 
-export function postsUrl (opts = {}) {
+export function postsUrl (opts = {}, querystringParams) {
   const optsWithDefaults = {
     defaultUrl: allCommunitiesUrl(),
     ...opts
@@ -85,12 +85,14 @@ export function postsUrl (opts = {}) {
   const inPostTypeContext = POST_TYPE_CONTEXTS.includes(postTypeContext)
   const base = baseUrl(optsWithDefaults)
 
-  return inPostTypeContext
+  const result = inPostTypeContext
     ? `${base}/${postTypeContext}`
     : `${base}`
+
+  return addQuerystringToPath(result, querystringParams)
 }
 
-export function postUrl (id, opts = {}) {
+export function postUrl (id, opts = {}, querystringParams = {}) {
   const action = get('action', opts)
   const postTypeContext = get('postTypeContext', opts)
   const inPostTypeContext = POST_TYPE_CONTEXTS.includes(postTypeContext)
@@ -100,15 +102,15 @@ export function postUrl (id, opts = {}) {
   result = `${result}/${id}`
   if (action) result = `${result}/${action}`
 
-  return result
+  return addQuerystringToPath(result, querystringParams)
 }
 
-export function editPostUrl (id, opts = {}) {
-  return postUrl(id, {...opts, action: 'edit'})
+export function editPostUrl (id, opts = {}, querystringParams = {}) {
+  return postUrl(id, {...opts, action: 'edit'}, querystringParams)
 }
 
-export function newPostUrl (opts = {}) {
-  return postUrl('new', {...opts})
+export function newPostUrl (opts = {}, querystringParams = {}) {
+  return postUrl('new', {...opts}, querystringParams)
 }
 
 export function commentUrl (postId, commentId, communitySlug) {
@@ -140,9 +142,9 @@ export const communityJoinUrl = ({slug, accessCode}) =>
 
 // URL utility functions
 
-export function makeUrl (path, params) {
-  params = omitBy(x => !x, params)
-  return `${path}${!isEmpty(params) ? '?' + qs.stringify(params) : ''}`
+export function addQuerystringToPath (path, querystringParams) {
+  querystringParams = omitBy(x => !x, querystringParams)
+  return `${path}${!isEmpty(querystringParams) ? '?' + qs.stringify(querystringParams) : ''}`
 }
 
 // TODO: refactor to utilize react-navigation matcher and params
@@ -162,7 +164,7 @@ export function removePostFromUrl (url) {
   return url.replace(new RegExp(matchForReplaceRegex), '')
 }
 
-// n.b.: use getParam instead of this where possible.
+// n.b.: use getRouteParam instead of this where possible.
 
 export function getCommunitySlugInPath (pathname) {
   const match = matchPath(pathname, {

@@ -1,13 +1,13 @@
 import { connect } from 'react-redux'
 import { get, find } from 'lodash/fp'
 import { push } from 'react-router-redux'
-import { removePostFromUrl } from 'util/navigation'
+import { editPostUrl, removePostFromUrl } from 'util/navigation'
 import fetchPost from 'store/actions/fetchPost'
-import getParam from 'store/selectors/getParam'
-import getPost, { presentPost } from 'store/selectors/getPost'
+import getRouteParam from 'store/selectors/getRouteParam'
+import getPost from 'store/selectors/getPost'
+import presentPost from 'store/presenters/presentPost'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import getPostTypeContext from 'store/selectors/getPostTypeContext'
 import voteOnPost from 'store/actions/voteOnPost'
 import joinProject from 'store/actions/joinProject'
 import leaveProject from 'store/actions/leaveProject'
@@ -16,23 +16,17 @@ import { FETCH_POST } from 'store/constants'
 
 export function mapStateToProps (state, props) {
   // match params
-  const id = getParam('postId', state, props)
-  const personId = getParam('personId', state, props)
-  const slug = getParam('slug', state, props)
-  const networkSlug = getParam('networkSlug', state, props)
+  const id = getRouteParam('postId', state, props)
+  const routeParams = props.match.params
   // everything else
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const post = presentPost(getPost(state, props), get('id', currentCommunity))
-  const postTypeContext = getPostTypeContext(state, props)
   const currentUser = getMe(state)
   const isProjectMember = find(({id}) => id === get('id', currentUser), get('members', post))
 
   return {
     id,
-    personId,
-    slug,
-    networkSlug,
-    postTypeContext,
+    routeParams,
     post,
     currentUser,
     isProjectMember,
@@ -42,7 +36,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   const { location } = props
-  const postId = getParam('postId', {}, props)
+  const postId = getRouteParam('postId', {}, props)
   const closeLocation = {
     ...props.location,
     pathname: removePostFromUrl(location.pathname)
@@ -50,12 +44,24 @@ export function mapDispatchToProps (dispatch, props) {
 
   return {
     fetchPost: () => dispatch(fetchPost(postId)),
+    editPost: () => dispatch(push(editPostUrl(postId, props.match.params))),
     onClose: () => dispatch(push(closeLocation)),
-    joinProject: postId => dispatch(joinProject(postId)),
-    leaveProject: postId => dispatch(leaveProject(postId)),
-    voteOnPost: (postId, myVote) => dispatch(voteOnPost(postId, myVote)),
+    joinProject: () => dispatch(joinProject(postId)),
+    leaveProject: () => dispatch(leaveProject(postId)),
+    voteOnPost: (myVote) => dispatch(voteOnPost(postId, myVote)),
     processStripeToken: (postId, token, amount) => dispatch(processStripeToken(postId, token, amount))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { post } = stateProps
+  return {
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
+    voteOnPost: () =>
+        dispatchProps.voteOnPost(!post.myVote)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)

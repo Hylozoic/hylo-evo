@@ -1,7 +1,7 @@
 import { get } from 'lodash/fp'
 import { textLength } from 'hylo-utils/text'
 import { AnalyticsEvents } from 'hylo-utils/constants'
-import { getPostFieldsFragment } from 'store/actions/fetchPost'
+import getPostFieldsFragment from 'graphql/fragments/getPostFieldsFragment'
 import { CREATE_PROJECT } from 'store/constants'
 
 export default function createProject (postParams) {

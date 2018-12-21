@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { pick } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
-import { presentPost } from 'store/selectors/getPost'
+import presentPost from 'store/presenters/presentPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import {
   fetchPosts,
@@ -16,9 +16,11 @@ export function mapStateToProps (state, props) {
   const fetchPostsParam = {
     filter: props.postTypeFilter,
     ...pick([
-      'subject',
       'slug',
-      'networkSlug',
+      'networkSlug'
+    ], props.routeParams),
+    ...pick([
+      'subject',
       'sortBy',
       'topic'
     ], props)

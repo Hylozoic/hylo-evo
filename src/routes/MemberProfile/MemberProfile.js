@@ -1,5 +1,4 @@
 import React from 'react'
-import { get } from 'lodash/fp'
 import { filter, isFunction } from 'lodash'
 import { AXOLOTL_ID } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
@@ -27,7 +26,7 @@ export default class MemberProfile extends React.Component {
   }
 
   componentDidMount () {
-    const personId = get('match.params.personId', this.props)
+    const { personId } = this.props.routeParams
     if (personId) this.props.fetchPerson(personId)
   }
 
@@ -42,13 +41,11 @@ export default class MemberProfile extends React.Component {
   render () {
     if (this.props.error) return <Error>this.props.error</Error>
     if (!this.props.person) return <Loading />
-
     const {
+      loading,
       person,
       currentUser,
-      match: {params: routeParams},
-      loading,
-      feedItemActions
+      routeParams
     } = this.props
     const {
       bannerUrl,
@@ -58,7 +55,6 @@ export default class MemberProfile extends React.Component {
     const { currentTab } = this.state
     const isMe = currentUser && currentUser.id === routeParams.personId
     const isAxolotl = AXOLOTL_ID === routeParams.personId
-
     const itemsMenuItems = [
       {icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(routeParams.personId), hide: isMe || isAxolotl}
     ]
@@ -68,21 +64,21 @@ export default class MemberProfile extends React.Component {
         <ProfileNamePlate {...person} rightSideContent={<MemberActionsMenu items={itemsMenuItems} />} />
       </ProfileBanner>
       <div styleName='content'>
-        <ProfileControls currentTab={this.state.currentTab} selectTab={this.selectTab}>
+        <ProfileControls currentTab={currentTab} selectTab={this.selectTab}>
           <span styleName='tagline'>{tagline}</span>
           <SocialButtons {...person} />
         </ProfileControls>
         {currentTab === 'Overview' && <div>
           <h2 styleName='subhead'>About Me</h2>
           <div styleName='bio'>{bio}</div>
-          <RecentActivity {...feedItemActions} {...routeParams} loading={loading} />
+          <RecentActivity routeParams={routeParams} loading={loading} />
         </div>}
         {currentTab === 'Posts' &&
-          <MemberPosts {...feedItemActions} {...routeParams} loading={loading} />}
+          <MemberPosts routeParams={routeParams} loading={loading} />}
         {currentTab === 'Comments' &&
-          <MemberComments {...feedItemActions} {...routeParams} loading={loading} />}
+          <MemberComments routeParams={routeParams} loading={loading} />}
         {currentTab === 'Upvotes' &&
-          <MemberVotes {...feedItemActions} {...routeParams} loading={loading} />}
+          <MemberVotes routeParams={routeParams} loading={loading} />}
       </div>
     </div>
   }

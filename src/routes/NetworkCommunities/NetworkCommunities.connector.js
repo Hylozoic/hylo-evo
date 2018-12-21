@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import getParam from 'store/selectors/getParam'
+import getRouteParam from 'store/selectors/getRouteParam'
 import {
   setSearch,
   setSort,
@@ -16,7 +16,7 @@ import {
 } from 'routes/NetworkSettings/NetworkSettings.store'
 
 export function mapStateToProps (state, props) {
-  const slug = getParam('networkSlug', state, props)
+  const slug = getRouteParam('networkSlug', state, props)
   const search = getSearch(state, props)
   const sortBy = getSort(state, props)
   const queryProps = {slug, sortBy, search}

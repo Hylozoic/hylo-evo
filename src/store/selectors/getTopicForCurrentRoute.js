@@ -1,11 +1,11 @@
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import getParam from './getParam'
+import getRouteParam from './getRouteParam'
 
 const getTopicForCurrentRoute = ormCreateSelector(
   orm,
   state => state.orm,
-  (state, props) => getParam('topicName', state, props),
+  (state, props) => getRouteParam('topicName', state, props),
   (session, topicName) => session.Topic.safeGet({name: topicName})
 )
 

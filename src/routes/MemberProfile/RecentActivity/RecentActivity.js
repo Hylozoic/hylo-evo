@@ -5,23 +5,20 @@ import CommentCard from 'components/CommentCard'
 import './RecentActivity.scss'
 
 export default class RecentActivity extends React.Component {
+  static defaultProps = {
+    routeParams: {}
+  }
+
   componentDidMount () {
     this.props.fetchRecentActivity()
   }
 
-  itemSelected = selectedItemId => selectedItemId === this.props.postId
+  itemSelected = selectedItemId => selectedItemId === this.props.routeParams.postId
 
   render () {
     if (this.props.loading) return <Loading />
 
-    const {
-      activityItems,
-      showDetails,
-      editPost,
-      voteOnPost,
-      slug,
-      networkSlug
-    } = this.props
+    const { activityItems, routeParams } = this.props
 
     return <div>
       <h2 styleName='subhead'>Recent Activity</h2>
@@ -29,17 +26,13 @@ export default class RecentActivity extends React.Component {
         return <div styleName='activity-item' key={i}>
           {item.hasOwnProperty('title')
             ? <PostCard
-              expanded={this.itemSelected(item.id)}
               post={item}
-              showDetails={showDetails}
-              editPost={editPost}
-              voteOnPost={voteOnPost}
-              slug={slug}
-              networkSlug={networkSlug} />
+              routeParams={routeParams}
+              expanded={this.itemSelected(item.id)} />
             : <CommentCard
               comment={item}
-              expanded={this.itemSelected(item.post.id)}
-              showDetails={showDetails} />}
+              routeParams={routeParams}
+              expanded={this.itemSelected(item.post.id)} />}
         </div>
       })}
     </div>

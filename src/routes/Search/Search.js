@@ -52,7 +52,6 @@ export default class Search extends Component {
       setSearchTerm,
       updateQueryParam,
       fetchMoreSearchResults,
-      showPostDetails,
       setSearchFilter,
       showPerson,
       filter
@@ -68,7 +67,6 @@ export default class Search extends Component {
             <SearchResult key={sr.id}
               searchResult={sr}
               term={searchForInput}
-              showPostDetails={showPostDetails}
               showPerson={showPerson} />)}
           {pending && <Loading type='bottom' />}
           <ScrollListener onBottom={() => fetchMoreSearchResults()}
@@ -79,7 +77,13 @@ export default class Search extends Component {
   }
 }
 
-export function SearchBar ({searchForInput, setSearchTerm, updateQueryParam, setSearchFilter, filter}) {
+export function SearchBar ({
+  searchForInput,
+  setSearchTerm,
+  updateQueryParam,
+  setSearchFilter,
+  filter
+}) {
   const onSearchChange = event => {
     const { value } = event.target
     setSearchTerm(value) // no debounce
@@ -113,8 +117,16 @@ export function TabBar ({ filter, setSearchFilter }) {
   </div>
 }
 
-export function SearchResult ({ searchResult, term = '', showPostDetails, showPerson }) {
+export function SearchResult ({
+  searchResult,
+  term = '',
+  showPerson
+}) {
   const { type, content } = searchResult
+  if (!content) {
+    console.log(`Search Result of "${type}" without data (see DEV-395):`, content)
+    return null
+  }
 
   const highlightProps = {
     terms: term.split(' '),
@@ -133,7 +145,6 @@ export function SearchResult ({ searchResult, term = '', showPostDetails, showPe
       component = <PostCard
         styleName='postcard-expand'
         post={content}
-        showDetails={() => showPostDetails(content.id, content.type)}
         highlightProps={highlightProps} />
       break
     case 'Comment':
@@ -143,6 +154,7 @@ export function SearchResult ({ searchResult, term = '', showPostDetails, showPe
         highlightProps={highlightProps} />
       break
   }
+  if (!component) return null
   return <div styleName='search-result'>
     {component}
   </div>

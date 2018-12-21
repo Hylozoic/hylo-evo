@@ -6,7 +6,7 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
     data-stylename="activity-item"
     key="30003"
   >
-    <PostCard
+    <Connect(PostCard)
       expanded={false}
       post={
         Object {
@@ -29,13 +29,14 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
           "type": "discussion",
         }
       }
+      routeParams={Object {}}
     />
   </div>
   <div
     data-stylename="activity-item"
     key="30002"
   >
-    <PostCard
+    <Connect(PostCard)
       expanded={false}
       post={
         Object {
@@ -66,6 +67,7 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
           "type": "discussion",
         }
       }
+      routeParams={Object {}}
     />
   </div>
 </div>

@@ -1,8 +1,9 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { compact } from 'lodash/fp'
 import orm from 'store/models'
-import { presentPost } from 'store/selectors/getPost'
-import { postsQueryFragment } from 'components/FeedList/FeedList.store'
+import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
+import presentPost from 'store/presenters/presentPost'
+import presentComment from 'store/presenters/presentComment'
 
 export const FETCH_RECENT_ACTIVITY = 'FETCH_RECENT_ACTIVITY'
 
@@ -65,23 +66,11 @@ export function indexActivityItems (comments, posts) {
     })
 }
 
-export function presentComment (comment, communitySlug) {
-  if (!comment || !comment.post) return
-  return {
-    ...comment.ref,
-    creator: comment.creator.ref,
-    post: comment.post.ref,
-    image: comment.attachments.toModelArray()[0],
-    slug: communitySlug
-  }
-}
-
 export const getRecentActivity = ormCreateSelector(
   orm,
   state => state.orm,
-  (_, { personId }) => personId,
-  (_, { slug }) => slug,
-  ({ Person }, personId, slug) => {
+  (_, { routeParams }) => routeParams,
+  ({ Person }, { personId, slug }) => {
     if (!Person.hasId(personId)) return
     const person = Person.withId(personId)
     const comments = compact(person.comments.toModelArray().map(comment =>

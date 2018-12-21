@@ -12,28 +12,39 @@ import { bgImageStyle } from 'util/index'
 
 export default class Feed extends Component {
   static propTypes = {
-    newPost: PropTypes.func
+    newPost: PropTypes.func,
+    routeParams: PropTypes.object,
+    querystringParams: PropTypes.object
+  }
+
+  static defaultProps = {
+    routeParams: {},
+    querystringParams: {}
   }
 
   componentDidMount () {
-    const { topicName, fetchTopic, networkSlug, fetchNetwork } = this.props
+    const { routeParams, fetchTopic, fetchNetwork } = this.props
+    const { networkSlug, topicName } = routeParams
+
     if (topicName) fetchTopic()
     if (networkSlug) fetchNetwork()
   }
 
   componentDidUpdate (prevProps) {
-    const { communitySlug, topicName, fetchTopic, networkSlug, fetchNetwork } = this.props
-    const topicChanged = topicName && get('topicName', prevProps) !== topicName
-    const slugChanged = communitySlug && get('communitySlug', prevProps) !== communitySlug
+    const { routeParams, fetchTopic, fetchNetwork } = this.props
+    const { slug, topicName, networkSlug } = routeParams
+    const topicChanged = topicName && get('routeParams.topicName', prevProps) !== topicName
+    const slugChanged = slug && get('routeParams.slug', prevProps) !== slug
     if (topicChanged || (topicName && slugChanged)) fetchTopic()
-    if (networkSlug && networkSlug !== prevProps.networkSlug) fetchNetwork()
+    if (networkSlug && networkSlug !== prevProps.routeParams.networkSlug) fetchNetwork()
   }
 
   getFeedProps () {
-    const { communitySlug, topic, networkSlug } = this.props
+    const { routeParams, querystringParams } = this.props
+    const { slug, networkSlug } = routeParams
 
     var subject
-    if (communitySlug) {
+    if (slug) {
       subject = 'community'
     } else if (networkSlug) {
       subject = 'network'
@@ -43,17 +54,14 @@ export default class Feed extends Component {
 
     return {
       subject,
-      slug: communitySlug,
-      topic: get('id', topic),
+      routeParams,
+      querystringParams,
+      topic: get('id', this.props.topic),
       ...pick([
-        'networkSlug',
         'postTypeFilter',
-        'postTypeContext',
         'sortBy',
         'changeSort',
         'changeTab',
-        'showPostDetails',
-        'voteOnPost',
         'selectedPostId'
       ], this.props)
     }
@@ -61,10 +69,11 @@ export default class Feed extends Component {
 
   render () {
     const {
-      topic, community, currentUser, topicName, postsTotal, followersTotal,
-      communityTopic, newPost, postTypeContext, network, networkSlug, currentUserHasMemberships,
-      goToCreateCommunity, membershipsPending
+      routeParams, topic, community, currentUser, postsTotal, followersTotal,
+      communityTopic, newPost, network, currentUserHasMemberships,
+      goToCreateCommunity, membershipsPending, postTypeFilter
     } = this.props
+    const { networkSlug, topicName } = routeParams
 
     if (topicName && !topic) return <Loading />
     if (community && topicName && !communityTopic) return <Loading />
@@ -79,14 +88,14 @@ export default class Feed extends Component {
           postsTotal={postsTotal}
           followersTotal={followersTotal}
           topic={topic}
-          postTypeContext={postTypeContext}
+          type={postTypeFilter}
           community={community}
           currentUser={currentUser}
           newPost={newPost} />
         : <FeedBanner
           community={community || network}
           currentUser={currentUser}
-          postTypeContext={postTypeContext}
+          type={postTypeFilter}
           all={!community && !networkSlug}
           newPost={newPost}
           currentUserHasMemberships={currentUserHasMemberships} />}
@@ -94,6 +103,7 @@ export default class Feed extends Component {
       {!membershipsPending && !currentUserHasMemberships && <CreateCommunityPrompt
         goToCreateCommunity={goToCreateCommunity}
       />}
+      {membershipsPending && <Loading />}
     </div>
   }
 }

@@ -3,7 +3,7 @@ import StripeCheckout from 'react-stripe-checkout'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { get, pick, throttle, isEmpty } from 'lodash/fp'
+import { get, throttle, isEmpty } from 'lodash/fp'
 import { tagUrl } from 'util/navigation'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import { PostImage, PostBody, PostFooter, PostHeader, PostCommunities } from 'components/PostCard'
@@ -17,31 +17,25 @@ import TextInput from 'components/TextInput'
 import ProjectMembersDialog from 'components/ProjectMembersDialog'
 import './PostDetail.scss'
 
-const { func, object, string } = PropTypes
-
 // the height of the header plus the padding-top
 const STICKY_HEADER_SCROLL_OFFSET = 78
 
 export default class PostDetail extends Component {
   static propTypes = {
-    post: object,
-    id: string,
-    currentUser: object,
-    slug: string,
-    fetchPost: func
+    post: PropTypes.object,
+    routeParams: PropTypes.object,
+    currentUser: PropTypes.object,
+    fetchPost: PropTypes.func
   }
 
-  constructor (props) {
-    super(props)
-    this.state = {
-      atHeader: false,
-      headerWidth: 0,
-      headerScrollOffset: 0,
-      atActivity: false,
-      activityWidth: 0,
-      activityScrollOffset: 0,
-      showMembersDialog: false
-    }
+  state = {
+    atHeader: false,
+    headerWidth: 0,
+    headerScrollOffset: 0,
+    atActivity: false,
+    activityWidth: 0,
+    activityScrollOffset: 0,
+    showMembersDialog: false
   }
 
   setHeaderStateFromDOM = () => {
@@ -98,12 +92,12 @@ export default class PostDetail extends Component {
     }
   })
 
-  toggleMembersDialog = () => this.setState({showMembersDialog: !this.state.showMembersDialog})
+  toggleMembersDialog = () => this.setState(state => ({showMembersDialog: !state.showMembersDialog}))
 
   render () {
     const {
+      routeParams,
       post,
-      slug,
       voteOnPost,
       isProjectMember,
       joinProject,
@@ -131,45 +125,31 @@ export default class PostDetail extends Component {
     }
     const hasMembers = post.members.length > 0
     let { showMembersDialog } = this.state
-    let { toggleMembersDialog } = this
     showMembersDialog = hasMembers && showMembersDialog
-    toggleMembersDialog = hasMembers && toggleMembersDialog
+    const toggleMembersDialog = hasMembers && this.toggleMembersDialog ? this.toggleMembersDialog : undefined
     const postFooter = <PostFooter
-      {...pick([
-        'myVote',
-        'votesTotal',
-        'commenters',
-        'commentersTotal',
-        'type',
-        'members'
-      ], post)}
+      {...post}
       voteOnPost={voteOnPost}
-      postId={post.id}
       onClick={toggleMembersDialog} />
 
     return <div styleName='post' ref={this.setHeaderStateFromDOM}>
-      <ScrollListener elementId={DETAIL_COLUMN_ID}
-        onScroll={this.handleScroll} />
-      <WrappedPostHeader {...this.props} />
+      <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
+      <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} />
       {atHeader && <div styleName='header-sticky' style={headerStyle}>
-        <WrappedPostHeader {...this.props} />
+        <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} />
       </div>}
       <PostImage postId={post.id} styleName='image' linked />
       <PostTags tags={post.tags} />
-      <PostBody title={post.title}
-        id={post.id}
-        details={post.details}
-        linkPreview={post.linkPreview}
-        slug={slug}
-        expanded
+      <PostBody
         styleName='body'
-        fileAttachments={post.fileAttachments} />
+        expanded
+        slug={routeParams.slug}
+        {...post} />
       {isProject && <div styleName='join-project-button-container'>
         <JoinProjectButton
           joinProject={joinProject}
           leaveProject={leaveProject}
-          leaving={isProjectMember}
-          postId={post.id} />
+          leaving={isProjectMember} />
       </div>}
       {isProject && acceptContributions &&
         <ProjectContributions
@@ -178,7 +158,7 @@ export default class PostDetail extends Component {
           processStripeToken={processStripeToken} />}
       <PostCommunities
         communities={post.communities}
-        slug={slug}
+        slug={routeParams.slug}
         showBottomBorder />
       <div styleName='activity-header' ref={this.setActivityStateFromDOM}>ACTIVITY</div>
       {postFooter}
@@ -189,32 +169,10 @@ export default class PostDetail extends Component {
         <div styleName='activity-header'>ACTIVITY</div>
         {postFooter}
       </div>}
-      <Comments postId={post.id} slug={slug} scrollToBottom={scrollToBottom} />
+      <Comments postId={post.id} slug={routeParams.slug} scrollToBottom={scrollToBottom} />
       <SocketSubscriber type='post' id={post.id} />
     </div>
   }
-}
-
-function WrappedPostHeader (props) {
-  const headerProps = {
-    date: props.post.createdAt,
-    ...pick([
-      'id',
-      'creator',
-      'type',
-      'communities',
-      'pinned',
-      'topics',
-      'announcement'
-    ], props.post),
-    ...pick([
-      'personId',
-      'slug',
-      'networkSlug',
-      'postTypeContext'
-    ], props)
-  }
-  return <PostHeader styleName='header' topicsOnNewline {...headerProps} />
 }
 
 export function PostTags ({ tags, slug }) {
@@ -227,9 +185,9 @@ export function PostTags ({ tags, slug }) {
   </div>
 }
 
-export function JoinProjectButton ({ leaving, joinProject, leaveProject, postId }) {
+export function JoinProjectButton ({ leaving, joinProject, leaveProject }) {
   const buttonText = leaving ? 'Leave Project' : 'Join Project'
-  const onClick = () => leaving ? leaveProject(postId) : joinProject(postId)
+  const onClick = () => leaving ? leaveProject() : joinProject()
 
   return <Button
     color='green'
