@@ -5,7 +5,7 @@ import Loading from 'components/Loading'
 import Button from 'components/Button'
 const { object, func } = PropTypes
 
-const clientId = 'ca_DrLirWk9SU9LkAwouYdEu0J9aidD1sDo'
+const clientId = process.env.STRIPE_CLIENT_ID
 const stripeUrl = `https://connect.stripe.com/oauth/authorize?response_type=code&client_id=${clientId}&scope=read_write`
 
 export default class PaymentSettingsTab extends Component {
