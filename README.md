@@ -2,15 +2,24 @@
 
 ## Getting Started
 
-## This setup uses Docker and relies upon the Hylo Staging API
-
 1. `git clone git@github.com:Hylozoic/hylo-evo.git`
 2. `cd hylo-evo`
-3. Make the following two file changes:
+
+### Using Hylo Staging API
+
+* From within the project root make these two file changes:
   * `cp .env.staging .env`
   * Change last line of `package.json` from `"proxy": "http://localhost:3001"` to `"proxy": "https://api-staging.hylo.com"`
-3. Build the docker container: `docker build -t hylo-evo-docker .`
-4. Run the docker container: 
+
+## Running local:
+
+1. `yarn install`
+2. `yarn start`
+
+## Running using Docker:
+
+1. Build the docker container: `docker build -t hylo-evo-docker .`
+2. Run the docker container: 
 ~~~
 docker run -it \
   -v ${PWD}:/usr/src/app \
