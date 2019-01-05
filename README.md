@@ -5,11 +5,9 @@
 1. `git clone git@github.com:Hylozoic/hylo-evo.git`
 2. `cd hylo-evo`
 
-### Using Hylo Staging API
+### Using the default Hylo Staging API configuration
 
-* From within the project root make these two file changes:
-  * `cp .env.staging .env`
-  * Change last line of `package.json` from `"proxy": "http://localhost:3001"` to `"proxy": "https://api-staging.hylo.com"`
+  * From the root of the project run: `cp .env.staging .env`
 
 ## Running local:
 
