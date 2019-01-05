@@ -221,5 +221,5 @@
       "jest"
     ]
   },
-  "proxy": "https://api-staging.hylo.com"
+  "proxy": "http://localhost:3001"
 }
