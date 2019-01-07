@@ -13,7 +13,6 @@ es5
 # misc
 .DS_Store
 .env
-.env.old
 npm-debug.log
 
 .vscode
