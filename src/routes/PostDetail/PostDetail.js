@@ -239,6 +239,8 @@ export class ProjectContributions extends Component {
       })
     }
 
+    const valid = false
+
     return <div styleName='project-contributions'>
       {received && <div styleName='success-notification'>Thanks for your contribution!</div>}
       {error && <div styleName='error-notification'>There was a problem processing your payment. Please check your card details and try again.</div>}
@@ -258,8 +260,11 @@ export class ProjectContributions extends Component {
             noClearButton />
         </div>
         <StripeCheckout
+          disabled={!valid}
+          name='Contributing Via Stripe'
           token={onToken}
-          stripeKey={process.env.STRIPE_PUBLISHABLE_KEY} />
+          stripeKey={process.env.STRIPE_PUBLISHABLE_KEY}
+          amount={Number(contributionAmount)} />
         <Button
           styleName='cancel-button'
           color='gray'
