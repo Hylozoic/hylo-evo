@@ -239,7 +239,9 @@ export class ProjectContributions extends Component {
       })
     }
 
-    const valid = false
+    const contributionAmountNumber = Number(contributionAmount)
+    const valid = !isNaN(contributionAmountNumber) &&
+      contributionAmount > 0
 
     return <div styleName='project-contributions'>
       {received && <div styleName='success-notification'>Thanks for your contribution!</div>}
