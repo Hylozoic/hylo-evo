@@ -85,6 +85,21 @@ exports[`UserSettings renders correctly 1`] = `
         "name": "Password",
         "path": "/settings/password",
       },
+      Object {
+        "component": <PaymentSettingsTab
+          currentUser={
+            Object {
+              "id": 1,
+            }
+          }
+          queryParams={undefined}
+          registerStripeAccount={undefined}
+          setConfirm={[Function]}
+          updateUserSettings={[Function]}
+        />,
+        "name": "Payment",
+        "path": "/settings/payment",
+      },
     ]
   }
 />

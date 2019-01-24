@@ -6,7 +6,8 @@ describe('PaymentSettingsTab', () => {
   it('renders correctly', () => {
     const wrapper = shallow(<PaymentSettingsTab
       currentUser={{}}
-      updateUserSettings={() => {}} />)
+      updateUserSettings={() => {}}
+      queryParams={{}} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

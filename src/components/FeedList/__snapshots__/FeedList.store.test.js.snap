@@ -59,6 +59,8 @@ posts(
   }
   votesTotal
   myVote
+  acceptContributions
+  totalContributions
   communities {
     id
     name
@@ -177,6 +179,8 @@ posts(
   }
   votesTotal
   myVote
+  acceptContributions
+  totalContributions
   communities {
     id
     name
