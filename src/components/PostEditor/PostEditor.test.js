@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import React from 'react'
 import { merge } from 'lodash'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import PostEditor, { ActionsBar } from './PostEditor'
 
 describe('PostEditor', () => {
@@ -328,6 +328,17 @@ describe('PostEditor', () => {
       expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
       expect(props.clearLinkPreview.mock.calls).toHaveLength(0)
     })
+  })
+
+  it('renders contribution button', () => {
+    const props = {
+      isProject: true,
+      currentUser: {
+        hasStripeAccount: true
+      }
+    }
+    const wrapper = shallow(<PostEditor {...props} />)
+    expect(wrapper).toMatchSnapshot()
   })
 })
 

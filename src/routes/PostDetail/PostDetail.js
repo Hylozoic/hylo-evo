@@ -205,7 +205,7 @@ export class ProjectContributions extends Component {
     contributionAmount: ''
   }
 
-  toggleExpand = () => {
+  toggleExpanded = () => {
     this.setState({
       expanded: !this.state.expanded,
       received: false
@@ -248,7 +248,7 @@ export class ProjectContributions extends Component {
       {error && <div styleName='error-notification'>There was a problem processing your payment. Please check your card details and try again.</div>}
       {!expanded && !received && <Button
         color='green'
-        onClick={this.toggleExpand}
+        onClick={this.toggleExpanded}
         label='Contribute'
         small
         narrow />}
@@ -270,7 +270,7 @@ export class ProjectContributions extends Component {
         <Button
           styleName='cancel-button'
           color='gray'
-          onClick={this.toggleExpand}
+          onClick={this.toggleExpanded}
           label='Cancel'
           small
           narrow />
