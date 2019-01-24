@@ -140,7 +140,6 @@ exports[`ProjectContributions disables button on invalid amount 1`] = `
         locale="auto"
         name="Contributing Via Stripe"
         reconfigureOnUpdate={false}
-        stripeKey="pk_test_q0UO6c12K9d6oP8DGiLCxr2b"
         token={[Function]}
         triggerEvent="onClick"
       >
