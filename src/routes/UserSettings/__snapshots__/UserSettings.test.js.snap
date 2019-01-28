@@ -8,6 +8,7 @@ exports[`UserSettings renders correctly 1`] = `
         "component": <AccountSettingsTab
           currentUser={
             Object {
+              "hasFeature": [Function],
               "id": 1,
             }
           }
@@ -42,6 +43,7 @@ exports[`UserSettings renders correctly 1`] = `
           allCommunitiesSettings={undefined}
           currentUser={
             Object {
+              "hasFeature": [Function],
               "id": 1,
             }
           }
@@ -76,6 +78,7 @@ exports[`UserSettings renders correctly 1`] = `
         "component": <PasswordSettingsTab
           currentUser={
             Object {
+              "hasFeature": [Function],
               "id": 1,
             }
           }
@@ -89,6 +92,7 @@ exports[`UserSettings renders correctly 1`] = `
         "component": <PaymentSettingsTab
           currentUser={
             Object {
+              "hasFeature": [Function],
               "id": 1,
             }
           }

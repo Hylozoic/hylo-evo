@@ -5,7 +5,7 @@ import React from 'react'
 describe('PaymentSettingsTab', () => {
   it('renders correctly', () => {
     const wrapper = shallow(<PaymentSettingsTab
-      currentUser={{}}
+      currentUser={{hasFeature: () => true}}
       updateUserSettings={() => {}}
       queryParams={{}} />)
     expect(wrapper).toMatchSnapshot()

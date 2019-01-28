@@ -334,7 +334,8 @@ describe('PostEditor', () => {
     const props = {
       isProject: true,
       currentUser: {
-        hasStripeAccount: true
+        hasStripeAccount: true,
+        hasFeature: () => true
       }
     }
     const wrapper = shallow(<PostEditor {...props} />)
