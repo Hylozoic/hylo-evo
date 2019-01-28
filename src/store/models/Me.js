@@ -1,7 +1,7 @@
 import { find, get, includes } from 'lodash/fp';
 import PropTypes from 'prop-types';
 import { attr, many, Model } from 'redux-orm';
-import featureFlags from '../../config/featureFlags';
+import featureFlag from '../../config/featureFlags';
 
 const Me = Model.createClass({
   toString () {
@@ -23,7 +23,7 @@ const Me = Model.createClass({
 
   hasFeature (key) {
     if (!key) throw new Error("Can't call hasFeature without a key")
-    const flag = featureFlags[key]
+    const flag = featureFlag(key)
     switch (flag) {
       case 'on':
         return true
