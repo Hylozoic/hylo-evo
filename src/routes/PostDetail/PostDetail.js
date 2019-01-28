@@ -15,6 +15,7 @@ import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
 import TextInput from 'components/TextInput'
 import ProjectMembersDialog from 'components/ProjectMembersDialog'
+import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import './PostDetail.scss'
 
 // the height of the header plus the padding-top
@@ -103,7 +104,8 @@ export default class PostDetail extends Component {
       joinProject,
       leaveProject,
       pending,
-      processStripeToken
+      processStripeToken,
+      currentUser
     } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
 
@@ -151,7 +153,7 @@ export default class PostDetail extends Component {
           leaveProject={leaveProject}
           leaving={isProjectMember} />
       </div>}
-      {isProject && acceptContributions &&
+      {isProject && acceptContributions && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) &&
         <ProjectContributions
           postId={post.id}
           totalContributions={totalContributions}

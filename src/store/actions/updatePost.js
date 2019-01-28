@@ -6,7 +6,7 @@ import { UPDATE_POST } from 'store/constants'
 
 export default function updatePost (post, query = updatePostMutation) {
   const {
-    id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, memberIds,     acceptContributions
+    id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, memberIds, acceptContributions
   } = post
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)

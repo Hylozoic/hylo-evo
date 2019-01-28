@@ -21,6 +21,7 @@ import LinkPreview from './LinkPreview'
 import ChangeImageButton from 'components/ChangeImageButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import styles from './PostEditor.scss'
+import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 
 export const MAX_TITLE_LENGTH = 50
 
@@ -354,7 +355,7 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>}
-        {isProject && <div styleName='footerSection'>
+        {isProject && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Accept Contributions</div>
           {hasStripeAccount && <div styleName={cx('footerSection-communities', 'accept-contributions')}>
             <Switch value={acceptContributions} onClick={this.toggleContributions} styleName='accept-contributions-switch' />
