@@ -6,7 +6,7 @@ import { Link, NavLink, matchPath } from 'react-router-dom'
 import Badge from 'components/Badge'
 import CreateTopic from 'components/CreateTopic'
 import Icon from 'components/Icon'
-import { tagUrl, topicsUrl } from 'util/navigation'
+import { topicUrl, topicsUrl } from 'util/navigation'
 import badgeHoverStyles from '../../../../../components/Badge/component.scss'
 import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
 
@@ -30,7 +30,7 @@ export default class TopicNavigation extends Component {
     } = this.props
 
     const currentTopic = topicName =>
-      matchPath(location.pathname, {path: tagUrl(topicName, communitySlug)})
+      matchPath(location.pathname, {path: topicUrl(topicName, communitySlug)})
 
     return <div styleName='s.topicNavigation'>
       <div styleName={cx('s.header', {'s.header-link': collapsed})}
@@ -47,7 +47,7 @@ export default class TopicNavigation extends Component {
           <li key={topic.name} styleName='s.topic'>
             <NavLink className={badgeHoverStyles.parent}
               styleName='s.topicLink'
-              to={tagUrl(topic.name, communitySlug)}
+              to={topicUrl(topic.name, communitySlug)}
               onClick={() => {
                 if (id) {
                   currentTopic(topic.name) && clearFeedList()

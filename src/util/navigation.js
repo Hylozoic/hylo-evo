@@ -51,7 +51,7 @@ export function baseUrl ({
   if (safeMemberId) {
     return personUrl(safeMemberId, safeCommunitySlug, networkSlug)
   } else if (topicName) {
-    return tagUrl(topicName, safeCommunitySlug)
+    return topicUrl(topicName, safeCommunitySlug)
   } else if (networkSlug) {
     return networkUrl(networkSlug)
   } else if (safeCommunitySlug) {
@@ -70,7 +70,7 @@ export function personUrl (id, communitySlug, networkSlug) {
   return `${base}/m/${id}`
 }
 
-export function tagUrl (tagName, communitySlug) {
+export function topicUrl (tagName, communitySlug) {
   const base = baseUrl({communitySlug, defaultUrl: allCommunitiesUrl()})
 
   return `${base}/${tagName}`

@@ -10,7 +10,7 @@ import Icon from 'components/Icon'
 import ScrollListener from 'components/ScrollListener'
 import TextInput from 'components/TextInput'
 import { inflectedTotal } from 'util/index'
-import { tagUrl } from 'util/navigation'
+import { topicUrl } from 'util/navigation'
 import './AllTopics.scss'
 
 const sortOptions = [
@@ -142,7 +142,7 @@ export function CommunityTopicListItem ({ item, slug, toggleSubscribe, deleteTop
   if (canModerate) dropdownItems.push({icon: 'Trash', label: 'Delete', onClick: deleteTopic, red: true})
 
   return <div styleName='topic'>
-    <Link styleName='topic-details' to={tagUrl(name, slug)}>
+    <Link styleName='topic-details' to={topicUrl(name, slug)}>
       <div styleName='topic-name'>#{name}</div>
       <div styleName='topic-stats'>{inflectedTotal('post', postsTotal)} • {inflectedTotal('follower', followersTotal)}</div>
     </Link>

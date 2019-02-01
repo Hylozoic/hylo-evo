@@ -3,7 +3,7 @@ import { any, arrayOf, func, object, string } from 'prop-types'
 import { debounce, has, get, isEmpty, trim } from 'lodash/fp'
 import { sanitize } from 'hylo-utils/text'
 import { validateTopicName } from 'hylo-utils/validators'
-import { tagUrl } from 'util/navigation'
+import { topicUrl } from 'util/navigation'
 
 import Button from 'components/Button'
 import Icon from 'components/Icon'
@@ -158,7 +158,7 @@ export default class CreateTopic extends Component {
     } = this.state
 
     if (redirectTopic) {
-      const topicUrl = tagUrl(encodeURI(redirectTopic), this.props.communitySlug)
+      const topicUrl = topicUrl(encodeURI(redirectTopic), this.props.communitySlug)
       if (topicUrl !== window.location.pathname) return <RedirectRoute to={topicUrl} />
     }
 

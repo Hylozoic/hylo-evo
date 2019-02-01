@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { get, throttle, isEmpty } from 'lodash/fp'
-import { tagUrl } from 'util/navigation'
+import { topicUrl } from 'util/navigation'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import { PostImage, PostBody, PostFooter, PostHeader, PostCommunities } from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
@@ -170,7 +170,7 @@ export function PostTags ({ tags, slug }) {
   if (isEmpty(tags)) return null
 
   return <div styleName='tags'>
-    {tags.map(tag => <Link styleName='tag' to={tagUrl(tag, slug)} key={tag}>
+    {tags.map(tag => <Link styleName='tag' to={topicUrl(tag, slug)} key={tag}>
       #{tag}
     </Link>)}
   </div>
