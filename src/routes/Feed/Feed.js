@@ -81,7 +81,7 @@ export default class Feed extends Component {
     if (membershipsPending) return <Loading />
 
     return <div>
-      {topicName
+      {/* {topicName
         ? <TopicFeedHeader
           communityTopic={communityTopic}
           topicName={topicName}
@@ -98,7 +98,7 @@ export default class Feed extends Component {
           type={postTypeFilter}
           all={!community && !networkSlug}
           newPost={newPost}
-          currentUserHasMemberships={currentUserHasMemberships} />}
+          currentUserHasMemberships={currentUserHasMemberships} />} */}
       {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}
       {!membershipsPending && !currentUserHasMemberships && <CreateCommunityPrompt
         goToCreateCommunity={goToCreateCommunity}

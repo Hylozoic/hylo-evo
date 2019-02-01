@@ -70,10 +70,10 @@ export function personUrl (id, communitySlug, networkSlug) {
   return `${base}/m/${id}`
 }
 
-export function topicUrl (tagName, communitySlug) {
+export function topicUrl (topicName, communitySlug) {
   const base = baseUrl({communitySlug, defaultUrl: allCommunitiesUrl()})
 
-  return `${base}/${tagName}`
+  return `${base}/${topicName}`
 }
 
 export function postsUrl (opts = {}, querystringParams) {

@@ -45,7 +45,6 @@ import {
   ID_MATCH_REGEX,
   VALID_POST_TYPE_CONTEXTS_MATCH_REGEX,
   isSignupPath,
-  isAllCommunitiesPath,
   isNetworkPath,
   isTagPath
 } from 'util/navigation'
@@ -91,7 +90,7 @@ export default class PrimaryLayout extends Component {
       ({ path }) => matchPath(location.pathname, {path, exact: true}),
       postDetailRoutes
     )
-    const showTopics = !isAllCommunitiesPath(location.pathname) && !isNetworkPath(location.pathname) && !isTagPath(location.pathname)
+    const showTopics = !isTagPath(location.pathname) && !isNetworkPath(location.pathname)
 
     return <div styleName='container'>
       <Drawer styleName={cx('drawer', {hidden: !isDrawerOpen})} {...{community, network}} />
@@ -106,7 +105,7 @@ export default class PrimaryLayout extends Component {
             {redirectRoutes.map(({from, to}) => <Redirect from={from} to={to} exact key={from} />)}
             <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/all/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
+            <Route path={`/all/:topicName/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             {/* <Route path='/all/topics' component={AllTopics} /> */}
             <Route path={`/n/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
@@ -168,6 +167,7 @@ const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
 const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${ID_MATCH_REGEX})/:action(edit)?`
 const postDetailRoutes = [
   {path: `/all/${POST_DETAIL_MATCH}`},
+  {path: `/all/:topicName/${OPTIONAL_POST_MATCH}`},
   {path: `/n/:networkSlug/m/:personId/${POST_DETAIL_MATCH}`},
   {path: `/n/:networkSlug/${POST_DETAIL_MATCH}`},
   {path: `/c/:slug/m/:personId/${POST_DETAIL_MATCH}`},
@@ -181,6 +181,8 @@ const EDIT_POST_MATCH = `${POST_DETAIL_MATCH}/:action(edit)`
 const postEditorRoutes = [
   {path: `/all/${NEW_POST_MATCH}`},
   {path: `/all/${EDIT_POST_MATCH}`},
+  {path: `/all/:topicName/${NEW_POST_MATCH}`},
+  {path: `/all/:topicName/${EDIT_POST_MATCH}`},
   {path: `/n/:networkSlug/${NEW_POST_MATCH}`},
   {path: `/n/:networkSlug/${EDIT_POST_MATCH}`},
   {path: `/n/:networkSlug/m/:personId/${EDIT_POST_MATCH}`},
