@@ -89,15 +89,15 @@ export default class AllTopics extends Component {
         <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
         <div styleName='controls'>
           <SearchBar {...{search, setSearch, selectedSort, setSort, fetchIsPending}} />
-          <CreateTopic
+          {community && <CreateTopic
             buttonText='Add a Topic'
             communityId={community.id}
             communitySlug={community.slug}
-            communityTopics={communityTopics} />
+            communityTopics={communityTopics} />}
         </div>
         <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {communityTopics.map(ct =>
-            <CommunityTopicListItem key={ct.id} item={ct} slug={community.slug}
+            <CommunityTopicListItem key={ct.id} item={ct} slug={community && community.slug}
               canModerate={canModerate}
               deleteTopic={() => deleteTopic(ct)}
               toggleSubscribe={() =>

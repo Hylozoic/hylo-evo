@@ -105,8 +105,8 @@ export default class PrimaryLayout extends Component {
             {redirectRoutes.map(({from, to}) => <Redirect from={from} to={to} exact key={from} />)}
             <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/all/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path='/all/topics' component={AllTopics} />
             <Route path={`/all/:topicName/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            {/* <Route path='/all/topics' component={AllTopics} /> */}
             <Route path={`/n/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
             <Route path={`/n/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />

@@ -63,9 +63,9 @@ export default class TopicNavigation extends Component {
             </NavLink>
           </li>)}
       </ul>
-      {communitySlug && <div styleName='s.addTopic'>
+      <div styleName='s.addTopic'>
         <Link to={topicsUrl(communitySlug)}>see all</Link>
-      </div>}
+      </div>
     </div>
   }
 }
