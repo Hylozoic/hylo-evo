@@ -98,7 +98,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     : () => dispatchProps.fetchCommunityTopics(community.id, {offset, sortBy: selectedSort, search, first})
 
   const fetchCommunityTopics = () =>
-    dispatchProps.fetchCommunityTopics(community.id, { search, first: initialLoad, sortBy: selectedSort })
+    dispatchProps.fetchCommunityTopics(get('id', community), { search, first: initialLoad, sortBy: selectedSort })
 
   return {
     ...stateProps,
