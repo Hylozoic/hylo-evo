@@ -23,10 +23,11 @@ export default function TopicFeedHeader ({
   type
 }) {
   const bannerUrl = get('bannerUrl', community)
-  const buttonText = communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'
-  const iconStyle = communityTopic.isSubscribed ? 'subscribe-star-icon-green' : 'subscribe-star-icon'
-  const buttonStyle = communityTopic.isSubscribed ? 'unsubscribe' : 'subscribe'
-
+  if (communityTopic) {
+    const buttonText = communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'
+    const iconStyle = communityTopic.isSubscribed ? 'subscribe-star-icon-green' : 'subscribe-star-icon'
+    const buttonStyle = communityTopic.isSubscribed ? 'unsubscribe' : 'subscribe'
+  }
   postsTotal = postsTotal || 0
   followersTotal = followersTotal || 0
 
@@ -40,7 +41,7 @@ export default function TopicFeedHeader ({
         <Icon name='Post' styleName='post-icon' />
         {inflectedTotal('post', postsTotal)}
       </div>
-      {community && <Button styleName={buttonStyle} onClick={toggleSubscribe}>
+      {communityTopic && <Button styleName={buttonStyle} onClick={toggleSubscribe}>
         <Icon name='Star' styleName={iconStyle} />{buttonText}
       </Button>}
       <PostPrompt

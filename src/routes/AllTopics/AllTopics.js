@@ -82,7 +82,7 @@ export default class AllTopics extends Component {
     } = this.props
 
     const { totalTopicsCached } = this.state
-
+    const toggleSubscribeFun = community ? toggleSubscribe(ct.topic.id, !ct.isSubscribed) : undefined
     return <FullPageModal>
       <div styleName='all-topics'>
         <div styleName='title'>Topics</div>
@@ -100,8 +100,7 @@ export default class AllTopics extends Component {
             <CommunityTopicListItem key={ct.id} item={ct} slug={community && community.slug}
               canModerate={canModerate}
               deleteTopic={() => deleteTopic(ct)}
-              toggleSubscribe={() =>
-                toggleSubscribe(ct.topic.id, !ct.isSubscribed)} />)}
+              toggleSubscribe={toggleSubscribeFun} />)}
           <ScrollListener onBottom={() => fetchMoreCommunityTopics()}
             elementId={TOPIC_LIST_ID} />
         </div>
@@ -146,9 +145,9 @@ export function CommunityTopicListItem ({ item, slug, toggleSubscribe, deleteTop
       <div styleName='topic-name'>#{name}</div>
       <div styleName='topic-stats'>{inflectedTotal('post', postsTotal)} • {inflectedTotal('follower', followersTotal)}</div>
     </Link>
-    <span onClick={toggleSubscribe} styleName='topic-subscribe'>
+    {toggleSubscribe && <span onClick={toggleSubscribe} styleName='topic-subscribe'>
       {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
-    </span>
+    </span>}
     {canModerate && <Dropdown styleName='topic-dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
   </div>
 }
