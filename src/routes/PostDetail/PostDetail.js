@@ -170,7 +170,7 @@ export function PostTags ({ tags, slug }) {
   if (isEmpty(tags)) return null
 
   return <div styleName='tags'>
-    {tags.map(tag => <Link styleName='tag' to={topicUrl(tag, slug)} key={tag}>
+    {tags.map(tag => <Link styleName='tag' to={topicUrl(tag, { communitySlug: slug })} key={tag}>
       #{tag}
     </Link>)}
   </div>

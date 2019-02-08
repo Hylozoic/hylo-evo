@@ -16,125 +16,33 @@ exports[`renders correctly for All Communities 1`] = `
     >
       Topics
     </span>
-    <Connect(CreateTopic)
-      communitySlug="foo"
-      communityTopics={
-        Array [
-          Object {
-            "newPostCount": 3,
-            "topic": Object {
-              "name": "t1",
-            },
-          },
-          Object {
-            "newPostCount": 0,
-            "topic": Object {
-              "name": "t2",
-            },
-          },
-          Object {
-            "topic": Object {
-              "name": "t3",
-            },
-          },
-          Object {
-            "newPostCount": 2,
-            "topic": Object {
-              "name": "t4",
-            },
-          },
-        ]
-      }
-    />
   </div>
-  <ul
-    data-stylename="s.topics"
-  >
-    <li
-      data-stylename="s.topic"
-      key="t1"
-    >
-      <NavLink
-        activeClassName="active-topic-nav-link"
-        aria-current="page"
-        data-stylename="s.topicLink"
-        onClick={[Function]}
-        to="/c/foo/t1"
-      >
-        <span
-          data-stylename="s.name"
-        >
-          #
-          t1
-        </span>
-        <Badge
-          data-stylename="s.badge"
-          number={3}
-        />
-      </NavLink>
-    </li>
-    <li
-      data-stylename="s.topic"
-      key="t2"
-    >
-      <NavLink
-        activeClassName="active-topic-nav-link"
-        aria-current="page"
-        data-stylename="s.topicLink"
-        onClick={[Function]}
-        to="/c/foo/t2"
-      >
-        <span
-          data-stylename="s.name"
-        >
-          #
-          t2
-        </span>
-      </NavLink>
-    </li>
-    <li
-      data-stylename="s.topic"
-      key="t3"
-    >
-      <NavLink
-        activeClassName="active-topic-nav-link"
-        aria-current="page"
-        data-stylename="s.topicLink"
-        onClick={[Function]}
-        to="/c/foo/t3"
-      >
-        <span
-          data-stylename="s.name"
-        >
-          #
-          t3
-        </span>
-      </NavLink>
-    </li>
-    <li
-      data-stylename="s.topic"
-      key="t4"
-    >
-      <NavLink
-        activeClassName="active-topic-nav-link"
-        aria-current="page"
-        data-stylename="s.topicLink"
-        onClick={[Function]}
-        to="/c/foo/t4"
-      >
-        <span
-          data-stylename="s.name"
-        >
-          #
-          t4
-        </span>
-        <Badge
-          data-stylename="s.badge"
-          number={2}
-        />
-      </NavLink>
-    </li>
-  </ul>
+  <TopicsList
+    topics={
+      Array [
+        Object {
+          "current": null,
+          "onClick": [Function],
+          "url": "/c/foo/t1",
+        },
+        Object {
+          "current": null,
+          "onClick": [Function],
+          "url": "/c/foo/t2",
+        },
+        Object {
+          "current": null,
+          "onClick": [Function],
+          "url": "/c/foo/t3",
+        },
+        Object {
+          "current": null,
+          "onClick": [Function],
+          "url": "/c/foo/t4",
+        },
+      ]
+    }
+  />
   <div
     data-stylename="s.addTopic"
   >
@@ -164,125 +72,33 @@ exports[`renders correctly for a community 1`] = `
     >
       Topics
     </span>
-    <Connect(CreateTopic)
-      communitySlug="foo"
-      communityTopics={
-        Array [
-          Object {
-            "newPostCount": 3,
-            "topic": Object {
-              "name": "t1",
-            },
-          },
-          Object {
-            "newPostCount": 0,
-            "topic": Object {
-              "name": "t2",
-            },
-          },
-          Object {
-            "topic": Object {
-              "name": "t3",
-            },
-          },
-          Object {
-            "newPostCount": 2,
-            "topic": Object {
-              "name": "t4",
-            },
-          },
-        ]
-      }
-    />
   </div>
-  <ul
-    data-stylename="s.topics"
-  >
-    <li
-      data-stylename="s.topic"
-      key="t1"
-    >
-      <NavLink
-        activeClassName="active-topic-nav-link"
-        aria-current="page"
-        data-stylename="s.topicLink"
-        onClick={[Function]}
-        to="/c/foo/t1"
-      >
-        <span
-          data-stylename="s.name"
-        >
-          #
-          t1
-        </span>
-        <Badge
-          data-stylename="s.badge"
-          number={3}
-        />
-      </NavLink>
-    </li>
-    <li
-      data-stylename="s.topic"
-      key="t2"
-    >
-      <NavLink
-        activeClassName="active-topic-nav-link"
-        aria-current="page"
-        data-stylename="s.topicLink"
-        onClick={[Function]}
-        to="/c/foo/t2"
-      >
-        <span
-          data-stylename="s.name"
-        >
-          #
-          t2
-        </span>
-      </NavLink>
-    </li>
-    <li
-      data-stylename="s.topic"
-      key="t3"
-    >
-      <NavLink
-        activeClassName="active-topic-nav-link"
-        aria-current="page"
-        data-stylename="s.topicLink"
-        onClick={[Function]}
-        to="/c/foo/t3"
-      >
-        <span
-          data-stylename="s.name"
-        >
-          #
-          t3
-        </span>
-      </NavLink>
-    </li>
-    <li
-      data-stylename="s.topic"
-      key="t4"
-    >
-      <NavLink
-        activeClassName="active-topic-nav-link"
-        aria-current="page"
-        data-stylename="s.topicLink"
-        onClick={[Function]}
-        to="/c/foo/t4"
-      >
-        <span
-          data-stylename="s.name"
-        >
-          #
-          t4
-        </span>
-        <Badge
-          data-stylename="s.badge"
-          number={2}
-        />
-      </NavLink>
-    </li>
-  </ul>
+  <TopicsList
+    topics={
+      Array [
+        Object {
+          "current": null,
+          "onClick": [Function],
+          "url": "/c/foo/t1",
+        },
+        Object {
+          "current": null,
+          "onClick": [Function],
+          "url": "/c/foo/t2",
+        },
+        Object {
+          "current": null,
+          "onClick": [Function],
+          "url": "/c/foo/t3",
+        },
+        Object {
+          "current": null,
+          "onClick": [Function],
+          "url": "/c/foo/t4",
+        },
+      ]
+    }
+  />
   <div
     data-stylename="s.addTopic"
   >

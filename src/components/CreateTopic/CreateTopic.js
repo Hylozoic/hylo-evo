@@ -4,7 +4,6 @@ import { debounce, has, get, isEmpty, trim } from 'lodash/fp'
 import { sanitize } from 'hylo-utils/text'
 import { validateTopicName } from 'hylo-utils/validators'
 import { topicUrl } from 'util/navigation'
-
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import ModalDialog from 'components/ModalDialog'
@@ -158,8 +157,8 @@ export default class CreateTopic extends Component {
     } = this.state
 
     if (redirectTopic) {
-      const topicUrl = topicUrl(encodeURI(redirectTopic), this.props.communitySlug)
-      if (topicUrl !== window.location.pathname) return <RedirectRoute to={topicUrl} />
+      const url = topicUrl(encodeURI(redirectTopic), { communitySlug: this.props.communitySlug })
+      if (url !== window.location.pathname) return <RedirectRoute to={url} />
     }
 
     return [

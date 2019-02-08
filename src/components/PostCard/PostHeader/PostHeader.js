@@ -110,6 +110,6 @@ export function TopicsLine ({ topics, slug, newLine }) {
   return <div styleName={cx('topicsLine', {'newLineForTopics': newLine})}>
     {!newLine && <span styleName='spacer'>•</span>}
     {topics.slice(0, 3).map(t =>
-      <Link styleName='topic' to={topicUrl(t.name, slug)} key={t.name}>#{t.name}</Link>)}
+      <Link styleName='topic' to={topicUrl(t.name, { communitySlug: slug })} key={t.name}>#{t.name}</Link>)}
   </div>
 }

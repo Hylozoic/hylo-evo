@@ -133,10 +133,5 @@ exports[`TopicListItem matches the latest snapshot 1`] = `
       52 followers
     </div>
   </Link>
-  <span
-    data-stylename="topic-subscribe"
-  >
-    Subscribe
-  </span>
 </div>
 `;

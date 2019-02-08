@@ -1,22 +1,22 @@
 import React from 'react'
+import { get, compact } from 'lodash/fp'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
 import './Navigation.scss'
-import { compact } from 'lodash/fp'
 
 export default function Navigation (props) {
   const {
     className,
     collapsed,
-    rootId,
-    rootSlug,
+    routeParams,
     rootPath,
     membersPath,
     projectsPath,
+    communityId,
     badge,
     clearBadge,
     clearFeedList,
-    showTopics
+    hideTopics
   } = props
 
   const homeOnClick = () => {
@@ -55,7 +55,11 @@ export default function Navigation (props) {
           <NavLink key={link.label} {...link} collapsed={collapsed}
             onClick={link.onClick} />)}
       </ul>
-      {showTopics && <TopicNavigation backUrl={rootPath} communityId={rootId} communitySlug={rootSlug} collapsed={collapsed} />}
+      {!hideTopics && <TopicNavigation
+        collapsed={collapsed}
+        backUrl={rootPath}
+        routeParams={routeParams}
+        communityId={communityId} />}
     </div>
   </div>
 }

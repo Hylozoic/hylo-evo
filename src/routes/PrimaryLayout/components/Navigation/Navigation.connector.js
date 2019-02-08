@@ -1,44 +1,33 @@
 import { connect } from 'react-redux'
+import { get } from 'lodash/fp'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { communityUrl, networkUrl } from 'util/navigation'
+import { baseUrl, allCommunitiesUrl } from 'util/navigation'
 import orm from 'store/models'
-import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
 import { makeDropQueryResults } from 'store/reducers/queryResults'
 
 export function mapStateToProps (state, props) {
+  const routeParams = props.match.params
   const community = getCommunityForCurrentRoute(state, props)
-  const network = getNetworkForCurrentRoute(state, props)
-  let rootId, rootSlug, rootPath, membersPath, communityMembership, badge
+  const rootPath = baseUrl(routeParams, allCommunitiesUrl())
+  const membersPath = `${rootPath}/members`
+  const projectsPath = `${rootPath}/project`
+  let communityMembership, badge
 
   if (community) {
-    rootId = community.id
-    rootSlug = get('slug', community)
-    rootPath = communityUrl(rootSlug)
-    membersPath = `${rootPath}/members`
     // we have to select the Community Membership from the ORM separately. we can't just
     // call `community.Memberships.first()` because that will be cached so long as
     // the community doesn't change, which will mask changes to the Community Membership's
     // newPostCount.
-    communityMembership = getCommunityMembership(state, {communityId: community.id})
+    communityMembership = getCommunityMembership(state, { communityId: community.id })
     badge = get('newPostCount', communityMembership)
-  } else if (network) {
-    rootId = network.id
-    rootSlug = get('slug', network)
-    rootPath = networkUrl(rootSlug)
-    membersPath = `${rootPath}/members`
-  } else {
-    rootSlug = ''
-    rootPath = communityUrl()
   }
-  const projectsPath = `${rootPath}/project`
 
   return {
-    rootId,
-    rootSlug,
+    routeParams,
+    communityId: get('id', community),
     rootPath,
     membersPath,
     projectsPath,

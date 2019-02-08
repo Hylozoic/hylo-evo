@@ -12,7 +12,6 @@ export const getSubscribedCommunityTopics = ormCreateSelector(
   getCommunityForCurrentRoute,
   getNetworkForCurrentRoute,
   (session, community, network) => {
-    console.log('!!!!!', community, network)
     let communityTopics
 
     if (community) {
@@ -36,7 +35,7 @@ export const getSubscribedCommunityTopics = ormCreateSelector(
     }
 
     let allCommunityTopics = session.CommunityTopic
-    .filter({isSubscribed: true})
+    .filter({ isSubscribed: true })
     .toModelArray()
 
     return sortBy(getTopicName, mergeCommunityTopics(allCommunityTopics))

@@ -82,7 +82,7 @@ export default class AllTopics extends Component {
     } = this.props
 
     const { totalTopicsCached } = this.state
-    const toggleSubscribeFun = community ? toggleSubscribe(ct.topic.id, !ct.isSubscribed) : undefined
+    const toggleSubscribeFun = ct => community ? toggleSubscribe(ct.topic.id, !ct.isSubscribed) : undefined
     return <FullPageModal>
       <div styleName='all-topics'>
         <div styleName='title'>Topics</div>
@@ -136,12 +136,12 @@ export function SearchBar ({search, setSearch, selectedSort, setSort, fetchIsPen
 
 export function CommunityTopicListItem ({ item, slug, toggleSubscribe, deleteTopic, canModerate }) {
   const { topic: { name }, postsTotal, followersTotal, isSubscribed } = item
-
   const dropdownItems = []
+
   if (canModerate) dropdownItems.push({icon: 'Trash', label: 'Delete', onClick: deleteTopic, red: true})
 
   return <div styleName='topic'>
-    <Link styleName='topic-details' to={topicUrl(name, slug)}>
+    <Link styleName='topic-details' to={topicUrl(name, { communitySlug: slug })}>
       <div styleName='topic-name'>#{name}</div>
       <div styleName='topic-stats'>{inflectedTotal('post', postsTotal)} • {inflectedTotal('follower', followersTotal)}</div>
     </Link>

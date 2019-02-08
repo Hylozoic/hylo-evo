@@ -37,16 +37,13 @@ import Search from 'routes/Search'
 import SignupModal from 'routes/Signup/SignupModal'
 import SocketListener from 'components/SocketListener'
 import SocketSubscriber from 'components/SocketSubscriber'
-import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
 import {
   ID_MATCH_REGEX,
   VALID_POST_TYPE_CONTEXTS_MATCH_REGEX,
-  isSignupPath,
-  isNetworkPath,
-  isTagPath
+  isSignupPath
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 // TODO: Implement create community privacy component when implemented on the server
@@ -90,30 +87,35 @@ export default class PrimaryLayout extends Component {
       ({ path }) => matchPath(location.pathname, {path, exact: true}),
       postDetailRoutes
     )
-    const showTopics = !isTagPath(location.pathname) // && !isNetworkPath(location.pathname)
+    const routesWithNavigation = [
+      {path: '/all'},
+      {path: '/n/:networkSlug'},
+      {path: '/c/:slug'}
+    ]
 
     return <div styleName='container'>
       <Drawer styleName={cx('drawer', {hidden: !isDrawerOpen})} {...{community, network}} />
       <TopNav styleName='top' onClick={closeDrawer} {...{community, network, currentUser, showLogoBadge}} />
       <div styleName='main' onClick={closeDrawer}>
-        <Navigation collapsed={hasDetail} styleName='left' showTopics={showTopics} />
+        {routesWithNavigation.map(({ path }) =>
+          <Route path={path} key={path} component={props =>
+            <Navigation {...props} collapsed={hasDetail} styleName='left' />} />)}
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
           <RedirectToCommunity path='/' currentUser={currentUser} />
           <RedirectToCommunity path='/app' currentUser={currentUser} />
           <Switch>
             {redirectRoutes.map(({from, to}) => <Redirect from={from} to={to} exact key={from} />)}
-            <Route path='/tag/:topicName' exact component={Feed} />
             <Route path='/all/topics' component={AllTopics} />
-            <Route path={`/all/:topicName/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/all/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path={`/all/:topicName/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/n/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
             <Route path={`/n/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
             <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />
             <Route path='/n/:networkSlug/topics' component={AllTopics} />
-            <Route path={`/n/:topicName/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path={`/n/:networkSlug/:topicName/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/c/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
             <Route path={`/c/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
@@ -216,6 +218,7 @@ const createCommunityRoutes = [
 ]
 
 const redirectRoutes = [
+  {from: '/tag/:topicName', to: '/all/topics/:topicName'},
   {from: '/c/:slug/tag/:topicName', to: '/c/:slug/:topicName'},
   {from: '/c/:slug/join/:accessCode/tag/:topicName', to: '/c/:slug/join/:accessCode/:topicName'},
   {from: '/p/:postId', to: '/all/p/:postId'},
