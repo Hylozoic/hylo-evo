@@ -1,7 +1,8 @@
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { flow, groupBy, map, pick, reduce, sortBy, values } from 'lodash/fp'
+import { flow, groupBy, map, pick, find, reduce, sortBy, values } from 'lodash/fp'
 
 const getTopicName = ({ topic: { name } }) => name.toLowerCase()
 
@@ -9,11 +10,27 @@ export const getSubscribedCommunityTopics = ormCreateSelector(
   orm,
   state => state.orm,
   getCommunityForCurrentRoute,
-  (session, community) => {
+  getNetworkForCurrentRoute,
+  (session, community, network) => {
+    console.log('!!!!!', community, network)
+    let communityTopics
+
     if (community) {
-      let communityTopics = session.CommunityTopic
+      communityTopics = session.CommunityTopic
       .filter({community: community.id, isSubscribed: true})
       .toModelArray()
+
+      return sortBy(getTopicName, communityTopics)
+    }
+
+    if (network) {
+      communityTopics = session.CommunityTopic
+      .filter(communityTopic =>
+          communityTopic.community && find(
+            cid => communityTopic.community.toString() === cid,
+            network.communities.toRefArray().map(c => c.id)
+          ) && communityTopic.isSubscribed
+      ).toModelArray()
 
       return sortBy(getTopicName, communityTopics)
     }

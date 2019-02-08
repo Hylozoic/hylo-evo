@@ -36,7 +36,6 @@ export function mapStateToProps (state, props) {
   const fetchIsPending = state.pending[FETCH_COMMUNITY_TOPICS]
   const currentUser = getMe(state, props)
   const canModerate = currentUser && currentUser.canModerate(community)
-
   const queryResultParams = {
     id: get('id', community),
     sortBy: selectedSort,
@@ -95,7 +94,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
 
   const fetchMoreCommunityTopics = fetchIsPending || !hasMore
     ? () => { }
-    : () => dispatchProps.fetchCommunityTopics(community.id, {offset, sortBy: selectedSort, search, first})
+    : () => dispatchProps.fetchCommunityTopics(get('id', community), {offset, sortBy: selectedSort, search, first})
 
   const fetchCommunityTopics = () =>
     dispatchProps.fetchCommunityTopics(get('id', community), { search, first: initialLoad, sortBy: selectedSort })

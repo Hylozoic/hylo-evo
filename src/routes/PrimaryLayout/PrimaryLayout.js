@@ -90,7 +90,7 @@ export default class PrimaryLayout extends Component {
       ({ path }) => matchPath(location.pathname, {path, exact: true}),
       postDetailRoutes
     )
-    const showTopics = !isTagPath(location.pathname) && !isNetworkPath(location.pathname)
+    const showTopics = !isTagPath(location.pathname) // && !isNetworkPath(location.pathname)
 
     return <div styleName='container'>
       <Drawer styleName={cx('drawer', {hidden: !isDrawerOpen})} {...{community, network}} />
@@ -112,7 +112,8 @@ export default class PrimaryLayout extends Component {
             <Route path={`/n/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
             <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />
-            <Route path='/n/:networkSlug/:topicName' exact component={TopicSupportComingSoon} />
+            <Route path='/n/:networkSlug/topics' component={AllTopics} />
+            <Route path={`/n/:topicName/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/c/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/c/:slug/members' component={Members} />
             <Route path={`/c/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
@@ -170,6 +171,7 @@ const postDetailRoutes = [
   {path: `/all/:topicName/${POST_DETAIL_MATCH}`},
   {path: `/n/:networkSlug/m/:personId/${POST_DETAIL_MATCH}`},
   {path: `/n/:networkSlug/${POST_DETAIL_MATCH}`},
+  {path: `/n/:networkSlug/:topicName/${POST_DETAIL_MATCH}`},
   {path: `/c/:slug/m/:personId/${POST_DETAIL_MATCH}`},
   {path: `/c/:slug/${POST_DETAIL_MATCH}`},
   {path: `/c/:slug/:topicName/${POST_DETAIL_MATCH}`},
@@ -186,6 +188,8 @@ const postEditorRoutes = [
   {path: `/n/:networkSlug/${NEW_POST_MATCH}`},
   {path: `/n/:networkSlug/${EDIT_POST_MATCH}`},
   {path: `/n/:networkSlug/m/:personId/${EDIT_POST_MATCH}`},
+  {path: `/n/:networkSlug/:topicName/${NEW_POST_MATCH}`},
+  {path: `/n/:networkSlug/:topicName/${EDIT_POST_MATCH}`},
   {path: `/c/:slug/${NEW_POST_MATCH}`},
   {path: `/c/:slug/${EDIT_POST_MATCH}`},
   {path: `/c/:slug/m/:personId/${EDIT_POST_MATCH}`},
