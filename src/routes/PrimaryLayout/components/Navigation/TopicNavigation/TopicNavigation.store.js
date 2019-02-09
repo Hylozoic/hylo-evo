@@ -23,12 +23,13 @@ export const getSubscribedCommunityTopics = ormCreateSelector(
     }
 
     if (network) {
-      communityTopics = session.CommunityTopic
-      .filter(communityTopic =>
-          communityTopic.community && find(
-            cid => communityTopic.community.toString() === cid,
-            network.communities.toRefArray().map(c => c.id)
+      communityTopics = session.CommunityTopic.filter(
+        communityTopic => {
+          return communityTopic.community && find(
+            cid => communityTopic.community === cid.toString(),
+            network.communities.toModelArray().map(c => c.id)
           ) && communityTopic.isSubscribed
+        }
       ).toModelArray()
 
       return sortBy(getTopicName, communityTopics)

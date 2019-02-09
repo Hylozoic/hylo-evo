@@ -58,7 +58,11 @@ exports[`AllTopics matches the latest snapshot 1`] = `
           }
         }
         key="1"
-        slug="goteam"
+        routeParams={
+          Object {
+            "slug": "goteam",
+          }
+        }
         toggleSubscribe={[Function]}
       />
       <ScrollListener

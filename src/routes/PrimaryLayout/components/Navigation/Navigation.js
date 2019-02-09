@@ -1,5 +1,5 @@
 import React from 'react'
-import { get, compact } from 'lodash/fp'
+import { compact } from 'lodash/fp'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
 import './Navigation.scss'

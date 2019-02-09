@@ -6,15 +6,29 @@ import meQueryFragment from 'graphql/fragments/meQueryFragment'
 
 export default function (slug, skipTopics) {
   const query = slug
-    ? `query ($slug: String, $first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean, $updateLastViewed: Boolean) {
+    ? `query (
+      $slug: String,
+      $first: Int,
+      $offset: Int,
+      $sortBy: String,
+      $order: String,
+      $autocomplete: String,
+      $subscribed: Boolean,
+      $updateLastViewed: Boolean
+    ) {
       ${meQueryFragment}
       ${communityQueryFragment}
     }`
     : (skipTopics
-      ? `{
-        ${meQueryFragment}
-      }`
-      : `query ($first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean) {
+      ? `{ ${meQueryFragment} }`
+      : `query (
+        $first: Int,
+        $offset: Int,
+        $sortBy: String,
+        $order: String,
+        $autocomplete: String,
+        $subscribed: Boolean
+      ) {
         ${meQueryFragment}
         ${communityTopicsQueryFragment}
       }`)
@@ -41,4 +55,10 @@ export default function (slug, skipTopics) {
 
 // the value of `first` is high because we are receiving unaggregated data from
 // the API, so there could be many duplicates
-const queryVariables = slug => ({slug, first: 200, offset: 0, subscribed: true, updateLastViewed: true})
+const queryVariables = slug => ({
+  slug,
+  first: 200,
+  offset: 0,
+  subscribed: true,
+  updateLastViewed: true
+})

@@ -18,6 +18,7 @@ describe('AllTopics', () => {
     ]
     const wrapper = shallow(<AllTopics
       community={{ id: '1', slug: 'goteam' }}
+      routeParams={{ slug: 'goteam'}}
       communityTopics={ct}
       topicsTotal='10'
       fetchCommunityTopics={jest.fn()}
@@ -28,6 +29,7 @@ describe('AllTopics', () => {
 
   it('caches totalTopics', () => {
     const wrapper = shallow(<AllTopics
+      routeParams={{ slug: 'goteam'}}
       community={{ id: '1', slug: 'goteam' }}
       fetchCommunityTopics={() => {}}
       toggleSubscribe={() => {}}
@@ -67,7 +69,9 @@ describe('TopicListItem', () => {
       followersTotal: 52,
       isSubscribed: false
     }
-    const wrapper = shallow(<CommunityTopicListItem item={ct} slug='goteam' />)
+    const wrapper = shallow(<CommunityTopicListItem
+      item={ct}
+      routeParams={{ slug: 'goteam'}} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

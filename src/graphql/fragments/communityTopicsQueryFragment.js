@@ -15,6 +15,9 @@ export default
     followersTotal
     isSubscribed
     newPostCount
+    community {
+      id
+    }
     topic {
       id
       name

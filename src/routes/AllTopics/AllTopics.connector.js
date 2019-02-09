@@ -30,6 +30,7 @@ const getTotalCommunityTopics = createSelector(getCommunityTopicResults, get('to
 const getHasMoreCommunityTopics = createSelector(getCommunityTopicResults, get('hasMore'))
 
 export function mapStateToProps (state, props) {
+  const routeParams = get('match.params', props)
   const community = getCommunityForCurrentRoute(state, props)
   const selectedSort = getSort(state)
   const search = getSearch(state)
@@ -46,6 +47,7 @@ export function mapStateToProps (state, props) {
   const total = getTotalCommunityTopics(state, queryResultParams)
 
   return {
+    routeParams,
     community,
     communityTopics,
     totalTopics: total,

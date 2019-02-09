@@ -1,5 +1,5 @@
 import { find } from 'lodash/fp'
-import { boolean, arrayOf, func, number, shape, string } from 'prop-types'
+import { boolean, arrayOf, func, number, shape, string, object } from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -36,6 +36,7 @@ export default class AllTopics extends Component {
       followersTotal: number,
       isSubscribed: boolean
     })),
+    routeParams: object.isRequired,
     totalTopics: number,
     selectedSort: string,
     setSort: func,
@@ -68,6 +69,7 @@ export default class AllTopics extends Component {
 
   render () {
     const {
+      routeParams,
       community,
       communityTopics,
       search,
@@ -80,9 +82,9 @@ export default class AllTopics extends Component {
       canModerate,
       deleteTopic
     } = this.props
-
     const { totalTopicsCached } = this.state
-    const toggleSubscribeFun = ct => community ? toggleSubscribe(ct.topic.id, !ct.isSubscribed) : undefined
+    const toggleSubscribeFun = community ? ct => toggleSubscribe(ct.topic.id, !ct.isSubscribed) : undefined
+
     return <FullPageModal>
       <div styleName='all-topics'>
         <div styleName='title'>Topics</div>
@@ -97,7 +99,10 @@ export default class AllTopics extends Component {
         </div>
         <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {communityTopics.map(ct =>
-            <CommunityTopicListItem key={ct.id} item={ct} slug={community && community.slug}
+            <CommunityTopicListItem
+              key={ct.id}
+              item={ct}
+              routeParams={routeParams}
               canModerate={canModerate}
               deleteTopic={() => deleteTopic(ct)}
               toggleSubscribe={toggleSubscribeFun} />)}
@@ -134,14 +139,14 @@ export function SearchBar ({search, setSearch, selectedSort, setSort, fetchIsPen
   </div>
 }
 
-export function CommunityTopicListItem ({ item, slug, toggleSubscribe, deleteTopic, canModerate }) {
+export function CommunityTopicListItem ({ item, routeParams, toggleSubscribe, deleteTopic, canModerate }) {
   const { topic: { name }, postsTotal, followersTotal, isSubscribed } = item
   const dropdownItems = []
 
   if (canModerate) dropdownItems.push({icon: 'Trash', label: 'Delete', onClick: deleteTopic, red: true})
 
   return <div styleName='topic'>
-    <Link styleName='topic-details' to={topicUrl(name, { communitySlug: slug })}>
+    <Link styleName='topic-details' to={topicUrl(name, routeParams)}>
       <div styleName='topic-name'>#{name}</div>
       <div styleName='topic-stats'>{inflectedTotal('post', postsTotal)} • {inflectedTotal('follower', followersTotal)}</div>
     </Link>

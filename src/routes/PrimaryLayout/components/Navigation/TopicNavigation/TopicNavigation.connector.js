@@ -8,9 +8,11 @@ import { FETCH_POSTS } from 'store/constants'
 import { makeDropQueryResults } from 'store/reducers/queryResults'
 
 export function mapStateToProps (state, props) {
+  const communityTopics = getSubscribedCommunityTopics(state, props)
+
   return {
     feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),
-    communityTopics: getSubscribedCommunityTopics(state, props)
+    communityTopics
   }
 }
 
