@@ -8,11 +8,11 @@ import { topicUrl } from 'util/navigation'
 
 const getTopicName = ({ topic: { name } }) => name.toLowerCase()
 
-export const getTopicsFromCommunityTopics = (state, props) => {
+export const getTopicsFromSubscribedCommunityTopics = (state, props) => {
   const { routeParams, location } = props
   const communityTopics = getSubscribedCommunityTopics(state, props)
 
-  return communityTopics.map(communityTopic => {
+  let topics = communityTopics.map(communityTopic => {
     return {
       ...communityTopic.ref,
       ...communityTopic.topic.ref,
@@ -23,12 +23,13 @@ export const getTopicsFromCommunityTopics = (state, props) => {
       )
     }
   })
-}
 
-// Compute unique topics list
-// topics
-//   .map(topic => topic.name)
-//   .filter((name, index, self) => find({ name: name }, self) === index)
+  const names = topics.map(topic => topic.name)
+  
+  topics = topics.filter((topic, index) => names.indexOf(topic.name) === index)
+
+  return topics
+}
 
 export const getSubscribedCommunityTopics = ormCreateSelector(
   orm,

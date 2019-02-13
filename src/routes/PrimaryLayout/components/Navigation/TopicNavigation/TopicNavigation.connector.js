@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { get, find } from 'lodash/fp'
-import { getTopicsFromCommunityTopics } from './TopicNavigation.store'
+import { getTopicsFromSubscribedCommunityTopics } from './TopicNavigation.store'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { topicsUrl, removePostFromUrl, allCommunitiesUrl } from 'util/navigation'
 import { FETCH_POSTS } from 'store/constants'
@@ -9,7 +9,7 @@ import { makeDropQueryResults } from 'store/reducers/queryResults'
 
 export function mapStateToProps (state, props) {
   const { routeParams } = props
-  const topics = getTopicsFromCommunityTopics(state, props)
+  const topics = getTopicsFromSubscribedCommunityTopics(state, props)
 
   return {
     feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),
