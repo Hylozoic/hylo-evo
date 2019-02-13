@@ -58,6 +58,7 @@ export function postPromptString (type = '', { firstName }) {
     offer: `Hi ${firstName}, what would you like to share?`,
     request: `Hi ${firstName}, what are you looking for?`,
     project: `Hi ${firstName}, what would you like to create?`,
+    event: `Hi ${firstName}, want to create an event?`,
     default: `Hi ${firstName}, what's on your mind?`
   }
 

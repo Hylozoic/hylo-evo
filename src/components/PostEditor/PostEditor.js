@@ -267,12 +267,12 @@ export default class PostEditor extends React.Component {
 
   render () {
     const { initialPrompt, titlePlaceholder, titleLengthError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
-    const { id, title, details, communities, linkPreview, topics, members } = post
+    const { id, title, details, communities, linkPreview, topics, members, type } = post
     const {
       onClose, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
       showImages, addFile, showFiles, setAnnouncement, announcementSelected,
-      canModerate, myModeratedCommunities, isProject
+      canModerate, myModeratedCommunities, isProject, isEvent
     } = this.props
 
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
@@ -281,7 +281,7 @@ export default class PostEditor extends React.Component {
           <div styleName='initial-prompt'>{initialPrompt}</div>
           <a styleName='initial-closeButton' onClick={onClose}><Icon name='Ex' /></a>
         </div>
-        {!isProject && <div styleName='postTypes'>
+        {!isProject && !isEvent && <div styleName='postTypes'>
           <Button {...this.postTypeButtonProps('discussion')} />
           <Button {...this.postTypeButtonProps('request')} />
           <Button {...this.postTypeButtonProps('offer')} />
@@ -342,6 +342,9 @@ export default class PostEditor extends React.Component {
               ref={component => { this.membersSelector = component }}
             />
           </div>
+        </div>}
+        {isEvent && <div styleName='footerSection'>
+          
         </div>}
         <div styleName='footerSection'>
           <div styleName='footerSection-label'>Post in</div>
