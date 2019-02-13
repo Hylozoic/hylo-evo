@@ -1,10 +1,34 @@
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import { matchPath } from 'react-router-dom'
+import { flow, groupBy, map, pick, find, reduce, sortBy, values } from 'lodash/fp'
+import orm from 'store/models'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
-import orm from 'store/models'
-import { createSelector as ormCreateSelector } from 'redux-orm'
-import { flow, groupBy, map, pick, find, reduce, sortBy, values } from 'lodash/fp'
+import { topicUrl } from 'util/navigation'
 
 const getTopicName = ({ topic: { name } }) => name.toLowerCase()
+
+export const getTopicsFromCommunityTopics = (state, props) => {
+  const { routeParams, location } = props
+  const communityTopics = getSubscribedCommunityTopics(state, props)
+
+  return communityTopics.map(communityTopic => {
+    return {
+      ...communityTopic.ref,
+      ...communityTopic.topic.ref,
+      url: topicUrl(communityTopic.topic.name, routeParams),
+      current: matchPath(
+        location.pathname,
+        { path: topicUrl(communityTopic.topicName, routeParams) }
+      )
+    }
+  })
+}
+
+// Compute unique topics list
+// topics
+//   .map(topic => topic.name)
+//   .filter((name, index, self) => find({ name: name }, self) === index)
 
 export const getSubscribedCommunityTopics = ormCreateSelector(
   orm,

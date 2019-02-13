@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
-import { Link, NavLink, matchPath } from 'react-router-dom'
-
+import { Link, NavLink } from 'react-router-dom'
 import Badge from 'components/Badge'
 import CreateTopic from 'components/CreateTopic'
 import Icon from 'components/Icon'
-import { topicUrl, topicsUrl, allCommunitiesUrl } from 'util/navigation'
 import badgeHoverStyles from '../../../../../components/Badge/component.scss'
 import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
 
-const { array, string, bool, func } = PropTypes
+const { array, string, bool, func, object } = PropTypes
 
 export default class TopicNavigation extends Component {
   static propTypes = {
-    communityTopics: array,
+    topics: array,
+    routeParams: object,
     communitySlug: string,
+    communityId: string,
+    seeAllUrl: string,
     backUrl: string,
     clearBadge: func,
     clearFeedList: func,
@@ -33,28 +34,11 @@ export default class TopicNavigation extends Component {
     }
   }
 
-  currentTopic = topicName => {
-    const { location, routeParams } = this.props
-
-    return matchPath(location.pathname, { path: topicUrl(topicName, routeParams) })
-  }
-
   render () {
     const {
-      communityTopics: communityTopicsRaw, goBack, expand, collapsed,
-      routeParams, communityId
+      topics, goBack, seeAllUrl, collapsed, expand, routeParams, communityId
     } = this.props
-    const { slug: communitySlug } = routeParams
-    const seeAllURL = topicsUrl(routeParams, allCommunitiesUrl())
-    const communityTopics = communityTopicsRaw.map(communityTopic => {
-      return {
-        ...communityTopic.ref,
-        ...communityTopic.topic.ref,
-        url: topicUrl(communityTopic.topic.name, routeParams),
-        onClick: () => this.onClickTopic(communityTopic),
-        current: this.currentTopic(communityTopic.name)
-      }
-    })
+    const { slug } = routeParams
 
     return <div styleName='s.topicNavigation'>
       <div styleName={cx('s.header', {'s.header-link': collapsed})} onClick={expand}>
@@ -62,25 +46,25 @@ export default class TopicNavigation extends Component {
         <span styleName='s.title'>Topics</span>
         {communityId && <CreateTopic
           communityId={communityId}
-          communitySlug={communitySlug}
-          communityTopics={communityTopics} />}
+          communitySlug={slug}
+          communityTopics={topics} />}
       </div>
-      <TopicsList onClose={goBack} topics={communityTopics} />
+      <TopicsList onClose={goBack} onClick={this.onClickTopic} topics={topics} />
       <div styleName='s.addTopic'>
-        <Link to={seeAllURL}>see all</Link>
+        <Link to={seeAllUrl}>see all</Link>
       </div>
     </div>
   }
 }
 
-export function TopicsList ({ topics, onClose }) {
+export function TopicsList ({ topics, onClick, onClose }) {
   return <ul styleName='s.topics'>
     {topics.map(topic =>
       <li key={topic.name} styleName='s.topic'>
         <NavLink className={badgeHoverStyles.parent}
           styleName='s.topicLink'
           to={topic.url}
-          onClick={topic.onClick}
+          onClick={() => onClick(topic)}
           activeClassName='active-topic-nav-link'>
           <span styleName='s.name'>#{topic.name}</span>
           {topic.newPostCount > 0 && !topic.current &&

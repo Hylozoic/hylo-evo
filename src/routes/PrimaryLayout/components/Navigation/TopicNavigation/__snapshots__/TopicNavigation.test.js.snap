@@ -18,27 +18,28 @@ exports[`renders correctly for All Communities 1`] = `
     </span>
   </div>
   <TopicsList
+    onClick={[Function]}
     topics={
       Array [
         Object {
-          "current": null,
-          "onClick": [Function],
-          "url": "/c/foo/t1",
+          "name": "t1",
+          "newPostCount": 3,
+          "url": "/t1",
         },
         Object {
-          "current": null,
-          "onClick": [Function],
-          "url": "/c/foo/t2",
+          "name": "t2",
+          "newPostCount": 0,
+          "url": "/t2",
         },
         Object {
-          "current": null,
-          "onClick": [Function],
-          "url": "/c/foo/t3",
+          "current": true,
+          "name": "t3",
+          "url": "/t3",
         },
         Object {
-          "current": null,
-          "onClick": [Function],
-          "url": "/c/foo/t4",
+          "name": "t4",
+          "newPostCount": 2,
+          "url": "/t4",
         },
       ]
     }
@@ -48,7 +49,6 @@ exports[`renders correctly for All Communities 1`] = `
   >
     <Link
       replace={false}
-      to="/c/foo/topics"
     >
       see all
     </Link>
@@ -74,27 +74,28 @@ exports[`renders correctly for a community 1`] = `
     </span>
   </div>
   <TopicsList
+    onClick={[Function]}
     topics={
       Array [
         Object {
-          "current": null,
-          "onClick": [Function],
-          "url": "/c/foo/t1",
+          "name": "t1",
+          "newPostCount": 3,
+          "url": "/t1",
         },
         Object {
-          "current": null,
-          "onClick": [Function],
-          "url": "/c/foo/t2",
+          "name": "t2",
+          "newPostCount": 0,
+          "url": "/t2",
         },
         Object {
-          "current": null,
-          "onClick": [Function],
-          "url": "/c/foo/t3",
+          "current": true,
+          "name": "t3",
+          "url": "/t3",
         },
         Object {
-          "current": null,
-          "onClick": [Function],
-          "url": "/c/foo/t4",
+          "name": "t4",
+          "newPostCount": 2,
+          "url": "/t4",
         },
       ]
     }
@@ -104,7 +105,6 @@ exports[`renders correctly for a community 1`] = `
   >
     <Link
       replace={false}
-      to="/c/foo/topics"
     >
       see all
     </Link>
