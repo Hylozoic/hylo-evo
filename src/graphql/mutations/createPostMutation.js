@@ -10,7 +10,10 @@ export default
   $imageUrls: [String],
   $fileUrls: [String],
   $announcement: Boolean
-  $topicNames: [String]
+  $topicNames: [String],
+  $eventInviteeIds: [ID],
+  $startTime: String,
+  $endTime: String,
 ) {
   createPost(data: {
     type: $type,
@@ -20,7 +23,10 @@ export default
     communityIds: $communityIds,
     imageUrls: $imageUrls,
     fileUrls: $fileUrls,
-    announcement: $announcement
-    topicNames: $topicNames
+    announcement: $announcement,
+    eventInviteeIds: $eventInviteeIds,
+    topicNames: $topicNames,
+    startTime: $startTime,
+    endTime: $endTime
   }) {${getPostFieldsFragment(false)}}
 }`

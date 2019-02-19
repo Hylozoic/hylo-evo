@@ -4,6 +4,7 @@ import ReactTooltip from 'react-tooltip'
 import { get, isEqual, throttle } from 'lodash/fp'
 import cheerio from 'cheerio'
 import cx from 'classnames'
+import Moment from 'moment'
 import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
 import { POST_PROP_TYPES } from 'store/models/Post'
 import AttachmentManager from './AttachmentManager'
@@ -17,6 +18,7 @@ import CommunitiesSelector from 'components/CommunitiesSelector'
 import TopicSelector from 'components/TopicSelector'
 import MemberSelector from 'components/MemberSelector'
 import LinkPreview from './LinkPreview'
+import DatePicker from 'components/DatePicker'
 import ChangeImageButton from 'components/ChangeImageButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import styles from './PostEditor.scss'
@@ -47,12 +49,14 @@ export default class PostEditor extends React.Component {
   static defaultProps = {
     initialPromptForPostType: {
       project: <span styleName='postType postType-project'>CREATE PROJECT</span>,
+      event: <span styleName='postType postType-event'>CREATE EVENT</span>,      
       default: 'What are you looking to post?'
     },
     titlePlaceholderForPostType: {
       offer: 'What super powers can you offer?',
       request: 'What are you looking for help with?',
       project: 'What would you like to call your project?',
+      event: 'What is your event called?',      
       default: 'What’s on your mind?'
     },
     detailsPlaceholder: 'Add a description',
@@ -60,7 +64,9 @@ export default class PostEditor extends React.Component {
       type: 'discussion',
       title: '',
       details: '',
-      communities: []
+      communities: [],
+      startTime: Moment().hour(18).minute(0),
+      endTime: Moment().hour(21).minute(0)
     },
     editing: false,
     loading: false
@@ -178,6 +184,19 @@ export default class PostEditor extends React.Component {
     }
   }
 
+  handleStartTimeChange = startTime => {
+    this.setState({
+      post: {...this.state.post, startTime},
+      valid: this.isValid({ startTime })
+    })
+  }
+
+  handleEndTimeChange = endTime => {
+    this.setState({
+      post: {...this.state.post, endTime},
+      valid: this.isValid({ endTime })
+    })
+  }
   setLinkPreview = (contentState) => {
     const { pollingFetchLinkPreview, linkPreviewStatus, clearLinkPreview } = this.props
     const { linkPreview } = this.state.post
@@ -221,8 +240,23 @@ export default class PostEditor extends React.Component {
     })
   }
 
+  updateEventInvitees = eventInvitees => {
+    this.setState({
+      post: {...this.state.post, eventInvitees}
+    })
+  }
+
   isValid = (postUpdates = {}) => {
     const { type, title, communities } = Object.assign({}, this.state.post, postUpdates)
+
+    console.log('isValid', !!(this.editor &&
+      communities &&
+      type.length > 0 &&
+      title.length > 0 &&
+      communities.length > 0 &&
+      title.length <= MAX_TITLE_LENGTH
+    ))
+
     return !!(this.editor &&
       communities &&
       type.length > 0 &&
@@ -237,13 +271,14 @@ export default class PostEditor extends React.Component {
       editing, createPost, createProject, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected, isProject
     } = this.props
     const {
-      id, type, title, communities, linkPreview, members
+      id, type, title, communities, linkPreview, members, eventInvitees, startTime, endTime
     } = this.state.post
     const details = this.editor.getContentHTML()
     const topicNames = this.topicSelector.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
+    const eventInviteeIds = eventInvitees && eventInvitees.map(m => m.id)    
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, eventInviteeIds, startTime, endTime
     }
     const saveFunc = editing ? updatePost : isProject ? createProject : createPost
     setAnnouncement(false)
@@ -267,7 +302,7 @@ export default class PostEditor extends React.Component {
 
   render () {
     const { initialPrompt, titlePlaceholder, titleLengthError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
-    const { id, title, details, communities, linkPreview, topics, members, type } = post
+    const { id, title, details, communities, linkPreview, topics, members, eventInvitees, startTime, endTime } = post
     const {
       onClose, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
@@ -344,7 +379,23 @@ export default class PostEditor extends React.Component {
           </div>
         </div>}
         {isEvent && <div styleName='footerSection'>
-          
+          <div styleName='footerSection-label'>Start Time</div>
+          <DatePicker value={startTime} onChange={this.handleStartTimeChange} />
+        </div>} 
+        {isEvent && <div styleName='footerSection'>
+          <div styleName='footerSection-label'>End Time</div>
+          <DatePicker value={endTime} onChange={this.handleEndTimeChange} />
+        </div>} 
+        {isEvent && <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Invite People</div>
+          <div styleName='footerSection-communities'>
+            <MemberSelector
+              initialMembers={eventInvitees || []}
+              onChange={this.updateEventInvitees}
+              readOnly={loading}
+              ref={component => { this.eventSelector = component }}
+            />
+          </div>
         </div>}
         <div styleName='footerSection'>
           <div styleName='footerSection-label'>Post in</div>
