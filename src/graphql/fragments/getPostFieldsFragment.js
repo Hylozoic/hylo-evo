@@ -83,6 +83,19 @@ const getPostFieldsFragment = withComments => `
           name
         }
       }
+    }  
+  }
+  eventInvitations {
+    total
+    hasMore
+    items {
+      id
+      response
+      person {
+        id
+        name
+        avatarUrl
+      }      
     }
   }`
 
