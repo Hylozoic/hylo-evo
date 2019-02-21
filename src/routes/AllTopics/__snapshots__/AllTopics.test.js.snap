@@ -43,7 +43,7 @@ exports[`AllTopics matches the latest snapshot 1`] = `
       data-stylename="topic-list"
       id="topic-list"
     >
-      <CommunityTopicListItem
+      <TopicListItem
         deleteTopic={[Function]}
         item={
           Object {

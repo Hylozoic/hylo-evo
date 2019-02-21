@@ -1,4 +1,4 @@
-import AllTopics, { SearchBar, CommunityTopicListItem } from './AllTopics'
+import AllTopics, { SearchBar, TopicListItem } from './AllTopics'
 import { shallow } from 'enzyme'
 import React from 'react'
 
@@ -69,7 +69,7 @@ describe('TopicListItem', () => {
       followersTotal: 52,
       isSubscribed: false
     }
-    const wrapper = shallow(<CommunityTopicListItem
+    const wrapper = shallow(<TopicListItem
       item={ct}
       routeParams={{ slug: 'goteam'}} />)
     expect(wrapper).toMatchSnapshot()

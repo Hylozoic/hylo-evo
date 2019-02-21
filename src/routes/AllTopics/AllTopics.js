@@ -99,7 +99,7 @@ export default class AllTopics extends Component {
         </div>
         <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {communityTopics.map(ct =>
-            <CommunityTopicListItem
+            <TopicListItem
               key={ct.id}
               item={ct}
               routeParams={routeParams}
@@ -139,7 +139,7 @@ export function SearchBar ({search, setSearch, selectedSort, setSort, fetchIsPen
   </div>
 }
 
-export function CommunityTopicListItem ({ item, routeParams, toggleSubscribe, deleteTopic, canModerate }) {
+export function TopicListItem ({ item, routeParams, toggleSubscribe, deleteTopic, canModerate }) {
   const { topic: { name }, postsTotal, followersTotal, isSubscribed } = item
   const dropdownItems = []
 
