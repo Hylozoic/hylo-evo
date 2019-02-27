@@ -12,7 +12,7 @@ import SocketSubscriber from 'components/SocketSubscriber'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
-import ProjectMembersDialog from 'components/ProjectMembersDialog'
+import PostPeopleDialog from 'components/PostPeopleDialog'
 import './PostDetail.scss'
 
 // the height of the header plus the padding-top
@@ -33,7 +33,7 @@ export default class PostDetail extends Component {
     atActivity: false,
     activityWidth: 0,
     activityScrollOffset: 0,
-    showMembersDialog: false
+    showPeopleDialog: false
   }
 
   setHeaderStateFromDOM = () => {
@@ -90,7 +90,7 @@ export default class PostDetail extends Component {
     }
   })
 
-  toggleMembersDialog = () => this.setState(state => ({showMembersDialog: !state.showMembersDialog}))
+  togglePeopleDialog = () => this.setState(state => ({showPeopleDialog: !state.showPeopleDialog}))
 
   render () {
     const {
@@ -108,6 +108,7 @@ export default class PostDetail extends Component {
     if (pending) return <Loading />
 
     const isProject = get('type', post) === 'project'
+    const isEvent = get('type', post) === 'event'
     const scrollToBottom = () => {
       const detail = document.getElementById(DETAIL_COLUMN_ID)
       detail.scrollTop = detail.scrollHeight
@@ -119,14 +120,24 @@ export default class PostDetail extends Component {
       width: activityWidth + 'px',
       marginTop: STICKY_HEADER_SCROLL_OFFSET + 'px'
     }
-    const hasMembers = post.members.length > 0
-    let { showMembersDialog } = this.state
-    showMembersDialog = hasMembers && showMembersDialog
-    const toggleMembersDialog = hasMembers && this.toggleMembersDialog ? this.toggleMembersDialog : undefined
+
+    var people, postPeopleDialogTitle
+    if (isProject) {
+      people = post.members
+      postPeopleDialogTitle = 'Project Members'
+    } else if (isEvent) {
+      people = post.eventInvitations
+      postPeopleDialogTitle = 'Responses'
+    }
+
+    const hasPeople = people.length > 0
+    let { showPeopleDialog } = this.state
+    showPeopleDialog = hasPeople && showPeopleDialog
+    const togglePeopleDialog = hasPeople && this.togglePeopleDialog ? this.togglePeopleDialog : undefined
     const postFooter = <PostFooter
       {...post}
       voteOnPost={voteOnPost}
-      onClick={toggleMembersDialog} />
+      onClick={togglePeopleDialog} />
 
     return <div styleName='post' ref={this.setHeaderStateFromDOM}>
       <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
@@ -153,9 +164,10 @@ export default class PostDetail extends Component {
         showBottomBorder />
       <div styleName='activity-header' ref={this.setActivityStateFromDOM}>ACTIVITY</div>
       {postFooter}
-      {showMembersDialog && <ProjectMembersDialog
-        members={post.members}
-        onClose={toggleMembersDialog} />}
+      {showPeopleDialog && <PostPeopleDialog
+        title={postPeopleDialogTitle}
+        members={people}
+        onClose={togglePeopleDialog} />}
       {atActivity && <div styleName='activity-sticky' style={activityStyle}>
         <div styleName='activity-header'>ACTIVITY</div>
         {postFooter}

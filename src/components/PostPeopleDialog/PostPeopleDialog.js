@@ -5,9 +5,10 @@ import { bgImageStyle } from 'util/index'
 import ModalDialog from 'components/ModalDialog'
 import TextInput from 'components/TextInput'
 import Member from 'components/Member'
-import './ProjectMembersDialog.scss'
+import './PostPeopleDialog.scss'
+import { humanResponse } from 'store/models/EventInvitation'
 
-export default class ProjectMembersDialog extends React.PureComponent {
+export default class PostPeopleDialog extends React.PureComponent {
   constructor (props) {
     super(props)
 
@@ -34,12 +35,12 @@ export default class ProjectMembersDialog extends React.PureComponent {
 
   render () {
     const { members, searchString, selectedMember } = this.state
-    const { onClose } = this.props
+    const { onClose, title = 'People' } = this.props
     const loading = false
 
     return <ModalDialog key='members-dialog'
       closeModal={onClose}
-      modalTitle={`Project Members (${this.props.members.length})`}
+      modalTitle={`${title} (${this.props.members.length})`}
       showCancelButton={false}
       showSubmitButton={false}
       style={{width: '100%', maxWidth: '620px'}}>
@@ -77,7 +78,7 @@ export default class ProjectMembersDialog extends React.PureComponent {
 }
 
 function MemberRow ({member, selected, onClick}) {
-  const { name, avatarUrl } = member
+  const { name, avatarUrl, response } = member
 
   return <div styleName={cx('row', {selected})} onClick={onClick}>
     <div styleName='col'>
@@ -86,6 +87,9 @@ function MemberRow ({member, selected, onClick}) {
     <div styleName='col'>
       {name}
     </div>
+    {response && <div styleName='col response'>
+      {humanResponse(response)}
+    </div>}
   </div>
 }
 
