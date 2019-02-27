@@ -107,8 +107,6 @@ export default class PostDetail extends Component {
     if (!post && !pending) return <NotFound />
     if (pending) return <Loading />
 
-    console.log('post.eventInvitations', post.eventInvitations)
-
     const isProject = get('type', post) === 'project'
     const scrollToBottom = () => {
       const detail = document.getElementById(DETAIL_COLUMN_ID)
@@ -142,7 +140,7 @@ export default class PostDetail extends Component {
         styleName='body'
         expanded
         slug={routeParams.slug}
-        {...post} />
+        post={post} />
       {isProject && <div styleName='join-project-button-container'>
         <JoinProjectButton
           joinProject={joinProject}

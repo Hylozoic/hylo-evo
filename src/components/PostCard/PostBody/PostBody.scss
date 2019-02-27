@@ -6,6 +6,10 @@
   margin-bottom: 36px;
 }
 
+.smallMargin {
+  margin-bottom: 12px;
+}
+
 .title {
   composes: cardPadding;
   margin-bottom: 12px;
@@ -64,4 +68,23 @@
       color: $color-gossamer;
     }
   }
+}
+
+.eventBody {
+  display: flex;
+  padding: 0px 30px;
+}
+
+.eventBodyColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.eventData {
+  display: flex;
+  padding: 0px 20px;
+}
+
+.icon {
+  margin-right: 10px;
 }

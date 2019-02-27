@@ -49,7 +49,8 @@ export default class PostCard extends React.Component {
       voteOnPost,
       highlightProps,
       expanded,
-      className
+      className,
+      respondToEvent
     } = this.props
 
     return <div ref='postCard'
@@ -62,7 +63,7 @@ export default class PostCard extends React.Component {
         highlightProps={highlightProps}
         editPost={editPost} />
       <PostImage styleName='image' postId={post.id} />
-      <PostBody {...post} slug={routeParams.slug} />
+      <PostBody post={post} slug={routeParams.slug} respondToEvent={respondToEvent} />
       <PostCommunities communities={post.communities} slug={routeParams.slug} />
       <PostFooter {...post} voteOnPost={voteOnPost} />
     </div>

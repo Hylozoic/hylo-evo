@@ -11,6 +11,10 @@ const getPostFieldsFragment = withComments => `
   }
   createdAt
   updatedAt
+  startTime
+  endTime
+  location
+  myEventResponse
   commenters(first: 3) {
     id
     name

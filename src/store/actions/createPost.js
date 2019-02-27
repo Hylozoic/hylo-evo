@@ -18,7 +18,8 @@ export default function createPost (postParams, query = createPostMutation) {
     networkSlug,
     eventInviteeIds = [],
     startTime,
-    endTime
+    endTime,
+    location
   } = postParams
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
@@ -39,7 +40,8 @@ export default function createPost (postParams, query = createPostMutation) {
         topicNames,
         eventInviteeIds,
         startTime: startTime.valueOf(),
-        endTime: endTime.valueOf()
+        endTime: endTime.valueOf(),
+        location
       }
     },
     meta: {

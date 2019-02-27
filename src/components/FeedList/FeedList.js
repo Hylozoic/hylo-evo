@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { throttle, isEmpty, some } from 'lodash/fp'
+import { throttle, isEmpty, some, get, find } from 'lodash/fp'
 import cx from 'classnames'
 import { CENTER_COLUMN_ID, position } from 'util/scrolling'
 import { queryParamWhitelist } from 'store/reducers/queryResults'

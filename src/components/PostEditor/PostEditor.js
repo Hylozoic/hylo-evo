@@ -65,6 +65,7 @@ export default class PostEditor extends React.Component {
       title: '',
       details: '',
       communities: [],
+      location: '',
       startTime: Moment().hour(18).minute(0),
       endTime: Moment().hour(21).minute(0)
     },
@@ -72,14 +73,20 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ editing, currentCommunity, post, topic, initialPrompt, announcementSelected, postTypeContext }) => {
+  buildStateFromProps = ({ editing, currentCommunity, post, topic, initialPrompt, announcementSelected, postTypeContext }) => {  
+
     const defaultPostWithCommunitiesAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
       type: postTypeContext || PostEditor.defaultProps.post.type,
       communities: currentCommunity ? [currentCommunity] : PostEditor.defaultProps.post.communities,
       topics: topic ? [topic] : [],
       detailsTopics: []
     })
-    const currentPost = post || defaultPostWithCommunitiesAndTopic
+    const currentPost = post ?
+      ({...post,
+        startTime: Moment(post.startTime),
+        endTime: Moment(post.endTime)
+      })
+      : defaultPostWithCommunitiesAndTopic
 
     return {
       post: currentPost,
@@ -197,6 +204,14 @@ export default class PostEditor extends React.Component {
       valid: this.isValid({ endTime })
     })
   }
+
+  handleLocationChange = event => {
+    const location = event.target.value
+    this.setState({
+      post: {...this.state.post, location}
+    })
+  }
+
   setLinkPreview = (contentState) => {
     const { pollingFetchLinkPreview, linkPreviewStatus, clearLinkPreview } = this.props
     const { linkPreview } = this.state.post
@@ -249,14 +264,6 @@ export default class PostEditor extends React.Component {
   isValid = (postUpdates = {}) => {
     const { type, title, communities } = Object.assign({}, this.state.post, postUpdates)
 
-    console.log('isValid', !!(this.editor &&
-      communities &&
-      type.length > 0 &&
-      title.length > 0 &&
-      communities.length > 0 &&
-      title.length <= MAX_TITLE_LENGTH
-    ))
-
     return !!(this.editor &&
       communities &&
       type.length > 0 &&
@@ -271,14 +278,14 @@ export default class PostEditor extends React.Component {
       editing, createPost, createProject, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected, isProject
     } = this.props
     const {
-      id, type, title, communities, linkPreview, members, eventInvitees, startTime, endTime
+      id, type, title, communities, linkPreview, members, eventInvitations, startTime, endTime, location
     } = this.state.post
     const details = this.editor.getContentHTML()
     const topicNames = this.topicSelector.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
-    const eventInviteeIds = eventInvitees && eventInvitees.map(m => m.id)    
+    const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, eventInviteeIds, startTime, endTime
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, eventInviteeIds, startTime, endTime, location
     }
     const saveFunc = editing ? updatePost : isProject ? createProject : createPost
     setAnnouncement(false)
@@ -302,7 +309,7 @@ export default class PostEditor extends React.Component {
 
   render () {
     const { initialPrompt, titlePlaceholder, titleLengthError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
-    const { id, title, details, communities, linkPreview, topics, members, eventInvitees, startTime, endTime } = post
+    const { id, title, details, communities, linkPreview, topics, members, eventInvitations, startTime, endTime, location } = post
     const {
       onClose, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
@@ -339,8 +346,7 @@ export default class PostEditor extends React.Component {
             onChange={this.handleTitleChange}
             disabled={loading}
             ref={x => { this.titleInput = x }}
-            maxLength={MAX_TITLE_LENGTH}
-          />
+            maxLength={MAX_TITLE_LENGTH} />
           {titleLengthError && <span styleName='title-error'>{`Title can't have more than ${MAX_TITLE_LENGTH} characters`}</span>}
           <HyloEditor
             styleName='editor'
@@ -379,18 +385,28 @@ export default class PostEditor extends React.Component {
           </div>
         </div>}
         {isEvent && <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Start Time</div>
+          <div styleName='footerSection-label alignedLabel'>Start Time</div>
           <DatePicker value={startTime} onChange={this.handleStartTimeChange} />
         </div>} 
         {isEvent && <div styleName='footerSection'>
-          <div styleName='footerSection-label'>End Time</div>
+          <div styleName='footerSection-label alignedLabel'>End Time</div>
           <DatePicker value={endTime} onChange={this.handleEndTimeChange} />
-        </div>} 
+        </div>}
+        {isEvent && <div styleName='footerSection'>
+          <div styleName='footerSection-label alignedLabel'>Location</div>
+          <input
+            type='text'
+            styleName='locationInput'
+            placeholder='Where is your event'
+            value={location || ''}
+            onChange={this.handleLocationChange}
+            ref={x => { this.locationInput = x }} />
+        </div>}
         {isEvent && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Invite People</div>
           <div styleName='footerSection-communities'>
             <MemberSelector
-              initialMembers={eventInvitees || []}
+              initialMembers={eventInvitations || []}
               onChange={this.updateEventInvitees}
               readOnly={loading}
               ref={component => { this.eventSelector = component }}

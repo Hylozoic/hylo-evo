@@ -15,3 +15,9 @@ EventInvitation.fields = {
 }
 
 export default EventInvitation
+
+export const RESPONSES = {
+  YES: 'yes',
+  NO: 'no',
+  INTERESTED: 'interested'
+}
