@@ -44,6 +44,36 @@ describe('mapDispatchToProps', () => {
     expect(window.confirm).toHaveBeenCalledWith('Are you sure you want to delete this post?')
     expect(dispatch.mock.calls).toMatchSnapshot()
   })
+
+  it('calls the right version of removePost', () => {
+    const postId = 1
+    const dispatch = jest.fn(val => val)
+
+    const defaultProps = {
+      routeParams: {}
+    }
+
+    const props1 = {
+      ...defaultProps,
+      editPost: () => {}
+    }
+    const dispatchProps1 = mapDispatchToProps(dispatch, props1)
+    dispatchProps1.removePost(postId)
+    expect(dispatch).toHaveBeenCalledTimes(1)
+
+    const props2 = {
+      ...defaultProps,
+      removePost: jest.fn()
+    }
+    const dispatchProps2 = mapDispatchToProps(dispatch, props2)
+    dispatchProps2.removePost(postId)
+    expect(props2.removePost).toHaveBeenCalledWith(postId)
+
+    const dispatchProps3 = mapDispatchToProps(dispatch, defaultProps)
+    dispatchProps3.removePost(postId)
+    expect(dispatch).toHaveBeenCalledTimes(2)
+    expect(dispatch.mock.calls).toMatchSnapshot()
+  })
 })
 
 describe('mergeProps', () => {
