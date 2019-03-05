@@ -4,8 +4,6 @@
 
 .body {
   margin-bottom: 36px;
-  display: flex;
-  composes: cardPadding;
 }
 
 .smallMargin {
@@ -70,29 +68,4 @@
       color: $color-gossamer;
     }
   }
-}
-
-.eventBody {
-  display: flex;
-  padding: 0px 30px;
-}
-
-.eventBodyColumn {
-  display: flex;
-  flex-direction: column;
-}
-
-.eventData {
-  composes: caption-lt-lg from 'css/typography.scss';
-  display: flex;
-  padding: 0px 20px;
-}
-
-.eventLocation {
-  margin-bottom: 20px;
-}
-
-.icon {
-  margin-right: 10px;
-  font-size: 16px;
 }

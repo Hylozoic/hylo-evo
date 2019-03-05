@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { get, throttle, isEmpty } from 'lodash/fp'
 import { tagUrl } from 'util/navigation'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
-import { PostImage, PostBody, PostFooter, PostHeader, PostCommunities } from 'components/PostCard'
+import { PostImage, PostBody, PostFooter, PostHeader, PostCommunities, EventBody } from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
 import Comments from './Comments'
 import SocketSubscriber from 'components/SocketSubscriber'
@@ -100,7 +100,8 @@ export default class PostDetail extends Component {
       isProjectMember,
       joinProject,
       leaveProject,
-      pending
+      pending,
+      respondToEvent
     } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
 
@@ -147,11 +148,17 @@ export default class PostDetail extends Component {
       </div>}
       <PostImage postId={post.id} styleName='image' linked />
       <PostTags tags={post.tags} />
-      <PostBody
+      {isEvent && <EventBody
         styleName='body'
         expanded
         slug={routeParams.slug}
-        post={post} />
+        event={post}
+        respondToEvent={respondToEvent} />}
+      {!isEvent && <PostBody
+        styleName='body'
+        expanded
+        slug={routeParams.slug}
+        post={post} />}
       {isProject && <div styleName='join-project-button-container'>
         <JoinProjectButton
           joinProject={joinProject}

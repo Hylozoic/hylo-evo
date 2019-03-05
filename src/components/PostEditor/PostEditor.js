@@ -255,9 +255,9 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  updateEventInvitees = eventInvitees => {
+  updateEventInvitations = eventInvitations => {
     this.setState({
-      post: {...this.state.post, eventInvitees}
+      post: {...this.state.post, eventInvitations}
     })
   }
 
@@ -407,7 +407,7 @@ export default class PostEditor extends React.Component {
           <div styleName='footerSection-communities'>
             <MemberSelector
               initialMembers={eventInvitations || []}
-              onChange={this.updateEventInvitees}
+              onChange={this.updateEventInvitations}
               readOnly={loading}
               ref={component => { this.eventSelector = component }}
             />
