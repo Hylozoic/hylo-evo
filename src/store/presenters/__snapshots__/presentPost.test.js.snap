@@ -5,6 +5,7 @@ Object {
   "commenters": Array [],
   "communities": Array [],
   "creator": undefined,
+  "eventInvitations": Array [],
   "fileAttachments": Array [],
   "followers": undefined,
   "id": 324,

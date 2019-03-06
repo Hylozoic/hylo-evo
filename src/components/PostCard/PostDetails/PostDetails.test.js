@@ -5,7 +5,6 @@ import PostDetails from './index'
 it('matches last snapshot', () => {
   const props = {
     id: 1,
-    title: 'hello there',
     details: 'the details',
     linkPreview: {
       title: 'a walk in the park',
@@ -27,6 +26,6 @@ it('matches last snapshot', () => {
       }
     ]
   }
-  const wrapper = shallow(<PostBody {...props} />)
+  const wrapper = shallow(<PostDetails {...props} />)
   expect(wrapper).toMatchSnapshot()
 })

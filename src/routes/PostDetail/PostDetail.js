@@ -131,7 +131,7 @@ export default class PostDetail extends Component {
       postPeopleDialogTitle = 'Responses'
     }
 
-    const hasPeople = people.length > 0
+    const hasPeople = people && people.length > 0
     let { showPeopleDialog } = this.state
     showPeopleDialog = hasPeople && showPeopleDialog
     const togglePeopleDialog = hasPeople && this.togglePeopleDialog ? this.togglePeopleDialog : undefined

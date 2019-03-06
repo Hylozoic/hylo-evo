@@ -1,22 +1,15 @@
-import Button from './Button'
+import DropdownButton from './DropdownButton'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-describe('Button', () => {
+describe('DropdownButton', () => {
   it('renders correctly', () => {
     const props = {
       label: 'Log in',
-      color: 'blue',
-      hover: true,
-      active: true,
-      narrow: true,
-      small: true,
-      children: null,
-      onClick: () => {},
-      disabled: false,
+      choices: [{label: 'one', value: 1}, {label: 'two', value: 2}],
       className: 'login'
     }
-    const wrapper = shallow(<Button {...props} />)
+    const wrapper = shallow(<DropdownButton {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

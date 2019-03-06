@@ -44,20 +44,22 @@ exports[`PostDetail renders correctly 1`] = `
   />
   <PostBody
     data-stylename="body"
-    details="the body of the post"
     expanded={true}
-    id="91"
-    imageUrl="foo.jpg"
-    members={Array []}
-    myVote={true}
-    slug="foo"
-    tags={
-      Array [
-        "singing",
-        "dancing",
-      ]
+    post={
+      Object {
+        "details": "the body of the post",
+        "id": "91",
+        "imageUrl": "foo.jpg",
+        "members": Array [],
+        "myVote": true,
+        "tags": Array [
+          "singing",
+          "dancing",
+        ],
+        "votesTotal": 7,
+      }
     }
-    votesTotal={7}
+    slug="foo"
   />
   <PostCommunities
     showBottomBorder={true}

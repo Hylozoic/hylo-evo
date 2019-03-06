@@ -442,6 +442,44 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
 </div>
 `;
 
+exports[`PostEditor editing a post saving a post will update a post 1`] = `
+Array [
+  Array [
+    Object {
+      "communities": Array [
+        Object {
+          "id": "1",
+          "name": "test community 1",
+        },
+        Object {
+          "id": "2",
+          "name": "test community 2",
+        },
+      ],
+      "details": undefined,
+      "endTime": "2019-03-06T21:41:23.315Z",
+      "eventInviteeIds": undefined,
+      "fileUrls": undefined,
+      "id": "test",
+      "imageUrls": undefined,
+      "linkPreview": Object {
+        "id": "1",
+        "title": "a link",
+      },
+      "location": undefined,
+      "memberIds": undefined,
+      "sendAnnouncement": undefined,
+      "startTime": "2019-03-06T21:41:23.315Z",
+      "title": "valid title",
+      "topicNames": Array [
+        "design",
+      ],
+      "type": "request",
+    },
+  ],
+]
+`;
+
 exports[`PostEditor for a new post correct title placeholder and type button selection for "discussion" type 1`] = `
 <div
   data-stylename="wrapper"
@@ -1005,6 +1043,41 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
     />
   </div>
 </div>
+`;
+
+exports[`PostEditor for a new post saving a post will create a new post 1`] = `
+Array [
+  Array [
+    Object {
+      "communities": Array [
+        Object {
+          "id": "1",
+          "name": "test community 1",
+        },
+        Object {
+          "id": "2",
+          "name": "test community 2",
+        },
+      ],
+      "details": undefined,
+      "endTime": "2019-03-06T21:41:23.315Z",
+      "eventInviteeIds": undefined,
+      "fileUrls": undefined,
+      "id": undefined,
+      "imageUrls": undefined,
+      "linkPreview": undefined,
+      "location": undefined,
+      "memberIds": undefined,
+      "sendAnnouncement": undefined,
+      "startTime": "2019-03-06T21:41:23.315Z",
+      "title": "valid title",
+      "topicNames": Array [
+        "design",
+      ],
+      "type": "offer",
+    },
+  ],
+]
 `;
 
 exports[`PostEditor post is defaulted while loading editor 1`] = `
@@ -1574,4 +1647,42 @@ exports[`PostEditor renders with min props 1`] = `
     />
   </div>
 </div>
+`;
+
+exports[`PostEditor saving a valid post will update a post 1`] = `
+Array [
+  Array [
+    Object {
+      "communities": Array [
+        Object {
+          "id": "1",
+          "name": "test community 1",
+        },
+        Object {
+          "id": "2",
+          "name": "test community 2",
+        },
+      ],
+      "details": undefined,
+      "endTime": "2019-03-06T21:41:23.315Z",
+      "eventInviteeIds": undefined,
+      "fileUrls": undefined,
+      "id": "test",
+      "imageUrls": undefined,
+      "linkPreview": Object {
+        "id": "1",
+        "title": "a link",
+      },
+      "location": undefined,
+      "memberIds": undefined,
+      "sendAnnouncement": undefined,
+      "startTime": "2019-03-06T21:41:23.315Z",
+      "title": "valid title",
+      "topicNames": Array [
+        "design",
+      ],
+      "type": "offer",
+    },
+  ],
+]
 `;
