@@ -6,17 +6,17 @@ exports[`EventBody matches last snapshot 1`] = `
   data-stylename="body"
 >
   <EventDate
-    endTime={2019-03-07T00:41:23.315Z}
+    endTime={"2019-03-07T00:41:23.315Z"}
     location="Oakland"
-    startTime={2019-03-06T21:41:23.315Z}
+    startTime={"2019-03-06T21:41:23.315Z"}
   />
   <div
     data-stylename="eventBodyColumn"
   >
     <PostTitle
-      endTime={2019-03-07T00:41:23.315Z}
+      endTime={"2019-03-07T00:41:23.315Z"}
       location="Oakland"
-      startTime={2019-03-06T21:41:23.315Z}
+      startTime={"2019-03-06T21:41:23.315Z"}
     />
     <div
       data-stylename="eventData"
@@ -39,19 +39,19 @@ exports[`EventBody matches last snapshot 1`] = `
       Oakland
     </div>
     <PostDetails
-      endTime={2019-03-07T00:41:23.315Z}
+      endTime={"2019-03-07T00:41:23.315Z"}
       expanded={true}
       hideDetails={false}
       location="Oakland"
       slug="sluggo"
-      startTime={2019-03-06T21:41:23.315Z}
+      startTime={"2019-03-06T21:41:23.315Z"}
     />
   </div>
   <EventRSVP
-    endTime={2019-03-07T00:41:23.315Z}
+    endTime={"2019-03-07T00:41:23.315Z"}
     location="Oakland"
     respondToEvent={[Function]}
-    startTime={2019-03-06T21:41:23.315Z}
+    startTime={"2019-03-06T21:41:23.315Z"}
   />
 </div>
 `;

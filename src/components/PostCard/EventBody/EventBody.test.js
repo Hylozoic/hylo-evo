@@ -7,8 +7,8 @@ describe('EventBody', () => {
   it('matches last snapshot', () => {
 
     const event = {
-      startTime: new Date(1551908483315),
-      endTime: new Date(1551919283315),
+      startTime: moment(1551908483315),
+      endTime: moment(1551919283315),
       location: 'Oakland'
     }
 
