@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
+import toggleCommunityTopicSubscribe from 'store/actions/toggleCommunityTopicSubscribe'
 
-const mapDispatchToProps = {toggleTopicSubscribe}
+const mapDispatchToProps = {toggleCommunityTopicSubscribe}
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { topic, community, communityTopic } = ownProps
@@ -9,7 +9,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...dispatchProps,
     ...ownProps,
     toggleSubscribe: () =>
-      dispatchProps.toggleTopicSubscribe(topic.id, community.id, !communityTopic.isSubscribed)
+      dispatchProps.toggleCommunityTopicSubscribe(topic.id, community.id, !communityTopic.isSubscribed)
   }
 }
 

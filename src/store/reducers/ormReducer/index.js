@@ -11,7 +11,7 @@ import {
   LEAVE_COMMUNITY,
   LEAVE_PROJECT_PENDING,
   RESET_NEW_POST_COUNT_PENDING,
-  TOGGLE_TOPIC_SUBSCRIBE_PENDING,
+  TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_THREAD_READ_TIME,
   VOTE_ON_POST_PENDING,
   UPDATE_POST_PENDING,
@@ -135,7 +135,7 @@ export default function ormReducer (state = {}, action) {
       if (membership) membership.delete()
       break
 
-    case TOGGLE_TOPIC_SUBSCRIBE_PENDING:
+    case TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING:
       const ct = CommunityTopic.get({topic: meta.topicId, community: meta.communityId})
       ct.update({
         followersTotal: ct.followersTotal + (meta.isSubscribing ? 1 : -1),

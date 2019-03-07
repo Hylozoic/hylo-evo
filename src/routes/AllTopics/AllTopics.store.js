@@ -1,9 +1,54 @@
-export const MODULE_NAME = 'AllTopics'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import { createSelector } from 'reselect'
+import { get, includes, isEmpty } from 'lodash/fp'
+import orm from 'store/models'
+import presentTopic from 'store/presenters/presentTopic'
+import { makeGetQueryResults } from 'store/reducers/queryResults'
+import { FETCH_TOPICS_FOR_CURRENT_USER } from 'store/constants'
 
+export const MODULE_NAME = 'AllTopics'
 export const SET_SORT = `${MODULE_NAME}/SET_SORT`
 export const SET_SEARCH = `${MODULE_NAME}/SET_SEARCH`
 export const DELETE_COMMUNITY_TOPIC = `${MODULE_NAME}/DELETE_COMMUNITY_TOPIC`
 export const DELETE_COMMUNITY_TOPIC_PENDING = `${DELETE_COMMUNITY_TOPIC}_PENDING`
+
+// Actions
+
+export function setSort (sort) {
+  return {
+    type: SET_SORT,
+    payload: sort
+  }
+}
+
+export function setSearch (search) {
+  return {
+    type: SET_SEARCH,
+    payload: search
+  }
+}
+
+export function deleteCommunityTopic (communityTopicId) {
+  return {
+    type: DELETE_COMMUNITY_TOPIC,
+    graphql: {
+      query: `mutation ($id: ID) {
+        deleteCommunityTopic(id: $id) {
+          success
+        }
+      }`,
+      variables: {
+        id: communityTopicId
+      }
+    },
+    meta: {
+      id: communityTopicId,
+      optimistic: true
+    }
+  }
+}
+
+// Reducer
 
 const defaultState = {
   sort: 'updated_at',
@@ -30,19 +75,29 @@ export default function reducer (state = defaultState, action) {
   }
 }
 
-export function setSort (sort) {
-  return {
-    type: SET_SORT,
-    payload: sort
-  }
-}
+// Selectors
 
-export function setSearch (search) {
-  return {
-    type: SET_SEARCH,
-    payload: search
+const getTopicsForCurrentUserResults = makeGetQueryResults(FETCH_TOPICS_FOR_CURRENT_USER)
+
+export const getTopics = ormCreateSelector(
+  orm,
+  state => state.orm,
+  getTopicsForCurrentUserResults,
+  (_, props) => props,
+  (session, results, props) => {
+    if (isEmpty(results) || isEmpty(results.ids)) return []
+    const topics = session.Topic.all()
+      .filter(x => includes(x.id, results.ids))
+      .orderBy(x => results.ids.indexOf(x.id))
+      .toModelArray()
+
+    return topics.map(t => presentTopic(t, props))
   }
-}
+)
+
+export const getTotalTopics = createSelector(getTopicsForCurrentUserResults, get('total'))
+
+export const getHasMoreTopics = createSelector(getTopicsForCurrentUserResults, get('hasMore'))
 
 export function getSort (state) {
   return state[MODULE_NAME].sort
@@ -50,24 +105,4 @@ export function getSort (state) {
 
 export function getSearch (state) {
   return state[MODULE_NAME].search
-}
-
-export function deleteCommunityTopic (communityTopicId) {
-  return {
-    type: DELETE_COMMUNITY_TOPIC,
-    graphql: {
-      query: `mutation ($id: ID) {
-        deleteCommunityTopic(id: $id) {
-          success
-        }
-      }`,
-      variables: {
-        id: communityTopicId
-      }
-    },
-    meta: {
-      id: communityTopicId,
-      optimistic: true
-    }
-  }
 }

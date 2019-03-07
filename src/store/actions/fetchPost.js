@@ -3,9 +3,9 @@ import {
   FETCH_POST,
   FETCH_COMMENTS
 } from 'store/constants'
-import fetchPostQuery from 'graphql/queries/fetchPostQuery'
+import postQuery from 'graphql/queries/postQuery'
 
-export default function fetchPost (id, opts = {}, query = fetchPostQuery) {
+export default function fetchPost (id, opts = {}, query = postQuery) {
   return {
     type: FETCH_POST,
     graphql: {

@@ -1,4 +1,4 @@
-import { find } from 'lodash/fp'
+import { get, find } from 'lodash/fp'
 import { boolean, arrayOf, func, number, shape, string, object } from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
@@ -26,30 +26,32 @@ export default class AllTopics extends Component {
   }
 
   static propTypes = {
-    communityTopics: arrayOf(shape({
-      topic: shape({
-        id: string.isRequired,
-        name: string.isRequired
-      }).isRequired,
+    topics: arrayOf(shape({
       id: string,
+      name: string.isRequired,
       postsTotal: number,
       followersTotal: number,
       isSubscribed: boolean
     })),
+    community: object,
+    network: object,
     routeParams: object.isRequired,
     totalTopics: number,
     selectedSort: string,
     setSort: func,
     search: string,
     setSearch: func,
-    toggleSubscribe: func.isRequired
+    toggleCommunityTopicSubscribe: func.isRequired
   }
 
   componentDidMount () {
-    this.props.fetchCommunityTopics()
+    if (!get('slug', this.props.routeParams) && !get('networkSlug', this.props.networkSlug)) this.props.fetchTopics()
+
     // Caching totalTopics because the total returned in the queryset
     // changes when there is a search term
-    this.setState({totalTopicsCached: this.props.totalTopics})
+    this.setState({
+      totalTopicsCached: this.props.totalTopics
+    })
   }
 
   componentDidUpdate (prevProps) {
@@ -57,9 +59,25 @@ export default class AllTopics extends Component {
       this.setState({totalTopicsCached: this.props.totalTopics})
     }
     if (prevProps.selectedSort !== this.props.selectedSort ||
-      prevProps.search !== this.props.search) {
-      this.props.fetchCommunityTopics()
+      prevProps.search !== this.props.search ||
+      prevProps.network !== this.props.network ||
+      prevProps.community !== this.props.community) {
+      this.props.fetchTopics()
     }
+  }
+
+  deleteCommunityTopic (communityTopicId) {
+    if (window.confirm('Are you sure you want to delete this communityTopic?')) {
+      this.props.deleteCommunityTopic(communityTopicId)
+    }
+  }
+
+  toggleCommunityTopicSubscribeFun () {
+    const { community } = this.props
+
+    return community
+      ? communityTopic => toggleCommunityTopicSubscribe(communityTopic.topic.id, community.id, !communityTopic.isSubscribed)
+      : undefined
   }
 
   toggleTopicModal = () =>
@@ -71,19 +89,18 @@ export default class AllTopics extends Component {
     const {
       routeParams,
       community,
-      communityTopics,
+      network,
+      topics,
       search,
       setSearch,
       selectedSort,
       setSort,
-      toggleSubscribe,
+      toggleCommunityTopicSubscribe,
+      fetchMoreTopics,
       fetchIsPending,
-      fetchMoreCommunityTopics,
-      canModerate,
-      deleteTopic
+      canModerate
     } = this.props
     const { totalTopicsCached } = this.state
-    const toggleSubscribeFun = community ? ct => toggleSubscribe(ct.topic.id, !ct.isSubscribed) : undefined
 
     return <FullPageModal>
       <div styleName='all-topics'>
@@ -91,22 +108,22 @@ export default class AllTopics extends Component {
         <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
         <div styleName='controls'>
           <SearchBar {...{search, setSearch, selectedSort, setSort, fetchIsPending}} />
-          {community && <CreateTopic
+          {/* {community && <CreateTopic
             buttonText='Add a Topic'
             communityId={community.id}
             communitySlug={community.slug}
-            communityTopics={communityTopics} />}
+            communityTopics={communityTopics} />} */}
         </div>
         <div styleName='topic-list' id={TOPIC_LIST_ID}>
-          {communityTopics.map(ct =>
+          {topics.map(topic =>
             <TopicListItem
-              key={ct.id}
-              item={ct}
+              key={topic.id}
+              item={topic}
               routeParams={routeParams}
               canModerate={canModerate}
-              deleteTopic={() => deleteTopic(ct)}
-              toggleSubscribe={toggleSubscribeFun} />)}
-          <ScrollListener onBottom={() => fetchMoreCommunityTopics()}
+              deleteItem={this.deleteCommunityTopic}
+              toggleSubscribe={this.toggleCommunityTopicSubscribeFun()} />)}
+          <ScrollListener onBottom={() => fetchMoreTopics()}
             elementId={TOPIC_LIST_ID} />
         </div>
       </div>
@@ -139,17 +156,20 @@ export function SearchBar ({search, setSearch, selectedSort, setSort, fetchIsPen
   </div>
 }
 
-export function TopicListItem ({ item, routeParams, toggleSubscribe, deleteTopic, canModerate }) {
-  const { topic: { name }, postsTotal, followersTotal, isSubscribed } = item
+export function TopicListItem ({ item, routeParams, toggleSubscribe, deleteItem, canModerate }) {
+  const { name, postsTotal, followersTotal, isSubscribed } = item
   const dropdownItems = []
 
-  if (canModerate) dropdownItems.push({icon: 'Trash', label: 'Delete', onClick: deleteTopic, red: true})
+  // if (canModerate) dropdownItems.push({icon: 'Trash', label: 'Delete', onClick: () => deleteItem(item.id), red: true})
 
   return <div styleName='topic'>
     <Link styleName='topic-details' to={topicUrl(name, routeParams)}>
       <div styleName='topic-name'>#{name}</div>
       <div styleName='topic-stats'>{inflectedTotal('post', postsTotal)} • {inflectedTotal('follower', followersTotal)}</div>
     </Link>
+    <ul>
+      {item.communityTopics.map(t => <li>{t.community.name}</li>)}
+    </ul>
     {toggleSubscribe && <span onClick={toggleSubscribe} styleName='topic-subscribe'>
       {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
     </span>}

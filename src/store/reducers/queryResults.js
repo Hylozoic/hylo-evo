@@ -229,6 +229,7 @@ export function buildKey (type, params) {
 export const queryParamWhitelist = [
   'id',
   'slug',
+  'communitySlug',
   'networkSlug',
   'sortBy',
   'search',

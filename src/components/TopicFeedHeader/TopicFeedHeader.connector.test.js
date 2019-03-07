@@ -8,10 +8,10 @@ describe('mergeProps', () => {
       communityTopic: {isSubscribed: true}
     }
     const dispatchProps = {
-      toggleTopicSubscribe: jest.fn()
+      toggleCommunityTopicSubscribe: jest.fn()
     }
     const mergedProps = mergeProps(null, dispatchProps, ownProps)
     mergedProps.toggleSubscribe()
-    expect(dispatchProps.toggleTopicSubscribe).toBeCalledWith('1', '10', false)
+    expect(dispatchProps.toggleCommunityTopicSubscribe).toBeCalledWith('1', '10', false)
   })
 })

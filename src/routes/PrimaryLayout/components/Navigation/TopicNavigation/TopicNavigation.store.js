@@ -25,7 +25,7 @@ export const getTopicsFromSubscribedCommunityTopics = (state, props) => {
   })
 
   const names = topics.map(topic => topic.name)
-  
+
   topics = topics.filter((topic, index) => names.indexOf(topic.name) === index)
 
   return topics

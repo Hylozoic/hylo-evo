@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { get, find } from 'lodash/fp'
+import { get } from 'lodash/fp'
 import { getTopicsFromSubscribedCommunityTopics } from './TopicNavigation.store'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { topicsUrl, removePostFromUrl, allCommunitiesUrl } from 'util/navigation'

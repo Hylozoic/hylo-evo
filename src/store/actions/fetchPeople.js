@@ -1,7 +1,7 @@
 import { FETCH_PEOPLE } from 'store/constants'
-import fetchPeopleQuery from 'graphql/queries/fetchPeopleQuery'
+import peopleQuery from 'graphql/queries/peopleQuery'
 
-export default function fetchPeople (autocomplete, query = fetchPeopleQuery, first = 20) {
+export default function fetchPeople (autocomplete, query = peopleQuery, first = 20) {
   return {
     type: FETCH_PEOPLE,
     graphql: {

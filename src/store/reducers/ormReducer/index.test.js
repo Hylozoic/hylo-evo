@@ -1,12 +1,12 @@
 import orm from 'store/models' // this initializes redux-orm
 import ormReducer from './index'
-import toggleTopicSubscribe from 'store/actions/toggleTopicSubscribe'
+import toggleCommunityTopicSubscribe from 'store/actions/toggleCommunityTopicSubscribe'
 import {
   CREATE_MESSAGE,
   VOTE_ON_POST_PENDING,
   MARK_ACTIVITY_READ_PENDING,
   MARK_ALL_ACTIVITIES_READ_PENDING,
-  TOGGLE_TOPIC_SUBSCRIBE_PENDING,
+  TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING,
   FETCH_NOTIFICATIONS,
   FETCH_FOR_COMMUNITY_PENDING,
   UPDATE_POST_PENDING
@@ -180,7 +180,7 @@ describe('on MARK_ALL_ACTIVITIES_READ_PENDING', () => {
   })
 })
 
-describe('on TOGGLE_TOPIC_SUBSCRIBE_PENDING', () => {
+describe('on TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING', () => {
   it('will set isSubscribed to false and decrement followersTotal', () => {
     const session = orm.session(orm.getEmptyState())
     session.CommunityTopic.create({
@@ -192,8 +192,8 @@ describe('on TOGGLE_TOPIC_SUBSCRIBE_PENDING', () => {
     })
     const state = session.state
     const action = {
-      ...toggleTopicSubscribe('1', '1'),
-      type: TOGGLE_TOPIC_SUBSCRIBE_PENDING
+      ...toggleCommunityTopicSubscribe('1', '1'),
+      type: TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING
     }
     const newState = ormReducer(state, action)
     expect(deep(state, newState)).toMatchSnapshot()
@@ -209,8 +209,8 @@ describe('on TOGGLE_TOPIC_SUBSCRIBE_PENDING', () => {
     })
     const state = session.state
     const action = {
-      ...toggleTopicSubscribe('2', '3', true),
-      type: TOGGLE_TOPIC_SUBSCRIBE_PENDING
+      ...toggleCommunityTopicSubscribe('2', '3', true),
+      type: TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING
     }
     const newState = ormReducer(state, action)
     expect(deep(state, newState)).toMatchSnapshot()
