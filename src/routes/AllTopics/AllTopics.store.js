@@ -106,7 +106,7 @@ export function getSearch (state) {
   return state[MODULE_NAME].search
 }
 
-export default function presentTopic (topic, { networkSlug }) {
+export function presentTopic (topic, { networkSlug }) {
   if (!topic) return null
 
   return {
