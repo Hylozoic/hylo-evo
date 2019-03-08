@@ -70,27 +70,25 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   } = stateProps
   const { fetchTopics } = dispatchProps
 
-  const fetchTopics = () => debounced(
-  fetchTopics, {
-    ...queryResultParams,
-    first: 20
-  })
-  const fetchMoreTopics = () => {
-    !fetchIsPending && hasMore && debounced(
-      fetchTopics, {
-        ...queryResultParams,
-        offset: get('length', topics, 0),
-        first: 10
-      }
-    )
-  }
-
   return {
     ...stateProps,
     ...ownProps,
     ...dispatchProps,
-    fetchTopics,
-    fetchMoreTopics
+    fetchTopics: () => debounced(
+      fetchTopics, {
+        ...queryResultParams,
+        first: 20
+      }
+    ),
+    fetchMoreTopics: () => {
+      !fetchIsPending && hasMore && debounced(
+        fetchTopics, {
+          ...queryResultParams,
+          offset: get('length', topics, 0),
+          first: 10
+        }
+      )
+    }
   }
 }
 

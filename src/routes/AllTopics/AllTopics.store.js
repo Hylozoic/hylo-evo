@@ -2,7 +2,6 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import { createSelector } from 'reselect'
 import { get, includes, isEmpty } from 'lodash/fp'
 import orm from 'store/models'
-import presentTopic from 'store/presenters/presentTopic'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 import { FETCH_TOPICS } from 'store/constants'
 
@@ -91,7 +90,7 @@ export const getTopics = ormCreateSelector(
       .orderBy(x => results.ids.indexOf(x.id))
       .toModelArray()
 
-    return topics.map(t => presentTopic(t, props))
+    return topics.map(topic => presentTopic(topic, props))
   }
 )
 
@@ -105,4 +104,16 @@ export function getSort (state) {
 
 export function getSearch (state) {
   return state[MODULE_NAME].search
+}
+
+export default function presentTopic (topic, { networkSlug }) {
+  if (!topic) return null
+
+  return {
+    ...topic.ref,
+    communityTopics: networkSlug
+      ? topic.communityTopics.toModelArray().filter(t =>
+        t.community.network && t.community.network.slug === networkSlug)
+      : topic.communityTopics.toModelArray()
+  }
 }

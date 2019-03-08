@@ -34,6 +34,10 @@ export default `query (
             id
             name
             avatarUrl
+            network {
+              id
+              slug
+            }
           }
           postsTotal
           followersTotal
