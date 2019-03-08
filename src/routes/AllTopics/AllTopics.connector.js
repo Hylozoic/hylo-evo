@@ -6,7 +6,7 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import isPendingFor from 'store/selectors/isPendingFor'
 import toggleCommunityTopicSubscribe from 'store/actions/toggleCommunityTopicSubscribe'
-import fetchTopicsForCurrentUser from 'store/actions/fetchTopicsForCurrentUser'
+import fetchTopics from 'store/actions/fetchTopics'
 import { FETCH_TOPICS } from 'store/constants'
 import {
   setSort,
@@ -57,7 +57,7 @@ export const mapDispatchToProps = {
   toggleCommunityTopicSubscribe,
   setSort,
   setSearch,
-  fetchTopicsForCurrentUser,
+  fetchTopics,
   deleteCommunityTopic
 }
 
@@ -68,16 +68,16 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     fetchIsPending,
     queryResultParams
   } = stateProps
-  const { fetchTopicsForCurrentUser } = dispatchProps
+  const { fetchTopics } = dispatchProps
 
   const fetchTopics = () => debounced(
-  fetchTopicsForCurrentUser, {
+  fetchTopics, {
     ...queryResultParams,
     first: 20
   })
   const fetchMoreTopics = () => {
     !fetchIsPending && hasMore && debounced(
-      fetchTopicsForCurrentUser, {
+      fetchTopics, {
         ...queryResultParams,
         offset: get('length', topics, 0),
         first: 10
