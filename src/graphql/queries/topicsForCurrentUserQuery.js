@@ -23,7 +23,10 @@ export default `query (
         communitySlug: $communitySlug,
         networkSlug: $networkSlug
       )
-      followersTotal
+      followersTotal(
+        communitySlug: $communitySlug,
+        networkSlug: $networkSlug
+      )
       communityTopics {
         items {
           id
