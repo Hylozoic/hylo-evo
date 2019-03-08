@@ -155,7 +155,7 @@ export default class PeopleSelector extends React.Component {
         <div styleName='message-form'>
           <MessageForm ref='form'
             forNewThread
-            findOrCreateThread={() => findOrCreateThread(participants.map(p => p.id))} />
+            findOrCreateThread={() => findOrCreateThread(participants.map(p => p.id), new Date().getTime().toString())} />
         </div>}
     </div>
   }
