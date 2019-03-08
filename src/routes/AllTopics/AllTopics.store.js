@@ -4,7 +4,7 @@ import { get, includes, isEmpty } from 'lodash/fp'
 import orm from 'store/models'
 import presentTopic from 'store/presenters/presentTopic'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
-import { FETCH_TOPICS_FOR_CURRENT_USER } from 'store/constants'
+import { FETCH_TOPICS } from 'store/constants'
 
 export const MODULE_NAME = 'AllTopics'
 export const SET_SORT = `${MODULE_NAME}/SET_SORT`
@@ -77,7 +77,7 @@ export default function reducer (state = defaultState, action) {
 
 // Selectors
 
-const getTopicsForCurrentUserResults = makeGetQueryResults(FETCH_TOPICS_FOR_CURRENT_USER)
+const getTopicsForCurrentUserResults = makeGetQueryResults(FETCH_TOPICS)
 
 export const getTopics = ormCreateSelector(
   orm,

@@ -1,12 +1,12 @@
 import { get } from 'lodash/fp'
-import { FETCH_TOPICS_FOR_CURRENT_USER } from '../constants'
-import topicsForCurrentUserQuery from 'graphql/queries/topicsForCurrentUserQuery'
+import { FETCH_TOPICS } from '../constants'
+import topicsQuery from 'graphql/queries/topicsQuery'
 
 export default function (queryVariables = {}) {
   return {
-    type: FETCH_TOPICS_FOR_CURRENT_USER,
+    type: FETCH_TOPICS,
     graphql: {
-      query: topicsForCurrentUserQuery,
+      query: topicsQuery,
       variables: queryVariables
     },
     meta: {

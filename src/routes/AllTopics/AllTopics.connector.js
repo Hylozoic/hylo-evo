@@ -7,7 +7,7 @@ import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute
 import isPendingFor from 'store/selectors/isPendingFor'
 import toggleCommunityTopicSubscribe from 'store/actions/toggleCommunityTopicSubscribe'
 import fetchTopicsForCurrentUser from 'store/actions/fetchTopicsForCurrentUser'
-import { FETCH_TOPICS_FOR_CURRENT_USER } from 'store/constants'
+import { FETCH_TOPICS } from 'store/constants'
 import {
   setSort,
   setSearch,
@@ -34,7 +34,7 @@ export function mapStateToProps (state, props) {
   const topics = getTopics(state, queryResultParams)
   const hasMore = getHasMoreTopics(state, queryResultParams)
   const totalTopics = getTotalTopics(state, queryResultParams)
-  const fetchIsPending = isPendingFor(FETCH_TOPICS_FOR_CURRENT_USER, state)
+  const fetchIsPending = isPendingFor(FETCH_TOPICS, state)
   const currentUser = getMe(state, props)
   const canModerate = currentUser && currentUser.canModerate(community)
 
