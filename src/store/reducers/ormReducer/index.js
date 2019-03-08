@@ -50,9 +50,13 @@ import {
   DELETE_COMMUNITY_TOPIC_PENDING
 } from 'routes/AllTopics/AllTopics.store'
 
+import {
+  FETCH_CONTACTS
+} from 'components/PeopleSelector/PeopleSelector.store'
+
 import orm from 'store/models'
 import clearCacheFor from './clearCacheFor'
-import { find, values } from 'lodash/fp'
+import { find, values, get } from 'lodash/fp'
 import extractModelsFromAction from '../ModelExtractor/extractModelsFromAction'
 import { isPromise } from 'util/index'
 
@@ -289,6 +293,15 @@ export default function ormReducer (state = {}, action) {
       comment = Comment.withId(meta.id)
       comment.update(meta.data)
       break
+
+    case FETCH_CONTACTS:
+      // TODO: more general way of marking holo data
+      if (!meta.holoChatAPI) return
+      const people = get('data.people.items', payload) || []
+      people.map(personData => {
+        const person = Person.withId(personData.id)
+        person.update({holoChatUser: true})
+      })
   }
 
   values(sessionReducers).forEach(fn => fn(session, action))

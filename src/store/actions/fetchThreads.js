@@ -44,6 +44,7 @@ export default function (first = 10, offset = 0) {
       }
     },
     meta: {
+      holoChatAPI: true,
       extractModel: 'Me',
       extractQueryResults: {
         getItems: get('payload.data.me.messageThreads')

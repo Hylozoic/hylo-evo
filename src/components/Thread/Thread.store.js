@@ -48,6 +48,7 @@ export function fetchThread (id) {
       }
     },
     meta: {
+      holoChatAPI: true,
       extractModel: 'MessageThread',
       extractQueryResults: {
         getType: () => FETCH_MESSAGES,

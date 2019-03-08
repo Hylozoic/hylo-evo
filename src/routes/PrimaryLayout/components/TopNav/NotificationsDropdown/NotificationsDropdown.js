@@ -45,8 +45,9 @@ export default class NotificationsDropdown extends Component {
   }
 
   componentDidMount = () => {
-    const { fetchNotifications } = this.props
-    fetchNotifications()
+    // FIXME: why are these commented out? Something to do with holo
+    // const { fetchNotifications } = this.props
+    // fetchNotifications()
   }
 
   hasUnread () {
