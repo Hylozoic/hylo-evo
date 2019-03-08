@@ -45,8 +45,8 @@ export default class NotificationsDropdown extends Component {
   }
 
   componentDidMount = () => {
-    const { fetchNotifications } = this.props
-    fetchNotifications()
+    // const { fetchNotifications } = this.props
+    // fetchNotifications()
   }
 
   hasUnread () {

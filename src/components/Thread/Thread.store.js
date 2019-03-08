@@ -52,7 +52,8 @@ export function fetchThread (id) {
       extractQueryResults: {
         getType: () => FETCH_MESSAGES,
         getItems: get('payload.data.messageThread.messages')
-      }
+      },
+      holoChatAPI: true
     }
   }
 }

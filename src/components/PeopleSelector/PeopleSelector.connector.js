@@ -7,15 +7,15 @@ import {
   removeParticipant,
   fetchContacts,
   fetchRecentContacts,
-  contactsSelector,
+  holoChatContactsSelector,
   findOrCreateThread,
-  matchesSelector,
+  holoChatMatchesSelector,
   participantsSelector,
   recentContactsSelector,
   setAutocomplete
 } from './PeopleSelector.store'
 
-import fetchPeople from 'store/actions/fetchPeople'
+import { fetchPeopleHoloChat as fetchPeople } from 'store/actions/fetchPeople'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 
 export function getParticipantSearch (props, participantsFromStore) {
@@ -32,8 +32,8 @@ export function mapStateToProps (state, props) {
   const participants = participantsSelector(state, props)
   return {
     autocomplete: state.autocomplete,
-    contacts: contactsSelector(state),
-    matches: matchesSelector(state),
+    contacts: holoChatContactsSelector(state),
+    matches: holoChatMatchesSelector(state),
     participants,
     participantSearch: getParticipantSearch(props, participants),
     recentContacts: recentContactsSelector(state)

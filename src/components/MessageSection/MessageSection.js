@@ -165,8 +165,9 @@ export default class MessageSection extends React.Component {
   }
 
   markAsRead = debounce(() => {
-    const { thread, updateThreadReadTime } = this.props
-    if (thread) updateThreadReadTime(thread.id)
+    // TODO: implement this mutation in the hApp?
+    // const { thread, updateThreadReadTime } = this.props
+    // if (thread) updateThreadReadTime(thread.id)
   }, 2000)
 
   render () {

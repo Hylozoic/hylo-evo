@@ -31,13 +31,17 @@ const findOrCreateThreadQuery =
 }`
 
 export function findOrCreateThread (participantIds, query = findOrCreateThreadQuery) {
+  const createdAt = new Date().getTime().toString()
   return {
     type: FIND_OR_CREATE_THREAD,
     graphql: {
       query,
-      variables: {participantIds}
+      variables: {participantIds, createdAt}
     },
-    meta: { extractModel: 'MessageThread' }
+    meta: {
+      holoChatAPI: true,
+      extractModel: 'MessageThread'
+    }
   }
 }
 
@@ -66,7 +70,10 @@ export function fetchContacts (query = fetchContactsQuery, first = 50) {
       query,
       variables: { first }
     },
-    meta: { extractModel: 'Person' }
+    meta: {
+      holoChatAPI: true,
+      extractModel: 'Person'
+    }
   }
 }
 
@@ -144,15 +151,16 @@ export function personListItemSelector (session, participants, currentUser, sear
     .map(pickPersonListItem)
 }
 
-export const contactsSelector = createSelector(
+export const holoChatContactsSelector = createSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME].participants,
   getMe,
+  state => p => p.holoChatUser,
   personListItemSelector
 )
 
-export const matchesSelector = createSelector(
+export const holoChatMatchesSelector = createSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME].participants,
@@ -160,7 +168,7 @@ export const matchesSelector = createSelector(
   state => p => {
     const { autocomplete } = state[MODULE_NAME]
     if (autocomplete) {
-      return p.name.toLowerCase().includes(autocomplete.toLowerCase())
+      return p.holoChatUser && p.name.toLowerCase().includes(autocomplete.toLowerCase())
     }
   },
   personListItemSelector

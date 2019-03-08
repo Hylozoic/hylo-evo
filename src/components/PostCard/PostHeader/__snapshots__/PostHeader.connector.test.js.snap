@@ -1,52 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mapDispatchToProps calls the right version of removePost 1`] = `
-Array [
-  Array [
-    Object {
-      "graphql": Object {
-        "query": "mutation ($postId: ID, $slug: String) {
-        removePost(postId: $postId, slug: $slug) {
-          success
-        }
-      }",
-        "variables": Object {
-          "postId": 1,
-          "slug": undefined,
-        },
-      },
-      "meta": Object {
-        "optimistic": true,
-        "postId": 1,
-        "slug": undefined,
-      },
-      "type": "PostHeader/REMOVE_POST",
-    },
-  ],
-  Array [
-    Object {
-      "graphql": Object {
-        "query": "mutation ($postId: ID, $slug: String) {
-        removePost(postId: $postId, slug: $slug) {
-          success
-        }
-      }",
-        "variables": Object {
-          "postId": 1,
-          "slug": undefined,
-        },
-      },
-      "meta": Object {
-        "optimistic": true,
-        "postId": 1,
-        "slug": undefined,
-      },
-      "type": "PostHeader/REMOVE_POST",
-    },
-  ],
-]
-`;
-
 exports[`mapDispatchToProps maps the action generators 1`] = `
 Object {
   "deletePost": [Function],

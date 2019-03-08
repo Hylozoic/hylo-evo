@@ -35,6 +35,7 @@ export function fetchMessages (id, opts = {}) {
       variables: opts.cursor ? {id, cursor: opts.cursor} : {id}
     },
     meta: {
+      holoChatAPI: true,
       extractModel: 'MessageThread',
       extractQueryResults: {
         getItems: get('payload.data.messageThread.messages')

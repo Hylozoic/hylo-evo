@@ -1,0 +1,9 @@
+{
+	"jsonrpc":"2.0",
+	"method":"hylo-chat/chat/main/graphql",
+	"id":123,
+	"params":{
+		"query":"query ($first: Int, $offset: Int) { me {id messageThreads(sortBy: \"updatedAt\", order: \"desc\", first: $first, offset: $offset) {total hasMore items { id unreadCount lastReadAt createdAt updatedAt participants { id name avatarUrl } messages(first: 1, order: \"desc\") {items { id createdAt text creator { id name}}}}}}}",
+		"variables":{"first": 10, "offset": 0}
+	}
+}

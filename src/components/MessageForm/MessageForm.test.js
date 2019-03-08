@@ -79,12 +79,12 @@ describe('for a new thread', () => {
 })
 
 describe('createMessage', () => {
-  const action = createMessage('1', 'hey you')
+  const messageThreadId = '1'
+  const text = 'hey you'
+  const action = createMessage(messageThreadId, text)
   it('uses messageThreadId and text as variables in the graphql mutation', () => {
-    expect(action.graphql.variables).toEqual({
-      messageThreadId: '1',
-      text: 'hey you'
-    })
+    expect(action.graphql.variables.messageThreadId).toEqual(messageThreadId)
+    expect(action.graphql.variables.text).toEqual(text)
   })
   it('behaves optimistically and generates a temp id for each message namespaced to the thread', () => {
     expect(action.meta.optimistic).toBeTruthy()

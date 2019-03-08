@@ -80,6 +80,7 @@ Object {
   },
   "meta": Object {
     "extractModel": "MessageThread",
+    "holoChatAPI": true,
   },
   "type": "FIND_OR_CREATE_THREAD",
 }

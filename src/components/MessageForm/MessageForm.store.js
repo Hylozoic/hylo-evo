@@ -13,11 +13,12 @@ export const UPDATE_MESSAGE_TEXT = 'UPDATE_MESSAGE_TEXT'
 
 // Action Creators
 export function createMessage (messageThreadId, text, forNewThread) {
+  const createdAt = new Date().getTime().toString()
   return {
     type: CREATE_MESSAGE,
     graphql: {
-      query: `mutation ($messageThreadId: String, $text: String) {
-        createMessage(data: {messageThreadId: $messageThreadId, text: $text}) {
+      query: `mutation ($messageThreadId: String, $text: String, $createdAt: String) {
+        createMessage(data: {messageThreadId: $messageThreadId, text: $text, createdAt: $createdAt}) {
           id
           text
           createdAt
@@ -31,10 +32,12 @@ export function createMessage (messageThreadId, text, forNewThread) {
       }`,
       variables: {
         messageThreadId,
-        text
+        text,
+        createdAt
       }
     },
     meta: {
+      holoChatAPI: true,
       optimistic: true,
       extractModel: 'Message',
       tempId: uniqueId(`messageThread${messageThreadId}_`),

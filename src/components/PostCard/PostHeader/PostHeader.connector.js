@@ -35,7 +35,7 @@ export function mapDispatchToProps (dispatch, props) {
     deletePost: postId => props.deletePost
       ? props.deletePost(postId)
       : deletePostWithConfirm(postId),
-    removePost: postId => props.removePost
+    removePost: postId => props.editPost
       ? props.removePost(postId)
       : dispatch(removePost(postId, slug)),
     pinPost: (postId, communityId) => props.pinPost

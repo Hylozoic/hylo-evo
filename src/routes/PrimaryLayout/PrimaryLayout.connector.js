@@ -2,6 +2,8 @@ import { connect } from 'react-redux'
 import { toggleDrawer } from './PrimaryLayout.store'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import fetchForCommunity from 'store/actions/fetchForCommunity'
+import holoChatAPITest from 'store/actions/holoChatAPITest'
+import registerUserWithHoloChat from 'store/actions/registerUserWithHoloChat'
 import { FETCH_FOR_COMMUNITY } from 'store/constants'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
@@ -36,7 +38,9 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchForCurrentUser: skipTopics => dispatch(fetchForCurrentUser(slug, skipTopics)),
     fetchForCommunity: () => dispatch(fetchForCommunity(slug)),
-    toggleDrawer: () => dispatch(toggleDrawer())
+    toggleDrawer: () => dispatch(toggleDrawer()),
+    holotest: () => dispatch(holoChatAPITest()),
+    registerUserWithHoloChat: user => dispatch(registerUserWithHoloChat(user))
   }
 }
 
