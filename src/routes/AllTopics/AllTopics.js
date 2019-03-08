@@ -1,8 +1,7 @@
-import { get, find } from 'lodash/fp'
+import { find } from 'lodash/fp'
 import { boolean, arrayOf, func, number, shape, string, object } from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-
 import CreateTopic from 'components/CreateTopic'
 import Dropdown from 'components/Dropdown'
 import FullPageModal from 'routes/FullPageModal'
@@ -164,8 +163,8 @@ export function TopicListItem ({ topic, routeParams, toggleSubscribe, deleteItem
       <div styleName='topic-stats'>{inflectedTotal('post', postsTotal)} • {inflectedTotal('follower', followersTotal)}</div>
     </Link>
     <ul>
-      {communityTopics.map(ct =>
-        <li>{ct.community.name} ({ct.followersTotal} / {ct.postsTotal})</li>
+      {communityTopics.map((ct, key) =>
+        <li key={key}>{ct.community.name} ({ct.followersTotal} / {ct.postsTotal})</li>
       )}
     </ul>
     {toggleSubscribe && <span onClick={toggleSubscribe} styleName='topic-subscribe'>
