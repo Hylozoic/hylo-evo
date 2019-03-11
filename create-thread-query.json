@@ -1,9 +1,0 @@
-{
-	"jsonrpc":"2.0",
-	"method":"hylo-chat/chat/main/graphql",
-	"id":123,
-	"params":{
-		"query":"mutation ($participantIds: [String]) {findOrCreateThread(data: {participantIds: $participantIds}) { id createdAt updatedAt participants { id name avatarUrl } } }",
-		"variables":{"participantIds":[]}
-	}
-}

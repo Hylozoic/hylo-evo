@@ -145,10 +145,7 @@
     "start": "node --preserve-symlinks scripts/start.js",
     "build": "node scripts/build.js && scripts/build-es5.sh",
     "test": "node scripts/test.js --env=jsdom",
-    "server": "./node_modules/.bin/babel-node scripts/serveUniversal.js",
-    "hc:build": "mkdir -p ./dna && cd dna-src && hc package --strip-meta -o ../dna/hylo-chat.hcpkg",
-    "hc:start": "mkdir -p tmp-storage && holochain -c ./container-config.toml",
-    "hc:test": "cd dna-src && hc test"
+    "server": "./node_modules/.bin/babel-node scripts/serveUniversal.js"
   },
   "jest": {
     "collectCoverageFrom": [
