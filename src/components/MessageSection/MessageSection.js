@@ -165,9 +165,9 @@ export default class MessageSection extends React.Component {
   }
 
   markAsRead = debounce(() => {
-    // TODO: implement this mutation in the hApp?
-    // const { thread, updateThreadReadTime } = this.props
-    // if (thread) updateThreadReadTime(thread.id)
+    // TODO: this is broken in holo mode
+    const { thread, updateThreadReadTime } = this.props
+    if (thread) updateThreadReadTime(thread.id)
   }, 2000)
 
   render () {
@@ -182,11 +182,3 @@ export default class MessageSection extends React.Component {
     </div>
   }
 }
-
-/* on hold
-function NewMessages () {
-  return <div styleName='new-messages' key='new-messages'>
-    <div styleName='new-messages-text'>new messages</div>
-    <div styleName='new-messages-line' />
-  </div>
-} */
