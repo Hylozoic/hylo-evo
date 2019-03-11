@@ -3,6 +3,7 @@ import { boolean, arrayOf, func, number, shape, string, object } from 'prop-type
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import CreateTopic from 'components/CreateTopic'
+import { CommunityCell } from 'components/CommunitiesList/CommunitiesList'
 import Dropdown from 'components/Dropdown'
 import FullPageModal from 'routes/FullPageModal'
 import Icon from 'components/Icon'
@@ -155,16 +156,16 @@ export function TopicListItem ({ topic, routeParams, toggleSubscribe, deleteItem
       <div styleName='topic-name'>#{name}</div>
       <div styleName='topic-stats'>{inflectedTotal('post', postsTotal)} • {inflectedTotal('follower', followersTotal)}</div>
     </Link>
-    <ul>
+    <div styleName='communitiesList'>
       {communityTopics.map((ct, key) =>
-        <li key={key}>
-          {ct.community.name} ({ct.followersTotal} / {ct.postsTotal})
-          {toggleSubscribe && <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
-            {ct.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
-          </span>}
-        </li>
+          <CommunityCell community={ct.community} key={key}>
+            ({ct.followersTotal} / {ct.postsTotal})
+            {toggleSubscribe && <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
+              {ct.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+            </span>}
+          </CommunityCell>
       )}
-    </ul>
+    </div>
     {canModerate && <Dropdown styleName='topic-dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
   </div>
 }
