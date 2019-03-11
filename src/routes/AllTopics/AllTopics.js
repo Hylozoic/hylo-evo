@@ -71,14 +71,6 @@ export default class AllTopics extends Component {
     }
   }
 
-  toggleCommunityTopicSubscribeFun () {
-    const { community, toggleCommunityTopicSubscribe } = this.props
-
-    return community
-      ? communityTopic => toggleCommunityTopicSubscribe(communityTopic.topic.id, community.id, !communityTopic.isSubscribed)
-      : undefined
-  }
-
   toggleTopicModal = () =>
     this.setState({
       createTopicModalVisible: !this.state.createTopicModalVisible
@@ -94,7 +86,8 @@ export default class AllTopics extends Component {
       setSort,
       fetchMoreTopics,
       fetchIsPending,
-      canModerate
+      canModerate,
+      toggleCommunityTopicSubscribe
     } = this.props
     const { totalTopicsCached } = this.state
 
@@ -118,7 +111,7 @@ export default class AllTopics extends Component {
               routeParams={routeParams}
               canModerate={canModerate}
               deleteItem={this.deleteCommunityTopic}
-              toggleSubscribe={this.toggleCommunityTopicSubscribeFun()} />)}
+              toggleSubscribe={toggleCommunityTopicSubscribe} />)}
           <ScrollListener onBottom={() => fetchMoreTopics()}
             elementId={TOPIC_LIST_ID} />
         </div>
@@ -153,7 +146,7 @@ export function SearchBar ({search, setSearch, selectedSort, setSort, fetchIsPen
 }
 
 export function TopicListItem ({ topic, routeParams, toggleSubscribe, deleteItem, canModerate }) {
-  const { name, communityTopics, postsTotal, followersTotal, isSubscribed } = topic
+  const { name, communityTopics, postsTotal, followersTotal } = topic
   const dropdownItems = []
   // if (canModerate) dropdownItems.push({icon: 'Trash', label: 'Delete', onClick: () => deleteItem(topic.id), red: true})
 
@@ -164,12 +157,14 @@ export function TopicListItem ({ topic, routeParams, toggleSubscribe, deleteItem
     </Link>
     <ul>
       {communityTopics.map((ct, key) =>
-        <li key={key}>{ct.community.name} ({ct.followersTotal} / {ct.postsTotal})</li>
+        <li key={key}>
+          {ct.community.name} ({ct.followersTotal} / {ct.postsTotal})
+          {toggleSubscribe && <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
+            {ct.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+          </span>}
+        </li>
       )}
     </ul>
-    {toggleSubscribe && <span onClick={toggleSubscribe} styleName='topic-subscribe'>
-      {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
-    </span>}
     {canModerate && <Dropdown styleName='topic-dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
   </div>
 }

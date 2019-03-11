@@ -25,15 +25,15 @@ export function mapStateToProps (state, props) {
   const network = getNetworkForCurrentRoute(state, props)
   const selectedSort = getSort(state)
   const search = getSearch(state)
-  const queryResultParams = {
+  const fetchTopicsParams = {
     communitySlug: routeParams.slug,
     networkSlug: routeParams.networkSlug,
     sortBy: selectedSort,
     autocomplete: search
   }
-  const topics = getTopics(state, queryResultParams)
-  const hasMore = getHasMoreTopics(state, queryResultParams)
-  const totalTopics = getTotalTopics(state, queryResultParams)
+  const topics = getTopics(state, fetchTopicsParams)
+  const hasMore = getHasMoreTopics(state, fetchTopicsParams)
+  const totalTopics = getTotalTopics(state, fetchTopicsParams)
   const fetchIsPending = isPendingFor(FETCH_TOPICS, state)
   const currentUser = getMe(state, props)
   const canModerate = currentUser && currentUser.canModerate(community)
@@ -44,7 +44,7 @@ export function mapStateToProps (state, props) {
     network,
     selectedSort,
     search,
-    queryResultParams,
+    fetchTopicsParams,
     topics,
     hasMore,
     totalTopics,
@@ -66,7 +66,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     topics,
     hasMore,
     fetchIsPending,
-    queryResultParams
+    fetchTopicsParams
   } = stateProps
   const { fetchTopics } = dispatchProps
 
@@ -76,14 +76,14 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...dispatchProps,
     fetchTopics: () => debounced(
       fetchTopics, {
-        ...queryResultParams,
+        ...fetchTopicsParams,
         first: 20
       }
     ),
     fetchMoreTopics: () => {
       !fetchIsPending && hasMore && debounced(
         fetchTopics, {
-          ...queryResultParams,
+          ...fetchTopicsParams,
           offset: get('length', topics, 0),
           first: 10
         }

@@ -3,29 +3,9 @@
   padding-right: 0;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
   border-top: 1px solid $color-cape-cod-10;
   overflow: hidden;
   min-height: 40px;
-}
-
-.bottomBorder {
-  border-bottom: 1px solid $color-cape-cod-10;
-  margin-bottom: 10px;
-}
-
-.expanded {
-  padding-top: 7px;
-}
-
-.row {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-.label {
-  composes: timestamp from 'css/typography.scss';
 }
 
 .communityList {
@@ -41,6 +21,28 @@
   }
 }
 
+.bottomBorder {
+  border-bottom: 1px solid $color-cape-cod-10;
+  margin-bottom: 10px;
+}
+
+.expanded {
+  padding-top: 7px;
+  width: 100%;
+  padding-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.label {
+  composes: timestamp from 'css/typography.scss';
+}
+
 .expandLink {
   margin-left: auto;
   margin-right: 22px;
@@ -49,34 +51,4 @@
 .expandIcon {
   composes: timestamp from 'css/typography.scss';
   font-size: 20px;
-}
-
-.expandedSection {
-  width: 100%;
-  padding-bottom: 10px;
-}
-
-.communityRow {
-  display: flex;
-  margin-bottom: 5px;
-}
-
-.communityCell {
-  flex: 1;
-  &:hover {
-    text-decoration: none;
-  }
-}
-
-.communityCellAvatar {
-  @include image(20px);
-  display: inline-block;
-  vertical-align: middle;
-  border-radius: 4px;
-  margin-right: 10px;
-}
-
-.communityCellName {
-  composes: text-button from 'css/typography.scss';
-  font-size: 12px;
 }

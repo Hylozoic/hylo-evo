@@ -1,4 +1,4 @@
-import NetworkCommunities, { Banner, SearchBar, CommunityList, CommunityCard } from './NetworkCommunities'
+import NetworkCommunities, { Banner, SearchBar, CommunitiesList, CommunityCard } from './NetworkCommunities'
 import { shallow } from 'enzyme'
 import React from 'react'
 
@@ -45,19 +45,19 @@ describe('SearchBar', () => {
   })
 })
 
-describe('CommunityList', () => {
+describe('CommunitiesList', () => {
   it('renders correctly', () => {
     const communities = [
       {id: 9}, {id: 8}, {id: 7}
     ]
-    const wrapper = shallow(<CommunityList
+    const wrapper = shallow(<CommunitiesList
       communities={communities}
       fetchMoreCommunities={() => {}} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
 
-describe('CommunityList', () => {
+describe('CommunitiesList', () => {
   it('renders correctly', () => {
     const community = {
       name: 'Foom',

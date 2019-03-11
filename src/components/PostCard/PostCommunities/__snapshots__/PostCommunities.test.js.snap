@@ -20,7 +20,7 @@ exports[`CommunityCell matches last snapshot with 1 community 1`] = `
 </Link>
 `;
 
-exports[`CommunityList matches last snapshot with 1 community 1`] = `
+exports[`CommunitiesList matches last snapshot with 1 community 1`] = `
 <span
   data-stylename="communityList"
 >
@@ -38,7 +38,7 @@ exports[`CommunityList matches last snapshot with 1 community 1`] = `
 </span>
 `;
 
-exports[`CommunityList matches last snapshot with 2 communities 1`] = `
+exports[`CommunitiesList matches last snapshot with 2 communities 1`] = `
 <span
   data-stylename="communityList"
 >
@@ -72,7 +72,7 @@ exports[`CommunityList matches last snapshot with 2 communities 1`] = `
 </span>
 `;
 
-exports[`CommunityList matches last snapshot with 5 community 1`] = `
+exports[`CommunitiesList matches last snapshot with 5 community 1`] = `
 <span
   data-stylename="communityList"
 >
@@ -155,7 +155,7 @@ exports[`PostCommunities matches last snapshot 1`] = `
     >
       Posted In: 
     </span>
-    <CommunityList
+    <CommunitiesList
       communities={
         Array [
           Object {

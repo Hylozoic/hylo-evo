@@ -1,5 +1,5 @@
 import React from 'react'
-import PostCommunities, { CommunityList, CommunityRow, CommunityCell } from './PostCommunities'
+import PostCommunities, { CommunitiesList, CommunityRow, CommunityCell } from './PostCommunities'
 import { shallow } from 'enzyme'
 
 describe('PostCommunities', () => {
@@ -73,7 +73,7 @@ describe('PostCommunities', () => {
   })
 })
 
-describe('CommunityList', () => {
+describe('CommunitiesList', () => {
   it('matches last snapshot with 1 community', () => {
     const props = {
       communities: [
@@ -86,7 +86,7 @@ describe('CommunityList', () => {
       expandFunc: () => {}
     }
 
-    const wrapper = shallow(<CommunityList {...props} />)
+    const wrapper = shallow(<CommunitiesList {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 
@@ -107,7 +107,7 @@ describe('CommunityList', () => {
       expandFunc: () => {}
     }
 
-    const wrapper = shallow(<CommunityList {...props} />)
+    const wrapper = shallow(<CommunitiesList {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 
@@ -143,7 +143,7 @@ describe('CommunityList', () => {
       expandFunc: () => {}
     }
 
-    const wrapper = shallow(<CommunityList {...props} />)
+    const wrapper = shallow(<CommunitiesList {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

@@ -7,7 +7,12 @@ const query =
   }
 }`
 
-export default function (topicId, communityId, isSubscribing) {
+export default function (communityTopic) {
+  const { topic, community, isSubscribed } = communityTopic
+  const topicId = topic.id
+  const communityId = community.id
+  const isSubscribing = !isSubscribed
+
   return {
     type: TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE,
     graphql: {
@@ -20,9 +25,9 @@ export default function (topicId, communityId, isSubscribing) {
     },
     meta: {
       optimistic: true,
-      isSubscribing,
       topicId,
-      communityId
+      communityId,
+      isSubscribing
     }
   }
 }
