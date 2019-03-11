@@ -22,12 +22,12 @@ export default class ModelExtractor {
     const { isHoloData } = this.options
     this.mergedNodes().forEach(({ modelName, payload }) => {
       const model = this.session[modelName]
-      const modifiedPayload = isHoloData
+      const sourceTaggedPayload = isHoloData
         ? {...payload, isHoloData}
-        : payload
-      model.hasId(modifiedPayload.id)
-        ? model.withId(modifiedPayload.id)[method](modifiedPayload)
-        : model.create(modifiedPayload)
+        : {...payload, isHyloData: true}
+      model.hasId(sourceTaggedPayload.id)
+        ? model.withId(sourceTaggedPayload.id)[method](sourceTaggedPayload)
+        : model.create(sourceTaggedPayload)
     })
   }
 
