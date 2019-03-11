@@ -181,7 +181,7 @@ export const holoChatContactsSelector = createSelector(
   state => state.orm,
   state => state[MODULE_NAME].participants,
   getMe,
-  state => p => p.holoChatUser,
+  state => p => p.isHoloData,
   personListItemSelector
 )
 
@@ -193,7 +193,7 @@ export const holoChatMatchesSelector = createSelector(
   state => p => {
     const { autocomplete } = state[MODULE_NAME]
     if (autocomplete) {
-      return p.holoChatUser && p.name.toLowerCase().includes(autocomplete.toLowerCase())
+      return p.isHoloData && p.name.toLowerCase().includes(autocomplete.toLowerCase())
     }
   },
   personListItemSelector

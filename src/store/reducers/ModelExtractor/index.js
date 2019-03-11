@@ -4,6 +4,7 @@ import { isUndefined, omitBy } from 'lodash/fp'
 
 export default class ModelExtractor {
   static addAll ({ session, root, modelName, ...opts }) {
+
     if (!root) return
     const extractor = new ModelExtractor(session, opts)
     extractor.walk(root, modelName)
@@ -18,11 +19,15 @@ export default class ModelExtractor {
 
   addAll () {
     const method = this.options.append ? 'updateAppending' : 'update'
+    const { isHoloData } = this.options
     this.mergedNodes().forEach(({ modelName, payload }) => {
       const model = this.session[modelName]
-      model.hasId(payload.id)
-        ? model.withId(payload.id)[method](payload)
-        : model.create(payload)
+      const modifiedPayload = isHoloData
+        ? {...payload, isHoloData}
+        : payload
+      model.hasId(modifiedPayload.id)
+        ? model.withId(modifiedPayload.id)[method](modifiedPayload)
+        : model.create(modifiedPayload)
     })
   }
 
