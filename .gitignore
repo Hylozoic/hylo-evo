@@ -10,12 +10,6 @@ coverage
 build
 es5
 
-# holochain
-dna
-tmp-storage
-target
-bundle.json
-
 # misc
 .DS_Store
 .env
