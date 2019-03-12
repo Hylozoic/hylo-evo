@@ -3,7 +3,7 @@ import React from 'react'
 import { throttle, debounce } from 'lodash'
 import { get } from 'lodash/fp'
 import Loading from 'components/Loading'
-import Message from 'components/Message'
+import Message from '../Message'
 import './MessageSection.scss'
 
 const { array, bool, func, number, object, string } = PropTypes

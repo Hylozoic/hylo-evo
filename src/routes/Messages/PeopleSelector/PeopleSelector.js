@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { debounce, throttle } from 'lodash/fp'
-
 import { getKeyCode, keyMap } from 'util/textInput'
-import MessageForm from 'components/MessageForm'
-import CloseMessages from 'components/Thread/CloseMessages'
+import MessageForm from '../MessageForm'
+import CloseMessages from '../Thread/CloseMessages'
 import PeopleSelectorMatches from './PeopleSelectorMatches'
 import PeopleSelectorContacts from './PeopleSelectorContacts'
 import SelectorMatchedItem from './SelectorMatchedItem'

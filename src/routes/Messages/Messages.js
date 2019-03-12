@@ -1,8 +1,8 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router'
-import PeopleSelector from 'components/PeopleSelector'
-import ThreadList from 'components/ThreadList'
-import Thread from 'components/Thread'
+import PeopleSelector from './PeopleSelector'
+import ThreadList from './ThreadList'
+import Thread from './Thread'
 import './Messages.scss'
 
 export default class Messages extends React.Component {

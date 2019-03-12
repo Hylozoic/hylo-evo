@@ -55,12 +55,12 @@
 }
 
 .thread-header {
-  composes: header from 'components/Thread/Thread.scss';
+  composes: header from '../Thread/Thread.scss';
   padding-top: $space-4x;
   padding-bottom: $space-3x;
   height: unset;
 }
 
 .message-form {
-  composes: message-form from 'components/MessageForm/MessageForm.scss';
+  composes: message-form from '../MessageForm/MessageForm.scss';
 }
