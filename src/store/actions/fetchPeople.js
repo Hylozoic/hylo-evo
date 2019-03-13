@@ -14,7 +14,3 @@ export default function fetchPeople (autocomplete, query = fetchPeopleQuery, fir
     }
   }
 }
-
-export function fetchPeopleHoloChat (autocomplete, query = fetchPeopleQuery, first = 20) {
-  return fetchPeople(autocomplete, query, first, true)
-}

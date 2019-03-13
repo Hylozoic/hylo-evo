@@ -13,6 +13,9 @@ import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import { get, some } from 'lodash/fp'
 import mobileRedirect from 'util/mobileRedirect'
 
+// TODO: this is the master switch, to be replaced with the subdomain switch
+const holoMode = false
+
 export function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
   const showLogoBadge = some(m => m.newPostCount > 0, memberships)
@@ -27,18 +30,22 @@ export function mapStateToProps (state, props) {
     hasMemberships,
     communityPending: state.pending[FETCH_FOR_COMMUNITY],
     returnToURL: getReturnToURL(state),
-    downloadAppUrl: mobileRedirect()
+    downloadAppUrl: mobileRedirect(),
+    holoMode
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
   const slug = getSlugFromLocation(null, props)
+  // const { holoMode } = props
 
   return {
     fetchForCurrentUser: skipTopics => dispatch(fetchForCurrentUser(slug, skipTopics)),
     fetchForCommunity: () => dispatch(fetchForCommunity(slug)),
     toggleDrawer: () => dispatch(toggleDrawer()),
-    registerUserWithHoloChat: user => dispatch(registerUserWithHoloChat(user))
+    registerUserWithHoloChat: holoMode
+      ? user => dispatch(registerUserWithHoloChat(user))
+      : () => {}
   }
 }
 

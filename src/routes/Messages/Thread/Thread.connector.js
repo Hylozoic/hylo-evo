@@ -15,9 +15,10 @@ export function mapStateToProps (state, props) {
 
 function mapDispatchToProps (dispatch, props) {
   const { threadId } = props.match.params
+  const { holoMode } = props
 
   return {
-    fetchThread: () => dispatch(fetchThread(threadId))
+    fetchThread: () => dispatch(fetchThread(threadId, holoMode))
   }
 }
 

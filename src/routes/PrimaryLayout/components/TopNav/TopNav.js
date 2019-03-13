@@ -15,7 +15,7 @@ import NotificationsDropdown from './NotificationsDropdown'
 
 export default class TopNav extends Component {
   render () {
-    const { className, community, network, currentUser, logout, toggleDrawer, showLogoBadge, onClick } = this.props
+    const { className, community, network, currentUser, logout, toggleDrawer, showLogoBadge, onClick, holoMode } = this.props
     const profileUrl = personUrl(get('id', currentUser))
 
     return <div styleName='topNavWrapper' className={className} onClick={onClick}>
@@ -27,7 +27,7 @@ export default class TopNav extends Component {
         </div>
         <div styleName='navIcons'>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
-          <MessagesDropdown renderToggleChildren={showBadge =>
+          <MessagesDropdown holoMode={holoMode} renderToggleChildren={showBadge =>
             <BadgedIcon name='Messages' styleName='icon'
               showBadge={showBadge} />} />
           <NotificationsDropdown renderToggleChildren={showBadge =>

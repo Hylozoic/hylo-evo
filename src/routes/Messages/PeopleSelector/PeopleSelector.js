@@ -116,7 +116,7 @@ export default class PeopleSelector extends React.Component {
   render () {
     const {
       contacts, matches, participants,
-      removeParticipant, findOrCreateThread, onCloseURL
+      removeParticipant, findOrCreateThread, onCloseURL, holoMode
     } = this.props
     const { currentMatch } = this.state
     return <div styleName='people-selector'>
@@ -154,6 +154,7 @@ export default class PeopleSelector extends React.Component {
         <div styleName='message-form'>
           <MessageForm ref='form'
             forNewThread
+            holoMode={holoMode}
             findOrCreateThread={() => findOrCreateThread(participants.map(p => p.id), new Date().getTime().toString())} />
         </div>}
     </div>

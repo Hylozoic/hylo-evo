@@ -34,14 +34,15 @@ export default class Thread extends React.Component {
   }
 
   render () {
-    const { thread, currentUser, id, onCloseURL } = this.props
+    const { thread, currentUser, id, onCloseURL, holoMode } = this.props
     return <div styleName='thread'>
       <Header thread={thread} currentUser={currentUser} onCloseURL={onCloseURL} />
-      <MessageSection thread={thread} messageThreadId={id} />
+      <MessageSection thread={thread} messageThreadId={id} holoMode={holoMode} />
       <div styleName='message-form'>
         <MessageForm
           formRef={textArea => this.form = textArea} // eslint-disable-line no-return-assign
           focusForm={this.focusForm}
+          holoMode={holoMode}
           messageThreadId={id} />
       </div>
       <PeopleTyping styleName='people-typing' />

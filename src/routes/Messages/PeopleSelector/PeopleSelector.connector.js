@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
@@ -15,7 +16,7 @@ import {
   setAutocomplete
 } from './PeopleSelector.store'
 
-import { fetchPeopleHoloChat as fetchPeople } from 'store/actions/fetchPeople'
+import { fetchPeople } from 'store/actions/fetchPeople'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 
 export function getParticipantSearch (props, participantsFromStore) {
@@ -40,15 +41,21 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = {
-  addParticipant,
-  removeParticipant,
-  changeQuerystringParam,
-  fetchContacts,
-  fetchRecentContacts,
-  fetchPeople,
-  setAutocomplete,
-  findOrCreateThread
+export function mapDispatchToProps (dispatch, props) {
+  const { holoMode } = props
+  return {
+    findOrCreateThread: (participantIds, createdAt) => dispatch(findOrCreateThread(participantIds, createdAt, holoMode)),
+    fetchContacts: () => dispatch(findOrCreateThread(holoMode)),
+    fetchPeople: (autocomplete, query, first) => dispatch(fetchPeople(autocomplete, query, first, holoMode)),
+    ...bindActionCreators({
+      addParticipant,
+      removeParticipant,
+      changeQuerystringParam,
+      fetchContacts,
+      fetchRecentContacts,
+      setAutocomplete
+    }, dispatch)
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
