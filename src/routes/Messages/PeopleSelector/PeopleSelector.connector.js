@@ -30,22 +30,27 @@ export function getParticipantSearch (props, participantsFromStore) {
 }
 
 export function mapStateToProps (state, props) {
+  const { holoMode } = props
+  // only show recentContacts in Hylo mode
+  const recentContacts = holoMode ? [] : recentContactsSelector(state)
+
   const participants = participantsSelector(state, props)
   return {
     autocomplete: state.autocomplete,
-    contacts: holoChatContactsSelector(state),
-    matches: holoChatMatchesSelector(state),
+    contacts: holoChatContactsSelector(state, props),
+    matches: holoChatMatchesSelector(state, props),
     participants,
     participantSearch: getParticipantSearch(props, participants),
-    recentContacts: recentContactsSelector(state)
+    recentContacts
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
   const { holoMode } = props
+
   return {
     findOrCreateThread: (participantIds, createdAt) => dispatch(findOrCreateThread(participantIds, createdAt, holoMode)),
-    fetchContacts: () => dispatch(findOrCreateThread(holoMode)),
+    fetchContacts: () => dispatch(fetchContacts(holoMode)),
     fetchPeople: (autocomplete, query, first) => dispatch(fetchPeople(autocomplete, query, first, holoMode)),
     ...bindActionCreators({
       addParticipant,

@@ -116,7 +116,8 @@ export default class PeopleSelector extends React.Component {
   render () {
     const {
       contacts, matches, participants,
-      removeParticipant, findOrCreateThread, onCloseURL, holoMode
+      removeParticipant, findOrCreateThread, onCloseURL, holoMode,
+      recentContacts
     } = this.props
     const { currentMatch } = this.state
     return <div styleName='people-selector'>
@@ -149,7 +150,7 @@ export default class PeopleSelector extends React.Component {
         : <PeopleSelectorContacts
           addParticipant={this.addParticipant}
           contacts={contacts}
-          recentContacts={[]} /* TODO: recentContacts is set to empty for holo-chat */ />}
+          recentContacts={recentContacts} />}
       {participants && participants.length > 0 &&
         <div styleName='message-form'>
           <MessageForm ref='form'
