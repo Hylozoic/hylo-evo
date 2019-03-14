@@ -24,7 +24,7 @@ it('matches the last snapshot for fetchContacts', () => {
     variables: { first: 20 }
   }
   const { query, variables } = graphql
-  const actual = store.fetchContacts(variables.first, query)
+  const actual = store.fetchContacts(true, variables.first, query)
   expect(actual).toMatchSnapshot()
 })
 

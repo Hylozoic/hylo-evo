@@ -27,7 +27,6 @@ exports[`PeopleSelector matches the last snapshot 1`] = `
   </div>
   <PeopleSelectorContacts
     addParticipant={[Function]}
-    recentContacts={Array []}
   />
 </div>
 `;

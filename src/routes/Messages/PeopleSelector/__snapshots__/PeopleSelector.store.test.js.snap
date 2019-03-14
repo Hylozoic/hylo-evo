@@ -3,7 +3,26 @@
 exports[`connector mapStateToProps returns the correct object 1`] = `
 Object {
   "autocomplete": undefined,
-  "contacts": Array [],
+  "contacts": Array [
+    Object {
+      "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/ecommerceil/128.jpg",
+      "community": "Associate",
+      "id": "71862",
+      "name": "Ahmad Bernier",
+    },
+    Object {
+      "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/akmalfikri/128.jpg",
+      "community": "Associate",
+      "id": "72655",
+      "name": "Leora Bahringer",
+    },
+    Object {
+      "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/markjenkins/128.jpg",
+      "community": "Associate",
+      "id": "72019",
+      "name": "Vita Breitenberg",
+    },
+  ],
   "matches": Array [],
   "participantSearch": null,
   "participants": Array [
@@ -74,7 +93,7 @@ Object {
   },
   "meta": Object {
     "extractModel": "MessageThread",
-    "holoChatAPI": true,
+    "holoChatAPI": false,
   },
   "type": "FIND_OR_CREATE_THREAD",
 }
