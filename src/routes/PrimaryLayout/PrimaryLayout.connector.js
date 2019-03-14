@@ -13,8 +13,7 @@ import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import { get, some } from 'lodash/fp'
 import mobileRedirect from 'util/mobileRedirect'
 
-// TODO: this is the master switch, to be replaced with the subdomain switch
-const holoMode = false
+const holoMode = window.location.host.split('.')[0] === 'holo'
 
 export function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
@@ -37,7 +36,6 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   const slug = getSlugFromLocation(null, props)
-  // const { holoMode } = props
 
   return {
     fetchForCurrentUser: skipTopics => dispatch(fetchForCurrentUser(slug, skipTopics)),
