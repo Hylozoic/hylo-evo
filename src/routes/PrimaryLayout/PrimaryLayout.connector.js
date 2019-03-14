@@ -12,6 +12,7 @@ import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommuni
 import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import { get, some } from 'lodash/fp'
 import mobileRedirect from 'util/mobileRedirect'
+import { fetchContacts } from 'routes/Messages/PeopleSelector/PeopleSelector.store'
 
 const holoMode = window.location.host.split('.')[0] === 'holo'
 
@@ -41,6 +42,7 @@ export function mapDispatchToProps (dispatch, props) {
     fetchForCurrentUser: skipTopics => dispatch(fetchForCurrentUser(slug, skipTopics)),
     fetchForCommunity: () => dispatch(fetchForCommunity(slug)),
     toggleDrawer: () => dispatch(toggleDrawer()),
+    fetchContacts: holoMode => dispatch(fetchContacts(holoMode)),
     registerUserWithHoloChat: holoMode
       ? user => dispatch(registerUserWithHoloChat(user))
       : () => {}
