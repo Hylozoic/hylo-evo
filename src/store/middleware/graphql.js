@@ -8,13 +8,13 @@ export default function graphqlMiddleware (store) {
     const { query, variables } = graphql
 
     const holoChatAPI = get('holoChatAPI', meta)
-    const path = holoChatAPI ? '' : '/noo/graphql'
-    const params = holoChatAPI ? holochatQueryParams({query, variables}) : {query, variables}
+    const path = holoChatAPI ? process.env.HOLO_CHAT_GRAPHQL_PATH : '/noo/graphql'
+    // const params = holoChatAPI ? holochatQueryParams({query, variables}) : {query, variables}
+    // TODO: this code could be better encapsulated, maybe as part of the fetchJSON and holoFetchJSON functions
     const then = holoChatAPI
       ? payload => {
-        const result = payload.result
-        if (!result) Promise.reject(new Error('No result from holoChatAPI'))
-        const resultJSON = JSON.parse(result)
+        if (!payload) Promise.reject(new Error('No result from holoChatAPI'))
+        const resultJSON = JSON.parse(payload)
         if (resultJSON.Err) return Promise.reject(resultJSON.Err)
         // TODO: is there a way to avoid this second JSON.parse?
         if (resultJSON.Ok) return {data: JSON.parse(resultJSON.Ok)}
@@ -35,7 +35,7 @@ export default function graphqlMiddleware (store) {
       payload: {
         api: {
           path,
-          params,
+          params: {query, variables},
           method: 'POST'
         }
       }
@@ -43,11 +43,11 @@ export default function graphqlMiddleware (store) {
   }
 }
 
-export function holochatQueryParams (params) {
-  return {
-    jsonrpc: '2.0',
-    method: 'hylo-chat/chat/graphql',
-    id: 123,
-    params
-  }
-}
+// export function holochatQueryParams (params) {
+//   return {
+//     jsonrpc: '2.0',
+//     method: 'hylo-chat/chat/graphql',
+//     id: 123,
+//     params
+//   }
+// }

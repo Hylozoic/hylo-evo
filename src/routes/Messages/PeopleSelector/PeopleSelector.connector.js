@@ -16,7 +16,7 @@ import {
   setAutocomplete
 } from './PeopleSelector.store'
 
-import { fetchPeople } from 'store/actions/fetchPeople'
+import fetchPeople from 'store/actions/fetchPeople'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 
 export function getParticipantSearch (props, participantsFromStore) {
@@ -56,7 +56,6 @@ export function mapDispatchToProps (dispatch, props) {
       addParticipant,
       removeParticipant,
       changeQuerystringParam,
-      fetchContacts,
       fetchRecentContacts,
       setAutocomplete
     }, dispatch)

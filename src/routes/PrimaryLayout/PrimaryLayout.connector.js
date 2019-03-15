@@ -14,7 +14,8 @@ import { get, some } from 'lodash/fp'
 import mobileRedirect from 'util/mobileRedirect'
 import { fetchContacts } from 'routes/Messages/PeopleSelector/PeopleSelector.store'
 
-const holoMode = window.location.host.split('.')[0] === 'holo'
+// const holoMode = window.location.host.split('.')[0] === 'holo'
+const holoMode = true
 
 export function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
