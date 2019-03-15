@@ -13,7 +13,9 @@ import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import { get, some } from 'lodash/fp'
 import mobileRedirect from 'util/mobileRedirect'
 
-const holoMode = window.location.host.split('.')[0] === 'holo'
+const HOLO_MODE_SUBDOMAIN = 'holo'
+const holoMode = typeof window !== 'undefined'
+  && window.location.host.split('.')[0] === HOLO_MODE_SUBDOMAIN
 
 export function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
