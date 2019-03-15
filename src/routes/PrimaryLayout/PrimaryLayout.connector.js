@@ -14,8 +14,8 @@ import { get, some } from 'lodash/fp'
 import mobileRedirect from 'util/mobileRedirect'
 
 const HOLO_MODE_SUBDOMAIN = 'holo'
-const holoMode = typeof window !== 'undefined'
-  && window.location.host.split('.')[0] === HOLO_MODE_SUBDOMAIN
+const holoMode = typeof window !== 'undefined' &&
+  window.location.host.split('.')[0] === HOLO_MODE_SUBDOMAIN
 
 export function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
