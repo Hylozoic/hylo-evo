@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { toggleDrawer } from './PrimaryLayout.store'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import fetchForCommunity from 'store/actions/fetchForCommunity'
+import registerUserWithHoloChat from 'store/actions/registerUserWithHoloChat'
 import { FETCH_FOR_COMMUNITY } from 'store/constants'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
@@ -11,6 +12,10 @@ import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommuni
 import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import { get, some } from 'lodash/fp'
 import mobileRedirect from 'util/mobileRedirect'
+
+const HOLO_MODE_SUBDOMAIN = 'holo'
+const holoMode = typeof window !== 'undefined' &&
+  window.location.host.split('.')[0] === HOLO_MODE_SUBDOMAIN
 
 export function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
@@ -26,7 +31,8 @@ export function mapStateToProps (state, props) {
     hasMemberships,
     communityPending: state.pending[FETCH_FOR_COMMUNITY],
     returnToURL: getReturnToURL(state),
-    downloadAppUrl: mobileRedirect()
+    downloadAppUrl: mobileRedirect(),
+    holoMode
   }
 }
 
@@ -36,7 +42,10 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchForCurrentUser: skipTopics => dispatch(fetchForCurrentUser(slug, skipTopics)),
     fetchForCommunity: () => dispatch(fetchForCommunity(slug)),
-    toggleDrawer: () => dispatch(toggleDrawer())
+    toggleDrawer: () => dispatch(toggleDrawer()),
+    registerUserWithHoloChat: holoMode
+      ? user => dispatch(registerUserWithHoloChat(user))
+      : () => {}
   }
 }
 

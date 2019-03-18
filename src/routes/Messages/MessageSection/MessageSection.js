@@ -3,7 +3,7 @@ import React from 'react'
 import { throttle, debounce } from 'lodash'
 import { get } from 'lodash/fp'
 import Loading from 'components/Loading'
-import Message from 'components/Message'
+import Message from '../Message'
 import './MessageSection.scss'
 
 const { array, bool, func, number, object, string } = PropTypes
@@ -165,6 +165,7 @@ export default class MessageSection extends React.Component {
   }
 
   markAsRead = debounce(() => {
+    // TODO: this is broken in holo mode
     const { thread, updateThreadReadTime } = this.props
     if (thread) updateThreadReadTime(thread.id)
   }, 2000)
@@ -181,11 +182,3 @@ export default class MessageSection extends React.Component {
     </div>
   }
 }
-
-/* on hold
-function NewMessages () {
-  return <div styleName='new-messages' key='new-messages'>
-    <div styleName='new-messages-text'>new messages</div>
-    <div styleName='new-messages-line' />
-  </div>
-} */

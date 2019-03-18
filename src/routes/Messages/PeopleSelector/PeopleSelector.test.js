@@ -4,7 +4,7 @@ import React from 'react'
 
 import { keyMap } from 'util/textInput'
 import PeopleSelector from './PeopleSelector'
-import PersonListItem from 'components/PersonListItem'
+import PersonListItem from './PersonListItem'
 
 describe('PeopleSelector', () => {
   it('matches the last snapshot', () => {

@@ -7,7 +7,7 @@ import {
 } from 'store/constants'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 
-export function fetchMessages (id, opts = {}) {
+export function fetchMessages (id, opts = {}, holoChatAPI = false) {
   return {
     type: FETCH_MESSAGES,
     graphql: {
@@ -35,6 +35,7 @@ export function fetchMessages (id, opts = {}) {
       variables: opts.cursor ? {id, cursor: opts.cursor} : {id}
     },
     meta: {
+      holoChatAPI,
       extractModel: 'MessageThread',
       extractQueryResults: {
         getItems: get('payload.data.messageThread.messages')

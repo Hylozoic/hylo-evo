@@ -24,4 +24,16 @@ export const mapDispatchToProps = {
   goToThread: messageThreadId => push(`/t/${messageThreadId}`)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { holoMode } = ownProps
+  const { createMessage } = dispatchProps
+
+  return {
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
+    createMessage: (messageThreadId, text, forNewThread) => createMessage(messageThreadId, text, forNewThread, holoMode)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps, {withRef: true})

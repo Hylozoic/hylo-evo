@@ -5,6 +5,7 @@ import { get } from 'lodash/fp'
 import TextareaAutosize from 'react-textarea-autosize'
 import { onEnterNoShift } from 'util/textInput'
 import RoundImage from 'components/RoundImage'
+import Loading from 'components/Loading'
 import './MessageForm.scss'
 var { func, object, string, bool } = PropTypes
 
@@ -92,7 +93,8 @@ export default class MessageForm extends React.Component {
 
     return <form styleName='message-form' className={className} onSubmit={this.submit}>
       <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
-      <TextareaAutosize value={text} styleName='message-textarea'
+      {pending && <Loading />}
+      {!pending && <TextareaAutosize value={text} styleName='message-textarea'
         disabled={pending}
         inputRef={formRef}
         onFocus={onFocus}
@@ -100,6 +102,7 @@ export default class MessageForm extends React.Component {
         onBlur={onBlur}
         onKeyDown={handleKeyDown}
         placeholder={placeholder} />
+      }
     </form>
   }
 }

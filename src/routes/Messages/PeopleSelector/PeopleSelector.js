@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { debounce, throttle } from 'lodash/fp'
-
 import { getKeyCode, keyMap } from 'util/textInput'
-import MessageForm from 'components/MessageForm'
-import CloseMessages from 'components/Thread/CloseMessages'
+import MessageForm from '../MessageForm'
+import CloseMessages from '../Thread/CloseMessages'
 import PeopleSelectorMatches from './PeopleSelectorMatches'
 import PeopleSelectorContacts from './PeopleSelectorContacts'
 import SelectorMatchedItem from './SelectorMatchedItem'
@@ -116,8 +115,9 @@ export default class PeopleSelector extends React.Component {
 
   render () {
     const {
-      contacts, matches, participants, recentContacts,
-      removeParticipant, findOrCreateThread, onCloseURL
+      contacts, matches, participants,
+      removeParticipant, findOrCreateThread, onCloseURL, holoMode,
+      recentContacts
     } = this.props
     const { currentMatch } = this.state
     return <div styleName='people-selector'>
@@ -155,7 +155,8 @@ export default class PeopleSelector extends React.Component {
         <div styleName='message-form'>
           <MessageForm ref='form'
             forNewThread
-            findOrCreateThread={() => findOrCreateThread(participants.map(p => p.id))} />
+            holoMode={holoMode}
+            findOrCreateThread={() => findOrCreateThread(participants.map(p => p.id), new Date().getTime().toString())} />
         </div>}
     </div>
   }

@@ -1,5 +1,5 @@
 .people-selector-contacts {
-  composes: messages-section from 'components/MessageSection/MessageSection.scss';
+  composes: messages-section from '../../MessageSection/MessageSection.scss';
   flex: 1;
   height: 0;
 }

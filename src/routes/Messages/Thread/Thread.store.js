@@ -9,7 +9,7 @@ import {
 export const MODULE_NAME = 'Thread'
 
 // Action Creators
-export function fetchThread (id) {
+export function fetchThread (id, holoChatAPI) {
   return {
     type: FETCH_THREAD,
     graphql: {
@@ -48,6 +48,7 @@ export function fetchThread (id) {
       }
     },
     meta: {
+      holoChatAPI,
       extractModel: 'MessageThread',
       extractQueryResults: {
         getType: () => FETCH_MESSAGES,

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import PersonListItem from 'components/PersonListItem'
+import PersonListItem from '../PersonListItem'
 import './PeopleSelectorContacts.scss'
 const { any, arrayOf, func, shape, string } = PropTypes
 

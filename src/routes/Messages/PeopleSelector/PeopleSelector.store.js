@@ -30,14 +30,17 @@ const findOrCreateThreadQuery =
   }
 }`
 
-export function findOrCreateThread (participantIds, query = findOrCreateThreadQuery) {
+export function findOrCreateThread (participantIds, createdAt, holoChatAPI = false, query = findOrCreateThreadQuery) {
   return {
     type: FIND_OR_CREATE_THREAD,
     graphql: {
       query,
-      variables: {participantIds}
+      variables: {participantIds, createdAt}
     },
-    meta: { extractModel: 'MessageThread' }
+    meta: {
+      holoChatAPI,
+      extractModel: 'MessageThread'
+    }
   }
 }
 
@@ -59,14 +62,17 @@ const fetchContactsQuery =
   }
 }`
 
-export function fetchContacts (query = fetchContactsQuery, first = 50) {
+export function fetchContacts (holoChatAPI = false, query = fetchContactsQuery, first = 50) {
   return {
     type: FETCH_CONTACTS,
     graphql: {
       query,
       variables: { first }
     },
-    meta: { extractModel: 'Person' }
+    meta: {
+      holoChatAPI,
+      extractModel: 'Person'
+    }
   }
 }
 
@@ -144,6 +150,9 @@ export function personListItemSelector (session, participants, currentUser, sear
     .map(pickPersonListItem)
 }
 
+// TODO: Figure out best way to have these two kinds of selectors (an additional flag? keep them seperate?)
+
+// Non holo selectors
 export const contactsSelector = createSelector(
   orm,
   state => state.orm,
@@ -161,6 +170,31 @@ export const matchesSelector = createSelector(
     const { autocomplete } = state[MODULE_NAME]
     if (autocomplete) {
       return p.name.toLowerCase().includes(autocomplete.toLowerCase())
+    }
+  },
+  personListItemSelector
+)
+
+// holo versions
+export const holoChatContactsSelector = createSelector(
+  orm,
+  state => state.orm,
+  state => state[MODULE_NAME].participants,
+  getMe,
+  (_, props) => props.holoMode ? p => p.isHoloData : () => true,
+  personListItemSelector
+)
+
+export const holoChatMatchesSelector = createSelector(
+  orm,
+  state => state.orm,
+  state => state[MODULE_NAME].participants,
+  getMe,
+  (state, props) => p => {
+    const { autocomplete } = state[MODULE_NAME]
+    if (autocomplete) {
+      const holoFilter = props.holoMode ? p.isHoloData : true
+      return holoFilter && p.name.toLowerCase().includes(autocomplete.toLowerCase())
     }
   },
   personListItemSelector

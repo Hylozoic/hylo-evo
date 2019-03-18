@@ -17,7 +17,7 @@
 ## Running using Docker:
 
 1. Build the docker container: `docker build -t hylo-evo-docker .`
-2. Run the docker container: 
+2. Run the docker container:
 ~~~
 docker run -it \
   -v ${PWD}:/usr/src/app \
