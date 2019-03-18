@@ -150,32 +150,6 @@ export function personListItemSelector (session, participants, currentUser, sear
     .map(pickPersonListItem)
 }
 
-// TODO: Figure out best way to have these two kinds of selectors (an additional flag? keep them seperate?)
-
-// Non holo selectors
-export const contactsSelector = createSelector(
-  orm,
-  state => state.orm,
-  state => state[MODULE_NAME].participants,
-  getMe,
-  personListItemSelector
-)
-
-export const matchesSelector = createSelector(
-  orm,
-  state => state.orm,
-  state => state[MODULE_NAME].participants,
-  getMe,
-  state => p => {
-    const { autocomplete } = state[MODULE_NAME]
-    if (autocomplete) {
-      return p.name.toLowerCase().includes(autocomplete.toLowerCase())
-    }
-  },
-  personListItemSelector
-)
-
-// holo versions
 export const holoChatContactsSelector = createSelector(
   orm,
   state => state.orm,
