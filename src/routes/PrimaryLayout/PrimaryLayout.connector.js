@@ -18,6 +18,10 @@ const HOLO_MODE_SUBDOMAIN = 'holo'
 const holoMode = typeof window !== 'undefined' &&
   window.location.host.split('.')[0] === HOLO_MODE_SUBDOMAIN
 
+const HOLO_MODE_SUBDOMAIN = 'holo'
+const holoMode = typeof window !== 'undefined' &&
+  window.location.host.split('.')[0] === HOLO_MODE_SUBDOMAIN
+
 export function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
   const showLogoBadge = some(m => m.newPostCount > 0, memberships)
@@ -44,7 +48,6 @@ export function mapDispatchToProps (dispatch, props) {
     fetchForCurrentUser: skipTopics => dispatch(fetchForCurrentUser(slug, skipTopics)),
     fetchForCommunity: () => dispatch(fetchForCommunity(slug)),
     toggleDrawer: () => dispatch(toggleDrawer()),
-    fetchContacts: holoMode => dispatch(fetchContacts(holoMode)),
     registerUserWithHoloChat: holoMode
       ? user => dispatch(registerUserWithHoloChat(user))
       : () => {}

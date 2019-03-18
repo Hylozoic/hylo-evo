@@ -42,12 +42,3 @@ export default function graphqlMiddleware (store) {
     })
   }
 }
-
-// export function holochatQueryParams (params) {
-//   return {
-//     jsonrpc: '2.0',
-//     method: 'hylo-chat/chat/graphql',
-//     id: 123,
-//     params
-//   }
-// }
