@@ -132,17 +132,17 @@ describe('connector', () => {
     })
   })
 
-  describe('holoChatContactsSelector', () => {
+  describe('contactsSelector', () => {
     it('filters out currentUser', () => {
       state.PeopleSelector.participants = []
-      const actual = store.holoChatContactsSelector(state, {})
+      const actual = store.contactsSelector(state)
       expect(actual.find(p => p.id === '999')).toBe(undefined)
     })
   })
 
-  describe('holoChatMatchesSelector', () => {
+  describe('matchesSelector', () => {
     it('returns empty array if autocomplete is missing', () => {
-      const actual = store.holoChatMatchesSelector(state, {})
+      const actual = store.matchesSelector(state)
       expect(actual).toEqual([])
     })
 
@@ -163,7 +163,7 @@ describe('connector', () => {
           'community': 'Associate'
         }
       ]
-      const actual = store.holoChatMatchesSelector(state, {})
+      const actual = store.matchesSelector(state)
       expect(actual).toEqual(expected)
     })
 
@@ -178,7 +178,7 @@ describe('connector', () => {
           'community': 'Associate'
         }
       ]
-      const actual = store.holoChatMatchesSelector(state, {})
+      const actual = store.matchesSelector(state)
       expect(actual).toEqual(expected)
     })
 
@@ -193,7 +193,7 @@ describe('connector', () => {
           'community': 'Associate'
         }
       ]
-      const actual = store.holoChatMatchesSelector(state, {})
+      const actual = store.matchesSelector(state)
       expect(actual).toEqual(expected)
     })
 
