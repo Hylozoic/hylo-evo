@@ -56,7 +56,6 @@ export function mapDispatchToProps (dispatch, props) {
       addParticipant,
       removeParticipant,
       changeQuerystringParam,
-      fetchContacts,
       fetchRecentContacts,
       setAutocomplete
     }, dispatch)
