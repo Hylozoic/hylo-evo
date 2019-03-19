@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import { get } from 'lodash/fp'
+import holoFetchJSON from 'util/holoFetchJSON'
 
 export default function apiMiddleware (req) {
   return store => next => action => {
@@ -9,7 +10,13 @@ export default function apiMiddleware (req) {
     const { path, params, method } = payload.api
     const cookie = req && req.headers.cookie
     const holoChatAPI = get('holoChatAPI', meta)
-    let promise = fetchJSON(path, params, {method, cookie, host: getHost(holoChatAPI)})
+
+    var promise
+    if (holoChatAPI) {
+      promise = holoFetchJSON(path, params)
+    } else {
+      promise = fetchJSON(path, params, {method, cookie, host: getHost()})
+    }
 
     if (meta && meta.then) {
       promise = promise.then(meta.then)
@@ -20,10 +27,8 @@ export default function apiMiddleware (req) {
 }
 
 // TODO: do we ever use API_HOST?
-export function getHost (holoChatAPI) {
-  if (holoChatAPI) {
-    return process.env.HOLO_CHAT_API_HOST
-  } else if (typeof window === 'undefined') {
+export function getHost () {
+  if (typeof window === 'undefined') {
     return process.env.API_HOST
   } else {
     return window.location.origin
