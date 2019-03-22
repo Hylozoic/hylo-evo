@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "@holochain/hc-web-client": "https://github.com/holochain/hc-web-client#call-raw",
+    "@babel/runtime": "^7.4.2",
     "ansi-styles": "^3.2.1",
     "app-module-path": "^2.2.0",
     "autoproxy": "^1.0.1",
