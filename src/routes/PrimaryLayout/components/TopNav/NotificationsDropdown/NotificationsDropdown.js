@@ -14,7 +14,8 @@ import {
   ACTION_APPROVED_JOIN_REQUEST,
   ACTION_MENTION,
   ACTION_COMMENT_MENTION,
-  ACTION_ANNOUNCEMENT
+  ACTION_ANNOUNCEMENT,
+  ACTION_EVENT_INVITATION
 } from 'store/models/Notification'
 import striptags from 'striptags'
 import { decode } from 'ent'
@@ -175,6 +176,11 @@ export function NotificationHeader ({ notification }) {
         <span styleName='bold'>{actor.name} </span>
         sent an announcement
       </div>
+    case ACTION_EVENT_INVITATION:
+      return <div styleName='header'>
+        <span styleName='bold'>{actor.name} </span>
+        invited you to an event
+      </div>      
   }
 
   return null
@@ -215,6 +221,11 @@ export function NotificationBody ({ notification }) {
       text = truncateForBody(post.title)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> wrote: "{text}"
+      </div>
+    case ACTION_EVENT_INVITATION:
+      text = truncateForBody(post.title)
+      return <div styleName='body'>
+        <span styleName='bold'>{firstName(actor)}</span> invited you to: "{text}"
       </div>
   }
 
