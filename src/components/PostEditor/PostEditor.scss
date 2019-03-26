@@ -170,7 +170,14 @@ $wrapperBorderRadius: 8px;
 }
 
 .locationInput {
-  /* empty */
+  border-color: transparent;
+  color: $color-rhino-80;
+  font-size: inherit;
+  line-height: inherit; 
+}
+
+.locationInput::placeholder {
+  color: $color-rhino-30;
 }
 
 .actionsBar {
