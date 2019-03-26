@@ -6,7 +6,9 @@ exports[`matches last snapshot 1`] = `
   highlightClassName="highlight"
   term="foo"
 >
-  <span>
+  <div
+    data-stylename="postDetails"
+  >
     <Connect(ClickCatcher)>
       <div
         dangerouslySetInnerHTML={
@@ -58,6 +60,6 @@ exports[`matches last snapshot 1`] = `
         </span>
       </a>
     </div>
-  </span>
+  </div>
 </Highlight>
 `;
