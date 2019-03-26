@@ -24,8 +24,8 @@ export default function PostDetails ({
     details = truncate(details, maxDetailsLength)
   }
 
-  return <Highlight {...highlightProps}>
-    <span>
+  return <Highlight {...highlightProps}>    
+    <div styleName='postDetails'>
       {details && !hideDetails &&
         <ClickCatcher>
           <div styleName='details' dangerouslySetInnerHTML={{__html: details}} />
@@ -43,6 +43,6 @@ export default function PostDetails ({
             <span styleName='file-name'>{decodeURIComponent(path.basename(fileAttachment.url))}</span>
           </a>)}
       </div>}
-    </span>
+    </div>
   </Highlight>
 }

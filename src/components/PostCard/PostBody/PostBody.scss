@@ -6,6 +6,11 @@
   margin-bottom: 36px;
   display: flex;
   composes: cardPadding;
+  flex-direction: column;
+}
+
+.eventBody {
+  flex-direction: row;
 }
 
 .smallMargin {
@@ -86,6 +91,7 @@
   composes: caption-lt-lg from 'css/typography.scss';
   display: flex;
   padding: 0px 20px;
+  margin-bottom: 15px;
 }
 
 .eventLocation {

@@ -47,16 +47,16 @@ export default function EventBody ({
 }) {
   const { startTime, endTime, location } = event
 
-  return <div styleName={cx('body', {smallMargin: !expanded})} className={className}>
+  return <div styleName={cx('body', 'eventBody', {smallMargin: !expanded})} className={className}>
     <EventDate {...event} />
     <div styleName='eventBodyColumn'>
       <PostTitle {...event} />
       <div styleName='eventData'>
         <Icon name='Clock' styleName='icon' /> {formatDates(startTime, endTime)}
       </div>
-      <div styleName='eventData eventLocation'>
+      {!!location && <div styleName='eventData eventLocation'>
         <Icon name='Location' styleName='icon' /> {location}
-      </div>
+      </div>}
       <PostDetails {...event} slug={slug} hideDetails={!expanded} expanded={expanded} />
     </div>
     <EventRSVP {...event} respondToEvent={respondToEvent} />    
