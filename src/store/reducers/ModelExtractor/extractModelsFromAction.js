@@ -1,10 +1,12 @@
 import { castArray } from 'lodash'
 import ModelExtractor from 'store/reducers/ModelExtractor'
+import { get } from 'lodash/fp'
 
 // extract immediately instead of creating new actions
 export default function extractModelsFromAction (action, session) {
+  const isHoloData = get('meta.holoChatAPI', action)
   getRoots(action).forEach(({ payload, modelName, append }) =>
-    ModelExtractor.addAll({session, root: payload, modelName, append}))
+    ModelExtractor.addAll({session, root: payload, modelName, append, isHoloData}))
 }
 
 export function getRoots (action) {

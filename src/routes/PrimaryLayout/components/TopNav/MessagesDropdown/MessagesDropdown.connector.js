@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { threadUrl } from 'util/navigation'
 import fetchThreads from 'store/actions/fetchThreads'
-import { getThreads } from 'components/ThreadList/ThreadList.store'
+import { getThreads } from 'routes/Messages/ThreadList/ThreadList.store'
 import getMe from 'store/selectors/getMe'
 import { FETCH_THREADS } from 'store/constants'
 
@@ -15,8 +15,9 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
+  const { holoMode } = props
   return {
-    fetchThreads: () => dispatch(fetchThreads()),
+    fetchThreads: () => dispatch(fetchThreads(10, 0, holoMode)),
     goToThread: id => dispatch(push(threadUrl(id)))
   }
 }
