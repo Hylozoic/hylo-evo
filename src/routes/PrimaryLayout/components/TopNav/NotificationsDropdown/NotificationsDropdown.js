@@ -48,6 +48,7 @@ export default class NotificationsDropdown extends Component {
   }
 
   componentDidMount = () => {
+    // TODO: fix this in holo
     const { fetchNotifications } = this.props
     fetchNotifications()
   }
