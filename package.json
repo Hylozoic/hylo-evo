@@ -55,13 +55,11 @@
     "webpack-manifest-plugin": "1.3.2",
     "whatwg-fetch": "2.0.3"
   },
-  "peerDependencies": {
-    "babel-runtime": "6.22.0"
-  },
   "dependencies": {
     "ansi-styles": "^3.2.1",
     "app-module-path": "^2.2.0",
     "autoproxy": "^1.0.1",
+    "babel-runtime": "6.22.0",
     "babel-jest": "^21.2.0",
     "babel-plugin-react-css-modules": "levity/babel-plugin-react-css-modules#ab83008",
     "bootstrap": "4.0.0-alpha.6",
