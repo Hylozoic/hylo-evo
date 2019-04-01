@@ -100,6 +100,19 @@ describe('PostEditor', () => {
     })
   })
 
+  describe.skip('for a new event', () => {
+    it('renders correctlry', () => {
+      const props = {
+        isEvent: true,
+        post: {
+          communities: []
+        }
+      }
+      const wrapper = shallow(<PostEditor {...props} />)
+      expect(wrapper).toMatchSnapshot()
+    })
+  })
+
   describe('editing a post', () => {
     const props = {
       editing: true,

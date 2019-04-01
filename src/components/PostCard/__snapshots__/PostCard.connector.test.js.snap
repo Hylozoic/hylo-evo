@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapDispatchToProps  1`] = `
+Object {
+  "editPost": [Function],
+  "respondToEvent": [Function],
+  "showDetails": [Function],
+  "voteOnPost": [Function],
+}
+`;

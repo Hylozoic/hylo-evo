@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly with INTERESTED response 1`] = `
+<div
+  data-stylename="eventRSVP"
+>
+  <DropdownButton
+    choices={
+      Array [
+        Object {
+          "label": "Going",
+          "value": "yes",
+        },
+        Object {
+          "label": "Interested",
+          "value": "interested",
+        },
+        Object {
+          "label": "Not Going",
+          "value": "no",
+        },
+      ]
+    }
+    label="Interested"
+    onChoose={[Function]}
+  />
+</div>
+`;
+
+exports[`renders correctly with NO response 1`] = `
+<div
+  data-stylename="eventRSVP"
+>
+  <DropdownButton
+    choices={
+      Array [
+        Object {
+          "label": "Going",
+          "value": "yes",
+        },
+        Object {
+          "label": "Interested",
+          "value": "interested",
+        },
+        Object {
+          "label": "Not Going",
+          "value": "no",
+        },
+      ]
+    }
+    label="Not Going"
+    onChoose={[Function]}
+  />
+</div>
+`;
+
+exports[`renders correctly with YES response 1`] = `
+<div
+  data-stylename="eventRSVP"
+>
+  <DropdownButton
+    choices={
+      Array [
+        Object {
+          "label": "Going",
+          "value": "yes",
+        },
+        Object {
+          "label": "Interested",
+          "value": "interested",
+        },
+        Object {
+          "label": "Not Going",
+          "value": "no",
+        },
+      ]
+    }
+    label="Going"
+    onChoose={[Function]}
+  />
+</div>
+`;
