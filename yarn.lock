@@ -13,7 +13,7 @@
 
 "@holochain/hc-web-client@https://github.com/holochain/hc-web-client#hylo":
   version "0.2.0"
-  resolved "https://github.com/holochain/hc-web-client#e1d37a67d3855e93193879bdf533001a3f2016d2"
+  resolved "https://github.com/holochain/hc-web-client#8e283424115f9feac68b464b9702bb5e2310e6f6"
   dependencies:
     rpc-websockets "^4.3.3"
 
