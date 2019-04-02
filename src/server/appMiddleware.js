@@ -1,4 +1,4 @@
-// import { getBrowserSnippet } from './newrelic' // this must be first
+import { getBrowserSnippet } from './newrelic' // this must be first
 import React from 'react'
 import { serverRouter } from 'router'
 import { renderToString } from 'react-dom/server'
@@ -35,6 +35,6 @@ appMiddleware.getIndexFile = once(() => {
 function html (markup) {
   const newRoot = `<div id="root">${markup}</div>`
   return appMiddleware.getIndexFile()
-  // .replace('<script id="newrelic"></script>', getBrowserSnippet())
+  .replace('<script id="newrelic"></script>', getBrowserSnippet())
   .replace('<div id="root"></div>', newRoot)
 }

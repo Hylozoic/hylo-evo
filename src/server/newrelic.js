@@ -1,6 +1,6 @@
-// const newrelic = process.env.NEW_RELIC_LICENSE_KEY && process.env.NODE_ENV !== 'test'
-//   ? require('newrelic')
-//   : null
+const newrelic = process.env.NEW_RELIC_LICENSE_KEY && process.env.NODE_ENV !== 'test'
+  ? require('newrelic')
+  : null
 
 export function getBrowserSnippet () {
   if (!newrelic) return ''
