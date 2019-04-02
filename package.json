@@ -80,7 +80,6 @@
     "express": "^4.15.2",
     "faker": "^4.1.0",
     "global": "^4.3.2",
-    "@holochain/hc-web-client": "https://github.com/holochain/hc-web-client#hylo",
     "hylo-utils": "https://github.com/Hylozoic/hylo-utils#a1f23db",
     "immutable": "^3.8.1",
     "inflection": "^1.12.0",
