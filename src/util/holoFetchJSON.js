@@ -1,12 +1,6 @@
-// import { connect } from '@holochain/hc-web-client'
-
-var call
+import { connect } from '@holochain/hc-web-client'
 
 export default function holoFetchJSON (path, params) {
-  // if (!call) {
-  //   const connection = await connect(process.env.HOLO_CHAT_API_HOST)
-  //   call = connection.call
-  // }
-
-  return call(path)(params)
+  return connect(process.env.HOLO_CHAT_API_HOST)
+    .then(connection => connection.call(path)(params))
 }
