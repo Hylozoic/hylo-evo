@@ -2,7 +2,7 @@
 
 var call
 
-export default async function holoFetchJSON (path, params) {
+export default function holoFetchJSON (path, params) {
   // if (!call) {
   //   const connection = await connect(process.env.HOLO_CHAT_API_HOST)
   //   call = connection.call
