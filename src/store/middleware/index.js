@@ -4,7 +4,9 @@ import { createLogger } from 'redux-logger'
 import promiseMiddleware from 'redux-promise'
 import { isDev } from 'config'
 import graphqlMiddleware from './graphql'
+import holochainGraphqlMiddleware from './holochainGraphqlMiddleware'
 import apiMiddleware from './apiMiddleware'
+import holochainApiMiddleware from './holochainApiMiddleware'
 import pendingMiddleware from './pendingMiddleware'
 import optimisticMiddleware from './optimisticMiddleware'
 import userFetchedMiddleware from './userFetchedMiddleware'
@@ -17,7 +19,9 @@ export default function createMiddleware (history, req) {
   const middleware = compact([
     routerMiddleware(history),
     graphqlMiddleware,
+    holochainGraphqlMiddleware,
     apiMiddleware(req),
+    holochainApiMiddleware(req),
     errorMiddleware,
     optimisticMiddleware,
     pendingMiddleware,
