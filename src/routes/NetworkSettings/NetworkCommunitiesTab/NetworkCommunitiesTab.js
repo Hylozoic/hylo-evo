@@ -4,9 +4,10 @@ import Button from 'components/Button'
 import Loading from 'components/Loading'
 import Autocomplete from 'react-autocomplete'
 import { isEmpty } from 'lodash/fp'
-import PaginatedList from '../PaginatedList'
-import { networkCommunitySettingsUrl } from 'util/navigation'
+import SimplePaginatedList from '../SimplePaginatedList'
+import RoundImage from 'components/RoundImage'
 import '../NetworkSettings.scss'
+import { DEFAULT_AVATAR } from 'store/models/Community'
 
 const { any, array, bool, func, number, object } = PropTypes
 
@@ -28,7 +29,8 @@ export default class NetworkCommunitiesTab extends Component {
   state = {
     changed: false,
     communityChoice: null,
-    communitySearch: ''
+    communitySearch: '',
+    expandedCommunityId: null
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -65,6 +67,27 @@ export default class NetworkCommunitiesTab extends Component {
     this.props.fetchCommunityAutocomplete(value)
   }
 
+  toggleExpandedMaker = communityId => () => {
+    const { expandedCommunityId } = this.state
+    if (expandedCommunityId === communityId) {
+      this.setState({expandedCommunityId: null})
+    } else {
+      this.setState({expandedCommunityId: communityId})
+    }
+  }
+
+  renderNetworkCommunityRow = community => {
+    const { removeCommunityFromNetwork } = this.props
+    const { expandedCommunityId } = this.state
+    const expanded = expandedCommunityId === community.id
+    return <NetworkCommunityRow
+      community={community}
+      expanded={expanded}
+      toggleExpanded={this.toggleExpandedMaker(community.id)}
+      key={community.id}
+      removeCommunityFromNetwork={removeCommunityFromNetwork} />
+  }
+
   render () {
     const {
       isModerator,
@@ -74,23 +97,23 @@ export default class NetworkCommunitiesTab extends Component {
       communitiesPending,
       communityAutocompleteCandidates,
       network,
-      removeCommunityFromNetwork,
       setCommunitiesPage
     } = this.props
 
     if (!network) return <Loading />
 
+    const header = <div styleName='section-label'><span>communities</span><span style={{marginLeft: 'auto'}}>visibility to network</span></div>
+
     return <div styleName='communities-tab'>
-      <PaginatedList styleName='communities'
+      <SimplePaginatedList styleName='communities'
         items={network.communities}
         itemProps={{square: true, size: 40}}
-        label={'Communities'}
+        header={header}
         page={communitiesPage}
         pageCount={communitiesPageCount}
         pending={communitiesPending}
-        removeItem={isAdmin && removeCommunityFromNetwork(network.id)}
-        setPage={setCommunitiesPage}
-        titleUrl={c => networkCommunitySettingsUrl(network.slug, c.slug)} />
+        setPage={setCommunitiesPage} 
+        renderItem={this.renderNetworkCommunityRow} />
       {isAdmin && <div styleName='autocomplete'>
         <Autocomplete
           getItemValue={community => community.name}
@@ -120,3 +143,17 @@ export default class NetworkCommunitiesTab extends Component {
     </div>
   }
 }
+
+export class NetworkCommunityRow extends Component {
+  render () {
+    const { community, expanded, toggleExpanded } = this.props
+    return <div styleName='networkCommunityRow'>
+      <span onClick={() => console.log('clicked community', community.name)}>
+        <RoundImage url={community.avatarUrl || DEFAULT_AVATAR} medium styleName='communityAvatar' />
+      </span>
+      <span onClick={toggleExpanded} styleName='communityName'>{community.name}</span>
+      {expanded && <span>This boy is expanded</span>}
+  </div>
+  }
+}
+

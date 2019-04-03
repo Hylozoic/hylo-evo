@@ -65,6 +65,7 @@
 .section-label {
   composes: tag from 'css/typography.scss';
   color: $color-rhino-30;
+  display: flex;
 }
 
 .communities {
@@ -127,4 +128,25 @@
 
 .communities-tab {
   padding-bottom: 20px
+}
+
+// NetworkCommunityRow
+.networkCommunityRow {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  border-bottom: 1px solid $color-ghost;
+}
+
+.communityAvatar {
+  margin-right: $space-4x;
+}
+
+.communityName {
+  composes: bdy-drk-sm from 'css/typography.scss';
+  font-size: 16px;
+  &:hover {
+    color: $color-rhino;
+    text-decoration: none;
+  }
 }
