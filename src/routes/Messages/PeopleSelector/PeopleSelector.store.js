@@ -3,10 +3,7 @@ import { pick } from 'lodash/fp'
 
 import getMe from 'store/selectors/getMe'
 import orm from 'store/models'
-import {
-  CREATE_MESSAGE,
-  FIND_OR_CREATE_THREAD
-} from 'store/constants'
+import { CREATE_MESSAGE } from 'store/constants'
 
 export const MODULE_NAME = 'PeopleSelector'
 
@@ -15,34 +12,6 @@ export const FETCH_RECENT_CONTACTS = 'FETCH_RECENT_CONTACTS'
 export const SET_AUTOCOMPLETE = 'PeopleSelector/SET_AUTOCOMPLETE'
 export const ADD_PARTICIPANT = 'PeopleSelector/ADD_PARTICIPANT'
 export const REMOVE_PARTICIPANT = 'PeopleSelector/REMOVE_PARTICIPANT'
-
-const findOrCreateThreadQuery =
-`mutation ($participantIds: [String]) {
-  findOrCreateThread(data: {participantIds: $participantIds}) {
-    id
-    createdAt
-    updatedAt
-    participants {
-      id
-      name
-      avatarUrl
-    }
-  }
-}`
-
-export function findOrCreateThread (participantIds, createdAt, holoChatAPI = false, query = findOrCreateThreadQuery) {
-  return {
-    type: FIND_OR_CREATE_THREAD,
-    graphql: {
-      query,
-      variables: {participantIds, createdAt}
-    },
-    meta: {
-      holoChatAPI,
-      extractModel: 'MessageThread'
-    }
-  }
-}
 
 const fetchContactsQuery =
 `query PeopleContacts ($first: Int) {

@@ -13,15 +13,88 @@ export default class Messages extends React.Component {
 
   render () {
     const { onCloseURL } = this.state
-    const { holoMode } = this.props
+    const {
+      currentUser,
+      currentThread,
+      currentThreadId,
+      threads,
+      threadSearch,
+      setThreadSearch,
+      fetchThread,
+      fetchThreads,
+      fetchMoreThreads,
+      holoMode,
+      // MessageSection
+      socket,
+      reconnectFetchMessages,
+      messages,
+      hasMoreMessages,
+      messagesPending,
+      fetchMessages,
+      updateThreadReadTime,
+      // MessageForm
+      createMessage,
+      text,
+      sendIsTyping,
+      findOrCreateThread,
+      goToThread,
+      pending,
+      forNewThread,
+      onFocus,
+      onBlur,
+      updateMessageText,
+      placeholder
+    } = this.props
 
     return <div styleName='modal'>
       <div styleName='content'>
-        <ThreadList styleName='left-column' holoMode={holoMode} />
+        <ThreadList
+          styleName='left-column'
+          currentUser={currentUser}
+          threads={threads}
+          threadSearch={threadSearch}
+          setThreadSearch={setThreadSearch}
+          fetchThreads={fetchThreads}
+          fetchMoreThreads={fetchMoreThreads}
+        />
         <div styleName='right-column'>
           <Switch>
-            <Route path='/t/new' component={props => <PeopleSelector {...props} onCloseURL={onCloseURL} holoMode={holoMode} />} />
-            <Route path='/t/:threadId' component={props => <Thread {...props} onCloseURL={onCloseURL} holoMode={holoMode} />} />
+            <Route path='/t/new' component={props =>
+              <PeopleSelector
+                {...props}
+                findOrCreateThread={findOrCreateThread}
+                onCloseURL={onCloseURL}
+                holoMode={holoMode}
+            />} />
+            <Route path='/t/:threadId' component={props =>
+              <Thread
+                id={currentThreadId}
+                thread={currentThread}
+                currentUser={currentUser}
+                fetchThread={fetchThread}
+                onCloseURL={onCloseURL}
+                // passthroughs to MessageSection
+                socket={socket}
+                reconnectFetchMessages={reconnectFetchMessages}
+                messages={messages}
+                hasMoreMessages={hasMoreMessages}
+                messagesPending={messagesPending}
+                fetchMessages={fetchMessages}
+                updateThreadReadTime={updateThreadReadTime}
+                currentThread={currentThread}
+                currentThreadId={currentThreadId}
+                createMessage={createMessage}
+                text={text}
+                sendIsTyping={sendIsTyping}
+                goToThread={goToThread}
+                pending={pending}
+                forNewThread={forNewThread}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                updateMessageText={updateMessageText}
+                placeholder={placeholder}
+              />}
+            />
             <Redirect to='/t/new' />
           </Switch>
         </div>

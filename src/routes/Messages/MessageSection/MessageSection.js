@@ -43,17 +43,16 @@ export function createMessageList (messages, lastSeenAt) {
 
 export default class MessageSection extends React.Component {
   static propTypes = {
-    currentUser: object,
-    messageThreadId: string,
-    messages: array,
-    pending: bool,
-    total: number,
-    hasMore: bool,
-    thread: object,
     socket: object,
+    currentUser: object,
+    reconnectFetchMessages: func,
+    messages: array,
+    hasMore: bool,
+    pending: bool,
+    fetchMessages: func.isRequired,
     updateThreadReadTime: func,
-    fetchMessages: func,
-    reconnectFetchMessages: func
+    thread: object,
+    messageThreadId: string
   }
 
   constructor (props) {

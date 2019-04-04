@@ -16,20 +16,22 @@ export const NEW_THREAD_ID = 'new'
 
 export default class MessageForm extends React.Component {
   static propTypes = {
-    createMessage: func,
-    currentUser: object,
-    findOrCreateThread: func,
-    focusForm: func,
-    formRef: func,
-    forNewThread: bool,
-    goToThread: func,
+    createMessage: func.isRequired,
     messageThreadId: string,
+    text: string,
+    focusForm: func,
+    sendIsTyping: func,
+    findOrCreateThread: func.isRequired,
+    goToThread: func,
+    pending: bool,
+    forNewThread: bool,
+    formRef: func,
     onFocus: func,
     onBlur: func,
-    pending: bool,
-    placeholder: string,
-    text: string,
-    updateMessageText: func
+    className: string,
+    currentUser: object,
+    updateMessageText: func,
+    placeholder: string
   }
 
   sendForExisting () {

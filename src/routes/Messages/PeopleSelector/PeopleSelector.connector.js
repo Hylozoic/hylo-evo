@@ -9,13 +9,11 @@ import {
   fetchContacts,
   fetchRecentContacts,
   holoChatContactsSelector,
-  findOrCreateThread,
   holoChatMatchesSelector,
   participantsSelector,
   recentContactsSelector,
   setAutocomplete
 } from './PeopleSelector.store'
-
 import fetchPeople from 'store/actions/fetchPeople'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 
@@ -49,7 +47,6 @@ export function mapDispatchToProps (dispatch, props) {
   const { holoMode } = props
 
   return {
-    findOrCreateThread: (participantIds, createdAt) => dispatch(findOrCreateThread(participantIds, createdAt, holoMode)),
     fetchContacts: () => dispatch(fetchContacts(holoMode)),
     fetchPeople: (autocomplete, query, first) => dispatch(fetchPeople(autocomplete, query, first, holoMode)),
     ...bindActionCreators({

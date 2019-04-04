@@ -115,11 +115,32 @@ export default class PeopleSelector extends React.Component {
 
   render () {
     const {
-      contacts, matches, participants,
-      removeParticipant, findOrCreateThread, onCloseURL, holoMode,
-      recentContacts
+      contacts,
+      matches,
+      participants,
+      removeParticipant,
+      findOrCreateThread,
+      onCloseURL,
+      holoMode,
+      recentContacts,
+      createMessage,
+      messageThreadId,
+      text,
+      focusForm,
+      sendIsTyping,
+      goToThread,
+      pending,
+      formRef,
+      onFocus,
+      onBlur,
+      className,
+      currentUser,
+      updateMessageText,
+      placeholder
     } = this.props
+
     const { currentMatch } = this.state
+
     return <div styleName='people-selector'>
       <div styleName='thread-header' tabIndex='0'>
         <div styleName='autocomplete-control'>
@@ -155,6 +176,20 @@ export default class PeopleSelector extends React.Component {
         <div styleName='message-form'>
           <MessageForm ref='form'
             forNewThread
+            createMessage={createMessage}
+            messageThreadId={messageThreadId}
+            text={text}
+            focusForm={focusForm}
+            sendIsTyping={sendIsTyping}
+            goToThread={goToThread}
+            pending={pending}
+            formRef={formRef}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            className={className}
+            currentUser={currentUser}
+            updateMessageText={updateMessageText}
+            placeholder={placeholder}
             holoMode={holoMode}
             findOrCreateThread={() => findOrCreateThread(participants.map(p => p.id), new Date().getTime().toString())} />
         </div>}

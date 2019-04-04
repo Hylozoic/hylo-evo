@@ -13,12 +13,13 @@ const { array, func, object, string } = PropTypes
 
 export default class ThreadList extends Component {
   static propTypes = {
-    match: object,
     currentUser: object,
-    threadSearch: string,
     threads: array,
-    fetchThreads: func,
+    threadSearch: string,
     setThreadSearch: func,
+    fetchThreads: func,
+    fetchMoreThreads: func,
+    match: object,
     className: string
   }
 

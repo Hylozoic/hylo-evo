@@ -1,4 +1,3 @@
-import Thread from './Thread'
-import connector from './Thread.connector'
+import component from './Thread'
 
-export default connector(Thread)
+export default component
