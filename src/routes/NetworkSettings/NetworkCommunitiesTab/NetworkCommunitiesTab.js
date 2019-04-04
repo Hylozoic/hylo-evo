@@ -8,6 +8,10 @@ import SimplePaginatedList from '../SimplePaginatedList'
 import RoundImage from 'components/RoundImage'
 import '../NetworkSettings.scss'
 import { DEFAULT_AVATAR } from 'store/models/Community'
+import Dropdown from 'components/Dropdown'
+import Avatar from 'components/Avatar'
+import { Link } from 'react-router-dom'
+import { personUrl } from 'util/navigation'
 
 const { any, array, bool, func, number, object } = PropTypes
 
@@ -147,13 +151,39 @@ export default class NetworkCommunitiesTab extends Component {
 export class NetworkCommunityRow extends Component {
   render () {
     const { community, expanded, toggleExpanded } = this.props
+    const { hidden } = community
+    const dropdownLabel = hidden ? 'Private to members' : 'Visible to network'
+    const dropdownItems = [
+      {label: 'Visible to network', onClick: () => console.log('make visible')},
+      {label: 'Private to members', onClick: () => console.log('make private')}      
+    ]
+
     return <div styleName='networkCommunityRow'>
-      <span onClick={() => console.log('clicked community', community.name)}>
-        <RoundImage url={community.avatarUrl || DEFAULT_AVATAR} medium styleName='communityAvatar' />
-      </span>
-      <span onClick={toggleExpanded} styleName='communityName'>{community.name}</span>
-      {expanded && <span>This boy is expanded</span>}
-  </div>
+      <div styleName='topRow'>
+        <span onClick={toggleExpanded}>
+          <RoundImage url={community.avatarUrl || DEFAULT_AVATAR} medium styleName='communityAvatar' />
+        </span>
+        <span onClick={toggleExpanded} styleName='communityName'>{community.name}</span>
+        <Dropdown styleName='visibilityDropdown' toggleChildren={<span styleName='dropdownLabel'>{dropdownLabel}</span>} items={dropdownItems} />
+      </div>
+      <div>
+        {expanded && <span>This boy is expanded</span>}
+      </div>
+    </div>
   }
 }
 
+export function CommunityModeratorSection ({ moderators, slug }) {
+  return <div styleName='moderators-section'>
+    <div styleName='moderators-header'>Community Moderators</div>
+    {moderators.map((m, index) => <CommunityModerator moderator={m} slug={slug} key={index} />)}
+  </div>
+}
+
+export function CommunityModerator ({ moderator, slug }) {
+  const { name, avatarUrl } = moderator
+  return <div styleName='moderator'>
+    <Avatar url={personUrl(moderator.id, slug)} avatarUrl={avatarUrl} styleName='moderator-image' medium />
+    <Link to={personUrl(moderator.id, slug)} styleName='moderator-name'>{name}</Link>
+  </div>
+}

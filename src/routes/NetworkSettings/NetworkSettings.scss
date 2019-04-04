@@ -133,8 +133,7 @@
 // NetworkCommunityRow
 .networkCommunityRow {
   display: flex;
-  align-items: center;
-  min-height: 52px;
+  flex-direction: column;
   border-bottom: 1px solid $color-ghost;
 }
 
@@ -147,6 +146,52 @@
   font-size: 16px;
   &:hover {
     color: $color-rhino;
+    text-decoration: none;
+  }
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+}
+
+.visibilityDropdown {
+  margin-left: auto;
+} 
+
+.dropdownLabel {
+  composes: bdy-lt-sm from 'css/typography.scss';
+}
+
+// CommunityModeratorSection
+
+.moderators-section {
+  /* empty */
+}
+
+.moderators-header {
+  composes: tag  from 'css/typography.scss';
+  margin-bottom: $space-2x;
+}
+
+// CommunityLeader
+
+.moderator {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.moderator-image {
+  margin-right: $space-4x;
+}
+
+.moderator-name {
+  composes: bdy-lt-sm from 'css/typography.scss';
+  font-size: 16px;
+  &:hover {
+    color: $color-rhino-80;
     text-decoration: none;
   }
 }
