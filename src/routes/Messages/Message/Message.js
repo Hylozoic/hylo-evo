@@ -13,6 +13,7 @@ export default function Message ({ message, isHeader }) {
   const pending = message.id.slice(0, 13) === 'messageThread'
   let text = present(sanitize(message.text).replace(/\n/g, '<br />'), {noP: true})
   const sName = cx('message', {messageHeader: isHeader})
+
   return <div styleName={sName}
     data-message-id={message.id}>
     <div styleName='avatar'>

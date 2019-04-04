@@ -1,5 +1,8 @@
 import orm from 'store/models'
-import { getMessages } from './MessageSection.store'
+import {
+  getMessages,
+  filterThreadsByParticipant
+} from './Messages.store'
 
 describe('getMessages', () => {
   it('should order the messages by their ID', () => {
@@ -43,5 +46,27 @@ describe('getMessages', () => {
     }
     const actual = getMessages(state, props)
     expect(actual).toEqual([])
+  })
+})
+
+describe('filterThreadsByParticipant', () => {
+  it('works as expected', () => {
+    const mockThread = names => {
+      return {
+        participants: {
+          toRefArray: function () {
+            return names.map(name => ({name}))
+          }
+        }
+      }
+    }
+
+    const filter = filterThreadsByParticipant('fo')
+    expect(filter(mockThread(['boxhead', 'footballface', 'tvnose']))).toBeTruthy()
+    expect(filter(mockThread(['Fearsome Foe', 'jim jam']))).toBeTruthy()
+    expect(filter(mockThread(['Tiresome toe', 'jim jam']))).toBeFalsy()
+
+    const noFilter = filterThreadsByParticipant()
+    expect(noFilter(mockThread(['whomever']))).toBeTruthy()
   })
 })

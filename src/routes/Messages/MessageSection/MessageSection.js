@@ -6,7 +6,7 @@ import Loading from 'components/Loading'
 import Message from '../Message'
 import './MessageSection.scss'
 
-const { array, bool, func, number, object, string } = PropTypes
+const { array, bool, func, object } = PropTypes
 
 // the maximum amount of time in minutes that can pass between messages to still
 // include them under the same avatar and timestamp
@@ -51,8 +51,7 @@ export default class MessageSection extends React.Component {
     pending: bool,
     fetchMessages: func.isRequired,
     updateThreadReadTime: func,
-    thread: object,
-    messageThreadId: string
+    messageThread: object
   }
 
   constructor (props) {
@@ -114,8 +113,8 @@ export default class MessageSection extends React.Component {
   componentDidUpdate (prevProps) {
     if (this.shouldScroll) this.scrollToBottom()
     /* on hold
-    if (thread && !lastSeenAtTimes[thread.id] && thread.unreadCount) {
-      lastSeenAtTimes[thread.id] = new Date(thread.lastReadAt).getTime()
+    if (messageThread && !lastSeenAtTimes[messageThread.id] && messageThread.unreadCount) {
+      lastSeenAtTimes[messageThread.id] = new Date(messageThread.lastReadAt).getTime()
     } */
   }
 
@@ -134,8 +133,10 @@ export default class MessageSection extends React.Component {
 
   fetchMore = () => {
     if (this.props.pending) return
+
     const { hasMore, fetchMessages, messages } = this.props
     const cursor = get('id', messages[0])
+
     if (cursor && hasMore) {
       fetchMessages()
     }
@@ -165,18 +166,18 @@ export default class MessageSection extends React.Component {
 
   markAsRead = debounce(() => {
     // TODO: this is broken in holo mode
-    const { thread, updateThreadReadTime } = this.props
-    if (thread) updateThreadReadTime(thread.id)
+    const { messageThread, updateThreadReadTime } = this.props
+    if (messageThread) updateThreadReadTime(messageThread.id)
   }, 2000)
 
   render () {
-    const { messages, pending, thread } = this.props
+    const { messages, pending, messageThread } = this.props
     return <div styleName='messages-section'
       ref={list => this.list = list} // eslint-disable-line no-return-assign
       onScroll={this.handleScroll}>
       <div styleName='messages-section-inner'>
         {pending && <Loading />}
-        {createMessageList(messages, lastSeenAtTimes[get('id', thread)])}
+        {createMessageList(messages, lastSeenAtTimes[get('id', messageThread)])}
       </div>
     </div>
   }

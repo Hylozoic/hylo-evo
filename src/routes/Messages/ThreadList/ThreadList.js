@@ -34,7 +34,7 @@ export default class ThreadList extends Component {
       threadSearch,
       setThreadSearch,
       fetchMoreThreads,
-      match: { params: { threadId } },
+      match: { params: { messageThreadId } },
       className
     } = this.props
     const onSearchChange = (event) => setThreadSearch(event.target.value)
@@ -52,7 +52,7 @@ export default class ThreadList extends Component {
           return <ThreadListItem id={t.id}
             key={`thread-li-${t.id}`}
             currentUser={currentUser}
-            active={t.id === threadId}
+            active={t.id === messageThreadId}
             thread={t}
             latestMessage={t.messages.orderBy(m => Date.parse(m.createdAt), 'desc').first()}
             unreadCount={t.unreadCount} />

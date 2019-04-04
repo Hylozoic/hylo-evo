@@ -15,8 +15,7 @@ import SkillsSection from 'components/SkillsSection/SkillsSection.store'
 import NetworkCommunities from 'routes/NetworkCommunities/NetworkCommunities.store'
 import NetworkSettings from 'routes/NetworkSettings/NetworkSettings.store'
 import PrimaryLayout from 'routes/PrimaryLayout/PrimaryLayout.store'
-import ThreadList from 'routes/Messages/ThreadList/ThreadList.store'
-import MessageForm from 'routes/Messages/MessageForm/MessageForm.store'
+import Messages from 'routes/Messages/Messages.store'
 import PeopleSelector from 'routes/Messages/PeopleSelector/PeopleSelector.store'
 import Members from 'routes/Members/Members.store'
 import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
@@ -54,8 +53,7 @@ export const combinedReducers = combineReducers({
   NetworkCommunities,
   NetworkSettings,
   PrimaryLayout,
-  ThreadList,
-  MessageForm,
+  Messages,
   PeopleSelector,
   PeopleTyping,
   HyloEditor,

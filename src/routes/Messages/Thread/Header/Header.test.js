@@ -20,11 +20,13 @@ describe('calculateMaxShown', () => {
     const expected = otherParticipants.length
     expect(calculateMaxShown(showAll, otherParticipants)).toEqual(expected)
   })
+
   it('returns 0 if array is not truthy', () => {
     const showAll = false
     const expected = 0
     expect(calculateMaxShown(showAll, undefined)).toEqual(expected)
   })
+
   it('returns the array length if the characters do not sum to the max allowed characters', () => {
     const showAll = false
     const otherParticipants = ['Jo', 'Alex', 'Carmen']
@@ -32,6 +34,7 @@ describe('calculateMaxShown', () => {
     const expected = otherParticipants.length
     expect(calculateMaxShown(showAll, otherParticipants, maxCharacters)).toEqual(expected)
   })
+
   it('returns the first n names that have fewer than maxCharacters', () => {
     const showAll = false
     const otherParticipants = ['Jo Lupo', 'Alex Trebeck', 'Carmen Sandiego']
@@ -50,6 +53,7 @@ describe('formatNames', () => {
     }
     expect(formatNames(otherParticipants, maxShown)).toEqual(expected)
   })
+
   it('returns a truncated list of names, and a string of "n others" if maxShown is fewer than total participants', () => {
     const maxShown = 2
     const otherParticipants = ['a', 'b', 'c', 'd']

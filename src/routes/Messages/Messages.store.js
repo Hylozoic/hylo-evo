@@ -58,8 +58,8 @@ export default function reducer (state = defaultState, action) {
     case SET_THREAD_SEARCH:
       return { threadSearch: payload }
     case CREATE_MESSAGE_PENDING:
-      const threadId = meta.forNewThread ? NEW_THREAD_ID : meta.messageThreadId
-      return { ...state, [threadId]: '' }
+      const messageThreadId = meta.forNewThread ? NEW_THREAD_ID : meta.messageThreadId
+      return { ...state, [messageThreadId]: '' }
     case UPDATE_MESSAGE_TEXT:
       return { ...state, [meta.messageThreadId]: meta.text }
     default:
@@ -71,21 +71,23 @@ export default function reducer (state = defaultState, action) {
 
 export const moduleSelector = state => state[MODULE_NAME]
 
-export const getTextForMessageThread = createSelector(
+export const getCurrentMessageThreadId = (_, { match }) => match.params.messageThreadId
+
+export const getTextForCurrentMessageThread = createSelector(
   moduleSelector,
-  (_, props) => props.messageThreadId,
+  getCurrentMessageThreadId,
   (_, props) => props.forNewThread,
   (state, messageThreadId, forNewThread) => forNewThread ? state[NEW_THREAD_ID] : (state[messageThreadId] || '')
 )
 
-export const getCurrentThread = ormCreateSelector(
+export const getCurrentMessageThread = ormCreateSelector(
   orm,
   state => state.orm,
-  (_, { match }) => match.params.threadId,
-  (session, threadId) => {
+  getCurrentMessageThreadId,
+  (session, messageThreadId) => {
     var thread
     try {
-      thread = session.MessageThread.get({id: threadId})
+      thread = session.MessageThread.get({ id: messageThreadId })
     } catch (e) {
       return null
     }
@@ -133,11 +135,12 @@ export function filterThreadsByParticipant (threadSearch) {
 
 export const getMessages = createSelector(
   state => orm.session(state.orm),
-  (state, props) => props.messageThreadId,
-  (session, id) => {
+  // (state, props) => props.messageThreadId,
+  getCurrentMessageThreadId,
+  (session, messageThreadId) => {
     let messageThread
     try {
-      messageThread = session.MessageThread.get({id})
+      messageThread = session.MessageThread.get({ id: messageThreadId })
     } catch (e) {
       return []
     }
@@ -150,11 +153,6 @@ const getMessageResults = makeGetQueryResults(FETCH_MESSAGES)
 export const getMessagesHasMore = createSelector(
   getMessageResults,
   get('hasMore')
-)
-
-export const getTotalMessages = createSelector(
-  getMessageResults,
-  get('total')
 )
 
 /// ACTIONS
@@ -178,7 +176,10 @@ export function findOrCreateThread (participantIds, createdAt, holoChatAPI = fal
     type: FIND_OR_CREATE_THREAD,
     graphql: {
       query,
-      variables: {participantIds, createdAt}
+      variables: {
+        participantIds,
+        createdAt
+      }
     },
     meta: {
       holoChatAPI,

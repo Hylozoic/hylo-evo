@@ -21,7 +21,7 @@ export default class MessageForm extends React.Component {
     text: string,
     focusForm: func,
     sendIsTyping: func,
-    findOrCreateThread: func.isRequired,
+    findOrCreateThread: func,
     goToThread: func,
     pending: bool,
     forNewThread: bool,

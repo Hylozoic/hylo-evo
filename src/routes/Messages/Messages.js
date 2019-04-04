@@ -1,5 +1,4 @@
 import React from 'react'
-import { Redirect, Route, Switch } from 'react-router'
 import PeopleSelector from './PeopleSelector'
 import ThreadList from './ThreadList'
 import Thread from './Thread'
@@ -8,15 +7,18 @@ import './Messages.scss'
 export default class Messages extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {onCloseURL: props.onCloseURL}
+
+    this.state = {
+      onCloseURL: props.onCloseURL
+    }
   }
 
   render () {
     const { onCloseURL } = this.state
     const {
       currentUser,
-      currentThread,
-      currentThreadId,
+      currentMessageThread,
+      currentMessageThreadId,
       threads,
       threadSearch,
       setThreadSearch,
@@ -30,6 +32,7 @@ export default class Messages extends React.Component {
       messages,
       hasMoreMessages,
       messagesPending,
+      messageCreatePending,
       fetchMessages,
       updateThreadReadTime,
       // MessageForm
@@ -38,7 +41,6 @@ export default class Messages extends React.Component {
       sendIsTyping,
       findOrCreateThread,
       goToThread,
-      pending,
       forNewThread,
       onFocus,
       onBlur,
@@ -58,45 +60,39 @@ export default class Messages extends React.Component {
           fetchMoreThreads={fetchMoreThreads}
         />
         <div styleName='right-column'>
-          <Switch>
-            <Route path='/t/new' component={props =>
-              <PeopleSelector
-                {...props}
-                findOrCreateThread={findOrCreateThread}
-                onCloseURL={onCloseURL}
-                holoMode={holoMode}
-            />} />
-            <Route path='/t/:threadId' component={props =>
-              <Thread
-                id={currentThreadId}
-                thread={currentThread}
-                currentUser={currentUser}
-                fetchThread={fetchThread}
-                onCloseURL={onCloseURL}
-                // passthroughs to MessageSection
-                socket={socket}
-                reconnectFetchMessages={reconnectFetchMessages}
-                messages={messages}
-                hasMoreMessages={hasMoreMessages}
-                messagesPending={messagesPending}
-                fetchMessages={fetchMessages}
-                updateThreadReadTime={updateThreadReadTime}
-                currentThread={currentThread}
-                currentThreadId={currentThreadId}
-                createMessage={createMessage}
-                text={text}
-                sendIsTyping={sendIsTyping}
-                goToThread={goToThread}
-                pending={pending}
-                forNewThread={forNewThread}
-                onFocus={onFocus}
-                onBlur={onBlur}
-                updateMessageText={updateMessageText}
-                placeholder={placeholder}
-              />}
-            />
-            <Redirect to='/t/new' />
-          </Switch>
+          {forNewThread &&
+            <PeopleSelector
+              {...this.props}
+              messageThreadId={currentMessageThreadId}
+              findOrCreateThread={findOrCreateThread}
+              onCloseURL={onCloseURL}
+              holoMode={holoMode} />}
+          {!forNewThread &&
+            <Thread
+              messageThreadId={currentMessageThreadId}
+              messageThread={currentMessageThread}
+              currentUser={currentUser}
+              fetchThread={fetchThread}
+              onCloseURL={onCloseURL}
+              // passthroughs to MessageSection
+              socket={socket}
+              reconnectFetchMessages={reconnectFetchMessages}
+              messages={messages}
+              hasMoreMessages={hasMoreMessages}
+              messageCreatePending={messageCreatePending}
+              messagesPending={messagesPending}
+              fetchMessages={fetchMessages}
+              updateThreadReadTime={updateThreadReadTime}
+              createMessage={createMessage}
+              text={text}
+              sendIsTyping={sendIsTyping}
+              goToThread={goToThread}
+              forNewThread={forNewThread}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              updateMessageText={updateMessageText}
+              placeholder={placeholder} />
+          }
         </div>
       </div>
     </div>

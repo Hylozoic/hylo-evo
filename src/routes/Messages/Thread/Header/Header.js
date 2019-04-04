@@ -1,5 +1,5 @@
 import React from 'react'
-import { isEmpty } from 'lodash/fp'
+import { isEmpty, filter, get, map } from 'lodash/fp'
 import Icon from 'components/Icon'
 import CloseMessages from '../CloseMessages'
 import { others } from 'store/models/MessageThread'
@@ -10,9 +10,10 @@ const MAX_CHARACTERS = 60
 export default class Header extends React.Component {
   constructor (props) {
     super(props)
+
     this.state = {
       showAll: false,
-      threadId: null
+      messageThreadId: null
     }
   }
 
@@ -24,26 +25,39 @@ export default class Header extends React.Component {
     })
   }
 
-  resetStateWithNewId = (threadId) => {
+  resetStateWithNewId = (messageThreadId) => {
     this.setState({
       showAll: false,
-      threadId
+      messageThreadId
     })
   }
 
   componentWillReceiveProps = () => {
-    const { threadId } = this.props
-    if (this.state.threadId !== threadId) {
-      this.resetStateWithNewId(threadId)
+    const messageThreadId = get('id', this.props.messageThread)
+
+    if (this.state.messageThreadId !== messageThreadId) {
+      this.resetStateWithNewId(messageThreadId)
     }
+  }
+
+  getOthers ({ currentUser, messageThread }) {
+    const participants = get('participants', messageThread) || []
+
+    if (!currentUser) return participants
+
+    const id = get('id', currentUser)
+
+    return currentUser && map('name', filter(f => f.id !== id, participants))
   }
 
   render () {
     const { showAll } = this.state
-    const { otherParticipants, onCloseURL } = this.props
+    const { onCloseURL } = this.props
+    const otherParticipants = this.getOthers(this.props)
     const maxShown = calculateMaxShown(showAll, otherParticipants, MAX_CHARACTERS)
     const { displayNames, andOthers } = generateDisplayNames(maxShown, otherParticipants)
     const showArrow = !!andOthers
+
     return <div styleName='header' id='thread-header'>
       <div styleName='header-text'>
         {displayNames}

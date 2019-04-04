@@ -151,7 +151,7 @@ export default class PrimaryLayout extends Component {
           </Switch>
         </div>
       </div>
-      <Route path='/t' render={props => <Messages {...props} holoMode={holoMode} />} />
+      <Route path='/t/:messageThreadId' render={props => <Messages {...props} holoMode={holoMode} />} />
       <Switch>
         {postEditorRoutes.map(({ path }) =>
           <Route path={path} exact key={path} children={({ match, location }) =>

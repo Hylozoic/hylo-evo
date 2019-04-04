@@ -19,40 +19,40 @@ import {
   updateMessageText,
   updateThreadReadTime,
   setThreadSearch,
-  getTextForMessageThread,
+  getTextForCurrentMessageThread,
   getThreadSearch,
   getThreads,
   getThreadsHasMore,
   getMessages,
   getMessagesHasMore,
-  getTotalMessages,
-  getCurrentThread
+  getCurrentMessageThread
 } from './Messages.store'
 
-findOrCreateThread,
-goToThread,
-pending,
-forNewThread,
-onFocus,
-onBlur,
-updateMessageText,
-placeholder
-
+// pending,
+// forNewThread,
+// onFocus,
+// onBlur,
+// updateMessageText,
+// placeholder
 
 export function mapStateToProps (state, props) {
-  const currentThreadId = get('match.params.threadId', props)
+  const routeParams = get('match.params', props)
+  const currentMessageThreadId = get('messageThreadId', routeParams)
+  const currentMessageThread = getCurrentMessageThread(state, props)
+  const forNewThread = currentMessageThreadId === 'new'
 
   return {
     onCloseURL: getPreviousLocation(state),
+    forNewThread,
     /// Thread
     currentUser: getMe(state),
-    currentThreadId,
-    currentThread: getCurrentThread(state, props),
+    currentMessageThreadId,
+    currentMessageThread,
     /// Messages
-    text: getTextForMessageThread(state, props),
+    text: getTextForCurrentMessageThread(state, props),
     // TODO: messageCreatePending was pending for Messages
     messageCreatePending: !!state.pending[CREATE_MESSAGE] || (props.forNewThread && !!state.pending[FIND_OR_CREATE_THREAD]),
-    sendIsTyping: sendIsTyping(currentThreadId),
+    sendIsTyping: sendIsTyping(currentMessageThreadId),
     /// ThreadList
     threadSearch: getThreadSearch(state, props),
     threads: getThreads(state, props),
@@ -61,16 +61,14 @@ export function mapStateToProps (state, props) {
     messages: getMessages(state, props),
     // TODO: messagesPending was pending for MessageSection
     messagesPending: !!state.pending[FETCH_MESSAGES],
-    totalMessages: getTotalMessages(state, { id: currentThreadId }),
-    // TODO: hasMoreMessages is hasMore prop MessageSection
-    hasMoreMessages: getMessagesHasMore(state, { id: currentThreadId }),
+    hasMoreMessages: getMessagesHasMore(state, { id: currentMessageThreadId }),
     socket: getSocket()
   }
 }
 
 /// Thread
 export function mapDispatchToProps (dispatch, props) {
-  const currentThreadId = get('match.params.threadId', props)
+  const currentMessageThreadId = get('match.params.messageThreadId', props)
   const { holoMode } = props
 
   return {
@@ -84,11 +82,11 @@ export function mapDispatchToProps (dispatch, props) {
       setThreadSearch
     }, dispatch),
     // Thread
-    fetchThread: () => dispatch(fetchThread(currentThreadId, holoMode)),
+    fetchThread: () => dispatch(fetchThread(currentMessageThreadId, holoMode)),
     // MessageSection
-    fetchMessagesMaker: cursor => () => dispatch(fetchMessages(currentThreadId, {cursor}, holoMode)),
+    fetchMessagesMaker: cursor => () => dispatch(fetchMessages(currentMessageThreadId, {cursor}, holoMode)),
     updateThreadReadTime: id => dispatch(updateThreadReadTime(id)),
-    reconnectFetchMessages: () => dispatch(fetchMessages(currentThreadId, {reset: true})),
+    reconnectFetchMessages: () => dispatch(fetchMessages(currentMessageThreadId, {reset: true})),
     findOrCreateThread: (participantIds, createdAt) => dispatch(findOrCreateThread(participantIds, createdAt, holoMode))
   }
 }
@@ -127,8 +125,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
 // export default connect(mapStateToProps, mapDispatchToProps, mergeProps, {withRef: true})
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
-
-//// MESSAGES
+/// MESSAGES
 // text
 // pending
 // currentUser
@@ -139,6 +136,6 @@ export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
 // /// Thread
 // currentUser
-// currentThread
-// id (currentThread)
+// currentMessageThread
+// id (currentMessageThread)
 // fetchThread
