@@ -1,7 +1,7 @@
 import { FETCH_PEOPLE } from 'store/constants'
 import fetchPeopleQuery from 'graphql/queries/fetchPeopleQuery'
 
-export default function fetchPeople (autocomplete, query = fetchPeopleQuery, first = 20, holoChatAPI = false) {
+export default function fetchPeople (autocomplete, query = fetchPeopleQuery, first = 20, holochainAPI = false) {
   return {
     type: FETCH_PEOPLE,
     graphql: {
@@ -9,7 +9,7 @@ export default function fetchPeople (autocomplete, query = fetchPeopleQuery, fir
       variables: { autocomplete, first }
     },
     meta: {
-      holoChatAPI,
+      holochainAPI,
       extractModel: 'Person'
     }
   }

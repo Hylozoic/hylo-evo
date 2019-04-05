@@ -31,7 +31,7 @@ const fetchContactsQuery =
   }
 }`
 
-export function fetchContacts (holoChatAPI = false, query = fetchContactsQuery, first = 50) {
+export function fetchContacts (holochainAPI = false, query = fetchContactsQuery, first = 50) {
   return {
     type: FETCH_CONTACTS,
     graphql: {
@@ -39,7 +39,7 @@ export function fetchContacts (holoChatAPI = false, query = fetchContactsQuery, 
       variables: { first }
     },
     meta: {
-      holoChatAPI,
+      holochainAPI,
       extractModel: 'Person'
     }
   }
@@ -124,7 +124,7 @@ export const holoChatContactsSelector = createSelector(
   state => state.orm,
   state => state[MODULE_NAME].participants,
   getMe,
-  (_, props) => props.holoMode ? p => p.isHoloData : () => true,
+  (_, props) => props.holochainMode ? p => p.isHoloData : () => true,
   personListItemSelector
 )
 
@@ -136,7 +136,7 @@ export const holoChatMatchesSelector = createSelector(
   (state, props) => p => {
     const { autocomplete } = state[MODULE_NAME]
     if (autocomplete) {
-      const holoFilter = props.holoMode ? p.isHoloData : true
+      const holoFilter = props.holochainMode ? p.isHoloData : true
       return holoFilter && p.name.toLowerCase().includes(autocomplete.toLowerCase())
     }
   },

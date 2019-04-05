@@ -25,7 +25,7 @@ export default class Messages extends React.Component {
       fetchThread,
       fetchThreads,
       fetchMoreThreads,
-      holoMode,
+      holochainMode,
       // MessageSection
       socket,
       reconnectFetchMessages,
@@ -66,7 +66,7 @@ export default class Messages extends React.Component {
               messageThreadId={currentMessageThreadId}
               findOrCreateThread={findOrCreateThread}
               onCloseURL={onCloseURL}
-              holoMode={holoMode} />}
+              holochainMode={holochainMode} />}
           {!forNewThread &&
             <Thread
               messageThreadId={currentMessageThreadId}

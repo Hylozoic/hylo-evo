@@ -1,4 +1,6 @@
-import { connect } from '@holochain/hc-web-client'
+import { connect as holochainSocketConnect } from '@holochain/hc-web-client'
+import setHolochainSocket from '../actions/setHolochainSocket'
+import getHolochainSocket from '../selectors/getHolochainSocket'
 
 export default function holochainApiMiddleware (req) {
   return store => next => action => {
@@ -7,8 +9,19 @@ export default function holochainApiMiddleware (req) {
     if (!payload || !payload.holochainApi) return next(action)
 
     const { path, params } = payload.holochainApi
+    const state = store.getState()
 
-    var promise = holoFetchJSON(path, params)
+    var holochainSocket = getHolochainSocket(state)
+    var promise = Promise.resolve()
+
+    if (!holochainSocket) {
+      promise = holochainSocketConnect(process.env.HOLO_CHAT_API_HOST).then(connection => {
+        holochainSocket = connection
+        store.dispatch(setHolochainSocket(holochainSocket))
+      })
+    }
+
+    promise = promise.then(() => holochainSocket.call(path)(params))
 
     if (meta && meta.then) {
       promise = promise.then(meta.then)
@@ -16,9 +29,4 @@ export default function holochainApiMiddleware (req) {
 
     return next({...action, payload: promise})
   }
-}
-
-export function holoFetchJSON (path, params) {
-  return connect(process.env.HOLO_CHAT_API_HOST).then(connection =>
-    connection.call(path)(params))
 }
