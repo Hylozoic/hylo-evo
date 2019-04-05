@@ -18,7 +18,13 @@ export default function holochainApiMiddleware (req) {
   }
 }
 
-export function holoFetchJSON (path, params) {
-  return connect(process.env.HOLO_CHAT_API_HOST).then(connection =>
-    connection.call(path)(params))
+var holoCall
+
+export async function holoFetchJSON (path, params) {
+  if (!holoCall) {
+    const connection = await connect(process.env.HOLO_CHAT_API_HOST)
+    holoCall = connection.call
+  }
+
+  return holoCall(path)(params)
 }
