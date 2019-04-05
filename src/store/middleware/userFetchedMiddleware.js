@@ -2,6 +2,7 @@ import { get } from 'lodash/fp'
 import getMe from '../selectors/getMe'
 import getMixpanel from '../selectors/getMixpanel'
 import getIntercom from '../selectors/getIntercom'
+import getHolochainActive from '../selectors/getHolochainActive'
 import { default as registerHolochainAgentAction } from '../actions/registerHolochainAgent'
 
 export default function userFetchedMiddleware ({ dispatch, getState }) {
@@ -12,8 +13,9 @@ export default function userFetchedMiddleware ({ dispatch, getState }) {
     const userFetched = !get('name', wasMe) && get('name', isMe)
     if (userFetched) {
       const state = getState()
+      const holochainActive = getHolochainActive(state)
       // Do these things with the currentUser the first time it's fetched in a session
-      registerHolochainAgent(state, dispatch)
+      holochainActive && registerHolochainAgent(state, dispatch)
       identifyMixpanelUser(state)
       registerIntercomUser(state)
     }
