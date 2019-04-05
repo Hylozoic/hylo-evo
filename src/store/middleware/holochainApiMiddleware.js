@@ -3,14 +3,13 @@ import setHolochainSocket from '../actions/setHolochainSocket'
 import getHolochainSocket from '../selectors/getHolochainSocket'
 
 export default function holochainApiMiddleware (req) {
-  return store => next => action => {
+  return ({ getState, dispatch }) => next => action => {
     const { payload, meta } = action
 
     if (!payload || !payload.holochainApi) return next(action)
 
     const { path, params } = payload.holochainApi
-    const state = store.getState()
-    let promise = initAndGetHolochainSocket(state, store.dispatch).then(holochainSocket =>
+    let promise = initAndGetHolochainSocket(getState(), dispatch).then(holochainSocket =>
       holochainSocket.call(path)(params)
     )
 
@@ -18,17 +17,17 @@ export default function holochainApiMiddleware (req) {
       promise = promise.then(meta.then)
     }
 
-    return next({...action, payload: promise})
+    return next({ ...action, payload: promise })
   }
 }
 
-export async function initAndGetHolochainSocket (state, dispatch) {
+export function initAndGetHolochainSocket (state, dispatch) {
   let holochainSocket = getHolochainSocket(state)
 
-  if (!holochainSocket) {
-    holochainSocket = await holochainSocketConnect(process.env.HOLO_CHAT_API_HOST)
-    dispatch(setHolochainSocket(holochainSocket))
-  }
+  if (holochainSocket) return Promise.resolve(holochainSocket)
 
-  return holochainSocket
+  return holochainSocketConnect(process.env.HOLO_CHAT_API_HOST).then(socket => {
+    dispatch(setHolochainSocket(socket))
+    return socket
+  })
 }
