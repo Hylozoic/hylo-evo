@@ -22,9 +22,12 @@ var holoCall
 
 export async function holoFetchJSON (path, params) {
   if (!holoCall) {
-    const connection = await connect(process.env.HOLO_CHAT_API_HOST)
-    holoCall = connection.call
+    return connect(process.env.HOLO_CHAT_API_HOST)
+      .then(connection => {
+        holoCall = connection.call
+      }).then(() =>
+        holoCall(path)(params))
   }
 
-  return holoCall(path)(params)
+  return new Promise((resolve, reject) => resolve(holoCall(path)(params)))
 }
