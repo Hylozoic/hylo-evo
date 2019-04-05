@@ -18,16 +18,17 @@ export default function holochainApiMiddleware (req) {
   }
 }
 
-var holoCall
+var holoSocket
 
 export async function holoFetchJSON (path, params) {
-  if (!holoCall) {
+  if (!holoSocket) {
     return connect(process.env.HOLO_CHAT_API_HOST)
-      .then(connection => {
-        holoCall = connection.call
+      .then(socketConnection => {
+        holoSocket = socketConnection
       }).then(() =>
-        holoCall(path)(params))
+        holoSocket.call(path)(params))
   }
 
-  return new Promise((resolve, reject) => resolve(holoCall(path)(params)))
+  return new Promise((resolve, reject) =>
+    resolve(holoSocket.call(path)(params)))
 }
