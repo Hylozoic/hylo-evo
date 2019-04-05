@@ -79,7 +79,7 @@ export default class PrimaryLayout extends Component {
       isCommunityRoute,
       communityPending,
       showLogoBadge,
-      holochainMode
+      holochainActive
     } = this.props
 
     if (isCommunityRoute) {
@@ -96,7 +96,7 @@ export default class PrimaryLayout extends Component {
 
     return <div styleName='container'>
       <Drawer styleName={cx('drawer', {hidden: !isDrawerOpen})} {...{community, network}} />
-      <TopNav styleName='top' onClick={closeDrawer} {...{community, network, currentUser, showLogoBadge, holochainMode}} />
+      <TopNav styleName='top' onClick={closeDrawer} {...{community, network, currentUser, showLogoBadge, holochainActive}} />
       <div styleName='main' onClick={closeDrawer}>
         <Navigation collapsed={hasDetail} styleName='left' showTopics={showTopics} />
         <div styleName='center' id={CENTER_COLUMN_ID}>
@@ -148,7 +148,7 @@ export default class PrimaryLayout extends Component {
           </Switch>
         </div>
       </div>
-      <Route path='/t/:messageThreadId' render={props => <Messages {...props} holochainMode={holochainMode} />} />
+      <Route path='/t/:messageThreadId' render={props => <Messages {...props} holochainActive={holochainActive} />} />
       <Switch>
         {postEditorRoutes.map(({ path }) =>
           <Route path={path} exact key={path} children={({ match, location }) =>

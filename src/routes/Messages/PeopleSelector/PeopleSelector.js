@@ -121,7 +121,7 @@ export default class PeopleSelector extends React.Component {
       removeParticipant,
       findOrCreateThread,
       onCloseURL,
-      holochainMode,
+      holochainActive,
       recentContacts,
       createMessage,
       messageThreadId,
@@ -190,7 +190,7 @@ export default class PeopleSelector extends React.Component {
             currentUser={currentUser}
             updateMessageText={updateMessageText}
             placeholder={placeholder}
-            holochainMode={holochainMode}
+            holochainActive={holochainActive}
             findOrCreateThread={() => findOrCreateThread(participants.map(p => p.id), new Date().getTime().toString())} />
         </div>}
     </div>
