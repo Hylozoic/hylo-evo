@@ -10,18 +10,9 @@ export default function holochainApiMiddleware (req) {
 
     const { path, params } = payload.holochainApi
     const state = store.getState()
-
-    var holochainSocket = getHolochainSocket(state)
-    var promise = Promise.resolve()
-
-    if (!holochainSocket) {
-      promise = holochainSocketConnect(process.env.HOLO_CHAT_API_HOST).then(connection => {
-        holochainSocket = connection
-        store.dispatch(setHolochainSocket(holochainSocket))
-      })
-    }
-
-    promise = promise.then(() => holochainSocket.call(path)(params))
+    let promise = initAndGetHolochainSocket(state, store.dispatch).then(holochainSocket =>
+      holochainSocket.call(path)(params)
+    )
 
     if (meta && meta.then) {
       promise = promise.then(meta.then)
@@ -29,4 +20,15 @@ export default function holochainApiMiddleware (req) {
 
     return next({...action, payload: promise})
   }
+}
+
+export async function initAndGetHolochainSocket (state, dispatch) {
+  let holochainSocket = getHolochainSocket(state)
+
+  if (!holochainSocket) {
+    holochainSocket = await holochainSocketConnect(process.env.HOLO_CHAT_API_HOST)
+    dispatch(setHolochainSocket(holochainSocket))
+  }
+
+  return holochainSocket
 }
