@@ -13,6 +13,7 @@ import {
   getCommunitiesPage,
   getCommunitiesTotal,
   removeCommunityFromNetwork,
+  updateCommunityHiddenSetting,
   PAGE_SIZE,
   FETCH_COMMUNITIES
 } from '../NetworkSettings.store'
@@ -50,7 +51,8 @@ export function mapDispatchToProps (dispatch, state) {
     removeCommunityFromNetwork: networkId => communityId => dispatch(removeCommunityFromNetwork(communityId, networkId)),
     createCommunity: networkId => () => dispatch(push(`/create-community/name/${networkId}`)),
     ...bindActionCreators({
-      setCommunitiesPage
+      setCommunitiesPage,
+      updateCommunityHiddenSetting
     }, dispatch)
   }
 }
@@ -61,7 +63,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const {
     fetchCommunitiesMaker
   } = dispatchProps
-  let addCommunityToNetwork, fetchCommunities, createCommunity
+  let addCommunityToNetwork, fetchCommunities, createCommunity, removeCommunityFromNetwork
 
   if (slug) {
     fetchCommunities = fetchCommunitiesMaker(slug, communitiesPage)
@@ -71,16 +73,20 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   if (networkId) {
     addCommunityToNetwork = dispatchProps.addCommunityToNetwork(networkId)
     createCommunity = dispatchProps.createCommunity(networkId)
+    removeCommunityFromNetwork = dispatchProps.removeCommunityFromNetwork(networkId)
   } else {
     addCommunityToNetwork = () => {}
     createCommunity = () => {}
+    removeCommunityFromNetwork = () => {}
   }
+
 
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
     addCommunityToNetwork,
+    removeCommunityFromNetwork,
     fetchCommunities,
     createCommunity
   }

@@ -164,10 +164,39 @@
   composes: bdy-lt-sm from 'css/typography.scss';
 }
 
+.arrowForwardIcon {
+  font-size: 16px;
+  top: 5px;
+  margin-right: 7px;
+  margin-left: 7px;
+}
+
+.arrowDownIcon {
+  font-size: 22px;
+  top: 5px;
+  margin-right: 2px;
+}
+
+.expandedNetworkCommunityRow {
+  padding-right: 15px;
+}
+
+.removeButton {
+  color: $color-amaranth;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.trashIcon {
+  color: $color-amaranth;
+  margin-right: 2px;
+}
+
 // CommunityModeratorSection
 
 .moderators-section {
-  /* empty */
+  margin-top: 15px;
+  margin-bottom: 25px;  
 }
 
 .moderators-header {

@@ -256,6 +256,15 @@ export function fetchNetworkSettings (slug, pageSize = PAGE_SIZE) {
               slug
               name
               avatarUrl
+              hidden
+              moderators (first: 100) {
+                hasMore
+                items {
+                  id
+                  name
+                  avatarUrl
+                }
+              }
             }
           }
           moderators (first: ${pageSize}, sortBy: "name") {

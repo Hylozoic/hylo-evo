@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
+import Icon from 'components/Icon'
 import Autocomplete from 'react-autocomplete'
 import { isEmpty } from 'lodash/fp'
 import SimplePaginatedList from '../SimplePaginatedList'
@@ -80,16 +81,25 @@ export default class NetworkCommunitiesTab extends Component {
     }
   }
 
-  renderNetworkCommunityRow = community => {
+  removeCommunityFromNetwork = community => {
+    const { id, name } = community
     const { removeCommunityFromNetwork } = this.props
+    if (window.confirm(`are you sure you want to remove ${name} from the network?`)) {
+      removeCommunityFromNetwork(id)
+    }
+  }
+
+  renderNetworkCommunityRow = community => {
     const { expandedCommunityId } = this.state
+    const { updateCommunityHiddenSetting } = this.props
     const expanded = expandedCommunityId === community.id
     return <NetworkCommunityRow
       community={community}
       expanded={expanded}
       toggleExpanded={this.toggleExpandedMaker(community.id)}
       key={community.id}
-      removeCommunityFromNetwork={removeCommunityFromNetwork} />
+      removeCommunityFromNetwork={this.removeCommunityFromNetwork}
+      updateCommunityHiddenSetting={updateCommunityHiddenSetting} />
   }
 
   render () {
@@ -150,25 +160,33 @@ export default class NetworkCommunitiesTab extends Component {
 
 export class NetworkCommunityRow extends Component {
   render () {
-    const { community, expanded, toggleExpanded } = this.props
-    const { hidden } = community
+    const { community, expanded, toggleExpanded, removeCommunityFromNetwork, updateCommunityHiddenSetting } = this.props
+    const { id, hidden, slug } = community
     const dropdownLabel = hidden ? 'Private to members' : 'Visible to network'
     const dropdownItems = [
-      {label: 'Visible to network', onClick: () => console.log('make visible')},
-      {label: 'Private to members', onClick: () => console.log('make private')}      
+      {label: 'Visible to network', onClick: () => updateCommunityHiddenSetting(id, false)},
+      {label: 'Private to members', onClick: () => updateCommunityHiddenSetting(id, true)}
     ]
+
+    const moderators = community.moderators.toModelArray()
 
     return <div styleName='networkCommunityRow'>
       <div styleName='topRow'>
         <span onClick={toggleExpanded}>
+          {expanded
+            ? <Icon name='ArrowDown' styleName='arrowDownIcon' />
+            : <Icon name='ArrowForward' styleName='arrowForwardIcon' />}
           <RoundImage url={community.avatarUrl || DEFAULT_AVATAR} medium styleName='communityAvatar' />
         </span>
         <span onClick={toggleExpanded} styleName='communityName'>{community.name}</span>
         <Dropdown styleName='visibilityDropdown' toggleChildren={<span styleName='dropdownLabel'>{dropdownLabel}</span>} items={dropdownItems} />
       </div>
-      <div>
-        {expanded && <span>This boy is expanded</span>}
-      </div>
+      {expanded && <div styleName='expandedNetworkCommunityRow'>
+        <CommunityModeratorSection moderators={moderators} slug={slug} />
+        <div styleName='removeButton' onClick={() => removeCommunityFromNetwork(community)}>
+          <Icon name='Trash' styleName='trashIcon' /> Remove Community from Network
+        </div>
+      </div>}
     </div>
   }
 }
