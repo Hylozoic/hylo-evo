@@ -23,10 +23,10 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
-  const { holoMode } = props
+  const { holochainMode } = props
 
   return {
-    fetchMessagesMaker: cursor => () => dispatch(fetchMessages(props.messageThreadId, {cursor}, holoMode)),
+    fetchMessagesMaker: cursor => () => dispatch(fetchMessages(props.messageThreadId, {cursor}, holochainMode)),
     updateThreadReadTime: id => dispatch(updateThreadReadTime(id)),
     reconnectFetchMessages: () => dispatch(fetchMessages(props.messageThreadId, {reset: true}))
   }

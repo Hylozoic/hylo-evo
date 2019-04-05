@@ -20,7 +20,7 @@ export default function registerHolochainAgent ({ id, name, avatarUrl }) {
       }
     },
     meta: {
-      holoChatAPI: true
+      holochainAPI: true
     }
   }
 }

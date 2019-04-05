@@ -1,1 +1,1 @@
-export default (state) => state.holochainSocket
+export default (state) => state.holochain.socket

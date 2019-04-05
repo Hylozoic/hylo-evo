@@ -7,14 +7,11 @@ import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import getMemberships from 'store/selectors/getMemberships'
+import getHolochainActive from 'store/selectors/getHolochainActive'
 import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommunityRoute'
 import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import { get, some } from 'lodash/fp'
 import mobileRedirect from 'util/mobileRedirect'
-
-const HOLO_MODE_SUBDOMAIN = 'holo'
-const holoMode = typeof window !== 'undefined' &&
-  window.location.host.split('.')[0] === HOLO_MODE_SUBDOMAIN
 
 export function mapStateToProps (state, props) {
   const memberships = getMemberships(state, props)
@@ -31,7 +28,7 @@ export function mapStateToProps (state, props) {
     communityPending: state.pending[FETCH_FOR_COMMUNITY],
     returnToURL: getReturnToURL(state),
     downloadAppUrl: mobileRedirect(),
-    holoMode
+    holochainMode: getHolochainActive(state)
   }
 }
 

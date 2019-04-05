@@ -3,9 +3,9 @@ import { get } from 'lodash/fp'
 export default function graphqlMiddleware (store) {
   return next => action => {
     const { type, meta, graphql } = action
-    const holoChatAPI = get('holoChatAPI', meta)
+    const holochainAPI = get('holochainAPI', meta)
 
-    if (holoChatAPI || !graphql) return next(action)
+    if (holochainAPI || !graphql) return next(action)
 
     const { query, variables } = graphql
 

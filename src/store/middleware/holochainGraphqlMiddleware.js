@@ -3,15 +3,15 @@ import { get } from 'lodash/fp'
 export default function holochainGraphqlMiddleware (store) {
   return next => action => {
     const { type, meta, graphql } = action
-    const holoChatAPI = get('holoChatAPI', meta)
+    const holochainAPI = get('holochainAPI', meta)
 
-    if (!holoChatAPI || !graphql) return next(action)
+    if (!holochainAPI || !graphql) return next(action)
 
     const { query, variables } = graphql
     const path = process.env.HOLO_CHAT_GRAPHQL_PATH
 
     const then = payload => {
-      if (!payload) Promise.reject(new Error('No result from holoChatAPI'))
+      if (!payload) Promise.reject(new Error('No result from holochainAPI'))
 
       const resultJSON = JSON.parse(payload)
 
