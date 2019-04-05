@@ -28,7 +28,7 @@ export function mapStateToProps (state, props) {
     communityPending: state.pending[FETCH_FOR_COMMUNITY],
     returnToURL: getReturnToURL(state),
     downloadAppUrl: mobileRedirect(),
-    holochainMode: getHolochainActive(state)
+    holochainActive: getHolochainActive(state)
   }
 }
 

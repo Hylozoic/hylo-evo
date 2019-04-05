@@ -13,15 +13,15 @@ export default class Messages extends React.Component {
 
   render () {
     const { onCloseURL } = this.state
-    const { holochainMode } = this.props
+    const { holochainActive } = this.props
 
     return <div styleName='modal'>
       <div styleName='content'>
-        <ThreadList styleName='left-column' holochainMode={holochainMode} />
+        <ThreadList styleName='left-column' holochainActive={holochainActive} />
         <div styleName='right-column'>
           <Switch>
-            <Route path='/t/new' component={props => <PeopleSelector {...props} onCloseURL={onCloseURL} holochainMode={holochainMode} />} />
-            <Route path='/t/:threadId' component={props => <Thread {...props} onCloseURL={onCloseURL} holochainMode={holochainMode} />} />
+            <Route path='/t/new' component={props => <PeopleSelector {...props} onCloseURL={onCloseURL} holochainActive={holochainActive} />} />
+            <Route path='/t/:threadId' component={props => <Thread {...props} onCloseURL={onCloseURL} holochainActive={holochainActive} />} />
             <Redirect to='/t/new' />
           </Switch>
         </div>
