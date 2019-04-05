@@ -69,7 +69,7 @@ export function mapStateToProps (state, props) {
 /// Thread
 export function mapDispatchToProps (dispatch, props) {
   const currentMessageThreadId = get('match.params.messageThreadId', props)
-  const { holoMode } = props
+  const { holochainMode } = props
 
   return {
     ...bindActionCreators({
@@ -82,22 +82,22 @@ export function mapDispatchToProps (dispatch, props) {
       setThreadSearch
     }, dispatch),
     // Thread
-    fetchThread: () => dispatch(fetchThread(currentMessageThreadId, holoMode)),
+    fetchThread: () => dispatch(fetchThread(currentMessageThreadId, holochainMode)),
     // MessageSection
-    fetchMessagesMaker: cursor => () => dispatch(fetchMessages(currentMessageThreadId, {cursor}, holoMode)),
+    fetchMessagesMaker: cursor => () => dispatch(fetchMessages(currentMessageThreadId, {cursor}, holochainMode)),
     updateThreadReadTime: id => dispatch(updateThreadReadTime(id)),
     reconnectFetchMessages: () => dispatch(fetchMessages(currentMessageThreadId, {reset: true})),
-    findOrCreateThread: (participantIds, createdAt) => dispatch(findOrCreateThread(participantIds, createdAt, holoMode))
+    findOrCreateThread: (participantIds, createdAt) => dispatch(findOrCreateThread(participantIds, createdAt, holochainMode))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { holoMode } = ownProps
+  const { holochainMode } = ownProps
   const { createMessage, fetchMessagesMaker } = dispatchProps
   const { threads, messages, hasMoreThreads } = stateProps
 
   // ThreadList
-  const fetchThreads = () => dispatchProps.fetchThreads(20, 0, holoMode)
+  const fetchThreads = () => dispatchProps.fetchThreads(20, 0, holochainMode)
   const fetchMoreThreads =
     hasMoreThreads
       ? () => dispatchProps.fetchThreads(20, threads.length)
@@ -110,7 +110,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...stateProps,
     ...dispatchProps,
     /// Messages
-    createMessage: (messageThreadId, text, forNewThread) => createMessage(messageThreadId, text, forNewThread, holoMode),
+    createMessage: (messageThreadId, text, forNewThread) => createMessage(messageThreadId, text, forNewThread, holochainMode),
     // ThreadList
     fetchThreads,
     fetchMoreThreads,

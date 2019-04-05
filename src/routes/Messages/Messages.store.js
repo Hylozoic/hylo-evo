@@ -171,7 +171,7 @@ const findOrCreateThreadQuery =
   }
 }`
 
-export function findOrCreateThread (participantIds, createdAt, holoChatAPI = false, query = findOrCreateThreadQuery) {
+export function findOrCreateThread (participantIds, createdAt, holochainAPI = false, query = findOrCreateThreadQuery) {
   return {
     type: FIND_OR_CREATE_THREAD,
     graphql: {
@@ -182,13 +182,13 @@ export function findOrCreateThread (participantIds, createdAt, holoChatAPI = fal
       }
     },
     meta: {
-      holoChatAPI,
+      holochainAPI,
       extractModel: 'MessageThread'
     }
   }
 }
 
-export function fetchThread (id, holoChatAPI) {
+export function fetchThread (id, holochainAPI) {
   return {
     type: FETCH_THREAD,
     graphql: {
@@ -227,7 +227,7 @@ export function fetchThread (id, holoChatAPI) {
       }
     },
     meta: {
-      holoChatAPI,
+      holochainAPI,
       extractModel: 'MessageThread',
       extractQueryResults: {
         getType: () => FETCH_MESSAGES,
@@ -237,7 +237,7 @@ export function fetchThread (id, holoChatAPI) {
   }
 }
 
-export function fetchMessages (id, opts = {}, holoChatAPI = false) {
+export function fetchMessages (id, opts = {}, holochainAPI = false) {
   return {
     type: FETCH_MESSAGES,
     graphql: {
@@ -265,7 +265,7 @@ export function fetchMessages (id, opts = {}, holoChatAPI = false) {
       variables: opts.cursor ? {id, cursor: opts.cursor} : {id}
     },
     meta: {
-      holoChatAPI,
+      holochainAPI,
       extractModel: 'MessageThread',
       extractQueryResults: {
         getItems: get('payload.data.messageThread.messages')
@@ -276,7 +276,7 @@ export function fetchMessages (id, opts = {}, holoChatAPI = false) {
   }
 }
 
-export function createMessage (messageThreadId, text, forNewThread, holoChatAPI = false) {
+export function createMessage (messageThreadId, text, forNewThread, holochainAPI = false) {
   const createdAt = new Date().getTime().toString()
   return {
     type: CREATE_MESSAGE,
@@ -301,7 +301,7 @@ export function createMessage (messageThreadId, text, forNewThread, holoChatAPI 
       }
     },
     meta: {
-      holoChatAPI,
+      holochainAPI,
       optimistic: true,
       extractModel: 'Message',
       tempId: uniqueId(`messageThread${messageThreadId}_`),
