@@ -1,4 +1,4 @@
-const REGISTER_USER_WITH_HOLO_CHAT = 'REGISTER_USER_WITH_HOLO_CHAT'
+const REGISTER_HOLOCHAIN_AGENT = 'REGISTER_HOLOCHAIN_AGENT'
 
 export const query = `
 mutation ($id: ID, $name: String, $avatarUrl: String) {
@@ -8,9 +8,9 @@ mutation ($id: ID, $name: String, $avatarUrl: String) {
 }
 `
 
-export default function registerUserWithHoloChat ({ id, name, avatarUrl }) {
+export default function registerHolochainAgent ({ id, name, avatarUrl }) {
   return {
-    type: REGISTER_USER_WITH_HOLO_CHAT,
+    type: REGISTER_HOLOCHAIN_AGENT,
     graphql: {
       query,
       variables: {

@@ -66,9 +66,6 @@ export default class PrimaryLayout extends Component {
     if (get('community.id', this.props) !== get('community.id', prevProps)) {
       this.props.fetchForCommunity()
     }
-    if (!get('currentUser', prevProps) && get('currentUser', this.props)) {
-      this.props.registerUserWithHoloChat(get('currentUser', this.props))
-    }
   }
 
   render () {

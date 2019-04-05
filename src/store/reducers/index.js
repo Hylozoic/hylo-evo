@@ -7,6 +7,7 @@ import locationHistory from './locationHistory'
 import resetStore from './resetStore'
 import mixpanel from './mixpanel'
 import intercom from './intercom'
+import holochainSocket from './holochainSocket'
 
 // Local store
 // generator-marker-local-store-import
@@ -46,6 +47,7 @@ export const combinedReducers = combineReducers({
   locationHistory,
   mixpanel,
   intercom,
+  holochainSocket,
 
   // Local store (Component)
   // generator-marker-local-store-reducer
