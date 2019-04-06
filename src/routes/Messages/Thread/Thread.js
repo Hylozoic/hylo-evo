@@ -65,8 +65,6 @@ export default class Thread extends React.Component {
       findOrCreateThread,
       goToThread,
       forNewThread,
-      onFocus,
-      onBlur,
       updateMessageText,
       placeholder
     } = this.props
@@ -100,8 +98,6 @@ export default class Thread extends React.Component {
           goToThread={goToThread}
           pending={messageCreatePending}
           forNewThread={forNewThread}
-          onFocus={onFocus}
-          onBlur={onBlur}
           updateMessageText={updateMessageText}
           placeholder={placeholder} />
       </div>

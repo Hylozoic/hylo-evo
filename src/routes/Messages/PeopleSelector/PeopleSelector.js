@@ -131,8 +131,6 @@ export default class PeopleSelector extends React.Component {
       goToThread,
       pending,
       formRef,
-      onFocus,
-      onBlur,
       className,
       currentUser,
       updateMessageText,
@@ -184,8 +182,6 @@ export default class PeopleSelector extends React.Component {
             goToThread={goToThread}
             pending={pending}
             formRef={formRef}
-            onFocus={onFocus}
-            onBlur={onBlur}
             className={className}
             currentUser={currentUser}
             updateMessageText={updateMessageText}

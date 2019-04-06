@@ -37,13 +37,11 @@ export default class Messages extends React.Component {
       updateThreadReadTime,
       // MessageForm
       createMessage,
-      text,
+      messageText,
       sendIsTyping,
       findOrCreateThread,
       goToThread,
       forNewThread,
-      onFocus,
-      onBlur,
       updateMessageText
     } = this.props
 
@@ -75,21 +73,19 @@ export default class Messages extends React.Component {
               onCloseURL={onCloseURL}
               // passthroughs to MessageSection
               socket={socket}
-              reconnectFetchMessages={reconnectFetchMessages}
               messages={messages}
-              hasMoreMessages={hasMoreMessages}
+              updateMessageText={updateMessageText} 
               messageCreatePending={messageCreatePending}
               messagesPending={messagesPending}
               fetchMessages={fetchMessages}
+              reconnectFetchMessages={reconnectFetchMessages}
               updateThreadReadTime={updateThreadReadTime}
               createMessage={createMessage}
-              text={text}
+              hasMoreMessages={hasMoreMessages}
+              messageText={messageText}
               sendIsTyping={sendIsTyping}
               goToThread={goToThread}
-              forNewThread={forNewThread}
-              onFocus={onFocus}
-              onBlur={onBlur}
-              updateMessageText={updateMessageText} />
+              forNewThread={forNewThread} />
           }
         </div>
       </div>

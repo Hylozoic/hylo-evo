@@ -27,8 +27,6 @@ export default class MessageForm extends React.Component {
     pending: bool,
     forNewThread: bool,
     formRef: func,
-    onFocus: func,
-    onBlur: func,
     className: string,
     currentUser: object,
     updateMessageText: func,
@@ -75,8 +73,6 @@ export default class MessageForm extends React.Component {
       formRef,
       forNewThread,
       messageThreadId,
-      onFocus,
-      onBlur,
       className,
       currentUser,
       pending,
@@ -100,9 +96,7 @@ export default class MessageForm extends React.Component {
       {!pending && <TextareaAutosize value={messageText} styleName='message-textarea'
         disabled={pending}
         inputRef={formRef}
-        onFocus={onFocus}
         onChange={onChange}
-        onBlur={onBlur}
         onKeyDown={handleKeyDown}
         placeholder={placeholder} />
       }
