@@ -7,6 +7,7 @@ import { onEnterNoShift } from 'util/textInput'
 import RoundImage from 'components/RoundImage'
 import Loading from 'components/Loading'
 import './MessageForm.scss'
+
 var { func, object, string, bool } = PropTypes
 
 // should share with comment form
@@ -18,7 +19,7 @@ export default class MessageForm extends React.Component {
   static propTypes = {
     createMessage: func.isRequired,
     messageThreadId: string,
-    text: string,
+    messageText: string,
     focusForm: func,
     sendIsTyping: func,
     findOrCreateThread: func,
@@ -35,24 +36,24 @@ export default class MessageForm extends React.Component {
   }
 
   sendForExisting () {
-    const { createMessage, messageThreadId, text } = this.props
-    createMessage(messageThreadId, text).then(() => this.props.focusForm())
+    const { createMessage, messageThreadId, messageText } = this.props
+    createMessage(messageThreadId, messageText).then(() => this.props.focusForm())
     this.startTyping.cancel()
     this.props.sendIsTyping(false)
   }
 
   handleThreadThenMessage () {
-    const { createMessage, findOrCreateThread, goToThread, text } = this.props
+    const { createMessage, findOrCreateThread, goToThread, messageText } = this.props
     findOrCreateThread().then(resp => {
       const messageThreadId = get('payload.data.findOrCreateThread.id', resp)
-      createMessage(messageThreadId, text, true).then(() => goToThread(messageThreadId))
+      createMessage(messageThreadId, messageText, true).then(() => goToThread(messageThreadId))
     })
   }
 
   submit = event => {
     if (event) event.preventDefault()
-    const { text, pending, forNewThread } = this.props
-    if (!text || pending) return false
+    const { messageText, pending, forNewThread } = this.props
+    if (!messageText || pending) return false
     if (forNewThread) {
       this.handleThreadThenMessage()
     } else {
@@ -82,7 +83,7 @@ export default class MessageForm extends React.Component {
       updateMessageText
     } = this.props
     const threadId = forNewThread ? NEW_THREAD_ID : messageThreadId
-    const text = pending ? '' : this.props.text
+    const messageText = pending ? '' : this.props.messageText
     const placeholder = this.props.placeholder || 'Write something...'
     const onChange = e => updateMessageText(threadId, e.target.value)
     const handleKeyDown = e => {
@@ -96,7 +97,7 @@ export default class MessageForm extends React.Component {
     return <form styleName='message-form' className={className} onSubmit={this.submit}>
       <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
       {pending && <Loading />}
-      {!pending && <TextareaAutosize value={text} styleName='message-textarea'
+      {!pending && <TextareaAutosize value={messageText} styleName='message-textarea'
         disabled={pending}
         inputRef={formRef}
         onFocus={onFocus}

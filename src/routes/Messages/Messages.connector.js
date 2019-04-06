@@ -38,7 +38,7 @@ export function mapStateToProps (state, props) {
     currentMessageThreadId,
     currentMessageThread,
     // TODO: Handle this as controlled input in local state on MessageForm? Sockets?
-    text: getTextForCurrentMessageThread(state, props),
+    messageText: getTextForCurrentMessageThread(state, props),
     messageCreatePending:
       isPendingFor(createMessage, state) ||
       (forNewThread && isPendingFor(findOrCreateThread, state)),

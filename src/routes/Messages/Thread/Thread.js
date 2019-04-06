@@ -60,7 +60,7 @@ export default class Thread extends React.Component {
       fetchMessages,
       updateThreadReadTime,
       createMessage,
-      text,
+      messageText,
       sendIsTyping,
       findOrCreateThread,
       goToThread,
@@ -94,7 +94,7 @@ export default class Thread extends React.Component {
           formRef={textArea => this.form = textArea} // eslint-disable-line no-return-assign
           focusForm={this.focusForm}
           createMessage={createMessage}
-          text={text}
+          messageText={messageText}
           sendIsTyping={sendIsTyping}
           findOrCreateThread={findOrCreateThread}
           goToThread={goToThread}
