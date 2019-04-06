@@ -19,9 +19,9 @@ export const mapDispatchToProps = {
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { threads, hasMore } = stateProps
-  const { holoMode } = ownProps
+  const { holochainActive } = ownProps
 
-  const fetchThreads = () => dispatchProps.fetchThreads(20, 0, holoMode)
+  const fetchThreads = () => dispatchProps.fetchThreads(20, 0, holochainActive)
 
   const fetchMoreThreads =
     hasMore

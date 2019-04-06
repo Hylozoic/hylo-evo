@@ -46,7 +46,7 @@ Object {
   },
   "meta": Object {
     "extractModel": "Person",
-    "holoChatAPI": true,
+    "holochainAPI": true,
   },
   "type": "FETCH_CONTACTS",
 }
@@ -93,7 +93,7 @@ Object {
   },
   "meta": Object {
     "extractModel": "MessageThread",
-    "holoChatAPI": false,
+    "holochainAPI": false,
   },
   "type": "FIND_OR_CREATE_THREAD",
 }

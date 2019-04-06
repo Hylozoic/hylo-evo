@@ -30,7 +30,7 @@ const findOrCreateThreadQuery =
   }
 }`
 
-export function findOrCreateThread (participantIds, createdAt, holoChatAPI = false, query = findOrCreateThreadQuery) {
+export function findOrCreateThread (participantIds, createdAt, holochainAPI = false, query = findOrCreateThreadQuery) {
   return {
     type: FIND_OR_CREATE_THREAD,
     graphql: {
@@ -38,7 +38,7 @@ export function findOrCreateThread (participantIds, createdAt, holoChatAPI = fal
       variables: {participantIds, createdAt}
     },
     meta: {
-      holoChatAPI,
+      holochainAPI,
       extractModel: 'MessageThread'
     }
   }
@@ -62,7 +62,7 @@ const fetchContactsQuery =
   }
 }`
 
-export function fetchContacts (holoChatAPI = false, query = fetchContactsQuery, first = 50) {
+export function fetchContacts (holochainAPI = false, query = fetchContactsQuery, first = 50) {
   return {
     type: FETCH_CONTACTS,
     graphql: {
@@ -70,7 +70,7 @@ export function fetchContacts (holoChatAPI = false, query = fetchContactsQuery, 
       variables: { first }
     },
     meta: {
-      holoChatAPI,
+      holochainAPI,
       extractModel: 'Person'
     }
   }
@@ -155,7 +155,7 @@ export const holoChatContactsSelector = createSelector(
   state => state.orm,
   state => state[MODULE_NAME].participants,
   getMe,
-  (_, props) => props.holoMode ? p => p.isHoloData : () => true,
+  (_, props) => props.holochainActive ? p => p.isHoloData : () => true,
   personListItemSelector
 )
 
@@ -167,7 +167,7 @@ export const holoChatMatchesSelector = createSelector(
   (state, props) => p => {
     const { autocomplete } = state[MODULE_NAME]
     if (autocomplete) {
-      const holoFilter = props.holoMode ? p.isHoloData : true
+      const holoFilter = props.holochainActive ? p.isHoloData : true
       return holoFilter && p.name.toLowerCase().includes(autocomplete.toLowerCase())
     }
   },
