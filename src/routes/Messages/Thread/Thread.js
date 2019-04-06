@@ -10,13 +10,14 @@ import './Thread.scss'
 const { string, func, array, object, bool } = PropTypes
 
 export default class Thread extends React.Component {
+  // TODO: Update to reflect real full props list
   static propTypes = {
     messageThreadId: string,
     messageThread: object,
     currentUser: object,
     fetchThread: func,
     onCloseURL: string,
-    // Pass throughs
+    // Passthroughs
     socket: object,
     reconnectFetchMessages: func,
     messages: array,
@@ -26,6 +27,7 @@ export default class Thread extends React.Component {
     updateThreadReadTime: func
   }
 
+  // TODO: Move this all up to Messages
   componentDidMount () {
     this.onThreadIdChange()
   }

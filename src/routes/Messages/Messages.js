@@ -44,8 +44,7 @@ export default class Messages extends React.Component {
       forNewThread,
       onFocus,
       onBlur,
-      updateMessageText,
-      placeholder
+      updateMessageText
     } = this.props
 
     return <div styleName='modal'>
@@ -90,8 +89,7 @@ export default class Messages extends React.Component {
               forNewThread={forNewThread}
               onFocus={onFocus}
               onBlur={onBlur}
-              updateMessageText={updateMessageText}
-              placeholder={placeholder} />
+              updateMessageText={updateMessageText} />
           }
         </div>
       </div>
