@@ -77,7 +77,6 @@ export default class Thread extends React.Component {
       <MessageSection
         socket={socket}
         currentUser={currentUser}
-        messageThreadId={messageThreadId}
         messageThread={messageThread}
         reconnectFetchMessages={reconnectFetchMessages}
         messages={messages}

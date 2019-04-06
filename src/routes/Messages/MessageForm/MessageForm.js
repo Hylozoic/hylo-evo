@@ -33,6 +33,10 @@ export default class MessageForm extends React.Component {
     placeholder: string
   }
 
+  static defaultProps = {
+    placeholder: 'Write something...'
+  }
+
   sendForExisting () {
     const { createMessage, messageThreadId, messageText } = this.props
     createMessage(messageThreadId, messageText).then(() => this.props.focusForm())
@@ -60,6 +64,21 @@ export default class MessageForm extends React.Component {
     return false
   }
 
+  handleOnChange = event => {
+    const { forNewThread, messageThreadId, updateMessageText } = this.props
+    const threadId = forNewThread ? NEW_THREAD_ID : messageThreadId
+
+    updateMessageText(threadId, event.target.value)
+  }
+
+  handleKeyDown = event => {
+    this.startTyping()
+    onEnterNoShift(e => {
+      e.preventDefault()
+      this.submit()
+    }, event)
+  }
+
   // broadcast "I'm typing!" every 3 seconds starting when the user is typing.
   // We send repeated notifications to make sure that a user gets notified even
   // if they load a comment thread after someone else has already started
@@ -70,36 +89,23 @@ export default class MessageForm extends React.Component {
 
   render () {
     const {
+      messageText,
       formRef,
-      forNewThread,
-      messageThreadId,
       className,
       currentUser,
       pending,
-      updateMessageText
+      placeholder
     } = this.props
-    const threadId = forNewThread ? NEW_THREAD_ID : messageThreadId
-    const messageText = pending ? '' : this.props.messageText
-    const placeholder = this.props.placeholder || 'Write something...'
-    const onChange = e => updateMessageText(threadId, e.target.value)
-    const handleKeyDown = e => {
-      this.startTyping()
-      onEnterNoShift(e => {
-        e.preventDefault()
-        this.submit()
-      }, e)
-    }
+
+    if (pending) return <Loading />
 
     return <form styleName='message-form' className={className} onSubmit={this.submit}>
       <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
-      {pending && <Loading />}
-      {!pending && <TextareaAutosize value={messageText} styleName='message-textarea'
-        disabled={pending}
+      <TextareaAutosize value={messageText} styleName='message-textarea'
         inputRef={formRef}
-        onChange={onChange}
-        onKeyDown={handleKeyDown}
+        onChange={this.handleOnChange}
+        onKeyDown={this.handleKeyDown}
         placeholder={placeholder} />
-      }
     </form>
   }
 }

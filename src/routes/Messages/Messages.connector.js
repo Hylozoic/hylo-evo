@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { push } from 'react-router-redux'
 import { get, isEmpty } from 'lodash/fp'
 import { getSocket, sendIsTyping } from 'client/websockets'
+import { push } from 'react-router-redux'
 import { threadUrl } from 'util/navigation'
 import fetchThreads from 'store/actions/fetchThreads'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
@@ -40,7 +40,6 @@ export function mapStateToProps (state, props) {
     currentUser: getMe(state),
     currentMessageThreadId,
     currentMessageThread,
-    // TODO: Handle this as controlled input in local state on MessageForm? Sockets?
     messageText: getTextForCurrentMessageThread(state, props),
     messageCreatePending:
       isPendingFor(createMessage, state) ||
@@ -62,24 +61,26 @@ export function mapDispatchToProps (dispatch, props) {
 
   return {
     ...bindActionCreators({
-      createMessage,
-      // TODO: Handle this as controlled input in local state on MessageForm? Sockets?
       updateMessageText,
-      goToThread: messageThreadId => push(threadUrl(messageThreadId)),
       fetchThreads,
-      setThreadSearch
+      setThreadSearch,
+      goToThread: messageThreadId => push(threadUrl(messageThreadId))
     }, dispatch),
+    findOrCreateThread: (participantIds, createdAt) =>
+      dispatch(findOrCreateThread(participantIds, createdAt, holochainActive)),
+    createMessage: (messageThreadId, text, forNewThread) =>
+      dispatch(createMessage(messageThreadId, text, forNewThread, holochainActive)),
     fetchThread: () => dispatch(fetchThread(currentMessageThreadId, holochainActive)),
-    fetchMessagesMaker: cursor => () => dispatch(fetchMessages(currentMessageThreadId, {cursor}, holochainActive)),
+    fetchMessagesMaker: cursor => () =>
+      dispatch(fetchMessages(currentMessageThreadId, {cursor}, holochainActive)),
     updateThreadReadTime: id => !holochainActive && dispatch(updateThreadReadTime(id)),
-    reconnectFetchMessages: () => dispatch(fetchMessages(currentMessageThreadId, {reset: true})),
-    findOrCreateThread: (participantIds, createdAt) => dispatch(findOrCreateThread(participantIds, createdAt, holochainActive))
+    reconnectFetchMessages: () => dispatch(fetchMessages(currentMessageThreadId, {reset: true}))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { holochainActive } = ownProps
-  const { createMessage, fetchMessagesMaker } = dispatchProps
+  const { fetchMessagesMaker } = dispatchProps
   const { threads, messages, hasMoreThreads } = stateProps
 
   const fetchThreads = () => dispatchProps.fetchThreads(20, 0, holochainActive)
@@ -93,7 +94,6 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    createMessage: (messageThreadId, text, forNewThread) => createMessage(messageThreadId, text, forNewThread, holochainActive),
     fetchThreads,
     fetchMoreThreads,
     fetchMessages: fetchMessagesMaker(fetchMessagesCursor)
@@ -101,18 +101,3 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
-
-/// MESSAGES
-// text
-// pending
-// currentUser
-// sendIsTyping
-// createMessage
-// updateMessageText
-// goToThread
-
-// /// Thread
-// currentUser
-// currentMessageThread
-// id (currentMessageThread)
-// fetchThread

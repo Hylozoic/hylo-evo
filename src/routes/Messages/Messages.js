@@ -72,21 +72,22 @@ export default class Messages extends React.Component {
               fetchThread={fetchThread}
               onCloseURL={onCloseURL}
               // passthroughs to MessageSection
-              socket={socket}
               messages={messages}
-              updateMessageText={updateMessageText} 
-              messageCreatePending={messageCreatePending}
-              messagesPending={messagesPending}
               fetchMessages={fetchMessages}
               reconnectFetchMessages={reconnectFetchMessages}
-              updateThreadReadTime={updateThreadReadTime}
-              createMessage={createMessage}
               hasMoreMessages={hasMoreMessages}
+              messagesPending={messagesPending}
+              updateThreadReadTime={updateThreadReadTime}
+              // passthrough to MessageForm
+              createMessage={createMessage}
+              findOrCreateThread={findOrCreateThread}
+              messageCreatePending={messageCreatePending}
               messageText={messageText}
-              sendIsTyping={sendIsTyping}
+              forNewThread={forNewThread}
+              updateMessageText={updateMessageText} 
               goToThread={goToThread}
-              forNewThread={forNewThread} />
-          }
+              socket={socket}
+              sendIsTyping={sendIsTyping} />}
         </div>
       </div>
     </div>
