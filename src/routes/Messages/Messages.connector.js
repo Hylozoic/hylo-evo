@@ -25,8 +25,11 @@ import {
   getCurrentMessageThread
 } from './Messages.store'
 
+const mockSocket = { on: () => {}, off: () => {} }
+
 export function mapStateToProps (state, props) {
   const routeParams = get('match.params', props)
+  const { holochainActive } = props
   const currentMessageThreadId = get('messageThreadId', routeParams)
   const currentMessageThread = getCurrentMessageThread(state, props)
   const forNewThread = currentMessageThreadId === 'new'
@@ -49,7 +52,7 @@ export function mapStateToProps (state, props) {
     messages: getMessages(state, props),
     messagesPending: isPendingFor(fetchMessages, state),
     hasMoreMessages: getMessagesHasMore(state, { id: currentMessageThreadId }),
-    socket: getSocket()
+    socket: holochainActive ? mockSocket : getSocket()
   }
 }
 
@@ -68,7 +71,7 @@ export function mapDispatchToProps (dispatch, props) {
     }, dispatch),
     fetchThread: () => dispatch(fetchThread(currentMessageThreadId, holochainActive)),
     fetchMessagesMaker: cursor => () => dispatch(fetchMessages(currentMessageThreadId, {cursor}, holochainActive)),
-    updateThreadReadTime: id => dispatch(updateThreadReadTime(id)),
+    updateThreadReadTime: id => !holochainActive && dispatch(updateThreadReadTime(id)),
     reconnectFetchMessages: () => dispatch(fetchMessages(currentMessageThreadId, {reset: true})),
     findOrCreateThread: (participantIds, createdAt) => dispatch(findOrCreateThread(participantIds, createdAt, holochainActive))
   }

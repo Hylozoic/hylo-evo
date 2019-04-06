@@ -65,9 +65,7 @@ export default class MessageSection extends React.Component {
   componentDidMount () {
     const { socket, reconnectFetchMessages } = this.props
     this.scrollToBottom()
-    this.reconnectHandler = () => {
-      reconnectFetchMessages()
-    }
+    this.reconnectHandler = () => reconnectFetchMessages()
     socket.on('reconnect', this.reconnectHandler)
     document && document.addEventListener('visibilitychange', this.handleVisibilityChange)
   }
