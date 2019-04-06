@@ -55,7 +55,7 @@
 }
 
 .thread-header {
-  composes: header from '../Thread/Thread.scss';
+  composes: header from '../Messages.scss';
   padding-top: $space-4x;
   padding-bottom: $space-3x;
   height: unset;

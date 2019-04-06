@@ -30,33 +30,33 @@ const mockSocket = { on: () => {}, off: () => {} }
 export function mapStateToProps (state, props) {
   const routeParams = get('match.params', props)
   const { holochainActive } = props
-  const currentMessageThreadId = get('messageThreadId', routeParams)
-  const currentMessageThread = getCurrentMessageThread(state, props)
-  const forNewThread = currentMessageThreadId === 'new'
+  const messageThreadId = get('messageThreadId', routeParams)
+  const messageThread = getCurrentMessageThread(state, props)
+  const forNewThread = messageThreadId === 'new'
 
   return {
     onCloseURL: getPreviousLocation(state),
     forNewThread,
     currentUser: getMe(state),
-    currentMessageThreadId,
-    currentMessageThread,
+    messageThreadId,
+    messageThread,
     messageText: getTextForCurrentMessageThread(state, props),
     messageCreatePending:
       isPendingFor(createMessage, state) ||
       (forNewThread && isPendingFor(findOrCreateThread, state)),
-    sendIsTyping: sendIsTyping(currentMessageThreadId),
+    sendIsTyping: sendIsTyping(messageThreadId),
     threadSearch: getThreadSearch(state, props),
     threads: getThreads(state, props),
     hasMoreThreads: getThreadsHasMore(state, props),
     messages: getMessages(state, props),
     messagesPending: isPendingFor(fetchMessages, state),
-    hasMoreMessages: getMessagesHasMore(state, { id: currentMessageThreadId }),
+    hasMoreMessages: getMessagesHasMore(state, { id: messageThreadId }),
     socket: holochainActive ? mockSocket : getSocket()
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const currentMessageThreadId = get('match.params.messageThreadId', props)
+  const messageThreadId = get('match.params.messageThreadId', props)
   const { holochainActive } = props
 
   return {
@@ -70,11 +70,11 @@ export function mapDispatchToProps (dispatch, props) {
       dispatch(findOrCreateThread(participantIds, createdAt, holochainActive)),
     createMessage: (messageThreadId, text, forNewThread) =>
       dispatch(createMessage(messageThreadId, text, forNewThread, holochainActive)),
-    fetchThread: () => dispatch(fetchThread(currentMessageThreadId, holochainActive)),
+    fetchThread: () => dispatch(fetchThread(messageThreadId, holochainActive)),
     fetchMessagesMaker: cursor => () =>
-      dispatch(fetchMessages(currentMessageThreadId, {cursor}, holochainActive)),
+      dispatch(fetchMessages(messageThreadId, {cursor}, holochainActive)),
     updateThreadReadTime: id => !holochainActive && dispatch(updateThreadReadTime(id)),
-    reconnectFetchMessages: () => dispatch(fetchMessages(currentMessageThreadId, {reset: true}))
+    reconnectFetchMessages: () => dispatch(fetchMessages(messageThreadId, {reset: true}))
   }
 }
 

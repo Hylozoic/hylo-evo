@@ -1,7 +1,11 @@
 import React from 'react'
 import PeopleSelector from './PeopleSelector'
 import ThreadList from './ThreadList'
-import Thread from './Thread'
+import Header from './Header'
+import MessageSection from './MessageSection'
+import MessageForm from './MessageForm'
+import PeopleTyping from 'components/PeopleTyping'
+import SocketSubscriber from 'components/SocketSubscriber'
 import './Messages.scss'
 
 export default class Messages extends React.Component {
@@ -13,16 +17,34 @@ export default class Messages extends React.Component {
     }
   }
 
+  componentDidMount () {
+    this.onThreadIdChange()
+  }
+
+  componentDidUpdate (prevProps) {
+    if (this.props.messageThreadId && this.props.messageThreadId !== prevProps.messageThreadId) {
+      this.onThreadIdChange()
+    }
+  }
+
+  focusForm = () => this.form && this.form.focus()
+
+  onThreadIdChange = () => {
+    if (!this.props.forNewThread) {
+      this.props.fetchThread()
+      this.focusForm()
+    }
+  }
+
   render () {
     const { onCloseURL } = this.state
     const {
       currentUser,
-      currentMessageThread,
-      currentMessageThreadId,
+      messageThread,
+      messageThreadId,
       threads,
       threadSearch,
       setThreadSearch,
-      fetchThread,
       fetchThreads,
       fetchMoreThreads,
       holochainActive,
@@ -60,34 +82,44 @@ export default class Messages extends React.Component {
           {forNewThread &&
             <PeopleSelector
               {...this.props}
-              messageThreadId={currentMessageThreadId}
+              messageThreadId={messageThreadId}
               findOrCreateThread={findOrCreateThread}
               onCloseURL={onCloseURL}
               holochainActive={holochainActive} />}
           {!forNewThread &&
-            <Thread
-              messageThreadId={currentMessageThreadId}
-              messageThread={currentMessageThread}
-              currentUser={currentUser}
-              fetchThread={fetchThread}
-              onCloseURL={onCloseURL}
-              // passthroughs to MessageSection
-              messages={messages}
-              fetchMessages={fetchMessages}
-              reconnectFetchMessages={reconnectFetchMessages}
-              hasMoreMessages={hasMoreMessages}
-              messagesPending={messagesPending}
-              updateThreadReadTime={updateThreadReadTime}
-              // passthrough to MessageForm
-              createMessage={createMessage}
-              findOrCreateThread={findOrCreateThread}
-              messageCreatePending={messageCreatePending}
-              messageText={messageText}
-              forNewThread={forNewThread}
-              updateMessageText={updateMessageText} 
-              goToThread={goToThread}
-              socket={socket}
-              sendIsTyping={sendIsTyping} />}
+            <div styleName='thread'>
+              <Header
+                messageThread={messageThread}
+                currentUser={currentUser}
+                onCloseURL={onCloseURL} />
+              <MessageSection
+                socket={socket}
+                currentUser={currentUser}
+                messageThread={messageThread}
+                reconnectFetchMessages={reconnectFetchMessages}
+                messages={messages}
+                hasMore={hasMoreMessages}
+                pending={messagesPending}
+                fetchMessages={fetchMessages}
+                updateThreadReadTime={updateThreadReadTime} />
+              <div styleName='message-form'>
+                <MessageForm
+                  messageThreadId={messageThreadId}
+                  currentUser={currentUser}
+                  formRef={textArea => this.form = textArea} // eslint-disable-line no-return-assign
+                  focusForm={this.focusForm}
+                  createMessage={createMessage}
+                  messageText={messageText}
+                  sendIsTyping={sendIsTyping}
+                  findOrCreateThread={findOrCreateThread}
+                  goToThread={goToThread}
+                  pending={messageCreatePending}
+                  forNewThread={forNewThread}
+                  updateMessageText={updateMessageText} />
+              </div>
+              <PeopleTyping styleName='people-typing' />
+              <SocketSubscriber type='post' id={messageThreadId} />
+            </div>}
         </div>
       </div>
     </div>

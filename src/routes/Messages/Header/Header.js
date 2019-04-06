@@ -3,7 +3,7 @@ import { isEmpty, filter, get, map } from 'lodash/fp'
 import Icon from 'components/Icon'
 import CloseMessages from '../CloseMessages'
 import { others } from 'store/models/MessageThread'
-import '../Thread.scss'
+import '../Messages.scss'
 
 const MAX_CHARACTERS = 60
 

@@ -46,6 +46,7 @@ export default class MessageForm extends React.Component {
 
   handleThreadThenMessage () {
     const { createMessage, findOrCreateThread, goToThread, messageText } = this.props
+
     findOrCreateThread().then(resp => {
       const messageThreadId = get('payload.data.findOrCreateThread.id', resp)
       createMessage(messageThreadId, messageText, true).then(() => goToThread(messageThreadId))
@@ -54,9 +55,8 @@ export default class MessageForm extends React.Component {
 
   submit = event => {
     if (event) event.preventDefault()
-    const { messageText, pending, forNewThread } = this.props
-    if (!messageText || pending) return false
-    if (forNewThread) {
+    if (!this.props.messageText || this.props.pending) return false
+    if (this.props.forNewThread) {
       this.handleThreadThenMessage()
     } else {
       this.sendForExisting()
@@ -73,10 +73,7 @@ export default class MessageForm extends React.Component {
 
   handleKeyDown = event => {
     this.startTyping()
-    onEnterNoShift(e => {
-      e.preventDefault()
-      this.submit()
-    }, event)
+    onEnterNoShift(this.submit, event)
   }
 
   // broadcast "I'm typing!" every 3 seconds starting when the user is typing.
@@ -101,7 +98,9 @@ export default class MessageForm extends React.Component {
 
     return <form styleName='message-form' className={className} onSubmit={this.submit}>
       <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
-      <TextareaAutosize value={messageText} styleName='message-textarea'
+      <TextareaAutosize
+        value={messageText}
+        styleName='message-textarea'
         inputRef={formRef}
         onChange={this.handleOnChange}
         onKeyDown={this.handleKeyDown}
