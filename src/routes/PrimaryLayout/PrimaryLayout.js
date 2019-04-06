@@ -148,7 +148,7 @@ export default class PrimaryLayout extends Component {
           </Switch>
         </div>
       </div>
-      <Route path='/t' render={props => <Messages {...props} holochainActive={holochainActive} />} />
+      <Route path='/t/:threadId?' render={props => <Messages {...props} holochainActive={holochainActive} />} />
       <Switch>
         {postEditorRoutes.map(({ path }) =>
           <Route path={path} exact key={path} children={({ match, location }) =>
