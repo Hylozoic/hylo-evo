@@ -22,20 +22,20 @@ const invalidPersonName = /[^a-z '-]+/gi
 
 export default class PeopleSelector extends React.Component {
   static propTypes = {
-    autocomplete: string,
-    contacts: arrayOf(personType),
-    recentContacts: arrayOf(personType),
-    matches: array,
     setAutocomplete: func.isRequired,
     fetchPeople: func.isRequired,
     fetchContacts: func.isRequired,
     fetchRecentContacts: func.isRequired,
     addParticipant: func.isRequired,
     removeParticipant: func.isRequired,
-    deleteParticipant: func,
-    participantSearch: arrayOf(personType),
-    participants: arrayOf(personType),
     changeQuerystringParam: func.isRequired,
+    autocomplete: string,
+    contacts: arrayOf(personType),
+    recentContacts: arrayOf(personType),
+    matches: array,
+    deleteParticipant: func,
+    participantSearch: arrayOf(String),
+    participants: arrayOf(personType),
     onCloseURL: string
   }
 

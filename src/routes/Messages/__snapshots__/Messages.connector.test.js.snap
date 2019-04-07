@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapStateToProps returns expected values 1`] = `
+Object {
+  "currentUser": undefined,
+  "forNewThread": false,
+  "hasMoreMessages": undefined,
+  "hasMoreThreads": undefined,
+  "messageCreatePending": false,
+  "messageText": "",
+  "messageThread": null,
+  "messageThreadId": undefined,
+  "messages": Array [],
+  "messagesPending": true,
+  "onCloseURL": "/",
+  "participants": Array [],
+  "sendIsTyping": [Function],
+  "socket": SailsSocket {
+    "_isConnecting": false,
+    "_mightBeAboutToAutoConnect": true,
+    "eventQueue": Object {
+      "sails:parseError": Array [
+        [Function],
+      ],
+    },
+    "headers": undefined,
+  },
+  "threadSearch": undefined,
+  "threads": Array [],
+}
+`;
