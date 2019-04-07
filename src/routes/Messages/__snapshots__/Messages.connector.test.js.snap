@@ -86,6 +86,7 @@ Object {
   "fetchMessages": [Function],
   "fetchMoreThreads": [Function],
   "fetchThreads": [Function],
+  "findOrCreateThread": [Function],
   "match": Object {
     "params": Object {
       "messageThreadId": "8",

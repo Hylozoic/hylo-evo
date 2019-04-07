@@ -67,6 +67,7 @@ export function mapDispatchToProps (dispatch, props) {
       updateMessageText,
       fetchThreads,
       setThreadSearch,
+      findOrCreateThread,
       goToThread: messageThreadId => push(threadUrl(messageThreadId))
     }, dispatch),
     findOrCreateThread: (participantIds, createdAt) =>
@@ -77,13 +78,15 @@ export function mapDispatchToProps (dispatch, props) {
     fetchMessages: cursor => () =>
       dispatch(fetchMessages(messageThreadId, {cursor}, holochainActive)),
     updateThreadReadTime: id => !holochainActive && dispatch(updateThreadReadTime(id)),
-    reconnectFetchMessages: () => dispatch(fetchMessages(messageThreadId, {reset: true}))
+    reconnectFetchMessages: () => dispatch(fetchMessages(messageThreadId, { reset: true }))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { holochainActive } = ownProps
-  const { threads, messages, hasMoreThreads } = stateProps
+  const { participants, threads, messages, hasMoreThreads } = stateProps
+  const findOrCreateThread = createdAt =>
+    dispatchProps.findOrCreateThread(participants.map(p => p.id), createdAt, holochainActive)
   const fetchThreads = () => dispatchProps.fetchThreads(20, 0, holochainActive)
   const fetchMoreThreads =
     hasMoreThreads
@@ -96,6 +99,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
+    findOrCreateThread,
     fetchThreads,
     fetchMoreThreads,
     fetchMessages

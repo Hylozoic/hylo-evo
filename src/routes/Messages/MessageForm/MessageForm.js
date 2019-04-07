@@ -43,10 +43,9 @@ export default class MessageForm extends React.Component {
   }
 
   sendNewMessage () {
-    const { findOrCreateThread, createMessage, participants, goToThread, messageText } = this.props
-
-    // TODO: Bind this in Messages.connector (Also maybe construct chain there too so that this is "findOrCreateThreadByParticipantsAndSendMessage" ha!)
-    findOrCreateThread(participants.map(p => p.id), new Date().getTime().toString()).then(resp => {
+    const { findOrCreateThread, createMessage, goToThread, messageText } = this.props
+    const createdAt = new Date().getTime().toString()
+    findOrCreateThread(createdAt).then(resp => {
       const messageThreadId = get('payload.data.findOrCreateThread.id', resp)
       createMessage(messageThreadId, messageText, true).then(() => goToThread(messageThreadId))
     })

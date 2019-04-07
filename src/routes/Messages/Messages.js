@@ -10,7 +10,7 @@ import './Messages.scss'
 
 export default class Messages extends React.Component {
   // TODO: Add propTypes
-  // TODO: New message to existing thread doesn't pop that thread to the top
+  // TODO: A bug - new message to existing thread doesn't pop that thread to the top
   constructor (props) {
     super(props)
 
@@ -110,7 +110,6 @@ export default class Messages extends React.Component {
                   messageText={messageText}
                   sendIsTyping={sendIsTyping}
                   findOrCreateThread={findOrCreateThread}
-                  participants={participants}
                   goToThread={goToThread}
                   pending={messageCreatePending}
                   forNewThread={forNewThread}
