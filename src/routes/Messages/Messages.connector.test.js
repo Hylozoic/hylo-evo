@@ -41,9 +41,10 @@ describe('mapStateToProps', () => {
   }
 
   const props = {
-    messageThreadId: '11',
     match: {
-      params: {}
+      params: {
+        messageThreadId: '11',
+      }
     }
   }
 
@@ -52,36 +53,42 @@ describe('mapStateToProps', () => {
   })
 })
 
-// describe('mapDispatchToProps', () => {
-//   it('returns expected values', () => {
-//     const dispatch = () => {}
-//     const props = {
-//       messageThreadId: '7'
-//     }
-//     expect(mapDispatchToProps(dispatch, props)).toMatchSnapshot()
-//   })
-// })
+describe('mapDispatchToProps', () => {
+  it('returns expected values', () => {
+    const dispatch = () => {}
+    const props = {
+      match: {
+        params: {
+          messageThreadId: '7'
+        }
+      }
+    }
+    expect(mapDispatchToProps(dispatch, props)).toMatchSnapshot()
+  })
+})
 
-// describe('mergeProps', () => {
-//   it('returns expected values', () => {
-//     const stateProps = {
-//       messages: [
-//         {id: '1', text: 'hi'}
-//       ]
-//     }
+describe('mergeProps', () => {
+  it('returns expected values', () => {
+    const stateProps = {
+      messages: [
+        {id: '1', text: 'hi'}
+      ]
+    }
+    const dispatchProps = {
+      fetchMessages: cursor => () => `more messages for thread ${cursor}`,
+      updateThreadReadTime: () => {},
+      reconnectFetchMessages: () => {}
+    }
+    const ownProps = {
+      match: {
+        params: {
+          messageThreadId: '8'
+        }
+      }
+    }
+    const props = mergeProps(stateProps, dispatchProps, ownProps)
 
-//     const dispatchProps = {
-//       fetchMessagesMaker: cursor => () => `more messages for thread ${cursor}`,
-//       updateThreadReadTime: () => {},
-//       reconnectFetchMessages: () => {}
-//     }
-
-//     const ownProps = {
-//       messageThreadId: '7'
-//     }
-
-//     const props = mergeProps(stateProps, dispatchProps, ownProps)
-//     expect(props).toMatchSnapshot()
-//     expect(props.fetchMessages()).toEqual('more messages for thread 1')
-//   })
-// })
+    expect(props).toMatchSnapshot()
+    expect(props.fetchMessages()).toEqual('more messages for thread 1')
+  })
+})
