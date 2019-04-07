@@ -39,15 +39,17 @@ export default class MessageForm extends React.Component {
 
   sendForExisting () {
     const { createMessage, messageThreadId, messageText } = this.props
+
     createMessage(messageThreadId, messageText).then(() => this.props.focusForm())
     this.startTyping.cancel()
     this.props.sendIsTyping(false)
   }
 
-  handleThreadThenMessage () {
-    const { createMessage, findOrCreateThread, goToThread, messageText } = this.props
+  sendNewMessage () {
+    const { findOrCreateThread, createMessage, participants, goToThread, messageText } = this.props
 
-    findOrCreateThread().then(resp => {
+    // TODO: Bind this in Messages.connector
+    findOrCreateThread(participants.map(p => p.id), new Date().getTime().toString()).then(resp => {
       const messageThreadId = get('payload.data.findOrCreateThread.id', resp)
       createMessage(messageThreadId, messageText, true).then(() => goToThread(messageThreadId))
     })
@@ -55,9 +57,11 @@ export default class MessageForm extends React.Component {
 
   submit = event => {
     if (event) event.preventDefault()
+    console.log('!!! submit:', this, this.props)
+
     if (!this.props.messageText || this.props.pending) return false
     if (this.props.forNewThread) {
-      this.handleThreadThenMessage()
+      this.sendNewMessage()
     } else {
       this.sendForExisting()
     }
@@ -65,10 +69,8 @@ export default class MessageForm extends React.Component {
   }
 
   handleOnChange = event => {
-    const { forNewThread, messageThreadId, updateMessageText } = this.props
-    const threadId = forNewThread ? NEW_THREAD_ID : messageThreadId
-
-    updateMessageText(threadId, event.target.value)
+    const { messageThreadId, updateMessageText } = this.props
+    updateMessageText(messageThreadId, event.target.value)
   }
 
   handleKeyDown = event => {

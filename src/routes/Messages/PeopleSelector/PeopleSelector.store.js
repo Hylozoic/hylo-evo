@@ -108,7 +108,7 @@ export function pickPersonListItem (person) {
   }
 }
 
-export function personListItemSelector (session, participants, currentUser, search = () => true) {
+export function getPersonListItem (session, participants, currentUser, search = () => true) {
   return session.Person
     .all()
     .filter(p => !participants.includes(p.id))
@@ -119,16 +119,16 @@ export function personListItemSelector (session, participants, currentUser, sear
     .map(pickPersonListItem)
 }
 
-export const holoChatContactsSelector = createSelector(
+export const getHoloChatContacts = createSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME].participants,
   getMe,
   (_, props) => props.holochainActive ? p => p.isHoloData : () => true,
-  personListItemSelector
+  getPersonListItem
 )
 
-export const holoChatMatchesSelector = createSelector(
+export const getHoloChatMatches = createSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME].participants,
@@ -140,7 +140,7 @@ export const holoChatMatchesSelector = createSelector(
       return holoFilter && p.name.toLowerCase().includes(autocomplete.toLowerCase())
     }
   },
-  personListItemSelector
+  getPersonListItem
 )
 
 const nameSort = (a, b) => {
@@ -158,7 +158,7 @@ export function personConnectionListItemSelector (session, participants) {
     .sort(nameSort)
 }
 
-export const recentContactsSelector = createSelector(
+export const getRecentContacts = createSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME].participants,
@@ -169,7 +169,7 @@ export function participantsFromStore (state) {
   return state[MODULE_NAME].participants
 }
 
-export const participantsSelector = createSelector(
+export const getParticipants = createSelector(
   orm,
   state => state.orm,
   participantsFromStore,

@@ -19,12 +19,12 @@ export const MODULE_NAME = 'Messages'
 export const UPDATE_MESSAGE_TEXT = `${MODULE_NAME}/UPDATE_MESSAGE_TEXT`
 export const SET_THREAD_SEARCH = `${MODULE_NAME}/SET_THREAD_SEARCH`
 
-export function updateMessageText (messageThreadId, text) {
+export function updateMessageText (messageThreadId, messageText) {
   return {
     type: UPDATE_MESSAGE_TEXT,
     meta: {
       messageThreadId,
-      text
+      messageText
     }
   }
 }
@@ -33,14 +33,6 @@ export function setThreadSearch (threadSearch) {
   return {
     type: SET_THREAD_SEARCH,
     payload: threadSearch
-  }
-}
-
-export function updateThreadReadTime (id) {
-  return {
-    type: UPDATE_THREAD_READ_TIME,
-    payload: {api: {path: `/noo/post/${id}/update-last-read`, method: 'POST'}},
-    meta: {id}
   }
 }
 
@@ -61,7 +53,7 @@ export default function reducer (state = defaultState, action) {
       const messageThreadId = meta.forNewThread ? NEW_THREAD_ID : meta.messageThreadId
       return { ...state, [messageThreadId]: '' }
     case UPDATE_MESSAGE_TEXT:
-      return { ...state, [meta.messageThreadId]: meta.text }
+      return { ...state, [meta.messageThreadId]: meta.messageText }
     default:
       return state
   }
@@ -76,8 +68,7 @@ export const getCurrentMessageThreadId = (_, { match }) => match.params.messageT
 export const getTextForCurrentMessageThread = createSelector(
   moduleSelector,
   getCurrentMessageThreadId,
-  (_, props) => props.forNewThread,
-  (state, messageThreadId, forNewThread) => forNewThread ? state[NEW_THREAD_ID] : (state[messageThreadId] || '')
+  (state, messageThreadId) => state[messageThreadId] || ''
 )
 
 export const getCurrentMessageThread = ormCreateSelector(
@@ -135,7 +126,6 @@ export function filterThreadsByParticipant (threadSearch) {
 
 export const getMessages = createSelector(
   state => orm.session(state.orm),
-  // (state, props) => props.messageThreadId,
   getCurrentMessageThreadId,
   (session, messageThreadId) => {
     let messageThread
@@ -276,7 +266,7 @@ export function fetchMessages (id, opts = {}, holochainAPI = false) {
   }
 }
 
-export function createMessage (messageThreadId, text, forNewThread, holochainAPI = false) {
+export function createMessage (messageThreadId, messageText, forNewThread, holochainAPI = false) {
   const createdAt = new Date().getTime().toString()
   return {
     type: CREATE_MESSAGE,
@@ -296,7 +286,7 @@ export function createMessage (messageThreadId, text, forNewThread, holochainAPI
       }`,
       variables: {
         messageThreadId,
-        text,
+        text: messageText,
         createdAt
       }
     },
@@ -306,9 +296,17 @@ export function createMessage (messageThreadId, text, forNewThread, holochainAPI
       extractModel: 'Message',
       tempId: uniqueId(`messageThread${messageThreadId}_`),
       messageThreadId,
-      text,
+      messageText,
       forNewThread,
       analytics: AnalyticsEvents.DIRECT_MESSAGE_SENT
     }
+  }
+}
+
+export function updateThreadReadTime (id) {
+  return {
+    type: UPDATE_THREAD_READ_TIME,
+    payload: {api: {path: `/noo/post/${id}/update-last-read`, method: 'POST'}},
+    meta: {id}
   }
 }

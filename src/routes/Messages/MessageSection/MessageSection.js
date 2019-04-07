@@ -163,7 +163,6 @@ export default class MessageSection extends React.Component {
   }
 
   markAsRead = debounce(() => {
-    // TODO: this is broken in holo mode
     const { messageThread, updateThreadReadTime } = this.props
     if (messageThread) updateThreadReadTime(messageThread.id)
   }, 2000)

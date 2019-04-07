@@ -30,10 +30,8 @@ export default class Messages extends React.Component {
   focusForm = () => this.form && this.form.focus()
 
   onThreadIdChange = () => {
-    if (!this.props.forNewThread) {
-      this.props.fetchThread()
-      this.focusForm()
-    }
+    if (!this.props.forNewThread) this.props.fetchThread()
+    this.focusForm()
   }
 
   render () {
@@ -64,7 +62,8 @@ export default class Messages extends React.Component {
       findOrCreateThread,
       goToThread,
       forNewThread,
-      updateMessageText
+      updateMessageText,
+      participants
     } = this.props
 
     return <div styleName='modal'>
@@ -79,19 +78,18 @@ export default class Messages extends React.Component {
           fetchMoreThreads={fetchMoreThreads}
         />
         <div styleName='right-column'>
-          {forNewThread &&
-            <PeopleSelector
-              {...this.props}
-              messageThreadId={messageThreadId}
-              findOrCreateThread={findOrCreateThread}
-              onCloseURL={onCloseURL}
-              holochainActive={holochainActive} />}
-          {!forNewThread &&
-            <div styleName='thread'>
+          <div styleName='thread'>
+            {forNewThread &&
+              <PeopleSelector
+                {...this.props}
+                onCloseURL={onCloseURL}
+                holochainActive={holochainActive} />}
+            {!forNewThread &&
               <Header
                 messageThread={messageThread}
                 currentUser={currentUser}
-                onCloseURL={onCloseURL} />
+                onCloseURL={onCloseURL} />}
+            {!forNewThread &&
               <MessageSection
                 socket={socket}
                 currentUser={currentUser}
@@ -101,25 +99,26 @@ export default class Messages extends React.Component {
                 hasMore={hasMoreMessages}
                 pending={messagesPending}
                 fetchMessages={fetchMessages}
-                updateThreadReadTime={updateThreadReadTime} />
-              <div styleName='message-form'>
-                <MessageForm
-                  messageThreadId={messageThreadId}
-                  currentUser={currentUser}
-                  formRef={textArea => this.form = textArea} // eslint-disable-line no-return-assign
-                  focusForm={this.focusForm}
-                  createMessage={createMessage}
-                  messageText={messageText}
-                  sendIsTyping={sendIsTyping}
-                  findOrCreateThread={findOrCreateThread}
-                  goToThread={goToThread}
-                  pending={messageCreatePending}
-                  forNewThread={forNewThread}
-                  updateMessageText={updateMessageText} />
-              </div>
-              <PeopleTyping styleName='people-typing' />
-              <SocketSubscriber type='post' id={messageThreadId} />
-            </div>}
+                updateThreadReadTime={updateThreadReadTime} />}
+            <div styleName='message-form'>
+              <MessageForm
+                messageThreadId={messageThreadId}
+                currentUser={currentUser}
+                formRef={textArea => this.form = textArea} // eslint-disable-line no-return-assign
+                focusForm={this.focusForm}
+                createMessage={createMessage}
+                messageText={messageText}
+                sendIsTyping={sendIsTyping}
+                findOrCreateThread={findOrCreateThread}
+                participants={participants}
+                goToThread={goToThread}
+                pending={messageCreatePending}
+                forNewThread={forNewThread}
+                updateMessageText={updateMessageText} />
+            </div>
+            <PeopleTyping styleName='people-typing' />
+            <SocketSubscriber type='post' id={messageThreadId} />
+          </div>
         </div>
       </div>
     </div>

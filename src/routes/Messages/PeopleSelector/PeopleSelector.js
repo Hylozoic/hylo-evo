@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { debounce, throttle } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
-import MessageForm from '../MessageForm'
 import CloseMessages from '../CloseMessages'
 import PeopleSelectorMatches from './PeopleSelectorMatches'
 import PeopleSelectorContacts from './PeopleSelectorContacts'
@@ -116,30 +115,16 @@ export default class PeopleSelector extends React.Component {
   render () {
     const {
       contacts,
+      recentContacts,
       matches,
       participants,
       removeParticipant,
-      findOrCreateThread,
-      onCloseURL,
-      holochainActive,
-      recentContacts,
-      createMessage,
-      messageThreadId,
-      text,
-      focusForm,
-      sendIsTyping,
-      goToThread,
-      pending,
-      formRef,
-      className,
-      currentUser,
-      updateMessageText,
-      placeholder
+      onCloseURL
     } = this.props
 
     const { currentMatch } = this.state
 
-    return <div styleName='people-selector'>
+    return <React.Fragment>
       <div styleName='thread-header' tabIndex='0'>
         <div styleName='autocomplete-control'>
           {participants && participants.map(participant =>
@@ -170,25 +155,6 @@ export default class PeopleSelector extends React.Component {
           addParticipant={this.addParticipant}
           contacts={contacts}
           recentContacts={recentContacts} />}
-      {participants && participants.length > 0 &&
-        <div styleName='message-form'>
-          <MessageForm ref='form'
-            forNewThread
-            createMessage={createMessage}
-            messageThreadId={messageThreadId}
-            text={text}
-            focusForm={focusForm}
-            sendIsTyping={sendIsTyping}
-            goToThread={goToThread}
-            pending={pending}
-            formRef={formRef}
-            className={className}
-            currentUser={currentUser}
-            updateMessageText={updateMessageText}
-            placeholder={placeholder}
-            holochainActive={holochainActive}
-            findOrCreateThread={() => findOrCreateThread(participants.map(p => p.id), new Date().getTime().toString())} />
-        </div>}
-    </div>
+    </React.Fragment>
   }
 }

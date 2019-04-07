@@ -8,6 +8,7 @@ import fetchThreads from 'store/actions/fetchThreads'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import getMe from 'store/selectors/getMe'
 import isPendingFor from 'store/selectors/isPendingFor'
+import { getParticipants } from './PeopleSelector/PeopleSelector.store'
 import {
   createMessage,
   fetchMessages,
@@ -36,6 +37,7 @@ export function mapStateToProps (state, props) {
 
   return {
     onCloseURL: getPreviousLocation(state),
+    participants: getParticipants(state),
     forNewThread,
     currentUser: getMe(state),
     messageThreadId,
@@ -71,7 +73,7 @@ export function mapDispatchToProps (dispatch, props) {
     createMessage: (messageThreadId, text, forNewThread) =>
       dispatch(createMessage(messageThreadId, text, forNewThread, holochainActive)),
     fetchThread: () => dispatch(fetchThread(messageThreadId, holochainActive)),
-    fetchMessagesMaker: cursor => () =>
+    fetchMessages: cursor => () =>
       dispatch(fetchMessages(messageThreadId, {cursor}, holochainActive)),
     updateThreadReadTime: id => !holochainActive && dispatch(updateThreadReadTime(id)),
     reconnectFetchMessages: () => dispatch(fetchMessages(messageThreadId, {reset: true}))
@@ -80,15 +82,14 @@ export function mapDispatchToProps (dispatch, props) {
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { holochainActive } = ownProps
-  const { fetchMessagesMaker } = dispatchProps
   const { threads, messages, hasMoreThreads } = stateProps
-
   const fetchThreads = () => dispatchProps.fetchThreads(20, 0, holochainActive)
   const fetchMoreThreads =
     hasMoreThreads
       ? () => dispatchProps.fetchThreads(20, threads.length)
       : () => {}
   const fetchMessagesCursor = !isEmpty(messages) && messages[0].id
+  const fetchMessages = dispatchProps.fetchMessages(fetchMessagesCursor)
 
   return {
     ...ownProps,
@@ -96,7 +97,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...dispatchProps,
     fetchThreads,
     fetchMoreThreads,
-    fetchMessages: fetchMessagesMaker(fetchMessagesCursor)
+    fetchMessages
   }
 }
 

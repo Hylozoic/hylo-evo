@@ -1,7 +1,8 @@
 import orm from 'store/models'
 import {
   getMessages,
-  filterThreadsByParticipant
+  filterThreadsByParticipant,
+  findOrCreateThread
 } from './Messages.store'
 
 describe('getMessages', () => {
@@ -68,5 +69,19 @@ describe('filterThreadsByParticipant', () => {
 
     const noFilter = filterThreadsByParticipant()
     expect(noFilter(mockThread(['whomever']))).toBeTruthy()
+  })
+})
+
+describe('findOrCreateThread', () => {
+  it('matches the last snapshot', () => {
+    const graphql = {
+      query: 'All the lonely people / Where do they all come from?',
+      variables: {
+        participantIds: ['1', '2', '3']
+      }
+    }
+    const { query, variables } = graphql
+    const actual = findOrCreateThread(variables.participantIds, query)
+    expect(actual).toMatchSnapshot()
   })
 })

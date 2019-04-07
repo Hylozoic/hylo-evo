@@ -8,10 +8,10 @@ import {
   removeParticipant,
   fetchContacts,
   fetchRecentContacts,
-  holoChatContactsSelector,
-  holoChatMatchesSelector,
-  participantsSelector,
-  recentContactsSelector,
+  getHoloChatContacts,
+  getHoloChatMatches,
+  getParticipants,
+  getRecentContacts,
   setAutocomplete
 } from './PeopleSelector.store'
 import fetchPeople from 'store/actions/fetchPeople'
@@ -30,13 +30,13 @@ export function getParticipantSearch (props, participantsFromStore) {
 export function mapStateToProps (state, props) {
   const { holochainActive } = props
   // only show recentContacts in Hylo mode
-  const recentContacts = holochainActive ? [] : recentContactsSelector(state)
+  const recentContacts = holochainActive ? [] : getRecentContacts(state)
 
-  const participants = participantsSelector(state, props)
+  const participants = getParticipants(state, props)
   return {
     autocomplete: state.autocomplete,
-    contacts: holoChatContactsSelector(state, props),
-    matches: holoChatMatchesSelector(state, props),
+    contacts: getHoloChatContacts(state, props),
+    matches: getHoloChatMatches(state, props),
     participants,
     participantSearch: getParticipantSearch(props, participants),
     recentContacts
