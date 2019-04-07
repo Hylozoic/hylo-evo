@@ -10,7 +10,7 @@ import './Messages.scss'
 
 export default class Messages extends React.Component {
   // TODO: Add propTypes
-
+  // TODO: New message to existing thread doesn't pop that thread to the top
   constructor (props) {
     super(props)
 
@@ -82,11 +82,7 @@ export default class Messages extends React.Component {
         <div styleName='right-column'>
           <div styleName='thread'>
             {forNewThread &&
-              <PeopleSelector
-                // TODO: make all props used explicit here
-                {...this.props}
-                onCloseURL={onCloseURL}
-                holochainActive={holochainActive} />}
+              <PeopleSelector location={this.props.location} onCloseURL={onCloseURL} holochainActive={holochainActive} />}
             {!forNewThread &&
               <Header
                 messageThread={messageThread}

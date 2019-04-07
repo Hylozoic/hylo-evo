@@ -8,7 +8,7 @@ import PeopleSelectorContacts from './PeopleSelectorContacts'
 import SelectorMatchedItem from './SelectorMatchedItem'
 import './PeopleSelector.scss'
 
-const { any, arrayOf, func, shape, string } = PropTypes
+const { any, array, arrayOf, func, shape, string } = PropTypes
 
 const personType = shape({
   id: any,
@@ -21,13 +21,22 @@ const personType = shape({
 const invalidPersonName = /[^a-z '-]+/gi
 
 export default class PeopleSelector extends React.Component {
-  // TODO: Check and update
   static propTypes = {
     autocomplete: string,
-    fetchPeople: func,
+    contacts: arrayOf(personType),
+    recentContacts: arrayOf(personType),
+    matches: array,
+    setAutocomplete: func.isRequired,
+    fetchPeople: func.isRequired,
+    fetchContacts: func.isRequired,
+    fetchRecentContacts: func.isRequired,
+    addParticipant: func.isRequired,
+    removeParticipant: func.isRequired,
     deleteParticipant: func,
+    participantSearch: arrayOf(personType),
     participants: arrayOf(personType),
-    setAutocomplete: func
+    changeQuerystringParam: func.isRequired,
+    onCloseURL: string
   }
 
   constructor (props) {
