@@ -99,22 +99,23 @@ export default class Messages extends React.Component {
                 pending={messagesPending}
                 fetchMessages={fetchMessages}
                 updateThreadReadTime={updateThreadReadTime} />}
-            <div styleName='message-form'>
-              <MessageForm
-                messageThreadId={messageThreadId}
-                currentUser={currentUser}
-                formRef={textArea => this.form = textArea} // eslint-disable-line no-return-assign
-                focusForm={this.focusForm}
-                createMessage={createMessage}
-                messageText={messageText}
-                sendIsTyping={sendIsTyping}
-                findOrCreateThread={findOrCreateThread}
-                participants={participants}
-                goToThread={goToThread}
-                pending={messageCreatePending}
-                forNewThread={forNewThread}
-                updateMessageText={updateMessageText} />
-            </div>
+            {(!forNewThread || participants.length > 0) &&
+              <div styleName='message-form'>
+                <MessageForm
+                  messageThreadId={messageThreadId}
+                  currentUser={currentUser}
+                  formRef={textArea => this.form = textArea} // eslint-disable-line no-return-assign
+                  focusForm={this.focusForm}
+                  createMessage={createMessage}
+                  messageText={messageText}
+                  sendIsTyping={sendIsTyping}
+                  findOrCreateThread={findOrCreateThread}
+                  participants={participants}
+                  goToThread={goToThread}
+                  pending={messageCreatePending}
+                  forNewThread={forNewThread}
+                  updateMessageText={updateMessageText} />
+              </div>}
             <PeopleTyping styleName='people-typing' />
             <SocketSubscriber type='post' id={messageThreadId} />
           </div>
