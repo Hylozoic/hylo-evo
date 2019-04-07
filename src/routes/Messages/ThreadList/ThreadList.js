@@ -12,6 +12,7 @@ import './ThreadList.scss'
 const { array, func, object, string } = PropTypes
 
 export default class ThreadList extends Component {
+  // TODO: Check and update
   static propTypes = {
     currentUser: object,
     threads: array,

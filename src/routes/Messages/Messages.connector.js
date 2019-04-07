@@ -23,7 +23,8 @@ import {
   getThreadsHasMore,
   getMessages,
   getMessagesHasMore,
-  getCurrentMessageThread
+  getCurrentMessageThread,
+  NEW_THREAD_ID
 } from './Messages.store'
 
 const mockSocket = { on: () => {}, off: () => {} }
@@ -33,7 +34,7 @@ export function mapStateToProps (state, props) {
   const { holochainActive } = props
   const messageThreadId = get('messageThreadId', routeParams)
   const messageThread = getCurrentMessageThread(state, props)
-  const forNewThread = messageThreadId === 'new'
+  const forNewThread = messageThreadId === NEW_THREAD_ID
 
   return {
     onCloseURL: getPreviousLocation(state),

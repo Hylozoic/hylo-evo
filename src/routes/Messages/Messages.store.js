@@ -13,11 +13,11 @@ import {
   FIND_OR_CREATE_THREAD
 } from 'store/constants'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
-import { NEW_THREAD_ID } from './MessageForm'
 
 export const MODULE_NAME = 'Messages'
 export const UPDATE_MESSAGE_TEXT = `${MODULE_NAME}/UPDATE_MESSAGE_TEXT`
 export const SET_THREAD_SEARCH = `${MODULE_NAME}/SET_THREAD_SEARCH`
+export const NEW_THREAD_ID = 'new'
 
 export function updateMessageText (messageThreadId, messageText) {
   return {

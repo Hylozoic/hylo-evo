@@ -9,6 +9,8 @@ import SocketSubscriber from 'components/SocketSubscriber'
 import './Messages.scss'
 
 export default class Messages extends React.Component {
+  // TODO: Add propTypes
+
   constructor (props) {
     super(props)
 
@@ -81,6 +83,7 @@ export default class Messages extends React.Component {
           <div styleName='thread'>
             {forNewThread &&
               <PeopleSelector
+                // TODO: make all props used explicit here
                 {...this.props}
                 onCloseURL={onCloseURL}
                 holochainActive={holochainActive} />}

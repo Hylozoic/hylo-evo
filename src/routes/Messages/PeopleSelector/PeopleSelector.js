@@ -21,6 +21,7 @@ const personType = shape({
 const invalidPersonName = /[^a-z '-]+/gi
 
 export default class PeopleSelector extends React.Component {
+  // TODO: Check and update
   static propTypes = {
     autocomplete: string,
     fetchPeople: func,

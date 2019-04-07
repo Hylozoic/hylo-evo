@@ -4,18 +4,15 @@ import { throttle } from 'lodash'
 import { get } from 'lodash/fp'
 import TextareaAutosize from 'react-textarea-autosize'
 import { onEnterNoShift } from 'util/textInput'
+import { STARTED_TYPING_INTERVAL } from 'util/constants'
 import RoundImage from 'components/RoundImage'
 import Loading from 'components/Loading'
 import './MessageForm.scss'
 
 var { func, object, string, bool } = PropTypes
 
-// should share with comment form
-export const STARTED_TYPING_INTERVAL = 3000
-
-export const NEW_THREAD_ID = 'new'
-
 export default class MessageForm extends React.Component {
+  // TODO: Check and update
   static propTypes = {
     createMessage: func.isRequired,
     messageThreadId: string,
@@ -48,7 +45,7 @@ export default class MessageForm extends React.Component {
   sendNewMessage () {
     const { findOrCreateThread, createMessage, participants, goToThread, messageText } = this.props
 
-    // TODO: Bind this in Messages.connector
+    // TODO: Bind this in Messages.connector (Also maybe construct chain there too so that this is "findOrCreateThreadByParticipantsAndSendMessage" ha!)
     findOrCreateThread(participants.map(p => p.id), new Date().getTime().toString()).then(resp => {
       const messageThreadId = get('payload.data.findOrCreateThread.id', resp)
       createMessage(messageThreadId, messageText, true).then(() => goToThread(messageThreadId))
@@ -57,8 +54,6 @@ export default class MessageForm extends React.Component {
 
   submit = event => {
     if (event) event.preventDefault()
-    console.log('!!! submit:', this, this.props)
-
     if (!this.props.messageText || this.props.pending) return false
     if (this.props.forNewThread) {
       this.sendNewMessage()
