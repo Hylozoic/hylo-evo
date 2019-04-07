@@ -6,7 +6,9 @@ describe('Header', () => {
   it('should match the latest snapshot', () => {
     const otherParticipants = ['one', 'two', 'three']
     const props = {
-      otherParticipants
+      messageThread: {
+        participants: otherParticipants
+      }
     }
     const wrapper = shallow(<Header {...props} />)
     expect(wrapper).toMatchSnapshot()

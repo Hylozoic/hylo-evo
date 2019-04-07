@@ -1,46 +1,56 @@
-// import { mapStateToProps, mapDispatchToProps, mergeProps } from './MessageSection.connector'
-// import orm from 'store/models'
+import { mapStateToProps, mapDispatchToProps, mergeProps } from './Messages.connector'
+import orm from 'store/models'
 
-// describe('mapStateToProps', () => {
-//   const session = orm.session(orm.getEmptyState())
-//   const { MessageThread, Message, Person } = session
+describe('mapStateToProps', () => {
+  const session = orm.session(orm.getEmptyState())
+  const { MessageThread, Message, Person } = session
 
-//   ;[
-//     {id: '1', name: 'Alice'},
-//     {id: '2', name: 'Bob'}
-//   ].forEach(x => Person.create(x))
+  const people = [
+    {id: '1', name: 'Alice'},
+    {id: '2', name: 'Bob'}
+  ]
+  people.forEach(x => Person.create(x))
 
-//   MessageThread.create({id: '11'})
+  MessageThread.create({id: '11'})
 
-//   ;[
-//     {id: '4', text: 'hi', creator: '1', messageThread: '11'},
-//     {id: '5', text: 'how are you', creator: '1', messageThread: '11'},
-//     {id: '6', text: 'fine thanks', creator: '2', messageThread: '11'},
-//     {id: '7', text: 'and you?', creator: '2', messageThread: '11'}
-//   ].forEach(x => Message.create(x))
+  const messages = [
+    {id: '4', text: 'hi', creator: '1', messageThread: '11'},
+    {id: '5', text: 'how are you', creator: '1', messageThread: '11'},
+    {id: '6', text: 'fine thanks', creator: '2', messageThread: '11'},
+    {id: '7', text: 'and you?', creator: '2', messageThread: '11'}
+  ]
+  messages.forEach(x => Message.create(x))
 
-//   const state = {
-//     orm: session.state,
-//     pending: {
-//       FETCH_MESSAGES: true
-//     },
-//     queryResults: {
-//       '{"type":"FETCH_MESSAGES","params":{"id":"11"}}': {
-//         hasMore: true,
-//         total: 77,
-//         ids: ['4', '5', '6', '7']
-//       }
-//     }
-//   }
+  const state = {
+    orm: session.state,
+    pending: {
+      FETCH_MESSAGES: true
+    },
+    Messages: {
+    },
+    PeopleSelector: {
+      participants: []
+    },
+    queryResults: {
+      '{"type":"FETCH_MESSAGES","params":{"id":"11"}}': {
+        hasMore: true,
+        total: 77,
+        ids: ['4', '5', '6', '7']
+      }
+    }
+  }
 
-//   const props = {
-//     messageThreadId: '11'
-//   }
+  const props = {
+    messageThreadId: '11',
+    match: {
+      params: {}
+    }
+  }
 
-//   it('returns expected values', () => {
-//     expect(mapStateToProps(state, props)).toMatchSnapshot()
-//   })
-// })
+  it('returns expected values', () => {
+    expect(mapStateToProps(state, props)).toMatchSnapshot()
+  })
+})
 
 // describe('mapDispatchToProps', () => {
 //   it('returns expected values', () => {

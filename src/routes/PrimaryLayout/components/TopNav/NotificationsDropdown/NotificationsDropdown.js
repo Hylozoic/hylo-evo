@@ -25,7 +25,7 @@ const { array, string, func } = PropTypes
 
 export default class NotificationsDropdown extends Component {
   static propTypes = {
-    fetchThreads: func,
+    fetchNotifications: func,
     markActivityRead: func,
     markAllActivitiesRead: func,
     renderToggleChildren: func,
