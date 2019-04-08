@@ -37,8 +37,19 @@ exports[`NetworkSettings doesnt have the moderators tab if only a moderator 1`] 
         "path": "/n/mycelium/settings/communities",
       },
       Object {
-        "path": "/n/mycelium/settings/communities/:slug",
-        "render": [Function],
+        "component": <Connect(NetworkModeratorsTab)
+          communities={undefined}
+          network={
+            Object {
+              "communities": Array [],
+              "id": 1,
+              "moderators": Array [],
+              "slug": "mycelium",
+            }
+          }
+        />,
+        "name": "Moderators",
+        "path": "/n/mycelium/settings/moderators",
       },
     ]
   }
@@ -68,20 +79,6 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
         "path": "/n/mycelium/settings",
       },
       Object {
-        "component": <Connect(NetworkModeratorsTab)
-          network={
-            Object {
-              "communities": Array [],
-              "id": 1,
-              "moderators": Array [],
-              "slug": "mycelium",
-            }
-          }
-        />,
-        "name": "Moderators",
-        "path": "/n/mycelium/settings/moderators",
-      },
-      Object {
         "component": <Connect(NetworkCommunitiesTab)
           isAdmin={true}
           isModerator={false}
@@ -98,8 +95,19 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
         "path": "/n/mycelium/settings/communities",
       },
       Object {
-        "path": "/n/mycelium/settings/communities/:slug",
-        "render": [Function],
+        "component": <Connect(NetworkModeratorsTab)
+          communities={undefined}
+          network={
+            Object {
+              "communities": Array [],
+              "id": 1,
+              "moderators": Array [],
+              "slug": "mycelium",
+            }
+          }
+        />,
+        "name": "Moderators",
+        "path": "/n/mycelium/settings/moderators",
       },
     ]
   }

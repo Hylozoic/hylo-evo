@@ -30,7 +30,8 @@ describe('mergeProps', () => {
   it('returns maps network id for addCommunityToNetwork and createCommunity with a network', () => {
     const dispatchProps = {
       addCommunityToNetwork: jest.fn(),
-      createCommunity: jest.fn()
+      createCommunity: jest.fn(),
+      removeCommunityFromNetwork: () => {}
     }
     const networkId = 321
     const ownProps = {

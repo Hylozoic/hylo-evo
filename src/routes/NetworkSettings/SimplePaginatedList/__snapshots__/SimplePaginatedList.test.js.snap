@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PaginationLinks renders correctly 1`] = `
+<div
+  data-stylename="pagination-links"
+>
+  <PageLink
+    i={0}
+    key="0"
+  />
+  <PageLink
+    i={1}
+    key="1"
+  />
+  <PageLink
+    i={2}
+    key="2"
+  />
+  <PageLink
+    i={3}
+    key="3"
+  />
+  <PageLink
+    i={4}
+    key="4"
+  />
+</div>
+`;
+
+exports[`SimplePaginatedList renders correctly 1`] = `
+<div
+  data-stylename="paginated-list"
+>
+  <div>
+    2
+  </div>
+  <div>
+    3
+  </div>
+  <PaginationLinks
+    page={3}
+    pageCount={5}
+    setPage={[Function]}
+  />
+</div>
+`;

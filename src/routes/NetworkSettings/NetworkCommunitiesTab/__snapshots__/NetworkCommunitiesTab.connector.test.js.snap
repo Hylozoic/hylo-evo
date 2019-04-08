@@ -8,6 +8,7 @@ Object {
   "fetchCommunityAutocomplete": [Function],
   "removeCommunityFromNetwork": [Function],
   "setCommunitiesPage": [Function],
+  "updateCommunityHiddenSetting": [Function],
 }
 `;
 

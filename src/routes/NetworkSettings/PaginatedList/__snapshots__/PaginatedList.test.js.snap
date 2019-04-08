@@ -6,7 +6,9 @@ exports[`PaginatedList renders correctly 1`] = `
 >
   <div
     data-stylename="section-label"
-  />
+  >
+    <span />
+  </div>
   <RemovableListItem
     item={
       Object {

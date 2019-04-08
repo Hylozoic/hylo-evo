@@ -2,7 +2,7 @@ import SimplePaginatedList, { PaginationLinks } from './index'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-describe('PaginatedList', () => {
+describe('SimplePaginatedList', () => {
   it('renders correctly', () => {
     const items = [{id: 2}, {id: 3}]
 
@@ -12,7 +12,8 @@ describe('PaginatedList', () => {
       page={3}
       pageCount={5}
       setPage={() => {}}
-      itemProps={{square: true, size: 40}} />)
+      itemProps={{square: true, size: 40}}
+      renderItem={item => <div>{item.id}</div>} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

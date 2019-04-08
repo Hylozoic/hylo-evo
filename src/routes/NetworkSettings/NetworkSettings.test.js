@@ -9,6 +9,7 @@ describe('NetworkSettings', () => {
 
   beforeEach(() => {
     props = {
+      fetchCommunities: () => {},
       fetchNetworkSettings: () => {},
       isAdmin: true,
       isModerator: false,
