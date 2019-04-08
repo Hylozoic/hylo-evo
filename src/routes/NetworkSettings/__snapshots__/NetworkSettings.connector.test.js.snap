@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapDispatchToProps returns the right keys 1`] = `
+Object {
+  "fetchCommunitiesMaker": [Function],
+  "fetchModeratorsMaker": [Function],
+  "fetchNetworkSettingsMaker": [Function],
+  "setConfirmBeforeClose": [Function],
+  "updateNetworkSettingsMaker": [Function],
+}
+`;
+
+exports[`mapStateToProps returns the right keys 1`] = `
+Object {
+  "communities": Array [],
+  "confirm": undefined,
+  "isAdmin": false,
+  "isModerator": false,
+  "loading": false,
+  "moderators": Array [],
+  "moderatorsPage": undefined,
+  "network": null,
+  "slug": undefined,
+}
+`;
