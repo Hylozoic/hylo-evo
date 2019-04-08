@@ -8,7 +8,9 @@ import {
   getModerators,
   fetchNetworkSettings,
   updateNetworkSettings,
-  getModeratorsPage
+  getModeratorsPage,
+  fetchCommunities,
+  getCommunities
 } from './NetworkSettings.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import getMe from 'store/selectors/getMe'
@@ -27,6 +29,10 @@ export function mapStateToProps (state, props) {
   const loading = !!state.pending[FETCH_NETWORK_SETTINGS]
   const me = getMe(state)
 
+  // Page is 0 here as we don't use pagination
+  const communitiesResultProps = {slug, page: 0}
+  const communities = getCommunities(state, communitiesResultProps)
+
   return {
     isAdmin: me ? me.isAdmin : false,
     isModerator: me && moderators ? some(['id', me.id], moderators) : false,
@@ -35,12 +41,14 @@ export function mapStateToProps (state, props) {
     moderators,
     loading,
     confirm,
-    moderatorsPage
+    moderatorsPage,
+    communities
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
   return {
+    fetchCommunitiesMaker: (slug) => () => dispatch(fetchCommunities({slug, page: 0, pageSize: 1000})),
     fetchNetworkSettingsMaker: slug => () => dispatch(fetchNetworkSettings(slug)),
     updateNetworkSettingsMaker: id => changes => dispatch(updateNetworkSettings(id, changes)),
     fetchModeratorsMaker: (slug, page) => () => dispatch(fetchModerators(slug, page)),
@@ -56,7 +64,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     fetchNetworkSettingsMaker,
     updateNetworkSettingsMaker,
     setConfirmBeforeClose,
-    fetchModeratorsMaker
+    fetchModeratorsMaker,
+    fetchCommunitiesMaker
    } = dispatchProps
   let fetchModerators,
     fetchNetworkSettings,
@@ -81,6 +90,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     return setConfirmBeforeClose(newState)
   }
 
+  const fetchCommunities = fetchCommunitiesMaker(slug)
+
   return {
     ...stateProps,
     ...dispatchProps,
@@ -88,7 +99,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     fetchNetworkSettings,
     updateNetworkSettings,
     setConfirm,
-    fetchModerators
+    fetchModerators,
+    fetchCommunities
   }
 }
 

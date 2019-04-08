@@ -28,6 +28,7 @@ export default class NetworkSettings extends Component {
 
   componentDidMount () {
     this.props.fetchNetworkSettings()
+    this.props.fetchCommunities()
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -43,7 +44,8 @@ export default class NetworkSettings extends Component {
       loading,
       network,
       updateNetworkSettings,
-      setConfirm
+      setConfirm,
+      communities
     } = this.props
 
     if (!network || loading) return <FullPageModal><Loading /></FullPageModal>
@@ -69,7 +71,7 @@ export default class NetworkSettings extends Component {
       }, {
         name: 'Moderators',
         path: `/n/${network.slug}/settings/moderators`,
-        component: <NetworkModeratorsTab network={network} />
+        component: <NetworkModeratorsTab network={network} communities={communities} />
       }
     ]
     return <FullPageModal narrow goToOnClose={`/n/${network.slug}`} content={content} />

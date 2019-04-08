@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
 import Autocomplete from 'react-autocomplete'
-import { isEmpty } from 'lodash/fp'
+import { isEmpty, intersection } from 'lodash/fp'
 import PaginatedList from '../PaginatedList'
 import '../NetworkSettings.scss'
 import Avatar from 'components/Avatar'
@@ -38,7 +38,21 @@ export default class NetworkModeratorsTab extends Component {
   addModerator = () => {
     const { moderatorChoice } = this.state
     if (moderatorChoice) {
-      this.props.addNetworkModeratorRole(moderatorChoice.id)
+      const moderatedCommunityIds = moderatorChoice.moderatedCommunityMemberships.map(mcm => mcm.community.id)
+      const { communities } = this.props
+      const networkCommunityIds = communities.map(c => c.id)
+      const networkModeratedCommunityIds = intersection(networkCommunityIds, moderatedCommunityIds)
+
+      var confirmed = true
+
+      if (isEmpty(networkModeratedCommunityIds)) {
+        confirmed = window.confirm(`${moderatorChoice.name} is not a moderator of any of the communities in this network. Are you sure you want to add them as a network moderator?`)
+      }
+
+      if (confirmed) {
+        this.props.addNetworkModeratorRole(moderatorChoice.id)
+      }
+
       this.setState({
         moderatorChoice: null,
         moderatorSearch: ''
@@ -47,12 +61,10 @@ export default class NetworkModeratorsTab extends Component {
   }
 
   chooseModerator = (_, person) => {
-    console.log('person')
-    console.log('this person moderates the following communities')
-    // this.setState({
-    //   moderatorChoice: person,
-    //   moderatorSearch: person.name
-    // })
+    this.setState({
+      moderatorChoice: person,
+      moderatorSearch: person.name
+    })
   }
 
   moderatorAutocomplete = ({ target: { value } }) => {
@@ -95,8 +107,9 @@ export default class NetworkModeratorsTab extends Component {
             }
           }}
           items={moderatorAutocompleteCandidates}
-          renderItem={(person, isHighlighted) => 
-            <ModeratorSuggestionRow person={person} isHighlighted={isHighlighted} key={person.id} />}
+          renderItem={(person, isHighlighted) => <div style={{ background: isHighlighted ? 'lightgray' : 'white' }} key={person.id}>
+            <ModeratorSuggestionRow person={person} isHighlighted={isHighlighted} />
+          </div>}
           value={this.state.moderatorSearch}
           onChange={this.moderatorAutocomplete}
           onSelect={this.chooseModerator}
@@ -109,9 +122,9 @@ export default class NetworkModeratorsTab extends Component {
 
 export class ModeratorSuggestionRow extends Component {
   render () {
-    const { person, isHighlighted } = this.props
+    const { person } = this.props
     const { name, avatarUrl } = person
-    return <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+    return <div>
       <Avatar avatarUrl={avatarUrl} small /> {name}
     </div>
   }
