@@ -50,7 +50,7 @@ export function LinkedCommunityNameList ({ communities, maxShown = 2, expandFunc
 
   return <span styleName='communityList'>
     {communitiesToDisplay.map((community, i) =>
-      <LinkedCommunityName community={community}>
+      <LinkedCommunityName community={community} key={i}>
         <Separator currentIndex={i} displayCount={communitiesToDisplay.length} othersCount={othersCount} />
       </LinkedCommunityName>)}
     {othersCount > 0 &&
