@@ -1,7 +1,6 @@
 import {
   removePostFromUrl,
-  postUrl,
-  networkCommunitySettingsUrl
+  postUrl
 } from './navigation'
 
 describe('postUrl', () => {
@@ -44,14 +43,6 @@ describe('postUrl', () => {
   it('should concatenate an action path parameter when action is passed in opts', () => {
     const expected = '/all/p/123/action'
     const actual = postUrl('123', {action: 'action'})
-    expect(actual).toEqual(expected)
-  })
-})
-
-describe('networkCommunitySettingsUrl', () => {
-  it('should default to displaying the all communities context', () => {
-    const expected = '/n/nslug/settings/communities/cslug'
-    const actual = networkCommunitySettingsUrl('nslug', 'cslug')
     expect(actual).toEqual(expected)
   })
 })

@@ -125,10 +125,6 @@ export function networkSettingsUrl (networkSlug) {
   return `${networkUrl(networkSlug)}/settings`
 }
 
-export function networkCommunitySettingsUrl (networkSlug, communitySlug) {
-  return `${networkUrl(networkSlug)}/settings/communities/${communitySlug}`
-}
-
 export function newMessageUrl () {
   return `${messagesUrl()}/new`
 }

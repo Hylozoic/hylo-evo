@@ -213,6 +213,14 @@ export function autocompleteQuery (queryName, type) {
             id
             name
             avatarUrl
+            moderatedCommunityMemberships {
+              community {
+                id
+                slug
+                name
+                avatarUrl
+              }
+            }
           }
         }
       }`,

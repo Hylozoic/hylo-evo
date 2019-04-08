@@ -6,12 +6,17 @@ import { Link } from 'react-router-dom'
 const { string, bool } = PropTypes
 
 export default function Avatar ({ url, avatarUrl, small, medium, className }) {
-  return <Link to={url} className={className}>
-    <RoundImage url={avatarUrl} small={small} medium={medium} />
-  </Link>
+  if (url) {
+    return <Link to={url} className={className}>
+      <RoundImage url={avatarUrl} small={small} medium={medium} />
+    </Link>
+  } else {
+    return <span className={className}>
+      <RoundImage url={avatarUrl} small={small} medium={medium} />
+    </span>
+  }
 }
 Avatar.propTypes = {
-  url: string.isRequired,
   avatarUrl: string,
   small: bool,
   medium: bool,

@@ -6,6 +6,7 @@ import Autocomplete from 'react-autocomplete'
 import { isEmpty } from 'lodash/fp'
 import PaginatedList from '../PaginatedList'
 import '../NetworkSettings.scss'
+import Avatar from 'components/Avatar'
 
 const { any, array, bool, func, number, object } = PropTypes
 
@@ -46,10 +47,12 @@ export default class NetworkModeratorsTab extends Component {
   }
 
   chooseModerator = (_, person) => {
-    this.setState({
-      moderatorChoice: person,
-      moderatorSearch: person.name
-    })
+    console.log('person')
+    console.log('this person moderates the following communities')
+    // this.setState({
+    //   moderatorChoice: person,
+    //   moderatorSearch: person.name
+    // })
   }
 
   moderatorAutocomplete = ({ target: { value } }) => {
@@ -92,17 +95,24 @@ export default class NetworkModeratorsTab extends Component {
             }
           }}
           items={moderatorAutocompleteCandidates}
-          renderItem={(person, isHighlighted) =>
-            <div key={person.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-              {person.name}
-            </div>
-          }
+          renderItem={(person, isHighlighted) => 
+            <ModeratorSuggestionRow person={person} isHighlighted={isHighlighted} key={person.id} />}
           value={this.state.moderatorSearch}
           onChange={this.moderatorAutocomplete}
           onSelect={this.chooseModerator}
         />
         <Button label='Add Moderator' color={'green'} onClick={this.addModerator} styleName='button' />
       </div>
+    </div>
+  }
+}
+
+export class ModeratorSuggestionRow extends Component {
+  render () {
+    const { person, isHighlighted } = this.props
+    const { name, avatarUrl } = person
+    return <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+      <Avatar avatarUrl={avatarUrl} small /> {name}
     </div>
   }
 }

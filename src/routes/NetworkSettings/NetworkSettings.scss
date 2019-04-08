@@ -178,13 +178,14 @@
 }
 
 .expandedNetworkCommunityRow {
-  padding-right: 15px;
+  padding-left: 35px;
 }
 
 .removeButton {
   color: $color-amaranth;
   display: flex;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
 .trashIcon {
