@@ -15,6 +15,7 @@ es5
 .env
 .env.production
 .env.old
+.env.production
 npm-debug.log
 
 .vscode

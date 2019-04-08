@@ -222,6 +222,10 @@ function addMiddleware (devServer) {
 
 function runDevServer (host, port, protocol) {
   var devServer = new WebpackDevServer(compiler, {
+    // NOTE: THIS IS DANGEROUS!
+    // It exposes your machine to attacks from the websites you visit:
+    // https://github.com/facebook/create-react-app/blob/991b092c893b916e6fd34e408e96a395d47b6008/packages/react-scripts/template/README.md#invalid-host-header-errors-after-configuring-proxy
+    disableHostCheck: true,
     // Enable gzip compression of generated files.
     compress: true,
     // Silence WebpackDevServer's own logs since they're generally not useful.
@@ -287,6 +291,7 @@ function runDevServer (host, port, protocol) {
 
 function run (port) {
   var protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
+
   var host = process.env.HOST || 'localhost'
   setupCompiler(host, port, protocol)
   runDevServer(host, port, protocol)

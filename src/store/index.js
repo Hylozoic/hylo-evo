@@ -4,7 +4,9 @@ import orm from './models'
 import rootReducer, { combinedReducers } from './reducers'
 
 export function getEmptyState () {
-  return combinedReducers({orm: orm.getEmptyState()}, {type: ''})
+  return combinedReducers({
+    orm: orm.getEmptyState()
+  }, {type: ''})
 }
 
 export default function (history, req) {

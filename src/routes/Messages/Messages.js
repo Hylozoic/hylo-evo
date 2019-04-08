@@ -1,8 +1,8 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router'
-import PeopleSelector from 'components/PeopleSelector'
-import ThreadList from 'components/ThreadList'
-import Thread from 'components/Thread'
+import PeopleSelector from './PeopleSelector'
+import ThreadList from './ThreadList'
+import Thread from './Thread'
 import './Messages.scss'
 
 export default class Messages extends React.Component {
@@ -13,14 +13,15 @@ export default class Messages extends React.Component {
 
   render () {
     const { onCloseURL } = this.state
+    const { holochainActive } = this.props
 
     return <div styleName='modal'>
       <div styleName='content'>
-        <ThreadList styleName='left-column' />
+        <ThreadList styleName='left-column' holochainActive={holochainActive} />
         <div styleName='right-column'>
           <Switch>
-            <Route path='/t/new' component={props => <PeopleSelector {...props} onCloseURL={onCloseURL} />} />
-            <Route path='/t/:threadId' component={props => <Thread {...props} onCloseURL={onCloseURL} />} />
+            <Route path='/t/new' component={props => <PeopleSelector {...props} onCloseURL={onCloseURL} holochainActive={holochainActive} />} />
+            <Route path='/t/:threadId' component={props => <Thread {...props} onCloseURL={onCloseURL} holochainActive={holochainActive} />} />
             <Redirect to='/t/new' />
           </Switch>
         </div>

@@ -3,26 +3,33 @@ import fetch from 'isomorphic-fetch'
 export default function apiMiddleware (req) {
   return store => next => action => {
     const { payload, meta } = action
+
     if (!payload || !payload.api) return next(action)
 
     const { path, params, method } = payload.api
     const cookie = req && req.headers.cookie
-    let promise = fetchJSON(path, params, {method, cookie})
+
+    var promise = fetchJSON(path, params, { method, cookie, host: getHost() })
 
     if (meta && meta.then) {
       promise = promise.then(meta.then)
     }
 
-    return next({...action, payload: promise})
+    return next({ ...action, payload: promise })
   }
 }
 
-export const HOST = typeof window === 'undefined'
-  ? process.env.API_HOST
-  : window.location.origin
+// TODO: do we ever use API_HOST?
+export function getHost () {
+  if (typeof window === 'undefined') {
+    return process.env.API_HOST
+  } else {
+    return window.location.origin
+  }
+}
 
 export function fetchJSON (path, params, options = {}) {
-  const fetchURL = (options.host || HOST) + path
+  const fetchURL = (options.host) + path
   const fetchOptions = {
     method: options.method || 'get',
     headers: {

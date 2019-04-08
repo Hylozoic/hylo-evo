@@ -7,6 +7,7 @@ import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import getMemberships from 'store/selectors/getMemberships'
+import getHolochainActive from 'store/selectors/getHolochainActive'
 import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommunityRoute'
 import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import { get, some } from 'lodash/fp'
@@ -26,7 +27,8 @@ export function mapStateToProps (state, props) {
     hasMemberships,
     communityPending: state.pending[FETCH_FOR_COMMUNITY],
     returnToURL: getReturnToURL(state),
-    downloadAppUrl: mobileRedirect()
+    downloadAppUrl: mobileRedirect(),
+    holochainActive: getHolochainActive(state)
   }
 }
 

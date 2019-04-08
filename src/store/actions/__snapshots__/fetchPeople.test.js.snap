@@ -11,6 +11,7 @@ Object {
   },
   "meta": Object {
     "extractModel": "Person",
+    "holochainAPI": false,
   },
   "type": "FETCH_PEOPLE",
 }
