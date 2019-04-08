@@ -7,6 +7,7 @@ import { isEmpty, intersection } from 'lodash/fp'
 import PaginatedList from '../PaginatedList'
 import '../NetworkSettings.scss'
 import Avatar from 'components/Avatar'
+import cx from 'classnames'
 
 const { any, array, bool, func, number, object } = PropTypes
 
@@ -107,7 +108,7 @@ export default class NetworkModeratorsTab extends Component {
             }
           }}
           items={moderatorAutocompleteCandidates}
-          renderItem={(person, isHighlighted) => <div style={{ background: isHighlighted ? 'lightgray' : 'white' }} key={person.id}>
+          renderItem={(person, isHighlighted) => <div key={person.id}>
             <ModeratorSuggestionRow person={person} isHighlighted={isHighlighted} />
           </div>}
           value={this.state.moderatorSearch}
@@ -122,10 +123,10 @@ export default class NetworkModeratorsTab extends Component {
 
 export class ModeratorSuggestionRow extends Component {
   render () {
-    const { person } = this.props
+    const { person, isHighlighted } = this.props
     const { name, avatarUrl } = person
-    return <div>
-      <Avatar avatarUrl={avatarUrl} small /> {name}
+    return <div styleName={cx('moderatorSuggestionRow', {blueBorder: isHighlighted})}>
+      <Avatar avatarUrl={avatarUrl} small styleName='moderatorSuggestionAvatar' /> {name}
     </div>
   }
 }

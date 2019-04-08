@@ -225,3 +225,20 @@
     text-decoration: none;
   }
 }
+
+// ModeratorSuggestionRow
+.moderatorSuggestionRow {
+  display: flex;
+  padding: 3px 5px;  
+  align-items: center;
+  background: white;
+  border: 2px solid white;
+}
+
+.blueBorder {
+  border: 2px solid lightblue;
+}
+
+.moderatorSuggestionAvatar {
+  margin-right: 5px;
+}
