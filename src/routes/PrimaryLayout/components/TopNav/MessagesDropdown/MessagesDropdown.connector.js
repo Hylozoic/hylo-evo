@@ -15,9 +15,9 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const { holoMode } = props
+  const { holochainActive } = props
   return {
-    fetchThreads: () => dispatch(fetchThreads(10, 0, holoMode)),
+    fetchThreads: () => dispatch(fetchThreads(10, 0, holochainActive)),
     goToThread: id => dispatch(push(threadUrl(id)))
   }
 }

@@ -1,15 +1,13 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
-import {
-  default as orm,
-  default as holoOrm
-} from './ormReducer'
+import orm from './ormReducer'
 import login from 'store/reducers/login'
 import pending from './pending'
 import locationHistory from './locationHistory'
 import resetStore from './resetStore'
 import mixpanel from './mixpanel'
 import intercom from './intercom'
+import holochain from './holochain'
 
 // Local store
 // generator-marker-local-store-import
@@ -42,7 +40,6 @@ import { handleSetState, composeReducers } from './util'
 export const combinedReducers = combineReducers({
   // Global store
   orm,
-  holoOrm,
   router: routerReducer,
   login,
   pending,
@@ -50,6 +47,7 @@ export const combinedReducers = combineReducers({
   locationHistory,
   mixpanel,
   intercom,
+  holochain,
 
   // Local store (Component)
   // generator-marker-local-store-reducer

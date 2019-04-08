@@ -2,7 +2,7 @@ import { get } from 'lodash/fp'
 
 import { FETCH_THREADS } from 'store/constants'
 
-export default function (first = 10, offset = 0, holoChatAPI = false) {
+export default function (first = 10, offset = 0, holochainAPI = false) {
   return {
     type: FETCH_THREADS,
     graphql: {
@@ -44,7 +44,7 @@ export default function (first = 10, offset = 0, holoChatAPI = false) {
       }
     },
     meta: {
-      holoChatAPI,
+      holochainAPI,
       extractModel: 'Me',
       extractQueryResults: {
         getItems: get('payload.data.me.messageThreads')
