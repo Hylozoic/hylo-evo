@@ -9,7 +9,6 @@ import SocketSubscriber from 'components/SocketSubscriber'
 import './Messages.scss'
 
 export default class Messages extends React.Component {
-  // TODO: Add propTypes
   // TODO: A bug - new message to existing thread doesn't pop that thread to the top
   constructor (props) {
     super(props)

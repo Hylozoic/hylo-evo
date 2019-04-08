@@ -42,14 +42,13 @@ export function createMessageList (messages, lastSeenAt) {
 }
 
 export default class MessageSection extends React.Component {
-  // TODO: Check and update
   static propTypes = {
     socket: object,
-    currentUser: object,
     reconnectFetchMessages: func,
+    currentUser: object,
     messages: array,
-    hasMore: bool,
     pending: bool,
+    hasMore: bool,
     fetchMessages: func.isRequired,
     updateThreadReadTime: func,
     messageThread: object

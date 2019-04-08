@@ -12,7 +12,6 @@ import './MessageForm.scss'
 var { func, object, string, bool } = PropTypes
 
 export default class MessageForm extends React.Component {
-  // TODO: Check and update
   static propTypes = {
     createMessage: func.isRequired,
     messageThreadId: string,
@@ -23,10 +22,10 @@ export default class MessageForm extends React.Component {
     goToThread: func,
     pending: bool,
     forNewThread: bool,
+    updateMessageText: func,
     formRef: func,
     className: string,
     currentUser: object,
-    updateMessageText: func,
     placeholder: string
   }
 
