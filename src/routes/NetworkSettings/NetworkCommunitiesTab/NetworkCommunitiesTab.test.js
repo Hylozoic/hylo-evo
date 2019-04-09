@@ -17,6 +17,31 @@ describe('NetworkCommunitiesTab', () => {
       setCommunitiesPage={() => {}} />)
     expect(wrapper).toMatchSnapshot()
   })
+
+  describe('renderNetworkCommunityRow', () => {
+    it('returns a NetworkCommunityRow', () => {
+      const wrapper = shallow(<NetworkCommunitiesTab
+        isModerator
+        isAdmin
+        communitiesPage={1}
+        communitiesPageCount={2}
+        communitiesPending={false}
+        communityAutocompleteCandidates={[]}
+        network={{id: 1}}
+        setCommunitiesPage={() => {}}
+        updateCommunityHiddenSetting={() => {}} />)
+
+      const community = {
+        id: 1
+      }
+
+      wrapper.instance().setState({
+        expandedCommunityId: community.id
+      })
+      expect(wrapper.instance().renderNetworkCommunityRow(community)).toMatchSnapshot()
+    })
+  })
+
 })
 
 describe('NetworkCommunityRow', () => {

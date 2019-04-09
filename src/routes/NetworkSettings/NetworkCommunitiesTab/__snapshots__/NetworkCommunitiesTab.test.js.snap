@@ -54,6 +54,20 @@ exports[`CommunityModeratorSection renders correctly 1`] = `
 </div>
 `;
 
+exports[`NetworkCommunitiesTab renderNetworkCommunityRow returns a NetworkCommunityRow 1`] = `
+<NetworkCommunityRow
+  community={
+    Object {
+      "id": 1,
+    }
+  }
+  expanded={true}
+  removeCommunityFromNetwork={[Function]}
+  toggleExpanded={[Function]}
+  updateCommunityHiddenSetting={[Function]}
+/>
+`;
+
 exports[`NetworkCommunitiesTab renders correctly 1`] = `
 <div
   data-stylename="communities-tab"
