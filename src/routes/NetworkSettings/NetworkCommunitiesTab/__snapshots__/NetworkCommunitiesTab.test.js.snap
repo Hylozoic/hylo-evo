@@ -1,0 +1,247 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommunityModerator renders correctly 1`] = `
+<div
+  data-stylename="moderator"
+>
+  <Avatar
+    avatarUrl="jo.png"
+    data-stylename="moderator-image"
+    medium={true}
+    url="/c/jomunity/m/2"
+  />
+  <Link
+    data-stylename="moderator-name"
+    replace={false}
+    to="/c/jomunity/m/2"
+  >
+    jo
+  </Link>
+</div>
+`;
+
+exports[`CommunityModeratorSection renders correctly 1`] = `
+<div
+  data-stylename="moderators-section"
+>
+  <div
+    data-stylename="moderators-header"
+  >
+    Community Moderators
+  </div>
+  <CommunityModerator
+    key="0"
+    moderator={
+      Object {
+        "avatarUrl": "jo.png",
+        "id": 2,
+        "name": "jo",
+      }
+    }
+    slug="jomunity"
+  />
+  <CommunityModerator
+    key="1"
+    moderator={
+      Object {
+        "avatarUrl": "sam.png",
+        "id": 3,
+        "name": "sam",
+      }
+    }
+    slug="jomunity"
+  />
+</div>
+`;
+
+exports[`NetworkCommunitiesTab renders correctly 1`] = `
+<div
+  data-stylename="communities-tab"
+>
+  <SimplePaginatedList
+    data-stylename="communities"
+    header={
+      <div
+        data-stylename="section-label"
+      >
+        <span>
+          communities
+        </span>
+        <span
+          style={
+            Object {
+              "marginLeft": "auto",
+            }
+          }
+        >
+          visibility to network
+        </span>
+      </div>
+    }
+    itemProps={
+      Object {
+        "size": 40,
+        "square": true,
+      }
+    }
+    page={1}
+    pageCount={2}
+    pending={false}
+    renderItem={[Function]}
+    setPage={[Function]}
+  />
+  <div
+    data-stylename="autocomplete"
+  >
+    <Autocomplete
+      autoHighlight={true}
+      getItemValue={[Function]}
+      inputProps={
+        Object {
+          "placeholder": "Start typing a community name",
+          "style": Object {
+            "border": "1px solid #ccc",
+            "borderRadius": "4px",
+            "padding": "3px",
+            "width": "400px",
+          },
+        }
+      }
+      items={
+        Array [
+          Object {
+            "avatarUrl": "jo.png",
+            "id": 2,
+            "name": "jomunity",
+          },
+          Object {
+            "avatarUrl": "sam.png",
+            "id": 3,
+            "name": "samunity",
+          },
+        ]
+      }
+      menuStyle={
+        Object {
+          "background": "rgba(255, 255, 255, 0.9)",
+          "borderRadius": "3px",
+          "boxShadow": "0 2px 12px rgba(0, 0, 0, 0.1)",
+          "fontSize": "90%",
+          "maxHeight": "50%",
+          "overflow": "auto",
+          "padding": "2px 0",
+          "position": "fixed",
+        }
+      }
+      onChange={[Function]}
+      onMenuVisibilityChange={[Function]}
+      onSelect={[Function]}
+      renderInput={[Function]}
+      renderItem={[Function]}
+      renderMenu={[Function]}
+      selectOnBlur={false}
+      value=""
+      wrapperProps={Object {}}
+      wrapperStyle={
+        Object {
+          "display": "inline-block",
+        }
+      }
+    />
+    <Button
+      color="green"
+      data-stylename="button"
+      label="Add Existing Community"
+      onClick={[Function]}
+    />
+  </div>
+  <Button
+    color="green"
+    data-stylename="button"
+    label="Add New Community"
+    onClick={[Function]}
+  />
+</div>
+`;
+
+exports[`NetworkCommunityRow renders correctly 1`] = `
+<div
+  data-stylename="networkCommunityRow"
+>
+  <div
+    data-stylename="topRow"
+  >
+    <span
+      onClick={[Function]}
+    >
+      <Icon
+        data-stylename="arrowDownIcon"
+        name="ArrowDown"
+      />
+      <RoundImage
+        data-stylename="communityAvatar"
+        medium={true}
+        url="jo.png"
+      />
+    </span>
+    <span
+      data-stylename="communityName"
+      onClick={[Function]}
+    >
+      jomunity
+    </span>
+    <Dropdown
+      data-stylename="visibilityDropdown"
+      items={
+        Array [
+          Object {
+            "label": "Visible to network",
+            "onClick": [Function],
+          },
+          Object {
+            "label": "Private to members",
+            "onClick": [Function],
+          },
+        ]
+      }
+      toggleChildren={
+        <span
+          data-stylename="dropdownLabel"
+        >
+          Visible to network
+        </span>
+      }
+    />
+  </div>
+  <div
+    data-stylename="expandedNetworkCommunityRow"
+  >
+    <CommunityModeratorSection
+      moderators={
+        Array [
+          Object {
+            "avatarUrl": "jo.png",
+            "id": 2,
+            "name": "jo",
+          },
+          Object {
+            "avatarUrl": "sam.png",
+            "id": 3,
+            "name": "sam",
+          },
+        ]
+      }
+    />
+    <div
+      data-stylename="removeButton"
+      onClick={[Function]}
+    >
+      <Icon
+        data-stylename="trashIcon"
+        name="Trash"
+      />
+       Remove Community from Network
+    </div>
+  </div>
+</div>
+`;
