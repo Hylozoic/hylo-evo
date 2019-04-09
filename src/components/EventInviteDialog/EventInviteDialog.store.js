@@ -30,7 +30,7 @@ export function invitePeopleToEvent (eventId, inviteeIds) {
       eventId,
       inviteeIds,
       optimistic: true,
-      extract
+      extractModel: 'Post'
     }
   }
 }

@@ -1,19 +1,22 @@
 $avatar-size: 20px;
 
 .container {
-  height: 500px;
+  height: 450px;
   display: flex;
   flex-direction: column;
 }
 
 .inviteSuggestions {
-  border: 1px solid black;  
   max-height: 300px;
   overflow-y: auto;
 }
 
+.alreadyInvitedLabel {
+  composes: bdy-lt-lg from 'css/typography.scss';
+  margin-top: 10px;
+}
+
 .alreadyInvited {
-  border: 1px solid black; 
   overflow-y: auto; 
 }
 
@@ -57,7 +60,7 @@ $avatar-size: 20px;
 
 // Search
 .search {
-  /* empty */
+  margin-bottom: 10px;
 }
 
 // TextInput Theme

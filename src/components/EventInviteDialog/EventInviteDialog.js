@@ -7,7 +7,6 @@ import Button from 'components/Button'
 import styles from './EventInviteDialog.scss'
 import { humanResponse } from 'store/models/EventInvitation'
 import TextInput from 'components/TextInput'
-import { throttle } from 'lodash/fp'
 
 export default class EventInviteDialog extends React.PureComponent {
   state = {
@@ -16,6 +15,8 @@ export default class EventInviteDialog extends React.PureComponent {
   }
 
   toggleInvite = id => {
+    console.log('**** toggleInvite', id)
+
     const { invitedIds } = this.state
 
     if (invitedIds.includes(id)) {
@@ -38,7 +39,7 @@ export default class EventInviteDialog extends React.PureComponent {
     const { eventInvitations } = this.props
     const { searchTerm } = this.state
     return this.props.people.filter(person => {
-      return !eventInvitations.map(ei => ei.id).includes(person.id) && 
+      return !eventInvitations.map(ei => ei.id).includes(person.id) &&
       person.name.toLowerCase().includes(searchTerm.toLowerCase())
     })
   }
@@ -78,6 +79,7 @@ export default class EventInviteDialog extends React.PureComponent {
             onClick={() => this.toggleInvite(invitee.id)}
           />)}
         </div>
+        <div styleName='alreadyInvitedLabel'>Already Invited</div>
         <div styleName='alreadyInvited'>
           {eventInvitations.map(eventInvitation => <InviteeRow person={eventInvitation} showResponse key={eventInvitation.id} />)}
         </div>
@@ -103,7 +105,7 @@ export function InviteeRow ({person, selected, showResponse, onClick}) {
       {name}
     </div>
     {!showResponse && <div styleName='col check'>
-      <CheckBox checked={selected} onChange={() => {}} />
+      <CheckBox checked={selected} noInput />
     </div>}
     {showResponse && response && <div styleName='col response'>
       {humanResponse(response)}
