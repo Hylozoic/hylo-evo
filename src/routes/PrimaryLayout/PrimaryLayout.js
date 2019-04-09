@@ -53,8 +53,6 @@ import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 // TODO: Implement create community privacy component when implemented on the server
 // import Privacy from 'routes/CreateCommunity/Privacy'
 import './PrimaryLayout.scss'
-import { connect } from '@holochain/hc-web-client'
-import { fetchContacts } from 'routes/Messages/PeopleSelector/PeopleSelector.store'
 
 export default class PrimaryLayout extends Component {
   componentDidMount () {
