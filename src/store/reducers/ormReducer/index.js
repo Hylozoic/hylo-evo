@@ -50,12 +50,16 @@ import {
 import {
   DELETE_COMMUNITY_TOPIC_PENDING
 } from 'routes/AllTopics/AllTopics.store'
+import {
+  INVITE_PEOPLE_TO_EVENT_PENDING
+} from 'components/EventInviteDialog/EventInviteDialog.store'
 
 import orm from 'store/models'
 import clearCacheFor from './clearCacheFor'
 import { find, values } from 'lodash/fp'
 import extractModelsFromAction from '../ModelExtractor/extractModelsFromAction'
 import { isPromise } from 'util/index'
+import EventInvitation from '../../models/EventInvitation';
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
@@ -66,6 +70,7 @@ export default function ormReducer (state = {}, action) {
     Comment,
     Community,
     CommunityTopic,
+    EventInvitation,
     Me,
     Membership,
     Message,
@@ -295,6 +300,15 @@ export default function ormReducer (state = {}, action) {
       const event = Post.withId(meta.id)
       event.update({myEventResponse: meta.response})
       break
+
+    // case INVITE_PEOPLE_TO_EVENT_PENDING:
+    //   meta.inviteeIds.map(inviteeId => {
+    //     EventInvitation.create({
+    //       event: meta.eventId,
+    //       person: inviteeId
+    //     })
+    //   })
+    //   break
   }
 
   values(sessionReducers).forEach(fn => fn(session, action))

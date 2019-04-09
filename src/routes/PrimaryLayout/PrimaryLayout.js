@@ -53,6 +53,8 @@ import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 // TODO: Implement create community privacy component when implemented on the server
 // import Privacy from 'routes/CreateCommunity/Privacy'
 import './PrimaryLayout.scss'
+import { connect } from '@holochain/hc-web-client'
+import { fetchContacts } from 'routes/Messages/PeopleSelector/PeopleSelector.store'
 
 export default class PrimaryLayout extends Component {
   componentDidMount () {
@@ -69,6 +71,18 @@ export default class PrimaryLayout extends Component {
     if (!get('currentUser', prevProps) && get('currentUser', this.props)) {
       this.props.registerUserWithHoloChat(get('currentUser', this.props))
     }
+  }
+
+  holoTest = () => {
+    console.log('HOLO TEST', fetchContacts(true))
+
+    // return this.props.fetchContacts(true)
+    // .then(result => {
+    //   console.log('result of calling fetchContacts')
+    // })
+    connect('ws:localhost:3400').then(({call, close}) => {
+      call('hylo_messenger/hylo-chat/graphql')({stuff: 'stuff'})
+    })
   }
 
   render () {
@@ -98,6 +112,7 @@ export default class PrimaryLayout extends Component {
     const showTopics = !isAllCommunitiesPath(location.pathname) && !isNetworkPath(location.pathname) && !isTagPath(location.pathname)
 
     return <div styleName='container'>
+      <div onClick={this.holoTest}>TEST HOLO</div>
       <Drawer styleName={cx('drawer', {hidden: !isDrawerOpen})} {...{community, network}} />
       <TopNav styleName='top' onClick={closeDrawer} {...{community, network, currentUser, showLogoBadge, holoMode}} />
       <div styleName='main' onClick={closeDrawer}>

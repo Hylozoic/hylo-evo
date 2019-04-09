@@ -4,7 +4,7 @@ const EventInvitation = Model.createClass({
   toString () {
     return `EventInvitation: ${this.id}`
   }
-}) 
+})
 
 EventInvitation.modelName = 'EventInvitation'
 EventInvitation.fields = {

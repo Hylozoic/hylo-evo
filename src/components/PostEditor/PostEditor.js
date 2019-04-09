@@ -364,15 +364,6 @@ export default class PostEditor extends React.Component {
       <AttachmentManager postId={id || 'new'} type='image' />
       <AttachmentManager postId={id || 'new'} type='file' />
       <div styleName='footer'>
-        <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Topics</div>
-          <div styleName='footerSection-communities'>
-            <TopicSelector
-              selectedTopics={topics}
-              detailsTopics={detailsTopics}
-              ref={component => { this.topicSelector = component && component.getWrappedInstance() }} />
-          </div>
-        </div>
         {isProject && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Project Members</div>
           <div styleName='footerSection-communities'>
@@ -413,6 +404,15 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>}
+        <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Topics</div>
+          <div styleName='footerSection-communities'>
+            <TopicSelector
+              selectedTopics={topics}
+              detailsTopics={detailsTopics}
+              ref={component => { this.topicSelector = component && component.getWrappedInstance() }} />
+          </div>
+        </div>
         <div styleName='footerSection'>
           <div styleName='footerSection-label'>Post in</div>
           <div styleName='footerSection-communities'>
