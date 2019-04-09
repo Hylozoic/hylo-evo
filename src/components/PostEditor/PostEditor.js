@@ -95,7 +95,8 @@ export default class PostEditor extends React.Component {
       valid: editing === true, // if we're editing, than it's already valid upon entry.
       announcementSelected: announcementSelected,
       toggleAnnouncementModal: false,
-      titleLengthError: false
+      titleLengthError: false,
+      dateError: false
     }
   }
 
@@ -192,6 +193,7 @@ export default class PostEditor extends React.Component {
   }
 
   handleStartTimeChange = startTime => {
+    startTime < this.state.post.endTime ? this.setState({dateError: false}) : this.setState({dateError: true})
     this.setState({
       post: {...this.state.post, startTime},
       valid: this.isValid({ startTime })
@@ -199,6 +201,7 @@ export default class PostEditor extends React.Component {
   }
 
   handleEndTimeChange = endTime => {
+    this.state.post.startTime < endTime ? this.setState({dateError: false}) : this.setState({dateError: true})
     this.setState({
       post: {...this.state.post, endTime},
       valid: this.isValid({ endTime })
@@ -262,14 +265,17 @@ export default class PostEditor extends React.Component {
   }
 
   isValid = (postUpdates = {}) => {
-    const { type, title, communities } = Object.assign({}, this.state.post, postUpdates)
+    const { type, title, communities, startTime, endTime } = Object.assign({}, this.state.post, postUpdates)
+    const { isEvent } = this.props
+
 
     return !!(this.editor &&
       communities &&
       type.length > 0 &&
       title.length > 0 &&
       communities.length > 0 &&
-      title.length <= MAX_TITLE_LENGTH
+      title.length <= MAX_TITLE_LENGTH &&
+      (!isEvent || startTime < endTime)
     )
   }
 
@@ -308,7 +314,7 @@ export default class PostEditor extends React.Component {
   }
 
   render () {
-    const { initialPrompt, titlePlaceholder, titleLengthError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
+    const { initialPrompt, titlePlaceholder, titleLengthError, dateError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
     const { id, title, details, communities, linkPreview, topics, members, eventInvitations, startTime, endTime, location } = post
     const {
       onClose, detailsPlaceholder,
@@ -377,6 +383,7 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>}
+        {isEvent && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
         {isEvent && <div styleName='footerSection'>
           <div styleName='footerSection-label alignedLabel'>Start Time</div>
           <DatePicker value={startTime} onChange={this.handleStartTimeChange} />
