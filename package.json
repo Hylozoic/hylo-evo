@@ -165,7 +165,9 @@
       "json",
       "lcov"
     ],
-    "setupFilesAfterEnv": ["./src/setupTests.js"],
+    "setupFilesAfterEnv": [
+      "./src/setupTests.js"
+    ],
     "moduleDirectories": [
       "node_modules",
       "src"
@@ -193,6 +195,7 @@
         "@babel/preset-env",
         {
           "targets": {
+            "node": "current",
             "browsers": [
               ">0.25%",
               "not ie 11",
