@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { CURRENT_USER_PROP_TYPES } from 'store/models/Me'
-import { PERSON_PROP_TYPES } from 'store/models/Person'
+import { PersonPropTypes } from 'store/models/Person'
 import { find, get, sortBy, isFunction } from 'lodash/fp'
 import './PostFooter.scss'
 import Icon from 'components/Icon'
@@ -17,7 +17,7 @@ export default class PostFooter extends React.PureComponent {
     commentersTotal: PropTypes.number,
     votesTotal: PropTypes.number,
     myVote: PropTypes.bool,
-    members: PropTypes.arrayOf(PropTypes.shape(PERSON_PROP_TYPES)),
+    members: PropTypes.arrayOf(PropTypes.shape(PersonPropTypes)),
     voteOnPost: PropTypes.func.isRequired,
     onClick: PropTypes.func
   }
