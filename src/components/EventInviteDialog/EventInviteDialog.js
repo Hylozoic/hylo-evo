@@ -15,8 +15,6 @@ export default class EventInviteDialog extends React.PureComponent {
   }
 
   toggleInvite = id => {
-    console.log('**** toggleInvite', id)
-
     const { invitedIds } = this.state
 
     if (invitedIds.includes(id)) {
