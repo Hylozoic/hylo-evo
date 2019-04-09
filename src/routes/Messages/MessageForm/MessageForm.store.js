@@ -12,7 +12,7 @@ export const MODULE_NAME = 'MessageForm'
 export const UPDATE_MESSAGE_TEXT = 'UPDATE_MESSAGE_TEXT'
 
 // Action Creators
-export function createMessage (messageThreadId, text, forNewThread, holoChatAPI = false) {
+export function createMessage (messageThreadId, text, forNewThread, holochainAPI = false) {
   const createdAt = new Date().getTime().toString()
   return {
     type: CREATE_MESSAGE,
@@ -37,7 +37,7 @@ export function createMessage (messageThreadId, text, forNewThread, holoChatAPI 
       }
     },
     meta: {
-      holoChatAPI,
+      holochainAPI,
       optimistic: true,
       extractModel: 'Message',
       tempId: uniqueId(`messageThread${messageThreadId}_`),

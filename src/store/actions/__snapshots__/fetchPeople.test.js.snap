@@ -11,7 +11,7 @@ Object {
   },
   "meta": Object {
     "extractModel": "Person",
-    "holoChatAPI": false,
+    "holochainAPI": false,
   },
   "type": "FETCH_PEOPLE",
 }

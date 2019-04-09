@@ -1,4 +1,4 @@
-import graphqlMiddleware from 'store/middleware/graphql'
+import graphqlMiddleware from 'store/middleware/graphqlMiddleware'
 
 describe('graphqlMiddleware', () => {
   let next, middleware
