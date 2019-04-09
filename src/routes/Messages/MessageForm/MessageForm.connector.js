@@ -25,14 +25,14 @@ export const mapDispatchToProps = {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { holoMode } = ownProps
+  const { holochainActive } = ownProps
   const { createMessage } = dispatchProps
 
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    createMessage: (messageThreadId, text, forNewThread) => createMessage(messageThreadId, text, forNewThread, holoMode)
+    createMessage: (messageThreadId, text, forNewThread) => createMessage(messageThreadId, text, forNewThread, holochainActive)
   }
 }
 

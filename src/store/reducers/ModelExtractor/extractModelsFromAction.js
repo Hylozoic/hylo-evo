@@ -4,7 +4,7 @@ import { get } from 'lodash/fp'
 
 // extract immediately instead of creating new actions
 export default function extractModelsFromAction (action, session) {
-  const isHoloData = get('meta.holoChatAPI', action)
+  const isHoloData = get('meta.holochainAPI', action)
   getRoots(action).forEach(({ payload, modelName, append }) =>
     ModelExtractor.addAll({session, root: payload, modelName, append, isHoloData}))
 }
