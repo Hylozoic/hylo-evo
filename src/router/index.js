@@ -7,7 +7,6 @@ import AuthRoute from './AuthRoute'
 import LoginCheck from 'routes/NonAuthLayout/LoginCheck'
 import JoinCommunity from 'routes/JoinCommunity'
 import NonAuthLayout from 'routes/NonAuthLayout'
-import UIKit from 'routes/UIKit'
 import '../css/global/index.scss'
 import ErrorBoundary from 'components/ErrorBoundary'
 
@@ -30,7 +29,6 @@ function rootRoutes () {
   return <ErrorBoundary>
     <LoginCheck>
       <Switch>
-        <Route path='/ui-kit' component={UIKit} />
         <AuthRoute returnToOnAuth path='/c/:slug/join/:accessCode' component={JoinCommunity} />
         <AuthRoute returnToOnAuth path='/h/use-invitation' component={JoinCommunity} />
         <AuthRoute path='/login' component={NonAuthLayout} />

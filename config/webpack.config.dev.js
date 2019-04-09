@@ -11,6 +11,7 @@ var publicPath = '/'
 var publicUrl = ''
 var env = getClientEnvironment(publicUrl)
 var path = require('path')
+var context = __dirname
 
 module.exports = {
   mode: 'development',
@@ -29,7 +30,7 @@ module.exports = {
   resolve: {
     // NOTE: fixes issue with yarn link and peerDependencies
     // https://github.com/webpack/webpack/issues/985#issuecomment-261497772
-    symlinks: false,
+    symlinks: true,
     modules: [
       paths.appSrc,
       path.resolve(__dirname, '..', 'node_modules'),
@@ -91,13 +92,12 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: paths.appSrc,
-        // include: [paths.appNodeModules, paths.appSrc],
         loader: 'babel-loader',
         options: {
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/babel-loader/
           // directory for faster rebuilds.
-          cacheDirectory: false
+          cacheDirectory: false  
         }
       },
       // Simple CSS loading for node_modules fond CSS (need in particular for draft-js-plugins-editor styles)
@@ -113,10 +113,10 @@ module.exports = {
         test: /\.(css|scss|sass)$/,
         exclude: /draft-js.*\.css$/,
         use: [
-          {loader: 'style-loader'},
+          'style-loader',
           sharedConfig.cssLoader,
           sharedConfig.postcssLoader,
-          {loader: 'sass-loader'},
+          'sass-loader',
           sharedConfig.sassResourcesLoader
         ]
       }

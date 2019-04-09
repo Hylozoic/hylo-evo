@@ -1,18 +1,17 @@
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var MiniCssExtractPlugin = require('mini-css-extract-plugin')
 var ManifestPlugin = require('webpack-manifest-plugin')
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 var paths = require('./paths')
 var getClientEnvironment = require('./env')
 var sharedConfig = require('./webpack.config.shared')
 
+
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 var publicPath = paths.servedPath
-// Some apps do not use client-side routing with pushState.
-// For these, "homepage" can be set to "." to enable relative asset paths.
-var shouldUseRelativeAssetPaths = publicPath === './'
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
@@ -28,15 +27,6 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 
 // Note: defined here because it will be used more than once.
 const cssFilename = 'static/css/[name].[contenthash:8].css'
-
-// ExtractTextPlugin expects the build output to be flat.
-// (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
-// However, our output is structured with css, js and media folders.
-// To have this structure working with relative paths, we have to use custom options.
-const extractTextPluginOptions = shouldUseRelativeAssetPaths
-  // Making sure that the publicPath goes back to to build folder.
-  ? {publicPath: Array(cssFilename.split('/').length).join('../')}
-  : {}
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -146,16 +136,14 @@ module.exports = {
       {
         test: /\.(css|scss|sass)$/,
         exclude: /draft-js.*\.css$/,
-        loader: ExtractTextPlugin.extract(Object.assign({
-          fallback: 'style-loader',
-          use: [
-            sharedConfig.cssLoader,
-            sharedConfig.postcssLoader,
-            {loader: 'sass-loader'},
-            sharedConfig.sassResourcesLoader
-          ]
-        }, extractTextPluginOptions))
-        // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+        use: [
+          MiniCssExtractPlugin.loader,
+          sharedConfig.cssLoader,
+          sharedConfig.postcssLoader,
+          'sass-loader',
+          sharedConfig.sassResourcesLoader
+        ]
+        // fallback: 'style-loader',
       },
 
       // "file" loader for svg
@@ -170,14 +158,32 @@ module.exports = {
       // Remember to add the new extension(s) to the "url" loader exclusion list.
     ]
   },
-
+  optimization: {
+    minimizer: [new UglifyJsPlugin({
+      uglifyOptions:{
+        compress: {
+          ie8: false,
+          warnings: false,
+          drop_console: true
+        },
+        mangle: {
+          ie8: false
+        },
+        output: {
+          comments: false,
+          ie8: false
+        },
+        sourceMap: true
+      }}
+    )]
+  },
   plugins: [
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In production, it will be an empty string unless you specify "homepage"
     // in `package.json`, in which case it will be the pathname of that URL.
-    new InterpolateHtmlPlugin(env.raw),
+    new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
@@ -200,24 +206,7 @@ module.exports = {
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
-    // Minify the code.
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        screw_ie8: true, // React doesn't support IE8
-        warnings: false,
-        drop_console: true
-      },
-      mangle: {
-        screw_ie8: true
-      },
-      output: {
-        comments: false,
-        screw_ie8: true
-      },
-      sourceMap: true
-    }),
-    // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: cssFilename
     }),
     // Generate a manifest file which contains a mapping of all asset filenames

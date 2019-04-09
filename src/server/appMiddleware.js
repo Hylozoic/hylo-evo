@@ -7,12 +7,12 @@ import { Provider } from 'react-redux'
 import createStore from '../store'
 import root from 'root-path'
 import { once } from 'lodash'
-import createHistory from 'history/createMemoryHistory'
+import { createMemoryHistory } from 'history'
 
 export default function appMiddleware (req, res, next) {
   // TODO: async data loading
 
-  const history = createHistory()
+  const history = createMemoryHistory()
   const store = createStore(history)
   const context = {}
   const markup = renderToString(<Provider store={store}>

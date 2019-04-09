@@ -1,11 +1,14 @@
-const { appSrc } = require('./paths')
+const paths = require('./paths')
+const appPackageJson = require(paths.appPackageJson)
 
 module.exports = {
   cssLoader: {
     loader: 'css-loader',
     options: {
       modules: true,
-      localIdentName: '[path]___[name]__[local]___[hash:base64:5]',
+      context: paths.root,
+      // Keeping this in only one place
+      localIdentName: appPackageJson.babel.plugins[0][1].generateScopedName,
       importLoaders: 3
     }
   },
@@ -31,10 +34,7 @@ module.exports = {
       // LEJ: Define global SASS variables in the files specified here
       // for preloading by the sass-resources loader. The explicit
       // load order is on purpose.
-      resources: [
-        appSrc + '/css/global/_sass_resources.scss',
-        appSrc + '/routes/UIKit/css/_sass_resources.scss'
-      ]
+      resources: [paths.appSrc + '/css/global/_sass_resources.scss']
     }
   }
 }

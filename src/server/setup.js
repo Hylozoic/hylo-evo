@@ -36,7 +36,7 @@ const cssModulesConfig = babel.plugins.find(x => x[0] === 'react-css-modules')[1
 cssHook({
   extensions: ['.css', '.scss'],
   generateScopedName: sharedConfig.cssLoader.options.localIdentName,
-  processorOpts: {parser: scss.parse},
+  processorOpts: { parser: scss.parse },
   prepend: [
     nested,
     resolvePath({

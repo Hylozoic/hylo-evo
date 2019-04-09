@@ -2,12 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { clientRouter } from './router'
-import createHistory from 'history/createBrowserHistory'
+import { createBrowserHistory } from 'history'
 import createStore from './store'
 import './client/websockets'
 import { rootDomId } from 'client/util'
 
-const history = createHistory()
+const history = createBrowserHistory()
 const store = createStore(history)
 
 ReactDOM.render(
