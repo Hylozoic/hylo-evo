@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import React from 'react'
 
 describe('DropdownButton', () => {
-  it('renders correctly', () => {
+  it('renders correctly and basic functions work', () => {
     const props = {
       label: 'Log in',
       choices: [{label: 'one', value: 1}, {label: 'two', value: 2}],

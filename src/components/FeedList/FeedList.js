@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { throttle, isEmpty, some, get, find } from 'lodash/fp'
+import { throttle, isEmpty, some } from 'lodash/fp'
 import cx from 'classnames'
 import { CENTER_COLUMN_ID, position } from 'util/scrolling'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
@@ -89,13 +89,15 @@ export default class FeedList extends React.Component {
       width: tabBarWidth + 'px'
     }
     const isProject = routeParams.postTypeContext === 'project'
-    const isEvent = routeParams.postTypeContext === 'event'    
+    const isEvent = routeParams.postTypeContext === 'event'
+
+    const showSortAndFilters = !isProject && !isEvent
 
     return <div styleName='FeedList-container'>
       <ScrollListener
         elementId={CENTER_COLUMN_ID}
         onScroll={this.handleScrollEvents} />
-      {!isProject && !isEvent && <React.Fragment>
+      {showSortAndFilters && <React.Fragment>
         <div>
           <TabBar ref={this.setStateFromDOM}
             onChangeTab={changeTab}

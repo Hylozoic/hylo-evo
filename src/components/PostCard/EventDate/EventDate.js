@@ -4,9 +4,9 @@ import './EventDate.scss'
 
 export default function EventDate ({ startTime }) {
   if (!startTime) return null
-  const moment = Moment(startTime)
+  const startTimeMoment = Moment(startTime)
   return <div styleName='eventDate'>
-    <span styleName='month'>{moment.format('MMM')}</span>
-    <span styleName='day'>{moment.format('D')}</span>    
+    <span styleName='month'>{startTimeMoment.format('MMM')}</span>
+    <span styleName='day'>{startTimeMoment.format('D')}</span>    
   </div>
 }

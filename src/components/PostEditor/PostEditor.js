@@ -317,13 +317,15 @@ export default class PostEditor extends React.Component {
       canModerate, myModeratedCommunities, isProject, isEvent
     } = this.props
 
+    const showPostTypes = !isProject && !isEvent
+
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
       <div styleName='header'>
         <div styleName='initial'>
           <div styleName='initial-prompt'>{initialPrompt}</div>
           <a styleName='initial-closeButton' onClick={onClose}><Icon name='Ex' /></a>
         </div>
-        {!isProject && !isEvent && <div styleName='postTypes'>
+        {showPostTypes && <div styleName='postTypes'>
           <Button {...this.postTypeButtonProps('discussion')} />
           <Button {...this.postTypeButtonProps('request')} />
           <Button {...this.postTypeButtonProps('offer')} />

@@ -31,3 +31,35 @@ exports[`DropdownButton renders correctly 1`] = `
   </div>
 </div>
 `;
+
+exports[`DropdownButton renders correctly and basic functions work 1`] = `
+<div>
+  <div
+    className="login"
+    data-stylename="dropdownButton green narrow small"
+    onClick={[Function]}
+    role="button"
+  >
+    Log in
+      |  ▾
+  </div>
+  <div
+    data-stylename="dropdown"
+  >
+    <span
+      data-stylename="choice"
+      key="1"
+      onClick={[Function]}
+    >
+      one
+    </span>
+    <span
+      data-stylename="choice"
+      key="2"
+      onClick={[Function]}
+    >
+      two
+    </span>
+  </div>
+</div>
+`;
