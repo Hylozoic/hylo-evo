@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.2.2",
-    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-env": "7.2.3",
+    "@babel/cli": "7.2.3",
+    "@babel/node": "7.2.2",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
@@ -188,28 +190,11 @@
   },
   "babel": {
     "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "browsers": [
-              ">0.25%",
-              "not ie 11",
-              "not op_mini all"
-            ]
-          }
-        }
-      ],
       "react-app"
     ],
     "env": {
       "test": {
-        "plugins": [
-          [
-            "data-stylename",
-            null
-          ]
-        ]
+        "plugins": ["data-stylename"]
       }
     },
     "ignore": [
