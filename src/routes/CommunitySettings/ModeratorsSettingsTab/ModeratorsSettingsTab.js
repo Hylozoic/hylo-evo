@@ -44,8 +44,9 @@ export default class ModeratorsSettingsTab extends Component {
 
     if (!moderators) return <Loading />
 
-    return [<ModeratorsList key='mList' {...this.props} removeItem={(id) => this.setState({modalVisible: true, moderatorToRemove: id})} />,
-      modalVisible && <ModalDialog key='remove-moderator-dialog'
+    return <React.Fragment>
+      <ModeratorsList key='mList' {...this.props} removeItem={(id) => this.setState({modalVisible: true, moderatorToRemove: id})} />
+      {modalVisible && <ModalDialog key='remove-moderator-dialog'
         closeModal={() => this.setState({modalVisible: false})}
         showModalTitle={false}
         submitButtonAction={this.submitRemoveModerator}
@@ -54,8 +55,8 @@ export default class ModeratorsSettingsTab extends Component {
           <div styleName='modal-text'>Are you sure you wish to remove this moderator?</div>
           <CheckBox checked={isRemoveFromCommunity} label='Remove from community as well' onChange={value => this.setState({isRemoveFromCommunity: value})} />
         </div>
-      </ModalDialog>
-    ]
+      </ModalDialog>}
+    </React.Fragment>
   }
 }
 

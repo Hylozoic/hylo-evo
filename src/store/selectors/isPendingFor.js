@@ -4,14 +4,21 @@ import {
   castArray,
   keys,
   omitBy,
-  isNull
+  isNull,
+  get,
+  isFunction
 } from 'lodash/fp'
 
-export default function isPendingFor (pendingKeys = [], state) {
+export default function isPendingFor (pendingActionsOrKeys = [], state) {
   const { pending } = state
+  const pendingKeys = castArray(pendingActionsOrKeys).map(pendingActionOrKey =>
+    isFunction(pendingActionOrKey)
+      ? get('type', pendingActionOrKey())
+      : pendingActionOrKey
+  )
 
   return !isEmpty(
     intersection(
-      castArray(pendingKeys),
+      pendingKeys,
       keys(omitBy(isNull, pending))))
 }
