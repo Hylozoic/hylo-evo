@@ -98,7 +98,7 @@ export default class PrimaryLayout extends Component {
       <Drawer styleName={cx('drawer', {hidden: !isDrawerOpen})} {...{community, network}} />
       <TopNav styleName='top' onClick={closeDrawer} {...{community, network, currentUser, showLogoBadge, holochainActive}} />
       <div styleName='main' onClick={closeDrawer}>
-        <Navigation collapsed={hasDetail} styleName='left' showTopics={showTopics} />
+        <Navigation collapsed={hasDetail} styleName='left' showTopics={showTopics} currentUser={currentUser} />
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
           <RedirectToCommunity path='/' currentUser={currentUser} />

@@ -3,9 +3,11 @@ import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
 import './Navigation.scss'
 import { compact } from 'lodash/fp'
+import { EVENTS } from 'config/featureFlags'
 
 export default function Navigation (props) {
   const {
+    currentUser,
     className,
     collapsed,
     rootId,
@@ -27,6 +29,8 @@ export default function Navigation (props) {
     }
   }
 
+  const hasEventsFeature = currentUser && currentUser.hasFeature(EVENTS)
+
   const links = compact([
     rootPath && {
       label: 'Home',
@@ -41,7 +45,7 @@ export default function Navigation (props) {
       icon: 'Projects',
       to: projectsPath
     },
-    eventsPath && {
+    eventsPath && hasEventsFeature && {
       label: 'Events',
       icon: 'Events',
       to: eventsPath

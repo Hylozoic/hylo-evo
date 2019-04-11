@@ -65,9 +65,7 @@ export default class PostEditor extends React.Component {
       title: '',
       details: '',
       communities: [],
-      location: '',
-      startTime: Moment().hour(18).minute(0),
-      endTime: Moment().hour(21).minute(0)
+      location: ''
     },
     editing: false,
     loading: false
@@ -193,7 +191,8 @@ export default class PostEditor extends React.Component {
   }
 
   handleStartTimeChange = startTime => {
-    startTime < this.state.post.endTime ? this.setState({dateError: false}) : this.setState({dateError: true})
+    this.validateTimeChange(startTime, this.state.post.endTime)
+
     this.setState({
       post: {...this.state.post, startTime},
       valid: this.isValid({ startTime })
@@ -201,11 +200,18 @@ export default class PostEditor extends React.Component {
   }
 
   handleEndTimeChange = endTime => {
-    this.state.post.startTime < endTime ? this.setState({dateError: false}) : this.setState({dateError: true})
+    this.validateTimeChange(this.state.post.startTime, endTime)
+
     this.setState({
       post: {...this.state.post, endTime},
       valid: this.isValid({ endTime })
     })
+  }
+
+  validateTimeChange = (startTime, endTime) => {
+    if (endTime) {
+      startTime < this.state.post.endTime ? this.setState({dateError: false}) : this.setState({dateError: true})
+    }
   }
 
   handleLocationChange = event => {
@@ -268,14 +274,13 @@ export default class PostEditor extends React.Component {
     const { type, title, communities, startTime, endTime } = Object.assign({}, this.state.post, postUpdates)
     const { isEvent } = this.props
 
-
     return !!(this.editor &&
       communities &&
       type.length > 0 &&
       title.length > 0 &&
       communities.length > 0 &&
       title.length <= MAX_TITLE_LENGTH &&
-      (!isEvent || startTime < endTime)
+      (!isEvent || (endTime && (startTime < endTime)))
     )
   }
 
