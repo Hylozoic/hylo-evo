@@ -59,7 +59,6 @@ import clearCacheFor from './clearCacheFor'
 import { find, values } from 'lodash/fp'
 import extractModelsFromAction from '../ModelExtractor/extractModelsFromAction'
 import { isPromise } from 'util/index'
-import EventInvitation from '../../models/EventInvitation';
 
 export default function ormReducer (state = {}, action) {
   const session = orm.session(state)
@@ -301,14 +300,15 @@ export default function ormReducer (state = {}, action) {
       event.update({myEventResponse: meta.response})
       break
 
-    // case INVITE_PEOPLE_TO_EVENT_PENDING:
-    //   meta.inviteeIds.map(inviteeId => {
-    //     EventInvitation.create({
-    //       event: meta.eventId,
-    //       person: inviteeId
-    //     })
-    //   })
-    //   break
+    case INVITE_PEOPLE_TO_EVENT_PENDING:
+      meta.inviteeIds.map(inviteeId => {
+        EventInvitation.create({
+          event: meta.eventId,
+          person: inviteeId
+        })
+      })
+      clearCacheFor(Post, meta.eventId)
+      break
   }
 
   values(sessionReducers).forEach(fn => fn(session, action))

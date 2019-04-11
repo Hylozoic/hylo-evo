@@ -6,6 +6,7 @@
   display: inline-block;
   cursor: pointer;
   user-select: none;
+  white-space: nowrap;
   &:focus {
     outline: 0;
   }
