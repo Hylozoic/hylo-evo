@@ -210,7 +210,7 @@ export default class PostEditor extends React.Component {
 
   validateTimeChange = (startTime, endTime) => {
     if (endTime) {
-      startTime < this.state.post.endTime ? this.setState({dateError: false}) : this.setState({dateError: true})
+      startTime < endTime ? this.setState({dateError: false}) : this.setState({dateError: true})
     }
   }
 
