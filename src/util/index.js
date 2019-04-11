@@ -30,7 +30,7 @@ export const formatDatePair = (startTime, endTime) => {
   if (endTime) {
     if (end.month() !== start.month()) {
       to = end.format(' - ddd, MMM D [at] h:mmA')
-    } else if (end.day() !== start.day()) {
+    } else if (end.date() !== start.date()) {
       to = end.format(' - ddd D [at] h:mmA')
     } else {
       to = end.format(' - h:mmA')
