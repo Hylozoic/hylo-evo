@@ -2,14 +2,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { debounce, throttle } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
-import MessageForm from '../MessageForm'
-import CloseMessages from '../Thread/CloseMessages'
+import CloseMessages from '../CloseMessages'
 import PeopleSelectorMatches from './PeopleSelectorMatches'
 import PeopleSelectorContacts from './PeopleSelectorContacts'
 import SelectorMatchedItem from './SelectorMatchedItem'
 import './PeopleSelector.scss'
 
-const { any, arrayOf, func, shape, string } = PropTypes
+const { any, array, arrayOf, func, shape, string } = PropTypes
 
 const personType = shape({
   id: any,
@@ -23,11 +22,21 @@ const invalidPersonName = /[^a-z '-]+/gi
 
 export default class PeopleSelector extends React.Component {
   static propTypes = {
+    setAutocomplete: func.isRequired,
+    fetchPeople: func.isRequired,
+    fetchContacts: func.isRequired,
+    fetchRecentContacts: func.isRequired,
+    addParticipant: func.isRequired,
+    removeParticipant: func.isRequired,
+    changeQuerystringParam: func.isRequired,
     autocomplete: string,
-    fetchPeople: func,
+    contacts: arrayOf(personType),
+    recentContacts: arrayOf(personType),
+    matches: array,
     deleteParticipant: func,
+    participantSearch: arrayOf(String),
     participants: arrayOf(personType),
-    setAutocomplete: func
+    onCloseURL: string
   }
 
   constructor (props) {
@@ -115,12 +124,17 @@ export default class PeopleSelector extends React.Component {
 
   render () {
     const {
-      contacts, matches, participants,
-      removeParticipant, findOrCreateThread, onCloseURL, holochainActive,
-      recentContacts
+      contacts,
+      recentContacts,
+      matches,
+      participants,
+      removeParticipant,
+      onCloseURL
     } = this.props
+
     const { currentMatch } = this.state
-    return <div styleName='people-selector'>
+
+    return <React.Fragment>
       <div styleName='thread-header' tabIndex='0'>
         <div styleName='autocomplete-control'>
           {participants && participants.map(participant =>
@@ -151,13 +165,6 @@ export default class PeopleSelector extends React.Component {
           addParticipant={this.addParticipant}
           contacts={contacts}
           recentContacts={recentContacts} />}
-      {participants && participants.length > 0 &&
-        <div styleName='message-form'>
-          <MessageForm ref='form'
-            forNewThread
-            holochainActive={holochainActive}
-            findOrCreateThread={() => findOrCreateThread(participants.map(p => p.id), new Date().getTime().toString())} />
-        </div>}
-    </div>
+    </React.Fragment>
   }
 }

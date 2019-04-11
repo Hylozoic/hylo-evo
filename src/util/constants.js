@@ -1,0 +1,1 @@
+export const STARTED_TYPING_INTERVAL = 3000

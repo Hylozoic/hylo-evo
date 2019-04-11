@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CreateTopic snapshots (various states) matches the last snapshot (modal visible) 1`] = `
-Array [
+<Fragment>
   <Icon
     data-stylename="create-button"
     key="create-button"
     name="Plus"
     onClick={[Function]}
-  />,
+  />
   <ModalDialogPortal
     backgroundImage="axolotl-corner.png"
     closeModal={[Function]}
@@ -21,8 +21,21 @@ Array [
     submitButtonIsDisabled={[Function]}
     submitButtonText="Add Topic"
     useNotificationFormat={false}
-  />,
-]
+  >
+    <div>
+      <TextInput
+        aria-label="topic-name"
+        autoFocus={true}
+        label="topic-name"
+        loading={false}
+        name="topic-name"
+        onChange={[Function]}
+        placeholder="Enter a topic name:"
+        value=""
+      />
+    </div>
+  </ModalDialogPortal>
+</Fragment>
 `;
 
 exports[`CreateTopic snapshots (various states) matches the last snapshot for a redirect 1`] = `
@@ -32,25 +45,24 @@ exports[`CreateTopic snapshots (various states) matches the last snapshot for a 
 `;
 
 exports[`CreateTopic snapshots (various states) matches the last snapshot for no buttonText 1`] = `
-Array [
+<Fragment>
   <Icon
     data-stylename="create-button"
     key="create-button"
     name="Plus"
     onClick={[Function]}
-  />,
-  "",
-]
+  />
+</Fragment>
 `;
 
 exports[`CreateTopic snapshots (various states) matches the last snapshot for notification (modal visible) 1`] = `
-Array [
+<Fragment>
   <Icon
     data-stylename="create-button"
     key="create-button"
     name="Plus"
     onClick={[Function]}
-  />,
+  />
   <ModalDialogPortal
     backgroundImage="axolotl-corner.png"
     closeModal={[Function]}
@@ -64,19 +76,31 @@ Array [
     submitButtonIsDisabled={[Function]}
     submitButtonText="Ok"
     useNotificationFormat={true}
-  />,
-]
+  >
+    <div
+      data-stylename="dialog-content"
+    >
+      you're subscribed to #
+    </div>
+  </ModalDialogPortal>
+</Fragment>
 `;
 
 exports[`CreateTopic snapshots (various states) matches the last snapshot with buttonText 1`] = `
-Array [
+<Fragment>
   <Button
     color="green-white-green-border"
     data-stylename="create-topic"
     key="create-button"
     narrow={true}
     onClick={[Function]}
-  />,
-  "",
-]
+  >
+    <Icon
+      data-stylename="plus"
+      green={true}
+      name="Plus"
+    />
+    Create a Topic
+  </Button>
+</Fragment>
 `;
