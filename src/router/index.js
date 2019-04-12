@@ -1,6 +1,6 @@
 import React from 'react'
 import { StaticRouter } from 'react-router'
-import { Switch, Route } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 import { ConnectedRouter } from 'connected-react-router'
 import PrimaryLayout from 'routes/PrimaryLayout'

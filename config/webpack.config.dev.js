@@ -93,12 +93,12 @@ module.exports = {
         test: /\.(js|jsx)$/,
         include: paths.appSrc,
         loader: 'babel-loader',
-        // options: {
-        //   // This is a feature of `babel-loader` for webpack (not Babel itself).
-        //   // It enables caching results in ./node_modules/.cache/babel-loader/
-        //   // directory for faster rebuilds.
-        //   cacheDirectory: false
-        // }
+        options: {
+          // This is a feature of `babel-loader` for webpack (not Babel itself).
+          // It enables caching results in ./node_modules/.cache/babel-loader/
+          // directory for faster rebuilds.
+          cacheDirectory: false
+        }
       },
       // Simple CSS loading for node_modules fond CSS (need in particular for draft-js-plugins-editor styles)
       {

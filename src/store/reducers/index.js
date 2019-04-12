@@ -37,7 +37,6 @@ import MemberSelector from 'components/MemberSelector/MemberSelector.store'
 import { history } from 'router'
 import { handleSetState, composeReducers } from './util'
 
-console.log('!!! history', history)
 export const combinedReducers = combineReducers({
   // Global store
   orm,
