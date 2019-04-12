@@ -4,6 +4,7 @@ import ReactTooltip from 'react-tooltip'
 import { get, isEqual, throttle } from 'lodash/fp'
 import cheerio from 'cheerio'
 import cx from 'classnames'
+import Moment from 'moment'
 import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
 import { POST_PROP_TYPES } from 'store/models/Post'
 import AttachmentManager from './AttachmentManager'
@@ -17,6 +18,7 @@ import CommunitiesSelector from 'components/CommunitiesSelector'
 import TopicSelector from 'components/TopicSelector'
 import MemberSelector from 'components/MemberSelector'
 import LinkPreview from './LinkPreview'
+import DatePicker from 'components/DatePicker'
 import ChangeImageButton from 'components/ChangeImageButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import styles from './PostEditor.scss'
@@ -47,12 +49,14 @@ export default class PostEditor extends React.Component {
   static defaultProps = {
     initialPromptForPostType: {
       project: <span styleName='postType postType-project'>CREATE PROJECT</span>,
+      event: <span styleName='postType postType-event'>CREATE EVENT</span>,      
       default: 'What are you looking to post?'
     },
     titlePlaceholderForPostType: {
       offer: 'What super powers can you offer?',
       request: 'What are you looking for help with?',
       project: 'What would you like to call your project?',
+      event: 'What is your event called?',      
       default: 'What’s on your mind?'
     },
     detailsPlaceholder: 'Add a description',
@@ -60,20 +64,27 @@ export default class PostEditor extends React.Component {
       type: 'discussion',
       title: '',
       details: '',
-      communities: []
+      communities: [],
+      location: ''
     },
     editing: false,
     loading: false
   }
 
-  buildStateFromProps = ({ editing, currentCommunity, post, topic, initialPrompt, announcementSelected, postTypeContext }) => {
+  buildStateFromProps = ({ editing, currentCommunity, post, topic, initialPrompt, announcementSelected, postTypeContext }) => {  
+
     const defaultPostWithCommunitiesAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
       type: postTypeContext || PostEditor.defaultProps.post.type,
       communities: currentCommunity ? [currentCommunity] : PostEditor.defaultProps.post.communities,
       topics: topic ? [topic] : [],
       detailsTopics: []
     })
-    const currentPost = post || defaultPostWithCommunitiesAndTopic
+    const currentPost = post ?
+      ({...post,
+        startTime: Moment(post.startTime),
+        endTime: Moment(post.endTime)
+      })
+      : defaultPostWithCommunitiesAndTopic
 
     return {
       post: currentPost,
@@ -82,7 +93,8 @@ export default class PostEditor extends React.Component {
       valid: editing === true, // if we're editing, than it's already valid upon entry.
       announcementSelected: announcementSelected,
       toggleAnnouncementModal: false,
-      titleLengthError: false
+      titleLengthError: false,
+      dateError: false
     }
   }
 
@@ -178,6 +190,37 @@ export default class PostEditor extends React.Component {
     }
   }
 
+  handleStartTimeChange = startTime => {
+    this.validateTimeChange(startTime, this.state.post.endTime)
+
+    this.setState({
+      post: {...this.state.post, startTime},
+      valid: this.isValid({ startTime })
+    })
+  }
+
+  handleEndTimeChange = endTime => {
+    this.validateTimeChange(this.state.post.startTime, endTime)
+
+    this.setState({
+      post: {...this.state.post, endTime},
+      valid: this.isValid({ endTime })
+    })
+  }
+
+  validateTimeChange = (startTime, endTime) => {
+    if (endTime) {
+      startTime < endTime ? this.setState({dateError: false}) : this.setState({dateError: true})
+    }
+  }
+
+  handleLocationChange = event => {
+    const location = event.target.value
+    this.setState({
+      post: {...this.state.post, location}
+    })
+  }
+
   setLinkPreview = (contentState) => {
     const { pollingFetchLinkPreview, linkPreviewStatus, clearLinkPreview } = this.props
     const { linkPreview } = this.state.post
@@ -221,14 +264,23 @@ export default class PostEditor extends React.Component {
     })
   }
 
+  updateEventInvitations = eventInvitations => {
+    this.setState({
+      post: {...this.state.post, eventInvitations}
+    })
+  }
+
   isValid = (postUpdates = {}) => {
-    const { type, title, communities } = Object.assign({}, this.state.post, postUpdates)
+    const { type, title, communities, startTime, endTime } = Object.assign({}, this.state.post, postUpdates)
+    const { isEvent } = this.props
+
     return !!(this.editor &&
       communities &&
       type.length > 0 &&
       title.length > 0 &&
       communities.length > 0 &&
-      title.length <= MAX_TITLE_LENGTH
+      title.length <= MAX_TITLE_LENGTH &&
+      (!isEvent || (endTime && (startTime < endTime)))
     )
   }
 
@@ -237,13 +289,14 @@ export default class PostEditor extends React.Component {
       editing, createPost, createProject, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected, isProject
     } = this.props
     const {
-      id, type, title, communities, linkPreview, members
+      id, type, title, communities, linkPreview, members, eventInvitations, startTime, endTime, location
     } = this.state.post
     const details = this.editor.getContentHTML()
     const topicNames = this.topicSelector.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
+    const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, eventInviteeIds, startTime, endTime, location
     }
     const saveFunc = editing ? updatePost : isProject ? createProject : createPost
     setAnnouncement(false)
@@ -266,14 +319,16 @@ export default class PostEditor extends React.Component {
   }
 
   render () {
-    const { initialPrompt, titlePlaceholder, titleLengthError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
-    const { id, title, details, communities, linkPreview, topics, members } = post
+    const { initialPrompt, titlePlaceholder, titleLengthError, dateError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
+    const { id, title, details, communities, linkPreview, topics, members, eventInvitations, startTime, endTime, location } = post
     const {
       onClose, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
       showImages, addFile, showFiles, setAnnouncement, announcementSelected,
-      canModerate, myModeratedCommunities, isProject
+      canModerate, myModeratedCommunities, isProject, isEvent
     } = this.props
+
+    const showPostTypes = !isProject && !isEvent
 
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
       <div styleName='header'>
@@ -281,7 +336,7 @@ export default class PostEditor extends React.Component {
           <div styleName='initial-prompt'>{initialPrompt}</div>
           <a styleName='initial-closeButton' onClick={onClose}><Icon name='Ex' /></a>
         </div>
-        {!isProject && <div styleName='postTypes'>
+        {showPostTypes && <div styleName='postTypes'>
           <Button {...this.postTypeButtonProps('discussion')} />
           <Button {...this.postTypeButtonProps('request')} />
           <Button {...this.postTypeButtonProps('offer')} />
@@ -304,8 +359,7 @@ export default class PostEditor extends React.Component {
             onChange={this.handleTitleChange}
             disabled={loading}
             ref={x => { this.titleInput = x }}
-            maxLength={MAX_TITLE_LENGTH}
-          />
+            maxLength={MAX_TITLE_LENGTH} />
           {titleLengthError && <span styleName='title-error'>{`Title can't have more than ${MAX_TITLE_LENGTH} characters`}</span>}
           <HyloEditor
             styleName='editor'
@@ -323,15 +377,6 @@ export default class PostEditor extends React.Component {
       <AttachmentManager postId={id || 'new'} type='image' />
       <AttachmentManager postId={id || 'new'} type='file' />
       <div styleName='footer'>
-        <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Topics</div>
-          <div styleName='footerSection-communities'>
-            <TopicSelector
-              selectedTopics={topics}
-              detailsTopics={detailsTopics}
-              ref={component => { this.topicSelector = component && component.getWrappedInstance() }} />
-          </div>
-        </div>
         {isProject && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Project Members</div>
           <div styleName='footerSection-communities'>
@@ -343,6 +388,45 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>}
+        {isEvent && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
+        {isEvent && <div styleName='footerSection'>
+          <div styleName='footerSection-label alignedLabel'>Start Time</div>
+          <DatePicker value={startTime} onChange={this.handleStartTimeChange} />
+        </div>} 
+        {isEvent && <div styleName='footerSection'>
+          <div styleName='footerSection-label alignedLabel'>End Time</div>
+          <DatePicker value={endTime} onChange={this.handleEndTimeChange} />
+        </div>}
+        {isEvent && <div styleName='footerSection'>
+          <div styleName='footerSection-label alignedLabel'>Location</div>
+          <input
+            type='text'
+            styleName='locationInput'
+            placeholder='Where is your event'
+            value={location || ''}
+            onChange={this.handleLocationChange}
+            ref={x => { this.locationInput = x }} />
+        </div>}
+        {isEvent && <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Invite People</div>
+          <div styleName='footerSection-communities'>
+            <MemberSelector
+              initialMembers={eventInvitations || []}
+              onChange={this.updateEventInvitations}
+              readOnly={loading}
+              ref={component => { this.eventSelector = component }}
+            />
+          </div>
+        </div>}
+        <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Topics</div>
+          <div styleName='footerSection-communities'>
+            <TopicSelector
+              selectedTopics={topics}
+              detailsTopics={detailsTopics}
+              ref={component => { this.topicSelector = component && component.getWrappedInstance() }} />
+          </div>
+        </div>
         <div styleName='footerSection'>
           <div styleName='footerSection-label'>Post in</div>
           <div styleName='footerSection-communities'>

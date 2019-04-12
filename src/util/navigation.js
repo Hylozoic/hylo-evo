@@ -9,7 +9,7 @@ import { host } from 'config'
 
 export const ID_MATCH_REGEX = '\\d+'
 export const DEFAULT_POST_TYPE_CONTEXT = 'p'
-export const POST_TYPE_CONTEXTS = ['project']
+export const POST_TYPE_CONTEXTS = ['project', 'event']
 export const VALID_POST_TYPE_CONTEXTS = [...POST_TYPE_CONTEXTS, DEFAULT_POST_TYPE_CONTEXT]
 export const VALID_POST_TYPE_CONTEXTS_MATCH_REGEX = VALID_POST_TYPE_CONTEXTS.join('|')
 

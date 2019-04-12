@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches last snapshot 1`] = `
+<Highlight
+  component="span"
+  highlightClassName="highlight"
+  term="foo"
+>
+  <div
+    data-stylename="postDetails"
+  >
+    <Connect(ClickCatcher)>
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p>the details</p>",
+          }
+        }
+        data-stylename="details"
+      />
+    </Connect(ClickCatcher)>
+    <LinkPreview
+      imageUrl="foo.png"
+      title="a walk in the park"
+      url="www.hylo.com/awitp"
+    />
+    <div
+      data-stylename="file-attachments"
+    >
+      <a
+        data-stylename="file-attachment"
+        href="https://www.hylo.com/awitp.pdf"
+        key="1"
+        target="_blank"
+      >
+        <Icon
+          data-stylename="file-icon"
+          name="Document"
+        />
+        <span
+          data-stylename="file-name"
+        >
+          awitp.pdf
+        </span>
+      </a>
+      <a
+        data-stylename="file-attachment"
+        href="http://www.google.com/lalala.zip"
+        key="1"
+        target="_blank"
+      >
+        <Icon
+          data-stylename="file-icon"
+          name="Document"
+        />
+        <span
+          data-stylename="file-name"
+        >
+          lalala.zip
+        </span>
+      </a>
+    </div>
+  </div>
+</Highlight>
+`;

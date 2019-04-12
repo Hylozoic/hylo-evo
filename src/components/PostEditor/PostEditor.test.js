@@ -72,7 +72,9 @@ describe('PostEditor', () => {
             {id: '1', name: 'test community 1'},
             {id: '2', name: 'test community 2'}
           ],
-          topicNames: ['design']
+          topicNames: ['design'],
+          startTime: new Date(1551908483315),
+          endTime: new Date(1551908483315)    
         },
         createPost: jest.fn(() => new Promise(() => {})),
         setAnnouncement: jest.fn()
@@ -94,7 +96,20 @@ describe('PostEditor', () => {
       testInstance.communitiesSelector = communitiesSelectorMock
       testInstance.save()
       expect(props.createPost.mock.calls).toHaveLength(1)
-      expect(props.createPost).toHaveBeenCalledWith(props.post)
+      expect(props.createPost.mock.calls).toMatchSnapshot()
+    })
+  })
+
+  describe.skip('for a new event', () => {
+    it('renders correctlry', () => {
+      const props = {
+        isEvent: true,
+        post: {
+          communities: []
+        }
+      }
+      const wrapper = shallow(<PostEditor {...props} />)
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
@@ -110,7 +125,9 @@ describe('PostEditor', () => {
           {id: '1', name: 'test community 1'},
           {id: '2', name: 'test community 2'}
         ],
-        topicNames: ['design']
+        topicNames: ['design'],
+        startTime: new Date(1551908483315),
+        endTime: new Date(1551908483315)
       },
       updatePost: jest.fn(() => new Promise(() => {})),
       showImagePreviews: true,
@@ -145,7 +162,7 @@ describe('PostEditor', () => {
       testInstance.communitiesSelector = communitiesSelectorMock
       testInstance.save()
       expect(props.updatePost.mock.calls).toHaveLength(1)
-      expect(props.updatePost).toHaveBeenCalledWith(props.post)
+      expect(props.updatePost.mock.calls).toMatchSnapshot()
     })
   })
 
@@ -218,7 +235,9 @@ describe('PostEditor', () => {
           {id: '1', name: 'test community 1'},
           {id: '2', name: 'test community 2'}
         ],
-        topicNames: ['design']
+        topicNames: ['design'],
+        startTime: new Date(1551908483315),
+        endTime: new Date(1551908483315)
       },
       updatePost: jest.fn(() => new Promise(() => {})),
       setAnnouncement: jest.fn()
@@ -240,7 +259,7 @@ describe('PostEditor', () => {
     testInstance.communitiesSelector = communitiesSelectorMock
     testInstance.save()
     expect(props.updatePost.mock.calls).toHaveLength(1)
-    expect(props.updatePost).toHaveBeenCalledWith(props.post)
+    expect(props.updatePost.mock.calls).toMatchSnapshot()
   })
 
   describe('linkPreview handling', () => {

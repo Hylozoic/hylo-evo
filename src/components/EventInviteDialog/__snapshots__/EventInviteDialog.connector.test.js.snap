@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapDispatchToProps returns the right keys 1`] = `
+Object {
+  "fetchPeople": [Function],
+  "invitePeopleToEvent": [Function],
+}
+`;
+
+exports[`mapStateToProps returns the right keys 1`] = `
+Object {
+  "people": Array [],
+}
+`;
