@@ -10,6 +10,8 @@ coverage
 build
 es5
 
+storybook-static
+
 # misc
 .DS_Store
 .env
