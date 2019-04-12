@@ -39,8 +39,8 @@ export default function createPost (postParams, query = createPostMutation) {
         announcement: sendAnnouncement,
         topicNames,
         eventInviteeIds,
-        startTime: startTime.valueOf(),
-        endTime: endTime.valueOf(),
+        startTime: startTime && startTime.valueOf(),
+        endTime: endTime && endTime.valueOf(),
         location
       }
     },

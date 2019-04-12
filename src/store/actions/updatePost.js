@@ -27,8 +27,8 @@ export default function updatePost (post, query = updatePostMutation) {
         topicNames,
         memberIds,
         eventInviteeIds,
-        startTime: startTime.valueOf(),
-        endTime: endTime.valueOf(),
+        startTime: startTime && startTime.valueOf(),
+        endTime: endTime && endTime.valueOf(),
         location
       }
     },
