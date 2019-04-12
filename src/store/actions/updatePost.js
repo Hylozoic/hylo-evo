@@ -6,7 +6,7 @@ import { UPDATE_POST } from 'store/constants'
 
 export default function updatePost (post, query = updatePostMutation) {
   const {
-    id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, memberIds, acceptContributions
+    id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, memberIds, acceptContributions, eventInviteeIds = [], startTime, endTime, location
   } = post
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
@@ -26,7 +26,11 @@ export default function updatePost (post, query = updatePostMutation) {
         fileUrls,
         topicNames,
         memberIds,
-        acceptContributions
+        acceptContributions,
+        eventInviteeIds,
+        startTime: startTime && startTime.valueOf(),
+        endTime: endTime && endTime.valueOf(),
+        location
       }
     },
     meta: {

@@ -98,6 +98,10 @@ $wrapperBorderRadius: 8px;
     color: $color-fuchsia-pink;
     background-color: $color-prim;
   }
+  &-event {
+    color: $color-medium-purple;
+    background-color: $color-moon-raker;
+  }
 }
 
 // Body area
@@ -168,6 +172,21 @@ $wrapperBorderRadius: 8px;
 
 .accept-contributions-switch {
   margin-right: 55px;
+}
+
+.alignedLabel {
+  width: 60px;
+}
+
+.locationInput {
+  border-color: transparent;
+  color: $color-rhino-80;
+  font-size: inherit;
+  line-height: inherit; 
+}
+
+.locationInput::placeholder {
+  color: $color-rhino-30;
 }
 
 .actionsBar {

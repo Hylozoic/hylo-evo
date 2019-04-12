@@ -5,8 +5,7 @@ import rootReducer, { combinedReducers } from './reducers'
 
 export function getEmptyState () {
   return combinedReducers({
-    orm: orm.getEmptyState(),
-    holoOrm: orm.getEmptyState()
+    orm: orm.getEmptyState()
   }, {type: ''})
 }
 

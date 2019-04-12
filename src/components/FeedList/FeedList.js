@@ -89,12 +89,15 @@ export default class FeedList extends React.Component {
       width: tabBarWidth + 'px'
     }
     const isProject = routeParams.postTypeContext === 'project'
+    const isEvent = routeParams.postTypeContext === 'event'
+
+    const showSortAndFilters = !isProject && !isEvent
 
     return <div styleName='FeedList-container'>
       <ScrollListener
         elementId={CENTER_COLUMN_ID}
         onScroll={this.handleScrollEvents} />
-      {!isProject && <React.Fragment>
+      {showSortAndFilters && <React.Fragment>
         <div>
           <TabBar ref={this.setStateFromDOM}
             onChangeTab={changeTab}

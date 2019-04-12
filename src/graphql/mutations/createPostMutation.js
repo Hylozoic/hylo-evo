@@ -11,7 +11,11 @@ export default
   $fileUrls: [String],
   $announcement: Boolean,
   $topicNames: [String],
-  $acceptContributions: Boolean
+  $acceptContributions: Boolean,
+  $eventInviteeIds: [ID],
+  $startTime: String,
+  $endTime: String,
+  $location: String
 ) {
   createPost(data: {
     type: $type,
@@ -23,6 +27,10 @@ export default
     fileUrls: $fileUrls,
     announcement: $announcement,
     topicNames: $topicNames,
-    acceptContributions: $acceptContributions
+    acceptContributions: $acceptContributions,
+    eventInviteeIds: $eventInviteeIds,
+    startTime: $startTime,
+    endTime: $endTime,
+    location: $location
   }) {${getPostFieldsFragment(false)}}
 }`

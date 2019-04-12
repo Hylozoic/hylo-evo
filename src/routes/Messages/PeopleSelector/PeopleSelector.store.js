@@ -3,10 +3,7 @@ import { pick } from 'lodash/fp'
 
 import getMe from 'store/selectors/getMe'
 import orm from 'store/models'
-import {
-  CREATE_MESSAGE,
-  FIND_OR_CREATE_THREAD
-} from 'store/constants'
+import { CREATE_MESSAGE } from 'store/constants'
 
 export const MODULE_NAME = 'PeopleSelector'
 
@@ -15,34 +12,6 @@ export const FETCH_RECENT_CONTACTS = 'FETCH_RECENT_CONTACTS'
 export const SET_AUTOCOMPLETE = 'PeopleSelector/SET_AUTOCOMPLETE'
 export const ADD_PARTICIPANT = 'PeopleSelector/ADD_PARTICIPANT'
 export const REMOVE_PARTICIPANT = 'PeopleSelector/REMOVE_PARTICIPANT'
-
-const findOrCreateThreadQuery =
-`mutation ($participantIds: [String]) {
-  findOrCreateThread(data: {participantIds: $participantIds}) {
-    id
-    createdAt
-    updatedAt
-    participants {
-      id
-      name
-      avatarUrl
-    }
-  }
-}`
-
-export function findOrCreateThread (participantIds, createdAt, holoChatAPI = false, query = findOrCreateThreadQuery) {
-  return {
-    type: FIND_OR_CREATE_THREAD,
-    graphql: {
-      query,
-      variables: {participantIds, createdAt}
-    },
-    meta: {
-      holoChatAPI,
-      extractModel: 'MessageThread'
-    }
-  }
-}
 
 const fetchContactsQuery =
 `query PeopleContacts ($first: Int) {
@@ -62,7 +31,7 @@ const fetchContactsQuery =
   }
 }`
 
-export function fetchContacts (holoChatAPI = false, query = fetchContactsQuery, first = 50) {
+export function fetchContacts (holochainAPI = false, query = fetchContactsQuery, first = 50) {
   return {
     type: FETCH_CONTACTS,
     graphql: {
@@ -70,7 +39,7 @@ export function fetchContacts (holoChatAPI = false, query = fetchContactsQuery, 
       variables: { first }
     },
     meta: {
-      holoChatAPI,
+      holochainAPI,
       extractModel: 'Person'
     }
   }
@@ -139,7 +108,7 @@ export function pickPersonListItem (person) {
   }
 }
 
-export function personListItemSelector (session, participants, currentUser, search = () => true) {
+export function getPersonListItem (session, participants, currentUser, search = () => true) {
   return session.Person
     .all()
     .filter(p => !participants.includes(p.id))
@@ -150,16 +119,16 @@ export function personListItemSelector (session, participants, currentUser, sear
     .map(pickPersonListItem)
 }
 
-export const holoChatContactsSelector = createSelector(
+export const getHoloChatContacts = createSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME].participants,
   getMe,
-  (_, props) => props.holoMode ? p => p.isHoloData : () => true,
-  personListItemSelector
+  (_, props) => props.holochainActive ? p => p.isHoloData : () => true,
+  getPersonListItem
 )
 
-export const holoChatMatchesSelector = createSelector(
+export const getHoloChatMatches = createSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME].participants,
@@ -167,11 +136,11 @@ export const holoChatMatchesSelector = createSelector(
   (state, props) => p => {
     const { autocomplete } = state[MODULE_NAME]
     if (autocomplete) {
-      const holoFilter = props.holoMode ? p.isHoloData : true
+      const holoFilter = props.holochainActive ? p.isHoloData : true
       return holoFilter && p.name.toLowerCase().includes(autocomplete.toLowerCase())
     }
   },
-  personListItemSelector
+  getPersonListItem
 )
 
 const nameSort = (a, b) => {
@@ -189,7 +158,7 @@ export function personConnectionListItemSelector (session, participants) {
     .sort(nameSort)
 }
 
-export const recentContactsSelector = createSelector(
+export const getRecentContacts = createSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME].participants,
@@ -200,7 +169,7 @@ export function participantsFromStore (state) {
   return state[MODULE_NAME].participants
 }
 
-export const participantsSelector = createSelector(
+export const getParticipants = createSelector(
   orm,
   state => state.orm,
   participantsFromStore,

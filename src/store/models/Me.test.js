@@ -33,7 +33,6 @@ describe('hasFeature', () => {
     expect(currentUser.hasFeature(featureName)).toBeTruthy()
   })
 
-
   it('returns false on "testing" with a non tester', () => {
     const featureName = 'TEST_FEATURE_3'
     const flagName = 'FEATURE_FLAG_' + featureName

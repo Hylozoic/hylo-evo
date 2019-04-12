@@ -16,8 +16,8 @@ import {
   ACTION_COMMENT_MENTION,
   ACTION_ANNOUNCEMENT,
   ACTION_DONATION_TO,
-  ACTION_DONATION_FROM
-
+  ACTION_DONATION_FROM,
+  ACTION_EVENT_INVITATION
 } from 'store/models/Notification'
 import striptags from 'striptags'
 import { decode } from 'ent'
@@ -28,7 +28,7 @@ const { array, string, func } = PropTypes
 
 export default class NotificationsDropdown extends Component {
   static propTypes = {
-    fetchThreads: func,
+    fetchNotifications: func,
     markActivityRead: func,
     markAllActivitiesRead: func,
     renderToggleChildren: func,
@@ -189,6 +189,11 @@ export function NotificationHeader ({ notification }) {
         <span styleName='bold'>{actor.name} </span>
         contributed to your project
       </div>
+    case ACTION_EVENT_INVITATION:
+      return <div styleName='header'>
+        <span styleName='bold'>{actor.name} </span>
+        invited you to an event
+      </div>
   }
 
   return null
@@ -239,6 +244,11 @@ export function NotificationBody ({ notification }) {
       text = truncateForBody(post.title)
       return <div styleName='body'>
         <span styleName='bold'>{actor.name}</span> contributed ${contributionAmount / 100} to "{text}"
+      </div>
+    case ACTION_EVENT_INVITATION:
+      text = truncateForBody(post.title)
+      return <div styleName='body'>
+        <span styleName='bold'>{firstName(actor)}</span> invited you to: "{text}"
       </div>
   }
 

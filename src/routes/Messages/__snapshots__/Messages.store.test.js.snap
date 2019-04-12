@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`findOrCreateThread matches the last snapshot 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($participantIds: [String]) {
+  findOrCreateThread(data: {participantIds: $participantIds}) {
+    id
+    createdAt
+    updatedAt
+    participants {
+      id
+      name
+      avatarUrl
+    }
+  }
+}",
+    "variables": Object {
+      "createdAt": "All the lonely people / Where do they all come from?",
+      "participantIds": Array [
+        "1",
+        "2",
+        "3",
+      ],
+    },
+  },
+  "meta": Object {
+    "extractModel": "MessageThread",
+    "holochainAPI": false,
+  },
+  "type": "FIND_OR_CREATE_THREAD",
+}
+`;

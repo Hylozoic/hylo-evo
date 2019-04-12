@@ -8,14 +8,12 @@ import {
   removeParticipant,
   fetchContacts,
   fetchRecentContacts,
-  holoChatContactsSelector,
-  findOrCreateThread,
-  holoChatMatchesSelector,
-  participantsSelector,
-  recentContactsSelector,
+  getHoloChatContacts,
+  getHoloChatMatches,
+  getParticipants,
+  getRecentContacts,
   setAutocomplete
 } from './PeopleSelector.store'
-
 import fetchPeople from 'store/actions/fetchPeople'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 
@@ -30,15 +28,15 @@ export function getParticipantSearch (props, participantsFromStore) {
 }
 
 export function mapStateToProps (state, props) {
-  const { holoMode } = props
+  const { holochainActive } = props
   // only show recentContacts in Hylo mode
-  const recentContacts = holoMode ? [] : recentContactsSelector(state)
+  const recentContacts = holochainActive ? [] : getRecentContacts(state)
 
-  const participants = participantsSelector(state, props)
+  const participants = getParticipants(state, props)
   return {
     autocomplete: state.autocomplete,
-    contacts: holoChatContactsSelector(state, props),
-    matches: holoChatMatchesSelector(state, props),
+    contacts: getHoloChatContacts(state, props),
+    matches: getHoloChatMatches(state, props),
     participants,
     participantSearch: getParticipantSearch(props, participants),
     recentContacts
@@ -46,12 +44,11 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const { holoMode } = props
+  const { holochainActive } = props
 
   return {
-    findOrCreateThread: (participantIds, createdAt) => dispatch(findOrCreateThread(participantIds, createdAt, holoMode)),
-    fetchContacts: () => dispatch(fetchContacts(holoMode)),
-    fetchPeople: (autocomplete, query, first) => dispatch(fetchPeople(autocomplete, query, first, holoMode)),
+    fetchContacts: () => dispatch(fetchContacts(holochainActive)),
+    fetchPeople: (autocomplete, query, first) => dispatch(fetchPeople(autocomplete, query, first, holochainActive)),
     ...bindActionCreators({
       addParticipant,
       removeParticipant,

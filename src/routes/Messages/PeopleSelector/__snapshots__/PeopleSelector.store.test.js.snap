@@ -46,7 +46,7 @@ Object {
   },
   "meta": Object {
     "extractModel": "Person",
-    "holoChatAPI": true,
+    "holochainAPI": true,
   },
   "type": "FETCH_CONTACTS",
 }
@@ -64,37 +64,5 @@ Object {
     "extractModel": "PersonConnection",
   },
   "type": "FETCH_RECENT_CONTACTS",
-}
-`;
-
-exports[`matches the last snapshot for findOrCreateThread 1`] = `
-Object {
-  "graphql": Object {
-    "query": "mutation ($participantIds: [String]) {
-  findOrCreateThread(data: {participantIds: $participantIds}) {
-    id
-    createdAt
-    updatedAt
-    participants {
-      id
-      name
-      avatarUrl
-    }
-  }
-}",
-    "variables": Object {
-      "createdAt": "All the lonely people / Where do they all come from?",
-      "participantIds": Array [
-        "1",
-        "2",
-        "3",
-      ],
-    },
-  },
-  "meta": Object {
-    "extractModel": "MessageThread",
-    "holoChatAPI": false,
-  },
-  "type": "FIND_OR_CREATE_THREAD",
 }
 `;

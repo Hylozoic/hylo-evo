@@ -12,7 +12,11 @@ export default
   $fileUrls: [String],
   $topicNames: [String],
   $memberIds: [ID],
-  $acceptContributions: Boolean
+  $acceptContributions: Boolean,
+  $eventInviteeIds: [ID],
+  $startTime: String,
+  $endTime: String,
+  $location: String
 ) {
   updatePost(id: $id, data: {
     type: $type,
@@ -24,6 +28,10 @@ export default
     fileUrls: $fileUrls,
     topicNames: $topicNames,
     memberIds: $memberIds,
-    acceptContributions: $acceptContributions
+    acceptContributions: $acceptContributions,
+    eventInviteeIds: $eventInviteeIds,
+    startTime: $startTime,
+    endTime: $endTime,
+    location: $location
   }) {${getPostFieldsFragment(false)}}
 }`

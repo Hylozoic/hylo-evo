@@ -16,7 +16,11 @@ export default function createPost (postParams, query = createPostMutation) {
     topicNames,
     sendAnnouncement,
     networkSlug,
-    acceptContributions
+    acceptContributions,
+    eventInviteeIds = [],
+    startTime,
+    endTime,
+    location
   } = postParams
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
@@ -35,7 +39,11 @@ export default function createPost (postParams, query = createPostMutation) {
         fileUrls,
         announcement: sendAnnouncement,
         topicNames,
-        acceptContributions
+        acceptContributions,
+        eventInviteeIds,
+        startTime: startTime && startTime.valueOf(),
+        endTime: endTime && endTime.valueOf(),
+        location
       }
     },
     meta: {

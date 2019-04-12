@@ -11,6 +11,10 @@ const getPostFieldsFragment = withComments => `
   }
   createdAt
   updatedAt
+  startTime
+  endTime
+  location
+  myEventResponse
   commenters(first: 3) {
     id
     name
@@ -85,6 +89,28 @@ const getPostFieldsFragment = withComments => `
           name
         }
       }
+    }  
+  }
+  eventInvitations {
+    total
+    hasMore
+    items {
+      id
+      response
+      person {
+        id
+        name
+        avatarUrl
+        bio
+        tagline
+        location
+        skills (first: 100) {
+          items {
+            id
+            name
+          }
+        }
+      }      
     }
   }`
 

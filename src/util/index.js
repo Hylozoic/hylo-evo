@@ -1,4 +1,5 @@
 import inflection from 'inflection'
+import moment from 'moment'
 
 export function bgImageStyle (url) {
   if (!url) return {}
@@ -17,3 +18,24 @@ export function isPromise (value) {
 }
 
 export const inflectedTotal = (word, count) => `${count.toLocaleString()} ${inflection.inflect(word, count)}`
+
+export const formatDatePair = (startTime, endTime) => {
+  const start = moment(startTime)
+  const end = moment(endTime)
+
+  const from = start.format('ddd, MMM D [at] h:mmA')
+
+  var to = ''
+
+  if (endTime) {
+    if (end.month() !== start.month()) {
+      to = end.format(' - ddd, MMM D [at] h:mmA')
+    } else if (end.date() !== start.date()) {
+      to = end.format(' - ddd D [at] h:mmA')
+    } else {
+      to = end.format(' - h:mmA')
+    }
+  }
+
+  return from + to
+}
