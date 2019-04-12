@@ -27,7 +27,7 @@ describe('PostEditor', () => {
     expect(instance.titleInput).toEqual('titleInput')
     wrapper.find('CommunitiesSelector').first().getElement().ref('communitiesSelector')
     expect(instance.communitiesSelector).toEqual('communitiesSelector')
-    wrapper.find('Connect(HyloEditor)').first().getElement().ref({getWrappedInstance: () => 'editor'})
+    wrapper.find('Connect(HyloEditor)').first().getElement().ref()
     expect(instance.editor).toEqual('editor')
   })
 

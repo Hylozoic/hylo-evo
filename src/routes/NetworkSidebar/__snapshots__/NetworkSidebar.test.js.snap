@@ -2,16 +2,16 @@
 
 exports[`NetworkSidebar matches the last snapshot 1`] = `
 <div
-  data-stylename="network-sidebar"
+  className="network-sidebar"
 />
 `;
 
 exports[`NetworkSidebar shows the settings link if a admin 1`] = `
 <div
-  data-stylename="network-sidebar"
+  className="network-sidebar"
 >
   <Link
-    data-stylename="settings-link"
+    className="settings-link text-button"
     replace={false}
     to="/n/networky-network/settings"
   >
@@ -22,10 +22,10 @@ exports[`NetworkSidebar shows the settings link if a admin 1`] = `
 
 exports[`NetworkSidebar shows the settings link if a moderator 1`] = `
 <div
-  data-stylename="network-sidebar"
+  className="network-sidebar"
 >
   <Link
-    data-stylename="settings-link"
+    className="settings-link text-button"
     replace={false}
     to="/n/networky-network/settings"
   >

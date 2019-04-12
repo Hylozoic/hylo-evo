@@ -35,7 +35,7 @@ export default class CommentForm extends Component {
 
     const placeholder = `Hi ${currentUser.firstName()}, what's on your mind?`
     return <div styleName='commentForm' className={className}
-      onClick={() => this.editor.getWrappedInstance().focus()}>
+      onClick={() => this.editor.focus()}>
       <div styleName={'prompt'}>
         <RoundImage url={currentUser.avatarUrl} small styleName='image' />
         <HyloEditor

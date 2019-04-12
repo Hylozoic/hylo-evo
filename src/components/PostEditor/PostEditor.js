@@ -314,7 +314,7 @@ export default class PostEditor extends React.Component {
             contentHTML={details}
             readOnly={loading}
             parentComponent={'PostEditor'}
-            ref={component => { this.editor = component && component.getWrappedInstance() }}
+            ref={component => { this.editor = component }}
           />
         </div>
       </div>
@@ -329,7 +329,7 @@ export default class PostEditor extends React.Component {
             <TopicSelector
               selectedTopics={topics}
               detailsTopics={detailsTopics}
-              ref={component => { this.topicSelector = component && component.getWrappedInstance() }} />
+              ref={component => { this.topicSelector = component }} />
           </div>
         </div>
         {isProject && <div styleName='footerSection'>

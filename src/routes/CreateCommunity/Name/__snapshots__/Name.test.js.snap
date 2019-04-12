@@ -2,7 +2,7 @@
 
 exports[`Name renders correctly 1`] = `
 <div
-  data-stylename="flex-wrapper"
+  className="flex-wrapper"
 >
   <ModalSidebar
     body="All good things start somewhere! Let's kick things off with a catchy name for your community."
@@ -10,7 +10,7 @@ exports[`Name renders correctly 1`] = `
     imageDialogOne="Hi, I'm Hylo the Axolotl!"
     imageDialogTwo="It's great to meet you!"
     imageUrl="/happy-axolotl.png"
-    onClick={[Function]}
+    onClick={[MockFunction]}
     theme={
       Object {
         "sidebarHeader": "sidebar-header-full-page",
@@ -19,20 +19,20 @@ exports[`Name renders correctly 1`] = `
     }
   />
   <div
-    data-stylename="panel"
+    className="panel"
   >
     <div>
       <span
-        data-stylename="step-count"
+        className="step-count"
       >
         STEP 1/3
       </span>
     </div>
     <div
-      data-stylename="center"
+      className="center"
     >
       <div
-        data-stylename="logo center"
+        className="logo center"
         style={
           Object {
             "backgroundImage": "url(/logo-white.svg)",
@@ -41,10 +41,10 @@ exports[`Name renders correctly 1`] = `
       />
     </div>
     <div
-      data-stylename="center-vertically"
+      className="center-vertically"
     >
       <span
-        data-stylename="text-input-label"
+        className="text-input-label"
       >
         What's the name of your community?
       </span>

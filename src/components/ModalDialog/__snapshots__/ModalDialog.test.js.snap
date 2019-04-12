@@ -2,10 +2,10 @@
 
 exports[`ModalDialog matches the last snapshot (useNotificationFormat) 1`] = `
 <div
-  data-stylename="popup"
+  className="popup"
 >
   <div
-    data-stylename="popup-inner"
+    className="popup-inner"
     style={
       Object {
         "backgroundImage": "url(/assets/foo.png)",
@@ -16,47 +16,47 @@ exports[`ModalDialog matches the last snapshot (useNotificationFormat) 1`] = `
     }
   >
     <span
-      data-stylename="close-btn"
+      className="close-btn"
       onClick={[Function]}
     >
       <Icon
-        data-stylename="icon"
+        className="icon"
         name="Ex"
       />
     </span>
     <div
-      data-stylename="title-block"
+      className="title-block"
     >
       <Icon
-        data-stylename="notification-icon"
+        className="notification-icon"
         green={true}
         name="Star"
       />
       <h1
-        data-stylename="notification-title"
+        className="notification-title"
       >
         Wombats
       </h1>
     </div>
     <div
-      data-stylename="content"
+      className="content"
     >
       <div>
         Yep, they're awesome alright.
       </div>
     </div>
     <div
-      data-stylename="controls"
+      className="controls"
     >
       <Button
+        className="cancel-btn"
         color="green-white-green-border"
-        data-stylename="cancel-btn"
         onClick={[Function]}
       >
         Cancel
       </Button>
       <Button
-        data-stylename="submit-btn"
+        className="submit-btn"
         disabled={false}
         onClick={[Function]}
       >
@@ -69,32 +69,32 @@ exports[`ModalDialog matches the last snapshot (useNotificationFormat) 1`] = `
 
 exports[`ModalDialog matches the last snapshot 1`] = `
 <div
-  data-stylename="popup"
+  className="popup"
 >
   <div
-    data-stylename="popup-inner"
+    className="popup-inner"
     style={Object {}}
   >
     <span
-      data-stylename="close-btn"
+      className="close-btn"
       onClick={[Function]}
     >
       <Icon
-        data-stylename="icon"
+        className="icon"
         name="Ex"
       />
     </span>
     <div
-      data-stylename="title-block"
+      className="title-block"
     >
       <h1
-        data-stylename=""
+        className=""
       >
         Wombats
       </h1>
     </div>
     <div
-      data-stylename="content"
+      className="content"
     >
       <div>
         Describe how awesome wombats are:
@@ -104,17 +104,17 @@ exports[`ModalDialog matches the last snapshot 1`] = `
       />
     </div>
     <div
-      data-stylename="controls"
+      className="controls"
     >
       <Button
+        className="cancel-btn"
         color="green-white-green-border"
-        data-stylename="cancel-btn"
         onClick={[Function]}
       >
         Cancel
       </Button>
       <Button
-        data-stylename="submit-btn"
+        className="submit-btn"
         disabled={false}
         onClick={[Function]}
       >

@@ -39,7 +39,6 @@ exports[`UserSettings renders correctly 1`] = `
       },
       Object {
         "component": <NotificationSettingsTab
-          allCommunitiesSettings={undefined}
           currentUser={
             Object {
               "id": 1,
@@ -55,8 +54,6 @@ exports[`UserSettings renders correctly 1`] = `
               },
             ]
           }
-          messageSettings={undefined}
-          updateAllMemberships={undefined}
           updateMembershipSettings={[Function]}
           updateUserSettings={[Function]}
         />,
@@ -65,9 +62,7 @@ exports[`UserSettings renders correctly 1`] = `
       },
       Object {
         "component": <BlockedUsersTab
-          blockedUsers={undefined}
           loading={true}
-          unBlockUser={undefined}
         />,
         "name": "Blocked Users",
         "path": "/settings/blocked-users",

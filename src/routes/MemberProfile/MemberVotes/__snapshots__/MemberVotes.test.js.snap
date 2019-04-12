@@ -3,7 +3,7 @@
 exports[`MemberVotes renders the same as the last snapshot 1`] = `
 <div>
   <div
-    data-stylename="activity-item"
+    className="activity-item"
     key="2"
   >
     <Connect(PostCard)
@@ -48,7 +48,7 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
     />
   </div>
   <div
-    data-stylename="activity-item"
+    className="activity-item"
     key="1"
   >
     <Connect(PostCard)

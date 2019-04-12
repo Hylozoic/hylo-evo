@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import getMe from 'store/selectors/getMe'
 import {
   getTextForMessageThread,
@@ -36,4 +36,4 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps, {withRef: true})
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps, {forwardRef: true})

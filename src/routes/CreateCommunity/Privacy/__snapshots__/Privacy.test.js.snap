@@ -2,12 +2,12 @@
 
 exports[`Privacy renders correctly 1`] = `
 <div
-  data-stylename="flex-wrapper"
+  className="flex-wrapper"
 >
   <ModalSidebar
     body="All good things start somewhere! Let's kick things off with a catchy name for your community."
     header="Great, let's get started"
-    onClick={[Function]}
+    onClick={[MockFunction]}
     theme={
       Object {
         "sidebarHeader": "sidebar-header-full-page",
@@ -16,20 +16,20 @@ exports[`Privacy renders correctly 1`] = `
     }
   />
   <div
-    data-stylename="panel"
+    className="panel"
   >
     <div>
       <span
-        data-stylename="step-count"
+        className="step-count"
       >
         STEP 3/4
       </span>
     </div>
     <div
-      data-stylename="center"
+      className="center"
     >
       <div
-        data-stylename="logo center"
+        className="logo center"
         style={
           Object {
             "backgroundImage": "url(/logo-white.svg)",
@@ -38,22 +38,22 @@ exports[`Privacy renders correctly 1`] = `
       />
     </div>
     <div
-      data-stylename="center-vertically privacy-label-row"
+      className="center-vertically privacy-label-row"
     >
       <span
-        data-stylename="privacy-input-label"
+        className="privacy-input-label"
       >
         SET THE PRIVACY LEVEL
       </span>
       <br />
       <span
-        data-stylename="privacy-label"
+        className="privacy-label"
       >
         This community is
       </span>
       <Dropdown
         alignRight={true}
-        data-stylename="privacy-dropdown"
+        className="privacy-dropdown"
         items={
           Array [
             Object {
@@ -83,7 +83,7 @@ exports[`Privacy renders correctly 1`] = `
   </div>
   <ModalFooter
     continueText="Continue"
-    previous={[Function]}
+    previous={[MockFunction]}
     submit={[Function]}
   />
 </div>

@@ -1,7 +1,8 @@
 import React from 'react'
 import { StaticRouter } from 'react-router'
 import { Switch, Route } from 'react-router-dom'
-import { ConnectedRouter } from 'react-router-redux'
+import { createBrowserHistory } from 'history'
+import { ConnectedRouter } from 'connected-react-router'
 import PrimaryLayout from 'routes/PrimaryLayout'
 import AuthRoute from './AuthRoute'
 import LoginCheck from 'routes/NonAuthLayout/LoginCheck'
@@ -10,7 +11,9 @@ import NonAuthLayout from 'routes/NonAuthLayout'
 import '../css/global/index.scss'
 import ErrorBoundary from 'components/ErrorBoundary'
 
-export function clientRouter (history) {
+export const history = createBrowserHistory()
+
+export function clientRouter () {
   require('client/rollbar') // set up handling of uncaught errors
 
   return <ConnectedRouter history={history}>

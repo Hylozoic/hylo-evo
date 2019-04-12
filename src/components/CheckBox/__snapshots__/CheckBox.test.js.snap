@@ -2,16 +2,15 @@
 
 exports[`renders correctly 1`] = `
 <label
-  data-stylename="label"
+  className="label"
 >
   <Icon
-    data-stylename="icon"
+    className="icon"
     name="Checkmark"
   />
   <input
     checked={true}
-    className="box"
-    data-stylename="checkbox"
+    className="box checkbox"
     onChange={[Function]}
     type="checkbox"
   />

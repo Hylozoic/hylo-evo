@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push, replace } from 'react-router-redux'
+import { push, replace } from 'connected-react-router'
 import { get } from 'lodash/fp'
 import { isEmpty } from 'lodash'
 import { FETCH_POSTS, FETCH_FOR_CURRENT_USER } from 'store/constants'

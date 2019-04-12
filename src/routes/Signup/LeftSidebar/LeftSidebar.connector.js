@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import getMe from 'store/selectors/getMe'
 import updateUserSettings from 'store/actions/updateUserSettings'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'

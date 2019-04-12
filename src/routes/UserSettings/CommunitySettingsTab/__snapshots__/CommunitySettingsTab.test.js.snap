@@ -2,30 +2,30 @@
 
 exports[`CommunityControl renders correctly 1`] = `
 <div
-  data-stylename="community-control"
+  className="community-control"
 >
   <div
-    data-stylename="row"
+    className="row"
   >
     <Link
       replace={false}
       to="/all"
     >
       <RoundImage
-        data-stylename="avatar"
+        className="avatar"
         medium={true}
         url="https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png"
       />
     </Link>
     <Link
-      data-stylename="name"
+      className="name bdy-drk-sm"
       replace={false}
       to="/all"
     >
       Foomunity
     </Link>
     <span
-      data-stylename="leave-button"
+      className="leave-button text-button"
       onClick={[Function]}
     >
       Leave

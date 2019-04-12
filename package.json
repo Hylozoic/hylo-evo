@@ -2,6 +2,17 @@
   "name": "hylo-evo",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "node --preserve-symlinks scripts/start.js",
+    "build": "node scripts/build.js && scripts/build-es5.sh",
+    "test": "node scripts/test.js",
+    "server": "./node_modules/.bin/babel-node scripts/serveUniversal.js",
+    "storybook": "start-storybook -p 6006",
+    "storybook:build": "build-storybook"
+  },
+  "devDependencies": {
+
+  },
   "dependencies": {
     "@babel/core": "7.2.2",
     "@babel/preset-env": "7.2.3",
@@ -15,6 +26,7 @@
     "babel-plugin-named-asset-import": "^0.3.1",
     "babel-preset-react-app": "^7.0.2",
     "babel-plugin-react-css-modules": "levity/babel-plugin-react-css-modules#ab83008",
+    "bfj": "6.1.1",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "chalk": "2.3.0",
     "commander": "^2.9.0",
@@ -38,6 +50,7 @@
     "gzip-size": "4.1.0",
     "html-webpack-plugin": "4.0.0-alpha.2",
     "http-proxy-middleware": "0.17.4",
+    "identity-obj-proxy": "3.0.0",
     "jest": "23.6.0",
     "jest-pnp-resolver": "1.0.2",
     "jest-resolve": "23.6.0",
@@ -91,13 +104,13 @@
     "faker": "^4.1.0",
     "global": "^4.3.2",
     "@holochain/hc-web-client": "https://github.com/holochain/hc-web-client#hylo",
-    "hylo-utils": "https://github.com/Hylozoic/hylo-utils#a1f23db",
+    "hylo-utils": "https://github.com/Hylozoic/hylo-utils#5b212ff",
     "immutable": "^3.8.1",
     "inflection": "^1.12.0",
     "inquirer": "^4.0.1",
     "ismobilejs": "^0.4.1",
     "linkifyjs": "^2.1.5",
-    "lodash": "^4.17.4",
+    "lodash": "~> 4.17.11",
     "lru-cache": "^4.1.1",
     "mime": "^2.0.3",
     "mixpanel-browser": "^2.22.4",
@@ -121,9 +134,11 @@
     "react-dnd-html5-backend": "^2.5.4",
     "react-intercom": "^1.0.14",
     "react-particles-js": "^2.1.0",
-    "react-redux": "^5.0.6",
-    "react-router-dom": "^4.3.0",
-    "react-router-redux": "next",
+    "react-redux": "^6.0.0",
+    "react-router@^4.3.1": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "history": "^4.7.2",
+    "connected-react-router": "^6.3.2",
     "react-textarea-autosize": "^5.2.1",
     "react-tooltip": "^3.4.0",
     "react-transition-group": "1.x",
@@ -154,14 +169,6 @@
     "node": "10.13.0",
     "yarn": "^1.1.0"
   },
-  "scripts": {
-    "start": "node --preserve-symlinks scripts/start.js",
-    "build": "node scripts/build.js && scripts/build-es5.sh",
-    "test": "node scripts/test.js --env=jsdom",
-    "server": "./node_modules/.bin/babel-node scripts/serveUniversal.js",
-    "storybook": "start-storybook -p 6006",
-    "storybook:build": "build-storybook"
-  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
@@ -174,8 +181,9 @@
     "setupFiles": [
       "react-app-polyfill/jsdom"
     ],
-    "setupFilesAfterEnv": [
-      "./src/setupTests.js"
+    "setupTestFrameworkScriptFile": "./src/setupTests.js",
+    "testPathIgnorePatterns": [
+      "<rootDir>[/\\\\](build|docs|node_modules|scripts|es5)[/\\\\]"
     ],
     "moduleDirectories": [
       "node_modules",
@@ -184,26 +192,34 @@
     "snapshotSerializers": [
       "<rootDir>/node_modules/enzyme-to-json/serializer"
     ],
-    "testPathIgnorePatterns": [
-      "<rootDir>[/\\\\](build|docs|node_modules|scripts|es5)[/\\\\]"
-    ],
-    "testEnvironment": "node",
+    "testEnvironment": "jsdom",
     "testURL": "http://localhost",
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/jest/__mocks__/fileMock.js",
       "\\.(css|less|scss)$": "<rootDir>/config/jest/__mocks__/styleMock.js"
-    }
+    },
+    "watchPlugins": [
+      "<rootDir>/node_modules/jest-watch-typeahead/filename.js",
+      "<rootDir>/node_modules/jest-watch-typeahead/testname.js"
+    ]
   },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "babel": {
     "presets": [
-      "react-app"
+      [
+        "react-app",
+        {
+          "useESModules": false,
+          "typescript": false
+        }
+      ]
     ],
-    "env": {
-      "test": {
-        "plugins": ["data-stylename"]
-      }
-    },
     "ignore": [
       "scripts/templates/*"
     ],

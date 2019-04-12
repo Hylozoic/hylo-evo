@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import blockUser from 'store/actions/blockUser'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'

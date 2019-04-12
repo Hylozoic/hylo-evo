@@ -12,7 +12,7 @@ exports[`Suggestion renders correctly (with a new topic) 1`] = `
       design
     </div>
     <div
-      data-stylename="suggestionMeta"
+      className="suggestionMeta faint-lt-sm"
     >
       create new
     </div>
@@ -32,23 +32,23 @@ exports[`Suggestion renders correctly (with a topic) 1`] = `
       design
     </div>
     <div
-      data-stylename="suggestionMeta"
+      className="suggestionMeta faint-lt-sm"
     >
       <span
-        data-stylename="column"
+        className="column"
       >
         <Icon
-          data-stylename="icon"
+          className="icon faint-lt-sm"
           name="Star"
         />
         1.2k
          subscribers
       </span>
       <span
-        data-stylename="column"
+        className="column"
       >
         <Icon
-          data-stylename="icon"
+          className="icon faint-lt-sm"
           name="Events"
         />
         250
@@ -84,23 +84,23 @@ exports[`Suggestion renders correctly (with min props) 1`] = `
       #
     </div>
     <div
-      data-stylename="suggestionMeta"
+      className="suggestionMeta faint-lt-sm"
     >
       <span
-        data-stylename="column"
+        className="column"
       >
         <Icon
-          data-stylename="icon"
+          className="icon faint-lt-sm"
           name="Star"
         />
         0
          subscribers
       </span>
       <span
-        data-stylename="column"
+        className="column"
       >
         <Icon
-          data-stylename="icon"
+          className="icon faint-lt-sm"
           name="Events"
         />
         0

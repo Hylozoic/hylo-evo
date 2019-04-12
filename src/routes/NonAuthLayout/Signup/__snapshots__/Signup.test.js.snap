@@ -3,20 +3,20 @@
 exports[`Signup renders correctly 1`] = `
 <div>
   <h1
-    data-stylename="title"
+    className="title hdr-headline"
   >
     Welcome to Hylo
   </h1>
   <p
-    data-stylename="blurb"
+    className="blurb bdy-lt-sm"
   >
     Stay connected, organized, and engaged with your community.
   </p>
   <div
-    data-stylename="field"
+    className="field"
   >
     <label
-      data-stylename="field-label"
+      className="field-label caption-drk-lg"
       htmlFor="name"
     >
       Full name
@@ -32,10 +32,10 @@ exports[`Signup renders correctly 1`] = `
     />
   </div>
   <div
-    data-stylename="field"
+    className="field"
   >
     <label
-      data-stylename="field-label"
+      className="field-label caption-drk-lg"
       htmlFor="email"
     >
       Your email address
@@ -50,10 +50,10 @@ exports[`Signup renders correctly 1`] = `
     />
   </div>
   <div
-    data-stylename="field"
+    className="field"
   >
     <label
-      data-stylename="field-label"
+      className="field-label caption-drk-lg"
       htmlFor="password"
     >
       Password
@@ -68,38 +68,38 @@ exports[`Signup renders correctly 1`] = `
     />
   </div>
   <Button
-    data-stylename="submit"
+    className="submit"
     label="Sign Up"
     onClick={[Function]}
   />
   <p
-    data-stylename="connect-label"
+    className="connect-label caption-lt-lg"
   >
     Or connect with:
   </p>
   <div
-    data-stylename="auth-buttons"
+    className="auth-buttons caption-lt-lg"
   >
     <a
       aria-label="Log in with Facebook"
-      data-stylename="facebook"
+      className="facebook"
       onClick={[Function]}
       tabIndex={0}
     >
       <Icon
-        data-stylename="auth-icon"
+        className="auth-icon"
         name="Facebook"
       />
       Facebook
     </a>
     <a
       aria-label="Log in with Google"
-      data-stylename="google"
+      className="google"
       onClick={[Function]}
       tabIndex={0}
     >
       <Icon
-        data-stylename="auth-icon"
+        className="auth-icon"
         name="Google"
       />
       Google
@@ -114,20 +114,20 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
     url="some.url"
   />
   <h1
-    data-stylename="title"
+    className="title hdr-headline"
   >
     Welcome to Hylo
   </h1>
   <p
-    data-stylename="blurb"
+    className="blurb bdy-lt-sm"
   >
     Stay connected, organized, and engaged with your community.
   </p>
   <div
-    data-stylename="field"
+    className="field"
   >
     <label
-      data-stylename="field-label"
+      className="field-label caption-drk-lg"
       htmlFor="name"
     >
       Full name
@@ -143,10 +143,10 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
     />
   </div>
   <div
-    data-stylename="field"
+    className="field"
   >
     <label
-      data-stylename="field-label"
+      className="field-label caption-drk-lg"
       htmlFor="email"
     >
       Your email address
@@ -161,10 +161,10 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
     />
   </div>
   <div
-    data-stylename="field"
+    className="field"
   >
     <label
-      data-stylename="field-label"
+      className="field-label caption-drk-lg"
       htmlFor="password"
     >
       Password
@@ -179,38 +179,38 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
     />
   </div>
   <Button
-    data-stylename="submit"
+    className="submit"
     label="Sign Up"
     onClick={[Function]}
   />
   <p
-    data-stylename="connect-label"
+    className="connect-label caption-lt-lg"
   >
     Or connect with:
   </p>
   <div
-    data-stylename="auth-buttons"
+    className="auth-buttons caption-lt-lg"
   >
     <a
       aria-label="Log in with Facebook"
-      data-stylename="facebook"
+      className="facebook"
       onClick={[Function]}
       tabIndex={0}
     >
       <Icon
-        data-stylename="auth-icon"
+        className="auth-icon"
         name="Facebook"
       />
       Facebook
     </a>
     <a
       aria-label="Log in with Google"
-      data-stylename="google"
+      className="google"
       onClick={[Function]}
       tabIndex={0}
     >
       <Icon
-        data-stylename="auth-icon"
+        className="auth-icon"
         name="Google"
       />
       Google

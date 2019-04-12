@@ -2,10 +2,10 @@
 
 exports[`PaginatedList renders correctly 1`] = `
 <div
-  data-stylename="paginated-list"
+  className="paginated-list"
 >
   <div
-    data-stylename="section-label"
+    className="section-label tag"
   />
   <RemovableListItem
     item={
@@ -37,7 +37,7 @@ exports[`PaginatedList renders correctly 1`] = `
 
 exports[`PaginationLinks renders correctly 1`] = `
 <div
-  data-stylename="pagination-links"
+  className="pagination-links"
 >
   <PageLink
     i={0}

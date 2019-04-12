@@ -50,18 +50,18 @@ exports[`CommunityRow renders with zero new posts 1`] = `
 
 exports[`Drawer renders a community list if networks are present 1`] = `
 <div
-  data-stylename="s.communityDrawer"
+  className="communityDrawer"
 >
   <Icon
-    data-stylename="s.closeDrawer"
+    className="closeDrawer"
     name="Ex"
   />
   <Logo />
   <ul
-    data-stylename="s.communitiesList"
+    className="communitiesList"
   >
     <li
-      data-stylename="s.sectionTitle"
+      className="sectionTitle"
     >
       Networked Communities
     </li>
@@ -92,7 +92,7 @@ exports[`Drawer renders a community list if networks are present 1`] = `
       }
     />
     <li
-      data-stylename="s.sectionTitle s.sectionTitleSeparator"
+      className="sectionTitle sectionTitleSeparator"
     >
       Independent Communities
     </li>
@@ -114,8 +114,8 @@ exports[`Drawer renders a community list if networks are present 1`] = `
     />
   </ul>
   <Button
+    className="newCommunity"
     color="white"
-    data-stylename="s.newCommunity"
     label="Start a Community"
   />
 </div>
@@ -123,10 +123,10 @@ exports[`Drawer renders a community list if networks are present 1`] = `
 
 exports[`Drawer renders with a current community 1`] = `
 <div
-  data-stylename="s.communityDrawer"
+  className="communityDrawer"
 >
   <Icon
-    data-stylename="s.closeDrawer"
+    className="closeDrawer"
     name="Ex"
   />
   <Logo
@@ -141,8 +141,8 @@ exports[`Drawer renders with a current community 1`] = `
     }
   />
   <Button
+    className="newCommunity"
     color="white"
-    data-stylename="s.newCommunity"
     label="Start a Community"
   />
 </div>
@@ -150,16 +150,16 @@ exports[`Drawer renders with a current community 1`] = `
 
 exports[`Drawer renders without a current community 1`] = `
 <div
-  data-stylename="s.communityDrawer"
+  className="communityDrawer"
 >
   <Icon
-    data-stylename="s.closeDrawer"
+    className="closeDrawer"
     name="Ex"
   />
   <Logo />
   <Button
+    className="newCommunity"
     color="white"
-    data-stylename="s.newCommunity"
     label="Start a Community"
   />
 </div>

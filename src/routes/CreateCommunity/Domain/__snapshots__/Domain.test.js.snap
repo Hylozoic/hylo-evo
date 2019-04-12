@@ -2,13 +2,13 @@
 
 exports[`Domain renders correctly 1`] = `
 <div
-  data-stylename="flex-wrapper"
+  className="flex-wrapper"
 >
   <ModalSidebar
     body="Your URL is the address that people will use to access your community online."
     header="Choose an address for your community"
     imageUrl="/happy-axolotl.png"
-    onClick={[Function]}
+    onClick={[MockFunction]}
     secondParagraph="The shorter the better!"
     theme={
       Object {
@@ -18,20 +18,20 @@ exports[`Domain renders correctly 1`] = `
     }
   />
   <div
-    data-stylename="panel"
+    className="panel"
   >
     <div>
       <span
-        data-stylename="step-count"
+        className="step-count"
       >
         STEP 2/3
       </span>
     </div>
     <div
-      data-stylename="center"
+      className="center"
     >
       <div
-        data-stylename="logo center"
+        className="logo center"
         style={
           Object {
             "backgroundImage": "url(/logo-white.svg)",
@@ -40,10 +40,10 @@ exports[`Domain renders correctly 1`] = `
       />
     </div>
     <div
-      data-stylename="center-vertically"
+      className="center-vertically"
     >
       <span
-        data-stylename="text-input-label"
+        className="text-input-label"
       >
         Choose a URL
       </span>
@@ -67,7 +67,7 @@ exports[`Domain renders correctly 1`] = `
   <ModalFooter
     continueText="Continue"
     hidePrevious={false}
-    previous={[Function]}
+    previous={[MockFunction]}
     submit={[Function]}
   />
 </div>

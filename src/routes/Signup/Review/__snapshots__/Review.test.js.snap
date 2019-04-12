@@ -2,55 +2,55 @@
 
 exports[`Review renders correctly 1`] = `
 <div
-  data-stylename="flex-wrapper"
+  className="flex-wrapper"
 >
   <Connect(LeftSidebar)
     body="You can always come back and change your details at any time."
     header="Everything looking good?"
   />
   <div
-    data-stylename="panel"
+    className="panel"
   >
     <span
-      data-stylename="white-text step-count"
+      className="white-text step-count"
     >
       STEP 4/4
     </span>
     <br />
     <div
-      data-stylename="center"
+      className="center"
     />
     <div
-      data-stylename="final-edit"
+      className="final-edit"
     >
       <div
-        data-stylename="three-column-input gray-bottom-border"
+        className="three-column-input gray-bottom-border"
       >
         <div
-          data-stylename="left-input-column"
+          className="left-input-column"
         >
           <span
-            data-stylename="text-opacity"
+            className="text-opacity"
           >
             YOUR NAME
           </span>
         </div>
         <div
-          data-stylename="center-input-column"
+          className="center-input-column"
         >
           <input
             autoFocus={true}
-            data-stylename="signup-input review-input-padding"
+            className="signup-input review-input-padding"
             onChange={[Function]}
             onKeyPress={[Function]}
             readOnly={true}
           />
         </div>
         <div
-          data-stylename="right-input-column"
+          className="right-input-column"
         >
           <span
-            data-stylename="edit-button text-opacity"
+            className="edit-button text-opacity"
             onClick={[Function]}
           >
             Edit
@@ -58,33 +58,33 @@ exports[`Review renders correctly 1`] = `
         </div>
       </div>
       <div
-        data-stylename="three-column-input gray-bottom-border"
+        className="three-column-input gray-bottom-border"
       >
         <div
-          data-stylename="left-input-column"
+          className="left-input-column"
         >
           <span
-            data-stylename="text-opacity"
+            className="text-opacity"
           >
             YOUR EMAIL
           </span>
         </div>
         <div
-          data-stylename="center-input-column"
+          className="center-input-column"
         >
           <input
             autoFocus={true}
-            data-stylename="signup-input review-input-padding"
+            className="signup-input review-input-padding"
             onChange={[Function]}
             onKeyPress={[Function]}
             readOnly={true}
           />
         </div>
         <div
-          data-stylename="right-input-column"
+          className="right-input-column"
         >
           <span
-            data-stylename="edit-button text-opacity"
+            className="edit-button text-opacity"
             onClick={[Function]}
           >
             Edit
@@ -92,33 +92,33 @@ exports[`Review renders correctly 1`] = `
         </div>
       </div>
       <div
-        data-stylename="three-column-input gray-bottom-border"
+        className="three-column-input gray-bottom-border"
       >
         <div
-          data-stylename="left-input-column"
+          className="left-input-column"
         >
           <span
-            data-stylename="text-opacity"
+            className="text-opacity"
           >
             LOCATION
           </span>
         </div>
         <div
-          data-stylename="center-input-column"
+          className="center-input-column"
         >
           <input
             autoFocus={true}
-            data-stylename="signup-input review-input-padding"
+            className="signup-input review-input-padding"
             onChange={[Function]}
             onKeyPress={[Function]}
             readOnly={true}
           />
         </div>
         <div
-          data-stylename="right-input-column"
+          className="right-input-column"
         >
           <span
-            data-stylename="edit-button text-opacity"
+            className="edit-button text-opacity"
             onClick={[Function]}
           >
             Edit
@@ -126,25 +126,25 @@ exports[`Review renders correctly 1`] = `
         </div>
       </div>
       <div
-        data-stylename="three-column-input gray-bottom-border"
+        className="three-column-input gray-bottom-border"
       >
         <div
-          data-stylename="left-input-column"
+          className="left-input-column"
         >
           <span
-            data-stylename="text-opacity"
+            className="text-opacity"
           >
             SKILLS
           </span>
         </div>
         <div
-          data-stylename="center-input-column-scrollable"
+          className="center-input-column-scrollable"
         />
         <div
-          data-stylename="right-input-column"
+          className="right-input-column"
         >
           <span
-            data-stylename="edit-button text-opacity"
+            className="edit-button text-opacity"
           >
             Edit
           </span>

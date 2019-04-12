@@ -2,18 +2,18 @@
 
 exports[`Banner renders correctly 1`] = `
 <div
-  data-stylename="banner"
+  className="banner"
 >
   <div
-    data-stylename="banner-text"
+    className="banner-text"
   >
     <div
-      data-stylename="name"
+      className="name hdr-display"
     >
       Communities
     </div>
     <div
-      data-stylename="stats"
+      className="stats caption-lt-lg"
     >
       12
        Communities  •  
@@ -22,7 +22,7 @@ exports[`Banner renders correctly 1`] = `
     </div>
   </div>
   <Icon
-    data-stylename="icon"
+    className="icon"
     name="More"
   />
 </div>
@@ -30,7 +30,7 @@ exports[`Banner renders correctly 1`] = `
 
 exports[`CommunityList renders correctly 1`] = `
 <div
-  data-stylename="community-list"
+  className="community-list content-margins"
 >
   <CommunityCard
     community={
@@ -65,24 +65,24 @@ exports[`CommunityList renders correctly 1`] = `
 
 exports[`CommunityList renders correctly 2`] = `
 <div
-  data-stylename="community-card"
+  className="community-card"
 >
   <RoundImage
-    data-stylename="community-image"
+    className="community-image"
     size="50px"
     square={true}
     url="foom.png"
   />
   <div
-    data-stylename="community-details"
+    className="community-details"
   >
     <span
-      data-stylename="community-name"
+      className="community-name"
     >
       Foom
     </span>
     <span
-      data-stylename="community-stats"
+      className="community-stats"
     >
       77
        Members
@@ -93,7 +93,7 @@ exports[`CommunityList renders correctly 2`] = `
 
 exports[`NetworkCommunities renders correctly 1`] = `
 <div
-  data-stylename="container"
+  className="container"
 >
   <Banner
     network={
@@ -129,17 +129,17 @@ exports[`NetworkCommunities renders correctly 1`] = `
 
 exports[`SearchBar renders correctly 1`] = `
 <div
-  data-stylename="search-bar"
+  className="search-bar content-margins"
 >
   <TextInput
-    data-stylename="search-input"
+    className="search-input"
     onChange={[Function]}
     placeholder="Search by name"
     value="fo"
   />
   <Dropdown
     alignRight={true}
-    data-stylename="search-order"
+    className="search-order"
     items={
       Array [
         Object {
@@ -158,7 +158,7 @@ exports[`SearchBar renders correctly 1`] = `
     }
     toggleChildren={
       <span
-        data-stylename="search-sorter-label"
+        className="search-sorter-label caption-lt-lg"
       >
         Alphabetical
         <Icon

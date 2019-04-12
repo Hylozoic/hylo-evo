@@ -2,11 +2,11 @@
 
 exports[`Header should match the latest snapshot 1`] = `
 <div
-  data-stylename="header"
+  className="header"
   id="thread-header"
 >
   <div
-    data-stylename="header-text"
+    className="header-text bdy-drk-lg"
   >
     one, two, three
   </div>

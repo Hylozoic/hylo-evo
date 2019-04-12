@@ -2,26 +2,26 @@
 
 exports[`AddLocation renders correctly 1`] = `
 <div
-  data-stylename="flex-wrapper"
+  className="flex-wrapper"
 >
   <Connect(LeftSidebar)
     body="Add your location to see more relevant content, and find people and projects around you."
     header="Add your location"
   />
   <div
-    data-stylename="panel"
+    className="panel"
   >
     <span
-      data-stylename="white-text step-count"
+      className="white-text step-count"
     >
       STEP 2/4
     </span>
     <br />
     <div
-      data-stylename="center"
+      className="center"
     >
       <div
-        data-stylename="logo center"
+        className="logo center"
         style={
           Object {
             "backgroundImage": "url(/logo-white.svg)",
@@ -30,11 +30,11 @@ exports[`AddLocation renders correctly 1`] = `
       />
     </div>
     <div
-      data-stylename="center"
+      className="center"
     >
       <input
         autoFocus={true}
-        data-stylename="signup-input signup-padding large-input-text gray-bottom-border"
+        className="signup-input signup-padding large-input-text gray-bottom-border"
         onChange={[Function]}
         onKeyPress={[Function]}
         placeholder="Where do you call home?"

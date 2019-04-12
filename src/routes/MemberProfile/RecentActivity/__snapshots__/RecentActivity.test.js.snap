@@ -3,12 +3,12 @@
 exports[`RecentActivity renders the same as the last snapshot 1`] = `
 <div>
   <h2
-    data-stylename="subhead"
+    className="subhead hdr-headline"
   >
     Recent Activity
   </h2>
   <div
-    data-stylename="activity-item"
+    className="activity-item"
     key="0"
   >
     <Connect(CommentCard)
@@ -31,7 +31,7 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
     />
   </div>
   <div
-    data-stylename="activity-item"
+    className="activity-item"
     key="1"
   >
     <Connect(CommentCard)
@@ -54,7 +54,7 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
     />
   </div>
   <div
-    data-stylename="activity-item"
+    className="activity-item"
     key="2"
   >
     <Connect(PostCard)
@@ -84,7 +84,7 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
     />
   </div>
   <div
-    data-stylename="activity-item"
+    className="activity-item"
     key="3"
   >
     <Connect(PostCard)

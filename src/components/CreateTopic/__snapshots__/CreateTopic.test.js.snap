@@ -34,7 +34,7 @@ exports[`CreateTopic snapshots (various states) matches the last snapshot for a 
 exports[`CreateTopic snapshots (various states) matches the last snapshot for no buttonText 1`] = `
 Array [
   <Icon
-    data-stylename="create-button"
+    className="create-button"
     key="create-button"
     name="Plus"
     onClick={[Function]}
@@ -71,12 +71,19 @@ Array [
 exports[`CreateTopic snapshots (various states) matches the last snapshot with buttonText 1`] = `
 Array [
   <Button
+    className="create-topic"
     color="green-white-green-border"
-    data-stylename="create-topic"
     key="create-button"
     narrow={true}
     onClick={[Function]}
-  />,
+  >
+    <Icon
+      className="plus"
+      green={true}
+      name="Plus"
+    />
+    Create a Topic
+  </Button>,
   "",
 ]
 `;

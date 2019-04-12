@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
 import { bindActionCreators } from 'redux'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 
 import {
   addCommunityToNetwork,

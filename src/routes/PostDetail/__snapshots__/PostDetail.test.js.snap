@@ -2,14 +2,14 @@
 
 exports[`PostDetail renders correctly 1`] = `
 <div
-  data-stylename="post"
+  className="post"
 >
   <ScrollListener
     elementId="detail-column"
     onScroll={[Function]}
   />
   <Connect(PostHeader)
-    data-stylename="header"
+    className="header"
     details="the body of the post"
     id="91"
     imageUrl="foo.jpg"
@@ -30,7 +30,7 @@ exports[`PostDetail renders correctly 1`] = `
     votesTotal={7}
   />
   <Connect(PostImage)
-    data-stylename="image"
+    className="image"
     linked={true}
     postId="91"
   />
@@ -43,7 +43,7 @@ exports[`PostDetail renders correctly 1`] = `
     }
   />
   <PostBody
-    data-stylename="body"
+    className="body"
     details="the body of the post"
     expanded={true}
     id="91"
@@ -64,7 +64,7 @@ exports[`PostDetail renders correctly 1`] = `
     slug="foo"
   />
   <div
-    data-stylename="activity-header"
+    className="activity-header tag"
   >
     ACTIVITY
   </div>
@@ -80,7 +80,7 @@ exports[`PostDetail renders correctly 1`] = `
         "dancing",
       ]
     }
-    voteOnPost={[Function]}
+    voteOnPost={[MockFunction]}
     votesTotal={7}
   />
   <Connect(Comments)

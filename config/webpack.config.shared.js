@@ -6,7 +6,7 @@ module.exports = {
     loader: 'css-loader',
     options: {
       modules: true,
-      context: paths.root,
+      context: paths.appPath,
       // Keeping this in only one place
       localIdentName: appPackageJson.babel.plugins[0][1].generateScopedName,
       importLoaders: 3

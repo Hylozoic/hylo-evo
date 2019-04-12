@@ -73,21 +73,21 @@ exports[`FullPageModal renders correctly with a single component 1`] = `
 
 exports[`FullPageModal renders correctly with multiple tabs 1`] = `
 <div
-  data-stylename="modal"
+  className="modal modal"
 >
   <div
-    data-stylename="content"
+    className="content modal-content"
   >
     <div
-      data-stylename="left-sidebar"
+      className="left-sidebar"
     >
       <div
-        data-stylename="left-sidebar-fixed border"
+        className="left-sidebar-fixed border"
       >
         <NavLink
           activeClassName="active"
           aria-current="page"
-          data-stylename="nav-link"
+          className="nav-link"
           exact={true}
           key="/settings"
           replace={true}
@@ -98,7 +98,7 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
         <NavLink
           activeClassName="active"
           aria-current="page"
-          data-stylename="nav-link"
+          className="nav-link"
           exact={true}
           key="/settings/communities"
           replace={true}
@@ -109,7 +109,7 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
       </div>
     </div>
     <div
-      data-stylename="center narrow"
+      className="center narrow"
     >
       <Route
         exact={true}
@@ -125,10 +125,10 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
       />
     </div>
     <div
-      data-stylename="right-sidebar"
+      className="right-sidebar"
     >
       <div
-        data-stylename="right-sidebar-inner"
+        className="right-sidebar-inner"
       >
         <CloseButton />
       </div>

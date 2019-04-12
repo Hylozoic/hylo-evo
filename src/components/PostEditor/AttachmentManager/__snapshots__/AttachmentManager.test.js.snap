@@ -2,7 +2,19 @@
 
 exports[`AttachmentManager renders FileManager when type is file 1`] = `
 <FileManager
-  loadAttachments={[Function]}
+  loadAttachments={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": undefined,
+        },
+      ],
+    }
+  }
   prop1="foo"
   prop2="bar"
   prop3="baz"
@@ -12,7 +24,19 @@ exports[`AttachmentManager renders FileManager when type is file 1`] = `
 
 exports[`AttachmentManager renders ImageManager when type is image 1`] = `
 <DragDropContext(ImageManager)
-  loadAttachments={[Function]}
+  loadAttachments={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": undefined,
+        },
+      ],
+    }
+  }
   prop1="foo"
   prop2="bar"
   prop3="baz"
@@ -22,15 +46,15 @@ exports[`AttachmentManager renders ImageManager when type is image 1`] = `
 
 exports[`FileManager matches last snapshot 1`] = `
 <div
-  data-stylename="file-manager"
+  className="file-manager attachment-manager"
 >
   <div
-    data-stylename="section-label"
+    className="section-label section-label"
   >
     Files
   </div>
   <div
-    data-stylename="file-previews"
+    className="file-previews"
   >
     <FilePreview
       key="0"
@@ -45,13 +69,13 @@ exports[`FileManager matches last snapshot 1`] = `
       url="bar.zip"
     />
     <div
-      data-stylename="loading-file"
+      className="loading-file add-file add-image image-box"
     >
       Loading...
     </div>
     <Connect(ChangeImageButton)
       attachmentType="file"
-      data-stylename="add-file-row"
+      className="add-file-row"
       update={[Function]}
       uploadSettings={
         Object {
@@ -61,10 +85,10 @@ exports[`FileManager matches last snapshot 1`] = `
       }
     >
       <div
-        data-stylename="add-file"
+        className="add-file add-image image-box"
       >
         <span
-          data-stylename="add-file-plus"
+          className="add-file-plus"
         >
           +
         </span>
@@ -77,24 +101,24 @@ exports[`FileManager matches last snapshot 1`] = `
 
 exports[`FilePreview matches last snapshot 1`] = `
 <div
-  data-stylename="file-preview"
+  className="file-preview"
 >
   <Icon
-    data-stylename="icon-document"
+    className="icon-document icon-file"
     name="Document"
   />
   <div
-    data-stylename="file-name"
+    className="file-name caption-drk-lg"
   >
     foo.pdf
   </div>
   <div
-    data-stylename="file-size"
+    className="file-size"
   >
     23.3mb
   </div>
   <Icon
-    data-stylename="remove-file"
+    className="remove-file remove-button"
     name="Ex"
     onClick={[Function]}
   />
@@ -103,15 +127,15 @@ exports[`FilePreview matches last snapshot 1`] = `
 
 exports[`ImageManager matches last snapshot 1`] = `
 <div
-  data-stylename="image-manager"
+  className="image-manager attachment-manager"
 >
   <div
-    data-stylename="section-label"
+    className="section-label section-label"
   >
     Images
   </div>
   <div
-    data-stylename="image-previews"
+    className="image-previews"
   >
     <DropTarget(DragSource(ImagePreview))
       key="0"
@@ -128,7 +152,7 @@ exports[`ImageManager matches last snapshot 1`] = `
       url="bar.jpg"
     />
     <div
-      data-stylename="add-image"
+      className="add-image image-box"
     >
       <Loading />
     </div>
@@ -143,7 +167,7 @@ exports[`ImageManager matches last snapshot 1`] = `
       }
     >
       <div
-        data-stylename="add-image"
+        className="add-image image-box"
       >
         +
       </div>
@@ -154,10 +178,10 @@ exports[`ImageManager matches last snapshot 1`] = `
 
 exports[`ImagePreview matches last snapshot 1`] = `
 <div
-  data-stylename="image-preview"
+  className="image-preview image-box"
 >
   <div
-    data-stylename="image"
+    className="image image-box"
     style={
       Object {
         "backgroundImage": "url(foo.zng)",
@@ -165,12 +189,12 @@ exports[`ImagePreview matches last snapshot 1`] = `
     }
   >
     <Icon
-      data-stylename="remove-image"
+      className="remove-image remove-button"
       name="Ex"
       onClick={[Function]}
     />
     <div
-      data-stylename="drag-preview"
+      className="drag-preview"
     />
   </div>
 </div>

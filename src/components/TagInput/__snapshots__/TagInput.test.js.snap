@@ -50,8 +50,7 @@ exports[`TagInput adds leading hashtags when flag is set 1`] = `
       className="searchInput"
     >
       <input
-        className="searchInput"
-        data-stylename=""
+        className="searchInput "
         onChange={[Function]}
         onKeyDown={[Function]}
         placeholder="Type..."
@@ -78,8 +77,7 @@ exports[`TagInput renders correctly (with min props) 1`] = `
       className="searchInput"
     >
       <input
-        className="searchInput"
-        data-stylename=""
+        className="searchInput "
         onChange={[Function]}
         onKeyDown={[Function]}
         placeholder="Type..."
@@ -139,8 +137,7 @@ exports[`TagInput renders correctly with tags 1`] = `
       className="searchInput"
     >
       <input
-        className="searchInput"
-        data-stylename=""
+        className="searchInput "
         onChange={[Function]}
         onKeyDown={[Function]}
         placeholder="Type..."

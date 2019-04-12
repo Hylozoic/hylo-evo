@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { routerReducer } from 'react-router-redux'
+import { connectRouter } from 'connected-react-router'
 import orm from './ormReducer'
 import login from 'store/reducers/login'
 import pending from './pending'
@@ -34,13 +34,14 @@ import JoinCommunity from 'routes/JoinCommunity/JoinCommunity.store'
 import CreateCommunity from 'routes/CreateCommunity/CreateCommunity.store'
 import CreateTopic from 'components/CreateTopic/CreateTopic.store'
 import MemberSelector from 'components/MemberSelector/MemberSelector.store'
-
+import { history } from 'router'
 import { handleSetState, composeReducers } from './util'
 
+console.log('!!! history', history)
 export const combinedReducers = combineReducers({
   // Global store
   orm,
-  router: routerReducer,
+  router: connectRouter(history),
   login,
   pending,
   queryResults,

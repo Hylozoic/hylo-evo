@@ -3,15 +3,15 @@
 exports[`renders correctly 1`] = `
 <div>
   <h1
-    data-stylename="title"
+    className="title hdr-headline"
   >
     Log in to Hylo
   </h1>
   <div
-    data-stylename="field"
+    className="field"
   >
     <label
-      data-stylename="field-label"
+      className="field-label caption-drk-lg"
       htmlFor="email"
     >
       Your email address
@@ -27,10 +27,10 @@ exports[`renders correctly 1`] = `
     />
   </div>
   <div
-    data-stylename="field"
+    className="field"
   >
     <label
-      data-stylename="field-label"
+      className="field-label caption-drk-lg"
       htmlFor="password"
     >
       Password
@@ -45,49 +45,49 @@ exports[`renders correctly 1`] = `
     />
   </div>
   <Button
-    data-stylename="submit"
+    className="submit"
     label="Log In"
     onClick={[Function]}
   />
   <Link
-    data-stylename="forgot-password"
+    className="forgot-password text-button"
     replace={false}
     to="/reset-password"
   >
     <p
-      data-stylename="forgot-password"
+      className="forgot-password text-button"
     >
       Forgot password?
     </p>
   </Link>
   <p
-    data-stylename="connect-label"
+    className="connect-label caption-lt-lg"
   >
     Or connect with:
   </p>
   <div
-    data-stylename="auth-buttons"
+    className="auth-buttons caption-lt-lg"
   >
     <a
       aria-label="Log in with Facebook"
-      data-stylename="facebook"
+      className="facebook"
       onClick={[Function]}
       tabIndex={0}
     >
       <Icon
-        data-stylename="auth-icon"
+        className="auth-icon"
         name="Facebook"
       />
       Facebook
     </a>
     <a
       aria-label="Log in with Google"
-      data-stylename="google"
+      className="google"
       onClick={[Function]}
       tabIndex={0}
     >
       <Icon
-        data-stylename="auth-icon"
+        className="auth-icon"
         name="Google"
       />
       Google
@@ -102,15 +102,15 @@ exports[`renders correctly with mobile redirect 1`] = `
     url="some.url"
   />
   <h1
-    data-stylename="title"
+    className="title hdr-headline"
   >
     Log in to Hylo
   </h1>
   <div
-    data-stylename="field"
+    className="field"
   >
     <label
-      data-stylename="field-label"
+      className="field-label caption-drk-lg"
       htmlFor="email"
     >
       Your email address
@@ -126,10 +126,10 @@ exports[`renders correctly with mobile redirect 1`] = `
     />
   </div>
   <div
-    data-stylename="field"
+    className="field"
   >
     <label
-      data-stylename="field-label"
+      className="field-label caption-drk-lg"
       htmlFor="password"
     >
       Password
@@ -144,49 +144,49 @@ exports[`renders correctly with mobile redirect 1`] = `
     />
   </div>
   <Button
-    data-stylename="submit"
+    className="submit"
     label="Log In"
     onClick={[Function]}
   />
   <Link
-    data-stylename="forgot-password"
+    className="forgot-password text-button"
     replace={false}
     to="/reset-password"
   >
     <p
-      data-stylename="forgot-password"
+      className="forgot-password text-button"
     >
       Forgot password?
     </p>
   </Link>
   <p
-    data-stylename="connect-label"
+    className="connect-label caption-lt-lg"
   >
     Or connect with:
   </p>
   <div
-    data-stylename="auth-buttons"
+    className="auth-buttons caption-lt-lg"
   >
     <a
       aria-label="Log in with Facebook"
-      data-stylename="facebook"
+      className="facebook"
       onClick={[Function]}
       tabIndex={0}
     >
       <Icon
-        data-stylename="auth-icon"
+        className="auth-icon"
         name="Facebook"
       />
       Facebook
     </a>
     <a
       aria-label="Log in with Google"
-      data-stylename="google"
+      className="google"
       onClick={[Function]}
       tabIndex={0}
     >
       <Icon
-        data-stylename="auth-icon"
+        className="auth-icon"
         name="Google"
       />
       Google

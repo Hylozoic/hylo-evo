@@ -2,16 +2,16 @@
 
 exports[`matches the last snapshot 1`] = `
 <div
-  data-stylename="modal"
+  className="modal modal"
 >
   <div
-    data-stylename="content"
+    className="content modal-content"
   >
     <withRouter(Connect(ThreadList))
-      data-stylename="left-column"
+      className="left-column"
     />
     <div
-      data-stylename="right-column"
+      className="right-column"
     >
       <Switch>
         <Route

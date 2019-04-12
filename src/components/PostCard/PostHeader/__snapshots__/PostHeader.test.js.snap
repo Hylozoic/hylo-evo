@@ -2,10 +2,10 @@
 
 exports[`TopicsLine matches last snapshot 1`] = `
 <div
-  data-stylename="topicsLine newLineForTopics"
+  className="topicsLine text-button newLineForTopics"
 >
   <Link
-    data-stylename="topic"
+    className="topic text-button"
     key="one"
     replace={false}
     to="/c/hay/one"
@@ -14,7 +14,7 @@ exports[`TopicsLine matches last snapshot 1`] = `
     one
   </Link>
   <Link
-    data-stylename="topic"
+    className="topic text-button"
     key="two"
     replace={false}
     to="/c/hay/two"
@@ -27,25 +27,25 @@ exports[`TopicsLine matches last snapshot 1`] = `
 
 exports[`matches announcement snapshot 1`] = `
 <div
-  data-stylename="header"
+  className="header"
 >
   <div
-    data-stylename="headerMainRow"
+    className="headerMainRow"
   >
     <Avatar
       avatarUrl="foo.png"
-      data-stylename="avatar"
+      className="avatar"
       url="/m/123"
     />
     <div
-      data-stylename="headerText"
+      className="headerText"
     >
       <Highlight
         component="span"
         highlightClassName="highlight"
       >
         <Link
-          data-stylename="userName"
+          className="userName"
           replace={false}
           to="/m/123"
         >
@@ -53,16 +53,16 @@ exports[`matches announcement snapshot 1`] = `
         </Link>
       </Highlight>
       <div
-        data-stylename="timestampRow"
+        className="timestampRow"
       >
         <span
-          data-stylename="timestamp"
+          className="timestamp timestamp"
         />
         <span
-          data-stylename="announcementSection"
+          className="announcementSection"
         >
           <span
-            data-stylename="announcementSpacer"
+            className="announcementSpacer timestamp"
           >
             •
           </span>
@@ -71,11 +71,12 @@ exports[`matches announcement snapshot 1`] = `
             data-tip="Announcement"
           >
             <Icon
-              data-stylename="announcementIcon"
+              className="announcementIcon"
               name="Announcement"
             />
           </span>
           <ReactTooltip
+            clickable={false}
             delayShow={550}
             effect="solid"
             id="announcement-tt"
@@ -87,7 +88,7 @@ exports[`matches announcement snapshot 1`] = `
       </div>
     </div>
     <div
-      data-stylename="upperRight"
+      className="upperRight"
     />
   </div>
 </div>
@@ -95,25 +96,25 @@ exports[`matches announcement snapshot 1`] = `
 
 exports[`matches announcement snapshot 2`] = `
 <div
-  data-stylename="header"
+  className="header"
 >
   <div
-    data-stylename="headerMainRow"
+    className="headerMainRow"
   >
     <Avatar
       avatarUrl="foo.png"
-      data-stylename="avatar"
+      className="avatar"
       url="/m/123"
     />
     <div
-      data-stylename="headerText"
+      className="headerText"
     >
       <Highlight
         component="span"
         highlightClassName="highlight"
       >
         <Link
-          data-stylename="userName"
+          className="userName"
           replace={false}
           to="/m/123"
         >
@@ -121,16 +122,16 @@ exports[`matches announcement snapshot 2`] = `
         </Link>
       </Highlight>
       <div
-        data-stylename="timestampRow"
+        className="timestampRow"
       >
         <span
-          data-stylename="timestamp"
+          className="timestamp timestamp"
         />
         <span
-          data-stylename="announcementSection"
+          className="announcementSection"
         >
           <span
-            data-stylename="announcementSpacer"
+            className="announcementSpacer timestamp"
           >
             •
           </span>
@@ -139,11 +140,12 @@ exports[`matches announcement snapshot 2`] = `
             data-tip="Announcement"
           >
             <Icon
-              data-stylename="announcementIcon"
+              className="announcementIcon"
               name="Announcement"
             />
           </span>
           <ReactTooltip
+            clickable={false}
             delayShow={550}
             effect="solid"
             id="announcement-tt"
@@ -155,10 +157,10 @@ exports[`matches announcement snapshot 2`] = `
       </div>
     </div>
     <div
-      data-stylename="upperRight"
+      className="upperRight"
     >
       <PostLabel
-        data-stylename="label"
+        className="label"
         type="request"
       />
     </div>
@@ -168,25 +170,25 @@ exports[`matches announcement snapshot 2`] = `
 
 exports[`matches announcement snapshot 3`] = `
 <div
-  data-stylename="header"
+  className="header"
 >
   <div
-    data-stylename="headerMainRow"
+    className="headerMainRow"
   >
     <Avatar
       avatarUrl="foo.png"
-      data-stylename="avatar"
+      className="avatar"
       url="/m/123"
     />
     <div
-      data-stylename="headerText"
+      className="headerText"
     >
       <Highlight
         component="span"
         highlightClassName="highlight"
       >
         <Link
-          data-stylename="userName"
+          className="userName"
           replace={false}
           to="/m/123"
         >
@@ -194,16 +196,16 @@ exports[`matches announcement snapshot 3`] = `
         </Link>
       </Highlight>
       <div
-        data-stylename="timestampRow"
+        className="timestampRow"
       >
         <span
-          data-stylename="timestamp"
+          className="timestamp timestamp"
         />
         <span
-          data-stylename="announcementSection"
+          className="announcementSection"
         >
           <span
-            data-stylename="announcementSpacer"
+            className="announcementSpacer timestamp"
           >
             •
           </span>
@@ -212,11 +214,12 @@ exports[`matches announcement snapshot 3`] = `
             data-tip="Announcement"
           >
             <Icon
-              data-stylename="announcementIcon"
+              className="announcementIcon"
               name="Announcement"
             />
           </span>
           <ReactTooltip
+            clickable={false}
             delayShow={550}
             effect="solid"
             id="announcement-tt"
@@ -228,10 +231,10 @@ exports[`matches announcement snapshot 3`] = `
       </div>
     </div>
     <div
-      data-stylename="upperRight"
+      className="upperRight"
     >
       <PostLabel
-        data-stylename="label"
+        className="label"
         type="request"
       />
       <Dropdown
@@ -263,25 +266,25 @@ exports[`matches announcement snapshot 3`] = `
 
 exports[`matches snapshot 1`] = `
 <div
-  data-stylename="header"
+  className="header"
 >
   <div
-    data-stylename="headerMainRow"
+    className="headerMainRow"
   >
     <Avatar
       avatarUrl="foo.png"
-      data-stylename="avatar"
+      className="avatar"
       url="/m/123"
     />
     <div
-      data-stylename="headerText"
+      className="headerText"
     >
       <Highlight
         component="span"
         highlightClassName="highlight"
       >
         <Link
-          data-stylename="userName"
+          className="userName"
           replace={false}
           to="/m/123"
         >
@@ -289,15 +292,15 @@ exports[`matches snapshot 1`] = `
         </Link>
       </Highlight>
       <div
-        data-stylename="timestampRow"
+        className="timestampRow"
       >
         <span
-          data-stylename="timestamp"
+          className="timestamp timestamp"
         />
       </div>
     </div>
     <div
-      data-stylename="upperRight"
+      className="upperRight"
     />
   </div>
 </div>
@@ -305,25 +308,25 @@ exports[`matches snapshot 1`] = `
 
 exports[`matches snapshot 2`] = `
 <div
-  data-stylename="header"
+  className="header"
 >
   <div
-    data-stylename="headerMainRow"
+    className="headerMainRow"
   >
     <Avatar
       avatarUrl="foo.png"
-      data-stylename="avatar"
+      className="avatar"
       url="/m/123"
     />
     <div
-      data-stylename="headerText"
+      className="headerText"
     >
       <Highlight
         component="span"
         highlightClassName="highlight"
       >
         <Link
-          data-stylename="userName"
+          className="userName"
           replace={false}
           to="/m/123"
         >
@@ -331,18 +334,18 @@ exports[`matches snapshot 2`] = `
         </Link>
       </Highlight>
       <div
-        data-stylename="timestampRow"
+        className="timestampRow"
       >
         <span
-          data-stylename="timestamp"
+          className="timestamp timestamp"
         />
       </div>
     </div>
     <div
-      data-stylename="upperRight"
+      className="upperRight"
     >
       <PostLabel
-        data-stylename="label"
+        className="label"
         type="request"
       />
     </div>
@@ -352,25 +355,25 @@ exports[`matches snapshot 2`] = `
 
 exports[`matches snapshot 3`] = `
 <div
-  data-stylename="header"
+  className="header"
 >
   <div
-    data-stylename="headerMainRow"
+    className="headerMainRow"
   >
     <Avatar
       avatarUrl="foo.png"
-      data-stylename="avatar"
+      className="avatar"
       url="/m/123"
     />
     <div
-      data-stylename="headerText"
+      className="headerText"
     >
       <Highlight
         component="span"
         highlightClassName="highlight"
       >
         <Link
-          data-stylename="userName"
+          className="userName"
           replace={false}
           to="/m/123"
         >
@@ -378,18 +381,18 @@ exports[`matches snapshot 3`] = `
         </Link>
       </Highlight>
       <div
-        data-stylename="timestampRow"
+        className="timestampRow"
       >
         <span
-          data-stylename="timestamp"
+          className="timestamp timestamp"
         />
       </div>
     </div>
     <div
-      data-stylename="upperRight"
+      className="upperRight"
     >
       <PostLabel
-        data-stylename="label"
+        className="label"
         type="request"
       />
       <Dropdown

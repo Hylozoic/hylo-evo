@@ -2,12 +2,12 @@
 
 exports[`CommunityCell matches last snapshot with 1 community 1`] = `
 <Link
-  data-stylename="communityCell"
+  className="communityCell"
   replace={false}
   to="/all"
 >
   <div
-    data-stylename="communityCellAvatar"
+    className="communityCellAvatar"
     style={
       Object {
         "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png)",
@@ -15,20 +15,20 @@ exports[`CommunityCell matches last snapshot with 1 community 1`] = `
     }
   />
   <span
-    data-stylename="communityCellName"
+    className="communityCellName text-button"
   />
 </Link>
 `;
 
 exports[`CommunityList matches last snapshot with 1 community 1`] = `
 <span
-  data-stylename="communityList"
+  className="communityList timestamp"
 >
   <span
     key="1"
   >
     <Link
-      data-stylename="communityLink"
+      className="communityLink"
       replace={false}
       to="/c/one"
     >
@@ -40,13 +40,13 @@ exports[`CommunityList matches last snapshot with 1 community 1`] = `
 
 exports[`CommunityList matches last snapshot with 2 communities 1`] = `
 <span
-  data-stylename="communityList"
+  className="communityList timestamp"
 >
   <span
     key="1"
   >
     <Link
-      data-stylename="communityLink"
+      className="communityLink"
       replace={false}
       to="/c/one"
     >
@@ -62,7 +62,7 @@ exports[`CommunityList matches last snapshot with 2 communities 1`] = `
     key="2"
   >
     <Link
-      data-stylename="communityLink"
+      className="communityLink"
       replace={false}
       to="/c/two"
     >
@@ -74,13 +74,13 @@ exports[`CommunityList matches last snapshot with 2 communities 1`] = `
 
 exports[`CommunityList matches last snapshot with 5 community 1`] = `
 <span
-  data-stylename="communityList"
+  className="communityList timestamp"
 >
   <span
     key="1"
   >
     <Link
-      data-stylename="communityLink"
+      className="communityLink"
       replace={false}
       to="/c/one"
     >
@@ -92,7 +92,7 @@ exports[`CommunityList matches last snapshot with 5 community 1`] = `
     key="2"
   >
     <Link
-      data-stylename="communityLink"
+      className="communityLink"
       replace={false}
       to="/c/two"
     >
@@ -106,7 +106,7 @@ exports[`CommunityList matches last snapshot with 5 community 1`] = `
      and 
   </span>
   <a
-    data-stylename="communityLink"
+    className="communityLink"
     key="others"
     onClick={[Function]}
   >
@@ -118,7 +118,7 @@ exports[`CommunityList matches last snapshot with 5 community 1`] = `
 
 exports[`CommunityRow matches last snapshot with 1 community 1`] = `
 <div
-  data-stylename="communityRow"
+  className="communityRow"
 >
   <CommunityCell
     community={
@@ -145,13 +145,13 @@ exports[`CommunityRow matches last snapshot with 1 community 1`] = `
 
 exports[`PostCommunities matches last snapshot 1`] = `
 <div
-  data-stylename="communities"
+  className="communities"
 >
   <div
-    data-stylename="row"
+    className="row"
   >
     <span
-      data-stylename="label"
+      className="label timestamp"
     >
       Posted In: 
     </span>
@@ -178,11 +178,11 @@ exports[`PostCommunities matches last snapshot 1`] = `
       expandFunc={[Function]}
     />
     <a
-      data-stylename="expandLink"
+      className="expandLink"
       onClick={[Function]}
     >
       <Icon
-        data-stylename="expandIcon"
+        className="expandIcon timestamp"
         name="ArrowDown"
       />
     </a>
@@ -192,26 +192,26 @@ exports[`PostCommunities matches last snapshot 1`] = `
 
 exports[`PostCommunities matches last snapshot when expanded 1`] = `
 <div
-  data-stylename="communities expanded"
+  className="communities expanded"
 >
   <span
-    data-stylename="expandedSection"
+    className="expandedSection"
     onClick={[Function]}
   >
     <div
-      data-stylename="row"
+      className="row"
     >
       <span
-        data-stylename="label"
+        className="label timestamp"
       >
         Posted In: 
       </span>
       <a
-        data-stylename="expandLink"
+        className="expandLink"
         onClick={[Function]}
       >
         <Icon
-          data-stylename="expandIcon"
+          className="expandIcon timestamp"
           name="ArrowUp"
         />
       </a>

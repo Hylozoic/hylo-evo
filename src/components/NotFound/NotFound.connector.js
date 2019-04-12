@@ -1,4 +1,4 @@
-import { goBack, push } from 'react-router-redux'
+import { goBack, push } from 'connected-react-router'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 

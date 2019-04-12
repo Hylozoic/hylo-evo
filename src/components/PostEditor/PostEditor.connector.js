@@ -1,6 +1,6 @@
 import { get, isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import { postUrl } from 'util/navigation'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getPostTypeContext from 'store/selectors/getPostTypeContext'

@@ -2,7 +2,7 @@
 
 exports[`Thread matches the last snapshot 1`] = `
 <div
-  data-stylename="thread"
+  className="thread"
 >
   <Connect(Header)
     thread={
@@ -20,7 +20,7 @@ exports[`Thread matches the last snapshot 1`] = `
     }
   />
   <div
-    data-stylename="message-form"
+    className="message-form"
   >
     <Connect(MessageForm)
       focusForm={[Function]}
@@ -29,7 +29,7 @@ exports[`Thread matches the last snapshot 1`] = `
     />
   </div>
   <Connect(PeopleTyping)
-    data-stylename="people-typing"
+    className="people-typing"
   />
   <Connect(SocketSubscriber)
     id="1"

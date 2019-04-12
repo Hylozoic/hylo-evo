@@ -1,7 +1,7 @@
 import { FETCH_NOTIFICATIONS, MARK_ACTIVITY_READ, MARK_ALL_ACTIVITIES_READ } from 'store/constants'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import {
   ACTION_NEW_COMMENT,
   ACTION_TAG,

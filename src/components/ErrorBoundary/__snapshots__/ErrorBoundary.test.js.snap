@@ -5,20 +5,20 @@ exports[`renders an error when an error is thrown 1`] = `
   message="An Error Message"
 >
   <div
-    data-stylename="container"
+    className="container"
   >
     <div
-      data-stylename="speech-bubble"
+      className="speech-bubble"
     >
       <div
-        data-stylename="arrow"
+        className="arrow"
       />
       <span>
         An Error Message
       </span>
     </div>
     <div
-      data-stylename="axolotl"
+      className="axolotl"
     />
   </div>
 </ErrorBoundary>

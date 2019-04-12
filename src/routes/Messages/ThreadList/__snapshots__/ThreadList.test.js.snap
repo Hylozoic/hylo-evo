@@ -2,28 +2,28 @@
 
 exports[`ThreadList matches the last snapshot 1`] = `
 <div
-  data-stylename="thread-list"
+  className="thread-list"
 >
   <div
-    data-stylename="header"
+    className="header"
   >
     <Link
       replace={false}
       to="/t/new"
     >
       <Button
-        data-stylename="new-message"
+        className="new-message"
         label="New Message"
       />
     </Link>
     <div
-      data-stylename="header-text"
+      className="header-text hdr-headline"
     >
       Messages
     </div>
   </div>
   <div
-    data-stylename="search"
+    className="search"
   >
     <TextInput
       onChange={[Function]}
@@ -31,11 +31,11 @@ exports[`ThreadList matches the last snapshot 1`] = `
     />
   </div>
   <ul
-    data-stylename="list"
+    className="list"
     id="thread-list-list"
   >
     <div
-      data-stylename="no-conversations"
+      className="no-conversations bdy-lt-lg"
     >
       You have no active conversations
     </div>
@@ -48,7 +48,7 @@ exports[`ThreadList matches the last snapshot 1`] = `
 
 exports[`ThreadListItem matches the last snapshot 1`] = `
 <li
-  data-stylename="list-item"
+  className="list-item"
 >
   <Link
     replace={false}
@@ -63,20 +63,20 @@ exports[`ThreadListItem matches the last snapshot 1`] = `
       }
     />
     <div
-      data-stylename="li-center-content"
+      className="li-center-content"
     >
       <ThreadNames
         names="Jo and La"
       />
       <div
-        data-stylename="thread-message-text"
+        className="thread-message-text bdy-lt-sm"
       />
     </div>
     <div
-      data-stylename="li-right-content"
+      className="li-right-content"
     >
       <div
-        data-stylename="message-time"
+        className="message-time timestamp"
       />
     </div>
   </Link>
@@ -85,7 +85,7 @@ exports[`ThreadListItem matches the last snapshot 1`] = `
 
 exports[`ThreadListItem matches the last snapshot with 2 participants 1`] = `
 <li
-  data-stylename="list-item"
+  className="list-item"
 >
   <Link
     replace={false}
@@ -99,20 +99,20 @@ exports[`ThreadListItem matches the last snapshot with 2 participants 1`] = `
       }
     />
     <div
-      data-stylename="li-center-content"
+      className="li-center-content"
     >
       <ThreadNames
         names="Jo"
       />
       <div
-        data-stylename="thread-message-text"
+        className="thread-message-text bdy-lt-sm"
       />
     </div>
     <div
-      data-stylename="li-right-content"
+      className="li-right-content"
     >
       <div
-        data-stylename="message-time"
+        className="message-time timestamp"
       />
     </div>
   </Link>
@@ -121,7 +121,7 @@ exports[`ThreadListItem matches the last snapshot with 2 participants 1`] = `
 
 exports[`ThreadListItem matches the last snapshot with just you 1`] = `
 <li
-  data-stylename="list-item"
+  className="list-item"
 >
   <Link
     replace={false}
@@ -135,20 +135,20 @@ exports[`ThreadListItem matches the last snapshot with just you 1`] = `
       }
     />
     <div
-      data-stylename="li-center-content"
+      className="li-center-content"
     >
       <ThreadNames
         names="You"
       />
       <div
-        data-stylename="thread-message-text"
+        className="thread-message-text bdy-lt-sm"
       />
     </div>
     <div
-      data-stylename="li-right-content"
+      className="li-right-content"
     >
       <div
-        data-stylename="message-time"
+        className="message-time timestamp"
       />
     </div>
   </Link>

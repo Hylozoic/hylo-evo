@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import { postUrl, editPostUrl } from 'util/navigation'
 import voteOnPost from 'store/actions/voteOnPost'
 

@@ -13,7 +13,7 @@ import userFetchedMiddleware from './userFetchedMiddleware'
 import userBlockingMiddleware from './userBlockingMiddleware'
 import mixpanelMiddleware from './mixpanelMiddleware'
 import errorMiddleware from './errorMiddleware'
-import { routerMiddleware } from 'react-router-redux'
+import { routerMiddleware } from 'connected-react-router'
 
 export default function createMiddleware (history, req) {
   const middleware = compact([

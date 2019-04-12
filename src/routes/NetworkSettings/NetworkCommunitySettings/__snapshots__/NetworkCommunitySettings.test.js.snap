@@ -2,16 +2,16 @@
 
 exports[`CommunityModerator matches the previous snapshot 1`] = `
 <div
-  data-stylename="moderator"
+  className="moderator"
 >
   <Avatar
     avatarUrl="jarpic.png"
-    data-stylename="moderator-image"
+    className="moderator-image"
     medium={true}
     url="/c/cslug/m/1"
   />
   <Link
-    data-stylename="moderator-name"
+    className="moderator-name bdy-lt-sm"
     replace={false}
     to="/c/cslug/m/1"
   >
@@ -22,10 +22,10 @@ exports[`CommunityModerator matches the previous snapshot 1`] = `
 
 exports[`CommunityModeratorSection matches the previous snapshot 1`] = `
 <div
-  data-stylename="moderators-section"
+  className="moderators-section"
 >
   <div
-    data-stylename="moderators-header"
+    className="moderators-header tag"
   >
     Community Moderators
   </div>
@@ -50,20 +50,20 @@ exports[`CommunityModeratorSection matches the previous snapshot 1`] = `
 exports[`NetworkCommunitySettings matches the previous snapshot and calls fetchCommunitySettings 1`] = `
 <div>
   <div
-    data-stylename="switch-row"
+    className="switch-row"
   >
     <div
-      data-stylename="switch-label"
+      className="switch-label caption-drk-lg"
     >
       Hide community from network
     </div>
     <Switch
-      data-stylename="switch"
+      className="switch"
       onClick={[Function]}
     />
   </div>
   <div
-    data-stylename="help-text"
+    className="help-text bdy-lt-sm"
   >
     Turning this on means this community will not appear in the network list and only members of this community (not the wider network) will be able to see posts from this community.
   </div>

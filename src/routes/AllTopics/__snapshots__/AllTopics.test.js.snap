@@ -3,20 +3,20 @@
 exports[`AllTopics matches the latest snapshot 1`] = `
 <withRouter(Connect(FullPageModal))>
   <div
-    data-stylename="all-topics"
+    className="all-topics"
   >
     <div
-      data-stylename="title"
+      className="title hdr-display"
     >
       Topics
     </div>
     <div
-      data-stylename="subtitle"
+      className="subtitle caption-lt-lg"
     >
        Total Topics
     </div>
     <div
-      data-stylename="controls"
+      className="controls"
     >
       <SearchBar />
       <Connect(CreateTopic)
@@ -40,7 +40,7 @@ exports[`AllTopics matches the latest snapshot 1`] = `
       />
     </div>
     <div
-      data-stylename="topic-list"
+      className="topic-list"
       id="topic-list"
     >
       <CommunityTopicListItem
@@ -72,10 +72,10 @@ exports[`AllTopics matches the latest snapshot 1`] = `
 
 exports[`SearchBar matches the latest snapshot 1`] = `
 <div
-  data-stylename="search-bar"
+  className="search-bar"
 >
   <TextInput
-    data-stylename="search-input"
+    className="search-input"
     noClearButton={true}
     onChange={[Function]}
     placeholder="Search topics"
@@ -83,7 +83,7 @@ exports[`SearchBar matches the latest snapshot 1`] = `
   />
   <Dropdown
     alignRight={true}
-    data-stylename="search-order"
+    className="search-order"
     items={
       Array [
         Object {
@@ -98,7 +98,7 @@ exports[`SearchBar matches the latest snapshot 1`] = `
     }
     toggleChildren={
       <span
-        data-stylename="search-sorter-label"
+        className="search-sorter-label caption-lt-lg"
       >
         Popular
         <Icon
@@ -112,21 +112,21 @@ exports[`SearchBar matches the latest snapshot 1`] = `
 
 exports[`TopicListItem matches the latest snapshot 1`] = `
 <div
-  data-stylename="topic"
+  className="topic"
 >
   <Link
-    data-stylename="topic-details"
+    className="topic-details"
     replace={false}
     to="/c/goteam/petitions"
   >
     <div
-      data-stylename="topic-name"
+      className="topic-name hdr-headline"
     >
       #
       petitions
     </div>
     <div
-      data-stylename="topic-stats"
+      className="topic-stats caption-drk-lg"
     >
       24 posts
        • 
@@ -134,7 +134,7 @@ exports[`TopicListItem matches the latest snapshot 1`] = `
     </div>
   </Link>
   <span
-    data-stylename="topic-subscribe"
+    className="topic-subscribe text-button"
   >
     Subscribe
   </span>

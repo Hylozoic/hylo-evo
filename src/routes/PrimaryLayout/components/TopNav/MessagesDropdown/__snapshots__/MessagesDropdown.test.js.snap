@@ -4,7 +4,7 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
 <TopNavDropdown
   body={
     <div
-      data-stylename="threads"
+      className="threads body"
     >
       <MessagesDropdownItem
         currentUser={
@@ -46,17 +46,17 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
   }
   header={
     <div
-      data-stylename="header-content"
+      className="header-content header-content"
     >
       <Link
-        data-stylename="open"
+        className="open header-link bdy-lt-sm"
         replace={false}
         to="/t/2"
       >
         Open Messages
       </Link>
       <Link
-        data-stylename="new"
+        className="new header-link bdy-lt-sm"
         replace={false}
         to="/t/new"
       >
@@ -82,17 +82,17 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
   }
   header={
     <div
-      data-stylename="header-content"
+      className="header-content header-content"
     >
       <Link
-        data-stylename="open"
+        className="open header-link bdy-lt-sm"
         replace={false}
         to="/t/new"
       >
         Open Messages
       </Link>
       <Link
-        data-stylename="new"
+        className="new header-link bdy-lt-sm"
         replace={false}
         to="/t/new"
       >

@@ -2,21 +2,20 @@
 
 exports[`Switch renders correctly 1`] = `
 <div
-  className="switch-class"
-  data-stylename="switch-container"
+  className="switch-class switch-container"
   onClick={[Function]}
 >
   <div
-    data-stylename="circle-gray-1"
+    className="circle-gray-1"
   />
   <div
-    data-stylename="connect-gray"
+    className="connect-gray"
   />
   <div
-    data-stylename="circle-gray-2"
+    className="circle-gray-2"
   />
   <div
-    data-stylename="switch-on"
+    className="switch-on"
   />
 </div>
 `;
