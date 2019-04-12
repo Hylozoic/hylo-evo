@@ -9,7 +9,6 @@ coverage
 # production
 build
 es5
-
 storybook-static
 
 # misc
