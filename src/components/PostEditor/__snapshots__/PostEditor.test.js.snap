@@ -446,6 +446,7 @@ exports[`PostEditor editing a post saving a post will update a post 1`] = `
 Array [
   Array [
     Object {
+      "acceptContributions": undefined,
       "communities": Array [
         Object {
           "id": "1",
@@ -1225,6 +1226,7 @@ exports[`PostEditor for a new post saving a post will create a new post 1`] = `
 Array [
   Array [
     Object {
+      "acceptContributions": undefined,
       "communities": Array [
         Object {
           "id": "1",
@@ -1757,22 +1759,6 @@ exports[`PostEditor renders contribution button 1`] = `
       <div
         data-stylename="footerSection-label"
       >
-        Topics
-      </div>
-      <div
-        data-stylename="footerSection-communities"
-      >
-        <Connect(TopicSelector)
-          detailsTopics={Array []}
-        />
-      </div>
-    </div>
-    <div
-      data-stylename="footerSection"
-    >
-      <div
-        data-stylename="footerSection-label"
-      >
         Project Members
       </div>
       <div
@@ -1805,6 +1791,22 @@ exports[`PostEditor renders contribution button 1`] = `
         >
           If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.
         </div>
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Topics
+      </div>
+      <div
+        data-stylename="footerSection-communities"
+      >
+        <Connect(TopicSelector)
+          detailsTopics={Array []}
+        />
       </div>
     </div>
     <div
@@ -1986,6 +1988,7 @@ exports[`PostEditor saving a valid post will update a post 1`] = `
 Array [
   Array [
     Object {
+      "acceptContributions": undefined,
       "communities": Array [
         Object {
           "id": "1",
