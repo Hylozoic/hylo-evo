@@ -165,6 +165,15 @@ $wrapperBorderRadius: 8px;
   }
 }
 
+.accept-contributions {
+  display: flex;
+  align-items: center;
+}
+
+.accept-contributions-switch {
+  margin-right: 55px;
+}
+
 .alignedLabel {
   width: 60px;
 }
@@ -227,4 +236,8 @@ $wrapperBorderRadius: 8px;
   padding-right: 10px;
   padding-left: 10px;
   border-radius: 10px;
+}
+
+.accept-contributions-help {
+  composes: caption-lt-lg from 'css/typography.scss';
 }

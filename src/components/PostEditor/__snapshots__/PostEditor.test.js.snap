@@ -446,6 +446,7 @@ exports[`PostEditor editing a post saving a post will update a post 1`] = `
 Array [
   Array [
     Object {
+      "acceptContributions": undefined,
       "communities": Array [
         Object {
           "id": "1",
@@ -1225,6 +1226,7 @@ exports[`PostEditor for a new post saving a post will create a new post 1`] = `
 Array [
   Array [
     Object {
+      "acceptContributions": undefined,
       "communities": Array [
         Object {
           "id": "1",
@@ -1683,6 +1685,163 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
 </div>
 `;
 
+exports[`PostEditor renders contribution button 1`] = `
+<div
+  data-stylename="wrapper"
+>
+  <div
+    data-stylename="header"
+  >
+    <div
+      data-stylename="initial"
+    >
+      <div
+        data-stylename="initial-prompt"
+      >
+        What are you looking to post?
+      </div>
+      <a
+        data-stylename="initial-closeButton"
+      >
+        <Icon
+          name="Ex"
+        />
+      </a>
+    </div>
+  </div>
+  <div
+    data-stylename="body"
+  >
+    <div
+      data-stylename="body-column"
+    >
+      <RoundImage
+        data-stylename="titleAvatar"
+        medium={true}
+      />
+    </div>
+    <div
+      data-stylename="body-column"
+    >
+      <input
+        data-stylename="titleInput"
+        disabled={false}
+        maxLength={50}
+        onChange={[Function]}
+        placeholder="What’s on your mind?"
+        type="text"
+        value=""
+      />
+      <Connect(HyloEditor)
+        contentHTML=""
+        data-stylename="editor"
+        onChange={[Function]}
+        parentComponent="PostEditor"
+        placeholder="Add a description"
+        readOnly={false}
+      />
+    </div>
+  </div>
+  <Connect(AttachmentManager)
+    postId="new"
+    type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="new"
+    type="file"
+  />
+  <div
+    data-stylename="footer"
+  >
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Project Members
+      </div>
+      <div
+        data-stylename="footerSection-communities"
+      >
+        <Connect(MemberSelector)
+          initialMembers={Array []}
+          onChange={[Function]}
+          readOnly={false}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Accept Contributions
+      </div>
+      <div
+        data-stylename="footerSection-communities accept-contributions"
+      >
+        <Switch
+          data-stylename="accept-contributions-switch"
+          onClick={[Function]}
+        />
+        <div
+          data-stylename="accept-contributions-help"
+        >
+          If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.
+        </div>
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Topics
+      </div>
+      <div
+        data-stylename="footerSection-communities"
+      >
+        <Connect(TopicSelector)
+          detailsTopics={Array []}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Post in
+      </div>
+      <div
+        data-stylename="footerSection-communities"
+      >
+        <CommunitiesSelector
+          onChange={[Function]}
+          options={Array []}
+          placeholder="Type community name..."
+          readOnly={false}
+          selected={Array []}
+        />
+      </div>
+    </div>
+    <ActionsBar
+      communities={Array []}
+      communityCount={0}
+      loading={false}
+      save={[Function]}
+      submitButtonLabel="Post"
+      toggleAnnouncementModal={[Function]}
+      valid={false}
+    />
+  </div>
+</div>
+`;
+
 exports[`PostEditor renders with min props 1`] = `
 <div
   data-stylename="wrapper"
@@ -1829,6 +1988,7 @@ exports[`PostEditor saving a valid post will update a post 1`] = `
 Array [
   Array [
     Object {
+      "acceptContributions": undefined,
       "communities": Array [
         Object {
           "id": "1",

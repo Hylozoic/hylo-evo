@@ -9,8 +9,9 @@ export default
   $communityIds: [String],
   $imageUrls: [String],
   $fileUrls: [String],
-  $announcement: Boolean
+  $announcement: Boolean,
   $topicNames: [String],
+  $acceptContributions: Boolean,
   $eventInviteeIds: [ID],
   $startTime: String,
   $endTime: String,
@@ -25,8 +26,9 @@ export default
     imageUrls: $imageUrls,
     fileUrls: $fileUrls,
     announcement: $announcement,
-    eventInviteeIds: $eventInviteeIds,
     topicNames: $topicNames,
+    acceptContributions: $acceptContributions,
+    eventInviteeIds: $eventInviteeIds,
     startTime: $startTime,
     endTime: $endTime,
     location: $location

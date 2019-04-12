@@ -47,6 +47,8 @@ const getPostFieldsFragment = withComments => `
   }
   votesTotal
   myVote
+  acceptContributions
+  totalContributions
   communities {
     id
     name

@@ -15,6 +15,8 @@ import {
   ACTION_MENTION,
   ACTION_COMMENT_MENTION,
   ACTION_ANNOUNCEMENT,
+  ACTION_DONATION_TO,
+  ACTION_DONATION_FROM,
   ACTION_EVENT_INVITATION
 } from 'store/models/Notification'
 import striptags from 'striptags'
@@ -177,18 +179,28 @@ export function NotificationHeader ({ notification }) {
         <span styleName='bold'>{actor.name} </span>
         sent an announcement
       </div>
+    case ACTION_DONATION_TO:
+      return <div styleName='header'>
+        <span styleName='bold'>You </span>
+        contributed to a project
+      </div>
+    case ACTION_DONATION_FROM:
+      return <div styleName='header'>
+        <span styleName='bold'>{actor.name} </span>
+        contributed to your project
+      </div>
     case ACTION_EVENT_INVITATION:
       return <div styleName='header'>
         <span styleName='bold'>{actor.name} </span>
         invited you to an event
-      </div>      
+      </div>
   }
 
   return null
 }
 
 export function NotificationBody ({ notification }) {
-  const { activity: { action, actor, post, comment, community } } = notification
+  const { activity: { action, actor, post, comment, community, contributionAmount } } = notification
 
   const truncateForBody = text =>
     text && textLength(text) > 76 ? truncate(text, 76) : text
@@ -222,6 +234,16 @@ export function NotificationBody ({ notification }) {
       text = truncateForBody(post.title)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> wrote: "{text}"
+      </div>
+    case ACTION_DONATION_TO:
+      text = truncateForBody(post.title)
+      return <div styleName='body'>
+        <span styleName='bold'>You</span> contributed ${contributionAmount / 100} to "{text}"
+      </div>
+    case ACTION_DONATION_FROM:
+      text = truncateForBody(post.title)
+      return <div styleName='body'>
+        <span styleName='bold'>{actor.name}</span> contributed ${contributionAmount / 100} to "{text}"
       </div>
     case ACTION_EVENT_INVITATION:
       text = truncateForBody(post.title)

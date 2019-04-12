@@ -16,6 +16,7 @@ import {
   VOTE_ON_POST_PENDING,
   UPDATE_POST_PENDING,
   UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING,
+  PROCESS_STRIPE_TOKEN_PENDING,
   RESPOND_TO_EVENT_PENDING
 } from 'store/constants'
 import {
@@ -293,6 +294,14 @@ export default function ormReducer (state = {}, action) {
     case UPDATE_COMMENT_PENDING:
       comment = Comment.withId(meta.id)
       comment.update(meta.data)
+      break
+
+    case PROCESS_STRIPE_TOKEN_PENDING:
+      post = Post.withId(meta.postId)
+      const totalContributions = Number(post.totalContributions) + Number(meta.amount)
+      post.update({
+        totalContributions
+      })
       break
 
     case RESPOND_TO_EVENT_PENDING:

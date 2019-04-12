@@ -14,6 +14,7 @@ import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
+import Switch from 'components/Switch'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 import TopicSelector from 'components/TopicSelector'
 import MemberSelector from 'components/MemberSelector'
@@ -22,6 +23,7 @@ import DatePicker from 'components/DatePicker'
 import ChangeImageButton from 'components/ChangeImageButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import styles from './PostEditor.scss'
+import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 
 export const MAX_TITLE_LENGTH = 50
 
@@ -49,14 +51,14 @@ export default class PostEditor extends React.Component {
   static defaultProps = {
     initialPromptForPostType: {
       project: <span styleName='postType postType-project'>CREATE PROJECT</span>,
-      event: <span styleName='postType postType-event'>CREATE EVENT</span>,      
+      event: <span styleName='postType postType-event'>CREATE EVENT</span>,
       default: 'What are you looking to post?'
     },
     titlePlaceholderForPostType: {
       offer: 'What super powers can you offer?',
       request: 'What are you looking for help with?',
       project: 'What would you like to call your project?',
-      event: 'What is your event called?',      
+      event: 'What is your event called?',
       default: 'What’s on your mind?'
     },
     detailsPlaceholder: 'Add a description',
@@ -71,16 +73,16 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ editing, currentCommunity, post, topic, initialPrompt, announcementSelected, postTypeContext }) => {  
-
+  buildStateFromProps = ({ editing, currentCommunity, post, topic, initialPrompt, announcementSelected, postTypeContext }) => {
     const defaultPostWithCommunitiesAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
       type: postTypeContext || PostEditor.defaultProps.post.type,
       communities: currentCommunity ? [currentCommunity] : PostEditor.defaultProps.post.communities,
       topics: topic ? [topic] : [],
-      detailsTopics: []
+      detailsTopics: [],
+      acceptContributions: false
     })
-    const currentPost = post ?
-      ({...post,
+    const currentPost = post
+      ? ({...post,
         startTime: Moment(post.startTime),
         endTime: Moment(post.endTime)
       })
@@ -190,6 +192,13 @@ export default class PostEditor extends React.Component {
     }
   }
 
+  toggleContributions = () => {
+    const { post, post: { acceptContributions } } = this.state
+    this.setState({
+      post: {...post, acceptContributions: !acceptContributions}
+    })
+  }
+
   handleStartTimeChange = startTime => {
     this.validateTimeChange(startTime, this.state.post.endTime)
 
@@ -289,14 +298,14 @@ export default class PostEditor extends React.Component {
       editing, createPost, createProject, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected, isProject
     } = this.props
     const {
-      id, type, title, communities, linkPreview, members, eventInvitations, startTime, endTime, location
+      id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, location
     } = this.state.post
     const details = this.editor.getContentHTML()
     const topicNames = this.topicSelector.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, eventInviteeIds, startTime, endTime, location
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location
     }
     const saveFunc = editing ? updatePost : isProject ? createProject : createPost
     setAnnouncement(false)
@@ -320,13 +329,15 @@ export default class PostEditor extends React.Component {
 
   render () {
     const { initialPrompt, titlePlaceholder, titleLengthError, dateError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
-    const { id, title, details, communities, linkPreview, topics, members, eventInvitations, startTime, endTime, location } = post
+    const { id, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location } = post
     const {
       onClose, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
       showImages, addFile, showFiles, setAnnouncement, announcementSelected,
       canModerate, myModeratedCommunities, isProject, isEvent
     } = this.props
+
+    const hasStripeAccount = get('hasStripeAccount', currentUser)
 
     const showPostTypes = !isProject && !isEvent
 
@@ -388,11 +399,21 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>}
+        {isProject && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) && <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Accept Contributions</div>
+          {hasStripeAccount && <div styleName={cx('footerSection-communities', 'accept-contributions')}>
+            <Switch value={acceptContributions} onClick={this.toggleContributions} styleName='accept-contributions-switch' />
+            {!acceptContributions && <div styleName='accept-contributions-help'>If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.</div>}
+          </div>}
+          {!hasStripeAccount && <div styleName={cx('footerSection-communities', 'accept-contributions-help')}>
+            To accept financial contributions for this project, you have to connect a Stripe account. Go to <a href='/settings/payment'>Settings</a> to set it up. (Remember to save your changes before leaving this form)
+          </div>}
+        </div>}
         {isEvent && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
         {isEvent && <div styleName='footerSection'>
           <div styleName='footerSection-label alignedLabel'>Start Time</div>
           <DatePicker value={startTime} onChange={this.handleStartTimeChange} />
-        </div>} 
+        </div>}
         {isEvent && <div styleName='footerSection'>
           <div styleName='footerSection-label alignedLabel'>End Time</div>
           <DatePicker value={endTime} onChange={this.handleEndTimeChange} />

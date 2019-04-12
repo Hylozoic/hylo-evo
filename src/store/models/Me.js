@@ -1,6 +1,6 @@
+import { find, get, includes } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import { attr, many, Model } from 'redux-orm'
-import { find, get, includes } from 'lodash/fp'
 import featureFlag from '../../config/featureFlags'
 
 const Me = Model.createClass({

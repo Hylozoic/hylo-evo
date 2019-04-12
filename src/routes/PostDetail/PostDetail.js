@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import StripeCheckout from 'react-stripe-checkout'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
@@ -12,6 +13,8 @@ import SocketSubscriber from 'components/SocketSubscriber'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
+import TextInput from 'components/TextInput'
+import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import PostPeopleDialog from 'components/PostPeopleDialog'
 import './PostDetail.scss'
 
@@ -101,6 +104,8 @@ export default class PostDetail extends Component {
       joinProject,
       leaveProject,
       pending,
+      processStripeToken,
+      currentUser,
       respondToEvent
     } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
@@ -110,6 +115,9 @@ export default class PostDetail extends Component {
 
     const isProject = get('type', post) === 'project'
     const isEvent = get('type', post) === 'event'
+
+    const { acceptContributions, totalContributions } = post || {}
+
     const scrollToBottom = () => {
       const detail = document.getElementById(DETAIL_COLUMN_ID)
       detail.scrollTop = detail.scrollHeight
@@ -165,6 +173,11 @@ export default class PostDetail extends Component {
           leaveProject={leaveProject}
           leaving={isProjectMember} />
       </div>}
+      {isProject && acceptContributions && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) &&
+        <ProjectContributions
+          postId={post.id}
+          totalContributions={totalContributions}
+          processStripeToken={processStripeToken} />}
       <PostCommunities
         communities={post.communities}
         slug={routeParams.slug}
@@ -207,4 +220,85 @@ export function JoinProjectButton ({ leaving, joinProject, leaveProject }) {
     styleName='join-project-button'>
     {buttonText}
   </Button>
+}
+
+export class ProjectContributions extends Component {
+  state = {
+    expanded: false,
+    contributionAmount: ''
+  }
+
+  toggleExpanded = () => {
+    this.setState({
+      expanded: !this.state.expanded,
+      received: false
+    })
+  }
+
+  setAmount = (event) => {
+    this.setState({
+      contributionAmount: event.target.value.replace('$', '')
+    })
+  }
+
+  render () {
+    const { postId, totalContributions, processStripeToken } = this.props
+    const { expanded, contributionAmount, received, error } = this.state
+
+    const onToken = token => {
+      this.setState({
+        expanded: false,
+        received: false,
+        error: false
+      })
+      processStripeToken(postId, token.id, contributionAmount)
+      .then(({ error }) => {
+        this.setAmount({target: {value: '0'}})
+        if (error) {
+          this.setState({error: true})
+        } else {
+          this.setState({received: true})
+        }
+      })
+    }
+
+    const contributionAmountNumber = Number(contributionAmount)
+    const valid = !isNaN(contributionAmountNumber) &&
+      contributionAmount > 0
+
+    return <div styleName='project-contributions'>
+      {received && <div styleName='success-notification'>Thanks for your contribution!</div>}
+      {error && <div styleName='error-notification'>There was a problem processing your payment. Please check your card details and try again.</div>}
+      {!expanded && !received && <Button
+        color='green'
+        onClick={this.toggleExpanded}
+        label='Contribute'
+        small
+        narrow />}
+      {expanded && <div>
+        <div styleName='amount-row'>
+          <span styleName='amount-label'>Amount</span>
+          <TextInput
+            onChange={this.setAmount}
+            inputRef={input => { this.amountInput = input }}
+            value={'$' + contributionAmount}
+            noClearButton />
+        </div>
+        <StripeCheckout
+          disabled={!valid}
+          name='Contributing Via Stripe'
+          token={onToken}
+          stripeKey={process.env.STRIPE_PUBLISHABLE_KEY}
+          amount={Number(contributionAmount)} />
+        <Button
+          styleName='cancel-button'
+          color='gray'
+          onClick={this.toggleExpanded}
+          label='Cancel'
+          small
+          narrow />
+      </div>}
+      <div styleName='project-contributions-total'>Contributions so far: ${totalContributions}</div>
+    </div>
+  }
 }

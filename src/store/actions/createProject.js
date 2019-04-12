@@ -16,7 +16,8 @@ export default function createProject (postParams) {
     topicNames,
     sendAnnouncement,
     memberIds = [],
-    networkSlug
+    networkSlug,
+    acceptContributions
   } = postParams
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
@@ -33,7 +34,8 @@ export default function createProject (postParams) {
         $fileUrls: [String],
         $announcement: Boolean
         $topicNames: [String]
-        $memberIds: [ID]        
+        $memberIds: [ID],
+        $acceptContributions: Boolean
       ) {
         createProject(data: {
           title: $title,
@@ -45,6 +47,7 @@ export default function createProject (postParams) {
           announcement: $announcement
           topicNames: $topicNames
           memberIds: $memberIds
+          acceptContributions: $acceptContributions
         }) {${getPostFieldsFragment(false)}}
       }`,
       variables: {
@@ -57,7 +60,8 @@ export default function createProject (postParams) {
         fileUrls,
         announcement: sendAnnouncement,
         topicNames,
-        memberIds
+        memberIds,
+        acceptContributions
       }
     },
     meta: {
