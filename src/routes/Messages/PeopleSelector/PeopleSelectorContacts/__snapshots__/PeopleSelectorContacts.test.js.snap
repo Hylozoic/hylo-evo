@@ -2,16 +2,16 @@
 
 exports[`does something 1`] = `
 <div
-  className="people-selector-contacts messages-section"
+  data-stylename="people-selector-contacts"
 >
   <div>
     <h2
-      className="contacts-header hdr-subheadline"
+      data-stylename="contacts-header"
     >
       All Contacts
     </h2>
     <ul
-      className="contact-list"
+      data-stylename="contact-list"
     >
       <PersonListItem
         key="1"

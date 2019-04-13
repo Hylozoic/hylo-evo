@@ -3,12 +3,12 @@
 exports[`shows basic pills 1`] = `
 <div>
   <div
-    className="header bdy-drk-lg"
+    data-stylename="header"
   >
     My Skills
   </div>
   <div
-    className="pill-container expanded"
+    data-stylename="pill-container expanded"
   >
     <Pillbox
       addLabel="Add a Skill"
@@ -38,12 +38,12 @@ exports[`shows basic pills 1`] = `
 exports[`shows editable fields when isMe = true 1`] = `
 <div>
   <div
-    className="header bdy-drk-lg"
+    data-stylename="header"
   >
     My Skills
   </div>
   <div
-    className="pill-container expanded"
+    data-stylename="pill-container expanded"
   >
     <Pillbox
       addLabel="Add a Skill"

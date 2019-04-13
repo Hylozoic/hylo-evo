@@ -2,7 +2,7 @@
 
 exports[`renders as expected 1`] = `
 <div
-  className="card"
+  data-stylename="card"
   onClick={[Function]}
 >
   <Connect(PostHeader)
@@ -66,7 +66,7 @@ exports[`renders as expected 1`] = `
     votesTotal={11519}
   />
   <Connect(PostImage)
-    className="image"
+    data-stylename="image"
     postId="FAKE_29222"
   />
   <PostBody

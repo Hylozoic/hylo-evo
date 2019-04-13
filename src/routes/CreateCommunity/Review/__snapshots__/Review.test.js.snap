@@ -2,13 +2,13 @@
 
 exports[`Review renders correctly 1`] = `
 <div
-  className="flex-wrapper"
+  data-stylename="flex-wrapper"
 >
   <ModalSidebar
     body="You can always come back and change your details at any time"
     header="Everything looking good?"
     imageUrl="/grooving-axolotl.png"
-    onClick={[MockFunction]}
+    onClick={[Function]}
     theme={
       Object {
         "sidebarHeader": "sidebar-header-full-page",
@@ -17,20 +17,20 @@ exports[`Review renders correctly 1`] = `
     }
   />
   <div
-    className="panel"
+    data-stylename="panel"
   >
     <div>
       <span
-        className="step-count"
+        data-stylename="step-count"
       >
         STEP 3/3
       </span>
     </div>
     <div
-      className="center"
+      data-stylename="center"
     >
       <div
-        className="logo center"
+        data-stylename="logo center"
         style={
           Object {
             "backgroundImage": "url(/logo-white.svg)",
@@ -39,7 +39,7 @@ exports[`Review renders correctly 1`] = `
       />
     </div>
     <div
-      className="center-review"
+      data-stylename="center-review"
     >
       <ReviewTextInput
         editHandler={[Function]}
@@ -89,22 +89,22 @@ exports[`Review renders correctly 1`] = `
 
 exports[`ReviewTextInput renders correctly 1`] = `
 <div
-  className="review-input-text-row"
+  data-stylename="review-input-text-row"
 >
   <div
-    className="review-input-text-label"
+    data-stylename="review-input-text-label"
   >
     <span>
       label
     </span>
   </div>
   <div
-    className="review-input-text"
+    data-stylename="review-input-text"
   >
     <TextInput
       name="community-name"
       noClearButton={true}
-      onChange={[MockFunction]}
+      onChange={[Function]}
       readOnly={false}
       theme={
         Object {
@@ -117,11 +117,11 @@ exports[`ReviewTextInput renders correctly 1`] = `
     />
   </div>
   <div
-    className="review-input-edit"
+    data-stylename="review-input-edit"
   >
     <span
-      className="edit-button"
-      onClick={[MockFunction]}
+      data-stylename="edit-button"
+      onClick={[Function]}
     >
       Edit
     </span>

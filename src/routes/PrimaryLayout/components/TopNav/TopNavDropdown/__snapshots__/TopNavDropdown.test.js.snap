@@ -10,13 +10,13 @@ exports[`TopNavDropdown renders correctly 1`] = `
     </div>
   </a>
   <div
-    className="wrapper"
+    data-stylename="wrapper"
   >
     <ul
-      className="menu"
+      data-stylename="menu"
     >
       <li
-        className="triangle"
+        data-stylename="triangle"
         style={
           Object {
             "right": -41,
@@ -25,7 +25,7 @@ exports[`TopNavDropdown renders correctly 1`] = `
       />
       <ErrorBoundary>
         <li
-          className="header bdy-lt-sm"
+          data-stylename="header"
         >
           <div>
             header

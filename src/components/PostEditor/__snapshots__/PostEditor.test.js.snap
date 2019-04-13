@@ -96,21 +96,21 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
 
 exports[`PostEditor editing a post form in editing mode 1`] = `
 <div
-  className="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    className="header"
+    data-stylename="header"
   >
     <div
-      className="initial"
+      data-stylename="initial"
     >
       <div
-        className="initial-prompt bdy-lt-sm"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        className="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -118,7 +118,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       </a>
     </div>
     <div
-      className="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className="undefined"
@@ -144,21 +144,21 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
     </div>
   </div>
   <div
-    className="body"
+    data-stylename="body"
   >
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        className="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <input
-        className="titleInput hdr-headline"
+        data-stylename="titleInput"
         disabled={false}
         maxLength={50}
         onChange={[Function]}
@@ -167,7 +167,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         value="valid title"
       />
       <Connect(HyloEditor)
-        className="editor"
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -193,18 +193,18 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
     type="file"
   />
   <div
-    className="footer"
+    data-stylename="footer"
   >
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Topics
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -212,15 +212,15 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       </div>
     </div>
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -259,7 +259,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       id="test"
       loading={false}
       save={[Function]}
-      setAnnouncement={[MockFunction]}
+      setAnnouncement={[Function]}
       submitButtonLabel="Save"
       toggleAnnouncementModal={[Function]}
       valid={true}
@@ -270,21 +270,21 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
 
 exports[`PostEditor editing a post post is loaded into fields 1`] = `
 <div
-  className="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    className="header"
+    data-stylename="header"
   >
     <div
-      className="initial"
+      data-stylename="initial"
     >
       <div
-        className="initial-prompt bdy-lt-sm"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        className="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -292,7 +292,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       </a>
     </div>
     <div
-      className="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className="undefined"
@@ -318,21 +318,21 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
     </div>
   </div>
   <div
-    className="body"
+    data-stylename="body"
   >
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        className="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <input
-        className="titleInput hdr-headline"
+        data-stylename="titleInput"
         disabled={false}
         maxLength={50}
         onChange={[Function]}
@@ -341,7 +341,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         value="valid title"
       />
       <Connect(HyloEditor)
-        className="editor"
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -367,18 +367,18 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
     type="file"
   />
   <div
-    className="footer"
+    data-stylename="footer"
   >
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Topics
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -386,15 +386,15 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       </div>
     </div>
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -433,7 +433,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       id="test"
       loading={false}
       save={[Function]}
-      setAnnouncement={[MockFunction]}
+      setAnnouncement={[Function]}
       submitButtonLabel="Save"
       toggleAnnouncementModal={[Function]}
       valid={true}
@@ -444,21 +444,21 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
 
 exports[`PostEditor for a new post correct title placeholder and type button selection for "discussion" type 1`] = `
 <div
-  className="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    className="header"
+    data-stylename="header"
   >
     <div
-      className="initial"
+      data-stylename="initial"
     >
       <div
-        className="initial-prompt bdy-lt-sm"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        className="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -466,7 +466,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </a>
     </div>
     <div
-      className="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className=""
@@ -492,21 +492,21 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
   </div>
   <div
-    className="body"
+    data-stylename="body"
   >
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        className="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <input
-        className="titleInput hdr-headline"
+        data-stylename="titleInput"
         disabled={false}
         maxLength={50}
         onChange={[Function]}
@@ -515,7 +515,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         value=""
       />
       <Connect(HyloEditor)
-        className="editor"
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -532,18 +532,18 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     type="file"
   />
   <div
-    className="footer"
+    data-stylename="footer"
   >
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Topics
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -551,15 +551,15 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
     </div>
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -585,21 +585,21 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
 
 exports[`PostEditor for a new post correct title placeholder and type button selection for "offer" type 1`] = `
 <div
-  className="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    className="header"
+    data-stylename="header"
   >
     <div
-      className="initial"
+      data-stylename="initial"
     >
       <div
-        className="initial-prompt bdy-lt-sm"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        className="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -607,7 +607,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </a>
     </div>
     <div
-      className="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className="undefined"
@@ -633,21 +633,21 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
   </div>
   <div
-    className="body"
+    data-stylename="body"
   >
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        className="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <input
-        className="titleInput hdr-headline"
+        data-stylename="titleInput"
         disabled={false}
         maxLength={50}
         onChange={[Function]}
@@ -656,7 +656,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         value=""
       />
       <Connect(HyloEditor)
-        className="editor"
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -673,18 +673,18 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     type="file"
   />
   <div
-    className="footer"
+    data-stylename="footer"
   >
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Topics
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -692,15 +692,15 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
     </div>
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -726,21 +726,21 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
 
 exports[`PostEditor for a new post correct title placeholder and type button selection for "request" type 1`] = `
 <div
-  className="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    className="header"
+    data-stylename="header"
   >
     <div
-      className="initial"
+      data-stylename="initial"
     >
       <div
-        className="initial-prompt bdy-lt-sm"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        className="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -748,7 +748,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </a>
     </div>
     <div
-      className="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className="undefined"
@@ -774,21 +774,21 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
   </div>
   <div
-    className="body"
+    data-stylename="body"
   >
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        className="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <input
-        className="titleInput hdr-headline"
+        data-stylename="titleInput"
         disabled={false}
         maxLength={50}
         onChange={[Function]}
@@ -797,7 +797,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         value=""
       />
       <Connect(HyloEditor)
-        className="editor"
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -814,18 +814,18 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     type="file"
   />
   <div
-    className="footer"
+    data-stylename="footer"
   >
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Topics
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -833,15 +833,15 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
     </div>
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -867,21 +867,21 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
 
 exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
 <div
-  className="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    className="header"
+    data-stylename="header"
   >
     <div
-      className="initial"
+      data-stylename="initial"
     >
       <div
-        className="initial-prompt bdy-lt-sm"
+        data-stylename="initial-prompt"
       >
         a test prompt
       </div>
       <a
-        className="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -889,7 +889,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       </a>
     </div>
     <div
-      className="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className=""
@@ -915,21 +915,21 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
     </div>
   </div>
   <div
-    className="body"
+    data-stylename="body"
   >
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        className="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <input
-        className="titleInput hdr-headline"
+        data-stylename="titleInput"
         disabled={false}
         maxLength={50}
         onChange={[Function]}
@@ -938,8 +938,8 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         value=""
       />
       <Connect(HyloEditor)
-        className="editor"
         contentHTML=""
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="details placeholder"
@@ -956,18 +956,18 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
     type="file"
   />
   <div
-    className="footer"
+    data-stylename="footer"
   >
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Topics
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -975,15 +975,15 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       </div>
     </div>
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -1009,21 +1009,21 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
 
 exports[`PostEditor post is defaulted while loading editor 1`] = `
 <div
-  className="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    className="header"
+    data-stylename="header"
   >
     <div
-      className="initial"
+      data-stylename="initial"
     >
       <div
-        className="initial-prompt bdy-lt-sm"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        className="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -1031,7 +1031,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       </a>
     </div>
     <div
-      className="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className=""
@@ -1057,21 +1057,21 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
     </div>
   </div>
   <div
-    className="body"
+    data-stylename="body"
   >
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        className="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <input
-        className="titleInput hdr-headline"
+        data-stylename="titleInput"
         disabled={true}
         maxLength={50}
         onChange={[Function]}
@@ -1080,8 +1080,8 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         value=""
       />
       <Connect(HyloEditor)
-        className="editor"
         contentHTML=""
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -1098,18 +1098,18 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
     type="file"
   />
   <div
-    className="footer"
+    data-stylename="footer"
   >
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Topics
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -1117,15 +1117,15 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       </div>
     </div>
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -1151,21 +1151,21 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
 
 exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
 <div
-  className="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    className="header"
+    data-stylename="header"
   >
     <div
-      className="initial"
+      data-stylename="initial"
     >
       <div
-        className="initial-prompt bdy-lt-sm"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        className="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -1173,7 +1173,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       </a>
     </div>
     <div
-      className="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className=""
@@ -1199,21 +1199,21 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
     </div>
   </div>
   <div
-    className="body"
+    data-stylename="body"
   >
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        className="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <input
-        className="titleInput hdr-headline"
+        data-stylename="titleInput"
         disabled={true}
         maxLength={50}
         onChange={[Function]}
@@ -1222,8 +1222,8 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
         value=""
       />
       <Connect(HyloEditor)
-        className="editor"
         contentHTML=""
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -1240,18 +1240,18 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
     type="file"
   />
   <div
-    className="footer"
+    data-stylename="footer"
   >
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Topics
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -1259,15 +1259,15 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       </div>
     </div>
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -1293,21 +1293,21 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
 
 exports[`PostEditor renders announcement option with admin in props 1`] = `
 <div
-  className="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    className="header"
+    data-stylename="header"
   >
     <div
-      className="initial"
+      data-stylename="initial"
     >
       <div
-        className="initial-prompt bdy-lt-sm"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        className="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -1315,7 +1315,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
       </a>
     </div>
     <div
-      className="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className=""
@@ -1341,21 +1341,21 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
     </div>
   </div>
   <div
-    className="body"
+    data-stylename="body"
   >
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        className="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <input
-        className="titleInput hdr-headline"
+        data-stylename="titleInput"
         disabled={false}
         maxLength={50}
         onChange={[Function]}
@@ -1364,8 +1364,8 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
         value=""
       />
       <Connect(HyloEditor)
-        className="editor"
         contentHTML=""
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -1382,18 +1382,18 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
     type="file"
   />
   <div
-    className="footer"
+    data-stylename="footer"
   >
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Topics
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -1401,15 +1401,15 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
       </div>
     </div>
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}
@@ -1436,21 +1436,21 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
 
 exports[`PostEditor renders with min props 1`] = `
 <div
-  className="wrapper"
+  data-stylename="wrapper"
 >
   <div
-    className="header"
+    data-stylename="header"
   >
     <div
-      className="initial"
+      data-stylename="initial"
     >
       <div
-        className="initial-prompt bdy-lt-sm"
+        data-stylename="initial-prompt"
       >
         What are you looking to post?
       </div>
       <a
-        className="initial-closeButton"
+        data-stylename="initial-closeButton"
       >
         <Icon
           name="Ex"
@@ -1458,7 +1458,7 @@ exports[`PostEditor renders with min props 1`] = `
       </a>
     </div>
     <div
-      className="postTypes"
+      data-stylename="postTypes"
     >
       <Button
         className=""
@@ -1484,21 +1484,21 @@ exports[`PostEditor renders with min props 1`] = `
     </div>
   </div>
   <div
-    className="body"
+    data-stylename="body"
   >
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <RoundImage
-        className="titleAvatar"
+        data-stylename="titleAvatar"
         medium={true}
       />
     </div>
     <div
-      className="body-column"
+      data-stylename="body-column"
     >
       <input
-        className="titleInput hdr-headline"
+        data-stylename="titleInput"
         disabled={false}
         maxLength={50}
         onChange={[Function]}
@@ -1507,8 +1507,8 @@ exports[`PostEditor renders with min props 1`] = `
         value=""
       />
       <Connect(HyloEditor)
-        className="editor"
         contentHTML=""
+        data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
         placeholder="Add a description"
@@ -1525,18 +1525,18 @@ exports[`PostEditor renders with min props 1`] = `
     type="file"
   />
   <div
-    className="footer"
+    data-stylename="footer"
   >
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Topics
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -1544,15 +1544,15 @@ exports[`PostEditor renders with min props 1`] = `
       </div>
     </div>
     <div
-      className="footerSection"
+      data-stylename="footerSection"
     >
       <div
-        className="footerSection-label section-label"
+        data-stylename="footerSection-label"
       >
         Post in
       </div>
       <div
-        className="footerSection-communities"
+        data-stylename="footerSection-communities"
       >
         <CommunitiesSelector
           onChange={[Function]}

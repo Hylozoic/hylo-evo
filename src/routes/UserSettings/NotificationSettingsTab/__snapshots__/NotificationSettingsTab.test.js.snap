@@ -42,12 +42,12 @@ exports[`MessageSettingsRow renders correctly 1`] = `
 exports[`NotificationSettingsTab renders correctly 1`] = `
 <div>
   <div
-    className="title hdr-display"
+    data-stylename="title"
   >
     Notifications
   </div>
   <div
-    className="prompt bdy-drk-sm"
+    data-stylename="prompt"
   >
     How often would you like to receive email digests for new posts in your communities?
   </div>
@@ -72,7 +72,7 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
     selected="daily"
   />
   <div
-    className="prompt bdy-drk-sm"
+    data-stylename="prompt"
   >
     How would you like to receive notifications about new comments on posts you're following?
   </div>
@@ -127,10 +127,10 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
     />
   </div>
   <div
-    className="help bdy-lt-sm"
+    data-stylename="help"
   >
     <p
-      className="help-paragraph"
+      data-stylename="help-paragraph"
     >
       Download our 
       <a
@@ -162,20 +162,20 @@ exports[`SettingsIcon renders correctly 1`] = `
 
 exports[`SettingsRow renders correctly 1`] = `
 <div
-  className="settingsRow"
+  data-stylename="settingsRow"
 >
   <div
-    className="nameRow"
+    data-stylename="nameRow"
   >
     <div
-      className="communityAvatar"
+      data-stylename="communityAvatar"
       style={Object {}}
     />
     <span
-      className="name"
+      data-stylename="name"
     />
     <Icon
-      className="arrowIcon"
+      data-stylename="arrowIcon"
       name="ArrowDown"
       onClick={[Function]}
     />

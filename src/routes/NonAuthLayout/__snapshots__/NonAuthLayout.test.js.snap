@@ -2,12 +2,12 @@
 
 exports[`NonAuthLayout renders correctly 1`] = `
 <div
-  className="background"
+  data-stylename="background"
 >
   <div
-    className="particlesBackgroundWrapper"
+    data-stylename="particlesBackgroundWrapper"
   >
-    <e
+    <t
       height="100%"
       params={
         Object {
@@ -134,14 +134,14 @@ exports[`NonAuthLayout renders correctly 1`] = `
     />
   </div>
   <div
-    className="topRow"
+    data-stylename="topRow"
   >
     <a
       href="/"
     >
       <img
         alt="Hylo logo"
-        className="logo"
+        data-stylename="logo"
         src="assets/hylo.svg"
       />
     </a>
@@ -168,7 +168,7 @@ exports[`NonAuthLayout renders correctly 1`] = `
   />
   <div>
     <p
-      className="below-container"
+      data-stylename="below-container"
     >
       <Route
         component={[Function]}

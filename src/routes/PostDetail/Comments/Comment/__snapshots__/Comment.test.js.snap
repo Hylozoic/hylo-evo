@@ -2,40 +2,40 @@
 
 exports[`Comment displays an image 1`] = `
 <div
-  className="comment"
+  data-stylename="comment"
 >
   <div
-    className="header"
+    data-stylename="header"
   >
     <Avatar
       avatarUrl="foo.jpg"
-      className="avatar"
+      data-stylename="avatar"
       url="/c/foo/m/1"
     />
     <Link
-      className="userName userName"
+      data-stylename="userName"
       replace={false}
       to="/c/foo/m/1"
     >
       Joe Smith
     </Link>
     <div
-      className="upperRight"
+      data-stylename="upperRight"
     >
       <span
-        className="timestamp timestamp"
+        data-stylename="timestamp"
       >
         just now
       </span>
     </div>
   </div>
   <a
-    className="imageLink"
+    data-stylename="imageLink"
     href="foo.png"
     target="_blank"
   >
     <img
-      className="image"
+      data-stylename="image"
       src="foo.png"
     />
   </a>
@@ -44,33 +44,33 @@ exports[`Comment displays an image 1`] = `
 
 exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
 <div
-  className="comment"
+  data-stylename="comment"
 >
   <div
-    className="header"
+    data-stylename="header"
   >
     <Avatar
       avatarUrl="foo.jpg"
-      className="avatar"
+      data-stylename="avatar"
       url="/c/foo/m/1"
     />
     <Link
-      className="userName userName"
+      data-stylename="userName"
       replace={false}
       to="/c/foo/m/1"
     >
       Joe Smith
     </Link>
     <div
-      className="upperRight"
+      data-stylename="upperRight"
     >
       <span
-        className="timestamp timestamp"
+        data-stylename="timestamp"
       >
         just now
       </span>
       <Dropdown
-        className="dropdown"
+        data-stylename="dropdown"
         items={
           Array [
             Object {
@@ -90,12 +90,12 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
   </div>
   <Connect(ClickCatcher)>
     <div
-      className="text bdy-lt-sm"
       dangerouslySetInnerHTML={
         Object {
           "__html": "<p>text of the comment</p>",
         }
       }
+      data-stylename="text"
       id="text"
     />
   </Connect(ClickCatcher)>
@@ -104,33 +104,33 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
 
 exports[`Comment displays the remove menu when removeComment is defined 1`] = `
 <div
-  className="comment"
+  data-stylename="comment"
 >
   <div
-    className="header"
+    data-stylename="header"
   >
     <Avatar
       avatarUrl="foo.jpg"
-      className="avatar"
+      data-stylename="avatar"
       url="/c/foo/m/1"
     />
     <Link
-      className="userName userName"
+      data-stylename="userName"
       replace={false}
       to="/c/foo/m/1"
     >
       Joe Smith
     </Link>
     <div
-      className="upperRight"
+      data-stylename="upperRight"
     >
       <span
-        className="timestamp timestamp"
+        data-stylename="timestamp"
       >
         just now
       </span>
       <Dropdown
-        className="dropdown"
+        data-stylename="dropdown"
         items={
           Array [
             Object {
@@ -150,12 +150,12 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
   </div>
   <Connect(ClickCatcher)>
     <div
-      className="text bdy-lt-sm"
       dangerouslySetInnerHTML={
         Object {
           "__html": "<p>text of the comment</p>",
         }
       }
+      data-stylename="text"
       id="text"
     />
   </Connect(ClickCatcher)>
@@ -164,28 +164,28 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
 
 exports[`Comment renders correctly 1`] = `
 <div
-  className="comment"
+  data-stylename="comment"
 >
   <div
-    className="header"
+    data-stylename="header"
   >
     <Avatar
       avatarUrl="foo.jpg"
-      className="avatar"
+      data-stylename="avatar"
       url="/c/foo/m/1"
     />
     <Link
-      className="userName userName"
+      data-stylename="userName"
       replace={false}
       to="/c/foo/m/1"
     >
       Joe Smith
     </Link>
     <div
-      className="upperRight"
+      data-stylename="upperRight"
     >
       <span
-        className="timestamp timestamp"
+        data-stylename="timestamp"
       >
         just now
       </span>
@@ -193,12 +193,12 @@ exports[`Comment renders correctly 1`] = `
   </div>
   <Connect(ClickCatcher)>
     <div
-      className="text bdy-lt-sm"
       dangerouslySetInnerHTML={
         Object {
           "__html": "<p>text of the comment</p>",
         }
       }
+      data-stylename="text"
       id="text"
     />
   </Connect(ClickCatcher)>
@@ -207,28 +207,28 @@ exports[`Comment renders correctly 1`] = `
 
 exports[`Comment renders correctly when editing 1`] = `
 <div
-  className="comment"
+  data-stylename="comment"
 >
   <div
-    className="header"
+    data-stylename="header"
   >
     <Avatar
       avatarUrl="foo.jpg"
-      className="avatar"
+      data-stylename="avatar"
       url="/c/foo/m/1"
     />
     <Link
-      className="userName userName"
+      data-stylename="userName"
       replace={false}
       to="/c/foo/m/1"
     >
       Joe Smith
     </Link>
     <div
-      className="upperRight"
+      data-stylename="upperRight"
     >
       <span
-        className="timestamp timestamp"
+        data-stylename="timestamp"
       >
         Editing now
       </span>
@@ -236,8 +236,8 @@ exports[`Comment renders correctly when editing 1`] = `
   </div>
   <Connect(ClickCatcher)>
     <Connect(HyloEditor)
-      className="editor bdy-lt-sm"
       contentHTML="<p>text of the comment</p>"
+      data-stylename="editor"
       parentComponent="CommentForm"
       submitOnReturnHandler={[Function]}
     />

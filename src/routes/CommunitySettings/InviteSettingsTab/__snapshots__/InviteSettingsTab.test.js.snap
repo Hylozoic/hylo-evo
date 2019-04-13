@@ -3,15 +3,15 @@
 exports[`renders correctly 1`] = `
 <div>
   <div
-    className="header"
+    data-stylename="styles.header"
   >
     <div
-      className="title hdr-display"
+      data-stylename="styles.title"
     >
       Invite People
     </div>
     <div
-      className="subtitle caption-lt-lg"
+      data-stylename="styles.subtitle"
     >
       to 
       Hylo
@@ -19,28 +19,28 @@ exports[`renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="invite-link-settings"
+    data-stylename="styles.invite-link-settings"
   >
     <div
-      className="invite-link-text"
+      data-stylename="styles.invite-link-text"
     >
       <div
-        className="help caption-lt-lg"
+        data-stylename="styles.help"
       >
         Anyone with this link can join the community
       </div>
       <div
-        className="invite-link text-button"
+        data-stylename="styles.invite-link"
       >
         http://www.hylo.com/c/hylo/join/lalala
       </div>
     </div>
     <div
-      className="buttons"
+      data-stylename="styles.buttons"
     >
       <Button
-        className="reset-button button"
         color="green-white-green-border"
+        data-stylename="styles.reset-button"
         narrow={true}
         onClick={[Function]}
         small={true}
@@ -52,8 +52,8 @@ exports[`renders correctly 1`] = `
         text="http://www.hylo.com/c/hylo/join/lalala"
       >
         <Button
-          className="copy-button button"
           color="green-white-green-border"
+          data-stylename="styles.copy-button"
           narrow={true}
           small={true}
         >
@@ -63,10 +63,10 @@ exports[`renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="email-section"
+    data-stylename="styles.email-section"
   >
     <TextareaAutosize
-      className="invite-msg-input"
+      data-stylename="styles.invite-msg-input"
       minRows={5}
       onChange={[Function]}
       onHeightChange={[Function]}
@@ -75,7 +75,7 @@ exports[`renders correctly 1`] = `
       value=""
     />
     <TextareaAutosize
-      className="invite-msg-input"
+      data-stylename="styles.invite-msg-input"
       minRows={5}
       onChange={[Function]}
       onHeightChange={[Function]}
@@ -87,7 +87,7 @@ I'm inviting you to join Hylo community on Hylo.
 Hylo is using Hylo for our online community: this is our dedicated space for communication & collaboration."
     />
     <div
-      className="send-invite-button"
+      data-stylename="styles.send-invite-button"
     >
       <Button
         color="green"
@@ -101,10 +101,10 @@ Hylo is using Hylo for our online community: this is our dedicated space for com
     </div>
   </div>
   <div
-    className="pending-invites-section"
+    data-stylename="styles.pending-invites-section"
   >
     <div
-      className="pending-invites-header"
+      data-stylename="styles.pending-invites-header"
     >
       <h1
         style={
@@ -118,7 +118,7 @@ Hylo is using Hylo for our online community: this is our dedicated space for com
       </h1>
     </div>
     <div
-      className="pending-invites-list"
+      data-stylename="styles.pending-invites-list"
     >
       <CSSTransitionGroup
         transitionAppear={false}

@@ -2,7 +2,7 @@
 
 exports[`CommunitySidebar renders correctly 1`] = `
 <div
-  className="community-sidebar"
+  data-stylename="community-sidebar"
 >
   <AboutSection
     description="the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, "
@@ -57,23 +57,23 @@ exports[`CommunitySidebar renders correctly 1`] = `
 
 exports[`MemberSection Doesn't show total if it's < 1 1`] = `
 <div
-  className="member-section"
+  data-stylename="member-section"
 >
   <Link
-    className="members-link"
+    data-stylename="members-link"
     replace={false}
     to="/c/foo/members"
   >
     <div
-      className="header bdy-drk-lg"
+      data-stylename="header"
     >
       Members
     </div>
     <div
-      className="images-and-count"
+      data-stylename="images-and-count"
     >
       <RoundImageRow
-        className="image-row"
+        data-stylename="image-row"
         imageUrls={
           Array [
             "https://s3.amazonaws.com/uifaces/faces/twitter/fiterik/128.jpg?26029",
@@ -90,7 +90,7 @@ exports[`MemberSection Doesn't show total if it's < 1 1`] = `
     </div>
   </Link>
   <Link
-    className="invite-link"
+    data-stylename="invite-link"
     replace={false}
     to="/c/foo/settings/invite"
   >
@@ -105,23 +105,23 @@ exports[`MemberSection Doesn't show total if it's < 1 1`] = `
 
 exports[`MemberSection Formats total correctly if it's > 999 1`] = `
 <div
-  className="member-section"
+  data-stylename="member-section"
 >
   <Link
-    className="members-link"
+    data-stylename="members-link"
     replace={false}
     to="/c/foo/members"
   >
     <div
-      className="header bdy-drk-lg"
+      data-stylename="header"
     >
       Members
     </div>
     <div
-      className="images-and-count"
+      data-stylename="images-and-count"
     >
       <RoundImageRow
-        className="image-row"
+        data-stylename="image-row"
         imageUrls={
           Array [
             "https://s3.amazonaws.com/uifaces/faces/twitter/fiterik/128.jpg?26029",
@@ -136,7 +136,7 @@ exports[`MemberSection Formats total correctly if it's > 999 1`] = `
         }
       />
       <span
-        className="members-total text-button"
+        data-stylename="members-total"
       >
         +5.6k
       </span>
@@ -147,23 +147,23 @@ exports[`MemberSection Formats total correctly if it's > 999 1`] = `
 
 exports[`MemberSection Shows invite link if canModerate is true 1`] = `
 <div
-  className="member-section"
+  data-stylename="member-section"
 >
   <Link
-    className="members-link"
+    data-stylename="members-link"
     replace={false}
     to="/c/foo/members"
   >
     <div
-      className="header bdy-drk-lg"
+      data-stylename="header"
     >
       Members
     </div>
     <div
-      className="images-and-count"
+      data-stylename="images-and-count"
     >
       <RoundImageRow
-        className="image-row"
+        data-stylename="image-row"
         imageUrls={
           Array [
             "https://s3.amazonaws.com/uifaces/faces/twitter/fiterik/128.jpg?26029",
@@ -178,14 +178,14 @@ exports[`MemberSection Shows invite link if canModerate is true 1`] = `
         }
       />
       <span
-        className="members-total text-button"
+        data-stylename="members-total"
       >
         +5.6k
       </span>
     </div>
   </Link>
   <Link
-    className="invite-link"
+    data-stylename="invite-link"
     replace={false}
     to="/c/foo/settings/invite"
   >

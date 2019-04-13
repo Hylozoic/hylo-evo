@@ -3,13 +3,13 @@
 exports[`CommunitySettingsTab renders correctly 1`] = `
 <div>
   <input
-    className="name hdr-display"
+    data-stylename="name"
     onChange={[Function]}
     type="text"
     value="Foomunity"
   />
   <div
-    className="banner"
+    data-stylename="banner"
     style={
       Object {
         "backgroundImage": "url(avatar.png)",
@@ -17,7 +17,7 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
     }
   >
     <Connect(ChangeImageButton)
-      className="change-banner-button"
+      data-stylename="change-banner-button"
       update={[Function]}
       uploadSettings={
         Object {
@@ -28,7 +28,7 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
     />
   </div>
   <div
-    className="avatar"
+    data-stylename="avatar"
     style={
       Object {
         "backgroundImage": "url(avatar.png)",
@@ -36,7 +36,7 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
     }
   >
     <Connect(ChangeImageButton)
-      className="change-avatar-button"
+      data-stylename="change-avatar-button"
       update={[Function]}
       uploadSettings={
         Object {
@@ -58,11 +58,11 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
     value="Fuji"
   />
   <div
-    className="button-row"
+    data-stylename="button-row"
   >
     <Button
-      className="save-button"
       color="gray"
+      data-stylename="save-button"
       label="Save Changes"
       onClick={null}
     />

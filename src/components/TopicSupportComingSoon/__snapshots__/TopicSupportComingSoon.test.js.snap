@@ -2,7 +2,7 @@
 
 exports[`renders 1`] = `
 <div
-  className="container"
+  data-stylename="container"
 >
   <h1>
     We're working on expanding
@@ -10,7 +10,7 @@ exports[`renders 1`] = `
     #topics to more places
   </h1>
   <p
-    className="gray-text"
+    data-stylename="gray-text"
   >
     In the meantime, click a topic from an individual
     <br />
@@ -21,13 +21,13 @@ exports[`renders 1`] = `
     to="/all"
   >
     <Button
-      className="back-button"
+      data-stylename="back-button"
     >
       Return to All Communities
     </Button>
   </Link>
   <img
-    className="axolotl-digging-image"
+    data-stylename="axolotl-digging-image"
     src="/axolotl-digging.svg"
   />
 </div>

@@ -10,10 +10,10 @@ exports[`renders a single image 1`] = `
 >
   <div>
     <div
-      className="others"
+      data-stylename="others"
     >
       <div
-        className="others-inner"
+        data-stylename="others-inner"
       />
     </div>
   </div>
@@ -30,13 +30,13 @@ exports[`renders multiple images 1`] = `
 >
   <div>
     <div
-      className="others"
+      data-stylename="others"
     >
       <div
-        className="others-inner"
+        data-stylename="others-inner"
       >
         <a
-          className="other"
+          data-stylename="other"
           href="bar"
           key="bar"
           target="_blank"
@@ -50,7 +50,7 @@ exports[`renders multiple images 1`] = `
           />
         </a>
         <a
-          className="other"
+          data-stylename="other"
           href="baz"
           key="baz"
           target="_blank"
@@ -64,7 +64,7 @@ exports[`renders multiple images 1`] = `
           />
         </a>
         <a
-          className="other"
+          data-stylename="other"
           href="bonk"
           key="bonk"
           target="_blank"

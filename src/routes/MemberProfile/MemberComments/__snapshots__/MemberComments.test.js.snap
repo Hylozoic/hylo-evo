@@ -3,7 +3,7 @@
 exports[`MemberComments renders the same as the last snapshot 1`] = `
 <div>
   <div
-    className="activity-item"
+    data-stylename="activity-item"
     key="2"
   >
     <Connect(CommentCard)
@@ -26,7 +26,7 @@ exports[`MemberComments renders the same as the last snapshot 1`] = `
     />
   </div>
   <div
-    className="activity-item"
+    data-stylename="activity-item"
     key="1"
   >
     <Connect(CommentCard)

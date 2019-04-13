@@ -2,11 +2,11 @@
 
 exports[`to display sending... when message is still in optimistic state 1`] = `
 <div
-  className="message messageHeader"
   data-message-id="messageThread12_1"
+  data-stylename="message messageHeader"
 >
   <div
-    className="avatar"
+    data-stylename="avatar"
   >
     <Avatar
       avatarUrl="http://avatar.com/i.png"
@@ -14,22 +14,22 @@ exports[`to display sending... when message is still in optimistic state 1`] = `
     />
   </div>
   <div
-    className="content"
+    data-stylename="content"
   >
     <div>
       <span
-        className="name username-cards"
+        data-stylename="name"
       >
         Good Person
       </span>
       <span
-        className="date timestamp"
+        data-stylename="date"
       >
         sending...
       </span>
     </div>
     <div
-      className="text bdy-drk-sm"
+      data-stylename="text"
     >
       <span
         dangerouslySetInnerHTML={
@@ -45,17 +45,17 @@ exports[`to display sending... when message is still in optimistic state 1`] = `
 
 exports[`to match the latest non-header snapshot 1`] = `
 <div
-  className="message"
   data-message-id="1"
+  data-stylename="message"
 >
   <div
-    className="avatar"
+    data-stylename="avatar"
   />
   <div
-    className="content"
+    data-stylename="content"
   >
     <div
-      className="text bdy-drk-sm"
+      data-stylename="text"
     >
       <span
         dangerouslySetInnerHTML={
@@ -71,11 +71,11 @@ exports[`to match the latest non-header snapshot 1`] = `
 
 exports[`to match the latest snapshot 1`] = `
 <div
-  className="message messageHeader"
   data-message-id="1"
+  data-stylename="message messageHeader"
 >
   <div
-    className="avatar"
+    data-stylename="avatar"
   >
     <Avatar
       avatarUrl="http://avatar.com/i.png"
@@ -83,20 +83,20 @@ exports[`to match the latest snapshot 1`] = `
     />
   </div>
   <div
-    className="content"
+    data-stylename="content"
   >
     <div>
       <span
-        className="name username-cards"
+        data-stylename="name"
       >
         Good Person
       </span>
       <span
-        className="date timestamp"
+        data-stylename="date"
       />
     </div>
     <div
-      className="text bdy-drk-sm"
+      data-stylename="text"
     >
       <span
         dangerouslySetInnerHTML={

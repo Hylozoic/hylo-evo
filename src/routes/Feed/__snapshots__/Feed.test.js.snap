@@ -2,18 +2,18 @@
 
 exports[`CreateCommunityPrompt matches the latest snapshot 1`] = `
 <div
-  className="create-community-prompt"
+  data-stylename="create-community-prompt"
 >
   <p>
     There's no posts yet, try starting a community!
   </p>
   <Button
-    className="button"
+    data-stylename="button"
     label="Create a Community"
-    onClick={[MockFunction]}
+    onClick={[Function]}
   />
   <div
-    className="sidebar-image"
+    data-stylename="sidebar-image"
     style={
       Object {
         "backgroundImage": "url(/assets/hey-axolotl.png)",

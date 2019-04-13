@@ -18,16 +18,16 @@ exports[`Suggestion renders correctly (with a user) 1`] = `
   key="1"
 >
   <a
-    className="suggestionLink"
+    data-stylename="suggestionLink"
     onClick={[Function]}
   >
     <RoundImage
-      className="suggestionAvatar"
+      data-stylename="suggestionAvatar"
       small={true}
       url="face.png"
     />
     <div
-      className="suggestionName"
+      data-stylename="suggestionName"
     >
       Joe Joe
     </div>
@@ -40,15 +40,15 @@ exports[`Suggestion renders correctly (with min props) 1`] = `
   key="blank"
 >
   <a
-    className="suggestionLink"
+    data-stylename="suggestionLink"
     onClick={[Function]}
   >
     <RoundImage
-      className="suggestionAvatar"
+      data-stylename="suggestionAvatar"
       small={true}
     />
     <div
-      className="suggestionName"
+      data-stylename="suggestionName"
     />
   </a>
 </li>

@@ -2,27 +2,27 @@
 
 exports[`renders correctly with multiple communities 1`] = `
 <div
-  className="modal"
+  data-stylename="modal"
 >
   <div
-    className="modal-container"
+    data-stylename="modal-container"
   >
     <h1
-      className="modal-header"
+      data-stylename="modal-header"
     >
       MAKE AN ANNOUNCEMENT
     </h1>
     <a>
       <Button
-        className="close-button"
-        onClick={[MockFunction]}
+        data-stylename="close-button"
+        onClick={[Function]}
         small={true}
       >
         Go Back
       </Button>
       <Button
-        className="send-button"
-        onClick={[MockFunction]}
+        data-stylename="send-button"
+        onClick={[Function]}
         small={true}
       >
         Send It
@@ -34,40 +34,40 @@ exports[`renders correctly with multiple communities 1`] = `
 
 exports[`renders correctly with multiple communities, where the current user is not always a moderator 1`] = `
 <div
-  className="modal"
+  data-stylename="modal"
 >
   <div
-    className="modal-container"
+    data-stylename="modal-container"
   >
     <h1
-      className="modal-header"
+      data-stylename="modal-header"
     >
       MAKE AN ANNOUNCEMENT
     </h1>
     <span>
       <p
-        className="modal-paragraph"
+        data-stylename="modal-paragraph"
       >
         This means that all members of the 
          communities selected will receive an instant email and push notification about this Post.
       </p>
       <p
-        className="modal-paragraph"
+        data-stylename="modal-paragraph"
       >
         This will only be sent as an Announcement to the communities where you are a Moderator. For other communities it will be shared as a regular Post.
       </p>
     </span>
     <a>
       <Button
-        className="close-button"
-        onClick={[MockFunction]}
+        data-stylename="close-button"
+        onClick={[Function]}
         small={true}
       >
         Go Back
       </Button>
       <Button
-        className="send-button"
-        onClick={[MockFunction]}
+        data-stylename="send-button"
+        onClick={[Function]}
         small={true}
       >
         Send It
@@ -79,27 +79,27 @@ exports[`renders correctly with multiple communities, where the current user is 
 
 exports[`renders correctly with one community 1`] = `
 <div
-  className="modal"
+  data-stylename="modal"
 >
   <div
-    className="modal-container"
+    data-stylename="modal-container"
   >
     <h1
-      className="modal-header"
+      data-stylename="modal-header"
     >
       MAKE AN ANNOUNCEMENT
     </h1>
     <a>
       <Button
-        className="close-button"
-        onClick={[MockFunction]}
+        data-stylename="close-button"
+        onClick={[Function]}
         small={true}
       >
         Go Back
       </Button>
       <Button
-        className="send-button"
-        onClick={[MockFunction]}
+        data-stylename="send-button"
+        onClick={[Function]}
         small={true}
       >
         Send It

@@ -54,10 +54,10 @@ exports[`Pill renders when editable 1`] = `
 
 exports[`Pillbox renders 1`] = `
 <div
-  className="root"
+  data-stylename="styles.root"
 >
   <div
-    className="pill-container"
+    data-stylename="styles.pill-container"
   >
     <CSSTransitionGroup
       transitionAppear={false}
@@ -88,7 +88,6 @@ exports[`Pillbox renders 1`] = `
     </CSSTransitionGroup>
   </div>
   <ReactTooltip
-    clickable={false}
     delayShow={500}
     disable={true}
     effect="solid"

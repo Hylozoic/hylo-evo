@@ -2,10 +2,10 @@
 
 exports[`PostFooter enables tooltip when myvote is false 1`] = `
 <div
-  className="footer"
+  data-stylename="footer"
 >
   <RoundImageRow
-    className="people"
+    data-stylename="people"
     imageUrls={
       Array [
         undefined,
@@ -15,7 +15,7 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
     }
   />
   <span
-    className="caption caption-lt-lg"
+    data-stylename="caption"
     style={
       Object {
         "cursor": "inherit",
@@ -25,19 +25,18 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
     Joe, Sue and 2 others commented
   </span>
   <a
-    className="vote-button text-button"
     data-for="postfooter-tt"
+    data-stylename="vote-button"
     data-tip="Upvote this post so more people see it."
     data-tip-disable={false}
   >
     <Icon
-      className="arrowIcon"
+      data-stylename="arrowIcon"
       name="ArrowUp"
     />
     3
   </a>
   <ReactTooltip
-    clickable={false}
     delayShow={550}
     effect="solid"
     id="postfooter-tt"
@@ -50,10 +49,10 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
 
 exports[`PostFooter matches the latest snapshot 1`] = `
 <div
-  className="footer"
+  data-stylename="footer"
 >
   <RoundImageRow
-    className="people"
+    data-stylename="people"
     imageUrls={
       Array [
         undefined,
@@ -63,7 +62,7 @@ exports[`PostFooter matches the latest snapshot 1`] = `
     }
   />
   <span
-    className="caption caption-lt-lg"
+    data-stylename="caption"
     style={
       Object {
         "cursor": "inherit",
@@ -73,19 +72,18 @@ exports[`PostFooter matches the latest snapshot 1`] = `
     Joe, Sue and 2 others commented
   </span>
   <a
-    className="vote-button text-button voted"
     data-for="postfooter-tt"
+    data-stylename="vote-button voted"
     data-tip="Upvote this post so more people see it."
     data-tip-disable={true}
   >
     <Icon
-      className="arrowIcon"
+      data-stylename="arrowIcon"
       name="ArrowUp"
     />
     3
   </a>
   <ReactTooltip
-    clickable={false}
     delayShow={550}
     effect="solid"
     id="postfooter-tt"

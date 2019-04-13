@@ -2,20 +2,20 @@
 
 exports[`matches the last snapshot 1`] = `
 <li
-  className="person-list-item"
+  data-stylename="person-list-item"
 >
   <RoundImage
-    className="avatar"
+    data-stylename="avatar"
     medium={true}
     url="https://wombat.life"
   />
   <span
-    className="name bdy-lt-sm"
+    data-stylename="name"
   >
     Wombat
   </span>
   <span
-    className="community faint-lt-sm"
+    data-stylename="community"
   />
 </li>
 `;

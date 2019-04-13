@@ -12,20 +12,8 @@ Object {
     },
     "id": 77,
   },
-  "dropPostResultsMaker": [MockFunction] {
-    "calls": Array [
-      Array [
-        undefined,
-      ],
-    ],
-    "results": Array [
-      Object {
-        "isThrow": false,
-        "value": undefined,
-      },
-    ],
-  },
+  "dropPostResultsMaker": [Function],
   "foo": 1,
-  "resetNewPostCount": [MockFunction],
+  "resetNewPostCount": [Function],
 }
 `;

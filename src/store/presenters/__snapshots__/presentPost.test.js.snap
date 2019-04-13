@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`presentPost matches the snapshot 1`] = `
+exports[`true 1`] = `
 Object {
   "commenters": Array [],
   "communities": Array [],

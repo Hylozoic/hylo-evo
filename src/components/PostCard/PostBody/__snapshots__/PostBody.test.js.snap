@@ -7,21 +7,23 @@ exports[`matches last snapshot 1`] = `
   term="foo"
 >
   <div
-    className="classy body"
+    className="classy"
+    data-stylename="body"
   >
     <div
-      className="hdr-headline title cardPadding"
+      className="hdr-headline"
+      data-stylename="title"
     >
       hello there
     </div>
     <Connect(ClickCatcher)>
       <div
-        className="details cardPadding"
         dangerouslySetInnerHTML={
           Object {
             "__html": "<p>the details</p>",
           }
         }
+        data-stylename="details"
       />
     </Connect(ClickCatcher)>
     <LinkPreview
@@ -30,36 +32,36 @@ exports[`matches last snapshot 1`] = `
       url="www.hylo.com/awitp"
     />
     <div
-      className="file-attachments cardPadding"
+      data-stylename="file-attachments"
     >
       <a
-        className="file-attachment"
+        data-stylename="file-attachment"
         href="https://www.hylo.com/awitp.pdf"
         key="1"
         target="_blank"
       >
         <Icon
-          className="file-icon"
+          data-stylename="file-icon"
           name="Document"
         />
         <span
-          className="file-name"
+          data-stylename="file-name"
         >
           awitp.pdf
         </span>
       </a>
       <a
-        className="file-attachment"
+        data-stylename="file-attachment"
         href="http://www.google.com/lalala.zip"
         key="1"
         target="_blank"
       >
         <Icon
-          className="file-icon"
+          data-stylename="file-icon"
           name="Document"
         />
         <span
-          className="file-name"
+          data-stylename="file-name"
         >
           lalala.zip
         </span>

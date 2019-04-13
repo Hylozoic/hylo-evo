@@ -2,14 +2,14 @@
 
 exports[`displays an image 1`] = `
 <a
-  className="link"
+  data-stylename="link"
   onClick={[Function]}
 >
   <div
-    className="comment-card bdy-lt-sm"
+    data-stylename="comment-card"
   >
     <div
-      className="comment-header"
+      data-stylename="comment-header"
     >
       <RoundImage
         large={true}
@@ -21,34 +21,34 @@ exports[`displays an image 1`] = `
         term="foo"
       >
         <div
-          className="comment-meta"
+          data-stylename="comment-meta"
         >
           <span
-            className="person-name person-name"
+            data-stylename="person-name"
           >
             Joe Smith
           </span>
            commented on 
           <span
-            className="post-title person-name person-name"
+            data-stylename="post-title"
           >
             Awesome Sauce #hashtag
           </span>
         </div>
       </Highlight>
       <span
-        className="date"
+        data-stylename="date"
       >
         just now
       </span>
     </div>
     <img
-      className="comment-image"
+      data-stylename="comment-image"
       onClick={[Function]}
       src="jam.png"
     />
     <div
-      className="comment-footer"
+      data-stylename="comment-footer"
     />
   </div>
 </a>
@@ -56,14 +56,14 @@ exports[`displays an image 1`] = `
 
 exports[`matches last snapshot 1`] = `
 <a
-  className="link"
+  data-stylename="link"
   onClick={[Function]}
 >
   <div
-    className="comment-card bdy-lt-sm"
+    data-stylename="comment-card"
   >
     <div
-      className="comment-header"
+      data-stylename="comment-header"
     >
       <RoundImage
         large={true}
@@ -75,23 +75,23 @@ exports[`matches last snapshot 1`] = `
         term="foo"
       >
         <div
-          className="comment-meta"
+          data-stylename="comment-meta"
         >
           <span
-            className="person-name person-name"
+            data-stylename="person-name"
           >
             Joe Smith
           </span>
            commented on 
           <span
-            className="post-title person-name person-name"
+            data-stylename="post-title"
           >
             Awesome Sauce #hashtag
           </span>
         </div>
       </Highlight>
       <span
-        className="date"
+        data-stylename="date"
       >
         just now
       </span>
@@ -103,17 +103,17 @@ exports[`matches last snapshot 1`] = `
         term="foo"
       >
         <div
-          className="comment-body bdy-lt-sm"
           dangerouslySetInnerHTML={
             Object {
               "__html": "<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the …</p>",
             }
           }
+          data-stylename="comment-body"
         />
       </Highlight>
     </Connect(ClickCatcher)>
     <div
-      className="comment-footer"
+      data-stylename="comment-footer"
     />
   </div>
 </a>
@@ -121,14 +121,14 @@ exports[`matches last snapshot 1`] = `
 
 exports[`matches last snapshot with different config 1`] = `
 <a
-  className="link"
+  data-stylename="link"
   onClick={[Function]}
 >
   <div
-    className="comment-card bdy-lt-sm expanded"
+    data-stylename="comment-card expanded"
   >
     <div
-      className="comment-header"
+      data-stylename="comment-header"
     >
       <RoundImage
         large={true}
@@ -140,23 +140,23 @@ exports[`matches last snapshot with different config 1`] = `
         term="foo"
       >
         <div
-          className="comment-meta"
+          data-stylename="comment-meta"
         >
           <span
-            className="person-name person-name"
+            data-stylename="person-name"
           >
             Joe Smith
           </span>
            commented on 
           <span
-            className="post-title person-name person-name"
+            data-stylename="post-title"
           >
             Awesome Sauce #hashtag
           </span>
         </div>
       </Highlight>
       <span
-        className="date"
+        data-stylename="date"
       >
         just now
       </span>
@@ -168,21 +168,21 @@ exports[`matches last snapshot with different config 1`] = `
         term="foo"
       >
         <div
-          className="comment-body bdy-lt-sm"
           dangerouslySetInnerHTML={
             Object {
               "__html": "<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. Irrelevant Change</p>",
             }
           }
+          data-stylename="comment-body"
         />
       </Highlight>
     </Connect(ClickCatcher)>
     <div
-      className="comment-footer"
+      data-stylename="comment-footer"
     >
       <span>
         <Icon
-          className="reply-button"
+          data-stylename="reply-button"
           green={true}
           name="Reply"
         />

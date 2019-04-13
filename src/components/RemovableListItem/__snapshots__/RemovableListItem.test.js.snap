@@ -2,10 +2,10 @@
 
 exports[`RemovableListItem does not render as links when no URL specified 1`] = `
 <div
-  className="item"
+  data-stylename="item"
 >
   <RoundImage
-    className="avatar"
+    data-stylename="avatar"
     medium={true}
     url="zeus.png"
   />
@@ -13,7 +13,7 @@ exports[`RemovableListItem does not render as links when no URL specified 1`] = 
     Zeus
   </span>
   <span
-    className="remove-button text-button"
+    data-stylename="remove-button"
     onClick={[Function]}
   >
     Remove
@@ -23,20 +23,20 @@ exports[`RemovableListItem does not render as links when no URL specified 1`] = 
 
 exports[`RemovableListItem doesnt render a remove link 1`] = `
 <div
-  className="item"
+  data-stylename="item"
 >
   <Link
     replace={false}
     to="/happy/place"
   >
     <RoundImage
-      className="avatar"
+      data-stylename="avatar"
       medium={true}
       url="zeus.png"
     />
   </Link>
   <Link
-    className="name bdy-drk-sm"
+    data-stylename="name"
     replace={false}
     to="/happy/place"
   >
@@ -47,27 +47,27 @@ exports[`RemovableListItem doesnt render a remove link 1`] = `
 
 exports[`RemovableListItem renders correctly 1`] = `
 <div
-  className="item"
+  data-stylename="item"
 >
   <Link
     replace={false}
     to="/happy/place"
   >
     <RoundImage
-      className="avatar"
+      data-stylename="avatar"
       medium={true}
       url="zeus.png"
     />
   </Link>
   <Link
-    className="name bdy-drk-sm"
+    data-stylename="name"
     replace={false}
     to="/happy/place"
   >
     Zeus
   </Link>
   <span
-    className="remove-button text-button"
+    data-stylename="remove-button"
     onClick={[Function]}
   >
     Remove

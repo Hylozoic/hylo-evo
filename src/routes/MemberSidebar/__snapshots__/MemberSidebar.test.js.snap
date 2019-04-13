@@ -2,7 +2,7 @@
 
 exports[`does something 1`] = `
 <div
-  className="member-sidebar"
+  data-stylename="member-sidebar"
 >
   <Connect(MessageMember) />
   <Connect(SkillsSection) />

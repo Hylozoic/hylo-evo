@@ -10,43 +10,44 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
       "type": "post",
     }
   }
-  onClose={[MockFunction]}
+  onClose={[Function]}
   promptVisible={false}
   reasonRequired={false}
-  submitFlagContent={[MockFunction]}
+  submitFlagContent={[Function]}
   type="post"
   visible={true}
 >
   <div
-    className="popup"
+    data-stylename="popup"
   >
     <div
-      className="popup-inner"
+      data-stylename="popup-inner"
     >
       <h1>
         Explanation for Flagging
       </h1>
       <span
-        className="close-btn"
+        data-stylename="close-btn"
         onClick={[Function]}
       >
         <Icon
-          className="icon"
+          data-stylename="icon"
           name="Ex"
         >
           <span
-            className="icon-Ex icon icon"
+            className="icon-Ex"
+            data-stylename="icon"
           />
         </Icon>
       </span>
       <div
-        className="content"
+        data-stylename="content"
       >
         <div
-          className="reason"
+          data-stylename="reason"
         >
           <Select
-            className=""
+            data-stylename=""
             fullWidth={true}
             onChange={[Function]}
             options={
@@ -77,7 +78,7 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
             selected=""
           >
             <label
-              className="select-wrapper"
+              data-stylename="select-wrapper"
               style={
                 Object {
                   "width": "100%",
@@ -85,7 +86,7 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
               }
             >
               <select
-                className="select"
+                data-stylename="select"
                 onChange={[Function]}
                 style={
                   Object {
@@ -135,7 +136,7 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
           </Select>
         </div>
         <TextareaAutosize
-          className="explanation-textbox"
+          data-stylename="explanation-textbox"
           minRows={6}
           onChange={[Function]}
           onHeightChange={[Function]}
@@ -144,7 +145,7 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
           value=""
         >
           <textarea
-            className="explanation-textbox"
+            data-stylename="explanation-textbox"
             onChange={[Function]}
             placeholder="What was wrong?"
             style={
@@ -156,12 +157,12 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
           />
         </TextareaAutosize>
         <Button
-          className="submit-btn"
+          data-stylename="submit-btn"
           disabled={true}
           onClick={[Function]}
         >
           <div
-            className="submit-btn button green disabled"
+            data-stylename="button green disabled"
             role="button"
             tabIndex={0}
           >
@@ -176,31 +177,31 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
 
 exports[`FlagContent changes title based on type 1`] = `
 <div
-  className="popup"
+  data-stylename="popup"
 >
   <div
-    className="popup-inner"
+    data-stylename="popup-inner"
   >
     <h1>
       Explanation for Flagging
     </h1>
     <span
-      className="close-btn"
+      data-stylename="close-btn"
       onClick={[Function]}
     >
       <Icon
-        className="icon"
+        data-stylename="icon"
         name="Ex"
       />
     </span>
     <div
-      className="content"
+      data-stylename="content"
     >
       <div
-        className="reason"
+        data-stylename="reason"
       >
         <Select
-          className=""
+          data-stylename=""
           fullWidth={true}
           onChange={[Function]}
           options={
@@ -232,7 +233,7 @@ exports[`FlagContent changes title based on type 1`] = `
         />
       </div>
       <TextareaAutosize
-        className="explanation-textbox"
+        data-stylename="explanation-textbox"
         minRows={6}
         onChange={[Function]}
         onHeightChange={[Function]}
@@ -241,7 +242,7 @@ exports[`FlagContent changes title based on type 1`] = `
         value=""
       />
       <Button
-        className="submit-btn"
+        data-stylename="submit-btn"
         disabled={true}
         onClick={[Function]}
       >
@@ -254,31 +255,31 @@ exports[`FlagContent changes title based on type 1`] = `
 
 exports[`FlagContent matches the last snapshot 1`] = `
 <div
-  className="popup"
+  data-stylename="popup"
 >
   <div
-    className="popup-inner"
+    data-stylename="popup-inner"
   >
     <h1>
       Explanation for Flagging
     </h1>
     <span
-      className="close-btn"
+      data-stylename="close-btn"
       onClick={[Function]}
     >
       <Icon
-        className="icon"
+        data-stylename="icon"
         name="Ex"
       />
     </span>
     <div
-      className="content"
+      data-stylename="content"
     >
       <div
-        className="reason"
+        data-stylename="reason"
       >
         <Select
-          className=""
+          data-stylename=""
           fullWidth={true}
           onChange={[Function]}
           options={
@@ -310,7 +311,7 @@ exports[`FlagContent matches the last snapshot 1`] = `
         />
       </div>
       <TextareaAutosize
-        className="explanation-textbox"
+        data-stylename="explanation-textbox"
         minRows={6}
         onChange={[Function]}
         onHeightChange={[Function]}
@@ -319,7 +320,7 @@ exports[`FlagContent matches the last snapshot 1`] = `
         value=""
       />
       <Button
-        className="submit-btn"
+        data-stylename="submit-btn"
         disabled={true}
         onClick={[Function]}
       >

@@ -2,7 +2,7 @@
 
 exports[`MemberProfile renders the same as the last snapshot 1`] = `
 <div
-  className="member-profile"
+  data-stylename="member-profile"
 >
   <ProfileBanner
     bannerUrl="http://www.axolotl.org/images/tiger/tiger_larva.jpg"
@@ -194,14 +194,14 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
     />
   </ProfileBanner>
   <div
-    className="content"
+    data-stylename="content"
   >
     <ProfileControls
       currentTab="Overview"
       selectTab={[Function]}
     >
       <span
-        className="tagline bdy-lt-lg"
+        data-stylename="tagline"
       />
       <SocialButtons
         avatarUrl="https://www.gravatar.com/avatar/32f7ff34c3b5a8600b79be9a85a5c92f?d=mm&s=140"
@@ -377,12 +377,12 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
     </ProfileControls>
     <div>
       <h2
-        className="subhead hdr-headline"
+        data-stylename="subhead"
       >
         About Me
       </h2>
       <div
-        className="bio bdy-lt-lg"
+        data-stylename="bio"
       >
         I like wombats.
       </div>
