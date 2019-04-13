@@ -238,7 +238,6 @@
       }
     },
     "plugins": [
-      "@babel/plugin-transform-modules-commonjs",
       [
         "react-css-modules",
         {
