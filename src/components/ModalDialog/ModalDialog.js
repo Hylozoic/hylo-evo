@@ -61,6 +61,17 @@ export default class ModalDialog extends Component {
     useNotificationFormat: false
   }
 
+  componentDidMount () {
+    // disable main window scrolling
+    this.previousOverflowStyle = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+  }
+
+  componentWillUnmount () {
+    // re-enable main window scrolling
+    document.body.style.overflow = this.previousOverflowStyle
+  }
+
   cancel = () => {
     if (this.props.cancelButtonAction) this.props.cancelButtonAction()
     this.props.closeModal()

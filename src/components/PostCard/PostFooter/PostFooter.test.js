@@ -32,6 +32,36 @@ describe('PostFooter', () => {
       myVote={false} />)
     expect(wrapper).toMatchSnapshot()
   })
+
+  it('matches the latest snapshot for project', () => {
+    const members = [{
+      id: 1,
+      name: 'Sarah Brown'
+    }]
+    const wrapper = shallow(<PostFooter
+      commenters={[]}
+      commentersTotal={0}
+      votesTotal={0}
+      type='project'
+      members={members} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('matches the latest snapshot for event', () => {
+    const eventInvitations = [
+      {
+        id: 1,
+        name: 'Arthur Smith',
+        response: 'yes'
+      }
+    ]
+    const wrapper = shallow(<PostFooter
+      commenters={[]}
+      commentersTotal={0}
+      votesTotal={0}
+      type='event' />)
+    expect(wrapper).toMatchSnapshot()
+  })
 })
 
 describe('commentCaption', () => {

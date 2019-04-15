@@ -1,0 +1,168 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EventInviteDialog renders correctly 1`] = `
+<ModalDialogPortal
+  closeModal={[Function]}
+  key="event-invite-dialog"
+  modalTitle="Invite"
+  showCancelButton={false}
+  showSubmitButton={false}
+  style={
+    Object {
+      "maxWidth": "620px",
+      "width": "100%",
+    }
+  }
+>
+  <div
+    data-stylename="container"
+  >
+    <Search
+      onChange={[Function]}
+    />
+    <div
+      data-stylename="inviteSuggestions"
+    >
+      <InviteeRow
+        key="4"
+        onClick={[Function]}
+        person={
+          Object {
+            "id": 4,
+            "name": "b",
+          }
+        }
+        selected={false}
+      />
+      <InviteeRow
+        key="5"
+        onClick={[Function]}
+        person={
+          Object {
+            "id": 5,
+            "name": "c",
+          }
+        }
+        selected={false}
+      />
+    </div>
+    <div
+      data-stylename="alreadyInvitedLabel"
+    >
+      Already Invited
+    </div>
+    <div
+      data-stylename="alreadyInvited"
+    >
+      <InviteeRow
+        key="1"
+        person={
+          Object {
+            "id": 1,
+          }
+        }
+        showResponse={true}
+      />
+      <InviteeRow
+        key="2"
+        person={
+          Object {
+            "id": 2,
+          }
+        }
+        showResponse={true}
+      />
+      <InviteeRow
+        key="3"
+        person={
+          Object {
+            "id": 3,
+          }
+        }
+        showResponse={true}
+      />
+    </div>
+    <Button
+      data-stylename="inviteButton"
+      disabled={true}
+      label="Select people to invite"
+      onClick={[Function]}
+      small={true}
+    />
+  </div>
+</ModalDialogPortal>
+`;
+
+exports[`InviteeRow renders correctly 1`] = `
+<div
+  data-stylename="row"
+  onClick={[Function]}
+>
+  <div
+    data-stylename="col"
+  >
+    <div
+      data-stylename="avatar"
+      style={
+        Object {
+          "backgroundImage": "url(j.png)",
+        }
+      }
+    />
+  </div>
+  <div
+    data-stylename="col"
+  >
+    j
+  </div>
+  <div
+    data-stylename="col check"
+  >
+    <CheckBox
+      checked={true}
+      noInput={true}
+    />
+  </div>
+</div>
+`;
+
+exports[`InviteeRow renders correctly with showResposne 1`] = `
+<div
+  data-stylename="row"
+  onClick={[Function]}
+>
+  <div
+    data-stylename="col"
+  >
+    <div
+      data-stylename="avatar"
+      style={
+        Object {
+          "backgroundImage": "url(j.png)",
+        }
+      }
+    />
+  </div>
+  <div
+    data-stylename="col"
+  >
+    j
+  </div>
+  <div
+    data-stylename="col response"
+  />
+</div>
+`;
+
+exports[`Search renders correctly 1`] = `
+<div
+  data-stylename="search"
+>
+  <TextInput
+    inputRef={[Function]}
+    onChange={[Function]}
+    placeholder="Search members"
+    theme={Object {}}
+  />
+</div>
+`;

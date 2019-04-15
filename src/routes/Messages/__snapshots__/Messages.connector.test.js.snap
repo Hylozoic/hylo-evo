@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapDispatchToProps returns expected values 1`] = `
+Object {
+  "createMessage": [Function],
+  "fetchMessages": [Function],
+  "fetchThread": [Function],
+  "fetchThreads": [Function],
+  "findOrCreateThread": [Function],
+  "goToThread": [Function],
+  "reconnectFetchMessages": [Function],
+  "setThreadSearch": [Function],
+  "updateMessageText": [Function],
+  "updateThreadReadTime": [Function],
+}
+`;
+
+exports[`mapStateToProps returns expected values 1`] = `
+Object {
+  "currentUser": undefined,
+  "forNewThread": false,
+  "hasMoreMessages": true,
+  "hasMoreThreads": undefined,
+  "messageCreatePending": false,
+  "messageText": "",
+  "messageThread": Object {
+    "id": "11",
+    "participants": Array [],
+  },
+  "messageThreadId": "11",
+  "messages": Array [
+    SessionBoundModel {
+      "_fields": Object {
+        "creator": "1",
+        "id": "4",
+        "messageThread": "11",
+        "text": "hi",
+      },
+    },
+    SessionBoundModel {
+      "_fields": Object {
+        "creator": "1",
+        "id": "5",
+        "messageThread": "11",
+        "text": "how are you",
+      },
+    },
+    SessionBoundModel {
+      "_fields": Object {
+        "creator": "2",
+        "id": "6",
+        "messageThread": "11",
+        "text": "fine thanks",
+      },
+    },
+    SessionBoundModel {
+      "_fields": Object {
+        "creator": "2",
+        "id": "7",
+        "messageThread": "11",
+        "text": "and you?",
+      },
+    },
+  ],
+  "messagesPending": true,
+  "onCloseURL": "/",
+  "participants": Array [],
+  "sendIsTyping": [Function],
+  "socket": SailsSocket {
+    "_isConnecting": false,
+    "_mightBeAboutToAutoConnect": true,
+    "eventQueue": Object {
+      "sails:parseError": Array [
+        [Function],
+      ],
+    },
+    "headers": undefined,
+  },
+  "threadSearch": undefined,
+  "threads": Array [],
+}
+`;
+
+exports[`mergeProps returns expected values 1`] = `
+Object {
+  "fetchMessages": [Function],
+  "fetchMoreThreads": [Function],
+  "fetchThreads": [Function],
+  "findOrCreateThread": [Function],
+  "match": Object {
+    "params": Object {
+      "messageThreadId": "8",
+    },
+  },
+  "messages": Array [
+    Object {
+      "id": "1",
+      "text": "hi",
+    },
+  ],
+  "reconnectFetchMessages": [Function],
+  "updateThreadReadTime": [Function],
+}
+`;

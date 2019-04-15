@@ -12,5 +12,8 @@ Object {
   "fetchPending": undefined,
   "memberships": Array [],
   "messageSettings": undefined,
+  "queryParams": Object {
+    "registered": undefined,
+  },
 }
 `;

@@ -39,8 +39,8 @@ describe('ModeratorsSettingsTab', () => {
       slug: 'foocommunity',
       removeModerator: jest.fn()
     }
-
     const wrapper = shallow(<ModeratorsSettingsTab {...props} />)
+
     wrapper.setState({moderatorToRemove: 3, isRemoveFromCommunity: false})
     wrapper.instance().submitRemoveModerator()
     expect(props.removeModerator).toHaveBeenCalledWith(3, false)

@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches last snapshot 1`] = `
+<Highlight
+  component="span"
+  highlightClassName="highlight"
+  term="foo"
+>
+  <div
+    className="hdr-headline"
+    data-stylename="title"
+  >
+    hello there
+  </div>
+</Highlight>
+`;

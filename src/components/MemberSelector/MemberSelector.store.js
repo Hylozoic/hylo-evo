@@ -49,7 +49,7 @@ export function pickPersonListItem (person) {
   }
 }
 
-export function personListItemSelector (session, members, currentUser, search = () => true) {
+export function getPersonListItem (session, members, currentUser, search = () => true) {
   return session.Person
     .all()
     .filter(p => !members.includes(p.id))
@@ -77,7 +77,7 @@ export const matchesSelector = createSelector(
       return p.name.toLowerCase().includes(autocomplete.toLowerCase())
     }
   },
-  personListItemSelector
+  getPersonListItem
 )
 
 export const defaultState = {

@@ -6,18 +6,6 @@ import {
   CREATE_MESSAGE
 } from 'store/constants'
 
-it('matches the last snapshot for findOrCreateThread', () => {
-  const graphql = {
-    query: 'All the lonely people / Where do they all come from?',
-    variables: {
-      participantIds: ['1', '2', '3']
-    }
-  }
-  const { query, variables } = graphql
-  const actual = store.findOrCreateThread(variables.participantIds, query)
-  expect(actual).toMatchSnapshot()
-})
-
 it('matches the last snapshot for fetchContacts', () => {
   const graphql = {
     query: 'I see trees of green',
@@ -112,14 +100,14 @@ describe('connector', () => {
     state.PeopleSelector = { participants: people.map(p => p.id) }
   })
 
-  describe('participantsSelector', () => {
+  describe('getParticipants', () => {
     it('returns the correct objects', () => {
       const expected = people.map(p => ({
         id: p.id,
         name: p.name,
         avatarUrl: p.avatarUrl
       }))
-      const actual = store.participantsSelector(state)
+      const actual = store.getParticipants(state)
       expect(actual).toEqual(expected)
     })
   })
@@ -132,17 +120,17 @@ describe('connector', () => {
     })
   })
 
-  describe('holoChatContactsSelector', () => {
+  describe('getHoloChatContacts', () => {
     it('filters out currentUser', () => {
       state.PeopleSelector.participants = []
-      const actual = store.holoChatContactsSelector(state, {})
+      const actual = store.getHoloChatContacts(state, {})
       expect(actual.find(p => p.id === '999')).toBe(undefined)
     })
   })
 
-  describe('holoChatMatchesSelector', () => {
+  describe('getHoloChatMatches', () => {
     it('returns empty array if autocomplete is missing', () => {
-      const actual = store.holoChatMatchesSelector(state, {})
+      const actual = store.getHoloChatMatches(state, {})
       expect(actual).toEqual([])
     })
 
@@ -163,7 +151,7 @@ describe('connector', () => {
           'community': 'Associate'
         }
       ]
-      const actual = store.holoChatMatchesSelector(state, {})
+      const actual = store.getHoloChatMatches(state, {})
       expect(actual).toEqual(expected)
     })
 
@@ -178,7 +166,7 @@ describe('connector', () => {
           'community': 'Associate'
         }
       ]
-      const actual = store.holoChatMatchesSelector(state, {})
+      const actual = store.getHoloChatMatches(state, {})
       expect(actual).toEqual(expected)
     })
 
@@ -193,7 +181,7 @@ describe('connector', () => {
           'community': 'Associate'
         }
       ]
-      const actual = store.holoChatMatchesSelector(state, {})
+      const actual = store.getHoloChatMatches(state, {})
       expect(actual).toEqual(expected)
     })
 

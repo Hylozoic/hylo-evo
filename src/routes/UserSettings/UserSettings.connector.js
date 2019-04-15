@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import {
   updateUserSettings, leaveCommunity, unlinkAccount,
-  updateMembershipSettings, updateAllMemberships
+  updateMembershipSettings, updateAllMemberships, registerStripeAccount
 } from './UserSettings.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
@@ -14,6 +14,7 @@ import unBlockUser from 'store/actions/unBlockUser'
 import getBlockedUsers from 'store/selectors/getBlockedUsers'
 import { FETCH_FOR_CURRENT_USER } from 'store/constants'
 import { get, every, includes } from 'lodash/fp'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
 // this selector assumes that all Memberships belong to the currentUser
 // using this instead of currentUser.memberships to avoid a memoization issue
@@ -50,6 +51,9 @@ export function mapStateToProps (state, props) {
 
   const confirm = get('FullPageModal.confirm', state)
   const fetchPending = state.pending[FETCH_FOR_CURRENT_USER]
+  const queryParams = {
+    registered: getQuerystringParam('registered', null, props)
+  }
 
   return {
     currentUser,
@@ -58,7 +62,8 @@ export function mapStateToProps (state, props) {
     confirm,
     fetchPending,
     allCommunitiesSettings,
-    messageSettings
+    messageSettings,
+    queryParams
   }
 }
 
@@ -71,7 +76,8 @@ export const mapDispatchToProps = {
   unlinkAccount,
   setConfirmBeforeClose,
   updateMembershipSettings,
-  updateAllMemberships
+  updateAllMemberships,
+  registerStripeAccount
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
