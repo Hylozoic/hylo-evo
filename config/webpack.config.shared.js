@@ -7,8 +7,7 @@ module.exports = {
     options: {
       modules: true,
       context: paths.appPath,
-      // Keeping this in only one place
-      localIdentName: appPackageJson.babel.plugins[0][1].generateScopedName,
+      localIdentName: "[name]__[local]___[hash:base64:5]",
       importLoaders: 3
     }
   },

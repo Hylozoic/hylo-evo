@@ -22,10 +22,10 @@
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
     "babel-loader": "8.0.5",
-    "babel-plugin-data-stylename": "^0.1.1",
     "babel-plugin-named-asset-import": "^0.3.1",
-    "babel-preset-react-app": "^7.0.2",
     "babel-plugin-react-css-modules": "levity/babel-plugin-react-css-modules#ab83008",
+    "babel-plugin-data-stylename": "0.1.1",
+    "babel-preset-react-app": "^7.0.2",
     "bfj": "6.1.1",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "chalk": "2.3.0",
@@ -74,6 +74,7 @@
     "@storybook/react": "^v5.0.6",
     "strip-ansi": "4.0.0",
     "style-loader": "0.23.1",
+    "@svgr/webpack": "4.1.0",
     "timezone-mock": "^0.0.7",
     "uglifyjs-webpack-plugin": "^2.1.2",
     "url-loader": "1.1.2",
@@ -220,39 +221,46 @@
     "env": {
       "test": {
         "plugins": [
-          "data-stylename",
+          "data-stylename"
+        ]
+      },
+      "development": {
+        "plugins": [
           [
             "react-css-modules",
             {
-              "generateScopedName": "[local]",
+              "generateScopedName": "[name]__[local]___[hash:base64:5]",
               "filetypes": {
                 ".scss": "postcss-scss"
               },
               "exclude": "node_modules",
               "searchPaths": [
                 "src"
-              ]
+              ],
+              "webpackHotModuleReloading": true
             }
           ]
-        ]
+        ]    
+      },
+      "production": {
+        "plugins": [
+          [
+            "react-css-modules",
+            {
+              "generateScopedName": "[name]__[local]___[hash:base64:5]",
+              "filetypes": {
+                ".scss": "postcss-scss"
+              },
+              "exclude": "node_modules",
+              "searchPaths": [
+                "src"
+              ],
+              "webpackHotModuleReloading": true
+            }
+          ]
+        ]    
       }
-    },
-    "plugins": [
-      [
-        "react-css-modules",
-        {
-          "generateScopedName": "[name]__[local]___[hash:base64:5]",
-          "filetypes": {
-            ".scss": "postcss-scss"
-          },
-          "exclude": "node_modules",
-          "searchPaths": [
-            "src"
-          ],
-          "webpackHotModuleReloading": true
-        }
-      ]
-    ]
+    }
   },
   "standard": {
     "parser": "babel-eslint",
