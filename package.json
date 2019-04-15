@@ -80,7 +80,7 @@
     "express": "^4.15.2",
     "faker": "^4.1.0",
     "global": "^4.3.2",
-    "@holochain/hc-web-client": "https://github.com/holochain/hc-web-client#hylo",
+    "@holochain/hc-web-client": "0.4.0",
     "hylo-utils": "https://github.com/Hylozoic/hylo-utils#51de852",
     "immutable": "^3.8.1",
     "inflection": "^1.12.0",
@@ -183,15 +183,18 @@
   },
   "babel": {
     "presets": [
-      ["env", {
-        "targets": {
-          "browsers": [
-            ">0.25%",
-            "not ie 11",
-            "not op_mini all"
-          ]
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              ">0.25%",
+              "not ie 11",
+              "not op_mini all"
+            ]
+          }
         }
-      }],
+      ],
       "react-app"
     ],
     "plugins": [

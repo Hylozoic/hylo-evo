@@ -8,9 +8,9 @@ export default function holochainApiMiddleware (req) {
 
     if (!payload || !payload.holochainApi) return next(action)
 
-    const { path, params } = payload.holochainApi
+    const { instance, zome, func, params } = payload.holochainApi
     let promise = initAndGetHolochainSocket(getState(), dispatch).then(holochainSocket =>
-      holochainSocket.call(path)(params)
+      holochainSocket.callZome(instance, zome, func)(params)
     )
 
     if (meta && meta.then) {
