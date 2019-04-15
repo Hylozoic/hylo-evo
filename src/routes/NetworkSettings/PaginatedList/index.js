@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 
 import cx from 'classnames'
 import { times, isEmpty } from 'lodash/fp'
-import RemovableListItem from 'components/RemovableListItem'
-
 import '../NetworkSettings.scss'
 
 export default class PaginatedList extends Component {
@@ -33,27 +31,19 @@ export default class PaginatedList extends Component {
     const {
       className,
       items,
-      itemProps,
-      label,
+      header,
       page,
       pageCount,
       pending,
-      removeItem,
-      setPage,
-      titleUrl = () => {},
-      rightColumnLabel
+      renderItem,
+      setPage
     } = this.props
     const { prevItems } = this.state
     const visibleItems = pending ? prevItems : items
 
     return <div styleName={cx('paginated-list', {loading: pending})} className={className}>
-      <div styleName='section-label'><span>{label}</span>{rightColumnLabel && <span>{rightColumnLabel}</span>}</div>
-      {visibleItems.map(m => <RemovableListItem
-        item={m}
-        url={titleUrl(m)}
-        key={m.id}
-        removeItem={removeItem}
-        {...itemProps} />)}
+      {header && header}
+      {visibleItems.map(item => renderItem(item))}
       <PaginationLinks page={page} pageCount={pageCount} setPage={setPage} />
     </div>
   }

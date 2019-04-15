@@ -72,7 +72,7 @@ exports[`NetworkCommunitiesTab renders correctly 1`] = `
 <div
   data-stylename="communities-tab"
 >
-  <SimplePaginatedList
+  <PaginatedList
     data-stylename="communities"
     header={
       <div
@@ -91,12 +91,6 @@ exports[`NetworkCommunitiesTab renders correctly 1`] = `
           visibility to network
         </span>
       </div>
-    }
-    itemProps={
-      Object {
-        "size": 40,
-        "square": true,
-      }
     }
     page={1}
     pageCount={2}

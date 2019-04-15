@@ -18,10 +18,17 @@ exports[`NetworkModeratorsTab renders correctly 1`] = `
 <div>
   <PaginatedList
     data-stylename="moderators"
-    label="Moderators"
+    header={
+      <div
+        data-stylename="section-label"
+      >
+        moderators
+      </div>
+    }
     page={1}
     pageCount={2}
     pending={false}
+    renderItem={[Function]}
     setPage={[Function]}
   />
   <div

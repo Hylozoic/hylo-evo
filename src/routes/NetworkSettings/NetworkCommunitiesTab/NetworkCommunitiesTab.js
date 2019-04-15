@@ -5,7 +5,7 @@ import Loading from 'components/Loading'
 import Icon from 'components/Icon'
 import Autocomplete from 'react-autocomplete'
 import { isEmpty } from 'lodash/fp'
-import SimplePaginatedList from '../SimplePaginatedList'
+import PaginatedList from '../PaginatedList'
 import RoundImage from 'components/RoundImage'
 import '../NetworkSettings.scss'
 import { DEFAULT_AVATAR } from 'store/models/Community'
@@ -119,14 +119,13 @@ export default class NetworkCommunitiesTab extends Component {
     const header = <div styleName='section-label'><span>communities</span><span style={{marginLeft: 'auto'}}>visibility to network</span></div>
 
     return <div styleName='communities-tab'>
-      <SimplePaginatedList styleName='communities'
+      <PaginatedList styleName='communities'
         items={network.communities}
-        itemProps={{square: true, size: 40}}
         header={header}
         page={communitiesPage}
         pageCount={communitiesPageCount}
         pending={communitiesPending}
-        setPage={setCommunitiesPage} 
+        setPage={setCommunitiesPage}
         renderItem={this.renderNetworkCommunityRow} />
       {isAdmin && <div styleName='autocomplete'>
         <Autocomplete

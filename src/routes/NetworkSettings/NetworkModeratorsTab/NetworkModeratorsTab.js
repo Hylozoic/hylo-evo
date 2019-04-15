@@ -5,9 +5,12 @@ import Loading from 'components/Loading'
 import Autocomplete from 'react-autocomplete'
 import { isEmpty, intersection } from 'lodash/fp'
 import PaginatedList from '../PaginatedList'
+import RemovableListItem from 'components/RemovableListItem'
 import '../NetworkSettings.scss'
 import Avatar from 'components/Avatar'
 import cx from 'classnames'
+import { personUrl } from 'util/navigation'
+
 
 const { any, array, bool, func, number, object } = PropTypes
 
@@ -73,6 +76,13 @@ export default class NetworkModeratorsTab extends Component {
     this.props.fetchModeratorAutocomplete(value)
   }
 
+  renderModeratorRow = moderator => {
+    const { network, removeNetworkModeratorRole } = this.props
+    return <ModeratorRow
+      moderator={moderator}
+      removeModerator={removeNetworkModeratorRole(network.id)} />
+  }
+
   render () {
     const {
       moderatorsPage,
@@ -80,21 +90,22 @@ export default class NetworkModeratorsTab extends Component {
       moderatorsPending,
       moderatorAutocompleteCandidates,
       network,
-      removeNetworkModeratorRole,
       setModeratorsPage
     } = this.props
 
     if (!network) return <Loading />
 
+    const header = <div styleName='section-label'>moderators</div>
+
     return <div>
       <PaginatedList styleName='moderators'
         items={network.moderators}
-        label={'Moderators'}
+        header={header}
         page={moderatorsPage}
         pageCount={moderatorsPageCount}
         pending={moderatorsPending}
-        removeItem={removeNetworkModeratorRole(network.id)}
-        setPage={setModeratorsPage} />
+        setPage={setModeratorsPage} 
+        renderItem={this.renderModeratorRow} />
       <div styleName='autocomplete'>
         <Autocomplete
           getItemValue={person => person.name}
@@ -121,6 +132,13 @@ export default class NetworkModeratorsTab extends Component {
   }
 }
 
+export function ModeratorRow ({ moderator, removeModerator }) {
+  const url = personUrl(moderator.id)
+  return <RemovableListItem
+    item={moderator}
+    url={url}
+    removeItem={removeModerator} />
+}
 export class ModeratorSuggestionRow extends Component {
   render () {
     const { person, isHighlighted } = this.props
