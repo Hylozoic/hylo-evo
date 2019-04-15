@@ -6,7 +6,12 @@ describe('mapStateToProps', () => {
       FullPageModal: {},
       pending: {}
     }
-    expect(mapStateToProps(state, {})).toMatchSnapshot()
+    const props = {
+      location: {
+        search: ''
+      }
+    }
+    expect(mapStateToProps(state, props)).toMatchSnapshot()
   })
 })
 

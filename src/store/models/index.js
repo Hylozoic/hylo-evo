@@ -5,6 +5,7 @@ import Attachment from './Attachment'
 import Comment from './Comment'
 import Community, { CommunityModerator } from './Community'
 import CommunityTopic from './CommunityTopic'
+import EventInvitation from './EventInvitation'
 import Invitation from './Invitation'
 import LinkPreview from './LinkPreview'
 import Me from './Me'
@@ -30,6 +31,7 @@ orm.register(
   Community,
   CommunityModerator,
   CommunityTopic,
+  EventInvitation,
   Invitation,
   LinkPreview,
   Me,

@@ -8,7 +8,10 @@ import {
   ACTION_APPROVED_JOIN_REQUEST,
   ACTION_MENTION,
   ACTION_COMMENT_MENTION,
-  ACTION_ANNOUNCEMENT
+  ACTION_ANNOUNCEMENT,
+  ACTION_DONATION_TO,
+  ACTION_DONATION_FROM,
+  ACTION_EVENT_INVITATION
  } from 'store/models/Notification'
 
 const u1 = {id: 1, name: 'Charles Darwin', avatarUrl: 'foo.png'}
@@ -93,6 +96,32 @@ const commentMentionNotification = {
   createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
 }
 
+const donationToNotification = {
+  id: 1,
+  activity: {
+    actor: u2,
+    action: ACTION_DONATION_TO,
+    meta: {},
+    post: {title: 'Our Oceans'},
+    unread: true,
+    contributionAmount: 12300
+  },
+  createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
+}
+
+const donationFromNotification = {
+  id: 1,
+  activity: {
+    actor: u2,
+    action: ACTION_DONATION_FROM,
+    meta: {},
+    post: {title: 'Our Oceans'},
+    unread: true,
+    contributionAmount: 12300
+  },
+  createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
+}
+
 const notifications = [
   commentNotification,
   tagNotification,
@@ -111,6 +140,18 @@ const announcementNotification = {
     action: ACTION_ANNOUNCEMENT,
     meta: {},
     post: {title: 'Announcement'},
+    unread: true
+  },
+  createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
+}
+
+const eventInvitationNotification = {
+  id: 10,
+  activity: {
+    actor: u2,
+    action: ACTION_EVENT_INVITATION,
+    meta: {},
+    post: {title: 'Event'},
     unread: true
   },
   createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
@@ -164,6 +205,16 @@ describe('Notification', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
+  it('renders correctly with a donation to notification', () => {
+    const wrapper = shallow(<Notification notification={donationToNotification} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('renders correctly with a donation to notification', () => {
+    const wrapper = shallow(<Notification notification={donationFromNotification} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
   it('renders correctly with a comment mention notification', () => {
     const wrapper = shallow(<Notification notification={commentMentionNotification} />)
     expect(wrapper).toMatchSnapshot()
@@ -200,6 +251,16 @@ describe('NotificationHeader', () => {
     const wrapper = shallow(<NotificationHeader notification={commentMentionNotification} />)
     expect(wrapper).toMatchSnapshot()
   })
+
+  it('renders correctly with a donation to notification', () => {
+    const wrapper = shallow(<NotificationHeader notification={donationToNotification} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('renders correctly with a donation from notification', () => {
+    const wrapper = shallow(<NotificationHeader notification={donationFromNotification} />)
+    expect(wrapper).toMatchSnapshot()
+  })
 })
 
 describe('NotificationBody', () => {
@@ -234,6 +295,16 @@ describe('NotificationBody', () => {
 
   it('renders correctly with an announcement notification', () => {
     const wrapper = shallow(<NotificationBody notification={announcementNotification} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('renders correctly with a donation to notification', () => {
+    const wrapper = shallow(<NotificationBody notification={donationToNotification} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('renders correctly with a donation from notification', () => {
+    const wrapper = shallow(<NotificationBody notification={donationFromNotification} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

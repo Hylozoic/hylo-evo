@@ -11,7 +11,12 @@ export default
   $imageUrls: [String],
   $fileUrls: [String],
   $topicNames: [String],
-  $memberIds: [ID]
+  $memberIds: [ID],
+  $acceptContributions: Boolean,
+  $eventInviteeIds: [ID],
+  $startTime: String,
+  $endTime: String,
+  $location: String
 ) {
   updatePost(id: $id, data: {
     type: $type,
@@ -22,6 +27,11 @@ export default
     imageUrls: $imageUrls,
     fileUrls: $fileUrls,
     topicNames: $topicNames,
-    memberIds: $memberIds
+    memberIds: $memberIds,
+    acceptContributions: $acceptContributions,
+    eventInviteeIds: $eventInviteeIds,
+    startTime: $startTime,
+    endTime: $endTime,
+    location: $location
   }) {${getPostFieldsFragment(false)}}
 }`

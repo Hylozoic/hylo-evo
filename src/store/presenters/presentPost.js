@@ -17,6 +17,12 @@ export default function presentPost (post, communityId) {
         ...person.ref,
         skills: person.skills.toRefArray()
       }
+    }),
+    eventInvitations: post.eventInvitations.toModelArray().map(eventInvitation => {
+      return {
+        response: eventInvitation.response,
+        ...eventInvitation.person.ref
+      }
     })
   }
 }

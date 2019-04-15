@@ -1,6 +1,7 @@
+import { find, get, includes } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import { attr, many, Model } from 'redux-orm'
-import { find, get } from 'lodash/fp'
+import featureFlag from '../../config/featureFlags'
 
 const Me = Model.createClass({
   toString () {
@@ -18,6 +19,24 @@ const Me = Model.createClass({
     const membership = find(m =>
       m.community === get('id', community), memberships)
     return get('hasModeratorRole', membership)
+  },
+
+  hasFeature (key) {
+    if (!key) throw new Error("Can't call hasFeature without a key")
+    const flag = featureFlag(key)
+    switch (flag) {
+      case 'on':
+        return true
+      case 'testing':
+        return this.isTester()
+      default:
+        return false
+    }
+  },
+
+  isTester () {
+    const testerIds = process.env.HYLO_TESTER_IDS.split(',')
+    return includes(this.id, testerIds)
   }
 })
 

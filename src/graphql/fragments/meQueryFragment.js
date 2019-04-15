@@ -17,6 +17,7 @@ export default
   url
   hasDevice
   intercomHash
+  hasStripeAccount
   blockedUsers {
     id
     name
