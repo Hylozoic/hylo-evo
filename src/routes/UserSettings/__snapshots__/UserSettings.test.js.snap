@@ -40,7 +40,6 @@ exports[`UserSettings renders correctly 1`] = `
       },
       Object {
         "component": <NotificationSettingsTab
-          allCommunitiesSettings={undefined}
           currentUser={
             Object {
               "hasFeature": [Function],
@@ -57,8 +56,6 @@ exports[`UserSettings renders correctly 1`] = `
               },
             ]
           }
-          messageSettings={undefined}
-          updateAllMemberships={undefined}
           updateMembershipSettings={[Function]}
           updateUserSettings={[Function]}
         />,
@@ -67,9 +64,7 @@ exports[`UserSettings renders correctly 1`] = `
       },
       Object {
         "component": <BlockedUsersTab
-          blockedUsers={undefined}
           loading={true}
-          unBlockUser={undefined}
         />,
         "name": "Blocked Users",
         "path": "/settings/blocked-users",
@@ -96,8 +91,6 @@ exports[`UserSettings renders correctly 1`] = `
               "id": 1,
             }
           }
-          queryParams={undefined}
-          registerStripeAccount={undefined}
           setConfirm={[Function]}
           updateUserSettings={[Function]}
         />,

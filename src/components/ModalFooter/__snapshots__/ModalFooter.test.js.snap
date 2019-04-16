@@ -10,13 +10,13 @@ exports[`ModalFooter renders correctly with a "Previous" button 1`] = `
     >
       <span
         data-stylename="previous-button"
-        onClick={[Function]}
+        onClick={[MockFunction]}
       >
         Previous
       </span>
       <span
         data-stylename="continue-button"
-        onClick={[Function]}
+        onClick={[MockFunction]}
       >
         continueText
       </span>
@@ -40,7 +40,7 @@ exports[`ModalFooter renders correctly without a "Previous" button 1`] = `
     >
       <span
         data-stylename="continue-button"
-        onClick={[Function]}
+        onClick={[MockFunction]}
       >
         continueText
       </span>

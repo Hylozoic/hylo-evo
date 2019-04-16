@@ -1026,7 +1026,6 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
       </span>
       <span
         data-stylename="mark-read"
-        onClick={undefined}
       >
         Mark all as read
       </span>
@@ -1066,7 +1065,6 @@ exports[`NotificationsDropdown renders correctly with an empty list 1`] = `
       </span>
       <span
         data-stylename="mark-read"
-        onClick={undefined}
       >
         Mark all as read
       </span>

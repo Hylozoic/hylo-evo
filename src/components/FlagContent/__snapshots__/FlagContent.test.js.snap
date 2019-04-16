@@ -10,10 +10,10 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
       "type": "post",
     }
   }
-  onClose={[Function]}
+  onClose={[MockFunction]}
   promptVisible={false}
   reasonRequired={false}
-  submitFlagContent={[Function]}
+  submitFlagContent={[MockFunction]}
   type="post"
   visible={true}
 >

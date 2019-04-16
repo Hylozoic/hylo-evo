@@ -82,7 +82,7 @@ exports[`PostDetail renders correctly 1`] = `
         "dancing",
       ]
     }
-    voteOnPost={[Function]}
+    voteOnPost={[MockFunction]}
     votesTotal={7}
   />
   <Connect(Comments)
@@ -100,7 +100,7 @@ exports[`PostDetail renders correctly 1`] = `
 exports[`ProjectContributions disables button on invalid amount 1`] = `
 <ProjectContributions
   postId={123}
-  processStripeToken={[Function]}
+  processStripeToken={[MockFunction]}
   totalContributions={321}
 >
   <div
@@ -142,7 +142,6 @@ exports[`ProjectContributions disables button on invalid amount 1`] = `
         locale="auto"
         name="Contributing Via Stripe"
         reconfigureOnUpdate={false}
-        stripeKey="pk_test_q0UO6c12K9d6oP8DGiLCxr2b"
         token={[Function]}
         triggerEvent="onClick"
       >
@@ -234,7 +233,7 @@ exports[`ProjectContributions renders correctly 1`] = `
 exports[`ProjectContributions renders error message 1`] = `
 <ProjectContributions
   postId={123}
-  processStripeToken={[Function]}
+  processStripeToken={[MockFunction]}
   totalContributions={321}
 >
   <div
@@ -274,7 +273,7 @@ exports[`ProjectContributions renders error message 1`] = `
 exports[`ProjectContributions renders received message 1`] = `
 <ProjectContributions
   postId={123}
-  processStripeToken={[Function]}
+  processStripeToken={[MockFunction]}
   totalContributions={321}
 >
   <div
