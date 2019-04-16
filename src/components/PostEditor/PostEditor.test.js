@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import React from 'react'
 import { merge } from 'lodash'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import PostEditor, { ActionsBar } from './PostEditor'
 
 describe('PostEditor', () => {
@@ -74,7 +74,7 @@ describe('PostEditor', () => {
           ],
           topicNames: ['design'],
           startTime: new Date(1551908483315),
-          endTime: new Date(1551908483315)    
+          endTime: new Date(1551908483315)
         },
         createPost: jest.fn(() => new Promise(() => {})),
         setAnnouncement: jest.fn()

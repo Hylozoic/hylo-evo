@@ -24,7 +24,7 @@ export default function PostDetails ({
     details = truncate(details, maxDetailsLength)
   }
 
-  return <Highlight {...highlightProps}>    
+  return <Highlight {...highlightProps}>
     <div styleName='postDetails'>
       {details && !hideDetails &&
         <ClickCatcher>

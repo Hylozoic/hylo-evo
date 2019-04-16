@@ -279,7 +279,8 @@
       "describe",
       "expect",
       "it",
-      "jest"
+      "jest",
+      "test"
     ]
   },
   "proxy": "http://localhost:3001"

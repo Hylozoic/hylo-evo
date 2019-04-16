@@ -6,5 +6,4 @@ describe('getPost', () => {
     const session = orm.session(orm.getEmptyState())
     expect(getPost(session.state, {match: {params: {postId: '1'}}})).toEqual(null)
   })
-
 })

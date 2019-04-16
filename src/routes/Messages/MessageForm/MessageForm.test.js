@@ -55,7 +55,7 @@ describe('for a new thread', () => {
   const mockGoToThread = jest.fn()
   const mockCreateMessage = jest.fn(() => Promise.resolve())
 
-  const wrapper = mount(<MessageForm 
+  const wrapper = mount(<MessageForm
     {...defaultProps}
     forNewThread
     findOrCreateThread={mockFindOrCreateThread}

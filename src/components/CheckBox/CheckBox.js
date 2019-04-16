@@ -6,7 +6,7 @@ import cx from 'classnames'
 
 const { bool, string, func } = PropTypes
 
-export default function CheckBox ({ checked, onChange, className, label, labelLeft = false, noInput}) {  
+export default function CheckBox ({ checked, onChange, className, label, labelLeft = false, noInput }) {
   const iconName = checked ? 'Checkmark' : 'Empty'
 
   return <label styleName='label'>

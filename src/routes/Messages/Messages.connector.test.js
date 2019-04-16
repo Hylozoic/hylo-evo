@@ -43,7 +43,7 @@ describe('mapStateToProps', () => {
   const props = {
     match: {
       params: {
-        messageThreadId: '11',
+        messageThreadId: '11'
       }
     }
   }

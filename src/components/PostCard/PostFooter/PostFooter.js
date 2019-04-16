@@ -39,7 +39,7 @@ export default class PostFooter extends React.PureComponent {
 
     const eventAttendees = filter(ei => ei.response === RESPONSES.YES, eventInvitations)
 
-    let peopleRowResult        
+    let peopleRowResult
 
     switch (type) {
       case 'project':
@@ -85,7 +85,7 @@ export default class PostFooter extends React.PureComponent {
     if (type === 'project') {
 
     } else {
-      
+
     }
     const { caption, avatarUrls } = peopleRowResult
 

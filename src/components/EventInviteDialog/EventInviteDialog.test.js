@@ -27,7 +27,7 @@ describe('InviteeRow', () => {
 
   it('renders correctly with showResposne', () => {
     const props = {
-      person: {id: 1, name: 'j', avatarUrl: 'j.png', response: 'needed!'}, 
+      person: {id: 1, name: 'j', avatarUrl: 'j.png', response: 'needed!'},
       selected: true,
       onClick: () => {},
       showResponse: true

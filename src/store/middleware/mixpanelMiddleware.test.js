@@ -1,4 +1,4 @@
-import mixpanelMiddleware from './mixpanelMiddleware';
+import mixpanelMiddleware from './mixpanelMiddleware'
 
 describe('mixpanelMiddleware', () => {
   let mixpanelMiddlewareInstance, mixpanel

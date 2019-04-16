@@ -145,7 +145,7 @@ export const getMessagesHasMore = createSelector(
   get('hasMore')
 )
 
-/// ACTIONS (to be moved to /store/actions/*)
+// / ACTIONS (to be moved to /store/actions/*)
 
 const findOrCreateThreadQuery =
 `mutation ($participantIds: [String]) {

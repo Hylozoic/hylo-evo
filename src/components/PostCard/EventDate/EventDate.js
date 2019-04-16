@@ -7,6 +7,6 @@ export default function EventDate ({ startTime }) {
   const startTimeMoment = Moment(startTime)
   return <div styleName='eventDate'>
     <span styleName='month'>{startTimeMoment.format('MMM')}</span>
-    <span styleName='day'>{startTimeMoment.format('D')}</span>    
+    <span styleName='day'>{startTimeMoment.format('D')}</span>
   </div>
 }

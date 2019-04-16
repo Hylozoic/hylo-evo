@@ -8,7 +8,6 @@ var paths = require('./paths')
 var getClientEnvironment = require('./env')
 var sharedConfig = require('./webpack.config.shared')
 
-
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 var publicPath = paths.servedPath
@@ -109,7 +108,7 @@ module.exports = {
             options: {
               limit: 10000,
               name: 'static/media/[name].[hash:8].[ext]'
-            },
+            }
           },
           // Process application JS with Babel.
           // The preset includes JSX, Flow, TypeScript, and some ESnext features.
@@ -127,11 +126,11 @@ module.exports = {
                   {
                     loaderMap: {
                       svg: {
-                        ReactComponent: '@svgr/webpack?-svgo,+ref![path]',
-                      },
-                    },
-                  },
-                ],
+                        ReactComponent: '@svgr/webpack?-svgo,+ref![path]'
+                      }
+                    }
+                  }
+                ]
               ],
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -139,7 +138,7 @@ module.exports = {
               cacheDirectory: true,
               cacheCompression: true,
               compact: true
-            },
+            }
           },
           // Process any JS outside of the app with Babel.
           // Unlike the application JS, we only compile the standard ES features.
@@ -155,11 +154,11 @@ module.exports = {
                 [
                   require.resolve('babel-preset-react-app/dependencies'),
                   { helpers: true }
-                ],
+                ]
               ],
               cacheDirectory: true,
               cacheCompression: true,
-              
+
               // If an error happens in a package, it's possible to be
               // because it was compiled. Thus, we don't want the browser
               // debugger to show the original code. Instead, the code
@@ -186,7 +185,7 @@ module.exports = {
               sharedConfig.sassResourcesLoader
             ]
             // fallback: 'style-loader',
-          },
+          }
           // // "file" loader makes sure those assets get served by WebpackDevServer.
           // // When you `import` an asset, you get its (virtual) filename.
           // // In production, they would get copied to the `build` folder.
@@ -211,7 +210,7 @@ module.exports = {
   },
   optimization: {
     minimizer: [new UglifyJsPlugin({
-      uglifyOptions:{
+      uglifyOptions: {
         compress: {
           ie8: false,
           warnings: false,

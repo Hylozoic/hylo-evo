@@ -3,7 +3,7 @@ import createMiddleware from './middleware'
 import orm from './models'
 import rootReducer, { combinedReducers } from './reducers'
 
-export function getEmptyState() {
+export function getEmptyState () {
   return combinedReducers({
     orm: orm.getEmptyState()
   }, {type: ''})
