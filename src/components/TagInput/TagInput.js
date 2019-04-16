@@ -71,7 +71,7 @@ export default class TagInput extends Component {
       if (includes(creationKeyCodes, keyCode)) {
         let { value } = event.target
         if (!value) return
-        handleAddition({id: value, name: value})
+        handleAddition({ id: value, name: value })
         this.resetInput()
         event.preventDefault()
         return
@@ -123,10 +123,10 @@ export default class TagInput extends Component {
     const suggestionsOrError = maxReached
       ? isEmpty(this.input.value)
         ? []
-        : [{name: `no more than ${maxTags} allowed`, isError: true}]
+        : [{ name: `no more than ${maxTags} allowed`, isError: true }]
       : suggestions
 
-    return <div className={cx(theme.root, {[theme.readOnly]: readOnly}, className)} onClick={this.focus}>
+    return <div className={cx(theme.root, { [theme.readOnly]: readOnly }, className)} onClick={this.focus}>
       <ul className={theme.selected}>
         {selectedItems}
       </ul>
@@ -134,7 +134,7 @@ export default class TagInput extends Component {
         <div className={theme.searchInput}>
           <input
             className={theme.searchInput}
-            styleName={cx({'error': maxReached})}
+            styleName={cx({ 'error': maxReached })}
             ref={component => { this.input = component }}
             type='text'
             placeholder={placeholder}
@@ -151,7 +151,7 @@ export default class TagInput extends Component {
               onChange={maxReached ? this.resetInput : this.select}
               theme={{
                 items: theme.suggestions,
-                item: cx(theme.suggestion, {[styles.error]: maxReached}),
+                item: cx(theme.suggestion, { [styles.error]: maxReached }),
                 'item-active': theme['suggestion-active']
               }}
               ref={component => { this.list = component }} />

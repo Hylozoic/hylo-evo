@@ -30,7 +30,7 @@ describe('JoinCommunity.store', () => {
   })
 
   describe('getNewMembership', () => {
-    const membership = {id: 'newmembership1'}
+    const membership = { id: 'newmembership1' }
     const testState = {
       [MODULE_NAME]: {
         ...defaultState,

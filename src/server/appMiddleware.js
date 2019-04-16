@@ -29,12 +29,12 @@ export default function appMiddleware (req, res, next) {
 // this is set up as a property to make it easy to mock in tests
 appMiddleware.getIndexFile = once(() => {
   const indexPath = root('build/index.html')
-  return readFileSync(indexPath, {encoding: 'utf-8'})
+  return readFileSync(indexPath, { encoding: 'utf-8' })
 })
 
 function html (markup) {
   const newRoot = `<div id="root">${markup}</div>`
   return appMiddleware.getIndexFile()
-  .replace('<script id="newrelic"></script>', getBrowserSnippet())
-  .replace('<div id="root"></div>', newRoot)
+    .replace('<script id="newrelic"></script>', getBrowserSnippet())
+    .replace('<div id="root"></div>', newRoot)
 }

@@ -16,7 +16,7 @@ describe('reducer', () => {
     test('rollbar called', () => {
       const action = {
         type: FETCH_FOR_CURRENT_USER,
-        payload: {data: {me: {id: '1', username: 'Proteus', email: 'prot@e.us'}}}
+        payload: { data: { me: { id: '1', username: 'Proteus', email: 'prot@e.us' } } }
       }
 
       reducer({}, action)
@@ -55,13 +55,13 @@ describe('ormSessionReducer', () => {
       id: '5',
       name: 'foo',
       avatarUrl: 'foo.png',
-      memberships: [{id: '7'}],
-      settings: {lights: 'on'}
+      memberships: [{ id: '7' }],
+      settings: { lights: 'on' }
     }
     const action = {
       type: FETCH_FOR_CURRENT_USER,
       payload: {
-        data: {me}
+        data: { me }
       }
     }
 

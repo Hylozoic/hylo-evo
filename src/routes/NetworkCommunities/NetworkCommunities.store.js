@@ -99,7 +99,7 @@ export const getNetwork = ormCreateSelector(
   state => state.orm,
   (state, { slug }) => slug,
   (session, slug) => {
-    return session.Network.safeGet({slug})
+    return session.Network.safeGet({ slug })
   }
 )
 

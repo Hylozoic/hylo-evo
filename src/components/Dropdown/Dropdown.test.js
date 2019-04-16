@@ -3,8 +3,8 @@ import { shallow } from 'enzyme'
 import React from 'react'
 
 const sampleItems = [
-  {label: 'item 1'},
-  {label: 'item 2'}
+  { label: 'item 1' },
+  { label: 'item 2' }
 ]
 
 it('renders with no items', () => {

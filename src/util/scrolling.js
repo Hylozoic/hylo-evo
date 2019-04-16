@@ -20,7 +20,7 @@ export function position (element, parent) {
     element = element.offsetParent
   }
 
-  return {x, y}
+  return { x, y }
 }
 
 export const isAtBottom = (offset, element) =>

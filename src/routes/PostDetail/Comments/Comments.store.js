@@ -97,14 +97,14 @@ export const getComments = createSelector(
   (session, id) => {
     var post
     try {
-      post = session.Post.get({id})
+      post = session.Post.get({ id })
     } catch (e) {
       return []
     }
     return post.comments.orderBy(c => Number(c.id)).toModelArray()
-    .map(comment => ({
-      ...comment.ref,
-      creator: comment.creator,
-      image: comment.attachments.toModelArray()[0]
-    }))
+      .map(comment => ({
+        ...comment.ref,
+        creator: comment.creator,
+        image: comment.attachments.toModelArray()[0]
+      }))
   })

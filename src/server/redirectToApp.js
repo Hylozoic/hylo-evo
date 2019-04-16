@@ -13,11 +13,11 @@ export default function (req, res, next, opts = {}) {
   const store = opts.mockStore || createStore(createMemoryHistory(), req)
 
   return store.dispatch(checkLogin())
-  .then(({ payload }) => {
-    if (payload && payload.signedIn) {
-      return res.redirect('/app?rd=1')
-    }
-    next()
-  })
-  .catch(err => next()) // eslint-disable-line handle-callback-err
+    .then(({ payload }) => {
+      if (payload && payload.signedIn) {
+        return res.redirect('/app?rd=1')
+      }
+      next()
+    })
+    .catch(err => next()) // eslint-disable-line handle-callback-err
 }

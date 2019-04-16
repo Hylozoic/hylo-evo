@@ -5,12 +5,12 @@ import rollbar from 'client/rollbar'
 export default class ErrorBoundary extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {hasError: false}
+    this.state = { hasError: false }
   }
 
   componentDidCatch (error, info) {
     // Display fallback UI
-    this.setState({hasError: true})
+    this.setState({ hasError: true })
 
     // Log to rollbar
     rollbar.error(error, info)

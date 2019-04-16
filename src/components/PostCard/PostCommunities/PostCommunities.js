@@ -46,7 +46,7 @@ export default class PostCommunities extends Component {
         <a onClick={this.toggleExpanded} styleName='expandLink'><Icon name='ArrowDown' styleName='expandIcon' /></a>
       </div>
 
-    return <div styleName={cx('communities', {expanded, bottomBorder: showBottomBorder})}>
+    return <div styleName={cx('communities', { expanded, bottomBorder: showBottomBorder })}>
       {content}
     </div>
   }
@@ -62,7 +62,7 @@ function others (n, expandFunc) {
   }
 }
 
-export function CommunityList ({communities, expandFunc}) {
+export function CommunityList ({ communities, expandFunc }) {
   const renderCommunity = (community, comma) => {
     return <span key={community.id}><Link to={communityUrl(community.slug)} styleName='communityLink'>{community.name}</Link>{comma ? ', ' : ''}</span>
   }

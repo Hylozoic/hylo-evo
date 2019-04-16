@@ -76,7 +76,7 @@ export function mapDispatchToProps (dispatch, props) {
       dispatch(createMessage(messageThreadId, text, forNewThread, holochainActive)),
     fetchThread: () => dispatch(fetchThread(messageThreadId, holochainActive)),
     fetchMessages: cursor => () =>
-      dispatch(fetchMessages(messageThreadId, {cursor}, holochainActive)),
+      dispatch(fetchMessages(messageThreadId, { cursor }, holochainActive)),
     updateThreadReadTime: id => !holochainActive && dispatch(updateThreadReadTime(id)),
     reconnectFetchMessages: () => dispatch(fetchMessages(messageThreadId, { reset: true }))
   }

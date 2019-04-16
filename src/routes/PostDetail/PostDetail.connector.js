@@ -23,7 +23,7 @@ export function mapStateToProps (state, props) {
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const post = presentPost(getPost(state, props), get('id', currentCommunity))
   const currentUser = getMe(state)
-  const isProjectMember = find(({id}) => id === get('id', currentUser), get('members', post))
+  const isProjectMember = find(({ id }) => id === get('id', currentUser), get('members', post))
 
   return {
     id,
@@ -62,7 +62,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...stateProps,
     ...dispatchProps,
     voteOnPost: () =>
-        dispatchProps.voteOnPost(!post.myVote)
+      dispatchProps.voteOnPost(!post.myVote)
   }
 }
 

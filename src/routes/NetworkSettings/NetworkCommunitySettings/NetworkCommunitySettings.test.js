@@ -10,7 +10,7 @@ describe('NetworkCommunitySettings', () => {
     props = {
       fetchCommunitySettings: jest.fn(),
       moderators: [],
-      community: {id: 1}
+      community: { id: 1 }
     }
   })
 

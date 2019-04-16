@@ -8,6 +8,6 @@ export default function fetchPerson (id, query = fetchPersonQuery) {
       query,
       variables: { id }
     },
-    meta: {extractModel: 'Person'}
+    meta: { extractModel: 'Person' }
   }
 }

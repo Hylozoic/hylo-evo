@@ -14,7 +14,7 @@ describe('connector', () => {
     session = orm.mutableSession(orm.getEmptyState())
     session.Person.create(person)
     session.Community.create(communities[0])
-    state = {orm: session.state}
+    state = { orm: session.state }
     selectorProps = {
       personId: '46816',
       slug: 'wombats'

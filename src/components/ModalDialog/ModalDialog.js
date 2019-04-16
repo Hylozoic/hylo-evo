@@ -51,7 +51,7 @@ export default class ModalDialog extends Component {
 
   static defaultProps = {
     closeOnSubmit: true,
-    style: {width: '500px'},
+    style: { width: '500px' },
     modalTitle: 'Notice',
     showModalTitle: true,
     showCancelButton: true,
@@ -105,7 +105,7 @@ export default class ModalDialog extends Component {
         backgroundSize: '180px'
       }
       : {}
-    const innerStyle = {...backgroundStyle, ...style}
+    const innerStyle = { ...backgroundStyle, ...style }
     const showControls = showCancelButton || showSubmitButton
 
     return <div styleName='popup'>

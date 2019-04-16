@@ -16,4 +16,4 @@ export const mapDispatchToProps = {
   clearTopics
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {forwardRef: true})
+export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })

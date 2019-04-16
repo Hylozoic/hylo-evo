@@ -94,17 +94,17 @@ export default function ormReducer (state = {}, action) {
         id: meta.tempId,
         post: meta.postId,
         text: meta.text,
-        creator: Me.first().id})
+        creator: Me.first().id })
       break
 
     case CREATE_COMMENT:
       Comment.withId(meta.tempId).delete()
-      if (!PostCommenter.safeGet({post: meta.postId, commenter: Me.first().id})) {
-        PostCommenter.create({post: meta.postId, commenter: Me.first().id})
+      if (!PostCommenter.safeGet({ post: meta.postId, commenter: Me.first().id })) {
+        PostCommenter.create({ post: meta.postId, commenter: Me.first().id })
         // we can assume the following because the backend returns the results pre-sorted
         // with the currentUser at the beginning
         const p = Post.withId(meta.postId)
-        p.update({commentersTotal: p.commentersTotal + 1})
+        p.update({ commentersTotal: p.commentersTotal + 1 })
       }
       break
 
@@ -114,7 +114,7 @@ export default function ormReducer (state = {}, action) {
         messageThread: meta.messageThreadId,
         text: meta.text,
         createdAt: new Date().toString(),
-        creator: Me.first().id})
+        creator: Me.first().id })
       break
 
     case CREATE_MESSAGE:
@@ -127,7 +127,7 @@ export default function ormReducer (state = {}, action) {
       if (meta.reset) {
         // this is so that after websocket reconnect events, pagination
         // of messages works as expected
-        Message.filter({messageThread: meta.id}).delete()
+        Message.filter({ messageThread: meta.id }).delete()
       }
       break
 
@@ -142,7 +142,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case TOGGLE_TOPIC_SUBSCRIBE_PENDING:
-      const ct = CommunityTopic.get({topic: meta.topicId, community: meta.communityId})
+      const ct = CommunityTopic.get({ topic: meta.topicId, community: meta.communityId })
       ct.update({
         followersTotal: ct.followersTotal + (meta.isSubscribing ? 1 : -1),
         isSubscribed: !!meta.isSubscribing
@@ -152,24 +152,24 @@ export default function ormReducer (state = {}, action) {
     case VOTE_ON_POST_PENDING:
       post = session.Post.withId(meta.postId)
       if (post.myVote) {
-        !meta.isUpvote && post.update({myVote: false, votesTotal: (post.votesTotal || 1) - 1})
+        !meta.isUpvote && post.update({ myVote: false, votesTotal: (post.votesTotal || 1) - 1 })
       } else {
-        meta.isUpvote && post.update({myVote: true, votesTotal: (post.votesTotal || 0) + 1})
+        meta.isUpvote && post.update({ myVote: true, votesTotal: (post.votesTotal || 0) + 1 })
       }
       break
 
     case RESET_NEW_POST_COUNT_PENDING:
       if (meta.type === 'CommunityTopic') {
-        session.CommunityTopic.withId(meta.id).update({newPostCount: 0})
+        session.CommunityTopic.withId(meta.id).update({ newPostCount: 0 })
       } else if (meta.type === 'Membership') {
-        const membership = session.Membership.safeGet({community: meta.id})
-        membership && membership.update({newPostCount: 0})
+        const membership = session.Membership.safeGet({ community: meta.id })
+        membership && membership.update({ newPostCount: 0 })
       }
       break
 
     case ADD_MODERATOR_PENDING:
       person = Person.withId(meta.personId)
-      Community.withId(meta.communityId).updateAppending({moderators: [person]})
+      Community.withId(meta.communityId).updateAppending({ moderators: [person] })
       break
 
     case REMOVE_MODERATOR_PENDING:
@@ -177,7 +177,7 @@ export default function ormReducer (state = {}, action) {
       const moderators = community.moderators.filter(m =>
         m.id !== meta.personId)
         .toModelArray()
-      community.update({moderators})
+      community.update({ moderators })
       break
 
     case UPDATE_COMMUNITY_SETTINGS_PENDING:
@@ -185,11 +185,11 @@ export default function ormReducer (state = {}, action) {
       community.update(meta.changes)
 
       // Triggers an update to redux-orm for the membership
-      membership = session.Membership.safeGet({community: meta.id}).update({forceUpdate: new Date()})
+      membership = session.Membership.safeGet({ community: meta.id }).update({ forceUpdate: new Date() })
       break
 
     case UPDATE_MEMBERSHIP_SETTINGS_PENDING:
-      membership = Membership.safeGet({community: meta.communityId})
+      membership = Membership.safeGet({ community: meta.communityId })
       if (!membership) break
       membership.update({
         settings: {
@@ -237,13 +237,13 @@ export default function ormReducer (state = {}, action) {
     case ADD_SKILL:
       const skill = payload.data.addSkill
       person = Person.withId(Me.first().id)
-      person.updateAppending({skills: [Skill.create(skill)]})
+      person.updateAppending({ skills: [Skill.create(skill)] })
       break
 
     case SIGNUP_ADD_SKILL:
       const mySkill = payload.data.addSkill
       me = Me.withId(Me.first().id)
-      me.updateAppending({skills: [Skill.create(mySkill)]})
+      me.updateAppending({ skills: [Skill.create(mySkill)] })
       break
 
     case DELETE_COMMENT_PENDING:
@@ -255,18 +255,18 @@ export default function ormReducer (state = {}, action) {
       // deleting all attachments and removing topics here because we restore them from the result of the UPDATE_POST action
       post = Post.withId(meta.id)
       post.attachments.toModelArray().map(a => a.delete())
-      post.update({topics: []})
+      post.update({ topics: [] })
       break
 
     case CREATE_COMMUNITY:
       me = Me.withId(Me.first().id)
-      me.updateAppending({memberships: [payload.data.createCommunity.id]})
+      me.updateAppending({ memberships: [payload.data.createCommunity.id] })
       break
 
     // TODO: Can we just query for Project and delete a ProjectMembership and not have to clearCache?
     case JOIN_PROJECT_PENDING:
       me = Me.first()
-      ProjectMember.create({post: meta.id, member: me.id})
+      ProjectMember.create({ post: meta.id, member: me.id })
       clearCacheFor(Post, meta.id)
       break
 
@@ -283,7 +283,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case USE_INVITATION:
-      Me.first().updateAppending({memberships: [payload.data.useInvitation.membership.id]})
+      Me.first().updateAppending({ memberships: [payload.data.useInvitation.membership.id] })
       break
 
     case DELETE_COMMUNITY_TOPIC_PENDING:
@@ -306,7 +306,7 @@ export default function ormReducer (state = {}, action) {
 
     case RESPOND_TO_EVENT_PENDING:
       const event = Post.withId(meta.id)
-      event.update({myEventResponse: meta.response})
+      event.update({ myEventResponse: meta.response })
       break
 
     case INVITE_PEOPLE_TO_EVENT_PENDING:

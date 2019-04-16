@@ -33,7 +33,7 @@ describe('PersonCard', () => {
       name: 'Joe Person',
       avatarUrl: 'me.png',
       location: 'home',
-      skills: [{name: 'crawling'}, {name: 'walking'}]
+      skills: [{ name: 'crawling' }, { name: 'walking' }]
     },
     highlightProps: {
       terms: ['cat']
@@ -51,7 +51,7 @@ describe('PersonCard', () => {
     const highlightProps = {
       terms: ['walking']
     }
-    const wrapper = shallow(<PersonCard {...{...props, highlightProps}} />)
+    const wrapper = shallow(<PersonCard {...{ ...props, highlightProps }} />)
 
     expect(wrapper).toMatchSnapshot()
   })

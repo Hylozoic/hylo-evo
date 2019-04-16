@@ -4,8 +4,8 @@ import orm from 'store/models'
 let state
 beforeAll(() => {
   const session = orm.session(orm.getEmptyState())
-  const community = session.Community.create({id: '99', slug: 'foo'})
-  session.Community.create({id: '88', slug: 'bar'})
+  const community = session.Community.create({ id: '99', slug: 'foo' })
+  session.Community.create({ id: '88', slug: 'bar' })
 
   session.Me.create({
     id: '1',
@@ -39,7 +39,7 @@ describe('mergeProps', () => {
     const slug = 'foo'
     const dispatch = x => x
     const ownProps = {}
-    const stateProps = mapStateToProps(state, {match: {params: {slug}}})
+    const stateProps = mapStateToProps(state, { match: { params: { slug } } })
     const dispatchProps = mapDispatchToProps(dispatch, stateProps)
     const mergedProps = mergeProps(stateProps, dispatchProps, ownProps)
     expect(mergedProps.fetchCommunitySettings()).toMatchSnapshot()

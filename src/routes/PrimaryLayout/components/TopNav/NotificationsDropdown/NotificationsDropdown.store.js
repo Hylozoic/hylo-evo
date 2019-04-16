@@ -76,7 +76,7 @@ export function markActivityRead (id) {
           id
         }
       }`,
-      variables: {id}
+      variables: { id }
     },
     meta: {
       id,
@@ -127,8 +127,8 @@ export const getNotifications = ormCreateSelector(
   state => state.orm,
   (session) => {
     return session.Notification
-    .all()
-    .orderBy(m => Number(m.id), 'desc')
-    .toModelArray()
+      .all()
+      .orderBy(m => Number(m.id), 'desc')
+      .toModelArray()
   }
 )

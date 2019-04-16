@@ -12,8 +12,8 @@ export default function NavLink (
   return <Route path={to} exact={exact}
     children={({ location, match }) => {
       const active = !!match
-      return <li styleName={cx('item', {active})}>
-        <Link to={to} styleName={cx('link', {collapsed: collapsed})}
+      return <li styleName={cx('item', { active })}>
+        <Link to={to} styleName={cx('link', { collapsed: collapsed })}
           onClick={onClick}>
           <BadgedIcon name={icon} green={active} showBadge={collapsed && badge}
             styleName='icon' />

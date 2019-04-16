@@ -3,15 +3,15 @@ import { shallow } from 'enzyme'
 import React from 'react'
 
 const commenters = [
-  {name: 'Joe Smith', id: '1'},
-  {name: 'Sue Jones', id: '2'},
-  {name: 'Scary Terry', id: '3'},
-  {name: 'John Larkin', id: '4'}
+  { name: 'Joe Smith', id: '1' },
+  { name: 'Sue Jones', id: '2' },
+  { name: 'Scary Terry', id: '3' },
+  { name: 'John Larkin', id: '4' }
 ]
 
 const commentersUnsorted = [
-  {name: 'Sue Jones', id: '2'},
-  {name: 'Joe Smith', id: '1'}
+  { name: 'Sue Jones', id: '2' },
+  { name: 'Joe Smith', id: '1' }
 ]
 
 describe('PostFooter', () => {

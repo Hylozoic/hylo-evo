@@ -17,8 +17,8 @@ const MessageThread = Model.createClass({
 
   newMessageReceived (bumpUnreadCount) {
     const update = bumpUnreadCount
-      ? {unreadCount: this.unreadCount + 1, updatedAt: new Date().toString()}
-      : {updatedAt: new Date().toString()}
+      ? { unreadCount: this.unreadCount + 1, updatedAt: new Date().toString() }
+      : { updatedAt: new Date().toString() }
     this.update(update)
     return this
   },
@@ -34,7 +34,7 @@ const MessageThread = Model.createClass({
   participantAttributes (currentUser, maxShown) {
     const currentUserId = get('id', currentUser)
     const participants = this.participants.toRefArray()
-    .filter(p => p.id !== currentUserId)
+      .filter(p => p.id !== currentUserId)
     var names, avatarUrls
 
     if (isEmpty(participants)) {
@@ -45,7 +45,7 @@ const MessageThread = Model.createClass({
       names = formatNames(participants.map(p => p.name), maxShown)
     }
 
-    return {names, avatarUrls}
+    return { names, avatarUrls }
   }
 })
 

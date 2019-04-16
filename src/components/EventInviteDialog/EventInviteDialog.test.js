@@ -6,8 +6,8 @@ describe('EventInviteDialog', () => {
   it('renders correctly', () => {
     const props = {
       onClose: () => {},
-      eventInvitations: [{id: 1}, {id: 2}, {id: 3}],
-      people: [{id: 1, name: 'a'}, {id: 4, name: 'b'}, {id: 5, name: 'c'}]
+      eventInvitations: [{ id: 1 }, { id: 2 }, { id: 3 }],
+      people: [{ id: 1, name: 'a' }, { id: 4, name: 'b' }, { id: 5, name: 'c' }]
     }
     const wrapper = shallow(<EventInviteDialog {...props} />)
     expect(wrapper).toMatchSnapshot()
@@ -17,7 +17,7 @@ describe('EventInviteDialog', () => {
 describe('InviteeRow', () => {
   it('renders correctly', () => {
     const props = {
-      person: {id: 1, name: 'j', avatarUrl: 'j.png', response: 'not needed'},
+      person: { id: 1, name: 'j', avatarUrl: 'j.png', response: 'not needed' },
       selected: true,
       onClick: () => {}
     }
@@ -27,7 +27,7 @@ describe('InviteeRow', () => {
 
   it('renders correctly with showResposne', () => {
     const props = {
-      person: {id: 1, name: 'j', avatarUrl: 'j.png', response: 'needed!'},
+      person: { id: 1, name: 'j', avatarUrl: 'j.png', response: 'needed!' },
       selected: true,
       onClick: () => {},
       showResponse: true

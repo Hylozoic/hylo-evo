@@ -18,7 +18,7 @@ export default function holochainGraphqlMiddleware (store) {
       if (resultJSON.Err) return Promise.reject(resultJSON.Err)
 
       // TODO: is there a way to avoid this second JSON.parse?
-      if (resultJSON.Ok) return {data: JSON.parse(resultJSON.Ok)}
+      if (resultJSON.Ok) return { data: JSON.parse(resultJSON.Ok) }
 
       return {}
     }

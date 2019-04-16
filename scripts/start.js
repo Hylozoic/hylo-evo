@@ -4,7 +4,7 @@ process.env.NODE_ENV = 'development'
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.
 // https://github.com/motdotla/dotenv
-require('dotenv').config({silent: true})
+require('dotenv').config({ silent: true })
 
 var chalk = require('chalk')
 var webpack = require('webpack')
@@ -170,7 +170,7 @@ function addMiddleware (devServer) {
     rewrites: [
       // proxy all requests starting with /noo, regardless of accept headers;
       // this is used to serve content for popup-based third-party auth
-      {from: /(^\/noo.*$)/, to: context => context.match[1]}
+      { from: /(^\/noo.*$)/, to: context => context.match[1] }
     ]
   }))
   if (proxy) {

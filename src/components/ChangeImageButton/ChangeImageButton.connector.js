@@ -9,7 +9,7 @@ export function mapStateToProps (state, { uploadSettings, attachmentType }) {
     pending.type === uploadSettings.type &&
     pending.attachmentType === attachmentType
 
-  return {loading}
+  return { loading }
 }
 
 export function mapDispatchToProps (dispatch, props) {
@@ -19,8 +19,8 @@ export function mapDispatchToProps (dispatch, props) {
         ...props.uploadSettings,
         attachmentType: props.attachmentType || 'image'
       }))
-      .then(({ error, payload }) =>
-        !error && payload.url && props.update(payload.url))
+        .then(({ error, payload }) =>
+          !error && payload.url && props.update(payload.url))
   }
 }
 

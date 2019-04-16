@@ -59,7 +59,7 @@ export default class PostCard extends React.Component {
 
     return <div ref='postCard'
       onClick={this.onClick}
-      styleName={cx('card', {expanded})}
+      styleName={cx('card', { expanded })}
       className={className}>
       <PostHeader
         {...post}

@@ -30,7 +30,7 @@ export function fetchMemberVotes (id, order = 'desc', limit = 20, providedQuery)
       query,
       variables: { id, limit, order }
     },
-    meta: {extractModel: 'Person'}
+    meta: { extractModel: 'Person' }
   }
 }
 

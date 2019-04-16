@@ -224,7 +224,7 @@ module.exports = {
           ie8: false
         },
         sourceMap: true
-      }}
+      } }
     )]
   },
   plugins: [

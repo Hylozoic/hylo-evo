@@ -60,11 +60,11 @@ export function pollingFetchLinkPreview (dispatch, htmlContent) {
 }
 
 export function removeLinkPreview () {
-  return {type: REMOVE_LINK_PREVIEW}
+  return { type: REMOVE_LINK_PREVIEW }
 }
 
 export function clearLinkPreview () {
-  return {type: CLEAR_LINK_PREVIEW}
+  return { type: CLEAR_LINK_PREVIEW }
 }
 
 export function showAnnouncementConfirmation (bool) {
@@ -106,17 +106,17 @@ export default function reducer (state = defaultState, action) {
     case FETCH_LINK_PREVIEW:
       const linkPreview = (meta.extractModel.getRoot(payload.data))
       if (linkPreview && !linkPreview.title) {
-        return {...state, linkPreviewId: null, linkPreviewStatus: 'invalid'}
+        return { ...state, linkPreviewId: null, linkPreviewStatus: 'invalid' }
       }
-      return {...state, linkPreviewId: get('id')(linkPreview), linkPreviewStatus: null}
+      return { ...state, linkPreviewId: get('id')(linkPreview), linkPreviewStatus: null }
     case REMOVE_LINK_PREVIEW:
-      return {...state, linkPreviewId: null, linkPreviewStatus: 'removed'}
+      return { ...state, linkPreviewId: null, linkPreviewStatus: 'removed' }
     case CLEAR_LINK_PREVIEW:
-      return {...state, linkPreviewId: null, linkPreviewStatus: 'cleared'}
+      return { ...state, linkPreviewId: null, linkPreviewStatus: 'cleared' }
     case SHOW_ANNOUNCEMENT_CONFIRMATION:
-      return {...state, showAnnouncementConfirmation: payload}
+      return { ...state, showAnnouncementConfirmation: payload }
     case SET_ANNOUNCEMENT:
-      return {...state, announcement: payload}
+      return { ...state, announcement: payload }
     default:
       return state
   }

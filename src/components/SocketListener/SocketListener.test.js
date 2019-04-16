@@ -38,5 +38,5 @@ it('sets up event handlers and subscribes', () => {
 
   expect(mockSocket.post).toBeCalled()
   expect(mockSocket.post.mock.calls[0][0])
-  .toBe(`${process.env.SOCKET_HOST}/noo/threads/subscribe`)
+    .toBe(`${process.env.SOCKET_HOST}/noo/threads/subscribe`)
 })

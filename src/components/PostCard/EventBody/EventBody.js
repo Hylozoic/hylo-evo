@@ -15,14 +15,14 @@ export default class EventBody extends Component {
     showInviteDialog: false
   }
 
-  toggleInviteDialog = () => this.setState({showInviteDialog: !this.state.showInviteDialog})
+  toggleInviteDialog = () => this.setState({ showInviteDialog: !this.state.showInviteDialog })
 
   render () {
     const { event, respondToEvent, slug, expanded, className } = this.props
     const { showInviteDialog } = this.state
     const { id, startTime, endTime, location, eventInvitations } = event
 
-    return <div styleName={cx('body', 'eventBody', {smallMargin: !expanded})} className={className}>
+    return <div styleName={cx('body', 'eventBody', { smallMargin: !expanded })} className={className}>
       <EventDate {...event} />
       <div styleName='eventBodyColumn'>
         <PostTitle {...event} />

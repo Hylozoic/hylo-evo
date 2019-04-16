@@ -83,7 +83,7 @@ export default class NetworkCommunitiesTab extends Component {
     return <div styleName='communities-tab'>
       <PaginatedList styleName='communities'
         items={network.communities}
-        itemProps={{square: true, size: 40}}
+        itemProps={{ square: true, size: 40 }}
         label={'Communities'}
         page={communitiesPage}
         pageCount={communitiesPageCount}
@@ -105,7 +105,7 @@ export default class NetworkCommunitiesTab extends Component {
           }}
           items={communityAutocompleteCandidates}
           renderItem={(community, isHighlighted) =>
-            <div key={community.id} style={{background: isHighlighted ? 'lightgray' : 'white'}}>
+            <div key={community.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
               {community.name}
             </div>
           }

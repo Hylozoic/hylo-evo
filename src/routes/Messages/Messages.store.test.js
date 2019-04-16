@@ -25,7 +25,7 @@ describe('reducer', () => {
         messageThreadId: '1'
       }
     }
-    expect(reducer(state, action)).toEqual({1: ''})
+    expect(reducer(state, action)).toEqual({ 1: '' })
   })
   it('sets the form text for a thread', () => {
     const state = {
@@ -38,7 +38,7 @@ describe('reducer', () => {
         messageText: 'biscuit'
       }
     }
-    expect(reducer(state, action)).toEqual({1: 'biscuit'})
+    expect(reducer(state, action)).toEqual({ 1: 'biscuit' })
   })
 })
 
@@ -101,7 +101,7 @@ describe('filterThreadsByParticipant', () => {
       return {
         participants: {
           toRefArray: function () {
-            return names.map(name => ({name}))
+            return names.map(name => ({ name }))
           }
         }
       }

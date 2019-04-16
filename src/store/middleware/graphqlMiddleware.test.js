@@ -5,17 +5,17 @@ describe('graphqlMiddleware', () => {
 
   const expectMetaThenToReject = (shouldReject, action) =>
     middleware(next)(action)
-    .then(({meta}) => {
-      expect(next).toHaveBeenCalled()
-      const then = meta.then
-      let rejected = false
-      return Promise.resolve(action.payload)
-      .then(then)
-      .then(result => result, reject => { rejected = true })
-      .then(() => {
-        expect(rejected).toEqual(shouldReject)
+      .then(({ meta }) => {
+        expect(next).toHaveBeenCalled()
+        const then = meta.then
+        let rejected = false
+        return Promise.resolve(action.payload)
+          .then(then)
+          .then(result => result, reject => { rejected = true })
+          .then(() => {
+            expect(rejected).toEqual(shouldReject)
+          })
       })
-    })
 
   beforeEach(() => {
     middleware = graphqlMiddleware({})
@@ -27,7 +27,7 @@ describe('graphqlMiddleware', () => {
       type: 'FOO',
       graphql: true,
       payload: {
-        errors: [{message: 'problems'}]
+        errors: [{ message: 'problems' }]
       }
     }
     return expectMetaThenToReject(true, action)

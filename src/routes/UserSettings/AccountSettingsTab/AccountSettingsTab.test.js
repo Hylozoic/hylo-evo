@@ -43,7 +43,7 @@ describe('AccountSettingsTab', () => {
     expect(wrapper.find('SettingsControl').length).toEqual(5)
     expect(wrapper.find('SocialControl').length).toEqual(3)
     expect(wrapper.find('Button').prop('color')).toEqual('gray')
-    wrapper.setState({changed: true})
+    wrapper.setState({ changed: true })
     expect(wrapper.find('Button').prop('color')).toEqual('green')
   })
 })
@@ -87,7 +87,7 @@ describe('SocialControl', () => {
         onChange={onChange} />)
 
       wrapper.instance().linkClicked()
-      expect(updateUserSettings).toHaveBeenCalledWith({twitterName: 'thetwittername'})
+      expect(updateUserSettings).toHaveBeenCalledWith({ twitterName: 'thetwittername' })
       expect(onChange).toHaveBeenCalledWith(true)
     })
 
@@ -110,7 +110,7 @@ describe('SocialControl', () => {
 
     it('calls the right things when provider is not twitter', done => {
       const provider = 'facebook'
-      const onLink = () => Promise.resolve({error: false})
+      const onLink = () => Promise.resolve({ error: false })
       const updateUserSettings = jest.fn()
       const onChange = jest.fn()
       const wrapper = shallow(<SocialControl
@@ -130,7 +130,7 @@ describe('SocialControl', () => {
 
     it('calls onChange with false on error when provider is not twitter', done => {
       const provider = 'facebook'
-      const onLink = () => Promise.resolve({error: true})
+      const onLink = () => Promise.resolve({ error: true })
       const updateUserSettings = jest.fn()
       const onChange = jest.fn()
       const wrapper = shallow(<SocialControl

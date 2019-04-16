@@ -65,13 +65,13 @@ export function baseUrl ({
 
 export function personUrl (id, communitySlug, networkSlug) {
   if (!id) return '/'
-  const base = baseUrl({networkSlug, communitySlug})
+  const base = baseUrl({ networkSlug, communitySlug })
 
   return `${base}/m/${id}`
 }
 
 export function tagUrl (tagName, communitySlug) {
-  const base = baseUrl({communitySlug, defaultUrl: allCommunitiesUrl()})
+  const base = baseUrl({ communitySlug, defaultUrl: allCommunitiesUrl() })
 
   return `${base}/${tagName}`
 }
@@ -106,15 +106,15 @@ export function postUrl (id, opts = {}, querystringParams = {}) {
 }
 
 export function editPostUrl (id, opts = {}, querystringParams = {}) {
-  return postUrl(id, {...opts, action: 'edit'}, querystringParams)
+  return postUrl(id, { ...opts, action: 'edit' }, querystringParams)
 }
 
 export function newPostUrl (opts = {}, querystringParams = {}) {
-  return postUrl('new', {...opts}, querystringParams)
+  return postUrl('new', { ...opts }, querystringParams)
 }
 
 export function commentUrl (postId, commentId, communitySlug) {
-  return `${postUrl(postId, {communitySlug})}#comment_${commentId}`
+  return `${postUrl(postId, { communitySlug })}#comment_${commentId}`
 }
 
 export function communitySettingsUrl (communitySlug) {
@@ -137,7 +137,7 @@ export function topicsUrl (communitySlug) {
   return communityUrl(communitySlug) + '/topics'
 }
 
-export const communityJoinUrl = ({slug, accessCode}) =>
+export const communityJoinUrl = ({ slug, accessCode }) =>
   slug && accessCode && `${origin()}/c/${slug}/join/${accessCode}`
 
 // URL utility functions

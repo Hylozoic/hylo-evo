@@ -6,7 +6,7 @@ describe('MessageThread', () => {
     const session = orm.session(orm.getEmptyState())
     const { MessageThread } = session
 
-    const thread = MessageThread.create({id: '1', lastReadAt: undefined})
+    const thread = MessageThread.create({ id: '1', lastReadAt: undefined })
     expect(thread.isUnread()).toBeTruthy()
   })
   it('marks a thread as unread if lastReadAt is older than updatedAt', () => {
@@ -15,7 +15,7 @@ describe('MessageThread', () => {
 
     const lastReadAt = new Date('2018-01-01')
     const updatedAt = new Date('2018-01-02')
-    const thread = MessageThread.create({id: '1', updatedAt, lastReadAt})
+    const thread = MessageThread.create({ id: '1', updatedAt, lastReadAt })
     expect(thread.isUnread()).toBeTruthy()
   })
   it('marks a thread as read if updatedAt is older than lastReadAt', () => {
@@ -24,7 +24,7 @@ describe('MessageThread', () => {
 
     const lastReadAt = new Date('2018-01-02')
     const updatedAt = new Date('2018-01-01')
-    const thread = MessageThread.create({id: '1', updatedAt, lastReadAt})
+    const thread = MessageThread.create({ id: '1', updatedAt, lastReadAt })
     expect(thread.isUnread()).toBeFalsy()
   })
 })

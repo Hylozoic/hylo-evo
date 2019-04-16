@@ -86,7 +86,7 @@ export default class HyloEditor extends Component {
   }
 
   reset = () => {
-    this.setState({editorState: this.getEditorStateFromHTML('')})
+    this.setState({ editorState: this.getEditorStateFromHTML('') })
   }
 
   isEmpty = () =>
@@ -114,7 +114,7 @@ export default class HyloEditor extends Component {
   }
 
   setEditorStateFromContentState = (contentState) => {
-    this.setState({editorState: EditorState.push(this.state.editorState, contentState)})
+    this.setState({ editorState: EditorState.push(this.state.editorState, contentState) })
   }
 
   handleChange = (editorState) => {
@@ -150,11 +150,11 @@ export default class HyloEditor extends Component {
   }
 
   enableSubmitOnReturn = () => {
-    this.setState({submitOnReturnEnabled: true})
+    this.setState({ submitOnReturnEnabled: true })
   }
 
   disableSubmitOnReturn = () => {
-    this.setState({submitOnReturnEnabled: false})
+    this.setState({ submitOnReturnEnabled: false })
   }
 
   handleMentionsClose = () => {
@@ -182,7 +182,7 @@ export default class HyloEditor extends Component {
     const { placeholder, mentionResults, topicResults, className, readOnly } = this.props
     const { topicSearch } = this.state
     const topicSuggestions = !validateTopicName(topicSearch)
-      ? [{id: -1, name: topicSearch}].concat(topicResults)
+      ? [{ id: -1, name: topicSearch }].concat(topicResults)
       : topicResults
     const { editorState } = this.state
     const styleNames = cx('wrapper', { readOnly })

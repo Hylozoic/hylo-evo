@@ -30,7 +30,7 @@ export default class MemberProfile extends React.Component {
     if (personId) this.props.fetchPerson(personId)
   }
 
-  selectTab = currentTab => this.setState({currentTab})
+  selectTab = currentTab => this.setState({ currentTab })
 
   blockUser = (personId) => () => {
     if (window.confirm(BLOCK_CONFIRM_MESSAGE)) {
@@ -56,7 +56,7 @@ export default class MemberProfile extends React.Component {
     const isMe = currentUser && currentUser.id === routeParams.personId
     const isAxolotl = AXOLOTL_ID === routeParams.personId
     const itemsMenuItems = [
-      {icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(routeParams.personId), hide: isMe || isAxolotl}
+      { icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(routeParams.personId), hide: isMe || isAxolotl }
     ]
 
     return <div styleName='member-profile'>

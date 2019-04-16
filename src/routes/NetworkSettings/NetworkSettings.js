@@ -77,7 +77,7 @@ export default class NetworkSettings extends Component {
         path: `/n/${network.slug}/settings/communities/:slug`,
         render: props => (
           <NetworkCommunitySettings network={network} isModerator={isModerator} isAdmin={isAdmin} match={props.match} />
-        )}
+        ) }
     ]
 
     // Remove the moderators tab when not a HyloAdmin

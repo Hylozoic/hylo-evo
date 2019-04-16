@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 export function mapStateToProps (state, props) {
   return {
     example: 'example'
-//  currentUser: getMe(state, props)
+    //  currentUser: getMe(state, props)
   }
 }
 

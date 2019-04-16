@@ -81,19 +81,19 @@ export default class PostDetail extends Component {
       activityScrollOffset
     } = this.state
     if (!atActivity && scrollTop >= activityScrollOffset) {
-      this.setState({atActivity: true})
+      this.setState({ atActivity: true })
     } else if (atActivity && scrollTop < activityScrollOffset) {
-      this.setState({atActivity: false})
+      this.setState({ atActivity: false })
     }
 
     if (!atHeader && scrollTop > headerScrollOffset) {
-      this.setState({atHeader: true})
+      this.setState({ atHeader: true })
     } else if (atHeader && scrollTop <= headerScrollOffset) {
-      this.setState({atHeader: false})
+      this.setState({ atHeader: false })
     }
   })
 
-  togglePeopleDialog = () => this.setState(state => ({showPeopleDialog: !state.showPeopleDialog}))
+  togglePeopleDialog = () => this.setState(state => ({ showPeopleDialog: !state.showPeopleDialog }))
 
   render () {
     const {
@@ -252,14 +252,14 @@ export class ProjectContributions extends Component {
         error: false
       })
       processStripeToken(postId, token.id, contributionAmount)
-      .then(({ error }) => {
-        this.setAmount({target: {value: '0'}})
-        if (error) {
-          this.setState({error: true})
-        } else {
-          this.setState({received: true})
-        }
-      })
+        .then(({ error }) => {
+          this.setAmount({ target: { value: '0' } })
+          if (error) {
+            this.setState({ error: true })
+          } else {
+            this.setState({ received: true })
+          }
+        })
     }
 
     const contributionAmountNumber = Number(contributionAmount)

@@ -8,7 +8,7 @@ const defaultMinProps = {
 
 function renderComponent (renderFunc, props = {}) {
   return renderFunc(
-    <TagInput {...{...defaultMinProps, ...props}} />
+    <TagInput {...{ ...defaultMinProps, ...props }} />
   )
 }
 
@@ -20,7 +20,7 @@ describe('TagInput', () => {
 
   it('renders correctly with tags', () => {
     const props = {
-      tags: [{name: 'one', id: 1}, {name: 'two', id: 2}]
+      tags: [{ name: 'one', id: 1 }, { name: 'two', id: 2 }]
     }
     const wrapper = renderComponent(shallow, props)
     expect(wrapper).toMatchSnapshot()
@@ -29,7 +29,7 @@ describe('TagInput', () => {
   it('adds leading hashtags when flag is set', () => {
     const props = {
       addLeadingHashtag: true,
-      tags: [{name: 'one', id: 1}, {name: 'two', id: 2}]
+      tags: [{ name: 'one', id: 1 }, { name: 'two', id: 2 }]
     }
     const wrapper = renderComponent(shallow, props)
     expect(wrapper).toMatchSnapshot()
@@ -39,7 +39,7 @@ describe('TagInput', () => {
     it("sets input.value to '' and calls handleInputChange", () => {
       const handleInputChange = jest.fn()
       const wrapper = renderComponent(shallow, { handleInputChange })
-      const input = {value: 'old'}
+      const input = { value: 'old' }
       wrapper.instance().input = input
       wrapper.instance().resetInput()
       expect(input.value).toEqual('')

@@ -29,7 +29,7 @@ export default function createMiddleware (history, req) {
     userFetchedMiddleware,
     userBlockingMiddleware,
     mixpanelMiddleware,
-    !req && isDev && createLogger({collapsed: true})
+    !req && isDev && createLogger({ collapsed: true })
   ])
 
   const composeFn = typeof __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined'

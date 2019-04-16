@@ -23,8 +23,8 @@ export default class ModelExtractor {
     this.mergedNodes().forEach(({ modelName, payload }) => {
       const model = this.session[modelName]
       const sourceTaggedPayload = isHoloData
-        ? {...payload, isHoloData}
-        : {...payload, isHyloData: true}
+        ? { ...payload, isHoloData }
+        : { ...payload, isHyloData: true }
       model.hasId(sourceTaggedPayload.id)
         ? model.withId(sourceTaggedPayload.id)[method](sourceTaggedPayload)
         : model.create(sourceTaggedPayload)
@@ -70,7 +70,7 @@ export default class ModelExtractor {
         if (type instanceof ForeignKey) {
           // each of the related values needs to have a foreign key back to
           // the current value...
-          this._walkMany(value, type.toModelName, {[type.relatedName]: node.id})
+          this._walkMany(value, type.toModelName, { [type.relatedName]: node.id })
 
           // ...and because the related values store the foreign key, the
           // current value does not need to record anything about the relation,

@@ -21,7 +21,7 @@ export default class Member extends React.Component {
     const {
       className,
       slug,
-      member: {id, name, location, tagline, avatarUrl, skills},
+      member: { id, name, location, tagline, avatarUrl, skills },
       goToPerson,
       canModerate,
       removeMember
@@ -29,7 +29,7 @@ export default class Member extends React.Component {
 
     return <div styleName='member' className={className}>
       {canModerate && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={[
-        {icon: 'Trash', label: 'Remove', onClick: (e) => this.removeOnClick(e, id, name, removeMember)}
+        { icon: 'Trash', label: 'Remove', onClick: (e) => this.removeOnClick(e, id, name, removeMember) }
       ]} />}
       <div onClick={goToPerson(id, slug)}>
         <div styleName='avatar' style={bgImageStyle(avatarUrl)} />

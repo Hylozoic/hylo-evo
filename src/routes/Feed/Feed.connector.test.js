@@ -14,7 +14,7 @@ describe('mapStateToProps', () => {
 
   beforeEach(() => {
     session = orm.session(orm.getEmptyState())
-    session.Community.create({id: '1', slug: 'foo', postCount: 10})
+    session.Community.create({ id: '1', slug: 'foo', postCount: 10 })
     session.Topic.create({
       id: '2',
       name: 'petitions',
@@ -53,7 +53,7 @@ describe('mapStateToProps', () => {
       match: matchProps
     }
     expect(mapStateToProps(state, props)).toMatchObject({
-      community: expect.objectContaining({id: '1', slug: 'foo'})
+      community: expect.objectContaining({ id: '1', slug: 'foo' })
     })
   })
 
@@ -68,7 +68,7 @@ describe('mapStateToProps', () => {
       }
     }
     expect(mapStateToProps(state, props)).toMatchObject({
-      communityTopic: expect.objectContaining({id: '3', postsTotal: '10'})
+      communityTopic: expect.objectContaining({ id: '3', postsTotal: '10' })
     })
   })
 
@@ -83,7 +83,7 @@ describe('mapStateToProps', () => {
       }
     }
     expect(mapStateToProps(state, props)).toMatchObject({
-      topic: expect.objectContaining({id: '2', name: 'petitions'})
+      topic: expect.objectContaining({ id: '2', name: 'petitions' })
     })
   })
 
@@ -143,7 +143,7 @@ describe('mapDispatchToProps', () => {
         pathname: '/c/foo'
       },
       match: {
-        params: {slug: 'foo'}
+        params: { slug: 'foo' }
       }
     }
 

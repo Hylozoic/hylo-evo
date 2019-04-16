@@ -56,11 +56,11 @@ export default class PostHeader extends PureComponent {
       type: 'post'
     }
     const dropdownItems = filter([
-      {icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost},
-      {icon: 'Edit', label: 'Edit', onClick: editPost},
-      {icon: 'Flag', label: 'Flag', onClick: this.flagPostFunc()},
-      {icon: 'Trash', label: 'Delete', onClick: deletePost, red: true},
-      {icon: 'Trash', label: 'Remove From Community', onClick: removePost, red: true}
+      { icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost },
+      { icon: 'Edit', label: 'Edit', onClick: editPost },
+      { icon: 'Flag', label: 'Flag', onClick: this.flagPostFunc() },
+      { icon: 'Trash', label: 'Delete', onClick: deletePost, red: true },
+      { icon: 'Trash', label: 'Remove From Community', onClick: removePost, red: true }
     ], item => isFunction(item.onClick))
 
     return <div styleName='header' className={className}>
@@ -98,7 +98,7 @@ export default class PostHeader extends PureComponent {
         </div>
         {flaggingVisible && <FlagContent type='post'
           linkData={flagPostData}
-          onClose={() => this.setState({flaggingVisible: false})} />
+          onClose={() => this.setState({ flaggingVisible: false })} />
         }
       </div>
       {topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.slug} newLine />}
@@ -107,7 +107,7 @@ export default class PostHeader extends PureComponent {
 }
 
 export function TopicsLine ({ topics, slug, newLine }) {
-  return <div styleName={cx('topicsLine', {'newLineForTopics': newLine})}>
+  return <div styleName={cx('topicsLine', { 'newLineForTopics': newLine })}>
     {!newLine && <span styleName='spacer'>•</span>}
     {topics.slice(0, 3).map(t =>
       <Link styleName='topic' to={tagUrl(t.name, slug)} key={t.name}>#{t.name}</Link>)}

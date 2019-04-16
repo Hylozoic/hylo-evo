@@ -13,8 +13,8 @@ export function mockRouter () {
 
 export function mockRouterMountOptions () {
   return {
-    context: {router: mockRouter()},
-    childContextTypes: {router: PropTypes.object}
+    context: { router: mockRouter() },
+    childContextTypes: { router: PropTypes.object }
   }
 }
 

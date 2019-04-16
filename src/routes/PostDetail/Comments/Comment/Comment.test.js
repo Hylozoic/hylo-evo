@@ -23,7 +23,7 @@ describe('Comment', () => {
 
   it('renders correctly when editing', () => {
     const wrapper = shallow(<Comment {...props} />)
-    wrapper.instance().setState({editing: true})
+    wrapper.instance().setState({ editing: true })
     wrapper.update()
     expect(wrapper).toMatchSnapshot()
   })
@@ -31,7 +31,7 @@ describe('Comment', () => {
   it('displays an image', () => {
     const comment = {
       ...props.comment,
-      image: {url: 'foo.png'}
+      image: { url: 'foo.png' }
     }
     const wrapper = shallow(<Comment comment={comment} slug={props.slug} />)
     expect(wrapper).toMatchSnapshot()
@@ -74,7 +74,7 @@ describe('Comment', () => {
       const wrapper = shallow(<Comment {...props} updateComment={updateComment} />)
       const theText = 'lalala'
       const instance = wrapper.instance()
-      instance.setState({editing: true})
+      instance.setState({ editing: true })
       instance.saveComment(theText)
       expect(instance.state.editing).toEqual(false)
       expect(updateComment).toHaveBeenCalledWith(theText)

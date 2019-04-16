@@ -14,7 +14,7 @@ export function mapStateToProps (state, props) {
   const moderatorIds = moderators.map(m => m.id)
   const moderatorSuggestions = state.ModeratorsSettings
     .filter(personId => !includes(personId, moderatorIds))
-    .map(personId => getPerson(state, {personId}))
+    .map(personId => getPerson(state, { personId }))
 
   return {
     moderators,

@@ -91,10 +91,10 @@ export default class PostFooter extends React.PureComponent {
 
     return <div styleName='footer'>
       <RoundImageRow imageUrls={avatarUrls.slice(0, 3)} styleName='people' onClick={onClick} />
-      <span styleName='caption' onClick={onClick} style={{cursor: onClick ? 'pointer' : 'inherit'}}>
+      <span styleName='caption' onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'inherit' }}>
         {caption}
       </span>
-      <a onClick={vote} styleName={cx('vote-button', {voted: myVote})}
+      <a onClick={vote} styleName={cx('vote-button', { voted: myVote })}
         data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for='postfooter-tt'>
         <Icon name='ArrowUp' styleName='arrowIcon' />
         {votesTotal}

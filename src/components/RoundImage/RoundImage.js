@@ -10,13 +10,13 @@ export default function RoundImage ({ url, small, medium, overlaps, overlapsVert
   let styleName = cx('image', { square, overlaps, small, medium, large, xlarge, 'overlaps-vertical': overlapsVertical })
   var style = bgImageStyle(url)
   if (size) {
-    style = {...style, width: size, height: size}
+    style = { ...style, width: size, height: size }
   }
   return <div
     style={style}
     styleName={styleName}
     className={className}
-     />
+  />
 }
 RoundImage.propTypes = {
   url: string,

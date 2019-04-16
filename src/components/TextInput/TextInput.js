@@ -16,13 +16,13 @@ export default function TextInput (props) {
   // TODO: different styles based on props, e.g. validated, error, etc.
   const onKeyDown = props.onEnter ? onEnter(props.onEnter) : () => {}
   const otherProps = omit(['onEnter', 'className', 'inputRef', 'theme', 'noClearButton', 'loading', 'label'], props)
-  const clear = () => onChange && onChange({target: {value: ''}})
+  const clear = () => onChange && onChange({ target: { value: '' } })
   return <div styleName={theme.wrapperStyle || 'wrapper'} className={theme.wrapper || className}>
-    <input styleName={theme.inputStyle || 'input'} {...{onKeyDown, ...otherProps}}
+    <input styleName={theme.inputStyle || 'input'} {...{ onKeyDown, ...otherProps }}
       ref={inputRef}
       className={theme.input}
       aria-label={label}
-      />
+    />
     {value && !noClearButton &&
       <div styleName='clear' className={theme.clear} onClick={clear}>
         Clear

@@ -7,7 +7,7 @@ describe('TopicSelector', () => {
 
   function renderComponent (renderFunc, props = {}) {
     return renderFunc(
-      <TopicSelector {...{...defaultMinProps, ...props}} />
+      <TopicSelector {...{ ...defaultMinProps, ...props }} />
     )
   }
 
@@ -19,24 +19,24 @@ describe('TopicSelector', () => {
   describe('componentDidMount', () => {
     it('calls updateSelected', () => {
       const wrapper = renderComponent(shallow, {
-        selectedTopics: [{name: 'one'}],
-        detailsTopics: [{name: 'two'}]
+        selectedTopics: [{ name: 'one' }],
+        detailsTopics: [{ name: 'two' }]
       })
-      expect(wrapper.instance().state.selected).toEqual([{name: 'one'}, {name: 'two'}])
+      expect(wrapper.instance().state.selected).toEqual([{ name: 'one' }, { name: 'two' }])
     })
   })
 
   describe('componentDidUpdate', () => {
     it('calls updateSelected if selectedTopics has changed', () => {
       const props = {
-        selectedTopics: [{name: 'one'}],
-        detailsTopics: [{name: 'two'}]
+        selectedTopics: [{ name: 'one' }],
+        detailsTopics: [{ name: 'two' }]
       }
       const wrapper = renderComponent(shallow, props)
       wrapper.instance().updateSelected = jest.fn()
-      wrapper.instance().componentDidUpdate({...defaultMinProps, ...props})
+      wrapper.instance().componentDidUpdate({ ...defaultMinProps, ...props })
       expect(wrapper.instance().updateSelected).not.toHaveBeenCalled()
-      wrapper.instance().componentDidUpdate({...defaultMinProps, ...props, selectedTopics: []})
+      wrapper.instance().componentDidUpdate({ ...defaultMinProps, ...props, selectedTopics: [] })
       expect(wrapper.instance().updateSelected).toHaveBeenCalled()
     })
   })
@@ -44,24 +44,24 @@ describe('TopicSelector', () => {
   describe('updateSelected', () => {
     it('does nothing if topicsEdited = true', () => {
       const props = {
-        selectedTopics: [{name: 'one'}],
-        detailsTopics: [{name: 'two'}]
+        selectedTopics: [{ name: 'one' }],
+        detailsTopics: [{ name: 'two' }]
       }
       const wrapper = renderComponent(shallow, props)
-      wrapper.instance().setState({topicsEdited: true, selected: []})
+      wrapper.instance().setState({ topicsEdited: true, selected: [] })
       wrapper.instance().updateSelected()
       expect(wrapper.instance().state.selected).toEqual([])
     })
 
     it('combines selected, props.selectedTopics and props.detailsTopics, truncating at 3', () => {
       const props = {
-        selectedTopics: [{name: 'one'}],
-        detailsTopics: [{name: 'two'}, {name: 'three'}]
+        selectedTopics: [{ name: 'one' }],
+        detailsTopics: [{ name: 'two' }, { name: 'three' }]
       }
       const wrapper = renderComponent(shallow, props)
-      wrapper.instance().setState({selected: [{name: 'zero'}]})
+      wrapper.instance().setState({ selected: [{ name: 'zero' }] })
       wrapper.instance().updateSelected()
-      expect(wrapper.instance().state.selected).toEqual([{name: 'zero'}, {name: 'one'}, {name: 'two'}])
+      expect(wrapper.instance().state.selected).toEqual([{ name: 'zero' }, { name: 'one' }, { name: 'two' }])
     })
   })
 
@@ -69,7 +69,7 @@ describe('TopicSelector', () => {
     it('returns state.selected', () => {
       const wrapper = renderComponent(shallow)
       const selected = ['one', 'two']
-      wrapper.instance().setState({selected})
+      wrapper.instance().setState({ selected })
       expect(wrapper.instance().getSelected()).toEqual(selected)
     })
   })
@@ -77,7 +77,7 @@ describe('TopicSelector', () => {
   describe('reset', () => {
     it('resets the state to defaultState', () => {
       const wrapper = renderComponent(shallow)
-      wrapper.instance().setState({topicsEdited: true, selected: [{name: 'one'}]})
+      wrapper.instance().setState({ topicsEdited: true, selected: [{ name: 'one' }] })
       wrapper.instance().reset()
       expect(wrapper.instance().state).toEqual(TopicSelector.defaultState)
     })
@@ -107,10 +107,10 @@ describe('TopicSelector', () => {
     it('sets state and calls clearTopics', () => {
       const clearTopics = jest.fn()
       const wrapper = renderComponent(shallow, { clearTopics })
-      const topic = {name: 'one'}
-      wrapper.setState({selected: [{name: 'zero'}]})
+      const topic = { name: 'one' }
+      wrapper.setState({ selected: [{ name: 'zero' }] })
       wrapper.instance().handleAddition(topic)
-      expect(wrapper.instance().state.selected).toEqual([{name: 'zero'}, {name: 'one'}])
+      expect(wrapper.instance().state.selected).toEqual([{ name: 'zero' }, { name: 'one' }])
       expect(clearTopics).toHaveBeenCalledWith()
     })
   })
@@ -119,10 +119,10 @@ describe('TopicSelector', () => {
     it('sets state and calls clearTopics', () => {
       const clearTopics = jest.fn()
       const wrapper = renderComponent(shallow, { clearTopics })
-      const topic = {name: 'one'}
-      wrapper.setState({selected: [{name: 'zero'}, {name: 'one'}]})
+      const topic = { name: 'one' }
+      wrapper.setState({ selected: [{ name: 'zero' }, { name: 'one' }] })
       wrapper.instance().handleDelete(topic)
-      expect(wrapper.instance().state.selected).toEqual([{name: 'zero'}])
+      expect(wrapper.instance().state.selected).toEqual([{ name: 'zero' }])
       expect(wrapper.instance().state.topicsEdited).toEqual(true)
     })
   })
@@ -135,7 +135,7 @@ describe('Suggestion', () => {
 
   function renderComponent (renderFunc, props = {}) {
     return renderFunc(
-      <Suggestion {...{...defaultMinProps, ...props}} />
+      <Suggestion {...{ ...defaultMinProps, ...props }} />
     )
   }
 

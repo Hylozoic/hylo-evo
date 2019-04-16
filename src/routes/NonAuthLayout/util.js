@@ -8,14 +8,14 @@ export function formatError (error, action) {
   const noPasswordMatch = error.match(/password account not found. available: \[(.*)\]/)
   if (noPasswordMatch) {
     var options = uniq(noPasswordMatch[1].split(',')
-    .map(option => ({
-      'google': 'Google',
-      'google-token': 'Google',
-      'facebook': 'Facebook',
-      'facebook-token': 'Facebook',
-      'linkedin': 'LinkedIn',
-      'linkedin-token': 'LinkedIn'
-    }[option])))
+      .map(option => ({
+        'google': 'Google',
+        'google-token': 'Google',
+        'facebook': 'Facebook',
+        'facebook-token': 'Facebook',
+        'linkedin': 'LinkedIn',
+        'linkedin-token': 'LinkedIn'
+      }[option])))
 
     return <div styleName='error'>
       Your account has no password set. <a href='/reset-password'>Set your password here.</a>

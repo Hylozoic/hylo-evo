@@ -9,9 +9,9 @@ const getCommunityTopicForCurrentRoute = ormCreateSelector(
   (state, props) => getRouteParam('topicName', state, props),
   (session, slug, topicName) => {
     try {
-      const community = session.Community.get({slug})
-      const topic = session.Topic.get({name: topicName})
-      return topic.communityTopics.filter({community: community.id}).first()
+      const community = session.Community.get({ slug })
+      const topic = session.Topic.get({ name: topicName })
+      return topic.communityTopics.filter({ community: community.id }).first()
     } catch (e) {
       return null
     }

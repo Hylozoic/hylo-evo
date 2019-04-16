@@ -59,7 +59,7 @@ export default class Search extends Component {
 
     return <FullPageModal>
       <div styleName='search'>
-        <SearchBar {...{searchForInput, setSearchTerm, updateQueryParam, setSearchFilter, filter}} />
+        <SearchBar {...{ searchForInput, setSearchTerm, updateQueryParam, setSearchFilter, filter }} />
         <div styleName='search-results'
           id={SEARCH_RESULTS_ID}
           ref={x => { this.searchResultsDiv = x }}>
@@ -100,10 +100,10 @@ export function SearchBar ({
 }
 
 const tabs = [
-  {id: 'all', label: 'All'},
-  {id: 'post', label: 'Discussions'},
-  {id: 'person', label: 'People'},
-  {id: 'comment', label: 'Comments'}
+  { id: 'all', label: 'All' },
+  { id: 'post', label: 'Discussions' },
+  { id: 'person', label: 'People' },
+  { id: 'comment', label: 'Comments' }
 ]
 
 export function TabBar ({ filter, setSearchFilter }) {

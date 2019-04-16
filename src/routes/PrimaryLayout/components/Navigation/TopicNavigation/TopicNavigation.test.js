@@ -3,10 +3,10 @@ import TopicNavigation from './TopicNavigation'
 import { shallow } from 'enzyme'
 
 const communityTopics = [
-  {topic: {name: 't1'}, newPostCount: 3},
-  {topic: {name: 't2'}, newPostCount: 0},
-  {topic: {name: 't3'}},
-  {topic: {name: 't4'}, newPostCount: 2}
+  { topic: { name: 't1' }, newPostCount: 3 },
+  { topic: { name: 't2' }, newPostCount: 0 },
+  { topic: { name: 't3' } },
+  { topic: { name: 't4' }, newPostCount: 2 }
 ]
 
 const community = {
@@ -15,7 +15,7 @@ const community = {
 
 const requiredProps = {
   communityTopics: communityTopics,
-  location: {pathname: '/'},
+  location: { pathname: '/' },
   backUrl: '/return-here',
   communitySlug: community.slug
 }

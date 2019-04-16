@@ -54,7 +54,7 @@ export default class Comments extends Component {
   }
 }
 
-export function ShowMore ({commentsLength, total, hasMore, fetchComments}) {
+export function ShowMore ({ commentsLength, total, hasMore, fetchComments }) {
   if (!hasMore) return null
 
   const extra = total - 10

@@ -14,8 +14,8 @@ import { tagUrl } from 'util/navigation'
 import './AllTopics.scss'
 
 const sortOptions = [
-  {id: 'num_followers', label: 'Popular'},
-  {id: 'updated_at', label: 'Recent'}
+  { id: 'num_followers', label: 'Popular' },
+  { id: 'updated_at', label: 'Recent' }
 ]
 
 const TOPIC_LIST_ID = 'topic-list'
@@ -48,12 +48,12 @@ export default class AllTopics extends Component {
     this.props.fetchCommunityTopics()
     // Caching totalTopics because the total returned in the queryset
     // changes when there is a search term
-    this.setState({totalTopicsCached: this.props.totalTopics})
+    this.setState({ totalTopicsCached: this.props.totalTopics })
   }
 
   componentDidUpdate (prevProps) {
     if (!this.state.totalTopicsCached && !prevProps.totalTopics && this.props.totalTopics) {
-      this.setState({totalTopicsCached: this.props.totalTopics})
+      this.setState({ totalTopicsCached: this.props.totalTopics })
     }
     if (prevProps.selectedSort !== this.props.selectedSort ||
       prevProps.search !== this.props.search) {
@@ -88,7 +88,7 @@ export default class AllTopics extends Component {
         <div styleName='title'>Topics</div>
         <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
         <div styleName='controls'>
-          <SearchBar {...{search, setSearch, selectedSort, setSort, fetchIsPending}} />
+          <SearchBar {...{ search, setSearch, selectedSort, setSort, fetchIsPending }} />
           <CreateTopic
             buttonText='Add a Topic'
             communityId={community.id}
@@ -110,7 +110,7 @@ export default class AllTopics extends Component {
   }
 }
 
-export function SearchBar ({search, setSearch, selectedSort, setSort, fetchIsPending}) {
+export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPending }) {
   var selected = find(o => o.id === selectedSort, sortOptions)
 
   if (!selected) selected = sortOptions[0]
@@ -139,7 +139,7 @@ export function CommunityTopicListItem ({ item, slug, toggleSubscribe, deleteTop
   const { topic: { name }, postsTotal, followersTotal, isSubscribed } = item
 
   const dropdownItems = []
-  if (canModerate) dropdownItems.push({icon: 'Trash', label: 'Delete', onClick: deleteTopic, red: true})
+  if (canModerate) dropdownItems.push({ icon: 'Trash', label: 'Delete', onClick: deleteTopic, red: true })
 
   return <div styleName='topic'>
     <Link styleName='topic-details' to={tagUrl(name, slug)}>

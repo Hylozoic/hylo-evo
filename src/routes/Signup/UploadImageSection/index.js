@@ -4,10 +4,10 @@ import { cameraSvg, loadingSvg } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import '../Signup.scss'
 
-export default function UploadImage ({avatarUrl, currentUser, updateSettingDirectly, loading}) {
+export default function UploadImage ({ avatarUrl, currentUser, updateSettingDirectly, loading }) {
   return <ChangeImageButton
     update={updateSettingDirectly('avatarUrl')}
-    uploadSettings={{type: 'userAvatar', id: currentUser.id}}
+    uploadSettings={{ type: 'userAvatar', id: currentUser.id }}
     styleName='change-avatar-button'>
     {uploadAvatar(currentUser, loading, avatarUrl)}
   </ChangeImageButton>

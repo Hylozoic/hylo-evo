@@ -46,9 +46,9 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
 
   setTemporatyState (key, value) {
     const oldValue = this.state[key]
-    this.setState({[key]: value})
+    this.setState({ [key]: value })
     setTimeout(() => {
-      this.setState({[key]: oldValue})
+      this.setState({ [key]: oldValue })
     }, 3000)
   }
 
@@ -60,36 +60,36 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
     const { emails, message } = this.state
 
     createInvitations(parseEmailList(emails), message)
-    .then(res => {
-      this.sending = false
-      const { invitations } = res.payload.data.createInvitation
-      const badEmails = invitations.filter(email => email.error).map(e => e.email)
+      .then(res => {
+        this.sending = false
+        const { invitations } = res.payload.data.createInvitation
+        const badEmails = invitations.filter(email => email.error).map(e => e.email)
 
-      const numBad = badEmails.length
-      let errorMessage, successMessage
-      if (numBad === 1) {
-        errorMessage = 'The address below is invalid.'
-      } else if (numBad > 1) {
-        errorMessage = `The ${numBad} addresses below are invalid.`
-      }
-      const numGood = invitations.length - badEmails.length
-      if (numGood > 0) {
-        successMessage = `Sent ${numGood} ${numGood === 1 ? 'email' : 'emails'}.`
-        trackAnalyticsEvent('Community Invitations Sent', { numGood })
-      }
-      this.setState({
-        emails: badEmails.join('\n'),
-        errorMessage,
-        successMessage
+        const numBad = badEmails.length
+        let errorMessage, successMessage
+        if (numBad === 1) {
+          errorMessage = 'The address below is invalid.'
+        } else if (numBad > 1) {
+          errorMessage = `The ${numBad} addresses below are invalid.`
+        }
+        const numGood = invitations.length - badEmails.length
+        if (numGood > 0) {
+          successMessage = `Sent ${numGood} ${numGood === 1 ? 'email' : 'emails'}.`
+          trackAnalyticsEvent('Community Invitations Sent', { numGood })
+        }
+        this.setState({
+          emails: badEmails.join('\n'),
+          errorMessage,
+          successMessage
+        })
       })
-    })
   }
 
   componentWillReceiveProps (nextProps) {
     const { community } = this.props
     const nextPropsCommunity = nextProps.community
     if (community && nextPropsCommunity && community !== nextPropsCommunity) {
-      this.setState({allMembersCanInvite: nextPropsCommunity.allowCommunityInvites})
+      this.setState({ allMembersCanInvite: nextPropsCommunity.allowCommunityInvites })
     }
   }
 
@@ -97,12 +97,12 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
     const communityId = this.props.community.id
     const allMembersCanInvite = !this.state.allMembersCanInvite
     this.props.allowCommunityInvites(communityId, allMembersCanInvite)
-      .then(({error}) => {
+      .then(({ error }) => {
         if (error) {
-          this.setState({allMembersCanInvite: !allMembersCanInvite})
+          this.setState({ allMembersCanInvite: !allMembersCanInvite })
         }
       })
-    this.setState({allMembersCanInvite})
+    this.setState({ allMembersCanInvite })
   }
 
   render () {
@@ -192,11 +192,11 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
           placeholder='Type email addresses'
           value={this.state.emails}
           disabled={pendingCreate}
-          onChange={(event) => this.setState({emails: event.target.value})} />
+          onChange={(event) => this.setState({ emails: event.target.value })} />
         <TextareaAutosize minRows={5} styleName='styles.invite-msg-input'
           value={this.state.message}
           disabled={pendingCreate}
-          onChange={(event) => this.setState({message: event.target.value})} />
+          onChange={(event) => this.setState({ message: event.target.value })} />
         <div styleName='styles.send-invite-button'>
           <Button color='green' disabled={disableSendBtn} onClick={this.sendInvites} narrow small>
             Send Invite
@@ -206,7 +206,7 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
 
       <div styleName='styles.pending-invites-section'>
         <div styleName='styles.pending-invites-header'>
-          <h1 style={{flex: 1}}>{!isPendingInvites && 'No '}Pending Invites</h1>
+          <h1 style={{ flex: 1 }}>{!isPendingInvites && 'No '}Pending Invites</h1>
           {isPendingInvites && <Button styleName='styles.resend-all-button'
             color='green-white-green-border'
             narrow small
@@ -225,7 +225,7 @@ ${props.community.name} is using Hylo for our online community: this is our dedi
             transitionEnterTimeout={400}
             transitionLeaveTimeout={500}>
             {pendingInvites.map(invite => <div styleName='styles.row' key={invite.id}>
-              <div style={{flex: 1}}>
+              <div style={{ flex: 1 }}>
                 <span>{invite.email}</span>
                 <span styleName='styles.invite-date'>{humanDate(invite.lastSentAt)}</span>
               </div>

@@ -7,6 +7,6 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = {clearUserTyping}
+export const mapDispatchToProps = { clearUserTyping }
 
 export default connect(mapStateToProps, mapDispatchToProps)

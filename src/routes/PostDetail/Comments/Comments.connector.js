@@ -6,8 +6,8 @@ import { fetchComments, createComment, getComments, getHasMoreComments, getTotal
 export function mapStateToProps (state, props) {
   return {
     comments: getComments(state, props),
-    total: getTotalComments(state, {id: props.postId}),
-    hasMore: getHasMoreComments(state, {id: props.postId}),
+    total: getTotalComments(state, { id: props.postId }),
+    hasMore: getHasMoreComments(state, { id: props.postId }),
     currentUser: getMe(state)
   }
 }
@@ -15,10 +15,10 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = (dispatch, props) => {
   const { postId, scrollToBottom } = props
   return {
-    fetchCommentsMaker: cursor => () => dispatch(fetchComments(postId, {cursor})),
+    fetchCommentsMaker: cursor => () => dispatch(fetchComments(postId, { cursor })),
     createComment: (text) =>
       dispatch(createComment(postId, text))
-      .then(() => scrollToBottom())
+        .then(() => scrollToBottom())
   }
 }
 

@@ -33,8 +33,8 @@ export default class DropdownButton extends Component {
         onClick={this.toggleExpanded}>
         {label}&nbsp;&nbsp;|&nbsp;&nbsp;▾
       </div>
-      <div styleName={cx('dropdown', {expanded})}>
-        {choices.map(({label, value}) =>
+      <div styleName={cx('dropdown', { expanded })}>
+        {choices.map(({ label, value }) =>
           <span styleName='choice' key={value} onClick={() => this.onChoose(value)}>{label}</span>)}
       </div>
     </div>

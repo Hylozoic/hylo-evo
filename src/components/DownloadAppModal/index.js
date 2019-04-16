@@ -6,8 +6,8 @@ import { rootDomId } from 'client/util'
 const DownloadAppPortal = function (props) {
   return ReactDOM.createPortal(
     <DownloadAppModal {...props} />,
-      document.getElementById(rootDomId)
-    )
+    document.getElementById(rootDomId)
+  )
 }
 
 export default DownloadAppPortal

@@ -14,7 +14,7 @@ export default class UploadPhoto extends Component {
   }
 
   submit = () => {
-    this.setState({changed: false})
+    this.setState({ changed: false })
     this.props.updateUserSettings(this.state.edits)
     this.props.goToNextStep()
   }

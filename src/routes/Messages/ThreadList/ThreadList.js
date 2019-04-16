@@ -68,7 +68,7 @@ export default class ThreadList extends Component {
   }
 }
 
-export function ThreadListItem ({currentUser, active, id, thread, latestMessage, unreadCount}) {
+export function ThreadListItem ({ currentUser, active, id, thread, latestMessage, unreadCount }) {
   let text = ''
   const maxTextLength = 54
   if (latestMessage) {
@@ -96,7 +96,7 @@ export function ThreadListItem ({currentUser, active, id, thread, latestMessage,
   </li>
 }
 
-function ThreadAvatars ({avatarUrls}) {
+function ThreadAvatars ({ avatarUrls }) {
   const count = avatarUrls.length
   const style = `avatar-${count < 4 ? count : 'more'}`
   const plusStyle = `avatar-${count < 4 ? count : 'more'} ${count > 4 ? 'plus-count' : ''}`
@@ -111,7 +111,7 @@ function ThreadAvatars ({avatarUrls}) {
   </div>
 }
 
-function ThreadNames ({names}) {
+function ThreadNames ({ names }) {
   return <div styleName='thread-names'>
     {names}
   </div>

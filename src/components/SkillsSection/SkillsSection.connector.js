@@ -21,7 +21,7 @@ export function mapStateToProps (state, props) {
   return {
     loading: isPendingFor(fetchMemberSkills, state),
     search,
-    skillSuggestions: getSkillSuggestions(state, {search, ...props}),
+    skillSuggestions: getSkillSuggestions(state, { search, ...props }),
     skills: getMemberSkills(state, props),
     currentUser,
     isMe: currentUser && person && currentUser.id === person.id

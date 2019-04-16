@@ -4,8 +4,8 @@ import React from 'react'
 import { mountWithMockRouter } from 'util/testing'
 import Loading from 'components/Loading'
 
-const person1 = {id: '1', name: 'City Bob'}
-const person2 = {id: '2', name: 'Country Alice'}
+const person1 = { id: '1', name: 'City Bob' }
+const person2 = { id: '2', name: 'Country Alice' }
 
 const messages = [
   {
@@ -55,7 +55,7 @@ const messages = [
 let wrapper, instance, socket
 
 beforeEach(() => {
-  socket = {on: jest.fn()}
+  socket = { on: jest.fn() }
 })
 
 it('renders as expected', () => {
@@ -82,7 +82,7 @@ it('marks as read when scrolled to bottom by user', () => {
   jest.spyOn(instance, 'markAsRead')
 
   instance.handleScroll({
-    target: {scrollTop: 1100, scrollHeight: 1200, offsetHeight: 100}
+    target: { scrollTop: 1100, scrollHeight: 1200, offsetHeight: 100 }
   })
   expect(instance.markAsRead).toBeCalled()
 })
@@ -149,7 +149,7 @@ it('fetches more messages when scrolled to top', () => {
       socket={socket}
       fetchMessages={fetchMessages} hasMore />)
   wrapper.instance().handleScroll({
-    target: {scrollTop: 0, scrollHeight: 1200, offsetHeight: 100}
+    target: { scrollTop: 0, scrollHeight: 1200, offsetHeight: 100 }
   })
   expect(fetchMessages).toBeCalled()
 })

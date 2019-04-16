@@ -55,7 +55,7 @@ describe('ProjectContributions', () => {
       postId={123}
       totalContributions={321}
       processStripeToken={jest.fn()} />)
-    wrapper.setState({received: true})
+    wrapper.setState({ received: true })
     expect(wrapper).toMatchSnapshot()
   })
 
@@ -64,7 +64,7 @@ describe('ProjectContributions', () => {
       postId={123}
       totalContributions={321}
       processStripeToken={jest.fn()} />)
-    wrapper.setState({error: true})
+    wrapper.setState({ error: true })
     expect(wrapper).toMatchSnapshot()
   })
 

@@ -1,7 +1,7 @@
 import
-  NotificationSettingsTab,
-  { MessageSettingsRow, AllCommunitiesSettingsRow, MembershipSettingsRow, SettingsRow, SettingsIcon}
-from './NotificationSettingsTab'
+NotificationSettingsTab,
+{ MessageSettingsRow, AllCommunitiesSettingsRow, MembershipSettingsRow, SettingsRow, SettingsIcon }
+  from './NotificationSettingsTab'
 import { shallow } from 'enzyme'
 import React from 'react'
 
@@ -19,7 +19,7 @@ describe('NotificationSettingsTab', () => {
     const wrapper = shallow(<NotificationSettingsTab
       currentUser={currentUser}
       updateUserSettings={() => {}}
-      memberships={[{id: 1}, {id: 2}]} />)
+      memberships={[{ id: 1 }, { id: 2 }]} />)
     expect(wrapper).toMatchSnapshot()
   })
 
@@ -55,14 +55,14 @@ describe('NotificationSettingsTab', () => {
       }
       const wrapper = shallow(<NotificationSettingsTab {...props} />)
       const instance = wrapper.instance()
-      instance.updateMessageSettings({sendPushNotifications: true})
-      expect(props.updateUserSettings).toHaveBeenCalledWith({settings: {dmNotifications: 'both'}})
-      instance.updateMessageSettings({sendEmail: false})
-      expect(props.updateUserSettings).toHaveBeenCalledWith({settings: {dmNotifications: 'none'}})
+      instance.updateMessageSettings({ sendPushNotifications: true })
+      expect(props.updateUserSettings).toHaveBeenCalledWith({ settings: { dmNotifications: 'both' } })
+      instance.updateMessageSettings({ sendEmail: false })
+      expect(props.updateUserSettings).toHaveBeenCalledWith({ settings: { dmNotifications: 'none' } })
       instance.updateMessageSettings({})
-      expect(props.updateUserSettings).toHaveBeenCalledWith({settings: {dmNotifications: 'email'}})
-      instance.updateMessageSettings({sendEmail: false, sendPushNotifications: true})
-      expect(props.updateUserSettings).toHaveBeenCalledWith({settings: {dmNotifications: 'push'}})
+      expect(props.updateUserSettings).toHaveBeenCalledWith({ settings: { dmNotifications: 'email' } })
+      instance.updateMessageSettings({ sendEmail: false, sendPushNotifications: true })
+      expect(props.updateUserSettings).toHaveBeenCalledWith({ settings: { dmNotifications: 'push' } })
     })
   })
 
@@ -85,15 +85,15 @@ describe('NotificationSettingsTab', () => {
       }
       const wrapper = shallow(<NotificationSettingsTab {...props} />)
       const instance = wrapper.instance()
-      instance.updateAllCommunities({sendPushNotifications: true})
-      expect(props.updateAllMemberships).toHaveBeenCalledWith([1, 2], {sendPushNotifications: true})
+      instance.updateAllCommunities({ sendPushNotifications: true })
+      expect(props.updateAllMemberships).toHaveBeenCalledWith([1, 2], { sendPushNotifications: true })
     })
   })
 })
 
 describe('MessageSettingsRow', () => {
   const props = {
-    settings: {sendEmail: true},
+    settings: { sendEmail: true },
     updateMessageSettings: () => {}
   }
 
@@ -105,7 +105,7 @@ describe('MessageSettingsRow', () => {
 
 describe('AllCommunitiesSettingsRow', () => {
   const props = {
-    settings: {sendEmail: true},
+    settings: { sendEmail: true },
     updateAllCommunities: () => {}
   }
 
@@ -118,7 +118,7 @@ describe('AllCommunitiesSettingsRow', () => {
 describe('MembershipSettingsRow', () => {
   const props = {
     membership: {
-      settings: {sendEmail: true},
+      settings: { sendEmail: true },
       community: {
         name: 'Foomunity',
         avatarUrl: 'foo.png'
@@ -135,7 +135,7 @@ describe('MembershipSettingsRow', () => {
 
 describe('SettingsRow', () => {
   const props = {
-    settings: {sendEmail: true},
+    settings: { sendEmail: true },
     updateMembershipSettings: () => {}
   }
 
@@ -149,7 +149,7 @@ describe('SettingsIcon', () => {
   const props = {
     settingKey: 'sendEmail',
     name: 'EmailNotification',
-    settings: {sendEmail: true},
+    settings: { sendEmail: true },
     update: () => {}
   }
 

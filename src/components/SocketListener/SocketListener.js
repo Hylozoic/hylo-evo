@@ -58,7 +58,7 @@ export default class SocketListener extends Component {
     })
   }
 
-  userTypingHandler = ({userId, userName, isTyping}) => {
+  userTypingHandler = ({ userId, userName, isTyping }) => {
     const { addUserTyping, clearUserTyping } = this.props
     isTyping ? addUserTyping(userId, userName) : clearUserTyping(userId)
   }

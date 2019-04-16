@@ -18,11 +18,11 @@ export default function reducer (state = initialState, action) {
   if (action.error) return state
 
   if (action.type === TOGGLE_DRAWER) {
-    return {...state, isDrawerOpen: !state.isDrawerOpen}
+    return { ...state, isDrawerOpen: !state.isDrawerOpen }
   }
 
   if (action.type === LOCATION_CHANGE) {
-    return {...state, isDrawerOpen: false}
+    return { ...state, isDrawerOpen: false }
   }
 
   // Links current user to rollbar config
@@ -53,11 +53,11 @@ export function ormSessionReducer (
   { type, meta, payload }
 ) {
   if (type === FETCH_FOR_COMMUNITY_PENDING) {
-    let community = Community.safeGet({slug: meta.slug})
+    let community = Community.safeGet({ slug: meta.slug })
     if (!community) return
-    let membership = Membership.safeGet({community: community.id})
+    let membership = Membership.safeGet({ community: community.id })
     if (!membership) return
-    membership.update({newPostCount: 0})
+    membership.update({ newPostCount: 0 })
   }
 
   if (type === FETCH_FOR_CURRENT_USER) {

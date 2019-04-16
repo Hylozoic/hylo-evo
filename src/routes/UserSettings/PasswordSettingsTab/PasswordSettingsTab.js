@@ -15,7 +15,7 @@ export default class PasswordSettingsTab extends Component {
   }
   constructor (props) {
     super(props)
-    this.state = {edits: {}, changed: false}
+    this.state = { edits: {}, changed: false }
   }
 
   render () {
@@ -23,7 +23,7 @@ export default class PasswordSettingsTab extends Component {
       currentUser,
       updateUserSettings,
       setConfirm
-     } = this.props
+    } = this.props
     if (!currentUser) return <Loading />
 
     const { edits, changed } = this.state
@@ -43,7 +43,7 @@ export default class PasswordSettingsTab extends Component {
     }
 
     const save = () => {
-      this.setState({changed: false})
+      this.setState({ changed: false })
       setConfirm(false)
       updateUserSettings(omit('confirm', edits))
     }

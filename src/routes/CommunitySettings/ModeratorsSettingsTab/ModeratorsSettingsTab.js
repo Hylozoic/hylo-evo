@@ -45,22 +45,22 @@ export default class ModeratorsSettingsTab extends Component {
     if (!moderators) return <Loading />
 
     return <React.Fragment>
-      <ModeratorsList key='mList' {...this.props} removeItem={(id) => this.setState({modalVisible: true, moderatorToRemove: id})} />
+      <ModeratorsList key='mList' {...this.props} removeItem={(id) => this.setState({ modalVisible: true, moderatorToRemove: id })} />
       {modalVisible && <ModalDialog key='remove-moderator-dialog'
-        closeModal={() => this.setState({modalVisible: false})}
+        closeModal={() => this.setState({ modalVisible: false })}
         showModalTitle={false}
         submitButtonAction={this.submitRemoveModerator}
         submitButtonText='Remove' >
         <div styleName='content'>
           <div styleName='modal-text'>Are you sure you wish to remove this moderator?</div>
-          <CheckBox checked={isRemoveFromCommunity} label='Remove from community as well' onChange={value => this.setState({isRemoveFromCommunity: value})} />
+          <CheckBox checked={isRemoveFromCommunity} label='Remove from community as well' onChange={value => this.setState({ isRemoveFromCommunity: value })} />
         </div>
       </ModalDialog>}
     </React.Fragment>
   }
 }
 
-export function ModeratorsList ({moderators, slug, removeItem, fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions}) {
+export function ModeratorsList ({ moderators, slug, removeItem, fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions }) {
   return <div>
     <div>
       {moderators.map(m =>
@@ -98,7 +98,7 @@ export class AddModerator extends Component {
     const { adding } = this.state
 
     const toggle = () => {
-      this.setState({adding: !adding})
+      this.setState({ adding: !adding })
     }
 
     const onInputChange = e => {
@@ -129,7 +129,7 @@ export class AddModerator extends Component {
       return this.refs.list.handleKeys(e)
     }
 
-    const listWidth = {width: get('refs.input.clientWidth', this, 0) + 4}
+    const listWidth = { width: get('refs.input.clientWidth', this, 0) + 4 }
 
     if (adding) {
       return <div styleName='add-moderator adding'>

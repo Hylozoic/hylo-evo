@@ -11,7 +11,7 @@ export default function CheckBox ({ checked, onChange, className, label, labelLe
 
   return <label styleName='label'>
     {labelLeft && label}
-    <Icon name={iconName} styleName={cx('icon', {'label-left': labelLeft})} />
+    <Icon name={iconName} styleName={cx('icon', { 'label-left': labelLeft })} />
     {!noInput && <input type='checkbox'
       styleName='checkbox'
       className={className}

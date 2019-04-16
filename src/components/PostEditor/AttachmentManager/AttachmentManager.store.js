@@ -64,11 +64,11 @@ export const makeAttachmentSelector = attachmentType => ormCreateSelector(
   (state, { postId }) => postId,
   ({ Attachment }, postId) =>
     Attachment.all()
-    .filter(({ type, post }) =>
-      type === attachmentType && post === postId)
-    .orderBy('position')
-    .toModelArray()
-  )
+      .filter(({ type, post }) =>
+        type === attachmentType && post === postId)
+      .orderBy('position')
+      .toModelArray()
+)
 
 // Reducer
 
@@ -83,11 +83,11 @@ export default function reducer (state = defaultState, action) {
 
   switch (type) {
     case SET_ATTACHMENTS:
-      return {...state, [payload.type]: payload.attachments}
+      return { ...state, [payload.type]: payload.attachments }
     case ADD_ATTACHMENT:
-      return {...state, [payload.type]: state[payload.type].concat([payload.url])}
+      return { ...state, [payload.type]: state[payload.type].concat([payload.url]) }
     case REMOVE_ATTACHMENT:
-      return {...state, [payload.type]: pullAt(payload.position, state[payload.type])}
+      return { ...state, [payload.type]: pullAt(payload.position, state[payload.type]) }
     case SWITCH_ATTACHMENTS:
       const { position1, position2 } = payload
       const attachments = clone(state[payload.type])

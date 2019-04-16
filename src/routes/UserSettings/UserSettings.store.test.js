@@ -2,7 +2,7 @@ import { updateAllMemberships, registerStripeAccount } from './UserSettings.stor
 
 describe('updateAllMemberships', () => {
   it('matches snapshot', () => {
-    expect(updateAllMemberships([1, 3, 5], {sendEmail: true})).toMatchSnapshot()
+    expect(updateAllMemberships([1, 3, 5], { sendEmail: true })).toMatchSnapshot()
   })
 })
 

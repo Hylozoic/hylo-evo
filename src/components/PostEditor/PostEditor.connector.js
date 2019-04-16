@@ -47,8 +47,8 @@ export function mapStateToProps (state, props) {
   const postPending = !!state.pending[CREATE_POST] || !!state.pending[CREATE_PROJECT]
   const loading = !!state.pending[FETCH_POST] || !!uploadAttachmentPending || postPending
   const editing = !!post || loading
-  const images = getAttachments(state, {type: 'image'})
-  const files = getAttachments(state, {type: 'file'})
+  const images = getAttachments(state, { type: 'image' })
+  const files = getAttachments(state, { type: 'file' })
   // TODO: this should be a selector exported from AttachmentManager
   const showImages = !isEmpty(images) ||
     get('attachmentType', uploadAttachmentPending) === 'image'
@@ -112,15 +112,15 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) || get('payload.data.createProject.id', createPostAction)
-    const url = postUrl(id, {communitySlug, networkSlug, postTypeContext, topicName})
+    const url = postUrl(id, { communitySlug, networkSlug, postTypeContext, topicName })
 
     return goToUrl(url)
   }
   const pollingFetchLinkPreview = fetchLinkPreviewPending
-      ? () => Promise.resolve()
-      : url => pollingFetchLinkPreviewRaw(url)
-  const createPost = postParams => dispatchProps.createPost({networkSlug, ...postParams})
-  const createProject = projectParams => dispatchProps.createProject({networkSlug, ...projectParams})
+    ? () => Promise.resolve()
+    : url => pollingFetchLinkPreviewRaw(url)
+  const createPost = postParams => dispatchProps.createPost({ networkSlug, ...postParams })
+  const createProject = projectParams => dispatchProps.createProject({ networkSlug, ...projectParams })
 
   return {
     ...stateProps,

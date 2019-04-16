@@ -44,7 +44,7 @@ export default class NotificationsDropdown extends Component {
   }
 
   onToggle = nowActive => {
-    if (nowActive) this.setState({lastOpenedAt: new Date()})
+    if (nowActive) this.setState({ lastOpenedAt: new Date() })
   }
 
   componentDidMount = () => {
@@ -78,8 +78,8 @@ export default class NotificationsDropdown extends Component {
     var { notifications } = this.props
     const { showingUnread } = this.state
 
-    const showRecent = () => this.setState({showingUnread: false})
-    const showUnread = () => this.setState({showingUnread: true})
+    const showRecent = () => this.setState({ showingUnread: false })
+    const showUnread = () => this.setState({ showingUnread: true })
 
     if (showingUnread) {
       notifications = notifications.filter(n => n.activity.unread)
@@ -113,10 +113,10 @@ export default class NotificationsDropdown extends Component {
       toggleChildren={renderToggleChildren(this.hasUnread())}
       header={
         <div styleName='header-content'>
-          <span onClick={showRecent} styleName={cx('tab', {active: !showingUnread})}>
+          <span onClick={showRecent} styleName={cx('tab', { active: !showingUnread })}>
             Recent
           </span>
-          <span onClick={showUnread} styleName={cx('tab', {active: showingUnread})}>
+          <span onClick={showUnread} styleName={cx('tab', { active: showingUnread })}>
             Unread
           </span>
           <span onClick={markAllActivitiesRead} styleName='mark-read'>Mark all as read</span>
@@ -129,7 +129,7 @@ export default class NotificationsDropdown extends Component {
 export function Notification ({ notification, onClick }) {
   const { activity: { unread, actor } } = notification
 
-  return <li styleName={cx('notification', {unread})}
+  return <li styleName={cx('notification', { unread })}
     onClick={() => onClick(notification)}>
     <div styleName='image-wraper'>
       <RoundImage url={actor.avatarUrl} />

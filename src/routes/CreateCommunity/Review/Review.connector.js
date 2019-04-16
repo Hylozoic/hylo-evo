@@ -8,7 +8,7 @@ import { createCommunity, getNetwork } from './Review.store'
 
 export function mapStateToProps (state, props) {
   const communityNetworkId = get('networkId', state.CreateCommunity)
-  const network = getNetwork(state, {networkId: communityNetworkId})
+  const network = getNetwork(state, { networkId: communityNetworkId })
 
   return {
     currentUser: getMe(state),

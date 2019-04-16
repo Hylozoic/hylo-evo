@@ -47,7 +47,7 @@ export class AboutSection extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {expanded: false}
+    this.state = { expanded: false }
   }
 
   render () {
@@ -56,7 +56,7 @@ export class AboutSection extends Component {
 
     if (!description) return null
 
-    const onClick = () => this.setState({expanded: !expanded})
+    const onClick = () => this.setState({ expanded: !expanded })
     const showExpandButton = description.length > 155
     if (!showExpandButton) {
       expanded = true
@@ -66,9 +66,9 @@ export class AboutSection extends Component {
       <div styleName='header'>
         About {name}
       </div>
-      <div styleName={cx('description', {expanded})}>
+      <div styleName={cx('description', { expanded })}>
         {!expanded && <div styleName='gradient' />}
-        <span dangerouslySetInnerHTML={{__html: markdown(description)}} />
+        <span dangerouslySetInnerHTML={{ __html: markdown(description) }} />
       </div>
       {showExpandButton && <span styleName='expand-button' onClick={onClick}>
         {expanded ? 'Show Less' : 'Read More'}

@@ -14,18 +14,18 @@ export function handleNotificationActions (session, action) {
     case FETCH_NOTIFICATIONS:
       if (meta.resetCount) {
         const me = Me.first()
-        me && me.update({newNotificationCount: 0})
+        me && me.update({ newNotificationCount: 0 })
       }
       break
 
     case MARK_ACTIVITY_READ_PENDING:
-      Activity.withId(meta.id).update({unread: false})
+      Activity.withId(meta.id).update({ unread: false })
       // invalidating selector memoization
       invalidateNotifications(session)
       break
 
     case MARK_ALL_ACTIVITIES_READ_PENDING:
-      Activity.all().update({unread: false})
+      Activity.all().update({ unread: false })
       // invalidating selector memoization
       invalidateNotifications(session)
       break
@@ -34,5 +34,5 @@ export function handleNotificationActions (session, action) {
 
 function invalidateNotifications ({ Notification }) {
   const first = Notification.first()
-  first && first.update({time: Date.now()})
+  first && first.update({ time: Date.now() })
 }

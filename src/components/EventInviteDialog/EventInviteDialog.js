@@ -29,7 +29,7 @@ export default class EventInviteDialog extends React.PureComponent {
   }
 
   onSearchChange = ({ target: { value } }) => {
-    this.setState({searchTerm: value})
+    this.setState({ searchTerm: value })
     this.props.fetchPeople(value)
   }
 
@@ -66,7 +66,7 @@ export default class EventInviteDialog extends React.PureComponent {
       modalTitle={`Invite`}
       showCancelButton={false}
       showSubmitButton={false}
-      style={{width: '100%', maxWidth: '620px'}}>
+      style={{ width: '100%', maxWidth: '620px' }}>
       <div styleName='container'>
         <Search onChange={this.onSearchChange} />
         <div styleName='inviteSuggestions'>
@@ -92,7 +92,7 @@ export default class EventInviteDialog extends React.PureComponent {
   }
 }
 
-export function InviteeRow ({person, selected, showResponse, onClick}) {
+export function InviteeRow ({ person, selected, showResponse, onClick }) {
   const { name, avatarUrl, response } = person
 
   return <div styleName={cx('row')} onClick={onClick}>

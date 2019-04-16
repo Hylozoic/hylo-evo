@@ -62,7 +62,7 @@ const searchQuery =
   }
 }`
 
-export function fetchSearchResults ({search, offset = 0, filter, query = searchQuery}) {
+export function fetchSearchResults ({ search, offset = 0, filter, query = searchQuery }) {
   return {
     type: FETCH_SEARCH,
     graphql: {
@@ -170,10 +170,10 @@ export const getSearchResults = ormCreateSelector(
   (session, results) => {
     if (isEmpty(results) || isEmpty(results.ids)) return []
     return session.SearchResult.all()
-    .filter(x => includes(x.id, results.ids))
-    .orderBy(x => results.ids.indexOf(x.id))
-    .toModelArray()
-    .map(searchResults => presentSearchResult(searchResults, session))
+      .filter(x => includes(x.id, results.ids))
+      .orderBy(x => results.ids.indexOf(x.id))
+      .toModelArray()
+      .map(searchResults => presentSearchResult(searchResults, session))
   }
 )
 

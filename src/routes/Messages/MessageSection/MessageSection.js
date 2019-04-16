@@ -122,10 +122,10 @@ export default class MessageSection extends React.Component {
   handleVisibilityChange = () => {
     const { onNextVisible } = this.state
     if (document && document.hidden) {
-      this.setState({visible: false})
+      this.setState({ visible: false })
     } else {
       if (onNextVisible) onNextVisible()
-      this.setState({visible: true, onNextVisible: null})
+      this.setState({ visible: true, onNextVisible: null })
     }
   }
 
@@ -147,7 +147,7 @@ export default class MessageSection extends React.Component {
     // bottom message doesn't mean we've read 'em all...
     if (this.atBottom(target)) this.markAsRead()
     if (target.scrollTop <= 150) this.fetchMore()
-  }, 500, {trailing: true})
+  }, 500, { trailing: true })
 
   handleScroll = event => {
     this.detectScrollExtremes(event.target)

@@ -69,8 +69,8 @@ describe('PostEditor', () => {
           type: 'offer',
           title: 'valid title',
           communities: [
-            {id: '1', name: 'test community 1'},
-            {id: '2', name: 'test community 2'}
+            { id: '1', name: 'test community 1' },
+            { id: '2', name: 'test community 2' }
           ],
           topicNames: ['design'],
           startTime: new Date(1551908483315),
@@ -84,7 +84,7 @@ describe('PostEditor', () => {
         reset: jest.fn()
       }
       const topicSelectorMock = {
-        getSelected: () => [{id: 1, name: 'design'}]
+        getSelected: () => [{ id: 1, name: 'design' }]
       }
       const communitiesSelectorMock = {
         reset: jest.fn()
@@ -120,10 +120,10 @@ describe('PostEditor', () => {
         id: 'test',
         type: 'request',
         title: 'valid title',
-        linkPreview: {id: '1', title: 'a link'},
+        linkPreview: { id: '1', title: 'a link' },
         communities: [
-          {id: '1', name: 'test community 1'},
-          {id: '2', name: 'test community 2'}
+          { id: '1', name: 'test community 1' },
+          { id: '2', name: 'test community 2' }
         ],
         topicNames: ['design'],
         startTime: new Date(1551908483315),
@@ -150,7 +150,7 @@ describe('PostEditor', () => {
         reset: jest.fn()
       }
       const topicSelectorMock = {
-        getSelected: () => [{id: 1, name: 'design'}]
+        getSelected: () => [{ id: 1, name: 'design' }]
       }
       const communitiesSelectorMock = {
         reset: jest.fn()
@@ -191,12 +191,12 @@ describe('PostEditor', () => {
           type: 'request',
           title: 'valid title',
           communities: [
-            {id: '1', name: 'test community 1'}
+            { id: '1', name: 'test community 1' }
           ]
         }
       }
       const testInstance = shallow(<PostEditor {...props} />).instance()
-      testInstance.editor = {isEmpty: jest.fn(() => false)}
+      testInstance.editor = { isEmpty: jest.fn(() => false) }
       expect(testInstance.isValid(props.post, {})).toBeTruthy()
     })
 
@@ -209,7 +209,7 @@ describe('PostEditor', () => {
         }
       }
       const testInstance = shallow(<PostEditor {...props} />).instance()
-      testInstance.editor = {isEmpty: jest.fn(() => false)}
+      testInstance.editor = { isEmpty: jest.fn(() => false) }
       expect(testInstance.isValid(props.post, {})).toBeFalsy()
     })
   })
@@ -230,10 +230,10 @@ describe('PostEditor', () => {
         id: 'test',
         type: 'offer',
         title: 'valid title',
-        linkPreview: {id: '1', title: 'a link'},
+        linkPreview: { id: '1', title: 'a link' },
         communities: [
-          {id: '1', name: 'test community 1'},
-          {id: '2', name: 'test community 2'}
+          { id: '1', name: 'test community 1' },
+          { id: '2', name: 'test community 2' }
         ],
         topicNames: ['design'],
         startTime: new Date(1551908483315),
@@ -247,7 +247,7 @@ describe('PostEditor', () => {
       reset: jest.fn()
     }
     const topicSelectorMock = {
-      getSelected: () => [{id: 1, name: 'design'}]
+      getSelected: () => [{ id: 1, name: 'design' }]
     }
     const communitiesSelectorMock = {
       reset: jest.fn()

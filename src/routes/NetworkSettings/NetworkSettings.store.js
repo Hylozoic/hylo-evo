@@ -74,7 +74,7 @@ export function ormSessionReducer ({ Network, Community, Person }, { meta, type 
       const network = Network.withId(meta.networkId)
       network.update({
         communities: network.communities.toModelArray()
-        .filter(c => c.id !== meta.communityId)
+          .filter(c => c.id !== meta.communityId)
       })
     }
     if (Community.hasId(meta.communityId)) {
@@ -88,7 +88,7 @@ export function ormSessionReducer ({ Network, Community, Person }, { meta, type 
       const network = Network.withId(meta.networkId)
       network.update({
         moderators: network.moderators.toModelArray()
-        .filter(m => m.id !== meta.personId)
+          .filter(m => m.id !== meta.personId)
       })
     }
   }
@@ -96,7 +96,7 @@ export function ormSessionReducer ({ Network, Community, Person }, { meta, type 
   if (type === ADD_NETWORK_MODERATOR_ROLE) {
     if (Network.hasId(meta.networkId)) {
       const person = Person.withId(meta.personId)
-      Network.withId(meta.networkId).updateAppending({moderators: [person]})
+      Network.withId(meta.networkId).updateAppending({ moderators: [person] })
     }
   }
 
@@ -104,7 +104,7 @@ export function ormSessionReducer ({ Network, Community, Person }, { meta, type 
     if (Network.hasId(meta.networkId) && Community.hasId(meta.communityId)) {
       const network = Network.withId(meta.networkId)
       const community = Community.withId(meta.communityId)
-      network.updateAppending({communities: [community]})
+      network.updateAppending({ communities: [community] })
       community.update({ network: network })
     }
   }
@@ -112,7 +112,7 @@ export function ormSessionReducer ({ Network, Community, Person }, { meta, type 
   if (type === UPDATE_COMMUNITY_HIDDEN_SETTING_PENDING) {
     if (Community.hasId(meta.id)) {
       const community = Community.withId(meta.id)
-      community.update({hidden: meta.hidden})
+      community.update({ hidden: meta.hidden })
     }
   }
 }
@@ -338,7 +338,7 @@ export function orderFromSort (sortBy) {
   return 'desc'
 }
 
-export function fetchCommunities ({slug, page, offset, sortBy = 'name', order, search, pageSize = PAGE_SIZE}) {
+export function fetchCommunities ({ slug, page, offset, sortBy = 'name', order, search, pageSize = PAGE_SIZE }) {
   offset = offset || page * pageSize
   order = order || orderFromSort(sortBy)
   return {

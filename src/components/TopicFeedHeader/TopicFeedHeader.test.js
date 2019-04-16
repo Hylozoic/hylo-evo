@@ -2,7 +2,7 @@ import TopicFeedHeader from './TopicFeedHeader'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-const topic = {name: 'Petitions'}
+const topic = { name: 'Petitions' }
 const bannerUrl = 'some.url'
 
 const defaultTestProps = {
@@ -119,7 +119,7 @@ describe('subscribe', () => {
     const props = {
       ...defaultTestProps,
       community: {},
-      communityTopic: {isSubscribed: false}
+      communityTopic: { isSubscribed: false }
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-stylename="subscribe"]').render().text()).toEqual('Subscribe')
@@ -129,7 +129,7 @@ describe('subscribe', () => {
     const props = {
       ...defaultTestProps,
       community: {},
-      communityTopic: {isSubscribed: true}
+      communityTopic: { isSubscribed: true }
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-stylename="unsubscribe"]').render().text()).toEqual('Unsubscribe')
@@ -139,7 +139,7 @@ describe('subscribe', () => {
     const props = {
       ...defaultTestProps,
       communityTopic: {},
-      community: {bannerUrl},
+      community: { bannerUrl },
       toggleSubscribe: jest.fn()
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)

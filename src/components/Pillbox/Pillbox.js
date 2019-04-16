@@ -23,7 +23,7 @@ export default class Pillbox extends Component {
   resetInput () {
     this.input.value = ''
     this.props.handleInputChange('')
-    this.setState({adding: false})
+    this.setState({ adding: false })
   }
 
   handleKeys = event => {
@@ -45,7 +45,7 @@ export default class Pillbox extends Component {
       if (includes(creationKeyCodes, keyCode)) {
         let { value } = event.target
         if (!value) return
-        handleAddition({id: value, name: value})
+        handleAddition({ id: value, name: value })
         this.resetInput()
         event.preventDefault()
         return
@@ -85,7 +85,7 @@ export default class Pillbox extends Component {
     }
 
     return <div styleName='styles.root'>
-      {editable && <div styleName={cx('styles.adding-root', {adding})}>
+      {editable && <div styleName={cx('styles.adding-root', { adding })}>
         <div styleName='styles.search-wrapper'>
           <input
             ref={component => { this.input = component }}
@@ -153,7 +153,7 @@ export class Pill extends Component {
   constructor (props) {
     super(props)
 
-    this.state = {removing: false}
+    this.state = { removing: false }
   }
 
   render () {
@@ -165,13 +165,13 @@ export class Pill extends Component {
         if (removing) {
           onRemove(id, label)
         } else {
-          this.setState({removing: true})
+          this.setState({ removing: true })
         }
       }
     }
 
     const mouseOut = () => {
-      this.setState({removing: false})
+      this.setState({ removing: false })
     }
 
     const pillStyles = cx(

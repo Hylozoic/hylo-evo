@@ -28,7 +28,7 @@ describe('Highlight', () => {
       className={componentClassName}
       terms={terms}
       highlightClassName={highlightClassName}
-      >{markup}</Highlight>)
+    >{markup}</Highlight>)
 
     expect(wrapper.html()).toEqual(shallow(expected).html())
   })
@@ -42,7 +42,7 @@ describe('Highlight', () => {
       className={componentClassName}
       terms={terms}
       highlightClassName={highlightClassName}>
-      <div className='outer' dangerouslySetInnerHTML={{__html: html}} />
+      <div className='outer' dangerouslySetInnerHTML={{ __html: html }} />
     </Highlight>)
 
     const expected = `<span>starts with a <span class="highlight-span">cat</span> <div>
@@ -64,7 +64,7 @@ describe('Highlight', () => {
       className={componentClassName}
       terms={terms}
       highlightClassName={highlightClassName}>
-      <div className='outer' dangerouslySetInnerHTML={{__html: html}} />
+      <div className='outer' dangerouslySetInnerHTML={{ __html: html }} />
     </Highlight>)
 
     const expected = `<span>starts with a <span class="highlight-span">cat</span> <div classname="cat">
@@ -90,7 +90,7 @@ describe('Highlight', () => {
       className={componentClassName}
       terms={terms}
       highlightClassName={highlightClassName}
-      >{markup}</Highlight>)
+    >{markup}</Highlight>)
 
     expect(wrapper.html()).toEqual(shallow(expected).html())
   })
@@ -104,7 +104,7 @@ describe('Highlight', () => {
       className={componentClassName}
       terms={terms}
       highlightClassName={highlightClassName}>
-      <div className='outer' dangerouslySetInnerHTML={{__html: html}} />
+      <div className='outer' dangerouslySetInnerHTML={{ __html: html }} />
     </Highlight>)
 
     const expected = `<div>
@@ -126,7 +126,7 @@ describe('Highlight', () => {
       className={componentClassName}
       terms={terms}
       highlightClassName={highlightClassName}>
-      <div className='outer' dangerouslySetInnerHTML={{__html: html}} />
+      <div className='outer' dangerouslySetInnerHTML={{ __html: html }} />
     </Highlight>)
 
     const expected = `<div>

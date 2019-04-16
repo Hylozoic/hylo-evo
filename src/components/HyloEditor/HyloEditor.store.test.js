@@ -10,10 +10,10 @@ import {
 } from './HyloEditor.constants.js'
 
 const people = [
-  {id: 0, name: 'Test User', avatarUrl: 'avatarURL0'},
-  {id: 1, name: 'RESUE TSET', avatarUrl: 'avatarURL1'},
-  {id: 2, name: 'Another Lastname', avatarUrl: 'avatarURL2'},
-  {id: 3, name: 'Someone Else', avatarUrl: 'avatarURL3'}
+  { id: 0, name: 'Test User', avatarUrl: 'avatarURL0' },
+  { id: 1, name: 'RESUE TSET', avatarUrl: 'avatarURL1' },
+  { id: 2, name: 'Another Lastname', avatarUrl: 'avatarURL2' },
+  { id: 3, name: 'Someone Else', avatarUrl: 'avatarURL3' }
 ]
 
 describe('findMentions', () => {

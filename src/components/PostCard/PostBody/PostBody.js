@@ -11,7 +11,7 @@ export default function PostBody ({
   className,
   highlightProps
 }) {
-  return <div styleName={cx('body', {smallMargin: !expanded})} className={className}>
+  return <div styleName={cx('body', { smallMargin: !expanded })} className={className}>
     <PostTitle {...post} highlightProp={highlightProps} />
     <PostDetails {...post} slug={slug} highlightProp={highlightProps} hideDetails={!expanded} expanded={expanded} />
   </div>
