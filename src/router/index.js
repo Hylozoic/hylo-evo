@@ -1,7 +1,7 @@
 import React from 'react'
 import { StaticRouter } from 'react-router'
 import { Switch } from 'react-router-dom'
-import { createBrowserHistory } from 'history'
+import { createBrowserHistory, createMemoryHistory } from 'history'
 import { ConnectedRouter } from 'connected-react-router'
 import PrimaryLayout from 'routes/PrimaryLayout'
 import AuthRoute from './AuthRoute'
@@ -11,7 +11,9 @@ import NonAuthLayout from 'routes/NonAuthLayout'
 import '../css/global/index.scss'
 import ErrorBoundary from 'components/ErrorBoundary'
 
-export const history = createBrowserHistory()
+// export const history = createBrowserHistory()
+
+export const history = typeof window !== 'undefined' ? createBrowserHistory() : createMemoryHistory()
 
 export function clientRouter () {
   require('client/rollbar') // set up handling of uncaught errors

@@ -18,6 +18,8 @@
     "@babel/preset-env": "7.2.3",
     "@babel/cli": "7.2.3",
     "@babel/node": "7.2.2",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
@@ -216,11 +218,12 @@
     "not op_mini all"
   ],
   "babel": {
-    "presets": [
-      "react-app"
-    ],
+    "presets": ["@babel/preset-env", "@babel/preset-react"],
     "ignore": [
       "scripts/templates/*"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
     ],
     "env": {
       "test": {
