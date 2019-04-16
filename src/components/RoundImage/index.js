@@ -1,3 +1,3 @@
-import component from './component'
+import component from './RoundImage'
 
 export default component

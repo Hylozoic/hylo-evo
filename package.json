@@ -72,6 +72,7 @@
     "@storybook/addon-links": "^v5.0.6",
     "@storybook/addons": "^v5.0.6",
     "@storybook/react": "^v5.0.6",
+    "@storybook/addon-info":"^5.0.8",
     "strip-ansi": "4.0.0",
     "style-loader": "0.23.1",
     "@svgr/webpack": "4.1.0",
