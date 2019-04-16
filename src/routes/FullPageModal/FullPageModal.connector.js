@@ -3,10 +3,12 @@ import { goBack, push } from 'connected-react-router'
 import { withRouter } from 'react-router-dom'
 import { setConfirmBeforeClose } from './FullPageModal.store'
 import { get } from 'lodash/fp'
+import getPreviousLocation from 'store/selectors/getPreviousLocation'
 
 export function mapStateToProps (state, props) {
   return {
-    confirmMessage: get('FullPageModal.confirm', state)
+    confirmMessage: get('FullPageModal.confirm', state),
+    previousLocation: getPreviousLocation(state)
   }
 }
 
@@ -17,15 +19,11 @@ export const mapDispatchToProps = {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { goBack, push, setConfirmBeforeClose } = dispatchProps
-  const { history, goToOnClose } = ownProps
-  const { confirmMessage } = stateProps
+  const { push, setConfirmBeforeClose } = dispatchProps
+  const { goToOnClose } = ownProps
+  const { confirmMessage, previousLocation } = stateProps
 
-  const navigate = goToOnClose
-    ? () => push(goToOnClose)
-    : history.length > 2
-      ? () => goBack()
-      : () => push('/')
+  const navigate = () => push(goToOnClose || previousLocation)
 
   const onClose = confirmMessage
     ? () => {

@@ -11,6 +11,8 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import voteOnPost from 'store/actions/voteOnPost'
 import joinProject from 'store/actions/joinProject'
 import leaveProject from 'store/actions/leaveProject'
+import processStripeToken from 'store/actions/processStripeToken'
+import respondToEvent from 'store/actions/respondToEvent'
 import { FETCH_POST } from 'store/constants'
 
 export function mapStateToProps (state, props) {
@@ -47,7 +49,9 @@ export function mapDispatchToProps (dispatch, props) {
     onClose: () => dispatch(push(closeLocation)),
     joinProject: () => dispatch(joinProject(postId)),
     leaveProject: () => dispatch(leaveProject(postId)),
-    voteOnPost: (myVote) => dispatch(voteOnPost(postId, myVote))
+    voteOnPost: (myVote) => dispatch(voteOnPost(postId, myVote)),
+    processStripeToken: (postId, token, amount) => dispatch(processStripeToken(postId, token, amount)),
+    respondToEvent: response => dispatch(respondToEvent(postId, response))
   }
 }
 

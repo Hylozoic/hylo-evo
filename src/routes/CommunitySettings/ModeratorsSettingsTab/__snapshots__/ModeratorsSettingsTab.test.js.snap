@@ -156,7 +156,7 @@ exports[`ModeratorsList renders correctly 1`] = `
 `;
 
 exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModerator 1`] = `
-Array [
+<Fragment>
   <ModeratorsList
     key="mList"
     moderators={
@@ -176,9 +176,8 @@ Array [
       ]
     }
     removeItem={[Function]}
-  />,
-  "",
-]
+  />
+</Fragment>
 `;
 
 exports[`ModeratorsSettingsTab renders loading if no moderators 1`] = `<Loading />`;

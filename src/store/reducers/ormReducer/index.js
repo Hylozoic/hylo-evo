@@ -15,7 +15,9 @@ import {
   UPDATE_THREAD_READ_TIME,
   VOTE_ON_POST_PENDING,
   UPDATE_POST_PENDING,
-  UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING
+  UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING,
+  PROCESS_STRIPE_TOKEN_PENDING,
+  RESPOND_TO_EVENT_PENDING
 } from 'store/constants'
 import {
   UPDATE_MEMBERSHIP_SETTINGS_PENDING,
@@ -49,6 +51,9 @@ import {
 import {
   DELETE_COMMUNITY_TOPIC_PENDING
 } from 'routes/AllTopics/AllTopics.store'
+import {
+  INVITE_PEOPLE_TO_EVENT_PENDING
+} from 'components/EventInviteDialog/EventInviteDialog.store'
 
 import orm from 'store/models'
 import clearCacheFor from './clearCacheFor'
@@ -65,6 +70,7 @@ export default function ormReducer (state = {}, action) {
     Comment,
     Community,
     CommunityTopic,
+    EventInvitation,
     Me,
     Membership,
     Message,
@@ -288,6 +294,29 @@ export default function ormReducer (state = {}, action) {
     case UPDATE_COMMENT_PENDING:
       comment = Comment.withId(meta.id)
       comment.update(meta.data)
+      break
+
+    case PROCESS_STRIPE_TOKEN_PENDING:
+      post = Post.withId(meta.postId)
+      const totalContributions = Number(post.totalContributions) + Number(meta.amount)
+      post.update({
+        totalContributions
+      })
+      break
+
+    case RESPOND_TO_EVENT_PENDING:
+      const event = Post.withId(meta.id)
+      event.update({myEventResponse: meta.response})
+      break
+
+    case INVITE_PEOPLE_TO_EVENT_PENDING:
+      meta.inviteeIds.map(inviteeId => {
+        EventInvitation.create({
+          event: meta.eventId,
+          person: inviteeId
+        })
+      })
+      clearCacheFor(Post, meta.eventId)
       break
   }
 

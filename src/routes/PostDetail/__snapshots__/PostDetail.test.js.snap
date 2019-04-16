@@ -44,20 +44,22 @@ exports[`PostDetail renders correctly 1`] = `
   />
   <PostBody
     data-stylename="body"
-    details="the body of the post"
     expanded={true}
-    id="91"
-    imageUrl="foo.jpg"
-    members={Array []}
-    myVote={true}
-    slug="foo"
-    tags={
-      Array [
-        "singing",
-        "dancing",
-      ]
+    post={
+      Object {
+        "details": "the body of the post",
+        "id": "91",
+        "imageUrl": "foo.jpg",
+        "members": Array [],
+        "myVote": true,
+        "tags": Array [
+          "singing",
+          "dancing",
+        ],
+        "votesTotal": 7,
+      }
     }
-    votesTotal={7}
+    slug="foo"
   />
   <PostCommunities
     showBottomBorder={true}
@@ -93,4 +95,202 @@ exports[`PostDetail renders correctly 1`] = `
     type="post"
   />
 </div>
+`;
+
+exports[`ProjectContributions disables button on invalid amount 1`] = `
+<ProjectContributions
+  postId={123}
+  processStripeToken={[Function]}
+  totalContributions={321}
+>
+  <div
+    data-stylename="project-contributions"
+  >
+    <div>
+      <div
+        data-stylename="amount-row"
+      >
+        <span
+          data-stylename="amount-label"
+        >
+          Amount
+        </span>
+        <TextInput
+          inputRef={[Function]}
+          noClearButton={true}
+          onChange={[Function]}
+          value="$12fc"
+        >
+          <div
+            data-stylename="wrapper"
+          >
+            <input
+              data-stylename="input"
+              onChange={[Function]}
+              onKeyDown={[Function]}
+              value="$12fc"
+            />
+          </div>
+        </TextInput>
+      </div>
+      <ReactStripeCheckout
+        ComponentClass="span"
+        amount={NaN}
+        className="StripeCheckout"
+        disabled={true}
+        label="Pay With Card"
+        locale="auto"
+        name="Contributing Via Stripe"
+        reconfigureOnUpdate={false}
+        stripeKey="pk_test_q0UO6c12K9d6oP8DGiLCxr2b"
+        token={[Function]}
+        triggerEvent="onClick"
+      >
+        <button
+          disabled={true}
+          style={
+            Object {
+              "background": "rgba(0,0,0,0.2)",
+              "border": 0,
+              "borderRadius": 5,
+              "display": "inline-block",
+              "overflow": "hidden",
+              "padding": 1,
+              "textDecoration": "none",
+              "userSelect": "none",
+            }
+          }
+        >
+          <span
+            style={
+              Object {
+                "background": "#f8f9fa",
+                "borderRadius": 4,
+                "boxShadow": "inset 0 1px 0 rgba(255,255,255,0.25)",
+                "color": "#999",
+                "display": "block",
+                "fontFamily": "\\"Helvetica Neue\\",Helvetica,Arial,sans-serif",
+                "fontSize": 14,
+                "height": 30,
+                "lineHeight": "30px",
+                "padding": "0 12px",
+                "position": "relative",
+                "textShadow": "0 1px 0 rgba(255,255,255,0.5)",
+              }
+            }
+          >
+            Pay With Card
+          </span>
+        </button>
+      </ReactStripeCheckout>
+      <Button
+        color="gray"
+        data-stylename="cancel-button"
+        label="Cancel"
+        narrow={true}
+        onClick={[Function]}
+        small={true}
+      >
+        <div
+          data-stylename="button gray narrow small"
+          onClick={[Function]}
+          role="button"
+          tabIndex={0}
+        >
+          Cancel
+        </div>
+      </Button>
+    </div>
+    <div
+      data-stylename="project-contributions-total"
+    >
+      Contributions so far: $
+      321
+    </div>
+  </div>
+</ProjectContributions>
+`;
+
+exports[`ProjectContributions renders correctly 1`] = `
+<div
+  data-stylename="project-contributions"
+>
+  <Button
+    color="green"
+    label="Contribute"
+    narrow={true}
+    onClick={[Function]}
+    small={true}
+  />
+  <div
+    data-stylename="project-contributions-total"
+  >
+    Contributions so far: $
+    321
+  </div>
+</div>
+`;
+
+exports[`ProjectContributions renders error message 1`] = `
+<ProjectContributions
+  postId={123}
+  processStripeToken={[Function]}
+  totalContributions={321}
+>
+  <div
+    data-stylename="project-contributions"
+  >
+    <div
+      data-stylename="error-notification"
+    >
+      There was a problem processing your payment. Please check your card details and try again.
+    </div>
+    <Button
+      color="green"
+      label="Contribute"
+      narrow={true}
+      onClick={[Function]}
+      small={true}
+    >
+      <div
+        data-stylename="button green narrow small"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        Contribute
+      </div>
+    </Button>
+    <div
+      data-stylename="project-contributions-total"
+    >
+      Contributions so far: $
+      321
+    </div>
+  </div>
+</ProjectContributions>
+`;
+
+exports[`ProjectContributions renders received message 1`] = `
+<ProjectContributions
+  postId={123}
+  processStripeToken={[Function]}
+  totalContributions={321}
+>
+  <div
+    data-stylename="project-contributions"
+  >
+    <div
+      data-stylename="success-notification"
+    >
+      Thanks for your contribution!
+    </div>
+    <div
+      data-stylename="project-contributions-total"
+    >
+      Contributions so far: $
+      321
+    </div>
+  </div>
+</ProjectContributions>
 `;

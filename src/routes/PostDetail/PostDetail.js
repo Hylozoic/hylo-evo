@@ -1,18 +1,21 @@
 import React, { Component } from 'react'
+import StripeCheckout from 'react-stripe-checkout'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { get, throttle, isEmpty } from 'lodash/fp'
 import { tagUrl } from 'util/navigation'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
-import { PostImage, PostBody, PostFooter, PostHeader, PostCommunities } from 'components/PostCard'
+import { PostImage, PostBody, PostFooter, PostHeader, PostCommunities, EventBody } from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
 import Comments from './Comments'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
-import ProjectMembersDialog from 'components/ProjectMembersDialog'
+import TextInput from 'components/TextInput'
+import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
+import PostPeopleDialog from 'components/PostPeopleDialog'
 import './PostDetail.scss'
 
 // the height of the header plus the padding-top
@@ -33,7 +36,7 @@ export default class PostDetail extends Component {
     atActivity: false,
     activityWidth: 0,
     activityScrollOffset: 0,
-    showMembersDialog: false
+    showPeopleDialog: false
   }
 
   setHeaderStateFromDOM = () => {
@@ -90,7 +93,7 @@ export default class PostDetail extends Component {
     }
   })
 
-  toggleMembersDialog = () => this.setState(state => ({showMembersDialog: !state.showMembersDialog}))
+  togglePeopleDialog = () => this.setState(state => ({showPeopleDialog: !state.showPeopleDialog}))
 
   render () {
     const {
@@ -100,7 +103,10 @@ export default class PostDetail extends Component {
       isProjectMember,
       joinProject,
       leaveProject,
-      pending
+      pending,
+      processStripeToken,
+      currentUser,
+      respondToEvent
     } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
 
@@ -108,6 +114,10 @@ export default class PostDetail extends Component {
     if (pending) return <Loading />
 
     const isProject = get('type', post) === 'project'
+    const isEvent = get('type', post) === 'event'
+
+    const { acceptContributions, totalContributions } = post || {}
+
     const scrollToBottom = () => {
       const detail = document.getElementById(DETAIL_COLUMN_ID)
       detail.scrollTop = detail.scrollHeight
@@ -119,14 +129,24 @@ export default class PostDetail extends Component {
       width: activityWidth + 'px',
       marginTop: STICKY_HEADER_SCROLL_OFFSET + 'px'
     }
-    const hasMembers = post.members.length > 0
-    let { showMembersDialog } = this.state
-    showMembersDialog = hasMembers && showMembersDialog
-    const toggleMembersDialog = hasMembers && this.toggleMembersDialog ? this.toggleMembersDialog : undefined
+
+    var people, postPeopleDialogTitle
+    if (isProject) {
+      people = post.members
+      postPeopleDialogTitle = 'Project Members'
+    } else if (isEvent) {
+      people = post.eventInvitations
+      postPeopleDialogTitle = 'Responses'
+    }
+
+    const hasPeople = people && people.length > 0
+    let { showPeopleDialog } = this.state
+    showPeopleDialog = hasPeople && showPeopleDialog
+    const togglePeopleDialog = hasPeople && this.togglePeopleDialog ? this.togglePeopleDialog : undefined
     const postFooter = <PostFooter
       {...post}
       voteOnPost={voteOnPost}
-      onClick={toggleMembersDialog} />
+      onClick={togglePeopleDialog} />
 
     return <div styleName='post' ref={this.setHeaderStateFromDOM}>
       <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
@@ -136,26 +156,38 @@ export default class PostDetail extends Component {
       </div>}
       <PostImage postId={post.id} styleName='image' linked />
       <PostTags tags={post.tags} />
-      <PostBody
+      {isEvent && <EventBody
         styleName='body'
         expanded
         slug={routeParams.slug}
-        {...post} />
+        event={post}
+        respondToEvent={respondToEvent} />}
+      {!isEvent && <PostBody
+        styleName='body'
+        expanded
+        slug={routeParams.slug}
+        post={post} />}
       {isProject && <div styleName='join-project-button-container'>
         <JoinProjectButton
           joinProject={joinProject}
           leaveProject={leaveProject}
           leaving={isProjectMember} />
       </div>}
+      {isProject && acceptContributions && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) &&
+        <ProjectContributions
+          postId={post.id}
+          totalContributions={totalContributions}
+          processStripeToken={processStripeToken} />}
       <PostCommunities
         communities={post.communities}
         slug={routeParams.slug}
         showBottomBorder />
       <div styleName='activity-header' ref={this.setActivityStateFromDOM}>ACTIVITY</div>
       {postFooter}
-      {showMembersDialog && <ProjectMembersDialog
-        members={post.members}
-        onClose={toggleMembersDialog} />}
+      {showPeopleDialog && <PostPeopleDialog
+        title={postPeopleDialogTitle}
+        members={people}
+        onClose={togglePeopleDialog} />}
       {atActivity && <div styleName='activity-sticky' style={activityStyle}>
         <div styleName='activity-header'>ACTIVITY</div>
         {postFooter}
@@ -188,4 +220,85 @@ export function JoinProjectButton ({ leaving, joinProject, leaveProject }) {
     styleName='join-project-button'>
     {buttonText}
   </Button>
+}
+
+export class ProjectContributions extends Component {
+  state = {
+    expanded: false,
+    contributionAmount: ''
+  }
+
+  toggleExpanded = () => {
+    this.setState({
+      expanded: !this.state.expanded,
+      received: false
+    })
+  }
+
+  setAmount = (event) => {
+    this.setState({
+      contributionAmount: event.target.value.replace('$', '')
+    })
+  }
+
+  render () {
+    const { postId, totalContributions, processStripeToken } = this.props
+    const { expanded, contributionAmount, received, error } = this.state
+
+    const onToken = token => {
+      this.setState({
+        expanded: false,
+        received: false,
+        error: false
+      })
+      processStripeToken(postId, token.id, contributionAmount)
+      .then(({ error }) => {
+        this.setAmount({target: {value: '0'}})
+        if (error) {
+          this.setState({error: true})
+        } else {
+          this.setState({received: true})
+        }
+      })
+    }
+
+    const contributionAmountNumber = Number(contributionAmount)
+    const valid = !isNaN(contributionAmountNumber) &&
+      contributionAmount > 0
+
+    return <div styleName='project-contributions'>
+      {received && <div styleName='success-notification'>Thanks for your contribution!</div>}
+      {error && <div styleName='error-notification'>There was a problem processing your payment. Please check your card details and try again.</div>}
+      {!expanded && !received && <Button
+        color='green'
+        onClick={this.toggleExpanded}
+        label='Contribute'
+        small
+        narrow />}
+      {expanded && <div>
+        <div styleName='amount-row'>
+          <span styleName='amount-label'>Amount</span>
+          <TextInput
+            onChange={this.setAmount}
+            inputRef={input => { this.amountInput = input }}
+            value={'$' + contributionAmount}
+            noClearButton />
+        </div>
+        <StripeCheckout
+          disabled={!valid}
+          name='Contributing Via Stripe'
+          token={onToken}
+          stripeKey={process.env.STRIPE_PUBLISHABLE_KEY}
+          amount={Number(contributionAmount)} />
+        <Button
+          styleName='cancel-button'
+          color='gray'
+          onClick={this.toggleExpanded}
+          label='Cancel'
+          small
+          narrow />
+      </div>}
+      <div styleName='project-contributions-total'>Contributions so far: ${totalContributions}</div>
+    </div>
+  }
 }

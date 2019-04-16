@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { threadUrl } from 'util/navigation'
 import fetchThreads from 'store/actions/fetchThreads'
-import { getThreads } from 'routes/Messages/ThreadList/ThreadList.store'
+import { getThreads } from 'routes/Messages/Messages.store'
 import getMe from 'store/selectors/getMe'
 import { FETCH_THREADS } from 'store/constants'
 

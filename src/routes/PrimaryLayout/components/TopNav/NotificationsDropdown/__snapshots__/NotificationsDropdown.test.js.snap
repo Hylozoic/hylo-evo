@@ -144,6 +144,142 @@ exports[`Notification renders correctly with a comment notification 1`] = `
 </li>
 `;
 
+exports[`Notification renders correctly with a donation to notification 1`] = `
+<li
+  data-stylename="notification unread"
+  onClick={[Function]}
+>
+  <div
+    data-stylename="image-wraper"
+  >
+    <RoundImage
+      url="bar.png"
+    />
+  </div>
+  <div
+    data-stylename="content"
+  >
+    <NotificationHeader
+      notification={
+        Object {
+          "activity": Object {
+            "action": "donation to",
+            "actor": Object {
+              "avatarUrl": "bar.png",
+              "id": 2,
+              "name": "Marie Curie",
+            },
+            "contributionAmount": 12300,
+            "meta": Object {},
+            "post": Object {
+              "title": "Our Oceans",
+            },
+            "unread": true,
+          },
+          "createdAt": 1995-12-17T03:23:00.000Z,
+          "id": 1,
+        }
+      }
+    />
+    <NotificationBody
+      notification={
+        Object {
+          "activity": Object {
+            "action": "donation to",
+            "actor": Object {
+              "avatarUrl": "bar.png",
+              "id": 2,
+              "name": "Marie Curie",
+            },
+            "contributionAmount": 12300,
+            "meta": Object {},
+            "post": Object {
+              "title": "Our Oceans",
+            },
+            "unread": true,
+          },
+          "createdAt": 1995-12-17T03:23:00.000Z,
+          "id": 1,
+        }
+      }
+    />
+    <div
+      data-stylename="date"
+    >
+      23 years ago
+    </div>
+  </div>
+</li>
+`;
+
+exports[`Notification renders correctly with a donation to notification 2`] = `
+<li
+  data-stylename="notification unread"
+  onClick={[Function]}
+>
+  <div
+    data-stylename="image-wraper"
+  >
+    <RoundImage
+      url="bar.png"
+    />
+  </div>
+  <div
+    data-stylename="content"
+  >
+    <NotificationHeader
+      notification={
+        Object {
+          "activity": Object {
+            "action": "donation from",
+            "actor": Object {
+              "avatarUrl": "bar.png",
+              "id": 2,
+              "name": "Marie Curie",
+            },
+            "contributionAmount": 12300,
+            "meta": Object {},
+            "post": Object {
+              "title": "Our Oceans",
+            },
+            "unread": true,
+          },
+          "createdAt": 1995-12-17T03:23:00.000Z,
+          "id": 1,
+        }
+      }
+    />
+    <NotificationBody
+      notification={
+        Object {
+          "activity": Object {
+            "action": "donation from",
+            "actor": Object {
+              "avatarUrl": "bar.png",
+              "id": 2,
+              "name": "Marie Curie",
+            },
+            "contributionAmount": 12300,
+            "meta": Object {},
+            "post": Object {
+              "title": "Our Oceans",
+            },
+            "unread": true,
+          },
+          "createdAt": 1995-12-17T03:23:00.000Z,
+          "id": 1,
+        }
+      }
+    />
+    <div
+      data-stylename="date"
+    >
+      23 years ago
+    </div>
+  </div>
+</li>
+`;
+
 exports[`Notification renders correctly with a join request notification 1`] = `
 <li
   data-stylename="notification unread"
@@ -446,6 +582,40 @@ exports[`NotificationBody renders correctly with a comment notification 1`] = `
 </div>
 `;
 
+exports[`NotificationBody renders correctly with a donation from notification 1`] = `
+<div
+  data-stylename="body"
+>
+  <span
+    data-stylename="bold"
+  >
+    Marie Curie
+  </span>
+   contributed $
+  123
+   to "
+  Our Oceans
+  "
+</div>
+`;
+
+exports[`NotificationBody renders correctly with a donation to notification 1`] = `
+<div
+  data-stylename="body"
+>
+  <span
+    data-stylename="bold"
+  >
+    You
+  </span>
+   contributed $
+  123
+   to "
+  Our Oceans
+  "
+</div>
+`;
+
 exports[`NotificationBody renders correctly with a join request notification 1`] = `
 <div
   data-stylename="body"
@@ -561,6 +731,33 @@ exports[`NotificationHeader renders correctly with a comment notification 1`] = 
   >
     Our Oceans
   </span>
+</div>
+`;
+
+exports[`NotificationHeader renders correctly with a donation from notification 1`] = `
+<div
+  data-stylename="header"
+>
+  <span
+    data-stylename="bold"
+  >
+    Marie Curie
+     
+  </span>
+  contributed to your project
+</div>
+`;
+
+exports[`NotificationHeader renders correctly with a donation to notification 1`] = `
+<div
+  data-stylename="header"
+>
+  <span
+    data-stylename="bold"
+  >
+    You 
+  </span>
+  contributed to a project
 </div>
 `;
 

@@ -70,60 +70,56 @@ exports[`renders as expected 1`] = `
     postId="FAKE_29222"
   />
   <PostBody
-    commenters={
-      Array [
-        Object {
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/manigm/128.jpg?1184",
-          "id": 98730,
-          "name": "Van Hudson",
-          "tagline": "Direct Research Consultant",
-        },
-        Object {
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/aleinadsays/128.jpg?75497",
-          "id": 66803,
-          "name": "Ms. Dawn Beahan",
-          "tagline": "National Accounts Architect",
-        },
-        Object {
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/ultragex/128.jpg?72463",
-          "id": 81915,
-          "name": "Ms. Coleman Krajcik",
-          "tagline": "Dynamic Response Specialist",
-        },
-      ]
-    }
-    commentersTotal={76572}
-    communities={
-      Array [
-        Object {
-          "id": "1",
-          "name": "Great Cause",
-          "slug": "great",
-        },
-      ]
-    }
-    context="Stop Wombat Walrus"
-    creator={
+    post={
       Object {
-        "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/claudioguglieri/128.jpg?82483",
-        "id": 82690,
-        "name": "Frederic Crona",
-        "tagline": "Legacy Marketing Executive",
+        "commenters": Array [
+          Object {
+            "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/manigm/128.jpg?1184",
+            "id": 98730,
+            "name": "Van Hudson",
+            "tagline": "Direct Research Consultant",
+          },
+          Object {
+            "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/aleinadsays/128.jpg?75497",
+            "id": 66803,
+            "name": "Ms. Dawn Beahan",
+            "tagline": "National Accounts Architect",
+          },
+          Object {
+            "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/ultragex/128.jpg?72463",
+            "id": 81915,
+            "name": "Ms. Coleman Krajcik",
+            "tagline": "Dynamic Response Specialist",
+          },
+        ],
+        "commentersTotal": 76572,
+        "communities": Array [
+          Object {
+            "id": "1",
+            "name": "Great Cause",
+            "slug": "great",
+          },
+        ],
+        "context": "Stop Wombat Walrus",
+        "creator": Object {
+          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/claudioguglieri/128.jpg?82483",
+          "id": 82690,
+          "name": "Frederic Crona",
+          "tagline": "Legacy Marketing Executive",
+        },
+        "details": "Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!",
+        "id": "FAKE_29222",
+        "tags": Array [
+          "activism",
+          "petition",
+        ],
+        "title": "We put this together as a PDF for hand-out at your next event or university class",
+        "type": "offer",
+        "updatedAt": "2014-01-17T00:00:00.000Z",
+        "votesTotal": 11519,
       }
     }
-    details="Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!"
-    id="FAKE_29222"
     slug="foom"
-    tags={
-      Array [
-        "activism",
-        "petition",
-      ]
-    }
-    title="We put this together as a PDF for hand-out at your next event or university class"
-    type="offer"
-    updatedAt="2014-01-17T00:00:00.000Z"
-    votesTotal={11519}
   />
   <PostCommunities
     communities={

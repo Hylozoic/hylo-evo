@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EventBody matches last snapshot 1`] = `
+<div
+  className="external-class"
+  data-stylename="body"
+>
+  <EventDate
+    endTime={"2019-03-07T00:41:23.315Z"}
+    location="Oakland"
+    startTime={"2019-03-06T21:41:23.315Z"}
+  />
+  <div
+    data-stylename="eventBodyColumn"
+  >
+    <PostTitle
+      endTime={"2019-03-07T00:41:23.315Z"}
+      location="Oakland"
+      startTime={"2019-03-06T21:41:23.315Z"}
+    />
+    <div
+      data-stylename="eventData"
+    >
+      <Icon
+        data-stylename="icon"
+        name="Clock"
+      />
+       
+      Wed, Mar 6 at 2:41PM - 5:41PM
+    </div>
+    <div
+      data-stylename="eventData eventLocation"
+    >
+      <Icon
+        data-stylename="icon"
+        name="Location"
+      />
+       
+      Oakland
+    </div>
+    <PostDetails
+      endTime={"2019-03-07T00:41:23.315Z"}
+      expanded={true}
+      hideDetails={false}
+      location="Oakland"
+      slug="sluggo"
+      startTime={"2019-03-06T21:41:23.315Z"}
+    />
+  </div>
+  <EventRSVP
+    endTime={"2019-03-07T00:41:23.315Z"}
+    location="Oakland"
+    respondToEvent={[Function]}
+    startTime={"2019-03-06T21:41:23.315Z"}
+  />
+</div>
+`;

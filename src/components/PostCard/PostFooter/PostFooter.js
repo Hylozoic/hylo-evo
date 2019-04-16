@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { CURRENT_USER_PROP_TYPES } from 'store/models/Me'
-import { PersonPropTypes } from 'store/models/Person'
-import { find, get, sortBy, isFunction } from 'lodash/fp'
+import { RESPONSES } from 'store/models/EventInvitation'
+import { PERSON_PROP_TYPES } from 'store/models/Person'
+import { find, get, sortBy, isFunction, filter } from 'lodash/fp'
 import './PostFooter.scss'
 import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
@@ -26,6 +27,7 @@ export default class PostFooter extends React.PureComponent {
     const {
       currentUser,
       commenters,
+      eventInvitations,
       commentersTotal,
       votesTotal,
       myVote,
@@ -34,31 +36,56 @@ export default class PostFooter extends React.PureComponent {
     } = this.props
     const onClick = isFunction(this.props.onClick) ? this.props.onClick : undefined
     const vote = isFunction(this.props.voteOnPost) ? () => this.props.voteOnPost() : undefined
-    let peopleRowResult
+
+    const eventAttendees = filter(ei => ei.response === RESPONSES.YES, eventInvitations)
+
+    let peopleRowResult        
+
+    switch (type) {
+      case 'project':
+        peopleRowResult = peopleSetup(
+          members,
+          members.length,
+          get('id', currentUser),
+          {
+            emptyMessage: 'No project members',
+            phraseSingular: 'is a member',
+            mePhraseSingular: 'are a member',
+            pluralPhrase: 'are members'
+          }
+        )
+        break
+      case 'event':
+        peopleRowResult = peopleSetup(
+          eventAttendees,
+          eventAttendees.length,
+          get('id', currentUser),
+          {
+            emptyMessage: 'No one is attending yet',
+            phraseSingular: 'is attending',
+            mePhraseSingular: 'are attending',
+            pluralPhrase: 'attending'
+          }
+        )
+        break
+      default:
+        peopleRowResult = peopleSetup(
+          commenters,
+          commentersTotal,
+          get('id', currentUser),
+          {
+            emptyMessage: 'Be the first to comment',
+            phraseSingular: 'commented',
+            mePhraseSingular: 'commented',
+            pluralPhrase: 'commented'
+          }
+        )
+    }
+
     if (type === 'project') {
-      peopleRowResult = peopleSetup(
-        members,
-        members.length,
-        get('id', currentUser),
-        {
-          emptyMessage: 'No project members',
-          phraseSingular: 'is a member',
-          mePhraseSingular: 'are a member',
-          pluralPhrase: 'are members'
-        }
-      )
+
     } else {
-      peopleRowResult = peopleSetup(
-        commenters,
-        commentersTotal,
-        get('id', currentUser),
-        {
-          emptyMessage: 'Be the first to comment',
-          phraseSingular: 'commented',
-          mePhraseSingular: 'commented',
-          pluralPhrase: 'commented'
-        }
-      )
+      
     }
     const { caption, avatarUrls } = peopleRowResult
 
