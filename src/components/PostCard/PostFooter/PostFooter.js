@@ -18,7 +18,7 @@ export default class PostFooter extends React.PureComponent {
     commentersTotal: PropTypes.number,
     votesTotal: PropTypes.number,
     myVote: PropTypes.bool,
-    members: PropTypes.arrayOf(PropTypes.shape(PersonPropTypes)),
+    members: PropTypes.arrayOf(PropTypes.shape(PERSON_PROP_TYPES)),
     voteOnPost: PropTypes.func.isRequired,
     onClick: PropTypes.func
   }

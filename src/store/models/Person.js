@@ -27,7 +27,7 @@ Person.fields = {
   votesTotal: attr()
 }
 
-export const PersonPropTypes = {
+export const PERSON_PROP_TYPES = {
   id: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number
