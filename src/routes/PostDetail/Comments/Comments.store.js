@@ -5,7 +5,7 @@ import { AnalyticsEvents } from 'hylo-utils/constants'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 import orm from 'store/models'
 
-export function fetchComments (id, opts = {}) {
+export function fetchComments (id, opts = {}, holochainAPI = false) {
   return {
     type: FETCH_COMMENTS,
     graphql: {
@@ -38,6 +38,7 @@ export function fetchComments (id, opts = {}) {
       }
     },
     meta: {
+      holochainAPI,
       extractModel: 'Post',
       extractQueryResults: {
         getItems: get('payload.data.post.comments')
@@ -46,12 +47,14 @@ export function fetchComments (id, opts = {}) {
   }
 }
 
-export function createComment (postId, text) {
+export function createComment (postId, text, holochainAPI = false) {
+  const createdAt = new Date().toISOString()
+
   return {
     type: CREATE_COMMENT,
     graphql: {
-      query: `mutation ($postId: String, $text: String) {
-        createComment(data: {postId: $postId, text: $text}) {
+      query: `mutation ($postId: String, $text: String, $createdAt: String) {
+        createComment(data: {postId: $postId, text: $text, createdAt: $createdAt}) {
           id
           text
           post {
@@ -65,10 +68,12 @@ export function createComment (postId, text) {
       }`,
       variables: {
         postId,
-        text
+        text,
+        createdAt
       }
     },
     meta: {
+      holochainAPI,
       optimistic: true,
       extractModel: 'Comment',
       tempId: uniqueId(`post${postId}_`),

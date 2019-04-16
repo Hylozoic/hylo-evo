@@ -19,6 +19,16 @@ export default class Comments extends Component {
 
   componentDidMount () {
     this.width = this.comments.offsetWidth
+    // these calls to fetchComments are temporary measures while we're fetching the post from hylo. 
+    // once we're fetching the post from holo we can remove
+    this.props.fetchComments()
+  }
+
+  componentDidUpdate (prevProps) {
+    // see comment above in componentDidMount 
+    if (this.props.postId !== prevProps.postId) {
+      this.props.fetchComments()
+    }
   }
 
   render () {
