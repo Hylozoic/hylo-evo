@@ -1,5 +1,4 @@
 import React from 'react'
-import { MemoryRouter } from 'react-router'
 import { shallow } from 'enzyme'
 import JoinCommunity, { SIGNUP_PATH, EXPIRED_INVITE_PATH } from './JoinCommunity'
 
