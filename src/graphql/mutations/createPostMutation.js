@@ -1,4 +1,4 @@
-import getPostFieldsFragment from 'graphql/fragments/getPostFieldsFragment'
+import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
 
 export default
 `mutation (
@@ -32,5 +32,5 @@ export default
     startTime: $startTime,
     endTime: $endTime,
     location: $location
-  }) {${getPostFieldsFragment(false)}}
+  }) {${postFieldsFragment(false)}}
 }`
