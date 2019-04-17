@@ -58,8 +58,6 @@ jobs:
     - run: sudo sh -c 'echo "deb https://dl.yarnpkg.com/debian/ stable main" >> /etc/apt/sources.list.d/yarn.list'
     - run: sudo apt update
     - run: sudo apt install yarn
-    - run: dpkg -L yarn
-    - run: /usr/share/yarn/bin/yarn --version
     # Dependencies
     #   This would typically go in either a build or a build-and-test job when using workflows
     # Restore the dependency cache
