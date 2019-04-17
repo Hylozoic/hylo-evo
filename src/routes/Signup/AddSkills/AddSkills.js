@@ -12,6 +12,7 @@ export default class AddSkills extends Component {
       editing: false,
       skillText: ''
     }
+    this.skillInput = React.createRef()
   }
 
   clickHandler = (skill) => {
@@ -42,7 +43,7 @@ export default class AddSkills extends Component {
       editing: true,
       skillText: ''
     })
-    this.skillInput && this.skillInput.focus()
+    this.skillInput.current && this.skillInput.current.focus()
   }
 
   createNewSkill = () => {
@@ -72,7 +73,7 @@ export default class AddSkills extends Component {
         <br />
         <div styleName='center'>
           <input
-            ref={input => { this.skillInput = input }}
+            ref={this.skillInput}
             value={skillText}
             styleName='signup-input center-text signup-padding large-input-text gray-bottom-border'
             autoFocus

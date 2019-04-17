@@ -17,8 +17,14 @@ export default class Comments extends Component {
     slug: string
   }
 
+  constructor (props) {
+    super(props)
+
+    this.comments = React.createRef()
+  }
+
   componentDidMount () {
-    this.width = this.comments.offsetWidth
+    this.width = this.comments.current.offsetWidth
   }
 
   render () {
@@ -37,7 +43,7 @@ export default class Comments extends Component {
       width: this.width + 'px'
     }
 
-    return <div styleName='comments' ref={x => { this.comments = x }}>
+    return <div styleName='comments' ref={this.comments}>
       <ShowMore
         commentsLength={comments.length}
         total={total}

@@ -137,6 +137,7 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
         </div>
         <TextareaAutosize
           data-stylename="explanation-textbox"
+          inputRef={[Function]}
           minRows={6}
           onChange={[Function]}
           onHeightChange={[Function]}
@@ -234,6 +235,7 @@ exports[`FlagContent changes title based on type 1`] = `
       </div>
       <TextareaAutosize
         data-stylename="explanation-textbox"
+        inputRef={[Function]}
         minRows={6}
         onChange={[Function]}
         onHeightChange={[Function]}
@@ -312,6 +314,7 @@ exports[`FlagContent matches the last snapshot 1`] = `
       </div>
       <TextareaAutosize
         data-stylename="explanation-textbox"
+        inputRef={[Function]}
         minRows={6}
         onChange={[Function]}
         onHeightChange={[Function]}

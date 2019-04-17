@@ -1,5 +1,5 @@
-import PostDetail, { ProjectContributions } from './PostDetail'
-import { shallow, mount } from 'enzyme'
+import PostDetail from './PostDetail'
+import { shallow } from 'enzyme'
 import React from 'react'
 
 describe('PostDetail', () => {
@@ -28,55 +28,6 @@ describe('PostDetail', () => {
       routeParams={routeParams}
       fetchPost={jest.fn()}
       voteOnPost={jest.fn()} />)
-    expect(wrapper).toMatchSnapshot()
-  })
-})
-
-describe('ProjectContributions', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<ProjectContributions
-      postId={123}
-      totalContributions={321}
-      processStripeToken={jest.fn()} />)
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  it('toggles expanded correctly', () => {
-    const wrapper = mount(<ProjectContributions
-      postId={123}
-      totalContributions={321}
-      processStripeToken={jest.fn()} />)
-    wrapper.instance().toggleExpanded()
-    expect(wrapper.instance().state.expanded).toBe(true)
-  })
-
-  it('renders received message', () => {
-    const wrapper = mount(<ProjectContributions
-      postId={123}
-      totalContributions={321}
-      processStripeToken={jest.fn()} />)
-    wrapper.setState({ received: true })
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  it('renders error message', () => {
-    const wrapper = mount(<ProjectContributions
-      postId={123}
-      totalContributions={321}
-      processStripeToken={jest.fn()} />)
-    wrapper.setState({ error: true })
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  it('disables button on invalid amount', () => {
-    const wrapper = mount(<ProjectContributions
-      postId={123}
-      totalContributions={321}
-      processStripeToken={jest.fn()} />)
-    wrapper.setState({
-      contributionAmount: '12fc',
-      expanded: true
-    })
     expect(wrapper).toMatchSnapshot()
   })
 })

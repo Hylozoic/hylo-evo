@@ -17,6 +17,7 @@ import {
 export default class Review extends Component {
   constructor () {
     super()
+
     this.state = {
       readOnly: {
         name: true,
@@ -168,7 +169,6 @@ export default class Review extends Component {
             editHandler={(event) => this.editHandler('name')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'name')}
-            inputRef={(input) => { this.name = input }}
           />
           <ReviewTextInput
             label={'Your Email'}
@@ -177,7 +177,6 @@ export default class Review extends Component {
             editHandler={() => this.editHandler('email')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'email')}
-            inputRef={(input) => { this.email = input }}
           />
           <ReviewTextInput
             label={'Community Name'}
@@ -186,7 +185,6 @@ export default class Review extends Component {
             editHandler={() => this.editHandler('communityName')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'communityName')}
-            inputRef={(input) => { this.communityName = input }}
           />
           <ReviewTextInput
             label={'URL'}
@@ -195,7 +193,6 @@ export default class Review extends Component {
             editHandler={() => this.editHandler('communityDomain')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'communityDomain')}
-            inputRef={(input) => { this.communityDomain = input }}
           />
           {networkName && <ReviewTextInput
             label={'Network'}

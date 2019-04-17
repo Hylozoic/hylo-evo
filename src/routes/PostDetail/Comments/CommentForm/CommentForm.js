@@ -15,6 +15,11 @@ export default class CommentForm extends Component {
     className: string,
     placeholderText: string
   }
+  constructor (props) {
+    super(props)
+
+    this.editor = React.createRef()
+  }
 
   startTyping = throttle((editorState, stateChanged) => {
     if (editorState.getLastChangeType() === 'insert-characters' && stateChanged) {
@@ -34,11 +39,11 @@ export default class CommentForm extends Component {
 
     const placeholder = `Hi ${currentUser.firstName()}, what's on your mind?`
     return <div styleName='commentForm' className={className}
-      onClick={() => this.editor.focus()}>
+      onClick={() => this.editor.current.focus()}>
       <div styleName={'prompt'}>
         <RoundImage url={currentUser.avatarUrl} small styleName='image' />
         <HyloEditor
-          ref={x => { this.editor = x }}
+          ref={this.editor}
           styleName='editor'
           onChange={this.startTyping}
           placeholder={placeholder}

@@ -112,7 +112,6 @@ export default class AddLocation extends Component {
                   }
                 }}
                 autoFocus
-                ref={(input) => { this.name = input }}
                 value={this.getValue('name')}
                 readOnly={this.state.readOnly.name}
               />
@@ -136,7 +135,6 @@ export default class AddLocation extends Component {
                   }
                 }}
                 autoFocus
-                ref={(input) => { this.email = input }}
                 value={this.getValue('email')}
                 readOnly={this.state.readOnly.email}
               />
@@ -160,7 +158,6 @@ export default class AddLocation extends Component {
                   }
                 }}
                 autoFocus
-                ref={(input) => { this.location = input }}
                 value={this.getValue('location')}
                 readOnly={this.state.readOnly.location}
               />

@@ -102,12 +102,17 @@ export default class PostEditor extends React.Component {
 
   constructor (props) {
     super(props)
+
     this.state = this.buildStateFromProps(props)
+    this.titleInput = React.createRef()
+    this.editor = React.createRef()
+    this.communitiesSelector = React.createRef()
+    this.topicSelector = React.createRef()
   }
 
   componentDidMount () {
     setTimeout(() => {
-      this.titleInput.focus()
+      this.titleInput.current.focus()
     }, 100)
   }
 
@@ -115,7 +120,7 @@ export default class PostEditor extends React.Component {
     const linkPreview = this.props.linkPreview
     if (get('post.id', this.props) !== get('post.id', prevProps)) {
       this.reset(this.props)
-      this.editor.focus()
+      this.editor.current.focus()
     } else if (linkPreview !== prevProps.linkPreview) {
       this.setState({
         post: { ...this.state.post, linkPreview }
@@ -128,12 +133,12 @@ export default class PostEditor extends React.Component {
   }
 
   reset = (props) => {
-    this.editor.reset()
-    this.communitiesSelector.reset()
+    this.editor.current.reset()
+    this.communitiesSelector.current.reset()
     this.setState(this.buildStateFromProps(props))
   }
 
-  focus = () => this.editor && this.editor.focus()
+  focus = () => this.editor.current && this.editor.current.focus()
 
   handlePostTypeSelection = event => {
     const type = event.target.textContent.toLowerCase()
@@ -283,7 +288,7 @@ export default class PostEditor extends React.Component {
     const { type, title, communities, startTime, endTime } = Object.assign({}, this.state.post, postUpdates)
     const { isEvent } = this.props
 
-    return !!(this.editor &&
+    return !!(this.editor.current &&
       communities &&
       type.length > 0 &&
       title.length > 0 &&
@@ -300,8 +305,8 @@ export default class PostEditor extends React.Component {
     const {
       id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, location
     } = this.state.post
-    const details = this.editor.getContentHTML()
-    const topicNames = this.topicSelector.getSelected().map(t => t.name)
+    const details = this.editor.current.getContentHTML()
+    const topicNames = this.topicSelector.current.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
     const postToSave = {
@@ -341,7 +346,7 @@ export default class PostEditor extends React.Component {
 
     const showPostTypes = !isProject && !isEvent
 
-    return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
+    return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
       <div styleName='header'>
         <div styleName='initial'>
           <div styleName='initial-prompt'>{initialPrompt}</div>
@@ -369,7 +374,7 @@ export default class PostEditor extends React.Component {
             value={title || ''}
             onChange={this.handleTitleChange}
             disabled={loading}
-            ref={x => { this.titleInput = x }}
+            ref={this.titleInput}
             maxLength={MAX_TITLE_LENGTH} />
           {titleLengthError && <span styleName='title-error'>{`Title can't have more than ${MAX_TITLE_LENGTH} characters`}</span>}
           <HyloEditor
@@ -379,7 +384,7 @@ export default class PostEditor extends React.Component {
             contentHTML={details}
             readOnly={loading}
             parentComponent={'PostEditor'}
-            ref={component => { this.editor = component }}
+            ref={this.editor}
           />
         </div>
       </div>
@@ -395,7 +400,6 @@ export default class PostEditor extends React.Component {
               initialMembers={members || []}
               onChange={this.updateProjectMembers}
               readOnly={loading}
-              ref={component => { this.membersSelector = component }}
             />
           </div>
         </div>}
@@ -426,7 +430,7 @@ export default class PostEditor extends React.Component {
             placeholder='Where is your event'
             value={location || ''}
             onChange={this.handleLocationChange}
-            ref={x => { this.locationInput = x }} />
+          />
         </div>}
         {isEvent && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Invite People</div>
@@ -435,7 +439,6 @@ export default class PostEditor extends React.Component {
               initialMembers={eventInvitations || []}
               onChange={this.updateEventInvitations}
               readOnly={loading}
-              ref={component => { this.eventSelector = component }}
             />
           </div>
         </div>}
@@ -445,7 +448,7 @@ export default class PostEditor extends React.Component {
             <TopicSelector
               selectedTopics={topics}
               detailsTopics={detailsTopics}
-              ref={component => { this.topicSelector = component && component.getWrappedInstance() }} />
+              ref={this.topicSelector} />
           </div>
         </div>
         <div styleName='footerSection'>
@@ -456,7 +459,7 @@ export default class PostEditor extends React.Component {
               selected={communities}
               onChange={this.setSelectedCommunities}
               readOnly={loading}
-              ref={component => { this.communitiesSelector = component }}
+              ref={this.communitiesSelector}
             />
           </div>
         </div>
