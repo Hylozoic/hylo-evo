@@ -1,8 +1,8 @@
-import MessageSection from './MessageSection'
-import { mount, shallow } from 'enzyme'
 import React from 'react'
+import { mount, shallow } from 'enzyme'
 import { mountWithMockRouter } from 'util/testing'
 import Loading from 'components/Loading'
+import MessageSection from './MessageSection'
 
 const person1 = { id: '1', name: 'City Bob' }
 const person2 = { id: '2', name: 'Country Alice' }
@@ -59,7 +59,7 @@ beforeEach(() => {
 })
 
 it('renders as expected', () => {
-  wrapper = shallow(<MessageSection messages={messages} />, { disableLifecycleMethods: true })
+  wrapper = shallow(<MessageSection messages={messages} fetchMessages={() => {}} />, { disableLifecycleMethods: true })
   expect(wrapper).toMatchSnapshot()
 })
 
@@ -67,7 +67,7 @@ it('fetches messages when the socket reconnects', () => {
   const reconnectFetchMessages = jest.fn()
 
   mount(<MessageSection messages={[]} socket={socket}
-    reconnectFetchMessages={reconnectFetchMessages} />)
+    fetchMessages={() => {}} reconnectFetchMessages={reconnectFetchMessages} />)
 
   expect(socket.on).toBeCalled()
   const [ eventName, callback ] = socket.on.mock.calls[0]
@@ -77,7 +77,7 @@ it('fetches messages when the socket reconnects', () => {
 })
 
 it('marks as read when scrolled to bottom by user', () => {
-  wrapper = shallow(<MessageSection messages={[]} />, { disableLifecycleMethods: true })
+  wrapper = shallow(<MessageSection messages={[]} fetchMessages={() => {}} />, { disableLifecycleMethods: true })
   instance = wrapper.instance()
   jest.spyOn(instance, 'markAsRead')
 
@@ -94,11 +94,15 @@ describe('when receiving a new message', () => {
     // with `shallow` unless you use an experimental flag.
     // https://github.com/airbnb/enzyme/issues/34
     wrapper = mountWithMockRouter(
-      <MessageSection messages={[]} socket={socket} currentUser={person1} />)
+      <MessageSection
+        fetchMessages={() => {}}
+        messages={[]}
+        socket={socket}
+        currentUser={person1} />)
     instance = wrapper.instance()
     jest.spyOn(instance, 'scrollToBottom')
     jest.spyOn(instance, 'markAsRead')
-    instance.list = { offsetHeight: 10, scrollHeight: 100, scrollTop: 0 }
+    instance.list.current = { offsetHeight: 10, scrollHeight: 100, scrollTop: 0 }
   })
 
   it('sets shouldScroll to true for new messages', () => {
@@ -131,7 +135,7 @@ describe('when receiving a new message', () => {
 
   describe('when already scrolled to bottom', () => {
     beforeEach(() => {
-      instance.list.scrollTop = 100
+      instance.list.current.scrollTop = 100
     })
 
     it('sets shouldScroll to true for single message from someone other than currentUser', () => {
@@ -147,7 +151,8 @@ it('fetches more messages when scrolled to top', () => {
     <MessageSection
       messages={messages}
       socket={socket}
-      fetchMessages={fetchMessages} hasMore />)
+      fetchMessages={fetchMessages}
+      hasMore />)
   wrapper.instance().handleScroll({
     target: { scrollTop: 0, scrollHeight: 1200, offsetHeight: 100 }
   })
@@ -155,28 +160,34 @@ it('fetches more messages when scrolled to top', () => {
 })
 
 it('shows Loading component when pending set', () => {
-  wrapper = shallow(<MessageSection messages={[]} pending />, { disableLifecycleMethods: true })
+  wrapper = shallow(<MessageSection messages={[]} fetchMessages={() => {}} pending />, { disableLifecycleMethods: true })
   expect(wrapper.find(Loading).length).toBe(1)
 })
 
 it('sets visible to false in state when visibility changes', () => {
-  wrapper = shallow(<MessageSection messages={[]} pending />, { disableLifecycleMethods: true })
+  wrapper = shallow(<MessageSection messages={[]} fetchMessages={() => {}} pending />, { disableLifecycleMethods: true })
   wrapper.setState({ visible: true })
-  // Note that document.hidden always returns true in jsdom
+  // jsdom document.hidden was false, force it to hidden and make it settable for this test
+  let hidden = true
+  Object.defineProperty(document, "hidden", {
+    configurable: true,
+    get () { return hidden },
+    set (bool) { hidden = Boolean(bool) }
+  })
   wrapper.instance().handleVisibilityChange()
   expect(wrapper.state('visible')).toBe(false)
 })
 
 it('returns true from atBottom when scrolled to bottom', () => {
   const bottom = { offsetHeight: 10, scrollHeight: 100, scrollTop: 100 }
-  wrapper = shallow(<MessageSection messages={[]} />, { disableLifecycleMethods: true })
+  wrapper = shallow(<MessageSection messages={[]} fetchMessages={() => {}} />, { disableLifecycleMethods: true })
   const actual = wrapper.instance().atBottom(bottom)
   expect(actual).toBe(true)
 })
 
 it('returns false from atBottom when scrolled up', () => {
   const top = { offsetHeight: 10, scrollHeight: 100, scrollTop: 50 }
-  wrapper = shallow(<MessageSection messages={[]} />, { disableLifecycleMethods: true })
+  wrapper = shallow(<MessageSection messages={[]} fetchMessages={() => {}} />, { disableLifecycleMethods: true })
   const actual = wrapper.instance().atBottom(top)
   expect(actual).toBe(false)
 })

@@ -146,7 +146,7 @@
     "react-stripe-checkout": "^2.6.3",
     "history": "^4.9.0",
     "connected-react-router": "^6.3.2",
-    "react-textarea-autosize": "^5.2.1",
+    "react-textarea-autosize": "^7.1.0",
     "react-tooltip": "^3.4.0",
     "react-transition-group": "1.x",
     "redux": "^3.7.2",
@@ -197,7 +197,7 @@
       "src"
     ],
     "snapshotSerializers": [
-      "<rootDir>/node_modules/enzyme-to-json/serializer"
+      "enzyme-to-json/serializer"
     ],
     "testEnvironment": "jsdom",
     "testURL": "http://localhost",
@@ -207,8 +207,8 @@
       "\\.(css|less|scss)$": "<rootDir>/config/jest/__mocks__/styleMock.js"
     },
     "watchPlugins": [
-      "<rootDir>/node_modules/jest-watch-typeahead/filename.js",
-      "<rootDir>/node_modules/jest-watch-typeahead/testname.js"
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
     ]
   },
   "browserslist": [
@@ -218,7 +218,10 @@
     "not op_mini all"
   ],
   "babel": {
-    "presets": ["@babel/preset-env", "@babel/preset-react"],
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
     "ignore": [
       "scripts/templates/*"
     ],

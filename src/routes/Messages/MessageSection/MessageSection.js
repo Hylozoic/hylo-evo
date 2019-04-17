@@ -56,10 +56,12 @@ export default class MessageSection extends React.Component {
 
   constructor (props) {
     super(props)
+
     this.state = {
       visible: true,
       onNextVisible: null
     }
+    this.list = React.createRef()
   }
 
   componentDidMount () {
@@ -102,7 +104,7 @@ export default class MessageSection extends React.Component {
       // and we're not already at the bottom, don't scroll
       if (deltaLength === 1 &&
         get('creator.id', latest) !== get('id', currentUser) &&
-        !this.atBottom(this.list)) return
+        !this.atBottom(this.list.current)) return
 
       this.shouldScroll = true
     }
@@ -121,6 +123,7 @@ export default class MessageSection extends React.Component {
 
   handleVisibilityChange = () => {
     const { onNextVisible } = this.state
+
     if (document && document.hidden) {
       this.setState({ visible: false })
     } else {
@@ -154,7 +157,7 @@ export default class MessageSection extends React.Component {
   }
 
   scrollToBottom = () => {
-    this.list.scrollTop = this.list.scrollHeight
+    this.list.current.scrollTop = this.list.current.scrollHeight
     if (this.state.visible) {
       this.markAsRead()
     } else {
@@ -169,8 +172,9 @@ export default class MessageSection extends React.Component {
 
   render () {
     const { messages, pending, messageThread } = this.props
+
     return <div styleName='messages-section'
-      ref={list => this.list = list} // eslint-disable-line no-return-assign
+      ref={this.list}
       onScroll={this.handleScroll}>
       <div styleName='messages-section-inner'>
         {pending && <Loading />}

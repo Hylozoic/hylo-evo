@@ -67,6 +67,7 @@ exports[`renders correctly 1`] = `
   >
     <TextareaAutosize
       data-stylename="styles.invite-msg-input"
+      inputRef={[Function]}
       minRows={5}
       onChange={[Function]}
       onHeightChange={[Function]}
@@ -76,6 +77,7 @@ exports[`renders correctly 1`] = `
     />
     <TextareaAutosize
       data-stylename="styles.invite-msg-input"
+      inputRef={[Function]}
       minRows={5}
       onChange={[Function]}
       onHeightChange={[Function]}

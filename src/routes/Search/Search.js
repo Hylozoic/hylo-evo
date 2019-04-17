@@ -61,8 +61,7 @@ export default class Search extends Component {
       <div styleName='search'>
         <SearchBar {...{ searchForInput, setSearchTerm, updateQueryParam, setSearchFilter, filter }} />
         <div styleName='search-results'
-          id={SEARCH_RESULTS_ID}
-          ref={x => { this.searchResultsDiv = x }}>
+          id={SEARCH_RESULTS_ID}>
           {searchResults.map(sr =>
             <SearchResult key={sr.id}
               searchResult={sr}

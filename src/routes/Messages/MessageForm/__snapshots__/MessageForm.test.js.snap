@@ -12,6 +12,7 @@ exports[`component matches the latest snapshot 1`] = `
   />
   <TextareaAutosize
     data-stylename="message-textarea"
+    inputRef={[Function]}
     onChange={[Function]}
     onHeightChange={[Function]}
     onKeyDown={[Function]}

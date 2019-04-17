@@ -23,7 +23,7 @@ export default class MessageForm extends React.Component {
     pending: bool,
     forNewThread: bool,
     updateMessageText: func,
-    formRef: func,
+    formRef: object,
     className: string,
     currentUser: object,
     placeholder: string

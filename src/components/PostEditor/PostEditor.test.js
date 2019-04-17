@@ -19,18 +19,6 @@ describe('PostEditor', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('sets component refs as expected', () => {
-    const props = {}
-    const wrapper = shallow(<PostEditor {...props} />)
-    const instance = wrapper.instance()
-    wrapper.find('[data-stylename="titleInput"]').first().getElement().ref('titleInput')
-    expect(instance.titleInput).toEqual('titleInput')
-    wrapper.find('CommunitiesSelector').first().getElement().ref('communitiesSelector')
-    expect(instance.communitiesSelector).toEqual('communitiesSelector')
-    wrapper.find('Connect(HyloEditor)').first().getElement().ref()
-    expect(instance.editor).toEqual('editor')
-  })
-
   describe('for a new post', () => {
     test('initial prompt and placeholders', () => {
       const props = {
@@ -91,9 +79,9 @@ describe('PostEditor', () => {
       }
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
-      testInstance.editor = editorMock
-      testInstance.topicSelector = topicSelectorMock
-      testInstance.communitiesSelector = communitiesSelectorMock
+      testInstance.editor.current = editorMock
+      testInstance.topicSelector.current = topicSelectorMock
+      testInstance.communitiesSelector.current = communitiesSelectorMock
       testInstance.save()
       expect(props.createPost.mock.calls).toHaveLength(1)
       expect(props.createPost.mock.calls).toMatchSnapshot()
@@ -157,9 +145,9 @@ describe('PostEditor', () => {
       }
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
-      testInstance.editor = editorMock
-      testInstance.topicSelector = topicSelectorMock
-      testInstance.communitiesSelector = communitiesSelectorMock
+      testInstance.editor.current = editorMock
+      testInstance.topicSelector.current = topicSelectorMock
+      testInstance.communitiesSelector.current = communitiesSelectorMock
       testInstance.save()
       expect(props.updatePost.mock.calls).toHaveLength(1)
       expect(props.updatePost.mock.calls).toMatchSnapshot()
@@ -196,7 +184,7 @@ describe('PostEditor', () => {
         }
       }
       const testInstance = shallow(<PostEditor {...props} />).instance()
-      testInstance.editor = { isEmpty: jest.fn(() => false) }
+      testInstance.editor.current = { isEmpty: jest.fn(() => false) }
       expect(testInstance.isValid(props.post, {})).toBeTruthy()
     })
 
@@ -254,9 +242,9 @@ describe('PostEditor', () => {
     }
     const wrapper = shallow(<PostEditor {...props} />)
     const testInstance = wrapper.instance()
-    testInstance.editor = editorMock
-    testInstance.topicSelector = topicSelectorMock
-    testInstance.communitiesSelector = communitiesSelectorMock
+    testInstance.editor.current = editorMock
+    testInstance.topicSelector.current = topicSelectorMock
+    testInstance.communitiesSelector.current = communitiesSelectorMock
     testInstance.save()
     expect(props.updatePost.mock.calls).toHaveLength(1)
     expect(props.updatePost.mock.calls).toMatchSnapshot()
