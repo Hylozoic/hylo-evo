@@ -58,8 +58,8 @@ jobs:
     - run: sudo sh -c 'echo "deb https://dl.yarnpkg.com/debian/ stable main" >> /etc/apt/sources.list.d/yarn.list'
     - run: sudo apt update
     - run: sudo apt install yarn
-    - run: sudo dpkg -L yarn
-    - run: sudo yarn --version
+    - run: dpkg -L yarn
+    - run: /usr/share/yarn --version
     # Dependencies
     #   This would typically go in either a build or a build-and-test job when using workflows
     # Restore the dependency cache
@@ -74,7 +74,7 @@ jobs:
     # This is based on your 1.0 configuration file or project settings
     - run: npm install -g codecov
     # This is based on your 1.0 configuration file or project settings
-    - run: yarn
+    - run: /usr/share/yarn
     # Save dependency cache
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
