@@ -4,7 +4,6 @@ import { isEmpty } from 'lodash/fp'
 import { fetchComments, createComment, getComments, getHasMoreComments, getTotalComments } from './Comments.store'
 import getHolochainActive from 'store/selectors/getHolochainActive'
 
-
 export function mapStateToProps (state, props) {
   return {
     comments: getComments(state, props),
@@ -28,7 +27,7 @@ export const mapDispatchToProps = (dispatch, props) => {
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { comments, holochainActive } = stateProps
   const { fetchCommentsMaker, createCommentMaker } = dispatchProps
-  const cursor = !isEmpty(comments) && comments[0].id  
+  const cursor = !isEmpty(comments) && comments[0].id
   return {
     ...ownProps,
     ...stateProps,
