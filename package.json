@@ -6,8 +6,8 @@
     "start": "node --preserve-symlinks scripts/start.js",
     "build": "node scripts/build.js && scripts/build-es5.sh",
     "test": "node scripts/test.js",
-    "lint": "npx standard",
-    "lint:fix": "npx standard --fix",
+    "lint": "yarn exec standard",
+    "lint:fix": "yarn exec standard --fix",
     "server": "./node_modules/.bin/babel-node scripts/serveUniversal.js",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook"
