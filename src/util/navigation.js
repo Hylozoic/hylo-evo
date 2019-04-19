@@ -7,9 +7,10 @@ import { HOLOCHAIN_ACTIVE, HOLOCHAIN_HASH_MATCH } from './holochain'
 // post type / post context related
 //
 // note: post Contexts have their own area if not default
+export const HYLO_ID_MATCH = '\\d+'
 export const POST_ID_MATCH = HOLOCHAIN_ACTIVE
-  ? `\\d+|${HOLOCHAIN_HASH_MATCH}`
-  : '\\d+'
+  ? `${HYLO_ID_MATCH}|${HOLOCHAIN_HASH_MATCH}`
+  : HYLO_ID_MATCH
 export const DEFAULT_POST_TYPE_CONTEXT = 'p'
 export const POST_TYPE_CONTEXTS = ['project', 'event']
 export const VALID_POST_TYPE_CONTEXTS = [...POST_TYPE_CONTEXTS, DEFAULT_POST_TYPE_CONTEXT]
