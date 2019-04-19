@@ -17,6 +17,7 @@ import {
   UPLOAD_ATTACHMENT
 } from 'store/constants'
 import createPost from 'store/actions/createPost'
+import holochainCreatePost from 'store/actions/holochainCreatePost'
 import createProject from 'store/actions/createProject'
 import updatePost from 'store/actions/updatePost'
 import {
@@ -101,7 +102,8 @@ export const mapDispatchToProps = (dispatch, props) => {
     removeLinkPreview: () => dispatch(removeLinkPreview()),
     clearLinkPreview: () => dispatch(clearLinkPreview()),
     updatePost: postParams => dispatch(updatePost(postParams)),
-    createPost: (postParams, holochainAPI) => dispatch(createPost(postParams, holochainAPI)),
+    createPost: (postParams) => dispatch(createPost(postParams)),
+    holochainCreatePost: (postParams) => dispatch(holochainCreatePost(postParams)),
     createProject: postParams => dispatch(createProject(postParams)),
     goToUrl: url => dispatch(push(url)),
     addImage: url => dispatch(addAttachment(url, 'image')),
@@ -122,7 +124,11 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const pollingFetchLinkPreview = fetchLinkPreviewPending
     ? () => Promise.resolve()
     : url => pollingFetchLinkPreviewRaw(url)
-  const createPost = postParams => dispatchProps.createPost({ networkSlug, ...postParams }, holochainActive)
+
+  const createPost = holochainActive
+    ? postParams => dispatchProps.holochainCreatePost({ networkSlug, ...postParams })
+    : postParams => dispatchProps.createPost({ networkSlug, ...postParams })
+
   const createProject = projectParams => dispatchProps.createProject({ networkSlug, ...projectParams })
 
   return {

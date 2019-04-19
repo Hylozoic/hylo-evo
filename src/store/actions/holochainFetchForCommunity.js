@@ -8,6 +8,7 @@ export default function holochainFetchForCommunity (slug) {
         community(slug: $slug) {
           id
           name
+          slug
         }
       }`,
       variables: {

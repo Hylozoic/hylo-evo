@@ -2,15 +2,15 @@ import holochainPostFieldsFragment from 'graphql/fragments/holochainPostFieldsFr
 
 export default
 `mutation (
-  $base: String,
+  $communitySlug: String,
   $type: String,
   $title: String,
   $details: String
 ) {
   createPost(data: {
-    base: $base,
+    communitySlug: $communitySlug,
     type: $type,
     title: $title,
     details: $details
-  }) {${holochainPostFieldsFragment}}
+  }) {${holochainPostFieldsFragment(false)}}
 }`
