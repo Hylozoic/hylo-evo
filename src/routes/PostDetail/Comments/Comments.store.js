@@ -49,30 +49,54 @@ export function fetchComments (id, opts = {}, holochainAPI = false) {
   }
 }
 
+const holochainCreateCommentMutation = `mutation ($postId: String, $text: String, $createdAt: String) {
+  createComment(data: {postId: $postId, text: $text, createdAt: $createdAt}) {
+    id
+    text
+    post {
+      id
+    }
+    createdAt
+    creator {
+      id
+    }
+  }
+}`
+
+const createCommentMutation = `mutation ($postId: String, $text: String) {
+  createComment(data: {postId: $postId, text: $text}) {
+    id
+    text
+    post {
+      id
+    }
+    creator {
+      id
+    }
+  }
+}`
 export function createComment (postId, text, holochainAPI = false) {
   const createdAt = new Date().toISOString()
+
+  const variables = {
+    postId,
+    text
+  }
+
+  var query
+
+  if (holochainAPI) {
+    variables.createdAt = createdAt
+    query = holochainCreateCommentMutation
+  } else {
+    query = createCommentMutation
+  }
 
   return {
     type: CREATE_COMMENT,
     graphql: {
-      query: `mutation ($postId: String, $text: String, $createdAt: String) {
-        createComment(data: {postId: $postId, text: $text, createdAt: $createdAt}) {
-          id
-          text
-          post {
-            id
-          }
-          createdAt
-          creator {
-            id
-          }
-        }
-      }`,
-      variables: {
-        postId,
-        text,
-        createdAt
-      }
+      query,
+      variables
     },
     meta: {
       holochainAPI,
