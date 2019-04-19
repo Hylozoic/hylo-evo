@@ -60,6 +60,9 @@ export default class PrimaryLayout extends Component {
     // to a single community
     const skipTopics = this.props.location.pathname !== '/all'
     this.props.fetchForCurrentUser(skipTopics)
+    if (this.props.slug) {
+      this.props.fetchForCommunity()
+    }
   }
 
   componentDidUpdate (prevProps) {
@@ -84,7 +87,8 @@ export default class PrimaryLayout extends Component {
 
     if (isCommunityRoute) {
       if (!currentUser) return <Loading />
-      if (!community && !communityPending) return <NotFound />
+      // don't show NotFound in holochain as we don't get the communities with currentUser
+      if (!community && !communityPending && !holochainActive) return <NotFound />
     }
 
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
