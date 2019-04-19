@@ -47,7 +47,7 @@ export default class FeedList extends React.Component {
   })
 
   componentDidMount () {
-    this.fetchOrShowCached()    
+    this.fetchOrShowCached()
   }
 
   componentDidUpdate (prevProps) {
