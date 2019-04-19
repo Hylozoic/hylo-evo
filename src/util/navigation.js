@@ -2,16 +2,18 @@ import { matchPath } from 'react-router'
 import qs from 'querystring'
 import { get, isEmpty, omitBy } from 'lodash/fp'
 import { host } from 'config'
+import { HOLOCHAIN_ACTIVE, HOLOCHAIN_HASH_MATCH } from './holochain'
 
 // post type / post context related
 //
 // note: post Contexts have their own area if not default
-
-export const ID_MATCH_REGEX = '\\d+'
+export const POST_ID_MATCH = HOLOCHAIN_ACTIVE
+  ? `\\d+|${HOLOCHAIN_HASH_MATCH}`
+  : '\\d+'
 export const DEFAULT_POST_TYPE_CONTEXT = 'p'
 export const POST_TYPE_CONTEXTS = ['project', 'event']
 export const VALID_POST_TYPE_CONTEXTS = [...POST_TYPE_CONTEXTS, DEFAULT_POST_TYPE_CONTEXT]
-export const VALID_POST_TYPE_CONTEXTS_MATCH_REGEX = VALID_POST_TYPE_CONTEXTS.join('|')
+export const VALID_POST_TYPE_CONTEXTS_MATCH = VALID_POST_TYPE_CONTEXTS.join('|')
 
 // fundamental URL paths
 
@@ -156,9 +158,9 @@ export function removePostFromUrl (url) {
   // remove current post id and stay in the current post
   // context.
   if (url.match(`/${DEFAULT_POST_TYPE_CONTEXT}/`)) {
-    matchForReplaceRegex = `/${DEFAULT_POST_TYPE_CONTEXT}/${ID_MATCH_REGEX}`
+    matchForReplaceRegex = `/${DEFAULT_POST_TYPE_CONTEXT}/${POST_ID_MATCH}`
   } else {
-    matchForReplaceRegex = `/${ID_MATCH_REGEX}`
+    matchForReplaceRegex = `/${POST_ID_MATCH}`
   }
 
   return url.replace(new RegExp(matchForReplaceRegex), '')
