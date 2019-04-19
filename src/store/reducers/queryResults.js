@@ -75,6 +75,11 @@ export default function (state = {}, action) {
         networkSlug: meta.networkSlug,
         ...payload.data[camelCase(type)]
       }
+
+      if (meta.holochainAPI) {
+        // holochain posts don't return 'communities' so we pass it through meta. See holochainCreatePost.js
+        root.communities = meta.communities
+      }
       return matchNewPostIntoQueryResults(state, root)
 
     case FIND_OR_CREATE_THREAD:
