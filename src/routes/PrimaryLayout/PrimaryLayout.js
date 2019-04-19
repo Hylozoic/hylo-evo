@@ -42,8 +42,8 @@ import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
 import {
-  ID_MATCH_REGEX,
-  VALID_POST_TYPE_CONTEXTS_MATCH_REGEX,
+  POST_ID_MATCH,
+  VALID_POST_TYPE_CONTEXTS_MATCH,
   isSignupPath,
   isAllCommunitiesPath,
   isNetworkPath,
@@ -161,11 +161,11 @@ export default class PrimaryLayout extends Component {
   }
 }
 
-const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})`
-const OPTIONAL_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:postId(${ID_MATCH_REGEX})?/:action(new|edit)?`
+const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH})`
+const OPTIONAL_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:postId(${POST_ID_MATCH})?/:action(new|edit)?`
 const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
 
-const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${ID_MATCH_REGEX})/:action(edit)?`
+const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})/:action(edit)?`
 const postDetailRoutes = [
   { path: `/all/${POST_DETAIL_MATCH}` },
   { path: `/n/:networkSlug/m/:personId/${POST_DETAIL_MATCH}` },
