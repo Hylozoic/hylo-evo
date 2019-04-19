@@ -1,6 +1,4 @@
 import { get } from 'lodash/fp'
-
-// export const HOLOCHAIN_FETCH_POSTS = 'HOLOCHAIN_FETCH_POSTS'
 import { FETCH_POSTS } from 'store/constants'
 
 export default function holochainFetchPosts (slug) {

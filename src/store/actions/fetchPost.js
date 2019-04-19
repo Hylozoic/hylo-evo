@@ -5,7 +5,7 @@ import {
 } from 'store/constants'
 import fetchPostQuery from 'graphql/queries/fetchPostQuery'
 
-export default function fetchPost (id, opts = {}, query = fetchPostQuery) {
+export default function fetchPost (id, query = fetchPostQuery) {
   return {
     type: FETCH_POST,
     graphql: {

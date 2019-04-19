@@ -63,6 +63,8 @@ export function mapDispatchToProps (dispatch, props) {
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { post, holochainActive } = stateProps
 
+  console.log('holochainActive', holochainActive)
+
   const fetchPost = holochainActive
     ? dispatchProps.holochainFetchPost
     : dispatchProps.fetchPost

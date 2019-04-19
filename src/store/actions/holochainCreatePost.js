@@ -12,7 +12,6 @@ export default function holochainCreatePost (postParams) {
     communities
   } = postParams
 
-  // for holochain
   const communitySlug = get('0.slug', communities)
   if (!communitySlug) throw new Error('must provide CommunitySlug to holochainCreatePost')
 
