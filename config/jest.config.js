@@ -1,10 +1,9 @@
-// const babelConfig = require('./babel.config.js')
 const paths = require('./paths')
 
 module.exports = {
   rootDir: paths.rootPath,
   transform: {
-    '/\\.(js|jsx)$/': '<rootDir>/config/jest/transformer.js'
+    '^.+\\.jsx?$': '<rootDir>/config/jest/transformer.js'
   },
   collectCoverageFrom: [
     '<rootDir>/src/**/*.{js,jsx}'
