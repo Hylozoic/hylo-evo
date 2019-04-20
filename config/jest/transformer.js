@@ -1,3 +1,5 @@
+const paths = require('../paths')
+
 module.exports = require('babel-jest').createTransformer(
-  require('../babel.config')()
+  require(paths.babelConfigFile)()
 )

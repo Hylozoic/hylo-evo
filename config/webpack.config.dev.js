@@ -81,7 +81,7 @@ module.exports = {
           // Process application JS with Babel.
           // The preset includes JSX, Flow, TypeScript, and some ESnext features.
           {
-            test: /\.(js|jsx)$/,
+            test: /\.jsx?$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {

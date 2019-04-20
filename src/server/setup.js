@@ -27,10 +27,9 @@ addPath(join(__dirname, '..'))
 
 // Configuration files are already ES5 so they doesn't get transpiled or copied
 // anywhere. We can always require them relative to the app's root path.
-const { resolveApp } = require(rootPath('config/paths'))
+const { resolveApp, babelConfigFile } = require(rootPath('config/paths'))
 const sharedConfig = require(rootPath('config/webpack.config.shared'))
-const babelConfig = require(rootPath('config/babel.config.js'))
-const cssModulesConfig = babelConfig().env.production.plugins.find(x => x[0] === 'react-css-modules')[1]
+const cssModulesConfig = require(babelConfigFile)().env.production.plugins.find(x => x[0] === 'react-css-modules')[1]
 
 // handle CSS imports and generate class names the same way that webpack does
 cssHook({
