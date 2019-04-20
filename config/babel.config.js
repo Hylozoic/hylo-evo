@@ -36,10 +36,14 @@ module.exports = function (api) {
         ]
       },
       development: {
-        plugins: [reactCSSModulesPlugin]
+        plugins: [
+          reactCSSModulesPlugin
+        ]
       },
       production: {
-        plugins: [reactCSSModulesPlugin],
+        plugins: [
+          reactCSSModulesPlugin
+        ],
         compact: true
       }
     }

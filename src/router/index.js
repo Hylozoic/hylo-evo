@@ -11,9 +11,9 @@ import NonAuthLayout from 'routes/NonAuthLayout'
 import '../css/global/index.scss'
 import ErrorBoundary from 'components/ErrorBoundary'
 
-// export const history = createBrowserHistory()
-
-export const history = typeof window !== 'undefined' ? createBrowserHistory() : createMemoryHistory()
+export const history = typeof window !== 'undefined'
+  ? createBrowserHistory()
+  : createMemoryHistory()
 
 export function clientRouter () {
   require('client/rollbar') // set up handling of uncaught errors
