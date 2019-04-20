@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import EventBody, { formatDates } from './EventBody'
+import EventBody from './EventBody'
 import moment from 'moment'
 
 describe('EventBody', () => {

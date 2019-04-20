@@ -117,27 +117,13 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
+              configFile: paths.babelConfigFile,
+              // `babel-loader` specific config (not Babel itself)
               customize: require.resolve(
                 'babel-preset-react-app/webpack-overrides'
               ),
-              plugins: [
-                [
-                  require.resolve('babel-plugin-named-asset-import'),
-                  {
-                    loaderMap: {
-                      svg: {
-                        ReactComponent: '@svgr/webpack?-svgo,+ref![path]'
-                      }
-                    }
-                  }
-                ]
-              ],
-              // This is a feature of `babel-loader` for webpack (not Babel itself).
-              // It enables caching results in ./node_modules/.cache/babel-loader/
-              // directory for faster rebuilds.
               cacheDirectory: true,
-              cacheCompression: true,
-              compact: true
+              cacheCompression: true
             }
           },
           // Process any JS outside of the app with Babel.
@@ -184,26 +170,7 @@ module.exports = {
               'sass-loader',
               sharedConfig.sassResourcesLoader
             ]
-            // fallback: 'style-loader',
           }
-          // // "file" loader makes sure those assets get served by WebpackDevServer.
-          // // When you `import` an asset, you get its (virtual) filename.
-          // // In production, they would get copied to the `build` folder.
-          // // This loader doesn't use a "test" so it will catch all modules
-          // // that fall through the other loaders.
-          // {
-          //   loader: require.resolve('file-loader'),
-          //   // Exclude `js` files to keep "css" loader working as it injects
-          //   // its runtime that would otherwise be processed through "file" loader.
-          //   // Also exclude `html` and `json` extensions so they get processed
-          //   // by webpacks internal loaders.
-          //   exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
-          //   options: {
-          //     name: 'static/media/[name].[hash:8].[ext]'
-          //   }
-          // }
-          // // ** STOP ** Are you adding a new loader?
-          // // Make sure to add the new loader(s) before the "file" loader.
         ]
       }
     ]

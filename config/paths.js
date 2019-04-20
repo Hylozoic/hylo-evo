@@ -61,7 +61,6 @@ function getServedPath (appPackageJson) {
   return ensureSlash(servedUrl, true)
 }
 
-// config after eject: we're in ./config/
 module.exports = {
   resolveApp,
   appBuild: resolveApp('build'),
@@ -69,12 +68,11 @@ module.exports = {
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
-  appPath: resolveApp('.'),
+  rootPath: resolveApp('.'),
   appSrc: resolveApp('src'),
+  babelConfigFile: resolveApp('config/babel.config.js'),
   yarnLockFile: resolveApp('yarn.lock'),
-  testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
-  ownNodeModules: resolveApp('node_modules'),
   nodePaths: nodePaths,
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json'))

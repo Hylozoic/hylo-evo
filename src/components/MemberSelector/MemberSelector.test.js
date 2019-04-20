@@ -22,7 +22,7 @@ describe('MemberSelector', () => {
   describe('componentDidMount', () => {
     it('calls setMembers', () => {
       const setMembers = jest.fn()
-      const wrapper = renderComponent(shallow, {
+      renderComponent(shallow, {
         selectedTopics: [{ name: 'one' }],
         detailsTopics: [{ name: 'two' }],
         setMembers

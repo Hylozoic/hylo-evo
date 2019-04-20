@@ -1,4 +1,4 @@
-import SocketListener, { handledEvents } from './SocketListener'
+import SocketListener from './SocketListener'
 import { mount } from 'enzyme'
 import React from 'react'
 import { getSocket, setSocket } from 'client/websockets'

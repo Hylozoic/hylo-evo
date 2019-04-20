@@ -175,102 +175,12 @@
     "node": "10.13.0",
     "yarn": "^1.1.0"
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
-    ],
-    "coverageReporters": [
-      "json",
-      "lcov"
-    ],
-    "resolver": "jest-pnp-resolver",
-    "setupFiles": [
-      "react-app-polyfill/jsdom"
-    ],
-    "setupTestFrameworkScriptFile": "./src/setupTests.js",
-    "testPathIgnorePatterns": [
-      "<rootDir>[/\\\\](build|docs|node_modules|scripts|es5)[/\\\\]"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "testEnvironment": "jsdom",
-    "testURL": "http://localhost",
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web",
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/jest/__mocks__/fileMock.js",
-      "\\.(css|less|scss)$": "<rootDir>/config/jest/__mocks__/styleMock.js"
-    },
-    "watchPlugins": [
-      "jest-watch-typeahead/filename",
-      "jest-watch-typeahead/testname"
-    ]
-  },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
   ],
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react"
-    ],
-    "ignore": [
-      "scripts/templates/*"
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-class-properties"
-    ],
-    "env": {
-      "test": {
-        "plugins": [
-          "data-stylename"
-        ]
-      },
-      "development": {
-        "plugins": [
-          [
-            "react-css-modules",
-            {
-              "generateScopedName": "[name]__[local]___[hash:base64:5]",
-              "filetypes": {
-                ".scss": "postcss-scss"
-              },
-              "exclude": "node_modules",
-              "searchPaths": [
-                "src"
-              ],
-              "webpackHotModuleReloading": true
-            }
-          ]
-        ]    
-      },
-      "production": {
-        "plugins": [
-          [
-            "react-css-modules",
-            {
-              "generateScopedName": "[name]__[local]___[hash:base64:5]",
-              "filetypes": {
-                ".scss": "postcss-scss"
-              },
-              "exclude": "node_modules",
-              "searchPaths": [
-                "src"
-              ],
-              "webpackHotModuleReloading": true
-            }
-          ]
-        ]    
-      }
-    }
-  },
   "standard": {
     "parser": "babel-eslint",
     "global": [

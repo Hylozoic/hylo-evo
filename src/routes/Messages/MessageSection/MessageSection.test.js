@@ -169,7 +169,7 @@ it('sets visible to false in state when visibility changes', () => {
   wrapper.setState({ visible: true })
   // jsdom document.hidden was false, force it to hidden and make it settable for this test
   let hidden = true
-  Object.defineProperty(document, "hidden", {
+  Object.defineProperty(document, 'hidden', {
     configurable: true,
     get () { return hidden },
     set (bool) { hidden = Boolean(bool) }

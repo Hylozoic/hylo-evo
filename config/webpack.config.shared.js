@@ -5,7 +5,7 @@ module.exports = {
     loader: 'css-loader',
     options: {
       modules: true,
-      context: paths.appPath,
+      context: paths.rootPath,
       localIdentName: '[name]__[local]___[hash:base64:5]',
       importLoaders: 3
     }

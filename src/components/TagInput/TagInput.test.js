@@ -39,7 +39,7 @@ describe('TagInput', () => {
     it("sets input.value to '' and calls handleInputChange", () => {
       const handleInputChange = jest.fn()
       const wrapper = renderComponent(shallow, { handleInputChange })
-      const input = {current: {value: 'old' }}
+      const input = { current: { value: 'old' } }
       wrapper.instance().input = input
       wrapper.instance().resetInput()
       expect(input.current.value).toEqual('')

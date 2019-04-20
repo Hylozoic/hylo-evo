@@ -48,13 +48,13 @@ describe('PostFooter', () => {
   })
 
   it('matches the latest snapshot for event', () => {
-    const eventInvitations = [
-      {
-        id: 1,
-        name: 'Arthur Smith',
-        response: 'yes'
-      }
-    ]
+    // const eventInvitations = [
+    //   {
+    //     id: 1,
+    //     name: 'Arthur Smith',
+    //     response: 'yes'
+    //   }
+    // ]
     const wrapper = shallow(<PostFooter
       commenters={[]}
       commentersTotal={0}
@@ -66,7 +66,7 @@ describe('PostFooter', () => {
 
 describe('commentCaption', () => {
   it('returns the correct text', () => {
-    const currentUserId = '1'
+    // const currentUserId = '1'
     expect(peopleSetup([], 0).caption).toEqual('Be the first to comment')
     expect(peopleSetup(commenters.slice(0, 1), 1).caption).toEqual('Joe commented')
     expect(peopleSetup(commenters.slice(0, 2), 2).caption).toEqual('Joe and Sue commented')

@@ -29,8 +29,8 @@ addPath(join(__dirname, '..'))
 // anywhere. We can always require them relative to the app's root path.
 const { resolveApp } = require(rootPath('config/paths'))
 const sharedConfig = require(rootPath('config/webpack.config.shared'))
-const { babel } = require(rootPath('package.json'))
-const cssModulesConfig = babel.env.production.plugins.find(x => x[0] === 'react-css-modules')[1]
+const babelConfig = require(rootPath('config/babel.config.js'))
+const cssModulesConfig = babelConfig().env.production.plugins.find(x => x[0] === 'react-css-modules')[1]
 
 // handle CSS imports and generate class names the same way that webpack does
 cssHook({
