@@ -1,7 +1,22 @@
 const path = require('path');
-// your app's webpack.config.js
 const hyloWebpackConfig = require('../config/webpack.config.dev')
 
-module.exports = async ({ config, mode }) => {
-  return { ...config, module: { ...config.module, rules: hyloWebpackConfig.module.rules } };
-};
+// Building using dev webpack config, but may need to make work with prod config
+module.exports = async ({ config }) => {
+  const mergedConfig = {
+    ...config,
+    resolve: {
+      ...config.resolve,
+      modules: [
+        ...hyloWebpackConfig.resolve.modules,
+        ...config.resolve.modules
+      ]
+    },
+    module: {
+      ...config.module,
+      rules: hyloWebpackConfig.module.rules
+    }
+  }
+
+  return mergedConfig
+}

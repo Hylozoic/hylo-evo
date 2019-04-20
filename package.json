@@ -6,8 +6,8 @@
     "start": "node --preserve-symlinks scripts/start.js",
     "build": "node scripts/build.js && scripts/build-es5.sh",
     "test": "node scripts/test.js",
-    "lint": "npx standard",
-    "lint:fix": "npx standard --fix",
+    "lint": "yarn exec standard",
+    "lint:fix": "yarn exec standard --fix",
     "server": "./node_modules/.bin/babel-node scripts/serveUniversal.js",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook"
@@ -20,11 +20,11 @@
     "@babel/preset-env": "7.2.3",
     "@babel/preset-react": "^7.0.0",
     "@holochain/hc-web-client": "0.4.0",
-    "@storybook/addon-actions": "^v5.0.6",
-    "@storybook/addon-info": "^5.0.8",
-    "@storybook/addon-links": "^v5.0.6",
-    "@storybook/addons": "^v5.0.6",
-    "@storybook/react": "^v5.0.6",
+    "@storybook/addon-actions": "^v5.0.10",
+    "@storybook/addon-info": "^5.0.10",
+    "@storybook/addon-links": "^v5.0.10",
+    "@storybook/addons": "^v5.0.10",
+    "@storybook/react": "^v5.0.10",
     "@svgr/webpack": "4.1.0",
     "ansi-styles": "^3.2.1",
     "app-module-path": "^2.2.0",
@@ -175,102 +175,12 @@
     "node": "10.13.0",
     "yarn": "^1.1.0"
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
-    ],
-    "coverageReporters": [
-      "json",
-      "lcov"
-    ],
-    "resolver": "jest-pnp-resolver",
-    "setupFiles": [
-      "react-app-polyfill/jsdom"
-    ],
-    "setupTestFrameworkScriptFile": "./src/setupTests.js",
-    "testPathIgnorePatterns": [
-      "<rootDir>[/\\\\](build|docs|node_modules|scripts|es5)[/\\\\]"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "testEnvironment": "jsdom",
-    "testURL": "http://localhost",
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web",
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/jest/__mocks__/fileMock.js",
-      "\\.(css|less|scss)$": "<rootDir>/config/jest/__mocks__/styleMock.js"
-    },
-    "watchPlugins": [
-      "jest-watch-typeahead/filename",
-      "jest-watch-typeahead/testname"
-    ]
-  },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
   ],
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react"
-    ],
-    "ignore": [
-      "scripts/templates/*"
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-class-properties"
-    ],
-    "env": {
-      "test": {
-        "plugins": [
-          "data-stylename"
-        ]
-      },
-      "development": {
-        "plugins": [
-          [
-            "react-css-modules",
-            {
-              "generateScopedName": "[name]__[local]___[hash:base64:5]",
-              "filetypes": {
-                ".scss": "postcss-scss"
-              },
-              "exclude": "node_modules",
-              "searchPaths": [
-                "src"
-              ],
-              "webpackHotModuleReloading": true
-            }
-          ]
-        ]    
-      },
-      "production": {
-        "plugins": [
-          [
-            "react-css-modules",
-            {
-              "generateScopedName": "[name]__[local]___[hash:base64:5]",
-              "filetypes": {
-                ".scss": "postcss-scss"
-              },
-              "exclude": "node_modules",
-              "searchPaths": [
-                "src"
-              ],
-              "webpackHotModuleReloading": true
-            }
-          ]
-        ]    
-      }
-    }
-  },
   "standard": {
     "parser": "babel-eslint",
     "global": [
