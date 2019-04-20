@@ -28,6 +28,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { comments, holochainActive } = stateProps
   const { fetchCommentsMaker, createCommentMaker } = dispatchProps
   const cursor = !isEmpty(comments) && comments[0].id
+
   return {
     ...ownProps,
     ...stateProps,

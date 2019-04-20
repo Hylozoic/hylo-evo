@@ -6,6 +6,8 @@ import { makeGetQueryResults } from 'store/reducers/queryResults'
 import orm from 'store/models'
 
 export function fetchComments (id, opts = {}, holochainAPI = false) {
+  const { cursor } = opts
+
   return {
     type: FETCH_COMMENTS,
     graphql: {
