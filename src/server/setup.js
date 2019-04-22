@@ -4,10 +4,10 @@
 import { join } from 'path'
 import dotenv from 'dotenv-safe'
 import { addPath } from 'app-module-path'
-import scss from 'postcss-scss'
-import nested from 'postcss-nested'
-import resolvePath from 'postcss-modules-resolve-path'
-import cssHook from 'css-modules-require-hook'
+import postcssScss from 'postcss-scss'
+import postcssNested from 'postcss-nested'
+import postcssModulesResolvePath from 'postcss-modules-resolve-path'
+import cssModulesRequireHook from 'css-modules-require-hook'
 import rootPath from 'root-path'
 
 const startTime = new Date().getTime()
@@ -27,19 +27,21 @@ addPath(join(__dirname, '..'))
 
 // Configuration files are already ES5 so they doesn't get transpiled or copied
 // anywhere. We can always require them relative to the app's root path.
-const { resolveApp, babelConfigFile } = require(rootPath('config/paths'))
+// const { resolveApp, babelConfigFile } = require(rootPath('config/paths'))
 const sharedConfig = require(rootPath('config/webpack.config.shared'))
-const cssModulesConfig = require(babelConfigFile)().env.production.plugins.find(x => x[0] === 'react-css-modules')[1]
+// const cssModulesConfig = require(babelConfigFile)().env.production.plugins.find(x => x[0] === 'react-css-modules')[1]
 
 // handle CSS imports and generate class names the same way that webpack does
-cssHook({
+cssModulesRequireHook({
   extensions: ['.css', '.scss'],
   generateScopedName: sharedConfig.cssLoader.options.localIdentName,
-  processorOpts: { parser: scss.parse },
+  processorOpts: {
+    parser: postcssScss.parse
+  },
   prepend: [
-    nested,
-    resolvePath({
-      paths: cssModulesConfig.searchPaths.map(resolveApp)
+    postcssNested,
+    postcssModulesResolvePath({
+      paths: [rootPath('src')] // cssModulesConfig.searchPaths.map(resolveApp)
     })
   ]
 })

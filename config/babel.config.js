@@ -1,7 +1,13 @@
 const sharedConfig = require('./webpack.config.shared')
+const paths = require('./paths')
 
 module.exports = function (api) {
-  if (api) api.cache(true)
+  if (api) {
+    console.log('Using Babel config with environment:', api.env())
+    api.cache(true)
+  } else {
+    console.log('Referencing Babel config (not running Babel)')
+  }
 
   const reactCSSModulesPlugin = [
     'react-css-modules',
@@ -12,9 +18,8 @@ module.exports = function (api) {
       },
       exclude: 'node_modules',
       searchPaths: [
-        'src'
-      ],
-      webpackHotModuleReloading: true
+        'src',
+      ]
     }
   ]
 
@@ -24,7 +29,7 @@ module.exports = function (api) {
       '@babel/preset-react'
     ],
     ignore: [
-      '../scripts/templates/*'
+      paths.resolveApp('scripts/templates/*')
     ],
     plugins: [
       '@babel/plugin-proposal-class-properties'
@@ -36,10 +41,26 @@ module.exports = function (api) {
         ]
       },
       development: {
-        plugins: [reactCSSModulesPlugin]
+        plugins: [
+          [
+            reactCSSModulesPlugin[0],
+            {
+              ...reactCSSModulesPlugin[1],
+              webpackHotModuleReloading: true
+            }
+          ]
+        ]
       },
       production: {
-        plugins: [reactCSSModulesPlugin],
+        plugins: [
+          reactCSSModulesPlugin
+        ],
+        compact: true
+      },
+      server: {
+        plugins: [
+          reactCSSModulesPlugin
+        ],
         compact: true
       }
     }
