@@ -1,22 +1,23 @@
-var webpack = require('webpack')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var MiniCssExtractPlugin = require('mini-css-extract-plugin')
-var ManifestPlugin = require('webpack-manifest-plugin')
-var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
-var UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-var paths = require('./paths')
-var getClientEnvironment = require('./env')
-var sharedConfig = require('./webpack.config.shared')
+const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const ManifestPlugin = require('webpack-manifest-plugin')
+const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const paths = require('./paths')
+const getClientEnvironment = require('./env')
+const sharedConfig = require('./webpack.config.shared')
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
-var publicPath = paths.servedPath
+const publicPath = paths.servedPath
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
-var publicUrl = publicPath.slice(0, -1)
+const publicUrl = publicPath.slice(0, -1)
 // Get environment variables to inject into our app.
-var env = getClientEnvironment(publicUrl)
+const env = getClientEnvironment(publicUrl)
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -52,7 +53,12 @@ module.exports = {
     filename: 'static/js/[name].[chunkhash:8].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
-    publicPath: publicPath
+    publicPath: publicPath,
+    // Point sourcemap entries to original disk location (format as URL on Windows)
+    devtoolModuleFilenameTemplate: info =>
+      path
+        .relative(paths.appSrc, info.absoluteResourcePath)
+        .replace(/\\/g, '/')
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -75,14 +81,17 @@ module.exports = {
   module: {
     rules: [
       // Disable require.ensure as it's not a standard language feature.
-      { parser: { requireEnsure: false } },
-
+      {
+        parser: {
+          requireEnsure: false
+        }
+      },
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
       // Using standard js linter
       {
-        enforce: 'pre',
         test: /\.jsx?$/,
+        enforce: 'pre',
         loader: 'standard-loader',
         include: paths.appSrc,
         options: {
@@ -119,9 +128,7 @@ module.exports = {
             options: {
               configFile: paths.babelConfigFile,
               // `babel-loader` specific config (not Babel itself)
-              customize: require.resolve(
-                'babel-preset-react-app/webpack-overrides'
-              ),
+              customize: require.resolve('babel-preset-react-app/webpack-overrides'),
               cacheDirectory: true,
               cacheCompression: true
             }
@@ -144,7 +151,6 @@ module.exports = {
               ],
               cacheDirectory: true,
               cacheCompression: true,
-
               // If an error happens in a package, it's possible to be
               // because it was compiled. Thus, we don't want the browser
               // debugger to show the original code. Instead, the code
@@ -162,7 +168,6 @@ module.exports = {
           // CSS Modules for all SASS files not in resources or global
           {
             test: /\.(css|scss|sass)$/,
-            exclude: /draft-js.*\.css$/,
             use: [
               MiniCssExtractPlugin.loader,
               sharedConfig.cssLoader,

@@ -64,16 +64,17 @@ function getServedPath (appPackageJson) {
 module.exports = {
   resolveApp,
   appBuild: resolveApp('build'),
-  appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
+  appNodeModules: resolveApp('node_modules'),
   appPackageJson: resolveApp('package.json'),
-  rootPath: resolveApp('.'),
+  appPublic: resolveApp('public'),
   appSrc: resolveApp('src'),
+  config: resolveApp('config'),
+  publicUrl: getPublicUrl(resolveApp('package.json')),
+  servedPath: getServedPath(resolveApp('package.json')),
+  rootPath: resolveApp('.'),
   babelConfigFile: resolveApp('config/babel.config.js'),
   yarnLockFile: resolveApp('yarn.lock'),
-  appNodeModules: resolveApp('node_modules'),
-  nodePaths: nodePaths,
-  publicUrl: getPublicUrl(resolveApp('package.json')),
-  servedPath: getServedPath(resolveApp('package.json'))
+  nodePaths: nodePaths
 }

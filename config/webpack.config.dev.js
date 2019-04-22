@@ -1,16 +1,17 @@
-var webpack = require('webpack')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
-var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
-var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
-var getClientEnvironment = require('./env')
-var paths = require('./paths')
-var sharedConfig = require('./webpack.config.shared')
+const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
+const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
+const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
+const getClientEnvironment = require('./env')
+const paths = require('./paths')
+const sharedConfig = require('./webpack.config.shared')
 
-var publicPath = '/'
-var publicUrl = ''
-var env = getClientEnvironment(publicUrl)
-var path = require('path')
+const publicPath = '/'
+const publicUrl = ''
+const env = getClientEnvironment(publicUrl)
+const path = require('path')
 
 module.exports = {
   mode: 'development',
@@ -24,7 +25,10 @@ module.exports = {
     path: paths.appBuild,
     pathinfo: true,
     filename: 'static/js/bundle.js',
-    publicPath: publicPath
+    publicPath: publicPath,
+    // Point sourcemap entries to original disk location (format as URL on Windows)
+    devtoolModuleFilenameTemplate: info =>
+      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')  
   },
   resolve: {
     // NOTE: fixes issue with yarn link and peerDependencies
@@ -128,7 +132,6 @@ module.exports = {
           // CSS Modules for all SASS files not in resources or global
           {
             test: /\.(css|scss|sass)$/,
-            exclude: /draft-js.*\.css$/,
             use: [
               'style-loader',
               sharedConfig.cssLoader,
