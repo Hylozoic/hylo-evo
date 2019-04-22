@@ -10,6 +10,11 @@ const holochainPostFieldsFragment = withComments => `
   }
   createdAt
   updatedAt
+  communities {
+    id
+    name
+    slug
+  }
   ${withComments ? `comments(first: 10, order: "desc") {
     items {
       id

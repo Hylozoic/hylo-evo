@@ -5,12 +5,14 @@ export default
   $communitySlug: String,
   $type: String,
   $title: String,
-  $details: String
+  $details: String,
+  $createdAt: String
 ) {
   createPost(data: {
     communitySlug: $communitySlug,
     type: $type,
     title: $title,
-    details: $details
+    details: $details,
+    createdAt: $createdAt
   }) {${holochainPostFieldsFragment(false)}}
 }`
