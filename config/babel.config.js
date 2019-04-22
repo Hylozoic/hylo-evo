@@ -18,9 +18,8 @@ module.exports = function (api) {
       },
       exclude: 'node_modules',
       searchPaths: [
-        'src'
-      ],
-      webpackHotModuleReloading: true
+        'src',
+      ]
     }
   ]
 
@@ -67,62 +66,3 @@ module.exports = function (api) {
     }
   }
 }
-
-  // const reactCSSModulesPlugin = [
-  //   'react-css-modules',
-  //   {
-  //     generateScopedName: sharedConfig.cssLoader.options.localIdentName,
-  //     handleMissingStyleName: 'warn',
-  //     filetypes: {
-  //       '.scss': {
-  //         syntax: 'postcss-scss',
-  //         plugins: [
-  //           [
-  //             'postcss-nested',
-  //             {
-  //               preserveEmpty: true
-  //             }
-  //           ],
-  //           [
-  //             'postcss-modules-resolve-path',
-  //             {
-  //               paths: [paths.appSrc]
-  //             }
-  //           ]
-  //         ],
-  //       }
-  //     },
-  //     exclude: 'node_modules'
-  //   }
-  // ]
-
-  // const reactCSSModulesPluginServer = [
-  //   'react-css-modules',
-  //   {
-  //     generateScopedName: sharedConfig.cssLoader.options.localIdentName,
-  //     handleMissingStyleName: 'warn',
-  //     filetypes: {
-  //       '.scss': {
-  //         syntax: 'postcss-scss',
-  //         // removeImport: true
-  //         plugins: [
-  //           // 'precss',
-  //           [
-  //             'postcss-nested',
-  //             {
-  //               preserveEmpty: true
-  //             }
-  //           ],
-  //           [
-  //             'postcss-modules-resolve-path',
-  //             {
-  //               paths: [paths.appSrc, paths.appNodeModules]
-  //             }
-  //           ],
-  //           'postcss-sass'
-  //         ],
-  //       }
-  //     },
-  //     exclude: 'node_modules'
-  //   }
-  // ]

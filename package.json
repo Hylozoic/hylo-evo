@@ -13,6 +13,10 @@
     "storybook:build": "build-storybook"
   },
   "dependencies": {
+    "babel-plugin-transform-postcss": "^0.3.0",
+    "postcss-modules": "^1.4.1",
+
+    
     "@babel/cli": "7.2.3",
     "@babel/core": "7.2.2",
     "@babel/node": "7.2.2",

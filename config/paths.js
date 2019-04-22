@@ -76,5 +76,6 @@ module.exports = {
   rootPath: resolveApp('.'),
   babelConfigFile: resolveApp('config/babel.config.js'),
   yarnLockFile: resolveApp('yarn.lock'),
+  nodeModules: resolveApp('node_modules'),
   nodePaths: nodePaths
 }
