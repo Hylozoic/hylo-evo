@@ -1,6 +1,11 @@
-export const HOLOCHAIN_MODE_SUBDOMAIN = 'holo'
+export const HOLOCHAIN_SUBDOMAINS = [
+  'holo',
+  'holochain'
+]
+
+const currentSubdomain = window.location.host.split('.')[0]
 
 export const HOLOCHAIN_ACTIVE = typeof window !== 'undefined' &&
-  window.location.host.split('.')[0] === HOLOCHAIN_MODE_SUBDOMAIN
+  HOLOCHAIN_SUBDOMAINS.some(subdomain => currentSubdomain === subdomain)
 
 export const HOLOCHAIN_HASH_MATCH = '[a-zA-Z0-9]{46}'
