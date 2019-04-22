@@ -33,7 +33,6 @@ export function mapStateToProps (state, props) {
   //       the raw props of the component.
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, communityId))
   const hasMore = getHasMorePosts(state, fetchPostsParam)
-
   const holochainActive = getHolochainActive(state)
 
   return {
@@ -49,16 +48,16 @@ export function mapDispatchToProps (dispatch) {
   return {
     fetchPosts: param => offset => dispatch(fetchPosts({ offset, ...param })),
     storeFetchPostsParam: param => () => dispatch(storeFetchPostsParam(param)),
-    holochainFetchPosts: address => dispatch(holochainFetchPosts(address))
+    holochainFetchPosts: param => dispatch(holochainFetchPosts(param))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { fetchPostsParam, fetchPostsParam: { slug }, holochainActive } = stateProps
+  const { fetchPostsParam, holochainActive } = stateProps
   const { storeFetchPostsParam } = dispatchProps
 
   const fetchPosts = holochainActive
-    ? () => dispatchProps.holochainFetchPosts(slug)
+    ? () => dispatchProps.holochainFetchPosts(fetchPostsParam)
     : dispatchProps.fetchPosts(fetchPostsParam)
 
   return {

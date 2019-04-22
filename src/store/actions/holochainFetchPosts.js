@@ -1,7 +1,7 @@
 import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
 
-export default function holochainFetchPosts (slug) {
+export default function holochainFetchPosts ({ slug }) {
   return {
     type: FETCH_POSTS,
     graphql: {
