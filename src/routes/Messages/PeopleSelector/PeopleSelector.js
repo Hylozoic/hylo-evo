@@ -16,8 +16,6 @@ const personType = shape({
   avatarUrl: string
 })
 
-// TODO: This _grossly_ underestimates the problem! See:
-// https://www.w3.org/International/questions/qa-personal-names
 const invalidPersonName = /[^a-z '-]+/gi
 
 export default class PeopleSelector extends React.Component {

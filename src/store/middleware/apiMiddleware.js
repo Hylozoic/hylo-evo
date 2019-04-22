@@ -19,7 +19,6 @@ export default function apiMiddleware (req) {
   }
 }
 
-// TODO: do we ever use API_HOST?
 export function getHost () {
   if (typeof window === 'undefined') {
     return process.env.API_HOST
