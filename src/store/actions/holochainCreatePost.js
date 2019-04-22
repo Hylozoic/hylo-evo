@@ -15,6 +15,8 @@ export default function holochainCreatePost (postParams) {
   const communitySlug = get('0.slug', communities)
   if (!communitySlug) throw new Error('must provide CommunitySlug to holochainCreatePost')
 
+  const createdAt = new Date().toISOString()
+
   return {
     type: CREATE_POST,
     graphql: {
@@ -23,7 +25,8 @@ export default function holochainCreatePost (postParams) {
         type,
         title,
         details,
-        communitySlug
+        communitySlug,
+        createdAt
       }
     },
     meta: {
@@ -35,9 +38,7 @@ export default function holochainCreatePost (postParams) {
       analytics: {
         eventName: AnalyticsEvents.POST_CREATED,
         detailsLength: textLength(details)
-      },
-      // this is used for the queryResults reducer
-      communities
+      }
     }
   }
 }

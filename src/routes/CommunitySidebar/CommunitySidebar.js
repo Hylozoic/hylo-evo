@@ -22,7 +22,9 @@ export default class CommunitySidebar extends Component {
   }
 
   render () {
-    const { community, members, leaders, canModerate } = this.props
+    const { community, members, leaders, canModerate, holochainActive } = this.props
+    // temporarily disable sidebar for holochain communities
+    if (holochainActive) return null
     if (!community || isEmpty(members)) return <Loading />
     const { name, description, slug, memberCount } = community
 
