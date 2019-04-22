@@ -11,7 +11,6 @@ const sharedConfig = require('./webpack.config.shared')
 const publicPath = '/'
 const publicUrl = ''
 const env = getClientEnvironment(publicUrl)
-const path = require('path')
 
 module.exports = {
   mode: 'development',

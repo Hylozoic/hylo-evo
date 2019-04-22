@@ -3,8 +3,8 @@ const paths = require('./paths')
 
 module.exports = function (api) {
   if (api) {
-    api.cache(true)
     console.log('Using Babel config with environment:', api.env())
+    api.cache(true)
   } else {
     console.log('Referencing Babel config (not running Babel)')
   }
