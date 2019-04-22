@@ -13,7 +13,6 @@ import Loading from 'components/Loading'
 
 export default function TextInput (props) {
   const { theme = {}, onChange, value, inputRef, className, noClearButton, loading, label } = props
-  // TODO: different styles based on props, e.g. validated, error, etc.
   const onKeyDown = props.onEnter ? onEnter(props.onEnter) : () => {}
   const otherProps = omit(['onEnter', 'className', 'inputRef', 'theme', 'noClearButton', 'loading', 'label'], props)
   const clear = () => onChange && onChange({ target: { value: '' } })

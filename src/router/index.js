@@ -23,7 +23,6 @@ export function clientRouter () {
   </ConnectedRouter>
 }
 
-// TODO: this probably needs to get the history as well
 export function serverRouter (req, context) {
   return <StaticRouter location={req.url} context={context}>
     {rootRoutes()}
