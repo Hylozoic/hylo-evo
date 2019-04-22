@@ -38,9 +38,7 @@ export default function holochainCreatePost (postParams) {
       analytics: {
         eventName: AnalyticsEvents.POST_CREATED,
         detailsLength: textLength(details)
-      },
-      // this is used for the queryResults reducer
-      communities
+      }
     }
   }
 }
