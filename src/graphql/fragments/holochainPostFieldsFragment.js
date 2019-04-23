@@ -15,6 +15,12 @@ const holochainPostFieldsFragment = withComments => `
     name
     slug
   }
+  commenters(first: 3) {
+    id
+    name
+    avatarUrl
+  }
+  commentersTotal
   ${withComments ? `comments(first: 10, order: "desc") {
     items {
       id
