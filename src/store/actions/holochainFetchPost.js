@@ -3,9 +3,9 @@ import {
   FETCH_POST,
   FETCH_COMMENTS
 } from 'store/constants'
-import fetchPostQuery from 'graphql/queries/fetchPostQuery'
+import holochainFetchPostQuery from 'graphql/queries/holochainFetchPostQuery'
 
-export default function fetchPost (id, query = fetchPostQuery) {
+export default function holochainFetchPost (id, query = holochainFetchPostQuery) {
   return {
     type: FETCH_POST,
     graphql: {
@@ -15,6 +15,7 @@ export default function fetchPost (id, query = fetchPostQuery) {
       }
     },
     meta: {
+      holochainAPI: true,
       extractModel: 'Post',
       extractQueryResults: {
         getType: () => FETCH_COMMENTS,

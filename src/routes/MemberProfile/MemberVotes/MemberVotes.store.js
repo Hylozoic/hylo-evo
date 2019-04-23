@@ -2,7 +2,7 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import { compact } from 'lodash/fp'
 import orm from 'store/models'
 import presentPost from 'store/presenters/presentPost'
-import getPostFieldsFragment from 'graphql/fragments/getPostFieldsFragment'
+import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
 import { FETCH_MEMBER_VOTES } from '../MemberProfile.store'
 
 export function fetchMemberVotes (id, order = 'desc', limit = 20, providedQuery) {
@@ -14,7 +14,7 @@ export function fetchMemberVotes (id, order = 'desc', limit = 20, providedQuery)
         items {
           id
           post {
-            ${getPostFieldsFragment(false)}
+            ${postFieldsFragment(false)}
           }
           voter {
             id

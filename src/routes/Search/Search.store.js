@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 import orm from 'store/models'
 import { isEmpty, includes, get } from 'lodash/fp'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
-import getPostFieldsFragment from 'graphql/fragments/getPostFieldsFragment'
+import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
 import presentPost from 'store/presenters/presentPost'
 import presentComment from 'store/presenters/presentComment'
 
@@ -37,7 +37,7 @@ const searchQuery =
           }
         }
         ... on Post {
-          ${getPostFieldsFragment(false)}
+          ${postFieldsFragment(false)}
         }
         ... on Comment {
           id
@@ -49,7 +49,7 @@ const searchQuery =
             avatarUrl
           }
           post {
-            ${getPostFieldsFragment(false)}
+            ${postFieldsFragment(false)}
           }
           attachments {
             id

@@ -52,6 +52,7 @@ export default class FeedList extends React.Component {
 
   componentDidUpdate (prevProps) {
     if (!prevProps) return
+
     const updateCheckFunc = key =>
       this.props[key] !== prevProps[key] ||
       this.props.routeParams[key] !== prevProps.routeParams[key]

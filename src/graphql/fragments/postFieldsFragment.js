@@ -1,4 +1,4 @@
-const getPostFieldsFragment = withComments => `
+const postFieldsFragment = withComments => `
   id
   announcement
   title
@@ -114,4 +114,4 @@ const getPostFieldsFragment = withComments => `
     }
   }`
 
-export default getPostFieldsFragment
+export default postFieldsFragment

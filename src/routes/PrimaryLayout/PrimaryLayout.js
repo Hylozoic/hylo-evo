@@ -42,8 +42,8 @@ import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
 import {
-  ID_MATCH_REGEX,
-  VALID_POST_TYPE_CONTEXTS_MATCH_REGEX,
+  POST_ID_MATCH,
+  VALID_POST_TYPE_CONTEXTS_MATCH,
   isSignupPath,
   isAllCommunitiesPath,
   isNetworkPath,
@@ -60,6 +60,9 @@ export default class PrimaryLayout extends Component {
     // to a single community
     const skipTopics = this.props.location.pathname !== '/all'
     this.props.fetchForCurrentUser(skipTopics)
+    if (this.props.slug) {
+      this.props.fetchForCommunity()
+    }
   }
 
   componentDidUpdate (prevProps) {
@@ -84,7 +87,8 @@ export default class PrimaryLayout extends Component {
 
     if (isCommunityRoute) {
       if (!currentUser) return <Loading />
-      if (!community && !communityPending) return <NotFound />
+      // don't show NotFound in holochain as we don't get the communities with currentUser
+      if (!community && !communityPending && !holochainActive) return <NotFound />
     }
 
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
@@ -133,7 +137,7 @@ export default class PrimaryLayout extends Component {
         </div>
         <div styleName={cx('sidebar', { hidden: hasDetail })}>
           <Switch>
-            <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
+            <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={holochainActive ? null : CommunitySidebar} />
             <Route path={`/c/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
             <Route path={`/c/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
             <Route path={`/n/:networkSlug/${OPTIONAL_NEW_POST_MATCH}`} exact component={NetworkSidebar} />
@@ -161,11 +165,11 @@ export default class PrimaryLayout extends Component {
   }
 }
 
-const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})`
-const OPTIONAL_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:postId(${ID_MATCH_REGEX})?/:action(new|edit)?`
+const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH})`
+const OPTIONAL_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:postId(${POST_ID_MATCH})?/:action(new|edit)?`
 const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
 
-const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${ID_MATCH_REGEX})/:action(edit)?`
+const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})/:action(edit)?`
 const postDetailRoutes = [
   { path: `/all/${POST_DETAIL_MATCH}` },
   { path: `/n/:networkSlug/m/:personId/${POST_DETAIL_MATCH}` },

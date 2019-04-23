@@ -54,7 +54,6 @@ export default class PostDetail extends Component {
   }
 
   setActivityStateFromDOM = activity => {
-    console.log(activity)
     const element = ReactDOM.findDOMNode(activity)
     const container = document.getElementById(DETAIL_COLUMN_ID)
     if (!element || !container) return
