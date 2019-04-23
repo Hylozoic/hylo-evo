@@ -11,7 +11,7 @@ EventInvitation.fields = {
   id: attr(),
   response: attr(),
   event: fk('Post', 'eventInvitations'),
-  person: fk('Person', 'eventInvitations')  
+  person: fk('Person', 'eventInvitations')
 }
 
 export default EventInvitation
@@ -25,7 +25,7 @@ export const RESPONSES = {
 export const humanResponse = (response) => {
   return {
     yes: 'Going',
-    no: 'Not Going',    
+    no: 'Not Going',
     interested: 'Interested'
   }[response]
 }

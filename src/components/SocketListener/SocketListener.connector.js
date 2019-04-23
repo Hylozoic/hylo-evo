@@ -74,13 +74,13 @@ function convertToThread (data) {
     }
   }
 
-  const { id, created_at, updated_at, people, comments } = data
+  const { id, created_at: createdAt, updated_at: updatedAt, people, comments } = data
   return {
     id,
-    createdAt: new Date(created_at).toString(),
-    updatedAt: new Date(updated_at).toString(),
-    participants: people.map(({id, name, avatar_url}) => ({id, name, avatarUrl: avatar_url})),
-    messages: comments.map(c => convertToMessage({message: c, postId: id})),
+    createdAt: new Date(createdAt).toString(),
+    updatedAt: new Date(updatedAt).toString(),
+    participants: people.map(({ id, name, avatar_url: avatarUrl }) => ({ id, name, avatarUrl })),
+    messages: comments.map(c => convertToMessage({ message: c, postId: id })),
     unreadCount: 1
   }
 }
@@ -94,12 +94,12 @@ function convertToMessage (data) {
     }
   }
 
-  const { message: { id, created_at, text, user_id }, postId } = data
+  const { message: { id, created_at: createdAt, text, user_id: userId }, postId } = data
   return {
     id,
-    createdAt: new Date(created_at).toString(),
+    createdAt: new Date(createdAt).toString(),
     text,
-    creator: user_id,
+    creator: userId,
     messageThread: postId
   }
 }

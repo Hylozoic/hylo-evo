@@ -40,7 +40,7 @@ export function leaveCommunity (id) {
       query: `mutation ($id: ID) {
         leaveCommunity(id: $id)
       }`,
-      variables: {id}
+      variables: { id }
     },
     meta: {
       id,
@@ -58,7 +58,7 @@ export function unlinkAccount (provider) {
           success
         }
       }`,
-      variables: {provider}
+      variables: { provider }
     }
   }
 }
@@ -117,7 +117,7 @@ export function registerStripeAccount (authorizationCode) {
           success
         }
       }`,
-      variables: {authorizationCode}
+      variables: { authorizationCode }
     },
     meta: {
       authorizationCode

@@ -49,7 +49,7 @@ export default class CommunitySettings extends Component {
           component: <CommunitySettingsTab
             community={community}
             updateCommunitySettings={updateCommunitySettings}
-            />
+          />
         },
         {
           name: 'Moderators',

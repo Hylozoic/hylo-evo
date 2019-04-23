@@ -46,9 +46,9 @@ const legacyThreadData = {
   created_at: '2017-05-13T01:01:14.202Z',
   updated_at: '2017-05-13T01:01:14.202Z',
   people: [
-    {id: '1', name: 'Foo', avatar_url: 'foo.png'},
-    {id: '2', name: 'Bar', avatar_url: 'bar.png'},
-    {id: '3', name: 'Zot', avatar_url: 'zot.png'}
+    { id: '1', name: 'Foo', avatar_url: 'foo.png' },
+    { id: '2', name: 'Bar', avatar_url: 'bar.png' },
+    { id: '3', name: 'Zot', avatar_url: 'zot.png' }
   ],
   comments: [
     legacyCommentData.comment
@@ -60,9 +60,9 @@ const threadData = {
   createdAt: '2017-05-13T01:01:14.202Z',
   updatedAt: '2017-05-13T01:01:14.202Z',
   participants: [
-    {id: '1', name: 'Foo', avatarUrl: 'foo.png'},
-    {id: '2', name: 'Bar', avatarUrl: 'bar.png'},
-    {id: '3', name: 'Zot', avatarUrl: 'zot.png'}
+    { id: '1', name: 'Foo', avatarUrl: 'foo.png' },
+    { id: '2', name: 'Bar', avatarUrl: 'bar.png' },
+    { id: '3', name: 'Zot', avatarUrl: 'zot.png' }
   ],
   messages: [
     {
@@ -77,7 +77,7 @@ let newProps
 beforeAll(() => {
   timezoneMock.register('US/Pacific')
   const dispatch = jest.fn(x => x)
-  const props = {location: {pathname: '/t/77'}}
+  const props = { location: { pathname: '/t/77' } }
   newProps = mapDispatchToProps(dispatch, props)
 })
 

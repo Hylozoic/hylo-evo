@@ -4,7 +4,7 @@ import React from 'react'
 
 describe('FullPageModal', () => {
   it('renders correctly with a single component', () => {
-    const history = {length: 2}
+    const history = { length: 2 }
     const content = <div>The Content</div>
     const wrapper = shallow(<FullPageModal
       history={history}
@@ -13,7 +13,7 @@ describe('FullPageModal', () => {
   })
 
   it('renders correctly when passed children', () => {
-    const history = {length: 2}
+    const history = { length: 2 }
 
     const wrapper = shallow(
       <FullPageModal history={history}>
@@ -24,7 +24,7 @@ describe('FullPageModal', () => {
   })
 
   it('renders correctly with multiple tabs', () => {
-    const history = {length: 2}
+    const history = { length: 2 }
     const content = [
       {
         name: 'Account',

@@ -9,6 +9,7 @@ coverage
 # production
 build
 es5
+storybook-static
 
 # misc
 .DS_Store
@@ -23,3 +24,4 @@ npm-debug.log
 
 yarn-error.log
 .idea
+yarn.lock

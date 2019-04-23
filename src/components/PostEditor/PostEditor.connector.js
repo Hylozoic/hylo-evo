@@ -1,6 +1,6 @@
 import { get, isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import { postUrl } from 'util/navigation'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getPostTypeContext from 'store/selectors/getPostTypeContext'
@@ -17,6 +17,7 @@ import {
   UPLOAD_ATTACHMENT
 } from 'store/constants'
 import createPost from 'store/actions/createPost'
+import holochainCreatePost from 'store/actions/holochainCreatePost'
 import createProject from 'store/actions/createProject'
 import updatePost from 'store/actions/updatePost'
 import {
@@ -32,6 +33,7 @@ import {
   addAttachment,
   getAttachments
 } from './AttachmentManager/AttachmentManager.store'
+import getHolochainActive from 'store/selectors/getHolochainActive'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
@@ -47,8 +49,8 @@ export function mapStateToProps (state, props) {
   const postPending = !!state.pending[CREATE_POST] || !!state.pending[CREATE_PROJECT]
   const loading = !!state.pending[FETCH_POST] || !!uploadAttachmentPending || postPending
   const editing = !!post || loading
-  const images = getAttachments(state, {type: 'image'})
-  const files = getAttachments(state, {type: 'file'})
+  const images = getAttachments(state, { type: 'image' })
+  const files = getAttachments(state, { type: 'file' })
   // TODO: this should be a selector exported from AttachmentManager
   const showImages = !isEmpty(images) ||
     get('attachmentType', uploadAttachmentPending) === 'image'
@@ -60,9 +62,10 @@ export function mapStateToProps (state, props) {
   const topicName = get('name', topic)
   const postTypeContext = getPostTypeContext(null, props) || getQuerystringParam('t', null, props)
   const isProject = postTypeContext === 'project' || get('type', post) === 'project'
-  const isEvent = postTypeContext === 'event' || get('type', post) === 'event'  
+  const isEvent = postTypeContext === 'event' || get('type', post) === 'event'
   const announcementSelected = state[MODULE_NAME].announcement
   const canModerate = currentUser && currentUser.canModerate(currentCommunity)
+  const holochainActive = getHolochainActive(state)
 
   return {
     currentUser,
@@ -88,7 +91,8 @@ export function mapStateToProps (state, props) {
     networkSlug,
     announcementSelected,
     canModerate,
-    myModeratedCommunities
+    myModeratedCommunities,
+    holochainActive
   }
 }
 
@@ -98,7 +102,8 @@ export const mapDispatchToProps = (dispatch, props) => {
     removeLinkPreview: () => dispatch(removeLinkPreview()),
     clearLinkPreview: () => dispatch(clearLinkPreview()),
     updatePost: postParams => dispatch(updatePost(postParams)),
-    createPost: postParams => dispatch(createPost(postParams)),
+    createPost: (postParams) => dispatch(createPost(postParams)),
+    holochainCreatePost: (postParams) => dispatch(holochainCreatePost(postParams)),
     createProject: postParams => dispatch(createProject(postParams)),
     goToUrl: url => dispatch(push(url)),
     addImage: url => dispatch(addAttachment(url, 'image')),
@@ -108,19 +113,23 @@ export const mapDispatchToProps = (dispatch, props) => {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { fetchLinkPreviewPending, topicName, communitySlug, networkSlug, postTypeContext } = stateProps
+  const { fetchLinkPreviewPending, topicName, communitySlug, networkSlug, postTypeContext, holochainActive } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) || get('payload.data.createProject.id', createPostAction)
-    const url = postUrl(id, {communitySlug, networkSlug, postTypeContext, topicName})
+    const url = postUrl(id, { communitySlug, networkSlug, postTypeContext, topicName })
 
     return goToUrl(url)
   }
   const pollingFetchLinkPreview = fetchLinkPreviewPending
-      ? () => Promise.resolve()
-      : url => pollingFetchLinkPreviewRaw(url)
-  const createPost = postParams => dispatchProps.createPost({networkSlug, ...postParams})
-  const createProject = projectParams => dispatchProps.createProject({networkSlug, ...projectParams})
+    ? () => Promise.resolve()
+    : url => pollingFetchLinkPreviewRaw(url)
+
+  const createPost = holochainActive
+    ? postParams => dispatchProps.holochainCreatePost({ networkSlug, ...postParams })
+    : postParams => dispatchProps.createPost({ networkSlug, ...postParams })
+
+  const createProject = projectParams => dispatchProps.createProject({ networkSlug, ...projectParams })
 
   return {
     ...stateProps,

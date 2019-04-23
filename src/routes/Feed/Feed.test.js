@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Feed, {CreateCommunityPrompt} from './Feed'
+import Feed, { CreateCommunityPrompt } from './Feed'
 
 describe('Feed', () => {
   it('renders a FeedList with correct props', () => {
@@ -32,7 +32,7 @@ describe('Feed', () => {
     const wrapper = shallow(<Feed
       routeParams={{ networkSlug: 'bar' }}
       postTypeFilter='request'
-      network={{id: 2}}
+      network={{ id: 2 }}
       fetchNetwork={jest.fn()}
       sortBy='votes'
       currentUser
@@ -56,7 +56,7 @@ describe('Feed', () => {
 
   it('displays the regular FeedBanner if on the main feed', () => {
     const props = {
-      currentUser: {id: 1}
+      currentUser: { id: 1 }
     }
     const wrapper = shallow(<Feed {...props} />)
     expect(wrapper.find('FeedBanner')).toHaveLength(1)
@@ -68,8 +68,8 @@ describe('Feed', () => {
       routeParams: {
         topicName: 'petitions'
       },
-      topic: {id: '5', name: 'petitions'},
-      currentUser: {id: 1}
+      topic: { id: '5', name: 'petitions' },
+      currentUser: { id: 1 }
     }
     const wrapper = shallow(<Feed {...props} fetchTopic={jest.fn()} />)
     expect(wrapper.find('FeedBanner')).toHaveLength(0)

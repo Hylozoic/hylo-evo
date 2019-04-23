@@ -6,9 +6,9 @@ import orm from 'store/models'
 const session = orm.mutableSession(orm.getEmptyState())
 const { MessageThread, Message, Person } = session
 
-const u1 = {id: '1', name: 'Charles Darwin', avatarUrl: 'foo.png'}
-const u2 = {id: '2', name: 'Marie Curie', avatarUrl: 'bar.png'}
-const u3 = {id: '3', name: 'Arthur Fonzarelli', avatarUrl: 'baz.png'}
+const u1 = { id: '1', name: 'Charles Darwin', avatarUrl: 'foo.png' }
+const u2 = { id: '2', name: 'Marie Curie', avatarUrl: 'bar.png' }
+const u3 = { id: '3', name: 'Arthur Fonzarelli', avatarUrl: 'baz.png' }
 
 ;[u1, u2, u3].forEach(u => Person.create(u))
 
@@ -26,8 +26,8 @@ const threads = [
 ].map(t => MessageThread.create(t))
 
 ;[
-  {text: 'hi', creator: u2.id, messageThread: threads[0].id},
-  {text: 'there', creator: u3.id, messageThread: threads[1].id}
+  { text: 'hi', creator: u2.id, messageThread: threads[0].id },
+  { text: 'there', creator: u3.id, messageThread: threads[1].id }
 ].map(m => Message.create(m))
 
 describe('MessagesDropdown', () => {
@@ -58,7 +58,7 @@ describe('MessagesDropdownItem', () => {
   })
 
   it('renders correctly with no other participants', () => {
-    const currentUser = {id: 1, name: 'Ra', avatarUrl: 'ra.png'}
+    const currentUser = { id: 1, name: 'Ra', avatarUrl: 'ra.png' }
     const thread = new MessageThread({
       participants: [currentUser]
     })
@@ -83,34 +83,34 @@ describe('MessagesDropdownItem', () => {
 describe('lastMessageCreator', () => {
   it('handles when the current user created the message', () => {
     const formattedName = 'You: '
-    const currentUser = {id: 1}
+    const currentUser = { id: 1 }
     const message = {
-      creator: {id: 1}
+      creator: { id: 1 }
     }
     expect(lastMessageCreator(message, currentUser, [])).toBe(formattedName)
   })
   it('handles when a different user created the message', () => {
     const name = 'name'
     const formattedName = 'name: '
-    const currentUser = {id: 1}
+    const currentUser = { id: 1 }
     const message = {
-      creator: {id: 2}
+      creator: { id: 2 }
     }
     const participants = [
-      {id: 2, name},
-      {id: 3, name: 'other'},
-      {id: 4, name: 'another'}
+      { id: 2, name },
+      { id: 3, name: 'other' },
+      { id: 4, name: 'another' }
     ]
     expect(lastMessageCreator(message, currentUser, participants)).toBe(formattedName)
   })
   it('handles when there are 2 participants and a different user created the message', () => {
-    const currentUser = {id: 1}
+    const currentUser = { id: 1 }
     const message = {
-      creator: {id: 2}
+      creator: { id: 2 }
     }
     const participants = [
-      {id: 2, name: 'name1'},
-      {id: 2, name: 'name2'}
+      { id: 2, name: 'name1' },
+      { id: 2, name: 'name2' }
     ]
     expect(lastMessageCreator(message, currentUser, participants)).toBe('')
   })

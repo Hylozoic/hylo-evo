@@ -21,9 +21,9 @@ export default function EventRSVP ({ myEventResponse, respondToEvent }) {
   }
 
   const choices = [
-    {label: 'Going', value: RESPONSES.YES},
-    {label: 'Interested', value: RESPONSES.INTERESTED},
-    {label: 'Not Going', value: RESPONSES.NO}
+    { label: 'Going', value: RESPONSES.YES },
+    { label: 'Interested', value: RESPONSES.INTERESTED },
+    { label: 'Not Going', value: RESPONSES.NO }
   ]
 
   return <div styleName='eventRSVP'>

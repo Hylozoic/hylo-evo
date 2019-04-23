@@ -4,9 +4,9 @@ import React from 'react'
 
 it('does something', () => {
   const wrapper = shallow(<Members members={[
-    {id: '1', name: 'You'},
-    {id: '2', name: 'Me'},
-    {id: '3', name: 'Everyone'}
+    { id: '1', name: 'You' },
+    { id: '2', name: 'Me' },
+    { id: '3', name: 'Everyone' }
   ]} />)
   expect(wrapper.find('Connect(Member)')).toHaveLength(3)
 })

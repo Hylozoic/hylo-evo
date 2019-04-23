@@ -24,13 +24,13 @@ export default class Domain extends Component {
     const communityDomain = removeUrlFromDomain(event.target.value)
     if (communityDomain !== '') {
       if (!slugValidatorRegex.test(communityDomain)) {
-        this.setState({communityDomainInvalid: true})
+        this.setState({ communityDomainInvalid: true })
       } else {
-        this.setState({communityDomainInvalid: false})
+        this.setState({ communityDomainInvalid: false })
         this.props.fetchCommunityExists(communityDomain)
       }
     }
-    this.setState({communityDomain})
+    this.setState({ communityDomain })
   }
 
   submit = () => {
@@ -71,7 +71,7 @@ export default class Domain extends Component {
 
   componentWillMount = () => {
     const { communityDomain } = this.props
-    if (communityDomain) this.setState({communityDomain: communityDomain})
+    if (communityDomain) this.setState({ communityDomain: communityDomain })
   }
   render () {
     return <div styleName='flex-wrapper'>
@@ -111,7 +111,7 @@ export default class Domain extends Component {
         previous={this.props.goToPreviousStep}
         hidePrevious={false}
         continueText={'Continue'}
-        />
+      />
     </div>
   }
 }

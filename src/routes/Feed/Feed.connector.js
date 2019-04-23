@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push, replace } from 'react-router-redux'
+import { push, replace } from 'connected-react-router'
 import { get } from 'lodash/fp'
 import { isEmpty } from 'lodash'
 import { FETCH_POSTS, FETCH_FOR_CURRENT_USER } from 'store/constants'
@@ -81,12 +81,12 @@ export function mapDispatchToProps (dispatch, props) {
     fetchTopic: () => {
       if (communitySlug && topicName) {
         return dispatch(fetchCommunityTopic(topicName, communitySlug))
-        .then(action => {
+          .then(action => {
           // redirect if no topic found
-          if (!action.payload.data.communityTopic) {
-            dispatch(replace(topicsUrl(communitySlug)))
-          }
-        })
+            if (!action.payload.data.communityTopic) {
+              dispatch(replace(topicsUrl(communitySlug)))
+            }
+          })
       } else if (topicName) {
         return dispatch(fetchTopic(topicName))
       }

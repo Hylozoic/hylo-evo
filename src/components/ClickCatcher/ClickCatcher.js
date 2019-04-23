@@ -20,7 +20,7 @@ export default function ClickCatcher ({ tag, handleMouseOver, navigate, ...props
       node.setAttribute('target', '_blank')
     }
   }
-  return React.createElement(tag, {...props, onClick: handleClick})
+  return React.createElement(tag, { ...props, onClick: handleClick })
 }
 ClickCatcher.propTypes = {
   tag: PropTypes.string.isRequired,

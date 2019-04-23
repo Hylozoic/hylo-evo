@@ -4,7 +4,7 @@ import React from 'react'
 
 describe('PaginatedList', () => {
   it('renders correctly', () => {
-    const items = [{id: 2}, {id: 3}]
+    const items = [{ id: 2 }, { id: 3 }]
 
     const wrapper = shallow(<PaginatedList
       isAdmin
@@ -12,7 +12,7 @@ describe('PaginatedList', () => {
       page={3}
       pageCount={5}
       setPage={() => {}}
-      itemProps={{square: true, size: 40}} />)
+      itemProps={{ square: true, size: 40 }} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

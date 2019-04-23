@@ -16,6 +16,7 @@ export default class Messages extends React.Component {
     this.state = {
       onCloseURL: props.onCloseURL
     }
+    this.form = React.createRef()
   }
 
   componentDidMount () {
@@ -28,7 +29,7 @@ export default class Messages extends React.Component {
     }
   }
 
-  focusForm = () => this.form && this.form.focus()
+  focusForm = () => this.form.current && this.form.current.focus()
 
   onThreadIdChange = () => {
     if (!this.props.forNewThread) this.props.fetchThread()
@@ -41,6 +42,7 @@ export default class Messages extends React.Component {
       currentUser,
       messageThread,
       messageThreadId,
+      threadsPending,
       threads,
       threadSearch,
       setThreadSearch,
@@ -72,6 +74,7 @@ export default class Messages extends React.Component {
         <ThreadList
           styleName='left-column'
           currentUser={currentUser}
+          threadsPending={threadsPending}
           threads={threads}
           threadSearch={threadSearch}
           setThreadSearch={setThreadSearch}
@@ -81,7 +84,10 @@ export default class Messages extends React.Component {
         <div styleName='right-column'>
           <div styleName='thread'>
             {forNewThread &&
-              <PeopleSelector location={this.props.location} onCloseURL={onCloseURL} holochainActive={holochainActive} />}
+              <PeopleSelector
+                location={this.props.location}
+                onCloseURL={onCloseURL}
+                holochainActive={holochainActive} />}
             {!forNewThread &&
               <Header
                 messageThread={messageThread}
@@ -103,7 +109,7 @@ export default class Messages extends React.Component {
                 <MessageForm
                   messageThreadId={messageThreadId}
                   currentUser={currentUser}
-                  formRef={textArea => this.form = textArea} // eslint-disable-line no-return-assign
+                  formRef={this.form}
                   focusForm={this.focusForm}
                   createMessage={createMessage}
                   messageText={messageText}

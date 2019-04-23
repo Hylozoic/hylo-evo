@@ -82,7 +82,7 @@ export default class PostEditor extends React.Component {
       acceptContributions: false
     })
     const currentPost = post
-      ? ({...post,
+      ? ({ ...post,
         startTime: Moment(post.startTime),
         endTime: Moment(post.endTime)
       })
@@ -102,12 +102,17 @@ export default class PostEditor extends React.Component {
 
   constructor (props) {
     super(props)
+
     this.state = this.buildStateFromProps(props)
+    this.titleInput = React.createRef()
+    this.editor = React.createRef()
+    this.communitiesSelector = React.createRef()
+    this.topicSelector = React.createRef()
   }
 
   componentDidMount () {
     setTimeout(() => {
-      this.titleInput.focus()
+      this.titleInput.current.focus()
     }, 100)
   }
 
@@ -115,10 +120,10 @@ export default class PostEditor extends React.Component {
     const linkPreview = this.props.linkPreview
     if (get('post.id', this.props) !== get('post.id', prevProps)) {
       this.reset(this.props)
-      this.editor.focus()
+      this.editor.current.focus()
     } else if (linkPreview !== prevProps.linkPreview) {
       this.setState({
-        post: {...this.state.post, linkPreview}
+        post: { ...this.state.post, linkPreview }
       })
     }
   }
@@ -128,17 +133,17 @@ export default class PostEditor extends React.Component {
   }
 
   reset = (props) => {
-    this.editor.reset()
-    this.communitiesSelector.reset()
+    this.editor.current.reset()
+    this.communitiesSelector.current.reset()
     this.setState(this.buildStateFromProps(props))
   }
 
-  focus = () => this.editor && this.editor.focus()
+  focus = () => this.editor.current && this.editor.current.focus()
 
   handlePostTypeSelection = event => {
     const type = event.target.textContent.toLowerCase()
     this.setState({
-      post: {...this.state.post, type},
+      post: { ...this.state.post, type },
       titlePlaceholder: this.titlePlaceholderForPostType(type),
       valid: this.isValid({ type })
     })
@@ -177,9 +182,9 @@ export default class PostEditor extends React.Component {
 
   handleTitleChange = (event) => {
     const title = event.target.value
-    title.length >= MAX_TITLE_LENGTH ? this.setState({titleLengthError: true}) : this.setState({titleLengthError: false})
+    title.length >= MAX_TITLE_LENGTH ? this.setState({ titleLengthError: true }) : this.setState({ titleLengthError: false })
     this.setState({
-      post: {...this.state.post, title},
+      post: { ...this.state.post, title },
       valid: this.isValid({ title })
     })
   }
@@ -195,7 +200,7 @@ export default class PostEditor extends React.Component {
   toggleContributions = () => {
     const { post, post: { acceptContributions } } = this.state
     this.setState({
-      post: {...post, acceptContributions: !acceptContributions}
+      post: { ...post, acceptContributions: !acceptContributions }
     })
   }
 
@@ -203,7 +208,7 @@ export default class PostEditor extends React.Component {
     this.validateTimeChange(startTime, this.state.post.endTime)
 
     this.setState({
-      post: {...this.state.post, startTime},
+      post: { ...this.state.post, startTime },
       valid: this.isValid({ startTime })
     })
   }
@@ -212,21 +217,21 @@ export default class PostEditor extends React.Component {
     this.validateTimeChange(this.state.post.startTime, endTime)
 
     this.setState({
-      post: {...this.state.post, endTime},
+      post: { ...this.state.post, endTime },
       valid: this.isValid({ endTime })
     })
   }
 
   validateTimeChange = (startTime, endTime) => {
     if (endTime) {
-      startTime < endTime ? this.setState({dateError: false}) : this.setState({dateError: true})
+      startTime < endTime ? this.setState({ dateError: false }) : this.setState({ dateError: true })
     }
   }
 
   handleLocationChange = event => {
     const location = event.target.value
     this.setState({
-      post: {...this.state.post, location}
+      post: { ...this.state.post, location }
     })
   }
 
@@ -248,7 +253,7 @@ export default class PostEditor extends React.Component {
     const hasChanged = !isEqual(this.state.detailsTopics, topicNames)
     if (hasChanged) {
       this.setState({
-        detailsTopics: topicNames.map(tn => ({name: tn, id: tn}))
+        detailsTopics: topicNames.map(tn => ({ name: tn, id: tn }))
       })
     }
   })
@@ -256,26 +261,26 @@ export default class PostEditor extends React.Component {
   removeLinkPreview = () => {
     this.props.removeLinkPreview()
     this.setState({
-      post: {...this.state.post, linkPreview: null}
+      post: { ...this.state.post, linkPreview: null }
     })
   }
 
   setSelectedCommunities = communities => {
     this.setState({
-      post: {...this.state.post, communities},
+      post: { ...this.state.post, communities },
       valid: this.isValid({ communities })
     })
   }
 
   updateProjectMembers = members => {
     this.setState({
-      post: {...this.state.post, members}
+      post: { ...this.state.post, members }
     })
   }
 
   updateEventInvitations = eventInvitations => {
     this.setState({
-      post: {...this.state.post, eventInvitations}
+      post: { ...this.state.post, eventInvitations }
     })
   }
 
@@ -283,7 +288,7 @@ export default class PostEditor extends React.Component {
     const { type, title, communities, startTime, endTime } = Object.assign({}, this.state.post, postUpdates)
     const { isEvent } = this.props
 
-    return !!(this.editor &&
+    return !!(this.editor.current &&
       communities &&
       type.length > 0 &&
       title.length > 0 &&
@@ -300,8 +305,8 @@ export default class PostEditor extends React.Component {
     const {
       id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, location
     } = this.state.post
-    const details = this.editor.getContentHTML()
-    const topicNames = this.topicSelector.getSelected().map(t => t.name)
+    const details = this.editor.current.getContentHTML()
+    const topicNames = this.topicSelector.current.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
     const postToSave = {
@@ -341,7 +346,7 @@ export default class PostEditor extends React.Component {
 
     const showPostTypes = !isProject && !isEvent
 
-    return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'} ref={element => { this.wrapper = element }}>
+    return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
       <div styleName='header'>
         <div styleName='initial'>
           <div styleName='initial-prompt'>{initialPrompt}</div>
@@ -369,7 +374,7 @@ export default class PostEditor extends React.Component {
             value={title || ''}
             onChange={this.handleTitleChange}
             disabled={loading}
-            ref={x => { this.titleInput = x }}
+            ref={this.titleInput}
             maxLength={MAX_TITLE_LENGTH} />
           {titleLengthError && <span styleName='title-error'>{`Title can't have more than ${MAX_TITLE_LENGTH} characters`}</span>}
           <HyloEditor
@@ -379,7 +384,7 @@ export default class PostEditor extends React.Component {
             contentHTML={details}
             readOnly={loading}
             parentComponent={'PostEditor'}
-            ref={component => { this.editor = component && component.getWrappedInstance() }}
+            ref={this.editor}
           />
         </div>
       </div>
@@ -395,7 +400,6 @@ export default class PostEditor extends React.Component {
               initialMembers={members || []}
               onChange={this.updateProjectMembers}
               readOnly={loading}
-              ref={component => { this.membersSelector = component }}
             />
           </div>
         </div>}
@@ -426,7 +430,7 @@ export default class PostEditor extends React.Component {
             placeholder='Where is your event'
             value={location || ''}
             onChange={this.handleLocationChange}
-            ref={x => { this.locationInput = x }} />
+          />
         </div>}
         {isEvent && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Invite People</div>
@@ -435,7 +439,6 @@ export default class PostEditor extends React.Component {
               initialMembers={eventInvitations || []}
               onChange={this.updateEventInvitations}
               readOnly={loading}
-              ref={component => { this.eventSelector = component }}
             />
           </div>
         </div>}
@@ -445,7 +448,7 @@ export default class PostEditor extends React.Component {
             <TopicSelector
               selectedTopics={topics}
               detailsTopics={detailsTopics}
-              ref={component => { this.topicSelector = component && component.getWrappedInstance() }} />
+              ref={this.topicSelector} />
           </div>
         </div>
         <div styleName='footerSection'>
@@ -456,7 +459,7 @@ export default class PostEditor extends React.Component {
               selected={communities}
               onChange={this.setSelectedCommunities}
               readOnly={loading}
-              ref={component => { this.communitiesSelector = component }}
+              ref={this.communitiesSelector}
             />
           </div>
         </div>
@@ -484,7 +487,7 @@ export default class PostEditor extends React.Component {
   }
 }
 
-export function ActionsBar ({id,
+export function ActionsBar ({ id,
   addImage,
   showImages,
   addFile,
@@ -509,19 +512,19 @@ export function ActionsBar ({id,
         attachmentType='image'
         disable={showImages}>
         <Icon name='AddImage'
-          styleName={cx('action-icon', {'highlight-icon': showImages})} />
+          styleName={cx('action-icon', { 'highlight-icon': showImages })} />
       </ChangeImageButton>
       <ChangeImageButton update={addFile}
         uploadSettings={uploadSettings(id)}
         attachmentType='file'
         disable={showFiles}>
         <Icon name='Paperclip'
-          styleName={cx('action-icon', {'highlight-icon': showFiles})} />
+          styleName={cx('action-icon', { 'highlight-icon': showFiles })} />
       </ChangeImageButton>
       {canModerate && <span data-tip='Send Announcement' data-for='announcement-tt'>
         <Icon name='Announcement'
           onClick={() => setAnnouncement(!announcementSelected)}
-          styleName={cx('action-icon', {'highlight-icon': announcementSelected})}
+          styleName={cx('action-icon', { 'highlight-icon': announcementSelected })}
         />
         <ReactTooltip
           effect={'solid'}

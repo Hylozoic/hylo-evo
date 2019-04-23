@@ -38,8 +38,8 @@ describe('reducer', () => {
           community: {
             members: {
               items: [
-                {id: 11},
-                {id: 12}
+                { id: 11 },
+                { id: 12 }
               ]
             }
           }

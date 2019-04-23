@@ -1,10 +1,10 @@
 import
-  CommunitySidebar,
-  { AboutSection,
-    MemberSection,
-    CommunityLeaderSection,
-    CommunityLeader
-  } from './CommunitySidebar'
+CommunitySidebar,
+{ AboutSection,
+  MemberSection,
+  CommunityLeaderSection,
+  CommunityLeader
+} from './CommunitySidebar'
 import { shallow } from 'enzyme'
 import React from 'react'
 import { fakePerson } from 'components/PostCard/samplePost'
@@ -22,15 +22,15 @@ const community = {
 }
 
 describe('CommunitySidebar', () => {
-  const members = [{id: 1}, {id: 2}, {id: 3}]
-  const leaders = [{id: 4}, {id: 5}, {id: 6}]
+  const members = [{ id: 1 }, { id: 2 }, { id: 3 }]
+  const leaders = [{ id: 4 }, { id: 5 }, { id: 6 }]
   const memberCount = 56
-  const currentUser = {canModerate: () => true}
+  const currentUser = { canModerate: () => true }
 
   it('renders correctly', () => {
     const wrapper = shallow(
       <CommunitySidebar
-        community={{...community, memberCount}}
+        community={{ ...community, memberCount }}
         currentUser={currentUser}
         members={members}
         leaders={leaders} />)
@@ -46,7 +46,7 @@ describe('AboutSection', () => {
         description={community.description} />)
     expect(wrapper.find('div').at(1).text()).toEqual(`About ${community.name}`)
     expect(wrapper.find('span').at(1).text()).toEqual('Read More')
-    wrapper.setState({expanded: true})
+    wrapper.setState({ expanded: true })
     expect(wrapper.find('span').at(1).text()).toEqual('Show Less')
   })
 })

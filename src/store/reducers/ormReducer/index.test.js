@@ -12,10 +12,10 @@ import {
   UPDATE_POST_PENDING
 } from 'store/constants'
 import {
-   DELETE_POST_PENDING,
-   REMOVE_POST_PENDING,
-   PIN_POST_PENDING
- } from 'components/PostCard/PostHeader/PostHeader.store'
+  DELETE_POST_PENDING,
+  REMOVE_POST_PENDING,
+  PIN_POST_PENDING
+} from 'components/PostCard/PostHeader/PostHeader.store'
 import {
   UPDATE_MEMBERSHIP_SETTINGS_PENDING,
   UPDATE_USER_SETTINGS_PENDING,
@@ -75,19 +75,19 @@ it('responds to an action with meta.extractModel', () => {
   expect(newState).toMatchObject({
     Community: {
       items: ['1'],
-      itemsById: {'1': {id: '1', name: 'Neighborhood'}}
+      itemsById: { '1': { id: '1', name: 'Neighborhood' } }
     },
     Person: {
       items: ['2'],
-      itemsById: {'2': {id: '2', name: 'Greg'}}
+      itemsById: { '2': { id: '2', name: 'Greg' } }
     },
     Post: {
       items: ['1'],
-      itemsById: {'1': {id: '1', title: 'Cat on the loose', creator: '2'}}
+      itemsById: { '1': { id: '1', title: 'Cat on the loose', creator: '2' } }
     },
     PostCommunities: {
       items: [0],
-      itemsById: {'0': {fromPostId: '1', toCommunityId: '1', id: 0}}
+      itemsById: { '0': { fromPostId: '1', toCommunityId: '1', id: 0 } }
     }
   })
 })
@@ -110,8 +110,8 @@ it('ignores an action with meta.extractModel that is a promise', () => {
 describe('on VOTE_ON_POST_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
 
-  session.Post.create({id: '1', votesTotal: 7, myVote: false})
-  session.Post.create({id: '2', votesTotal: 4, myVote: true})
+  session.Post.create({ id: '1', votesTotal: 7, myVote: false })
+  session.Post.create({ id: '2', votesTotal: 4, myVote: true })
 
   const state = session.state
 
@@ -121,24 +121,24 @@ describe('on VOTE_ON_POST_PENDING', () => {
 
   describe('when myVote is false', () => {
     it('does nothing if isUpvote is false', () => {
-      expect(ormReducer(state, {...action, meta: {postId: '1', isUpvote: false}}))
-      .toEqual(state)
+      expect(ormReducer(state, { ...action, meta: { postId: '1', isUpvote: false } }))
+        .toEqual(state)
     })
 
     it('increments votesTotal and updates myVote if isUpvote is true', () => {
-      const newState = ormReducer(state, {...action, meta: {postId: '1', isUpvote: true}})
+      const newState = ormReducer(state, { ...action, meta: { postId: '1', isUpvote: true } })
       expect(deep(state, newState)).toMatchSnapshot()
     })
   })
 
   describe('when myVote is true', () => {
     it('does nothing if isUpvote is true', () => {
-      expect(ormReducer(state, {...action, meta: {postId: '2', isUpvote: true}}))
-      .toEqual(state)
+      expect(ormReducer(state, { ...action, meta: { postId: '2', isUpvote: true } }))
+        .toEqual(state)
     })
 
     it('decrements votesTotal and updates myVote if isUpvote is false', () => {
-      const newState = ormReducer(state, {...action, meta: {postId: '2', isUpvote: false}})
+      const newState = ormReducer(state, { ...action, meta: { postId: '2', isUpvote: false } })
       expect(deep(state, newState)).toMatchSnapshot()
     })
   })
@@ -147,8 +147,8 @@ describe('on VOTE_ON_POST_PENDING', () => {
 const makeActivityState = () => {
   const session = orm.session(orm.getEmptyState())
 
-  session.Activity.create({id: '1', unread: true})
-  session.Activity.create({id: '2', unread: true})
+  session.Activity.create({ id: '1', unread: true })
+  session.Activity.create({ id: '2', unread: true })
 
   return session.state
 }
@@ -219,11 +219,11 @@ describe('on TOGGLE_TOPIC_SUBSCRIBE_PENDING', () => {
 
 describe('on CREATE_MESSAGE', () => {
   const session = orm.session(orm.getEmptyState())
-  session.Message.create({id: 'temp'})
-  session.MessageThread.create({id: '1'})
+  session.Message.create({ id: 'temp' })
+  session.MessageThread.create({ id: '1' })
 
   // this would be created by extractModelMiddleware
-  session.Message.create({id: '2'})
+  session.Message.create({ id: '2' })
 
   it('replaces the temporary message with a permanent one', () => {
     const action = {
@@ -239,7 +239,7 @@ describe('on CREATE_MESSAGE', () => {
           }
         }
       },
-      meta: {tempId: 'temp'}
+      meta: { tempId: 'temp' }
     }
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
@@ -252,14 +252,14 @@ describe('on CREATE_MESSAGE', () => {
 
 describe('on DELETE_POST_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
-  session.Post.create({id: '1'})
-  session.Post.create({id: '2'})
-  session.Post.create({id: '3'})
+  session.Post.create({ id: '1' })
+  session.Post.create({ id: '2' })
+  session.Post.create({ id: '3' })
 
   it('removes the post', () => {
     const action = {
       type: DELETE_POST_PENDING,
-      meta: {id: '2'}
+      meta: { id: '2' }
     }
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
@@ -270,16 +270,16 @@ describe('on DELETE_POST_PENDING', () => {
 
 describe('on REMOVE_POST_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
-  const community1 = session.Community.create({id: '1', slug: 'foo'})
-  const community2 = session.Community.create({id: '2', slug: 'bar'})
+  const community1 = session.Community.create({ id: '1', slug: 'foo' })
+  const community2 = session.Community.create({ id: '2', slug: 'bar' })
 
-  session.Post.create({id: '1', communities: [community1, community2]})
-  session.Post.create({id: '2', communities: [community1, community2]})
+  session.Post.create({ id: '1', communities: [community1, community2] })
+  session.Post.create({ id: '2', communities: [community1, community2] })
 
   it('removes the post from the community', () => {
     const action = {
       type: REMOVE_POST_PENDING,
-      meta: {postId: '1', slug: 'bar'}
+      meta: { postId: '1', slug: 'bar' }
     }
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
@@ -294,7 +294,7 @@ describe('on REMOVE_POST_PENDING', () => {
 
 describe('on PIN_POST_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
-  const community = session.Community.create({id: '1', slug: 'foo'})
+  const community = session.Community.create({ id: '1', slug: 'foo' })
   const postId = 123
   const postMembership = session.PostMembership.create({
     pinned: false,
@@ -364,7 +364,7 @@ describe('on UPDATE_COMMUNITY_SETTINGS_PENDING', () => {
 describe('on FETCH_NOTIFICATIONS', () => {
   const session = orm.session(orm.getEmptyState())
 
-  session.Me.create({newNotificationCount: 3})
+  session.Me.create({ newNotificationCount: 3 })
 
   const action = {
     type: FETCH_NOTIFICATIONS,
@@ -407,7 +407,7 @@ describe(' on UPDATE_MEMBERSHIP_SETTINGS_PENDING', () => {
   it('updates membership settings, keeping current settings where unchanged', () => {
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
-    const membership = newSession.Membership.safeGet({community: communityId})
+    const membership = newSession.Membership.safeGet({ community: communityId })
     expect(membership.settings).toEqual({
       sendFoo: true,
       sendEmail: true,
@@ -545,11 +545,11 @@ describe('on UPDATE_POST_PENDING', () => {
 
 describe('on CREATE_COMMUNITY', () => {
   const session = orm.session(orm.getEmptyState())
-  const community1 = session.Community.create({id: 'c1'})
-  const community2 = session.Community.create({id: 'c2'})
+  const community1 = session.Community.create({ id: 'c1' })
+  const community2 = session.Community.create({ id: 'c2' })
   const hasModeratorRole = true
-  const membership = session.Membership.create({id: 'm1', community: community1.id, hasModeratorRole})
-  session.Membership.create({id: 'm2', community: community2.id, hasModeratorRole})
+  const membership = session.Membership.create({ id: 'm1', community: community1.id, hasModeratorRole })
+  session.Membership.create({ id: 'm2', community: community2.id, hasModeratorRole })
   session.Me.create({
     memberships: [membership.id]
   })
@@ -587,9 +587,9 @@ describe('on REMOVE_MEMBER_PENDING', () => {
       }
     }
     const session = orm.session(orm.getEmptyState())
-    session.Person.create({id: '2', name: 'Foo'})
-    session.Person.create({id: '4', name: 'Bar'})
-    session.Community.create({id: '3', memberCount: 8, members: ['2', '4']})
+    session.Person.create({ id: '2', name: 'Foo' })
+    session.Person.create({ id: '4', name: 'Bar' })
+    session.Community.create({ id: '3', memberCount: 8, members: ['2', '4'] })
 
     const newState = ormReducer(session.state, action)
     const community = orm.session(newState).Community.withId('3')
@@ -611,7 +611,7 @@ describe('on UPDATE_COMMUNITY_HIDDEN_SETTING_PENDING', () => {
       }
     }
     const session = orm.session(orm.getEmptyState())
-    session.Community.create({id: communityId, hidden: false})
+    session.Community.create({ id: communityId, hidden: false })
 
     const newState = ormReducer(session.state, action)
     const community = orm.session(newState).Community.withId(communityId)
@@ -621,13 +621,13 @@ describe('on UPDATE_COMMUNITY_HIDDEN_SETTING_PENDING', () => {
 
 describe('on DELETE_COMMUNITY_TOPIC_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
-  session.CommunityTopic.create({id: '1'})
-  session.CommunityTopic.create({id: '2'})
+  session.CommunityTopic.create({ id: '1' })
+  session.CommunityTopic.create({ id: '2' })
 
   it('removes the communityTopic', () => {
     const action = {
       type: DELETE_COMMUNITY_TOPIC_PENDING,
-      meta: {id: '1'}
+      meta: { id: '1' }
     }
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
@@ -640,10 +640,10 @@ describe('on UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING', () => {
   it('should update all the memberships settings', () => {
     const session = orm.mutableSession(orm.getEmptyState())
     const meId = 'meId'
-    session.Me.create({id: meId})
-    session.Membership.create({person: meId, settings: {}})
-    session.Membership.create({person: meId, settings: {}})
-    session.Membership.create({person: meId, settings: {}})
+    session.Me.create({ id: meId })
+    session.Membership.create({ person: meId, settings: {} })
+    session.Membership.create({ person: meId, settings: {} })
+    session.Membership.create({ person: meId, settings: {} })
 
     const action = {
       type: UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING,

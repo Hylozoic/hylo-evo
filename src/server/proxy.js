@@ -46,20 +46,20 @@ export function getAndStore (url) {
   const chunks = []
   return new Promise((resolve, reject) => {
     request.get(url)
-    .on('error', reject)
-    .on('response', upstreamRes => {
-      const gzipped = upstreamRes.headers['content-encoding'] === 'gzip'
-      upstreamRes.on('data', d => chunks.push(d))
-      upstreamRes.on('end', () => {
-        const doc = Buffer.concat(chunks)
-        const save = value => cache.set(url, value) && resolve(value)
-        if (gzipped) {
-          save(doc)
-        } else {
-          gzip(doc, (err, buf) => err ? reject(err) : save(buf))
-        }
+      .on('error', reject)
+      .on('response', upstreamRes => {
+        const gzipped = upstreamRes.headers['content-encoding'] === 'gzip'
+        upstreamRes.on('data', d => chunks.push(d))
+        upstreamRes.on('end', () => {
+          const doc = Buffer.concat(chunks)
+          const save = value => cache.set(url, value) && resolve(value)
+          if (gzipped) {
+            save(doc)
+          } else {
+            gzip(doc, (err, buf) => err ? reject(err) : save(buf))
+          }
+        })
       })
-    })
   })
 }
 
@@ -85,8 +85,8 @@ export function handlePage (req, res) {
     sendCachedData(cachedValue)
   } else {
     getAndStore(newUrl)
-    .then(() => sendCachedData(cache.get(newUrl)))
-    .catch(err => res.serverError(err.message))
+      .then(() => sendCachedData(cache.get(newUrl)))
+      .catch(err => res.serverError(err.message))
   }
 }
 

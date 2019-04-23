@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import RoundImage from 'components/RoundImage'
+import RoundImage from '../RoundImage'
 import { Link } from 'react-router-dom'
 
 const { string, bool } = PropTypes

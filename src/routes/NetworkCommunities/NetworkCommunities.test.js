@@ -4,9 +4,9 @@ import React from 'react'
 
 describe('NetworkCommunities', () => {
   it('renders correctly', () => {
-    const network = {id: 78}
+    const network = { id: 78 }
     const communities = [
-      {id: 9}, {id: 8}, {id: 7}
+      { id: 9 }, { id: 8 }, { id: 7 }
     ]
     const wrapper = shallow(<NetworkCommunities
       network={network}
@@ -48,7 +48,7 @@ describe('SearchBar', () => {
 describe('CommunityList', () => {
   it('renders correctly', () => {
     const communities = [
-      {id: 9}, {id: 8}, {id: 7}
+      { id: 9 }, { id: 8 }, { id: 7 }
     ]
     const wrapper = shallow(<CommunityList
       communities={communities}

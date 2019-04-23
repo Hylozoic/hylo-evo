@@ -21,7 +21,7 @@ export function mapStateToProps (state, props) {
   const slug = props.network.slug
 
   const moderatorsPage = getModeratorsPage(state, props)
-  const moderatorResultProps = {slug, page: moderatorsPage}
+  const moderatorResultProps = { slug, page: moderatorsPage }
   const moderators = getModerators(state, moderatorResultProps)
   const moderatorsTotal = getModeratorsTotal(state, moderatorResultProps)
   const moderatorsPageCount = Math.ceil(moderatorsTotal / PAGE_SIZE)

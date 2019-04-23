@@ -33,7 +33,7 @@
 
 .notification {
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   cursor: pointer;
   &:first-child {
     margin-top: 5px;
@@ -63,7 +63,7 @@
 .content {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   padding: 20px 15px 15px 0;
   border-bottom: 1px solid $color-black-squeeze;
 }

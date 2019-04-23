@@ -67,7 +67,7 @@ export function fetchNetworkMembers (slug, sortBy, offset, search) {
     type: FETCH_MEMBERS,
     graphql: {
       query: networkMembersQuery,
-      variables: {slug, first: 20, offset, sortBy, search}
+      variables: { slug, first: 20, offset, sortBy, search }
     },
     meta: {
       extractModel: 'Network',
@@ -83,7 +83,7 @@ export function fetchCommunityMembers (slug, sortBy, offset, search) {
     type: FETCH_MEMBERS,
     graphql: {
       query: communityMembersQuery,
-      variables: {slug, first: 20, offset, sortBy, search}
+      variables: { slug, first: 20, offset, sortBy, search }
     },
     meta: {
       extractModel: 'Community',
@@ -143,7 +143,7 @@ export function ormSessionReducer ({ Community }, { meta, type }) {
   if (type === REMOVE_MEMBER_PENDING) {
     const community = Community.withId(meta.communityId)
     const members = community.members.filter(m => m.id !== meta.personId)
-    .toModelArray()
-    community.update({members, memberCount: community.memberCount - 1})
+      .toModelArray()
+    community.update({ members, memberCount: community.memberCount - 1 })
   }
 }

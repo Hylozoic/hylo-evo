@@ -25,6 +25,6 @@ describe('presentSearchResult', () => {
 
   it('presents a Comment SearchResult', () => {
     expect(presentSearchResult(searchResult, session))
-    .toMatchSnapshot()
+      .toMatchSnapshot()
   })
 })

@@ -6,7 +6,7 @@ exports[`ModalSidebar renders correctly with a "Previous" button 1`] = `
 >
   <p
     data-stylename="gray-text close-button"
-    onClick={[Function]}
+    onClick={[MockFunction]}
   >
     CLOSE
   </p>
@@ -29,7 +29,7 @@ exports[`ModalSidebar renders correctly without a theme 1`] = `
 >
   <p
     data-stylename="gray-text close-button"
-    onClick={[Function]}
+    onClick={[MockFunction]}
   >
     CLOSE
   </p>

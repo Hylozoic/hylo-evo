@@ -38,13 +38,13 @@ describe('SocketListener.store.ormSessionReducer', () => {
     let action
 
     beforeEach(() => {
-      session.Me.create({id: '2'})
-      session.Person.create({id: '14'})
-      session.Community.create({id: '1', name: 'place'})
-      session.Membership.create({id: '1', community: '1'})
-      session.Membership.create({id: '2', community: '1', person: '14'})
-      session.CommunityTopic.create({id: '1', topic: '2', community: '1'})
-      session.CommunityTopic.create({id: '2', topic: '7', community: '1'})
+      session.Me.create({ id: '2' })
+      session.Person.create({ id: '14' })
+      session.Community.create({ id: '1', name: 'place' })
+      session.Membership.create({ id: '1', community: '1' })
+      session.Membership.create({ id: '2', community: '1', person: '14' })
+      session.CommunityTopic.create({ id: '1', topic: '2', community: '1' })
+      session.CommunityTopic.create({ id: '2', topic: '7', community: '1' })
       action = {
         type: RECEIVE_POST,
         payload: {
@@ -71,7 +71,7 @@ describe('SocketListener.store.ormSessionReducer', () => {
   })
 
   it('responds to RECEIVE_NOTIFICATION', () => {
-    session.Me.create({id: '77', newNotificationCount: 2})
+    session.Me.create({ id: '77', newNotificationCount: 2 })
     const action = {
       type: RECEIVE_NOTIFICATION
     }

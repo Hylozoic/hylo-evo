@@ -23,11 +23,11 @@ export default class Comment extends Component {
   }
 
   editComment = () => {
-    this.setState({editing: true})
+    this.setState({ editing: true })
   }
 
   saveComment = text => {
-    this.setState({editing: false})
+    this.setState({ editing: false })
     this.props.updateComment(text)
   }
 
@@ -39,12 +39,12 @@ export default class Comment extends Component {
 
     const dropdownItems = filter([
       {},
-      {icon: 'Edit', label: 'Edit', onClick: isCreator && this.editComment},
-      {icon: 'Trash', label: 'Delete', onClick: deleteComment},
-      {icon: 'Trash', label: 'Remove', onClick: removeComment}
+      { icon: 'Edit', label: 'Edit', onClick: isCreator && this.editComment },
+      { icon: 'Trash', label: 'Delete', onClick: deleteComment },
+      { icon: 'Trash', label: 'Remove', onClick: removeComment }
     ], item => isFunction(item.onClick))
 
-    const presentedText = present(sanitize(text), {slug})
+    const presentedText = present(sanitize(text), { slug })
 
     return <div styleName='comment'>
       <div styleName='header'>
@@ -68,7 +68,7 @@ export default class Comment extends Component {
           contentHTML={text}
           parentComponent={'CommentForm'}
           submitOnReturnHandler={this.saveComment} />}
-        {!editing && <div id='text' styleName='text' dangerouslySetInnerHTML={{__html: presentedText}} />}
+        {!editing && <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />}
         {/* <div styleName='reply'><Icon name='Reply' styleName='icon' />Reply</div> */}
       </ClickCatcher>}
     </div>

@@ -22,7 +22,7 @@ export default class FlagContent extends PureComponent {
   }
 
   closeModal = () => {
-    this.setState({promptVisible: false, highlightRequired: false})
+    this.setState({ promptVisible: false, highlightRequired: false })
     if (this.props.onClose) {
       this.props.onClose()
     }
@@ -32,11 +32,11 @@ export default class FlagContent extends PureComponent {
     (selectedCategory || this.state.selectedCategory) !== 'other'
 
   submit = () => {
-    const {submitFlagContent, linkData} = this.props
-    const {selectedCategory, explanation} = this.state
+    const { submitFlagContent, linkData } = this.props
+    const { selectedCategory, explanation } = this.state
 
     if (isEmpty(selectedCategory)) {
-      this.setState({reasonRequired: true})
+      this.setState({ reasonRequired: true })
       return
     }
 
@@ -62,30 +62,30 @@ export default class FlagContent extends PureComponent {
   }
 
   updateSelected = (selectedCategory) => {
-    this.setState({selectedCategory})
-    const {type = 'content'} = this.props
-    const {highlightRequired} = this.state
+    this.setState({ selectedCategory })
+    const { type = 'content' } = this.props
+    const { highlightRequired } = this.state
 
     const required = !this.isExplanationOptional(selectedCategory) && highlightRequired
       ? ' (explanation required)'
       : ''
     const subtitle = `Why was this ${type} '${selectedCategory}'${required}?`
-    this.setState({subtitle})
+    this.setState({ subtitle })
   }
 
   render () {
     const options = [
-      {label: 'Inappropriate Content', id: 'inappropriate'},
-      {label: 'Spam', id: 'spam'},
-      {label: 'Offensive', id: 'offensive'},
-      {label: 'Illegal', id: 'illegal'},
-      {label: 'Other', id: 'other'}
+      { label: 'Inappropriate Content', id: 'inappropriate' },
+      { label: 'Spam', id: 'spam' },
+      { label: 'Offensive', id: 'offensive' },
+      { label: 'Illegal', id: 'illegal' },
+      { label: 'Other', id: 'other' }
     ]
 
     const {
       subtitle = 'What was wrong?',
       reasonRequired,
-      selectedCategory = '', explanation} = this.state
+      selectedCategory = '', explanation } = this.state
 
     return <div styleName='popup'>
       <div styleName='popup-inner'>
@@ -108,7 +108,7 @@ export default class FlagContent extends PureComponent {
             styleName='explanation-textbox'
             minRows={6}
             value={explanation}
-            onChange={(e) => { this.setState({explanation: e.target.value}) }}
+            onChange={(e) => { this.setState({ explanation: e.target.value }) }}
             placeholder={subtitle} />
           <Button styleName='submit-btn' onClick={this.submit} disabled={isEmpty(selectedCategory)}>Submit</Button>
         </div>

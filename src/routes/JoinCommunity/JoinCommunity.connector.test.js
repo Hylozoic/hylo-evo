@@ -72,7 +72,7 @@ describe('JoinCommunity.connector', () => {
     it('wraps useInvitation and checkInvitation with the expected parameters', () => {
       const invitationToken = 'invitationtoken1'
       const accessCode = 'accesscode1'
-      const stateProps = {invitationToken, accessCode}
+      const stateProps = { invitationToken, accessCode }
       const dispatchProps = {
         checkInvitation: jest.fn(),
         useInvitation: jest.fn()
@@ -82,11 +82,11 @@ describe('JoinCommunity.connector', () => {
       const actual = mergeProps(stateProps, dispatchProps, ownProps)
       actual.checkInvitation(userId)
       expect(dispatchProps.checkInvitation).toBeCalledWith(
-        {invitationToken, accessCode}
+        { invitationToken, accessCode }
       )
       actual.useInvitation(userId)
       expect(dispatchProps.useInvitation).toBeCalledWith(
-        userId, {invitationToken, accessCode}
+        userId, { invitationToken, accessCode }
       )
     })
   })

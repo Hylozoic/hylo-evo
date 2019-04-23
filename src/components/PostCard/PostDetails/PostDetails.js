@@ -19,16 +19,16 @@ export default function PostDetails ({
   fileAttachments,
   hideDetails
 }) {
-  details = present(sanitize(details), {slug})
+  details = present(sanitize(details), { slug })
   if (!expanded && textLength(details) > maxDetailsLength) {
     details = truncate(details, maxDetailsLength)
   }
 
-  return <Highlight {...highlightProps}>    
+  return <Highlight {...highlightProps}>
     <div styleName='postDetails'>
       {details && !hideDetails &&
         <ClickCatcher>
-          <div styleName='details' dangerouslySetInnerHTML={{__html: details}} />
+          <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
         </ClickCatcher>
       }
       {linkPreview &&

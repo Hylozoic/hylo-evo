@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import { addCommunityName, addNetworkId } from '../CreateCommunity.store'
 import getRouteParam from 'store/selectors/getRouteParam'
 import { get } from 'lodash/fp'

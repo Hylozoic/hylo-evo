@@ -3,6 +3,9 @@ import { pick } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
 import presentPost from 'store/presenters/presentPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getHolochainActive from 'store/selectors/getHolochainActive'
+import holochainFetchPosts from 'store/actions/holochainFetchPosts'
+
 import {
   fetchPosts,
   storeFetchPostsParam,
@@ -30,8 +33,10 @@ export function mapStateToProps (state, props) {
   //       the raw props of the component.
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, communityId))
   const hasMore = getHasMorePosts(state, fetchPostsParam)
+  const holochainActive = getHolochainActive(state)
 
   return {
+    holochainActive,
     posts,
     hasMore,
     fetchPostsParam,
@@ -41,20 +46,25 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch) {
   return {
-    fetchPosts: param => offset => dispatch(fetchPosts({offset, ...param})),
-    storeFetchPostsParam: param => () => dispatch(storeFetchPostsParam(param))
+    fetchPosts: param => offset => dispatch(fetchPosts({ offset, ...param })),
+    storeFetchPostsParam: param => () => dispatch(storeFetchPostsParam(param)),
+    holochainFetchPosts: param => dispatch(holochainFetchPosts(param))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { fetchPostsParam } = stateProps
-  const { fetchPosts, storeFetchPostsParam } = dispatchProps
+  const { fetchPostsParam, holochainActive } = stateProps
+  const { storeFetchPostsParam } = dispatchProps
+
+  const fetchPosts = holochainActive
+    ? () => dispatchProps.holochainFetchPosts(fetchPostsParam)
+    : dispatchProps.fetchPosts(fetchPostsParam)
 
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    fetchPosts: fetchPosts(fetchPostsParam),
+    fetchPosts,
     storeFetchPostsParam: storeFetchPostsParam(fetchPostsParam)
   }
 }

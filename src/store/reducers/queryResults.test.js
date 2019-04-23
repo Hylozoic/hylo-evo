@@ -1,18 +1,18 @@
 import { get } from 'lodash/fp'
 import orm from 'store/models'
 import queryResults, {
-   buildKey,
-   matchNewPostIntoQueryResults,
-   makeGetQueryResults,
-   makeQueryResultsModelSelector,
-   matchNewThreadIntoQueryResults
- } from './queryResults'
+  buildKey,
+  matchNewPostIntoQueryResults,
+  makeGetQueryResults,
+  makeQueryResultsModelSelector,
+  matchNewThreadIntoQueryResults
+} from './queryResults'
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
 import {
-   REMOVE_POST_PENDING
- } from 'components/PostCard/PostHeader/PostHeader.store'
+  REMOVE_POST_PENDING
+} from 'components/PostCard/PostHeader/PostHeader.store'
 
-const variables = {slug: 'foo', sortBy: 'name'}
+const variables = { slug: 'foo', sortBy: 'name' }
 
 const key = JSON.stringify({
   type: FETCH_MEMBERS,
@@ -29,14 +29,14 @@ describe('using extractQueryResults', () => {
           community: {
             members: {
               total: 22,
-              items: [{id: 7}, {id: 8}, {id: 9}],
+              items: [{ id: 7 }, { id: 8 }, { id: 9 }],
               hasMore: true
             }
           }
         }
       },
       meta: {
-        graphql: {variables},
+        graphql: { variables },
         extractQueryResults: {
           getItems: get('payload.data.community.members')
         }
@@ -68,7 +68,7 @@ describe('using extractQueryResults', () => {
           community: {
             members: {
               total: 22,
-              items: [{id: 7}, {id: 8}, {id: 9}],
+              items: [{ id: 7 }, { id: 8 }, { id: 9 }],
               hasMore: false
             }
           }
@@ -76,7 +76,7 @@ describe('using extractQueryResults', () => {
       },
       meta: {
         graphql: {
-          variables: {slug: 'foo', sortBy: 'name'}
+          variables: { slug: 'foo', sortBy: 'name' }
         },
         extractQueryResults: {
           getItems: get('payload.data.community.members')
@@ -104,14 +104,14 @@ describe('using extractQueryResults', () => {
           community: {
             members: {
               total: 22,
-              items: [{id: 7}, {id: 8}, {id: 9}],
+              items: [{ id: 7 }, { id: 8 }, { id: 9 }],
               hasMore: true
             }
           }
         }
       },
       meta: {
-        graphql: {variables},
+        graphql: { variables },
         extractQueryResults: {
           getItems: get('invalid-data-path')
         }
@@ -126,9 +126,9 @@ describe('using extractQueryResults', () => {
 
     const action = {
       type: FETCH_MEMBERS,
-      payload: {data: {test: {items: []}}},
+      payload: { data: { test: { items: [] } } },
       meta: {
-        graphql: {variables},
+        graphql: { variables },
         extractQueryResults: {
           getItems: get('payload.data.test'),
           getType: () => 'TEST_TYPE'
@@ -153,9 +153,9 @@ describe('using extractQueryResults', () => {
 
     const action = {
       type: FETCH_MEMBERS,
-      payload: {data: {test: {items: []}}},
+      payload: { data: { test: { items: [] } } },
       meta: {
-        graphql: {variables},
+        graphql: { variables },
         customVariables: {
           id: 1
         },
@@ -217,8 +217,8 @@ describe('queryResults reducer', () => {
 
 describe('buildKey', () => {
   it('omits blank parameters', () => {
-    expect(buildKey('actionType', {slug: 'foo', search: null}))
-    .toEqual('{"type":"actionType","params":{"slug":"foo"}}')
+    expect(buildKey('actionType', { slug: 'foo', search: null }))
+      .toEqual('{"type":"actionType","params":{"slug":"foo"}}')
   })
 })
 
@@ -234,8 +234,8 @@ describe('matchNewPostIntoQueryResults', () => {
         ids: ['18', '11']
       }
     }
-    const communities = [{slug: 'foo'}, {slug: 'bar'}]
-    const post = {id: '17', type: 'request', communities}
+    const communities = [{ slug: 'foo' }, { slug: 'bar' }]
+    const post = { id: '17', type: 'request', communities }
 
     expect(matchNewPostIntoQueryResults(state, post)).toEqual({
       '{"type":"FETCH_POSTS","params":{"slug":"bar"}}': {
@@ -256,8 +256,8 @@ describe('matchNewPostIntoQueryResults', () => {
         ids: ['18', '11']
       }
     }
-    const communities = [{slug: 'foo'}, {slug: 'bar'}]
-    const post = {id: '17', type: 'request', communities, topics: [{name: 'a', id: '123'}]}
+    const communities = [{ slug: 'foo' }, { slug: 'bar' }]
+    const post = { id: '17', type: 'request', communities, topics: [{ name: 'a', id: '123' }] }
     expect(matchNewPostIntoQueryResults(state, post)).toEqual({
       '{"type":"FETCH_POSTS","params":{"slug":"bar","topic":"123"}}': {
         hasMore: true,
@@ -276,7 +276,7 @@ describe('matchNewThreadIntoQueryResults', () => {
       }
     }
 
-    const thread = {id: '27'}
+    const thread = { id: '27' }
 
     expect(matchNewThreadIntoQueryResults(state, thread)).toEqual({
       '{"type":"FETCH_THREADS","params":{}}': {

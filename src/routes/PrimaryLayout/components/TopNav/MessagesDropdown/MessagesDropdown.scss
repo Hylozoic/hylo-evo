@@ -17,7 +17,7 @@
 
 .thread {
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   cursor: pointer;
   &:first-child {
     margin-top: 5px;
@@ -43,7 +43,7 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  align-items: start;
+  align-items: flex-start;
   padding: 20px 15px 15px 0;
   border-bottom: 1px solid $color-black-squeeze;
 }

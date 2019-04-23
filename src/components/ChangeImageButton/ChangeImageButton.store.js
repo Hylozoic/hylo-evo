@@ -13,7 +13,7 @@ export function upload (opts) {
         api: {
           method: 'post',
           path: '/noo/upload',
-          params: {url, id, type, filename}
+          params: { url, id, type, filename }
         }
       }),
       failure: err => {
@@ -32,6 +32,6 @@ export function upload (opts) {
   return {
     type: UPLOAD_ATTACHMENT,
     payload,
-    meta: {type, id, attachmentType}
+    meta: { type, id, attachmentType }
   }
 }

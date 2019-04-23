@@ -8,7 +8,7 @@ import {
 export function mapStateToProps (state, props) {
   return {
     example: getExample(state, props)
-//  currentUser: getMe(state, props)
+    //  currentUser: getMe(state, props)
   }
 }
 

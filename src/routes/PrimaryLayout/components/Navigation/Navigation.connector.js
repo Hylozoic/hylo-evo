@@ -23,7 +23,7 @@ export function mapStateToProps (state, props) {
     // call `community.Memberships.first()` because that will be cached so long as
     // the community doesn't change, which will mask changes to the Community Membership's
     // newPostCount.
-    communityMembership = getCommunityMembership(state, {communityId: community.id})
+    communityMembership = getCommunityMembership(state, { communityId: community.id })
     badge = get('newPostCount', communityMembership)
   } else if (network) {
     rootId = network.id
@@ -83,5 +83,5 @@ const getCommunityMembership = ormCreateSelector(
   orm,
   state => state.orm,
   (state, { communityId }) => communityId,
-  (session, id) => session.Membership.safeGet({community: id})
+  (session, id) => session.Membership.safeGet({ community: id })
 )

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import blockUser from 'store/actions/blockUser'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
@@ -20,7 +20,7 @@ const MESSAGES = {
 export function mapStateToProps (state, props) {
   const error = Number.isSafeInteger(Number(props.match.params.personId)) ? null : MESSAGES.invalid
   const routeParams = props.match.params
-  const person = getPresentedPerson(state, {...routeParams, ...props})
+  const person = getPresentedPerson(state, { ...routeParams, ...props })
   const loading = isPendingFor([
     FETCH_RECENT_ACTIVITY,
     FETCH_MEMBER_POSTS,

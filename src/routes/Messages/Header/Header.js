@@ -85,7 +85,7 @@ export function calculateMaxShown (showAll, otherParticipants, maxCharacters) {
 
 export function generateDisplayNames (maxShown, otherParticipants) {
   return isEmpty(otherParticipants)
-    ? {displayNames: 'You'}
+    ? { displayNames: 'You' }
     : formatNames([...otherParticipants], maxShown)
 }
 
@@ -98,8 +98,8 @@ export function formatNames (otherParticipants, maxShown) {
   if (maxShown && maxShown !== length) andOthers = truncatedNames.pop()
 
   if (andOthers) {
-    return {displayNames: truncatedNames.join(', '), andOthers: ` ${andOthers}`}
+    return { displayNames: truncatedNames.join(', '), andOthers: ` ${andOthers}` }
   } else {
-    return {displayNames: truncatedNames.join(', ')}
+    return { displayNames: truncatedNames.join(', ') }
   }
 }

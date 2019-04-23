@@ -11,8 +11,8 @@ const { bool, object } = PropTypes
 export default function Message ({ message, isHeader }) {
   const person = message.creator
   const pending = message.id.slice(0, 13) === 'messageThread'
-  let text = present(sanitize(message.text).replace(/\n/g, '<br />'), {noP: true})
-  const sName = cx('message', {messageHeader: isHeader})
+  let text = present(sanitize(message.text).replace(/\n/g, '<br />'), { noP: true })
+  const sName = cx('message', { messageHeader: isHeader })
 
   return <div styleName={sName}
     data-message-id={message.id}>
@@ -25,7 +25,7 @@ export default function Message ({ message, isHeader }) {
         <span styleName='date'>{pending ? 'sending...' : humanDate(message.createdAt)}</span>
       </div>}
       <div styleName='text'>
-        <span dangerouslySetInnerHTML={{__html: text}} />
+        <span dangerouslySetInnerHTML={{ __html: text }} />
       </div>
     </div>
   </div>

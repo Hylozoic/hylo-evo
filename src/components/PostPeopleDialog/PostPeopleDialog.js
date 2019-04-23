@@ -29,7 +29,7 @@ export default class PostPeopleDialog extends React.PureComponent {
 
     this.setState({
       searchString,
-      members: filter(membersFilter, this.props.members)}
+      members: filter(membersFilter, this.props.members) }
     )
   }
 
@@ -43,7 +43,7 @@ export default class PostPeopleDialog extends React.PureComponent {
       modalTitle={`${title} (${this.props.members.length})`}
       showCancelButton={false}
       showSubmitButton={false}
-      style={{width: '100%', maxWidth: '620px'}}>
+      style={{ width: '100%', maxWidth: '620px' }}>
       <div styleName='container'>
         {/*
           TODO: Can make memberDetails optional by adding a `withDetails` flag
@@ -77,10 +77,10 @@ export default class PostPeopleDialog extends React.PureComponent {
   }
 }
 
-function MemberRow ({member, selected, onClick}) {
+function MemberRow ({ member, selected, onClick }) {
   const { name, avatarUrl, response } = member
 
-  return <div styleName={cx('row', {selected})} onClick={onClick}>
+  return <div styleName={cx('row', { selected })} onClick={onClick}>
     <div styleName='col'>
       <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
     </div>
@@ -93,7 +93,7 @@ function MemberRow ({member, selected, onClick}) {
   </div>
 }
 
-function MemberDetail ({member}) {
+function MemberDetail ({ member }) {
   return <div styleName='member-detail'>
     <Member member={member} styleName='member' />
   </div>

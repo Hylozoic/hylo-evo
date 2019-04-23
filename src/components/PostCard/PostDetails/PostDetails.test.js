@@ -14,7 +14,7 @@ it('matches last snapshot', () => {
     slug: 'foomunity',
     expanded: true,
     className: 'classy',
-    highlightProps: {term: 'foo'},
+    highlightProps: { term: 'foo' },
     fileAttachments: [
       {
         id: 1,

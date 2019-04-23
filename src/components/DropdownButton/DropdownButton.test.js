@@ -6,7 +6,7 @@ describe('DropdownButton', () => {
   it('renders correctly and basic functions work', () => {
     const props = {
       label: 'Log in',
-      choices: [{label: 'one', value: 1}, {label: 'two', value: 2}],
+      choices: [{ label: 'one', value: 1 }, { label: 'two', value: 2 }],
       className: 'login',
       onChoose: jest.fn()
     }
@@ -17,7 +17,7 @@ describe('DropdownButton', () => {
     expect(instance.state.expanded).toBeTruthy()
     instance.toggleExpanded()
     expect(instance.state.expanded).toBeFalsy()
-    instance.setState({expanded: true})
+    instance.setState({ expanded: true })
     const choice = 123
     instance.onChoose(choice)
     expect(instance.state.expanded).toBeFalsy()

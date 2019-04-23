@@ -52,7 +52,7 @@ export default class SkillsSection extends Component {
         <div
           styleName={cx('pill-container', 'expanded')}>
           <Pillbox
-            pills={map(skills, skill => ({...skill, label: skill.name}))}
+            pills={map(skills, skill => ({ ...skill, label: skill.name }))}
             handleInputChange={this.handleInputChange}
             handleAddition={this.handleAddition}
             handleDelete={this.handleDelete}

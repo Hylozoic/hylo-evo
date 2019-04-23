@@ -16,7 +16,7 @@ export default function resetNewPostCount (id, type) {
         }
       }
     },
-    meta: {id, type, optimistic: true}
+    meta: { id, type, optimistic: true }
   }
 }
 

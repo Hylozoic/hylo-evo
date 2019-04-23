@@ -18,10 +18,10 @@ describe('ModeratorsSettingsTab', () => {
 
   it('renders a list of RemovableListItems and AddModerator', () => {
     const moderators = [
-      {id: 1},
-      {id: 2},
-      {id: 3},
-      {id: 4}
+      { id: 1 },
+      { id: 2 },
+      { id: 3 },
+      { id: 4 }
     ]
 
     const wrapper = shallow(<ModeratorsSettingsTab moderators={moderators} />)
@@ -31,17 +31,17 @@ describe('ModeratorsSettingsTab', () => {
   it('calls removeModerator', () => {
     const props = {
       moderators: [
-        {id: 1},
-        {id: 2},
-        {id: 3},
-        {id: 4}
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+        { id: 4 }
       ],
       slug: 'foocommunity',
       removeModerator: jest.fn()
     }
     const wrapper = shallow(<ModeratorsSettingsTab {...props} />)
 
-    wrapper.setState({moderatorToRemove: 3, isRemoveFromCommunity: false})
+    wrapper.setState({ moderatorToRemove: 3, isRemoveFromCommunity: false })
     wrapper.instance().submitRemoveModerator()
     expect(props.removeModerator).toHaveBeenCalledWith(3, false)
   })
@@ -51,10 +51,10 @@ describe('ModeratorsList', () => {
   it('renders correctly', () => {
     const props = {
       moderators: [
-        {id: 1},
-        {id: 2},
-        {id: 3},
-        {id: 4}
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+        { id: 4 }
       ],
       slug: 'foocommunity'
     }
@@ -74,12 +74,12 @@ describe('AddModerator', () => {
 
   it('renders correctly when adding with suggestions', () => {
     const suggestions = [
-      {id: 1, name: 'Demeter'},
-      {id: 2, name: 'Ares'},
-      {id: 1, name: 'Hermes'}
+      { id: 1, name: 'Demeter' },
+      { id: 2, name: 'Ares' },
+      { id: 1, name: 'Hermes' }
     ]
     const wrapper = shallow(<AddModerator moderatorSuggestions={suggestions} />)
-    wrapper.setState({adding: true})
+    wrapper.setState({ adding: true })
     expect(wrapper).toMatchSnapshot()
   })
 
@@ -90,12 +90,12 @@ describe('AddModerator', () => {
     const wrapper = shallow(<AddModerator
       fetchModeratorSuggestions={fetchModeratorSuggestions}
       clearModeratorSuggestions={clearModeratorSuggestions} />)
-    wrapper.setState({adding: true})
+    wrapper.setState({ adding: true })
 
     const input = wrapper.find('input')
 
     input.simulate('change', {
-      target: {value: 'Artem'}
+      target: { value: 'Artem' }
     })
     expect(fetchModeratorSuggestions).toHaveBeenCalledWith('Artem')
     expect(clearModeratorSuggestions).not.toHaveBeenCalled()
@@ -103,7 +103,7 @@ describe('AddModerator', () => {
     fetchModeratorSuggestions.mockClear()
     clearModeratorSuggestions.mockClear()
     input.simulate('change', {
-      target: {value: ''}
+      target: { value: '' }
     })
     expect(clearModeratorSuggestions).toHaveBeenCalled()
     expect(fetchModeratorSuggestions).not.toHaveBeenCalled()

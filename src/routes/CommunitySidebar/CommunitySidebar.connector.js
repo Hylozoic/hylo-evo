@@ -7,7 +7,8 @@ export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
   const members = community ? community.members.toModelArray().slice(0, 8) : []
   const leaders = community ? community.moderators.toModelArray() : []
-  const canModerate = getCanModerate(state, {community})
+  const canModerate = getCanModerate(state, { community })
+
   return {
     community: community ? community.ref : null,
     members,

@@ -26,7 +26,11 @@ exports[`matches the last snapshot 1`] = `
           <MessageForm
             createMessage={[Function]}
             focusForm={[Function]}
-            formRef={[Function]}
+            formRef={
+              Object {
+                "current": null,
+              }
+            }
             placeholder="Write something..."
           />
         </div>

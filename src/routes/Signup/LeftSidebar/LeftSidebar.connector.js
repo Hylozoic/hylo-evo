@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import getMe from 'store/selectors/getMe'
 import updateUserSettings from 'store/actions/updateUserSettings'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
@@ -23,7 +23,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...dispatchProps,
     ...ownProps,
     handleCloseSignupModal: (defaultPath = '/') => {
-      const changes = {settings: {signupInProgress: false}}
+      const changes = { settings: { signupInProgress: false } }
       return dispatchProps.updateUserSettings(changes).then(() => {
         dispatchProps.resetReturnToURL()
         dispatchProps.push(stateProps.returnToURL || defaultPath)

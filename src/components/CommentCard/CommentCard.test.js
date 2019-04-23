@@ -18,7 +18,7 @@ const props = {
   },
   shouldShowReply: false,
   expanded: false,
-  highlightProps: {term: 'foo'}
+  highlightProps: { term: 'foo' }
 }
 
 it('matches last snapshot', () => {
@@ -39,7 +39,7 @@ it('matches last snapshot with different config', () => {
 it('displays an image', () => {
   const comment = {
     ...props.comment,
-    image: {url: 'jam.png'}
+    image: { url: 'jam.png' }
   }
   const wrapper = shallow(<CommentCard {...props} comment={comment} />)
   expect(wrapper).toMatchSnapshot()

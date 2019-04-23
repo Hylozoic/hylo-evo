@@ -2,16 +2,19 @@ import { matchPath } from 'react-router'
 import qs from 'querystring'
 import { get, isEmpty, omitBy } from 'lodash/fp'
 import { host } from 'config'
+import { HOLOCHAIN_ACTIVE, HOLOCHAIN_HASH_MATCH } from './holochain'
 
 // post type / post context related
 //
 // note: post Contexts have their own area if not default
-
-export const ID_MATCH_REGEX = '\\d+'
+export const HYLO_ID_MATCH = '\\d+'
+export const POST_ID_MATCH = HOLOCHAIN_ACTIVE
+  ? `${HYLO_ID_MATCH}|${HOLOCHAIN_HASH_MATCH}`
+  : HYLO_ID_MATCH
 export const DEFAULT_POST_TYPE_CONTEXT = 'p'
 export const POST_TYPE_CONTEXTS = ['project', 'event']
 export const VALID_POST_TYPE_CONTEXTS = [...POST_TYPE_CONTEXTS, DEFAULT_POST_TYPE_CONTEXT]
-export const VALID_POST_TYPE_CONTEXTS_MATCH_REGEX = VALID_POST_TYPE_CONTEXTS.join('|')
+export const VALID_POST_TYPE_CONTEXTS_MATCH = VALID_POST_TYPE_CONTEXTS.join('|')
 
 // fundamental URL paths
 
@@ -65,13 +68,13 @@ export function baseUrl ({
 
 export function personUrl (id, communitySlug, networkSlug) {
   if (!id) return '/'
-  const base = baseUrl({networkSlug, communitySlug})
+  const base = baseUrl({ networkSlug, communitySlug })
 
   return `${base}/m/${id}`
 }
 
 export function tagUrl (tagName, communitySlug) {
-  const base = baseUrl({communitySlug, defaultUrl: allCommunitiesUrl()})
+  const base = baseUrl({ communitySlug, defaultUrl: allCommunitiesUrl() })
 
   return `${base}/${tagName}`
 }
@@ -106,15 +109,15 @@ export function postUrl (id, opts = {}, querystringParams = {}) {
 }
 
 export function editPostUrl (id, opts = {}, querystringParams = {}) {
-  return postUrl(id, {...opts, action: 'edit'}, querystringParams)
+  return postUrl(id, { ...opts, action: 'edit' }, querystringParams)
 }
 
 export function newPostUrl (opts = {}, querystringParams = {}) {
-  return postUrl('new', {...opts}, querystringParams)
+  return postUrl('new', { ...opts }, querystringParams)
 }
 
 export function commentUrl (postId, commentId, communitySlug) {
-  return `${postUrl(postId, {communitySlug})}#comment_${commentId}`
+  return `${postUrl(postId, { communitySlug })}#comment_${commentId}`
 }
 
 export function communitySettingsUrl (communitySlug) {
@@ -137,7 +140,7 @@ export function topicsUrl (communitySlug) {
   return communityUrl(communitySlug) + '/topics'
 }
 
-export const communityJoinUrl = ({slug, accessCode}) =>
+export const communityJoinUrl = ({ slug, accessCode }) =>
   slug && accessCode && `${origin()}/c/${slug}/join/${accessCode}`
 
 // URL utility functions
@@ -156,9 +159,9 @@ export function removePostFromUrl (url) {
   // remove current post id and stay in the current post
   // context.
   if (url.match(`/${DEFAULT_POST_TYPE_CONTEXT}/`)) {
-    matchForReplaceRegex = `/${DEFAULT_POST_TYPE_CONTEXT}/${ID_MATCH_REGEX}`
+    matchForReplaceRegex = `/${DEFAULT_POST_TYPE_CONTEXT}/${POST_ID_MATCH}`
   } else {
-    matchForReplaceRegex = `/${ID_MATCH_REGEX}`
+    matchForReplaceRegex = `/${POST_ID_MATCH}`
   }
 
   return url.replace(new RegExp(matchForReplaceRegex), '')

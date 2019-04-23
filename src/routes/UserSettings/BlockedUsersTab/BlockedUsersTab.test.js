@@ -5,10 +5,10 @@ import React from 'react'
 describe('BlockedUsersTab', () => {
   it('renders a list of UnBlockUserControls', () => {
     const blockedUsers = [
-      {id: 1},
-      {id: 2},
-      {id: 3},
-      {id: 4}
+      { id: 1 },
+      { id: 2 },
+      { id: 3 },
+      { id: 4 }
     ]
     const wrapper = shallow(<BlockedUsersTab blockedUsers={blockedUsers} />)
     expect(wrapper.find('UnBlockUserControl').length).toEqual(4)

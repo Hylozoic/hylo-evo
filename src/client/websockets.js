@@ -16,7 +16,7 @@ if (isClient) {
   socket = io.socket
 } else {
   const noop = () => {}
-  socket = {get: noop, post: noop, on: noop, off: noop}
+  socket = { get: noop, post: noop, on: noop, off: noop }
 }
 
 export const socketUrl = path => `${socketHost}/${path.replace(/^\//, '')}`
@@ -28,5 +28,5 @@ export const setSocket = mock => { socket = mock }
 
 export const sendIsTyping = curry((postId, isTyping) => {
   const url = socketUrl(`/noo/post/${postId}/typing`)
-  getSocket().post(url, {isTyping})
+  getSocket().post(url, { isTyping })
 })

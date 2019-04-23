@@ -37,25 +37,25 @@ describe('component', () => {
   })
 
   it('does not createMessage when shift-enter is pressed', () => {
-    wrapper.find('textarea').simulate('keydown', {which: keyMap.ENTER, shiftKey: true})
+    wrapper.find('textarea').simulate('keydown', { which: keyMap.ENTER, shiftKey: true })
     expect(mockCreateMessage).not.toHaveBeenCalled()
   })
 
   it('does createMessage when enter is pressed', () => {
-    wrapper.find('textarea').simulate('keydown', {which: keyMap.ENTER})
+    wrapper.find('textarea').simulate('keydown', { which: keyMap.ENTER })
     expect(mockCreateMessage.mock.calls[0]).toEqual([messageThreadId, 'hey you'])
   })
 })
 
 describe('for a new thread', () => {
   const mockFindOrCreateThread = jest.fn(() => Promise.resolve({
-    payload: {data: {findOrCreateThread: {id: 5}}}
+    payload: { data: { findOrCreateThread: { id: 5 } } }
   }))
 
   const mockGoToThread = jest.fn()
   const mockCreateMessage = jest.fn(() => Promise.resolve())
 
-  const wrapper = mount(<MessageForm 
+  const wrapper = mount(<MessageForm
     {...defaultProps}
     forNewThread
     findOrCreateThread={mockFindOrCreateThread}
@@ -65,7 +65,7 @@ describe('for a new thread', () => {
     sendIsTyping={jest.fn()} />)
 
   it('finds or creates a thread', () => {
-    wrapper.find('textarea').simulate('keydown', {which: keyMap.ENTER})
+    wrapper.find('textarea').simulate('keydown', { which: keyMap.ENTER })
     expect.assertions(3)
     return new Promise(resolve => {
       setTimeout(() => {

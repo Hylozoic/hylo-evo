@@ -88,13 +88,13 @@ export default function reducer (state = defaultState, action) {
 
   switch (type) {
     case FIND_MENTIONS_PENDING:
-      return {...state, mentionSearchTerm: action.meta.graphql.variables.mentionSearchTerm}
+      return { ...state, mentionSearchTerm: action.meta.graphql.variables.mentionSearchTerm }
     case CLEAR_MENTIONS:
-      return {...state, mentionSearchTerm: null}
+      return { ...state, mentionSearchTerm: null }
     case FIND_TOPICS_PENDING:
-      return {...state, topicsSearchTerm: action.meta.graphql.variables.topicsSearchTerm}
+      return { ...state, topicsSearchTerm: action.meta.graphql.variables.topicsSearchTerm }
     case CLEAR_TOPICS:
-      return {...state, topicsSearchTerm: null}
+      return { ...state, topicsSearchTerm: null }
     default:
       return state
   }

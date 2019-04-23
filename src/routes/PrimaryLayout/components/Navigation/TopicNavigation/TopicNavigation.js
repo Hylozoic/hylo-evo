@@ -30,10 +30,10 @@ export default class TopicNavigation extends Component {
     } = this.props
 
     const currentTopic = topicName =>
-      matchPath(location.pathname, {path: tagUrl(topicName, communitySlug)})
+      matchPath(location.pathname, { path: tagUrl(topicName, communitySlug) })
 
     return <div styleName='s.topicNavigation'>
-      <div styleName={cx('s.header', {'s.header-link': collapsed})}
+      <div styleName={cx('s.header', { 's.header-link': collapsed })}
         onClick={expand}>
         <Icon name='Topics' styleName='s.icon' />
         <span styleName='s.title'>Topics</span>

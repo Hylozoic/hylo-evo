@@ -1,6 +1,6 @@
 import qs from 'querystring'
 import { addQuerystringToPath } from 'util/navigation'
-import { push, replace } from 'react-router-redux'
+import { push, replace } from 'connected-react-router'
 
 export default function changeQuerystringParam (props, key, value, defaultValue, useReplace) {
   const querystringParams = qs.parse(props.location.search.substring(1))

@@ -10,7 +10,7 @@ const { array, object, string, bool } = PropTypes
 export default class Dropdown extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {neverOpened: true}
+    this.state = { neverOpened: true }
   }
 
   static propTypes = {
@@ -22,7 +22,7 @@ export default class Dropdown extends React.Component {
   }
 
   toggle = (event, context) => {
-    this.setState({active: !this.state.active})
+    this.setState({ active: !this.state.active })
     if (event) {
       event.stopPropagation()
       event.preventDefault()
@@ -30,7 +30,7 @@ export default class Dropdown extends React.Component {
   }
 
   hide = () => {
-    if (this.state.active) this.setState({active: false})
+    if (this.state.active) this.setState({ active: false })
     return true
   }
 
@@ -52,7 +52,7 @@ export default class Dropdown extends React.Component {
     }
 
     let menuItems = children || items.map(item =>
-      <li styleName={cx(item.onClick ? 'linkItem' : 'headerItem', {redItem: item.red})}
+      <li styleName={cx(item.onClick ? 'linkItem' : 'headerItem', { redItem: item.red })}
         onClick={item.onClick} key={item.label}>
         {item.icon && <Icon styleName='icon' name={item.icon} />}
         {item.label}
@@ -60,7 +60,7 @@ export default class Dropdown extends React.Component {
 
     if (triangle) {
       const triangleLi = <li styleName='triangle' key='triangle'
-        style={{left: findTriangleLeftPos(this.refs.parent)}} />
+        style={{ left: findTriangleLeftPos(this.refs.parent) }} />
       menuItems = [triangleLi].concat(menuItems)
     }
 
@@ -70,15 +70,15 @@ export default class Dropdown extends React.Component {
   render () {
     const { toggleChildren, className, triangle, alignRight } = this.props
     const { active } = this.state
-    const styleName = cx('dropdown', {'has-triangle': triangle})
+    const styleName = cx('dropdown', { 'has-triangle': triangle })
 
     return <div className={className} styleName={styleName} ref='parent'
       onKeyDown={this.handleKeys}>
       <a styleName='dropdown-toggle' onClick={this.toggle}>
         {toggleChildren}
       </a>
-      <div styleName={cx('wrapper', {alignRight})}>
-        <ul styleName={cx('dropdown-menu', {active, alignRight})}
+      <div styleName={cx('wrapper', { alignRight })}>
+        <ul styleName={cx('dropdown-menu', { active, alignRight })}
           onClick={() => this.toggle()}>
           {this.renderMenuItems()}
         </ul>

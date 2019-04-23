@@ -1,1 +1,1 @@
-export default (state) => state.holochain.active
+export default (state) => state.holochain && state.holochain.active

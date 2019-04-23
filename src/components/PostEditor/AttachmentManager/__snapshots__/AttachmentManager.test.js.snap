@@ -2,7 +2,19 @@
 
 exports[`AttachmentManager renders FileManager when type is file 1`] = `
 <FileManager
-  loadAttachments={[Function]}
+  loadAttachments={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": undefined,
+        },
+      ],
+    }
+  }
   prop1="foo"
   prop2="bar"
   prop3="baz"
@@ -12,7 +24,19 @@ exports[`AttachmentManager renders FileManager when type is file 1`] = `
 
 exports[`AttachmentManager renders ImageManager when type is image 1`] = `
 <DragDropContext(ImageManager)
-  loadAttachments={[Function]}
+  loadAttachments={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": undefined,
+        },
+      ],
+    }
+  }
   prop1="foo"
   prop2="bar"
   prop3="baz"

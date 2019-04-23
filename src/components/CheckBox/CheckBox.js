@@ -6,12 +6,12 @@ import cx from 'classnames'
 
 const { bool, string, func } = PropTypes
 
-export default function CheckBox ({ checked, onChange, className, label, labelLeft = false, noInput}) {  
+export default function CheckBox ({ checked, onChange, className, label, labelLeft = false, noInput }) {
   const iconName = checked ? 'Checkmark' : 'Empty'
 
   return <label styleName='label'>
     {labelLeft && label}
-    <Icon name={iconName} styleName={cx('icon', {'label-left': labelLeft})} />
+    <Icon name={iconName} styleName={cx('icon', { 'label-left': labelLeft })} />
     {!noInput && <input type='checkbox'
       styleName='checkbox'
       className={className}

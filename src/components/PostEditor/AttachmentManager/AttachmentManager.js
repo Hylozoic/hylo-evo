@@ -39,30 +39,30 @@ export default class AttachmentManager extends React.Component {
 }
 
 export const ImageManager = DragDropContext(HTML5Backend)(
-class ImageManager extends React.Component {
-  render () {
-    const { postId, showAttachments, attachments, pending, addAttachment, removeAttachment, switchAttachments } = this.props
-    if (!showAttachments) return null
+  class ImageManager extends React.Component {
+    render () {
+      const { postId, showAttachments, attachments, pending, addAttachment, removeAttachment, switchAttachments } = this.props
+      if (!showAttachments) return null
 
-    return <div styleName='image-manager'>
-      <div styleName='section-label'>Images</div>
-      <div styleName='image-previews'>
-        {attachments.map((url, i) =>
-          <ImagePreview url={url}
-            removeImage={removeAttachment}
-            switchImages={switchAttachments}
-            position={i}
-            key={i} />)}
-        {pending && <div styleName='add-image'><Loading /></div>}
-        <ChangeImageButton update={addAttachment}
-          uploadSettings={uploadSettings(postId)}
-          attachmentType='image'>
-          <div styleName='add-image'>+</div>
-        </ChangeImageButton>
+      return <div styleName='image-manager'>
+        <div styleName='section-label'>Images</div>
+        <div styleName='image-previews'>
+          {attachments.map((url, i) =>
+            <ImagePreview url={url}
+              removeImage={removeAttachment}
+              switchImages={switchAttachments}
+              position={i}
+              key={i} />)}
+          {pending && <div styleName='add-image'><Loading /></div>}
+          <ChangeImageButton update={addAttachment}
+            uploadSettings={uploadSettings(postId)}
+            attachmentType='image'>
+            <div styleName='add-image'>+</div>
+          </ChangeImageButton>
+        </div>
       </div>
-    </div>
-  }
-})
+    }
+  })
 
 const imagePreviewSource = {
   beginDrag (props) {
@@ -82,25 +82,25 @@ const imagePreviewTarget = {
 export const ImagePreview = DropTarget('ImagePreview', imagePreviewTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget()
 }))(
-DragSource('ImagePreview', imagePreviewSource, (connect, monitor) => ({
-  connectDragSource: connect.dragSource(),
-  connectDragPreview: connect.dragPreview(),
-  isDragging: monitor.isDragging()
-}))(
-class ImagePreview extends React.Component {
-  render () {
-    const {
-      url, removeImage, connectDragSource, connectDragPreview, connectDropTarget, position
-    } = this.props
+  DragSource('ImagePreview', imagePreviewSource, (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    connectDragPreview: connect.dragPreview(),
+    isDragging: monitor.isDragging()
+  }))(
+    class ImagePreview extends React.Component {
+      render () {
+        const {
+          url, removeImage, connectDragSource, connectDragPreview, connectDropTarget, position
+        } = this.props
 
-    return connectDropTarget(connectDragSource(<div styleName='image-preview'>
-      <div style={bgImageStyle(url)} styleName='image'>
-        <Icon name='Ex' styleName='remove-image' onClick={() => removeImage(position)} />
-        {connectDragPreview(<div styleName='drag-preview' />)}
-      </div>
-    </div>))
-  }
-}))
+        return connectDropTarget(connectDragSource(<div styleName='image-preview'>
+          <div style={bgImageStyle(url)} styleName='image'>
+            <Icon name='Ex' styleName='remove-image' onClick={() => removeImage(position)} />
+            {connectDragPreview(<div styleName='drag-preview' />)}
+          </div>
+        </div>))
+      }
+    }))
 
 export function FileManager ({
   postId, showAttachments, attachments, pending, addAttachment, removeAttachment

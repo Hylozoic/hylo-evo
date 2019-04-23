@@ -14,7 +14,7 @@ export default function RoundImageRow ({ imageUrls = [], className, vertical, ca
     imageUrls = imageUrls.slice(0, cap)
   }
 
-  const zIndexStyle = i => ascending ? {zIndex: i} : {zIndex: imageUrls.length - i}
+  const zIndexStyle = i => ascending ? { zIndex: i } : { zIndex: imageUrls.length - i }
 
   const images = imageUrls.map((url, i) =>
     <RoundImage

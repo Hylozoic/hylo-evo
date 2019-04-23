@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import React from 'react'
 import { merge } from 'lodash'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import PostEditor, { ActionsBar } from './PostEditor'
 
 describe('PostEditor', () => {
@@ -17,18 +17,6 @@ describe('PostEditor', () => {
     }
     const wrapper = shallow(<PostEditor {...props} />)
     expect(wrapper).toMatchSnapshot()
-  })
-
-  it('sets component refs as expected', () => {
-    const props = {}
-    const wrapper = shallow(<PostEditor {...props} />)
-    const instance = wrapper.instance()
-    wrapper.find('[data-stylename="titleInput"]').first().getElement().ref('titleInput')
-    expect(instance.titleInput).toEqual('titleInput')
-    wrapper.find('CommunitiesSelector').first().getElement().ref('communitiesSelector')
-    expect(instance.communitiesSelector).toEqual('communitiesSelector')
-    wrapper.find('Connect(HyloEditor)').first().getElement().ref({getWrappedInstance: () => 'editor'})
-    expect(instance.editor).toEqual('editor')
   })
 
   describe('for a new post', () => {
@@ -69,12 +57,12 @@ describe('PostEditor', () => {
           type: 'offer',
           title: 'valid title',
           communities: [
-            {id: '1', name: 'test community 1'},
-            {id: '2', name: 'test community 2'}
+            { id: '1', name: 'test community 1' },
+            { id: '2', name: 'test community 2' }
           ],
           topicNames: ['design'],
           startTime: new Date(1551908483315),
-          endTime: new Date(1551908483315)    
+          endTime: new Date(1551908483315)
         },
         createPost: jest.fn(() => new Promise(() => {})),
         setAnnouncement: jest.fn()
@@ -84,16 +72,16 @@ describe('PostEditor', () => {
         reset: jest.fn()
       }
       const topicSelectorMock = {
-        getSelected: () => [{id: 1, name: 'design'}]
+        getSelected: () => [{ id: 1, name: 'design' }]
       }
       const communitiesSelectorMock = {
         reset: jest.fn()
       }
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
-      testInstance.editor = editorMock
-      testInstance.topicSelector = topicSelectorMock
-      testInstance.communitiesSelector = communitiesSelectorMock
+      testInstance.editor.current = editorMock
+      testInstance.topicSelector.current = topicSelectorMock
+      testInstance.communitiesSelector.current = communitiesSelectorMock
       testInstance.save()
       expect(props.createPost.mock.calls).toHaveLength(1)
       expect(props.createPost.mock.calls).toMatchSnapshot()
@@ -120,10 +108,10 @@ describe('PostEditor', () => {
         id: 'test',
         type: 'request',
         title: 'valid title',
-        linkPreview: {id: '1', title: 'a link'},
+        linkPreview: { id: '1', title: 'a link' },
         communities: [
-          {id: '1', name: 'test community 1'},
-          {id: '2', name: 'test community 2'}
+          { id: '1', name: 'test community 1' },
+          { id: '2', name: 'test community 2' }
         ],
         topicNames: ['design'],
         startTime: new Date(1551908483315),
@@ -150,16 +138,16 @@ describe('PostEditor', () => {
         reset: jest.fn()
       }
       const topicSelectorMock = {
-        getSelected: () => [{id: 1, name: 'design'}]
+        getSelected: () => [{ id: 1, name: 'design' }]
       }
       const communitiesSelectorMock = {
         reset: jest.fn()
       }
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
-      testInstance.editor = editorMock
-      testInstance.topicSelector = topicSelectorMock
-      testInstance.communitiesSelector = communitiesSelectorMock
+      testInstance.editor.current = editorMock
+      testInstance.topicSelector.current = topicSelectorMock
+      testInstance.communitiesSelector.current = communitiesSelectorMock
       testInstance.save()
       expect(props.updatePost.mock.calls).toHaveLength(1)
       expect(props.updatePost.mock.calls).toMatchSnapshot()
@@ -191,12 +179,12 @@ describe('PostEditor', () => {
           type: 'request',
           title: 'valid title',
           communities: [
-            {id: '1', name: 'test community 1'}
+            { id: '1', name: 'test community 1' }
           ]
         }
       }
       const testInstance = shallow(<PostEditor {...props} />).instance()
-      testInstance.editor = {isEmpty: jest.fn(() => false)}
+      testInstance.editor.current = { isEmpty: jest.fn(() => false) }
       expect(testInstance.isValid(props.post, {})).toBeTruthy()
     })
 
@@ -209,7 +197,7 @@ describe('PostEditor', () => {
         }
       }
       const testInstance = shallow(<PostEditor {...props} />).instance()
-      testInstance.editor = {isEmpty: jest.fn(() => false)}
+      testInstance.editor = { isEmpty: jest.fn(() => false) }
       expect(testInstance.isValid(props.post, {})).toBeFalsy()
     })
   })
@@ -230,10 +218,10 @@ describe('PostEditor', () => {
         id: 'test',
         type: 'offer',
         title: 'valid title',
-        linkPreview: {id: '1', title: 'a link'},
+        linkPreview: { id: '1', title: 'a link' },
         communities: [
-          {id: '1', name: 'test community 1'},
-          {id: '2', name: 'test community 2'}
+          { id: '1', name: 'test community 1' },
+          { id: '2', name: 'test community 2' }
         ],
         topicNames: ['design'],
         startTime: new Date(1551908483315),
@@ -247,16 +235,16 @@ describe('PostEditor', () => {
       reset: jest.fn()
     }
     const topicSelectorMock = {
-      getSelected: () => [{id: 1, name: 'design'}]
+      getSelected: () => [{ id: 1, name: 'design' }]
     }
     const communitiesSelectorMock = {
       reset: jest.fn()
     }
     const wrapper = shallow(<PostEditor {...props} />)
     const testInstance = wrapper.instance()
-    testInstance.editor = editorMock
-    testInstance.topicSelector = topicSelectorMock
-    testInstance.communitiesSelector = communitiesSelectorMock
+    testInstance.editor.current = editorMock
+    testInstance.topicSelector.current = topicSelectorMock
+    testInstance.communitiesSelector.current = communitiesSelectorMock
     testInstance.save()
     expect(props.updatePost.mock.calls).toHaveLength(1)
     expect(props.updatePost.mock.calls).toMatchSnapshot()

@@ -17,7 +17,7 @@ export default class CommunitySettingsTab extends Component {
   }
   constructor (props) {
     super(props)
-    this.state = {edits: {}, changed: false}
+    this.state = { edits: {}, changed: false }
   }
 
   componentDidMount () {
@@ -71,10 +71,10 @@ export default class CommunitySettingsTab extends Component {
     }
 
     const updateSettingDirectly = (key, changed) => value =>
-      updateSetting(key, changed)({target: {value}})
+      updateSetting(key, changed)({ target: { value } })
 
     const save = () => {
-      this.setState({changed: false})
+      this.setState({ changed: false })
       updateCommunitySettings(edits)
     }
 
@@ -83,13 +83,13 @@ export default class CommunitySettingsTab extends Component {
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <ChangeImageButton
           update={updateSettingDirectly('bannerUrl')}
-          uploadSettings={{type: 'communityBanner', id: community.id}}
+          uploadSettings={{ type: 'communityBanner', id: community.id }}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
         <ChangeImageButton
           update={updateSettingDirectly('avatarUrl')}
-          uploadSettings={{type: 'communityAvatar', id: community.id}}
+          uploadSettings={{ type: 'communityAvatar', id: community.id }}
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Description' onChange={updateSetting('description')} value={description} type='textarea' />

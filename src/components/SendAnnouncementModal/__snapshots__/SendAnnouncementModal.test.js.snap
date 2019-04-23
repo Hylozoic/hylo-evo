@@ -15,14 +15,14 @@ exports[`renders correctly with multiple communities 1`] = `
     <a>
       <Button
         data-stylename="close-button"
-        onClick={[Function]}
+        onClick={[MockFunction]}
         small={true}
       >
         Go Back
       </Button>
       <Button
         data-stylename="send-button"
-        onClick={[Function]}
+        onClick={[MockFunction]}
         small={true}
       >
         Send It
@@ -60,14 +60,14 @@ exports[`renders correctly with multiple communities, where the current user is 
     <a>
       <Button
         data-stylename="close-button"
-        onClick={[Function]}
+        onClick={[MockFunction]}
         small={true}
       >
         Go Back
       </Button>
       <Button
         data-stylename="send-button"
-        onClick={[Function]}
+        onClick={[MockFunction]}
         small={true}
       >
         Send It
@@ -92,14 +92,14 @@ exports[`renders correctly with one community 1`] = `
     <a>
       <Button
         data-stylename="close-button"
-        onClick={[Function]}
+        onClick={[MockFunction]}
         small={true}
       >
         Go Back
       </Button>
       <Button
         data-stylename="send-button"
-        onClick={[Function]}
+        onClick={[MockFunction]}
         small={true}
       >
         Send It

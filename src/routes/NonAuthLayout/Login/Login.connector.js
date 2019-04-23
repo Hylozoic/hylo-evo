@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import getLoginError from 'store/selectors/getLoginError'
 import { checkLogin, login, loginWithService } from './Login.store'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import mobileRedirect from 'util/mobileRedirect'
 

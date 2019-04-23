@@ -12,7 +12,7 @@ it('renders correctly', () => {
     community={community}
     regenerateAccessCode={() => {}}
     inviteLink='http://www.hylo.com/c/hylo/join/lalala'
-    />)
+  />)
   expect(wrapper).toMatchSnapshot()
 })
 
@@ -30,7 +30,7 @@ it('toggles allowCommunityInvites and calls the function to make the request on 
     inviteLink='http://www.hylo.com/c/hylo/join/lalala'
     allMembersCanInvite={allMembersCanInvite}
     allowCommunityInvites={allowCommunityInvites}
-    />)
+  />)
   wrapper.instance().toggleAllMembersCanInvite()
   expect(allowCommunityInvites).toBeCalled()
   expect(wrapper.instance().state.allMembersCanInvite).toBeTruthy()
@@ -42,7 +42,7 @@ it('handles allowCommunityInvites error', () => {
     name: 'Hylo'
   }
   const allMembersCanInvite = false
-  const allowCommunityInvites = jest.fn(() => Promise.resolve({error: 'some error'}))
+  const allowCommunityInvites = jest.fn(() => Promise.resolve({ error: 'some error' }))
 
   const wrapper = shallow(<InviteSettingsTab
     community={community}
@@ -50,7 +50,7 @@ it('handles allowCommunityInvites error', () => {
     inviteLink='http://www.hylo.com/c/hylo/join/lalala'
     allMembersCanInvite={allMembersCanInvite}
     allowCommunityInvites={allowCommunityInvites}
-    />)
+  />)
   wrapper.instance().toggleAllMembersCanInvite()
   expect(allowCommunityInvites).toBeCalled()
   expect(wrapper.instance().state.allMembersCanInvite).toBeTruthy()
@@ -66,6 +66,6 @@ it('changes state when nextProps has a new value for community.allowCommunityInv
   }
 
   const wrapper = shallow(<InviteSettingsTab community={community} />)
-  wrapper.setProps({community: nextCommunity})
+  wrapper.setProps({ community: nextCommunity })
   expect(wrapper.instance().state.allMembersCanInvite).toBeTruthy()
 })

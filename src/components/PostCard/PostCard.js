@@ -59,7 +59,7 @@ export default class PostCard extends React.Component {
 
     return <div ref='postCard'
       onClick={this.onClick}
-      styleName={cx('card', {expanded})}
+      styleName={cx('card', { expanded })}
       className={className}>
       <PostHeader
         {...post}
@@ -68,7 +68,7 @@ export default class PostCard extends React.Component {
         editPost={editPost} />
       <PostImage styleName='image' postId={post.id} />
       {isEvent && <EventBody event={post} slug={routeParams.slug} respondToEvent={respondToEvent} />}
-      {!isEvent && <PostBody post={post} slug={routeParams.slug} />}            
+      {!isEvent && <PostBody post={post} slug={routeParams.slug} />}
       <PostCommunities communities={post.communities} slug={routeParams.slug} />
       <PostFooter {...post} voteOnPost={voteOnPost} />
     </div>

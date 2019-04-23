@@ -9,7 +9,7 @@ describe('FeedList', () => {
   })
 
   it('renders a post list', () => {
-    const posts = [{id: 1}, {id: 2}, {id: 3}]
+    const posts = [{ id: 1 }, { id: 2 }, { id: 3 }]
     const wrapper = shallow(<FeedList
       storeFetchPostsParam={jest.fn()}
       posts={posts} />)

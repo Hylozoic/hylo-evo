@@ -40,9 +40,9 @@ export default class FeedList extends React.Component {
     const { scrollTop } = event.target
     const { atTabBar, scrollOffset } = this.state
     if (atTabBar && scrollTop < scrollOffset) {
-      this.setState({atTabBar: false})
+      this.setState({ atTabBar: false })
     } else if (!atTabBar && scrollTop > scrollOffset) {
-      this.setState({atTabBar: true})
+      this.setState({ atTabBar: true })
     }
   })
 
@@ -52,6 +52,7 @@ export default class FeedList extends React.Component {
 
   componentDidUpdate (prevProps) {
     if (!prevProps) return
+
     const updateCheckFunc = key =>
       this.props[key] !== prevProps[key] ||
       this.props.routeParams[key] !== prevProps.routeParams[key]
@@ -119,7 +120,7 @@ export default class FeedList extends React.Component {
             routeParams={routeParams}
             querystringParams={querystringParams}
             post={post}
-            styleName={cx('FeedListItem', {expanded})}
+            styleName={cx('FeedListItem', { expanded })}
             expanded={expanded}
             key={post.id} />
         })}

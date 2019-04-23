@@ -25,7 +25,7 @@ it('will call onTop', () => {
     onTop: jest.fn()
   }
   const wrapper = shallow(<ScrollListener {...props} />, { disableLifecycleMethods: true })
-  wrapper.setState({hitTop: false})
+  wrapper.setState({ hitTop: false })
   const simEvent = {
     preventDefault: jest.fn()
   }

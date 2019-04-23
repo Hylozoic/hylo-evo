@@ -3,7 +3,7 @@ import './DownloadAppModal.scss'
 import Button from '../Button'
 import { axolotlPhone } from 'util/assets'
 
-export default function DownloadAppModal ({url, returnToURL}) {
+export default function DownloadAppModal ({ url, returnToURL }) {
   const deepLinkOrigin = 'hyloapp://home'
   const deepLinkPath = deepLinkOrigin + returnToURL
   const appStoreName = url.indexOf('android') === -1 ? 'Apple App Store' : 'Google Play Store'

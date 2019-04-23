@@ -6,18 +6,18 @@ describe('mapStateToProps', () => {
   const { MessageThread, Message, Person } = session
 
   const people = [
-    {id: '1', name: 'Alice'},
-    {id: '2', name: 'Bob'}
+    { id: '1', name: 'Alice' },
+    { id: '2', name: 'Bob' }
   ]
   people.forEach(x => Person.create(x))
 
-  MessageThread.create({id: '11'})
+  MessageThread.create({ id: '11' })
 
   const messages = [
-    {id: '4', text: 'hi', creator: '1', messageThread: '11'},
-    {id: '5', text: 'how are you', creator: '1', messageThread: '11'},
-    {id: '6', text: 'fine thanks', creator: '2', messageThread: '11'},
-    {id: '7', text: 'and you?', creator: '2', messageThread: '11'}
+    { id: '4', text: 'hi', creator: '1', messageThread: '11' },
+    { id: '5', text: 'how are you', creator: '1', messageThread: '11' },
+    { id: '6', text: 'fine thanks', creator: '2', messageThread: '11' },
+    { id: '7', text: 'and you?', creator: '2', messageThread: '11' }
   ]
   messages.forEach(x => Message.create(x))
 
@@ -43,7 +43,7 @@ describe('mapStateToProps', () => {
   const props = {
     match: {
       params: {
-        messageThreadId: '11',
+        messageThreadId: '11'
       }
     }
   }
@@ -71,7 +71,7 @@ describe('mergeProps', () => {
   it('returns expected values', () => {
     const stateProps = {
       messages: [
-        {id: '1', text: 'hi'}
+        { id: '1', text: 'hi' }
       ]
     }
     const dispatchProps = {

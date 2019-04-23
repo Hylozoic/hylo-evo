@@ -24,7 +24,7 @@ export default function CommentCard ({
   const commentText = present(sanitize(comment.text), commentPresentOpts)
 
   return <a onClick={() => showDetails(comment.post.id)} styleName='link'>
-    <div styleName={cx('comment-card', {expanded})}>
+    <div styleName={cx('comment-card', { expanded })}>
       <div styleName='comment-header'>
         <RoundImage url={creator.avatarUrl} large />
         <Highlight {...highlightProps}>
@@ -40,7 +40,7 @@ export default function CommentCard ({
         styleName='comment-image' />}
       {!image && <ClickCatcher>
         <Highlight {...highlightProps}>
-          <div styleName='comment-body' dangerouslySetInnerHTML={{__html: commentText}} />
+          <div styleName='comment-body' dangerouslySetInnerHTML={{ __html: commentText }} />
         </Highlight>
       </ClickCatcher>}
       <div styleName='comment-footer'>

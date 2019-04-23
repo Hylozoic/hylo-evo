@@ -21,7 +21,7 @@ const getImagesForPost = ormCreateSelector(
   (state, { postId }) => postId,
   ({ Attachment }, postId) =>
     Attachment.all()
-    .filter(({ type, post }) => type === 'image' && post === postId)
-    .orderBy(get('position'))
-    .toRefArray()
+      .filter(({ type, post }) => type === 'image' && post === postId)
+      .orderBy(get('position'))
+      .toRefArray()
 )

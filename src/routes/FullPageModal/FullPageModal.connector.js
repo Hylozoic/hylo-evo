@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { goBack, push } from 'react-router-redux'
+import { goBack, push } from 'connected-react-router'
 import { withRouter } from 'react-router-dom'
 import { setConfirmBeforeClose } from './FullPageModal.store'
 import { get } from 'lodash/fp'

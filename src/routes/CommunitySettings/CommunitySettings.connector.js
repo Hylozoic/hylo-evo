@@ -10,7 +10,7 @@ import getCanModerate from 'store/selectors/getCanModerate'
 export function mapStateToProps (state, props) {
   const slug = getRouteParam('slug', state, props, false)
   const community = getCommunityForCurrentRoute(state, props)
-  const canModerate = getCanModerate(state, {community})
+  const canModerate = getCanModerate(state, { community })
 
   return {
     community,
@@ -30,7 +30,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { community, slug } = stateProps
   const {
     fetchCommunitySettingsMaker, updateCommunitySettingsMaker
-   } = dispatchProps
+  } = dispatchProps
   var fetchCommunitySettings, updateCommunitySettings
 
   if (slug) {

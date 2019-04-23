@@ -13,7 +13,7 @@ import userFetchedMiddleware from './userFetchedMiddleware'
 import userBlockingMiddleware from './userBlockingMiddleware'
 import mixpanelMiddleware from './mixpanelMiddleware'
 import errorMiddleware from './errorMiddleware'
-import { routerMiddleware } from 'react-router-redux'
+import { routerMiddleware } from 'connected-react-router'
 
 export default function createMiddleware (history, req) {
   const middleware = compact([
@@ -29,7 +29,7 @@ export default function createMiddleware (history, req) {
     userFetchedMiddleware,
     userBlockingMiddleware,
     mixpanelMiddleware,
-    !req && isDev && createLogger({collapsed: true})
+    !req && isDev && createLogger({ collapsed: true })
   ])
 
   const composeFn = typeof __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined'

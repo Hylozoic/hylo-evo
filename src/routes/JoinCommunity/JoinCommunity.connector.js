@@ -37,9 +37,9 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...stateProps,
     ...dispatchProps,
     checkInvitation: () =>
-      dispatchProps.checkInvitation({invitationToken, accessCode}),
+      dispatchProps.checkInvitation({ invitationToken, accessCode }),
     useInvitation: (userId) =>
-      dispatchProps.useInvitation(userId, {invitationToken, accessCode})
+      dispatchProps.useInvitation(userId, { invitationToken, accessCode })
   }
 }
 

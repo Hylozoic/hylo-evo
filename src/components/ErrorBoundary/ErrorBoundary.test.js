@@ -14,7 +14,7 @@ it('renders an error when an error is thrown', () => {
   expect(wrapper).toMatchSnapshot()
 })
 
-function FailingChild ({throwError = false}) {
+function FailingChild ({ throwError = false }) {
   if (throwError) {
     throw new Error('my error')
   }

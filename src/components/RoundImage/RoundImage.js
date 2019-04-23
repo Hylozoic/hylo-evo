@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
-import { bgImageStyle } from 'util/index'
-import './component.scss'
+import { bgImageStyle } from '../../util/index'
+import './RoundImage.scss'
 
 const { string, bool } = PropTypes
 
@@ -10,13 +10,13 @@ export default function RoundImage ({ url, small, medium, overlaps, overlapsVert
   let styleName = cx('image', { square, overlaps, small, medium, large, xlarge, 'overlaps-vertical': overlapsVertical })
   var style = bgImageStyle(url)
   if (size) {
-    style = {...style, width: size, height: size}
+    style = { ...style, width: size, height: size }
   }
   return <div
     style={style}
     styleName={styleName}
     className={className}
-     />
+  />
 }
 RoundImage.propTypes = {
   url: string,

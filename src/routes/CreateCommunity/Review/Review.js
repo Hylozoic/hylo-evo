@@ -17,6 +17,7 @@ import {
 export default class Review extends Component {
   constructor () {
     super()
+
     this.state = {
       readOnly: {
         name: true,
@@ -74,23 +75,21 @@ export default class Review extends Component {
       name,
       email
     })
-    // TODO: passing params to createCommunity could happen in mergeProps,
-    // so that this call is just this.props.createCommunity()
     this.props.createCommunity(
       // communityPrivacy,
       communityName,
       communityDomain,
       communityNetworkId
     )
-    .then(({ error }) => {
-      if (error) {
-        this.setState({
-          error: 'There was an error, please try again.'
-        })
-      } else {
-        this.props.goToCommunity(`${communityDomain}`)
-      }
-    })
+      .then(({ error }) => {
+        if (error) {
+          this.setState({
+            error: 'There was an error, please try again.'
+          })
+        } else {
+          this.props.goToCommunity(`${communityDomain}`)
+        }
+      })
   }
 
   errorCheckAndSubmit = () => {
@@ -115,7 +114,7 @@ export default class Review extends Component {
 
   componentWillMount = () => {
     const { communityPrivacy } = this.props
-    const privacyOption = find(privacyOptions, {label: communityPrivacy})
+    const privacyOption = find(privacyOptions, { label: communityPrivacy })
     const selectedCommunityPrivacy = get('label', privacyOption) // set to Private by default
     this.setState({
       edits: {
@@ -168,7 +167,6 @@ export default class Review extends Component {
             editHandler={(event) => this.editHandler('name')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'name')}
-            inputRef={(input) => { this.name = input }}
           />
           <ReviewTextInput
             label={'Your Email'}
@@ -177,7 +175,6 @@ export default class Review extends Component {
             editHandler={() => this.editHandler('email')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'email')}
-            inputRef={(input) => { this.email = input }}
           />
           <ReviewTextInput
             label={'Community Name'}
@@ -186,7 +183,6 @@ export default class Review extends Component {
             editHandler={() => this.editHandler('communityName')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'communityName')}
-            inputRef={(input) => { this.communityName = input }}
           />
           <ReviewTextInput
             label={'URL'}
@@ -195,7 +191,6 @@ export default class Review extends Component {
             editHandler={() => this.editHandler('communityDomain')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'communityDomain')}
-            inputRef={(input) => { this.communityDomain = input }}
           />
           {networkName && <ReviewTextInput
             label={'Network'}
@@ -218,12 +213,12 @@ export default class Review extends Component {
         previous={this.previous}
         showPrevious={false}
         continueText={'Finish Up'}
-        />
+      />
     </div>
   }
 }
 
-export function ReviewTextInput ({label, value, editHandler, onChange, readOnly = true, inputRef}) {
+export function ReviewTextInput ({ label, value, editHandler, onChange, readOnly = true, inputRef }) {
   return <div styleName='review-input-text-row'>
     <div styleName='review-input-text-label'>
       <span>{label}</span>
@@ -257,7 +252,7 @@ const sidebarTheme = {
 }
 
 const privacyOptions = [
-  {id: '0', label: 'public'},
-  {id: '1', label: 'private'},
-  {id: '2', label: 'unlisted'}
+  { id: '0', label: 'public' },
+  { id: '1', label: 'private' },
+  { id: '2', label: 'unlisted' }
 ]

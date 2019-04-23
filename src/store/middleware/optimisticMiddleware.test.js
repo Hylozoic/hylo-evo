@@ -6,15 +6,15 @@ describe('optimisticMiddleware', () => {
 
   beforeEach(() => {
     initialState = {
-      aReducer: {a: 1, b: 2}
+      aReducer: { a: 1, b: 2 }
     }
-    store = {dispatch: jest.fn(), getState: () => initialState}
+    store = { dispatch: jest.fn(), getState: () => initialState }
     middleware = optimisticMiddleware(store)
     next = jest.fn(val => Promise.resolve(val))
   })
 
   it('continues the chain for a non optimistic action', () => {
-    let action = {type: 'FOO', payload: {id: 3}}
+    let action = { type: 'FOO', payload: { id: 3 } }
     middleware(next)(action)
     expect(next).toHaveBeenCalled()
   })
@@ -25,24 +25,24 @@ describe('optimisticMiddleware', () => {
       const action = {
         type: 'FOO',
         payload: Promise.reject(error),
-        meta: {optimistic: true}
+        meta: { optimistic: true }
       }
 
       expect.assertions(3)
 
       return middleware(next)(action)
-      .then(() => {
-        expect(next).toHaveBeenCalled()
-        expect(store.dispatch).toBeCalledWith({
-          type: SET_STATE,
-          payload: initialState,
-          meta: {error}
-        })
+        .then(() => {
+          expect(next).toHaveBeenCalled()
+          expect(store.dispatch).toBeCalledWith({
+            type: SET_STATE,
+            payload: initialState,
+            meta: { error }
+          })
 
-        return action.payload.catch(err => {
-          expect(err).toEqual(error)
+          return action.payload.catch(err => {
+            expect(err).toEqual(error)
+          })
         })
-      })
     })
   })
 })

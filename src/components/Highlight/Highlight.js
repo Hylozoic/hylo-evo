@@ -165,7 +165,7 @@ export default class Highlight extends React.Component {
       } else {
         parsed = React.cloneElement(
           children,
-          {key: `parse${++this.parseCounter}`},
+          { key: `parse${++this.parseCounter}` },
           this.parse(children.props.children)
         )
       }

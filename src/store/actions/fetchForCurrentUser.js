@@ -21,7 +21,7 @@ export default function (slug, skipTopics) {
 
   return {
     type: FETCH_FOR_CURRENT_USER,
-    graphql: {query, variables: queryVariables(slug)},
+    graphql: { query, variables: queryVariables(slug) },
     meta: {
       extractModel: [
         {
@@ -41,4 +41,4 @@ export default function (slug, skipTopics) {
 
 // the value of `first` is high because we are receiving unaggregated data from
 // the API, so there could be many duplicates
-const queryVariables = slug => ({slug, first: 200, offset: 0, subscribed: true, updateLastViewed: true})
+const queryVariables = slug => ({ slug, first: 200, offset: 0, subscribed: true, updateLastViewed: true })

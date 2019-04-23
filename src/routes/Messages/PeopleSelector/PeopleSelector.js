@@ -16,8 +16,6 @@ const personType = shape({
   avatarUrl: string
 })
 
-// TODO: This _grossly_ underestimates the problem! See:
-// https://www.w3.org/International/questions/qa-personal-names
 const invalidPersonName = /[^a-z '-]+/gi
 
 export default class PeopleSelector extends React.Component {
@@ -41,7 +39,9 @@ export default class PeopleSelector extends React.Component {
 
   constructor (props) {
     super(props)
+
     this.state = { currentMatch: null }
+    this.autocomplete = React.createRef()
   }
 
   componentDidMount () {
@@ -68,9 +68,9 @@ export default class PeopleSelector extends React.Component {
   addParticipant = id => {
     this.props.setAutocomplete(null)
     this.setState({ currentMatch: null })
-    this.autocomplete.value = null
+    this.autocomplete.current.value = null
     this.props.addParticipant(id)
-    this.autocomplete.focus()
+    this.autocomplete.current.focus()
   }
 
   arrow (direction, evt) {
@@ -89,11 +89,11 @@ export default class PeopleSelector extends React.Component {
   autocompleteSearch = throttle(1000, this.props.fetchPeople)
 
   onChange = debounce(200, () => {
-    const { value } = this.autocomplete
+    const { value } = this.autocomplete.current
     if (!invalidPersonName.exec(value)) {
       return this.props.setAutocomplete(value)
     }
-    this.autocomplete.value = value.replace(invalidPersonName, '')
+    this.autocomplete.current.value = value.replace(invalidPersonName, '')
   })
 
   onKeyDown (evt) {
@@ -105,18 +105,11 @@ export default class PeopleSelector extends React.Component {
       case keyMap.ENTER:
         evt.preventDefault()
         this.props.addParticipant(this.state.currentMatch)
-        this.autocomplete.value = null
+        this.autocomplete.current.value = null
         return this.props.setAutocomplete(null)
 
       default:
-        this.autocompleteSearch(this.autocomplete.value)
-    }
-  }
-
-  removeParticipant (id) {
-    this.props.removeParticipant(id)
-    if (!this.autocomplete.value) {
-      this.setState({ currentMatch: null })
+        this.autocompleteSearch(this.autocomplete.current.value)
     }
   }
 
@@ -146,7 +139,7 @@ export default class PeopleSelector extends React.Component {
           )}
           <input styleName='autocomplete'
             autoFocus
-            ref={i => this.autocomplete = i} // eslint-disable-line no-return-assign
+            ref={this.autocomplete}
             type='text'
             spellCheck={false}
             onChange={evt => this.onChange(evt)}

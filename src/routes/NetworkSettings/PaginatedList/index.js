@@ -18,7 +18,7 @@ export default class PaginatedList extends Component {
     const { pending, items } = this.props
     const { prevItems } = this.state
     if (pending || items === prevItems || isEmpty(items)) return
-    this.setState({prevItems: items})
+    this.setState({ prevItems: items })
   }
 
   componentDidMount () {
@@ -45,7 +45,7 @@ export default class PaginatedList extends Component {
     const { prevItems } = this.state
     const visibleItems = pending ? prevItems : items
 
-    return <div styleName={cx('paginated-list', {loading: pending})} className={className}>
+    return <div styleName={cx('paginated-list', { loading: pending })} className={className}>
       <div styleName='section-label'>{label}</div>
       {visibleItems.map(m => <RemovableListItem
         item={m}

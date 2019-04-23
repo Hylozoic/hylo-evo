@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import reducer, { ormSessionReducer } from './PrimaryLayout.store'
 import { FETCH_FOR_CURRENT_USER } from 'store/constants'
-import { LOCATION_CHANGE } from 'react-router-redux'
+import { LOCATION_CHANGE } from 'connected-react-router'
 import rollbar from 'client/rollbar'
 import orm from 'store/models'
 
@@ -16,7 +16,7 @@ describe('reducer', () => {
     test('rollbar called', () => {
       const action = {
         type: FETCH_FOR_CURRENT_USER,
-        payload: {data: {me: {id: '1', username: 'Proteus', email: 'prot@e.us'}}}
+        payload: { data: { me: { id: '1', username: 'Proteus', email: 'prot@e.us' } } }
       }
 
       reducer({}, action)
@@ -55,13 +55,13 @@ describe('ormSessionReducer', () => {
       id: '5',
       name: 'foo',
       avatarUrl: 'foo.png',
-      memberships: [{id: '7'}],
-      settings: {lights: 'on'}
+      memberships: [{ id: '7' }],
+      settings: { lights: 'on' }
     }
     const action = {
       type: FETCH_FOR_CURRENT_USER,
       payload: {
-        data: {me}
+        data: { me }
       }
     }
 

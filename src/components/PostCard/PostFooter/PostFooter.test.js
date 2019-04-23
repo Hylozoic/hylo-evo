@@ -3,15 +3,15 @@ import { shallow } from 'enzyme'
 import React from 'react'
 
 const commenters = [
-  {name: 'Joe Smith', id: '1'},
-  {name: 'Sue Jones', id: '2'},
-  {name: 'Scary Terry', id: '3'},
-  {name: 'John Larkin', id: '4'}
+  { name: 'Joe Smith', id: '1' },
+  { name: 'Sue Jones', id: '2' },
+  { name: 'Scary Terry', id: '3' },
+  { name: 'John Larkin', id: '4' }
 ]
 
 const commentersUnsorted = [
-  {name: 'Sue Jones', id: '2'},
-  {name: 'Joe Smith', id: '1'}
+  { name: 'Sue Jones', id: '2' },
+  { name: 'Joe Smith', id: '1' }
 ]
 
 describe('PostFooter', () => {
@@ -48,13 +48,13 @@ describe('PostFooter', () => {
   })
 
   it('matches the latest snapshot for event', () => {
-    const eventInvitations = [
-      {
-        id: 1,
-        name: 'Arthur Smith',
-        response: 'yes'
-      }
-    ]
+    // const eventInvitations = [
+    //   {
+    //     id: 1,
+    //     name: 'Arthur Smith',
+    //     response: 'yes'
+    //   }
+    // ]
     const wrapper = shallow(<PostFooter
       commenters={[]}
       commentersTotal={0}
@@ -66,7 +66,7 @@ describe('PostFooter', () => {
 
 describe('commentCaption', () => {
   it('returns the correct text', () => {
-    const currentUserId = '1'
+    // const currentUserId = '1'
     expect(peopleSetup([], 0).caption).toEqual('Be the first to comment')
     expect(peopleSetup(commenters.slice(0, 1), 1).caption).toEqual('Joe commented')
     expect(peopleSetup(commenters.slice(0, 2), 2).caption).toEqual('Joe and Sue commented')

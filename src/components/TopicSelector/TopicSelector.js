@@ -53,7 +53,7 @@ export default class TopicSelector extends Component {
   }
 
   handleInputChange = input => {
-    this.setState({input})
+    this.setState({ input })
     if (!isEmpty(input)) {
       this.props.findTopics(input)
     } else {
@@ -85,7 +85,7 @@ export default class TopicSelector extends Component {
     const sortedTopicResults = sortBy([t => t.name === input ? -1 : 1, 'followersTotal', 'postsTotal'], topicResults)
 
     const suggestions = addNew
-      ? [{id: input, name: input, isNew: true}].concat(sortedTopicResults)
+      ? [{ id: input, name: input, isNew: true }].concat(sortedTopicResults)
       : sortedTopicResults
 
     return (
@@ -108,8 +108,8 @@ export default class TopicSelector extends Component {
 }
 
 // this should take an object. fix here and call site
-export function Suggestion ({item, handleChoice}) {
-  const {id, name, isNew, isError, postsTotal, followersTotal} = item
+export function Suggestion ({ item, handleChoice }) {
+  const { id, name, isNew, isError, postsTotal, followersTotal } = item
   const formatCount = count => isNaN(count)
     ? 0
     : count < 1000

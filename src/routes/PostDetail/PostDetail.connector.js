@@ -1,13 +1,15 @@
 import { connect } from 'react-redux'
 import { get, find } from 'lodash/fp'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import { editPostUrl, removePostFromUrl } from 'util/navigation'
 import fetchPost from 'store/actions/fetchPost'
+import holochainFetchPost from 'store/actions/holochainFetchPost'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getPost from 'store/selectors/getPost'
 import presentPost from 'store/presenters/presentPost'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getHolochainActive from 'store/selectors/getHolochainActive'
 import voteOnPost from 'store/actions/voteOnPost'
 import joinProject from 'store/actions/joinProject'
 import leaveProject from 'store/actions/leaveProject'
@@ -23,7 +25,8 @@ export function mapStateToProps (state, props) {
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const post = presentPost(getPost(state, props), get('id', currentCommunity))
   const currentUser = getMe(state)
-  const isProjectMember = find(({id}) => id === get('id', currentUser), get('members', post))
+  const isProjectMember = find(({ id }) => id === get('id', currentUser), get('members', post))
+  const holochainActive = getHolochainActive(state)
 
   return {
     id,
@@ -31,7 +34,8 @@ export function mapStateToProps (state, props) {
     post,
     currentUser,
     isProjectMember,
-    pending: state.pending[FETCH_POST]
+    pending: state.pending[FETCH_POST],
+    holochainActive
   }
 }
 
@@ -45,6 +49,7 @@ export function mapDispatchToProps (dispatch, props) {
 
   return {
     fetchPost: () => dispatch(fetchPost(postId)),
+    holochainFetchPost: () => dispatch(holochainFetchPost(postId)),
     editPost: () => dispatch(push(editPostUrl(postId, props.match.params))),
     onClose: () => dispatch(push(closeLocation)),
     joinProject: () => dispatch(joinProject(postId)),
@@ -56,13 +61,19 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { post } = stateProps
+  const { post, holochainActive } = stateProps
+
+  const fetchPost = holochainActive
+    ? dispatchProps.holochainFetchPost
+    : dispatchProps.fetchPost
+
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
     voteOnPost: () =>
-        dispatchProps.voteOnPost(!post.myVote)
+      dispatchProps.voteOnPost(!post.myVote),
+    fetchPost
   }
 }
 

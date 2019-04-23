@@ -10,7 +10,7 @@ exports[`CreateCommunityPrompt matches the latest snapshot 1`] = `
   <Button
     data-stylename="button"
     label="Create a Community"
-    onClick={[Function]}
+    onClick={[MockFunction]}
   />
   <div
     data-stylename="sidebar-image"

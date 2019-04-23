@@ -24,7 +24,7 @@ import {
 } from 'routes/NetworkSettings/NetworkSettings.store'
 import {
   REMOVE_POST_PENDING
- } from 'components/PostCard/PostHeader/PostHeader.store'
+} from 'components/PostCard/PostHeader/PostHeader.store'
 import {
   RECEIVE_THREAD
 } from 'components/SocketListener/SocketListener.store'
@@ -37,7 +37,7 @@ export default function (state = {}, action) {
   let root
 
   const addNetworkModerators = state => {
-    const params = {...meta.graphql.variables, page: meta.page}
+    const params = { ...meta.graphql.variables, page: meta.page }
     if (payload.data.network.moderators) {
       return appendIds(state, FETCH_MODERATORS, params, payload.data.network.moderators)
     } else {
@@ -46,7 +46,7 @@ export default function (state = {}, action) {
   }
 
   const addNetworkCommunities = state => {
-    const params = {...meta.graphql.variables, page: meta.page}
+    const params = { ...meta.graphql.variables, page: meta.page }
     if (payload.data.network.communities) {
       return appendIds(state, FETCH_COMMUNITIES, params, payload.data.network.communities)
     } else {
@@ -112,7 +112,7 @@ export default function (state = {}, action) {
   return state
 }
 
-export function matchNewPostIntoQueryResults (state, {id, type, networkSlug, communities, topics = []}) {
+export function matchNewPostIntoQueryResults (state, { id, type, networkSlug, communities, topics = [] }) {
   /* about this:
       we add the post id into queryResult sets that are based on time of
       creation because we know that the post just created is the latest
@@ -125,20 +125,20 @@ export function matchNewPostIntoQueryResults (state, {id, type, networkSlug, com
   queriesToMatch.push({})
   for (let topic of topics) {
     queriesToMatch.push(
-      {topic: topic.id}
+      { topic: topic.id }
     )
   }
   // Network feeds w/ topics
   if (networkSlug) {
     queriesToMatch.push(
-      {networkSlug},
-      {networkSlug, filter: type},
-      {networkSlug, sortBy: 'updated'},
-      {networkSlug, sortBy: 'updated', filter: type}
+      { networkSlug },
+      { networkSlug, filter: type },
+      { networkSlug, sortBy: 'updated' },
+      { networkSlug, sortBy: 'updated', filter: type }
     )
     for (let topic of topics) {
       queriesToMatch.push(
-        {networkSlug: networkSlug, topic: topic.id}
+        { networkSlug: networkSlug, topic: topic.id }
       )
     }
   }
@@ -146,14 +146,14 @@ export function matchNewPostIntoQueryResults (state, {id, type, networkSlug, com
   // Network feeds w/ topics
   return reduce((memo, community) => {
     queriesToMatch.push(
-      {slug: community.slug},
-      {slug: community.slug, filter: type},
-      {slug: community.slug, sortBy: 'updated'},
-      {slug: community.slug, sortBy: 'updated', filter: type}
+      { slug: community.slug },
+      { slug: community.slug, filter: type },
+      { slug: community.slug, sortBy: 'updated' },
+      { slug: community.slug, sortBy: 'updated', filter: type }
     )
     for (let topic of topics) {
       queriesToMatch.push(
-        {slug: community.slug, topic: topic.id}
+        { slug: community.slug, topic: topic.id }
       )
     }
     return reduce((innerMemo, params) => {
@@ -162,7 +162,7 @@ export function matchNewPostIntoQueryResults (state, {id, type, networkSlug, com
   }, state, communities)
 }
 
-export function matchNewThreadIntoQueryResults (state, {id, type}) {
+export function matchNewThreadIntoQueryResults (state, { id, type }) {
   return prependIdForCreate(state, FETCH_THREADS, null, id)
 }
 
@@ -247,9 +247,9 @@ export function makeQueryResultsModelSelector (resultsSelector, modelName, trans
     (session, results) => {
       if (isEmpty(results) || isEmpty(results.ids)) return []
       return session[modelName].all()
-      .filter(x => includes(x.id, results.ids))
-      .orderBy(x => results.ids.indexOf(x.id))
-      .toModelArray()
-      .map(transform)
+        .filter(x => includes(x.id, results.ids))
+        .orderBy(x => results.ids.indexOf(x.id))
+        .toModelArray()
+        .map(transform)
     })
 }

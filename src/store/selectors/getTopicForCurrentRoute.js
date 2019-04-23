@@ -6,7 +6,7 @@ const getTopicForCurrentRoute = ormCreateSelector(
   orm,
   state => state.orm,
   (state, props) => getRouteParam('topicName', state, props),
-  (session, topicName) => session.Topic.safeGet({name: topicName})
+  (session, topicName) => session.Topic.safeGet({ name: topicName })
 )
 
 export default getTopicForCurrentRoute

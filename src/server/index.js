@@ -8,8 +8,6 @@ import apiProxy from './apiProxy'
 import redirectToApp from './redirectToApp'
 import { handleStaticPages } from './proxy'
 
-global.SERVER_SIDE_RENDERING = true
-
 const port = process.env.PORT || 9001
 
 export default function () {

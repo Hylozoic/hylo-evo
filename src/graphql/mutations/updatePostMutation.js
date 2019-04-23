@@ -1,4 +1,4 @@
-import getPostFieldsFragment from '../fragments/getPostFieldsFragment'
+import postFieldsFragment from '../fragments/postFieldsFragment'
 
 export default
 `mutation (
@@ -33,5 +33,5 @@ export default
     startTime: $startTime,
     endTime: $endTime,
     location: $location
-  }) {${getPostFieldsFragment(false)}}
+  }) {${postFieldsFragment(false)}}
 }`

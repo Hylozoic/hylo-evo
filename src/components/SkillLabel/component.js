@@ -6,7 +6,7 @@ import './component.scss'
 const { string, bool } = PropTypes
 
 export default function SkillLabel ({ children, label, color = 'dark', active, className }) {
-  let styleName = cx('label', color, {active})
+  let styleName = cx('label', color, { active })
   return <div styleName={styleName} className={className}>
     {label || children}
   </div>

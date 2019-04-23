@@ -11,7 +11,7 @@ it('shows NotFound if a currentUser is loaded and the community does not exist',
   const wrapper = shallow(<PrimaryLayout
     isCommunityRoute
     currentUser={{}}
-    location={{pathname: ''}} />, { disableLifecycleMethods: true })
+    location={{ pathname: '' }} />, { disableLifecycleMethods: true })
   expect(wrapper).toMatchSnapshot()
 })
 
@@ -25,8 +25,8 @@ it('shows nothing for a community route if the community and currentUser are not
 it('shows normal children for a community route if the community is loaded', () => {
   const wrapper = shallow(<PrimaryLayout
     isCommunityRoute
-    location={{pathname: '/'}}
-    community={{id: '1'}}
+    location={{ pathname: '/' }}
+    community={{ id: '1' }}
     currentUser={{}} />, { disableLifecycleMethods: true })
   expect(wrapper.name()).toEqual('div')
 })

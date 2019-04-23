@@ -9,7 +9,7 @@ export default function respondToEvent (id, response) {
           success
         }
       }`,
-      variables: {id, response}
+      variables: { id, response }
     },
     meta: {
       id,

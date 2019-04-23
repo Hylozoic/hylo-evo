@@ -24,9 +24,9 @@ describe('fetchRecentActivity', () => {
 })
 
 describe('connector', () => {
-  let session = undefined
+  let session
   let state = null
-  let props = undefined
+  let props
 
   beforeEach(() => {
     session = orm.mutableSession(orm.getEmptyState())

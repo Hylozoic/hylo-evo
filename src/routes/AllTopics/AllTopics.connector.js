@@ -20,9 +20,9 @@ export const getCommunityTopics = ormCreateSelector(
   (session, results) => {
     if (isEmpty(results) || isEmpty(results.ids)) return []
     return session.CommunityTopic.all()
-    .filter(x => includes(x.id, results.ids))
-    .orderBy(x => results.ids.indexOf(x.id))
-    .toModelArray()
+      .filter(x => includes(x.id, results.ids))
+      .orderBy(x => results.ids.indexOf(x.id))
+      .toModelArray()
   }
 )
 
@@ -66,7 +66,7 @@ export function mapDispatchToProps (dispatch, props) {
       setSearch
     }, dispatch),
     fetchCommunityTopics: (communityId, { search, first, sortBy, offset } = {}) =>
-      debouncedFetch(dispatch, communityId, {search, first, sortBy, offset}),
+      debouncedFetch(dispatch, communityId, { search, first, sortBy, offset }),
     deleteTopic: topic => {
       if (window.confirm('Are you sure you want to delete this topic?')) {
         dispatch(deleteCommunityTopic(topic.id))
@@ -95,7 +95,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
 
   const fetchMoreCommunityTopics = fetchIsPending || !hasMore
     ? () => { }
-    : () => dispatchProps.fetchCommunityTopics(community.id, {offset, sortBy: selectedSort, search, first})
+    : () => dispatchProps.fetchCommunityTopics(community.id, { offset, sortBy: selectedSort, search, first })
 
   const fetchCommunityTopics = () =>
     dispatchProps.fetchCommunityTopics(community.id, { search, first: initialLoad, sortBy: selectedSort })

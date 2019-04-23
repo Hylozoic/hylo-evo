@@ -7,12 +7,12 @@ import { Provider } from 'react-redux'
 import createStore from '../store'
 import root from 'root-path'
 import { once } from 'lodash'
-import createHistory from 'history/createMemoryHistory'
+import { createMemoryHistory } from 'history'
 
 export default function appMiddleware (req, res, next) {
   // TODO: async data loading
 
-  const history = createHistory()
+  const history = createMemoryHistory()
   const store = createStore(history)
   const context = {}
   const markup = renderToString(<Provider store={store}>
@@ -29,12 +29,12 @@ export default function appMiddleware (req, res, next) {
 // this is set up as a property to make it easy to mock in tests
 appMiddleware.getIndexFile = once(() => {
   const indexPath = root('build/index.html')
-  return readFileSync(indexPath, {encoding: 'utf-8'})
+  return readFileSync(indexPath, { encoding: 'utf-8' })
 })
 
 function html (markup) {
   const newRoot = `<div id="root">${markup}</div>`
   return appMiddleware.getIndexFile()
-  .replace('<script id="newrelic"></script>', getBrowserSnippet())
-  .replace('<div id="root"></div>', newRoot)
+    .replace('<script id="newrelic"></script>', getBrowserSnippet())
+    .replace('<div id="root"></div>', newRoot)
 }

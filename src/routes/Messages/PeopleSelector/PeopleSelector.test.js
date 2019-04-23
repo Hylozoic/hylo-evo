@@ -204,43 +204,6 @@ describe('PeopleSelector', () => {
     })
   })
 
-  describe('removeParticipant', () => {
-    it('calls props.removeParticipant', () => {
-      const removeParticipant = jest.fn()
-      const wrapper = shallow(
-        <PeopleSelector
-          {...defaultProps}
-          removeParticipant={removeParticipant} />
-      )
-      const ps = wrapper.instance()
-      ps.autocomplete = { value: '' }
-      ps.removeParticipant('1')
-      expect(removeParticipant).toBeCalledWith('1')
-    })
-
-    it('sets currentMatch to null if nothing being typed', () => {
-      const wrapper = shallow(
-        <PeopleSelector {...defaultProps} />
-      )
-      const ps = wrapper.instance()
-      ps.autocomplete = { value: '' }
-      ps.state = { currentMatch: 'abc' }
-      ps.removeParticipant('1')
-      expect(ps.state.currentMatch).toBe(null)
-    })
-
-    it('does not set currentMatch to null if autocomplete in use', () => {
-      const wrapper = shallow(
-        <PeopleSelector {...defaultProps} />
-      )
-      const ps = wrapper.instance()
-      ps.autocomplete = { value: 'abc' }
-      ps.state = { currentMatch: 'abc' }
-      ps.removeParticipant('1')
-      expect(ps.state.currentMatch).toBe('abc')
-    })
-  })
-
   describe('componentDidMount', () => {
     it('adds particpants in the search, then clears it', () => {
       const addParticipant = jest.fn()

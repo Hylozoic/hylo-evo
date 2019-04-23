@@ -80,7 +80,7 @@ export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount, i
   return <li styleName='s.communityRow'>
     <Link to={path || `/c/${slug}`} styleName='s.communityRowLink' title={name}>
       <div styleName='s.communityRowAvatar' style={imageStyle} />
-      <span styleName={cx('s.community-name', {'s.is-member': isMember})}>{name}</span>
+      <span styleName={cx('s.community-name', { 's.is-member': isMember })}>{name}</span>
       {showBadge && <Badge expanded number={newPostCount} />}
     </Link>
   </li>
@@ -121,17 +121,17 @@ export class NetworkRow extends React.Component {
 
     const path = network.path || `/n/${slug}`
 
-    return <li styleName={cx('s.networkRow', {'s.networkExpanded': expanded})}>
+    return <li styleName={cx('s.networkRow', { 's.networkExpanded': expanded })}>
       <Link to={path} styleName='s.networkRowLink' title={name} className={badgeHoverStyles.parent}>
         <div styleName='s.network-name-wrapper'>
           <div styleName='s.avatar' style={imageStyle} />
           <span styleName='s.network-name'>{name}</span>
           {showCommunities && <span styleName='s.communitiesButton' onClick={this.toggleExpanded}>
             {expanded
-            ? <Icon name='ArrowDown' styleName='s.arrowDown' />
-            : newPostCount
-              ? <Badge number={newPostCount} expanded />
-              : <Icon name='ArrowForward' styleName='s.arrowForward' />}
+              ? <Icon name='ArrowDown' styleName='s.arrowDown' />
+              : newPostCount
+                ? <Badge number={newPostCount} expanded />
+                : <Icon name='ArrowForward' styleName='s.arrowForward' />}
           </span>}
         </div>
       </Link>

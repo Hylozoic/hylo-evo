@@ -6,7 +6,7 @@ describe('reducer', () => {
   it('adds data for ADD_USER_TYPING', () => {
     const action = {
       type: ADD_USER_TYPING,
-      payload: {id: '1', name: 'Proteus'}
+      payload: { id: '1', name: 'Proteus' }
     }
     const newState = reducer({}, action)
     expect(newState).toEqual({
@@ -21,7 +21,7 @@ describe('reducer', () => {
   it('removes data for CLEAR_USER_TYPING', () => {
     const action = {
       type: CLEAR_USER_TYPING,
-      payload: {id: '5'}
+      payload: { id: '5' }
     }
 
     const state = {

@@ -5,7 +5,7 @@ import orm from 'store/models'
 
 describe('ThreadList', () => {
   it('matches the last snapshot', () => {
-    const match = {params: {}}
+    const match = { params: {} }
     const wrapper = shallow(<ThreadList threads={[]} fetchThreads={jest.fn()} match={match} />)
     expect(wrapper).toMatchSnapshot()
   })
@@ -13,7 +13,7 @@ describe('ThreadList', () => {
 
 describe('ThreadListItem', () => {
   var MessageThread, Person
-  const currentUser = {id: 2, name: 'Ra', avatarUrl: 'ra.png'}
+  const currentUser = { id: 2, name: 'Ra', avatarUrl: 'ra.png' }
 
   beforeEach(() => {
     const session = orm.session(orm.getEmptyState())
@@ -26,9 +26,9 @@ describe('ThreadListItem', () => {
       currentUser,
       thread: MessageThread.create({
         participants: [
-          {id: 1, name: 'Jo', avatarUrl: 'jo.png'},
+          { id: 1, name: 'Jo', avatarUrl: 'jo.png' },
           currentUser,
-          {id: 3, name: 'La', avatarUrl: 'la.png'}
+          { id: 3, name: 'La', avatarUrl: 'la.png' }
         ].map(p => Person.create(p))
       })
     }
@@ -42,7 +42,7 @@ describe('ThreadListItem', () => {
       currentUser,
       thread: MessageThread.create({
         participants: [
-          {id: 1, name: 'Jo', avatarUrl: 'jo.png'},
+          { id: 1, name: 'Jo', avatarUrl: 'jo.png' },
           currentUser
         ].map(p => Person.create(p))
       })

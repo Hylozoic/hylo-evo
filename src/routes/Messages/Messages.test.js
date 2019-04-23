@@ -11,9 +11,9 @@ const testProps = {
     }
   }
 }
- 
+
 it('matches the last snapshot', () => {
-  const wrapper = shallow(<Messages {...testProps}  />, { disableLifecycleMethods: true })
+  const wrapper = shallow(<Messages {...testProps} />, { disableLifecycleMethods: true })
 
   expect(wrapper).toMatchSnapshot()
 })

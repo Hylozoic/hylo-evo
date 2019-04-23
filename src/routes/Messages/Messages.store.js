@@ -106,10 +106,10 @@ export const getThreads = ormCreateSelector(
   (session, threadSearch, results) => {
     if (isEmpty(results) || isEmpty(results.ids)) return []
     return session.MessageThread.all()
-    .filter(x => includes(x.id, results.ids))
-    .orderBy(x => -new Date(x.updatedAt))
-    .toModelArray()
-    .filter(filterThreadsByParticipant(threadSearch))
+      .filter(x => includes(x.id, results.ids))
+      .orderBy(x => -new Date(x.updatedAt))
+      .toModelArray()
+      .filter(filterThreadsByParticipant(threadSearch))
   }
 )
 
@@ -145,7 +145,7 @@ export const getMessagesHasMore = createSelector(
   get('hasMore')
 )
 
-/// ACTIONS (to be moved to /store/actions/*)
+// / ACTIONS (to be moved to /store/actions/*)
 
 const findOrCreateThreadQuery =
 `mutation ($participantIds: [String]) {
@@ -178,7 +178,7 @@ export function findOrCreateThread (participantIds, createdAt, holochainAPI = fa
   }
 }
 
-export function fetchThread (id, holochainAPI) {
+export function fetchThread (id, holochainAPI = false) {
   return {
     type: FETCH_THREAD,
     graphql: {
@@ -252,7 +252,7 @@ export function fetchMessages (id, opts = {}, holochainAPI = false) {
           }
         }
       `,
-      variables: opts.cursor ? {id, cursor: opts.cursor} : {id}
+      variables: opts.cursor ? { id, cursor: opts.cursor } : { id }
     },
     meta: {
       holochainAPI,
@@ -306,7 +306,7 @@ export function createMessage (messageThreadId, messageText, forNewThread, holoc
 export function updateThreadReadTime (id) {
   return {
     type: UPDATE_THREAD_READ_TIME,
-    payload: {api: {path: `/noo/post/${id}/update-last-read`, method: 'POST'}},
-    meta: {id}
+    payload: { api: { path: `/noo/post/${id}/update-last-read`, method: 'POST' } },
+    meta: { id }
   }
 }

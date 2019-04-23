@@ -39,7 +39,7 @@ export default class NonAuthLayout extends React.Component {
           <Link to='/login'>
             <Button styleName='signupButton' color='green-white-green-border'>Log In</Button>
           </Link>
-      } />
+        } />
       </div>
 
       <Route path='/login' component={() =>

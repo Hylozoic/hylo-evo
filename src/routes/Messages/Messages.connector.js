@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { get, isEmpty } from 'lodash/fp'
 import { getSocket, sendIsTyping } from 'client/websockets'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import { threadUrl } from 'util/navigation'
 import fetchThreads from 'store/actions/fetchThreads'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
@@ -50,6 +50,7 @@ export function mapStateToProps (state, props) {
     sendIsTyping: sendIsTyping(messageThreadId),
     threadSearch: getThreadSearch(state, props),
     threads: getThreads(state, props),
+    threadsPending: isPendingFor(fetchThreads, state),
     hasMoreThreads: getThreadsHasMore(state, props),
     messages: getMessages(state, props),
     messagesPending: isPendingFor(fetchMessages, state),
@@ -76,7 +77,7 @@ export function mapDispatchToProps (dispatch, props) {
       dispatch(createMessage(messageThreadId, text, forNewThread, holochainActive)),
     fetchThread: () => dispatch(fetchThread(messageThreadId, holochainActive)),
     fetchMessages: cursor => () =>
-      dispatch(fetchMessages(messageThreadId, {cursor}, holochainActive)),
+      dispatch(fetchMessages(messageThreadId, { cursor }, holochainActive)),
     updateThreadReadTime: id => !holochainActive && dispatch(updateThreadReadTime(id)),
     reconnectFetchMessages: () => dispatch(fetchMessages(messageThreadId, { reset: true }))
   }

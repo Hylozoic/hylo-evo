@@ -4,8 +4,8 @@ import orm from 'store/models'
 let state
 beforeAll(() => {
   const session = orm.session(orm.getEmptyState())
-  const community = session.Community.create({id: '99', slug: 'foo'})
-  session.Community.create({id: '88', slug: 'bar'})
+  const community = session.Community.create({ id: '99', slug: 'foo' })
+  session.Community.create({ id: '88', slug: 'bar' })
 
   session.Me.create({
     id: '1',
@@ -31,7 +31,7 @@ beforeAll(() => {
     hasModeratorRole: true
   })
 
-  community.update({moderators: ['1', '2']})
+  community.update({ moderators: ['1', '2'] })
 
   state = {
     orm: session.state,

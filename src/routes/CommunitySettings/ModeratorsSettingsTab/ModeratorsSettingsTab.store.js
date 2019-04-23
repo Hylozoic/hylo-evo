@@ -74,7 +74,7 @@ export function addModerator (personId, communityId) {
           }
         }
       }`,
-      variables: {personId, communityId}
+      variables: { personId, communityId }
     },
     meta: {
       personId,
@@ -100,7 +100,7 @@ export function removeModerator (personId, communityId, isRemoveFromCommunity) {
           }
         }
       }`,
-      variables: {personId, communityId, isRemoveFromCommunity}
+      variables: { personId, communityId, isRemoveFromCommunity }
     },
     meta: {
       personId,
@@ -117,7 +117,7 @@ export const getModerators = ormCreateSelector(
   state => state.orm,
   (state, props) => props.communityId,
   ({ Community }, id) => {
-    const community = Community.safeGet({id})
+    const community = Community.safeGet({ id })
     if (!community) return []
     return community.moderators.toModelArray()
   }

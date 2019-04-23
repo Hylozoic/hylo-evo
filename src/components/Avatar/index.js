@@ -1,2 +1,3 @@
-import component from './component'
+import component from './Avatar'
+
 export default component
