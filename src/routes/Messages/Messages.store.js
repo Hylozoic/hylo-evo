@@ -178,7 +178,7 @@ export function findOrCreateThread (participantIds, createdAt, holochainAPI = fa
   }
 }
 
-export function fetchThread (id, holochainAPI) {
+export function fetchThread (id, holochainAPI = false) {
   return {
     type: FETCH_THREAD,
     graphql: {

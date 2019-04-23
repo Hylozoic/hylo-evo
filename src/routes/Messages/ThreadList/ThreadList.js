@@ -1,14 +1,15 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { get, isEmpty } from 'lodash/fp'
 import { Link } from 'react-router-dom'
+import { humanDate } from 'hylo-utils/text'
 import RoundImage from 'components/RoundImage'
 import Badge from 'components/Badge'
 import Button from 'components/Button'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
-import { humanDate } from 'hylo-utils/text'
 import './ThreadList.scss'
+
 const { array, func, object, string } = PropTypes
 
 export default class ThreadList extends Component {
@@ -31,6 +32,7 @@ export default class ThreadList extends Component {
   render () {
     const {
       currentUser,
+      threadsPending,
       threads,
       threadSearch,
       setThreadSearch,
@@ -49,7 +51,7 @@ export default class ThreadList extends Component {
         <TextInput placeholder='Search for people...' value={threadSearch} onChange={onSearchChange} />
       </div>
       <ul styleName='list' id={'thread-list-list'}>
-        {threads.map(t => {
+        {!threadsPending && threads.map(t => {
           return <ThreadListItem id={t.id}
             key={`thread-li-${t.id}`}
             currentUser={currentUser}
@@ -58,8 +60,12 @@ export default class ThreadList extends Component {
             latestMessage={t.messages.orderBy(m => Date.parse(m.createdAt), 'desc').first()}
             unreadCount={t.unreadCount} />
         })}
-        {!threads.length && !threadSearch && <div styleName='no-conversations'>You have no active conversations</div>}
-        {!threads.length && threadSearch && <div styleName='no-conversations'>No conversations found</div>}
+        {threadsPending &&
+          <div styleName='no-conversations'>Loading conversations...</div>}
+        {!threadsPending && !threads.length && !threadSearch &&
+          <div styleName='no-conversations'>You have no active conversations</div>}
+        {!threadsPending && !threads.length && threadSearch &&
+          <div styleName='no-conversations'>No conversations found</div>}
       </ul>
       <ScrollListener
         elementId={'thread-list-list'}
@@ -69,8 +75,9 @@ export default class ThreadList extends Component {
 }
 
 export function ThreadListItem ({ currentUser, active, id, thread, latestMessage, unreadCount }) {
-  let text = ''
   const maxTextLength = 54
+  let text = ''
+
   if (latestMessage) {
     text = latestMessage.text.substring(0, maxTextLength)
     if (latestMessage.text.length > maxTextLength) {

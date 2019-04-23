@@ -50,6 +50,7 @@ export function mapStateToProps (state, props) {
     sendIsTyping: sendIsTyping(messageThreadId),
     threadSearch: getThreadSearch(state, props),
     threads: getThreads(state, props),
+    threadsPending: isPendingFor(fetchThreads, state),
     hasMoreThreads: getThreadsHasMore(state, props),
     messages: getMessages(state, props),
     messagesPending: isPendingFor(fetchMessages, state),

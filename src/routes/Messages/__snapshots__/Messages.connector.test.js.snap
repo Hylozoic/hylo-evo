@@ -78,6 +78,7 @@ Object {
   },
   "threadSearch": undefined,
   "threads": Array [],
+  "threadsPending": false,
 }
 `;
 

@@ -42,6 +42,7 @@ export default class Messages extends React.Component {
       currentUser,
       messageThread,
       messageThreadId,
+      threadsPending,
       threads,
       threadSearch,
       setThreadSearch,
@@ -73,6 +74,7 @@ export default class Messages extends React.Component {
         <ThreadList
           styleName='left-column'
           currentUser={currentUser}
+          threadsPending={threadsPending}
           threads={threads}
           threadSearch={threadSearch}
           setThreadSearch={setThreadSearch}
