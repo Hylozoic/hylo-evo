@@ -18,7 +18,7 @@ module.exports = function (api) {
       },
       exclude: 'node_modules',
       searchPaths: [
-        'src',
+        'src'
       ]
     }
   ]
