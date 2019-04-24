@@ -13,9 +13,9 @@ import { CENTER_COLUMN_ID } from 'util/scrolling'
 const { string, array, func, object } = PropTypes
 
 const sortOptions = [
-  {id: 'name', label: 'Alphabetical'},
-  {id: 'num_members', label: 'Popular'},
-  {id: 'created_at', label: 'Newest'}
+  { id: 'name', label: 'Alphabetical' },
+  { id: 'num_members', label: 'Popular' },
+  { id: 'created_at', label: 'Newest' }
 ]
 
 export default class NetworkCommunities extends Component {
@@ -44,7 +44,7 @@ export default class NetworkCommunities extends Component {
     }
 
     if (communitiesTotal && !this.state.communitiesTotal) {
-      this.setState({communitiesTotal})
+      this.setState({ communitiesTotal })
     }
   }
 

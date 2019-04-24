@@ -21,7 +21,7 @@ export default class TopNav extends Component {
     return <div styleName='topNavWrapper' className={className} onClick={onClick}>
       <div styleName='topNav' ref='topNav'>
         <div styleName='logo-hover'>
-          <Logo {...{communityOrNetwork: community || network, toggleDrawer}} />
+          <Logo {...{ communityOrNetwork: community || network, toggleDrawer }} />
           {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
           <Title community={community} network={network} onClick={toggleDrawer} />
         </div>

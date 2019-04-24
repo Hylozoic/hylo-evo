@@ -8,6 +8,6 @@ export function mapStateToProps (state) {
   }
 }
 
-const mapDispatchToProps = {checkLogin}
+const mapDispatchToProps = { checkLogin }
 
 export default connect(mapStateToProps, mapDispatchToProps)

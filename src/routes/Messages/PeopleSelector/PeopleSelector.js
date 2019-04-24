@@ -2,14 +2,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { debounce, throttle } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
-import MessageForm from '../MessageForm'
-import CloseMessages from '../Thread/CloseMessages'
+import CloseMessages from '../CloseMessages'
 import PeopleSelectorMatches from './PeopleSelectorMatches'
 import PeopleSelectorContacts from './PeopleSelectorContacts'
 import SelectorMatchedItem from './SelectorMatchedItem'
 import './PeopleSelector.scss'
 
-const { any, arrayOf, func, shape, string } = PropTypes
+const { any, array, arrayOf, func, shape, string } = PropTypes
 
 const personType = shape({
   id: any,
@@ -17,22 +16,32 @@ const personType = shape({
   avatarUrl: string
 })
 
-// TODO: This _grossly_ underestimates the problem! See:
-// https://www.w3.org/International/questions/qa-personal-names
 const invalidPersonName = /[^a-z '-]+/gi
 
 export default class PeopleSelector extends React.Component {
   static propTypes = {
+    setAutocomplete: func.isRequired,
+    fetchPeople: func.isRequired,
+    fetchContacts: func.isRequired,
+    fetchRecentContacts: func.isRequired,
+    addParticipant: func.isRequired,
+    removeParticipant: func.isRequired,
+    changeQuerystringParam: func.isRequired,
     autocomplete: string,
-    fetchPeople: func,
+    contacts: arrayOf(personType),
+    recentContacts: arrayOf(personType),
+    matches: array,
     deleteParticipant: func,
+    participantSearch: arrayOf(String),
     participants: arrayOf(personType),
-    setAutocomplete: func
+    onCloseURL: string
   }
 
   constructor (props) {
     super(props)
+
     this.state = { currentMatch: null }
+    this.autocomplete = React.createRef()
   }
 
   componentDidMount () {
@@ -59,9 +68,9 @@ export default class PeopleSelector extends React.Component {
   addParticipant = id => {
     this.props.setAutocomplete(null)
     this.setState({ currentMatch: null })
-    this.autocomplete.value = null
+    this.autocomplete.current.value = null
     this.props.addParticipant(id)
-    this.autocomplete.focus()
+    this.autocomplete.current.focus()
   }
 
   arrow (direction, evt) {
@@ -80,11 +89,11 @@ export default class PeopleSelector extends React.Component {
   autocompleteSearch = throttle(1000, this.props.fetchPeople)
 
   onChange = debounce(200, () => {
-    const { value } = this.autocomplete
+    const { value } = this.autocomplete.current
     if (!invalidPersonName.exec(value)) {
       return this.props.setAutocomplete(value)
     }
-    this.autocomplete.value = value.replace(invalidPersonName, '')
+    this.autocomplete.current.value = value.replace(invalidPersonName, '')
   })
 
   onKeyDown (evt) {
@@ -96,18 +105,11 @@ export default class PeopleSelector extends React.Component {
       case keyMap.ENTER:
         evt.preventDefault()
         this.props.addParticipant(this.state.currentMatch)
-        this.autocomplete.value = null
+        this.autocomplete.current.value = null
         return this.props.setAutocomplete(null)
 
       default:
-        this.autocompleteSearch(this.autocomplete.value)
-    }
-  }
-
-  removeParticipant (id) {
-    this.props.removeParticipant(id)
-    if (!this.autocomplete.value) {
-      this.setState({ currentMatch: null })
+        this.autocompleteSearch(this.autocomplete.current.value)
     }
   }
 
@@ -115,12 +117,17 @@ export default class PeopleSelector extends React.Component {
 
   render () {
     const {
-      contacts, matches, participants,
-      removeParticipant, findOrCreateThread, onCloseURL, holochainActive,
-      recentContacts
+      contacts,
+      recentContacts,
+      matches,
+      participants,
+      removeParticipant,
+      onCloseURL
     } = this.props
+
     const { currentMatch } = this.state
-    return <div styleName='people-selector'>
+
+    return <React.Fragment>
       <div styleName='thread-header' tabIndex='0'>
         <div styleName='autocomplete-control'>
           {participants && participants.map(participant =>
@@ -132,7 +139,7 @@ export default class PeopleSelector extends React.Component {
           )}
           <input styleName='autocomplete'
             autoFocus
-            ref={i => this.autocomplete = i} // eslint-disable-line no-return-assign
+            ref={this.autocomplete}
             type='text'
             spellCheck={false}
             onChange={evt => this.onChange(evt)}
@@ -151,13 +158,6 @@ export default class PeopleSelector extends React.Component {
           addParticipant={this.addParticipant}
           contacts={contacts}
           recentContacts={recentContacts} />}
-      {participants && participants.length > 0 &&
-        <div styleName='message-form'>
-          <MessageForm ref='form'
-            forNewThread
-            holochainActive={holochainActive}
-            findOrCreateThread={() => findOrCreateThread(participants.map(p => p.id), new Date().getTime().toString())} />
-        </div>}
-    </div>
+    </React.Fragment>
   }
 }

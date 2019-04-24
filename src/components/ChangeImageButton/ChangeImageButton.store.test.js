@@ -3,9 +3,9 @@ function setupUpload (shouldSucceed, callbackArgs) {
 
   jest.doMock('client/filepicker', () => {
     if (shouldSucceed) {
-      return {pick: opts => opts.success(...callbackArgs)}
+      return { pick: opts => opts.success(...callbackArgs) }
     } else {
-      return {pick: opts => opts.failure(...callbackArgs)}
+      return { pick: opts => opts.failure(...callbackArgs) }
     }
   })
 
@@ -15,7 +15,7 @@ function setupUpload (shouldSucceed, callbackArgs) {
 
 const url = 'http://filepicker.io/hfwoe/eh98e'
 const filename = 'foo.jpg'
-const opts = {type: 'userAvatar', id: 3, attachmentType: 'image'}
+const opts = { type: 'userAvatar', id: 3, attachmentType: 'image' }
 
 it('returns an API action after filepicker succeeds', () => {
   const upload = setupUpload(true, [url, filename])
@@ -31,7 +31,7 @@ it('returns an API action after filepicker succeeds', () => {
     api: {
       method: 'post',
       path: '/noo/upload',
-      params: {url, id: 3, type: 'userAvatar', filename}
+      params: { url, id: 3, type: 'userAvatar', filename }
     }
   })
 })

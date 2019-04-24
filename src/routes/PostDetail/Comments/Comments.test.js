@@ -5,7 +5,7 @@ import React from 'react'
 describe('Comments', () => {
   it('renders correctly', () => {
     const props = {
-      comments: [{id: 1}, {id: 2}, {id: 3}],
+      comments: [{ id: 1 }, { id: 2 }, { id: 3 }],
       total: 9,
       hasMore: true,
       postId: '91',

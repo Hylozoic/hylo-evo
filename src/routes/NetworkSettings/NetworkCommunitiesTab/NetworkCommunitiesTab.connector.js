@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
 import { bindActionCreators } from 'redux'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 
 import {
   addCommunityToNetwork,
@@ -22,7 +22,7 @@ export function mapStateToProps (state, props) {
   const slug = props.network.slug
 
   const communitiesPage = getCommunitiesPage(state, props)
-  const communitiesResultProps = {slug, page: communitiesPage}
+  const communitiesResultProps = { slug, page: communitiesPage }
   const communities = getCommunities(state, communitiesResultProps)
   const communitiesTotal = getCommunitiesTotal(state, communitiesResultProps)
   const communitiesPageCount = Math.ceil(communitiesTotal / PAGE_SIZE)
@@ -46,7 +46,7 @@ export function mapDispatchToProps (dispatch, state) {
   return {
     addCommunityToNetwork: networkId => communityId => dispatch(addCommunityToNetwork(communityId, networkId)),
     fetchCommunityAutocomplete: (auto, first, offset) => dispatch(fetchCommunityAutocomplete(auto, first, offset)),
-    fetchCommunitiesMaker: (slug, page) => () => dispatch(fetchCommunities({slug, page})),
+    fetchCommunitiesMaker: (slug, page) => () => dispatch(fetchCommunities({ slug, page })),
     removeCommunityFromNetwork: networkId => communityId => dispatch(removeCommunityFromNetwork(communityId, networkId)),
     createCommunity: networkId => () => dispatch(push(`/create-community/name/${networkId}`)),
     ...bindActionCreators({

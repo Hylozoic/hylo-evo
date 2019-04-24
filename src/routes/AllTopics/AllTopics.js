@@ -14,8 +14,8 @@ import { topicUrl } from 'util/navigation'
 import './AllTopics.scss'
 
 const sortOptions = [
-  {id: 'num_followers', label: 'Popular'},
-  {id: 'updated_at', label: 'Recent'}
+  { id: 'num_followers', label: 'Popular' },
+  { id: 'updated_at', label: 'Recent' }
 ]
 
 const TOPIC_LIST_ID = 'topic-list'
@@ -56,7 +56,7 @@ export default class AllTopics extends Component {
 
   componentDidUpdate (prevProps) {
     if (!this.state.totalTopicsCached && !prevProps.totalTopics && this.props.totalTopics) {
-      this.setState({totalTopicsCached: this.props.totalTopics})
+      this.setState({ totalTopicsCached: this.props.totalTopics })
     }
     if (prevProps.selectedSort !== this.props.selectedSort ||
       prevProps.search !== this.props.search ||
@@ -121,7 +121,7 @@ export default class AllTopics extends Component {
   }
 }
 
-export function SearchBar ({search, setSearch, selectedSort, setSort, fetchIsPending}) {
+export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPending }) {
   var selected = find(o => o.id === selectedSort, sortOptions)
 
   if (!selected) selected = sortOptions[0]

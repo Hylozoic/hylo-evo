@@ -6,7 +6,12 @@ describe('mapStateToProps', () => {
       FullPageModal: {},
       pending: {}
     }
-    expect(mapStateToProps(state, {})).toMatchSnapshot()
+    const props = {
+      location: {
+        search: ''
+      }
+    }
+    expect(mapStateToProps(state, props)).toMatchSnapshot()
   })
 })
 
@@ -18,7 +23,7 @@ describe('mergeProps', () => {
       setConfirmBeforeClose
     }
 
-    var { setConfirm } = mergeProps({confirm: false}, dispatchProps, {})
+    var { setConfirm } = mergeProps({ confirm: false }, dispatchProps, {})
 
     setConfirm(false)
     expect(setConfirmBeforeClose).not.toHaveBeenCalled()
@@ -26,7 +31,7 @@ describe('mergeProps', () => {
     expect(setConfirmBeforeClose).toHaveBeenCalledWith('message')
 
     setConfirmBeforeClose.mockClear()
-    setConfirm = mergeProps({confirm: 'message'}, dispatchProps, {}).setConfirm
+    setConfirm = mergeProps({ confirm: 'message' }, dispatchProps, {}).setConfirm
 
     setConfirm('message')
     expect(setConfirmBeforeClose).not.toHaveBeenCalled()

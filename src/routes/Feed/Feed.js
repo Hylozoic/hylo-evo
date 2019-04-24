@@ -108,7 +108,7 @@ export default class Feed extends Component {
   }
 }
 
-export function CreateCommunityPrompt ({goToCreateCommunity}) {
+export function CreateCommunityPrompt ({ goToCreateCommunity }) {
   return <div styleName='create-community-prompt'>
     <p>There's no posts yet, try starting a community!</p>
     <Button

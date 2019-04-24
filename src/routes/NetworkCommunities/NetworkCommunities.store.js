@@ -55,7 +55,6 @@ export function fetchNetwork (slug, sortBy) {
   return {
     type: FETCH_NETWORK_SETTINGS,
     graphql: {
-      // TODO: check if we are actually using the numMembers field of community here. If not, remove
       query: `query ($slug: String, $sortBy: String, $order: String) {
         network (slug: $slug) {
           id
@@ -99,7 +98,7 @@ export const getNetwork = ormCreateSelector(
   state => state.orm,
   (state, { slug }) => slug,
   (session, slug) => {
-    return session.Network.safeGet({slug})
+    return session.Network.safeGet({ slug })
   }
 )
 

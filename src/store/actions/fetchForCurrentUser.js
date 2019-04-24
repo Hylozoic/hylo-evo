@@ -35,7 +35,7 @@ export default function (slug, skipTopics) {
 
   return {
     type: FETCH_FOR_CURRENT_USER,
-    graphql: {query, variables: queryVariables(slug)},
+    graphql: { query, variables: queryVariables(slug) },
     meta: {
       extractModel: [
         {

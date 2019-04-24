@@ -13,7 +13,7 @@ const { func, object } = PropTypes
 export default class NetworkSettingsTab extends Component {
   constructor (props) {
     super(props)
-    this.state = {edits: {}, changed: false, saved: false}
+    this.state = { edits: {}, changed: false, saved: false }
   }
 
   static propTypes = {
@@ -85,11 +85,11 @@ export default class NetworkSettingsTab extends Component {
     }
 
     const updateSettingDirectly = (key, changed) => value =>
-    updateSetting(key, changed)({target: {value}})
+      updateSetting(key, changed)({ target: { value } })
 
     const save = () => {
-      this.setState({changed: false})
-      this.setState({saved: true})
+      this.setState({ changed: false })
+      this.setState({ saved: true })
       setConfirm(false)
       updateNetworkSettings(edits)
     }
@@ -99,13 +99,13 @@ export default class NetworkSettingsTab extends Component {
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <ChangeImageButton
           update={updateSettingDirectly('bannerUrl')}
-          uploadSettings={{type: 'networkBanner', id: network.id}}
+          uploadSettings={{ type: 'networkBanner', id: network.id }}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
         <ChangeImageButton
           update={updateSettingDirectly('avatarUrl')}
-          uploadSettings={{type: 'networkAvatar', id: network.id}}
+          uploadSettings={{ type: 'networkAvatar', id: network.id }}
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Description' onChange={updateSetting('description')} value={description} type='textarea' />

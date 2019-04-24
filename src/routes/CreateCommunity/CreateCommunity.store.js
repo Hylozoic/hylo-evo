@@ -11,19 +11,19 @@ const defaultState = {}
 
 export default function reducer (state = defaultState, action) {
   if (action.type === ADD_COMMUNITY_NAME) {
-    return {...state, name: action.payload}
+    return { ...state, name: action.payload }
   }
   if (action.type === ADD_COMMUNITY_DOMAIN) {
-    return {...state, domain: action.payload}
+    return { ...state, domain: action.payload }
   }
   if (action.type === ADD_COMMUNITY_PRIVACY) {
-    return {...state, privacy: action.payload}
+    return { ...state, privacy: action.payload }
   }
   if (action.type === ADD_NETWORK_ID) {
-    return {...state, networkId: action.payload}
+    return { ...state, networkId: action.payload }
   }
   if (action.type === FETCH_COMMUNITY_EXISTS) {
-    return {...state, domainExists: action.payload.data.communityExists.exists}
+    return { ...state, domainExists: action.payload.data.communityExists.exists }
   }
   if (action.type === CREATE_COMMUNITY) {
     if (!action.error) {

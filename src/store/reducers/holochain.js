@@ -1,11 +1,8 @@
-import { SET_HOLOCHAIN_SOCKET } from '../constants'
-
-const HOLOCHAIN_MODE_SUBDOMAIN = 'holo'
-const active = typeof window !== 'undefined' &&
-  window.location.host.split('.')[0] === HOLOCHAIN_MODE_SUBDOMAIN
+import { SET_HOLOCHAIN_SOCKET } from 'store/constants'
+import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 
 export const initialState = {
-  active,
+  active: HOLOCHAIN_ACTIVE,
   socket: null
 }
 

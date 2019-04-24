@@ -1,3 +1,3 @@
 import CommunitySettingsTab from './CommunitySettingsTab'
 
-export default CommunitySettings
+export default CommunitySettingsTab

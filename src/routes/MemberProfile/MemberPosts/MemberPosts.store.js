@@ -25,9 +25,9 @@ export function fetchMemberPosts (id, first = 20, query = memberPostsQuery) {
     type: FETCH_MEMBER_POSTS,
     graphql: {
       query,
-      variables: {id, first}
+      variables: { id, first }
     },
-    meta: {extractModel: 'Person'}
+    meta: { extractModel: 'Person' }
   }
 }
 

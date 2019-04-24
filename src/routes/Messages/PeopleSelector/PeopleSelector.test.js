@@ -1,21 +1,26 @@
-import { mount, shallow, render } from 'enzyme'
-import { MemoryRouter } from 'react-router'
 import React from 'react'
-
+import { MemoryRouter } from 'react-router'
+import { mount, shallow } from 'enzyme'
 import { keyMap } from 'util/textInput'
 import PeopleSelector from './PeopleSelector'
 import PersonListItem from './PersonListItem'
 
+const defaultProps = {
+  setAutocomplete: () => {},
+  fetchPeople: () => {},
+  fetchContacts: () => {},
+  fetchRecentContacts: () => {},
+  addParticipant: () => {},
+  removeParticipant: () => {},
+  changeQuerystringParam: () => {},
+  participants: [],
+  onCloseURL: ''
+}
+
 describe('PeopleSelector', () => {
   it('matches the last snapshot', () => {
     const wrapper = shallow(
-      <PeopleSelector
-        fetchContacts={() => {}}
-        fetchPeople={() => {}}
-        matches={[]}
-        fetchRecentContacts={jest.fn()}
-        participants={[]}
-        onCloseURL='' />
+      <PeopleSelector {...defaultProps} />
     )
     expect(wrapper).toMatchSnapshot()
   })
@@ -29,20 +34,19 @@ describe('PeopleSelector', () => {
     let wrapper
 
     beforeEach(() => {
-      addParticipant = jest.fn()
       fetchPeople = jest.fn()
+      addParticipant = jest.fn()
       removeParticipant = jest.fn()
       setAutocomplete = jest.fn()
       wrapper = mount(
         <MemoryRouter>
           <PeopleSelector
+            {...defaultProps}
+            fetchPeople={fetchPeople}
             addParticipant={addParticipant}
-            matches={[ { id: '1' }, { id: '2' } ]}
-            participants={[]}
-            fetchContacts={() => {}} fetchPeople={fetchPeople} fetchRecentContacts={() => {}}
             removeParticipant={removeParticipant}
             setAutocomplete={setAutocomplete}
-            onCloseURL='' />
+            matches={[ { id: '1' }, { id: '2' } ]} />
         </MemoryRouter>
       )
       wrapper.find(PeopleSelector).instance().setState({ currentMatch: '1' })
@@ -141,10 +145,8 @@ describe('PeopleSelector', () => {
       wrapper = mount(
         <MemoryRouter>
           <PeopleSelector
-            fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
-            participants={[]}
-            setAutocomplete={setAutocomplete}
-            onCloseURL='' />
+            {...defaultProps}
+            setAutocomplete={setAutocomplete} />
         </MemoryRouter>
       )
     })
@@ -177,11 +179,8 @@ describe('PeopleSelector', () => {
       const wrapper = mount(
         <MemoryRouter>
           <PeopleSelector
-            addParticipant={addParticipant}
-            participants={[]}
-            fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
-            setAutocomplete={() => {}}
-            onCloseURL='' />
+            {...defaultProps}
+            addParticipant={addParticipant} />
         </MemoryRouter>
       )
       wrapper.find(PeopleSelector).instance().addParticipant('1')
@@ -193,11 +192,8 @@ describe('PeopleSelector', () => {
       const wrapper = mount(
         <MemoryRouter>
           <PeopleSelector
-            addParticipant={() => {}}
-            participants={[]}
-            fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
-            setAutocomplete={setAutocomplete}
-            onCloseURL='' />
+            {...defaultProps}
+            setAutocomplete={setAutocomplete} />
         </MemoryRouter>
       )
       const input = wrapper.find('input').first()
@@ -208,59 +204,6 @@ describe('PeopleSelector', () => {
     })
   })
 
-  describe('removeParticipant', () => {
-    it('calls props.removeParticipant', () => {
-      const removeParticipant = jest.fn()
-      const wrapper = shallow(
-        <PeopleSelector
-          fetchPeople={() => {}}
-          participants={[]}
-          fetchContacts={jest.fn()}
-          fetchRecentContacts={jest.fn()}
-          removeParticipant={removeParticipant}
-          onCloseURL='' />
-      )
-      const ps = wrapper.instance()
-      ps.autocomplete = { value: '' }
-      ps.removeParticipant('1')
-      expect(removeParticipant).toBeCalledWith('1')
-    })
-
-    it('sets currentMatch to null if nothing being typed', () => {
-      const wrapper = shallow(
-        <PeopleSelector
-          fetchPeople={() => {}}
-          participants={[]}
-          fetchContacts={jest.fn()}
-          fetchRecentContacts={jest.fn()}
-          removeParticipant={() => {}}
-          onCloseURL='' />
-      )
-      const ps = wrapper.instance()
-      ps.autocomplete = { value: '' }
-      ps.state = { currentMatch: 'abc' }
-      ps.removeParticipant('1')
-      expect(ps.state.currentMatch).toBe(null)
-    })
-
-    it('does not set currentMatch to null if autocomplete in use', () => {
-      const wrapper = shallow(
-        <PeopleSelector
-          fetchPeople={() => {}}
-          participants={[]}
-          fetchContacts={jest.fn()}
-          fetchRecentContacts={jest.fn()}
-          removeParticipant={() => {}}
-          onCloseURL='' />
-      )
-      const ps = wrapper.instance()
-      ps.autocomplete = { value: 'abc' }
-      ps.state = { currentMatch: 'abc' }
-      ps.removeParticipant('1')
-      expect(ps.state.currentMatch).toBe('abc')
-    })
-  })
-
   describe('componentDidMount', () => {
     it('adds particpants in the search, then clears it', () => {
       const addParticipant = jest.fn()
@@ -268,12 +211,10 @@ describe('PeopleSelector', () => {
       mount(
         <MemoryRouter>
           <PeopleSelector
+            {...defaultProps}
             addParticipant={addParticipant}
-            participants={[]}
             participantSearch={[ '1', '2' ]}
-            fetchContacts={() => {}} fetchPeople={() => {}} fetchRecentContacts={() => {}}
-            changeQuerystringParam={changeQuerystringParam}
-            onCloseURL='' />
+            changeQuerystringParam={changeQuerystringParam} />
         </MemoryRouter>
       )
       expect(addParticipant).toBeCalledWith('1')

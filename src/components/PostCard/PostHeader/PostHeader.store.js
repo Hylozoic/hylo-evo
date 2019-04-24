@@ -80,7 +80,7 @@ export const getCommunity = ormCreateSelector(
   orm,
   state => state.orm,
   (_, { routeParams }) => routeParams,
-  (session, { slug }) => session.Community.safeGet({slug})
+  (session, { slug }) => session.Community.safeGet({ slug })
 )
 
 export function ormSessionReducer ({ Post }, { type, meta }) {
@@ -94,15 +94,15 @@ export function ormSessionReducer ({ Post }, { type, meta }) {
       post = Post.withId(meta.postId)
       const communities = post.communities.filter(c =>
         c.slug !== meta.slug).toModelArray()
-      post.update({communities})
+      post.update({ communities })
       break
 
     case PIN_POST_PENDING:
       post = Post.withId(meta.postId)
       // this line is to clear the selector memoization
-      post.update({_invalidate: (post._invalidate || 0) + 1})
+      post.update({ _invalidate: (post._invalidate || 0) + 1 })
       let postMembership = post.postMemberships.filter(p =>
         Number(p.community) === Number(meta.communityId)).toModelArray()[0]
-      postMembership && postMembership.update({pinned: !postMembership.pinned})
+      postMembership && postMembership.update({ pinned: !postMembership.pinned })
   }
 }

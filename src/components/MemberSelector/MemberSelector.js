@@ -60,7 +60,7 @@ export default class MemberSelector extends Component {
   }
 }
 
-export function Suggestion ({item, handleChoice}) {
+export function Suggestion ({ item, handleChoice }) {
   const { id, name, avatarUrl } = item
   return <li key={id || 'blank'}>
     <a onClick={event => handleChoice(item, event)} styleName='suggestionLink'>

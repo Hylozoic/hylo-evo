@@ -13,10 +13,10 @@ export default function apiProxy (req, res, next) {
 
   request.delete = request.delete || request.del
   const method = request[req.method.toLowerCase()]
-  const headers = {...req.headers, host: apiHostname}
-  const upstreamReq = method(url, {headers, followRedirect: false})
+  const headers = { ...req.headers, host: apiHostname }
+  const upstreamReq = method(url, { headers, followRedirect: false })
 
   req.pipe(upstreamReq)
-  .on('error', err => console.error('✗ ' + err.message))
-  .pipe(res)
+    .on('error', err => console.error('✗ ' + err.message))
+    .pipe(res)
 }

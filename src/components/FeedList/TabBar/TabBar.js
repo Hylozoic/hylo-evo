@@ -7,15 +7,15 @@ import Icon from 'components/Icon'
 import './TabBar.scss'
 
 const tabs = [
-  {id: 'all', label: 'All'},
-  {id: 'discussion', label: 'Discussions'},
-  {id: 'request', label: 'Requests'},
-  {id: 'offer', label: 'Offers'}
+  { id: 'all', label: 'All' },
+  { id: 'discussion', label: 'Discussions' },
+  { id: 'request', label: 'Requests' },
+  { id: 'offer', label: 'Offers' }
 ]
 
 const sortOptions = [
-  {id: 'updated', label: 'Latest'},
-  {id: 'votes', label: 'Popular'}
+  { id: 'updated', label: 'Latest' },
+  { id: 'votes', label: 'Popular' }
 ]
 
 export default class TabBar extends React.Component {

@@ -33,8 +33,8 @@ export default class Privacy extends Component {
 
   componentWillMount = () => {
     const { communityPrivacy } = this.props
-    const privacyOption = find(privacyOptions, {label: communityPrivacy})
-    this.setState({selectedPrivacy: get('id', privacyOption) || 1})
+    const privacyOption = find(privacyOptions, { label: communityPrivacy })
+    this.setState({ selectedPrivacy: get('id', privacyOption) || 1 })
   }
   render () {
     return <div styleName='flex-wrapper'>
@@ -71,7 +71,7 @@ export default class Privacy extends Component {
         submit={this.submit}
         previous={this.props.goToPreviousStep}
         continueText={'Continue'}
-        />
+      />
     </div>
   }
 }
@@ -82,7 +82,7 @@ const sidebarTheme = {
 }
 
 const privacyOptions = [
-  {id: '0', label: 'public'},
-  {id: '1', label: 'private'},
-  {id: '2', label: 'unlisted'}
+  { id: '0', label: 'public' },
+  { id: '1', label: 'private' },
+  { id: '2', label: 'unlisted' }
 ]

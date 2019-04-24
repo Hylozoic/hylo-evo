@@ -5,8 +5,8 @@ import { CREATE_POST } from 'store/constants'
 let state, requiredProps
 beforeAll(() => {
   const session = orm.session(orm.getEmptyState())
-  const community = session.Community.create({id: '99', slug: 'foo'})
-  const community2 = session.Community.create({id: '100', slug: 'bar'})
+  const community = session.Community.create({ id: '99', slug: 'foo' })
+  const community2 = session.Community.create({ id: '100', slug: 'bar' })
 
   session.LinkPreview.create({
     id: 1
@@ -19,11 +19,11 @@ beforeAll(() => {
       community: community.id,
       hasModeratorRole: true
     }),
-      session.Membership.create({
-        id: '678',
-        community: community2.id,
-        hasModeratorRole: false
-      })
+    session.Membership.create({
+      id: '678',
+      community: community2.id,
+      hasModeratorRole: false
+    })
     ]
   })
 

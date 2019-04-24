@@ -8,7 +8,7 @@ exports[`Review renders correctly 1`] = `
     body="You can always come back and change your details at any time"
     header="Everything looking good?"
     imageUrl="/grooving-axolotl.png"
-    onClick={[Function]}
+    onClick={[MockFunction]}
     theme={
       Object {
         "sidebarHeader": "sidebar-header-full-page",
@@ -43,7 +43,6 @@ exports[`Review renders correctly 1`] = `
     >
       <ReviewTextInput
         editHandler={[Function]}
-        inputRef={[Function]}
         label="Your Name"
         onChange={[Function]}
         onEnter={[Function]}
@@ -52,7 +51,6 @@ exports[`Review renders correctly 1`] = `
       />
       <ReviewTextInput
         editHandler={[Function]}
-        inputRef={[Function]}
         label="Your Email"
         onChange={[Function]}
         onEnter={[Function]}
@@ -61,7 +59,6 @@ exports[`Review renders correctly 1`] = `
       />
       <ReviewTextInput
         editHandler={[Function]}
-        inputRef={[Function]}
         label="Community Name"
         onChange={[Function]}
         onEnter={[Function]}
@@ -70,7 +67,6 @@ exports[`Review renders correctly 1`] = `
       />
       <ReviewTextInput
         editHandler={[Function]}
-        inputRef={[Function]}
         label="URL"
         onChange={[Function]}
         onEnter={[Function]}
@@ -104,7 +100,7 @@ exports[`ReviewTextInput renders correctly 1`] = `
     <TextInput
       name="community-name"
       noClearButton={true}
-      onChange={[Function]}
+      onChange={[MockFunction]}
       readOnly={false}
       theme={
         Object {
@@ -121,7 +117,7 @@ exports[`ReviewTextInput renders correctly 1`] = `
   >
     <span
       data-stylename="edit-button"
-      onClick={[Function]}
+      onClick={[MockFunction]}
     >
       Edit
     </span>

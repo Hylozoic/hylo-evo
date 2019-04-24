@@ -24,6 +24,8 @@ export function mapStateToProps (state, props) {
     communityMembership = getCommunityMembership(state, { communityId: community.id })
     badge = get('newPostCount', communityMembership)
   }
+  const projectsPath = `${rootPath}/project`
+  const eventsPath = `${rootPath}/event`
 
   return {
     routeParams,
@@ -31,6 +33,7 @@ export function mapStateToProps (state, props) {
     rootPath,
     membersPath,
     projectsPath,
+    eventsPath,
     badge,
     feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),
     communityMembership
@@ -70,5 +73,5 @@ const getCommunityMembership = ormCreateSelector(
   orm,
   state => state.orm,
   (state, { communityId }) => communityId,
-  (session, id) => session.Membership.safeGet({community: id})
+  (session, id) => session.Membership.safeGet({ community: id })
 )

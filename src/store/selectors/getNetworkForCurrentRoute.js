@@ -23,7 +23,7 @@ const getNetworkForCurrentRoute = ormCreateSelector(
   state => state.orm,
   getNetworkSlugFromLocation,
   (session, slug) => {
-    return session.Network.safeGet({slug})
+    return session.Network.safeGet({ slug })
   }
 )
 

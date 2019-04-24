@@ -9,7 +9,7 @@ import {
   removeMember,
   getMembers,
   setMembers
- } from '../MemberSelector/MemberSelector.store'
+} from '../MemberSelector/MemberSelector.store'
 
 export function mapStateToProps (state, props) {
   const people = matchesSelector(state, props)
@@ -38,4 +38,4 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps, {withRef: true})
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps, { forwardRef: true })

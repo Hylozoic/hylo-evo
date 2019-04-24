@@ -1,0 +1,73 @@
+.dropdownButton {
+  height: 40px;
+  line-height: 38px;
+  padding: 0px 40px;
+  border-radius: 25px;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  &:focus {
+    outline: 0;
+  }
+}
+
+.small {
+  padding: 0px 30px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 10pt;
+}
+
+.narrow {
+  padding: 0px 10px;
+}
+
+.disabled {
+  cursor: not-allowed;
+  background-color: #cccccc;
+}
+
+.green {
+  border: 1px solid $color-caribbean-green;
+  background-color: $color-caribbean-green;
+  color: $color-white;
+  &:hover, &.hover {
+    background-color: lighten($color-caribbean-green, 2%);
+  }
+  &:active, &.active {
+    background-color: darken($color-caribbean-green, 2%);
+  }
+  &.disabled {
+    border-color: lighten(desaturate($color-caribbean-green, 40%), 35%);
+    background-color: lighten(desaturate($color-caribbean-green, 40%), 35%);
+  }
+}
+
+.hover, .active {
+  display: inline-block;
+}
+
+.downArrow {
+  color: $color-white;
+}
+
+.dropdown {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  z-index: 10;
+  background: aliceblue;
+  border-radius: 4px;
+  margin-top: 3px;  
+}
+
+.choice {
+  composes: caption-lt-lg from 'css/typography.scss';
+  padding: 5px 15px;
+  border-bottom: 1px solid $color-cape-cod-10;
+}
+
+.expanded {
+  display: flex;
+}

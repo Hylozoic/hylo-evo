@@ -3,9 +3,12 @@ import { compact } from 'lodash/fp'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
 import './Navigation.scss'
+import { compact } from 'lodash/fp'
+import { EVENTS } from 'config/featureFlags'
 
 export default function Navigation (props) {
   const {
+    currentUser,
     className,
     collapsed,
     routeParams,
@@ -13,6 +16,7 @@ export default function Navigation (props) {
     membersPath,
     projectsPath,
     communityId,
+    eventsPath,
     badge,
     clearBadge,
     clearFeedList,
@@ -25,6 +29,8 @@ export default function Navigation (props) {
       clearBadge()
     }
   }
+
+  const hasEventsFeature = currentUser && currentUser.hasFeature(EVENTS)
 
   const links = compact([
     rootPath && {
@@ -39,6 +45,11 @@ export default function Navigation (props) {
       label: 'Projects',
       icon: 'Projects',
       to: projectsPath
+    },
+    eventsPath && hasEventsFeature && {
+      label: 'Events',
+      icon: 'Events',
+      to: eventsPath
     },
     membersPath && {
       label: 'Members',

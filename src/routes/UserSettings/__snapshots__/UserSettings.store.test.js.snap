@@ -1,5 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`registerStripeAccount matches snapshot 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($authorizationCode: String) {
+        registerStripeAccount(authorizationCode: $authorizationCode) {
+          success
+        }
+      }",
+    "variables": Object {
+      "authorizationCode": "anauthorizationcodexyz",
+    },
+  },
+  "meta": Object {
+    "authorizationCode": "anauthorizationcodexyz",
+  },
+  "type": "UserSettings/REGISTER_STRIPE_ACCOUNT",
+}
+`;
+
 exports[`updateAllMemberships matches snapshot 1`] = `
 Object {
   "graphql": Object {

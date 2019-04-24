@@ -52,7 +52,7 @@ describe('AuthRoute', () => {
     }
     shallow(<AuthRoute {...testProps} />)
     expect(testProps.setReturnToURL)
-    .toHaveBeenCalledWith(testProps.location.pathname + testProps.location.search)
+      .toHaveBeenCalledWith(testProps.location.pathname + testProps.location.search)
   })
 
   it('should set the URL to return to and send to login if not logged in and requireAuth is set', () => {
@@ -68,7 +68,7 @@ describe('AuthRoute', () => {
     }
     const wrapper = shallow(<AuthRoute {...testProps} />)
     expect(testProps.setReturnToURL)
-    .toHaveBeenCalledWith(testProps.location.pathname + testProps.location.search)
+      .toHaveBeenCalledWith(testProps.location.pathname + testProps.location.search)
     expect(wrapper).toMatchSnapshot()
   })
 })

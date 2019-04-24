@@ -65,21 +65,21 @@ export default class NotificationSettingsTab extends Component {
     const {
       currentUser, updateUserSettings, memberships, updateMembershipSettings, allCommunitiesSettings,
       messageSettings
-     } = this.props
+    } = this.props
 
     if (!currentUser) return <Loading />
 
     const { settings = {}, hasDevice } = currentUser
 
     const updateSetting = setting => value => {
-      updateUserSettings({settings: {[setting]: value}})
+      updateUserSettings({ settings: { [setting]: value } })
     }
 
     var notificationOptions = compact([
-      {id: 'none', label: 'None'},
-      {id: 'email', label: 'Email'},
-      hasDevice && {id: 'push', label: 'Mobile App'},
-      hasDevice && {id: 'both', label: 'Both'}
+      { id: 'none', label: 'None' },
+      { id: 'email', label: 'Email' },
+      hasDevice && { id: 'push', label: 'Mobile App' },
+      hasDevice && { id: 'both', label: 'Both' }
     ])
 
     const getSetting = setting => {
@@ -95,9 +95,9 @@ export default class NotificationSettingsTab extends Component {
         onChange={updateSetting('digestFrequency')}
         selected={settings['digestFrequency']}
         options={[
-          {id: 'daily', label: 'Daily'},
-          {id: 'weekly', label: 'Weekly'},
-          {id: 'never', label: 'Never'}
+          { id: 'daily', label: 'Daily' },
+          { id: 'weekly', label: 'Weekly' },
+          { id: 'never', label: 'Never' }
         ]} />
 
       <div styleName='prompt'>How would you like to receive notifications about
@@ -172,7 +172,7 @@ export class SettingsRow extends React.Component {
 
     const imageStyle = bgImageStyle(imageUrl)
 
-    return <div styleName={cx('settingsRow', {expanded})}>
+    return <div styleName={cx('settingsRow', { expanded })}>
       <div styleName='nameRow'>
         {iconName && <Icon name={iconName} styleName='avatarIcon' />}
         {!iconName && <div styleName='communityAvatar' style={imageStyle} />}
@@ -189,6 +189,6 @@ export class SettingsRow extends React.Component {
 
 export function SettingsIcon ({ settingKey, name, update, settings }) {
   return <Icon name={name}
-    styleName={cx('icon', {highlightIcon: settings[settingKey]})}
-    onClick={() => update({[settingKey]: !settings[settingKey]})} />
+    styleName={cx('icon', { highlightIcon: settings[settingKey] })}
+    onClick={() => update({ [settingKey]: !settings[settingKey] })} />
 }

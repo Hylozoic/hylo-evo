@@ -6,8 +6,8 @@ import { rootDomId } from 'client/util'
 const SendAnnouncementPortal = function (props) {
   return ReactDOM.createPortal(
     <SendAnnouncementModal {...props} />,
-      document.getElementById(rootDomId)
-    )
+    document.getElementById(rootDomId)
+  )
 }
 
 export default SendAnnouncementPortal

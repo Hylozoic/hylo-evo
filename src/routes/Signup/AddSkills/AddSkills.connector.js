@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push, goBack } from 'react-router-redux'
+import { push, goBack } from 'connected-react-router'
 import getMe from 'store/selectors/getMe'
 import { addSkill, removeSkill } from './AddSkills.store'
 import fetchMySkills from 'store/actions/fetchMySkills'

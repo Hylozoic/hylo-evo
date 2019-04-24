@@ -5,7 +5,9 @@ import { AnalyticsEvents } from 'hylo-utils/constants'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 import orm from 'store/models'
 
-export function fetchComments (id, opts = {}) {
+export function fetchComments (id, opts = {}, holochainAPI = false) {
+  const { cursor } = opts
+
   return {
     type: FETCH_COMMENTS,
     graphql: {
@@ -34,10 +36,11 @@ export function fetchComments (id, opts = {}) {
       }`,
       variables: {
         id,
-        cursor: opts.cursor
+        cursor
       }
     },
     meta: {
+      holochainAPI,
       extractModel: 'Post',
       extractQueryResults: {
         getItems: get('payload.data.post.comments')
@@ -46,29 +49,57 @@ export function fetchComments (id, opts = {}) {
   }
 }
 
-export function createComment (postId, text) {
+const holochainCreateCommentMutation = `mutation ($postId: String, $text: String, $createdAt: String) {
+  createComment(data: {postId: $postId, text: $text, createdAt: $createdAt}) {
+    id
+    text
+    post {
+      id
+    }
+    createdAt
+    creator {
+      id
+    }
+  }
+}`
+
+const createCommentMutation = `mutation ($postId: String, $text: String) {
+  createComment(data: {postId: $postId, text: $text}) {
+    id
+    text
+    post {
+      id
+    }
+    creator {
+      id
+    }
+  }
+}`
+export function createComment (postId, text, holochainAPI = false) {
+  const createdAt = new Date().toISOString()
+
+  const variables = {
+    postId,
+    text
+  }
+
+  var query
+
+  if (holochainAPI) {
+    variables.createdAt = createdAt
+    query = holochainCreateCommentMutation
+  } else {
+    query = createCommentMutation
+  }
+
   return {
     type: CREATE_COMMENT,
     graphql: {
-      query: `mutation ($postId: String, $text: String) {
-        createComment(data: {postId: $postId, text: $text}) {
-          id
-          text
-          post {
-            id
-          }
-          createdAt
-          creator {
-            id
-          }
-        }
-      }`,
-      variables: {
-        postId,
-        text
-      }
+      query,
+      variables
     },
     meta: {
+      holochainAPI,
       optimistic: true,
       extractModel: 'Comment',
       tempId: uniqueId(`post${postId}_`),
@@ -97,14 +128,14 @@ export const getComments = createSelector(
   (session, id) => {
     var post
     try {
-      post = session.Post.get({id})
+      post = session.Post.get({ id })
     } catch (e) {
       return []
     }
     return post.comments.orderBy(c => Number(c.id)).toModelArray()
-    .map(comment => ({
-      ...comment.ref,
-      creator: comment.creator,
-      image: comment.attachments.toModelArray()[0]
-    }))
+      .map(comment => ({
+        ...comment.ref,
+        creator: comment.creator,
+        image: comment.attachments.toModelArray()[0]
+      }))
   })

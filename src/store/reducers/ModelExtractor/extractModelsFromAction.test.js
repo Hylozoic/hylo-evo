@@ -30,7 +30,7 @@ it('handles an action with an object meta.extractModel', () => {
       data: {
         flarg: postData
       },
-      cruft: {wow: 1}
+      cruft: { wow: 1 }
     },
     meta: {
       extractModel: {
@@ -58,7 +58,7 @@ it('handles an action with an array meta.extractModel', () => {
         flarg: postData,
         arg: personData
       },
-      cruft: {wow: 1}
+      cruft: { wow: 1 }
     },
     meta: {
       extractModel: [

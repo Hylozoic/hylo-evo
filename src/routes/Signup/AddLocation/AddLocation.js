@@ -21,12 +21,12 @@ export default class AddLocation extends Component {
   setLocation = () => {
     const { currentUser } = this.props
     if (currentUser && currentUser.location) {
-      this.setState({location: currentUser.location})
+      this.setState({ location: currentUser.location })
     }
   }
   submit = () => {
     const location = this.state.location
-    this.props.updateUserSettings({location})
+    this.props.updateUserSettings({ location })
     this.props.goToNextStep()
   }
 

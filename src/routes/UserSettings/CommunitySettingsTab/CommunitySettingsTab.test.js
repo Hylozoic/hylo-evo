@@ -5,10 +5,10 @@ import React from 'react'
 describe('CommunitySettingsTab', () => {
   it('renders a list of CommunityControls', () => {
     const memberships = [
-      {id: 1},
-      {id: 2},
-      {id: 3},
-      {id: 4}
+      { id: 1 },
+      { id: 2 },
+      { id: 3 },
+      { id: 4 }
     ]
     const wrapper = shallow(<CommunitySettingsTab memberships={memberships} />)
     expect(wrapper.find('CommunityControl').length).toEqual(4)

@@ -4,7 +4,7 @@ process.env.NODE_ENV = 'development'
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.
 // https://github.com/motdotla/dotenv
-require('dotenv').config({silent: true})
+require('dotenv').config({ silent: true })
 
 var chalk = require('chalk')
 var webpack = require('webpack')
@@ -35,19 +35,6 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 var DEFAULT_PORT = process.env.PORT || 3000
 var compiler
 var handleCompile
-
-// You can safely remove this after ejecting.
-// We only use this block for testing of Create React App itself:
-var isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1)
-if (isSmokeTest) {
-  handleCompile = function (err, stats) {
-    if (err || stats.hasErrors() || stats.hasWarnings()) {
-      process.exit(1)
-    } else {
-      process.exit(0)
-    }
-  }
-}
 
 function setupCompiler (host, port, protocol) {
   // "Compiler" is a low-level interface to Webpack.
@@ -170,7 +157,7 @@ function addMiddleware (devServer) {
     rewrites: [
       // proxy all requests starting with /noo, regardless of accept headers;
       // this is used to serve content for popup-based third-party auth
-      {from: /(^\/noo.*$)/, to: context => context.match[1]}
+      { from: /(^\/noo.*$)/, to: context => context.match[1] }
     ]
   }))
   if (proxy) {

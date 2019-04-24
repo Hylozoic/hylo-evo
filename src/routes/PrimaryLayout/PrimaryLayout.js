@@ -41,9 +41,8 @@ import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
 import {
-  ID_MATCH_REGEX,
-  VALID_POST_TYPE_CONTEXTS_MATCH_REGEX,
-  isSignupPath
+  POST_ID_MATCH,
+  VALID_POST_TYPE_CONTEXTS_MATCH
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 // TODO: Implement create community privacy component when implemented on the server
@@ -56,6 +55,9 @@ export default class PrimaryLayout extends Component {
     // to a single community
     const skipTopics = false // this.props.location.pathname !== '/all'
     this.props.fetchForCurrentUser(skipTopics)
+    if (this.props.slug) {
+      this.props.fetchForCommunity()
+    }
   }
 
   componentDidUpdate (prevProps) {
@@ -80,12 +82,13 @@ export default class PrimaryLayout extends Component {
 
     if (isCommunityRoute) {
       if (!currentUser) return <Loading />
-      if (!community && !communityPending) return <NotFound />
+      // don't show NotFound in holochain as we don't get the communities with currentUser
+      if (!community && !communityPending && !holochainActive) return <NotFound />
     }
 
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
     const hasDetail = some(
-      ({ path }) => matchPath(location.pathname, {path, exact: true}),
+      ({ path }) => matchPath(location.pathname, { path, exact: true }),
       postDetailRoutes
     )
     const routesWithNavigation = [
@@ -95,8 +98,8 @@ export default class PrimaryLayout extends Component {
     ]
 
     return <div styleName='container'>
-      <Drawer styleName={cx('drawer', {hidden: !isDrawerOpen})} {...{community, network}} />
-      <TopNav styleName='top' onClick={closeDrawer} {...{community, network, currentUser, showLogoBadge, holochainActive}} />
+      <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
+      <TopNav styleName='top' onClick={closeDrawer} {...{ community, network, currentUser, showLogoBadge, holochainActive }} />
       <div styleName='main' onClick={closeDrawer}>
         {routesWithNavigation.map(({ path }) =>
           <Route path={path} key={path} component={props =>
@@ -134,9 +137,9 @@ export default class PrimaryLayout extends Component {
                 <CreateCommunity {...props} component={component} />} />)}
           </Switch>
         </div>
-        <div styleName={cx('sidebar', {hidden: hasDetail})}>
+        <div styleName={cx('sidebar', { hidden: hasDetail })}>
           <Switch>
-            <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
+            <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={holochainActive ? null : CommunitySidebar} />
             <Route path={`/c/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
             <Route path={`/c/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
             <Route path={`/n/:networkSlug/${OPTIONAL_NEW_POST_MATCH}`} exact component={NetworkSidebar} />
@@ -144,14 +147,14 @@ export default class PrimaryLayout extends Component {
             <Route path={`/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
           </Switch>
         </div>
-        <div styleName={cx('detail', {hidden: !hasDetail})} id={DETAIL_COLUMN_ID}>
+        <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
           <Switch>
             {postDetailRoutes.map(({ path }) =>
               <Route path={path} component={PostDetail} key={path} />)}
           </Switch>
         </div>
       </div>
-      <Route path='/t/:threadId?' render={props => <Messages {...props} holochainActive={holochainActive} />} />
+      <Route path='/t/:messageThreadId?' render={props => <Messages {...props} holochainActive={holochainActive} />} />
       <Switch>
         {postEditorRoutes.map(({ path }) =>
           <Route path={path} exact key={path} children={({ match, location }) =>
@@ -164,11 +167,11 @@ export default class PrimaryLayout extends Component {
   }
 }
 
-const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH_REGEX})`
-const OPTIONAL_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:postId(${ID_MATCH_REGEX})?/:action(new|edit)?`
+const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH})`
+const OPTIONAL_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:postId(${POST_ID_MATCH})?/:action(new|edit)?`
 const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
 
-const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${ID_MATCH_REGEX})/:action(edit)?`
+const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})/:action(edit)?`
 const postDetailRoutes = [
   {path: `/all/${POST_DETAIL_MATCH}`},
   {path: `/all/:topicName/${POST_DETAIL_MATCH}`},
@@ -202,20 +205,20 @@ const postEditorRoutes = [
 ]
 
 const signupRoutes = [
-  {path: '/signup/upload-photo', child: UploadPhoto},
-  {path: '/signup/add-location', child: AddLocation},
-  {path: '/signup/add-skills', child: AddSkills},
-  {path: '/signup/review', child: Review}
+  { path: '/signup/upload-photo', child: UploadPhoto },
+  { path: '/signup/add-location', child: AddLocation },
+  { path: '/signup/add-skills', child: AddSkills },
+  { path: '/signup/review', child: Review }
 ]
 
 const createCommunityRoutes = [
-  {path: '/create-community/name/:networkId', component: Name},
-  {path: '/create-community/name', component: Name},
-  {path: '/create-community/domain', component: Domain},
+  { path: '/create-community/name/:networkId', component: Name },
+  { path: '/create-community/name', component: Name },
+  { path: '/create-community/domain', component: Domain },
   // TODO: Implement create community privacy component when implemented on the server
   // TODO: Don't forget to change 'step' values
   // {path: '/create-community/privacy', component: Privacy},
-  {path: '/create-community/review', component: CommunityReview}
+  { path: '/create-community/review', component: CommunityReview }
 ]
 
 const redirectRoutes = [
@@ -246,9 +249,9 @@ export function redirectIfCommunity (currentUser) {
     if (!currentUser) return <Loading type='top' />
     if (currentUser.memberships.count() === 0) return <Redirect to={`/all`} />
     const mostRecentCommunity = currentUser.memberships
-    .orderBy(m => new Date(m.lastViewedAt), 'desc')
-    .first()
-    .community
+      .orderBy(m => new Date(m.lastViewedAt), 'desc')
+      .first()
+      .community
 
     return <Redirect to={`/c/${mostRecentCommunity.slug}`} />
   }

@@ -11,7 +11,7 @@ export default function voteOnPost (postId, isUpvote) {
           votesTotal
         }
       }`,
-      variables: {postId, isUpvote}
+      variables: { postId, isUpvote }
     },
     meta: {
       postId,

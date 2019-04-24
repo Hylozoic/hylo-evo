@@ -26,7 +26,7 @@ export default function reducer (state = defaultState, action) {
 
   switch (type) {
     case FETCH_EXAMPLE:
-      return {example: 'fetched example'}
+      return { example: 'fetched example' }
     default:
       return state
   }

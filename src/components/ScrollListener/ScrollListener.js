@@ -45,18 +45,18 @@ export default class ScrollListener extends React.Component {
     const isNowAtTop = scrollTop === 0
     if (!hitBottom && isNowAtBottom) {
       onBottom && onBottom()
-      this.setState({hitBottom: true})
+      this.setState({ hitBottom: true })
     } else if (hitBottom && !isNowAtBottom) {
       onLeaveBottom && onLeaveBottom()
-      this.setState({hitBottom: false})
+      this.setState({ hitBottom: false })
     }
 
     if (!hitTop && isNowAtTop) {
       onTop && onTop()
-      this.setState({hitTop: true})
+      this.setState({ hitTop: true })
     } else if (hitTop && !isNowAtTop) {
       onLeaveTop && onLeaveTop()
-      this.setState({hitTop: false})
+      this.setState({ hitTop: false })
     }
   }
 

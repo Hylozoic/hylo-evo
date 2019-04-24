@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import { removePostFromUrl, editPostUrl } from 'util/navigation'
 import getMe from 'store/selectors/getMe'
 import {
@@ -24,7 +24,7 @@ export function mapDispatchToProps (dispatch, props) {
   const deletePostWithConfirm = postId => {
     if (window.confirm('Are you sure you want to delete this post?')) {
       dispatch(deletePost(postId))
-      .then(() => dispatch(push(closeUrl)))
+        .then(() => dispatch(push(closeUrl)))
     }
   }
 

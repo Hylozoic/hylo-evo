@@ -18,7 +18,7 @@ describe('TopNavDropdown', () => {
       toggleChildren={toggleChildren}
       header={header}
       body={body}
-      />)
+    />)
 
     expect(wrapper).toMatchSnapshot()
     expect(wrapper.find('div').at(2).prop('data-stylename')).toEqual('wrapper')

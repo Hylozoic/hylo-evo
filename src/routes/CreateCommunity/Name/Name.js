@@ -44,7 +44,7 @@ export default class Name extends Component {
 
   componentWillMount = () => {
     const { communityName } = this.props
-    if (communityName) this.setState({communityName})
+    if (communityName) this.setState({ communityName })
   }
 
   componentDidMount = () => {
@@ -89,7 +89,7 @@ export default class Name extends Component {
         submit={this.errorCheckAndSubmit}
         showPrevious={false}
         continueText={'Continue'}
-        />
+      />
     </div>
   }
 }

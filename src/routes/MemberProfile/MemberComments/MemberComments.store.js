@@ -38,7 +38,7 @@ export function fetchMemberComments (id, order = 'desc', limit = 20, query = mem
       query,
       variables: { id, limit, order }
     },
-    meta: {extractModel: 'Person'}
+    meta: { extractModel: 'Person' }
   }
 }
 

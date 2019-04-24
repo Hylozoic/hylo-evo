@@ -161,10 +161,9 @@ export default class CreateTopic extends Component {
       if (url !== window.location.pathname) return <RedirectRoute to={url} />
     }
 
-    return [
-      this.buttonChooser(),
-
-      modalVisible && <ModalDialog key='create-dialog'
+    return <React.Fragment>
+      {this.buttonChooser()}
+      {modalVisible && <ModalDialog key='create-dialog'
         backgroundImage='axolotl-corner.png'
         closeModal={this.toggleTopicModal}
         closeOnSubmit={false}
@@ -190,7 +189,7 @@ export default class CreateTopic extends Component {
               value={this.state.topicName} />
             {nameError && <div styleName='topic-error'>{nameError}</div>}
           </div>}
-      </ModalDialog>
-    ]
+      </ModalDialog>}
+    </React.Fragment>
   }
 }

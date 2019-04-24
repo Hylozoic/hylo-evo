@@ -16,16 +16,16 @@ export default class Login extends React.Component {
 
   submit = () => {
     return this.props.login(this.state.email, this.state.password)
-    .then(({ error }) => error || this.props.redirectOnSignIn('/'))
+      .then(({ error }) => error || this.props.redirectOnSignIn('/'))
   }
 
   loginAndRedirect = (service) => {
     this.props.loginWithService(service)
-    .then(({ error }) => error || this.props.redirectOnSignIn('/'))
+      .then(({ error }) => error || this.props.redirectOnSignIn('/'))
   }
 
   render () {
-    const setState = key => event => this.setState({[key]: event.target.value})
+    const setState = key => event => this.setState({ [key]: event.target.value })
     const { downloadAppUrl, returnToURL } = this.props
     return <div className={this.props.className}>
       {downloadAppUrl && <DownloadAppModal url={downloadAppUrl} returnToURL={returnToURL} />}

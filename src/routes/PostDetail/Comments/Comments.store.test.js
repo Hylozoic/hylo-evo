@@ -5,7 +5,7 @@ import extractModelsFromAction from 'store/reducers/ModelExtractor/extractModels
 describe('getComments', () => {
   it("returns an empty array if post doesn't exist", () => {
     const session = orm.session(orm.getEmptyState())
-    expect(getComments(session.state, {postId: '1'})).toEqual([])
+    expect(getComments(session.state, { postId: '1' })).toEqual([])
   })
 
   it('returns images', () => {
@@ -43,7 +43,7 @@ describe('getComments', () => {
             }
           }
         },
-        meta: {extractModel: 'Post'}
+        meta: { extractModel: 'Post' }
       },
       {
         payload: {
@@ -77,7 +77,7 @@ describe('getComments', () => {
             }
           }
         },
-        meta: {extractModel: 'Post'}
+        meta: { extractModel: 'Post' }
       }
     ]
 
@@ -87,7 +87,7 @@ describe('getComments', () => {
     const state = {
       orm: session.state
     }
-    const comments = getComments(state, {postId: 1})
+    const comments = getComments(state, { postId: 1 })
     expect(comments.length).toEqual(2)
     expect(comments.map(c => c.text)).toEqual(['eleven', 'twelve'])
     expect(comments.map(c => c.image.url)).toEqual(['foo.png', 'bar.png'])
@@ -97,16 +97,16 @@ describe('getComments', () => {
     const session = orm.session(orm.getEmptyState())
     const { Post, Comment } = session;
     [
-      {model: Comment, attrs: {id: '4', post: '1'}},
-      {model: Comment, attrs: {id: '5', post: '2'}},
-      {model: Comment, attrs: {id: '1', post: '1'}},
-      {model: Comment, attrs: {id: '3', post: '2'}},
-      {model: Comment, attrs: {id: '2', post: '1'}},
-      {model: Post, attrs: {id: '1'}},
-      {model: Post, attrs: {id: '2'}}
+      { model: Comment, attrs: { id: '4', post: '1' } },
+      { model: Comment, attrs: { id: '5', post: '2' } },
+      { model: Comment, attrs: { id: '1', post: '1' } },
+      { model: Comment, attrs: { id: '3', post: '2' } },
+      { model: Comment, attrs: { id: '2', post: '1' } },
+      { model: Post, attrs: { id: '1' } },
+      { model: Post, attrs: { id: '2' } }
     ].forEach(({ model, attrs }) => model.create(attrs))
 
-    expect(getComments({orm: session.state}, {postId: '1'}).map(c => c.id))
-    .toEqual(['1', '2', '4'])
+    expect(getComments({ orm: session.state }, { postId: '1' }).map(c => c.id))
+      .toEqual(['1', '2', '4'])
   })
 })

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { toggleDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
 import getMemberships from 'store/selectors/getMemberships'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import { get, values, omit, each } from 'lodash/fp'
 import { pullAllBy } from 'lodash'
 import { ALL_COMMUNITIES_ID, ALL_COMMUNITIES_AVATAR_PATH } from 'store/models/Community'

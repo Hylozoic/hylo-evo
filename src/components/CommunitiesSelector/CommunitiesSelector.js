@@ -39,7 +39,7 @@ export default class CommunitiesSelector extends Component {
   }
 
   clearSuggestions = () =>
-    this.setState({suggestions: CommunitiesSelector.defaultState.suggestions})
+    this.setState({ suggestions: CommunitiesSelector.defaultState.suggestions })
 
   handleInputChange = (input) => {
     if (input && input.length > 0) {

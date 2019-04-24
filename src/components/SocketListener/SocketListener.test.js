@@ -1,4 +1,4 @@
-import SocketListener, { handledEvents } from './SocketListener'
+import SocketListener from './SocketListener'
 import { mount } from 'enzyme'
 import React from 'react'
 import { getSocket, setSocket } from 'client/websockets'
@@ -38,5 +38,5 @@ it('sets up event handlers and subscribes', () => {
 
   expect(mockSocket.post).toBeCalled()
   expect(mockSocket.post.mock.calls[0][0])
-  .toBe(`${process.env.SOCKET_HOST}/noo/threads/subscribe`)
+    .toBe(`${process.env.SOCKET_HOST}/noo/threads/subscribe`)
 })

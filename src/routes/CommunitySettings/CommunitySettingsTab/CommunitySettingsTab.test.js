@@ -16,7 +16,7 @@ describe('CommunitySettingsTab', () => {
     const wrapper = shallow(<CommunitySettingsTab community={community} />)
     expect(wrapper).toMatchSnapshot()
     expect(wrapper.find('Button').prop('color')).toEqual('gray')
-    wrapper.setState({changed: true})
+    wrapper.setState({ changed: true })
     expect(wrapper.find('Button').prop('color')).toEqual('green')
   })
 })

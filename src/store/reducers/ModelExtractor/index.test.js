@@ -70,7 +70,7 @@ it('handles an array root', () => {
       id: '1',
       name: 'Alice',
       posts: [
-        {id: '1', title: 'Hi!'}
+        { id: '1', title: 'Hi!' }
       ]
     },
     {
@@ -82,15 +82,15 @@ it('handles an array root', () => {
   expect(extractor.mergedNodes()).toEqual([
     {
       modelName: 'Post',
-      payload: {id: '1', title: 'Hi!', creator: '1'}
+      payload: { id: '1', title: 'Hi!', creator: '1' }
     },
     {
       modelName: 'Person',
-      payload: {id: '1', name: 'Alice'}
+      payload: { id: '1', name: 'Alice' }
     },
     {
       modelName: 'Person',
-      payload: {id: '2', name: 'Bob'}
+      payload: { id: '2', name: 'Bob' }
     }
   ])
 })
@@ -106,7 +106,7 @@ it('handles a query set root', () => {
         posts: {
           hasMore: false,
           items: [
-            {id: '1', title: 'Hi!'}
+            { id: '1', title: 'Hi!' }
           ]
         }
       },
@@ -120,15 +120,15 @@ it('handles a query set root', () => {
   expect(extractor.mergedNodes()).toEqual([
     {
       modelName: 'Post',
-      payload: {id: '1', title: 'Hi!', creator: '1'}
+      payload: { id: '1', title: 'Hi!', creator: '1' }
     },
     {
       modelName: 'Person',
-      payload: {id: '1', name: 'Alice'}
+      payload: { id: '1', name: 'Alice' }
     },
     {
       modelName: 'Person',
-      payload: {id: '2', name: 'Bob'}
+      payload: { id: '2', name: 'Bob' }
     }
   ])
 })
@@ -150,9 +150,9 @@ describe('append option', () => {
 
   beforeEach(() => {
     session = orm.session(orm.getEmptyState())
-    session.Community.create({id: '1', name: 'One'})
-    session.Community.create({id: '2', name: 'Two'})
-    session.Community.create({id: '3', name: 'Three'})
+    session.Community.create({ id: '1', name: 'One' })
+    session.Community.create({ id: '2', name: 'Two' })
+    session.Community.create({ id: '3', name: 'Three' })
     session.Post.create({
       id: '1',
       communities: ['1', '2', '3']
@@ -162,24 +162,24 @@ describe('append option', () => {
       id: '1',
       title: 'well then!',
       communities: [
-        {id: '3', name: 'Three'},
-        {id: '4', name: 'Four'},
-        {id: '5', name: 'Five'}
+        { id: '3', name: 'Three' },
+        { id: '4', name: 'Four' },
+        { id: '5', name: 'Five' }
       ]
     }
   })
 
   it('appends data when set', () => {
-    ModelExtractor.addAll({session, root, modelName: 'Post', append: true})
+    ModelExtractor.addAll({ session, root, modelName: 'Post', append: true })
     const post = session.Post.withId('1')
     expect(post.communities.toRefArray().map(c => c.id))
-    .toEqual(['1', '2', '3', '4', '5'])
+      .toEqual(['1', '2', '3', '4', '5'])
   })
 
   it('does not append data when not set', () => {
-    ModelExtractor.addAll({session, root, modelName: 'Post', append: false})
+    ModelExtractor.addAll({ session, root, modelName: 'Post', append: false })
     const post = session.Post.withId('1')
     expect(post.communities.toRefArray().map(c => c.id))
-    .toEqual(['3', '4', '5'])
+      .toEqual(['3', '4', '5'])
   })
 })

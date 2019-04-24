@@ -18,7 +18,7 @@ export default class Signup extends React.Component {
 
   render () {
     const { className, downloadAppUrl } = this.props
-    const setState = key => event => this.setState({[key]: event.target.value})
+    const setState = key => event => this.setState({ [key]: event.target.value })
     return <div className={className}>
       {downloadAppUrl && <DownloadAppModal url={downloadAppUrl} />}
       <h1 styleName='title'>Welcome to Hylo</h1>

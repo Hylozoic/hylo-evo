@@ -32,13 +32,13 @@ export default class KeyControlledList extends React.Component {
   constructor (props) {
     super(props)
     let { selectedIndex } = props
-    this.state = {selectedIndex}
+    this.state = { selectedIndex }
   }
 
   componentWillReceiveProps (nextProps) {
     var max = nextProps.children.length - 1
     if (this.state.selectedIndex > max) {
-      this.setState({selectedIndex: max})
+      this.setState({ selectedIndex: max })
     }
   }
 
@@ -52,7 +52,7 @@ export default class KeyControlledList extends React.Component {
     if (i < 0) i += length
     i = i % length
 
-    this.setState({selectedIndex: i})
+    this.setState({ selectedIndex: i })
   }
 
   // this method is called from other components
@@ -113,10 +113,10 @@ export default class KeyControlledList extends React.Component {
         const active = selectedIndex === i
         const className = cx(
           theme.item,
-          {[theme['item-active']]: active}
+          { [theme['item-active']]: active }
         )
         return element && element.props
-          ? React.cloneElement(element, {ref: i, className})
+          ? React.cloneElement(element, { ref: i, className })
           : element
       })
     return <ul {...omit(propsToOmit, props)} className={theme.items}>
@@ -166,7 +166,7 @@ export class KeyControlledItemList extends React.Component {
     const selectedIndex = indexOf(selected, items)
 
     const renderListItem = this.props.renderListItem
-      ? item => this.props.renderListItem({item, handleChoice: this.change})
+      ? item => this.props.renderListItem({ item, handleChoice: this.change })
       : item => <li className={theme.item} key={item.id || 'blank'}>
         <a onClick={event => this.change(item, event)}>{item.name}</a>
       </li>

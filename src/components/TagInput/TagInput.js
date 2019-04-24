@@ -47,15 +47,22 @@ export default class TagInput extends Component {
     }
   }
 
+  constructor (props) {
+    super(props)
+
+    this.input = React.createRef()
+    this.list = React.createRef()
+  }
+
   resetInput = () => {
-    if (this.input) this.input.value = ''
+    if (this.input.current) this.input.current.value = ''
     this.props.handleInputChange('')
   }
 
   handleKeys = event => {
     let { allowNewTags, handleAddition, handleInputChange, filter } = this.props
     const keyCode = getKeyCode(event)
-    const keyWasHandled = this.list && this.list.handleKeys(event)
+    const keyWasHandled = this.list.current && this.list.current.handleKeys(event)
 
     if (!keyWasHandled && allowNewTags) {
       // if the current input has matching search results, you can press Escape
@@ -71,7 +78,7 @@ export default class TagInput extends Component {
       if (includes(creationKeyCodes, keyCode)) {
         let { value } = event.target
         if (!value) return
-        handleAddition({id: value, name: value})
+        handleAddition({ id: value, name: value })
         this.resetInput()
         event.preventDefault()
         return
@@ -92,7 +99,7 @@ export default class TagInput extends Component {
   }
 
   focus = () => {
-    this.input.focus()
+    this.input.current.focus()
   }
 
   handleChange = debounce(value => {
@@ -121,12 +128,12 @@ export default class TagInput extends Component {
 
     // this is so the suggestion list can do double duty as an error message
     const suggestionsOrError = maxReached
-      ? isEmpty(this.input.value)
+      ? isEmpty(this.input.current.value)
         ? []
-        : [{name: `no more than ${maxTags} allowed`, isError: true}]
+        : [{ name: `no more than ${maxTags} allowed`, isError: true }]
       : suggestions
 
-    return <div className={cx(theme.root, {[theme.readOnly]: readOnly}, className)} onClick={this.focus}>
+    return <div className={cx(theme.root, { [theme.readOnly]: readOnly }, className)} onClick={this.focus}>
       <ul className={theme.selected}>
         {selectedItems}
       </ul>
@@ -134,8 +141,8 @@ export default class TagInput extends Component {
         <div className={theme.searchInput}>
           <input
             className={theme.searchInput}
-            styleName={cx({'error': maxReached})}
-            ref={component => { this.input = component }}
+            styleName={cx({ 'error': maxReached })}
+            ref={this.input}
             type='text'
             placeholder={placeholder}
             spellCheck={false}
@@ -151,10 +158,10 @@ export default class TagInput extends Component {
               onChange={maxReached ? this.resetInput : this.select}
               theme={{
                 items: theme.suggestions,
-                item: cx(theme.suggestion, {[styles.error]: maxReached}),
+                item: cx(theme.suggestion, { [styles.error]: maxReached }),
                 'item-active': theme['suggestion-active']
               }}
-              ref={component => { this.list = component }} />
+              ref={this.list} />
           </div>
         }
       </div>

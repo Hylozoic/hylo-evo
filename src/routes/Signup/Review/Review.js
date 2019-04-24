@@ -46,12 +46,12 @@ export default class AddLocation extends Component {
   submit = () => {
     const { edits } = this.state
     Object.keys(edits).forEach((key) => (edits[key] == null) && delete edits[key])
-    const changes = Object.assign(edits, {settings: {signupInProgress: false}})
+    const changes = Object.assign(edits, { settings: { signupInProgress: false } })
     this.props.updateUserSettings(changes)
-    .then(() => {
-      this.props.trackAnalyticsEvent('Signup Complete')
-      this.props.goToNextStep()
-    })
+      .then(() => {
+        this.props.trackAnalyticsEvent('Signup Complete')
+        this.props.goToNextStep()
+      })
   }
 
   previous = () => {
@@ -112,7 +112,6 @@ export default class AddLocation extends Component {
                   }
                 }}
                 autoFocus
-                ref={(input) => { this.name = input }}
                 value={this.getValue('name')}
                 readOnly={this.state.readOnly.name}
               />
@@ -136,7 +135,6 @@ export default class AddLocation extends Component {
                   }
                 }}
                 autoFocus
-                ref={(input) => { this.email = input }}
                 value={this.getValue('email')}
                 readOnly={this.state.readOnly.email}
               />
@@ -160,7 +158,6 @@ export default class AddLocation extends Component {
                   }
                 }}
                 autoFocus
-                ref={(input) => { this.location = input }}
                 value={this.getValue('location')}
                 readOnly={this.state.readOnly.location}
               />
@@ -193,7 +190,7 @@ export default class AddLocation extends Component {
   }
 }
 
-export function Pill ({skill}) {
+export function Pill ({ skill }) {
   return <span styleName='review-skill'>
     {skill.name}
   </span>

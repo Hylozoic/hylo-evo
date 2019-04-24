@@ -10,7 +10,7 @@ exports[`Name renders correctly 1`] = `
     imageDialogOne="Hi, I'm Hylo the Axolotl!"
     imageDialogTwo="It's great to meet you!"
     imageUrl="/happy-axolotl.png"
-    onClick={[Function]}
+    onClick={[MockFunction]}
     theme={
       Object {
         "sidebarHeader": "sidebar-header-full-page",

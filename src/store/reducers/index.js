@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { routerReducer } from 'react-router-redux'
+import { connectRouter } from 'connected-react-router'
 import orm from './ormReducer'
 import login from 'store/reducers/login'
 import pending from './pending'
@@ -16,8 +16,7 @@ import SkillsSection from 'components/SkillsSection/SkillsSection.store'
 import NetworkCommunities from 'routes/NetworkCommunities/NetworkCommunities.store'
 import NetworkSettings from 'routes/NetworkSettings/NetworkSettings.store'
 import PrimaryLayout from 'routes/PrimaryLayout/PrimaryLayout.store'
-import ThreadList from 'routes/Messages/ThreadList/ThreadList.store'
-import MessageForm from 'routes/Messages/MessageForm/MessageForm.store'
+import Messages from 'routes/Messages/Messages.store'
 import PeopleSelector from 'routes/Messages/PeopleSelector/PeopleSelector.store'
 import Members from 'routes/Members/Members.store'
 import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
@@ -34,13 +33,13 @@ import JoinCommunity from 'routes/JoinCommunity/JoinCommunity.store'
 import CreateCommunity from 'routes/CreateCommunity/CreateCommunity.store'
 import CreateTopic from 'components/CreateTopic/CreateTopic.store'
 import MemberSelector from 'components/MemberSelector/MemberSelector.store'
-
+import { history } from 'router'
 import { handleSetState, composeReducers } from './util'
 
 export const combinedReducers = combineReducers({
   // Global store
   orm,
-  router: routerReducer,
+  router: connectRouter(history),
   login,
   pending,
   queryResults,
@@ -56,8 +55,7 @@ export const combinedReducers = combineReducers({
   NetworkCommunities,
   NetworkSettings,
   PrimaryLayout,
-  ThreadList,
-  MessageForm,
+  Messages,
   PeopleSelector,
   PeopleTyping,
   HyloEditor,

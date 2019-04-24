@@ -76,6 +76,7 @@ exports[`matches announcement snapshot 1`] = `
             />
           </span>
           <ReactTooltip
+            clickable={false}
             delayShow={550}
             effect="solid"
             id="announcement-tt"
@@ -144,6 +145,7 @@ exports[`matches announcement snapshot 2`] = `
             />
           </span>
           <ReactTooltip
+            clickable={false}
             delayShow={550}
             effect="solid"
             id="announcement-tt"
@@ -217,6 +219,7 @@ exports[`matches announcement snapshot 3`] = `
             />
           </span>
           <ReactTooltip
+            clickable={false}
             delayShow={550}
             effect="solid"
             id="announcement-tt"

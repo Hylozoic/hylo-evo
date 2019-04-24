@@ -30,14 +30,14 @@ export default function reducer (state = defaultState, action) {
 export function addUserTyping (id, name) {
   return {
     type: ADD_USER_TYPING,
-    payload: {id, name}
+    payload: { id, name }
   }
 }
 
 export function clearUserTyping (id) {
   return {
     type: CLEAR_USER_TYPING,
-    payload: {id}
+    payload: { id }
   }
 }
 

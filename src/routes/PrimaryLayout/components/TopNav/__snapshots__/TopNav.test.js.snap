@@ -37,7 +37,6 @@ exports[`renders as expected with no community 1`] = `
         toggleChildren={
           <RoundImage
             small={true}
-            url={undefined}
           />
         }
       >

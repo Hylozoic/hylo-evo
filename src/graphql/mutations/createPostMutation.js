@@ -1,4 +1,4 @@
-import getPostFieldsFragment from 'graphql/fragments/getPostFieldsFragment'
+import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
 
 export default
 `mutation (
@@ -9,8 +9,13 @@ export default
   $communityIds: [String],
   $imageUrls: [String],
   $fileUrls: [String],
-  $announcement: Boolean
-  $topicNames: [String]
+  $announcement: Boolean,
+  $topicNames: [String],
+  $acceptContributions: Boolean,
+  $eventInviteeIds: [ID],
+  $startTime: String,
+  $endTime: String,
+  $location: String
 ) {
   createPost(data: {
     type: $type,
@@ -20,7 +25,12 @@ export default
     communityIds: $communityIds,
     imageUrls: $imageUrls,
     fileUrls: $fileUrls,
-    announcement: $announcement
-    topicNames: $topicNames
-  }) {${getPostFieldsFragment(false)}}
+    announcement: $announcement,
+    topicNames: $topicNames,
+    acceptContributions: $acceptContributions,
+    eventInviteeIds: $eventInviteeIds,
+    startTime: $startTime,
+    endTime: $endTime,
+    location: $location
+  }) {${postFieldsFragment(false)}}
 }`

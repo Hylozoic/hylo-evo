@@ -1,7 +1,7 @@
 import orm from 'store/models' // this initializes redux-orm
 
 it('can be created', () => {
-  const community = {id: '1'}
+  const community = { id: '1' }
   const session = orm.session(orm.getEmptyState())
   session.Community.create(community)
 
@@ -11,14 +11,14 @@ it('can be created', () => {
 })
 
 it('can have moderators added', () => {
-  const community = {id: '1'}
+  const community = { id: '1' }
   const session = orm.session(orm.getEmptyState())
   session.Community.create(community)
 
-  const moderators = [{id: 1, name: 'Joe'}, {id: 2, name: 'Sue'}].map(p =>
+  const moderators = [{ id: 1, name: 'Joe' }, { id: 2, name: 'Sue' }].map(p =>
     session.Person.create(p))
 
-  session.Community.withId('1').update({moderators})
+  session.Community.withId('1').update({ moderators })
 
   const retrievedMods = session.Community.withId('1').moderators.toModelArray()
 

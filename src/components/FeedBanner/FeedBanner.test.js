@@ -46,7 +46,7 @@ describe('postPromptString', () => {
   it('renders a post prompt string', () => {
     const firstName = 'anybody'
 
-    expect(postPromptString('project', {firstName})).toMatchSnapshot()
-    expect(postPromptString('', {firstName})).toMatchSnapshot()
+    expect(postPromptString('project', { firstName })).toMatchSnapshot()
+    expect(postPromptString('', { firstName })).toMatchSnapshot()
   })
 })

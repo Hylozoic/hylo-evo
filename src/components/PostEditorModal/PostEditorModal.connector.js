@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import { get, omit } from 'lodash/fp'
 import { postsUrl, postUrl } from 'util/navigation'
 

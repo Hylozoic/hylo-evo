@@ -24,10 +24,10 @@ describe('PostDetail', () => {
     }
 
     const wrapper = shallow(<PostDetail
-        post={post}
-        routeParams={routeParams}
-        fetchPost={jest.fn()}
-        voteOnPost={jest.fn()} />)
+      post={post}
+      routeParams={routeParams}
+      fetchPost={jest.fn()}
+      voteOnPost={jest.fn()} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

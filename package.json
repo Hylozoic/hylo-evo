@@ -2,73 +2,59 @@
   "name": "hylo-evo",
   "version": "0.1.0",
   "private": true,
-  "devDependencies": {
-    "babel-cli": "6.26.0",
-    "babel-core": "6.26.0",
-    "babel-eslint": "7.2.3",
-    "babel-loader": "7.1.2",
-    "babel-plugin-data-stylename": "^0.1.1",
-    "babel-preset-react-app": "^2.0.1",
-    "case-sensitive-paths-webpack-plugin": "2.1.1",
-    "chalk": "2.3.0",
-    "commander": "^2.9.0",
-    "connect-history-api-fallback": "1.5.0",
-    "cross-spawn": "5.1.0",
-    "css-loader": "0.28.7",
-    "detect-port": "1.0.1",
-    "dotenv": "2.0.0",
-    "enzyme": "3.2.0",
-    "enzyme-to-json": "3.2.2",
-    "eslint": "3.19.0",
-    "eslint-config-react-app": "2.0.1",
-    "eslint-loader": "1.9.0",
-    "eslint-plugin-flowtype": "2.39.1",
-    "eslint-plugin-import": "2.8.0",
-    "eslint-plugin-jsx-a11y": "6.0.2",
-    "eslint-plugin-react": "7.5.1",
-    "extract-text-webpack-plugin": "3.0.2",
-    "faker": "^4.1.0",
-    "file-loader": "1.1.5",
-    "filesize": "3.3.0",
-    "fs-extra": "0.30.0",
-    "gzip-size": "4.1.0",
-    "html-webpack-plugin": "2.30.1",
-    "http-proxy-middleware": "0.17.4",
-    "jest": "21.2.1",
-    "json-loader": "0.5.7",
-    "mock-fs": "^4.2.0",
-    "object-assign": "4.1.1",
-    "path-exists": "2.1.0",
-    "postcss-cssnext": "^3.0.2",
-    "postcss-loader": "2.0.9",
-    "promise": "7.1.1",
-    "react-dev-utils": "4.2.1",
-    "recursive-readdir": "2.2.1",
-    "redux-logger": "3.0.6",
-    "redux-mock-store": "1.3.0",
-    "strip-ansi": "4.0.0",
-    "style-loader": "0.19.0",
-    "timezone-mock": "^0.0.7",
-    "url-loader": "0.6.2",
-    "webpack": "3.10.0",
-    "webpack-dev-server": "2.9.6",
-    "webpack-manifest-plugin": "1.3.2",
-    "whatwg-fetch": "2.0.3"
+  "scripts": {
+    "start": "node --preserve-symlinks scripts/start.js",
+    "build": "node scripts/build.js && scripts/build-es5.sh",
+    "test": "node scripts/test.js",
+    "lint": "yarn exec standard",
+    "lint:fix": "yarn exec standard --fix",
+    "server": "./node_modules/.bin/babel-node --config-file ./config/babel.config.js scripts/serveUniversal.js",
+    "storybook": "start-storybook -p 6006",
+    "storybook:build": "build-storybook"
   },
   "dependencies": {
+    "@babel/cli": "7.2.3",
+    "@babel/core": "7.2.2",
+    "@babel/node": "7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/preset-env": "7.2.3",
+    "@babel/preset-react": "^7.0.0",
+    "@holochain/hc-web-client": "0.4.0",
+    "@storybook/addon-actions": "^v5.0.10",
+    "@storybook/addon-info": "^5.0.10",
+    "@storybook/addon-links": "^v5.0.10",
+    "@storybook/addons": "^v5.0.10",
+    "@storybook/react": "^v5.0.10",
+    "@svgr/webpack": "4.1.0",
     "ansi-styles": "^3.2.1",
     "app-module-path": "^2.2.0",
     "autoproxy": "^1.0.1",
-    "babel-jest": "^21.2.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "9.0.0",
+    "babel-jest": "23.6.0",
+    "babel-loader": "8.0.5",
+    "babel-plugin-data-stylename": "0.1.1",
+    "babel-plugin-named-asset-import": "^0.3.1",
     "babel-plugin-react-css-modules": "levity/babel-plugin-react-css-modules#ab83008",
+    "babel-preset-react-app": "^7.0.2",
+    "bfj": "6.1.1",
     "bootstrap": "4.0.0-alpha.6",
+    "case-sensitive-paths-webpack-plugin": "2.2.0",
+    "chalk": "2.3.0",
     "classnames": "^2.2.5",
+    "commander": "^2.9.0",
     "compression": "^1.6.2",
+    "connect-history-api-fallback": "1.5.0",
+    "connected-react-router": "^6.3.2",
     "cookie-parser": "^1.4.3",
-    "css-modules-require-hook": "^4.0.6",
+    "cross-spawn": "5.1.0",
+    "css-loader": "1.0.0",
+    "css-modules-require-hook": "^4.2.2",
     "deep-diff": "^0.3.7",
+    "detect-port": "1.0.1",
+    "dotenv": "6.0.0",
     "dotenv-safe": "^4.0.4",
-    "dotenv-webpack": "1.5.4",
+    "dotenv-webpack": "^1.7.0",
     "draft-convert": "2.0.1",
     "draft-js": "^0.10.4",
     "draft-js-export-html": "1.2.0",
@@ -76,46 +62,84 @@
     "draft-js-mention-plugin": "2.0.1",
     "draft-js-plugins-editor": "2.0.3",
     "ent": "^2.2.0",
-    "enzyme-adapter-react-16": "^1.1.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "enzyme-to-json": "^3.3.5",
+    "eslint": "5.12.0",
+    "eslint-config-react-app": "^3.0.8",
+    "eslint-loader": "2.1.1",
+    "eslint-plugin-flowtype": "2.50.1",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jsx-a11y": "6.1.2",
+    "eslint-plugin-react": "7.12.4",
     "express": "^4.15.2",
     "faker": "^4.1.0",
+    "file-loader": "2.0.0",
+    "filesize": "3.3.0",
+    "fs-extra": "7.0.1",
     "global": "^4.3.2",
-    "@holochain/hc-web-client": "https://github.com/holochain/hc-web-client#hylo",
-    "hylo-utils": "https://github.com/Hylozoic/hylo-utils#a1f23db",
+    "gzip-size": "4.1.0",
+    "history": "^4.9.0",
+    "html-webpack-plugin": "4.0.0-alpha.2",
+    "http-proxy-middleware": "0.17.4",
+    "hylo-utils": "https://github.com/Hylozoic/hylo-utils#5b212ff",
+    "identity-obj-proxy": "3.0.0",
     "immutable": "^3.8.1",
     "inflection": "^1.12.0",
     "inquirer": "^4.0.1",
     "ismobilejs": "^0.4.1",
+    "jest": "23.6.0",
+    "jest-pnp-resolver": "1.0.2",
+    "jest-resolve": "23.6.0",
+    "jest-watch-typeahead": "^0.2.1",
+    "json-loader": "0.5.7",
     "linkifyjs": "^2.1.5",
-    "lodash": "^4.17.4",
+    "lodash": "~> 4.17.11",
     "lru-cache": "^4.1.1",
     "mime": "^2.0.3",
+    "mini-css-extract-plugin": "0.5.0",
     "mixpanel-browser": "^2.22.4",
-    "newrelic": "^2.4.1",
-    "node-sass": "^4.7.2",
+    "mock-fs": "^4.2.0",
+    "moment": "^2.24.0",
+    "newrelic": "^5.6.3",
+    "node-sass": "^4.11.0",
     "normalize.css": "^7.0.0",
+    "object-assign": "4.1.1",
+    "path-exists": "2.1.0",
     "path-to-regexp": "^2.4.0",
+    "postcss-flexbugs-fixes": "4.1.0",
+    "postcss-loader": "3.0.0",
     "postcss-modules-resolve-path": "^1.0.0",
+    "postcss-preset-env": "6.5.0",
+    "postcss-safe-parser": "4.0.1",
     "postcss-scss": "^1.0.2",
     "pretty-date": "^0.2.0",
+    "promise": "7.1.1",
     "prop-types": "^15.6.0",
     "pushstate-server": "^3.0.0",
     "raf": "^3.4.0",
-    "react": "^16.2.0",
+    "react": "^16.8.6",
+    "react-app-polyfill": "^0.2.2",
     "react-autocomplete": "^1.7.2",
     "react-copy-to-clipboard": "^5.0.1",
+    "react-datetime": "^2.16.3",
+    "react-dev-utils": "^8.0.0",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
-    "react-dom": "^16.2.0",
+    "react-dom": "^16.8.6",
     "react-intercom": "^1.0.14",
     "react-particles-js": "^2.1.0",
-    "react-redux": "^5.0.6",
-    "react-router-dom": "^4.3.0",
-    "react-router-redux": "next",
-    "react-textarea-autosize": "^5.2.1",
+    "react-redux": "^6.0.0",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-stripe-checkout": "^2.6.3",
+    "react-textarea-autosize": "^7.1.0",
     "react-tooltip": "^3.4.0",
     "react-transition-group": "1.x",
+    "recursive-readdir": "2.2.1",
     "redux": "^3.7.2",
+    "redux-logger": "3.0.6",
+    "redux-mock-store": "1.3.0",
     "redux-orm": "Hylozoic/redux-orm#model-createClass-dist",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.2.0",
@@ -126,99 +150,37 @@
     "rollbar": "^2.3.2",
     "root-path": "^0.2.0",
     "sails.io.js": "1.1.13",
-    "sass-loader": "^6.0.6",
-    "sass-resources-loader": "1.3.1",
+    "sass-loader": "7.1.0",
+    "sass-resources-loader": "^2.0.0",
     "socket.io-client": "2.0.4",
-    "standard": "10.0.3",
+    "standard": "12.0.1",
     "standard-loader": "^6.0.1",
     "streamifier": "^0.1.1",
+    "strip-ansi": "4.0.0",
     "striptags": "2.2.1",
+    "style-loader": "0.23.1",
     "tether": "^1.4.0",
+    "timezone-mock": "^0.0.7",
     "trunc-html": "^1.1.2",
+    "uglifyjs-webpack-plugin": "^2.1.2",
+    "url-loader": "1.1.2",
     "validator": "^8.1.0",
-    "velocity-react": "^1.3.3"
+    "velocity-react": "^1.3.3",
+    "webpack": "4.28.3",
+    "webpack-dev-server": "3.3.1",
+    "webpack-manifest-plugin": "2.0.4",
+    "whatwg-fetch": "2.0.3"
   },
   "engines": {
-    "node": "8.9.2",
+    "node": "10.13.0",
     "yarn": "^1.1.0"
   },
-  "scripts": {
-    "start": "node --preserve-symlinks scripts/start.js",
-    "build": "node scripts/build.js && scripts/build-es5.sh",
-    "test": "node scripts/test.js --env=jsdom",
-    "server": "./node_modules/.bin/babel-node scripts/serveUniversal.js"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
-    ],
-    "coverageReporters": [
-      "json",
-      "lcov"
-    ],
-    "setupTestFrameworkScriptFile": "./src/setupTests.js",
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
-    ],
-    "snapshotSerializers": [
-      "<rootDir>/node_modules/enzyme-to-json/serializer"
-    ],
-    "testPathIgnorePatterns": [
-      "<rootDir>[/\\\\](build|docs|node_modules|scripts|es5)[/\\\\]"
-    ],
-    "testEnvironment": "node",
-    "testURL": "http://localhost",
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web",
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/jest/__mocks__/fileMock.js",
-      "\\.(css|less|scss)$": "<rootDir>/config/jest/__mocks__/styleMock.js"
-    }
-  },
-  "babel": {
-    "presets": [
-      ["env", {
-        "targets": {
-          "browsers": [
-            ">0.25%",
-            "not ie 11",
-            "not op_mini all"
-          ]
-        }
-      }],
-      "react-app"
-    ],
-    "plugins": [
-      [
-        "react-css-modules",
-        {
-          "filetypes": {
-            ".scss": "postcss-scss"
-          },
-          "exclude": "node_modules",
-          "searchPaths": [
-            "src"
-          ],
-          "webpackHotModuleReloading": true
-        }
-      ]
-    ],
-    "env": {
-      "test": {
-        "plugins": [
-          [
-            "data-stylename"
-          ]
-        ]
-      }
-    },
-    "ignore": [
-      "scripts/templates/*"
-    ]
-  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "standard": {
     "parser": "babel-eslint",
     "global": [
@@ -229,7 +191,8 @@
       "describe",
       "expect",
       "it",
-      "jest"
+      "jest",
+      "test"
     ]
   },
   "proxy": "http://localhost:3001"

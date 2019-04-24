@@ -6,7 +6,7 @@ import rootReducer, { combinedReducers } from './reducers'
 export function getEmptyState () {
   return combinedReducers({
     orm: orm.getEmptyState()
-  }, {type: ''})
+  }, { type: '' })
 }
 
 export default function (history, req) {

@@ -32,7 +32,7 @@ export default class AccountSettingsTab extends Component {
   }
   constructor (props) {
     super(props)
-    this.state = {edits: {}, changed: false}
+    this.state = { edits: {}, changed: false }
   }
 
   componentDidMount () {
@@ -77,7 +77,7 @@ export default class AccountSettingsTab extends Component {
       loginWithService,
       unlinkAccount,
       setConfirm
-     } = this.props
+    } = this.props
     if (!currentUser) return <Loading />
 
     const { edits, changed } = this.state
@@ -98,10 +98,10 @@ export default class AccountSettingsTab extends Component {
     }
 
     const updateSettingDirectly = (key, changed) => value =>
-      updateSetting(key, changed)({target: {value}})
+      updateSetting(key, changed)({ target: { value } })
 
     const save = () => {
-      this.setState({changed: false})
+      this.setState({ changed: false })
       setConfirm(false)
       updateUserSettings(edits)
     }
@@ -111,13 +111,13 @@ export default class AccountSettingsTab extends Component {
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <ChangeImageButton
           update={updateSettingDirectly('bannerUrl')}
-          uploadSettings={{type: 'userBanner', id: currentUser.id}}
+          uploadSettings={{ type: 'userBanner', id: currentUser.id }}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
         <ChangeImageButton
           update={updateSettingDirectly('avatarUrl')}
-          uploadSettings={{type: 'userAvatar', id: currentUser.id}}
+          uploadSettings={{ type: 'userAvatar', id: currentUser.id }}
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Tagline' onChange={updateSetting('tagline')} value={tagline} maxLength={60} />
@@ -166,14 +166,14 @@ export class SocialControl extends Component {
       const key = provider === 'twitter' ? 'twitterName' : 'linkedinUrl'
       const value = onLink()
       if (!value) return onChange(false)
-      updateUserSettings({[key]: value})
+      updateUserSettings({ [key]: value })
       return onChange(true)
     } else {
       return onLink()
-      .then(({ error }) => {
-        if (error) return onChange(false)
-        return onChange(true)
-      })
+        .then(({ error }) => {
+          if (error) return onChange(false)
+          return onChange(true)
+        })
     }
   }
 
@@ -193,7 +193,7 @@ export class SocialControl extends Component {
       {linked ? 'Unlink' : 'Link'}
     </span>
     return <div styleName='control'>
-      <div styleName={cx('social-control-label', {linked})}>{label}{linkButton}</div>
+      <div styleName={cx('social-control-label', { linked })}>{label}{linkButton}</div>
     </div>
   }
 }

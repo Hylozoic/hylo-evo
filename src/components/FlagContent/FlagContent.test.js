@@ -6,7 +6,7 @@ describe('FlagContent', () => {
   it('matches the last snapshot', () => {
     const wrapper = shallow(<FlagContent type='post'
       onClose={() => { }} />
-      , <div />)
+    , <div />)
 
     expect(wrapper).toMatchSnapshot()
   })
@@ -35,7 +35,7 @@ describe('FlagContent', () => {
     const onClose = jest.fn()
     const submitFlagContent = jest.fn()
 
-    const linkData = {id: 33, type: 'post'}
+    const linkData = { id: 33, type: 'post' }
     const instance = mount(<FlagContent visible
       type='post'
       linkData={linkData}
@@ -54,7 +54,7 @@ describe('FlagContent', () => {
     const onClose = jest.fn()
     const submitFlagContent = jest.fn()
 
-    const linkData = {id: 33, type: 'post'}
+    const linkData = { id: 33, type: 'post' }
     const instance = mount(<FlagContent visible
       type='post'
       linkData={linkData}
@@ -62,7 +62,7 @@ describe('FlagContent', () => {
       onClose={onClose} />
     ).instance()
 
-    instance.setState({selectedCategory: 'inappropriate'})
+    instance.setState({ selectedCategory: 'inappropriate' })
 
     instance.setState({
       explanation: '  my reason  '
@@ -80,7 +80,7 @@ describe('FlagContent', () => {
     const onClose = jest.fn()
     const submitFlagContent = jest.fn()
 
-    const linkData = {id: 33, type: 'post'}
+    const linkData = { id: 33, type: 'post' }
     const renderer = mount(<FlagContent visible
       type='post'
       linkData={linkData}
@@ -92,7 +92,7 @@ describe('FlagContent', () => {
 
     const instance = renderer.instance()
 
-    instance.setState({selectedCategory: 'other'})
+    instance.setState({ selectedCategory: 'other' })
 
     expect(instance.isExplanationOptional()).toBeFalsy()
     expect(instance.state.highlightRequired).toBeFalsy()

@@ -1,13 +1,12 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import './CommentForm.scss'
+import PropTypes from 'prop-types'
+import { throttle } from 'lodash'
+import { STARTED_TYPING_INTERVAL } from 'util/constants'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
-import { throttle } from 'lodash'
+import './CommentForm.scss'
 
 const { object, func, string } = PropTypes
-
-export const STARTED_TYPING_INTERVAL = 3000
 
 export default class CommentForm extends Component {
   static propTypes = {
@@ -15,6 +14,11 @@ export default class CommentForm extends Component {
     createComment: func,
     className: string,
     placeholderText: string
+  }
+  constructor (props) {
+    super(props)
+
+    this.editor = React.createRef()
   }
 
   startTyping = throttle((editorState, stateChanged) => {
@@ -35,11 +39,11 @@ export default class CommentForm extends Component {
 
     const placeholder = `Hi ${currentUser.firstName()}, what's on your mind?`
     return <div styleName='commentForm' className={className}
-      onClick={() => this.editor.getWrappedInstance().focus()}>
+      onClick={() => this.editor.current.focus()}>
       <div styleName={'prompt'}>
         <RoundImage url={currentUser.avatarUrl} small styleName='image' />
         <HyloEditor
-          ref={x => { this.editor = x }}
+          ref={this.editor}
           styleName='editor'
           onChange={this.startTyping}
           placeholder={placeholder}

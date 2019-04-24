@@ -35,7 +35,7 @@ describe('mergeProps', () => {
       })
     fetchSearchResultsDebounced.mockClear()
 
-    const merged2 = mergeProps({...stateProps, hasMore: false}, dispatchProps, {})
+    const merged2 = mergeProps({ ...stateProps, hasMore: false }, dispatchProps, {})
     merged2.fetchMoreSearchResults()
     expect(fetchSearchResultsDebounced).not.toHaveBeenCalled()
   })

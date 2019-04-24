@@ -4,6 +4,17 @@
 
 .body {
   margin-bottom: 36px;
+  display: flex;
+  composes: cardPadding;
+  flex-direction: column;
+}
+
+.eventBody {
+  flex-direction: row;
+}
+
+.smallMargin {
+  margin-bottom: 12px;
 }
 
 .title {
@@ -64,4 +75,40 @@
       color: $color-gossamer;
     }
   }
+}
+
+.eventBody {
+  display: flex;
+  padding: 0px 30px;
+}
+
+.eventBodyColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.eventRightColumn {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+}
+
+.eventData {
+  composes: caption-lt-lg from 'css/typography.scss';
+  display: flex;
+  padding: 0px 20px;
+  margin-bottom: 15px;
+}
+
+.eventLocation {
+  margin-bottom: 20px;
+}
+
+.inviteButton {
+  margin-top: 10px;
+}
+
+.icon {
+  margin-right: 10px;
+  font-size: 16px;
 }

@@ -8,7 +8,7 @@ export default function holochainGraphqlMiddleware (store) {
     if (!holochainAPI || !graphql) return next(action)
 
     const { query, variables } = graphql
-    const path = process.env.HOLO_CHAT_GRAPHQL_PATH
+    const [instance, zome, func] = process.env.HOLO_CHAT_GRAPHQL_PATH.split('/')
 
     const then = payload => {
       if (!payload) Promise.reject(new Error('No result from holochainAPI'))
@@ -18,7 +18,7 @@ export default function holochainGraphqlMiddleware (store) {
       if (resultJSON.Err) return Promise.reject(resultJSON.Err)
 
       // TODO: is there a way to avoid this second JSON.parse?
-      if (resultJSON.Ok) return {data: JSON.parse(resultJSON.Ok)}
+      if (resultJSON.Ok) return { data: JSON.parse(resultJSON.Ok) }
 
       return {}
     }
@@ -32,7 +32,9 @@ export default function holochainGraphqlMiddleware (store) {
       },
       payload: {
         holochainApi: {
-          path,
+          instance,
+          zome,
+          func,
           params: { query, variables },
           method: 'POST'
         }

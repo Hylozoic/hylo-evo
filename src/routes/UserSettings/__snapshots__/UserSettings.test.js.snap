@@ -8,6 +8,7 @@ exports[`UserSettings renders correctly 1`] = `
         "component": <AccountSettingsTab
           currentUser={
             Object {
+              "hasFeature": [Function],
               "id": 1,
             }
           }
@@ -39,9 +40,9 @@ exports[`UserSettings renders correctly 1`] = `
       },
       Object {
         "component": <NotificationSettingsTab
-          allCommunitiesSettings={undefined}
           currentUser={
             Object {
+              "hasFeature": [Function],
               "id": 1,
             }
           }
@@ -55,8 +56,6 @@ exports[`UserSettings renders correctly 1`] = `
               },
             ]
           }
-          messageSettings={undefined}
-          updateAllMemberships={undefined}
           updateMembershipSettings={[Function]}
           updateUserSettings={[Function]}
         />,
@@ -65,9 +64,7 @@ exports[`UserSettings renders correctly 1`] = `
       },
       Object {
         "component": <BlockedUsersTab
-          blockedUsers={undefined}
           loading={true}
-          unBlockUser={undefined}
         />,
         "name": "Blocked Users",
         "path": "/settings/blocked-users",
@@ -76,6 +73,7 @@ exports[`UserSettings renders correctly 1`] = `
         "component": <PasswordSettingsTab
           currentUser={
             Object {
+              "hasFeature": [Function],
               "id": 1,
             }
           }
@@ -84,6 +82,20 @@ exports[`UserSettings renders correctly 1`] = `
         />,
         "name": "Password",
         "path": "/settings/password",
+      },
+      Object {
+        "component": <PaymentSettingsTab
+          currentUser={
+            Object {
+              "hasFeature": [Function],
+              "id": 1,
+            }
+          }
+          setConfirm={[Function]}
+          updateUserSettings={[Function]}
+        />,
+        "name": "Payment",
+        "path": "/settings/payment",
       },
     ]
   }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import { get, debounce } from 'lodash/fp'
 import {
   fetchSearchResults,
@@ -19,7 +19,7 @@ export function mapStateToProps (state, props) {
   const searchFromQuerystring = getQuerystringParam('t', state, props)
   const searchForInput = getSearchTerm(state, props)
   const filter = getSearchFilter(state, props)
-  const queryResultProps = {search: searchForInput, type: filter}
+  const queryResultProps = { search: searchForInput, type: filter }
   const searchResults = getSearchResults(state, queryResultProps)
   const hasMore = getHasMoreSearchResults(state, queryResultProps)
   return {
@@ -50,11 +50,11 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const offset = get('length', searchResults)
 
   const fetchSearchResults = () => {
-    return fetchSearchResultsDebounced({search: searchForInput, filter})
+    return fetchSearchResultsDebounced({ search: searchForInput, filter })
   }
 
   const fetchMoreSearchResults = () => hasMore
-    ? fetchSearchResultsDebounced({search: searchForInput, filter, offset})
+    ? fetchSearchResultsDebounced({ search: searchForInput, filter, offset })
     : () => {}
 
   return {

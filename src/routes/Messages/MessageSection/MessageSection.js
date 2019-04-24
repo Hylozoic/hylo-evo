@@ -6,7 +6,7 @@ import Loading from 'components/Loading'
 import Message from '../Message'
 import './MessageSection.scss'
 
-const { array, bool, func, number, object, string } = PropTypes
+const { array, bool, func, object } = PropTypes
 
 // the maximum amount of time in minutes that can pass between messages to still
 // include them under the same avatar and timestamp
@@ -43,33 +43,31 @@ export function createMessageList (messages, lastSeenAt) {
 
 export default class MessageSection extends React.Component {
   static propTypes = {
+    socket: object,
+    reconnectFetchMessages: func,
     currentUser: object,
-    messageThreadId: string,
     messages: array,
     pending: bool,
-    total: number,
     hasMore: bool,
-    thread: object,
-    socket: object,
+    fetchMessages: func.isRequired,
     updateThreadReadTime: func,
-    fetchMessages: func,
-    reconnectFetchMessages: func
+    messageThread: object
   }
 
   constructor (props) {
     super(props)
+
     this.state = {
       visible: true,
       onNextVisible: null
     }
+    this.list = React.createRef()
   }
 
   componentDidMount () {
     const { socket, reconnectFetchMessages } = this.props
     this.scrollToBottom()
-    this.reconnectHandler = () => {
-      reconnectFetchMessages()
-    }
+    this.reconnectHandler = () => reconnectFetchMessages()
     socket.on('reconnect', this.reconnectHandler)
     document && document.addEventListener('visibilitychange', this.handleVisibilityChange)
   }
@@ -106,7 +104,7 @@ export default class MessageSection extends React.Component {
       // and we're not already at the bottom, don't scroll
       if (deltaLength === 1 &&
         get('creator.id', latest) !== get('id', currentUser) &&
-        !this.atBottom(this.list)) return
+        !this.atBottom(this.list.current)) return
 
       this.shouldScroll = true
     }
@@ -115,8 +113,8 @@ export default class MessageSection extends React.Component {
   componentDidUpdate (prevProps) {
     if (this.shouldScroll) this.scrollToBottom()
     /* on hold
-    if (thread && !lastSeenAtTimes[thread.id] && thread.unreadCount) {
-      lastSeenAtTimes[thread.id] = new Date(thread.lastReadAt).getTime()
+    if (messageThread && !lastSeenAtTimes[messageThread.id] && messageThread.unreadCount) {
+      lastSeenAtTimes[messageThread.id] = new Date(messageThread.lastReadAt).getTime()
     } */
   }
 
@@ -125,18 +123,21 @@ export default class MessageSection extends React.Component {
 
   handleVisibilityChange = () => {
     const { onNextVisible } = this.state
+
     if (document && document.hidden) {
-      this.setState({visible: false})
+      this.setState({ visible: false })
     } else {
       if (onNextVisible) onNextVisible()
-      this.setState({visible: true, onNextVisible: null})
+      this.setState({ visible: true, onNextVisible: null })
     }
   }
 
   fetchMore = () => {
     if (this.props.pending) return
+
     const { hasMore, fetchMessages, messages } = this.props
     const cursor = get('id', messages[0])
+
     if (cursor && hasMore) {
       fetchMessages()
     }
@@ -149,14 +150,14 @@ export default class MessageSection extends React.Component {
     // bottom message doesn't mean we've read 'em all...
     if (this.atBottom(target)) this.markAsRead()
     if (target.scrollTop <= 150) this.fetchMore()
-  }, 500, {trailing: true})
+  }, 500, { trailing: true })
 
   handleScroll = event => {
     this.detectScrollExtremes(event.target)
   }
 
   scrollToBottom = () => {
-    this.list.scrollTop = this.list.scrollHeight
+    this.list.current.scrollTop = this.list.current.scrollHeight
     if (this.state.visible) {
       this.markAsRead()
     } else {
@@ -165,19 +166,19 @@ export default class MessageSection extends React.Component {
   }
 
   markAsRead = debounce(() => {
-    // TODO: this is broken in holo mode
-    const { thread, updateThreadReadTime } = this.props
-    if (thread) updateThreadReadTime(thread.id)
+    const { messageThread, updateThreadReadTime } = this.props
+    if (messageThread) updateThreadReadTime(messageThread.id)
   }, 2000)
 
   render () {
-    const { messages, pending, thread } = this.props
+    const { messages, pending, messageThread } = this.props
+
     return <div styleName='messages-section'
-      ref={list => this.list = list} // eslint-disable-line no-return-assign
+      ref={this.list}
       onScroll={this.handleScroll}>
       <div styleName='messages-section-inner'>
         {pending && <Loading />}
-        {createMessageList(messages, lastSeenAtTimes[get('id', thread)])}
+        {createMessageList(messages, lastSeenAtTimes[get('id', messageThread)])}
       </div>
     </div>
   }

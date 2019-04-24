@@ -19,7 +19,6 @@ export default function apiMiddleware (req) {
   }
 }
 
-// TODO: do we ever use API_HOST?
 export function getHost () {
   if (typeof window === 'undefined') {
     return process.env.API_HOST
@@ -45,7 +44,7 @@ export function fetchJSON (path, params, options = {}) {
     if (status === 200) return resp.json()
     return resp.text().then(body => {
       let error = new Error(body)
-      error.response = {status, statusText, url, body}
+      error.response = { status, statusText, url, body }
       throw error
     })
   }

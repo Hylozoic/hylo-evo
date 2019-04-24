@@ -5,7 +5,7 @@ export function login (email, password) {
   return {
     type: LOGIN,
     payload: {
-      api: {method: 'post', path: '/noo/login', params: {email, password}}
+      api: { method: 'post', path: '/noo/login', params: { email, password } }
     }
   }
 }
@@ -21,7 +21,7 @@ export function checkLogin () {
   return {
     type: CHECK_LOGIN,
     payload: {
-      api: {path: '/noo/user/status'}
+      api: { path: '/noo/user/status' }
     }
   }
 }
@@ -30,7 +30,7 @@ export function logout () {
   return {
     type: LOGOUT,
     payload: {
-      api: {path: '/noo/session', method: 'DELETE'}
+      api: { path: '/noo/session', method: 'DELETE' }
     },
     meta: {
       then: () => {

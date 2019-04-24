@@ -7,7 +7,7 @@ describe('mapStateToProps', () => {
 
   beforeEach(() => {
     const session = orm.session(orm.getEmptyState())
-    session.Network.create({id: '33', slug: 'foo'})
+    session.Network.create({ id: '33', slug: 'foo' })
 
     session.Me.create({
       id: '1',

@@ -47,7 +47,7 @@ describe('PostEditor store', () => {
     })
 
     describe(`when ${REMOVE_LINK_PREVIEW}`, () => {
-      const action = {type: REMOVE_LINK_PREVIEW}
+      const action = { type: REMOVE_LINK_PREVIEW }
       test('linkPreviewId is cleared and status set to "removed"', () => {
         const finalState = reducer(defaultState, action)
         expect(finalState.linkPreviewId).toBeFalsy()
@@ -57,7 +57,7 @@ describe('PostEditor store', () => {
     })
 
     describe(`when ${CLEAR_LINK_PREVIEW}`, () => {
-      const action = {type: CLEAR_LINK_PREVIEW}
+      const action = { type: CLEAR_LINK_PREVIEW }
       test('linkPreviewId is cleared and status set to "cleared"', () => {
         const finalState = reducer(defaultState, action)
         expect(finalState.linkPreviewId).toBeFalsy()

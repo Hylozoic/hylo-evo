@@ -38,9 +38,9 @@ describe('AllTopics', () => {
     />)
 
     expect(wrapper.state().totalTopicsCached).not.toBeDefined()
-    wrapper.setProps({totalTopics: 11})
+    wrapper.setProps({ totalTopics: 11 })
     expect(wrapper.state().totalTopicsCached).toEqual(11)
-    wrapper.setProps({totalTopics: 5})
+    wrapper.setProps({ totalTopics: 5 })
     expect(wrapper.state().totalTopicsCached).toEqual(11)
   })
 })

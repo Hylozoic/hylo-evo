@@ -11,6 +11,7 @@ export const UPDATE_MEMBERSHIP_SETTINGS = `${MODULE_NAME}/UPDATE_MEMBERSHIP_SETT
 export const UPDATE_MEMBERSHIP_SETTINGS_PENDING = UPDATE_MEMBERSHIP_SETTINGS + '_PENDING'
 export const UPDATE_ALL_MEMBERSHIP_SETTINGS = `${MODULE_NAME}/UPDATE_ALL_MEMBERSHIP_SETTINGS`
 export const UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING = `${UPDATE_ALL_MEMBERSHIP_SETTINGS}_PENDING`
+export const REGISTER_STRIPE_ACCOUNT = `${MODULE_NAME}/REGISTER_STRIPE_ACCOUNT`
 
 export function updateUserSettings (changes) {
   return {
@@ -39,7 +40,7 @@ export function leaveCommunity (id) {
       query: `mutation ($id: ID) {
         leaveCommunity(id: $id)
       }`,
-      variables: {id}
+      variables: { id }
     },
     meta: {
       id,
@@ -57,7 +58,7 @@ export function unlinkAccount (provider) {
           success
         }
       }`,
-      variables: {provider}
+      variables: { provider }
     }
   }
 }
@@ -103,6 +104,23 @@ export function updateAllMemberships (communityIds, settings) {
     meta: {
       settings,
       optimistic: true
+    }
+  }
+}
+
+export function registerStripeAccount (authorizationCode) {
+  return {
+    type: REGISTER_STRIPE_ACCOUNT,
+    graphql: {
+      query: `mutation ($authorizationCode: String) {
+        registerStripeAccount(authorizationCode: $authorizationCode) {
+          success
+        }
+      }`,
+      variables: { authorizationCode }
+    },
+    meta: {
+      authorizationCode
     }
   }
 }

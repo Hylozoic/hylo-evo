@@ -5,8 +5,8 @@ import React from 'react'
 describe('Pillbox', () => {
   it('renders', () => {
     const wrapper = shallow(<Pillbox pills={[
-      {id: 1, label: 'clickable', onClick: () => {}},
-      {id: 2, label: 'unclickable'}
+      { id: 1, label: 'clickable', onClick: () => {} },
+      { id: 2, label: 'unclickable' }
     ]} />)
     expect(wrapper).toMatchSnapshot()
   })

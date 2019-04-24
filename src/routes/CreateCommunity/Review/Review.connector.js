@@ -1,6 +1,6 @@
 import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import getMe from 'store/selectors/getMe'
 import updateUserSettings from 'store/actions/updateUserSettings'
 import { addCommunityName, addCommunityDomain, fetchCommunityExists } from '../CreateCommunity.store'
@@ -8,7 +8,7 @@ import { createCommunity, getNetwork } from './Review.store'
 
 export function mapStateToProps (state, props) {
   const communityNetworkId = get('networkId', state.CreateCommunity)
-  const network = getNetwork(state, {networkId: communityNetworkId})
+  const network = getNetwork(state, { networkId: communityNetworkId })
 
   return {
     currentUser: getMe(state),

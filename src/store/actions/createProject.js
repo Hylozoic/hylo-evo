@@ -1,7 +1,7 @@
 import { get } from 'lodash/fp'
 import { textLength } from 'hylo-utils/text'
 import { AnalyticsEvents } from 'hylo-utils/constants'
-import getPostFieldsFragment from 'graphql/fragments/getPostFieldsFragment'
+import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
 import { CREATE_PROJECT } from 'store/constants'
 
 export default function createProject (postParams) {
@@ -16,7 +16,8 @@ export default function createProject (postParams) {
     topicNames,
     sendAnnouncement,
     memberIds = [],
-    networkSlug
+    networkSlug,
+    acceptContributions
   } = postParams
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
@@ -33,7 +34,8 @@ export default function createProject (postParams) {
         $fileUrls: [String],
         $announcement: Boolean
         $topicNames: [String]
-        $memberIds: [ID]        
+        $memberIds: [ID],
+        $acceptContributions: Boolean
       ) {
         createProject(data: {
           title: $title,
@@ -45,7 +47,8 @@ export default function createProject (postParams) {
           announcement: $announcement
           topicNames: $topicNames
           memberIds: $memberIds
-        }) {${getPostFieldsFragment(false)}}
+          acceptContributions: $acceptContributions
+        }) {${postFieldsFragment(false)}}
       }`,
       variables: {
         type,
@@ -57,7 +60,8 @@ export default function createProject (postParams) {
         fileUrls,
         announcement: sendAnnouncement,
         topicNames,
-        memberIds
+        memberIds,
+        acceptContributions
       }
     },
     meta: {

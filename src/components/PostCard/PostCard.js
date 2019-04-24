@@ -6,11 +6,13 @@ import PostFooter from './PostFooter'
 import PostCommunities from './PostCommunities'
 import PostImage from './PostImage'
 import PostBody from './PostBody'
+import EventBody from './EventBody'
 import './PostCard.scss'
 import samplePost from './samplePost'
 import cx from 'classnames'
+import { get } from 'lodash/fp'
 
-export { PostHeader, PostFooter, PostImage, PostBody, PostCommunities }
+export { PostHeader, PostFooter, PostImage, PostBody, PostCommunities, EventBody }
 
 export default class PostCard extends React.Component {
   static propTypes = {
@@ -49,12 +51,15 @@ export default class PostCard extends React.Component {
       voteOnPost,
       highlightProps,
       expanded,
-      className
+      className,
+      respondToEvent
     } = this.props
+
+    const isEvent = get('type', post) === 'event'
 
     return <div ref='postCard'
       onClick={this.onClick}
-      styleName={cx('card', {expanded})}
+      styleName={cx('card', { expanded })}
       className={className}>
       <PostHeader
         {...post}
@@ -62,7 +67,8 @@ export default class PostCard extends React.Component {
         highlightProps={highlightProps}
         editPost={editPost} />
       <PostImage styleName='image' postId={post.id} />
-      <PostBody {...post} slug={routeParams.slug} />
+      {isEvent && <EventBody event={post} slug={routeParams.slug} respondToEvent={respondToEvent} />}
+      {!isEvent && <PostBody post={post} slug={routeParams.slug} />}
       <PostCommunities communities={post.communities} slug={routeParams.slug} />
       <PostFooter {...post} voteOnPost={voteOnPost} />
     </div>

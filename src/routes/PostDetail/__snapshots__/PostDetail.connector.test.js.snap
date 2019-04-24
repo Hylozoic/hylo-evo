@@ -1,8 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`mapDispatchToProps returns the right keys 1`] = `
+Object {
+  "editPost": [Function],
+  "fetchPost": [Function],
+  "holochainFetchPost": [Function],
+  "joinProject": [Function],
+  "leaveProject": [Function],
+  "onClose": [Function],
+  "processStripeToken": [Function],
+  "respondToEvent": [Function],
+  "voteOnPost": [Function],
+}
+`;
+
 exports[`mapStateToProps returns the right keys 1`] = `
 Object {
   "currentUser": undefined,
+  "holochainActive": undefined,
   "id": undefined,
   "isProjectMember": undefined,
   "pending": undefined,

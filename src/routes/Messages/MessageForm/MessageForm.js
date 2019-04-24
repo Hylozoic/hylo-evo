@@ -4,59 +4,71 @@ import { throttle } from 'lodash'
 import { get } from 'lodash/fp'
 import TextareaAutosize from 'react-textarea-autosize'
 import { onEnterNoShift } from 'util/textInput'
+import { STARTED_TYPING_INTERVAL } from 'util/constants'
 import RoundImage from 'components/RoundImage'
 import Loading from 'components/Loading'
 import './MessageForm.scss'
+
 var { func, object, string, bool } = PropTypes
-
-// should share with comment form
-export const STARTED_TYPING_INTERVAL = 3000
-
-export const NEW_THREAD_ID = 'new'
 
 export default class MessageForm extends React.Component {
   static propTypes = {
-    createMessage: func,
-    currentUser: object,
-    findOrCreateThread: func,
-    focusForm: func,
-    formRef: func,
-    forNewThread: bool,
-    goToThread: func,
+    createMessage: func.isRequired,
     messageThreadId: string,
-    onFocus: func,
-    onBlur: func,
+    messageText: string,
+    focusForm: func,
+    sendIsTyping: func,
+    findOrCreateThread: func,
+    goToThread: func,
     pending: bool,
-    placeholder: string,
-    text: string,
-    updateMessageText: func
+    forNewThread: bool,
+    updateMessageText: func,
+    formRef: object,
+    className: string,
+    currentUser: object,
+    placeholder: string
+  }
+
+  static defaultProps = {
+    placeholder: 'Write something...'
   }
 
   sendForExisting () {
-    const { createMessage, messageThreadId, text } = this.props
-    createMessage(messageThreadId, text).then(() => this.props.focusForm())
+    const { createMessage, messageThreadId, messageText } = this.props
+
+    createMessage(messageThreadId, messageText).then(() => this.props.focusForm())
     this.startTyping.cancel()
     this.props.sendIsTyping(false)
   }
 
-  handleThreadThenMessage () {
-    const { createMessage, findOrCreateThread, goToThread, text } = this.props
-    findOrCreateThread().then(resp => {
+  sendNewMessage () {
+    const { findOrCreateThread, createMessage, goToThread, messageText } = this.props
+    const createdAt = new Date().getTime().toString()
+    findOrCreateThread(createdAt).then(resp => {
       const messageThreadId = get('payload.data.findOrCreateThread.id', resp)
-      createMessage(messageThreadId, text, true).then(() => goToThread(messageThreadId))
+      createMessage(messageThreadId, messageText, true).then(() => goToThread(messageThreadId))
     })
   }
 
   submit = event => {
     if (event) event.preventDefault()
-    const { text, pending, forNewThread } = this.props
-    if (!text || pending) return false
-    if (forNewThread) {
-      this.handleThreadThenMessage()
+    if (!this.props.messageText || this.props.pending) return false
+    if (this.props.forNewThread) {
+      this.sendNewMessage()
     } else {
       this.sendForExisting()
     }
     return false
+  }
+
+  handleOnChange = event => {
+    const { messageThreadId, updateMessageText } = this.props
+    updateMessageText(messageThreadId, event.target.value)
+  }
+
+  handleKeyDown = event => {
+    this.startTyping()
+    onEnterNoShift(this.submit, event)
   }
 
   // broadcast "I'm typing!" every 3 seconds starting when the user is typing.
@@ -69,40 +81,25 @@ export default class MessageForm extends React.Component {
 
   render () {
     const {
+      messageText,
       formRef,
-      forNewThread,
-      messageThreadId,
-      onFocus,
-      onBlur,
       className,
       currentUser,
       pending,
-      updateMessageText
+      placeholder
     } = this.props
-    const threadId = forNewThread ? NEW_THREAD_ID : messageThreadId
-    const text = pending ? '' : this.props.text
-    const placeholder = this.props.placeholder || 'Write something...'
-    const onChange = e => updateMessageText(threadId, e.target.value)
-    const handleKeyDown = e => {
-      this.startTyping()
-      onEnterNoShift(e => {
-        e.preventDefault()
-        this.submit()
-      }, e)
-    }
+
+    if (pending) return <Loading />
 
     return <form styleName='message-form' className={className} onSubmit={this.submit}>
       <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
-      {pending && <Loading />}
-      {!pending && <TextareaAutosize value={text} styleName='message-textarea'
-        disabled={pending}
+      <TextareaAutosize
+        value={messageText}
+        styleName='message-textarea'
         inputRef={formRef}
-        onFocus={onFocus}
-        onChange={onChange}
-        onBlur={onBlur}
-        onKeyDown={handleKeyDown}
+        onChange={this.handleOnChange}
+        onKeyDown={this.handleKeyDown}
         placeholder={placeholder} />
-      }
     </form>
   }
 }

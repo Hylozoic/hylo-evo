@@ -28,11 +28,11 @@ export default function FeedBanner ({
     ({ bannerUrl, avatarUrl, name, location } = community)
   }
 
-  return <div styleName={cx('banner', {'all-communities': all})}>
+  return <div styleName={cx('banner', { 'all-communities': all })}>
     <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
       <div styleName='fade'><div styleName='fade2' /></div>
       <div styleName='header'>
-        <div styleName={cx('logo', {'all-logo': all})} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
+        <div styleName={cx('logo', { 'all-logo': all })} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
         <div styleName='header-text'>
           <span styleName='header-name'>{name}</span>
           {location && <div styleName='header-subtitle'>
@@ -58,6 +58,7 @@ export function postPromptString (type = '', { firstName }) {
     offer: `Hi ${firstName}, what would you like to share?`,
     request: `Hi ${firstName}, what are you looking for?`,
     project: `Hi ${firstName}, what would you like to create?`,
+    event: `Hi ${firstName}, want to create an event?`,
     default: `Hi ${firstName}, what's on your mind?`
   }
 
@@ -73,12 +74,12 @@ export class PostPrompt extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = {hover: false}
+    this.state = { hover: false }
   }
 
-  onMouseEnterHandler = () => this.setState({hover: true})
+  onMouseEnterHandler = () => this.setState({ hover: true })
 
-  onMouseLeaveHandler = () => this.setState({hover: false})
+  onMouseLeaveHandler = () => this.setState({ hover: false })
 
   render () {
     const { type, avatarUrl, firstName, newPost, promptStringFunc, className } = this.props
@@ -87,7 +88,7 @@ export class PostPrompt extends React.Component {
     return <div onMouseEnter={this.onMouseEnterHandler} onMouseLeave={this.onMouseLeaveHandler}>
       <div styleName='postPrompt' className={className} onClick={newPost}>
         <RoundImage url={avatarUrl} small styleName='prompt-image' />
-        {promptStringFunc(type, {firstName})}
+        {promptStringFunc(type, { firstName })}
       </div>
       <div styleName={cx('shadow', { hover })} />
     </div>

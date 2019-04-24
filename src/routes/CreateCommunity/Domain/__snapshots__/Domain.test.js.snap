@@ -8,7 +8,7 @@ exports[`Domain renders correctly 1`] = `
     body="Your URL is the address that people will use to access your community online."
     header="Choose an address for your community"
     imageUrl="/happy-axolotl.png"
-    onClick={[Function]}
+    onClick={[MockFunction]}
     secondParagraph="The shorter the better!"
     theme={
       Object {
@@ -67,7 +67,7 @@ exports[`Domain renders correctly 1`] = `
   <ModalFooter
     continueText="Continue"
     hidePrevious={false}
-    previous={[Function]}
+    previous={[MockFunction]}
     submit={[Function]}
   />
 </div>

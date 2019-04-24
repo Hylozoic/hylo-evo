@@ -1,5 +1,4 @@
 import React from 'react'
-import { MemoryRouter } from 'react-router'
 import { shallow } from 'enzyme'
 import JoinCommunity, { SIGNUP_PATH, EXPIRED_INVITE_PATH } from './JoinCommunity'
 
@@ -59,9 +58,9 @@ describe('JoinCommunity', () => {
       isLoggedIn: true,
       checkInvitation: jest.fn(),
       useInvitation: jest.fn(),
-      currentUser: {id: 'validUser'},
+      currentUser: { id: 'validUser' },
       communitySlug: 'mycommunity',
-      fetchForCurrentUser: jest.fn(() => Promise.resolve({id: 'validUser'}))
+      fetchForCurrentUser: jest.fn(() => Promise.resolve({ id: 'validUser' }))
     }
     const wrapper = shallow(<JoinCommunity {...testProps} />)
     expect(testProps.checkInvitation.mock.calls.length).toBe(0)
@@ -77,7 +76,7 @@ describe('JoinCommunity', () => {
       checkInvitation: jest.fn(),
       useInvitation: jest.fn(),
       currentUser: null,
-      fetchForCurrentUser: jest.fn(() => Promise.resolve({id: 'validUser'}))
+      fetchForCurrentUser: jest.fn(() => Promise.resolve({ id: 'validUser' }))
     }
     const wrapper = shallow(<JoinCommunity {...testProps} />)
     const communitySlug = 'mycommunity'

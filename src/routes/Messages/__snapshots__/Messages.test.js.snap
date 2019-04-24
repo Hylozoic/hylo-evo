@@ -7,26 +7,40 @@ exports[`matches the last snapshot 1`] = `
   <div
     data-stylename="content"
   >
-    <withRouter(Connect(ThreadList))
+    <withRouter(ThreadList)
       data-stylename="left-column"
     />
     <div
       data-stylename="right-column"
     >
-      <Switch>
-        <Route
-          component={[Function]}
-          path="/t/new"
+      <div
+        data-stylename="thread"
+      >
+        <Header />
+        <MessageSection
+          fetchMessages={[Function]}
         />
-        <Route
-          component={[Function]}
-          path="/t/:threadId"
+        <div
+          data-stylename="message-form"
+        >
+          <MessageForm
+            createMessage={[Function]}
+            focusForm={[Function]}
+            formRef={
+              Object {
+                "current": null,
+              }
+            }
+            placeholder="Write something..."
+          />
+        </div>
+        <Connect(PeopleTyping)
+          data-stylename="people-typing"
         />
-        <Redirect
-          push={false}
-          to="/t/new"
+        <Connect(SocketSubscriber)
+          type="post"
         />
-      </Switch>
+      </div>
     </div>
   </div>
 </div>

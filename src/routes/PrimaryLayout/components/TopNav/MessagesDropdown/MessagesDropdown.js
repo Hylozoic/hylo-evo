@@ -12,7 +12,7 @@ import { get, isEmpty, some, find } from 'lodash/fp'
 import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
 import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
 
-const {array, string, func} = PropTypes
+const { array, string, func } = PropTypes
 
 export default class MessagesDropdown extends Component {
   static propTypes = {
@@ -36,7 +36,7 @@ export default class MessagesDropdown extends Component {
   onToggle = nowActive => {
     // TODO this is not quite sufficient -- this value should also be bumped
     // if the current user is in the messages UI, receiving new messages.
-    if (nowActive) this.setState({lastOpenedAt: new Date()})
+    if (nowActive) this.setState({ lastOpenedAt: new Date() })
   }
 
   hasUnread () {
@@ -118,7 +118,7 @@ export function MessagesDropdownItem ({ thread, onClick, currentUser }) {
     text = `${truncate(text, maxMessageLength)}...`
   }
 
-  return <li styleName={cx('thread', {unread: thread.isUnread()})}
+  return <li styleName={cx('thread', { unread: thread.isUnread() })}
     onClick={onClick}>
     <div styleName='image-wrapper'>
       <RoundImageRow imageUrls={avatarUrls} vertical ascending cap='2' />

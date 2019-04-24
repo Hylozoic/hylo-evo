@@ -18,18 +18,20 @@ export default class Pillbox extends Component {
     this.state = {
       adding: false
     }
+    this.input = React.createRef()
+    this.list = React.createRef()
   }
 
   resetInput () {
-    this.input.value = ''
+    this.input.current.value = ''
     this.props.handleInputChange('')
-    this.setState({adding: false})
+    this.setState({ adding: false })
   }
 
   handleKeys = event => {
     let { handleAddition, filter } = this.props
     const keyCode = getKeyCode(event)
-    const keyWasHandled = this.list && this.list.handleKeys(event)
+    const keyWasHandled = this.list.current && this.list.current.handleKeys(event)
 
     if (!keyWasHandled) {
       // if the current input has matching search results, you can press Escape
@@ -45,7 +47,7 @@ export default class Pillbox extends Component {
       if (includes(creationKeyCodes, keyCode)) {
         let { value } = event.target
         if (!value) return
-        handleAddition({id: value, name: value})
+        handleAddition({ id: value, name: value })
         this.resetInput()
         event.preventDefault()
         return
@@ -61,7 +63,7 @@ export default class Pillbox extends Component {
   }
 
   focus = () => delay(() => {
-    this.input.focus()
+    this.input.current.focus()
   }, 10)
 
   handleChange = debounce(value => {
@@ -85,10 +87,10 @@ export default class Pillbox extends Component {
     }
 
     return <div styleName='styles.root'>
-      {editable && <div styleName={cx('styles.adding-root', {adding})}>
+      {editable && <div styleName={cx('styles.adding-root', { adding })}>
         <div styleName='styles.search-wrapper'>
           <input
-            ref={component => { this.input = component }}
+            ref={this.input}
             type='text'
             styleName='styles.search'
             maxLength='21'
@@ -107,7 +109,7 @@ export default class Pillbox extends Component {
             'item-active': styles['suggestion-active']
           }}
           onChange={this.select}
-          ref={component => { this.list = component }} />
+          ref={this.list} />
         }
       </div>
       }
@@ -153,7 +155,7 @@ export class Pill extends Component {
   constructor (props) {
     super(props)
 
-    this.state = {removing: false}
+    this.state = { removing: false }
   }
 
   render () {
@@ -165,13 +167,13 @@ export class Pill extends Component {
         if (removing) {
           onRemove(id, label)
         } else {
-          this.setState({removing: true})
+          this.setState({ removing: true })
         }
       }
     }
 
     const mouseOut = () => {
-      this.setState({removing: false})
+      this.setState({ removing: false })
     }
 
     const pillStyles = cx(

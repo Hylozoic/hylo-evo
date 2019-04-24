@@ -3,7 +3,6 @@ import isPendingFor from 'store/selectors/isPendingFor'
 import getMe from 'store/selectors/getMe'
 import getPerson from 'store/selectors/getPerson'
 import {
-  FETCH_MEMBER_SKILLS,
   addSkill,
   removeSkill,
   fetchMemberSkills,
@@ -20,9 +19,9 @@ export function mapStateToProps (state, props) {
   const search = getSearch(state)
 
   return {
-    loading: isPendingFor(FETCH_MEMBER_SKILLS, state),
+    loading: isPendingFor(fetchMemberSkills, state),
     search,
-    skillSuggestions: getSkillSuggestions(state, {search, ...props}),
+    skillSuggestions: getSkillSuggestions(state, { search, ...props }),
     skills: getMemberSkills(state, props),
     currentUser,
     isMe: currentUser && person && currentUser.id === person.id

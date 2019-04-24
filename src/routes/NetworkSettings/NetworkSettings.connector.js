@@ -17,10 +17,10 @@ import { FETCH_NETWORK_SETTINGS } from 'routes/NetworkSettings/NetworkSettings.s
 
 export function mapStateToProps (state, props) {
   const slug = getRouteParam('networkSlug', state, props)
-  const network = getNetwork(state, {slug})
+  const network = getNetwork(state, { slug })
 
   const moderatorsPage = getModeratorsPage(state, props)
-  const moderatorResultProps = {slug, page: moderatorsPage}
+  const moderatorResultProps = { slug, page: moderatorsPage }
   const moderators = getModerators(state, moderatorResultProps)
 
   const confirm = state.FullPageModal.confirm
@@ -57,7 +57,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     updateNetworkSettingsMaker,
     setConfirmBeforeClose,
     fetchModeratorsMaker
-   } = dispatchProps
+  } = dispatchProps
   let fetchModerators,
     fetchNetworkSettings,
     updateNetworkSettings

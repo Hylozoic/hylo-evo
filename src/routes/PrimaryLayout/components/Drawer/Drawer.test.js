@@ -81,8 +81,8 @@ describe('NetworkRow', () => {
     const props = {
       ...defaultProps,
       communities: [
-        {id: 1, newPostCount: 0},
-        {id: 2, newPostCount: 0}
+        { id: 1, newPostCount: 0 },
+        { id: 2, newPostCount: 0 }
       ]
     }
     const wrapper = shallow(<NetworkRow {...props} />)

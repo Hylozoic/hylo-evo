@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`invitePeopleToEvent matches snapshot 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($eventId: ID, $inviteeIds: [ID]) {
+        invitePeopleToEvent(eventId: $eventId, inviteeIds: $inviteeIds) {
+          id
+          eventInvitations {
+            total
+            hasMore
+            items {
+              id
+              response
+              person {
+                id
+                name
+                avatarUrl
+              }      
+            }       
+          } 
+        }
+      }",
+    "variables": Object {
+      "eventId": 1,
+      "inviteeIds": Array [
+        2,
+        3,
+        4,
+      ],
+    },
+  },
+  "meta": Object {
+    "eventId": 1,
+    "extractModel": "Post",
+    "inviteeIds": Array [
+      2,
+      3,
+      4,
+    ],
+    "optimistic": true,
+  },
+  "type": "EventInviteDialog/INVITE_PEOPLE_TO_EVENT",
+}
+`;
+
+exports[`presentPerson extracts the right keys 1`] = `
+Object {
+  "avatarUrl": "jo.png",
+  "community": "coomunity",
+  "id": 1,
+  "name": "jo",
+}
+`;

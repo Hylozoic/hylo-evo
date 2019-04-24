@@ -12,6 +12,7 @@ export default class AddSkills extends Component {
       editing: false,
       skillText: ''
     }
+    this.skillInput = React.createRef()
   }
 
   clickHandler = (skill) => {
@@ -42,7 +43,7 @@ export default class AddSkills extends Component {
       editing: true,
       skillText: ''
     })
-    this.skillInput && this.skillInput.focus()
+    this.skillInput.current && this.skillInput.current.focus()
   }
 
   createNewSkill = () => {
@@ -72,7 +73,7 @@ export default class AddSkills extends Component {
         <br />
         <div styleName='center'>
           <input
-            ref={input => { this.skillInput = input }}
+            ref={this.skillInput}
             value={skillText}
             styleName='signup-input center-text signup-padding large-input-text gray-bottom-border'
             autoFocus
@@ -96,7 +97,7 @@ export default class AddSkills extends Component {
             {this.getRemainingSkills().map((skill, index) =>
               <Pill key={index} skill={skill} clickHandler={() => this.props.addSkill(skill.name)} />
             )}
-            <Pill id='other-pill' skill={{name: '+ Other'}} clickHandler={() => this.editNewSkill()} />
+            <Pill id='other-pill' skill={{ name: '+ Other' }} clickHandler={() => this.editNewSkill()} />
           </div>}
         </div>
         <div>
@@ -120,23 +121,23 @@ export default class AddSkills extends Component {
   }
 }
 
-export function Pill ({skill, clickHandler}) {
+export function Pill ({ skill, clickHandler }) {
   return <span styleName='skill' onClick={clickHandler}>
     {skill.name}
   </span>
 }
 
 const defaultSkills = [
-  {name: 'Writing'},
-  {name: 'Design'},
-  {name: 'Project Management'},
-  {name: 'Photography'},
-  {name: 'Facilitation'},
-  {name: 'Media'},
-  {name: 'Community Organizing'},
-  {name: 'Technology'},
-  {name: 'Social Media'},
-  {name: 'Event Planning'},
-  {name: 'Education'},
-  {name: 'Communications'}
+  { name: 'Writing' },
+  { name: 'Design' },
+  { name: 'Project Management' },
+  { name: 'Photography' },
+  { name: 'Facilitation' },
+  { name: 'Media' },
+  { name: 'Community Organizing' },
+  { name: 'Technology' },
+  { name: 'Social Media' },
+  { name: 'Event Planning' },
+  { name: 'Education' },
+  { name: 'Communications' }
 ]
