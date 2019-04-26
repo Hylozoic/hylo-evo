@@ -3,6 +3,8 @@
     "target": "es6",
     "jsx": "react",
     "checkJs": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "module": "commonjs",
     "baseUrl": ".",
     "paths": {
