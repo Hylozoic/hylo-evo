@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "jsx": "react",
-    "checkJs": true,
+    "checkJs": false,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "module": "commonjs",
