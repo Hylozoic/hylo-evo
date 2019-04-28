@@ -1,5 +1,4 @@
 import { get } from 'lodash/fp'
-import gql from 'graphql-tag'
 import apolloClient from 'client/apolloClient'
 import { LOGOUT } from 'store/constants'
 import { stringToGraphql } from 'util/graphql'

@@ -3,6 +3,7 @@ const paths = require('./paths')
 module.exports = {
   rootDir: paths.rootPath,
   transform: {
+    "\\.(gql|graphql)$": 'jest-transform-graphql',
     '^.+\\.jsx?$': '<rootDir>/config/jest/transformer.js'
   },
   collectCoverageFrom: [
@@ -14,9 +15,10 @@ module.exports = {
   ],
   resolver: 'jest-pnp-resolver',
   setupFiles: [
-    'react-app-polyfill/jsdom'
+    'react-app-polyfill/jsdom',
+    '<rootDir>/config/jest/beforeTestEnvSetup.js'
   ],
-  setupTestFrameworkScriptFile: '<rootDir>/src/setupTests.js',
+  setupTestFrameworkScriptFile: '<rootDir>/config/jest/afterTestEnvSetup.js',
   testPathIgnorePatterns: [
     '<rootDir>[/\\\\](build|docs|node_modules|scripts|es5)[/\\\\]'
   ],

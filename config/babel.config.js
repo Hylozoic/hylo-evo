@@ -59,6 +59,7 @@ module.exports = function (api) {
       },
       server: {
         plugins: [
+          'import-graphql',
           reactCSSModulesPlugin
         ],
         compact: true

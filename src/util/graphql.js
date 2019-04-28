@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export function stringToGraphql (graphqlString) {
-  return (typeof graphqlString === 'string' || graphqlString instanceof String) 
+  return (typeof graphqlString === 'string' || graphqlString instanceof String)
     ? gql(graphqlString)
     : graphqlString
 }
