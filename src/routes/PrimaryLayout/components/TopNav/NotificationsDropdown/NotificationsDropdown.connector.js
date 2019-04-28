@@ -1,30 +1,44 @@
 import { connect } from 'react-redux'
-import {
-  fetchNotifications,
-  markActivityRead,
-  markAllActivitiesRead,
-  getNotifications,
-  goToNotification
-} from './NotificationsDropdown.store'
+import { graphql, compose } from 'react-apollo'
+import { push } from 'connected-react-router'
+import notificationsQuery from 'graphql/queries/notificationsQuery.graphql'
+import markActivityReadMutation from 'graphql/mutations/markActivityReadMutation.graphql'
+import markAllActivitiesReadMutation from 'graphql/mutations/markAllActivitiesReadMutation.graphql'
 import getMe from 'store/selectors/getMe'
-import { FETCH_NOTIFICATIONS } from 'store/constants'
+import { urlForNotification } from 'store/models/Notification'
+
+export const fetchNotifications = graphql(notificationsQuery, {
+  props: ({ data: { notifications, loading } }) => ({
+    notifications: notifications && notifications.items,
+    pending: loading
+  })
+})
+
+export const markActivityRead = graphql(markActivityReadMutation, {
+  props: ({ mutate }) => ({
+    markActivityRead: id => mutate({ variables: { id } })
+  })
+})
+
+export const markAllActivitiesRead = graphql(markAllActivitiesReadMutation, {
+  name: 'markAllActivitiesRead'
+})
 
 export function mapStateToProps (state, props) {
-  const notifications = getNotifications(state, props)
   return {
-    notifications,
-    currentUser: getMe(state, props),
-    pending: state.pending[FETCH_NOTIFICATIONS]
+    currentUser: getMe(state, props)
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    fetchNotifications: () => dispatch(fetchNotifications()),
-    goToNotification: notification => dispatch(goToNotification(notification)),
-    markActivityRead: id => dispatch(markActivityRead(id)),
-    markAllActivitiesRead: () => dispatch(markAllActivitiesRead())
+    goToNotification: notification => dispatch(push(urlForNotification(notification)))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export default compose(
+  fetchNotifications,
+  markActivityRead,
+  markAllActivitiesRead,
+  connect(mapStateToProps, mapDispatchToProps)
+)

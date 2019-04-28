@@ -1,0 +1,11 @@
+mutation markAllActivitiesReadMutation {
+  markAllActivitiesRead {
+    items {
+      id
+      activity {
+        id
+        unread
+      }
+    }
+  }
+}

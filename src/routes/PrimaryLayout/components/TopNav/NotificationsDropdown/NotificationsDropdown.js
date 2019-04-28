@@ -47,11 +47,13 @@ export default class NotificationsDropdown extends Component {
     if (nowActive) this.setState({ lastOpenedAt: new Date() })
   }
 
-  componentDidMount = () => {
-    // TODO: fix this in holo
-    const { fetchNotifications } = this.props
-    fetchNotifications()
-  }
+  // This is happening already with Apollo,
+  // but also all Notifications are pulled in with the initial fetchForCurrentUser
+  // componentDidMount = () => {
+  //   // TODO: fix this in holo
+  //   const { fetchNotifications } = this.props
+  //   fetchNotifications()
+  // }
 
   hasUnread () {
     if (isEmpty(this.props.notifications)) {

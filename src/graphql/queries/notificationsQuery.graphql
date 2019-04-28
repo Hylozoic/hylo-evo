@@ -1,0 +1,41 @@
+query NotificationsQuery (
+  $first: Int = 20,
+  $order: String = "desc",
+  $resetCount: Boolean = true
+) {
+  notifications (first: $first, order: $order, resetCount: $resetCount) {
+    total
+    hasMore
+    items {
+      id
+      createdAt
+      activity {
+        id
+        actor {
+          id
+          name
+          avatarUrl
+        }
+        comment {
+          id
+          text
+        }
+        post {
+          id
+          title
+        }
+        community {
+          id
+          name
+          slug
+        }
+        meta {
+          reasons
+        }
+        action
+        unread
+        contributionAmount
+      }
+    }
+  }
+}
