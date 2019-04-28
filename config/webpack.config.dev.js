@@ -81,6 +81,8 @@ module.exports = {
               name: 'static/media/[name].[hash:8].[ext]'
             }
           },
+          // Graphql files
+          sharedConfig.graphqlLoader,
           // Process application JS with Babel.
           // The preset includes JSX, Flow, TypeScript, and some ESnext features.
           {

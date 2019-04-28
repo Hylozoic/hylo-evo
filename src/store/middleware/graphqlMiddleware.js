@@ -1,4 +1,5 @@
 import { get } from 'lodash/fp'
+import { graphqlToString } from 'util/graphql'
 
 export default function graphqlMiddleware (store) {
   return next => action => {
@@ -7,7 +8,8 @@ export default function graphqlMiddleware (store) {
 
     if (holochainAPI || !graphql) return next(action)
 
-    const { query, variables } = graphql
+    const { query: unknownGraphql, variables } = graphql
+    const query = graphqlToString(unknownGraphql)
 
     const path = '/noo/graphql'
 

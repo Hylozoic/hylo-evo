@@ -1,6 +1,11 @@
 const paths = require('./paths')
 
 module.exports = {
+  graphqlLoader: {
+    test: /\.(graphql|gql)$/,
+    exclude: /node_modules/,
+    loader: 'graphql-tag/loader',
+  },
   cssLoader: {
     loader: 'css-loader',
     options: {

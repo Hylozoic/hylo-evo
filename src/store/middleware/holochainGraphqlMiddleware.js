@@ -1,4 +1,5 @@
 import { get } from 'lodash/fp'
+import { graphqlToString } from 'util/graphql'
 
 export default function holochainGraphqlMiddleware (store) {
   return next => action => {
@@ -7,7 +8,8 @@ export default function holochainGraphqlMiddleware (store) {
 
     if (!holochainAPI || !graphql) return next(action)
 
-    const { query, variables } = graphql
+    const { query: unknownGraphql, variables } = graphql
+    const query = graphqlToString(unknownGraphql)
     const [instance, zome, func] = process.env.HOLO_CHAT_GRAPHQL_PATH.split('/')
 
     const then = payload => {

@@ -80,6 +80,8 @@
     "filesize": "3.3.0",
     "fs-extra": "7.0.1",
     "global": "^4.3.2",
+    "graphql": "^14.2.1",
+    "graphql-tag": "^2.10.1",
     "gzip-size": "4.1.0",
     "history": "^4.9.0",
     "html-webpack-plugin": "4.0.0-alpha.2",
