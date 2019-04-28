@@ -3,13 +3,49 @@ import PropTypes from 'prop-types'
 import { attr, many, Model } from 'redux-orm'
 import featureFlag from '../../config/featureFlags'
 
+export function firstName (user) {
+  return user.name ? user.name.split(' ')[0] : null
+}
+
+export function isTester (userId) {
+  const testerIds = process.env.HYLO_TESTER_IDS.split(',')
+
+  return includes(userId, testerIds)
+}
+
+export function hasFeature (key, isTester = false) {
+  if (!key) throw new Error("Can't call hasFeature without a user and a key")
+
+  const flag = featureFlag(key)
+
+  switch (flag) {
+    case 'on':
+      return true
+    case 'testing':
+      return isTester
+    default:
+      return false
+  }
+}
+
+export const CURRENT_USER_PROP_TYPES = {
+  id: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired,
+  name: PropTypes.string.isRequired,
+  avatarUrl: PropTypes.string
+}
+
+export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_user_banner.jpg'
+
 const Me = Model.createClass({
   toString () {
     return `Me: ${this.name}`
   },
 
   firstName () {
-    return this.name ? this.name.split(' ')[0] : null
+    return firstName(this)
   },
 
   canModerate (community) {
@@ -22,21 +58,7 @@ const Me = Model.createClass({
   },
 
   hasFeature (key) {
-    if (!key) throw new Error("Can't call hasFeature without a key")
-    const flag = featureFlag(key)
-    switch (flag) {
-      case 'on':
-        return true
-      case 'testing':
-        return this.isTester()
-      default:
-        return false
-    }
-  },
-
-  isTester () {
-    const testerIds = process.env.HYLO_TESTER_IDS.split(',')
-    return includes(this.id, testerIds)
+    return hasFeature(key, isTester(this.id))
   }
 })
 
@@ -60,14 +82,3 @@ Me.fields = {
   skills: many('Skill'),
   blockedUsers: many('Person')
 }
-
-export const CURRENT_USER_PROP_TYPES = {
-  id: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ]).isRequired,
-  name: PropTypes.string.isRequired,
-  avatarUrl: PropTypes.string
-}
-
-export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_user_banner.jpg'
