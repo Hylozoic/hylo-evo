@@ -9,7 +9,7 @@
     "lint": "yarn exec standard",
     "lint:fix": "yarn exec standard --fix",
     "server": "./node_modules/.bin/babel-node --config-file ./config/babel.config.js scripts/serveUniversal.js",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -s public",
     "storybook:build": "build-storybook"
   },
   "dependencies": {

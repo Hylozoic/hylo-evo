@@ -1,12 +1,12 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { MemoryRouter } from 'react-router'
-import Avatar from 'components/Avatar'
+import TextInput from 'components/TextInput'
 
-storiesOf('Avatar', module)
+storiesOf('TextInput', module)
   .addDecorator(story => (
     <MemoryRouter>{story()}</MemoryRouter>
   ))
   .add('Show', () =>
-    <Avatar avatarUrl='https://avatars3.githubusercontent.com/u/5264862?s=40&v=4' url='anything' />
+    <TextInput onChange={() => {}} value={'Here is some text'} />
   )
