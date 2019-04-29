@@ -1,27 +1,17 @@
 import { get } from 'lodash/fp'
 import { FETCH_FOR_CURRENT_USER } from 'store/constants'
-import communityTopicsQueryFragment from 'graphql/fragments/communityTopicsQueryFragment'
-import communityQueryFragment from 'graphql/fragments/communityQueryFragment'
-import meQueryFragment from 'graphql/fragments/meQueryFragment'
+import MeQuery from 'graphql/queries/MeQuery.graphql'
 
-export default function (slug, skipTopics) {
-  const query = slug
-    ? `query ($slug: String, $first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean, $updateLastViewed: Boolean) {
-      ${meQueryFragment}
-      ${communityQueryFragment}
-    }`
-    : (skipTopics
-      ? `{
-        ${meQueryFragment}
-      }`
-      : `query ($first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean) {
-        ${meQueryFragment}
-        ${communityTopicsQueryFragment}
-      }`)
-
+export default function (slug) {
   return {
     type: FETCH_FOR_CURRENT_USER,
-    graphql: { query, variables: queryVariables(slug) },
+    graphql: {
+      query: MeQuery,
+      variables: {
+        includeCommunity: slug,
+        ...queryVariables(slug)
+      }
+    },
     meta: {
       extractModel: [
         {

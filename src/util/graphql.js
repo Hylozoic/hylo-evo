@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import { print } from 'graphql/language/printer'
 
 export function stringToGraphql (graphqlString) {
   return (typeof graphqlString === 'string' || graphqlString instanceof String)
@@ -9,6 +10,6 @@ export function stringToGraphql (graphqlString) {
 export function graphqlToString (unknownGraphql) {
   // Enables blended use of strings and gql tags for graphql queries
   return (typeof unknownGraphql === 'object' && !(unknownGraphql instanceof String))
-    ? unknownGraphql.loc && unknownGraphql.loc.source.body
+    ? print(unknownGraphql)
     : unknownGraphql
 }

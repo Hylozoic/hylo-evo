@@ -1,13 +1,13 @@
 import { connect } from 'react-redux'
 import { graphql, compose } from 'react-apollo'
 import { push } from 'connected-react-router'
-import notificationsQuery from 'graphql/queries/notificationsQuery.graphql'
+import NotificationsQuery from 'graphql/queries/NotificationsQuery.graphql'
 import markActivityReadMutation from 'graphql/mutations/markActivityReadMutation.graphql'
 import markAllActivitiesReadMutation from 'graphql/mutations/markAllActivitiesReadMutation.graphql'
 import getMe from 'store/selectors/getMe'
 import { urlForNotification } from 'store/models/Notification'
 
-export const fetchNotifications = graphql(notificationsQuery, {
+export const fetchNotifications = graphql(NotificationsQuery, {
   props: ({ data: { notifications, loading } }) => ({
     notifications: notifications && notifications.items,
     pending: loading

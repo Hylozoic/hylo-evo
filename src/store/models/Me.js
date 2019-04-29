@@ -8,7 +8,7 @@ export function firstName (user) {
 }
 
 export function isTester (userId) {
-  const testerIds = process.env.HYLO_TESTER_IDS.split(',')
+  const testerIds = process.env.HYLO_TESTER_IDS && process.env.HYLO_TESTER_IDS.split(',')
 
   return includes(userId, testerIds)
 }

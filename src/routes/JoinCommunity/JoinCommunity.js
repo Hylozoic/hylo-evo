@@ -14,7 +14,7 @@ export default class JoinCommunity extends Component {
     if (!isLoggedIn) {
       checkInvitation()
     } else {
-      fetchForCurrentUser(null, true)
+      fetchForCurrentUser()
       if (currentUser) useInvitation(currentUser.id)
     }
   }

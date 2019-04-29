@@ -1,0 +1,16 @@
+mutation MeUpdateMutation ($changes: MeInput) {
+  updateMe(changes: $changes) {
+    id
+    name
+    avatarUrl
+    location
+    email
+    bannerUrl
+    bio
+    tagline
+    twitterName
+    linkedinUrl
+    facebookUrl
+    url
+  }
+}

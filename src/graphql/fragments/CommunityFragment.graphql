@@ -1,0 +1,45 @@
+#import 'graphql/fragments/CommunityTopicsFragment.graphql'
+
+fragment CommunityFragment on Community {
+  id
+  name
+  slug
+  description
+  avatarUrl
+  network {
+    id
+    slug
+    name
+    avatarUrl
+    communities(first: 300) {
+      items {
+        id
+      }
+    }
+    memberCount
+    members(first: 8, sortBy: "name", order: "desc") {
+      items {
+        id
+        name
+        avatarUrl
+      }
+    }
+    moderators {
+      items {
+        id
+        name
+        avatarUrl
+      }
+    }
+  }
+  communityTopics(
+    first: $first,
+    offset: $offset,
+    sortBy: $sortBy,
+    order: $order,
+    subscribed: $subscribed,
+    autocomplete: $autocomplete
+  ) @skip(if: $skipTopics) {
+    ...CommunityTopicsFragment
+  }
+}
