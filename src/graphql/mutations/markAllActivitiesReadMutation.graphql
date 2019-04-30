@@ -1,4 +1,4 @@
-mutation markAllActivitiesReadMutation {
+mutation MarkAllActivitiesReadMutation {
   markAllActivitiesRead {
     items {
       id

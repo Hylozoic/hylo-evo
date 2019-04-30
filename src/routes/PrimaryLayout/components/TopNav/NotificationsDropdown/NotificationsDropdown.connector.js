@@ -2,8 +2,8 @@ import { connect } from 'react-redux'
 import { graphql, compose } from 'react-apollo'
 import { push } from 'connected-react-router'
 import NotificationsQuery from 'graphql/queries/NotificationsQuery.graphql'
-import markActivityReadMutation from 'graphql/mutations/markActivityReadMutation.graphql'
-import markAllActivitiesReadMutation from 'graphql/mutations/markAllActivitiesReadMutation.graphql'
+import MarkActivityReadMutation from 'graphql/mutations/MarkActivityReadMutation.graphql'
+import MarkAllActivitiesReadMutation from 'graphql/mutations/MarkAllActivitiesReadMutation.graphql'
 import getMe from 'store/selectors/getMe'
 import { urlForNotification } from 'store/models/Notification'
 
@@ -14,13 +14,13 @@ export const fetchNotifications = graphql(NotificationsQuery, {
   })
 })
 
-export const markActivityRead = graphql(markActivityReadMutation, {
+export const markActivityRead = graphql(MarkActivityReadMutation, {
   props: ({ mutate }) => ({
     markActivityRead: id => mutate({ variables: { id } })
   })
 })
 
-export const markAllActivitiesRead = graphql(markAllActivitiesReadMutation, {
+export const markAllActivitiesRead = graphql(MarkAllActivitiesReadMutation, {
   name: 'markAllActivitiesRead'
 })
 

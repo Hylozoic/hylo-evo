@@ -1,4 +1,4 @@
-mutation markActivityReadMutation ($id: ID) {
+mutation MarkActivityReadMutation ($id: ID) {
   markActivityRead(id: $id) {
     id
     unread
