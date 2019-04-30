@@ -3,14 +3,7 @@ import React, { Component } from 'react'
 import './BlockedUsersTab.scss'
 import Loading from 'components/Loading'
 
-const { array, func } = PropTypes
-
 export default class BlockedUsersTab extends Component {
-  static propTypes = {
-    memberships: array,
-    updateMembershipSettings: func
-  }
-
   render () {
     const { blockedUsers, unBlockUser, loading } = this.props
     if (loading || !blockedUsers) return <Loading />

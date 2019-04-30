@@ -1,81 +1,37 @@
 import { connect } from 'react-redux'
-import getMe from 'store/selectors/getMe'
-import {
-  updateUserSettings, leaveCommunity, unlinkAccount,
-  updateMembershipSettings, updateAllMemberships, registerStripeAccount
-} from './UserSettings.store'
-import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
-import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
-import { createSelector as ormCreateSelector } from 'redux-orm'
-import { createSelector } from 'reselect'
-import orm from 'store/models'
-import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
-import unBlockUser from 'store/actions/unBlockUser'
-import getBlockedUsers from 'store/selectors/getBlockedUsers'
-import { FETCH_FOR_CURRENT_USER } from 'store/constants'
+import { graphql, compose } from 'react-apollo'
+import React from 'react'
+import gql from 'graphql-tag'
 import { get, every, includes } from 'lodash/fp'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
-
-// this selector assumes that all Memberships belong to the currentUser
-// using this instead of currentUser.memberships to avoid a memoization issue
-// see https://github.com/tommikaikkonen/redux-orm/issues/117
-export const getCurrentUserMemberships = ormCreateSelector(
-  orm,
-  state => state.orm,
-  (session) =>
-    session.Membership.all().toModelArray()
-)
-
-export const getAllCommunitiesSettings = createSelector(
-  getCurrentUserMemberships,
-  memberships => ({
-    sendEmail: every(m => m.settings && m.settings.sendEmail, memberships),
-    sendPushNotifications: every(m => m.settings && m.settings.sendPushNotifications, memberships)
-  })
-)
-
-export const getMessageSettings = createSelector(
-  getMe,
-  me => me && ({
-    sendEmail: includes(me.settings && me.settings.dmNotifications, ['email', 'both']),
-    sendPushNotifications: includes(me.settings && me.settings.dmNotifications, ['push', 'both'])
-  })
-)
+import MeQuery from 'graphql/queries/MeQuery.graphql'
+import MeUpdateMutation from 'graphql/mutations/MeUpdateMutation.graphql'
+import UpdateMembershipMutation from 'graphql/mutations/UpdateMembershipMutation.graphql'
+import {
+  leaveCommunity,
+  unlinkAccount,
+  updateAllMemberships,
+  registerStripeAccount
+} from './UserSettings.store'
+import unBlockUser from 'store/actions/unBlockUser'
+import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
+import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
 
 export function mapStateToProps (state, props) {
-  const currentUser = getMe(state, props)
-  const memberships = getCurrentUserMemberships(state, props)
-  const blockedUsers = getBlockedUsers(state, props)
-  const allCommunitiesSettings = getAllCommunitiesSettings(state, props)
-  const messageSettings = getMessageSettings(state, props)
-
-  const confirm = get('FullPageModal.confirm', state)
-  const fetchPending = state.pending[FETCH_FOR_CURRENT_USER]
-  const queryParams = {
-    registered: getQuerystringParam('registered', null, props)
-  }
-
   return {
-    currentUser,
-    memberships,
-    blockedUsers,
-    confirm,
-    fetchPending,
-    allCommunitiesSettings,
-    messageSettings,
-    queryParams
+    confirm: get('FullPageModal.confirm', state),
+    queryParams: {
+      registered: getQuerystringParam('registered', null, props)
+    }
   }
 }
 
 export const mapDispatchToProps = {
-  fetchForCurrentUser,
-  updateUserSettings,
   unBlockUser,
   leaveCommunity,
   loginWithService,
   unlinkAccount,
   setConfirmBeforeClose,
-  updateMembershipSettings,
   updateAllMemberships,
   registerStripeAccount
 }
@@ -95,4 +51,112 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   }
 }
 
-export default component => connect(mapStateToProps, mapDispatchToProps, mergeProps)(component)
+const fetchCurrentUser = graphql(MeQuery, {
+  props: ({ data: { me, loading } }) => {
+    if (loading) return { fetchPending: loading }
+
+    return {
+      fetchPending: loading,
+      currentUser: me,
+      memberships: me.memberships,
+      blockedUsers: me.blockedUsers,
+      messageSettings: {
+        sendEmail: includes(me.settings && me.settings.dmNotifications, ['email', 'both']),
+        sendPushNotifications: includes(me.settings && me.settings.dmNotifications, ['push', 'both'])
+      },
+      allCommunitiesSettings: {
+        sendEmail: every(m => m.settings && m.settings.sendEmail, me.memberships),
+        sendPushNotifications: every(m => m.settings && m.settings.sendPushNotifications, me.memberships)
+      }
+    }
+  }
+})
+
+const updateUserSettings = graphql(MeUpdateMutation, {
+  props: ({ mutate, ownProps: { currentUser } }) => {
+    return {
+      updateUserSettings: changes => mutate({
+        variables: { changes },
+        optimisticResponse: {
+          __typename: 'Mutation',
+          updateMe: {
+            __typename: 'Me',
+            id: 'current-user',
+            ...currentUser,
+            settings: {
+              __typename: 'UserSettings',
+              ...currentUser.settings,
+              ...changes.settings
+            }
+          }
+        }
+      }),
+      update: (client, { data: { updateMe } }) => {
+        const query = MeQuery
+        const meBeforeUpdate = client.readQuery({ query })
+        client.writeQuery({
+          query,
+          data: {
+            me: {
+              ...meBeforeUpdate.me,
+              ...updateMe
+            }
+          }
+        })
+      }
+    }
+  }
+})
+
+const updateMembershipSettings = graphql(UpdateMembershipMutation, {
+  props: ({ mutate }) => {
+    return {
+      updateMembershipSettings: (communityId, settings) => mutate({
+        variables: {
+          data: {
+            settings
+          },
+          communityId
+        }
+      })
+    }
+  }
+})
+
+export default compose(
+  fetchCurrentUser,
+  updateUserSettings,
+  updateMembershipSettings,
+  connect(mapStateToProps, mapDispatchToProps, mergeProps)
+)
+
+// const graphqlDynamic = (query, config) => {
+//   return component => {
+//     return props => {
+//       return React.createElement(
+//         graphql(query(props), config)(component),
+//         props
+//       )
+//     }
+//   }
+// }
+//
+// const updateAllMembershipsQuery = (props) => {
+//   console.log('!!!!!! props!!!!:', props)
+//   if (props.fetchPending) return gql``
+//   const mutations = props.currentUser.memberships.map(({ community: { id } }) => `
+//     alias${id}: updateMembership(
+//       communityId: ${id},
+//       data: {settings: ${JSON.stringify(settings).replace(/"/g, '')}}
+//     ) {
+//       id
+//     }
+//   `).join()
+//   return gql`
+//     mutation UpdateAllMemberships {
+//       ${mutations}
+//     }
+//   `
+// }
+
+// const updateAllMemberships = graphqlDynamic(updateAllMembershipsQuery)

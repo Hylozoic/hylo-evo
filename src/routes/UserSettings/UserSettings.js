@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import './UserSettings.scss'
+import { hasFeature } from 'store/models/Me'
+import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import AccountSettingsTab from './AccountSettingsTab/AccountSettingsTab'
 import CommunitySettingsTab from './CommunitySettingsTab/CommunitySettingsTab'
 import BlockedUsersTab from './BlockedUsersTab/BlockedUsersTab'
@@ -8,7 +9,7 @@ import NotificationSettingsTab from './NotificationSettingsTab/NotificationSetti
 import PasswordSettingsTab from './PasswordSettingsTab/PasswordSettingsTab'
 import PaymentSettingsTab from './PaymentSettingsTab/PaymentSettingsTab'
 import FullPageModal from 'routes/FullPageModal'
-import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
+import './UserSettings.scss'
 
 const { object, func } = PropTypes
 
@@ -18,9 +19,9 @@ export default class UserSettings extends Component {
     onClose: func
   }
 
-  componentDidMount () {
-    this.props.fetchForCurrentUser()
-  }
+  // componentDidMount () {
+  //   this.props.fetchForCurrentUser()
+  // }
 
   render () {
     const {
@@ -41,6 +42,8 @@ export default class UserSettings extends Component {
       queryParams,
       registerStripeAccount
     } = this.props
+
+    console.log('!!!!!! rerendering with new props currentUser:', updateUserSettings)
 
     const content = [
       {
@@ -91,7 +94,7 @@ export default class UserSettings extends Component {
       }
     ]
 
-    if (currentUser && currentUser.hasFeature(PROJECT_CONTRIBUTIONS)) {
+    if (currentUser && hasFeature(currentUser, PROJECT_CONTRIBUTIONS)) {
       content.push({
         name: 'Payment',
         path: '/settings/payment',

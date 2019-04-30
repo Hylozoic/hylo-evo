@@ -4,34 +4,9 @@ import {
 } from 'store/constants'
 
 export const MODULE_NAME = 'UserSettings'
-
-export const UPDATE_USER_SETTINGS = `${MODULE_NAME}/UPDATE_USER_SETTINGS`
-export const UPDATE_USER_SETTINGS_PENDING = UPDATE_USER_SETTINGS + '_PENDING'
-export const UPDATE_MEMBERSHIP_SETTINGS = `${MODULE_NAME}/UPDATE_MEMBERSHIP_SETTINGS`
-export const UPDATE_MEMBERSHIP_SETTINGS_PENDING = UPDATE_MEMBERSHIP_SETTINGS + '_PENDING'
 export const UPDATE_ALL_MEMBERSHIP_SETTINGS = `${MODULE_NAME}/UPDATE_ALL_MEMBERSHIP_SETTINGS`
 export const UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING = `${UPDATE_ALL_MEMBERSHIP_SETTINGS}_PENDING`
 export const REGISTER_STRIPE_ACCOUNT = `${MODULE_NAME}/REGISTER_STRIPE_ACCOUNT`
-
-export function updateUserSettings (changes) {
-  return {
-    type: UPDATE_USER_SETTINGS,
-    graphql: {
-      query: `mutation ($changes: MeInput) {
-        updateMe(changes: $changes) {
-          id
-        }
-      }`,
-      variables: {
-        changes
-      }
-    },
-    meta: {
-      optimistic: true,
-      changes
-    }
-  }
-}
 
 export function leaveCommunity (id) {
   return {
@@ -59,30 +34,6 @@ export function unlinkAccount (provider) {
         }
       }`,
       variables: { provider }
-    }
-  }
-}
-
-export function updateMembershipSettings (communityId, settings) {
-  return {
-    type: UPDATE_MEMBERSHIP_SETTINGS,
-    graphql: {
-      query: `mutation ($communityId: ID, $data: MembershipInput) {
-        updateMembership(communityId: $communityId, data: $data) {
-          id
-        }
-      }`,
-      variables: {
-        data: {
-          settings
-        },
-        communityId: communityId
-      }
-    },
-    meta: {
-      communityId,
-      settings,
-      optimistic: true
     }
   }
 }

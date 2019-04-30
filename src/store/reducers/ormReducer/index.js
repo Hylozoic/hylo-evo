@@ -15,13 +15,11 @@ import {
   UPDATE_THREAD_READ_TIME,
   VOTE_ON_POST_PENDING,
   UPDATE_POST_PENDING,
-  UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING,
+  UPDATE_USER_SETTINGS_PENDING,
   PROCESS_STRIPE_TOKEN_PENDING,
   RESPOND_TO_EVENT_PENDING
 } from 'store/constants'
 import {
-  UPDATE_MEMBERSHIP_SETTINGS_PENDING,
-  UPDATE_USER_SETTINGS_PENDING,
   UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING
 } from 'routes/UserSettings/UserSettings.store'
 
@@ -72,7 +70,6 @@ export default function ormReducer (state = {}, action) {
     CommunityTopic,
     EventInvitation,
     Me,
-    Membership,
     Message,
     MessageThread,
     Person,
@@ -188,17 +185,6 @@ export default function ormReducer (state = {}, action) {
       membership = session.Membership.safeGet({ community: meta.id }).update({ forceUpdate: new Date() })
       break
 
-    case UPDATE_MEMBERSHIP_SETTINGS_PENDING:
-      membership = Membership.safeGet({ community: meta.communityId })
-      if (!membership) break
-      membership.update({
-        settings: {
-          ...membership.settings,
-          ...meta.settings
-        }
-      })
-      break
-
     case UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING:
       const memberships = session.Membership.all()
       memberships.toModelArray().map(membership => {
@@ -212,7 +198,6 @@ export default function ormReducer (state = {}, action) {
       break
 
     case UPDATE_USER_SETTINGS_PENDING:
-    case UPDATE_USER_SETTINGS_GLOBAL_PENDING:
       me = Me.first()
       const changes = {
         ...meta.changes,

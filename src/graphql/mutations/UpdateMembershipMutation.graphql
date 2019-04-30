@@ -1,0 +1,18 @@
+mutation ($communityId: ID, $data: MembershipInput) {
+  updateMembership(communityId: $communityId, data: $data) {
+    id
+    lastViewedAt
+    newPostCount
+    hasModeratorRole
+    settings {
+      sendEmail
+      sendPushNotifications
+    }
+    community {
+      id
+      name
+      slug
+      avatarUrl
+    }
+  }
+}
