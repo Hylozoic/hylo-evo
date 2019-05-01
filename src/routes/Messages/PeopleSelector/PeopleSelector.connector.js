@@ -1,14 +1,13 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
+import { graphql, compose } from 'react-apollo'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
 import {
   addParticipant,
   removeParticipant,
-  fetchContacts,
+  HolochainPeopleQuery,
   fetchRecentContacts,
-  getHoloChatContacts,
   getHoloChatMatches,
   getParticipants,
   getRecentContacts,
@@ -35,7 +34,6 @@ export function mapStateToProps (state, props) {
   const participants = getParticipants(state, props)
   return {
     autocomplete: state.autocomplete,
-    contacts: getHoloChatContacts(state, props),
     matches: getHoloChatMatches(state, props),
     participants,
     participantSearch: getParticipantSearch(props, participants),
@@ -47,7 +45,6 @@ export function mapDispatchToProps (dispatch, props) {
   const { holochainActive } = props
 
   return {
-    fetchContacts: () => dispatch(fetchContacts(holochainActive)),
     fetchPeople: (autocomplete, query, first) => dispatch(fetchPeople(autocomplete, query, first, holochainActive)),
     ...bindActionCreators({
       addParticipant,
@@ -59,4 +56,20 @@ export function mapDispatchToProps (dispatch, props) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+const fetchHolochainContacts = graphql(HolochainPeopleQuery, {
+  options: {
+    pollInterval: 10000
+  },
+  props: ({ data: { people, loading }, currentUser }) => {
+    return {
+      contacts: people && people.items,
+      // contacts: currentUser && people && people.items.filter(p => p.id !== currentUser.id),
+      onError: (s) => console.log('!!!!! errors on fetch in fetchContactApollo:', s)
+    }
+  }
+})
+
+export default compose(
+  fetchHolochainContacts,
+  connect(mapStateToProps, mapDispatchToProps)
+)

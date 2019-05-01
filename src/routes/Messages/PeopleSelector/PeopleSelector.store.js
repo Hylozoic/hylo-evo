@@ -1,5 +1,6 @@
 import { createSelector } from 'redux-orm'
 import { pick } from 'lodash/fp'
+import gql from 'graphql-tag'
 
 import getMe from 'store/selectors/getMe'
 import orm from 'store/models'
@@ -13,44 +14,10 @@ export const SET_AUTOCOMPLETE = 'PeopleSelector/SET_AUTOCOMPLETE'
 export const ADD_PARTICIPANT = 'PeopleSelector/ADD_PARTICIPANT'
 export const REMOVE_PARTICIPANT = 'PeopleSelector/REMOVE_PARTICIPANT'
 
-const fetchContactsQuery =
-`query PeopleContacts ($first: Int) {
-  people (first: $first) {
-    items {
-      id
-      name
-      avatarUrl
-      memberships (first: 1) {
-        id
-        community {
-          id
-          name
-        }
-      }
-    }
-  }
-}`
-
-export function fetchContacts (holochainAPI = false, query = fetchContactsQuery, first = 50) {
-  return {
-    type: FETCH_CONTACTS,
-    graphql: {
-      query,
-      variables: { first }
-    },
-    meta: {
-      holochainAPI,
-      extractModel: 'Person'
-    }
-  }
-}
-
-const fetchRecentContactsQuery =
-`query RecentPersonConnections ($first: Int) {
-  connections (first: $first) {
-    items {
-      id
-      person {
+export const HolochainPeopleQuery = gql`
+  query HolochainPeopleQuery ($first: Int) {
+    people (first: $first) {
+      items {
         id
         name
         avatarUrl
@@ -62,13 +29,35 @@ const fetchRecentContactsQuery =
           }
         }
       }
-      type
-      updatedAt
     }
   }
-}`
+`
 
-export function fetchRecentContacts (query = fetchRecentContactsQuery, first = 20) {
+export const RecentContactsQuery = gql`
+  query RecentPersonConnections ($first: Int) {
+    connections (first: $first) {
+      items {
+        id
+        person {
+          id
+          name
+          avatarUrl
+          memberships (first: 1) {
+            id
+            community {
+              id
+              name
+            }
+          }
+        }
+        type
+        updatedAt
+      }
+    }
+  }
+`
+
+export function fetchRecentContacts (query = RecentContactsQuery, first = 20) {
   return {
     type: FETCH_RECENT_CONTACTS,
     graphql: {
@@ -118,15 +107,6 @@ export function getPersonListItem (session, participants, currentUser, search = 
     .toModelArray()
     .map(pickPersonListItem)
 }
-
-export const getHoloChatContacts = createSelector(
-  orm,
-  state => state.orm,
-  state => state[MODULE_NAME].participants,
-  getMe,
-  (_, props) => props.holochainActive ? p => p.isHoloData : () => true,
-  getPersonListItem
-)
 
 export const getHoloChatMatches = createSelector(
   orm,

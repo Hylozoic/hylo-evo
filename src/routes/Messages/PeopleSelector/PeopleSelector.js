@@ -22,7 +22,6 @@ export default class PeopleSelector extends React.Component {
   static propTypes = {
     setAutocomplete: func.isRequired,
     fetchPeople: func.isRequired,
-    fetchContacts: func.isRequired,
     fetchRecentContacts: func.isRequired,
     addParticipant: func.isRequired,
     removeParticipant: func.isRequired,
@@ -45,7 +44,6 @@ export default class PeopleSelector extends React.Component {
   }
 
   componentDidMount () {
-    this.props.fetchContacts()
     this.props.fetchRecentContacts()
     const { participantSearch } = this.props
     if (participantSearch) {
