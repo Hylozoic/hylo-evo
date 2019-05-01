@@ -15,6 +15,10 @@ export class HolochainWebSocketLink extends ApolloLink {
   request (operation) {
     return new Observable(async observer => {
       try {
+        const holochainRequestAllowed = get('holochain', operation.getContext())
+        
+        if (!holochainRequestAllowed) return observer.complete()
+
         const callObject = createCallObjectWithParams({
           query: graphqlToString(operation.query),
           variables: operation.variables
