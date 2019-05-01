@@ -9,9 +9,12 @@ import PeopleTyping from 'components/PeopleTyping'
 import SocketSubscriber from 'components/SocketSubscriber'
 import './Messages.scss'
 
+export const NEW_THREAD_ID = 'new'
+
 export default class Messages extends React.Component {
   static defaultProps = {
-    participants: []
+    participants: [],
+    socket: null
   }
 
   constructor (props) {
@@ -19,15 +22,23 @@ export default class Messages extends React.Component {
 
     this.state = {
       onCloseURL: props.onCloseURL,
-      participants: props.participants
+      participants: props.participants,
+      forNewThread: props.messageThreadId === NEW_THREAD_ID
     }
     this.form = React.createRef()
   }
 
   componentDidMount () {
     this.onThreadIdChange()
-
-    // TODO: Handle this
+    this.props.fetchPeople()
+    this.props.fetchRecentContacts()
+    // TODO: Handle querystring participants for Members Message button
+    // const { participantSearch } = this.props
+    // if (participantSearch) {
+    //   participantSearch.forEach(p => this.props.addParticipant(p))
+    //   this.props.changeQuerystringParam(this.props, 'participants', null)
+    // }
+    // Here is some of the stuff that was used to make it...
     // import getQuerystringParam from 'store/selectors/getQuerystringParam'
     // participantIdsSearch: getQuerystringParam('participants', null, props),
     // export function getParticipantSearch (props, participantsFromStore) {
@@ -69,7 +80,11 @@ export default class Messages extends React.Component {
   focusForm = () => this.form.current && this.form.current.focus()
 
   onThreadIdChange = () => {
-    if (!this.props.forNewThread) this.props.fetchThread()
+    const forNewThread = this.props.messageThreadId === NEW_THREAD_ID
+    this.setState(() => ({ forNewThread }))
+    if (!forNewThread) {
+      this.props.fetchThread()
+    }
     this.focusForm()
   }
 
@@ -88,10 +103,8 @@ export default class Messages extends React.Component {
       setThreadSearch,
       fetchThreads,
       fetchMoreThreads,
-      holochainActive,
       // MessageSection
       socket,
-      reconnectFetchMessages,
       messages,
       hasMoreMessages,
       messagesPending,
@@ -104,9 +117,15 @@ export default class Messages extends React.Component {
       sendIsTyping,
       findOrCreateThread,
       goToThread,
-      forNewThread,
-      updateMessageText
+      updateMessageText,
+      // PeopleSelector
+      fetchRecentContacts,
+      fetchPeople,
+      setContactsSearch,
+      holochainContacts,
+      recentContacts
     } = this.props
+    const { forNewThread } = this.state
 
     return <div styleName='modal'>
       <div styleName='content'>
@@ -124,9 +143,14 @@ export default class Messages extends React.Component {
           <div styleName='thread'>
             {forNewThread &&
               <PeopleSelector
-                location={this.props.location}
+                currentUser={currentUser}
+                fetchPeople={fetchPeople}
+                fetchDefaultList={fetchRecentContacts}
+                setContactsSearch={setContactsSearch}
+                contacts={holochainContacts}
+                recentContacts={recentContacts}
+                matches={holochainContacts}
                 onCloseURL={onCloseURL}
-                holochainActive={holochainActive}
                 participants={participants}
                 addParticipant={this.addParticipant}
                 removeParticipant={this.removeParticipant} />}
@@ -139,13 +163,12 @@ export default class Messages extends React.Component {
               <MessageSection
                 socket={socket}
                 currentUser={currentUser}
-                messageThread={messageThread}
-                reconnectFetchMessages={reconnectFetchMessages}
+                fetchMessages={fetchMessages}
                 messages={messages}
                 hasMore={hasMoreMessages}
                 pending={messagesPending}
-                fetchMessages={fetchMessages}
-                updateThreadReadTime={updateThreadReadTime} />}
+                updateThreadReadTime={updateThreadReadTime}
+                messageThread={messageThread} />}
             {(!forNewThread || participants.length > 0) &&
               <div styleName='message-form'>
                 <MessageForm
@@ -164,7 +187,7 @@ export default class Messages extends React.Component {
                   updateMessageText={updateMessageText} />
               </div>}
             <PeopleTyping styleName='people-typing' />
-            <SocketSubscriber type='post' id={messageThreadId} />
+            {socket && <SocketSubscriber type='post' id={messageThreadId} />}
           </div>
         </div>
       </div>
@@ -173,29 +196,31 @@ export default class Messages extends React.Component {
 }
 
 Messages.propTypes = {
+  changeQuerystringParam: PropTypes.func,
+  holochainContacts: PropTypes.array,
   createMessage: PropTypes.func,
   currentUser: PropTypes.object,
   fetchMessages: PropTypes.func,
   fetchMoreThreads: PropTypes.func,
+  fetchPeople: PropTypes.func,
   fetchThread: PropTypes.func,
   fetchThreads: PropTypes.func,
   findOrCreateThread: PropTypes.func,
-  forNewThread: PropTypes.bool,
-  changeQuerystringParam: PropTypes.func,
   goToThread: PropTypes.func,
   hasMoreMessages: PropTypes.bool,
   holochainActive: PropTypes.bool,
   location: PropTypes.object,
   messageCreatePending: PropTypes.bool,
   messageText: PropTypes.string,
-  messageThread: PropTypes.array,
+  messageThread: PropTypes.object,
   messageThreadId: PropTypes.string,
   messages: PropTypes.array,
   messagesPending: PropTypes.bool,
   onCloseURL: PropTypes.string,
   participants: PropTypes.array,
-  reconnectFetchMessages: PropTypes.func,
+  recentContacts: PropTypes.array,
   sendIsTyping: PropTypes.func,
+  setContactsSearch: PropTypes.func,
   setThreadSearch: PropTypes.func,
   socket: PropTypes.object,
   threadSearch: PropTypes.string,

@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types'
+import { any, arrayOf, func, shape, string } from 'prop-types'
 import React from 'react'
 import PersonListItem from '../PersonListItem'
 import './PeopleSelectorContacts.scss'
-const { any, arrayOf, func, shape, string } = PropTypes
 
 export default function PeopleSelectorContacts ({ addParticipant, contacts, recentContacts }) {
   return <div styleName='people-selector-contacts'>

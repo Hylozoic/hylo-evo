@@ -76,8 +76,7 @@ describe('mergeProps', () => {
     }
     const dispatchProps = {
       fetchMessages: cursor => () => `more messages for thread ${cursor}`,
-      updateThreadReadTime: () => {},
-      reconnectFetchMessages: () => {}
+      updateThreadReadTime: () => {}
     }
     const ownProps = {
       match: {

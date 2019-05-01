@@ -10,21 +10,7 @@ import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
 import './ThreadList.scss'
 
-const { array, func, object, string } = PropTypes
-
 export default class ThreadList extends Component {
-  // TODO: Check and update
-  static propTypes = {
-    currentUser: object,
-    threads: array,
-    threadSearch: string,
-    setThreadSearch: func,
-    fetchThreads: func,
-    fetchMoreThreads: func,
-    match: object,
-    className: string
-  }
-
   componentDidMount () {
     if (isEmpty(this.props.threads)) this.props.fetchThreads()
   }
@@ -72,6 +58,18 @@ export default class ThreadList extends Component {
         onBottom={fetchMoreThreads} />
     </div>
   }
+}
+
+ThreadList.propTypes = {
+  className: PropTypes.string,
+  currentUser: PropTypes.object,
+  fetchMoreThreads: PropTypes.func,
+  fetchThreads: PropTypes.func,
+  match: PropTypes.object,
+  setThreadSearch: PropTypes.func,
+  threadSearch: PropTypes.string,
+  threads: PropTypes.array,
+  threadsPending: PropTypes.bool
 }
 
 export function ThreadListItem ({ currentUser, active, id, thread, latestMessage, unreadCount }) {

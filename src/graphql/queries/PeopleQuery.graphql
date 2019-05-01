@@ -1,5 +1,4 @@
-export default
-`query PeopleAutocomplete ($autocomplete: String, $first: Int) {
+query PeopleQuery ($autocomplete: String, $first: Int) {
   people (autocomplete: $autocomplete, first: $first) {
     items {
       id
@@ -14,4 +13,4 @@ export default
       }
     }
   }
-}`
+}

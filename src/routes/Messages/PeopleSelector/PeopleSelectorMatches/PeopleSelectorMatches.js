@@ -26,7 +26,7 @@ export default class PeopleSelectorMatches extends React.Component {
       {matches && matches.map(match =>
         <PersonListItem
           key={match.id}
-          active={match.id === currentMatch}
+          active={match.id === currentMatch.id}
           person={match}
           onClick={() => addParticipant(match)}
           onMouseOver={() => setCurrentMatch(match)} />)}

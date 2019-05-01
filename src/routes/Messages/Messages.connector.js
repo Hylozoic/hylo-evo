@@ -4,11 +4,13 @@ import { get, isEmpty } from 'lodash/fp'
 import { getSocket, sendIsTyping } from 'client/websockets'
 import { push } from 'connected-react-router'
 import { threadUrl } from 'util/navigation'
+import changeQuerystringParam from 'store/actions/changeQuerystringParam'
+import isPendingFor from 'store/selectors/isPendingFor'
 import fetchThreads from 'store/actions/fetchThreads'
+import fetchPeople from 'store/actions/fetchPeople'
+import fetchRecentContacts from 'store/actions/fetchRecentContacts'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import getMe from 'store/selectors/getMe'
-import isPendingFor from 'store/selectors/isPendingFor'
-import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import {
   createMessage,
   fetchMessages,
@@ -17,6 +19,8 @@ import {
   updateMessageText,
   updateThreadReadTime,
   setThreadSearch,
+  setContactsSearch,
+  getHolochainContactsWithSearch,
   getTextForCurrentMessageThread,
   getThreadSearch,
   getThreads,
@@ -24,28 +28,27 @@ import {
   getMessages,
   getMessagesHasMore,
   getCurrentMessageThread,
-  NEW_THREAD_ID
+  getRecentContacts
 } from './Messages.store'
-
-const mockSocket = { on: () => {}, off: () => {} }
 
 export function mapStateToProps (state, props) {
   const routeParams = get('match.params', props)
   const { holochainActive } = props
   const messageThreadId = get('messageThreadId', routeParams)
   const messageThread = getCurrentMessageThread(state, props)
-  const forNewThread = messageThreadId === NEW_THREAD_ID
+  const recentContacts = holochainActive ? [] : getRecentContacts(state)
 
   return {
+    recentContacts,
+    holochainContacts: getHolochainContactsWithSearch(state, props),
     onCloseURL: getPreviousLocation(state),
-    forNewThread,
     currentUser: getMe(state),
     messageThreadId,
     messageThread,
     messageText: getTextForCurrentMessageThread(state, props),
     messageCreatePending:
       isPendingFor(createMessage, state) ||
-      (forNewThread && isPendingFor(findOrCreateThread, state)),
+      isPendingFor(findOrCreateThread, state),
     sendIsTyping: sendIsTyping(messageThreadId),
     threadSearch: getThreadSearch(state, props),
     threads: getThreads(state, props),
@@ -54,7 +57,7 @@ export function mapStateToProps (state, props) {
     messages: getMessages(state, props),
     messagesPending: isPendingFor(fetchMessages, state),
     hasMoreMessages: getMessagesHasMore(state, { id: messageThreadId }),
-    socket: holochainActive ? mockSocket : getSocket()
+    socket: holochainActive ? null : getSocket()
   }
 }
 
@@ -64,28 +67,28 @@ export function mapDispatchToProps (dispatch, props) {
 
   return {
     ...bindActionCreators({
+      setContactsSearch,
+      setThreadSearch,
       updateMessageText,
       fetchThreads,
-      setThreadSearch,
+      fetchMessages,
       findOrCreateThread,
       changeQuerystringParam,
+      fetchRecentContacts,
       goToThread: messageThreadId => push(threadUrl(messageThreadId))
     }, dispatch),
-    findOrCreateThread: (participantIds, createdAt) =>
-      dispatch(findOrCreateThread(participantIds, createdAt, holochainActive)),
+    fetchPeople: (autocomplete, query, first) =>
+      dispatch(fetchPeople(autocomplete, query, first, holochainActive)),
     createMessage: (messageThreadId, text, forNewThread) =>
       dispatch(createMessage(messageThreadId, text, forNewThread, holochainActive)),
     fetchThread: () => dispatch(fetchThread(messageThreadId, holochainActive)),
-    fetchMessages: cursor => () =>
-      dispatch(fetchMessages(messageThreadId, { cursor }, holochainActive)),
-    updateThreadReadTime: id => !holochainActive && dispatch(updateThreadReadTime(id)),
-    reconnectFetchMessages: () => dispatch(fetchMessages(messageThreadId, { reset: true }))
+    updateThreadReadTime: id => !holochainActive && dispatch(updateThreadReadTime(id))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { holochainActive } = ownProps
-  const { threads, messages, hasMoreThreads } = stateProps
+  const { threads, messages, hasMoreThreads, messageThreadId } = stateProps
   const findOrCreateThread = (participantIds, createdAt) =>
     dispatchProps.findOrCreateThread(participantIds, createdAt, holochainActive)
   const fetchThreads = () => dispatchProps.fetchThreads(20, 0, holochainActive)
@@ -94,7 +97,9 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
       ? () => dispatchProps.fetchThreads(20, threads.length)
       : () => {}
   const fetchMessagesCursor = !isEmpty(messages) && messages[0].id
-  const fetchMessages = dispatchProps.fetchMessages(fetchMessagesCursor)
+  const fetchMessages = () => dispatchProps.fetchMessages(messageThreadId, {
+    cursor: fetchMessagesCursor
+  }, holochainActive)
 
   return {
     ...ownProps,

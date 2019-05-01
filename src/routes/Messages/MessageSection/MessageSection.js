@@ -44,7 +44,6 @@ export function createMessageList (messages, lastSeenAt) {
 export default class MessageSection extends React.Component {
   static propTypes = {
     socket: object,
-    reconnectFetchMessages: func,
     currentUser: object,
     messages: array,
     pending: bool,
@@ -65,16 +64,16 @@ export default class MessageSection extends React.Component {
   }
 
   componentDidMount () {
-    const { socket, reconnectFetchMessages } = this.props
+    const { socket, fetchMessages } = this.props
     this.scrollToBottom()
-    this.reconnectHandler = () => reconnectFetchMessages()
-    socket.on('reconnect', this.reconnectHandler)
+    this.reconnectHandler = () => fetchMessages()
+    socket && socket.on('reconnect', this.reconnectHandler)
     document && document.addEventListener('visibilitychange', this.handleVisibilityChange)
   }
 
   componentWillUnmount () {
     const { socket } = this.props
-    socket.off('reconnect', this.reconnectHandler)
+    socket && socket.off('reconnect', this.reconnectHandler)
     document && document.removeEventListener('visibilitychange', this.handleVisibilityChange)
   }
 
