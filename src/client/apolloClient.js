@@ -3,10 +3,11 @@ import HolochainWebSocketLink from './HolochainWebSocketLink'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { split } from 'apollo-link'
+import { get } from 'lodash/fp'
 import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 
 const link = split(
-  () => HOLOCHAIN_ACTIVE,
+  operation => HOLOCHAIN_ACTIVE && get('holochain', operation.getContext()),
   new HolochainWebSocketLink({
     uri: process.env.HOLO_CHAT_API_HOST
   }),
