@@ -12,8 +12,6 @@ export const MODULE_NAME = 'PeopleSelector'
 export const FETCH_CONTACTS = 'FETCH_CONTACTS'
 export const FETCH_RECENT_CONTACTS = 'FETCH_RECENT_CONTACTS'
 export const SET_AUTOCOMPLETE = 'PeopleSelector/SET_AUTOCOMPLETE'
-export const ADD_PARTICIPANT = 'PeopleSelector/ADD_PARTICIPANT'
-export const REMOVE_PARTICIPANT = 'PeopleSelector/REMOVE_PARTICIPANT'
 
 export const HolochainPeopleQuery = gql`
   query HolochainPeopleQuery ($first: Int) {

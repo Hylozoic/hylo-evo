@@ -26,24 +26,6 @@ it('matches the last snapshot for fetchRecentContacts', () => {
   expect(actual).toMatchSnapshot()
 })
 
-it('returns the correct action from addParticipant', () => {
-  const expected = {
-    type: store.ADD_PARTICIPANT,
-    payload: '1'
-  }
-  const actual = store.addParticipant('1')
-  expect(actual).toEqual(expected)
-})
-
-it('returns the correct action from removeParticipant', () => {
-  const expected = {
-    type: store.REMOVE_PARTICIPANT,
-    payload: '1'
-  }
-  const actual = store.removeParticipant('1')
-  expect(actual).toEqual(expected)
-})
-
 it('returns the correct action from setAutocomplete', () => {
   const expected = {
     type: store.SET_AUTOCOMPLETE,
@@ -98,34 +80,6 @@ describe('connector', () => {
     session.Me.create(me)
     state = { orm: session.state }
     state.PeopleSelector = { participants: people.map(p => p.id) }
-  })
-
-  describe('getParticipants', () => {
-    it('returns the correct objects', () => {
-      const expected = people.map(p => ({
-        id: p.id,
-        name: p.name,
-        avatarUrl: p.avatarUrl
-      }))
-      const actual = store.getParticipants(state)
-      expect(actual).toEqual(expected)
-    })
-  })
-
-  describe('participantsFromStore', () => {
-    it('returns the participants array from store', () => {
-      const expected = state.PeopleSelector.participants
-      const actual = store.participantsFromStore(state)
-      expect(actual).toEqual(expected)
-    })
-  })
-
-  describe('getHoloChatContacts', () => {
-    it('filters out currentUser', () => {
-      state.PeopleSelector.participants = []
-      const actual = store.getHoloChatContacts(state, {})
-      expect(actual.find(p => p.id === '999')).toBe(undefined)
-    })
   })
 
   describe('getHoloChatMatches', () => {
@@ -231,15 +185,6 @@ describe('reducer', () => {
   it('should return the initial state', () => {
     const expected = store.defaultState
     const actual = reducer(undefined, { type: 'FLARGLE' })
-    expect(actual).toEqual(expected)
-  })
-
-  it('should handle PeopleSelector/ADD_PARTICIPANT', () => {
-    const expected = { participants: [ '1' ] }
-    const actual = reducer(store.defaultState, {
-      type: store.ADD_PARTICIPANT,
-      payload: '1'
-    })
     expect(actual).toEqual(expected)
   })
 

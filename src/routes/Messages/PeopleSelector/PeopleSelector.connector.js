@@ -9,7 +9,6 @@ import {
   setAutocomplete
 } from './PeopleSelector.store'
 import fetchPeople from 'store/actions/fetchPeople'
-import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 
 export function mapStateToProps (state, props) {
   const { holochainActive } = props
@@ -29,7 +28,6 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchPeople: (autocomplete, query, first) => dispatch(fetchPeople(autocomplete, query, first, holochainActive)),
     ...bindActionCreators({
-      changeQuerystringParam,
       fetchRecentContacts,
       setAutocomplete
     }, dispatch)
@@ -37,18 +35,15 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 const fetchHolochainContacts = graphql(HolochainPeopleQuery, {
-  skip: props => !props.holochainActive,
   options: {
-    pollInterval: 10000,
-    context: {
-      holochain: true
-    }
+    context: { holochain: true },
+    pollInterval: 10000
   },
   props: ({ data: { people, loading }, currentUser }) => {
     return {
-      contacts: people && people.items,
+      // TODO: Fix this
       // contacts: currentUser && people && people.items.filter(p => p.id !== currentUser.id),
-      onError: (s) => console.log('!!!!! errors on fetch in fetchContactApollo:', s)
+      contacts: people && people.items
     }
   }
 })

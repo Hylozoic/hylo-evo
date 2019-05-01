@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { debounce, throttle } from 'lodash/fp'
+import { debounce, throttle, has } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
 import CloseMessages from '../CloseMessages'
 import PeopleSelectorMatches from './PeopleSelectorMatches'
@@ -23,7 +23,6 @@ export default class PeopleSelector extends React.Component {
     setAutocomplete: func.isRequired,
     fetchPeople: func.isRequired,
     fetchRecentContacts: func.isRequired,
-    changeQuerystringParam: func.isRequired,
     autocomplete: string,
     contacts: arrayOf(personType),
     recentContacts: arrayOf(personType),
@@ -57,16 +56,23 @@ export default class PeopleSelector extends React.Component {
     this.setState({ currentMatch: matches[0].id })
   }
 
-  addParticipant = participant => {
+  addParticipant = (participant) => {
+    this.autocomplete.current.focus()
+    if (this.props.participants.find(p => p.id === participant.id)) return
     this.props.setAutocomplete(null)
     this.setState({ currentMatch: null })
     this.autocomplete.current.value = null
     this.props.addParticipant(participant)
-    this.autocomplete.current.focus()
   }
 
-  removeParticipant = participant => {
+  removeParticipant = (participant) => {
     this.props.removeParticipant(participant)
+  }
+
+  excludeParticipants = (contactList) => {
+    if (!contactList) return
+    const participantsIds = this.props.participants.map(p => p.id)
+    return contactList.filter(c => !participantsIds.includes(c.id))
   }
 
   arrow (direction, evt) {
@@ -148,12 +154,12 @@ export default class PeopleSelector extends React.Component {
         ? <PeopleSelectorMatches
           addParticipant={this.addParticipant}
           currentMatch={currentMatch}
-          matches={matches}
+          matches={this.excludeParticipants(matches)}
           setCurrentMatch={this.setCurrentMatch} />
         : <PeopleSelectorContacts
           addParticipant={this.addParticipant}
-          contacts={contacts}
-          recentContacts={recentContacts} />}
+          contacts={this.excludeParticipants(contacts)}
+          recentContacts={this.excludeParticipants(recentContacts)} />}
     </React.Fragment>
   }
 }

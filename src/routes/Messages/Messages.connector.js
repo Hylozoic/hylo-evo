@@ -8,6 +8,7 @@ import fetchThreads from 'store/actions/fetchThreads'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import getMe from 'store/selectors/getMe'
 import isPendingFor from 'store/selectors/isPendingFor'
+import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import {
   createMessage,
   fetchMessages,
@@ -67,6 +68,7 @@ export function mapDispatchToProps (dispatch, props) {
       fetchThreads,
       setThreadSearch,
       findOrCreateThread,
+      changeQuerystringParam,
       goToThread: messageThreadId => push(threadUrl(messageThreadId))
     }, dispatch),
     findOrCreateThread: (participantIds, createdAt) =>

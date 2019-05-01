@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PeopleSelector from './PeopleSelector'
 import ThreadList from './ThreadList'
 import Header from './Header'
@@ -169,4 +170,37 @@ export default class Messages extends React.Component {
       </div>
     </div>
   }
+}
+
+Messages.propTypes = {
+  createMessage: PropTypes.func,
+  currentUser: PropTypes.object,
+  fetchMessages: PropTypes.func,
+  fetchMoreThreads: PropTypes.func,
+  fetchThread: PropTypes.func,
+  fetchThreads: PropTypes.func,
+  findOrCreateThread: PropTypes.func,
+  forNewThread: PropTypes.bool,
+  changeQuerystringParam: PropTypes.func,
+  goToThread: PropTypes.func,
+  hasMoreMessages: PropTypes.bool,
+  holochainActive: PropTypes.bool,
+  location: PropTypes.object,
+  messageCreatePending: PropTypes.bool,
+  messageText: PropTypes.string,
+  messageThread: PropTypes.array,
+  messageThreadId: PropTypes.string,
+  messages: PropTypes.array,
+  messagesPending: PropTypes.bool,
+  onCloseURL: PropTypes.string,
+  participants: PropTypes.array,
+  reconnectFetchMessages: PropTypes.func,
+  sendIsTyping: PropTypes.func,
+  setThreadSearch: PropTypes.func,
+  socket: PropTypes.object,
+  threadSearch: PropTypes.string,
+  threads: PropTypes.array,
+  threadsPending: PropTypes.bool,
+  updateMessageText: PropTypes.func,
+  updateThreadReadTime: PropTypes.func
 }
