@@ -41,7 +41,7 @@
     "babel-plugin-data-stylename": "0.1.1",
     "babel-plugin-named-asset-import": "^0.3.1",
     "babel-plugin-react-css-modules": "levity/babel-plugin-react-css-modules#ab83008",
-    "babel-preset-react-app": "^7.0.2",
+    "babel-preset-react-app": "^8.0.0",
     "bfj": "6.1.1",
     "bootstrap": "4.0.0-alpha.6",
     "case-sensitive-paths-webpack-plugin": "2.2.0",

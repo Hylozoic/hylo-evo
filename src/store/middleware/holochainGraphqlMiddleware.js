@@ -10,7 +10,6 @@ export default function holochainGraphqlMiddleware (store) {
 
     const { query: unknownGraphql, variables } = graphql
     const query = graphqlToString(unknownGraphql)
-    const [instance, zome, func] = process.env.HOLO_CHAT_GRAPHQL_PATH.split('/')
 
     const then = payload => {
       if (!payload) Promise.reject(new Error('No result from holochainAPI'))
@@ -34,11 +33,7 @@ export default function holochainGraphqlMiddleware (store) {
       },
       payload: {
         holochainApi: {
-          instance,
-          zome,
-          func,
-          params: { query, variables },
-          method: 'POST'
+          params: { query, variables }
         }
       }
     })

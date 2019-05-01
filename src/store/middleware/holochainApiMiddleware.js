@@ -1,4 +1,5 @@
 import { connect as holochainSocketConnect } from '@holochain/hc-web-client'
+import { createCallObjectWithParams } from 'util/holochain'
 import setHolochainSocket from '../actions/setHolochainSocket'
 import getHolochainSocket from '../selectors/getHolochainSocket'
 
@@ -8,10 +9,13 @@ export default function holochainApiMiddleware (req) {
 
     if (!payload || !payload.holochainApi) return next(action)
 
-    const { instance, zome, func, params } = payload.holochainApi
-    let promise = initAndGetHolochainSocket(getState(), dispatch).then(holochainSocket =>
-      holochainSocket.callZome(instance, zome, func)(params)
-    )
+    const { params } = payload.holochainApi
+
+    let promise = initAndGetHolochainSocket(getState(), dispatch).then(holochainSocket => {
+      const callObject = createCallObjectWithParams(params)
+
+      return holochainSocket.call('call')(callObject)
+    })
 
     if (meta && meta.then) {
       promise = promise.then(meta.then)

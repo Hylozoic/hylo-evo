@@ -24,7 +24,6 @@ export default function apolloMiddleware (store) {
 
     const operation = get('definitions[0].operation', parsedGraphql)
     // const queryName = get('definitions[0].selectionSet.selections[0].name.value', parsedGraphql)
-    // console.log("TCL: apolloMiddleware -> optimisticResponse", get('apolloOptimistic', meta), operation)
 
     switch (operation) {
       case 'mutation':
