@@ -5,15 +5,6 @@ import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
 import './PersonListItem.scss'
 
-const { any, bool, func, shape, string } = PropTypes
-
-const personType = shape({
-  id: any,
-  name: string,
-  avatarUrl: string,
-  community: string
-})
-
 export default function PersonListItem ({ active, onClick, onMouseOver, person }) {
   return <li styleName={cx('person-list-item', { active })} onClick={onClick} onMouseOver={onMouseOver}>
     <RoundImage url={person.avatarUrl} styleName='avatar' medium />
@@ -22,8 +13,16 @@ export default function PersonListItem ({ active, onClick, onMouseOver, person }
   </li>
 }
 
+const personType = PropTypes.shape({
+  id: PropTypes.any,
+  name: PropTypes.string,
+  avatarUrl: PropTypes.string,
+  community: PropTypes.string
+})
+
 PersonListItem.propTypes = {
-  active: bool,
-  addParticipant: func,
+  active: PropTypes.bool,
+  onClick: PropTypes.func,
+  onMouseOver: PropTypes.func,
   person: personType
 }

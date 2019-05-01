@@ -35,16 +35,17 @@ export default class MessageForm extends React.Component {
 
   sendForExisting () {
     const { createMessage, messageThreadId, messageText } = this.props
-
     createMessage(messageThreadId, messageText).then(() => this.props.focusForm())
     this.startTyping.cancel()
     this.props.sendIsTyping(false)
   }
 
   sendNewMessage () {
-    const { findOrCreateThread, createMessage, goToThread, messageText } = this.props
+    const { findOrCreateThread, participants, createMessage, goToThread, messageText } = this.props
+    const participantIds = participants.map(p => p.id)
     const createdAt = new Date().getTime().toString()
-    findOrCreateThread(createdAt).then(resp => {
+
+    findOrCreateThread(participantIds, createdAt).then(resp => {
       const messageThreadId = get('payload.data.findOrCreateThread.id', resp)
       createMessage(messageThreadId, messageText, true).then(() => goToThread(messageThreadId))
     })

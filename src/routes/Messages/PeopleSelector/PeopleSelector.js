@@ -23,15 +23,12 @@ export default class PeopleSelector extends React.Component {
     setAutocomplete: func.isRequired,
     fetchPeople: func.isRequired,
     fetchRecentContacts: func.isRequired,
-    addParticipant: func.isRequired,
-    removeParticipant: func.isRequired,
     changeQuerystringParam: func.isRequired,
     autocomplete: string,
     contacts: arrayOf(personType),
     recentContacts: arrayOf(personType),
     matches: array,
     deleteParticipant: func,
-    participantSearch: arrayOf(String),
     participants: arrayOf(personType),
     onCloseURL: string
   }
@@ -39,17 +36,14 @@ export default class PeopleSelector extends React.Component {
   constructor (props) {
     super(props)
 
-    this.state = { currentMatch: null }
+    this.state = {
+      currentMatch: null
+    }
     this.autocomplete = React.createRef()
   }
 
   componentDidMount () {
     this.props.fetchRecentContacts()
-    const { participantSearch } = this.props
-    if (participantSearch) {
-      participantSearch.forEach(p => this.props.addParticipant(p))
-      this.props.changeQuerystringParam(this.props, 'participants', null)
-    }
   }
 
   componentWillReceiveProps (props) {
@@ -63,12 +57,16 @@ export default class PeopleSelector extends React.Component {
     this.setState({ currentMatch: matches[0].id })
   }
 
-  addParticipant = id => {
+  addParticipant = participant => {
     this.props.setAutocomplete(null)
     this.setState({ currentMatch: null })
     this.autocomplete.current.value = null
-    this.props.addParticipant(id)
+    this.props.addParticipant(participant)
     this.autocomplete.current.focus()
+  }
+
+  removeParticipant = participant => {
+    this.props.removeParticipant(participant)
   }
 
   arrow (direction, evt) {
@@ -96,13 +94,13 @@ export default class PeopleSelector extends React.Component {
 
   onKeyDown (evt) {
     switch (getKeyCode(evt)) {
-      case keyMap.BACKSPACE: return this.state.currentMatch ? null : this.props.removeParticipant()
+      case keyMap.BACKSPACE: return this.state.currentMatch ? null : this.removeParticipant()
       case keyMap.UP: return this.arrow('up', evt)
       case keyMap.DOWN: return this.arrow('down', evt)
       case keyMap.COMMA:
       case keyMap.ENTER:
         evt.preventDefault()
-        this.props.addParticipant(this.state.currentMatch)
+        this.addParticipant(this.state.currentMatch)
         this.autocomplete.current.value = null
         return this.props.setAutocomplete(null)
 
@@ -118,12 +116,12 @@ export default class PeopleSelector extends React.Component {
       contacts,
       recentContacts,
       matches,
-      participants,
-      removeParticipant,
-      onCloseURL
+      onCloseURL,
+      participants
     } = this.props
-
-    const { currentMatch } = this.state
+    const {
+      currentMatch
+    } = this.state
 
     return <React.Fragment>
       <div styleName='thread-header' tabIndex='0'>
@@ -133,7 +131,7 @@ export default class PeopleSelector extends React.Component {
               avatarUrl={participant.avatarUrl}
               key={participant.id}
               name={participant.name}
-              removeParticipant={() => removeParticipant(participant.id)} />
+              removeParticipant={() => this.removeParticipant(participant)} />
           )}
           <input styleName='autocomplete'
             autoFocus

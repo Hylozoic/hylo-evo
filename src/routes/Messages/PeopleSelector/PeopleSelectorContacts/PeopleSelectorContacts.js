@@ -14,7 +14,7 @@ export default function PeopleSelectorContacts ({ addParticipant, contacts, rece
             <PersonListItem
               key={contact.id}
               person={contact}
-              onClick={() => addParticipant(contact.id)} />)}
+              onClick={() => addParticipant(contact)} />)}
         </ul>
       </div>}
     {contacts && contacts.length > 0 &&
@@ -25,7 +25,7 @@ export default function PeopleSelectorContacts ({ addParticipant, contacts, rece
             <PersonListItem
               key={contact.id}
               person={contact}
-              onClick={() => addParticipant(contact.id)} />)}
+              onClick={() => addParticipant(contact)} />)}
         </ul>
       </div>}
   </div>

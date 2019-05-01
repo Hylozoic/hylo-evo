@@ -9,24 +9,60 @@ import SocketSubscriber from 'components/SocketSubscriber'
 import './Messages.scss'
 
 export default class Messages extends React.Component {
-  // TODO: A bug - new message to existing thread doesn't pop that thread to the top
+  static defaultProps = {
+    participants: []
+  }
+
   constructor (props) {
     super(props)
 
     this.state = {
-      onCloseURL: props.onCloseURL
+      onCloseURL: props.onCloseURL,
+      participants: props.participants
     }
     this.form = React.createRef()
   }
 
   componentDidMount () {
     this.onThreadIdChange()
+
+    // TODO: Handle this
+    // import getQuerystringParam from 'store/selectors/getQuerystringParam'
+    // participantIdsSearch: getQuerystringParam('participants', null, props),
+    // export function getParticipantSearch (props, participantsFromStore) {
+    //   const participantIds = getQuerystringParam('participants', null, props)
+    //   if (participantIds) {
+    //     return participantIds
+    //       .split(',')
+    //       .filter(pId => !participantsFromStore.find(participant => participant.id === pId))
+    //   }
+    //   return null
+    // }
+    // const { participantIdsSearch } = this.props
+    // if (participantIdsSearch) {
+    //   participantIdsSearch.forEach(p => this.addParticipant(p))
+    //   this.props.changeQuerystringParam(this.props, 'participants', null)
+    // }
   }
 
   componentDidUpdate (prevProps) {
     if (this.props.messageThreadId && this.props.messageThreadId !== prevProps.messageThreadId) {
       this.onThreadIdChange()
     }
+  }
+
+  addParticipant = (participant) => {
+    this.setState(state => ({
+      participants: [...state.participants, participant]
+    }))
+  }
+
+  removeParticipant = (participant) => {
+    this.setState(({ participants }) => ({
+      participants: !participant
+        ? participants.slice(0, participants.length - 1)
+        : [...participants.filter(p => p.id !== participant.id)]
+    }))
   }
 
   focusForm = () => this.form.current && this.form.current.focus()
@@ -37,7 +73,10 @@ export default class Messages extends React.Component {
   }
 
   render () {
-    const { onCloseURL } = this.state
+    const {
+      participants,
+      onCloseURL
+    } = this.state
     const {
       currentUser,
       messageThread,
@@ -65,8 +104,7 @@ export default class Messages extends React.Component {
       findOrCreateThread,
       goToThread,
       forNewThread,
-      updateMessageText,
-      participants
+      updateMessageText
     } = this.props
 
     return <div styleName='modal'>
@@ -87,7 +125,10 @@ export default class Messages extends React.Component {
               <PeopleSelector
                 location={this.props.location}
                 onCloseURL={onCloseURL}
-                holochainActive={holochainActive} />}
+                holochainActive={holochainActive}
+                participants={participants}
+                addParticipant={this.addParticipant}
+                removeParticipant={this.removeParticipant} />}
             {!forNewThread &&
               <Header
                 messageThread={messageThread}
@@ -112,6 +153,7 @@ export default class Messages extends React.Component {
                   formRef={this.form}
                   focusForm={this.focusForm}
                   createMessage={createMessage}
+                  participants={participants}
                   messageText={messageText}
                   sendIsTyping={sendIsTyping}
                   findOrCreateThread={findOrCreateThread}

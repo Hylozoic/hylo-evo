@@ -1,4 +1,5 @@
-import { createSelector } from 'redux-orm'
+import { createSelector } from 'reselect'
+import { createSelector as ormCreateSelector } from 'redux-orm'
 import { pick } from 'lodash/fp'
 import gql from 'graphql-tag'
 
@@ -68,20 +69,6 @@ export function fetchRecentContacts (query = RecentContactsQuery, first = 20) {
   }
 }
 
-export function addParticipant (id) {
-  return {
-    type: ADD_PARTICIPANT,
-    payload: id
-  }
-}
-
-export function removeParticipant (id) {
-  return {
-    type: REMOVE_PARTICIPANT,
-    payload: id
-  }
-}
-
 export function setAutocomplete (autocomplete) {
   return {
     type: SET_AUTOCOMPLETE,
@@ -108,7 +95,7 @@ export function getPersonListItem (session, participants, currentUser, search = 
     .map(pickPersonListItem)
 }
 
-export const getHoloChatMatches = createSelector(
+export const getHoloChatMatches = ormCreateSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME].participants,
@@ -138,7 +125,7 @@ export function personConnectionListItemSelector (session, participants) {
     .sort(nameSort)
 }
 
-export const getRecentContacts = createSelector(
+export const getRecentContacts = ormCreateSelector(
   orm,
   state => state.orm,
   state => state[MODULE_NAME].participants,
@@ -150,11 +137,9 @@ export function participantsFromStore (state) {
 }
 
 export const getParticipants = createSelector(
-  orm,
-  state => state.orm,
   participantsFromStore,
-  (session, fromStore) => fromStore.map(id =>
-    pick([ 'id', 'name', 'avatarUrl' ], session.Person.withId(id).ref))
+  fromStore => fromStore.map(participant =>
+    pick([ 'id', 'name', 'avatarUrl' ], participant))
 )
 
 export const defaultState = {
@@ -176,25 +161,6 @@ export default function reducer (state = defaultState, action) {
       return {
         ...state,
         autocomplete: payload
-      }
-
-    case ADD_PARTICIPANT:
-      return {
-        ...state,
-        participants: [ ...state.participants, payload ]
-      }
-
-    case REMOVE_PARTICIPANT:
-      if (payload) {
-        return {
-          ...state,
-          participants: state.participants.filter(p => p !== payload)
-        }
-      }
-      // No payload? Remove the last element.
-      return {
-        ...state,
-        participants: state.participants.slice(0, state.participants.length - 1)
       }
   }
 

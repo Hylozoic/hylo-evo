@@ -28,8 +28,8 @@ export default class PeopleSelectorMatches extends React.Component {
           key={match.id}
           active={match.id === currentMatch}
           person={match}
-          onClick={() => addParticipant(match.id)}
-          onMouseOver={() => setCurrentMatch(match.id)} />)}
+          onClick={() => addParticipant(match)}
+          onMouseOver={() => setCurrentMatch(match)} />)}
     </ul>
   }
 }

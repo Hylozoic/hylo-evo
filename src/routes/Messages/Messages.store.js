@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
+import gql from 'graphql-tag'
 import { some, get, isEmpty, includes, uniqueId } from 'lodash/fp'
 import { AnalyticsEvents } from 'hylo-utils/constants'
 import {
@@ -147,21 +148,21 @@ export const getMessagesHasMore = createSelector(
 
 // / ACTIONS (to be moved to /store/actions/*)
 
-const findOrCreateThreadQuery =
-`mutation ($participantIds: [String]) {
-  findOrCreateThread(data: {participantIds: $participantIds}) {
-    id
-    createdAt
-    updatedAt
-    participants {
+const FindOrCreateThreadMutation = gql`
+  mutation FindOrCreateThreadMutation ($participantIds: [String]) {
+    findOrCreateThread(data: {participantIds: $participantIds}) {
       id
-      name
-      avatarUrl
+      createdAt
+      updatedAt
+      participants {
+        id
+        name
+        avatarUrl
+      }
     }
   }
-}`
-
-export function findOrCreateThread (participantIds, createdAt, holochainAPI = false, query = findOrCreateThreadQuery) {
+`
+export function findOrCreateThread (participantIds, createdAt, holochainAPI = false, query = FindOrCreateThreadMutation) {
   return {
     type: FIND_OR_CREATE_THREAD,
     graphql: {
@@ -178,40 +179,41 @@ export function findOrCreateThread (participantIds, createdAt, holochainAPI = fa
   }
 }
 
-export function fetchThread (id, holochainAPI = false) {
+export const FetchThreadQuery = gql`
+  query FetchThreadQuery ($id: ID) {
+    messageThread (id: $id) {
+      id
+      unreadCount
+      lastReadAt
+      createdAt
+      updatedAt
+      participants {
+        id
+        name
+        avatarUrl
+      }
+      messages(first: 40, order: "desc") {
+        items {
+          id
+          text
+          creator {
+            id
+            name
+            avatarUrl
+          }
+          createdAt
+        }
+        total
+        hasMore
+      }
+    }
+  }
+`
+export function fetchThread (id, holochainAPI = false, query = FetchThreadQuery) {
   return {
     type: FETCH_THREAD,
     graphql: {
-      query: `
-        query ($id: ID) {
-          messageThread (id: $id) {
-            id
-            unreadCount
-            lastReadAt
-            createdAt
-            updatedAt
-            participants {
-              id
-              name
-              avatarUrl
-            }
-            messages(first: 40, order: "desc") {
-              items {
-                id
-                text
-                creator {
-                  id
-                  name
-                  avatarUrl
-                }
-                createdAt
-              }
-              total
-              hasMore
-            }
-          }
-        }
-      `,
+      query: FetchThreadQuery,
       variables: {
         id
       }
@@ -227,31 +229,32 @@ export function fetchThread (id, holochainAPI = false) {
   }
 }
 
-export function fetchMessages (id, opts = {}, holochainAPI = false) {
+export const FetchMessagesQuery = gql`
+  query ($id: ID, $cursor: ID) {
+    messageThread (id: $id) {
+      id
+      messages(first: 80, cursor: $cursor, order: "desc") {
+        items {
+          id
+          createdAt
+          text
+          creator {
+            id
+            name
+            avatarUrl
+          }
+        }
+        total
+        hasMore
+      }
+    }
+  }
+`
+export function fetchMessages (id, opts = {}, holochainAPI = false, query = FetchMessagesQuery) {
   return {
     type: FETCH_MESSAGES,
     graphql: {
-      query: `
-        query ($id: ID, $cursor: ID) {
-          messageThread (id: $id) {
-            id
-            messages(first: 80, cursor: $cursor, order: "desc") {
-              items {
-                id
-                createdAt
-                text
-                creator {
-                  id
-                  name
-                  avatarUrl
-                }
-              }
-              total
-              hasMore
-            }
-          }
-        }
-      `,
+      query,
       variables: opts.cursor ? { id, cursor: opts.cursor } : { id }
     },
     meta: {
@@ -266,24 +269,27 @@ export function fetchMessages (id, opts = {}, holochainAPI = false) {
   }
 }
 
-export function createMessage (messageThreadId, messageText, forNewThread, holochainAPI = false) {
+export const CreateMessageMutation = gql`
+  mutation ($messageThreadId: String, $text: String, $createdAt: String) {
+    createMessage(data: {messageThreadId: $messageThreadId, text: $text, createdAt: $createdAt}) {
+      id
+      text
+      createdAt
+      creator {
+        id
+      }
+      messageThread {
+        id
+      }
+    }
+  }
+`
+export function createMessage (messageThreadId, messageText, forNewThread, holochainAPI = false, query = CreateMessageMutation) {
   const createdAt = new Date().getTime().toString()
   return {
     type: CREATE_MESSAGE,
     graphql: {
-      query: `mutation ($messageThreadId: String, $text: String, $createdAt: String) {
-        createMessage(data: {messageThreadId: $messageThreadId, text: $text, createdAt: $createdAt}) {
-          id
-          text
-          createdAt
-          creator {
-            id
-          }
-          messageThread {
-            id
-          }
-        }
-      }`,
+      query,
       variables: {
         messageThreadId,
         text: messageText,

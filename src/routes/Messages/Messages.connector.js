@@ -8,7 +8,6 @@ import fetchThreads from 'store/actions/fetchThreads'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import getMe from 'store/selectors/getMe'
 import isPendingFor from 'store/selectors/isPendingFor'
-import { getParticipants } from './PeopleSelector/PeopleSelector.store'
 import {
   createMessage,
   fetchMessages,
@@ -38,7 +37,6 @@ export function mapStateToProps (state, props) {
 
   return {
     onCloseURL: getPreviousLocation(state),
-    participants: getParticipants(state),
     forNewThread,
     currentUser: getMe(state),
     messageThreadId,
@@ -85,9 +83,9 @@ export function mapDispatchToProps (dispatch, props) {
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { holochainActive } = ownProps
-  const { participants, threads, messages, hasMoreThreads } = stateProps
-  const findOrCreateThread = createdAt =>
-    dispatchProps.findOrCreateThread(participants.map(p => p.id), createdAt, holochainActive)
+  const { threads, messages, hasMoreThreads } = stateProps
+  const findOrCreateThread = (participantIds, createdAt) =>
+    dispatchProps.findOrCreateThread(participantIds, createdAt, holochainActive)
   const fetchThreads = () => dispatchProps.fetchThreads(20, 0, holochainActive)
   const fetchMoreThreads =
     hasMoreThreads
