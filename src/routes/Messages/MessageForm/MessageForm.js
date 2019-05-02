@@ -46,7 +46,8 @@ export default class MessageForm extends React.Component {
     const createdAt = new Date().getTime().toString()
 
     findOrCreateThread(participantIds, createdAt).then(resp => {
-      const messageThreadId = get('payload.data.findOrCreateThread.id', resp)
+      // NOTE: This is a Holochain+Apollo thing
+      const messageThreadId = get('payload.data.findOrCreateThread.id', resp) || get('data.findOrCreateThread.id', resp)
       createMessage(messageThreadId, messageText, true).then(() => goToThread(messageThreadId))
     })
   }

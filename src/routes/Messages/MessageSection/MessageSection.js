@@ -1,12 +1,10 @@
-import PropTypes from 'prop-types'
+import { array, bool, func, object } from 'prop-types'
 import React from 'react'
 import { throttle, debounce } from 'lodash'
 import { get } from 'lodash/fp'
 import Loading from 'components/Loading'
 import Message from '../Message'
 import './MessageSection.scss'
-
-const { array, bool, func, object } = PropTypes
 
 // the maximum amount of time in minutes that can pass between messages to still
 // include them under the same avatar and timestamp
@@ -42,17 +40,6 @@ export function createMessageList (messages, lastSeenAt) {
 }
 
 export default class MessageSection extends React.Component {
-  static propTypes = {
-    socket: object,
-    currentUser: object,
-    messages: array,
-    pending: bool,
-    hasMore: bool,
-    fetchMessages: func.isRequired,
-    updateThreadReadTime: func,
-    messageThread: object
-  }
-
   constructor (props) {
     super(props)
 
@@ -166,7 +153,8 @@ export default class MessageSection extends React.Component {
 
   markAsRead = debounce(() => {
     const { messageThread, updateThreadReadTime } = this.props
-    if (messageThread) updateThreadReadTime(messageThread.id)
+    // TODO: Clean this up better? Holochain currently not supporting this
+    if (updateThreadReadTime && messageThread) updateThreadReadTime(messageThread.id)
   }, 2000)
 
   render () {
@@ -181,4 +169,15 @@ export default class MessageSection extends React.Component {
       </div>
     </div>
   }
+}
+
+MessageSection.propTypes = {
+  fetchMessages: func.isRequired,
+  hasMore: bool,
+  messageThread: object,
+  messages: array,
+  pending: bool,
+  socket: object,
+  currentUser: object,
+  updateThreadReadTime: func
 }

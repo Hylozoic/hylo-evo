@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import { array, string, func } from 'prop-types'
 import React, { Component } from 'react'
 import './MessagesDropdown.scss'
 import { Link } from 'react-router-dom'
@@ -7,12 +7,11 @@ import cx from 'classnames'
 import { newMessageUrl, threadUrl } from 'util/navigation'
 import RoundImageRow from 'components/RoundImageRow'
 import TopNavDropdown from '../TopNavDropdown'
-import { get, isEmpty, some, find } from 'lodash/fp'
-
+import { get, isEmpty, some, find, orderBy } from 'lodash/fp'
+import { toRefArray } from 'store/models'
+import { participantAttributes, isUnread, isUpdatedSince } from 'store/models/MessageThread'
 import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
 import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
-
-const { array, string, func } = PropTypes
 
 export default class MessagesDropdown extends Component {
   static propTypes = {
@@ -46,9 +45,11 @@ export default class MessagesDropdown extends Component {
     }
 
     const { lastOpenedAt } = this.state
-    const isUnread = t =>
-      t.isUnread() && (!lastOpenedAt || t.isUpdatedSince(lastOpenedAt))
-    return some(isUnread, this.props.threads)
+
+    return some(
+      thread => isUnread(thread) && (!lastOpenedAt || isUpdatedSince(thread, lastOpenedAt)),
+      this.props.threads
+    )
   }
 
   render () {
@@ -103,14 +104,14 @@ export default class MessagesDropdown extends Component {
 }
 
 export function MessagesDropdownItem ({ thread, onClick, currentUser }) {
-  const message = thread.messages.orderBy(m => Date.parse(m.createdAt), 'desc').first()
+  const message = orderBy(m => Date.parse(m.createdAt), 'desc', toRefArray(thread.messages))[0]
   if (!message || !message.text) return null
 
   var { text } = message
-  var participants = thread.participants.toRefArray()
+  var participants = toRefArray(thread.participants)
   text = lastMessageCreator(message, currentUser, participants) + text
 
-  const { names, avatarUrls } = thread.participantAttributes(currentUser, 2)
+  const { names, avatarUrls } = participantAttributes(thread, currentUser, 2)
 
   const maxMessageLength = 145
 
@@ -118,7 +119,7 @@ export function MessagesDropdownItem ({ thread, onClick, currentUser }) {
     text = `${truncate(text, maxMessageLength)}...`
   }
 
-  return <li styleName={cx('thread', { unread: thread.isUnread() })}
+  return <li styleName={cx('thread', { unread: isUnread(thread) })}
     onClick={onClick}>
     <div styleName='image-wrapper'>
       <RoundImageRow imageUrls={avatarUrls} vertical ascending cap='2' />

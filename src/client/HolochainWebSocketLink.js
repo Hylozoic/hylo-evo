@@ -16,7 +16,7 @@ export class HolochainWebSocketLink extends ApolloLink {
     return new Observable(async observer => {
       try {
         const holochainRequestAllowed = get('holochain', operation.getContext())
-        
+
         if (!holochainRequestAllowed) return observer.complete()
 
         const callObject = createCallObjectWithParams({

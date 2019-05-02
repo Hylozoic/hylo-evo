@@ -21,6 +21,10 @@ export const UPDATE_MESSAGE_TEXT = `${MODULE_NAME}/UPDATE_MESSAGE_TEXT`
 export const SET_THREAD_SEARCH = `${MODULE_NAME}/SET_THREAD_SEARCH`
 export const SET_CONTACTS_SEARCH = `${MODULE_NAME}/SET_CONTACTS_SEARCH`
 
+// LOCAL STORE
+
+// Actions
+
 export function setContactsSearch (search) {
   return {
     type: SET_CONTACTS_SEARCH,
@@ -44,6 +48,20 @@ export function updateMessageText (messageThreadId, messageText) {
     }
   }
 }
+
+// Selectors
+
+export const moduleSelector = state => state[MODULE_NAME]
+
+export const getContactsSearch = createSelector(
+  moduleSelector,
+  (state, props) => state.contactsSearch
+)
+
+export const getThreadSearch = createSelector(
+  moduleSelector,
+  (state, props) => get('threadSearch', state)
+)
 
 // REDUCER
 
@@ -71,10 +89,7 @@ export default function reducer (state = defaultState, action) {
   }
 }
 
-// SELECTORS
-
-export const moduleSelector = state => state[MODULE_NAME]
-
+// GLOBAL STORE
 // Contacts and Participants
 
 export function presentPersonListItem (person) {
@@ -96,7 +111,7 @@ export const getHolochainContactsWithSearch = ormCreateSelector(
   orm,
   state => state.orm,
   (state, props) => p => {
-    const { contactsSearch } = state[MODULE_NAME]
+    const contactsSearch = getContactsSearch(state)
     const holoFilter = props.holochainActive ? p.isHoloData : true
     if (!contactsSearch || contactsSearch.length < 1) return holoFilter
     return holoFilter && p.name.toLowerCase().includes(contactsSearch.toLowerCase())
@@ -151,11 +166,6 @@ export const getCurrentMessageThread = ormCreateSelector(
   }
 )
 
-export const getThreadSearch = createSelector(
-  moduleSelector,
-  (state, props) => get('threadSearch', state)
-)
-
 export const getThreadResults = makeGetQueryResults(FETCH_THREADS)
 
 export const getThreadsHasMore = createSelector(getThreadResults, get('hasMore'))
@@ -169,9 +179,9 @@ export const getThreads = ormCreateSelector(
     if (isEmpty(results) || isEmpty(results.ids)) return []
     return session.MessageThread.all()
       .filter(x => includes(x.id, results.ids))
+      .filter(filterThreadsByParticipant(threadSearch))
       .orderBy(x => -new Date(x.updatedAt))
       .toModelArray()
-      .filter(filterThreadsByParticipant(threadSearch))
   }
 )
 
@@ -209,7 +219,7 @@ export const getMessagesHasMore = createSelector(
 
 // ACTIONS (to be moved to /store/actions/*)
 
-const FindOrCreateThreadMutation = gql`
+export const FindOrCreateThreadMutation = gql`
   mutation FindOrCreateThreadMutation ($participantIds: [String]) {
     findOrCreateThread(data: {participantIds: $participantIds}) {
       id
@@ -331,7 +341,11 @@ export function fetchMessages (id, opts = {}, holochainAPI = false, query = Fetc
 
 export const CreateMessageMutation = gql`
   mutation ($messageThreadId: String, $text: String, $createdAt: String) {
-    createMessage(data: {messageThreadId: $messageThreadId, text: $text, createdAt: $createdAt}) {
+    createMessage(data: {
+      messageThreadId: $messageThreadId,
+      text: $text,
+      createdAt: $createdAt
+    }) {
       id
       text
       createdAt
@@ -372,7 +386,12 @@ export function createMessage (messageThreadId, messageText, forNewThread, holoc
 export function updateThreadReadTime (id) {
   return {
     type: UPDATE_THREAD_READ_TIME,
-    payload: { api: { path: `/noo/post/${id}/update-last-read`, method: 'POST' } },
+    payload: {
+      api: {
+        path: `/noo/post/${id}/update-last-read`,
+        method: 'POST'
+      }
+    },
     meta: { id }
   }
 }

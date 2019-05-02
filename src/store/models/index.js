@@ -23,7 +23,18 @@ import Skill from './Skill'
 import Topic from './Topic'
 import Vote from './Vote'
 
+// Migration utilities
+
+export function toRefArray (arrayOrModelInstance) {
+  return arrayOrModelInstance.toRefArray
+    ? arrayOrModelInstance.toRefArray()
+    : arrayOrModelInstance
+}
+
+// ORM instantiation
+
 export const orm = new ORM()
+
 orm.register(
   Activity,
   Attachment,

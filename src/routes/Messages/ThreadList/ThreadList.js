@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { get, isEmpty } from 'lodash/fp'
+import { get, isEmpty, orderBy } from 'lodash/fp'
 import { Link } from 'react-router-dom'
 import { humanDate } from 'hylo-utils/text'
 import RoundImage from 'components/RoundImage'
@@ -8,9 +8,15 @@ import Badge from 'components/Badge'
 import Button from 'components/Button'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
+import { toRefArray } from 'store/models'
+import { participantAttributes } from 'store/models/MessageThread'
 import './ThreadList.scss'
 
 export default class ThreadList extends Component {
+  static defaultProps = {
+    threads: []
+  }
+
   componentDidMount () {
     if (isEmpty(this.props.threads)) this.props.fetchThreads()
   }
@@ -43,7 +49,7 @@ export default class ThreadList extends Component {
             currentUser={currentUser}
             active={t.id === messageThreadId}
             thread={t}
-            latestMessage={t.messages.orderBy(m => Date.parse(m.createdAt), 'desc').first()}
+            latestMessage={orderBy(m => Date.parse(m.createdAt), 'desc', toRefArray(t.messages))[0]}
             unreadCount={t.unreadCount} />
         })}
         {threadsPending &&
@@ -83,7 +89,7 @@ export function ThreadListItem ({ currentUser, active, id, thread, latestMessage
     }
   }
 
-  const { names, avatarUrls } = thread.participantAttributes(currentUser, 2)
+  const { names, avatarUrls } = participantAttributes(thread, currentUser, 2)
 
   return <li styleName='list-item'>
     <Link to={`/t/${id}`}>

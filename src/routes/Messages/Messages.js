@@ -31,7 +31,6 @@ export default class Messages extends React.Component {
   componentDidMount () {
     this.onThreadIdChange()
     this.props.fetchPeople()
-    this.props.fetchRecentContacts()
     // TODO: Handle querystring participants for Members Message button
     // const { participantSearch } = this.props
     // if (participantSearch) {
@@ -197,18 +196,19 @@ export default class Messages extends React.Component {
 
 Messages.propTypes = {
   changeQuerystringParam: PropTypes.func,
-  holochainContacts: PropTypes.array,
   createMessage: PropTypes.func,
   currentUser: PropTypes.object,
   fetchMessages: PropTypes.func,
   fetchMoreThreads: PropTypes.func,
   fetchPeople: PropTypes.func,
+  fetchRecentContacts: PropTypes.func,
   fetchThread: PropTypes.func,
   fetchThreads: PropTypes.func,
   findOrCreateThread: PropTypes.func,
   goToThread: PropTypes.func,
   hasMoreMessages: PropTypes.bool,
   holochainActive: PropTypes.bool,
+  holochainContacts: PropTypes.array,
   location: PropTypes.object,
   messageCreatePending: PropTypes.bool,
   messageText: PropTypes.string,
