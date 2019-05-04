@@ -561,9 +561,7 @@ exports[`NotificationBody renders correctly with a comment mention notification 
   >
     Marie
   </span>
-   wrote: "
-  I live right next to there and can come help out. I've never done …
-  "
+   commented
 </div>
 `;
 
@@ -576,9 +574,7 @@ exports[`NotificationBody renders correctly with a comment notification 1`] = `
   >
     Marie
   </span>
-   wrote: "
-  I live right next to there and can come help out. I've never done …
-  "
+   commented
 </div>
 `;
 
