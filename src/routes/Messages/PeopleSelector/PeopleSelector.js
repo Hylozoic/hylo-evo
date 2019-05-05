@@ -21,8 +21,7 @@ export default class PeopleSelector extends React.Component {
   }
 
   componentDidMount () {
-    // TODO: Is there a better way to handle empty functions coming-back from Apollo
-    this.props.fetchDefaultList && this.props.fetchDefaultList()
+    this.props.fetchDefaultList()
   }
 
   componentWillReceiveProps (props) {

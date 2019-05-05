@@ -1,0 +1,33 @@
+query MessageThreadsQuery ($first: Int, $offset: Int) {
+  me {
+    id
+    messageThreads(sortBy: "updatedAt", order: "desc", first: $first, offset: $offset) {
+      total
+      hasMore
+      items {
+        id
+        unreadCount
+        lastReadAt
+        createdAt
+        updatedAt
+        participants {
+          id
+          name
+          avatarUrl
+        }
+        # TODO: Changed "first" value to 80 for Holochain ease but needs to be reconsidered for node because that's too many for this
+        messages(first: 80, order: "desc") {
+          items {
+            id
+            createdAt
+            text
+            creator {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}

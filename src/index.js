@@ -11,7 +11,7 @@ import { rootDomId } from 'client/util'
 const store = createStore(history)
 
 // TODO: For testing
-// apolloClient.clearStore()
+apolloClient.clearStore()
 
 ReactDOM.render(
   <ApolloProvider client={apolloClient}>

@@ -19,7 +19,7 @@
 }
 
 .fade {
-  // TODO: replace these with pseudo elements
+  // Note: replace these with pseudo elements
   composes: imageShape;
   position: relative;
   background-image: linear-gradient(180deg, $color-cod-gray-0, $color-cod-gray-0 30%, $color-cod-gray-dark);
@@ -55,7 +55,7 @@
 }
 
 .header-name {
-  // TODO: extract typography?
+  // Extract typography?
   @include font-medium;
   color: $color-white;
   font-size: 32px;
@@ -81,7 +81,7 @@
 
 // PostPrompt
 
-// TODO: find other places where 56px and 28px are used.
+// Note: find other places where 56px and 28px are used.
 .postPromptShape {
   border-radius: 4px;
   height: 56px;

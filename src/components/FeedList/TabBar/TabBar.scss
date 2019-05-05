@@ -24,7 +24,7 @@
 
 .tab-active {
   composes: tab;
-  // TODO: extract typography? 1px from .HDR-MINOR
+  // Extract typography? 1px from .HDR-MINOR
   @include font-bold;
   color: $color-rhino;
   font-size: 15px;

@@ -82,8 +82,13 @@ export default class PrimaryLayout extends Component {
       holochainActive
     } = this.props
 
+    if (!currentUser || (isCommunityRoute && communityPending)) {
+      return <div styleName='container'>
+        <Loading type='loading-fullscreen' />
+      </div>
+    }
+
     if (isCommunityRoute) {
-      if (!currentUser) return <Loading />
       // don't show NotFound in holochain as we don't get the communities with currentUser
       if (!community && !communityPending && !holochainActive) return <NotFound />
     }
@@ -234,7 +239,6 @@ export function RedirectToCommunity ({ path, currentUser }) {
 
 export function redirectIfCommunity (currentUser) {
   return () => {
-    if (!currentUser) return <Loading type='top' />
     if (currentUser.memberships.count() === 0) return <Redirect to={`/all`} />
     const mostRecentCommunity = currentUser.memberships
       .orderBy(m => new Date(m.lastViewedAt), 'desc')

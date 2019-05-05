@@ -31,6 +31,12 @@ export function toRefArray (arrayOrModelInstance) {
     : arrayOrModelInstance
 }
 
+export function itemsToArray (maybeHasItems) {
+  return maybeHasItems.items
+    ? maybeHasItems.items
+    : maybeHasItems
+}
+
 // ORM instantiation
 
 export const orm = new ORM()

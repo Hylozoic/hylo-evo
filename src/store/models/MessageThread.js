@@ -32,6 +32,63 @@ export function isUpdatedSince (messageThread, date) {
   return new Date(messageThread.updatedAt) > date
 }
 
+export function markAsRead (messageThreadInstance) {
+  messageThreadInstance.update({
+    unreadCount: 0,
+    lastReadAt: new Date().toString()
+  })
+
+  return messageThreadInstance
+}
+
+export function newMessageReceived (messageThreadInstance, bumpUnreadCount) {
+  const update = bumpUnreadCount
+    ? { unreadCount: messageThreadInstance.unreadCount + 1, updatedAt: new Date().toString() }
+    : { updatedAt: new Date().toString() }
+  messageThreadInstance.update(update)
+  return messageThreadInstance
+}
+
+// ReduxORM Model
+
+const MessageThread = Model.createClass({
+  isUnread () {
+    return isUnread(this)
+  },
+
+  isUpdatedSince (date) {
+    return isUpdatedSince(this, date)
+  },
+
+  toString () {
+    return `MessageThread: ${this.id}`
+  },
+
+  newMessageReceived (bumpUnreadCount) {
+    return newMessageReceived(this, bumpUnreadCount)
+  },
+
+  markAsRead () {
+    return markAsRead(this)
+  },
+
+  participantAttributes (currentUser, maxShown) {
+    return participantAttributes(this.toRefArray(), currentUser, maxShown)
+  }
+})
+
+export default MessageThread
+
+MessageThread.modelName = 'MessageThread'
+
+MessageThread.fields = {
+  id: attr(),
+  unreadCount: attr(),
+  participants: many('Person'),
+  updatedAt: attr(),
+  lastReadAt: attr()
+}
+
 // Utility
 
 export function formatNames (names, maxShown) {
@@ -56,54 +113,4 @@ export function others (n) {
   } else {
     return `${n} others`
   }
-}
-
-// ReduxORM Model
-
-const MessageThread = Model.createClass({
-  isUnread () {
-    return isUnread(this)
-  },
-
-  isUpdatedSince (date) {
-    return isUpdatedSince(this, date)
-  },
-
-  toString () {
-    return `MessageThread: ${this.id}`
-  },
-
-  // TODO: Figure-out how to handle this correctly outside of ReduxORM
-  newMessageReceived (bumpUnreadCount) {
-    const update = bumpUnreadCount
-      ? { unreadCount: this.unreadCount + 1, updatedAt: new Date().toString() }
-      : { updatedAt: new Date().toString() }
-    this.update(update)
-    return this
-  },
-  
-  // TODO: Figure-out how to handle this correctly outside of ReduxORM
-  markAsRead () {
-    this.update({
-      unreadCount: 0,
-      lastReadAt: new Date().toString()
-    })
-    return this
-  },
-
-  participantAttributes (currentUser, maxShown) {
-    return participantAttributes(this.toRefArray(), currentUser, maxShown)
-  }
-})
-
-export default MessageThread
-
-MessageThread.modelName = 'MessageThread'
-
-MessageThread.fields = {
-  id: attr(),
-  unreadCount: attr(),
-  participants: many('Person'),
-  updatedAt: attr(),
-  lastReadAt: attr()
 }

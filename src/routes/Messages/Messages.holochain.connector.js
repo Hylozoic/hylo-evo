@@ -7,23 +7,23 @@ import { push } from 'connected-react-router'
 import { threadUrl } from 'util/navigation'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getMe from 'store/selectors/getMe'
-import { FetchThreadsQuery } from 'store/actions/fetchThreads'
-import PeopleQuery from 'graphql/queries/PeopleQuery.graphql'
-import HolochainPeopleQuery from 'graphql/queries/HolochainPeopleQuery.graphql'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
+import { NEW_THREAD_ID } from './Messages'
+import HolochainPeopleQuery from 'graphql/queries/HolochainPeopleQuery.graphql'
+import FindOrCreateThreadMutation from 'graphql/mutations/FindOrCreateThreadMutation.graphql'
+import CreateMessageMutation from 'graphql/mutations/CreateMessageMutation.graphql'
+import MessageThreadsQuery from 'graphql/queries/MessageThreadsQuery.graphql'
+import MessageThreadQuery from 'graphql/queries/MessageThreadQuery.graphql'
+import MessageThreadMessagesQuery from 'graphql/queries/MessageThreadMessagesQuery.graphql'
 import {
   updateMessageText,
   setThreadSearch,
   setContactsSearch,
   getTextForCurrentMessageThread,
   getThreadSearch,
-  CreateMessageMutation,
-  FetchMessagesQuery,
-  FindOrCreateThreadMutation,
-  FetchThreadQuery,
-  getContactsSearch
+  getContactsSearch,
+  filterThreadsByParticipant
 } from './Messages.store'
-import { NEW_THREAD_ID } from './Messages';
 
 const mockSocket = { on: () => {}, off: () => {} }
 
@@ -61,7 +61,19 @@ export function mapStateToProps (state, props) {
     sendIsTyping: sendIsTyping(messageThreadId),
     threadSearch: getThreadSearch(state, props),
     contactsSearch: getContactsSearch(state, props),
-    socket: holochainActive ? mockSocket : getSocket()
+    socket: holochainActive ? mockSocket : getSocket(),
+    // The follow are not implemented as Apollo querybindings below
+    // are doing each of these implicitly but they are still expected
+    // at some places in components.
+    //
+    // Not implemented in holochain:
+    fetchRecentContacts: () => {},
+    updateThreadReadTime: () => {},
+    // Apollo handled:
+    fetchThreads: () => {},
+    fetchThread: () => {},
+    fetchMessages: () => {},
+    fetchPeople: () => {}
   }
 }
 
@@ -97,11 +109,13 @@ Loading status
   !hasMoreMessages: bool
 */
 
-const findOrCreateThread = graphql(FindOrCreateThreadMutation, {
-  // mutation FindOrCreateThreadMutation ($participantIds: [String])
-  options: {
-    context: { holochain: true }
-  },
+export const holochainContacts = graphql(HolochainPeopleQuery, {
+  props: ({ data: { people } }) => ({
+    holochainContacts: get('items', people)
+  })
+})
+
+export const findOrCreateThread = graphql(FindOrCreateThreadMutation, {
   props: ({ mutate }) => ({
     findOrCreateThread: (participantIds, createdAt) => mutate({
       variables: {
@@ -112,50 +126,37 @@ const findOrCreateThread = graphql(FindOrCreateThreadMutation, {
   })
 })
 
-const createMessage = graphql(CreateMessageMutation, {
+export const createMessage = graphql(CreateMessageMutation, {
   props: ({ mutate, loading }) => ({
-    // $messageThreadId: String, $text: String, $createdAt: String
     createMessage: (messageThreadId, text, forNewThread) => mutate({
       variables: {
         messageThreadId,
         text,
         createdAt: new Date().getTime().toString()
-      }
-    }),
-    messageCreatePending: loading
-  }),
-  options: {
-    context: { holochain: true }
-  }
+      },
+      refetchQueries: [
+        {
+          query: MessageThreadQuery,
+          variables: {
+            id: messageThreadId
+          }
+        }
+      ],
+      messageCreatePending: loading
+    })
+  })
 })
 
-const fetchThreads = graphql(FetchThreadsQuery, {
-  // query ($first: Int, $offset: Int)
-  props: ({ data }) => ({
-    fetchThreads: () => {
-      console.log('!!!', data)
-    },
-    threads: get('me.messageThreads.items', data),
-    threadsPending: data.loading
-  }),
-  options: {
-    context: { holochain: true }
-  }
-})
-
-const fetchThread = graphql(FetchThreadQuery, {
-  // query FetchThreadQuery ($id: ID)
+export const thread = graphql(MessageThreadQuery, {
+  skip: props => !props.messageThreadId || props.messageThreadId === NEW_THREAD_ID,
   props: ({ data: { messageThread, loading } }) => ({
-    fetchThread: () => {},
     messageThread,
     threadsPending: loading
   }),
   options: props => ({
-    skip: !props.messageThreadId || props.messageThreadId === NEW_THREAD_ID,
-    context: { holochain: true },
     variables: {
-      // NOTE: it might be too much magic but if we changed
-      // the query variable name to messageThreadId (which I think it shoul be)
+      // NOTE: it might be too much magic but if we changed the query variable
+      // name to messageThreadId (which I think it should be)
       // then we can do away with this block as Apollo will by default look
       // for matching props on the component for missing variables.
       id: props.messageThreadId
@@ -163,52 +164,34 @@ const fetchThread = graphql(FetchThreadQuery, {
   })
 })
 
-const fetchMessages = graphql(FetchMessagesQuery, {
-  // query ($id: ID, $cursor: ID)
+export const messages = graphql(MessageThreadMessagesQuery, {
   props: ({ data: { messageThread, loading } }) => ({
-    fetchMessages: () => {},
     messages: get('messages.items', messageThread) || [],
     messagesPending: loading
   }),
   options: props => ({
-    context: { holochain: true },
     variables: {
       id: props.messageThreadId
     }
   })
 })
 
-const fetchPeople = graphql(PeopleQuery, {
-  // query PeopleQuery ($autocomplete: String, $first: Int)
-  props: ({ data: { messageThread, loading } }) => ({
-    fetchPeople: () => {}
-  }),
-  options: props => ({
-    context: { holochain: true },
-    variables: {
-      autocomplete: props.contactsSearch
-    }
-  })
-})
-
-const holochainContacts = graphql(HolochainPeopleQuery, {
-  options: {
-    context: { holochain: true }
-  },
-  props: ({ data: { people } }) => {
+export const threads = graphql(MessageThreadsQuery, {
+  props: ({ data: { me, loading }, threadSearch }) => {
+    const threads = loading ? [] : get('messageThreads.items', me)
     return {
-      holochainContacts: get('items', people)
+      threads: threads.filter(filterThreadsByParticipant(threadSearch)),
+      threadsPending: loading
     }
   }
 })
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
+  holochainContacts,
   findOrCreateThread,
   createMessage,
-  fetchThreads,
-  fetchThread,
-  fetchMessages,
-  fetchPeople,
-  holochainContacts
+  thread,
+  messages,
+  threads
 )

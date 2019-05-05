@@ -7,6 +7,14 @@ export function firstName (user) {
   return user.name ? user.name.split(' ')[0] : null
 }
 
+export function canModerate (me, community) {
+  const memberships = me.memberships
+  const membership = find(m =>
+    m.community === get('id', community), memberships)
+
+  return get('hasModeratorRole', membership)
+}
+
 export function isTester (userId) {
   const testerIds = process.env.HYLO_TESTER_IDS && process.env.HYLO_TESTER_IDS.split(',')
 
@@ -49,12 +57,8 @@ const Me = Model.createClass({
   },
 
   canModerate (community) {
-    const memberships = this.memberships.toRefArray
-      ? this.memberships.toRefArray()
-      : this.memberships
-    const membership = find(m =>
-      m.community === get('id', community), memberships)
-    return get('hasModeratorRole', membership)
+    const me = this.toRefArray ? this.toRefArray() : this
+    return canModerate(me, community)
   },
 
   hasFeature (key) {

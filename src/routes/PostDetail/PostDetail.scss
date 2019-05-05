@@ -59,7 +59,7 @@
 }
 
 .tag {
-  // TODO: Extract typography
+  // Extract typography?
   @include font-regular;
   color: $color-caribbean-green;
   font-size: 12px;

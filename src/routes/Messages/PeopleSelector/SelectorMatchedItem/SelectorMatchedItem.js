@@ -1,13 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import './SelectorMatchedItem.scss'
 
-const { func, string } = PropTypes
-
-export default function SelectorMatchedItem ({ avatarUrl, id, name, removeParticipant }) {
+export default function SelectorMatchedItem ({ avatarUrl, name, removeParticipant }) {
   return <div styleName='selector-matched-item'>
     <RoundImage url={avatarUrl} small styleName='avatar' />
     <span styleName='name'>{name}</span>
@@ -18,6 +15,7 @@ export default function SelectorMatchedItem ({ avatarUrl, id, name, removePartic
 }
 
 SelectorMatchedItem.propTypes = {
-  name: string,
-  deleteMatch: func
+  avatarUrl: PropTypes.string,
+  name: PropTypes.string,
+  removeParticipant: PropTypes.func
 }

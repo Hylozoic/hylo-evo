@@ -9,63 +9,20 @@ import RoundImage from 'components/RoundImage'
 import Loading from 'components/Loading'
 import './MessageForm.scss'
 
-var { func, object, string, bool } = PropTypes
-
 export default class MessageForm extends React.Component {
-  static propTypes = {
-    createMessage: func.isRequired,
-    messageThreadId: string,
-    messageText: string,
-    focusForm: func,
-    sendIsTyping: func,
-    findOrCreateThread: func,
-    goToThread: func,
-    pending: bool,
-    forNewThread: bool,
-    updateMessageText: func,
-    formRef: object,
-    className: string,
-    currentUser: object,
-    placeholder: string
-  }
-
   static defaultProps = {
     placeholder: 'Write something...'
   }
 
-  sendForExisting () {
-    const { createMessage, messageThreadId, messageText } = this.props
-    createMessage(messageThreadId, messageText).then(() => this.props.focusForm())
+  submit = () => {
     this.startTyping.cancel()
     this.props.sendIsTyping(false)
-  }
-
-  sendNewMessage () {
-    const { findOrCreateThread, participants, createMessage, goToThread, messageText } = this.props
-    const participantIds = participants.map(p => p.id)
-    const createdAt = new Date().getTime().toString()
-
-    findOrCreateThread(participantIds, createdAt).then(resp => {
-      // NOTE: This is a Holochain+Apollo thing
-      const messageThreadId = get('payload.data.findOrCreateThread.id', resp) || get('data.findOrCreateThread.id', resp)
-      createMessage(messageThreadId, messageText, true).then(() => goToThread(messageThreadId))
-    })
-  }
-
-  submit = event => {
-    if (event) event.preventDefault()
-    if (!this.props.messageText || this.props.pending) return false
-    if (this.props.forNewThread) {
-      this.sendNewMessage()
-    } else {
-      this.sendForExisting()
-    }
-    return false
+    this.props.updateMessageText('')
+    this.props.onSubmit()
   }
 
   handleOnChange = event => {
-    const { messageThreadId, updateMessageText } = this.props
-    updateMessageText(messageThreadId, event.target.value)
+    this.props.updateMessageText(event.target.value)
   }
 
   handleKeyDown = event => {
@@ -104,4 +61,16 @@ export default class MessageForm extends React.Component {
         placeholder={placeholder} />
     </form>
   }
+}
+
+MessageForm.propTypes = {
+  className: PropTypes.string,
+  currentUser: PropTypes.object,
+  formRef: PropTypes.object,
+  messageText: PropTypes.string,
+  onSubmit: PropTypes.func.isRequired,
+  pending: PropTypes.bool,
+  placeholder: PropTypes.string,
+  sendIsTyping: PropTypes.func,
+  updateMessageText: PropTypes.func
 }

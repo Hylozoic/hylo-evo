@@ -28,12 +28,6 @@ export function createMessageList (messages, lastSeenAt) {
       isHeader = greaterThanMax || m.creator.id !== currentHeader.creator.id
       currentHeader = isHeader ? m : currentHeader
     }
-    /* on hold
-    let messageTime = new Date(m.createdAt).getTime()
-    if (lastTimestamp && lastSeenAt && lastTimestamp < lastSeenAt && lastSeenAt < messageTime) {
-      acc.push(<NewMessages />)
-    }
-    lastTimestamp = messageTime */
     acc.push(<Message message={m} key={`message-${m.id}`} isHeader={isHeader} />)
     return acc
   }, [])
@@ -75,8 +69,6 @@ export default class MessageSection extends React.Component {
     // This avoids an automatic re-render on scroll, and any inconsistencies
     // owing to the async nature of setState and/or setState batching.
 
-    // if (oldMessages && oldMessages.length > 1 && messages && messages.length > 1)
-
     this.shouldScroll = false
 
     if (deltaLength) {
@@ -98,10 +90,6 @@ export default class MessageSection extends React.Component {
 
   componentDidUpdate (prevProps) {
     if (this.shouldScroll) this.scrollToBottom()
-    /* on hold
-    if (messageThread && !lastSeenAtTimes[messageThread.id] && messageThread.unreadCount) {
-      lastSeenAtTimes[messageThread.id] = new Date(messageThread.lastReadAt).getTime()
-    } */
   }
 
   atBottom = ({ offsetHeight, scrollHeight, scrollTop }) =>
@@ -131,9 +119,7 @@ export default class MessageSection extends React.Component {
 
   detectScrollExtremes = throttle(target => {
     if (this.props.pending) return
-
-    // TODO: is this the correct behaviour? Just because we've read the
-    // bottom message doesn't mean we've read 'em all...
+    // Marks entire thread as read if we've seen the last message
     if (this.atBottom(target)) this.markAsRead()
     if (target.scrollTop <= 150) this.fetchMore()
   }, 500, { trailing: true })
@@ -153,8 +139,7 @@ export default class MessageSection extends React.Component {
 
   markAsRead = debounce(() => {
     const { messageThread, updateThreadReadTime } = this.props
-    // TODO: Clean this up better? Holochain currently not supporting this
-    if (updateThreadReadTime && messageThread) updateThreadReadTime(messageThread.id)
+    if (messageThread) updateThreadReadTime(messageThread.id)
   }, 2000)
 
   render () {
@@ -163,10 +148,12 @@ export default class MessageSection extends React.Component {
     return <div styleName='messages-section'
       ref={this.list}
       onScroll={this.handleScroll}>
-      <div styleName='messages-section-inner'>
-        {pending && <Loading />}
-        {createMessageList(messages, lastSeenAtTimes[get('id', messageThread)])}
-      </div>
+      {pending && <Loading />}
+      {!pending &&
+        <div styleName='messages-section-inner'>
+          {createMessageList(messages, lastSeenAtTimes[get('id', messageThread)])}
+        </div>
+      }
     </div>
   }
 }

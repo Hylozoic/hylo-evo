@@ -51,7 +51,7 @@ export function mapStateToProps (state, props) {
   const editing = !!post || loading
   const images = getAttachments(state, { type: 'image' })
   const files = getAttachments(state, { type: 'file' })
-  // TODO: this should be a selector exported from AttachmentManager
+  // Note: this could be a selector exported from AttachmentManager
   const showImages = !isEmpty(images) ||
     get('attachmentType', uploadAttachmentPending) === 'image'
   const showFiles = !isEmpty(files) ||

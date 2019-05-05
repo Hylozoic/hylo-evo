@@ -1,8 +1,7 @@
 import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
-import gql from 'graphql-tag'
-import { some, get, isEmpty, includes, pick, uniqueId } from 'lodash/fp'
+import { get, isEmpty, includes, pick, uniqueId } from 'lodash/fp'
 import { AnalyticsEvents } from 'hylo-utils/constants'
 import {
   FETCH_MESSAGES,
@@ -10,11 +9,13 @@ import {
   FETCH_THREADS,
   UPDATE_THREAD_READ_TIME,
   CREATE_MESSAGE,
-  CREATE_MESSAGE_PENDING,
   FIND_OR_CREATE_THREAD
 } from 'store/constants'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
-import { NEW_THREAD_ID } from './Messages'
+import FindOrCreateThreadMutation from 'graphql/mutations/FindOrCreateThreadMutation.graphql'
+import CreateMessageMutation from 'graphql/mutations/CreateMessageMutation.graphql'
+import MessageThreadQuery from 'graphql/queries/MessageThreadQuery.graphql'
+import MessageThreadMessagesQuery from 'graphql/queries/MessageThreadMessagesQuery.graphql'
 
 export const MODULE_NAME = 'Messages'
 export const UPDATE_MESSAGE_TEXT = `${MODULE_NAME}/UPDATE_MESSAGE_TEXT`
@@ -79,9 +80,6 @@ export default function reducer (state = defaultState, action) {
       return { ...state, contactsSearch: payload }
     case SET_THREAD_SEARCH:
       return { ...state, threadSearch: payload }
-    case CREATE_MESSAGE_PENDING:
-      const messageThreadId = meta.forNewThread ? NEW_THREAD_ID : meta.messageThreadId
-      return { ...state, [messageThreadId]: '' }
     case UPDATE_MESSAGE_TEXT:
       return { ...state, [meta.messageThreadId]: meta.messageText }
     default:
@@ -90,7 +88,103 @@ export default function reducer (state = defaultState, action) {
 }
 
 // GLOBAL STORE
-// Contacts and Participants
+
+// ACTIONS (to be moved to /store/actions/*)
+
+export function findOrCreateThread (participantIds, createdAt, holochainAPI = false) {
+  return {
+    type: FIND_OR_CREATE_THREAD,
+    graphql: {
+      query: FindOrCreateThreadMutation,
+      variables: {
+        participantIds,
+        createdAt
+      }
+    },
+    meta: {
+      holochainAPI,
+      extractModel: 'MessageThread'
+    }
+  }
+}
+
+export function fetchThread (id, holochainAPI = false) {
+  return {
+    type: FETCH_THREAD,
+    graphql: {
+      query: MessageThreadQuery,
+      variables: {
+        id
+      }
+    },
+    meta: {
+      holochainAPI,
+      extractModel: 'MessageThread',
+      extractQueryResults: {
+        getType: () => FETCH_MESSAGES,
+        getItems: get('payload.data.messageThread.messages')
+      }
+    }
+  }
+}
+
+export function fetchMessages (id, opts = {}, holochainAPI = false) {
+  return {
+    type: FETCH_MESSAGES,
+    graphql: {
+      query: MessageThreadMessagesQuery,
+      variables: opts.cursor ? { id, cursor: opts.cursor } : { id }
+    },
+    meta: {
+      holochainAPI,
+      extractModel: 'MessageThread',
+      extractQueryResults: {
+        getItems: get('payload.data.messageThread.messages')
+      },
+      id
+    }
+  }
+}
+
+export function createMessage (messageThreadId, messageText, forNewThread, holochainAPI = false) {
+  const createdAt = new Date().getTime().toString()
+  return {
+    type: CREATE_MESSAGE,
+    graphql: {
+      query: CreateMessageMutation,
+      variables: {
+        messageThreadId,
+        text: messageText,
+        createdAt
+      }
+    },
+    meta: {
+      holochainAPI,
+      optimistic: true,
+      extractModel: 'Message',
+      tempId: uniqueId(`messageThread${messageThreadId}_`),
+      messageThreadId,
+      messageText,
+      forNewThread,
+      analytics: AnalyticsEvents.DIRECT_MESSAGE_SENT
+    }
+  }
+}
+
+export function updateThreadReadTime (id) {
+  return {
+    type: UPDATE_THREAD_READ_TIME,
+    payload: {
+      api: {
+        path: `/noo/post/${id}/update-last-read`,
+        method: 'POST'
+      }
+    },
+    meta: { id }
+  }
+}
+
+// Selectors
 
 export function presentPersonListItem (person) {
   return {
@@ -100,13 +194,7 @@ export function presentPersonListItem (person) {
   }
 }
 
-const nameSort = (a, b) => {
-  const aName = a.name.toUpperCase()
-  const bName = b.name.toUpperCase()
-  return aName > bName ? 1 : aName < bName ? -1 : 0
-}
-
-// TODO this can cleaned-up / seperated better
+// TODO: Needs be cleaned-up / seperated better to be reused with Apollo
 export const getHolochainContactsWithSearch = ormCreateSelector(
   orm,
   state => state.orm,
@@ -185,17 +273,6 @@ export const getThreads = ormCreateSelector(
   }
 )
 
-export function filterThreadsByParticipant (threadSearch) {
-  if (!threadSearch) return () => true
-
-  const threadSearchLC = threadSearch.toLowerCase()
-  return thread => {
-    const participants = thread.participants.toRefArray()
-    const match = name => name.toLowerCase().startsWith(threadSearchLC)
-    return some(p => some(match, p.name.split(' ')), participants)
-  }
-}
-
 export const getMessages = createSelector(
   state => orm.session(state.orm),
   getCurrentMessageThreadId,
@@ -217,181 +294,24 @@ export const getMessagesHasMore = createSelector(
   get('hasMore')
 )
 
-// ACTIONS (to be moved to /store/actions/*)
+// Utility
 
-export const FindOrCreateThreadMutation = gql`
-  mutation FindOrCreateThreadMutation ($participantIds: [String]) {
-    findOrCreateThread(data: {participantIds: $participantIds}) {
-      id
-      createdAt
-      updatedAt
-      participants {
-        id
-        name
-        avatarUrl
-      }
-    }
-  }
-`
-export function findOrCreateThread (participantIds, createdAt, holochainAPI = false, query = FindOrCreateThreadMutation) {
-  return {
-    type: FIND_OR_CREATE_THREAD,
-    graphql: {
-      query,
-      variables: {
-        participantIds,
-        createdAt
-      }
-    },
-    meta: {
-      holochainAPI,
-      extractModel: 'MessageThread'
-    }
-  }
+const nameSort = (a, b) => {
+  const aName = a.name.toUpperCase()
+  const bName = b.name.toUpperCase()
+  return aName > bName ? 1 : aName < bName ? -1 : 0
 }
 
-export const FetchThreadQuery = gql`
-  query FetchThreadQuery ($id: ID) {
-    messageThread (id: $id) {
-      id
-      unreadCount
-      lastReadAt
-      createdAt
-      updatedAt
-      participants {
-        id
-        name
-        avatarUrl
-      }
-      messages(first: 40, order: "desc") {
-        items {
-          id
-          text
-          creator {
-            id
-            name
-            avatarUrl
-          }
-          createdAt
-        }
-        total
-        hasMore
-      }
-    }
-  }
-`
-export function fetchThread (id, holochainAPI = false, query = FetchThreadQuery) {
-  return {
-    type: FETCH_THREAD,
-    graphql: {
-      query: FetchThreadQuery,
-      variables: {
-        id
-      }
-    },
-    meta: {
-      holochainAPI,
-      extractModel: 'MessageThread',
-      extractQueryResults: {
-        getType: () => FETCH_MESSAGES,
-        getItems: get('payload.data.messageThread.messages')
-      }
-    }
-  }
-}
+export function filterThreadsByParticipant (threadSearch) {
+  if (!threadSearch) return () => true
 
-export const FetchMessagesQuery = gql`
-  query ($id: ID, $cursor: ID) {
-    messageThread (id: $id) {
-      id
-      messages(first: 80, cursor: $cursor, order: "desc") {
-        items {
-          id
-          createdAt
-          text
-          creator {
-            id
-            name
-            avatarUrl
-          }
-        }
-        total
-        hasMore
-      }
-    }
-  }
-`
-export function fetchMessages (id, opts = {}, holochainAPI = false, query = FetchMessagesQuery) {
-  return {
-    type: FETCH_MESSAGES,
-    graphql: {
-      query,
-      variables: opts.cursor ? { id, cursor: opts.cursor } : { id }
-    },
-    meta: {
-      holochainAPI,
-      extractModel: 'MessageThread',
-      extractQueryResults: {
-        getItems: get('payload.data.messageThread.messages')
-      },
-      id
-    }
-  }
-}
-
-export const CreateMessageMutation = gql`
-  mutation ($messageThreadId: String, $text: String, $createdAt: String) {
-    createMessage(data: {
-      messageThreadId: $messageThreadId,
-      text: $text,
-      createdAt: $createdAt
-    }) {
-      id
-      text
-      createdAt
-      creator {
-        id
-      }
-      messageThread {
-        id
-      }
-    }
-  }
-`
-export function createMessage (messageThreadId, messageText, forNewThread, holochainAPI = false, query = CreateMessageMutation) {
-  const createdAt = new Date().getTime().toString()
-  return {
-    type: CREATE_MESSAGE,
-    graphql: {
-      query,
-      variables: {
-        messageThreadId,
-        text: messageText,
-        createdAt
-      }
-    },
-    meta: {
-      holochainAPI,
-      optimistic: true,
-      extractModel: 'Message',
-      tempId: uniqueId(`messageThread${messageThreadId}_`),
-      messageThreadId,
-      messageText,
-      forNewThread,
-      analytics: AnalyticsEvents.DIRECT_MESSAGE_SENT
-    }
-  }
-}
-
-export function updateThreadReadTime (id) {
-  return {
-    type: UPDATE_THREAD_READ_TIME,
-    payload: {
-      api: {
-        path: `/noo/post/${id}/update-last-read`,
-        method: 'POST'
-      }
-    },
-    meta: { id }
+  const threadSearchLC = threadSearch.toLowerCase()
+  return thread => {
+    // TODO: For some reason filtering in the Apollo props is not sending the whole thread object
+    console.log('!!! thread in filter:', thread)
+    // const participants = toRefArray(thread.participants)
+    // const match = name => name.toLowerCase().startsWith(threadSearchLC)
+    // return some(p => some(match, p.name.split(' ')), participants)
+    return true
   }
 }

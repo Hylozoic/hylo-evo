@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { get } from 'lodash/fp'
 import PeopleSelector from './PeopleSelector'
 import ThreadList from './ThreadList'
 import Header from './Header'
@@ -62,6 +63,45 @@ export default class Messages extends React.Component {
     }
   }
 
+  onThreadIdChange = () => {
+    const forNewThread = this.props.messageThreadId === NEW_THREAD_ID
+    this.setState(() => ({ forNewThread }))
+    if (!forNewThread) {
+      this.props.fetchThread()
+    }
+    this.focusForm()
+  }
+
+  sendMessage = event => {
+    if (event) event.preventDefault()
+    if (!this.props.messageText || this.props.pending) return false
+    this.setState(() => ({ participants: [] }))
+    if (this.state.forNewThread) {
+      this.sendNewMessage()
+    } else {
+      this.sendForExisting()
+    }
+    return false
+  }
+
+  sendForExisting () {
+    const { createMessage, messageThreadId, messageText } = this.props
+    createMessage(messageThreadId, messageText).then(() => this.focusForm())
+  }
+
+  sendNewMessage () {
+    const { findOrCreateThread, createMessage, goToThread, messageText } = this.props
+    const { participants } = this.state
+    const participantIds = participants.map(p => p.id)
+    const createdAt = new Date().getTime().toString()
+
+    findOrCreateThread(participantIds, createdAt).then(resp => {
+      // NOTE: This is a Holochain+Apollo thing
+      const messageThreadId = get('payload.data.findOrCreateThread.id', resp) || get('data.findOrCreateThread.id', resp)
+      createMessage(messageThreadId, messageText, true).then(() => goToThread(messageThreadId))
+    })
+  }
+
   addParticipant = (participant) => {
     this.setState(state => ({
       participants: [...state.participants, participant]
@@ -76,16 +116,11 @@ export default class Messages extends React.Component {
     }))
   }
 
-  focusForm = () => this.form.current && this.form.current.focus()
-
-  onThreadIdChange = () => {
-    const forNewThread = this.props.messageThreadId === NEW_THREAD_ID
-    this.setState(() => ({ forNewThread }))
-    if (!forNewThread) {
-      this.props.fetchThread()
-    }
-    this.focusForm()
+  updateMessageText = messageText => {
+    this.props.updateMessageText(this.props.messageThreadId, messageText)
   }
+
+  focusForm = () => this.form.current && this.form.current.focus()
 
   render () {
     const {
@@ -111,12 +146,8 @@ export default class Messages extends React.Component {
       fetchMessages,
       updateThreadReadTime,
       // MessageForm
-      createMessage,
       messageText,
       sendIsTyping,
-      findOrCreateThread,
-      goToThread,
-      updateMessageText,
       // PeopleSelector
       fetchRecentContacts,
       fetchPeople,
@@ -157,6 +188,7 @@ export default class Messages extends React.Component {
               <Header
                 messageThread={messageThread}
                 currentUser={currentUser}
+                pending={messagesPending}
                 onCloseURL={onCloseURL} />}
             {!forNewThread &&
               <MessageSection
@@ -171,19 +203,13 @@ export default class Messages extends React.Component {
             {(!forNewThread || participants.length > 0) &&
               <div styleName='message-form'>
                 <MessageForm
-                  messageThreadId={messageThreadId}
+                  onSubmit={this.sendMessage}
                   currentUser={currentUser}
                   formRef={this.form}
-                  focusForm={this.focusForm}
-                  createMessage={createMessage}
-                  participants={participants}
+                  updateMessageText={this.updateMessageText}
                   messageText={messageText}
                   sendIsTyping={sendIsTyping}
-                  findOrCreateThread={findOrCreateThread}
-                  goToThread={goToThread}
-                  pending={messageCreatePending}
-                  forNewThread={forNewThread}
-                  updateMessageText={updateMessageText} />
+                  pending={messageCreatePending} />
               </div>}
             <PeopleTyping styleName='people-typing' />
             {socket && <SocketSubscriber type='post' id={messageThreadId} />}

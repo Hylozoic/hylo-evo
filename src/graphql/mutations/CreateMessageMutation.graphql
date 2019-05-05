@@ -1,0 +1,30 @@
+mutation CreateMessageMutation (
+  $messageThreadId: String,
+  $text: String,
+  $createdAt: String
+) {
+  createMessage(data: {
+    messageThreadId: $messageThreadId,
+    text: $text,
+    createdAt: $createdAt
+  }) {
+    id
+    text
+    createdAt
+    creator {
+      id
+      name
+      avatarUrl
+    }
+    messageThread {
+      id
+      createdAt
+      updatedAt
+      participants {
+        id
+        name
+        avatarUrl
+      }
+    }
+  }
+}

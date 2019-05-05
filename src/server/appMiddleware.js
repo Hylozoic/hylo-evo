@@ -10,7 +10,7 @@ import { once } from 'lodash'
 import { createMemoryHistory } from 'history'
 
 export default function appMiddleware (req, res, next) {
-  // TODO: async data loading
+  // Note: add async data loading for more effective SSR
 
   const history = createMemoryHistory()
   const store = createStore(history)

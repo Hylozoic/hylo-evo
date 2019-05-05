@@ -1,17 +1,17 @@
-import { array, string, func } from 'prop-types'
 import React, { Component } from 'react'
-import './MessagesDropdown.scss'
+import { array, string, func } from 'prop-types'
+import { get, isEmpty, some, find, orderBy } from 'lodash/fp'
 import { Link } from 'react-router-dom'
-import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import cx from 'classnames'
+import { humanDate, textLength, truncate } from 'hylo-utils/text'
+import { toRefArray, itemsToArray } from 'store/models'
 import { newMessageUrl, threadUrl } from 'util/navigation'
 import RoundImageRow from 'components/RoundImageRow'
 import TopNavDropdown from '../TopNavDropdown'
-import { get, isEmpty, some, find, orderBy } from 'lodash/fp'
-import { toRefArray } from 'store/models'
 import { participantAttributes, isUnread, isUpdatedSince } from 'store/models/MessageThread'
 import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
 import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
+import './MessagesDropdown.scss'
 
 export default class MessagesDropdown extends Component {
   static propTypes = {
@@ -29,7 +29,7 @@ export default class MessagesDropdown extends Component {
 
   componentDidMount = () => {
     const { fetchThreads } = this.props
-    fetchThreads()
+    if (fetchThreads) fetchThreads()
   }
 
   onToggle = nowActive => {
@@ -104,7 +104,7 @@ export default class MessagesDropdown extends Component {
 }
 
 export function MessagesDropdownItem ({ thread, onClick, currentUser }) {
-  const message = orderBy(m => Date.parse(m.createdAt), 'desc', toRefArray(thread.messages))[0]
+  const message = orderBy(m => Date.parse(m.createdAt), 'desc', toRefArray(itemsToArray(thread.messages)))[0]
   if (!message || !message.text) return null
 
   var { text } = message
@@ -135,5 +135,5 @@ export function MessagesDropdownItem ({ thread, onClick, currentUser }) {
 export function lastMessageCreator (message, currentUser, participants) {
   if (get('id', message.creator) === currentUser.id) return 'You: '
   if (participants.length <= 2) return ''
-  return find(p => p.id === get('id', message.creator), participants).name + ': '
+  return find(p => p.id === get('creator', message), participants).name + ': '
 }

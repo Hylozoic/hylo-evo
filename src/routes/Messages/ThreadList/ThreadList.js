@@ -8,7 +8,7 @@ import Badge from 'components/Badge'
 import Button from 'components/Button'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
-import { toRefArray } from 'store/models'
+import { toRefArray, itemsToArray } from 'store/models'
 import { participantAttributes } from 'store/models/MessageThread'
 import './ThreadList.scss'
 
@@ -44,12 +44,16 @@ export default class ThreadList extends Component {
       </div>
       <ul styleName='list' id={'thread-list-list'}>
         {!threadsPending && threads.map(t => {
+          const messages = toRefArray(itemsToArray(t.messages))
+          // TODO: Look at why orderBy wasn't doing what was expected
+          // orderBy(m => Date.parse(m.createdAt), 'desc', messages)
+          const latestMessage = messages[messages.length - 1]
           return <ThreadListItem id={t.id}
             key={`thread-li-${t.id}`}
             currentUser={currentUser}
             active={t.id === messageThreadId}
             thread={t}
-            latestMessage={orderBy(m => Date.parse(m.createdAt), 'desc', toRefArray(t.messages))[0]}
+            latestMessage={latestMessage}
             unreadCount={t.unreadCount} />
         })}
         {threadsPending &&
