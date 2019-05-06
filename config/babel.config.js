@@ -25,13 +25,35 @@ module.exports = function (api) {
 
   return {
     presets: [
+      [
+        '@babel/preset-env',
+        {
+          'targets': {
+            'browsers': [
+              '>0.25%',
+              'not ie 11',
+              'not op_mini all'
+            ]
+          }
+        }
+      ],
       '@babel/preset-react'
+    ],
+    plugins: [
+      '@babel/plugin-transform-runtime',
+      '@babel/plugin-proposal-class-properties',
+      [
+        'module-resolver',
+        {
+          root: ['src'],
+          extensions: ['.graphql']
+        }
+      ],
+      'import-graphql',
+      'inline-import'
     ],
     ignore: [
       paths.resolveApp('scripts/templates/*')
-    ],
-    plugins: [
-      '@babel/plugin-proposal-class-properties'
     ],
     env: {
       test: {
@@ -58,7 +80,6 @@ module.exports = function (api) {
       },
       server: {
         plugins: [
-          'import-graphql',
           reactCSSModulesPlugin
         ],
         compact: true
