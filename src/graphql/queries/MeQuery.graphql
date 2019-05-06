@@ -1,5 +1,5 @@
-#import "graphql/fragments/MeCompleteFragment.graphql"
-#import "graphql/fragments/CommunityFragment.graphql"
+#import "../fragments/MeCompleteFragment.graphql"
+#import "../fragments/CommunityFragment.graphql"
 
 query MeQuery (
   $slug: String,

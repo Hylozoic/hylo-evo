@@ -1,4 +1,4 @@
-#import 'graphql/fragments/CommunityTopicsFragment.graphql'
+#import '../fragments/CommunityTopicsFragment.graphql'
 
 fragment CommunityFragment on Community {
   id

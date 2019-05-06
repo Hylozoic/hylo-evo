@@ -1,4 +1,4 @@
-#import 'graphql/fragments/MeCompleteFragment.graphql'
+#import '../fragments/MeCompleteFragment.graphql'
 
 mutation MeUpdateMutation ($changes: MeInput) {
   updateMe(changes: $changes) {

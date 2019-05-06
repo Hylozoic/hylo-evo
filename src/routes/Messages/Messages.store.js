@@ -305,7 +305,7 @@ const nameSort = (a, b) => {
 export function filterThreadsByParticipant (threadSearch) {
   if (!threadSearch) return () => true
 
-  const threadSearchLC = threadSearch.toLowerCase()
+  // const threadSearchLC = threadSearch.toLowerCase()
   return thread => {
     // TODO: For some reason filtering in the Apollo props is not sending the whole thread object
     console.log('!!! thread in filter:', thread)
