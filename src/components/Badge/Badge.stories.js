@@ -15,5 +15,7 @@ storiesOf('Badge', module)
     <MemoryRouter>{story()}</MemoryRouter>
   ))
   .add('Show', () =>
-    <Badge {...props}><Button label='Badge' /></Badge>
+    <Button label='Badged'>
+      <Badge {...props} />
+    </Button>
   )
