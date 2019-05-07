@@ -8,10 +8,10 @@ import createStore from './store'
 import './client/websockets'
 import { rootDomId } from 'client/util'
 
-const store = createStore(history)
+// // TODO: For testing
+// apolloClient.clearStore()
 
-// TODO: For testing
-apolloClient.clearStore()
+const store = createStore(history)
 
 ReactDOM.render(
   <ApolloProvider client={apolloClient}>

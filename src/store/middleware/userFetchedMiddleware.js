@@ -3,7 +3,7 @@ import getMe from '../selectors/getMe'
 import getMixpanel from '../selectors/getMixpanel'
 import getIntercom from '../selectors/getIntercom'
 import getHolochainActive from '../selectors/getHolochainActive'
-import apolloClient from 'client/apolloClient'
+import apolloClient from '../../client/apolloClient'
 import HolochainRegisterUserMutation from 'graphql/mutations/HolochainRegisterUserMutation.graphql'
 
 export default function userFetchedMiddleware ({ dispatch, getState }) {

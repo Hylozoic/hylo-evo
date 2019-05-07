@@ -4,17 +4,26 @@ import { get } from 'lodash/fp'
 import { graphqlToString } from 'util/graphql'
 import { createCallObjectWithParams } from 'util/holochain'
 
+const DEFAULT_PARAMS = {
+  active: true
+}
 export class HolochainWebSocketLink extends ApolloLink {
-  constructor (paramsOrClient) {
+  constructor (paramsOrClient = DEFAULT_PARAMS) {
     super()
 
-    this.holochainSocket = new Client(paramsOrClient.uri)
-    this.holochainSocket.on('open', () => console.log('🎉 Successfully connected to Holochain!'))
+    this.paramsOrClient = paramsOrClient
+
+    if (paramsOrClient.active) {
+      this.holochainSocket = new Client(paramsOrClient.uri)
+      this.holochainSocket.on('open', () => console.log('🎉 Successfully connected to Holochain!'))
+    }
   }
 
   request (operation) {
     return new Observable(async observer => {
       try {
+        if (!this.paramsOrClient.active) return observer.complete()
+
         const query = graphqlToString(operation.query)
         const variables = operation.variables
         const callObject = createCallObjectWithParams({

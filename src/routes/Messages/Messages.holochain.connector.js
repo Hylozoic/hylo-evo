@@ -14,7 +14,6 @@ import FindOrCreateThreadMutation from 'graphql/mutations/FindOrCreateThreadMuta
 import CreateMessageMutation from 'graphql/mutations/CreateMessageMutation.graphql'
 import MessageThreadsQuery from 'graphql/queries/MessageThreadsQuery.graphql'
 import MessageThreadQuery from 'graphql/queries/MessageThreadQuery.graphql'
-import MessageThreadMessagesQuery from 'graphql/queries/MessageThreadMessagesQuery.graphql'
 import {
   updateMessageText,
   setThreadSearch,
@@ -27,27 +26,8 @@ import {
 
 const mockSocket = { on: () => {}, off: () => {} }
 
-/*
-Redux for the local store, react-router and socket stuff only:
+// Redux for local store, react-router/window location and socket stuff only
 
-LOCAL STORE QUERIES, MUTATIONS
-  setContactsSearch: func,
-  setThreadSearch: func,
-  updateMessageText: func,
-  messageText: string,
-  threadSearch: string,
-
-SOCKETS RELATED
-  sendIsTyping: func,
-  socket: object,
-
-REACT ROUTER/WINDOW LOCATION BASED
-  messageThreadId: string,
-  onCloseURL: string,
-  !location: object,
-  goToThread: func,
-  changeQuerystringParam: func,
-*/
 export function mapStateToProps (state, props) {
   const routeParams = get('match.params', props)
   const messageThreadId = get('messageThreadId', routeParams)
@@ -62,18 +42,19 @@ export function mapStateToProps (state, props) {
     threadSearch: getThreadSearch(state, props),
     contactsSearch: getContactsSearch(state, props),
     socket: holochainActive ? mockSocket : getSocket(),
-    // The follow are not implemented as Apollo querybindings below
-    // are doing each of these implicitly but they are still expected
-    // at some places in components.
-    //
-    // Not implemented in holochain:
-    fetchRecentContacts: () => {},
-    updateThreadReadTime: () => {},
-    // Apollo handled:
+    // * Apollo + holochain query mocks
+    // These functions in an Apollo world are either not called explicitely
+    // and handled implicitely by the query bindings below or not implemented.
+    // They are mocked here as this component is still expecting and calling
+    // them in the case of it's redux use. This keeps us from needing to
+    // pollute the component with null checks before calling each of these functions.
     fetchThreads: () => {},
     fetchThread: () => {},
     fetchMessages: () => {},
-    fetchPeople: () => {}
+    fetchPeople: () => {},
+    // Not implemented
+    fetchRecentContacts: () => {},
+    updateThreadReadTime: () => {}
   }
 }
 
@@ -87,33 +68,7 @@ export function mapDispatchToProps (dispatch) {
   }, dispatch)
 }
 
-/*
-QUERIES, MUTATIONS, LOADING STATUS AND SELECTORS TO GO TO APOLLO
-  x createMessage: mutation ($messageThreadId: String, $text: String, $createdAt: String)
-  x fetchThreads: query ($first: Int, $offset: Int)
-  !fetchMoreThreads: func,
-  x fetchThread: query FetchThreadQuery ($id: ID)
-  x fetchMessages: query ($id: ID, $cursor: ID)
-  x fetchPeople: query PeopleQuery ($autocomplete: String, $first: Int)
-  x findOrCreateThread: mutation FindOrCreateThreadMutation ($participantIds: [String])
-  !updateThreadReadTime: func,
-Selectors
-  x threads: array,
-  x messageThread: object,
-  x messages: array,
-  x holochainContacts: array,  // uses Redux store for contactsSearch within selector
-Loading status
-  x messagesPending: bool,
-  x threadsPending: bool,
-  x messageCreatePending: bool,
-  !hasMoreMessages: bool
-*/
-
-export const holochainContacts = graphql(HolochainPeopleQuery, {
-  props: ({ data: { people } }) => ({
-    holochainContacts: get('items', people)
-  })
-})
+// Apollo queries, selectors, mutations and loading status
 
 export const findOrCreateThread = graphql(FindOrCreateThreadMutation, {
   props: ({ mutate }) => ({
@@ -129,6 +84,8 @@ export const findOrCreateThread = graphql(FindOrCreateThreadMutation, {
 export const createMessage = graphql(CreateMessageMutation, {
   props: ({ mutate, loading }) => ({
     createMessage: (messageThreadId, text, forNewThread) => mutate({
+      // TODO: Figure-out how to handle loading state for mutations
+      // messageCreatePending: loading,
       variables: {
         messageThreadId,
         text,
@@ -136,27 +93,56 @@ export const createMessage = graphql(CreateMessageMutation, {
       },
       refetchQueries: [
         {
-          query: MessageThreadQuery,
+          query: MessageThreadsQuery,
+          // * Best practice: Always pass variables that are arguments to the operation even if they are null.
+          // If a query that has arguments is ran, even if those arguments are not provided
+          // the query result is cache keyed with those variables in the header as null
           variables: {
-            id: messageThreadId
+            first: null,
+            offset: null
           }
         }
-      ],
-      messageCreatePending: loading
+      ]
     })
   })
+})
+
+export const holochainContacts = graphql(HolochainPeopleQuery, {
+  props: ({ data: { people } }) => ({
+    holochainContacts: get('items', people)
+  })
+})
+
+export const threads = graphql(MessageThreadsQuery, {
+  props: ({ data: { me, loading }, threadSearch }) => {
+    const threads = get('messageThreads.items', me)
+    return {
+      threads: threads && threads.filter(filterThreadsByParticipant(threadSearch)),
+      threadsPending: loading
+    }
+  },
+  variables: {
+    first: null,
+    offset: null
+  },
+  options: {
+    pollInterval: 60000
+  }
 })
 
 export const thread = graphql(MessageThreadQuery, {
   skip: props => !props.messageThreadId || props.messageThreadId === NEW_THREAD_ID,
   props: ({ data: { messageThread, loading } }) => ({
     messageThread,
-    threadsPending: loading
+    messages: get('messages.items', messageThread),
+    messagesPending: loading
   }),
   options: props => ({
+    pollInterval: 10000,
     variables: {
-      // NOTE: it might be too much magic but if we changed the query variable
-      // name to messageThreadId (which I think it should be)
+      // * Best Practice: Normalize argument names in graphql queries (to explicit ID names)?
+      // It may be too much magic but if we changed the query variable
+      // name to messageThreadId (which I think it should be either way)
       // then we can do away with this block as Apollo will by default look
       // for matching props on the component for missing variables.
       id: props.messageThreadId
@@ -164,34 +150,11 @@ export const thread = graphql(MessageThreadQuery, {
   })
 })
 
-export const messages = graphql(MessageThreadMessagesQuery, {
-  props: ({ data: { messageThread, loading } }) => ({
-    messages: get('messages.items', messageThread) || [],
-    messagesPending: loading
-  }),
-  options: props => ({
-    variables: {
-      id: props.messageThreadId
-    }
-  })
-})
-
-export const threads = graphql(MessageThreadsQuery, {
-  props: ({ data: { me, loading }, threadSearch }) => {
-    const threads = loading ? [] : get('messageThreads.items', me)
-    return {
-      threads: threads.filter(filterThreadsByParticipant(threadSearch)),
-      threadsPending: loading
-    }
-  }
-})
-
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  holochainContacts,
   findOrCreateThread,
   createMessage,
+  threads,
   thread,
-  messages,
-  threads
+  holochainContacts
 )

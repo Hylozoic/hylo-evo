@@ -17,9 +17,7 @@ export default class ThreadList extends Component {
     threads: []
   }
 
-  componentDidMount () {
-    if (isEmpty(this.props.threads)) this.props.fetchThreads()
-  }
+  onSearchChange = event => this.props.setThreadSearch(event.target.value)
 
   render () {
     const {
@@ -27,12 +25,10 @@ export default class ThreadList extends Component {
       threadsPending,
       threads,
       threadSearch,
-      setThreadSearch,
-      fetchMoreThreads,
+      onScrollBottom,
       match: { params: { messageThreadId } },
       className
     } = this.props
-    const onSearchChange = (event) => setThreadSearch(event.target.value)
 
     return <div styleName='thread-list' className={className}>
       <div styleName='header'>
@@ -40,32 +36,38 @@ export default class ThreadList extends Component {
         <div styleName='header-text'>Messages</div>
       </div>
       <div styleName='search'>
-        <TextInput placeholder='Search for people...' value={threadSearch} onChange={onSearchChange} />
+        <TextInput
+          placeholder='Search for people...'
+          value={threadSearch}
+          onChange={this.onSearchChange} />
       </div>
       <ul styleName='list' id={'thread-list-list'}>
-        {!threadsPending && threads.map(t => {
-          const messages = toRefArray(itemsToArray(t.messages))
+        {!isEmpty(threads) && threads.map(t => {
+          const messages = itemsToArray(toRefArray(t.messages))
           // TODO: Look at why orderBy wasn't doing what was expected
           // orderBy(m => Date.parse(m.createdAt), 'desc', messages)
           const latestMessage = messages[messages.length - 1]
-          return <ThreadListItem id={t.id}
-            key={`thread-li-${t.id}`}
-            currentUser={currentUser}
+          return <ThreadListItem
+            id={t.id}
             active={t.id === messageThreadId}
             thread={t}
             latestMessage={latestMessage}
-            unreadCount={t.unreadCount} />
+            currentUser={currentUser}
+            unreadCount={t.unreadCount}
+            key={`thread-li-${t.id}`} />
         })}
-        {threadsPending &&
+        {threadsPending && isEmpty(threads) &&
           <div styleName='no-conversations'>Loading conversations...</div>}
-        {!threadsPending && !threads.length && !threadSearch &&
+        {threadsPending && !isEmpty(threads) &&
+          <div styleName='no-conversations'>Refreshing...</div>}
+        {!threadsPending && isEmpty(threads) && !threadSearch &&
           <div styleName='no-conversations'>You have no active conversations</div>}
-        {!threadsPending && !threads.length && threadSearch &&
+        {!threadsPending && isEmpty(threads) && threadSearch &&
           <div styleName='no-conversations'>No conversations found</div>}
       </ul>
       <ScrollListener
         elementId={'thread-list-list'}
-        onBottom={fetchMoreThreads} />
+        onBottom={onScrollBottom} />
     </div>
   }
 }
@@ -73,8 +75,7 @@ export default class ThreadList extends Component {
 ThreadList.propTypes = {
   className: PropTypes.string,
   currentUser: PropTypes.object,
-  fetchMoreThreads: PropTypes.func,
-  fetchThreads: PropTypes.func,
+  onScrollBottom: PropTypes.func,
   match: PropTypes.object,
   setThreadSearch: PropTypes.func,
   threadSearch: PropTypes.string,
@@ -82,11 +83,13 @@ ThreadList.propTypes = {
   threadsPending: PropTypes.bool
 }
 
-export function ThreadListItem ({ currentUser, active, id, thread, latestMessage, unreadCount }) {
+export function ThreadListItem ({
+  currentUser, active, id, thread, latestMessage, unreadCount
+}) {
   const maxTextLength = 54
   let text = ''
 
-  if (latestMessage) {
+  if (latestMessage && latestMessage.text) {
     text = latestMessage.text.substring(0, maxTextLength)
     if (latestMessage.text.length > maxTextLength) {
       text += '...'
@@ -109,6 +112,17 @@ export function ThreadListItem ({ currentUser, active, id, thread, latestMessage
       </div>
     </Link>
   </li>
+}
+
+ThreadListItem.propTypes = {
+  active: PropTypes.bool,
+  currentUser: PropTypes.object,
+  id: PropTypes.any,
+  latestMessage: PropTypes.shape({
+    text: PropTypes.string.isRequired
+  }),
+  thread: PropTypes.object,
+  unreadCount: PropTypes.number
 }
 
 function ThreadAvatars ({ avatarUrls }) {

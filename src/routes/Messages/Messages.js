@@ -15,6 +15,8 @@ export const NEW_THREAD_ID = 'new'
 export default class Messages extends React.Component {
   static defaultProps = {
     participants: [],
+    threads: [],
+    messages: [],
     socket: null
   }
 
@@ -29,9 +31,10 @@ export default class Messages extends React.Component {
     this.form = React.createRef()
   }
 
-  componentDidMount () {
-    this.onThreadIdChange()
-    this.props.fetchPeople()
+  async componentDidMount () {
+    await this.props.fetchPeople()
+    await this.props.fetchThreads()
+    await this.onThreadIdChange()
     // TODO: Handle querystring participants for Members Message button
     // const { participantSearch } = this.props
     // if (participantSearch) {
@@ -89,17 +92,17 @@ export default class Messages extends React.Component {
     createMessage(messageThreadId, messageText).then(() => this.focusForm())
   }
 
-  sendNewMessage () {
+  async sendNewMessage () {
     const { findOrCreateThread, createMessage, goToThread, messageText } = this.props
     const { participants } = this.state
     const participantIds = participants.map(p => p.id)
     const createdAt = new Date().getTime().toString()
-
-    findOrCreateThread(participantIds, createdAt).then(resp => {
-      // NOTE: This is a Holochain+Apollo thing
-      const messageThreadId = get('payload.data.findOrCreateThread.id', resp) || get('data.findOrCreateThread.id', resp)
-      createMessage(messageThreadId, messageText, true).then(() => goToThread(messageThreadId))
-    })
+    const createThreadResponse = await findOrCreateThread(participantIds, createdAt)
+    // NOTE: This is a Redux vs Apollo data structure thing
+    const messageThreadId = get('payload.data.findOrCreateThread.id', createThreadResponse) ||
+      get('data.findOrCreateThread.id', createThreadResponse)
+    await createMessage(messageThreadId, messageText, true)
+    goToThread(messageThreadId)
   }
 
   addParticipant = (participant) => {
@@ -135,7 +138,6 @@ export default class Messages extends React.Component {
       threads,
       threadSearch,
       setThreadSearch,
-      fetchThreads,
       fetchMoreThreads,
       // MessageSection
       socket,
@@ -161,14 +163,12 @@ export default class Messages extends React.Component {
       <div styleName='content'>
         <ThreadList
           styleName='left-column'
+          setThreadSearch={setThreadSearch}
+          onScrollBottom={fetchMoreThreads}
           currentUser={currentUser}
           threadsPending={threadsPending}
           threads={threads}
-          threadSearch={threadSearch}
-          setThreadSearch={setThreadSearch}
-          fetchThreads={fetchThreads}
-          fetchMoreThreads={fetchMoreThreads}
-        />
+          threadSearch={threadSearch} />
         <div styleName='right-column'>
           <div styleName='thread'>
             {forNewThread &&

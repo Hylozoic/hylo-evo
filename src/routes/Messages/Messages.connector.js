@@ -33,10 +33,9 @@ import {
 
 export function mapStateToProps (state, props) {
   const routeParams = get('match.params', props)
-  const { holochainActive } = props
   const messageThreadId = get('messageThreadId', routeParams)
   const messageThread = getCurrentMessageThread(state, props)
-  const recentContacts = holochainActive ? [] : getRecentContacts(state)
+  const recentContacts = getRecentContacts(state)
 
   return {
     recentContacts,
@@ -52,46 +51,37 @@ export function mapStateToProps (state, props) {
     sendIsTyping: sendIsTyping(messageThreadId),
     threadSearch: getThreadSearch(state, props),
     threads: getThreads(state, props),
-    threadsPending: isPendingFor(fetchThreads, state),
+    threadsPending: isPendingFor(fetchThreads, state) || isPendingFor(fetchMessages, state),
     hasMoreThreads: getThreadsHasMore(state, props),
     messages: getMessages(state, props),
     messagesPending: isPendingFor(fetchMessages, state),
     hasMoreMessages: getMessagesHasMore(state, { id: messageThreadId }),
-    socket: holochainActive ? null : getSocket()
+    socket: getSocket()
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const messageThreadId = get('match.params.messageThreadId', props)
-  const { holochainActive } = props
-
-  return {
-    ...bindActionCreators({
-      setContactsSearch,
-      setThreadSearch,
-      updateMessageText,
-      fetchThreads,
-      fetchMessages,
-      findOrCreateThread,
-      changeQuerystringParam,
-      fetchRecentContacts,
-      goToThread: messageThreadId => push(threadUrl(messageThreadId))
-    }, dispatch),
-    fetchPeople: (autocomplete, query, first) =>
-      dispatch(fetchPeople(autocomplete, query, first, holochainActive)),
-    createMessage: (messageThreadId, text, forNewThread) =>
-      dispatch(createMessage(messageThreadId, text, forNewThread, holochainActive)),
-    fetchThread: () => dispatch(fetchThread(messageThreadId, holochainActive)),
-    updateThreadReadTime: id => !holochainActive && dispatch(updateThreadReadTime(id))
-  }
+  return bindActionCreators({
+    setContactsSearch,
+    setThreadSearch,
+    updateMessageText,
+    fetchThreads,
+    fetchMessages,
+    findOrCreateThread,
+    createMessage,
+    changeQuerystringParam,
+    fetchRecentContacts,
+    fetchPeople,
+    updateThreadReadTime,
+    fetchThread,
+    goToThread: messageThreadId => push(threadUrl(messageThreadId))
+  }, dispatch)
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { holochainActive } = ownProps
   const { threads, messages, hasMoreThreads, messageThreadId } = stateProps
-  const findOrCreateThread = (participantIds, createdAt) =>
-    dispatchProps.findOrCreateThread(participantIds, createdAt, holochainActive)
-  const fetchThreads = () => dispatchProps.fetchThreads(20, 0, holochainActive)
+  const fetchThread = () => dispatchProps.fetchThread(messageThreadId)
+  const fetchThreads = () => dispatchProps.fetchThreads(20, 0)
   const fetchMoreThreads =
     hasMoreThreads
       ? () => dispatchProps.fetchThreads(20, threads.length)
@@ -99,13 +89,13 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const fetchMessagesCursor = !isEmpty(messages) && messages[0].id
   const fetchMessages = () => dispatchProps.fetchMessages(messageThreadId, {
     cursor: fetchMessagesCursor
-  }, holochainActive)
+  })
 
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    findOrCreateThread,
+    fetchThread,
     fetchThreads,
     fetchMoreThreads,
     fetchMessages
