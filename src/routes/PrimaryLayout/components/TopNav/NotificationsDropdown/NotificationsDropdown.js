@@ -210,7 +210,7 @@ export function NotificationBody ({ notification }) {
     case ACTION_COMMENT_MENTION:
       var text = decode(striptags(truncateForBody(comment.text)))
       return <div styleName='body'>
-        <span styleName='bold'>{firstName(actor)}</span> commented
+        <span styleName='bold'>{firstName(actor)}</span> wrote: "{text}"
       </div>
     case ACTION_TAG:
     case ACTION_MENTION:
