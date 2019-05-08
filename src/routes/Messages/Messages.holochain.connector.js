@@ -89,8 +89,9 @@ export const createMessage = graphql(CreateMessageMutation, {
       // messageCreatePending: loading,
       variables: {
         messageThreadId,
-        text,
-        createdAt: currentDateString()
+        text
+        // * not currently supported by hylo-holo-dnas
+        // createdAt: currentDateString()
       },
       refetchQueries: [
         {

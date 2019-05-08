@@ -44,9 +44,8 @@ export default class ThreadList extends Component {
       <ul styleName='list' id={'thread-list-list'}>
         {!isEmpty(threads) && threads.map(t => {
           const messages = itemsToArray(toRefArray(t.messages))
-          // TODO: Look at why orderBy wasn't doing what was expected
-          // orderBy(m => Date.parse(m.createdAt), 'desc', messages)
-          const latestMessage = messages[messages.length - 1]
+          const latestMessage = orderBy(m => Date.parse(m.createdAt), 'desc', messages)[0]
+
           return <ThreadListItem
             id={t.id}
             active={t.id === messageThreadId}

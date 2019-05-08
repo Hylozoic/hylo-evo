@@ -1,7 +1,7 @@
 query MessageThreadsQuery ($first: Int, $offset: Int) {
   me {
     id
-    messageThreads(sortBy: "updatedAt", order: "desc", first: $first, offset: $offset) {
+    messageThreads(sortBy: "updatedAt", order: "asc", first: $first, offset: $offset) {
       total
       hasMore
       items {
