@@ -8,7 +8,7 @@ import createStore from './store'
 import './client/websockets'
 import { rootDomId } from 'client/util'
 
-// // TODO: For testing
+// * For testing
 // apolloClient.clearStore()
 
 const store = createStore(history)
