@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { graphql, compose } from 'react-apollo'
-import gql from 'graphql-tag'
-import { get, pick } from 'lodash/fp'
+import { get, orderBy, pick } from 'lodash/fp'
+import HolochainCommunityQuery from 'graphql/queries/HolochainCommunityQuery.graphql'
 
 export function mapStateToProps (state, props) {
   const fetchPostsParam = {
@@ -25,36 +25,11 @@ export function mapStateToProps (state, props) {
   }
 }
 
-const HolochainCommunityQuery = gql`
-  query ($slug: String) {
-    community(slug: $slug) {
-      id
-      slug
-      posts {
-        hasMore
-        items {
-          id
-          title
-          details
-          type
-          creator {
-            id
-            name
-            avatarUrl
-          }
-          createdAt
-          updatedAt
-        }
-      }
-    }
-  }
-`
-
 export const posts = graphql(HolochainCommunityQuery, {
   props: ({ data: { community, loading } }) => {
-    const posts = get('community.posts.items', community)
+    const posts = get('posts.items', community)
     return {
-      posts,
+      posts: orderBy('createdAt', 'desc', posts),
       pending: loading
     }
   },
@@ -62,7 +37,7 @@ export const posts = graphql(HolochainCommunityQuery, {
     variables: {
       slug: get('fetchPostsParam.slug', props)
     },
-    pollInterval: 60000
+    fetchPolicy: 'cache-only'
   })
 })
 

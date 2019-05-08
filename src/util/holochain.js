@@ -18,3 +18,9 @@ export function createCallObjectWithParams (params) {
     params
   }
 }
+
+export function currentDateString () {
+  // ? Date vs Time -- Do these return the same thing and should they?
+  // new Date().getTime().toString()
+  return new Date().toISOString()
+}

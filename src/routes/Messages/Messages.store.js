@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import orm from 'store/models'
-import { get, isEmpty, includes, pick, uniqueId } from 'lodash/fp'
+import { get, some, isEmpty, includes, pick, uniqueId } from 'lodash/fp'
 import { AnalyticsEvents } from 'hylo-utils/constants'
+import orm, { toRefArray } from 'store/models'
 import {
   FETCH_MESSAGES,
   FETCH_THREAD,
@@ -91,24 +91,24 @@ export default function reducer (state = defaultState, action) {
 
 // ACTIONS (to be moved to /store/actions/*)
 
-export function findOrCreateThread (participantIds, createdAt, holochainAPI = false) {
+export function findOrCreateThread (participantIds, createdAt) {
   return {
     type: FIND_OR_CREATE_THREAD,
     graphql: {
       query: FindOrCreateThreadMutation,
       variables: {
         participantIds,
+        // TODO: Remove createdAt generation if not used by Hylo API
         createdAt
       }
     },
     meta: {
-      holochainAPI,
       extractModel: 'MessageThread'
     }
   }
 }
 
-export function fetchThread (id, holochainAPI = false) {
+export function fetchThread (id) {
   return {
     type: FETCH_THREAD,
     graphql: {
@@ -118,7 +118,6 @@ export function fetchThread (id, holochainAPI = false) {
       }
     },
     meta: {
-      holochainAPI,
       extractModel: 'MessageThread',
       extractQueryResults: {
         getType: () => FETCH_MESSAGES,
@@ -128,7 +127,7 @@ export function fetchThread (id, holochainAPI = false) {
   }
 }
 
-export function fetchMessages (id, opts = {}, holochainAPI = false) {
+export function fetchMessages (id, opts = {}) {
   return {
     type: FETCH_MESSAGES,
     graphql: {
@@ -136,7 +135,6 @@ export function fetchMessages (id, opts = {}, holochainAPI = false) {
       variables: opts.cursor ? { id, cursor: opts.cursor } : { id }
     },
     meta: {
-      holochainAPI,
       extractModel: 'MessageThread',
       extractQueryResults: {
         getItems: get('payload.data.messageThread.messages')
@@ -146,7 +144,8 @@ export function fetchMessages (id, opts = {}, holochainAPI = false) {
   }
 }
 
-export function createMessage (messageThreadId, messageText, forNewThread, holochainAPI = false) {
+export function createMessage (messageThreadId, messageText, forNewThread) {
+  // TODO: Remove createdAt generation if not used by Hylo API
   const createdAt = new Date().getTime().toString()
   return {
     type: CREATE_MESSAGE,
@@ -159,7 +158,6 @@ export function createMessage (messageThreadId, messageText, forNewThread, holoc
       }
     },
     meta: {
-      holochainAPI,
       optimistic: true,
       extractModel: 'Message',
       tempId: uniqueId(`messageThread${messageThreadId}_`),
@@ -194,25 +192,25 @@ export function presentPersonListItem (person) {
   }
 }
 
-// TODO: Needs be cleaned-up / seperated better to be reused with Apollo
-export const getHolochainContactsWithSearch = ormCreateSelector(
-  orm,
-  state => state.orm,
-  (state, props) => p => {
-    const contactsSearch = getContactsSearch(state)
-    const holoFilter = props.holochainActive ? p.isHoloData : true
-    if (!contactsSearch || contactsSearch.length < 1) return holoFilter
-    return holoFilter && p.name.toLowerCase().includes(contactsSearch.toLowerCase())
-  },
-  (session, search = () => true) => {
-    return session.Person
-      .all()
-      .filter(search)
-      .toModelArray()
-      .map(presentPersonListItem)
-      .sort(nameSort)
-  }
-)
+// TODO: Fix contacts search for Holochain+Apollo and Hylo API
+// export const getHolochainContactsWithSearch = ormCreateSelector(
+//   orm,
+//   state => state.orm,
+//   (state, props) => p => {
+//     const contactsSearch = getContactsSearch(state)
+//     const holoFilter = props.holochainActive ? p.isHoloData : true
+//     if (!contactsSearch || contactsSearch.length < 1) return holoFilter
+//     return holoFilter && p.name.toLowerCase().includes(contactsSearch.toLowerCase())
+//   },
+//   (session, search = () => true) => {
+//     return session.Person
+//       .all()
+//       .filter(search)
+//       .toModelArray()
+//       .map(presentPersonListItem)
+//       .sort(nameSort)
+//   }
+// )
 
 export const getRecentContacts = ormCreateSelector(
   orm,
@@ -305,13 +303,10 @@ const nameSort = (a, b) => {
 export function filterThreadsByParticipant (threadSearch) {
   if (!threadSearch) return () => true
 
-  // const threadSearchLC = threadSearch.toLowerCase()
+  const threadSearchLC = threadSearch.toLowerCase()
   return thread => {
-    // TODO: For some reason filtering in the Apollo props is not sending the whole thread object
-    console.log('!!! thread in filter:', thread)
-    // const participants = toRefArray(thread.participants)
-    // const match = name => name.toLowerCase().startsWith(threadSearchLC)
-    // return some(p => some(match, p.name.split(' ')), participants)
-    return true
+    const participants = toRefArray(thread.participants)
+    const match = name => name.toLowerCase().startsWith(threadSearchLC)
+    return some(p => some(match, p.name.split(' ')), participants)
   }
 }

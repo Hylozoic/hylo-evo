@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node --preserve-symlinks scripts/start.js",
+    "start": "rm -rf ./node_modules/.cache/babel-loader && node --preserve-symlinks scripts/start.js",
     "build": "node scripts/build.js && scripts/build-es5.sh",
     "test": "node scripts/test.js",
     "lint": "yarn exec standard",

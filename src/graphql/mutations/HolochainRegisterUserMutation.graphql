@@ -1,4 +1,8 @@
-mutation ($id: ID, $name: String, $avatarUrl: String) {
+mutation HolochainRegisterUserMutation (
+  $id: ID,
+  $name: String,
+  $avatarUrl: String
+) {
   registerUser(id: $id, name: $name, avatarUrl: $avatarUrl) {
     success
   }

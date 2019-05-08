@@ -59,18 +59,17 @@ export function receivePost (data, communityId) {
   }
 }
 
-// TODO: Apollo - Handle through Apollo store
 export function receiveNotification (notification) {
   return {
-    // type: RECEIVE_NOTIFICATION,
-    // payload: {
-    //   data: {
-    //     notification
-    //   }
-    // },
-    // meta: {
-    //   extractModel: 'Notification'
-    // }
+    type: RECEIVE_NOTIFICATION,
+    payload: {
+      data: {
+        notification
+      }
+    },
+    meta: {
+      extractModel: 'Notification'
+    }
   }
 }
 

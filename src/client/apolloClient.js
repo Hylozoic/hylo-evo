@@ -29,7 +29,8 @@ const apolloClient = new ApolloClient({
     uri: process.env.HOLO_CHAT_API_HOST,
     active: HOLOCHAIN_ACTIVE
   }),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  connectToDevTools: true
   // resolvers: resolvers
 })
 

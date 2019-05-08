@@ -96,6 +96,7 @@ export default class Messages extends React.Component {
     const { findOrCreateThread, createMessage, goToThread, messageText } = this.props
     const { participants } = this.state
     const participantIds = participants.map(p => p.id)
+    // TODO: Remove createdAt generation if not used by Hylo API
     const createdAt = new Date().getTime().toString()
     const createThreadResponse = await findOrCreateThread(participantIds, createdAt)
     // NOTE: This is a Redux vs Apollo data structure thing

@@ -4,6 +4,7 @@ import { graphql, compose } from 'react-apollo'
 import { get } from 'lodash/fp'
 import { getSocket, sendIsTyping } from 'client/websockets'
 import { push } from 'connected-react-router'
+import { currentDateString } from 'util/holochain'
 import { threadUrl } from 'util/navigation'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getMe from 'store/selectors/getMe'
@@ -72,10 +73,10 @@ export function mapDispatchToProps (dispatch) {
 
 export const findOrCreateThread = graphql(FindOrCreateThreadMutation, {
   props: ({ mutate }) => ({
-    findOrCreateThread: (participantIds, createdAt) => mutate({
+    findOrCreateThread: participantIds => mutate({
       variables: {
         participantIds,
-        createdAt
+        createdAt: currentDateString()
       }
     })
   })
@@ -89,7 +90,7 @@ export const createMessage = graphql(CreateMessageMutation, {
       variables: {
         messageThreadId,
         text,
-        createdAt: new Date().getTime().toString()
+        createdAt: currentDateString()
       },
       refetchQueries: [
         {
@@ -114,10 +115,10 @@ export const holochainContacts = graphql(HolochainPeopleQuery, {
 })
 
 export const threads = graphql(MessageThreadsQuery, {
-  props: ({ data: { me, loading }, threadSearch }) => {
+  props: ({ data: { me, loading }, ownProps }) => {
     const threads = get('messageThreads.items', me)
     return {
-      threads: threads && threads.filter(filterThreadsByParticipant(threadSearch)),
+      threads: threads && threads.filter(filterThreadsByParticipant(ownProps.threadSearch)),
       threadsPending: loading
     }
   },

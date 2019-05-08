@@ -1,0 +1,23 @@
+query HolochainCommunityQuery ($slug: String) {
+  community(slug: $slug) {
+    id
+    name
+    slug
+    posts {
+      hasMore
+      items {
+        id
+        title
+        details
+        type
+        creator {
+          id
+          name
+          avatarUrl
+        }
+        createdAt
+        updatedAt
+      }
+    }
+  }
+}

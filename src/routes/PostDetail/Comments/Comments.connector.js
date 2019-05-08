@@ -17,24 +17,22 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = (dispatch, props) => {
   const { postId, scrollToBottom } = props
   return {
-    fetchCommentsMaker: (cursor, holochainApi) => () => dispatch(fetchComments(postId, { cursor }, holochainApi)),
-    createCommentMaker: holochainApi => text =>
-      dispatch(createComment(postId, text, holochainApi))
-        .then(() => scrollToBottom())
+    fetchCommentsMaker: cursor => () => dispatch(fetchComments(postId, { cursor })),
+    createComment: text => dispatch(createComment(postId, text)).then(() => scrollToBottom())
   }
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { comments, holochainActive } = stateProps
-  const { fetchCommentsMaker, createCommentMaker } = dispatchProps
+  const { comments } = stateProps
+  const { fetchCommentsMaker } = dispatchProps
   const cursor = !isEmpty(comments) && comments[0].id
+  const fetchComments = fetchCommentsMaker(cursor)
 
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    fetchComments: fetchCommentsMaker(cursor, holochainActive),
-    createComment: createCommentMaker(holochainActive)
+    fetchComments
   }
 }
 

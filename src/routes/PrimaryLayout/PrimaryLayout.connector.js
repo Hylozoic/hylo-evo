@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import { toggleDrawer } from './PrimaryLayout.store'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import fetchForCommunity from 'store/actions/fetchForCommunity'
-import holochainFetchForCommunity from 'store/actions/holochainFetchForCommunity'
 import { FETCH_FOR_COMMUNITY } from 'store/constants'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
@@ -42,23 +41,8 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchForCurrentUser: () => dispatch(fetchForCurrentUser(slug)),
     fetchForCommunity: () => dispatch(fetchForCommunity(slug)),
-    holochainFetchForCommunity: () => dispatch(holochainFetchForCommunity(slug)),
     toggleDrawer: () => dispatch(toggleDrawer())
   }
 }
 
-export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { holochainActive } = stateProps
-  const fetchForCommunity = holochainActive
-    ? dispatchProps.holochainFetchForCommunity
-    : dispatchProps.fetchForCommunity
-
-  return {
-    ...stateProps,
-    ...dispatchProps,
-    ...ownProps,
-    fetchForCommunity
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
+export default connect(mapStateToProps, mapDispatchToProps)

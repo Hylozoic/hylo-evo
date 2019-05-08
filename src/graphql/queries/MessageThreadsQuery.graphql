@@ -15,7 +15,8 @@ query MessageThreadsQuery ($first: Int, $offset: Int) {
           name
           avatarUrl
         }
-        # TODO: Changed "first" value to 80 for Holochain ease but needs to be reconsidered for node because that's too many for this
+        # TODO: Changed "first" value to 80 for Holochain/Apollo query matching
+        #       but needs to be refactored to not do this for Hylo API
         messages(first: 80, order: "desc") {
           items {
             id

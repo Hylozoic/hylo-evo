@@ -1,4 +1,4 @@
-const holochainPostFieldsFragment = withComments => `
+fragment HolochainPostFieldsFragment on Post {
   id
   title
   details
@@ -21,7 +21,7 @@ const holochainPostFieldsFragment = withComments => `
     avatarUrl
   }
   commentersTotal
-  ${withComments ? `comments(first: 10, order: "desc") {
+  comments {
     items {
       id
       text
@@ -38,7 +38,5 @@ const holochainPostFieldsFragment = withComments => `
     }
     total
     hasMore
-  }` : ''}
-`
-
-export default holochainPostFieldsFragment
+  }
+}

@@ -1,12 +1,10 @@
-import { get } from 'lodash/fp'
 import { graphqlToString } from 'util/graphql'
 
 export default function graphqlMiddleware (store) {
   return next => action => {
     const { type, meta, graphql } = action
-    const holochainAPI = get('holochainAPI', meta)
 
-    if (holochainAPI || !graphql) return next(action)
+    if (!graphql) return next(action)
 
     const { query: unknownGraphql, variables } = graphql
     const query = graphqlToString(unknownGraphql)

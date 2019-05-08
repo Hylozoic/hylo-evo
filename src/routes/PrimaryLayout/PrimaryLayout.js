@@ -102,7 +102,7 @@ export default class PrimaryLayout extends Component {
 
     return <div styleName='container'>
       <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
-      <TopNav styleName='top' onClick={closeDrawer} {...{ community, network, currentUser, showLogoBadge, holochainActive }} />
+      <TopNav styleName='top' onClick={closeDrawer} {...{ community, network, currentUser, showLogoBadge }} />
       <div styleName='main' onClick={closeDrawer}>
         <Navigation collapsed={hasDetail} styleName='left' showTopics={showTopics} currentUser={currentUser} />
         <div styleName='center' id={CENTER_COLUMN_ID}>
@@ -154,7 +154,7 @@ export default class PrimaryLayout extends Component {
           </Switch>
         </div>
       </div>
-      <Route path='/t/:messageThreadId?' render={props => <Messages {...props} holochainActive={holochainActive} />} />
+      <Route path='/t/:messageThreadId?' render={props => <Messages {...props} />} />
       <Switch>
         {postEditorRoutes.map(({ path }) =>
           <Route path={path} exact key={path} children={({ match, location }) =>

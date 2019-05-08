@@ -20,7 +20,6 @@ import {
   updateThreadReadTime,
   setThreadSearch,
   setContactsSearch,
-  getHolochainContactsWithSearch,
   getTextForCurrentMessageThread,
   getThreadSearch,
   getThreads,
@@ -39,7 +38,6 @@ export function mapStateToProps (state, props) {
 
   return {
     recentContacts,
-    holochainContacts: getHolochainContactsWithSearch(state, props),
     onCloseURL: getPreviousLocation(state),
     currentUser: getMe(state),
     messageThreadId,
