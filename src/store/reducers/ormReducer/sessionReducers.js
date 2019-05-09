@@ -4,6 +4,8 @@ Reducers in this folder are different from the usual: they have the signature
 redux-orm API on models in the session. Their return values are ignored.
 */
 
+export { handleNotificationActions } from './notifications'
+
 export {
   ormSessionReducer as postHeaderReducer
 } from 'components/PostCard/PostHeader/PostHeader.store'

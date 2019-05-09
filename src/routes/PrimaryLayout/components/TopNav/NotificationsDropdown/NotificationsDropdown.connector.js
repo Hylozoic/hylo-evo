@@ -1,44 +1,31 @@
 import { connect } from 'react-redux'
-import { graphql, compose } from 'react-apollo'
-import { push } from 'connected-react-router'
-import NotificationsQuery from 'graphql/queries/NotificationsQuery.graphql'
-import MarkActivityReadMutation from 'graphql/mutations/MarkActivityReadMutation.graphql'
-import MarkAllActivitiesReadMutation from 'graphql/mutations/MarkAllActivitiesReadMutation.graphql'
+import {
+  fetchNotifications,
+  markActivityRead,
+  markAllActivitiesRead,
+  getNotifications
+} from './NotificationsDropdown.store'
 import getMe from 'store/selectors/getMe'
 import { urlForNotification } from 'store/models/Notification'
-
-export const fetchNotifications = graphql(NotificationsQuery, {
-  props: ({ data: { notifications, loading } }) => ({
-    notifications: notifications && notifications.items,
-    pending: loading
-  })
-})
-
-export const markActivityRead = graphql(MarkActivityReadMutation, {
-  props: ({ mutate }) => ({
-    markActivityRead: id => mutate({ variables: { id } })
-  })
-})
-
-export const markAllActivitiesRead = graphql(MarkAllActivitiesReadMutation, {
-  name: 'markAllActivitiesRead'
-})
+import { push } from 'connected-react-router'
+import { FETCH_NOTIFICATIONS } from 'store/constants'
 
 export function mapStateToProps (state, props) {
+  const notifications = getNotifications(state, props)
   return {
-    currentUser: getMe(state, props)
+    notifications,
+    currentUser: getMe(state, props),
+    pending: state.pending[FETCH_NOTIFICATIONS]
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    goToNotification: notification => dispatch(push(urlForNotification(notification)))
+    fetchNotifications: () => dispatch(fetchNotifications()),
+    goToNotification: notification => dispatch(push(urlForNotification(notification))),
+    markActivityRead: id => dispatch(markActivityRead(id)),
+    markAllActivitiesRead: () => dispatch(markAllActivitiesRead())
   }
 }
 
-export default compose(
-  fetchNotifications,
-  markActivityRead,
-  markAllActivitiesRead,
-  connect(mapStateToProps, mapDispatchToProps)
-)
+export default connect(mapStateToProps, mapDispatchToProps)
