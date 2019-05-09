@@ -36,6 +36,7 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 const community = graphql(HolochainCommunityQuery, {
+  skip: props => !props.slug,
   props: ({ data: { community, loading } }) => ({
     community,
     communityPending: loading

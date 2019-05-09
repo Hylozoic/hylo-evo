@@ -1,54 +1,78 @@
-import { get } from 'lodash/fp'
+import { get, omit } from 'lodash/fp'
 import apolloClient from 'client/apolloClient'
-import { LOGOUT } from 'store/constants'
-import { stringToGraphql } from 'util/graphql'
+import { LOGOUT, RESET_STORE } from 'store/constants'
+
+/*
+
+  * Make calls to Apollo Client
+
+  'apollo' key on action is simply a passthrough of options to current instance of Apollo client
+  with the added feature of being able simply pass a 'graphql' key which can infer and the correct
+  operation:
+
+  https://www.apollographql.com/docs/react/api/apollo-client  
+
+  Note: currently requires valid parsed graphql (i.e. a graphql file or gql`` tagged operation)
+
+  * Example usage
+
+  Dispatch this:
+
+  callApollo({
+    query: MyQuery,
+    // * alternatively:
+    // mutation: MyMutation,
+    // graphql: MyQueryOrMutation,
+    ...apolloClientCallOptions
+  })
+
+  The action:
+
+  function callApollo (apollo) {
+    return {
+      type: CALL_APOLLO,
+      apollo
+    }
+  }
+
+*/
 
 export default function apolloMiddleware (store) {
   return next => action => {
-    const { type, meta, graphql } = action
-    let promise
-    const apollo = get('apollo', meta)
+    const { type, apollo, meta } = action
 
-    // TODO: To handle this and BLOCK_USER with local resolver
-    if (type === LOGOUT) {
+    // TODO: Handle LOGOUT and BLOCK_USER (with a local resolver)
+    if (type === LOGOUT || type === RESET_STORE) {
       apolloClient.resetStore()
 
       return next(action)
     }
 
-    if (!apollo || !graphql) return next(action)
+    if (!apollo) return next(action)
 
-    const { query: unknownGraphql, variables } = graphql
+    const { graphql, query, mutation } = apollo
+    const operation = graphql || query || mutation
+    const operationType = get('definitions[0].operation', operation)
+    const apolloCall = {
+      [operationType]: operation,
+      ...omit([operationType, 'graphql'], apollo)
+    }
+    let nextPayload
 
-    const parsedGraphql = stringToGraphql(unknownGraphql)
-
-    const operation = get('definitions[0].operation', parsedGraphql)
-    // const queryName = get('definitions[0].selectionSet.selections[0].name.value', parsedGraphql)
-
-    switch (operation) {
+    switch (operationType) {
       case 'mutation':
-        const update = get('update', apollo)
-        const optimisticResponse = get('optimisticResponse', apollo)
-
-        promise = apolloClient.mutate({
-          mutation: parsedGraphql,
-          variables,
-          optimisticResponse,
-          update
-        })
+        nextPayload = apolloClient.mutate(apolloCall)
         break
       case 'query':
-        promise = apolloClient.query({
-          query: parsedGraphql,
-          variables
-        })
+        nextPayload = apolloClient.query(apolloCall)
         break
     }
 
+    // Maintain support for the promise middleware
     if (meta && meta.then) {
-      promise = promise.then(meta.then)
+      nextPayload = nextPayload.then(meta.then)
     }
 
-    return next({ ...action, payload: promise })
+    return next({ ...action, payload: nextPayload })
   }
 }
