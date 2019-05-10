@@ -3,6 +3,16 @@ import PropTypes from 'prop-types'
 import { attr, many, Model } from 'redux-orm'
 import featureFlag from '../../config/featureFlags'
 
+export const MOCK_ME = {
+  memberships: {
+    count: () => 0,
+    items: []
+  },
+  firstName: () => 'Loren',
+  hasFeature: () => false,
+  canModerate: () => true
+}
+
 export function firstName (user) {
   return user.name ? user.name.split(' ')[0] : null
 }

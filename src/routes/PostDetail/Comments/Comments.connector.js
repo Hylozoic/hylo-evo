@@ -2,15 +2,13 @@ import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import { isEmpty } from 'lodash/fp'
 import { fetchComments, createComment, getComments, getHasMoreComments, getTotalComments } from './Comments.store'
-import getHolochainActive from 'store/selectors/getHolochainActive'
 
 export function mapStateToProps (state, props) {
   return {
     comments: getComments(state, props),
     total: getTotalComments(state, { id: props.postId }),
     hasMore: getHasMoreComments(state, { id: props.postId }),
-    currentUser: getMe(state),
-    holochainActive: getHolochainActive(state)
+    currentUser: getMe(state)
   }
 }
 

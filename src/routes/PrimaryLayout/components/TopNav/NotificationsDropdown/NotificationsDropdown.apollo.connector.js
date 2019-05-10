@@ -7,6 +7,10 @@ import MarkAllActivitiesReadMutation from 'graphql/mutations/MarkAllActivitiesRe
 import getMe from 'store/selectors/getMe'
 import { urlForNotification } from 'store/models/Notification'
 
+// * Kept for now for future Apollo exploration, was build to talk to Hylo API
+//   This does work on it's own without need of our ReduxORM setup beyond
+//   currentUser.
+
 export function mapStateToProps (state, props) {
   return {
     currentUser: getMe(state, props),

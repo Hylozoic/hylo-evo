@@ -8,6 +8,12 @@ export const HOLOCHAIN_ACTIVE = typeof window !== 'undefined' &&
 
 export const HOLOCHAIN_HASH_MATCH = '[a-zA-Z0-9]{46}'
 
+export const HOLOCHAIN_MOCK_AGENT = {
+  id: 'loren',
+  name: 'Loren Johnson',
+  avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/23247/userAvatar/23247/profile-1-4.jpg'
+}
+
 export function createCallObjectWithParams (params) {
   const [instance, zome, func] = process.env.HOLO_CHAT_GRAPHQL_PATH.split('/')
 
@@ -21,6 +27,5 @@ export function createCallObjectWithParams (params) {
 
 export function currentDateString () {
   // ? Date vs Time -- Do these return the same thing and should they?
-  // new Date().getTime().toString()
   return new Date().toISOString()
 }

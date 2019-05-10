@@ -10,7 +10,7 @@ import { LOGOUT, RESET_STORE } from 'store/constants'
   with the added feature of being able simply pass a 'graphql' key which can infer and the correct
   operation:
 
-  https://www.apollographql.com/docs/react/api/apollo-client  
+  https://www.apollographql.com/docs/react/api/apollo-client
 
   Note: currently requires valid parsed graphql (i.e. a graphql file or gql`` tagged operation)
 

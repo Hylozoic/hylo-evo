@@ -14,10 +14,11 @@ export default class MessageForm extends React.Component {
     placeholder: 'Write something...'
   }
 
-  submit = () => {
+  submit = event => {
+    if (event) event.preventDefault()
     this.startTyping.cancel()
     this.props.sendIsTyping(false)
-    this.props.updateMessageText('')
+    this.props.updateMessageText()
     this.props.onSubmit()
   }
 

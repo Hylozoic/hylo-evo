@@ -2,7 +2,7 @@ import { get } from 'lodash/fp'
 import { FETCH_FOR_CURRENT_USER } from 'store/constants'
 import MeQuery from 'graphql/queries/MeQuery.graphql'
 
-export default function (slug) {
+export default function fetchForCurrentUser (slug) {
   return {
     type: FETCH_FOR_CURRENT_USER,
     graphql: {

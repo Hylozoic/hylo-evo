@@ -13,9 +13,16 @@ export class HolochainWebSocketLink extends ApolloLink {
 
     this.paramsOrClient = paramsOrClient
 
+    this.ready = new Promise((resolve, reject) => {
+      this.readyResolve = resolve
+    })
+
     if (paramsOrClient.active) {
       this.holochainSocket = new Client(paramsOrClient.uri)
-      this.holochainSocket.on('open', () => console.log('🎉 Successfully connected to Holochain!'))
+      this.holochainSocket.on('open', () => {
+        this.readyResolve()
+        console.log('🎉 Successfully connected to Holochain!')
+      })
     }
   }
 
@@ -23,6 +30,8 @@ export class HolochainWebSocketLink extends ApolloLink {
     return new Observable(async observer => {
       try {
         if (!this.paramsOrClient.active) return observer.complete()
+
+        await this.ready
 
         const query = graphqlToString(operation.query)
         const variables = operation.variables

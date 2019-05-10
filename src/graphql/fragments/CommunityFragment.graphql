@@ -39,6 +39,10 @@ fragment CommunityFragment on Community {
     order: $order,
     subscribed: $subscribed,
     autocomplete: $autocomplete
+  # * This is not yet worked-out, it may be working, it may not be
+  #   if it does what you need to do in the wrapping query call
+  #   send in the $skipTopics variable, which you can/should also
+  #   set as a default of false (e.g. '$skipTopics: Boolean = false')
   ) @skip(if: $skipTopics) {
     ...CommunityTopicsFragment
   }

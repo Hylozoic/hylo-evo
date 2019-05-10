@@ -41,6 +41,7 @@ import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
+import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 import {
   POST_ID_MATCH,
   VALID_POST_TYPE_CONTEXTS_MATCH,
@@ -60,6 +61,8 @@ export default class PrimaryLayout extends Component {
     if (this.props.slug) {
       this.props.fetchForCommunity()
     }
+
+    if (HOLOCHAIN_ACTIVE) this.props.registerHolochainAgent()
   }
 
   componentDidUpdate (prevProps) {
@@ -78,8 +81,7 @@ export default class PrimaryLayout extends Component {
       toggleDrawer,
       isCommunityRoute,
       communityPending,
-      showLogoBadge,
-      holochainActive
+      showLogoBadge
     } = this.props
 
     if (!currentUser || (isCommunityRoute && communityPending)) {
@@ -89,8 +91,7 @@ export default class PrimaryLayout extends Component {
     }
 
     if (isCommunityRoute) {
-      // don't show NotFound in holochain as we don't get the communities with currentUser
-      if (!community && !communityPending && !holochainActive) return <NotFound />
+      if (!community && !communityPending) return <NotFound />
     }
 
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
@@ -139,7 +140,7 @@ export default class PrimaryLayout extends Component {
         </div>
         <div styleName={cx('sidebar', { hidden: hasDetail })}>
           <Switch>
-            <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={holochainActive ? null : CommunitySidebar} />
+            <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
             <Route path={`/c/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
             <Route path={`/c/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
             <Route path={`/n/:networkSlug/${OPTIONAL_NEW_POST_MATCH}`} exact component={NetworkSidebar} />

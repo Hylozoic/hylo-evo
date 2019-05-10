@@ -75,8 +75,7 @@ export default class Messages extends React.Component {
     this.focusForm()
   }
 
-  sendMessage = event => {
-    if (event) event.preventDefault()
+  sendMessage = () => {
     if (!this.props.messageText || this.props.pending) return false
     this.setState(() => ({ participants: [] }))
     if (this.state.forNewThread) {
@@ -234,7 +233,6 @@ Messages.propTypes = {
   findOrCreateThread: PropTypes.func,
   goToThread: PropTypes.func,
   hasMoreMessages: PropTypes.bool,
-  holochainActive: PropTypes.bool,
   holochainContacts: PropTypes.array,
   location: PropTypes.object,
   messageCreatePending: PropTypes.bool,

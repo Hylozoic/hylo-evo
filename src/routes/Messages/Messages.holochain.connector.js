@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { graphql, compose } from 'react-apollo'
 import { get } from 'lodash/fp'
-import { getSocket, sendIsTyping } from 'client/websockets'
+import { sendIsTyping } from 'client/websockets'
 import { push } from 'connected-react-router'
 import { currentDateString } from 'util/holochain'
 import { threadUrl } from 'util/navigation'
@@ -32,7 +32,6 @@ const mockSocket = { on: () => {}, off: () => {} }
 export function mapStateToProps (state, props) {
   const routeParams = get('match.params', props)
   const messageThreadId = get('messageThreadId', routeParams)
-  const { holochainActive } = props
 
   return {
     currentUser: getMe(state, props),
@@ -42,13 +41,13 @@ export function mapStateToProps (state, props) {
     sendIsTyping: sendIsTyping(messageThreadId),
     threadSearch: getThreadSearch(state, props),
     contactsSearch: getContactsSearch(state, props),
-    socket: holochainActive ? mockSocket : getSocket(),
     // * Apollo + holochain query mocks
     // These functions in an Apollo world are either not called explicitely
     // and handled implicitely by the query bindings below or not implemented.
     // They are mocked here as this component is still expecting and calling
     // them in the case of it's redux use. This keeps us from needing to
     // pollute the component with null checks before calling each of these functions.
+    socket: mockSocket,
     fetchThreads: () => {},
     fetchThread: () => {},
     fetchMessages: () => {},
@@ -75,8 +74,9 @@ export const findOrCreateThread = graphql(FindOrCreateThreadMutation, {
   props: ({ mutate }) => ({
     findOrCreateThread: participantIds => mutate({
       variables: {
-        participantIds,
-        createdAt: currentDateString()
+        participantIds
+        // * not currently supported by hylo-holo-dnas
+        // createdAt: currentDateString()
       }
     })
   })
@@ -89,9 +89,8 @@ export const createMessage = graphql(CreateMessageMutation, {
       // messageCreatePending: loading,
       variables: {
         messageThreadId,
-        text
-        // * not currently supported by hylo-holo-dnas
-        // createdAt: currentDateString()
+        text,
+        createdAt: currentDateString()
       },
       refetchQueries: [
         {
@@ -119,7 +118,10 @@ export const threads = graphql(MessageThreadsQuery, {
   props: ({ data: { me, loading }, ownProps }) => {
     const threads = get('messageThreads.items', me)
     return {
-      threads: threads && threads.filter(filterThreadsByParticipant(ownProps.threadSearch)),
+      // TODO: Order threads by most recent message
+      threads: threads && threads
+        .filter(filterThreadsByParticipant(ownProps.threadSearch))
+        .reverse(),
       threadsPending: loading
     }
   },
