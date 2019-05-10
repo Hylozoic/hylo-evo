@@ -56,11 +56,10 @@ import './PrimaryLayout.scss'
 export default class PrimaryLayout extends Component {
   componentDidMount () {
     this.props.fetchForCurrentUser()
+    if (HOLOCHAIN_ACTIVE) this.props.registerHolochainAgent()
     if (this.props.slug) {
       this.props.fetchForCommunity()
     }
-
-    if (HOLOCHAIN_ACTIVE) this.props.registerHolochainAgent()
   }
 
   componentDidUpdate (prevProps) {
