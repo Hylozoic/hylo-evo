@@ -4,6 +4,7 @@ import './CommunitySettings.scss'
 import CommunitySettingsTab from './CommunitySettingsTab'
 import ModeratorsSettingsTab from './ModeratorsSettingsTab'
 import InviteSettingsTab from './InviteSettingsTab'
+import DeleteSettingsTab from './DeleteSettingsTab'
 import Loading from 'components/Loading'
 import FullPageModal from 'routes/FullPageModal'
 import { get } from 'lodash/fp'
@@ -32,7 +33,8 @@ export default class CommunitySettings extends Component {
     const {
       community,
       updateCommunitySettings,
-      canModerate
+      canModerate,
+      deleteCommunity
     } = this.props
 
     if (!community) return <Loading />
@@ -40,6 +42,8 @@ export default class CommunitySettings extends Component {
     if (!canModerate) return <Redirect to={communityUrl(community.slug)} />
 
     const { slug } = community
+
+    console.log('community community ', community)
 
     return <FullPageModal goToOnClose={`/c/${slug}`}
       content={[
@@ -60,6 +64,11 @@ export default class CommunitySettings extends Component {
           name: 'Invite',
           path: `/c/${slug}/settings/invite`,
           component: <InviteSettingsTab community={community} />
+        },
+        {
+          name: 'Delete',
+          path: `/c/${slug}/settings/delete`,
+          component: <DeleteSettingsTab community={community} deleteCommunity={deleteCommunity} />
         }
       ]} />
   }
