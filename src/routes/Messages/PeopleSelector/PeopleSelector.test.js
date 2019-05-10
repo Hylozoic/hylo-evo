@@ -6,10 +6,10 @@ import PeopleSelector from './PeopleSelector'
 import PersonListItem from './PersonListItem'
 
 const defaultProps = {
-  setAutocomplete: () => {},
+  setContactsSearch: () => {},
   fetchPeople: () => {},
   fetchContacts: () => {},
-  fetchRecentContacts: () => {},
+  fetchDefaultList: () => {},
   addParticipant: () => {},
   removeParticipant: () => {},
   changeQuerystringParam: () => {},
@@ -30,14 +30,14 @@ describe('PeopleSelector', () => {
     let fetchPeople
     let removeParticipant
     let input
-    let setAutocomplete
+    let setContactsSearch
     let wrapper
 
     beforeEach(() => {
       fetchPeople = jest.fn()
       addParticipant = jest.fn()
       removeParticipant = jest.fn()
-      setAutocomplete = jest.fn()
+      setContactsSearch = jest.fn()
       wrapper = mount(
         <MemoryRouter>
           <PeopleSelector
@@ -45,7 +45,7 @@ describe('PeopleSelector', () => {
             fetchPeople={fetchPeople}
             addParticipant={addParticipant}
             removeParticipant={removeParticipant}
-            setAutocomplete={setAutocomplete}
+            setContactsSearch={setContactsSearch}
             matches={[ { id: '1' }, { id: '2' } ]} />
         </MemoryRouter>
       )
@@ -130,23 +130,23 @@ describe('PeopleSelector', () => {
 
     it('resets values after adding participants', () => {
       input.simulate('keyDown', { keyCode: keyMap.ENTER })
-      expect(setAutocomplete).toBeCalledWith(null)
+      expect(setContactsSearch).toBeCalledWith(null)
       expect(input.instance().value).toBe('')
     })
   })
 
-  describe('setAutocomplete', () => {
-    let setAutocomplete
+  describe('setContactsSearch', () => {
+    let setContactsSearch
     let wrapper
 
     beforeEach(() => {
       jest.useFakeTimers()
-      setAutocomplete = jest.fn()
+      setContactsSearch = jest.fn()
       wrapper = mount(
         <MemoryRouter>
           <PeopleSelector
             {...defaultProps}
-            setAutocomplete={setAutocomplete} />
+            setContactsSearch={setContactsSearch} />
         </MemoryRouter>
       )
     })
@@ -157,7 +157,7 @@ describe('PeopleSelector', () => {
       input.instance().value = expected
       input.simulate('change')
       jest.runAllTimers()
-      const actual = setAutocomplete.mock.calls[0][0]
+      const actual = setContactsSearch.mock.calls[0][0]
       expect(actual).toBe(expected)
     })
 
@@ -168,7 +168,7 @@ describe('PeopleSelector', () => {
       input.instance().value = invalid
       input.simulate('change')
       jest.runAllTimers()
-      expect(setAutocomplete).not.toHaveBeenCalled()
+      expect(setContactsSearch).not.toHaveBeenCalled()
       expect(input.instance().value).toBe(expected)
     })
   })
@@ -188,19 +188,19 @@ describe('PeopleSelector', () => {
     })
 
     it('resets values after adding a participant', () => {
-      const setAutocomplete = jest.fn()
+      const setContactsSearch = jest.fn()
       const wrapper = mount(
         <MemoryRouter>
           <PeopleSelector
             {...defaultProps}
-            setAutocomplete={setAutocomplete} />
+            setContactsSearch={setContactsSearch} />
         </MemoryRouter>
       )
       const input = wrapper.find('input').first()
       input.instance().value = 'flargle'
       wrapper.find(PeopleSelector).instance().addParticipant('1')
       expect(input.instance().value).toBeFalsy()
-      expect(setAutocomplete).toBeCalledWith(null)
+      expect(setContactsSearch).toBeCalledWith(null)
     })
   })
 

@@ -28,7 +28,7 @@ exports[`renders as expected with no community 1`] = `
       <Connect(MessagesDropdown)
         renderToggleChildren={[Function]}
       />
-      <Apollo(Apollo(Apollo(Connect(NotificationsDropdown))))
+      <Connect(NotificationsDropdown)
         renderToggleChildren={[Function]}
       />
       <Dropdown

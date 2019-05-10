@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { get } from 'lodash/fp'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import PeopleSelector from './PeopleSelector'
 import ThreadList from './ThreadList'
 import Header from './Header'
@@ -39,23 +40,6 @@ export default class Messages extends React.Component {
     // const { participantSearch } = this.props
     // if (participantSearch) {
     //   participantSearch.forEach(p => this.props.addParticipant(p))
-    //   this.props.changeQuerystringParam(this.props, 'participants', null)
-    // }
-    // Here is some of the stuff that was used to make it...
-    // import getQuerystringParam from 'store/selectors/getQuerystringParam'
-    // participantIdsSearch: getQuerystringParam('participants', null, props),
-    // export function getParticipantSearch (props, participantsFromStore) {
-    //   const participantIds = getQuerystringParam('participants', null, props)
-    //   if (participantIds) {
-    //     return participantIds
-    //       .split(',')
-    //       .filter(pId => !participantsFromStore.find(participant => participant.id === pId))
-    //   }
-    //   return null
-    // }
-    // const { participantIdsSearch } = this.props
-    // if (participantIdsSearch) {
-    //   participantIdsSearch.forEach(p => this.addParticipant(p))
     //   this.props.changeQuerystringParam(this.props, 'participants', null)
     // }
   }

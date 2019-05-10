@@ -1,5 +1,5 @@
-import { mapStateToProps, mapDispatchToProps, mergeProps } from './Messages.connector'
 import orm from 'store/models'
+import { mapStateToProps, mapDispatchToProps, mergeProps } from './Messages.connector'
 
 describe('mapStateToProps', () => {
   const session = orm.session(orm.getEmptyState())

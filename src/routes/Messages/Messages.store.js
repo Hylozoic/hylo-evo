@@ -16,6 +16,7 @@ import FindOrCreateThreadMutation from 'graphql/mutations/FindOrCreateThreadMuta
 import CreateMessageMutation from 'graphql/mutations/CreateMessageMutation.graphql'
 import MessageThreadQuery from 'graphql/queries/MessageThreadQuery.graphql'
 import MessageThreadMessagesQuery from 'graphql/queries/MessageThreadMessagesQuery.graphql'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
 export const MODULE_NAME = 'Messages'
 export const UPDATE_MESSAGE_TEXT = `${MODULE_NAME}/UPDATE_MESSAGE_TEXT`
@@ -190,6 +191,17 @@ export function presentPersonListItem (person) {
     community: person.memberships.first()
       ? person.memberships.first().community.name : null
   }
+}
+
+// TODO: Handle querystring participants for Members Message button
+export function getParticipantSearch (props, participantsFromStore) {
+  const participantIds = getQuerystringParam('participants', null, props)
+  if (participantIds) {
+    return participantIds
+      .split(',')
+      .filter(pId => !participantsFromStore.find(participant => participant.id === pId))
+  }
+  return null
 }
 
 // TODO: Fix contacts search for Holochain+Apollo and Hylo API
