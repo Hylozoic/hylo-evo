@@ -1,24 +1,28 @@
-import { ApolloLink, Observable } from 'apollo-link'
+import { ApolloLink, Observable, fromError } from 'apollo-link'
 import { Client } from 'rpc-websockets'
 import { get } from 'lodash/fp'
 import { graphqlToString } from 'util/graphql'
 import { createCallObjectWithParams } from 'util/holochain'
 
 const DEFAULT_PARAMS = {
-  active: true
+  active: true,
+  maxReconnects: 100,
+  reconnectInterval: 3000
 }
+
 export class HolochainWebSocketLink extends ApolloLink {
-  constructor (paramsOrClient = DEFAULT_PARAMS) {
+  constructor (paramsOrClient = {}) {
     super()
 
-    this.paramsOrClient = paramsOrClient
-
-    this.ready = new Promise((resolve, reject) => {
-      this.readyResolve = resolve
-    })
-
     if (paramsOrClient.active) {
-      this.holochainSocket = new Client(paramsOrClient.uri)
+      this.paramsOrClient = Object.assign({}, DEFAULT_PARAMS, paramsOrClient)
+      this.ready = new Promise((resolve, reject) => {
+        this.readyResolve = resolve
+      })
+      this.holochainSocket = new Client(paramsOrClient.uri, {
+        max_reconnects: paramsOrClient.maxReconnects,
+        reconnect_interval: paramsOrClient.reconnectInterval
+      })
       this.holochainSocket.on('open', () => {
         this.readyResolve()
         console.log('🎉 Successfully connected to Holochain!')
@@ -28,9 +32,8 @@ export class HolochainWebSocketLink extends ApolloLink {
 
   request (operation) {
     return new Observable(async observer => {
+      if (!this.paramsOrClient.active) return observer.complete()
       try {
-        if (!this.paramsOrClient.active) return observer.complete()
-
         await this.ready
 
         const query = graphqlToString(operation.query)
