@@ -1,5 +1,7 @@
 import { ApolloClient } from 'apollo-client'
+import { ApolloLink } from 'apollo-link'
 import HolochainWebSocketLink from './HolochainWebSocketLink'
+import { RetryLink } from 'apollo-link-retry'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 // import { HttpLink } from 'apollo-link-http'
 // import { split } from 'apollo-link'
@@ -24,14 +26,19 @@ import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 //   Query: {}
 // }
 
-const apolloClient = new ApolloClient({
-  link: new HolochainWebSocketLink({
+const link = ApolloLink.from([
+  new RetryLink(),
+  new HolochainWebSocketLink({
     uri: process.env.HOLO_CHAT_API_HOST,
     active: HOLOCHAIN_ACTIVE
-  }),
+  })
+])
+
+const apolloClient = new ApolloClient({
+  link,
+  // resolvers
   cache: new InMemoryCache(),
   connectToDevTools: true
-  // resolvers: resolvers
 })
 
 export default apolloClient

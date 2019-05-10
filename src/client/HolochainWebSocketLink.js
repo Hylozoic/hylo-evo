@@ -1,13 +1,11 @@
-import { ApolloLink, Observable, fromError } from 'apollo-link'
+import { ApolloLink, Observable } from 'apollo-link'
 import { Client } from 'rpc-websockets'
 import { get } from 'lodash/fp'
 import { graphqlToString } from 'util/graphql'
 import { createCallObjectWithParams } from 'util/holochain'
 
 const DEFAULT_PARAMS = {
-  active: true,
-  maxReconnects: 100,
-  reconnectInterval: 3000
+  active: true
 }
 
 export class HolochainWebSocketLink extends ApolloLink {
@@ -16,17 +14,6 @@ export class HolochainWebSocketLink extends ApolloLink {
 
     if (paramsOrClient.active) {
       this.paramsOrClient = Object.assign({}, DEFAULT_PARAMS, paramsOrClient)
-      this.ready = new Promise((resolve, reject) => {
-        this.readyResolve = resolve
-      })
-      this.holochainSocket = new Client(paramsOrClient.uri, {
-        max_reconnects: paramsOrClient.maxReconnects,
-        reconnect_interval: paramsOrClient.reconnectInterval
-      })
-      this.holochainSocket.on('open', () => {
-        this.readyResolve()
-        console.log('🎉 Successfully connected to Holochain!')
-      })
     }
   }
 
@@ -34,6 +21,20 @@ export class HolochainWebSocketLink extends ApolloLink {
     return new Observable(async observer => {
       if (!this.paramsOrClient.active) return observer.complete()
       try {
+        if (this.paramsOrClient.active && !this.holochainSocket) {
+          this.ready = new Promise((resolve, reject) => {
+            this.readyResolve = resolve
+          })
+          this.holochainSocket = new Client(this.paramsOrClient.uri, {
+            // Note: using apollo-retry-link instead
+            max_reconnects: 0
+          })
+          this.holochainSocket.on('open', () => {
+            this.readyResolve()
+            console.log('🎉 Successfully connected to Holochain!')
+          })
+        }
+
         await this.ready
 
         const query = graphqlToString(operation.query)
@@ -64,9 +65,10 @@ export class HolochainWebSocketLink extends ApolloLink {
         observer.next({ data: result })
         observer.complete()
       } catch (error) {
-        if (process.env.NODE_ENV === 'development') console.log('👎 Holochain graphql operation error -- ', error, operation)
+        if (process.env.NODE_ENV === 'development') {
+          console.log('👎 Holochain graphql operation error -- ', error.toString(), operation)
+        }
 
-        console.log('!! error retrieving in holochain', error)
         observer.error(error)
       }
     })
