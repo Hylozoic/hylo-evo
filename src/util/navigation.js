@@ -150,8 +150,8 @@ export function addQuerystringToPath (path, querystringParams) {
   return `${path}${!isEmpty(querystringParams) ? '?' + qs.stringify(querystringParams) : ''}`
 }
 
-// TODO: refactor to utilize react-navigation matcher and params
-//       or potentially replace this in all cases with postsUrl
+// * refactor to utilize react-navigation matcher and params
+//   or potentially replace this in all cases with postsUrl
 export function removePostFromUrl (url) {
   let matchForReplaceRegex
 

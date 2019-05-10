@@ -33,8 +33,8 @@ export default class MessagesDropdown extends Component {
   }
 
   onToggle = nowActive => {
-    // TODO this is not quite sufficient -- this value should also be bumped
-    // if the current user is in the messages UI, receiving new messages.
+    // * this is not quite sufficient -- this value should also be bumped
+    //   if the current user is in the messages UI, receiving new messages
     if (nowActive) this.setState({ lastOpenedAt: new Date() })
   }
 

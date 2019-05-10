@@ -51,8 +51,6 @@ import {
   isTagPath
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
-// TODO: Implement create community privacy component when implemented on the server
-// import Privacy from 'routes/CreateCommunity/Privacy'
 import './PrimaryLayout.scss'
 
 export default class PrimaryLayout extends Component {
@@ -210,9 +208,6 @@ const createCommunityRoutes = [
   { path: '/create-community/name/:networkId', component: Name },
   { path: '/create-community/name', component: Name },
   { path: '/create-community/domain', component: Domain },
-  // TODO: Implement create community privacy component when implemented on the server
-  // TODO: Don't forget to change 'step' values
-  // {path: '/create-community/privacy', component: Privacy},
   { path: '/create-community/review', component: CommunityReview }
 ]
 
