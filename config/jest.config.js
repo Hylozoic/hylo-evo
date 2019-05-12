@@ -39,5 +39,9 @@ module.exports = {
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname'
-  ]
+  ],
+  // * Because console.log will get munched in test display with `verbose: true`:
+  //   https://github.com/facebook/jest/issues/2441
+  //   Note: Alternatively could use `--runInBand` to always run tests in serial
+  verbose: false
 }

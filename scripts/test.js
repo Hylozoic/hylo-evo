@@ -10,11 +10,6 @@ require('dotenv').config({ silent: true })
 const jest = require('jest')
 const argv = process.argv.slice(2)
 
-// * Because console.log will get seen in the display without this:
-//   https://github.com/facebook/jest/issues/2441
-//   Note: Alternatively could use `--runInBand` to always run tests in serial
-argv.push('--verbose=false')
-
 // Custom config file location
 if (argv.indexOf('--config') < 0) {
   argv.push('--config', 'config/jest.config.js')
