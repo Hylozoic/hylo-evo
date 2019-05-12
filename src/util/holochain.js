@@ -3,8 +3,10 @@ export const HOLOCHAIN_SUBDOMAINS = [
   'holochain'
 ]
 
-export const HOLOCHAIN_ACTIVE = typeof window !== 'undefined' &&
+export const HOLOCHAIN_ACTIVE = process.env.HOLOCHAIN_BUILD || (
+  typeof window !== 'undefined' &&
   HOLOCHAIN_SUBDOMAINS.some(subdomain => window.location.host.split('.')[0] === subdomain)
+)
 
 export const HOLOCHAIN_HASH_MATCH = '[a-zA-Z0-9]{46}'
 

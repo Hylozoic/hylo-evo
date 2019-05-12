@@ -1,6 +1,10 @@
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.NODE_ENV = 'production'
 
+// Set build for holochain by using `HOLOCHAIN_BUILD=true` in CLI run
+// Sets env variable for visibility in app during build time
+const holochain = process.env.HOLOCHAIN_BUILD
+
 // Load environment variables from .env file. Suppress warnings using silent
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.
@@ -14,7 +18,9 @@ var pathExists = require('path-exists')
 var filesize = require('filesize')
 var gzipSize = require('gzip-size').sync
 var webpack = require('webpack')
-var config = require('../config/webpack.config.prod')
+var config = holochain
+  ? require('../config/webpack.config.holochain')
+  : require('../config/webpack.config.prod')
 var paths = require('../config/paths')
 var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles')
 var recursive = require('recursive-readdir')
@@ -31,7 +37,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 // Output: /static/js/main.js
 function removeFileNameHash (fileName) {
   return fileName
-    .replace(paths.appBuild, '')
+    .replace(config.output.path, '')
     .replace(/\/?(.*)(\.\w+)(\.js|\.css)/, (match, p1, p2, p3) => p1 + p3)
 }
 
@@ -54,7 +60,7 @@ function getDifferenceLabel (currentSize, previousSize) {
 
 // First, read the current file sizes in build directory.
 // This lets us display how much they changed later.
-recursive (paths.appBuild, (err, fileNames) => { // eslint-disable-line
+recursive (config.output.path, (err, fileNames) => { // eslint-disable-line
   var previousSizeMap = (fileNames || [])
     .filter(fileName => /\.(js|css)$/.test(fileName))
     .reduce((memo, fileName) => {
@@ -66,7 +72,7 @@ recursive (paths.appBuild, (err, fileNames) => { // eslint-disable-line
 
   // Remove all content but keep the directory so that
   // if you're in it, you don't end up in Trash
-  fs.emptyDirSync(paths.appBuild)
+  fs.emptyDirSync(config.output.path)
 
   // Start the webpack build
   build(previousSizeMap)
@@ -80,12 +86,12 @@ function printFileSizes (stats, previousSizeMap) {
   var assets = stats.toJson().assets
     .filter(asset => /\.(js|css)$/.test(asset.name))
     .map(asset => {
-      var fileContents = fs.readFileSync(paths.appBuild + '/' + asset.name)
+      var fileContents = fs.readFileSync(config.output.path + '/' + asset.name)
       var size = gzipSize(fileContents)
       var previousSize = previousSizeMap[removeFileNameHash(asset.name)]
       var difference = getDifferenceLabel(size, previousSize)
       return {
-        folder: path.join('build', path.dirname(asset.name)),
+        folder: path.join(config.output.path, path.dirname(asset.name)),
         name: path.basename(asset.name),
         size: size,
         sizeLabel: filesize(size) + (difference ? ' (' + difference + ')' : '')
@@ -121,7 +127,9 @@ function printErrors (summary, errors) {
 
 // Create the production build and print the deployment instructions.
 function build (previousSizeMap) {
-  console.log('Creating an optimized production build...')
+  console.log(
+    `Creating a production ${holochain ? chalk.cyan('holochain ') : ''}build to ${chalk.cyan(config.output.path)}`)
+
   webpack(config).run((err, stats) => {
     if (err) {
       printErrors('Failed to compile.', [err])
@@ -155,7 +163,7 @@ function build (previousSizeMap) {
       console.log('The project was built assuming it is hosted at ' + chalk.green(publicPath) + '.')
       console.log('You can control this with the ' + chalk.green('homepage') + ' field in your ' + chalk.cyan('package.json') + '.')
       console.log()
-      console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.')
+      console.log('The build in ' + chalk.cyan(config.output.path) + ' folder is ready to be deployed.')
       console.log('To publish it at ' + chalk.green(homepagePath) + ', run:')
       // If script deploy has been added to package.json, skip the instructions
       if (typeof appPackage.scripts.deploy === 'undefined') {
@@ -184,7 +192,7 @@ function build (previousSizeMap) {
       console.log('The project was built assuming it is hosted at ' + chalk.green(publicPath) + '.')
       console.log('You can control this with the ' + chalk.green('homepage') + ' field in your ' + chalk.cyan('package.json') + '.')
       console.log()
-      console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.')
+      console.log('The ' + chalk.cyan(config.output.path) + ' folder is ready to be deployed.')
       console.log()
     } else {
       // no homepage or "homepage": "http://mywebsite.com"
@@ -201,7 +209,7 @@ function build (previousSizeMap) {
         console.log('  ' + chalk.green('"homepage"') + chalk.cyan(': ') + chalk.green('"http://myname.github.io/myapp"') + chalk.cyan(','))
         console.log()
       }
-      console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.')
+      console.log('The ' + chalk.cyan(config.output.path) + ' folder is ready to be deployed.')
       console.log('You may also serve it locally with a static server:')
       console.log()
       if (useYarn) {
@@ -209,7 +217,7 @@ function build (previousSizeMap) {
       } else {
         console.log('  ' + chalk.cyan('npm') + ' install -g pushstate-server')
       }
-      console.log('  ' + chalk.cyan('pushstate-server') + ' build')
+      console.log('  ' + chalk.cyan('pushstate-server') + ` ${config.output.path}`)
       console.log('  ' + chalk.cyan(openCommand) + ' http://localhost:9000')
       console.log()
     }
@@ -217,7 +225,7 @@ function build (previousSizeMap) {
 }
 
 function copyPublicFolder () {
-  fs.copySync(paths.appPublic, paths.appBuild, {
+  fs.copySync(paths.appPublic, config.output.path, {
     dereference: true,
     filter: file => file !== paths.appHtml
   })

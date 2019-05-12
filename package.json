@@ -5,6 +5,7 @@
   "scripts": {
     "start": "rm -rf ./node_modules/.cache/babel-loader && node --preserve-symlinks scripts/start.js",
     "build": "node --max-old-space-size=4000 scripts/build.js && scripts/build-es5.sh",
+    "build:hc": "HOLOCHAIN_BUILD=true node --max-old-space-size=4000 scripts/build.js",
     "test": "node scripts/test.js",
     "lint": "yarn exec standard",
     "lint:fix": "yarn exec standard --fix",
