@@ -8,7 +8,7 @@ import Badge from 'components/Badge'
 import Button from 'components/Button'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
-import { toRefArray, itemsToArray } from 'store/models'
+import { toRefArray, itemsToArray } from 'util/reduxOrmMigration'
 import { participantAttributes } from 'store/models/MessageThread'
 import './ThreadList.scss'
 

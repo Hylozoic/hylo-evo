@@ -3,7 +3,7 @@ const paths = require('./paths')
 module.exports = {
   rootDir: paths.rootPath,
   transform: {
-    "\\.(gql|graphql)$": 'jest-transform-graphql',
+    '\\.(gql|graphql)$': 'jest-transform-graphql',
     '^.+\\.jsx?$': '<rootDir>/config/jest/transformer.js'
   },
   collectCoverageFrom: [

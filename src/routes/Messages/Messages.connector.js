@@ -52,16 +52,18 @@ export function mapStateToProps (state, props) {
     messageThreadId,
     messageThread,
     messageText: getTextForCurrentMessageThread(state, props),
+    messagesPending: isPendingFor(fetchMessages, state),
     messageCreatePending:
       isPendingFor(createMessage, state) ||
       isPendingFor(findOrCreateThread, state),
-    sendIsTyping: sendIsTyping(messageThreadId),
-    threadSearch: getThreadSearch(state, props),
+    threadsPending:
+      isPendingFor(fetchThreads, state) ||
+      isPendingFor(fetchMessages, state),
     threads: getThreads(state, props),
-    threadsPending: isPendingFor(fetchThreads, state) || isPendingFor(fetchMessages, state),
     hasMoreThreads: getThreadsHasMore(state, props),
+    threadSearch: getThreadSearch(state, props),
+    sendIsTyping: sendIsTyping(messageThreadId),
     messages: getMessages(state, props),
-    messagesPending: isPendingFor(fetchMessages, state),
     hasMoreMessages: getMessagesHasMore(state, { id: messageThreadId }),
     socket: getSocket()
   }

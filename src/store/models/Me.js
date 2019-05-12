@@ -1,7 +1,8 @@
 import { find, get, includes } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import { attr, many, Model } from 'redux-orm'
-import featureFlag from '../../config/featureFlags'
+import featureFlag from 'config/featureFlags'
+import { toRefArray } from 'util/reduxOrmMigration'
 
 export const MOCK_ME = {
   memberships: {
@@ -17,12 +18,13 @@ export function firstName (user) {
   return user.name ? user.name.split(' ')[0] : null
 }
 
-export function canModerate (me, community) {
-  const memberships = me.memberships
-  const membership = find(m =>
-    m.community === get('id', community), memberships)
+export function canModerate (memberships, community) {
+  const matchedMembership = find(
+    m => m.community === get('id', community),
+    toRefArray(memberships)
+  )
 
-  return get('hasModeratorRole', membership)
+  return get('hasModeratorRole', matchedMembership)
 }
 
 export function isTester (userId) {
@@ -67,8 +69,7 @@ const Me = Model.createClass({
   },
 
   canModerate (community) {
-    const me = this.toRefArray ? this.toRefArray() : this
-    return canModerate(me, community)
+    return canModerate(this.memberships, community)
   },
 
   hasFeature (key) {

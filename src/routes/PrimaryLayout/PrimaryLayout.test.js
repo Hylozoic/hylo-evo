@@ -19,7 +19,7 @@ it('shows nothing for a community route if the community and currentUser are not
   const wrapper = shallow(<PrimaryLayout
     isCommunityRoute
     communityPending />, { disableLifecycleMethods: true })
-  expect(wrapper.name()).toEqual('Loading')
+  expect(wrapper).toMatchSnapshot()
 })
 
 it('shows normal children for a community route if the community is loaded', () => {
@@ -39,13 +39,7 @@ describe('RedirectToCommunity', () => {
     session.Me.create({ id: '1' })
   })
 
-  it('shows a Loading component if currentUser not set yet', () => {
-    const wrapper = shallow(<RedirectToCommunity currentUser={null} />)
-    const renderWrapper = shallow(wrapper.props().render())
-    expect(renderWrapper.find('[data-stylename="loading-top"]').length).toBe(1)
-  })
-
-  it('sets `to` prop of Redirect correctly if currentUser has no memberships', () => {
+it('sets `to` prop of Redirect correctly if currentUser has no memberships', () => {
     const me = session.Me.first()
     const wrapper = shallow(<MemoryRouter>
       {redirectIfCommunity(me)()}

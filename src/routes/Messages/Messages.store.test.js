@@ -1,7 +1,6 @@
 import orm from 'store/models'
 import {
-  CREATE_MESSAGE,
-  CREATE_MESSAGE_PENDING
+  CREATE_MESSAGE
 } from 'store/constants'
 import reducer, {
   defaultState,
@@ -15,9 +14,10 @@ import reducer, {
   UPDATE_MESSAGE_TEXT,
   setContactsSearch,
   SET_CONTACTS_SEARCH,
-  getParticipantSearch
+  getParticipantSearch,
+  getHolochainContactsWithSearch
 } from './Messages.store'
-// import people from './PeopleSelector.test.json'
+import { people } from './Messages.test.json'
 
 describe('reducer', () => {
   it('should return the initial state', () => {
@@ -28,23 +28,11 @@ describe('reducer', () => {
 
   it('should handle SET_CONTACTS_SEARCH', () => {
     const state = {}
-    const expected = { autocomplete: 'flargleargle' }
+    const expected = { contactsSearch: 'flargleargle' }
     const actual = reducer(state, { type: SET_CONTACTS_SEARCH, payload: 'flargleargle' })
     expect(actual).toEqual(expected)
   })
 
-  it('clears the form when CREATE_MESSAGE_PENDING action fires', () => {
-    const state = {
-      1: 'trinket'
-    }
-    const action = {
-      type: CREATE_MESSAGE_PENDING,
-      meta: {
-        messageThreadId: '1'
-      }
-    }
-    expect(reducer(state, action)).toEqual({ 1: '' })
-  })
   it('sets the form text for a thread', () => {
     const state = {
       1: ''
@@ -287,66 +275,9 @@ describe('connector', () => {
     session.Person.create(me)
     session.Me.create(me)
     state = { orm: session.state }
-    state.PeopleSelector = { participants: people.map(p => p.id) }
   })
 
-  describe('getHoloChatMatches', () => {
-    it('returns empty array if autocomplete is missing', () => {
-      const actual = store.getHoloChatMatches(state, {})
-      expect(actual).toEqual([])
-    })
-
-    it('returns the correct objects by matching autocomplete', () => {
-      state.PeopleSelector.participants = []
-      state.PeopleSelector.autocomplete = 'BR'
-      const expected = [
-        {
-          'id': '72203',
-          'name': 'Brooks Funk',
-          'avatarUrl': 'https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg',
-          'community': 'Associate'
-        },
-        {
-          'id': '72019',
-          'name': 'Vita Breitenberg',
-          'avatarUrl': 'https://s3.amazonaws.com/uifaces/faces/twitter/markjenkins/128.jpg',
-          'community': 'Associate'
-        }
-      ]
-      const actual = store.getHoloChatMatches(state, {})
-      expect(actual).toEqual(expected)
-    })
-
-    it('does not return objects whose ids are already in participants', () => {
-      state.PeopleSelector.participants = [ '72019' ]
-      state.PeopleSelector.autocomplete = 'BR'
-      const expected = [
-        {
-          'id': '72203',
-          'name': 'Brooks Funk',
-          'avatarUrl': 'https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg',
-          'community': 'Associate'
-        }
-      ]
-      const actual = store.getHoloChatMatches(state, {})
-      expect(actual).toEqual(expected)
-    })
-
-    it('filters out currentUser', () => {
-      state.PeopleSelector.participants = []
-      state.PeopleSelector.autocomplete = 'BRE'
-      const expected = [
-        {
-          'id': '72019',
-          'name': 'Vita Breitenberg',
-          'avatarUrl': 'https://s3.amazonaws.com/uifaces/faces/twitter/markjenkins/128.jpg',
-          'community': 'Associate'
-        }
-      ]
-      const actual = store.getHoloChatMatches(state, {})
-      expect(actual).toEqual(expected)
-    })
-
+  describe('getHolochainContactsWithSearch', () => {
     describe('pickPersonListItem', () => {
       it('picks the correct properties', () => {
         const person = session.Person.withId('72203')
@@ -356,7 +287,7 @@ describe('connector', () => {
           'avatarUrl': 'https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg',
           'community': 'Associate'
         }
-        const actual = store.pickPersonListItem(person)
+        const actual = pickPersonListItem(person)
         expect(actual).toEqual(expected)
       })
     })
@@ -373,7 +304,7 @@ describe('connector', () => {
           }))
         const participants = [ '72203' ]
         const expected = [ '72019' ]
-        const actual = store.personConnectionListItemSelector(session, participants)
+        const actual = personConnectionListItemSelector(session, participants)
           .map(person => person.id)
         expect(actual).toEqual(expected)
       })

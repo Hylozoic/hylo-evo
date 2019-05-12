@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { get } from 'lodash/fp'
-import getQuerystringParam from 'store/selectors/getQuerystringParam'
+// import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import PeopleSelector from './PeopleSelector'
 import ThreadList from './ThreadList'
 import Header from './Header'

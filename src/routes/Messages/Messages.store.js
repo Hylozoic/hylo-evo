@@ -2,7 +2,8 @@ import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { get, some, isEmpty, includes, pick, uniqueId } from 'lodash/fp'
 import { AnalyticsEvents } from 'hylo-utils/constants'
-import orm, { toRefArray } from 'store/models'
+import orm from 'store/models'
+import { toRefArray } from 'util/reduxOrmMigration'
 import {
   FETCH_MESSAGES,
   FETCH_THREAD,
@@ -67,7 +68,7 @@ export const getThreadSearch = createSelector(
 
 // REDUCER
 
-const defaultState = {
+export const defaultState = {
   contactsSearch: '',
   threadSearch: ''
 }
@@ -205,24 +206,24 @@ export function getParticipantSearch (props, participantsFromStore) {
 }
 
 // TODO: Fix contacts search for Holochain+Apollo and Hylo API
-// export const getHolochainContactsWithSearch = ormCreateSelector(
-//   orm,
-//   state => state.orm,
-//   (state, props) => p => {
-//     const contactsSearch = getContactsSearch(state)
-//     const holoFilter = props.holochainActive ? p.isHoloData : true
-//     if (!contactsSearch || contactsSearch.length < 1) return holoFilter
-//     return holoFilter && p.name.toLowerCase().includes(contactsSearch.toLowerCase())
-//   },
-//   (session, search = () => true) => {
-//     return session.Person
-//       .all()
-//       .filter(search)
-//       .toModelArray()
-//       .map(presentPersonListItem)
-//       .sort(nameSort)
-//   }
-// )
+export const getHolochainContactsWithSearch = ormCreateSelector(
+  orm,
+  state => state.orm,
+  (state, props) => p => {
+    const contactsSearch = getContactsSearch(state)
+    const holoFilter = props.holochainActive ? p.isHoloData : true
+    if (!contactsSearch || contactsSearch.length < 1) return holoFilter
+    return holoFilter && p.name.toLowerCase().includes(contactsSearch.toLowerCase())
+  },
+  (session, search = () => true) => {
+    return session.Person
+      .all()
+      .filter(search)
+      .toModelArray()
+      .map(presentPersonListItem)
+      .sort(nameSort)
+  }
+)
 
 export const getRecentContacts = ormCreateSelector(
   orm,

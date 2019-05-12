@@ -9,6 +9,7 @@ exports[`matches the last snapshot 1`] = `
   >
     <withRouter(ThreadList)
       data-stylename="left-column"
+      threads={Array []}
     />
     <div
       data-stylename="right-column"
@@ -19,26 +20,25 @@ exports[`matches the last snapshot 1`] = `
         <Header />
         <MessageSection
           fetchMessages={[Function]}
+          messages={Array []}
+          socket={null}
         />
         <div
           data-stylename="message-form"
         >
           <MessageForm
-            createMessage={[Function]}
-            focusForm={[Function]}
             formRef={
               Object {
                 "current": null,
               }
             }
+            onSubmit={[Function]}
             placeholder="Write something..."
+            updateMessageText={[Function]}
           />
         </div>
         <Connect(PeopleTyping)
           data-stylename="people-typing"
-        />
-        <Connect(SocketSubscriber)
-          type="post"
         />
       </div>
     </div>

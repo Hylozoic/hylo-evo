@@ -2,13 +2,16 @@
 
 exports[`mapDispatchToProps returns expected values 1`] = `
 Object {
+  "changeQuerystringParam": [Function],
   "createMessage": [Function],
   "fetchMessages": [Function],
+  "fetchPeople": [Function],
+  "fetchRecentContacts": [Function],
   "fetchThread": [Function],
   "fetchThreads": [Function],
   "findOrCreateThread": [Function],
   "goToThread": [Function],
-  "reconnectFetchMessages": [Function],
+  "setContactsSearch": [Function],
   "setThreadSearch": [Function],
   "updateMessageText": [Function],
   "updateThreadReadTime": [Function],
@@ -18,7 +21,6 @@ Object {
 exports[`mapStateToProps returns expected values 1`] = `
 Object {
   "currentUser": undefined,
-  "forNewThread": false,
   "hasMoreMessages": true,
   "hasMoreThreads": undefined,
   "messageCreatePending": false,
@@ -64,7 +66,7 @@ Object {
   ],
   "messagesPending": true,
   "onCloseURL": "/",
-  "participants": Array [],
+  "recentContacts": Array [],
   "sendIsTyping": [Function],
   "socket": SailsSocket {
     "_isConnecting": false,
@@ -78,7 +80,7 @@ Object {
   },
   "threadSearch": undefined,
   "threads": Array [],
-  "threadsPending": false,
+  "threadsPending": true,
 }
 `;
 
@@ -86,8 +88,8 @@ exports[`mergeProps returns expected values 1`] = `
 Object {
   "fetchMessages": [Function],
   "fetchMoreThreads": [Function],
+  "fetchThread": [Function],
   "fetchThreads": [Function],
-  "findOrCreateThread": [Function],
   "match": Object {
     "params": Object {
       "messageThreadId": "8",
@@ -99,7 +101,6 @@ Object {
       "text": "hi",
     },
   ],
-  "reconnectFetchMessages": [Function],
   "updateThreadReadTime": [Function],
 }
 `;

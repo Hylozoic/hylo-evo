@@ -12,9 +12,7 @@ export class HolochainWebSocketLink extends ApolloLink {
   constructor (paramsOrClient = {}) {
     super()
 
-    if (paramsOrClient.active) {
-      this.paramsOrClient = Object.assign({}, DEFAULT_PARAMS, paramsOrClient)
-    }
+    this.paramsOrClient = Object.assign({}, DEFAULT_PARAMS, paramsOrClient)
   }
 
   request (operation) {

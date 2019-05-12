@@ -1,25 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-
 import PersonListItem from '../PersonListItem'
 import './PeopleSelectorMatches.scss'
 
-const { any, arrayOf, func, shape, string } = PropTypes
-
-const personType = shape({
-  id: any,
-  name: string,
-  avatarUrl: string,
-  community: string
-})
-
 export default class PeopleSelectorMatches extends React.Component {
-  static propTypes = {
-    addParticipant: func,
-    currentMatch: any,
-    matches: arrayOf(personType)
-  }
-
   render () {
     const { addParticipant, currentMatch, matches, setCurrentMatch } = this.props
     return <ul styleName='people-selector-matches'>
@@ -32,4 +16,18 @@ export default class PeopleSelectorMatches extends React.Component {
           onMouseOver={() => setCurrentMatch(match)} />)}
     </ul>
   }
+}
+
+PeopleSelectorMatches.propTypes = {
+  addParticipant: PropTypes.func.isRequired,
+  setCurrentMatch: PropTypes.func.isRequired,
+  currentMatch: PropTypes.object,
+  matches: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.any,
+      name: PropTypes.string,
+      avatarUrl: PropTypes.string,
+      community: PropTypes.string
+    })
+  )
 }

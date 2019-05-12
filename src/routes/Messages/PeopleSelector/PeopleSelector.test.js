@@ -48,8 +48,8 @@ describe('PeopleSelector', () => {
             setContactsSearch={setContactsSearch}
             matches={[ { id: '1' }, { id: '2' } ]} />
         </MemoryRouter>
-      )
-      wrapper.find(PeopleSelector).instance().setState({ currentMatch: '1' })
+      )      
+      wrapper.find(PeopleSelector).instance().setState({ currentMatch: { id: '1' } })
       input = wrapper.find('input').first()
     })
 
@@ -99,14 +99,14 @@ describe('PeopleSelector', () => {
     })
 
     it('changes active match if not at top of list when up arrow pressed', () => {
-      wrapper.find(PeopleSelector).instance().setState({ currentMatch: '2' })
+      wrapper.find(PeopleSelector).instance().setState({ currentMatch: { id: '2' } })
       input.simulate('keyDown', { keyCode: keyMap.UP })
       const actual = wrapper.find(PersonListItem).last().prop('active')
       expect(actual).toBe(false)
     })
 
     it('does not change active match if at bottom of list when down arrow pressed', () => {
-      wrapper.find(PeopleSelector).instance().setState({ currentMatch: '2' })
+      wrapper.find(PeopleSelector).instance().setState({ currentMatch: { id: '2' } })
       input.simulate('keyDown', { keyCode: keyMap.DOWN })
       const actual = wrapper.find(PersonListItem).last().prop('active')
       expect(actual).toBe(true)
@@ -120,12 +120,12 @@ describe('PeopleSelector', () => {
 
     it('calls addParticipant with currentMatch when enter pressed', () => {
       input.simulate('keyDown', { keyCode: keyMap.ENTER })
-      expect(addParticipant).toBeCalledWith('1')
+      expect(addParticipant).toBeCalledWith({ id: '1' })
     })
 
     it('calls addParticipant with currentMatch when comma pressed', () => {
       input.simulate('keyDown', { keyCode: keyMap.COMMA })
-      expect(addParticipant).toBeCalledWith('1')
+      expect(addParticipant).toBeCalledWith({ id: '1' })
     })
 
     it('resets values after adding participants', () => {
@@ -201,27 +201,6 @@ describe('PeopleSelector', () => {
       wrapper.find(PeopleSelector).instance().addParticipant('1')
       expect(input.instance().value).toBeFalsy()
       expect(setContactsSearch).toBeCalledWith(null)
-    })
-  })
-
-  describe('componentDidMount', () => {
-    it('adds particpants in the search, then clears it', () => {
-      const addParticipant = jest.fn()
-      const changeQuerystringParam = jest.fn()
-      mount(
-        <MemoryRouter>
-          <PeopleSelector
-            {...defaultProps}
-            addParticipant={addParticipant}
-            participantSearch={[ '1', '2' ]}
-            changeQuerystringParam={changeQuerystringParam} />
-        </MemoryRouter>
-      )
-      expect(addParticipant).toBeCalledWith('1')
-      expect(addParticipant).toBeCalledWith('2')
-      const [ _, param, value ] = changeQuerystringParam.mock.calls[0]
-      expect(param).toBe('participants')
-      expect(value).toBe(null)
     })
   })
 })

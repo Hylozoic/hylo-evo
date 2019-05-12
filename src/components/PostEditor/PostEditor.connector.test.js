@@ -14,16 +14,17 @@ beforeAll(() => {
 
   session.Me.create({
     id: '1',
-    memberships: [session.Membership.create({
-      id: '345',
-      community: community.id,
-      hasModeratorRole: true
-    }),
-    session.Membership.create({
-      id: '678',
-      community: community2.id,
-      hasModeratorRole: false
-    })
+    memberships: [
+      session.Membership.create({
+        id: '345',
+        community: community.id,
+        hasModeratorRole: true
+      }),
+      session.Membership.create({
+        id: '678',
+        community: community2.id,
+        hasModeratorRole: false
+      })
     ]
   })
 

@@ -35,6 +35,8 @@ export default class PeopleSelector extends React.Component {
     this.setState({ currentMatch: matches[0] })
   }
 
+  setCurrentMatch = (person) => this.setState(() => ({ currentMatch: person }))
+
   addParticipant = (participant) => {
     this.autocompleteInput.current.focus()
     if (this.props.participants.find(p => p.id === participant.id)) return
@@ -96,8 +98,6 @@ export default class PeopleSelector extends React.Component {
         this.autocompleteSearch(this.autocompleteInput.current.value)
     }
   }
-
-  setCurrentMatch = person => this.setState(() => ({ currentMatch: person }))
 
   render () {
     const {

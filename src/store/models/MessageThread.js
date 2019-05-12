@@ -1,14 +1,13 @@
 import { attr, many, Model } from 'redux-orm'
-import { get, isEmpty } from 'lodash/fp'
+import { filter, get, isEmpty } from 'lodash/fp'
+import { toRefArray } from 'util/reduxOrmMigration'
 
 // MessageThread functions
 
 export function participantAttributes (messageThread, currentUser, maxShown) {
   const currentUserId = get('id', currentUser)
-  const participants = messageThread.participants.toRefArray
-    ? messageThread.participants.toRefArray()
-    : messageThread.participants
-  const filteredParticipants = participants.filter(p => p.id !== currentUserId)
+  const participants = toRefArray(messageThread.participants)
+  const filteredParticipants = filter(p => p.id !== currentUserId, participants)
   var names, avatarUrls
 
   if (isEmpty(filteredParticipants)) {
@@ -73,7 +72,7 @@ const MessageThread = Model.createClass({
   },
 
   participantAttributes (currentUser, maxShown) {
-    return participantAttributes(this.toRefArray(), currentUser, maxShown)
+    return participantAttributes(this, currentUser, maxShown)
   }
 })
 

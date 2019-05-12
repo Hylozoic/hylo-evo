@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
-
 import RoundImage from 'components/RoundImage'
 import './PersonListItem.scss'
 
@@ -13,16 +12,14 @@ export default function PersonListItem ({ active, onClick, onMouseOver, person }
   </li>
 }
 
-const personType = PropTypes.shape({
-  id: PropTypes.any,
-  name: PropTypes.string,
-  avatarUrl: PropTypes.string,
-  community: PropTypes.string
-})
-
 PersonListItem.propTypes = {
   active: PropTypes.bool,
   onClick: PropTypes.func,
   onMouseOver: PropTypes.func,
-  person: personType
+  person: PropTypes.shape({
+    id: PropTypes.any,
+    name: PropTypes.string,
+    avatarUrl: PropTypes.string,
+    community: PropTypes.string
+  })
 }
