@@ -4,12 +4,12 @@ import { get } from 'lodash/fp'
 import mobileRedirect from 'util/mobileRedirect'
 import HolochainRegisterUserMutation from 'graphql/mutations/HolochainRegisterUserMutation.graphql'
 import HolochainCommunityQuery from 'graphql/queries/HolochainCommunityQuery.graphql'
+import HolochainCurrentUserQuery from 'graphql/queries/HolochainCurrentUserQuery.graphql'
 import fetchForCurrentUserMock from 'store/actions/fetchForCurrentUserMock'
 import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommunityRoute'
 import getMe from 'store/selectors/getMe'
 import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import { toggleDrawer } from './PrimaryLayout.store'
-import { HOLOCHAIN_MOCK_AGENT } from 'util/holochain'
 
 export function mapStateToProps (state, props) {
   const slug = getSlugFromLocation(null, props)
@@ -27,23 +27,24 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export function mapDispatchToProps (dispatch, props) {
+export function mapDispatchToProps (dispatch) {
   return {
-    fetchForCurrentUser: () =>
-      dispatch(fetchForCurrentUserMock(HOLOCHAIN_MOCK_AGENT)),
+    fetchForCurrentUser: (holochainUserData) =>
+      dispatch(fetchForCurrentUserMock(holochainUserData)),
     toggleDrawer: () => dispatch(toggleDrawer())
   }
 }
 
-const registerHolochainAgent = graphql(HolochainRegisterUserMutation, {
-  props: ({ mutate }) => {
-    return {
-      registerHolochainAgent: () => mutate({
-        variables: HOLOCHAIN_MOCK_AGENT
-      })
-    }
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { currentUser } = ownProps
+  const fetchForCurrentUser = () => dispatchProps.fetchForCurrentUser(currentUser)
+  return {
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
+    fetchForCurrentUser
   }
-})
+}
 
 const community = graphql(HolochainCommunityQuery, {
   skip: props => !props.currentUser || !props.slug,
@@ -59,8 +60,17 @@ const community = graphql(HolochainCommunityQuery, {
   }
 })
 
+const currentUser = graphql(HolochainCurrentUserQuery, {
+  skip: props => !!props.currentUser,
+  props: ({ data: { me } }) => {
+    return {
+      currentUser: me
+    }
+  }
+})
+
 export default compose(
-  registerHolochainAgent,
-  connect(mapStateToProps, mapDispatchToProps),
+  currentUser,
+  connect(mapStateToProps, mapDispatchToProps, mergeProps),
   community
 )

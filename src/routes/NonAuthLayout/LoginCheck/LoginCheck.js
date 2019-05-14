@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Loading from 'components/Loading'
 
-export default class LoginCheck extends React.Component {
-  componentDidMount () {
-    this.props.checkLogin()
-  }
-
-  render () {
-    if (!this.props.hasCheckedLogin) {
-      return <Loading type='fullscreen' />
+export default function LoginCheck ({ hasCheckedLogin, checkLogin, children }) {
+  useEffect(() => {
+    if (!hasCheckedLogin) {
+      checkLogin()
     }
+  })
 
-    return this.props.children
+  if (!hasCheckedLogin) {
+    return <Loading type='fullscreen' />
   }
+
+  return children
 }

@@ -41,7 +41,6 @@ import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
-import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 import {
   POST_ID_MATCH,
   VALID_POST_TYPE_CONTEXTS_MATCH,
@@ -56,7 +55,6 @@ import './PrimaryLayout.scss'
 export default class PrimaryLayout extends Component {
   componentDidMount () {
     this.props.fetchForCurrentUser()
-    if (HOLOCHAIN_ACTIVE) this.props.registerHolochainAgent()
     if (this.props.slug) {
       this.props.fetchForCommunity()
     }
