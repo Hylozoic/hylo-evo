@@ -1,7 +1,8 @@
 import React from 'react'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
-
+import { communityUrl } from 'util/navigation'
+import { get } from 'lodash/fp'
 import { formatError } from '../util'
 import './HolochainLogin.scss'
 
@@ -12,12 +13,14 @@ export default class HolochainLogin extends React.Component {
   }
 
   submit = () => {
-    const { registerHolochainAgent, redirectOnSignIn, setLogin } = this.props
+    const { registerHolochainAgent, createDefaultCommunity, redirectOnSignIn, setLogin } = this.props
     return registerHolochainAgent(this.state.name, this.state.avatarUrl)
-      .then(result => {
-        console.log('registerHolochainAgent', result)
+      .then(() => createDefaultCommunity())
+      .then(defaultCommunityPayload => {
+        const defaultCommunitySlug = get('data.createCommunity.slug', defaultCommunityPayload)
         setLogin(true)
-        redirectOnSignIn('/')
+        const redirectUrl = defaultCommunitySlug ? communityUrl(defaultCommunitySlug) : '/'
+        redirectOnSignIn(redirectUrl)
       })
   }
 

@@ -3,6 +3,7 @@ import { graphql, compose } from 'react-apollo'
 import { push } from 'connected-react-router'
 import { setLogin } from '../Login/Login.store'
 import HolochainRegisterUserMutation from 'graphql/mutations/HolochainRegisterUserMutation.graphql'
+import HolochainCreateDefaultCommunityMutation from 'graphql/mutations/HolochainCreateDefaultCommunityMutation.graphql'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 
 export function mapStateToProps (state, props) {
@@ -18,14 +19,22 @@ export const mapDispatchToProps = {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { returnToURL } = stateProps
+  const { resetReturnToURL } = dispatchProps
+
+  const redirectOnSignIn = defaultUrl => {
+    resetReturnToURL()
+    const redirectUrl = returnToURL && returnToURL !== '/'
+      ? returnToURL
+      : defaultUrl
+    dispatchProps.push(redirectUrl)
+  }
+
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    redirectOnSignIn: (defaultPath) => {
-      dispatchProps.resetReturnToURL()
-      dispatchProps.push(stateProps.returnToURL || defaultPath)
-    }
+    redirectOnSignIn
   }
 }
 
@@ -42,7 +51,16 @@ const registerHolochainAgent = graphql(HolochainRegisterUserMutation, {
   }
 })
 
+const createDefaultCommunity = graphql(HolochainCreateDefaultCommunityMutation, {
+  props: ({ mutate }) => {
+    return {
+      createDefaultCommunity: () => mutate()
+    }
+  }
+})
+
 export default compose(
   registerHolochainAgent,
+  createDefaultCommunity,
   connect(mapStateToProps, mapDispatchToProps, mergeProps)
 )

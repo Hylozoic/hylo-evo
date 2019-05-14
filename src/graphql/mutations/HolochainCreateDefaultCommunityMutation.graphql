@@ -1,0 +1,12 @@
+mutation HolochainCreateDefaultCommunity {
+  createCommunity(
+    data: {
+      slug: "hylo-holochain", 
+      name: "Hylo on Holochain" 
+    }
+  ) {
+    id
+    slug
+    name
+  }
+}
