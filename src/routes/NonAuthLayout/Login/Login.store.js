@@ -1,5 +1,5 @@
 import authWithService from './authWithService'
-import { CHECK_LOGIN, LOGIN, LOGOUT, SET_LOGIN } from 'store/constants'
+import { CHECK_LOGIN, LOGIN, LOGOUT } from 'store/constants'
 
 export function login (email, password) {
   return {
@@ -28,7 +28,7 @@ export function checkLogin () {
 
 export function setLogin (signedIn) {
   return {
-    type: SET_LOGIN,
+    type: CHECK_LOGIN,
     payload: {
       signedIn
     }
