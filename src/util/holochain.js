@@ -11,9 +11,9 @@ export const HOLOCHAIN_ACTIVE = process.env.HOLOCHAIN_BUILD || (
 export const HOLOCHAIN_HASH_MATCH = '[a-zA-Z0-9]{46}'
 
 export const HOLOCHAIN_MOCK_AGENT = {
-  id: 'loren',
-  name: 'Loren Johnson',
-  avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/23247/userAvatar/23247/profile-1-4.jpg'
+  id: 'robbie',
+  name: 'Robbie Carlton',
+  avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/user/11204/avatar/1467755857845_a14145223586391656938.jpeg'
 }
 
 export function createCallObjectWithParams (params) {

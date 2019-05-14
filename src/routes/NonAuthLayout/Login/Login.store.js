@@ -1,5 +1,5 @@
 import authWithService from './authWithService'
-import { CHECK_LOGIN, LOGIN, LOGOUT } from 'store/constants'
+import { CHECK_LOGIN, LOGIN, LOGOUT, SET_LOGIN } from 'store/constants'
 import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 
 export function login (email, password) {
@@ -34,6 +34,15 @@ export function mockCheckLogin () {
     type: CHECK_LOGIN,
     payload: {
       signedIn: true
+    }
+  }
+}
+
+export function setLogin (signedIn) {
+  return {
+    type: SET_LOGIN,
+    payload: {
+      signedIn
     }
   }
 }
