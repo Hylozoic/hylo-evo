@@ -15,7 +15,6 @@ const mapDispatchToProps = { setLogin }
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { currentUser } = ownProps
   const { setLogin } = dispatchProps
-  console.log('ownprops.currentUser', currentUser)
 
   const checkLogin = currentUser
     ? () => setLogin(currentUser.isRegistered)

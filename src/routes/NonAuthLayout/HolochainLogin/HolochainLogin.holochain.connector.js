@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { graphql, compose } from 'react-apollo'
 import { push } from 'connected-react-router'
+import { setLogin } from '../Login/Login.store'
 import HolochainRegisterUserMutation from 'graphql/mutations/HolochainRegisterUserMutation.graphql'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 
@@ -12,7 +13,8 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = {
   resetReturnToURL,
-  push
+  push,
+  setLogin
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {

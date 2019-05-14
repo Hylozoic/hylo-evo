@@ -12,10 +12,11 @@ export default class HolochainLogin extends React.Component {
   }
 
   submit = () => {
-    const { registerHolochainAgent, redirectOnSignIn } = this.props
+    const { registerHolochainAgent, redirectOnSignIn, setLogin } = this.props
     return registerHolochainAgent(this.state.name, this.state.avatarUrl)
       .then(result => {
-        console.log('registerHolochainAgent result', result)
+        console.log('registerHolochainAgent', result)
+        setLogin(true)
         redirectOnSignIn('/')
       })
   }
