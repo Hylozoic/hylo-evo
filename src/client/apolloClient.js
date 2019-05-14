@@ -12,7 +12,7 @@ import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 // const link = split(
 //   operation => HOLOCHAIN_ACTIVE,
 //   new HolochainWebSocketLink({
-//     uri: process.env.HOLO_CHAT_API_HOST
+//     uri: process.env.HOLOCHAIN_WEBSOCKET_URI
 //   }),
 //   new HttpLink({
 //     uri: 'http://localhost:9000/noo/graphql'
@@ -29,7 +29,7 @@ import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 const link = ApolloLink.from([
   new RetryLink(),
   new HolochainWebSocketLink({
-    uri: process.env.HOLO_CHAT_API_HOST,
+    uri: process.env.HOLOCHAIN_WEBSOCKET_URI,
     active: HOLOCHAIN_ACTIVE
   })
 ])

@@ -17,7 +17,7 @@ export const HOLOCHAIN_MOCK_AGENT = {
 }
 
 export function createCallObjectWithParams (params) {
-  const [instance, zome, func] = process.env.HOLO_CHAT_GRAPHQL_PATH.split('/')
+  const [instance, zome, func] = process.env.HOLOCHAIN_GRAPHQL_PATH.split('/')
 
   return {
     'instance_id': instance,
