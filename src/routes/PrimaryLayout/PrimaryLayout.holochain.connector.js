@@ -46,16 +46,6 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   }
 }
 
-const registerHolochainAgent = graphql(HolochainRegisterUserMutation, {
-  props: ({ mutate }) => {
-    return {
-      registerHolochainAgent: variables => mutate({
-        variables
-      })
-    }
-  }
-})
-
 const community = graphql(HolochainCommunityQuery, {
   skip: props => !props.currentUser || !props.slug,
   props: ({ data: { community, loading } }) => ({
@@ -81,7 +71,6 @@ const currentUser = graphql(HolochainCurrentUserQuery, {
 
 export default compose(
   currentUser,
-  registerHolochainAgent,
   connect(mapStateToProps, mapDispatchToProps, mergeProps),
   community
 )
