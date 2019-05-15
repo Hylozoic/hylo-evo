@@ -91,7 +91,6 @@ export default class FeedList extends React.Component {
     }
     const isProject = routeParams.postTypeContext === 'project'
     const isEvent = routeParams.postTypeContext === 'event'
-
     const showSortAndFilters = !isProject && !isEvent
 
     return <div styleName='FeedList-container'>

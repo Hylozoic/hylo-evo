@@ -2,7 +2,7 @@ import { ApolloLink, Observable } from 'apollo-link'
 import { Client } from 'rpc-websockets'
 import { get } from 'lodash/fp'
 import { graphqlToString } from 'util/graphql'
-import { createCallObjectWithParams } from 'util/holochain'
+import { createGraphqlZomeCallObjectWithArgs } from 'util/holochain'
 
 const DEFAULT_PARAMS = {
   active: true
@@ -37,7 +37,7 @@ export class HolochainWebSocketLink extends ApolloLink {
 
         const query = graphqlToString(operation.query)
         const variables = operation.variables
-        const callObject = createCallObjectWithParams({
+        const callObject = createGraphqlZomeCallObjectWithArgs({
           query,
           variables
         })

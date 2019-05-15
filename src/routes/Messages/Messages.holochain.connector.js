@@ -4,7 +4,11 @@ import { graphql, compose } from 'react-apollo'
 import { get } from 'lodash/fp'
 import { sendIsTyping } from 'client/websockets'
 import { push } from 'connected-react-router'
-import { currentDateString } from 'util/holochain'
+import {
+  currentDateString,
+  HOLOCHAIN_POLL_INTERVAL_SLOW,
+  HOLOCHAIN_POLL_INTERVAL_FAST
+} from 'util/holochain'
 import { threadUrl } from 'util/navigation'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getMe from 'store/selectors/getMe'
@@ -139,7 +143,7 @@ export const threads = graphql(MessageThreadsQuery, {
     offset: null
   },
   options: {
-    pollInterval: 60000
+    pollInterval: HOLOCHAIN_POLL_INTERVAL_SLOW
   }
 })
 
@@ -151,7 +155,7 @@ export const thread = graphql(MessageThreadQuery, {
     messagesPending: loading
   }),
   options: props => ({
-    pollInterval: 10000,
+    pollInterval: HOLOCHAIN_POLL_INTERVAL_FAST,
     variables: {
       // * Best Practice: Normalize argument names in graphql queries (to explicit ID names)?
       // It may be too much magic but if we changed the query variable

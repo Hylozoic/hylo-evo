@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { graphql, compose } from 'react-apollo'
 import { get } from 'lodash/fp'
 import mobileRedirect from 'util/mobileRedirect'
-import HolochainRegisterUserMutation from 'graphql/mutations/HolochainRegisterUserMutation.graphql'
+import { HOLOCHAIN_POLL_INTERVAL_SLOW } from 'util/holochain'
 import HolochainCommunityQuery from 'graphql/queries/HolochainCommunityQuery.graphql'
 import HolochainCurrentUserQuery from 'graphql/queries/HolochainCurrentUserQuery.graphql'
 import fetchForCurrentUserMock from 'store/actions/fetchForCurrentUserMock'
@@ -56,7 +56,7 @@ const community = graphql(HolochainCommunityQuery, {
     slug: props.slug
   }),
   options: {
-    pollInterval: 30000
+    pollInterval: HOLOCHAIN_POLL_INTERVAL_SLOW
   }
 })
 

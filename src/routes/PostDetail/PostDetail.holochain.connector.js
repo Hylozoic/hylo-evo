@@ -2,6 +2,7 @@ import HolochainPostQuery from 'graphql/queries/HolochainPostQuery.graphql'
 import { connect } from 'react-redux'
 import { graphql, compose } from 'react-apollo'
 import { push } from 'connected-react-router'
+import { HOLOCHAIN_POLL_INTERVAL_SLOW } from 'util/holochain'
 import { editPostUrl, removePostFromUrl } from 'util/navigation'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getMe from 'store/selectors/getMe'
@@ -49,7 +50,8 @@ export const posts = graphql(HolochainPostQuery, {
   options: ({ id }) => ({
     variables: {
       id
-    }
+    },
+    pollInterval: HOLOCHAIN_POLL_INTERVAL_SLOW
   })
 })
 
