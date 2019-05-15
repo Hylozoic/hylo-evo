@@ -1,8 +1,7 @@
 import { ApolloLink, Observable } from 'apollo-link'
-import { Client } from 'rpc-websockets'
 import { get } from 'lodash/fp'
 import { graphqlToString } from 'util/graphql'
-import { createGraphqlZomeCallObjectWithArgs } from 'util/holochain'
+import { connect as hcWebClientConnect } from '@holochain/hc-web-client'
 
 const DEFAULT_PARAMS = {
   active: true
@@ -15,33 +14,43 @@ export class HolochainWebSocketLink extends ApolloLink {
     this.paramsOrClient = Object.assign({}, DEFAULT_PARAMS, paramsOrClient)
   }
 
+  async initOrGetCallGraphqlZome () {
+    if (this.callGraphqlZome) return
+    try {
+      // * Use apollo-retry-link instead of native WS-RPC retries
+      //   requires a hc-web-client update to allow passing this
+      //   WS-RPC config parameter: `max_reconnects: 0`
+      // * Ignore our hardcoded URI unless a Holochain build
+      //   as when the UI is served from a hApp the URI is inferred
+      const holochainClient = await hcWebClientConnect(
+        process.env.HOLOCHAIN_BUILD
+          ? null
+          : this.paramsOrClient.uri
+      )
+      const { callZome } = holochainClient
+      const callParams = process.env.HOLOCHAIN_GRAPHQL_PATH.split('/')
+
+      this.callGraphqlZome = callZome(...callParams)
+      console.log('🎉 Successfully connected to Holochain!')
+    } catch (error) {
+      console.log('😞 Holochain client connection failed -- ', error.toString())
+      throw (error)
+    }
+  }
+
   request (operation) {
     return new Observable(async observer => {
       if (!this.paramsOrClient.active) return observer.complete()
-      try {
-        if (this.paramsOrClient.active && !this.holochainSocket) {
-          this.ready = new Promise((resolve, reject) => {
-            this.readyResolve = resolve
-          })
-          this.holochainSocket = new Client(this.paramsOrClient.uri, {
-            // Note: using apollo-retry-link instead
-            max_reconnects: 0
-          })
-          this.holochainSocket.on('open', () => {
-            this.readyResolve()
-            console.log('🎉 Successfully connected to Holochain!')
-          })
-        }
 
-        await this.ready
+      try {
+        await this.initOrGetCallGraphqlZome()
 
         const query = graphqlToString(operation.query)
         const variables = operation.variables
-        const callObject = createGraphqlZomeCallObjectWithArgs({
+        const rawResult = await this.callGraphqlZome({
           query,
           variables
         })
-        const rawResult = await this.holochainSocket.call('call', callObject)
         const jsonResult = JSON.parse(rawResult)
         const error = get('Err', jsonResult)
         const ok = get('Ok', jsonResult)
