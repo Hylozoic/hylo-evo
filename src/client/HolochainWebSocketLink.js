@@ -4,7 +4,8 @@ import { graphqlToString } from 'util/graphql'
 import { connect as hcWebClientConnect } from '@holochain/hc-web-client'
 
 const DEFAULT_PARAMS = {
-  active: true
+  active: true,
+  consoleLogging: false
 }
 
 export class HolochainWebSocketLink extends ApolloLink {
@@ -31,9 +32,13 @@ export class HolochainWebSocketLink extends ApolloLink {
       const callParams = process.env.HOLOCHAIN_GRAPHQL_PATH.split('/')
 
       this.callGraphqlZome = callZome(...callParams)
-      console.log('🎉 Successfully connected to Holochain!')
+      if (this.paramsOrClient.consoleLogging) {
+        console.log('🎉 Successfully connected to Holochain!')
+      }
     } catch (error) {
-      console.log('😞 Holochain client connection failed -- ', error.toString())
+      if (this.paramsOrClient.consoleLogging) {
+        console.log('😞 Holochain client connection failed -- ', error.toString())
+      }
       throw (error)
     }
   }
@@ -65,14 +70,14 @@ export class HolochainWebSocketLink extends ApolloLink {
 
         const result = JSON.parse(ok)
 
-        if (process.env.NODE_ENV === 'development') {
+        if (this.paramsOrClient.consoleLogging) {
           console.log('👍 Holochain graphql operation complete: ', { result, query, variables })
         }
 
         observer.next({ data: result })
         observer.complete()
       } catch (error) {
-        if (process.env.NODE_ENV === 'development') {
+        if (this.paramsOrClient.consoleLogging) {
           console.log('👎 Holochain graphql operation error -- ', error.toString(), operation)
         }
 
