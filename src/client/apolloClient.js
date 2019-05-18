@@ -30,6 +30,7 @@ const link = ApolloLink.from([
   new RetryLink(),
   new HolochainWebSocketLink({
     uri: process.env.HOLOCHAIN_WEBSOCKET_URI,
+    consoleLogging: HOLOCHAIN_ACTIVE,
     active: HOLOCHAIN_ACTIVE
   })
 ])

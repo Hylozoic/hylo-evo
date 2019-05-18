@@ -41,6 +41,9 @@ describe('mapStateToProps', () => {
   }
 
   const props = {
+    location: {
+      search: ''
+    },
     match: {
       params: {
         messageThreadId: '11'

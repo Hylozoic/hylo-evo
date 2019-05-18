@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { get, some, isEmpty, includes, pick, uniqueId } from 'lodash/fp'
+import { get, some, isEmpty, castArray, includes, pick, uniqueId } from 'lodash/fp'
 import { AnalyticsEvents } from 'hylo-utils/constants'
 import orm from 'store/models'
 import { toRefArray } from 'util/reduxOrmMigration'
@@ -194,16 +194,31 @@ export function presentPersonListItem (person) {
   }
 }
 
-// TODO: Handle querystring participants for Members Message button
-export function getParticipantSearch (props, participantsFromStore) {
-  const participantIds = getQuerystringParam('participants', null, props)
-  if (participantIds) {
-    return participantIds
-      .split(',')
-      .filter(pId => !participantsFromStore.find(participant => participant.id === pId))
+export const getParticipantsFromQuerystring = ormCreateSelector(
+  orm,
+  state => state.orm,
+  (_, props) => props,
+  ({ Person }, props) => {
+    const participantsQuerystringParam = getQuerystringParam('participants', null, props)
+    if (!isEmpty(participantsQuerystringParam)) {
+      const participantIds = participantsQuerystringParam.split(',')
+      const participants = Person
+        .all()
+        .toRefArray()
+        .filter(person => participantIds.includes(person.id))
+      return participants
+        ? castArray(participants)
+        : null
+    }
+    return null
   }
-  return null
-}
+)
+
+export const peopleSelector = ormCreateSelector(
+  orm,
+  state => state.orm,
+  session => session.Person.all()
+)
 
 // TODO: Fix contacts search for Holochain+Apollo and Hylo API
 export const getHolochainContactsWithSearch = ormCreateSelector(

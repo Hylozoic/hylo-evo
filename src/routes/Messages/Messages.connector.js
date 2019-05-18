@@ -20,6 +20,7 @@ import {
   updateThreadReadTime,
   setThreadSearch,
   setContactsSearch,
+  getParticipantsFromQuerystring,
   getTextForCurrentMessageThread,
   getThreadSearch,
   getThreads,
@@ -47,6 +48,7 @@ export function mapStateToProps (state, props) {
 
   return {
     recentContacts,
+    participants: getParticipantsFromQuerystring(state, props),
     onCloseURL: getPreviousLocation(state),
     currentUser: getMe(state),
     messageThreadId,

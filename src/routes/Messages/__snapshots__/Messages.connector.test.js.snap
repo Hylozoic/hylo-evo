@@ -66,6 +66,7 @@ Object {
   ],
   "messagesPending": true,
   "onCloseURL": "/",
+  "participants": null,
   "recentContacts": Array [],
   "sendIsTyping": [Function],
   "socket": SailsSocket {

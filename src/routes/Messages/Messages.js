@@ -26,7 +26,7 @@ export default class Messages extends React.Component {
 
     this.state = {
       onCloseURL: props.onCloseURL,
-      participants: props.participants,
+      participants: [],
       forNewThread: props.messageThreadId === NEW_THREAD_ID
     }
     this.form = React.createRef()
@@ -36,12 +36,13 @@ export default class Messages extends React.Component {
     await this.props.fetchPeople()
     await this.props.fetchThreads()
     await this.onThreadIdChange()
-    // TODO: Handle querystring participants for Members Message button
-    // const { participantSearch } = this.props
-    // if (participantSearch) {
-    //   participantSearch.forEach(p => this.props.addParticipant(p))
-    //   this.props.changeQuerystringParam(this.props, 'participants', null)
-    // }
+
+    const { participants } = this.props
+
+    if (participants) {
+      participants.forEach(p => this.addParticipant(p))
+      this.props.changeQuerystringParam(this.props, 'participants', null)
+    }
   }
 
   componentDidUpdate (prevProps) {
