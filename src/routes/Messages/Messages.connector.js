@@ -31,15 +31,6 @@ import {
   getRecentContacts
 } from './Messages.store'
 
-// TODO: Handle querystring participants for Members Message button
-// Here is some of the stuff that was used to make it...
-// participantIdsSearch: getQuerystringParam('participants', null, props),
-// const { participantIdsSearch } = this.props
-// if (participantIdsSearch) {
-//   participantIdsSearch.forEach(p => this.addParticipant(p))
-//   this.props.changeQuerystringParam(this.props, 'participants', null)
-// }
-
 export function mapStateToProps (state, props) {
   const routeParams = get('match.params', props)
   const messageThreadId = get('messageThreadId', routeParams)

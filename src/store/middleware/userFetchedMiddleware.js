@@ -2,13 +2,13 @@ import { get } from 'lodash/fp'
 import getMe from '../selectors/getMe'
 import getMixpanel from '../selectors/getMixpanel'
 import getIntercom from '../selectors/getIntercom'
-// import { HOLOCHAIN_ACTIVE } from 'util/holochain'
+import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 
 export default function userFetchedMiddleware ({ dispatch, getState }) {
   return next => action => {
-    // TODO: Don't use Intercom or Mixpanel for Holochain for now
-    //       This will require also some checks within the related middlewares and reducers possibly
-    // if (HOLOCHAIN_ACTIVE) next(action)
+    // * Don't use Intercom or Mixpanel for Holochain
+    if (HOLOCHAIN_ACTIVE) next(action)
+
     const wasMe = getMe(getState())
     const result = next(action)
     const isMe = getMe(getState())
