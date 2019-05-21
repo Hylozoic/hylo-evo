@@ -92,7 +92,7 @@ export function regenerateAccessCode (communityId) {
   }
 }
 
-export function deletePost (id) {
+export function deleteCommunity (id) {
   return {
     type: DELETE_COMMUNITY,
     graphql: {
