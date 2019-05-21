@@ -66,7 +66,10 @@ const currentUser = graphql(HolochainCurrentUserQuery, {
     return {
       currentUser: me
     }
-  }
+  },
+  options: () => ({
+    fetchPolicy: 'network-only'
+  })
 })
 
 export default compose(

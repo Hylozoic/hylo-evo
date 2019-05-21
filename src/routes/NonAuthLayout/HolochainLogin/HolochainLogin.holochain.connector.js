@@ -5,6 +5,7 @@ import { setLogin } from '../Login/Login.store'
 import HolochainRegisterUserMutation from 'graphql/mutations/HolochainRegisterUserMutation.graphql'
 import HolochainCreateDefaultCommunityMutation from 'graphql/mutations/HolochainCreateDefaultCommunityMutation.graphql'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
+import fetchForCurrentUserMock from 'store/actions/fetchForCurrentUserMock'
 
 export function mapStateToProps (state, props) {
   return {
@@ -15,7 +16,8 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = {
   resetReturnToURL,
   push,
-  setLogin
+  setLogin,
+  fetchForCurrentUserMock // this is used to set currentUser in the redux store from the result of registerHolochainAgent
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
