@@ -43,8 +43,6 @@ export default class CommunitySettings extends Component {
 
     const { slug } = community
 
-    console.log('community community ', community)
-
     return <FullPageModal goToOnClose={`/c/${slug}`}
       content={[
         {

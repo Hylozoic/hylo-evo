@@ -20,8 +20,6 @@ export default function Button ({
 }) {
   let styleName = cx('button', color, { hover, active, narrow, small, disabled })
 
-  console.log('className', className)
-
   return <div
     role='button'
     tabIndex={tabIndex}
