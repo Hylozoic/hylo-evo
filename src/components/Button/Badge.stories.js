@@ -18,6 +18,15 @@ storiesOf('Button', module)
   .addDecorator(story => (
     <MemoryRouter>{story()}</MemoryRouter>
   ))
-  .add('Show', () =>
-    <Button {...props} />
+  .add('Normal', () =>
+    <Button {...props} />,
+  {
+    notes: 'Button in normal mode. Clickable'
+  }
+  )
+  .add('Disabled', () =>
+    <Button {...props} active={false} />,
+  {
+    notes: 'Button in disabled mode. Not clickable'
+  }
   )
