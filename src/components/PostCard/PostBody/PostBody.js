@@ -13,6 +13,6 @@ export default function PostBody ({
 }) {
   return <div styleName={cx('body', { smallMargin: !expanded })} className={className}>
     <PostTitle {...post} highlightProp={highlightProps} />
-    <PostDetails {...post} slug={slug} highlightProp={highlightProps} hideDetails={!expanded} expanded={expanded} />
+    <PostDetails {...post} slug={slug} highlightProp={highlightProps} expanded={expanded} />
   </div>
 }
