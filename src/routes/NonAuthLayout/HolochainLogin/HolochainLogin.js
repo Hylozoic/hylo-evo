@@ -12,27 +12,22 @@ export default class HolochainLogin extends React.Component {
     this.state = {}
   }
 
-  submit = async () => {
-    const { registerHolochainAgent, createDefaultCommunity, redirectOnSignIn, setLogin, fetchForCurrentUserMock } = this.props
-
-    const registeredAgentPayload = await registerHolochainAgent(this.state.name, this.state.avatarUrl)
-    const registeredUser = get('data.registerUser', registeredAgentPayload)
-
-    // setting currentUser in redux store
-    fetchForCurrentUserMock(registeredUser)
-
-    const defaultCommunityPayload = await createDefaultCommunity()
-
-    const defaultCommunitySlug = get('data.createCommunity.slug', defaultCommunityPayload)
-    setLogin(true)
-    const redirectUrl = defaultCommunitySlug ? communityUrl(defaultCommunitySlug) : '/'
-    redirectOnSignIn(redirectUrl)
+  submit = () => {
+    const { registerHolochainAgent, createDefaultCommunity, redirectOnSignIn, setLogin } = this.props
+    return registerHolochainAgent(this.state.name, this.state.avatarUrl)
+      .then(() => createDefaultCommunity())
+      .then(defaultCommunityPayload => {
+        const defaultCommunitySlug = get('data.createCommunity.slug', defaultCommunityPayload)
+        setLogin(true)
+        const redirectUrl = defaultCommunitySlug ? communityUrl(defaultCommunitySlug) : '/'
+        redirectOnSignIn(redirectUrl)
+      })
   }
 
   render () {
     const setState = key => event => this.setState({ [key]: event.target.value })
     return <div className={this.props.className}>
-      <h1 styleName='title'>Register your Holochain agent</h1>
+      <h1 styleName='title'>Log in to Hylo</h1>
       {this.props.error && formatError(this.props.error, 'Login')}
       <div styleName='field'>
         <label htmlFor='name' styleName='field-label'>Your name</label>
@@ -42,7 +37,7 @@ export default class HolochainLogin extends React.Component {
       <div styleName='field'>
         <label htmlFor='avatarUrl' styleName='field-label'>Avatar URL</label>
         <TextInput aria-label='avatarUrl' label='avatarUrl' type='text' name='avatarUrl' onChange={setState('avatarUrl')}
-          inputRef={input => { this.avatarUrl = input }} />
+          inputRef={input => { this.avatarUrl = input }} autoFocus />
       </div>
       <Button styleName='submit' label='Log In' onClick={this.submit} />
     </div>
