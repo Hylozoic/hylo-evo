@@ -20,6 +20,8 @@ import {
   updateThreadReadTime,
   setThreadSearch,
   setContactsSearch,
+  getAllContacts,
+  getMatchingContacts,
   getParticipantsFromQuerystring,
   getTextForCurrentMessageThread,
   getThreadSearch,
@@ -34,16 +36,16 @@ import {
 export function mapStateToProps (state, props) {
   const routeParams = get('match.params', props)
   const messageThreadId = get('messageThreadId', routeParams)
-  const messageThread = getCurrentMessageThread(state, props)
-  const recentContacts = getRecentContacts(state)
 
   return {
-    recentContacts,
+    messageThreadId,
+    contacts: getAllContacts(state, props),
+    recentContacts: getRecentContacts(state),
+    matchingContacts: getMatchingContacts(state, props),
     participants: getParticipantsFromQuerystring(state, props),
     onCloseURL: getPreviousLocation(state),
     currentUser: getMe(state),
-    messageThreadId,
-    messageThread,
+    messageThread: getCurrentMessageThread(state, props),
     messageText: getTextForCurrentMessageThread(state, props),
     messagesPending: isPendingFor(fetchMessages, state),
     messageCreatePending:

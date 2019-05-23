@@ -4,7 +4,7 @@ exports[`matches the last snapshot 1`] = `
 <ul
   data-stylename="people-selector-matches"
 >
-  <PersonListItem
+  <PeopleListItem
     active={true}
     key="72297"
     onClick={[Function]}
@@ -18,7 +18,7 @@ exports[`matches the last snapshot 1`] = `
       }
     }
   />
-  <PersonListItem
+  <PeopleListItem
     active={false}
     key="72552"
     onClick={[Function]}
@@ -32,7 +32,7 @@ exports[`matches the last snapshot 1`] = `
       }
     }
   />
-  <PersonListItem
+  <PeopleListItem
     active={false}
     key="72257"
     onClick={[Function]}
@@ -46,7 +46,7 @@ exports[`matches the last snapshot 1`] = `
       }
     }
   />
-  <PersonListItem
+  <PeopleListItem
     active={false}
     key="72041"
     onClick={[Function]}

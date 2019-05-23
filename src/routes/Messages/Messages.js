@@ -139,7 +139,8 @@ export default class Messages extends React.Component {
       fetchRecentContacts,
       fetchPeople,
       setContactsSearch,
-      holochainContacts,
+      contacts,
+      matchingContacts,
       recentContacts
     } = this.props
     const { forNewThread } = this.state
@@ -161,14 +162,14 @@ export default class Messages extends React.Component {
                 currentUser={currentUser}
                 fetchPeople={fetchPeople}
                 fetchDefaultList={fetchRecentContacts}
-                setContactsSearch={setContactsSearch}
-                contacts={holochainContacts}
-                recentContacts={recentContacts}
-                matches={holochainContacts}
+                setPeopleSearch={setContactsSearch}
+                people={contacts}
+                recentPeople={recentContacts}
+                matchingPeople={matchingContacts}
                 onCloseURL={onCloseURL}
-                participants={participants}
-                addParticipant={this.addParticipant}
-                removeParticipant={this.removeParticipant} />}
+                selectedPeople={participants}
+                selectPerson={this.addParticipant}
+                removePerson={this.removeParticipant} />}
             {!forNewThread &&
               <Header
                 messageThread={messageThread}
@@ -218,7 +219,7 @@ Messages.propTypes = {
   findOrCreateThread: PropTypes.func,
   goToThread: PropTypes.func,
   hasMoreMessages: PropTypes.bool,
-  holochainContacts: PropTypes.array,
+  contacts: PropTypes.array,
   location: PropTypes.object,
   messageCreatePending: PropTypes.bool,
   messageText: PropTypes.string,

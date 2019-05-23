@@ -1,4 +1,4 @@
-import PersonListItem from './PersonListItem'
+import PeopleListItem from './PeopleListItem'
 import { shallow } from 'enzyme'
 import React from 'react'
 
@@ -9,6 +9,6 @@ it('matches the last snapshot', () => {
     name: 'Wombat',
     avatarUrl: 'https://wombat.life'
   }
-  const wrapper = shallow(<PersonListItem addMatch={() => {}} person={person} />)
+  const wrapper = shallow(<PeopleListItem addMatch={() => {}} person={person} />)
   expect(wrapper).toMatchSnapshot()
 })

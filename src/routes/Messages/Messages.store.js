@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { get, some, isEmpty, castArray, includes, pick, uniqueId } from 'lodash/fp'
+import { get, some, isEmpty, castArray, includes, pick, uniqueId, sortBy } from 'lodash/fp'
 import { AnalyticsEvents } from 'hylo-utils/constants'
 import orm from 'store/models'
 import { toRefArray } from 'util/reduxOrmMigration'
@@ -186,14 +186,6 @@ export function updateThreadReadTime (id) {
 
 // Selectors
 
-export function presentPersonListItem (person) {
-  return {
-    ...pick([ 'id', 'name', 'avatarUrl' ], person.ref),
-    community: person.memberships.first()
-      ? person.memberships.first().community.name : null
-  }
-}
-
 export const getParticipantsFromQuerystring = ormCreateSelector(
   orm,
   state => state.orm,
@@ -206,49 +198,50 @@ export const getParticipantsFromQuerystring = ormCreateSelector(
         .all()
         .toRefArray()
         .filter(person => participantIds.includes(person.id))
+
       return participants
         ? castArray(participants)
         : null
     }
+
     return null
   }
 )
 
-export const peopleSelector = ormCreateSelector(
+export const getAllContacts = ormCreateSelector(
   orm,
   state => state.orm,
-  session => session.Person.all()
-)
-
-// TODO: Fix contacts search for Holochain+Apollo and Hylo API
-export const getHolochainContactsWithSearch = ormCreateSelector(
-  orm,
-  state => state.orm,
-  (state, props) => p => {
-    const contactsSearch = getContactsSearch(state)
-    const holoFilter = props.holochainActive ? p.isHoloData : true
-    if (!contactsSearch || contactsSearch.length < 1) return holoFilter
-    return holoFilter && p.name.toLowerCase().includes(contactsSearch.toLowerCase())
-  },
-  (session, search = () => true) => {
-    return session.Person
-      .all()
-      .filter(search)
-      .toModelArray()
-      .map(presentPersonListItem)
-      .sort(nameSort)
-  }
+  session => session.Person.all().toRefArray()
 )
 
 export const getRecentContacts = ormCreateSelector(
   orm,
   state => state.orm,
-  session => {
-    return session.PersonConnection
+  ({ PersonConnection }) => {
+    const recentContacts = PersonConnection
       .all()
       .toModelArray()
       .map(connection => presentPersonListItem(connection.person))
-      .sort(nameSort)
+
+    return sortByName(recentContacts)
+  }
+)
+
+export const getMatchingContacts = ormCreateSelector(
+  orm,
+  state => state.orm,
+  getContactsSearch,
+  ({ Person }, contactsSearch) => {
+    if (!contactsSearch) return null
+    const matchingContacts = Person
+      .all()
+      .toModelArray()
+      .filter(person =>
+        person.name.toLowerCase().includes(contactsSearch.toLowerCase())
+      )
+      .map(presentPersonListItem)
+
+    return sortByName(matchingContacts)
   }
 )
 
@@ -292,10 +285,10 @@ export const getThreads = ormCreateSelector(
   (session, threadSearch, results) => {
     if (isEmpty(results) || isEmpty(results.ids)) return []
     return session.MessageThread.all()
-      .filter(x => includes(x.id, results.ids))
-      .filter(filterThreadsByParticipant(threadSearch))
       .orderBy(x => -new Date(x.updatedAt))
       .toModelArray()
+      .filter(x => includes(x.id, results.ids))
+      .filter(filterThreadsByParticipant(threadSearch))
   }
 )
 
@@ -322,11 +315,15 @@ export const getMessagesHasMore = createSelector(
 
 // Utility
 
-const nameSort = (a, b) => {
-  const aName = a.name.toUpperCase()
-  const bName = b.name.toUpperCase()
-  return aName > bName ? 1 : aName < bName ? -1 : 0
+export function presentPersonListItem (person) {
+  return {
+    ...pick([ 'id', 'name', 'avatarUrl' ], person.ref),
+    community: person.memberships.first()
+      ? person.memberships.first().community.name : null
+  }
 }
+
+export const sortByName = sortBy(person => person && person.name.toUpperCase())
 
 export function filterThreadsByParticipant (threadSearch) {
   if (!threadSearch) return () => true
