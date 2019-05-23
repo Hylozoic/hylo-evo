@@ -14,7 +14,6 @@ exports[`matches last snapshot 1`] = `
   />
   <PostDetails
     expanded={true}
-    hideDetails={false}
     highlightProp={
       Object {
         "term": "foo",
