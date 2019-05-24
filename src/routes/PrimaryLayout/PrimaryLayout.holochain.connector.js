@@ -23,26 +23,15 @@ export function mapStateToProps (state, props) {
     isDrawerOpen: get('PrimaryLayout.isDrawerOpen', state),
     showLogoBadge: false,
     // not used by holochain
-    fetchForCommunity: () => {}
+    fetchForCommunity: () => {},
+    fetchForCurrentUser: () => {}
   }
 }
 
 export function mapDispatchToProps (dispatch) {
   return {
-    fetchForCurrentUser: (holochainUserData) =>
-      dispatch(fetchForCurrentUserMock(holochainUserData)),
+    saveCurrentUserInStore: holochainUserData => dispatch(fetchForCurrentUserMock(holochainUserData)),
     toggleDrawer: () => dispatch(toggleDrawer())
-  }
-}
-
-export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { currentUser } = ownProps
-  const fetchForCurrentUser = () => dispatchProps.fetchForCurrentUser(currentUser)
-  return {
-    ...ownProps,
-    ...stateProps,
-    ...dispatchProps,
-    fetchForCurrentUser
   }
 }
 
@@ -62,7 +51,8 @@ const community = graphql(HolochainCommunityQuery, {
 
 const currentUser = graphql(HolochainCurrentUserQuery, {
   skip: props => !!props.currentUser,
-  props: ({ data: { me } }) => {
+  props: ({ data: { me }, ownProps: { saveCurrentUserInStore } }) => {
+    me && saveCurrentUserInStore(me)
     return {
       currentUser: me
     }
@@ -73,7 +63,7 @@ const currentUser = graphql(HolochainCurrentUserQuery, {
 })
 
 export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
   currentUser,
-  connect(mapStateToProps, mapDispatchToProps, mergeProps),
   community
 )
