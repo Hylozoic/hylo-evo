@@ -35,10 +35,10 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     : navigate
 
   return {
+    onClose,
     ...stateProps,
     ...dispatchProps,
-    ...ownProps,
-    onClose
+    ...ownProps
   }
 }
 
