@@ -14,7 +14,14 @@ module.exports = async ({ config }) => {
     },
     module: {
       ...config.module,
-      rules: hyloWebpackConfig.module.rules
+      rules: [
+        // import Markdown raw
+        {
+          test: /\.md$/,
+          use: 'raw-loader'
+        },
+        ...hyloWebpackConfig.module.rules
+      ]
     }
   }
 
