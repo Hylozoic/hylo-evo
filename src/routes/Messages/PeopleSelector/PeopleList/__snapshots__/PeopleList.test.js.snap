@@ -2,18 +2,18 @@
 
 exports[`does something 1`] = `
 <div
-  data-stylename="people-selector-contacts"
+  data-stylename="people-list-container"
 >
   <div>
     <h2
-      data-stylename="contacts-header"
+      data-stylename="people-list-header"
     >
       All Contacts
     </h2>
     <ul
-      data-stylename="contact-list"
+      data-stylename="people-list"
     >
-      <PersonListItem
+      <PeopleListItem
         key="1"
         onClick={[Function]}
         person={
@@ -25,7 +25,7 @@ exports[`does something 1`] = `
           }
         }
       />
-      <PersonListItem
+      <PeopleListItem
         key="2"
         onClick={[Function]}
         person={
@@ -37,7 +37,7 @@ exports[`does something 1`] = `
           }
         }
       />
-      <PersonListItem
+      <PeopleListItem
         key="3"
         onClick={[Function]}
         person={

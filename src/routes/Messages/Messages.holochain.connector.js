@@ -26,7 +26,8 @@ import {
   getTextForCurrentMessageThread,
   getThreadSearch,
   getContactsSearch,
-  filterThreadsByParticipant
+  filterThreadsByParticipant,
+  sortByName
 } from './Messages.store'
 
 const mockSocket = { on: () => {}, off: () => {} }
@@ -38,9 +39,9 @@ export function mapStateToProps (state, props) {
   const messageThreadId = get('messageThreadId', routeParams)
 
   return {
+    messageThreadId,
     currentUser: getMe(state, props),
     onCloseURL: getPreviousLocation(state),
-    messageThreadId,
     messageText: getTextForCurrentMessageThread(state, props),
     sendIsTyping: sendIsTyping(messageThreadId),
     threadSearch: getThreadSearch(state, props),
@@ -112,10 +113,18 @@ export const createMessage = graphql(CreateMessageMutation, {
   })
 })
 
-export const holochainContacts = graphql(HolochainPeopleQuery, {
-  props: ({ data: { people } }) => ({
-    holochainContacts: get('items', people)
-  })
+export const contacts = graphql(HolochainPeopleQuery, {
+  props: ({ data: { people }, ownProps }) => {
+    const contacts = get('items', people) || []
+    const { contactsSearch } = ownProps
+    return {
+      contacts,
+      matches: contactsSearch
+        ? sortByName(contacts.filter(person =>
+          person.name.toLowerCase().includes(contactsSearch.toLowerCase())))
+        : []
+    }
+  }
 })
 
 export const threads = graphql(MessageThreadsQuery, {
@@ -164,5 +173,5 @@ export default compose(
   createMessage,
   threads,
   thread,
-  holochainContacts
+  contacts
 )

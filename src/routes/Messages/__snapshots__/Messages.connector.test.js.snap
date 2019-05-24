@@ -20,9 +20,22 @@ Object {
 
 exports[`mapStateToProps returns expected values 1`] = `
 Object {
+  "contacts": Array [
+    Object {
+      "id": "1",
+      "name": "Alice",
+      "skills": undefined,
+    },
+    Object {
+      "id": "2",
+      "name": "Bob",
+      "skills": undefined,
+    },
+  ],
   "currentUser": undefined,
   "hasMoreMessages": true,
   "hasMoreThreads": undefined,
+  "matchingContacts": null,
   "messageCreatePending": false,
   "messageText": "",
   "messageThread": Object {

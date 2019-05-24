@@ -1,10 +1,10 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 
-import PeopleSelectorContacts from './PeopleSelectorContacts'
+import PeopleList from './PeopleList'
 
 it('does something', () => {
-  const contacts = [
+  const people = [
     {
       id: '1',
       name: 'Wombat',
@@ -24,6 +24,6 @@ it('does something', () => {
       community: 'Ocelots'
     }
   ]
-  const wrapper = shallow(<PeopleSelectorContacts contacts={contacts} />)
+  const wrapper = shallow(<PeopleList people={people} />)
   expect(wrapper).toMatchSnapshot()
 })

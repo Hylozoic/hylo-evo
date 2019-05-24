@@ -2,9 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
-import './PersonListItem.scss'
+import './PeopleListItem.scss'
 
-export default function PersonListItem ({ active, onClick, onMouseOver, person }) {
+export default function PeopleListItem ({ active, onClick, onMouseOver, person }) {
   return <li styleName={cx('person-list-item', { active })} onClick={onClick} onMouseOver={onMouseOver}>
     <RoundImage url={person.avatarUrl} styleName='avatar' medium />
     <span styleName='name'>{person.name}</span>
@@ -12,7 +12,7 @@ export default function PersonListItem ({ active, onClick, onMouseOver, person }
   </li>
 }
 
-PersonListItem.propTypes = {
+PeopleListItem.propTypes = {
   active: PropTypes.bool,
   onClick: PropTypes.func,
   onMouseOver: PropTypes.func,

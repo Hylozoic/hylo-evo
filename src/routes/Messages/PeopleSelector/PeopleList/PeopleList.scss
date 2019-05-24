@@ -1,16 +1,16 @@
-.people-selector-contacts {
+.people-list-container {
   composes: messages-section from '../../MessageSection/MessageSection.scss';
   flex: 1;
   height: 0;
 }
 
-.contacts-header {
+.people-list-header {
   composes: hdr-subheadline from 'css/typography.scss';
   margin-top: $space-8x;
   color: $color-rhino-80;
 }
 
-.contact-list {
+.people-list {
   padding: 0;
 
   li:hover {

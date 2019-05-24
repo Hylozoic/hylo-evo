@@ -23,8 +23,8 @@ exports[`PeopleSelector matches the last snapshot 1`] = `
       onCloseURL=""
     />
   </div>
-  <PeopleSelectorContacts
-    addParticipant={[Function]}
+  <PeopleList
+    onClick={[Function]}
   />
 </Fragment>
 `;
