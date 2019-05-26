@@ -23,11 +23,13 @@ export class HolochainWebSocketLink extends ApolloLink {
       //   WS-RPC config parameter: `max_reconnects: 0`
       // * Ignore our hardcoded URI unless a Holochain build
       //   as when the UI is served from a hApp the URI is inferred
-      const holochainClient = await hcWebClientConnect(
-        process.env.HOLOCHAIN_BUILD
-          ? null
-          : this.paramsOrClient.uri
-      )
+      const holochainClient = await hcWebClientConnect({
+        url: process.env.HOLOCHAIN_BUILD ? null : this.paramsOrClient.uri,
+        timeout: 5000,
+        wsClient: {
+          max_reconnects: 0
+        }
+      })
       const { callZome } = holochainClient
       const callParams = process.env.HOLOCHAIN_GRAPHQL_PATH.split('/')
 
