@@ -9,7 +9,7 @@ import {
   HOLOCHAIN_POLL_INTERVAL_SLOW,
   HOLOCHAIN_POLL_INTERVAL_FAST
 } from 'util/holochain'
-import { threadUrl } from 'util/navigation'
+import { threadUrl, communityUrl } from 'util/navigation'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getMe from 'store/selectors/getMe'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
@@ -41,7 +41,8 @@ export function mapStateToProps (state, props) {
   return {
     messageThreadId,
     currentUser: getMe(state, props),
-    onCloseURL: getPreviousLocation(state),
+    // * For now doing the most simplest thing
+    onCloseURL: communityUrl('hylo-holochain'),
     messageText: getTextForCurrentMessageThread(state, props),
     sendIsTyping: sendIsTyping(messageThreadId),
     threadSearch: getThreadSearch(state, props),
