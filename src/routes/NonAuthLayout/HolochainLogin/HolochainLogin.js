@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
-import { communityUrl } from 'util/navigation'
-import { get } from 'lodash/fp'
+import { defaultHolochainCommunityUrl } from 'util/navigation'
 import { formatError } from '../util'
 import './HolochainLogin.scss'
 
@@ -17,12 +16,9 @@ export default class HolochainLogin extends React.Component {
     const { registerHolochainAgent, createDefaultCommunity, redirectOnSignIn, setLogin } = this.props
 
     await registerHolochainAgent(this.state.name, this.state.avatarUrl)
-
-    const defaultCommunityPayload = await createDefaultCommunity()
-    const defaultCommunitySlug = get('data.createCommunity.slug', defaultCommunityPayload)
-
+    await createDefaultCommunity()
     setLogin(true)
-    redirectOnSignIn(communityUrl(defaultCommunitySlug, '/'))
+    redirectOnSignIn(defaultHolochainCommunityUrl())
   }
 
   onChangeHandlerForKey = key => event => this.setState({ [key]: event.target.value })

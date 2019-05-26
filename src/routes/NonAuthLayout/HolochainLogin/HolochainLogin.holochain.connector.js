@@ -1,14 +1,16 @@
 import { connect } from 'react-redux'
 import { graphql, compose } from 'react-apollo'
 import { push } from 'connected-react-router'
-import { get } from 'lodash/fp'
-import { setLogin } from '../Login/Login.store'
+import {
+  HOLOCHAIN_DEFAULT_COMMUNITY_NAME,
+  HOLOCHAIN_DEFAULT_COMMUNITY_SLUG
+} from 'util/holochain'
 import HolochainRegisterUserMutation from 'graphql/mutations/HolochainRegisterUserMutation.graphql'
-import HolochainCreateDefaultCommunityMutation from 'graphql/mutations/HolochainCreateDefaultCommunityMutation.graphql'
+import HolochainCreateCommunityMutation from 'graphql/mutations/HolochainCreateCommunityMutation.graphql'
+import { setLogin } from '../Login/Login.store'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
-import fetchForCurrentUserMock from 'store/actions/fetchForCurrentUserMock'
 
-export function mapStateToProps (state, props) {
+export function mapStateToProps (state) {
   return {
     returnToURL: getReturnToURL(state)
   }
@@ -17,9 +19,7 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = {
   resetReturnToURL,
   push,
-  setLogin,
-  // this is used to set currentUser in the redux store from the result of registerHolochainAgent
-  fetchForCurrentUserMock
+  setLogin
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
@@ -43,28 +43,27 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
 }
 
 const registerHolochainAgent = graphql(HolochainRegisterUserMutation, {
-  props: ({ mutate, ownProps }) => {
+  props: ({ mutate }) => {
     return {
-      registerHolochainAgent: async (name, avatarUrl) => {
-        const registeredAgentPayload = await mutate({
-          variables: {
-            name,
-            avatarUrl
-          }
-        })
-        const currentUser = get('data.registerUser', registeredAgentPayload)
-
-        // set currentUser in redux store
-        await ownProps.fetchForCurrentUserMock(currentUser)
-
-        return registeredAgentPayload
-      }
+      registerHolochainAgent: (name, avatarUrl) => mutate({
+        variables: {
+          name,
+          avatarUrl
+        }
+      })
     }
   }
 })
 
-const createDefaultCommunity = graphql(HolochainCreateDefaultCommunityMutation, {
-  name: 'createDefaultCommunity'
+const createDefaultCommunity = graphql(HolochainCreateCommunityMutation, {
+  props: ({ mutate }) => ({
+    createDefaultCommunity: () => mutate({
+      variables: {
+        slug: HOLOCHAIN_DEFAULT_COMMUNITY_SLUG,
+        name: HOLOCHAIN_DEFAULT_COMMUNITY_NAME
+      }
+    })
+  })
 })
 
 export default compose(

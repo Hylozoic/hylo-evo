@@ -28,11 +28,9 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export function mapDispatchToProps (dispatch) {
-  return {
-    saveCurrentUserInStore: holochainUserData => dispatch(fetchForCurrentUserMock(holochainUserData)),
-    toggleDrawer: () => dispatch(toggleDrawer())
-  }
+export const mapDispatchToProps = {
+  fetchForCurrentUserMock,
+  toggleDrawer
 }
 
 const community = graphql(HolochainCommunityQuery, {
@@ -49,21 +47,19 @@ const community = graphql(HolochainCommunityQuery, {
   }
 })
 
-const currentUser = graphql(HolochainCurrentUserQuery, {
-  skip: props => !!props.currentUser,
-  props: ({ data: { me }, ownProps: { saveCurrentUserInStore } }) => {
-    me && saveCurrentUserInStore(me)
+const currentUserFromHolochainAgent = graphql(HolochainCurrentUserQuery, {
+  skip: props => props.currentUser || props.holochainAgent,
+  props: ({ data: { me: holochainAgent }, ownProps: { fetchForCurrentUserMock } }) => {
+    // * Merges Holochain Agent data into the Redux ORM CurrentUser mock
+    fetchForCurrentUserMock(holochainAgent)
     return {
-      currentUser: me
+      holochainAgent
     }
-  },
-  options: () => ({
-    fetchPolicy: 'network-only'
-  })
+  }
 })
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  currentUser,
+  currentUserFromHolochainAgent,
   community
 )

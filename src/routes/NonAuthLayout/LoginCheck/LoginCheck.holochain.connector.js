@@ -1,23 +1,25 @@
 import { connect } from 'react-redux'
 import { graphql, compose } from 'react-apollo'
+import { isNull } from 'lodash'
 import { setLogin } from '../Login/Login.store'
 import HolochainCurrentUserQuery from 'graphql/queries/HolochainCurrentUserQuery.graphql'
-import { isNull } from 'lodash'
 
-export function mapStateToProps (state) {
+export function mapStateToProps (state, props) {
   return {
     hasCheckedLogin: !isNull(state.login.isLoggedIn)
   }
 }
 
-const mapDispatchToProps = { setLogin }
+const mapDispatchToProps = {
+  setLogin
+}
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { currentUser } = ownProps
+  const { holochainAgent } = ownProps
   const { setLogin } = dispatchProps
 
-  const checkLogin = currentUser
-    ? () => setLogin(currentUser.isRegistered)
+  const checkLogin = holochainAgent
+    ? () => setLogin(holochainAgent.isRegistered)
     : () => {}
 
   return {
@@ -28,16 +30,14 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   }
 }
 
-const currentUser = graphql(HolochainCurrentUserQuery, {
-  skip: props => !!props.currentUser,
-  props: ({ data: { me } }) => {
-    return {
-      currentUser: me
-    }
-  }
+const holochainAgent = graphql(HolochainCurrentUserQuery, {
+  skip: props => props.holochainAgent,
+  props: ({ data: { me: holochainAgent } }) => ({
+    holochainAgent
+  })
 })
 
 export default compose(
-  currentUser,
+  holochainAgent,
   connect(mapStateToProps, mapDispatchToProps, mergeProps)
 )
