@@ -12,7 +12,7 @@ import {
 import { threadUrl, communityUrl } from 'util/navigation'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getMe from 'store/selectors/getMe'
-import getPreviousLocation from 'store/selectors/getPreviousLocation'
+// import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import { NEW_THREAD_ID } from './Messages'
 import HolochainPeopleQuery from 'graphql/queries/HolochainPeopleQuery.graphql'
 import FindOrCreateThreadMutation from 'graphql/mutations/FindOrCreateThreadMutation.graphql'
