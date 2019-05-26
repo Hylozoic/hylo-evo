@@ -16,6 +16,7 @@ import './MessagesDropdown.scss'
 export default class MessagesDropdown extends Component {
   constructor (props) {
     super(props)
+    this.dropdown = React.createRef()
     this.state = {}
   }
 
@@ -55,8 +56,8 @@ export default class MessagesDropdown extends Component {
     } = this.props
 
     const onClick = id => {
-      goToThread(id)
-      this.refs.dropdown.toggle(false)
+      if (id) goToThread(id)
+      this.dropdown.current.toggle(false)
     }
 
     let body
@@ -82,7 +83,7 @@ export default class MessagesDropdown extends Component {
       : newMessageUrl()
 
     return <TopNavDropdown
-      ref='dropdown'
+      ref={this.dropdown}
       className={className}
       onToggle={this.onToggle}
       toggleChildren={renderToggleChildren(this.hasUnread())}
