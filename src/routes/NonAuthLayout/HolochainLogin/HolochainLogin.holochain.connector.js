@@ -68,7 +68,7 @@ const createDefaultCommunity = graphql(HolochainCreateDefaultCommunityMutation, 
 })
 
 export default compose(
+  connect(mapStateToProps, mapDispatchToProps, mergeProps),
   registerHolochainAgent,
-  createDefaultCommunity,
-  connect(mapStateToProps, mapDispatchToProps, mergeProps)
+  createDefaultCommunity
 )
