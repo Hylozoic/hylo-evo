@@ -4,15 +4,17 @@ import { graphqlToString } from 'util/graphql'
 import { connect as hcWebClientConnect } from '@holochain/hc-web-client'
 
 const DEFAULT_PARAMS = {
+  uri: null,
   active: true,
-  consoleLogging: false
+  consoleLogging: false,
+  timeout: 5000
 }
 
 export class HolochainWebSocketLink extends ApolloLink {
-  constructor (paramsOrClient = {}) {
+  constructor (params = {}) {
     super()
 
-    this.paramsOrClient = Object.assign({}, DEFAULT_PARAMS, paramsOrClient)
+    this.params = Object.assign({}, DEFAULT_PARAMS, params)
   }
 
   async initOrGetCallGraphqlZome () {
@@ -21,21 +23,19 @@ export class HolochainWebSocketLink extends ApolloLink {
       // * Ignore our hardcoded URI unless a Holochain build
       //   as when the UI is served from a hApp the URI is inferred
       const holochainClient = await hcWebClientConnect({
-        url: process.env.HOLOCHAIN_BUILD ? null : this.paramsOrClient.uri,
-        timeout: 5000,
-        wsClient: {
-          max_reconnects: 0
-        }
+        url: this.params.uri,
+        timeout: this.params.timeout,
+        wsClient: { max_reconnects: 0 }
       })
       const { callZome } = holochainClient
       const callParams = process.env.HOLOCHAIN_GRAPHQL_PATH.split('/')
 
       this.callGraphqlZome = callZome(...callParams)
-      if (this.paramsOrClient.consoleLogging) {
+      if (this.params.consoleLogging) {
         console.log('🎉 Successfully connected to Holochain!')
       }
     } catch (error) {
-      if (this.paramsOrClient.consoleLogging) {
+      if (this.params.consoleLogging) {
         console.log('😞 Holochain client connection failed -- ', error.toString())
       }
       throw (error)
@@ -44,7 +44,7 @@ export class HolochainWebSocketLink extends ApolloLink {
 
   request (operation) {
     return new Observable(async observer => {
-      if (!this.paramsOrClient.active) return observer.complete()
+      if (!this.params.active) return observer.complete()
 
       try {
         await this.initOrGetCallGraphqlZome()
@@ -69,18 +69,19 @@ export class HolochainWebSocketLink extends ApolloLink {
 
         const result = JSON.parse(ok)
 
-        if (this.paramsOrClient.consoleLogging) {
+        if (this.params.consoleLogging) {
           console.log('👍 Holochain graphql operation complete: ', { result, query, variables })
         }
 
         observer.next({ data: result })
         observer.complete()
       } catch (error) {
-        if (this.paramsOrClient.consoleLogging) {
+        if (this.params.consoleLogging) {
           console.log(
             '👎 Holochain graphql operation error -- ', error.toString(),
             {
-              graphqlString: graphqlToString(operation.query || operation.mutation),
+              query: graphqlToString(operation.query || operation.mutation),
+              variables: operation.variables,
               operation
             }
           )

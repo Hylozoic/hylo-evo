@@ -29,7 +29,9 @@ import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 const link = ApolloLink.from([
   new RetryLink(),
   new HolochainWebSocketLink({
-    uri: process.env.HOLOCHAIN_WEBSOCKET_URI,
+    uri: process.env.HOLOCHAIN_BUILD
+      ? null
+      : process.env.HOLOCHAIN_WEBSOCKET_URI,
     consoleLogging: HOLOCHAIN_ACTIVE,
     active: HOLOCHAIN_ACTIVE
   })
