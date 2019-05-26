@@ -1,7 +1,7 @@
-query MessageThreadsQuery ($first: Int, $offset: Int) {
+query MessageThreadsQuery ($first: Int = 10, $offset: Int, $firstMessages: Int = 1) {
   me {
     id
-    messageThreads(sortBy: "updatedAt", order: "asc", first: $first, offset: $offset) {
+    messageThreads(sortBy: "updatedAt", order: "desc", first: $first, offset: $offset) {
       total
       hasMore
       items {
@@ -15,9 +15,7 @@ query MessageThreadsQuery ($first: Int, $offset: Int) {
           name
           avatarUrl
         }
-        # TODO: Changed "first" value to 80 for Holochain/Apollo query matching
-        #       but needs to be refactored to not do this for Hylo API
-        messages(first: 80, order: "desc") {
+        messages(first: $firstMessages, order: "desc") {
           items {
             id
             createdAt

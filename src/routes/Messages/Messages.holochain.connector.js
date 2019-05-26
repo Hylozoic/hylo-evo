@@ -139,7 +139,8 @@ export const threads = graphql(MessageThreadsQuery, {
     }
   },
   variables: {
-    first: null,
+    firstMessages: 80,
+    first: 20,
     offset: null
   },
   options: {

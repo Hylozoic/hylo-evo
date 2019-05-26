@@ -282,12 +282,12 @@ export const getThreads = ormCreateSelector(
   state => state.orm,
   getThreadSearch,
   getThreadResults,
-  (session, threadSearch, results) => {
-    if (isEmpty(results) || isEmpty(results.ids)) return []
+  (session, threadSearch, searchResults) => {
+    if (isEmpty(searchResults) || isEmpty(searchResults.ids)) return []
     return session.MessageThread.all()
-      .orderBy(x => -new Date(x.updatedAt))
+      .orderBy(thread => -new Date(thread.updatedAt))
       .toModelArray()
-      .filter(x => includes(x.id, results.ids))
+      .filter(thread => includes(thread.id, searchResults.ids))
       .filter(filterThreadsByParticipant(threadSearch))
   }
 )

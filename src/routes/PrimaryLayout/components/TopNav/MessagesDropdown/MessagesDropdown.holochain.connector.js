@@ -20,8 +20,9 @@ export function mapDispatchToProps (dispatch, props) {
 
 const threads = graphql(MessageThreadsQuery, {
   variables: {
-    first: 10,
-    offset: 0
+    firstMessages: 80,
+    first: 20,
+    offset: null
   },
   props: ({ data: { me, loading } }) => {
     const threads = loading ? [] : get('messageThreads.items', me)
