@@ -1,16 +1,9 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import './DeleteSettingsTab.scss'
 import Button from 'components/Button'
-import Loading from 'components/Loading'
-const { object, func } = PropTypes
+import './DeleteSettingsTab.scss'
 
 export default class DeleteSettingsTab extends Component {
-  static propTypes = {
-    community: object,
-    deleteCommunity: func
-  }
-
   deleteCommunity = () => {
     const { community: { name }, deleteCommunity } = this.props
     if (window.confirm(`Are you sure you want to delete the community ${name}?`)) {
@@ -37,4 +30,9 @@ export default class DeleteSettingsTab extends Component {
       </div>
     </div>
   }
+}
+
+DeleteSettingsTab.propTypes = {
+  community: PropTypes.object,
+  deleteCommunity: PropTypes.func
 }
