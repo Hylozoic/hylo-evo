@@ -45,6 +45,19 @@ exports[`renders correctly with a community 1`] = `
         "name": "Invite",
         "path": "/c/foo/settings/invite",
       },
+      Object {
+        "component": <DeleteSettingsTab
+          community={
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
+          }
+        />,
+        "name": "Delete",
+        "path": "/c/foo/settings/delete",
+      },
     ]
   }
   goToOnClose="/c/foo"

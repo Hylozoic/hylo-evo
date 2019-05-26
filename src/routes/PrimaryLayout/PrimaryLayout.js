@@ -13,6 +13,7 @@ import AddLocation from 'routes/Signup/AddLocation'
 import AddSkills from 'routes/Signup/AddSkills'
 import AllTopics from 'routes/AllTopics'
 import CreateCommunity from 'routes/CreateCommunity'
+import CommunityDeleteConfirmation from 'routes/CommunitySettings/CommunityDeleteConfirmation'
 import CommunityReview from 'routes/CreateCommunity/Review'
 import CommunitySettings from 'routes/CommunitySettings'
 import CommunitySidebar from 'routes/CommunitySidebar'
@@ -125,6 +126,7 @@ export default class PrimaryLayout extends Component {
             <Route path={`/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
+            <Route path='/confirm-community-delete' component={CommunityDeleteConfirmation} />
             {signupRoutes.map(({ path, child }) =>
               <Route path={path} key={path} component={props =>
                 <SignupModal {...props} child={child} />} />)}

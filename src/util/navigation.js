@@ -64,6 +64,10 @@ export function baseUrl ({
   }
 }
 
+export function communityDeleteConfirmationUrl () {
+  return '/confirm-community-delete'
+}
+
 // derived URL paths
 
 export function personUrl (id, communitySlug, networkSlug) {

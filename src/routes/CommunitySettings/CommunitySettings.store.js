@@ -3,6 +3,7 @@ export const REGENERATE_ACCESS_CODE = `${MODULE_NAME}/REGENERATE_ACCESS_CODE`
 export const FETCH_COMMUNITY_SETTINGS = `${MODULE_NAME}/FETCH_COMMUNITY_SETTINGS`
 export const UPDATE_COMMUNITY_SETTINGS = `${MODULE_NAME}/UPDATE_COMMUNITY_SETTINGS`
 export const UPDATE_COMMUNITY_SETTINGS_PENDING = UPDATE_COMMUNITY_SETTINGS + '_PENDING'
+export const DELETE_COMMUNITY = `${MODULE_NAME}/DELETE_COMMUNITY`
 
 export function fetchCommunitySettings (slug) {
   return {
@@ -87,6 +88,26 @@ export function regenerateAccessCode (communityId) {
     },
     meta: {
       extractModel: 'Community'
+    }
+  }
+}
+
+export function deleteCommunity (id) {
+  return {
+    type: DELETE_COMMUNITY,
+    graphql: {
+      query: `mutation ($id: ID) {
+        deleteCommunity(id: $id) {
+          success
+        }
+      }`,
+      variables: {
+        id
+      }
+    },
+    meta: {
+      optimistic: true,
+      id
     }
   }
 }
