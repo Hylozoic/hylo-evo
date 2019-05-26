@@ -14,7 +14,9 @@ const startTime = new Date().getTime()
 
 export default startTime
 
-dotenv.load()
+dotenv.load({
+  allowEmptyValues: true
+})
 
 // This allows files to require or import paths that are relative to src/,
 // duplicating the effect of resolve.modules in the webpack config.
