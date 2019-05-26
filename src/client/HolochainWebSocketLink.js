@@ -18,9 +18,6 @@ export class HolochainWebSocketLink extends ApolloLink {
   async initOrGetCallGraphqlZome () {
     if (this.callGraphqlZome) return
     try {
-      // * Use apollo-retry-link instead of native WS-RPC retries
-      //   requires a hc-web-client update to allow passing this
-      //   WS-RPC config parameter: `max_reconnects: 0`
       // * Ignore our hardcoded URI unless a Holochain build
       //   as when the UI is served from a hApp the URI is inferred
       const holochainClient = await hcWebClientConnect({
@@ -80,9 +77,14 @@ export class HolochainWebSocketLink extends ApolloLink {
         observer.complete()
       } catch (error) {
         if (this.paramsOrClient.consoleLogging) {
-          console.log('👎 Holochain graphql operation error -- ', error.toString(), operation)
+          console.log(
+            '👎 Holochain graphql operation error -- ', error.toString(),
+            {
+              graphqlString: graphqlToString(operation.query || operation.mutation),
+              operation
+            }
+          )
         }
-
         observer.error(error)
       }
     })
