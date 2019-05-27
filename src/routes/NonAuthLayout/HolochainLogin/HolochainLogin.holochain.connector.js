@@ -1,12 +1,16 @@
 import { connect } from 'react-redux'
 import { graphql, compose } from 'react-apollo'
 import { push } from 'connected-react-router'
-import { setLogin } from '../Login/Login.store'
+import {
+  HOLOCHAIN_DEFAULT_COMMUNITY_NAME,
+  HOLOCHAIN_DEFAULT_COMMUNITY_SLUG
+} from 'util/holochain'
 import HolochainRegisterUserMutation from 'graphql/mutations/HolochainRegisterUserMutation.graphql'
-import HolochainCreateDefaultCommunityMutation from 'graphql/mutations/HolochainCreateDefaultCommunityMutation.graphql'
+import HolochainCreateCommunityMutation from 'graphql/mutations/HolochainCreateCommunityMutation.graphql'
+import { setLogin } from '../Login/Login.store'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 
-export function mapStateToProps (state, props) {
+export function mapStateToProps (state) {
   return {
     returnToURL: getReturnToURL(state)
   }
@@ -51,16 +55,19 @@ const registerHolochainAgent = graphql(HolochainRegisterUserMutation, {
   }
 })
 
-const createDefaultCommunity = graphql(HolochainCreateDefaultCommunityMutation, {
-  props: ({ mutate }) => {
-    return {
-      createDefaultCommunity: () => mutate()
-    }
-  }
+const createDefaultCommunity = graphql(HolochainCreateCommunityMutation, {
+  props: ({ mutate }) => ({
+    createDefaultCommunity: () => mutate({
+      variables: {
+        slug: HOLOCHAIN_DEFAULT_COMMUNITY_SLUG,
+        name: HOLOCHAIN_DEFAULT_COMMUNITY_NAME
+      }
+    })
+  })
 })
 
 export default compose(
+  connect(mapStateToProps, mapDispatchToProps, mergeProps),
   registerHolochainAgent,
-  createDefaultCommunity,
-  connect(mapStateToProps, mapDispatchToProps, mergeProps)
+  createDefaultCommunity
 )

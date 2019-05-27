@@ -1,8 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
-import { communityUrl } from 'util/navigation'
-import { get } from 'lodash/fp'
+import { defaultHolochainCommunityUrl } from 'util/navigation'
 import { formatError } from '../util'
 import './HolochainLogin.scss'
 
@@ -12,34 +12,41 @@ export default class HolochainLogin extends React.Component {
     this.state = {}
   }
 
-  submit = () => {
+  submit = async () => {
     const { registerHolochainAgent, createDefaultCommunity, redirectOnSignIn, setLogin } = this.props
-    return registerHolochainAgent(this.state.name, this.state.avatarUrl)
-      .then(() => createDefaultCommunity())
-      .then(defaultCommunityPayload => {
-        const defaultCommunitySlug = get('data.createCommunity.slug', defaultCommunityPayload)
-        setLogin(true)
-        const redirectUrl = defaultCommunitySlug ? communityUrl(defaultCommunitySlug) : '/'
-        redirectOnSignIn(redirectUrl)
-      })
+
+    await registerHolochainAgent(this.state.name, this.state.avatarUrl)
+    await createDefaultCommunity()
+    setLogin(true)
+    redirectOnSignIn(defaultHolochainCommunityUrl())
   }
 
+  onChangeHandlerForKey = key => event => this.setState({ [key]: event.target.value })
+
   render () {
-    const setState = key => event => this.setState({ [key]: event.target.value })
     return <div className={this.props.className}>
-      <h1 styleName='title'>Log in to Hylo</h1>
+      <h1 styleName='title'>Register your Holochain agent</h1>
       {this.props.error && formatError(this.props.error, 'Login')}
       <div styleName='field'>
         <label htmlFor='name' styleName='field-label'>Your name</label>
-        <TextInput aria-label='name' label='name' type='text' name='name' onChange={setState('name')}
+        <TextInput aria-label='name' label='name' type='text' name='name' onChange={this.onChangeHandlerForKey('name')}
           inputRef={input => { this.name = input }} autoFocus />
       </div>
       <div styleName='field'>
         <label htmlFor='avatarUrl' styleName='field-label'>Avatar URL</label>
-        <TextInput aria-label='avatarUrl' label='avatarUrl' type='text' name='avatarUrl' onChange={setState('avatarUrl')}
-          inputRef={input => { this.avatarUrl = input }} autoFocus />
+        <TextInput aria-label='avatarUrl' label='avatarUrl' type='text' name='avatarUrl' onChange={this.onChangeHandlerForKey('avatarUrl')}
+          inputRef={input => { this.avatarUrl = input }} />
       </div>
       <Button styleName='submit' label='Log In' onClick={this.submit} />
     </div>
   }
+}
+
+HolochainLogin.propTypes = {
+  className: PropTypes.string,
+  createDefaultCommunity: PropTypes.func,
+  error: PropTypes.string,
+  redirectOnSignIn: PropTypes.func,
+  registerHolochainAgent: PropTypes.func,
+  setLogin: PropTypes.func
 }

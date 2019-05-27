@@ -23,27 +23,14 @@ export function mapStateToProps (state, props) {
     isDrawerOpen: get('PrimaryLayout.isDrawerOpen', state),
     showLogoBadge: false,
     // not used by holochain
-    fetchForCommunity: () => {}
+    fetchForCommunity: () => {},
+    fetchForCurrentUser: () => {}
   }
 }
 
-export function mapDispatchToProps (dispatch) {
-  return {
-    fetchForCurrentUser: (holochainUserData) =>
-      dispatch(fetchForCurrentUserMock(holochainUserData)),
-    toggleDrawer: () => dispatch(toggleDrawer())
-  }
-}
-
-export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { currentUser } = ownProps
-  const fetchForCurrentUser = () => dispatchProps.fetchForCurrentUser(currentUser)
-  return {
-    ...ownProps,
-    ...stateProps,
-    ...dispatchProps,
-    fetchForCurrentUser
-  }
+export const mapDispatchToProps = {
+  fetchForCurrentUserMock,
+  toggleDrawer
 }
 
 const community = graphql(HolochainCommunityQuery, {
@@ -60,17 +47,20 @@ const community = graphql(HolochainCommunityQuery, {
   }
 })
 
-const currentUser = graphql(HolochainCurrentUserQuery, {
-  skip: props => !!props.currentUser,
-  props: ({ data: { me } }) => {
+const currentUserFromHolochainAgent = graphql(HolochainCurrentUserQuery, {
+  skip: props => props.currentUser,
+  props: ({ data: { me: holochainAgent, loading }, ownProps: { fetchForCurrentUserMock } }) => {
+    if (loading) return
+    // * Merges Holochain Agent data into the Redux ORM CurrentUser mock
+    fetchForCurrentUserMock(holochainAgent)
     return {
-      currentUser: me
+      holochainAgent
     }
   }
 })
 
 export default compose(
-  currentUser,
-  connect(mapStateToProps, mapDispatchToProps, mergeProps),
+  connect(mapStateToProps, mapDispatchToProps),
+  currentUserFromHolochainAgent,
   community
 )
