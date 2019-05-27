@@ -34,7 +34,10 @@ const holochainAgent = graphql(HolochainCurrentUserQuery, {
   skip: props => props.holochainAgent,
   props: ({ data: { me: holochainAgent } }) => ({
     holochainAgent
-  })
+  }),
+  options: {
+    fetchPolicy: 'no-cache'
+  }
 })
 
 export default compose(

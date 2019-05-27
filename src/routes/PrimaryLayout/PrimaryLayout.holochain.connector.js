@@ -48,8 +48,9 @@ const community = graphql(HolochainCommunityQuery, {
 })
 
 const currentUserFromHolochainAgent = graphql(HolochainCurrentUserQuery, {
-  skip: props => props.currentUser || props.holochainAgent,
-  props: ({ data: { me: holochainAgent }, ownProps: { fetchForCurrentUserMock } }) => {
+  skip: props => props.currentUser,
+  props: ({ data: { me: holochainAgent, loading }, ownProps: { fetchForCurrentUserMock } }) => {
+    if (loading) return
     // * Merges Holochain Agent data into the Redux ORM CurrentUser mock
     fetchForCurrentUserMock(holochainAgent)
     return {
