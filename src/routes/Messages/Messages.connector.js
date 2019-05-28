@@ -45,12 +45,10 @@ export function mapStateToProps (state, props) {
     participants: getParticipantsFromQuerystring(state, props),
     onCloseURL: getPreviousLocation(state),
     currentUser: getMe(state),
+    messageThreadPending: isPendingFor(fetchThread, state),
     messageThread: getCurrentMessageThread(state, props),
     messageText: getTextForCurrentMessageThread(state, props),
     messagesPending: isPendingFor(fetchMessages, state),
-    messageCreatePending:
-      isPendingFor(createMessage, state) ||
-      isPendingFor(findOrCreateThread, state),
     threadsPending:
       isPendingFor(fetchThreads, state) ||
       isPendingFor(fetchMessages, state),
@@ -60,6 +58,9 @@ export function mapStateToProps (state, props) {
     sendIsTyping: sendIsTyping(messageThreadId),
     messages: getMessages(state, props),
     hasMoreMessages: getMessagesHasMore(state, { id: messageThreadId }),
+    messageCreatePending:
+      isPendingFor(createMessage, state) ||
+      isPendingFor(findOrCreateThread, state),
     socket: getSocket()
   }
 }

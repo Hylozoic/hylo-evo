@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { get } from 'lodash/fp'
-// import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import Loading from 'components/Loading'
 import PeopleSelector from './PeopleSelector'
 import ThreadList from './ThreadList'
 import Header from './Header'
@@ -25,6 +25,7 @@ export default class Messages extends React.Component {
     super(props)
 
     this.state = {
+      loading: true,
       onCloseURL: props.onCloseURL,
       participants: [],
       forNewThread: props.messageThreadId === NEW_THREAD_ID
@@ -33,9 +34,10 @@ export default class Messages extends React.Component {
   }
 
   async componentDidMount () {
-    await this.props.fetchPeople()
     await this.props.fetchThreads()
-    await this.onThreadIdChange()
+    await this.props.fetchPeople()
+    this.setState(() => ({ loading: false }))
+    this.onThreadIdChange()
 
     const { participants } = this.props
 
@@ -80,10 +82,8 @@ export default class Messages extends React.Component {
     const { findOrCreateThread, createMessage, goToThread, messageText } = this.props
     const { participants } = this.state
     const participantIds = participants.map(p => p.id)
-    // TODO: Remove createdAt generation if not used by Hylo API
-    const createdAt = new Date().getTime().toString()
-    const createThreadResponse = await findOrCreateThread(participantIds, createdAt)
-    // NOTE: This is a Redux vs Apollo data structure thing
+    const createThreadResponse = await findOrCreateThread(participantIds)
+    // * This is a Redux vs Apollo data structure thing
     const messageThreadId = get('payload.data.findOrCreateThread.id', createThreadResponse) ||
       get('data.findOrCreateThread.id', createThreadResponse)
     await createMessage(messageThreadId, messageText, true)
@@ -112,10 +112,6 @@ export default class Messages extends React.Component {
 
   render () {
     const {
-      participants,
-      onCloseURL
-    } = this.state
-    const {
       currentUser,
       messageThread,
       messageThreadId,
@@ -129,8 +125,8 @@ export default class Messages extends React.Component {
       messages,
       hasMoreMessages,
       messagesPending,
-      messageCreatePending,
       fetchMessages,
+      messageCreatePending,
       updateThreadReadTime,
       // MessageForm
       messageText,
@@ -143,7 +139,18 @@ export default class Messages extends React.Component {
       matchingContacts,
       recentContacts
     } = this.props
+    const {
+      loading,
+      participants,
+      onCloseURL
+    } = this.state
     const { forNewThread } = this.state
+
+    if (loading) {
+      return <div styleName='modal'>
+        <Loading />
+      </div>
+    }
 
     return <div styleName='modal'>
       <div styleName='content'>
@@ -225,6 +232,7 @@ Messages.propTypes = {
   messageText: PropTypes.string,
   messageThread: PropTypes.object,
   messageThreadId: PropTypes.string,
+  messageThreadPending: PropTypes.bool,
   messages: PropTypes.array,
   messagesPending: PropTypes.bool,
   onCloseURL: PropTypes.string,

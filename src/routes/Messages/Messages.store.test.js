@@ -14,8 +14,7 @@ import reducer, {
   UPDATE_MESSAGE_TEXT,
   setContactsSearch,
   SET_CONTACTS_SEARCH,
-  getParticipantsFromQuerystring,
-  getHolochainContactsWithSearch
+  getParticipantsFromQuerystring
 } from './Messages.store'
 import { people } from './Messages.test.json'
 
@@ -300,38 +299,4 @@ describe('connector', () => {
     session.Me.create(me)
     state = { orm: session.state }
   })
-
-  // describe('getHolochainContactsWithSearch', () => {
-  //   describe('pickPersonListItem', () => {
-  //     it('picks the correct properties', () => {
-  //       const person = session.Person.withId('72203')
-  //       const expected = {
-  //         'id': '72203',
-  //         'name': 'Brooks Funk',
-  //         'avatarUrl': 'https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg',
-  //         'community': 'Associate'
-  //       }
-  //       const actual = pickPersonListItem(person)
-  //       expect(actual).toEqual(expected)
-  //     })
-  //   })
-
-  //   describe('personConnectionListItemSelector', () => {
-  //     let id = 1
-
-  //     it('filters connections by participants', () => {
-  //       [ '72203', '72019' ].forEach(person =>
-  //         session.PersonConnection.create({
-  //           id: '' + id++,
-  //           person,
-  //           type: 'message'
-  //         }))
-  //       const participants = [ '72203' ]
-  //       const expected = [ '72019' ]
-  //       const actual = personConnectionListItemSelector(session, participants)
-  //         .map(person => person.id)
-  //       expect(actual).toEqual(expected)
-  //     })
-  //   })
-  // })
 })

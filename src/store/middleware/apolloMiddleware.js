@@ -41,7 +41,7 @@ export default function apolloMiddleware (store) {
   return next => action => {
     const { type, apollo, meta } = action
 
-    // TODO: Handle LOGOUT and BLOCK_USER (with a local resolver)
+    // * Handle LOGOUT and BLOCK_USER (with a local resolver)
     if (type === LOGOUT || type === RESET_STORE) {
       apolloClient.resetStore()
 

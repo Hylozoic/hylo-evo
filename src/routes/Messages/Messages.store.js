@@ -93,15 +93,13 @@ export default function reducer (state = defaultState, action) {
 
 // ACTIONS (to be moved to /store/actions/*)
 
-export function findOrCreateThread (participantIds, createdAt) {
+export function findOrCreateThread (participantIds) {
   return {
     type: FIND_OR_CREATE_THREAD,
     graphql: {
       query: FindOrCreateThreadMutation,
       variables: {
-        participantIds,
-        // TODO: Remove createdAt generation if not used by Hylo API
-        createdAt
+        participantIds
       }
     },
     meta: {
@@ -147,16 +145,13 @@ export function fetchMessages (id, opts = {}) {
 }
 
 export function createMessage (messageThreadId, messageText, forNewThread) {
-  // TODO: Remove createdAt generation if not used by Hylo API
-  const createdAt = new Date().getTime().toString()
   return {
     type: CREATE_MESSAGE,
     graphql: {
       query: CreateMessageMutation,
       variables: {
         messageThreadId,
-        text: messageText,
-        createdAt
+        text: messageText
       }
     },
     meta: {

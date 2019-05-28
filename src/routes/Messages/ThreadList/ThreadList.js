@@ -10,6 +10,7 @@ import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
 import { toRefArray, itemsToArray } from 'util/reduxOrmMigration'
 import { participantAttributes } from 'store/models/MessageThread'
+import Loading from 'components/Loading'
 import './ThreadList.scss'
 
 export default class ThreadList extends Component {
@@ -55,13 +56,11 @@ export default class ThreadList extends Component {
             unreadCount={t.unreadCount}
             key={`thread-li-${t.id}`} />
         })}
-        {threadsPending && isEmpty(threads) &&
-          <div styleName='no-conversations'>Loading conversations...</div>}
-        {threadsPending && !isEmpty(threads) &&
-          <div styleName='no-conversations'>Refreshing...</div>}
-        {!threadsPending && isEmpty(threads) && !threadSearch &&
+        {threadsPending &&
+          <Loading type='bottom' />}
+        {isEmpty(threads) && !threadSearch &&
           <div styleName='no-conversations'>You have no active conversations</div>}
-        {!threadsPending && isEmpty(threads) && threadSearch &&
+        {isEmpty(threads) && threadSearch &&
           <div styleName='no-conversations'>No conversations found</div>}
       </ul>
       <ScrollListener

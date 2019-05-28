@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches the last snapshot 1`] = `
+exports[`renders entire component when not loading 1`] = `
 <div
   data-stylename="modal"
 >
@@ -43,5 +43,13 @@ exports[`matches the last snapshot 1`] = `
       </div>
     </div>
   </div>
+</div>
+`;
+
+exports[`renders loading when in loading state 1`] = `
+<div
+  data-stylename="modal"
+>
+  <Loading />
 </div>
 `;

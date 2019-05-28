@@ -43,6 +43,7 @@ Object {
     "participants": Array [],
   },
   "messageThreadId": "11",
+  "messageThreadPending": false,
   "messages": Array [
     SessionBoundModel {
       "_fields": Object {
