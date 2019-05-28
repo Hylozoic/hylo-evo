@@ -1,22 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import TextInput from 'components/TextInput'
-import Button from 'components/Button'
-import { defaultHolochainCommunityUrl } from 'util/navigation'
 import { formatError } from '../util'
+import { defaultHolochainCommunityUrl } from 'util/navigation'
+import TextInput from 'components/TextInput'
 import fetch from 'isomorphic-fetch'
+import Button from 'components/Button'
+import RoundImage from 'components/RoundImage'
+import Loading from 'components/Loading'
 import './HolochainLogin.scss'
-import Avatar from 'components/Avatar/Avatar';
 
 export default class HolochainLogin extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {}
+  state = {
+    loading: false
   }
 
   submit = async () => {
     const { registerHolochainAgent, createDefaultCommunity, redirectOnSignIn, setLogin } = this.props
 
+    this.setState(() => ({ loading: true }))
     await registerHolochainAgent(this.state.name, this.state.avatarUrl)
     await createDefaultCommunity()
     setLogin(true)
@@ -25,7 +26,7 @@ export default class HolochainLogin extends React.Component {
 
   onChangeHandlerForKey = key => event => this.setState({ [key]: event.target.value })
 
-  getRandomAvatarUrl = async () => {    
+  getRandomAvatarUrl = async () => {  
     const randomUserResponse = await fetch('https://randomuser.me/api')
     const randomUserResult = await randomUserResponse.json()
     const randomUser = randomUserResult.results[0]
@@ -35,6 +36,8 @@ export default class HolochainLogin extends React.Component {
   }
 
   render () {
+    if (this.state.loading) return <Loading />
+
     return <div className={this.props.className}>
       <h1 styleName='title'>Register your Holochain agent</h1>
       {this.props.error && formatError(this.props.error, 'Login')}
@@ -49,10 +52,10 @@ export default class HolochainLogin extends React.Component {
           {/* <a styleName='avatar-entry-label-link' onClick={this.getRandomAvatarUrl}>get random avatar</a> */}
         </label>
         <div styleName='avatar-entry'>
-          <Avatar
-            onClick={this.getRandomAvatarUrl}
+          <RoundImage
             styleName='avatar-entry-preview'
-            avatarUrl={this.state.avatarUrl}
+            url={this.state.avatarUrl}
+            onClick={this.getRandomAvatarUrl}
           />
           <TextInput
             styleName='avatar-entry-url'
