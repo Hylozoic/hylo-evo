@@ -46,10 +46,11 @@ export default class HolochainLogin extends React.Component {
       <div styleName='field'>
         <label styleName='field-label avatar-entry-label' htmlFor='avatarUrl'>
           Avatar URL
-          <a styleName='avatar-entry-label-link' onClick={this.getRandomAvatarUrl}>get random avatar</a>
+          {/* <a styleName='avatar-entry-label-link' onClick={this.getRandomAvatarUrl}>get random avatar</a> */}
         </label>
         <div styleName='avatar-entry'>
           <Avatar
+            onClick={this.getRandomAvatarUrl}
             styleName='avatar-entry-preview'
             avatarUrl={this.state.avatarUrl}
           />

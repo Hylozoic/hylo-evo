@@ -6,7 +6,7 @@ import './RoundImage.scss'
 
 const { string, bool } = PropTypes
 
-export default function RoundImage ({ url, small, medium, overlaps, overlapsVertical, large, xlarge, className, square, size }) {
+export default function RoundImage ({ url, small, medium, overlaps, overlapsVertical, large, xlarge, className, square, size, ...props }) {
   let styleName = cx('image', { square, overlaps, small, medium, large, xlarge, 'overlaps-vertical': overlapsVertical })
   var style = bgImageStyle(url)
   if (size) {
@@ -16,6 +16,7 @@ export default function RoundImage ({ url, small, medium, overlaps, overlapsVert
     style={style}
     styleName={styleName}
     className={className}
+    {...props}
   />
 }
 RoundImage.propTypes = {
