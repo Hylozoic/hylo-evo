@@ -43,11 +43,18 @@ export default class HolochainLogin extends React.Component {
       {this.props.error && formatError(this.props.error, 'Login')}
       <div styleName='field'>
         <label htmlFor='name' styleName='field-label'>Your name</label>
-        <TextInput aria-label='name' label='name' type='text' name='name' onChange={this.onChangeHandlerForKey('name')}
-          inputRef={input => { this.name = input }} autoFocus />
+        <TextInput
+          aria-label='name'
+          label='name'
+          type='text'
+          name='name'
+          onChange={this.onChangeHandlerForKey('name')}
+          inputRef={input => { this.name = input }}
+          autoFocus
+        />
       </div>
       <div styleName='field'>
-        <label styleName='field-label avatar-entry-label' htmlFor='avatarUrl'>
+        <label styleName='field-label' htmlFor='avatarUrl'>
           Avatar URL
           {/* <a styleName='avatar-entry-label-link' onClick={this.getRandomAvatarUrl}>get random avatar</a> */}
         </label>
