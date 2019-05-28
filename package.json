@@ -21,7 +21,7 @@
     "@babel/preset-env": "7.2.3",
     "@babel/preset-react": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.4.4",
-    "@holochain/hc-web-client": "https://github.com/holochain/hc-web-client#add-callbacks-on-signals",
+    "@holochain/hc-web-client": "0.4.1",
     "@storybook/addon-actions": "^v5.0.10",
     "@storybook/addon-info": "^5.0.10",
     "@storybook/addon-links": "^v5.0.10",

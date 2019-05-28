@@ -1131,9 +1131,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.2.tgz#63985d3d8b02530e0869962f4da09142ee8e200e"
   integrity sha512-n/VQ4mbfr81aqkx/XmVicOLjviMuy02eenSdJY33SVA7S2J42EU0P1H0mOogfYedb3wXA0d/LVtBrgTSm04WEA==
 
-"@holochain/hc-web-client@https://github.com/holochain/hc-web-client#add-callbacks-on-signals":
-  version "0.4.0"
-  resolved "https://github.com/holochain/hc-web-client#56027ea889a8808c8a9affe1c0fb0c8af2ef397c"
+"@holochain/hc-web-client@0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@holochain/hc-web-client/-/hc-web-client-0.4.1.tgz#d2a0e0d74ffe4af7d2863e854c1241e46fc7787a"
+  integrity sha512-3TN87s5jMNVO2uG8Mb9tqKwoXklM+T/52SwldNfhtLmLE1jcQ7AQKBih7+s9zZQm5XJNH4Hmb52zQx5JAv91KQ==
   dependencies:
     rpc-websockets "^4.3.3"
 
