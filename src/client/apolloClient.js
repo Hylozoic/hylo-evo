@@ -34,7 +34,7 @@ const link = ApolloLink.from([
     uri: process.env.HOLOCHAIN_BUILD
       ? null
       : process.env.HOLOCHAIN_WEBSOCKET_URI,
-    consoleLogging: HOLOCHAIN_ACTIVE,
+    logging: HOLOCHAIN_ACTIVE,
     active: HOLOCHAIN_ACTIVE
   })
 ])

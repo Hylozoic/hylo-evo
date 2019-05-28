@@ -4,16 +4,15 @@ import { once } from 'lodash'
 import root from 'root-path'
 import { renderToString } from 'react-dom/server'
 import { readFileSync } from 'fs'
+import { ApolloProvider } from 'react-apollo'
 import { Provider } from 'react-redux'
 import { createMemoryHistory } from 'history'
-import { ApolloProvider } from 'react-apollo'
 import { serverRouter } from 'router'
 import apolloClient from 'client/apolloClient'
 import createStore from '../store'
 
 export default function appMiddleware (req, res, next) {
   // Note: add async data loading for more effective SSR
-
   const history = createMemoryHistory()
   const store = createStore(history)
   const context = {}

@@ -6,7 +6,7 @@ import { connect as hcWebClientConnect } from '@holochain/hc-web-client'
 const DEFAULT_PARAMS = {
   uri: null,
   active: true,
-  consoleLogging: false,
+  logging: false,
   timeout: 5000
 }
 
@@ -29,11 +29,11 @@ export class HolochainWebSocketLink extends ApolloLink {
       const callParams = process.env.HOLOCHAIN_GRAPHQL_PATH.split('/')
 
       this.callGraphqlZome = callZome(...callParams)
-      if (this.params.consoleLogging) {
+      if (this.params.logging) {
         console.log('🎉 Successfully connected to Holochain!')
       }
     } catch (error) {
-      if (this.params.consoleLogging) {
+      if (this.params.logging) {
         console.log('😞 Holochain client connection failed -- ', error.toString())
       }
       throw (error)
@@ -67,14 +67,29 @@ export class HolochainWebSocketLink extends ApolloLink {
 
         const result = JSON.parse(ok)
 
-        if (this.params.consoleLogging) {
-          console.log('👍 Holochain graphql operation complete: ', { result, query, variables })
+        if (this.params.logging) {
+          const detailsFormat = 'font-weight: bold; color: rgb(220, 208, 120)'
+
+          console.groupCollapsed(
+            `👍 ${operation.operationName}%c complete`,
+            'font-weight: normal; color: rgb(160, 160, 160)'
+          )
+          console.groupCollapsed('%cOperation', detailsFormat)
+          console.log(query)
+          console.groupEnd()
+          console.groupCollapsed('%cVariables', detailsFormat)
+          console.log(variables)
+          console.groupEnd()
+          console.groupCollapsed('%cResult', detailsFormat)
+          console.log(result)
+          console.groupEnd()
+          console.groupEnd()
         }
 
         observer.next({ data: result })
         observer.complete()
       } catch (error) {
-        if (this.params.consoleLogging) {
+        if (this.params.logging) {
           console.log(
             '👎 Holochain graphql operation error -- ', error.toString(),
             {
