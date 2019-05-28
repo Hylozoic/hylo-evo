@@ -26,7 +26,7 @@ export default class HolochainLogin extends React.Component {
 
   onChangeHandlerForKey = key => event => this.setState({ [key]: event.target.value })
 
-  getRandomAvatarUrl = async () => {  
+  getRandomAvatarUrl = async () => {
     const randomUserResponse = await fetch('https://randomuser.me/api')
     const randomUserResult = await randomUserResponse.json()
     const randomUser = randomUserResult.results[0]

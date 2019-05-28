@@ -29,6 +29,8 @@ import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 const link = ApolloLink.from([
   new RetryLink(),
   new HolochainWebSocketLink({
+    // * Ignore our hardcoded URI unless a Holochain build
+    //   as when the UI is served from a hApp the URI is inferred
     uri: process.env.HOLOCHAIN_BUILD
       ? null
       : process.env.HOLOCHAIN_WEBSOCKET_URI,

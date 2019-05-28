@@ -20,8 +20,6 @@ export class HolochainWebSocketLink extends ApolloLink {
   async initOrGetCallGraphqlZome () {
     if (this.callGraphqlZome) return
     try {
-      // * Ignore our hardcoded URI unless a Holochain build
-      //   as when the UI is served from a hApp the URI is inferred
       const holochainClient = await hcWebClientConnect({
         url: this.params.uri,
         timeout: this.params.timeout,
