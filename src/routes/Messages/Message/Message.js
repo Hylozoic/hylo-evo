@@ -31,9 +31,9 @@ export default function Message ({ message, isHeader }) {
 
 Message.propTypes = {
   message: PropTypes.shape({
-    id: PropTypes.any.isRequired,
-    text: PropTypes.string.isRequired,
-    creator: PropTypes.object.isRequired
+    id: PropTypes.string,
+    text: PropTypes.string,
+    creator: PropTypes.object
   }).isRequired,
   isHeader: PropTypes.bool
 }
