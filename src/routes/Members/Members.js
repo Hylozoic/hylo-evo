@@ -1,4 +1,6 @@
-import PropTypes from 'prop-types'
+import {
+  bool, func, string, arrayOf, shape
+} from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Button from 'components/Button'
@@ -7,34 +9,12 @@ import Icon from 'components/Icon'
 import Member from 'components/Member'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
+import { CENTER_COLUMN_ID } from 'util/scrolling'
 import './Members.scss'
 import { debounce, isEmpty, some, times } from 'lodash/fp'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
 
-const { bool, func, string, arrayOf, shape } = PropTypes
-
 export default class Members extends Component {
-  static propTypes = {
-    slug: string,
-    sortBy: string,
-    members: arrayOf(shape({
-      id: string,
-      name: string,
-      location: string,
-      tagline: string,
-      avatarUrl: string
-    })),
-    hasMore: bool,
-    changeSort: func,
-    changeSearch: func,
-    canModerate: bool
-  }
-
-  fetchOrShowCached () {
-    const { hasMore, members, fetchMembers } = this.props
-    if (isEmpty(members) && hasMore !== false) fetchMembers()
-  }
-
   componentDidMount () {
     this.fetchOrShowCached()
   }
@@ -46,7 +26,12 @@ export default class Members extends Component {
     }
   }
 
-  fetchMore () {
+  fetchOrShowCached = () => {
+    const { hasMore, members, fetchMembers } = this.props
+    if (isEmpty(members) && hasMore !== false) fetchMembers()
+  }
+
+  fetchMore = () => {
     const { members, hasMore, fetchMembers, pending } = this.props
     if (pending || members.length === 0 || !hasMore) return
     fetchMembers(members.length)
@@ -104,9 +89,25 @@ export default class Members extends Component {
           </div>)}
         </div>
       </div>
-      <ScrollListener onBottom={() => this.fetchMore()} />
+      <ScrollListener onBottom={this.fetchMore}
+        elementId={CENTER_COLUMN_ID} />
     </div>
   }
+}
+Members.propTypes = {
+  slug: string,
+  sortBy: string,
+  members: arrayOf(shape({
+    id: string,
+    name: string,
+    location: string,
+    tagline: string,
+    avatarUrl: string
+  })),
+  hasMore: bool,
+  changeSort: func,
+  changeSearch: func,
+  canModerate: bool
 }
 
 function SortLabel ({ text }) {
