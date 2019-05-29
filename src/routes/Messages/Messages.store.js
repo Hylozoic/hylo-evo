@@ -1,23 +1,46 @@
 import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import orm from 'store/models'
-import { some, get, isEmpty, includes, uniqueId } from 'lodash/fp'
+import { get, some, isEmpty, castArray, includes, pick, uniqueId, sortBy } from 'lodash/fp'
 import { AnalyticsEvents } from 'hylo-utils/constants'
+import orm from 'store/models'
+import { toRefArray } from 'util/reduxOrmMigration'
 import {
   FETCH_MESSAGES,
   FETCH_THREAD,
   FETCH_THREADS,
   UPDATE_THREAD_READ_TIME,
   CREATE_MESSAGE,
-  CREATE_MESSAGE_PENDING,
   FIND_OR_CREATE_THREAD
 } from 'store/constants'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
+import FindOrCreateThreadMutation from 'graphql/mutations/FindOrCreateThreadMutation.graphql'
+import CreateMessageMutation from 'graphql/mutations/CreateMessageMutation.graphql'
+import MessageThreadQuery from 'graphql/queries/MessageThreadQuery.graphql'
+import MessageThreadMessagesQuery from 'graphql/queries/MessageThreadMessagesQuery.graphql'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
 export const MODULE_NAME = 'Messages'
 export const UPDATE_MESSAGE_TEXT = `${MODULE_NAME}/UPDATE_MESSAGE_TEXT`
 export const SET_THREAD_SEARCH = `${MODULE_NAME}/SET_THREAD_SEARCH`
-export const NEW_THREAD_ID = 'new'
+export const SET_CONTACTS_SEARCH = `${MODULE_NAME}/SET_CONTACTS_SEARCH`
+
+// LOCAL STORE
+
+// Actions
+
+export function setContactsSearch (search) {
+  return {
+    type: SET_CONTACTS_SEARCH,
+    payload: search
+  }
+}
+
+export function setThreadSearch (threadSearch) {
+  return {
+    type: SET_THREAD_SEARCH,
+    payload: threadSearch
+  }
+}
 
 export function updateMessageText (messageThreadId, messageText) {
   return {
@@ -29,16 +52,24 @@ export function updateMessageText (messageThreadId, messageText) {
   }
 }
 
-export function setThreadSearch (threadSearch) {
-  return {
-    type: SET_THREAD_SEARCH,
-    payload: threadSearch
-  }
-}
+// Selectors
+
+export const moduleSelector = state => state[MODULE_NAME]
+
+export const getContactsSearch = createSelector(
+  moduleSelector,
+  (state, props) => state.contactsSearch
+)
+
+export const getThreadSearch = createSelector(
+  moduleSelector,
+  (state, props) => get('threadSearch', state)
+)
 
 // REDUCER
 
-const defaultState = {
+export const defaultState = {
+  contactsSearch: '',
   threadSearch: ''
 }
 
@@ -47,11 +78,10 @@ export default function reducer (state = defaultState, action) {
   if (error) return state
 
   switch (type) {
+    case SET_CONTACTS_SEARCH:
+      return { ...state, contactsSearch: payload }
     case SET_THREAD_SEARCH:
-      return { threadSearch: payload }
-    case CREATE_MESSAGE_PENDING:
-      const messageThreadId = meta.forNewThread ? NEW_THREAD_ID : meta.messageThreadId
-      return { ...state, [messageThreadId]: '' }
+      return { ...state, threadSearch: payload }
     case UPDATE_MESSAGE_TEXT:
       return { ...state, [meta.messageThreadId]: meta.messageText }
     default:
@@ -59,9 +89,158 @@ export default function reducer (state = defaultState, action) {
   }
 }
 
-// SELECTORS
+// GLOBAL STORE
 
-export const moduleSelector = state => state[MODULE_NAME]
+// ACTIONS (to be moved to /store/actions/*)
+
+export function findOrCreateThread (participantIds) {
+  return {
+    type: FIND_OR_CREATE_THREAD,
+    graphql: {
+      query: FindOrCreateThreadMutation,
+      variables: {
+        participantIds
+      }
+    },
+    meta: {
+      extractModel: 'MessageThread'
+    }
+  }
+}
+
+export function fetchThread (id) {
+  return {
+    type: FETCH_THREAD,
+    graphql: {
+      query: MessageThreadQuery,
+      variables: {
+        id
+      }
+    },
+    meta: {
+      extractModel: 'MessageThread',
+      extractQueryResults: {
+        getType: () => FETCH_MESSAGES,
+        getItems: get('payload.data.messageThread.messages')
+      }
+    }
+  }
+}
+
+export function fetchMessages (id, opts = {}) {
+  return {
+    type: FETCH_MESSAGES,
+    graphql: {
+      query: MessageThreadMessagesQuery,
+      variables: opts.cursor ? { id, cursor: opts.cursor } : { id }
+    },
+    meta: {
+      extractModel: 'MessageThread',
+      extractQueryResults: {
+        getItems: get('payload.data.messageThread.messages')
+      },
+      id
+    }
+  }
+}
+
+export function createMessage (messageThreadId, messageText, forNewThread) {
+  return {
+    type: CREATE_MESSAGE,
+    graphql: {
+      query: CreateMessageMutation,
+      variables: {
+        messageThreadId,
+        text: messageText
+      }
+    },
+    meta: {
+      optimistic: true,
+      extractModel: 'Message',
+      tempId: uniqueId(`messageThread${messageThreadId}_`),
+      messageThreadId,
+      messageText,
+      forNewThread,
+      analytics: AnalyticsEvents.DIRECT_MESSAGE_SENT
+    }
+  }
+}
+
+export function updateThreadReadTime (id) {
+  return {
+    type: UPDATE_THREAD_READ_TIME,
+    payload: {
+      api: {
+        path: `/noo/post/${id}/update-last-read`,
+        method: 'POST'
+      }
+    },
+    meta: { id }
+  }
+}
+
+// Selectors
+
+export const getParticipantsFromQuerystring = ormCreateSelector(
+  orm,
+  state => state.orm,
+  (_, props) => props,
+  ({ Person }, props) => {
+    const participantsQuerystringParam = getQuerystringParam('participants', null, props)
+    if (!isEmpty(participantsQuerystringParam)) {
+      const participantIds = participantsQuerystringParam.split(',')
+      const participants = Person
+        .all()
+        .toRefArray()
+        .filter(person => participantIds.includes(person.id))
+
+      return participants
+        ? castArray(participants)
+        : null
+    }
+
+    return null
+  }
+)
+
+export const getAllContacts = ormCreateSelector(
+  orm,
+  state => state.orm,
+  session => session.Person.all().toRefArray()
+)
+
+export const getRecentContacts = ormCreateSelector(
+  orm,
+  state => state.orm,
+  ({ PersonConnection }) => {
+    const recentContacts = PersonConnection
+      .all()
+      .toModelArray()
+      .map(connection => presentPersonListItem(connection.person))
+
+    return sortByName(recentContacts)
+  }
+)
+
+export const getMatchingContacts = ormCreateSelector(
+  orm,
+  state => state.orm,
+  getContactsSearch,
+  ({ Person }, contactsSearch) => {
+    if (!contactsSearch) return null
+    const matchingContacts = Person
+      .all()
+      .toModelArray()
+      .filter(person =>
+        person.name.toLowerCase().includes(contactsSearch.toLowerCase())
+      )
+      .map(presentPersonListItem)
+
+    return sortByName(matchingContacts)
+  }
+)
+
+// Threads and Messages
 
 export const getCurrentMessageThreadId = (_, { match }) => match.params.messageThreadId
 
@@ -89,11 +268,6 @@ export const getCurrentMessageThread = ormCreateSelector(
   }
 )
 
-export const getThreadSearch = createSelector(
-  moduleSelector,
-  (state, props) => get('threadSearch', state)
-)
-
 export const getThreadResults = makeGetQueryResults(FETCH_THREADS)
 
 export const getThreadsHasMore = createSelector(getThreadResults, get('hasMore'))
@@ -103,26 +277,15 @@ export const getThreads = ormCreateSelector(
   state => state.orm,
   getThreadSearch,
   getThreadResults,
-  (session, threadSearch, results) => {
-    if (isEmpty(results) || isEmpty(results.ids)) return []
+  (session, threadSearch, searchResults) => {
+    if (isEmpty(searchResults) || isEmpty(searchResults.ids)) return []
     return session.MessageThread.all()
-      .filter(x => includes(x.id, results.ids))
-      .orderBy(x => -new Date(x.updatedAt))
+      .orderBy(thread => -new Date(thread.updatedAt))
       .toModelArray()
+      .filter(thread => includes(thread.id, searchResults.ids))
       .filter(filterThreadsByParticipant(threadSearch))
   }
 )
-
-export function filterThreadsByParticipant (threadSearch) {
-  if (!threadSearch) return () => true
-
-  const threadSearchLC = threadSearch.toLowerCase()
-  return thread => {
-    const participants = thread.participants.toRefArray()
-    const match = name => name.toLowerCase().startsWith(threadSearchLC)
-    return some(p => some(match, p.name.split(' ')), participants)
-  }
-}
 
 export const getMessages = createSelector(
   state => orm.session(state.orm),
@@ -145,168 +308,25 @@ export const getMessagesHasMore = createSelector(
   get('hasMore')
 )
 
-// / ACTIONS (to be moved to /store/actions/*)
+// Utility
 
-const findOrCreateThreadQuery =
-`mutation ($participantIds: [String]) {
-  findOrCreateThread(data: {participantIds: $participantIds}) {
-    id
-    createdAt
-    updatedAt
-    participants {
-      id
-      name
-      avatarUrl
-    }
-  }
-}`
-
-export function findOrCreateThread (participantIds, createdAt, holochainAPI = false, query = findOrCreateThreadQuery) {
+export function presentPersonListItem (person) {
   return {
-    type: FIND_OR_CREATE_THREAD,
-    graphql: {
-      query,
-      variables: {
-        participantIds,
-        createdAt
-      }
-    },
-    meta: {
-      holochainAPI,
-      extractModel: 'MessageThread'
-    }
+    ...pick([ 'id', 'name', 'avatarUrl' ], person.ref),
+    community: person.memberships.first()
+      ? person.memberships.first().community.name : null
   }
 }
 
-export function fetchThread (id, holochainAPI = false) {
-  return {
-    type: FETCH_THREAD,
-    graphql: {
-      query: `
-        query ($id: ID) {
-          messageThread (id: $id) {
-            id
-            unreadCount
-            lastReadAt
-            createdAt
-            updatedAt
-            participants {
-              id
-              name
-              avatarUrl
-            }
-            messages(first: 40, order: "desc") {
-              items {
-                id
-                text
-                creator {
-                  id
-                  name
-                  avatarUrl
-                }
-                createdAt
-              }
-              total
-              hasMore
-            }
-          }
-        }
-      `,
-      variables: {
-        id
-      }
-    },
-    meta: {
-      holochainAPI,
-      extractModel: 'MessageThread',
-      extractQueryResults: {
-        getType: () => FETCH_MESSAGES,
-        getItems: get('payload.data.messageThread.messages')
-      }
-    }
-  }
-}
+export const sortByName = sortBy(person => person && person.name.toUpperCase())
 
-export function fetchMessages (id, opts = {}, holochainAPI = false) {
-  return {
-    type: FETCH_MESSAGES,
-    graphql: {
-      query: `
-        query ($id: ID, $cursor: ID) {
-          messageThread (id: $id) {
-            id
-            messages(first: 80, cursor: $cursor, order: "desc") {
-              items {
-                id
-                createdAt
-                text
-                creator {
-                  id
-                  name
-                  avatarUrl
-                }
-              }
-              total
-              hasMore
-            }
-          }
-        }
-      `,
-      variables: opts.cursor ? { id, cursor: opts.cursor } : { id }
-    },
-    meta: {
-      holochainAPI,
-      extractModel: 'MessageThread',
-      extractQueryResults: {
-        getItems: get('payload.data.messageThread.messages')
-      },
-      reset: opts.reset,
-      id
-    }
-  }
-}
+export function filterThreadsByParticipant (threadSearch) {
+  if (!threadSearch) return () => true
 
-export function createMessage (messageThreadId, messageText, forNewThread, holochainAPI = false) {
-  const createdAt = new Date().getTime().toString()
-  return {
-    type: CREATE_MESSAGE,
-    graphql: {
-      query: `mutation ($messageThreadId: String, $text: String, $createdAt: String) {
-        createMessage(data: {messageThreadId: $messageThreadId, text: $text, createdAt: $createdAt}) {
-          id
-          text
-          createdAt
-          creator {
-            id
-          }
-          messageThread {
-            id
-          }
-        }
-      }`,
-      variables: {
-        messageThreadId,
-        text: messageText,
-        createdAt
-      }
-    },
-    meta: {
-      holochainAPI,
-      optimistic: true,
-      extractModel: 'Message',
-      tempId: uniqueId(`messageThread${messageThreadId}_`),
-      messageThreadId,
-      messageText,
-      forNewThread,
-      analytics: AnalyticsEvents.DIRECT_MESSAGE_SENT
-    }
-  }
-}
-
-export function updateThreadReadTime (id) {
-  return {
-    type: UPDATE_THREAD_READ_TIME,
-    payload: { api: { path: `/noo/post/${id}/update-last-read`, method: 'POST' } },
-    meta: { id }
+  const threadSearchLC = threadSearch.toLowerCase()
+  return thread => {
+    const participants = toRefArray(thread.participants)
+    const match = name => name.toLowerCase().startsWith(threadSearchLC)
+    return some(p => some(match, p.name.split(' ')), participants)
   }
 }

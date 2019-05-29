@@ -26,6 +26,15 @@ export function checkLogin () {
   }
 }
 
+export function setLogin (signedIn) {
+  return {
+    type: CHECK_LOGIN,
+    payload: {
+      signedIn
+    }
+  }
+}
+
 export function logout () {
   return {
     type: LOGOUT,

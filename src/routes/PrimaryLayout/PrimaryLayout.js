@@ -51,16 +51,12 @@ import {
   isTagPath
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
-// TODO: Implement create community privacy component when implemented on the server
-// import Privacy from 'routes/CreateCommunity/Privacy'
+import { HOLOCHAIN_ACTIVE, HOLOCHAIN_DEFAULT_COMMUNITY_SLUG } from 'util/holochain'
 import './PrimaryLayout.scss'
 
 export default class PrimaryLayout extends Component {
   componentDidMount () {
-    // avoid fetching topics for All Communities if we're just going to redirect
-    // to a single community
-    const skipTopics = this.props.location.pathname !== '/all'
-    this.props.fetchForCurrentUser(skipTopics)
+    this.props.fetchForCurrentUser()
     if (this.props.slug) {
       this.props.fetchForCommunity()
     }
@@ -82,14 +78,17 @@ export default class PrimaryLayout extends Component {
       toggleDrawer,
       isCommunityRoute,
       communityPending,
-      showLogoBadge,
-      holochainActive
+      showLogoBadge
     } = this.props
 
+    if (!currentUser) {
+      return <div styleName='container'>
+        <Loading type='loading-fullscreen' />
+      </div>
+    }
+
     if (isCommunityRoute) {
-      if (!currentUser) return <Loading />
-      // don't show NotFound in holochain as we don't get the communities with currentUser
-      if (!community && !communityPending && !holochainActive) return <NotFound />
+      if (!community && !communityPending) return <NotFound />
     }
 
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
@@ -101,7 +100,7 @@ export default class PrimaryLayout extends Component {
 
     return <div styleName='container'>
       <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
-      <TopNav styleName='top' onClick={closeDrawer} {...{ community, network, currentUser, showLogoBadge, holochainActive }} />
+      <TopNav styleName='top' onClick={closeDrawer} {...{ community, network, currentUser, showLogoBadge }} />
       <div styleName='main' onClick={closeDrawer}>
         <Navigation collapsed={hasDetail} styleName='left' showTopics={showTopics} currentUser={currentUser} />
         <div styleName='center' id={CENTER_COLUMN_ID}>
@@ -139,7 +138,7 @@ export default class PrimaryLayout extends Component {
         </div>
         <div styleName={cx('sidebar', { hidden: hasDetail })}>
           <Switch>
-            <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={holochainActive ? null : CommunitySidebar} />
+            <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
             <Route path={`/c/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
             <Route path={`/c/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
             <Route path={`/n/:networkSlug/${OPTIONAL_NEW_POST_MATCH}`} exact component={NetworkSidebar} />
@@ -154,7 +153,7 @@ export default class PrimaryLayout extends Component {
           </Switch>
         </div>
       </div>
-      <Route path='/t/:messageThreadId?' render={props => <Messages {...props} holochainActive={holochainActive} />} />
+      <Route path='/t/:messageThreadId?' render={props => <Messages {...props} />} />
       <Switch>
         {postEditorRoutes.map(({ path }) =>
           <Route path={path} exact key={path} children={({ match, location }) =>
@@ -209,9 +208,6 @@ const createCommunityRoutes = [
   { path: '/create-community/name/:networkId', component: Name },
   { path: '/create-community/name', component: Name },
   { path: '/create-community/domain', component: Domain },
-  // TODO: Implement create community privacy component when implemented on the server
-  // TODO: Don't forget to change 'step' values
-  // {path: '/create-community/privacy', component: Privacy},
   { path: '/create-community/review', component: CommunityReview }
 ]
 
@@ -237,10 +233,12 @@ export function RedirectToCommunity ({ path, currentUser }) {
   return <Route path={path} exact render={redirectIfCommunity(currentUser)} />
 }
 
-export function redirectIfCommunity (currentUser) {
+export function redirectIfCommunity (currentUser, holochain = HOLOCHAIN_ACTIVE) {
   return () => {
-    if (!currentUser) return <Loading type='top' />
+    if (holochain) return <Redirect to={`/c/${HOLOCHAIN_DEFAULT_COMMUNITY_SLUG}`} />
+
     if (currentUser.memberships.count() === 0) return <Redirect to={`/all`} />
+
     const mostRecentCommunity = currentUser.memberships
       .orderBy(m => new Date(m.lastViewedAt), 'desc')
       .first()

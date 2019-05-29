@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`does something 1`] = `
+<div
+  data-stylename="people-list-container"
+>
+  <div>
+    <h2
+      data-stylename="people-list-header"
+    >
+      All Contacts
+    </h2>
+    <ul
+      data-stylename="people-list"
+    >
+      <PeopleListItem
+        key="1"
+        onClick={[Function]}
+        person={
+          Object {
+            "avatarUrl": "https://flargle.com",
+            "community": "Wombats",
+            "id": "1",
+            "name": "Wombat",
+          }
+        }
+      />
+      <PeopleListItem
+        key="2"
+        onClick={[Function]}
+        person={
+          Object {
+            "avatarUrl": "https://argle.com",
+            "community": "Aardvarks",
+            "id": "2",
+            "name": "Aardvark",
+          }
+        }
+      />
+      <PeopleListItem
+        key="3"
+        onClick={[Function]}
+        person={
+          Object {
+            "avatarUrl": "https://wargle.com",
+            "community": "Ocelots",
+            "id": "3",
+            "name": "Ocelot",
+          }
+        }
+      />
+    </ul>
+  </div>
+</div>
+`;

@@ -17,6 +17,10 @@ export default class Comments extends Component {
     slug: string
   }
 
+  static defaultProps = {
+    comments: []
+  }
+
   constructor (props) {
     super(props)
 

@@ -3,6 +3,7 @@ const paths = require('./paths')
 module.exports = {
   rootDir: paths.rootPath,
   transform: {
+    '\\.(gql|graphql)$': 'jest-transform-graphql',
     '^.+\\.jsx?$': '<rootDir>/config/jest/transformer.js'
   },
   collectCoverageFrom: [
@@ -14,9 +15,10 @@ module.exports = {
   ],
   resolver: 'jest-pnp-resolver',
   setupFiles: [
-    'react-app-polyfill/jsdom'
+    'react-app-polyfill/jsdom',
+    '<rootDir>/config/jest/beforeTestEnvSetup.js'
   ],
-  setupTestFrameworkScriptFile: '<rootDir>/src/setupTests.js',
+  setupTestFrameworkScriptFile: '<rootDir>/config/jest/afterTestEnvSetup.js',
   testPathIgnorePatterns: [
     '<rootDir>[/\\\\](build|docs|node_modules|scripts|es5)[/\\\\]'
   ],
@@ -37,5 +39,9 @@ module.exports = {
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname'
-  ]
+  ],
+  // * Because console.log will get munched in test display with `verbose: true`:
+  //   https://github.com/facebook/jest/issues/2441
+  //   Note: Alternatively could use `--runInBand` to always run tests in serial
+  verbose: false
 }

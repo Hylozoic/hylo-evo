@@ -12,8 +12,16 @@ const testProps = {
   }
 }
 
-it('matches the last snapshot', () => {
+it('renders loading when in loading state', () => {
   const wrapper = shallow(<Messages {...testProps} />, { disableLifecycleMethods: true })
+  wrapper.setState({ loading: true })
+
+  expect(wrapper).toMatchSnapshot()
+})
+
+it('renders entire component when not loading', () => {
+  const wrapper = shallow(<Messages {...testProps} />, { disableLifecycleMethods: true })
+  wrapper.setState({ loading: false })
 
   expect(wrapper).toMatchSnapshot()
 })

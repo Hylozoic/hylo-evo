@@ -3,17 +3,17 @@ import { MemoryRouter } from 'react-router'
 import { mount, shallow } from 'enzyme'
 import { keyMap } from 'util/textInput'
 import PeopleSelector from './PeopleSelector'
-import PersonListItem from './PersonListItem'
+import PeopleListItem from './PeopleListItem'
 
 const defaultProps = {
-  setAutocomplete: () => {},
+  setPeopleSearch: () => {},
   fetchPeople: () => {},
   fetchContacts: () => {},
-  fetchRecentContacts: () => {},
-  addParticipant: () => {},
-  removeParticipant: () => {},
+  fetchDefaultList: () => {},
+  selectPerson: () => {},
+  removePerson: () => {},
   changeQuerystringParam: () => {},
-  participants: [],
+  selectedPeople: [],
   onCloseURL: ''
 }
 
@@ -26,30 +26,30 @@ describe('PeopleSelector', () => {
   })
 
   describe('onKeyDown', () => {
-    let addParticipant
+    let selectPerson
     let fetchPeople
-    let removeParticipant
+    let removePerson
     let input
-    let setAutocomplete
+    let setPeopleSearch
     let wrapper
 
     beforeEach(() => {
       fetchPeople = jest.fn()
-      addParticipant = jest.fn()
-      removeParticipant = jest.fn()
-      setAutocomplete = jest.fn()
+      selectPerson = jest.fn()
+      removePerson = jest.fn()
+      setPeopleSearch = jest.fn()
       wrapper = mount(
         <MemoryRouter>
           <PeopleSelector
             {...defaultProps}
             fetchPeople={fetchPeople}
-            addParticipant={addParticipant}
-            removeParticipant={removeParticipant}
-            setAutocomplete={setAutocomplete}
-            matches={[ { id: '1' }, { id: '2' } ]} />
+            selectPerson={selectPerson}
+            removePerson={removePerson}
+            setPeopleSearch={setPeopleSearch}
+            matchingPeople={[ { id: '1' }, { id: '2' } ]} />
         </MemoryRouter>
-      )
-      wrapper.find(PeopleSelector).instance().setState({ currentMatch: '1' })
+      )      
+      wrapper.find(PeopleSelector).instance().setState({ currentMatch: { id: '1' } })
       input = wrapper.find('input').first()
     })
 
@@ -66,12 +66,12 @@ describe('PeopleSelector', () => {
     it('removes participant if backspace pressed when currentMatch missing', () => {
       wrapper.find(PeopleSelector).instance().setState({ currentMatch: null })
       input.simulate('keyDown', { keyCode: keyMap.BACKSPACE })
-      expect(removeParticipant).toHaveBeenCalled()
+      expect(removePerson).toHaveBeenCalled()
     })
 
     it('does not remove participant if backspace pressed when currentMatch defined', () => {
       input.simulate('keyDown', { keyCode: keyMap.BACKSPACE })
-      expect(removeParticipant).not.toHaveBeenCalled()
+      expect(removePerson).not.toHaveBeenCalled()
     })
 
     it('calls arrow with `up` if up arrow pressed', () => {
@@ -94,59 +94,59 @@ describe('PeopleSelector', () => {
 
     it('does not change active match if at top of list when up arrow pressed', () => {
       input.simulate('keyDown', { keyCode: keyMap.UP })
-      const actual = wrapper.find(PersonListItem).first().prop('active')
+      const actual = wrapper.find(PeopleListItem).first().prop('active')
       expect(actual).toBe(true)
     })
 
     it('changes active match if not at top of list when up arrow pressed', () => {
-      wrapper.find(PeopleSelector).instance().setState({ currentMatch: '2' })
+      wrapper.find(PeopleSelector).instance().setState({ currentMatch: { id: '2' } })
       input.simulate('keyDown', { keyCode: keyMap.UP })
-      const actual = wrapper.find(PersonListItem).last().prop('active')
+      const actual = wrapper.find(PeopleListItem).last().prop('active')
       expect(actual).toBe(false)
     })
 
     it('does not change active match if at bottom of list when down arrow pressed', () => {
-      wrapper.find(PeopleSelector).instance().setState({ currentMatch: '2' })
+      wrapper.find(PeopleSelector).instance().setState({ currentMatch: { id: '2' } })
       input.simulate('keyDown', { keyCode: keyMap.DOWN })
-      const actual = wrapper.find(PersonListItem).last().prop('active')
+      const actual = wrapper.find(PeopleListItem).last().prop('active')
       expect(actual).toBe(true)
     })
 
     it('changes active match if not at bottom of list when down arrow pressed', () => {
       input.simulate('keyDown', { keyCode: keyMap.DOWN })
-      const actual = wrapper.find(PersonListItem).first().prop('active')
+      const actual = wrapper.find(PeopleListItem).first().prop('active')
       expect(actual).toBe(false)
     })
 
-    it('calls addParticipant with currentMatch when enter pressed', () => {
+    it('calls selectPerson with currentMatch when enter pressed', () => {
       input.simulate('keyDown', { keyCode: keyMap.ENTER })
-      expect(addParticipant).toBeCalledWith('1')
+      expect(selectPerson).toBeCalledWith({ id: '1' })
     })
 
-    it('calls addParticipant with currentMatch when comma pressed', () => {
+    it('calls selectPerson with currentMatch when comma pressed', () => {
       input.simulate('keyDown', { keyCode: keyMap.COMMA })
-      expect(addParticipant).toBeCalledWith('1')
+      expect(selectPerson).toBeCalledWith({ id: '1' })
     })
 
-    it('resets values after adding participants', () => {
+    it('resets values after adding selectedPeople', () => {
       input.simulate('keyDown', { keyCode: keyMap.ENTER })
-      expect(setAutocomplete).toBeCalledWith(null)
+      expect(setPeopleSearch).toBeCalledWith(null)
       expect(input.instance().value).toBe('')
     })
   })
 
-  describe('setAutocomplete', () => {
-    let setAutocomplete
+  describe('setPeopleSearch', () => {
+    let setPeopleSearch
     let wrapper
 
     beforeEach(() => {
       jest.useFakeTimers()
-      setAutocomplete = jest.fn()
+      setPeopleSearch = jest.fn()
       wrapper = mount(
         <MemoryRouter>
           <PeopleSelector
             {...defaultProps}
-            setAutocomplete={setAutocomplete} />
+            setPeopleSearch={setPeopleSearch} />
         </MemoryRouter>
       )
     })
@@ -157,7 +157,7 @@ describe('PeopleSelector', () => {
       input.instance().value = expected
       input.simulate('change')
       jest.runAllTimers()
-      const actual = setAutocomplete.mock.calls[0][0]
+      const actual = setPeopleSearch.mock.calls[0][0]
       expect(actual).toBe(expected)
     })
 
@@ -168,60 +168,39 @@ describe('PeopleSelector', () => {
       input.instance().value = invalid
       input.simulate('change')
       jest.runAllTimers()
-      expect(setAutocomplete).not.toHaveBeenCalled()
+      expect(setPeopleSearch).not.toHaveBeenCalled()
       expect(input.instance().value).toBe(expected)
     })
   })
 
-  describe('addParticipant', () => {
-    it('calls addParticipant with the correct id', () => {
-      const addParticipant = jest.fn()
+  describe('selectPerson', () => {
+    it('calls selectPerson with the correct id', () => {
+      const selectPerson = jest.fn()
       const wrapper = mount(
         <MemoryRouter>
           <PeopleSelector
             {...defaultProps}
-            addParticipant={addParticipant} />
+            selectPerson={selectPerson} />
         </MemoryRouter>
       )
-      wrapper.find(PeopleSelector).instance().addParticipant('1')
-      expect(addParticipant).toBeCalledWith('1')
+      wrapper.find(PeopleSelector).instance().selectPerson('1')
+      expect(selectPerson).toBeCalledWith('1')
     })
 
     it('resets values after adding a participant', () => {
-      const setAutocomplete = jest.fn()
+      const setPeopleSearch = jest.fn()
       const wrapper = mount(
         <MemoryRouter>
           <PeopleSelector
             {...defaultProps}
-            setAutocomplete={setAutocomplete} />
+            setPeopleSearch={setPeopleSearch} />
         </MemoryRouter>
       )
       const input = wrapper.find('input').first()
       input.instance().value = 'flargle'
-      wrapper.find(PeopleSelector).instance().addParticipant('1')
+      wrapper.find(PeopleSelector).instance().selectPerson('1')
       expect(input.instance().value).toBeFalsy()
-      expect(setAutocomplete).toBeCalledWith(null)
-    })
-  })
-
-  describe('componentDidMount', () => {
-    it('adds particpants in the search, then clears it', () => {
-      const addParticipant = jest.fn()
-      const changeQuerystringParam = jest.fn()
-      mount(
-        <MemoryRouter>
-          <PeopleSelector
-            {...defaultProps}
-            addParticipant={addParticipant}
-            participantSearch={[ '1', '2' ]}
-            changeQuerystringParam={changeQuerystringParam} />
-        </MemoryRouter>
-      )
-      expect(addParticipant).toBeCalledWith('1')
-      expect(addParticipant).toBeCalledWith('2')
-      const [ _, param, value ] = changeQuerystringParam.mock.calls[0]
-      expect(param).toBe('participants')
-      expect(value).toBe(null)
+      expect(setPeopleSearch).toBeCalledWith(null)
     })
   })
 })

@@ -1,3 +1,8 @@
-import connector from './FeedList.connector'
+import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 import component from './FeedList'
-export default connector(component)
+import holochainConnector from './FeedList.holochain.connector'
+import connector from './FeedList.connector'
+
+export default HOLOCHAIN_ACTIVE
+  ? holochainConnector(component)
+  : connector(component)

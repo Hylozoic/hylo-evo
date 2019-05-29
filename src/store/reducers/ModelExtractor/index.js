@@ -19,15 +19,11 @@ export default class ModelExtractor {
 
   addAll () {
     const method = this.options.append ? 'updateAppending' : 'update'
-    const { isHoloData } = this.options
     this.mergedNodes().forEach(({ modelName, payload }) => {
       const model = this.session[modelName]
-      const sourceTaggedPayload = isHoloData
-        ? { ...payload, isHoloData }
-        : { ...payload, isHyloData: true }
-      model.hasId(sourceTaggedPayload.id)
-        ? model.withId(sourceTaggedPayload.id)[method](sourceTaggedPayload)
-        : model.create(sourceTaggedPayload)
+      model.hasId(payload.id)
+        ? model.withId(payload.id)[method](payload)
+        : model.create(payload)
     })
   }
 

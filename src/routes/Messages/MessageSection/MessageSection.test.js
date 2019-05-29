@@ -64,16 +64,16 @@ it('renders as expected', () => {
 })
 
 it('fetches messages when the socket reconnects', () => {
-  const reconnectFetchMessages = jest.fn()
+  const fetchMessages = jest.fn()
 
   mount(<MessageSection messages={[]} socket={socket}
-    fetchMessages={() => {}} reconnectFetchMessages={reconnectFetchMessages} />)
+    fetchMessages={fetchMessages} />)
 
   expect(socket.on).toBeCalled()
   const [ eventName, callback ] = socket.on.mock.calls[0]
   expect(eventName).toBe('reconnect')
   callback()
-  expect(reconnectFetchMessages).toBeCalled()
+  expect(fetchMessages).toBeCalled()
 })
 
 it('marks as read when scrolled to bottom by user', () => {

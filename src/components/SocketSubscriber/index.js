@@ -1,3 +1,7 @@
 import connector from './SocketSubscriber.connector'
 import component from './SocketSubscriber'
-export default connector(component)
+import { HOLOCHAIN_ACTIVE } from 'util/holochain'
+
+export default HOLOCHAIN_ACTIVE
+  ? () => null
+  : connector(component)

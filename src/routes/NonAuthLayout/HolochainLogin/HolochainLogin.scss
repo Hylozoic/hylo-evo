@@ -1,0 +1,56 @@
+.title {
+  composes: hdr-headline from 'css/typography.scss';
+  color: $color-caribbean-green;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.field {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.field-label {
+  composes: caption-drk-lg from 'css/typography.scss';
+  display: block;
+}
+
+.avatar-entry-label {
+  display: flex;
+  justify-content: space-between;
+}
+
+.avatar-entry {
+  display: flex;
+  justify-content: stretch;
+  align-content: center;
+}
+
+.avatar-entry-preview {
+  margin-right: 5px;
+  max-height: 38px;
+  max-width: 38px;
+  border: 0 !important;
+  background-image: url(/assets/default-avatar.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.avatar-entry-url {
+  flex: 1;
+}
+
+.avatar-entry-label-link {
+  color: $color-caribbean-green !important;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.submit {
+  width: 100%;
+  text-align: center;
+  padding: 0;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+

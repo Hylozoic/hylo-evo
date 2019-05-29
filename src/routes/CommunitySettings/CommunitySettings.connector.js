@@ -9,7 +9,6 @@ import getCanModerate from 'store/selectors/getCanModerate'
 import { push } from 'connected-react-router'
 import { communityDeleteConfirmationUrl } from 'util/navigation'
 
-
 export function mapStateToProps (state, props) {
   const slug = getRouteParam('slug', state, props, false)
   const community = getCommunityForCurrentRoute(state, props)

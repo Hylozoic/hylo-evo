@@ -51,7 +51,7 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
 
 .linkItem {
   composes: itemBorder;
-  // TODO: Extract typography?
+  // Extract typography?
   @include font-regular;
   color: $color-rhino;
   padding: $space-2x $space-4x;
@@ -71,7 +71,7 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
 
 .headerItem {
   composes: itemBorder;
-  // TODO: Extract typography?
+  // Extract typography?
   @include font-bold;
   color: $color-rhino-60;
   font-size: 10px;

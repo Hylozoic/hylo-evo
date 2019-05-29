@@ -1,4 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { get } from 'lodash/fp'
+import Loading from 'components/Loading'
 import PeopleSelector from './PeopleSelector'
 import ThreadList from './ThreadList'
 import Header from './Header'
@@ -8,19 +11,40 @@ import PeopleTyping from 'components/PeopleTyping'
 import SocketSubscriber from 'components/SocketSubscriber'
 import './Messages.scss'
 
+export const NEW_THREAD_ID = 'new'
+
 export default class Messages extends React.Component {
-  // TODO: A bug - new message to existing thread doesn't pop that thread to the top
+  static defaultProps = {
+    participants: [],
+    threads: [],
+    messages: [],
+    socket: null
+  }
+
   constructor (props) {
     super(props)
 
     this.state = {
-      onCloseURL: props.onCloseURL
+      loading: true,
+      onCloseURL: props.onCloseURL,
+      participants: [],
+      forNewThread: props.messageThreadId === NEW_THREAD_ID
     }
     this.form = React.createRef()
   }
 
-  componentDidMount () {
+  async componentDidMount () {
+    await this.props.fetchThreads()
+    await this.props.fetchPeople()
+    this.setState(() => ({ loading: false }))
     this.onThreadIdChange()
+
+    const { participants } = this.props
+
+    if (participants) {
+      participants.forEach(p => this.addParticipant(p))
+      this.props.changeQuerystringParam(this.props, 'participants', null)
+    }
   }
 
   componentDidUpdate (prevProps) {
@@ -29,15 +53,64 @@ export default class Messages extends React.Component {
     }
   }
 
-  focusForm = () => this.form.current && this.form.current.focus()
-
   onThreadIdChange = () => {
-    if (!this.props.forNewThread) this.props.fetchThread()
+    const forNewThread = this.props.messageThreadId === NEW_THREAD_ID
+    this.setState(() => ({ forNewThread }))
+    if (!forNewThread) {
+      this.props.fetchThread()
+    }
     this.focusForm()
   }
 
+  sendMessage = () => {
+    if (!this.props.messageText || this.props.pending) return false
+    this.setState(() => ({ participants: [] }))
+    if (this.state.forNewThread) {
+      this.sendNewMessage()
+    } else {
+      this.sendForExisting()
+    }
+    return false
+  }
+
+  sendForExisting () {
+    const { createMessage, messageThreadId, messageText } = this.props
+    createMessage(messageThreadId, messageText).then(() => this.focusForm())
+  }
+
+  async sendNewMessage () {
+    const { findOrCreateThread, createMessage, goToThread, messageText } = this.props
+    const { participants } = this.state
+    const participantIds = participants.map(p => p.id)
+    const createThreadResponse = await findOrCreateThread(participantIds)
+    // * This is a Redux vs Apollo data structure thing
+    const messageThreadId = get('payload.data.findOrCreateThread.id', createThreadResponse) ||
+      get('data.findOrCreateThread.id', createThreadResponse)
+    await createMessage(messageThreadId, messageText, true)
+    goToThread(messageThreadId)
+  }
+
+  addParticipant = (participant) => {
+    this.setState(state => ({
+      participants: [...state.participants, participant]
+    }))
+  }
+
+  removeParticipant = (participant) => {
+    this.setState(({ participants }) => ({
+      participants: !participant
+        ? participants.slice(0, participants.length - 1)
+        : [...participants.filter(p => p.id !== participant.id)]
+    }))
+  }
+
+  updateMessageText = messageText => {
+    this.props.updateMessageText(this.props.messageThreadId, messageText)
+  }
+
+  focusForm = () => this.form.current && this.form.current.focus()
+
   render () {
-    const { onCloseURL } = this.state
     const {
       currentUser,
       messageThread,
@@ -46,85 +119,132 @@ export default class Messages extends React.Component {
       threads,
       threadSearch,
       setThreadSearch,
-      fetchThreads,
       fetchMoreThreads,
-      holochainActive,
       // MessageSection
       socket,
-      reconnectFetchMessages,
       messages,
       hasMoreMessages,
       messagesPending,
-      messageCreatePending,
       fetchMessages,
+      messageCreatePending,
       updateThreadReadTime,
       // MessageForm
-      createMessage,
       messageText,
       sendIsTyping,
-      findOrCreateThread,
-      goToThread,
-      forNewThread,
-      updateMessageText,
-      participants
+      // PeopleSelector
+      fetchRecentContacts,
+      fetchPeople,
+      setContactsSearch,
+      contacts,
+      matchingContacts,
+      recentContacts
     } = this.props
+    const {
+      loading,
+      participants,
+      onCloseURL
+    } = this.state
+    const { forNewThread } = this.state
+
+    if (loading) {
+      return <div styleName='modal'>
+        <Loading />
+      </div>
+    }
 
     return <div styleName='modal'>
       <div styleName='content'>
         <ThreadList
           styleName='left-column'
+          setThreadSearch={setThreadSearch}
+          onScrollBottom={fetchMoreThreads}
           currentUser={currentUser}
           threadsPending={threadsPending}
           threads={threads}
-          threadSearch={threadSearch}
-          setThreadSearch={setThreadSearch}
-          fetchThreads={fetchThreads}
-          fetchMoreThreads={fetchMoreThreads}
-        />
+          threadSearch={threadSearch} />
         <div styleName='right-column'>
           <div styleName='thread'>
             {forNewThread &&
               <PeopleSelector
-                location={this.props.location}
+                currentUser={currentUser}
+                fetchPeople={fetchPeople}
+                fetchDefaultList={fetchRecentContacts}
+                setPeopleSearch={setContactsSearch}
+                people={contacts}
+                recentPeople={recentContacts}
+                matchingPeople={matchingContacts}
                 onCloseURL={onCloseURL}
-                holochainActive={holochainActive} />}
+                selectedPeople={participants}
+                selectPerson={this.addParticipant}
+                removePerson={this.removeParticipant} />}
             {!forNewThread &&
               <Header
                 messageThread={messageThread}
                 currentUser={currentUser}
+                pending={messagesPending}
                 onCloseURL={onCloseURL} />}
             {!forNewThread &&
               <MessageSection
                 socket={socket}
                 currentUser={currentUser}
-                messageThread={messageThread}
-                reconnectFetchMessages={reconnectFetchMessages}
+                fetchMessages={fetchMessages}
                 messages={messages}
                 hasMore={hasMoreMessages}
                 pending={messagesPending}
-                fetchMessages={fetchMessages}
-                updateThreadReadTime={updateThreadReadTime} />}
+                updateThreadReadTime={updateThreadReadTime}
+                messageThread={messageThread} />}
             {(!forNewThread || participants.length > 0) &&
               <div styleName='message-form'>
                 <MessageForm
-                  messageThreadId={messageThreadId}
+                  onSubmit={this.sendMessage}
                   currentUser={currentUser}
                   formRef={this.form}
-                  focusForm={this.focusForm}
-                  createMessage={createMessage}
+                  updateMessageText={this.updateMessageText}
                   messageText={messageText}
                   sendIsTyping={sendIsTyping}
-                  findOrCreateThread={findOrCreateThread}
-                  goToThread={goToThread}
-                  pending={messageCreatePending}
-                  forNewThread={forNewThread}
-                  updateMessageText={updateMessageText} />
+                  pending={messageCreatePending} />
               </div>}
             <PeopleTyping styleName='people-typing' />
-            <SocketSubscriber type='post' id={messageThreadId} />
+            {socket && <SocketSubscriber type='post' id={messageThreadId} />}
           </div>
         </div>
       </div>
     </div>
   }
+}
+
+Messages.propTypes = {
+  changeQuerystringParam: PropTypes.func,
+  createMessage: PropTypes.func,
+  currentUser: PropTypes.object,
+  fetchMessages: PropTypes.func,
+  fetchMoreThreads: PropTypes.func,
+  fetchPeople: PropTypes.func,
+  fetchRecentContacts: PropTypes.func,
+  fetchThread: PropTypes.func,
+  fetchThreads: PropTypes.func,
+  findOrCreateThread: PropTypes.func,
+  goToThread: PropTypes.func,
+  hasMoreMessages: PropTypes.bool,
+  contacts: PropTypes.array,
+  location: PropTypes.object,
+  messageCreatePending: PropTypes.bool,
+  messageText: PropTypes.string,
+  messageThread: PropTypes.object,
+  messageThreadId: PropTypes.string,
+  messageThreadPending: PropTypes.bool,
+  messages: PropTypes.array,
+  messagesPending: PropTypes.bool,
+  onCloseURL: PropTypes.string,
+  participants: PropTypes.array,
+  recentContacts: PropTypes.array,
+  sendIsTyping: PropTypes.func,
+  setContactsSearch: PropTypes.func,
+  setThreadSearch: PropTypes.func,
+  socket: PropTypes.object,
+  threadSearch: PropTypes.string,
+  threads: PropTypes.array,
+  threadsPending: PropTypes.bool,
+  updateMessageText: PropTypes.func,
+  updateThreadReadTime: PropTypes.func
 }

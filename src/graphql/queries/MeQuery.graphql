@@ -1,0 +1,22 @@
+#import "../fragments/MeCompleteFragment.graphql"
+#import "../fragments/CommunityFragment.graphql"
+
+query MeQuery (
+  $slug: String,
+  $updateLastViewed: Boolean,
+  $includeCommunity: Boolean = false
+  $skipTopics: Boolean = false,
+  $first: Int,
+  $offset: Int,
+  $sortBy: String,
+  $order: String,
+  $autocomplete: String,
+  $subscribed: Boolean
+) {
+  me {
+    ...MeCompleteFragment
+  }
+  community(slug: $slug, updateLastViewed: $updateLastViewed) @include(if: $includeCommunity) {
+    ...CommunityFragment
+  }
+}

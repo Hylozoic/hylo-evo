@@ -16,7 +16,6 @@ export default function holochainFetchForCommunity (slug) {
       }
     },
     meta: {
-      holochainAPI: true,
       extractModel: 'Community',
       slug
     }
