@@ -4,16 +4,27 @@ import styles from './FullPageModal.scss'
 import { NavLink, Route } from 'react-router-dom'
 import Icon from 'components/Icon'
 import cx from 'classnames'
-const { object, func, array, oneOfType } = PropTypes
 
 export default class FullPageModal extends Component {
-  static propTypes = {
-    content: oneOfType([array, object]),
-    onClose: func
+  state = {
+    entryLocation: this.props.previousLocation
+  }
+
+  onClose = () => {
+    const { entryLocation } = this.state
+    const { confirmMessage, setConfirmBeforeClose, navigate, goToOnClose } = this.props
+    const closeLocation = goToOnClose || entryLocation
+
+    if (confirmMessage && window.confirm(confirmMessage)) {
+      setConfirmBeforeClose(false)
+      navigate(closeLocation)
+    } else {
+      navigate(closeLocation)
+    }
   }
 
   render () {
-    const { onClose, content, children, narrow } = this.props
+    const { content, children, narrow } = this.props
 
     const multipleTabs = Array.isArray(content)
 
@@ -42,12 +53,22 @@ export default class FullPageModal extends Component {
         {!multipleTabs && <div styleName={cx('center', { narrow })}>{content || children}</div>}
         <div styleName='right-sidebar'>
           <div styleName='right-sidebar-inner'>
-            <CloseButton onClose={onClose} />
+            <CloseButton onClose={this.onClose} />
           </div>
         </div>
       </div>
     </div>
   }
+}
+
+FullPageModal.propTypes = {
+  children: PropTypes.any,
+  content: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
+  narrow: PropTypes.bool,
+  onClose: PropTypes.func
 }
 
 export function CloseButton ({ onClose }) {
