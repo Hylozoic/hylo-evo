@@ -161,7 +161,7 @@ export default class PrimaryLayout extends Component {
       </Switch>
       <SocketListener location={location} />
       <SocketSubscriber type='community' id={get('slug', community)} />
-      <Intercom appID={isTest ? null : config.intercom.appId} />
+      <Intercom appID={isTest ? null : config.intercom.appId} hide_default_launcher={hasDetail} />
     </div>
   }
 }
