@@ -5,7 +5,12 @@ import TextInput from 'components/TextInput'
 
 storiesOf('TextInput', module)
   .addDecorator(story => (
-    <MemoryRouter>{story()}</MemoryRouter>
+    <MemoryRouter>
+      <>
+        <br />
+        {story()}
+      </>
+    </MemoryRouter>
   ))
   .add('Show', () =>
     <TextInput onChange={() => {}} value={'Here is some text'} />
@@ -17,5 +22,5 @@ storiesOf('TextInput', module)
     <TextInput noClearButton='true' onChange={() => {}} value={'Here is some other text, without clear button.'} />
   )
   .add('With accessibility label', () =>
-    <TextInput label='accessibility label' onChange={() => {}} value={'This one includes an aria-label'} />
+    <TextInput label='accessibility label' onChange={() => {}} value={'This one includes an aria-labelfor accessibility'} />
   )
