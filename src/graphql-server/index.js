@@ -155,16 +155,7 @@ export const resolvers = {
     },
 
     async creator (post) {
-      const graphqlFetcher = createZomeCall('graphql/graphql', { resultParser: JSON.parse })
-      const personQueryString = `query CreatorQuery($id: ID) {
-        person (id: $id) {
-          id
-          name
-          avatarUrl
-        }
-      }`
-      const queryResult = await graphqlFetcher({ query: personQueryString, variables: { id: post.creator } })
-      const creator = get('person', queryResult)
+      const creator = await personFetcher(post.creator)
 
       return creator
     },
@@ -218,16 +209,7 @@ export const resolvers = {
 
   Comment: {
     async creator (comment) {
-      const graphqlFetcher = createZomeCall('graphql/graphql', { resultParser: JSON.parse })
-      const personQueryString = `query CreatorQuery($id: ID) {
-        person (id: $id) {
-          id
-          name
-          avatarUrl
-        }
-      }`
-      const queryResult = await graphqlFetcher({ query: personQueryString, variables: { id: comment.creator } })
-      const creator = get('person', queryResult)
+      const creator = await personFetcher(comment.creator)
 
       return creator
     }
