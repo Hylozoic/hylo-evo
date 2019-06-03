@@ -58,6 +58,7 @@ type Comment {
   creator: Person
   post: Post
   createdAt: String
+  attachments: [String]
 }
 
 type MessageThreadQuerySet {
@@ -93,6 +94,7 @@ type Query {
   me: Me
   person(id: ID): Person
   community(id: ID, slug: String): Community
+  communities: [Community]
   messageThread(id: ID): MessageThread
   post(id: ID): Post
   people: PersonQuerySet

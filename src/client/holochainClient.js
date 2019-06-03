@@ -24,10 +24,16 @@ async function initAndGetHolochainClient () {
   }
 }
 
-export function createZomeCall (zomeCallPath, opts = {
-  dnaInstanceId: DNA_INSTANCE_ID,
-  logging: HOLOCHAIN_LOGGING
-}) {
+export function createZomeCall (zomeCallPath, callOpts = {}) {
+  const DEFAULT_OPTS = {
+    dnaInstanceId: DNA_INSTANCE_ID,
+    logging: HOLOCHAIN_LOGGING,
+    resultParser: null
+  }
+  const opts = {
+    ...DEFAULT_OPTS,
+    ...callOpts
+  }
   return async function (args = {}) {
     try {
       await initAndGetHolochainClient()
@@ -36,13 +42,15 @@ export function createZomeCall (zomeCallPath, opts = {
       const rawResult = await zomeCall(args)
       const jsonResult = JSON.parse(rawResult)
       const error = get('Err', jsonResult) || get('SerializationError', jsonResult)
-      const result = get('Ok', jsonResult)
+      const rawOk = get('Ok', jsonResult)
 
       if (error) throw (error)
 
-      if (!result) {
+      if (!rawOk) {
         throw new Error(`response returned Ok with an unexpected result: ${jsonResult}}`)
       }
+
+      const result = opts.resultParser ? opts.resultParser(rawOk) : rawOk
 
       if (opts.logging) {
         const detailsFormat = 'font-weight: bold; color: rgb(220, 208, 120)'
