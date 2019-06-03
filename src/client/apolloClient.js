@@ -26,6 +26,7 @@ const link = ApolloLink.from([
   apolloLogger,
   new SchemaLink({ schema })
 ])
+
 const apolloClient = new ApolloClient({
   link,
   cache: new InMemoryCache(),

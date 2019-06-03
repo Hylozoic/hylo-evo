@@ -176,24 +176,30 @@ export const resolvers = {
       }
     },
 
-    // async commenters (post) {
-    //   const commentsAddressesFetcher = createZomeCall('comments/get_comments')
-    //   const commentAddresses = await commentsAddressesFetcher({ base: post.id })
-    //   const commentFetcher = createZomeCall('comments/get_comment')
-    //   const commenters = await Promise.all(
-    //     commentAddresses.map(async address => {
-    //       const commenterAddress = await commentFetcher({ address }).creator
-    //       const commenter = await personFetcher(commenterAddress)
+    async commenters (post) {
+      const commentsAddressesFetcher = createZomeCall('comments/get_comments')
+      const commentAddresses = await commentsAddressesFetcher({ base: post.id })
+      const commentFetcher = createZomeCall('comments/get_comment')
+      const commenterAddresses = []
+      const commenters = await Promise.all(
+        commentAddresses.map(async address => {
+          const comment = await commentFetcher({ address })
+          const commenterAddress = comment.creator
 
-    //       return {
-    //         id: commenterAddress,
-    //         ...commenter
-    //       }
-    //     })
-    //   )
+          if (commenterAddresses.includes(commenterAddress)) return null
 
-    //   return commenters
-    // },
+          commenterAddresses.push(commenterAddress)
+          const commenter = await personFetcher(commenterAddress)
+
+          return {
+            id: commenterAddress,
+            ...commenter
+          }
+        })
+      )
+
+      return commenters.filter(commenter => !!commenter)
+    },
 
     async commentersTotal (post) {
       const commentsAddressesFetcher = createZomeCall('comments/get_comments')
