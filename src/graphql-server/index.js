@@ -1,7 +1,7 @@
 import { makeExecutableSchema } from 'graphql-tools'
 import { get } from 'lodash/fp'
 import { createZomeCall } from 'client/holochainClient'
-import typeDefs from './oldSchema.graphql'
+import typeDefs from './simpleSchema.graphql'
 
 export const resolvers = {
   Query: {

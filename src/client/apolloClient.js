@@ -1,6 +1,7 @@
 import { ApolloClient } from 'apollo-client'
-// import { ApolloLink } from 'apollo-link'
+import { ApolloLink } from 'apollo-link'
 // import HolochainWebSocketLink from './HolochainWebSocketLink'
+import apolloLogger from 'apollo-link-logger'
 import { SchemaLink } from 'apollo-link-schema'
 // import { RetryLink } from 'apollo-link-retry'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -21,7 +22,10 @@ import schema, { /* resolvers */ } from '../graphql-server'
 //   })
 // ])
 
-const link = new SchemaLink({ schema })
+const link = ApolloLink.from([
+  apolloLogger,
+  new SchemaLink({ schema })
+])
 const apolloClient = new ApolloClient({
   link,
   cache: new InMemoryCache(),

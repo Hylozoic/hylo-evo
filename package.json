@@ -33,6 +33,7 @@
     "ansi-styles": "^3.2.1",
     "apollo-boost": "^0.3.1",
     "apollo-client": "^2.5.1",
+    "apollo-link-logger": "^1.2.3",
     "apollo-link-retry": "^2.2.13",
     "apollo-link-schema": "^1.2.2",
     "app-module-path": "^2.2.0",
