@@ -9,7 +9,7 @@ import './client/websockets'
 import { rootDomId } from 'client/util'
 
 // * For testing
-// apolloClient.clearStore()
+// apolloClient.resetStore()
 
 const store = createStore(history)
 

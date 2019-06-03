@@ -38,7 +38,7 @@ module.exports = {
       path.resolve(__dirname, '..', 'node_modules'),
       'node_modules'
     ].concat(paths.nodePaths),
-    extensions: ['.js', '.json', '.jsx'],
+    extensions: ['.mjs', '.js', '.json', '.jsx'],
     alias: {
       'react-native': 'react-native-web'
     }

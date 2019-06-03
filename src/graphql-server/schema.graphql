@@ -1,0 +1,138 @@
+# The currently logged-in person.
+type Me {
+  id: ID
+  name: String
+  avatarUrl: String
+  isRegistered: Boolean
+  messageThreads(first: Int, offset: Int, order: String, sortBy: String): MessageThreadQuerySet
+}
+
+type Person {
+  id: ID
+  name: String
+  avatarUrl: String
+}
+
+type Community {
+  id: ID
+  name: String
+  slug: String
+  posts: PostQuerySet
+}
+
+type PersonQuerySet {
+  total: Int
+  hasMore: Boolean
+  items: [Person]
+}
+
+type PostQuerySet {
+  total: Int
+  hasMore: Boolean
+  items: [Post]
+}
+
+type Post {
+  id: ID
+  title: String
+  details: String
+  type: String
+  createdAt: String
+  updatedAt: String
+  creator: Person
+  comments(first: Int, cursor: ID, order: String): CommentQuerySet
+  commenters(first: Int): [Person]
+  commentersTotal: Int
+  communities(first: Int, cursor: ID, order: String): [Community]
+}
+
+type CommentQuerySet {
+  total: Int
+  hasMore: Boolean
+  items: [Comment]
+}
+
+type Comment {
+  id: ID
+  text: String
+  creator: Person
+  post: Post
+  createdAt: String
+}
+
+type MessageThreadQuerySet {
+  total: Int
+  hasMore: Boolean
+  items: [MessageThread]
+}
+
+type MessageThread {
+  id: ID
+  createdAt: String
+  updatedAt: String
+  participants(first: Int, cursor: ID, order: String): [Person]
+  participantsTotal: Int
+  messages(first: Int, cursor: ID, order: String): MessageQuerySet
+}
+
+type MessageQuerySet {
+  total: Int
+  hasMore: Boolean
+  items: [Message]
+}
+
+type Message {
+  id: ID
+  text: String
+  creator: Person
+  messageThread: MessageThread
+  createdAt: String
+}
+
+type Query {
+  me: Me
+  person(id: ID): Person
+  community(id: ID, slug: String): Community
+  messageThread(id: ID): MessageThread
+  post(id: ID): Post
+  people: PersonQuerySet
+}
+
+input PostInput {
+  title: String
+  details: String
+  type: String
+  communitySlug: String
+  createdAt: String
+}
+
+input CommentInput {
+  postId: String
+  text: String
+  createdAt: String
+}
+
+input MessageInput {
+  messageThreadId: String
+  text: String
+  createdAt: String
+}
+
+input MessageThreadInput {
+  participantIds: [String]
+  createdAt: String
+}
+
+input CommunityInput {
+  name: String
+  slug: String
+}
+
+type Mutation {
+  createComment(data: CommentInput): Comment
+  createCommunity(data: CommunityInput): Community
+  createMessage(data: MessageInput): Message
+  createPost(data: PostInput): Post
+  findOrCreateThread(data: MessageThreadInput): MessageThread
+  registerUser(name: String, avatarUrl: String): Person
+}
