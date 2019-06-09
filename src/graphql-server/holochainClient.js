@@ -10,7 +10,9 @@ async function initAndGetHolochainClient () {
   if (holochainClient) return holochainClient
   try {
     holochainClient = await hcWebClientConnect({
-      url: process.env.HOLOCHAIN_WEBSOCKET_URI,
+      url: process.env.HOLOCHAIN_BUILD
+        ? null
+        : process.env.HOLOCHAIN_WEBSOCKET_URI,
       wsClient: { max_reconnects: 0 }
     })
     if (HOLOCHAIN_LOGGING) {
@@ -37,6 +39,7 @@ export function createZomeCall (zomeCallPath, callOpts = {}) {
   return async function (args = {}) {
     try {
       await initAndGetHolochainClient()
+
       const { zome, zomeFunc } = parseZomeCallPath(zomeCallPath)
       const zomeCall = holochainClient.callZome(opts.dnaInstanceId, zome, zomeFunc)
       const rawResult = await zomeCall(args)
@@ -45,10 +48,6 @@ export function createZomeCall (zomeCallPath, callOpts = {}) {
       const rawOk = get('Ok', jsonResult)
 
       if (error) throw (error)
-
-      // if (!rawOk) {
-      //   throw new Error(`response returned Ok with an unexpected result: ${jsonResult}}`)
-      // }
 
       const result = opts.resultParser ? opts.resultParser(rawOk) : rawOk
 

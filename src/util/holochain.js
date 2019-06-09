@@ -11,6 +11,7 @@ export const HOLOCHAIN_POLL_INTERVAL_SLOW = 30000
 export const HOLOCHAIN_POLL_INTERVAL_FAST = 10000
 export const HOLOCHAIN_DEFAULT_COMMUNITY_NAME = 'Hylo Holochain'
 export const HOLOCHAIN_DEFAULT_COMMUNITY_SLUG = 'hylo-holochain'
+export const HOLOCHAIN_USE_LOCAL_RESOLVERS = window && new URLSearchParams(window.location.search).has('localresolvers')
 
 export function getHolochainWebsocketURI () {
   return process.env.HOLOCHAIN_WEBSOCKET_URI

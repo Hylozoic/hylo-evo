@@ -1,4 +1,4 @@
-import { createZomeCall } from 'client/holochainClient'
+import { createZomeCall } from './holochainClient'
 
 export const zomeInterface = {
   communities: {

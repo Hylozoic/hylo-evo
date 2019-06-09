@@ -16,7 +16,7 @@ export const resolvers = {
 
     async createCommunity (_, { data: communityData }) {
       const hcCommunityData = toZomeData('community', communityData)
-      const newCommunity = zomeInterface.createCommunity(hcCommunityData)
+      const newCommunity = zomeInterface.communities.create(hcCommunityData)
 
       return toUiData('community', newCommunity)
     },
@@ -70,7 +70,7 @@ export const resolvers = {
   Post: {
     async communities (post) {
       return [
-        toUiData('community', await zomeInterface.communities.get(post.base))
+        toUiData('community', await zomeInterface.communities.getBySlug(post.base))
       ]
     },
 

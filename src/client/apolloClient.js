@@ -1,38 +1,33 @@
 import { ApolloClient } from 'apollo-client'
 import { ApolloLink } from 'apollo-link'
-// import HolochainWebSocketLink from './HolochainWebSocketLink'
+import HolochainWebSocketLink from './HolochainWebSocketLink'
 import apolloLogger from 'apollo-link-logger'
 import { SchemaLink } from 'apollo-link-schema'
-// import { RetryLink } from 'apollo-link-retry'
+import { RetryLink } from 'apollo-link-retry'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-// import { HOLOCHAIN_ACTIVE } from 'util/holochain'
-import schema, { /* resolvers */ } from '../graphql-server'
-// import typeDefs from 'graphql-server/oldSchema.graphql'
-
-// const link = ApolloLink.from([
-//   new RetryLink(),
-//   new HolochainWebSocketLink({
-//     // * Ignore our hardcoded URI unless a Holochain build
-//     //   as when the UI is served from a hApp the URI is inferred
-//     uri: process.env.HOLOCHAIN_BUILD
-//       ? null
-//       : process.env.HOLOCHAIN_WEBSOCKET_URI,
-//     logging: HOLOCHAIN_ACTIVE,
-//     active: HOLOCHAIN_ACTIVE
-//   })
-// ])
+import { HOLOCHAIN_ACTIVE, HOLOCHAIN_USE_LOCAL_RESOLVERS } from 'util/holochain'
+import schema from '../graphql-server'
 
 const link = ApolloLink.from([
   apolloLogger,
-  new SchemaLink({ schema })
+  new RetryLink(),
+  HOLOCHAIN_USE_LOCAL_RESOLVERS
+    ? new SchemaLink({ schema })
+    : new HolochainWebSocketLink({
+      // * Ignore our hardcoded URI unless a Holochain build
+      //   as when the UI is served from a hApp the URI is inferred
+      uri: process.env.HOLOCHAIN_BUILD
+        ? null
+        : process.env.HOLOCHAIN_WEBSOCKET_URI,
+      logging: HOLOCHAIN_ACTIVE,
+      active: HOLOCHAIN_ACTIVE
+    })
 ])
 
 const apolloClient = new ApolloClient({
   link,
   cache: new InMemoryCache(),
   connectToDevTools: true
-  // resolvers,
-  // typeDefs
 })
 
 export default apolloClient
