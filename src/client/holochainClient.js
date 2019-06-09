@@ -46,9 +46,9 @@ export function createZomeCall (zomeCallPath, callOpts = {}) {
 
       if (error) throw (error)
 
-      if (!rawOk) {
-        throw new Error(`response returned Ok with an unexpected result: ${jsonResult}}`)
-      }
+      // if (!rawOk) {
+      //   throw new Error(`response returned Ok with an unexpected result: ${jsonResult}}`)
+      // }
 
       const result = opts.resultParser ? opts.resultParser(rawOk) : rawOk
 
