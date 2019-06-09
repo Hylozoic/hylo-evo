@@ -3,7 +3,7 @@ import { createZomeCall } from './holochainClient'
 export const zomeInterface = {
   communities: {
     all: async () => {
-      const addresses = await createZomeCall('community/get_communitys')()
+      const addresses = await createZomeCall('community/get_communities')()
 
       return Promise.all(
         addresses.map(address => zomeInterface.communities.get(address))

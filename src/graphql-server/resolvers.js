@@ -70,7 +70,7 @@ export const resolvers = {
   Post: {
     async communities (post) {
       return [
-        toUiData('community', await zomeInterface.communities.getBySlug(post.base))
+        toUiData('community', await zomeInterface.communities.get(post.base))
       ]
     },
 
