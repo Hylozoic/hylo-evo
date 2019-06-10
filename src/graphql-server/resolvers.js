@@ -79,6 +79,20 @@ export const resolvers = {
     }
   },
 
+  Comment: {
+    async creator ({ creator }) {
+      return toUiData('person', await zomeInterface.people.get(creator))
+    }
+  },
+
+  Community: {
+    async posts ({ id }) {
+      const posts = await zomeInterface.posts.all(id)
+
+      return toUiQuerySet(posts.map(post => toUiData('post', post)))
+    }
+  },
+
   Me: {
     async messageThreads () {
       const messageThreads = await zomeInterface.messageThreads.all()
@@ -88,14 +102,6 @@ export const resolvers = {
           return toUiData('messageThread', messageThread)
         })
       )
-    }
-  },
-
-  Community: {
-    async posts ({ id }) {
-      const posts = await zomeInterface.posts.all(id)
-
-      return toUiQuerySet(posts.map(post => toUiData('post', post)))
     }
   },
 
@@ -154,12 +160,6 @@ export const resolvers = {
       const commenterAddresses = comments.map(comment => comment.creator)
 
       return new Set(commenterAddresses).size
-    }
-  },
-
-  Comment: {
-    async creator ({ creator }) {
-      return toUiData('person', await zomeInterface.people.get(creator))
     }
   }
 }
