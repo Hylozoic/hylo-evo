@@ -18,6 +18,9 @@ Object {
     "avatar_url": "avatarUrl",
     "timestamp": "createdAt",
   },
+  "message": Object {
+    "thread_addr": "messageThreadId",
+  },
   "person": Object {
     "agent_id": "id",
   },

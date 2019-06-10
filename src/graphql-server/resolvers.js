@@ -33,10 +33,20 @@ export const resolvers = {
       const newComment = await zomeInterface.comments.create(hcCommentData)
 
       return toUiData('comment', newComment)
-    }
+    },
 
-    // createMessage(data: MessageInput): Message
-    // findOrCreateThread(data: MessageThreadInput): MessageThread
+    async findOrCreateThread (_, { data: { participantIds } }) {
+      const messageThread = await zomeInterface.messageThreads.create(participantIds)
+
+      return toUiData('messageThread', messageThread)
+    },
+
+    async createMessage (_, { data: messageData }) {
+      const hcMessageData = toZomeData('message', messageData)
+      const newMessage = await zomeInterface.messages.create(hcMessageData)
+
+      return toUiData('message', newMessage)
+    }
   },
 
   Query: {
@@ -56,40 +66,81 @@ export const resolvers = {
 
     async post (_, { id }) {
       return toUiData('post', await zomeInterface.posts.get(id))
+    },
+
+    async people () {
+      const people = await zomeInterface.people.all()
+
+      return toUiQuerySet(people.map(person => toUiData('person', person)))
+    },
+
+    async messageThread (_, { id }) {
+      return toUiData('messageThread', await zomeInterface.messageThreads.get(id))
+    }
+  },
+
+  Me: {
+    async messageThreads () {
+      const messageThreads = await zomeInterface.messageThreads.all()
+
+      return toUiQuerySet(
+        messageThreads.map(messageThread => {
+          return toUiData('messageThread', messageThread)
+        })
+      )
     }
   },
 
   Community: {
-    async posts (community) {
-      const posts = await zomeInterface.posts.all(community.id)
+    async posts ({ id }) {
+      const posts = await zomeInterface.posts.all(id)
 
       return toUiQuerySet(posts.map(post => toUiData('post', post)))
     }
   },
 
+  Message: {
+    async creator ({ creator }) {
+      return toUiData('person', await zomeInterface.people.get(creator))
+    }
+  },
+
+  MessageThread: {
+    async messages ({ id }) {
+      const messages = await zomeInterface.messages.all(id)
+
+      return toUiQuerySet(messages.map(message => toUiData('message', message)))
+    },
+
+    async participants ({ participants }) {
+      return participants.map(participant => toUiData('person', participant))
+    }
+  },
+
   Post: {
-    async communities (post) {
+    async communities ({ base }) {
       return [
-        toUiData('community', await zomeInterface.communities.get(post.base))
+        toUiData('community', await zomeInterface.communities.get(base))
       ]
     },
 
-    async creator (post) {
-      return toUiData('person', await zomeInterface.people.get(post.creator))
+    async creator ({ creator }) {
+      return toUiData('person', await zomeInterface.people.get(creator))
     },
 
-    async comments (post) {
-      const hcComments = await zomeInterface.comments.all(post.id)
+    async comments ({ id }) {
+      const hcComments = await zomeInterface.comments.all(id)
 
       return toUiQuerySet(hcComments.map(comment => toUiData('comment', comment)))
     },
 
-    async commenters (post) {
-      const comments = await zomeInterface.comments.all(post.id)
+    async commenters ({ id }) {
+      const comments = await zomeInterface.comments.all(id)
       const commenterAddresses = []
       const commenters = await Promise.all(comments.map(({ creator }) => {
         if (commenterAddresses.includes(creator)) return null
         commenterAddresses.push(creator)
+
         return zomeInterface.people.get(creator)
       }))
 
@@ -98,8 +149,8 @@ export const resolvers = {
         .map(commenter => toUiData('person', commenter))
     },
 
-    async commentersTotal (post) {
-      const comments = await zomeInterface.comments.all(post.id)
+    async commentersTotal ({ id }) {
+      const comments = await zomeInterface.comments.all(id)
       const commenterAddresses = comments.map(comment => comment.creator)
 
       return new Set(commenterAddresses).size
@@ -107,8 +158,8 @@ export const resolvers = {
   },
 
   Comment: {
-    async creator (comment) {
-      return toUiData('person', await zomeInterface.people.get(comment.creator))
+    async creator ({ creator }) {
+      return toUiData('person', await zomeInterface.people.get(creator))
     }
   }
 }

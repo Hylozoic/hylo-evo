@@ -1,7 +1,7 @@
 import { invert } from 'lodash/fp'
 import { currentDateString } from 'util/holochain'
 
-// Data mapping from zome <> Hylo UI
+// Data mapping, zome <> Hylo UI
 export const zomeDefaultAttribsMap = () => ({
   post: {
     announcement: false,
@@ -10,6 +10,9 @@ export const zomeDefaultAttribsMap = () => ({
   comment: {
     attachments: []
   }
+})
+
+const uiDefaultAttribsMap = () => ({
 })
 
 export const toZomeKeyMap = {
@@ -27,6 +30,9 @@ export const toZomeKeyMap = {
   comment: {
     'postId': 'base',
     'creator': 'agent_id'
+  },
+  message: {
+    'messageThreadId': 'thread_addr'
   }
 }
 
@@ -47,7 +53,7 @@ export const createDataRemapper = initialDataMap => (type, data) => {
       ? dataMap[key]
       : key
     remappedData[mappedKey] = data[key]
-    // Mutating passed object. Used a cloned copy or do another way
+    // TODO: Mutating passed object. Used a cloned copy or do another way
     delete data[key]
   }
 
@@ -66,7 +72,14 @@ export const toZomeData = (...args) => {
   }
 }
 
-export const toUiData = createDataRemapper(toUiKeyMap)
+export const toUiData = (...args) => {
+  const results = createDataRemapper(toUiKeyMap)(...args)
+
+  return {
+    ...uiDefaultAttribsMap()[args[0]],
+    ...results
+  }
+}
 
 export const toUiQuerySet = results => ({
   total: results.length,

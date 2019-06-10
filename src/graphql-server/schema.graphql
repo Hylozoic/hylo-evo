@@ -20,7 +20,7 @@ type Community {
   posts: PostQuerySet
 }
 
-type PersonQuerySet {
+type PeopleQuerySet {
   total: Int
   hasMore: Boolean
   items: [Person]
@@ -74,6 +74,8 @@ type MessageThread {
   participants(first: Int, cursor: ID, order: String): [Person]
   participantsTotal: Int
   messages(first: Int, cursor: ID, order: String): MessageQuerySet
+  unreadCount: Int
+  lastReadAt: String
 }
 
 type MessageQuerySet {
@@ -97,7 +99,7 @@ type Query {
   communities: [Community]
   messageThread(id: ID): MessageThread
   post(id: ID): Post
-  people: PersonQuerySet
+  people: PeopleQuerySet
 }
 
 input PostInput {
