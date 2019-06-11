@@ -8,29 +8,29 @@ import {
 export const resolvers = {
   Mutation: {
     async registerUser (_, userData) {
-      const hcUserData = toZomeData('person', userData)
-      const registeredUser = await zomeInterface.currentUser.create(hcUserData)
+      const zomeUserData = toZomeData('person', userData)
+      const registeredUser = await zomeInterface.currentUser.create(zomeUserData)
 
       return toUiData('person', registeredUser)
     },
 
     async createCommunity (_, { data: communityData }) {
-      const hcCommunityData = toZomeData('community', communityData)
-      const newCommunity = zomeInterface.communities.create(hcCommunityData)
+      const zomeCommunityData = toZomeData('community', communityData)
+      const newCommunity = zomeInterface.communities.create(zomeCommunityData)
 
       return toUiData('community', newCommunity)
     },
 
     async createPost (_, { data: postData }) {
-      const hcPostData = toZomeData('post', postData)
-      const newPost = await zomeInterface.posts.create(hcPostData)
+      const zomePostData = toZomeData('post', postData)
+      const newPost = await zomeInterface.posts.create(zomePostData)
 
       return toUiData('post', newPost)
     },
 
     async createComment (_, { data: commentData }) {
-      const hcCommentData = toZomeData('comment', commentData)
-      const newComment = await zomeInterface.comments.create(hcCommentData)
+      const zomeCommentData = toZomeData('comment', commentData)
+      const newComment = await zomeInterface.comments.create(zomeCommentData)
 
       return toUiData('comment', newComment)
     },
@@ -42,8 +42,8 @@ export const resolvers = {
     },
 
     async createMessage (_, { data: messageData }) {
-      const hcMessageData = toZomeData('message', messageData)
-      const newMessage = await zomeInterface.messages.create(hcMessageData)
+      const zomeMessageData = toZomeData('message', messageData)
+      const newMessage = await zomeInterface.messages.create(zomeMessageData)
 
       return toUiData('message', newMessage)
     }
@@ -135,9 +135,9 @@ export const resolvers = {
     },
 
     async comments ({ id }) {
-      const hcComments = await zomeInterface.comments.all(id)
+      const zomeComments = await zomeInterface.comments.all(id)
 
-      return toUiQuerySet(hcComments.map(comment => toUiData('comment', comment)))
+      return toUiQuerySet(zomeComments.map(comment => toUiData('comment', comment)))
     },
 
     async commenters ({ id }) {

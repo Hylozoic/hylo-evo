@@ -174,7 +174,6 @@ export const zomeInterface = {
 
       return {
         address,
-        creator: await zomeInterface.people.get(post.creator),
         ...post
       }
     },
