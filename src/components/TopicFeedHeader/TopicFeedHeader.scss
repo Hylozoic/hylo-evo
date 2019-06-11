@@ -107,7 +107,7 @@
 }
 
 .fade {
-  // TODO: replace these with pseudo elements
+  // Note: replace these with pseudo elements
   composes: imageShape;
   position: absolute;
   background-image: linear-gradient(180deg, $color-cod-gray-0, $color-cod-gray-0 30%, $color-cod-gray-dark);

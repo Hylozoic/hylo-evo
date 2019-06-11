@@ -13,8 +13,11 @@ export default function mixpanelMiddleware (store) {
       //
       // NOTE: the mixpanel object is initialized in initialState of the store creation
       const state = store.getState()
-      const isLoggedIn = getIsLoggedIn(state)
       const mixpanel = getMixpanel(state)
+
+      if (!mixpanel) return next(action)
+
+      const isLoggedIn = getIsLoggedIn(state)
       const { analytics } = meta
       const trackingEventName = get('eventName', analytics) ||
         (isString(analytics) && analytics) ||

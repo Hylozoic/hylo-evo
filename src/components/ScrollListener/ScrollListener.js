@@ -1,27 +1,12 @@
-import PropTypes from 'prop-types'
+import { func, number, object, string } from 'prop-types'
 import React from 'react'
 import { throttle } from 'lodash/fp'
 import { isAtBottom } from 'util/scrolling'
-const { func, number, object, string } = PropTypes
 
 export default class ScrollListener extends React.Component {
-  static propTypes = {
-    onBottom: func,
-    onLeaveBottom: func,
-    onTop: func,
-    onLeaveTop: func,
-    onScroll: func,
-    elementId: string,
-    element: object,
-    padding: number
-  }
-
-  constructor (props) {
-    super(props)
-    this.state = {
-      hitTop: true,
-      hitBottom: false
-    }
+  state = {
+    hitTop: true,
+    hitBottom: false
   }
 
   passThroughScroll = event => {
@@ -82,4 +67,14 @@ export default class ScrollListener extends React.Component {
   render () {
     return null
   }
+}
+ScrollListener.propTypes = {
+  onBottom: func,
+  onLeaveBottom: func,
+  onTop: func,
+  onLeaveTop: func,
+  onScroll: func,
+  elementId: string,
+  element: object,
+  padding: number
 }

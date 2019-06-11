@@ -8,6 +8,7 @@ coverage
 
 # production
 build
+build-hc
 es5
 storybook-static
 

@@ -1,0 +1,60 @@
+{ 
+  "people": [
+    {
+      "id": "72297",
+      "name": "Cristal Heller",
+      "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/saarabpreet/128.jpg",
+      "memberships": [
+        {
+          "id": "6654",
+          "community": {
+            "id": "2619",
+            "name": "Associate"
+          }
+        }
+      ]
+    },
+    {
+      "id": "72552",
+      "name": "Helga Cronin",
+      "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/orkuncaylar/128.jpg",
+      "memberships": [
+        {
+          "id": "6904",
+          "community": {
+            "id": "2619",
+            "name": "Associate"
+          }
+        }
+      ]
+    },
+    {
+      "id": "72257",
+      "name": "Isadore Herzog",
+      "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/larrygerard/128.jpg",
+      "memberships": [
+        {
+          "id": "6613",
+          "community": {
+            "id": "2619",
+            "name": "Associate"
+          }
+        }
+      ]
+    },
+    {
+      "id": "72041",
+      "name": "Oma Hettinger",
+      "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/antonyzotov/128.jpg",
+      "memberships": [
+        {
+          "id": "6397",
+          "community": {
+            "id": "2619",
+            "name": "Associate"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,41 +1,33 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import './MessagesDropdown.scss'
+import PropTypes from 'prop-types'
+import { get, isEmpty, some, find, orderBy } from 'lodash/fp'
 import { Link } from 'react-router-dom'
-import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import cx from 'classnames'
+import { toRefArray, itemsToArray } from 'util/reduxOrmMigration'
+import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import { newMessageUrl, threadUrl } from 'util/navigation'
 import RoundImageRow from 'components/RoundImageRow'
 import TopNavDropdown from '../TopNavDropdown'
-import { get, isEmpty, some, find } from 'lodash/fp'
-
+import { participantAttributes, isUnread, isUpdatedSince } from 'store/models/MessageThread'
 import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
 import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
-
-const { array, string, func } = PropTypes
+import './MessagesDropdown.scss'
 
 export default class MessagesDropdown extends Component {
-  static propTypes = {
-    fetchThreads: func,
-    renderToggleChildren: func,
-    threads: array,
-    className: string,
-    goToThread: func
-  }
-
   constructor (props) {
     super(props)
+    this.dropdown = React.createRef()
     this.state = {}
   }
 
   componentDidMount = () => {
     const { fetchThreads } = this.props
-    fetchThreads()
+    if (fetchThreads) fetchThreads()
   }
 
   onToggle = nowActive => {
-    // TODO this is not quite sufficient -- this value should also be bumped
-    // if the current user is in the messages UI, receiving new messages.
+    // * this is not quite sufficient -- this value should also be bumped
+    //   if the current user is in the messages UI, receiving new messages
     if (nowActive) this.setState({ lastOpenedAt: new Date() })
   }
 
@@ -46,9 +38,11 @@ export default class MessagesDropdown extends Component {
     }
 
     const { lastOpenedAt } = this.state
-    const isUnread = t =>
-      t.isUnread() && (!lastOpenedAt || t.isUpdatedSince(lastOpenedAt))
-    return some(isUnread, this.props.threads)
+
+    return some(
+      thread => isUnread(thread) && (!lastOpenedAt || isUpdatedSince(thread, lastOpenedAt)),
+      this.props.threads
+    )
   }
 
   render () {
@@ -62,8 +56,8 @@ export default class MessagesDropdown extends Component {
     } = this.props
 
     const onClick = id => {
-      goToThread(id)
-      this.refs.dropdown.toggle(false)
+      if (id) goToThread(id)
+      this.dropdown.current.toggle(false)
     }
 
     let body
@@ -73,11 +67,14 @@ export default class MessagesDropdown extends Component {
       body = <NoItems message="You don't have any conversations yet" />
     } else {
       body = <div styleName='threads'>
-        {threads.map(thread => <MessagesDropdownItem
-          thread={thread}
-          onClick={() => onClick(thread.id)}
-          currentUser={currentUser}
-          key={thread.id} />)}
+        {threads.map(thread =>
+          <MessagesDropdownItem
+            thread={thread}
+            onClick={() => onClick(thread.id)}
+            currentUser={currentUser}
+            key={thread.id}
+          />
+        )}
       </div>
     }
 
@@ -86,7 +83,7 @@ export default class MessagesDropdown extends Component {
       : newMessageUrl()
 
     return <TopNavDropdown
-      ref='dropdown'
+      ref={this.dropdown}
       className={className}
       onToggle={this.onToggle}
       toggleChildren={renderToggleChildren(this.hasUnread())}
@@ -102,37 +99,57 @@ export default class MessagesDropdown extends Component {
   }
 }
 
-export function MessagesDropdownItem ({ thread, onClick, currentUser }) {
-  const message = thread.messages.orderBy(m => Date.parse(m.createdAt), 'desc').first()
+MessagesDropdown.propTypes = {
+  className: PropTypes.any,
+  currentUser: PropTypes.object,
+  fetchThreads: PropTypes.func,
+  goToThread: PropTypes.func,
+  pending: PropTypes.any,
+  renderToggleChildren: PropTypes.func,
+  threads: PropTypes.array
+}
+
+export function MessagesDropdownItem ({ thread, onClick, currentUser, maxMessageLength = 145 }) {
+  if (!thread) return null
+
+  const messages = toRefArray(itemsToArray(thread.messages))
+  const message = orderBy(m => Date.parse(m.createdAt), 'desc', messages)[0]
+
   if (!message || !message.text) return null
 
-  var { text } = message
-  var participants = thread.participants.toRefArray()
-  text = lastMessageCreator(message, currentUser, participants) + text
+  const participants = toRefArray(thread.participants)
+  const { names, avatarUrls } = participantAttributes(thread, currentUser, 2)
 
-  const { names, avatarUrls } = thread.participantAttributes(currentUser, 2)
+  var displayText = lastMessageCreator(message, currentUser, participants) + message.text
 
-  const maxMessageLength = 145
-
-  if (textLength(text) > maxMessageLength) {
-    text = `${truncate(text, maxMessageLength)}...`
+  if (textLength(displayText) > maxMessageLength) {
+    displayText = `${truncate(displayText, maxMessageLength)}...`
   }
 
-  return <li styleName={cx('thread', { unread: thread.isUnread() })}
+  return <li styleName={cx('thread', { unread: isUnread(thread) })}
     onClick={onClick}>
     <div styleName='image-wrapper'>
       <RoundImageRow imageUrls={avatarUrls} vertical ascending cap='2' />
     </div>
     <div styleName='message-content'>
       <div styleName='name'>{names}</div>
-      <div styleName='body'>{text}</div>
+      <div styleName='body'>{displayText}</div>
       <div styleName='date'>{humanDate(thread.updatedAt)}</div>
     </div>
   </li>
 }
 
+MessagesDropdownItem.propTypes = {
+  currentUser: PropTypes.any,
+  onClick: PropTypes.any,
+  thread: PropTypes.any,
+  maxMessageLength: PropTypes.number
+}
+
 export function lastMessageCreator (message, currentUser, participants) {
-  if (get('id', message.creator) === currentUser.id) return 'You: '
+  const creatorPersonId = get('creator.id', message) || get('creator', message)
+
+  if (creatorPersonId === currentUser.id) return 'You: '
   if (participants.length <= 2) return ''
-  return find(p => p.id === get('id', message.creator), participants).name + ': '
+  return find(p => p.id === creatorPersonId, participants).name + ': '
 }

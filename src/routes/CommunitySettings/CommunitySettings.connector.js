@@ -1,11 +1,13 @@
 import { connect } from 'react-redux'
 import {
-  fetchCommunitySettings, updateCommunitySettings
+  fetchCommunitySettings, updateCommunitySettings, deleteCommunity
 } from './CommunitySettings.store'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getRouteParam from 'store/selectors/getRouteParam'
 import { get } from 'lodash/fp'
 import getCanModerate from 'store/selectors/getCanModerate'
+import { push } from 'connected-react-router'
+import { communityDeleteConfirmationUrl } from 'util/navigation'
 
 export function mapStateToProps (state, props) {
   const slug = getRouteParam('slug', state, props, false)
@@ -22,16 +24,18 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     fetchCommunitySettingsMaker: slug => () => dispatch(fetchCommunitySettings(slug)),
-    updateCommunitySettingsMaker: id => changes => dispatch(updateCommunitySettings(id, changes))
+    updateCommunitySettingsMaker: id => changes => dispatch(updateCommunitySettings(id, changes)),
+    deleteCommunity: id => dispatch(deleteCommunity(id)),
+    goToCommunityDeleteConfirmation: () => dispatch(push(communityDeleteConfirmationUrl()))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { community, slug } = stateProps
   const {
-    fetchCommunitySettingsMaker, updateCommunitySettingsMaker
+    fetchCommunitySettingsMaker, updateCommunitySettingsMaker, goToCommunityDeleteConfirmation
   } = dispatchProps
-  var fetchCommunitySettings, updateCommunitySettings
+  var fetchCommunitySettings, updateCommunitySettings, deleteCommunity
 
   if (slug) {
     fetchCommunitySettings = fetchCommunitySettingsMaker(slug)
@@ -41,8 +45,16 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
 
   if (get('id', community)) {
     updateCommunitySettings = updateCommunitySettingsMaker(community.id)
+    deleteCommunity = () =>
+      dispatchProps.deleteCommunity(community.id)
+        .then(({ error }) => {
+          if (!error) {
+            return goToCommunityDeleteConfirmation()
+          }
+        })
   } else {
     updateCommunitySettings = () => {}
+    deleteCommunity = () => {}
   }
 
   return {
@@ -50,7 +62,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...dispatchProps,
     ...ownProps,
     fetchCommunitySettings,
-    updateCommunitySettings
+    updateCommunitySettings,
+    deleteCommunity
   }
 }
 

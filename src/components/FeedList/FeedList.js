@@ -62,13 +62,13 @@ export default class FeedList extends React.Component {
     }
   }
 
-  fetchOrShowCached () {
+  fetchOrShowCached = () => {
     const { hasMore, posts, fetchPosts, storeFetchPostsParam } = this.props
     if (isEmpty(posts) && hasMore !== false) fetchPosts()
     storeFetchPostsParam()
   }
 
-  fetchMorePosts () {
+  fetchMorePosts = () => {
     const { pending, posts, hasMore, fetchPosts } = this.props
     if (pending || posts.length === 0 || !hasMore) return
     fetchPosts(posts.length)
@@ -91,7 +91,6 @@ export default class FeedList extends React.Component {
     }
     const isProject = routeParams.postTypeContext === 'project'
     const isEvent = routeParams.postTypeContext === 'event'
-
     const showSortAndFilters = !isProject && !isEvent
 
     return <div styleName='FeedList-container'>
@@ -125,7 +124,7 @@ export default class FeedList extends React.Component {
             key={post.id} />
         })}
       </div>
-      <ScrollListener onBottom={() => this.fetchMorePosts()}
+      <ScrollListener onBottom={this.fetchMorePosts}
         elementId={CENTER_COLUMN_ID} />
       {pending && <Loading />}
     </div>

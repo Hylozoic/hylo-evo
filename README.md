@@ -5,27 +5,21 @@
 1. `git clone git@github.com:Hylozoic/hylo-evo.git`
 2. `cd hylo-evo`
 
-### Using the default Hylo Staging API configuration
-
-  * From the root of the project run: `cp .env.staging .env`
-
 ## Running local:
 
 1. `yarn install`
 2. `yarn start`
 
-## Running using Docker:
+## Building for standard Hylo API deployment
 
-1. Build the docker container: `docker build -t hylo-evo-docker .`
-2. Run the docker container:
-~~~
-docker run -it \
-  -v ${PWD}:/usr/src/app \
-  -v /usr/src/app/node_modules \
-  -p 9000:9000 \
-  --rm \
-  hylo-evo-docker`
-~~~
+1. Run `yarn build`
+2. Once complete Hylo is ready to be served at `<projectRoot>/build`
+
+## Building for Holochain
+
+1. Optionally set `HOLOCHAIN_BUILD_PATH` in your local `.env` file. Defaults to `<projectRoot>/build-hc`
+2. Run `yarn build:hc`
+3. Once complete Hylo+Holochain is ready to be served at `<HOLOCHAIN_BUILD_PATH>`
 
 ## Further documentation
 

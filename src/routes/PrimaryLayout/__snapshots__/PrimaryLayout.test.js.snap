@@ -1,3 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`shows NotFound if a currentUser is loaded and the community does not exist 1`] = `<withRouter(Connect(NotFound)) />`;
+
+exports[`shows nothing for a community route if the community and currentUser are not loaded 1`] = `
+<div
+  data-stylename="container"
+>
+  <Loading
+    type="loading-fullscreen"
+  />
+</div>
+`;

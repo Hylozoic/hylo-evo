@@ -1,6 +1,11 @@
 const paths = require('./paths')
 
 module.exports = {
+  graphqlLoader: {
+    test: /\.(graphql|gql)$/,
+    exclude: /node_modules/,
+    loader: 'graphql-tag/loader'
+  },
   cssLoader: {
     loader: 'css-loader',
     options: {
@@ -21,7 +26,7 @@ module.exports = {
   sassResourcesLoader: {
     loader: 'sass-resources-loader',
     options: {
-      // LEJ: Define global SASS variables in the files specified here
+      // * Define global SASS variables in the files specified here
       // for preloading by the sass-resources loader. The explicit
       // load order is on purpose.
       resources: [paths.appSrc + '/css/global/_sass_resources.scss']

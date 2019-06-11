@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
     case LOCATION_CHANGE:
       return {
         previousLocation: state.currentLocation,
-        currentLocation: action.payload.location
+        currentLocation: action.payload.location.pathname
       }
     default:
       return state

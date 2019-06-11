@@ -28,11 +28,21 @@ module.exports = function (api) {
       '@babel/preset-env',
       '@babel/preset-react'
     ],
+    plugins: [
+      '@babel/plugin-transform-runtime',
+      '@babel/plugin-proposal-class-properties',
+      [
+        'module-resolver',
+        {
+          root: ['src'],
+          extensions: ['.graphql']
+        }
+      ],
+      'import-graphql',
+      'inline-import'
+    ],
     ignore: [
       paths.resolveApp('scripts/templates/*')
-    ],
-    plugins: [
-      '@babel/plugin-proposal-class-properties'
     ],
     env: {
       test: {

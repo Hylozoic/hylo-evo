@@ -66,6 +66,7 @@ $drawer-z-index: 51;
   // From Bootstrap make-col-ready():
   position: relative;
   min-height: 1px; // Prevent collapsing
+  height: 100%;
   flex: 0 0 $center-column-width;
   max-width: $center-column-width;
   overflow-y: auto;

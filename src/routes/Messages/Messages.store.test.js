@@ -1,9 +1,9 @@
 import orm from 'store/models'
 import {
-  CREATE_MESSAGE,
-  CREATE_MESSAGE_PENDING
+  CREATE_MESSAGE
 } from 'store/constants'
 import reducer, {
+  defaultState,
   getMessages,
   filterThreadsByParticipant,
   findOrCreateThread,
@@ -11,22 +11,27 @@ import reducer, {
   updateMessageText,
   moduleSelector,
   getTextForCurrentMessageThread,
-  UPDATE_MESSAGE_TEXT
+  UPDATE_MESSAGE_TEXT,
+  setContactsSearch,
+  SET_CONTACTS_SEARCH,
+  getParticipantsFromQuerystring
 } from './Messages.store'
+import { people } from './Messages.test.json'
 
 describe('reducer', () => {
-  it('clears the form when CREATE_MESSAGE_PENDING action fires', () => {
-    const state = {
-      1: 'trinket'
-    }
-    const action = {
-      type: CREATE_MESSAGE_PENDING,
-      meta: {
-        messageThreadId: '1'
-      }
-    }
-    expect(reducer(state, action)).toEqual({ 1: '' })
+  it('should return the initial state', () => {
+    const expected = defaultState
+    const actual = reducer(undefined, { type: 'FLARGLE' })
+    expect(actual).toEqual(expected)
   })
+
+  it('should handle SET_CONTACTS_SEARCH', () => {
+    const state = {}
+    const expected = { contactsSearch: 'flargleargle' }
+    const actual = reducer(state, { type: SET_CONTACTS_SEARCH, payload: 'flargleargle' })
+    expect(actual).toEqual(expected)
+  })
+
   it('sets the form text for a thread', () => {
     const state = {
       1: ''
@@ -213,5 +218,85 @@ describe('getTextForCurrentMessageThread', () => {
       }
     }
     expect(getTextForCurrentMessageThread(state, props)).toEqual('')
+  })
+})
+
+it('returns the correct action from setContactsSearch', () => {
+  const expected = {
+    type: SET_CONTACTS_SEARCH,
+    payload: 'flargle'
+  }
+  const actual = setContactsSearch('flargle')
+  expect(actual).toEqual(expected)
+})
+
+describe('getParticipantsFromQuerystring', () => {
+  let session = null
+  let state = null
+
+  beforeEach(() => {
+    session = orm.mutableSession(orm.getEmptyState())
+
+    people.forEach(person => {
+      session.Person.create({
+        ...person,
+        memberships: person.memberships.map(m => m.id)
+      })
+      session.Membership.create({
+        ...person.memberships[0],
+        person: person.id,
+        community: person.memberships[0].community.id
+      })
+      session.Community.create(person.memberships[0].community)
+    })
+
+    state = { orm: session.state }
+  })
+
+  it('returns the correct id', () => {
+    const location = { search: '?participants=72297' }
+    console.log(people)
+    const expected = session.Person.filter(p => p.id === '72297').toRefArray()
+    const actual = getParticipantsFromQuerystring(state, { location })
+    expect(actual).toEqual(expected)
+  })
+
+  it('returns null if no search', () => {
+    const actual = getParticipantsFromQuerystring(state, { location: { search: '' } })
+    expect(actual).toBe(null)
+  })
+
+  it('filters out ids from store', () => {
+    const participantIds = people.map(p => p.id)
+    const location = { search: `?participants=${participantIds.join(',')}` }
+    const expected = session.Person.all().toRefArray()
+    const actual = getParticipantsFromQuerystring(state, { location })
+    expect(actual).toEqual(expected)
+  })
+})
+
+describe('connector', () => {
+  let session = null
+  let state = null
+
+  beforeEach(() => {
+    session = orm.mutableSession(orm.getEmptyState())
+
+    people.forEach(person => {
+      session.Person.create({
+        ...person,
+        memberships: person.memberships.map(m => m.id)
+      })
+      session.Membership.create({
+        ...person.memberships[0],
+        person: person.id,
+        community: person.memberships[0].community.id
+      })
+      session.Community.create(person.memberships[0].community)
+    })
+    const me = { id: '999', name: 'Break Wind' }
+    session.Person.create(me)
+    session.Me.create(me)
+    state = { orm: session.state }
   })
 })

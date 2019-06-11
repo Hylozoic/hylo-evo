@@ -24,6 +24,7 @@ import Topic from './Topic'
 import Vote from './Vote'
 
 export const orm = new ORM()
+
 orm.register(
   Activity,
   Attachment,

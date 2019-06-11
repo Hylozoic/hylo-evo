@@ -12,6 +12,7 @@ $preview-height: 80px;
   border-radius: 4px;
   padding-top: $space-2x;
   padding-right: $space-3x;
+  margin-bottom: 25px;
 
   a, a:hover {
     text-decoration: none;
@@ -19,7 +20,7 @@ $preview-height: 80px;
 }
 
 .noImage {
-  //TODO: this class is a hack. We should be using flexbox for this component
+  // Note: this class is a hack. We should be using flexbox for this component
   padding-left: $space-3x;
 }
 
@@ -41,7 +42,7 @@ $preview-height: 80px;
 }
 
 .previewDomain {
-  // TODO: Extract typography? Very close to BDY-DRK-SM
+  // Extract typography: Very close to BDY-DRK-SM
   @include font-regular;
   color: $color-dove-gray-50;
   font-size: 12px;

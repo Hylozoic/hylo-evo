@@ -41,7 +41,7 @@ export function mapStateToProps (state, props) {
     network = getNetworkForCurrentRoute(state, props)
   }
 
-  // TODO: TBD - consolidate this getQuerystringParam('t', ...) into getPostTypeContext
+  // * TBD - consolidate this getQuerystringParam('t', ...) into getPostTypeContext
   const postTypeFilter = postTypeContext || getQuerystringParam('t', state, props)
   const sortBy = getQuerystringParam('s', state, props)
 

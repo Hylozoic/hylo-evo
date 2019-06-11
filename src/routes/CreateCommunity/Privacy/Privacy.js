@@ -19,8 +19,8 @@ export default class Privacy extends Component {
   }
 
   submit = () => {
-    // TODO: Find out how this will actuall be saved in the db.
-    // Currently set to be saved by label
+    // * Find out how this will actuall be saved in the db.
+    //   Currently set to be saved by label
     this.props.addCommunityPrivacy(privacyOptions[this.state.selectedPrivacy].label)
     this.props.goToNextStep()
   }

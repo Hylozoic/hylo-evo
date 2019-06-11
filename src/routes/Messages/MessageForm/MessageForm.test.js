@@ -15,15 +15,17 @@ const defaultProps = {
   messageText: 'hey you',
   currentUser,
   participants: [],
-  createMessage: () => {}
+  updateMessageText: () => {},
+  onSubmit: () => {}
 }
 
+
 describe('component', () => {
-  const mockCreateMessage = jest.fn(() => Promise.resolve())
+  const mockOnSubmit = jest.fn(() => Promise.resolve())
   const sendIsTyping = jest.fn()
   const wrapper = mount(<MessageForm
     {...defaultProps}
-    createMessage={mockCreateMessage}
+    onSubmit={mockOnSubmit}
     sendIsTyping={sendIsTyping} />)
 
   it('matches the latest snapshot', () => {
@@ -36,44 +38,13 @@ describe('component', () => {
     expect(sendIsTyping).toHaveBeenCalledWith(true)
   })
 
-  it('does not createMessage when shift-enter is pressed', () => {
+  it('does not run onSubmit when shift-enter is pressed', () => {
     wrapper.find('textarea').simulate('keydown', { which: keyMap.ENTER, shiftKey: true })
-    expect(mockCreateMessage).not.toHaveBeenCalled()
+    expect(mockOnSubmit).not.toHaveBeenCalled()
   })
 
-  it('does createMessage when enter is pressed', () => {
+  it('does onSubmit when enter is pressed', () => {
     wrapper.find('textarea').simulate('keydown', { which: keyMap.ENTER })
-    expect(mockCreateMessage.mock.calls[0]).toEqual([messageThreadId, 'hey you'])
-  })
-})
-
-describe('for a new thread', () => {
-  const mockFindOrCreateThread = jest.fn(() => Promise.resolve({
-    payload: { data: { findOrCreateThread: { id: 5 } } }
-  }))
-
-  const mockGoToThread = jest.fn()
-  const mockCreateMessage = jest.fn(() => Promise.resolve())
-
-  const wrapper = mount(<MessageForm
-    {...defaultProps}
-    forNewThread
-    findOrCreateThread={mockFindOrCreateThread}
-    goToThread={mockGoToThread}
-    text='hey you'
-    createMessage={mockCreateMessage}
-    sendIsTyping={jest.fn()} />)
-
-  it('finds or creates a thread', () => {
-    wrapper.find('textarea').simulate('keydown', { which: keyMap.ENTER })
-    expect.assertions(3)
-    return new Promise(resolve => {
-      setTimeout(() => {
-        expect(mockFindOrCreateThread).toHaveBeenCalled()
-        expect(mockCreateMessage).toHaveBeenCalled()
-        expect(mockGoToThread).toHaveBeenCalledWith(5)
-        resolve()
-      }, 100)
-    })
+    expect(mockOnSubmit).toHaveBeenCalled()
   })
 })

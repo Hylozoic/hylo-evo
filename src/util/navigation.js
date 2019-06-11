@@ -2,27 +2,41 @@ import { matchPath } from 'react-router'
 import qs from 'querystring'
 import { get, isEmpty, omitBy } from 'lodash/fp'
 import { host } from 'config'
-import { HOLOCHAIN_ACTIVE, HOLOCHAIN_HASH_MATCH } from './holochain'
+import {
+  HOLOCHAIN_ACTIVE,
+  HOLOCHAIN_HASH_MATCH,
+  HOLOCHAIN_DEFAULT_COMMUNITY_SLUG
+} from './holochain'
 
-// post type / post context related
-//
-// note: post Contexts have their own area if not default
+// Post type / post context related
+// * Post Contexts have their own area if not default
+
 export const HYLO_ID_MATCH = '\\d+'
 export const POST_ID_MATCH = HOLOCHAIN_ACTIVE
-  ? `${HYLO_ID_MATCH}|${HOLOCHAIN_HASH_MATCH}`
+  ? HOLOCHAIN_HASH_MATCH
   : HYLO_ID_MATCH
 export const DEFAULT_POST_TYPE_CONTEXT = 'p'
 export const POST_TYPE_CONTEXTS = ['project', 'event']
 export const VALID_POST_TYPE_CONTEXTS = [...POST_TYPE_CONTEXTS, DEFAULT_POST_TYPE_CONTEXT]
 export const VALID_POST_TYPE_CONTEXTS_MATCH = VALID_POST_TYPE_CONTEXTS.join('|')
 
-// fundamental URL paths
+// Fundamental URL paths
 
 export function allCommunitiesUrl () {
   return '/all'
 }
 
-export function communityUrl (slug, defaultUrl = allCommunitiesUrl()) {
+export function defaultHolochainCommunityUrl () {
+  return `/c/${HOLOCHAIN_DEFAULT_COMMUNITY_SLUG}`
+}
+
+export function defaultCommunityUrl () {
+  return HOLOCHAIN_ACTIVE
+    ? defaultHolochainCommunityUrl()
+    : allCommunitiesUrl()
+}
+
+export function communityUrl (slug, defaultUrl = defaultCommunityUrl()) {
   return slug ? `/c/${slug}` : defaultUrl
 }
 
@@ -64,6 +78,10 @@ export function baseUrl ({
   } else {
     return defaultUrl
   }
+}
+
+export function communityDeleteConfirmationUrl () {
+  return '/confirm-community-delete'
 }
 
 // derived URL paths
@@ -148,8 +166,8 @@ export function addQuerystringToPath (path, querystringParams) {
   return `${path}${!isEmpty(querystringParams) ? '?' + qs.stringify(querystringParams) : ''}`
 }
 
-// TODO: refactor to utilize react-navigation matcher and params
-//       or potentially replace this in all cases with postsUrl
+// * refactor to utilize react-navigation matcher and params
+//   or potentially replace this in all cases with postsUrl
 export function removePostFromUrl (url) {
   let matchForReplaceRegex
 

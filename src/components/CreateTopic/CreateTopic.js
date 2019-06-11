@@ -70,7 +70,7 @@ export default class CreateTopic extends Component {
   createAndNotify = name => {
     this.props.createTopic(name, this.props.communityId)
 
-    // TODO: assumes success
+    // Note: assumes success
     this.setState({
       closeOnSubmit: true,
       loading: false,
