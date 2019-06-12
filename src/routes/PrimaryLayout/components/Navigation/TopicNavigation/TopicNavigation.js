@@ -41,7 +41,7 @@ export default class TopicNavigation extends Component {
     const { slug } = routeParams
 
     return <div styleName='s.topicNavigation'>
-      <div styleName={cx('s.header', {'s.header-link': collapsed})} onClick={expand}>
+      <div styleName={cx('s.header', { 's.header-link': collapsed })} onClick={expand}>
         <Icon name='Topics' styleName='s.icon' />
         <span styleName='s.title'>Topics</span>
         {communityId && <CreateTopic

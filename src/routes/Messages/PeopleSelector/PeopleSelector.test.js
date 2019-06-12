@@ -48,7 +48,7 @@ describe('PeopleSelector', () => {
             setPeopleSearch={setPeopleSearch}
             matchingPeople={[ { id: '1' }, { id: '2' } ]} />
         </MemoryRouter>
-      )      
+      )
       wrapper.find(PeopleSelector).instance().setState({ currentMatch: { id: '1' } })
       input = wrapper.find('input').first()
     })

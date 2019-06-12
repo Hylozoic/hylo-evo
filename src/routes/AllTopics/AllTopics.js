@@ -97,7 +97,7 @@ export default class AllTopics extends Component {
         <div styleName='title'>Topics</div>
         <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
         <div styleName='controls'>
-          <SearchBar {...{search, setSearch, selectedSort, setSort, fetchIsPending}} />
+          <SearchBar {...{ search, setSearch, selectedSort, setSort, fetchIsPending }} />
           {/* {community && <CreateTopic
             buttonText='Add a Topic'
             communityId={community.id}
@@ -158,12 +158,12 @@ export function TopicListItem ({ topic, routeParams, toggleSubscribe, deleteItem
     </Link>
     <div styleName='communitiesList'>
       {communityTopics.map((ct, key) =>
-          <CommunityCell community={ct.community} key={key}>
+        <CommunityCell community={ct.community} key={key}>
             ({ct.followersTotal} / {ct.postsTotal})
-            {toggleSubscribe && <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
-              {ct.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
-            </span>}
-          </CommunityCell>
+          {toggleSubscribe && <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
+            {ct.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+          </span>}
+        </CommunityCell>
       )}
     </div>
     {canModerate && <Dropdown styleName='topic-dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}

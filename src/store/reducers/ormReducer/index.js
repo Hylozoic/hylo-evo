@@ -142,7 +142,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING:
-      const ct = CommunityTopic.get({topic: meta.topicId, community: meta.communityId})
+      const ct = CommunityTopic.get({ topic: meta.topicId, community: meta.communityId })
       ct.update({
         followersTotal: ct.followersTotal + (meta.isSubscribing ? 1 : -1),
         isSubscribed: !!meta.isSubscribing

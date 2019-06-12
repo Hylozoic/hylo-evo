@@ -83,10 +83,10 @@ export function mapDispatchToProps (dispatch, props) {
         return dispatch(fetchCommunityTopic(topicName, communitySlug))
           .then(action => {
           // redirect if no topic found
-          if (!action.payload.data.communityTopic) {
-            dispatch(replace(topicsUrl({ communitySlug })))
-          }
-        })
+            if (!action.payload.data.communityTopic) {
+              dispatch(replace(topicsUrl({ communitySlug })))
+            }
+          })
       } else if (topicName) {
         return dispatch(fetchTopic(topicName))
       }

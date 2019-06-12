@@ -14,6 +14,7 @@ export function mapStateToProps (state, props) {
   const rootPath = baseUrl(routeParams, allCommunitiesUrl())
   const membersPath = `${rootPath}/members`
   const projectsPath = `${rootPath}/project`
+  const eventsPath = `${rootPath}/event`
   let communityMembership, badge
 
   if (community) {
@@ -24,8 +25,6 @@ export function mapStateToProps (state, props) {
     communityMembership = getCommunityMembership(state, { communityId: community.id })
     badge = get('newPostCount', communityMembership)
   }
-  const projectsPath = `${rootPath}/project`
-  const eventsPath = `${rootPath}/event`
 
   return {
     routeParams,

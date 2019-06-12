@@ -42,6 +42,7 @@ import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
 import {
+  isSignupPath,
   POST_ID_MATCH,
   VALID_POST_TYPE_CONTEXTS_MATCH
 } from 'util/navigation'
@@ -92,9 +93,9 @@ export default class PrimaryLayout extends Component {
       postDetailRoutes
     )
     const routesWithNavigation = [
-      {path: '/all'},
-      {path: '/n/:networkSlug'},
-      {path: '/c/:slug'}
+      { path: '/all' },
+      { path: '/n/:networkSlug' },
+      { path: '/c/:slug' }
     ]
 
     return <div styleName='container'>
@@ -109,7 +110,7 @@ export default class PrimaryLayout extends Component {
           <RedirectToCommunity path='/' currentUser={currentUser} />
           <RedirectToCommunity path='/app' currentUser={currentUser} />
           <Switch>
-            {redirectRoutes.map(({from, to}) => <Redirect from={from} to={to} exact key={from} />)}
+            {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
             <Route path='/all/topics' component={AllTopics} />
             <Route path={`/all/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/all/:topicName/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
@@ -174,35 +175,35 @@ const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
 
 const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})/:action(edit)?`
 const postDetailRoutes = [
-  {path: `/all/${POST_DETAIL_MATCH}`},
-  {path: `/all/:topicName/${POST_DETAIL_MATCH}`},
-  {path: `/n/:networkSlug/m/:personId/${POST_DETAIL_MATCH}`},
-  {path: `/n/:networkSlug/${POST_DETAIL_MATCH}`},
-  {path: `/n/:networkSlug/:topicName/${POST_DETAIL_MATCH}`},
-  {path: `/c/:slug/m/:personId/${POST_DETAIL_MATCH}`},
-  {path: `/c/:slug/${POST_DETAIL_MATCH}`},
-  {path: `/c/:slug/:topicName/${POST_DETAIL_MATCH}`},
-  {path: `/m/:personId/${POST_DETAIL_MATCH}`}
+  { path: `/all/${POST_DETAIL_MATCH}` },
+  { path: `/all/:topicName/${POST_DETAIL_MATCH}` },
+  { path: `/n/:networkSlug/m/:personId/${POST_DETAIL_MATCH}` },
+  { path: `/n/:networkSlug/${POST_DETAIL_MATCH}` },
+  { path: `/n/:networkSlug/:topicName/${POST_DETAIL_MATCH}` },
+  { path: `/c/:slug/m/:personId/${POST_DETAIL_MATCH}` },
+  { path: `/c/:slug/${POST_DETAIL_MATCH}` },
+  { path: `/c/:slug/:topicName/${POST_DETAIL_MATCH}` },
+  { path: `/m/:personId/${POST_DETAIL_MATCH}` }
 ]
 
 const NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:action(new)`
 const EDIT_POST_MATCH = `${POST_DETAIL_MATCH}/:action(edit)`
 const postEditorRoutes = [
-  {path: `/all/${NEW_POST_MATCH}`},
-  {path: `/all/${EDIT_POST_MATCH}`},
-  {path: `/all/:topicName/${NEW_POST_MATCH}`},
-  {path: `/all/:topicName/${EDIT_POST_MATCH}`},
-  {path: `/n/:networkSlug/${NEW_POST_MATCH}`},
-  {path: `/n/:networkSlug/${EDIT_POST_MATCH}`},
-  {path: `/n/:networkSlug/m/:personId/${EDIT_POST_MATCH}`},
-  {path: `/n/:networkSlug/:topicName/${NEW_POST_MATCH}`},
-  {path: `/n/:networkSlug/:topicName/${EDIT_POST_MATCH}`},
-  {path: `/c/:slug/${NEW_POST_MATCH}`},
-  {path: `/c/:slug/${EDIT_POST_MATCH}`},
-  {path: `/c/:slug/m/:personId/${EDIT_POST_MATCH}`},
-  {path: `/c/:slug/:topicName/${NEW_POST_MATCH}`},
-  {path: `/c/:slug/:topicName/${EDIT_POST_MATCH}`},
-  {path: `/m/:personId/${EDIT_POST_MATCH}`}
+  { path: `/all/${NEW_POST_MATCH}` },
+  { path: `/all/${EDIT_POST_MATCH}` },
+  { path: `/all/:topicName/${NEW_POST_MATCH}` },
+  { path: `/all/:topicName/${EDIT_POST_MATCH}` },
+  { path: `/n/:networkSlug/${NEW_POST_MATCH}` },
+  { path: `/n/:networkSlug/${EDIT_POST_MATCH}` },
+  { path: `/n/:networkSlug/m/:personId/${EDIT_POST_MATCH}` },
+  { path: `/n/:networkSlug/:topicName/${NEW_POST_MATCH}` },
+  { path: `/n/:networkSlug/:topicName/${EDIT_POST_MATCH}` },
+  { path: `/c/:slug/${NEW_POST_MATCH}` },
+  { path: `/c/:slug/${EDIT_POST_MATCH}` },
+  { path: `/c/:slug/m/:personId/${EDIT_POST_MATCH}` },
+  { path: `/c/:slug/:topicName/${NEW_POST_MATCH}` },
+  { path: `/c/:slug/:topicName/${EDIT_POST_MATCH}` },
+  { path: `/m/:personId/${EDIT_POST_MATCH}` }
 ]
 
 const signupRoutes = [
@@ -220,15 +221,15 @@ const createCommunityRoutes = [
 ]
 
 const redirectRoutes = [
-  {from: '/tag/:topicName', to: '/all/topics/:topicName'},
-  {from: '/c/:slug/tag/:topicName', to: '/c/:slug/:topicName'},
-  {from: '/c/:slug/join/:accessCode/tag/:topicName', to: '/c/:slug/join/:accessCode/:topicName'},
-  {from: '/p/:postId', to: '/all/p/:postId'},
-  {from: '/u/:personId', to: '/m/:personId'},
-  {from: '/c/:slug/about', to: '/c/:slug'},
-  {from: '/c/:slug/people', to: '/c/:slug/members'},
-  {from: '/c/:slug/invite', to: '/c/:slug/settings/invite'},
-  {from: '/c/:slug/events', to: '/c/:slug'}
+  { from: '/tag/:topicName', to: '/all/topics/:topicName' },
+  { from: '/c/:slug/tag/:topicName', to: '/c/:slug/:topicName' },
+  { from: '/c/:slug/join/:accessCode/tag/:topicName', to: '/c/:slug/join/:accessCode/:topicName' },
+  { from: '/p/:postId', to: '/all/p/:postId' },
+  { from: '/u/:personId', to: '/m/:personId' },
+  { from: '/c/:slug/about', to: '/c/:slug' },
+  { from: '/c/:slug/people', to: '/c/:slug/members' },
+  { from: '/c/:slug/invite', to: '/c/:slug/settings/invite' },
+  { from: '/c/:slug/events', to: '/c/:slug' }
 ]
 
 export function RedirectToSignupFlow ({ currentUser, pathname }) {

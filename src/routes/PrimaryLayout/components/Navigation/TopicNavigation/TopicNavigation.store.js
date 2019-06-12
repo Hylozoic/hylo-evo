@@ -41,8 +41,8 @@ export const getSubscribedCommunityTopics = ormCreateSelector(
 
     if (community) {
       communityTopics = session.CommunityTopic
-      .filter({community: community.id, isSubscribed: true})
-      .toModelArray()
+        .filter({ community: community.id, isSubscribed: true })
+        .toModelArray()
 
       return sortBy(getTopicName, communityTopics)
     }
@@ -61,8 +61,8 @@ export const getSubscribedCommunityTopics = ormCreateSelector(
     }
 
     let allCommunityTopics = session.CommunityTopic
-    .filter({ isSubscribed: true })
-    .toModelArray()
+      .filter({ isSubscribed: true })
+      .toModelArray()
 
     return sortBy(getTopicName, mergeCommunityTopics(allCommunityTopics))
   }
