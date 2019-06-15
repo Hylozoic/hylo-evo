@@ -1,8 +1,8 @@
 import { createZomeCall } from './holochainClient'
 
-export const zomeInterface = {
+export const HyloDnaInterface = {
   comments: {
-    all: base => createZomeCall('comments/all_for_base')({ base }) || [],
+    all: base => createZomeCall('comments/all_for_base')({ base }),
 
     get: address => createZomeCall('comments/get')({ address }),
 
@@ -48,14 +48,14 @@ export const zomeInterface = {
       const addresses = await createZomeCall('messages/get_threads')()
 
       return Promise.all(addresses.map(
-        messageThreadAddress => zomeInterface.messageThreads.get(messageThreadAddress)
+        messageThreadAddress => HyloDnaInterface.messageThreads.get(messageThreadAddress)
       ))
     },
 
     get: async address => {
       return {
         address,
-        participants: await zomeInterface.messageThreads.__getParticipants(address)
+        participants: await HyloDnaInterface.messageThreads.__getParticipants(address)
       }
     },
 
@@ -64,7 +64,7 @@ export const zomeInterface = {
 
       return {
         address,
-        participants: await zomeInterface.messageThreads.__getParticipants(address)
+        participants: await HyloDnaInterface.messageThreads.__getParticipants(address)
       }
     },
 
@@ -72,7 +72,7 @@ export const zomeInterface = {
       const participantAddresses = await createZomeCall('messages/get_participants')({ thread_address: address })
 
       return Promise.all(participantAddresses.map(
-        async participantAddress => zomeInterface.people.get(participantAddress)
+        async participantAddress => HyloDnaInterface.people.get(participantAddress)
       ))
     }
   },
@@ -92,4 +92,4 @@ export const zomeInterface = {
   }
 }
 
-export default zomeInterface
+export default HyloDnaInterface

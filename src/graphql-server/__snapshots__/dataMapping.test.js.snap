@@ -1,5 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`toInterfaceData should match snapshot 1`] = `
+Object {
+  "agent_id": "idhash",
+  "avatar_url": "avatarUrlthing",
+}
+`;
+
 exports[`toUiData should match snapshot 1`] = `
 Object {
   "avatarUrl": "avatarUrlthing",
@@ -19,12 +26,13 @@ Object {
     "timestamp": "createdAt",
   },
   "message": Object {
-    "thread_addr": "messageThreadId",
+    "thread_address": "messageThreadId",
   },
   "person": Object {
     "agent_id": "id",
   },
   "post": Object {
+    "base": "communityId",
     "post_type": "type",
   },
 }
@@ -42,12 +50,5 @@ Object {
     },
   ],
   "total": 2,
-}
-`;
-
-exports[`toZomeData should match snapshot 1`] = `
-Object {
-  "agent_id": "idhash",
-  "avatar_url": "avatarUrlthing",
 }
 `;

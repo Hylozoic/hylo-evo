@@ -15,7 +15,7 @@ export const interfaceDefaultAttribsMap = () => ({
 const uiDefaultAttribsMap = () => ({
 })
 
-export const toZomeKeyMap = {
+export const toInterfaceKeyMap = {
   global: {
     'createdAt': 'timestamp',
     'id': 'address',
@@ -38,11 +38,12 @@ export const toZomeKeyMap = {
 }
 
 export const toUiKeyMap = {}
-for (let key in toZomeKeyMap) {
-  toUiKeyMap[key] = invert(toZomeKeyMap[key])
+for (let key in toInterfaceKeyMap) {
+  toUiKeyMap[key] = invert(toInterfaceKeyMap[key])
 }
 
 export const createDataRemapper = initialDataMap => (type, data) => {
+  const clonedData = Object.assign({}, data)
   const dataMapForType = type in initialDataMap
     ? initialDataMap[type]
     : {}
@@ -55,11 +56,11 @@ export const createDataRemapper = initialDataMap => (type, data) => {
       : key
     remappedData[mappedKey] = data[key]
     // TODO: Mutating passed object. Used a cloned copy or do another way
-    delete data[key]
+    delete clonedData[key]
   }
 
   return {
-    ...data,
+    ...clonedData,
     ...remappedData
   }
 }
@@ -67,7 +68,7 @@ export const createDataRemapper = initialDataMap => (type, data) => {
 export const toInterfaceData = (...args) => {
   if (typeof args[1] !== 'object' || isArray(args[1])) return args[1]
 
-  const results = createDataRemapper(toZomeKeyMap)(...args)
+  const results = createDataRemapper(toInterfaceKeyMap)(...args)
 
   return {
     ...interfaceDefaultAttribsMap()[args[0]],

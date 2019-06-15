@@ -1,11 +1,11 @@
-import { toUiKeyMap, toUiQuerySet, toZomeData, toUiData } from './dataMapping'
+import { toUiKeyMap, toUiQuerySet, toInterfaceData, toUiData } from './dataMapping'
 
 const uiData = {
   id: 'idhash',
   avatarUrl: 'avatarUrlthing'
 }
 
-const zomeData = {
+const interfaceData = {
   agent_id: 'idhash',
   avatar_url: 'avatarUrlthing'
 }
@@ -15,13 +15,13 @@ const resultDataset = [
   { 2: 'test' }
 ]
 
-it('toZomeData should match snapshot', () => {
+it('toInterfaceData should match snapshot', () => {
 
-  expect(toZomeData('person', uiData)).toMatchSnapshot()
+  expect(toInterfaceData('person', uiData)).toMatchSnapshot()
 })
 
 it('toUiData should match snapshot', () => {
-  expect(toUiData('person', zomeData)).toMatchSnapshot()
+  expect(toUiData('person', interfaceData)).toMatchSnapshot()
 })
 
 it('toUiQuerySet should match snapshot', () => {

@@ -1,4 +1,4 @@
-import zomeInterface from './zomeInterface'
+import HyloDnaInterface from './HyloDnaInterface'
 import {
   toUiData,
   toUiQuerySet,
@@ -8,51 +8,51 @@ import {
 export const resolvers = {
   Mutation: {
     async registerUser (_, userData) {
-      return dataMappedCall('person', userData, zomeInterface.currentUser.create)
+      return dataMappedCall('person', userData, HyloDnaInterface.currentUser.create)
     },
 
     async createCommunity (_, { data: communityData }) {
-      return dataMappedCall('community', communityData, zomeInterface.communities.create)
+      return dataMappedCall('community', communityData, HyloDnaInterface.communities.create)
     },
 
     async createPost (_, { data: postData }) {
-      return dataMappedCall('post', postData, zomeInterface.posts.create)
+      return dataMappedCall('post', postData, HyloDnaInterface.posts.create)
     },
 
     async createComment (_, { data: commentData }) {
-      return dataMappedCall('comment', commentData, zomeInterface.comments.create)
+      return dataMappedCall('comment', commentData, HyloDnaInterface.comments.create)
     },
 
     async findOrCreateThread (_, { data: { participantIds } }) {
-      return dataMappedCall('messageThread', participantIds, zomeInterface.messageThreads.create)
+      return dataMappedCall('messageThread', participantIds, HyloDnaInterface.messageThreads.create)
     },
 
     async createMessage (_, { data: messageData }) {
-      return dataMappedCall('message', messageData, zomeInterface.messages.create)
+      return dataMappedCall('message', messageData, HyloDnaInterface.messages.create)
     }
   },
 
   Query: {
     async me () {
-      return toUiData('person', await zomeInterface.currentUser.get())
+      return toUiData('person', await HyloDnaInterface.currentUser.get())
     },
 
     async communities () {
-      const communities = await zomeInterface.communities.all()
+      const communities = await HyloDnaInterface.communities.all()
 
       return communities.map(community => toUiData('community', community))
     },
 
     async community (_, { slug }) {
-      return toUiData('community', await zomeInterface.communities.getBySlug(slug))
+      return toUiData('community', await HyloDnaInterface.communities.getBySlug(slug))
     },
 
     async post (_, { id }) {
-      return toUiData('post', await zomeInterface.posts.get(id))
+      return toUiData('post', await HyloDnaInterface.posts.get(id))
     },
 
     async people () {
-      const people = await zomeInterface.people.all()
+      const people = await HyloDnaInterface.people.all()
 
       return toUiQuerySet(people.map(person =>
         toUiData('person', person)
@@ -60,19 +60,19 @@ export const resolvers = {
     },
 
     async messageThread (_, { id }) {
-      return toUiData('messageThread', await zomeInterface.messageThreads.get(id))
+      return toUiData('messageThread', await HyloDnaInterface.messageThreads.get(id))
     }
   },
 
   Comment: {
     async creator ({ creator }) {
-      return toUiData('person', await zomeInterface.people.get(creator))
+      return toUiData('person', await HyloDnaInterface.people.get(creator))
     }
   },
 
   Community: {
     async posts ({ id }) {
-      const posts = await zomeInterface.posts.all(id)
+      const posts = await HyloDnaInterface.posts.all(id)
 
       return toUiQuerySet(posts.map(post =>
         toUiData('post', post)
@@ -82,7 +82,7 @@ export const resolvers = {
 
   Me: {
     async messageThreads () {
-      const messageThreads = await zomeInterface.messageThreads.all()
+      const messageThreads = await HyloDnaInterface.messageThreads.all()
 
       return toUiQuerySet(messageThreads.map(messageThread =>
         toUiData('messageThread', messageThread)
@@ -92,13 +92,13 @@ export const resolvers = {
 
   Message: {
     async creator ({ creator }) {
-      return toUiData('person', await zomeInterface.people.get(creator))
+      return toUiData('person', await HyloDnaInterface.people.get(creator))
     }
   },
 
   MessageThread: {
     async messages ({ id }) {
-      const messages = await zomeInterface.messages.all(id)
+      const messages = await HyloDnaInterface.messages.all(id)
 
       return toUiQuerySet(messages.map(message =>
         toUiData('message', message)
@@ -113,16 +113,16 @@ export const resolvers = {
   Post: {
     async communities ({ communityId }) {
       return [
-        toUiData('community', await zomeInterface.communities.get(communityId))
+        toUiData('community', await HyloDnaInterface.communities.get(communityId))
       ]
     },
 
     async creator ({ creator }) {
-      return toUiData('person', await zomeInterface.people.get(creator))
+      return toUiData('person', await HyloDnaInterface.people.get(creator))
     },
 
     async comments ({ id }) {
-      const zomeComments = await zomeInterface.comments.all(id)
+      const zomeComments = await HyloDnaInterface.comments.all(id)
 
       return toUiQuerySet(zomeComments.map(comment =>
         toUiData('comment', comment)
@@ -130,13 +130,13 @@ export const resolvers = {
     },
 
     async commenters ({ id }) {
-      const comments = await zomeInterface.comments.all(id)
+      const comments = await HyloDnaInterface.comments.all(id)
       const commenterAddresses = []
       const commenters = await Promise.all(comments.map(({ creator }) => {
         if (commenterAddresses.includes(creator)) return null
         commenterAddresses.push(creator)
 
-        return zomeInterface.people.get(creator)
+        return HyloDnaInterface.people.get(creator)
       }))
 
       return commenters
@@ -145,7 +145,7 @@ export const resolvers = {
     },
 
     async commentersTotal ({ id }) {
-      const comments = await zomeInterface.comments.all(id)
+      const comments = await HyloDnaInterface.comments.all(id)
       const commenterAddresses = comments.map(comment => comment.creator)
 
       return new Set(commenterAddresses).size

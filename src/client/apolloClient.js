@@ -11,7 +11,7 @@ import schema from '../graphql-server'
 const link = ApolloLink.from([
   apolloLogger,
   new RetryLink(),
-  HOLOCHAIN_USE_LOCAL_RESOLVERS
+  HOLOCHAIN_USE_LOCAL_RESOLVERS && HOLOCHAIN_ACTIVE
     ? new SchemaLink({ schema })
     : new HolochainWebSocketLink({
       // * Ignore our hardcoded URI unless a Holochain build
