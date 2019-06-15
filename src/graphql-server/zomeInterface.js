@@ -2,140 +2,74 @@ import { createZomeCall } from './holochainClient'
 
 export const zomeInterface = {
   comments: {
-    all: async base => {
-      const addresses = await createZomeCall('comments/get_comments')({ base }) || []
+    all: base => createZomeCall('comments/all_for_base')({ base }) || [],
 
-      return Promise.all(
-        addresses.map(address => zomeInterface.comments.get(address))
-      )
-    },
+    get: address => createZomeCall('comments/get')({ address }),
 
-    get: async address => {
-      return {
-        address,
-        ...await createZomeCall('comments/get_comment')({ address })
-      }
-    },
-
-    create: async comment => {
-      const address = await createZomeCall('comments/create_comment')({ comment })
-      const newComment = await zomeInterface.comments.get(address)
-
-      return {
-        address,
-        post: newComment.base,
-        creator: newComment.creator
-      }
-    }
+    create: createZomeCall('comments/create')
   },
 
   communities: {
-    all: async () => {
-      const addresses = await createZomeCall('community/get_communities')()
+    all: createZomeCall('communities/all'),
 
-      return Promise.all(
-        addresses.map(address => zomeInterface.communities.get(address))
-      )
-    },
+    get: address => createZomeCall('communities/get')({ address }),
 
-    get: async address => {
-      return {
-        address,
-        ...await createZomeCall('community/get_community')({ address })
-      }
-    },
+    getBySlug: slug => createZomeCall('communities/get_by_slug')({ slug }),
 
-    getBySlug: async slug => {
-      const address = await createZomeCall('community/get_community_address_by_slug')({ slug })
-
-      return {
-        address,
-        ...await createZomeCall('community/get_community')({ address })
-      }
-    },
-
-    create: async community => {
-      const address = await createZomeCall('community/create_community')(community)
-
-      return zomeInterface.communities.get(address)
-    }
+    create: createZomeCall('communities/create')
   },
 
   currentUser: {
     create: async user => {
-      const agentId = await createZomeCall('identity/register_user')(user)
-
       return {
-        ...await zomeInterface.people.get(agentId),
+        ...await createZomeCall('people/register_user')(user),
         isRegistered: true
       }
     },
 
     get: async () => {
-      const agentId = await createZomeCall('identity/get_me')()
-
       return {
-        ...await zomeInterface.people.get(agentId),
-        isRegistered: await createZomeCall('identity/is_registered')()
+        ...await createZomeCall('people/get_me')(),
+        isRegistered: await createZomeCall('people/is_registered')()
       }
     }
   },
 
   messages: {
-    all: async (address) => {
-      const addresses = await createZomeCall('chat/get_thread_messages')({ thread_addr: address })
-      return Promise.all(
-        addresses.map(async address => zomeInterface.messages.get(address))
-      )
-    },
+    all: address => createZomeCall('messages/get_thread_messages')({ thread_address: address }),
 
-    get: async (address) => {
-      return {
-        address,
-        ...await createZomeCall('chat/get_message')({ message_addr: address })
-      }
-    },
+    get: address => createZomeCall('messages/get')({ message_addr: address }),
 
-    create: async (message) => {
-      const address = await createZomeCall('chat/post_message_to_thread')(message)
-      const creator = await createZomeCall('identity/get_me')()
-
-      return {
-        address,
-        creator,
-        ...message
-      }
-    }
+    create: createZomeCall('messages/create')
   },
 
   messageThreads: {
     all: async () => {
-      const addresses = await createZomeCall('chat/get_my_threads')()
+      const addresses = await createZomeCall('messages/get_threads')()
 
-      return Promise.all(addresses.map(async messageThreadAddress =>
-        zomeInterface.messageThreads.get(messageThreadAddress)
+      return Promise.all(addresses.map(
+        messageThreadAddress => zomeInterface.messageThreads.get(messageThreadAddress)
       ))
     },
 
-    get: async (address) => {
+    get: async address => {
       return {
         address,
-        participants: await zomeInterface.messageThreads.__getMessageThreadParticipants(address)
+        participants: await zomeInterface.messageThreads.__getParticipants(address)
       }
     },
 
-    create: async (participantAddresses) => {
-      const address = await createZomeCall('chat/get_or_create_thread')({ participant_ids: participantAddresses })
+    create: async participantAddresses => {
+      const address = await createZomeCall('messages/create_thread')({ participant_ids: participantAddresses })
 
       return {
         address,
-        participants: await zomeInterface.messageThreads.__getMessageThreadParticipants(address)
+        participants: await zomeInterface.messageThreads.__getParticipants(address)
       }
     },
 
-    // TODO: move this to it's own domain or MAYBE put it as a graphql field resolver instead
-    __getMessageThreadParticipants: async (address) => {
-      const participantAddresses = await createZomeCall('chat/get_thread_participants')({ thread_addr: address })
+    __getParticipants: async address => {
+      const participantAddresses = await createZomeCall('messages/get_participants')({ thread_address: address })
 
       return Promise.all(participantAddresses.map(
         async participantAddress => zomeInterface.people.get(participantAddress)
@@ -144,61 +78,17 @@ export const zomeInterface = {
   },
 
   people: {
-    all: async () => {
-      const addresses = await createZomeCall('identity/get_people')()
+    all: createZomeCall('people/all'),
 
-      return Promise.all(
-        addresses.map(address => zomeInterface.people.get(address))
-      )
-    },
-
-    get: async agentId => {
-      return {
-        agent_id: agentId,
-        ...await createZomeCall('identity/get_identity')({ agent_id: agentId })
-      }
-    }
+    get: agentId => createZomeCall('people/get')({ agent_id: agentId })
   },
 
   posts: {
-    all: async base => {
-      const addresses = await createZomeCall('posts/get_posts')({ base })
+    all: base => createZomeCall('posts/all_for_base')({ base }),
 
-      return Promise.all(
-        addresses.map(address => zomeInterface.posts.get(address))
-      )
-    },
+    get: address => createZomeCall('posts/get')({ address }),
 
-    get: async address => {
-      const post = await createZomeCall('posts/get_post')({ address })
-
-      return {
-        address,
-        ...post
-      }
-    },
-
-    create: async post => {
-      const base = await createZomeCall('community/get_community_address_by_slug')({
-        slug: post.communitySlug
-      })
-      const address = await createZomeCall('posts/create_post')({
-        base,
-        ...post
-      })
-
-      return {
-        base,
-        address,
-        ...post,
-        // TODO: fix this
-        community: {
-          slug: post.communitySlug,
-          address: base
-        }
-      }
-    }
-
+    create: createZomeCall('posts/create')
   }
 }
 

@@ -1,51 +1,34 @@
 import zomeInterface from './zomeInterface'
 import {
-  toZomeData,
   toUiData,
-  toUiQuerySet
+  toUiQuerySet,
+  dataMappedCall
 } from './dataMapping'
 
 export const resolvers = {
   Mutation: {
     async registerUser (_, userData) {
-      const zomeUserData = toZomeData('person', userData)
-      const registeredUser = await zomeInterface.currentUser.create(zomeUserData)
-
-      return toUiData('person', registeredUser)
+      return dataMappedCall('person', userData, zomeInterface.currentUser.create)
     },
 
     async createCommunity (_, { data: communityData }) {
-      const zomeCommunityData = toZomeData('community', communityData)
-      const newCommunity = zomeInterface.communities.create(zomeCommunityData)
-
-      return toUiData('community', newCommunity)
+      return dataMappedCall('community', communityData, zomeInterface.communities.create)
     },
 
     async createPost (_, { data: postData }) {
-      const zomePostData = toZomeData('post', postData)
-      const newPost = await zomeInterface.posts.create(zomePostData)
-
-      return toUiData('post', newPost)
+      return dataMappedCall('post', postData, zomeInterface.posts.create)
     },
 
     async createComment (_, { data: commentData }) {
-      const zomeCommentData = toZomeData('comment', commentData)
-      const newComment = await zomeInterface.comments.create(zomeCommentData)
-
-      return toUiData('comment', newComment)
+      return dataMappedCall('comment', commentData, zomeInterface.comments.create)
     },
 
     async findOrCreateThread (_, { data: { participantIds } }) {
-      const messageThread = await zomeInterface.messageThreads.create(participantIds)
-
-      return toUiData('messageThread', messageThread)
+      return dataMappedCall('messageThread', participantIds, zomeInterface.messageThreads.create)
     },
 
     async createMessage (_, { data: messageData }) {
-      const zomeMessageData = toZomeData('message', messageData)
-      const newMessage = await zomeInterface.messages.create(zomeMessageData)
-
-      return toUiData('message', newMessage)
+      return dataMappedCall('message', messageData, zomeInterface.messages.create)
     }
   },
 
@@ -71,7 +54,9 @@ export const resolvers = {
     async people () {
       const people = await zomeInterface.people.all()
 
-      return toUiQuerySet(people.map(person => toUiData('person', person)))
+      return toUiQuerySet(people.map(person =>
+        toUiData('person', person)
+      ))
     },
 
     async messageThread (_, { id }) {
@@ -89,7 +74,9 @@ export const resolvers = {
     async posts ({ id }) {
       const posts = await zomeInterface.posts.all(id)
 
-      return toUiQuerySet(posts.map(post => toUiData('post', post)))
+      return toUiQuerySet(posts.map(post =>
+        toUiData('post', post)
+      ))
     }
   },
 
@@ -97,11 +84,9 @@ export const resolvers = {
     async messageThreads () {
       const messageThreads = await zomeInterface.messageThreads.all()
 
-      return toUiQuerySet(
-        messageThreads.map(messageThread => {
-          return toUiData('messageThread', messageThread)
-        })
-      )
+      return toUiQuerySet(messageThreads.map(messageThread =>
+        toUiData('messageThread', messageThread)
+      ))
     }
   },
 
@@ -115,7 +100,9 @@ export const resolvers = {
     async messages ({ id }) {
       const messages = await zomeInterface.messages.all(id)
 
-      return toUiQuerySet(messages.map(message => toUiData('message', message)))
+      return toUiQuerySet(messages.map(message =>
+        toUiData('message', message)
+      ))
     },
 
     async participants ({ participants }) {
@@ -124,9 +111,9 @@ export const resolvers = {
   },
 
   Post: {
-    async communities ({ base }) {
+    async communities ({ communityId }) {
       return [
-        toUiData('community', await zomeInterface.communities.get(base))
+        toUiData('community', await zomeInterface.communities.get(communityId))
       ]
     },
 
@@ -137,7 +124,9 @@ export const resolvers = {
     async comments ({ id }) {
       const zomeComments = await zomeInterface.comments.all(id)
 
-      return toUiQuerySet(zomeComments.map(comment => toUiData('comment', comment)))
+      return toUiQuerySet(zomeComments.map(comment =>
+        toUiData('comment', comment)
+      ))
     },
 
     async commenters ({ id }) {

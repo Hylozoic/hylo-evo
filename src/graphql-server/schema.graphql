@@ -106,7 +106,7 @@ input PostInput {
   title: String
   details: String
   type: String
-  communitySlug: String
+  communityId: String
   createdAt: String
 }
 

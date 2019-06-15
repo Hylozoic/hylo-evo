@@ -1,8 +1,8 @@
-import { invert } from 'lodash/fp'
+import { invert, isArray } from 'lodash/fp'
 import { currentDateString } from 'util/holochain'
 
-// Data mapping, zome <> Hylo UI
-export const zomeDefaultAttribsMap = () => ({
+// Data mapping, interface <> Hylo UI
+export const interfaceDefaultAttribsMap = () => ({
   post: {
     announcement: false,
     timestamp: currentDateString()
@@ -22,7 +22,8 @@ export const toZomeKeyMap = {
     'avatarUrl': 'avatar_url'
   },
   post: {
-    'type': 'post_type'
+    'type': 'post_type',
+    'communityId': 'base'
   },
   person: {
     'id': 'agent_id'
@@ -32,7 +33,7 @@ export const toZomeKeyMap = {
     'creator': 'agent_id'
   },
   message: {
-    'messageThreadId': 'thread_addr'
+    'messageThreadId': 'thread_address'
   }
 }
 
@@ -63,11 +64,13 @@ export const createDataRemapper = initialDataMap => (type, data) => {
   }
 }
 
-export const toZomeData = (...args) => {
+export const toInterfaceData = (...args) => {
+  if (typeof args[1] !== 'object' || isArray(args[1])) return args[1]
+
   const results = createDataRemapper(toZomeKeyMap)(...args)
 
   return {
-    ...zomeDefaultAttribsMap()[args[0]],
+    ...interfaceDefaultAttribsMap()[args[0]],
     ...results
   }
 }
@@ -86,3 +89,10 @@ export const toUiQuerySet = results => ({
   items: results,
   hasMore: false
 })
+
+export async function dataMappedCall (entityType, inputData, interfaceFunc) {
+  const interfaceData = toInterfaceData(entityType, inputData)
+  const interfaceResult = await interfaceFunc(interfaceData)
+
+  return toUiData(entityType, interfaceResult)
+}
