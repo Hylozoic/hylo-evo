@@ -32,6 +32,7 @@ describe('PeopleSelector', () => {
     let input
     let setPeopleSearch
     let wrapper
+    let peopleSelectorComponent
 
     beforeEach(() => {
       fetchPeople = jest.fn()
@@ -49,7 +50,8 @@ describe('PeopleSelector', () => {
             matchingPeople={[ { id: '1' }, { id: '2' } ]} />
         </MemoryRouter>
       )      
-      wrapper.find(PeopleSelector).instance().setState({ currentMatch: { id: '1' } })
+      peopleSelectorComponent = wrapper.find(PeopleSelector)
+      peopleSelectorComponent.instance().setState({ currentMatch: { id: '1' } })
       input = wrapper.find('input').first()
     })
 
@@ -63,13 +65,13 @@ describe('PeopleSelector', () => {
       expect(fetchPeople).toHaveBeenCalled()
     })
 
-    it('removes participant if backspace pressed when currentMatch missing', () => {
-      wrapper.find(PeopleSelector).instance().setState({ currentMatch: null })
+    it('removes participant if backspace pressed when autocompleteInput is empty', () => {
       input.simulate('keyDown', { keyCode: keyMap.BACKSPACE })
       expect(removePerson).toHaveBeenCalled()
     })
 
-    it('does not remove participant if backspace pressed when currentMatch defined', () => {
+    it('does not remove participant if backspace pressed when autocompleteInput is not empty', () => {
+      peopleSelectorComponent.instance().autocompleteInput.current.value = 'not empty'
       input.simulate('keyDown', { keyCode: keyMap.BACKSPACE })
       expect(removePerson).not.toHaveBeenCalled()
     })
