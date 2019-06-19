@@ -5,7 +5,7 @@ import { get } from 'lodash/fp'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import { setConfirmBeforeClose } from './FullPageModal.store'
 
-export function mapStateToProps (state, props) {  
+export function mapStateToProps (state, props) {
   return {
     confirmMessage: get('FullPageModal.confirm', state),
     previousLocation: getPreviousLocation(state)

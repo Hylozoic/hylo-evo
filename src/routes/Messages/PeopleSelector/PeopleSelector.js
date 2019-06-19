@@ -84,7 +84,7 @@ export default class PeopleSelector extends React.Component {
 
   onKeyDown (evt) {
     switch (getKeyCode(evt)) {
-      case keyMap.BACKSPACE: return this.state.currentMatch ? null : this.removePerson()
+      case keyMap.BACKSPACE: return this.autocompleteInput.current.value ? null : this.removePerson()
       case keyMap.UP: return this.arrow('up', evt)
       case keyMap.DOWN: return this.arrow('down', evt)
       case keyMap.COMMA:
