@@ -9,8 +9,8 @@ class ExampleContainer extends React.Component {
       { id: 'tag2', label: 'tag 2', avatarUrl: 'https://www.xat.com/web_gear/chat/av/45.png' }
     ],
     suggestions: [
-      { id: 1,  name: 'suggestion 1', isError: true },
-      { id: 2,  name: 'suggestion 2', isError: false }
+      { id: 1, name: 'suggestion 1', isError: true },
+      { id: 2, name: 'suggestion 2', isError: false }
     ]
   }
   handleDelete = nodeToDelete => {

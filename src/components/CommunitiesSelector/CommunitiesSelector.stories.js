@@ -10,7 +10,7 @@ class ExampleCommunitiesSelector extends React.Component {
       { id: 3, name: "McDonal's" },
       { id: 4, name: 'StarBucks' }
     ],
-    selected:[]
+    selected: []
   }
   onChange = arraySelected => {
     this.setState({
