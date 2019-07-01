@@ -125,6 +125,9 @@ export const contacts = graphql(HolochainPeopleQuery, {
           person.name.toLowerCase().includes(contactsSearch.toLowerCase())))
         : []
     }
+  },
+  options: {
+    pollInterval: HOLOCHAIN_POLL_INTERVAL_SLOW
   }
 })
 

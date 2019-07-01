@@ -28,6 +28,7 @@ export function mapStateToProps (state, props) {
 export const posts = graphql(HolochainCommunityQuery, {
   props: ({ data: { community, loading } }) => {
     const posts = get('posts.items', community)
+
     return {
       posts: orderBy('createdAt', 'desc', posts),
       pending: loading

@@ -58,7 +58,7 @@ export class HolochainWebSocketLink extends ApolloLink {
         const ok = get('Ok', jsonResult)
 
         if (error) {
-          throw new Error(`error: ${JSON.parse(error)}`)
+          throw error
         }
 
         if (!ok) {
@@ -91,7 +91,7 @@ export class HolochainWebSocketLink extends ApolloLink {
       } catch (error) {
         if (this.params.logging) {
           console.log(
-            '👎 Holochain graphql operation error -- ', error.toString(),
+            '👎 Holochain graphql operation error -- ', error,
             {
               query: graphqlToString(operation.query || operation.mutation),
               variables: operation.variables,
