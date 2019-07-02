@@ -31,4 +31,6 @@ class ExampleCommunitiesSelector extends React.Component {
 storiesOf('CommunitiesSelector', module)
   .add('show', () => (
     <ExampleCommunitiesSelector />
-  ))
+  ),
+  {notes:'Realiza una busqueda de las comunidades, agrega las comunidades seleccionadas o descarta alguna'}
+  )
