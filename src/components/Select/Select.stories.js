@@ -24,7 +24,9 @@ const options = [
 storiesOf('Select', module)
   .add('basic', () => (
     <Select options={options} />
-  ))
+  ),
+  {notes: 'Select form with 4 label options. Come whit normal, full width and placeholder size'}
+  )
   .add('full width', () => (
     <Select options={options} fullWidth />
   ))

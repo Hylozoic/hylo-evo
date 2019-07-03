@@ -29,4 +29,6 @@ storiesOf('DropdownButton', module)
         ]
       }
     />
-  ))
+  ),
+  { notes: 'A dropdown menu, but in this cases is a button and not a label' }
+  )

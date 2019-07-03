@@ -7,7 +7,9 @@ storiesOf('SettingsControl', module)
     <SettingsControl
       type='text'
     />
-  ))
+  ),
+  {notes: 'Various types of input: text, password, textarea and text with label input'}
+  )
   .add('input password', () => (
     <SettingsControl
       type='password'

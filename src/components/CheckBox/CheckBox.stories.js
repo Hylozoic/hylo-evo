@@ -5,7 +5,9 @@ import CheckBox from './CheckBox'
 storiesOf('Checkbox', module)
   .add('simple', () => (
     <CheckBox />
-  ))
+  ),
+  { notes: 'Simple Checkbox button with and without label the component' }
+  )
   .add('checked', () => (
     <CheckBox checked />
   ))

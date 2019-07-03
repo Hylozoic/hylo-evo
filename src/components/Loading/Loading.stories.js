@@ -11,7 +11,9 @@ storiesOf('Loading', module)
         {story()}
       </>
     </MemoryRouter>
-  ))
+  ),
+  { notes: 'A loading icon' }
+  )
   .add('Full screen', () =>
     <Loading type='fullscreen' />
   )

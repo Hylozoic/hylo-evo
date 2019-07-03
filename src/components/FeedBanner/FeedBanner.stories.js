@@ -27,4 +27,6 @@ storiesOf('FeedBanner', module)
       community
       currentUserHasMemberships
     />
-  ))
+  ),
+  {notes: 'A feed banner whit different desings. They are three: for all communities, one community and whit user membership'}
+  )

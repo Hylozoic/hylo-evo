@@ -24,4 +24,6 @@ class ExampleSimpleTabBar extends React.Component {
 storiesOf('SimpleTabBar', module)
   .add('show', () => (
     <ExampleSimpleTabBar />
-  ))
+  ),
+  {notes: 'A simple tab bar with three texts'}
+  )

@@ -38,7 +38,7 @@ storiesOf('Dropdown', module)
       }
     />
   ),
-  { notes }
+  { notes: 'A dropdown menu with a optional tirangular pointer and 3 items' }
   )
   .add('triangular pointer', () => (
     <Dropdown

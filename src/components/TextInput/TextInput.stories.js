@@ -13,7 +13,10 @@ storiesOf('TextInput', module)
     </MemoryRouter>
   ))
   .add('Show', () =>
-    <TextInput onChange={() => {}} value={'Here is some text'} />
+    (
+      <TextInput onChange={() => {}} value={'Here is some text'} />
+    ),
+    { notes: 'Text input with clear button, loading icon and aria-labelfor accessibility' }
   )
   .add('Loading', () =>
     <TextInput loading='true' onChange={() => {}} value={'Here is some other text, with a loading icon!'} />
