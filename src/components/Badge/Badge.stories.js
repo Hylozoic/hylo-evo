@@ -1,6 +1,5 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { MemoryRouter } from 'react-router'
 import Badge from 'components/Badge'
 
 const props = {
@@ -10,9 +9,6 @@ const props = {
 }
 
 storiesOf('Badge', module)
-  .addDecorator(story => (
-    <MemoryRouter>{story()}</MemoryRouter>
-  ))
   .add('Basic', () =>
     <Badge {...props} />
   )
