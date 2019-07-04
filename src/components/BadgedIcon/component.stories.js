@@ -1,10 +1,11 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import component from './component'
+import BadgedIcon from './component'
 
 storiesOf('BadgedIcon', module)
-.add('show', () => (
-<component />
-),
-{ notes: 'Simple "All Feeds" icon' }
-)
+  .add('show',
+    () => (
+      <BadgedIcon />
+    ),
+    { notes: 'Simple "All Feeds" icon' }
+  )

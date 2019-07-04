@@ -25,5 +25,5 @@ storiesOf('SimpleTabBar', module)
   .add('show', () => (
     <ExampleSimpleTabBar />
   ),
-  {notes: 'A simple tab bar with three texts'}
+  { notes: 'A simple tab bar with three texts' }
   )

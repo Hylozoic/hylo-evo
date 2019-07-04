@@ -12,18 +12,19 @@ storiesOf('TextInput', module)
       </>
     </MemoryRouter>
   ))
-  .add('Show', () =>
-    (
-      <TextInput onChange={() => {}} value={'Here is some text'} />
-    ),
+  .add('Show',
+    () => <TextInput onChange={() => {}} value={'Here is some text'} />,
     { notes: 'Text input with clear button, loading icon and aria-labelfor accessibility' }
   )
-  .add('Loading', () =>
-    <TextInput loading='true' onChange={() => {}} value={'Here is some other text, with a loading icon!'} />
+  .add('Loading',
+    () => <TextInput loading='true' onChange={() => {}} value={'Here is some other text, with a loading icon!'} />,
+    { notes: 'with loading button' }
   )
-  .add('Without clear button', () =>
-    <TextInput noClearButton='true' onChange={() => {}} value={'Here is some other text, without clear button.'} />
+  .add('Without clear button',
+    () => <TextInput noClearButton='true' onChange={() => {}} value={'Here is some other text, without clear button.'} />,
+    { notes: 'without "clear" button' }
   )
-  .add('With accessibility label', () =>
-    <TextInput label='accessibility label' onChange={() => {}} value={'This one includes an aria-labelfor accessibility'} />
+  .add('With accessibility label',
+    () => <TextInput label='accessibility label' onChange={() => {}} value={'This one includes an aria-labelfor accessibility'} />,
+    { notes: 'accessibility message using the "label" prop' }
   )

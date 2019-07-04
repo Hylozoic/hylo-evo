@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react'
 import RemovableListItem from './RemovableListItem'
 
 class ExampleRemoveItem extends React.Component {
-
   state = {
     items: [
       { id: 1, name: 'item1' },

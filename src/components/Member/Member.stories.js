@@ -6,23 +6,24 @@ import Member from './Member'
 storiesOf('Member', module)
   .addDecorator(story => (
     <MemoryRouter>
-                <>
-                  <br />
-                  {story()}
-                </>
+      <>
+        <br />
+        {story()}
+      </>
     </MemoryRouter>
   ))
-  .add('show', () => (
-    <Member
-      member={{
-        id: 'one',
-        name: 'Batman',
-        location: 'Gotham'
-      }}
-      goToPerson={(id, slug) => {}}
-    />
-  ),
-  {notes: 'A menber profile view with the avatar, skills, tagline and option'}
+  .add('show',
+    () => (
+      <Member
+        member={{
+          id: 'one',
+          name: 'Batman',
+          location: 'Gotham'
+        }}
+        goToPerson={(id, slug) => {}}
+      />
+    ),
+    { notes: 'A menber profile view with the avatar, skills, tagline and option' }
   )
   .add('Avatar', () => (
     <Member

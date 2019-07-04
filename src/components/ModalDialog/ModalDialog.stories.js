@@ -14,7 +14,7 @@ storiesOf('ModalDialog', module)
   .add('show', () => (
     <ModalDialog />
   ),
-  {notes: "A modal dialog whit custom title, background image, notification format, cancel and submit button. Also has a view without title"}
+  { notes: 'A modal dialog whit custom title, background image, notification format, cancel and submit button. Also has a view without title' }
   )
   .add('with custom title', () => (
     <ModalDialog modalTitle='An Interesting Title' />

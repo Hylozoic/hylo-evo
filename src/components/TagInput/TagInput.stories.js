@@ -42,9 +42,7 @@ class ExampleContainer extends React.Component {
   }
 }
 
-storiesOf('TagInput', module)
-  .add('basic', () => 
-  (<ExampleContainer />),
-  { notes: 'Input with add-on tags and button to remove them. It also has suggestions.' }
-  )
+const notes = 'Input with add-on tags and button to remove them. It also has suggestions.'
 
+storiesOf('TagInput', module)
+  .add('basic', () => <ExampleContainer />, { notes })
