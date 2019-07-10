@@ -8,7 +8,14 @@ const props = {
   onClick: () => {}
 }
 
+const notes = `
+Red badge intended to display a number
+`
+
 storiesOf('Badge', module)
-  .add('Basic', () =>
-    <Badge {...props} />
+  .add('Basic',
+    () => (
+      <Badge {...props} />
+    ),
+    { notes }
   )

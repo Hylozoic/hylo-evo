@@ -7,7 +7,7 @@ class ExampleCommunitiesSelector extends React.Component {
     options: [
       { id: 1, name: 'KFC' },
       { id: 2, name: 'Arturo' },
-      { id: 3, name: "McDonal's" },
+      { id: 3, name: "McDonald's" },
       { id: 4, name: 'StarBucks' }
     ],
     selected: []
@@ -32,5 +32,5 @@ storiesOf('CommunitiesSelector', module)
   .add('show', () => (
     <ExampleCommunitiesSelector />
   ),
-  { notes: 'Realiza una busqueda de las comunidades, agrega las comunidades seleccionadas o descarta alguna' }
+  { notes: "Search communities, add the selected ones or discard some. The suggestions are KFC, Arturo, McDonald's and StarBucks" }
   )
