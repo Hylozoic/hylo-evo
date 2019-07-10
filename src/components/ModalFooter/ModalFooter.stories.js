@@ -9,7 +9,7 @@ storiesOf('ModalFooter', module)
         <ModalFooter continueText='next' />
       </div>
     ),
-    { notes: 'Ventana Modal de footer normal' }
+    { notes: 'default footer' }
   )
   .add('without previous option',
     () => (
