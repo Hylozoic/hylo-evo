@@ -3,20 +3,18 @@ import { storiesOf } from '@storybook/react'
 import { MemoryRouter } from 'react-router'
 import Dropdown from './Dropdown'
 
-const notes = ''
-
 storiesOf('Dropdown', module)
   .addDecorator(story => (
     <MemoryRouter>
-                <>
-                  <br />
-                  {story()}
-                </>
+      <>
+        <br />
+        {story()}
+      </>
     </MemoryRouter>
   ))
   .add('show', () => (
     <Dropdown
-      toggleChildren='Dropdown'
+      toggleChildren='Click Here'
       items={
         [
           {
@@ -38,11 +36,11 @@ storiesOf('Dropdown', module)
       }
     />
   ),
-  { notes: 'A dropdown menu with a optional tirangular pointer and 3 items' }
+  { notes: 'A dropdown menu with 3 items' }
   )
   .add('triangular pointer', () => (
     <Dropdown
-      toggleChildren='Dropdown'
+      toggleChildren='Click Here'
       items={
         [
           {
@@ -60,5 +58,5 @@ storiesOf('Dropdown', module)
       triangle
     />
   ),
-  { notes }
+  { notes: 'A dropdown menu with an optional tirangular pointer and 3 items' }
   )

@@ -11,7 +11,7 @@ storiesOf('ModalFooter', module)
     ),
     { notes: 'Ventana Modal de footer normal' }
   )
-  .add('without option previous',
+  .add('without previous option',
     () => (
       <div style={{ height: '10rem', backgroundColor: 'gray' }}>
         <ModalFooter
@@ -20,5 +20,5 @@ storiesOf('ModalFooter', module)
         />
       </div>
     ),
-    { notes: 'Ventana Modal de footer sin opcion de previous' }
+    { notes: 'without previous option' }
   )

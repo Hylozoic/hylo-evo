@@ -12,21 +12,28 @@ storiesOf('FeedBanner', module)
       </>
     </MemoryRouter>
   ))
-  .add('for all communities', () => (
-    <FeedBanner all />
-  ))
-  .add('community', () => (
-    <FeedBanner community />
-  ))
-  .add('with user membership', () => (
-    <FeedBanner
-      currentUser={{
-        firstName: () => 'Philip',
-        avatarUrl: 'https://avatars3.githubusercontent.com/u/5264862?s=40&v=4'
-      }}
-      community
-      currentUserHasMemberships
-    />
-  ),
-  { notes: 'A feed banner whit different desings. They are three: for all communities, one community and whit user membership' }
+  .add('for all communities',
+    () => (
+      <FeedBanner all />
+    ),
+    { notes: 'A feed banner whit different desings. They are three: for all communities, one community and whit user membership' }
+  )
+  .add('community',
+    () => (
+      <FeedBanner community />
+    ),
+    { notes: 'A feed banner whit different desings. They are three: for all communities, one community and whit user membership' }
+  )
+  .add('with user membership',
+    () => (
+      <FeedBanner
+        currentUser={{
+          firstName: () => 'Philip',
+          avatarUrl: 'https://avatars3.githubusercontent.com/u/5264862?s=40&v=4'
+        }}
+        community
+        currentUserHasMemberships
+      />
+    ),
+    { notes: 'A feed banner whit different desings. They are three: for all communities, one community and whit user membership' }
   )
