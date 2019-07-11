@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import SendAnnouncementModal from './SendAnnouncementModal'
 
 storiesOf('SendAnnouncementModal', module)
-  .add('show',
+  .add('basic',
     () => (
       <SendAnnouncementModal
         communities={
@@ -21,9 +21,9 @@ storiesOf('SendAnnouncementModal', module)
         communityCount={0}
       />
     ),
-    { notes: 'Modal for send announcement for one or more communities' }
+    { notes: 'Modal to send announcement to one or more communities' }
   )
-  .add('One communitie',
+  .add('One community',
     () => (
       <SendAnnouncementModal
         communities={
@@ -41,7 +41,7 @@ storiesOf('SendAnnouncementModal', module)
         communityCount={1}
       />
     ),
-    { notes: 'Case for one communitie' }
+    { notes: 'Case for one community' }
   )
   .add('Two communities',
     () => (

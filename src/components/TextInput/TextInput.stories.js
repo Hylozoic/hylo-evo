@@ -25,6 +25,6 @@ storiesOf('TextInput', module)
     { notes: 'without "clear" button' }
   )
   .add('With accessibility label',
-    () => <TextInput label='accessibility label' onChange={() => {}} value={'This one includes an aria-labelfor accessibility'} />,
+    () => <TextInput label='accessibility label' onChange={() => {}} value={'This one includes an aria-label for accessibility'} />,
     { notes: 'accessibility message using the "label" prop' }
   )
