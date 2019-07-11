@@ -29,7 +29,8 @@ class ExampleRemoveItem extends React.Component {
             item={item}
             removeItem={this.removeItem}
             key={i}
-            skipConfirm
+            skipConfirm={this.props.skipConfirm}
+            square={this.props.square}
           />
         )
         }
@@ -39,6 +40,12 @@ class ExampleRemoveItem extends React.Component {
 }
 
 storiesOf('RemovableListItem', module)
-  .add('show', () => (
+  .add('default', () => (
     <ExampleRemoveItem />
+  ))
+  .add('without confirmation', () => (
+    <ExampleRemoveItem skipConfirm />
+  ))
+  .add('square pics', () => (
+    <ExampleRemoveItem square />
   ))

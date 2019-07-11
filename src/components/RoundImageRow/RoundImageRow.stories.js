@@ -16,5 +16,5 @@ storiesOf('RoundImageRow', module)
         }
       />
     ),
-    { notes: 'Create a round image row whit de array imageUrls. Just put de links of what images you like' }
+    { notes: 'Create a round image row with the urls passed via the imageUrls prop' }
   )
