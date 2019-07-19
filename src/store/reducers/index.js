@@ -7,7 +7,6 @@ import locationHistory from './locationHistory'
 import resetStore from './resetStore'
 import mixpanel from './mixpanel'
 import intercom from './intercom'
-import holochain from './holochain'
 
 // Local store
 // generator-marker-local-store-import
@@ -17,7 +16,6 @@ import NetworkCommunities from 'routes/NetworkCommunities/NetworkCommunities.sto
 import NetworkSettings from 'routes/NetworkSettings/NetworkSettings.store'
 import PrimaryLayout from 'routes/PrimaryLayout/PrimaryLayout.store'
 import Messages from 'routes/Messages/Messages.store'
-import PeopleSelector from 'routes/Messages/PeopleSelector/PeopleSelector.store'
 import Members from 'routes/Members/Members.store'
 import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
@@ -46,7 +44,6 @@ export const combinedReducers = combineReducers({
   locationHistory,
   mixpanel,
   intercom,
-  holochain,
 
   // Local store (Component)
   // generator-marker-local-store-reducer
@@ -56,7 +53,6 @@ export const combinedReducers = combineReducers({
   NetworkSettings,
   PrimaryLayout,
   Messages,
-  PeopleSelector,
   PeopleTyping,
   HyloEditor,
   PostEditor,

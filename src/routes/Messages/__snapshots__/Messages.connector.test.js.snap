@@ -2,13 +2,16 @@
 
 exports[`mapDispatchToProps returns expected values 1`] = `
 Object {
+  "changeQuerystringParam": [Function],
   "createMessage": [Function],
   "fetchMessages": [Function],
+  "fetchPeople": [Function],
+  "fetchRecentContacts": [Function],
   "fetchThread": [Function],
   "fetchThreads": [Function],
   "findOrCreateThread": [Function],
   "goToThread": [Function],
-  "reconnectFetchMessages": [Function],
+  "setContactsSearch": [Function],
   "setThreadSearch": [Function],
   "updateMessageText": [Function],
   "updateThreadReadTime": [Function],
@@ -17,10 +20,22 @@ Object {
 
 exports[`mapStateToProps returns expected values 1`] = `
 Object {
+  "contacts": Array [
+    Object {
+      "id": "1",
+      "name": "Alice",
+      "skills": undefined,
+    },
+    Object {
+      "id": "2",
+      "name": "Bob",
+      "skills": undefined,
+    },
+  ],
   "currentUser": undefined,
-  "forNewThread": false,
   "hasMoreMessages": true,
   "hasMoreThreads": undefined,
+  "matchingContacts": null,
   "messageCreatePending": false,
   "messageText": "",
   "messageThread": Object {
@@ -28,6 +43,7 @@ Object {
     "participants": Array [],
   },
   "messageThreadId": "11",
+  "messageThreadPending": false,
   "messages": Array [
     SessionBoundModel {
       "_fields": Object {
@@ -64,7 +80,8 @@ Object {
   ],
   "messagesPending": true,
   "onCloseURL": "/",
-  "participants": Array [],
+  "participants": null,
+  "recentContacts": Array [],
   "sendIsTyping": [Function],
   "socket": SailsSocket {
     "_isConnecting": false,
@@ -78,7 +95,7 @@ Object {
   },
   "threadSearch": undefined,
   "threads": Array [],
-  "threadsPending": false,
+  "threadsPending": true,
 }
 `;
 
@@ -86,8 +103,8 @@ exports[`mergeProps returns expected values 1`] = `
 Object {
   "fetchMessages": [Function],
   "fetchMoreThreads": [Function],
+  "fetchThread": [Function],
   "fetchThreads": [Function],
-  "findOrCreateThread": [Function],
   "match": Object {
     "params": Object {
       "messageThreadId": "8",
@@ -99,7 +116,6 @@ Object {
       "text": "hi",
     },
   ],
-  "reconnectFetchMessages": [Function],
   "updateThreadReadTime": [Function],
 }
 `;

@@ -162,7 +162,6 @@ describe('on MARK_ACTIVITY_READ_PENDING', () => {
         id: '2'
       }
     }
-
     const newState = ormReducer(state, action)
     expect(deep(state, newState)).toMatchSnapshot()
   })

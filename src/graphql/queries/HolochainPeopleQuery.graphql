@@ -1,0 +1,9 @@
+query HolochainPeopleQuery ($first: Int) {
+  people (first: $first) {
+    items {
+      id
+      name
+      avatarUrl
+    }
+  }
+}

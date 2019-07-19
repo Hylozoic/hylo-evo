@@ -1,12 +1,10 @@
-import PropTypes from 'prop-types'
+import { array, bool, func, object } from 'prop-types'
 import React from 'react'
 import { throttle, debounce } from 'lodash'
 import { get } from 'lodash/fp'
 import Loading from 'components/Loading'
 import Message from '../Message'
 import './MessageSection.scss'
-
-const { array, bool, func, object } = PropTypes
 
 // the maximum amount of time in minutes that can pass between messages to still
 // include them under the same avatar and timestamp
@@ -30,30 +28,12 @@ export function createMessageList (messages, lastSeenAt) {
       isHeader = greaterThanMax || m.creator.id !== currentHeader.creator.id
       currentHeader = isHeader ? m : currentHeader
     }
-    /* on hold
-    let messageTime = new Date(m.createdAt).getTime()
-    if (lastTimestamp && lastSeenAt && lastTimestamp < lastSeenAt && lastSeenAt < messageTime) {
-      acc.push(<NewMessages />)
-    }
-    lastTimestamp = messageTime */
     acc.push(<Message message={m} key={`message-${m.id}`} isHeader={isHeader} />)
     return acc
   }, [])
 }
 
 export default class MessageSection extends React.Component {
-  static propTypes = {
-    socket: object,
-    reconnectFetchMessages: func,
-    currentUser: object,
-    messages: array,
-    pending: bool,
-    hasMore: bool,
-    fetchMessages: func.isRequired,
-    updateThreadReadTime: func,
-    messageThread: object
-  }
-
   constructor (props) {
     super(props)
 
@@ -65,16 +45,16 @@ export default class MessageSection extends React.Component {
   }
 
   componentDidMount () {
-    const { socket, reconnectFetchMessages } = this.props
+    const { socket, fetchMessages } = this.props
     this.scrollToBottom()
-    this.reconnectHandler = () => reconnectFetchMessages()
-    socket.on('reconnect', this.reconnectHandler)
+    this.reconnectHandler = () => fetchMessages()
+    socket && socket.on('reconnect', this.reconnectHandler)
     document && document.addEventListener('visibilitychange', this.handleVisibilityChange)
   }
 
   componentWillUnmount () {
     const { socket } = this.props
-    socket.off('reconnect', this.reconnectHandler)
+    socket && socket.off('reconnect', this.reconnectHandler)
     document && document.removeEventListener('visibilitychange', this.handleVisibilityChange)
   }
 
@@ -88,8 +68,6 @@ export default class MessageSection extends React.Component {
     // Note: we write directly to the object here rather than using setState.
     // This avoids an automatic re-render on scroll, and any inconsistencies
     // owing to the async nature of setState and/or setState batching.
-
-    // if (oldMessages && oldMessages.length > 1 && messages && messages.length > 1)
 
     this.shouldScroll = false
 
@@ -112,10 +90,6 @@ export default class MessageSection extends React.Component {
 
   componentDidUpdate (prevProps) {
     if (this.shouldScroll) this.scrollToBottom()
-    /* on hold
-    if (messageThread && !lastSeenAtTimes[messageThread.id] && messageThread.unreadCount) {
-      lastSeenAtTimes[messageThread.id] = new Date(messageThread.lastReadAt).getTime()
-    } */
   }
 
   atBottom = ({ offsetHeight, scrollHeight, scrollTop }) =>
@@ -145,9 +119,7 @@ export default class MessageSection extends React.Component {
 
   detectScrollExtremes = throttle(target => {
     if (this.props.pending) return
-
-    // TODO: is this the correct behaviour? Just because we've read the
-    // bottom message doesn't mean we've read 'em all...
+    // Marks entire thread as read if we've seen the last message
     if (this.atBottom(target)) this.markAsRead()
     if (target.scrollTop <= 150) this.fetchMore()
   }, 500, { trailing: true })
@@ -176,10 +148,23 @@ export default class MessageSection extends React.Component {
     return <div styleName='messages-section'
       ref={this.list}
       onScroll={this.handleScroll}>
-      <div styleName='messages-section-inner'>
-        {pending && <Loading />}
-        {createMessageList(messages, lastSeenAtTimes[get('id', messageThread)])}
-      </div>
+      {pending && <Loading />}
+      {!pending &&
+        <div styleName='messages-section-inner'>
+          {createMessageList(messages, lastSeenAtTimes[get('id', messageThread)])}
+        </div>
+      }
     </div>
   }
+}
+
+MessageSection.propTypes = {
+  fetchMessages: func.isRequired,
+  hasMore: bool,
+  messageThread: object,
+  messages: array,
+  pending: bool,
+  socket: object,
+  currentUser: object,
+  updateThreadReadTime: func
 }

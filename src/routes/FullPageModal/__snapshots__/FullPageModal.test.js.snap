@@ -30,7 +30,9 @@ exports[`FullPageModal renders correctly when passed children 1`] = `
       <div
         data-stylename="right-sidebar-inner"
       >
-        <CloseButton />
+        <CloseButton
+          onClose={[Function]}
+        />
       </div>
     </div>
   </div>
@@ -64,7 +66,9 @@ exports[`FullPageModal renders correctly with a single component 1`] = `
       <div
         data-stylename="right-sidebar-inner"
       >
-        <CloseButton />
+        <CloseButton
+          onClose={[Function]}
+        />
       </div>
     </div>
   </div>
@@ -130,7 +134,9 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
       <div
         data-stylename="right-sidebar-inner"
       >
-        <CloseButton />
+        <CloseButton
+          onClose={[Function]}
+        />
       </div>
     </div>
   </div>

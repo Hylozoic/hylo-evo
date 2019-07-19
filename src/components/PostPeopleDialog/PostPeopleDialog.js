@@ -46,7 +46,7 @@ export default class PostPeopleDialog extends React.PureComponent {
       style={{ width: '100%', maxWidth: '620px' }}>
       <div styleName='container'>
         {/*
-          TODO: Can make memberDetails optional by adding a `withDetails` flag
+          Note: Can make memberDetails optional by adding a `withDetails` flag
           sending in `goToMember` and switchin the onClick on a `MemberRow` to
           go there instead of showing detail and making adding a conditional
           style to make width of members-list be 100% in that case.

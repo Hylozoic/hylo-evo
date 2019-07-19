@@ -17,7 +17,6 @@ import {
   UPLOAD_ATTACHMENT
 } from 'store/constants'
 import createPost from 'store/actions/createPost'
-import holochainCreatePost from 'store/actions/holochainCreatePost'
 import createProject from 'store/actions/createProject'
 import updatePost from 'store/actions/updatePost'
 import {
@@ -33,7 +32,6 @@ import {
   addAttachment,
   getAttachments
 } from './AttachmentManager/AttachmentManager.store'
-import getHolochainActive from 'store/selectors/getHolochainActive'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
@@ -51,7 +49,7 @@ export function mapStateToProps (state, props) {
   const editing = !!post || loading
   const images = getAttachments(state, { type: 'image' })
   const files = getAttachments(state, { type: 'file' })
-  // TODO: this should be a selector exported from AttachmentManager
+  // Note: this could be a selector exported from AttachmentManager
   const showImages = !isEmpty(images) ||
     get('attachmentType', uploadAttachmentPending) === 'image'
   const showFiles = !isEmpty(files) ||
@@ -65,7 +63,6 @@ export function mapStateToProps (state, props) {
   const isEvent = postTypeContext === 'event' || get('type', post) === 'event'
   const announcementSelected = state[MODULE_NAME].announcement
   const canModerate = currentUser && currentUser.canModerate(currentCommunity)
-  const holochainActive = getHolochainActive(state)
 
   return {
     currentUser,
@@ -91,8 +88,7 @@ export function mapStateToProps (state, props) {
     networkSlug,
     announcementSelected,
     canModerate,
-    myModeratedCommunities,
-    holochainActive
+    myModeratedCommunities
   }
 }
 
@@ -102,8 +98,7 @@ export const mapDispatchToProps = (dispatch, props) => {
     removeLinkPreview: () => dispatch(removeLinkPreview()),
     clearLinkPreview: () => dispatch(clearLinkPreview()),
     updatePost: postParams => dispatch(updatePost(postParams)),
-    createPost: (postParams) => dispatch(createPost(postParams)),
-    holochainCreatePost: (postParams) => dispatch(holochainCreatePost(postParams)),
+    createPost: postParams => dispatch(createPost(postParams)),
     createProject: postParams => dispatch(createProject(postParams)),
     goToUrl: url => dispatch(push(url)),
     addImage: url => dispatch(addAttachment(url, 'image')),
@@ -113,10 +108,13 @@ export const mapDispatchToProps = (dispatch, props) => {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { fetchLinkPreviewPending, topicName, communitySlug, networkSlug, postTypeContext, holochainActive } = stateProps
+  const {
+    fetchLinkPreviewPending, topicName, communitySlug, networkSlug, postTypeContext
+  } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
   const goToPost = createPostAction => {
-    const id = get('payload.data.createPost.id', createPostAction) || get('payload.data.createProject.id', createPostAction)
+    const id = get('payload.data.createPost.id', createPostAction) ||
+      get('payload.data.createProject.id', createPostAction)
     const url = postUrl(id, { communitySlug, networkSlug, postTypeContext, topicName })
 
     return goToUrl(url)
@@ -124,12 +122,9 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const pollingFetchLinkPreview = fetchLinkPreviewPending
     ? () => Promise.resolve()
     : url => pollingFetchLinkPreviewRaw(url)
-
-  const createPost = holochainActive
-    ? postParams => dispatchProps.holochainCreatePost({ networkSlug, ...postParams })
-    : postParams => dispatchProps.createPost({ networkSlug, ...postParams })
-
-  const createProject = projectParams => dispatchProps.createProject({ networkSlug, ...projectParams })
+  const createPost = postParams => dispatchProps.createPost({ networkSlug, ...postParams })
+  const createProject = projectParams =>
+    dispatchProps.createProject({ networkSlug, ...projectParams })
 
   return {
     ...stateProps,

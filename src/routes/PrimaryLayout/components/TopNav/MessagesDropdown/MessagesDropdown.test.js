@@ -51,6 +51,7 @@ describe('MessagesDropdown', () => {
 })
 
 describe('MessagesDropdownItem', () => {
+
   it('renders correctly with an empty thread', () => {
     const thread = new MessageThread({})
     const wrapper = shallow(<MessagesDropdownItem thread={thread} />)
@@ -69,9 +70,13 @@ describe('MessagesDropdownItem', () => {
   it('renders correctly with a message', () => {
     const mockNavigate = jest.fn()
     const goToThread = i => mockNavigate(i)
-
-    const wrapper = shallow(<MessagesDropdownItem
-      thread={threads[0]} currentUser={u1} onClick={() => goToThread(threads[0].id)} />)
+    const wrapper = shallow(
+      <MessagesDropdownItem
+        thread={threads[0]}
+        currentUser={u1}
+        onClick={() => goToThread(threads[0].id)}
+      />
+    )
     expect(wrapper.find('RoundImageRow').prop('imageUrls')).toEqual(['bar.png', 'baz.png'])
     expect(wrapper.find('div').at(2).text()).toEqual('Marie Curie and Arthur Fonzarelli')
     expect(wrapper.find('div').at(3).text()).toEqual('Marie Curie: hi')

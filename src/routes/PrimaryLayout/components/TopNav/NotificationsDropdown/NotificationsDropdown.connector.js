@@ -3,10 +3,11 @@ import {
   fetchNotifications,
   markActivityRead,
   markAllActivitiesRead,
-  getNotifications,
-  goToNotification
+  getNotifications
 } from './NotificationsDropdown.store'
 import getMe from 'store/selectors/getMe'
+import { urlForNotification } from 'store/models/Notification'
+import { push } from 'connected-react-router'
 import { FETCH_NOTIFICATIONS } from 'store/constants'
 
 export function mapStateToProps (state, props) {
@@ -21,7 +22,7 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     fetchNotifications: () => dispatch(fetchNotifications()),
-    goToNotification: notification => dispatch(goToNotification(notification)),
+    goToNotification: notification => dispatch(push(urlForNotification(notification))),
     markActivityRead: id => dispatch(markActivityRead(id)),
     markAllActivitiesRead: () => dispatch(markAllActivitiesRead())
   }

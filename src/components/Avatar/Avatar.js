@@ -12,7 +12,7 @@ export default function Avatar ({ url, avatarUrl, small, medium, className }) {
 }
 Avatar.propTypes = {
   url: string.isRequired,
-  avatarUrl: string,
+  avatarUrl: string.isRequired,
   small: bool,
   medium: bool,
   className: string

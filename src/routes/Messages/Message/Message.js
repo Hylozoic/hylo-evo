@@ -6,8 +6,6 @@ import { personUrl } from 'util/navigation'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import './Message.scss'
 
-const { bool, object } = PropTypes
-
 export default function Message ({ message, isHeader }) {
   const person = message.creator
   const pending = message.id.slice(0, 13) === 'messageThread'
@@ -30,7 +28,12 @@ export default function Message ({ message, isHeader }) {
     </div>
   </div>
 }
+
 Message.propTypes = {
-  message: object.isRequired,
-  isHeader: bool
+  message: PropTypes.shape({
+    id: PropTypes.string,
+    text: PropTypes.string,
+    creator: PropTypes.object
+  }).isRequired,
+  isHeader: PropTypes.bool
 }

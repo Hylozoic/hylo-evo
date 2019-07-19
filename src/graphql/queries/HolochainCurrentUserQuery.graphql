@@ -1,0 +1,8 @@
+query HolochainCurrentUserQuery {
+  me {
+    id
+    name
+    avatarUrl
+    isRegistered
+  }
+}

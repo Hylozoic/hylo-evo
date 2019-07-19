@@ -6,7 +6,7 @@ function loadStories() {
   req.keys().forEach(filename => req(filename))
 }
 
-// TODO: would be really nice if this showed-up in the addOns viewport
+// * would be really nice if this showed-up in the addOns viewport
 // https://github.com/storybooks/storybook/issues/1147
 addDecorator(
   withInfo({

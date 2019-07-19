@@ -1,5 +1,5 @@
-import { mapStateToProps, mapDispatchToProps, mergeProps } from './Messages.connector'
 import orm from 'store/models'
+import { mapStateToProps, mapDispatchToProps, mergeProps } from './Messages.connector'
 
 describe('mapStateToProps', () => {
   const session = orm.session(orm.getEmptyState())
@@ -41,6 +41,9 @@ describe('mapStateToProps', () => {
   }
 
   const props = {
+    location: {
+      search: ''
+    },
     match: {
       params: {
         messageThreadId: '11'
@@ -75,9 +78,8 @@ describe('mergeProps', () => {
       ]
     }
     const dispatchProps = {
-      fetchMessages: cursor => () => `more messages for thread ${cursor}`,
-      updateThreadReadTime: () => {},
-      reconnectFetchMessages: () => {}
+      fetchMessages: (messageThreadId, { cursor }) => `more messages for thread ${cursor}`,
+      updateThreadReadTime: () => {}
     }
     const ownProps = {
       match: {

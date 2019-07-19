@@ -38,7 +38,7 @@ module.exports = {
       path.resolve(__dirname, '..', 'node_modules'),
       'node_modules'
     ].concat(paths.nodePaths),
-    extensions: ['.js', '.json', '.jsx'],
+    extensions: ['.mjs', '.js', '.json', '.jsx'],
     alias: {
       'react-native': 'react-native-web'
     }
@@ -81,6 +81,8 @@ module.exports = {
               name: 'static/media/[name].[hash:8].[ext]'
             }
           },
+          // Graphql files
+          sharedConfig.graphqlLoader,
           // Process application JS with Babel.
           // The preset includes JSX, Flow, TypeScript, and some ESnext features.
           {
