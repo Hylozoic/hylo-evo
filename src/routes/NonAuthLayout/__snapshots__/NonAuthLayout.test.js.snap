@@ -7,7 +7,7 @@ exports[`NonAuthLayout renders correctly 1`] = `
   <div
     data-stylename="particlesBackgroundWrapper"
   >
-    <e
+    <t
       height="100%"
       params={
         Object {
