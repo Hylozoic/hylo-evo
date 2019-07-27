@@ -39,7 +39,7 @@ describe('RedirectToCommunity', () => {
     session.Me.create({ id: '1' })
   })
 
-it('sets `to` prop of Redirect correctly if currentUser has no memberships', () => {
+  it('sets `to` prop of Redirect correctly if currentUser has no memberships', () => {
     const me = session.Me.first()
     const wrapper = shallow(<MemoryRouter>
       {redirectIfCommunity(me)()}
