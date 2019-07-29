@@ -2,7 +2,6 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { MemoryRouter } from 'react-router'
 import Avatar from 'components/Avatar'
-// import notesShow from './notesShow.md'
 
 const notes = 'The Avatar component renders a consistent image from a url or base64 data, this example uses a URL. Set a link to more information about the avatar as shown in this example that links to the Github profile for Philip Beadle.'
 

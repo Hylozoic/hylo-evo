@@ -25,9 +25,6 @@ class ExampleContainer extends React.Component {
       tags
     })
   }
-  handleInputChange = change => {
-    // console.log(change)
-  }
   render () {
     return <TagInput
       tags={this.state.tags}
@@ -37,7 +34,7 @@ class ExampleContainer extends React.Component {
       allowNewTags
       handleDelete={this.handleDelete}
       handleAddition={this.handleAddition}
-      handleInputChange={this.handleInputChange}
+      handleInputChange={() => {}}
     />
   }
 }
