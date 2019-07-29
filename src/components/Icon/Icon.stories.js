@@ -3,8 +3,6 @@ import { storiesOf } from '@storybook/react'
 import Icon from 'components/Icon'
 import '../../css/global/index.scss'
 
-// import iconMarkdown from './IconMarkdown.md'
-
 const props = {
   onClick: () => {}
 }
@@ -68,9 +66,6 @@ const iconMarkdown = `
 `
 
 storiesOf('Icon', module)
-//   .addDecorator(story => (
-//     story()
-//   ))
   .add('Normal', () =>
     <Icon {...props} name='EmailNotification' />,
   {

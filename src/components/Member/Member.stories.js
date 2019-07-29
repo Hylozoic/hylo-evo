@@ -23,7 +23,7 @@ storiesOf('Member', module)
         goToPerson={(id, slug) => {}}
       />
     ),
-    { notes: 'A menber profile view with the avatar, skills, tagline and option' }
+    { notes: 'A member profile view with the avatar, skills, tagline and option' }
   )
   .add('Avatar', () => (
     <Member

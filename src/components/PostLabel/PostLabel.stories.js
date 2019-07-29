@@ -18,47 +18,47 @@ storiesOf('PostLabel', module)
     () => (
       <PostLabel type={'label'} className={'label'} />
     ),
-  {
-    notes: { markdown }
-  }
+    {
+      notes: { markdown }
+    }
   )
   .add('discussion',
     () => (
       <PostLabel type={'discussion'} className={'discussion'} />
     ),
-  {
-    notes: { markdown }
-  }
+    {
+      notes: { markdown }
+    }
   )
   .add('event',
     () => (
       <PostLabel type={'event'} className={'event'} />
     ),
-  {
-    notes: { markdown }
-  }
+    {
+      notes: { markdown }
+    }
   )
   .add('offer',
     () => (
       <PostLabel type={'offer'} className={'offer'} />
     ),
-  {
-    notes: { markdown }
-  }
+    {
+      notes: { markdown }
+    }
   )
   .add('project',
     () => (
       <PostLabel type={'project'} className={'project'} />
     ),
-  {
-    notes: { markdown }
-  }
+    {
+      notes: { markdown }
+    }
   )
   .add('request',
     () => (
       <PostLabel type={'request'} className={'request'} />
     ),
-  {
-    notes: { markdown }
-  }
+    {
+      notes: { markdown }
+    }
   )

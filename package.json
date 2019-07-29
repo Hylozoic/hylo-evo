@@ -12,8 +12,7 @@
     "server": "./node_modules/.bin/babel-node --config-file ./config/babel.config.js scripts/serveUniversal.js",
     "storybook": "start-storybook -p 6006 -s public",
     "storybook:build": "build-storybook -s public",
-    "build-storybook": "build-storybook -s public",
-    "deploy-storybook": "storybook-to-ghpages"
+    "storybook:deploy": "storybook-to-ghpages"
   },
   "dependencies": {
     "@babel/cli": "7.2.3",
@@ -27,8 +26,10 @@
     "@storybook/addon-actions": "^v5.0.10",
     "@storybook/addon-info": "^5.0.10",
     "@storybook/addon-links": "^v5.0.10",
+    "@storybook/addon-notes": "^5.0.11",
     "@storybook/addons": "^v5.0.10",
     "@storybook/react": "^v5.0.10",
+    "@storybook/storybook-deployer": "^2.8.1",
     "@svgr/webpack": "4.1.0",
     "@types/react": "^16.8.14",
     "@types/react-css-modules": "^4.6.2",
@@ -192,8 +193,6 @@
     "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
-    "@storybook/addon-notes": "^5.0.11",
-    "@storybook/storybook-deployer": "^2.8.1",
     "standard": "12.0.1"
   },
   "engines": {
