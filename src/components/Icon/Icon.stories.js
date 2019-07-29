@@ -70,17 +70,14 @@ storiesOf('Icon', module)
     <Icon {...props} name='EmailNotification' />,
   {
     notes: { markdown: iconMarkdown }
-  }
-  )
+  })
   .add('Labeled', () =>
     <Icon {...props} name='EmailNotification'> Sample text</Icon>,
   {
     notes: { markdown: iconMarkdown }
-  }
-  )
+  })
   .add('Green', () =>
     <Icon {...props} green='true' name='EmailNotification'> Sample text</Icon>,
   {
     notes: { markdown: iconMarkdown }
-  }
-  )
+  })

@@ -22,11 +22,9 @@ storiesOf('Button', module)
     <Button {...props} />,
   {
     notes: 'Button in normal mode. Clickable'
-  }
-  )
+  })
   .add('Disabled', () =>
     <Button {...props} active={false} />,
   {
     notes: 'Button in disabled mode. Not clickable'
-  }
-  )
+  })
