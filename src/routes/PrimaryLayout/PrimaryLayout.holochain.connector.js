@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { graphql, compose } from 'react-apollo'
+import { goBack, push } from 'connected-react-router'
 import { get } from 'lodash/fp'
 import mobileRedirect from 'util/mobileRedirect'
 import { HOLOCHAIN_POLL_INTERVAL_SLOW } from 'util/holochain'
@@ -28,9 +30,12 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = {
-  fetchForCurrentUserMock,
-  toggleDrawer
+export function mapDispatchToProps (dispatch, props) {
+  return bindActionCreators({
+    fetchForCurrentUserMock,
+    toggleDrawer,
+    goBack: () => props.history.length > 2 ? goBack() : push('/')
+  }, dispatch)
 }
 
 const community = graphql(HolochainCommunityQuery, {

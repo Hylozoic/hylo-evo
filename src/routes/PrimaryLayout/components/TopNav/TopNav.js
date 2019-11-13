@@ -12,6 +12,7 @@ import { get } from 'lodash/fp'
 import { hyloLogo } from 'util/assets'
 import MessagesDropdown from './MessagesDropdown'
 import NotificationsDropdown from './NotificationsDropdown'
+import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 import './TopNav.scss'
 
 export default function TopNav ({
@@ -37,7 +38,7 @@ export default function TopNav ({
         <Title community={community} network={network} onClick={toggleDrawer} />
       </div>
       <div styleName='navIcons'>
-        <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
+        {!HOLOCHAIN_ACTIVE && <Link to='/search'><Icon name='Search' styleName='icon' /></Link>}
         <MessagesDropdown renderToggleChildren={showBadge =>
           <BadgedIcon name='Messages' styleName='icon'
             showBadge={showBadge} />} />

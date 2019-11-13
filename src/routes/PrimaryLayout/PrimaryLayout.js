@@ -99,7 +99,13 @@ export default function PrimaryLayout ({
 
   return <div styleName='container'>
     <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
-    <TopNav styleName='top' onClick={closeDrawer} smallScreen={smallScreen} goBack={smallScreen && hasDetail ? goBack : null} {...{ community, network, currentUser, showLogoBadge }} />
+    <TopNav
+      styleName='top'
+      onClick={closeDrawer}
+      smallScreen={smallScreen}
+      goBack={smallScreen && hasDetail ? goBack : null}
+      {...{ community, network, currentUser, showLogoBadge }}
+    />
     <div styleName='main' onClick={closeDrawer}>
       <Navigation styleName={cx('left', { hidden: smallScreen })} collapsed={hasDetail} showTopics={showTopics} currentUser={currentUser} />
       <div styleName={cx('center', { hidden: hasDetail && smallScreen })} id={CENTER_COLUMN_ID}>
