@@ -60,7 +60,7 @@ export default function TopNav ({
   </div>
 }
 
-function BackButton ({ onClick })  {
+function BackButton ({ onClick }) {
   return <Button styleName='backButton' color='gray' small narrow onClick={onClick}>&lt; Back</Button>
 }
 
