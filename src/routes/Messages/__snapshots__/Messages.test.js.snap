@@ -9,6 +9,7 @@ exports[`renders entire component when not loading 1`] = `
   >
     <withRouter(ThreadList)
       data-stylename="left-column"
+      onCloseURL={null}
       threads={Array []}
     />
     <div
