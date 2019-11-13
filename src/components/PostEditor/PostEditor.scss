@@ -21,6 +21,11 @@ $wrapperBorderRadius: 8px;
   border: 1px solid $color-cape-cod-10;
   background: $color-white;
 }
+@media (max-width: $bp-small-screen) {
+  .wrapper {
+    min-width: unset;
+  }
+}
 
 .wrapper-scrollable-inner {
   max-height: 360px;

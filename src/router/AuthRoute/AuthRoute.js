@@ -23,13 +23,13 @@ export default function AuthRoute ({
   // to auth the user with a token and send them into sign-up.
   if (
     (!isLoggedIn && (requireAuth || returnToOnAuth)) ||
-      (isMobile && location.pathname !== '/login')
+    (process.env.REDIRECT_TO_APP_STORE && isMobile && location.pathname !== '/login')
   ) {
     setReturnToURL(location.pathname + location.search)
   }
   if (
     (!isLoggedIn && requireAuth) ||
-    (isMobile && location.pathname !== '/login')
+    (process.env.REDIRECT_TO_APP_STORE && isMobile && location.pathname !== '/login')
   ) {
     return <RedirectRoute to={'/login'} />
   }

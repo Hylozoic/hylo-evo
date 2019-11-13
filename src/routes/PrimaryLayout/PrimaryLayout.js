@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import {
   matchPath,
   Redirect,
@@ -7,8 +7,9 @@ import {
 } from 'react-router-dom'
 import cx from 'classnames'
 import { get, some } from 'lodash/fp'
-import Intercom from 'react-intercom'
-import config, { isTest } from 'config'
+// import Intercom from 'react-intercom'
+// import config, { isTest } from 'config'
+import { isSmallScreen } from 'util/responsive'
 import AddLocation from 'routes/Signup/AddLocation'
 import AddSkills from 'routes/Signup/AddSkills'
 import AllTopics from 'routes/AllTopics'
@@ -54,116 +55,113 @@ import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import { HOLOCHAIN_ACTIVE, HOLOCHAIN_DEFAULT_COMMUNITY_SLUG } from 'util/holochain'
 import './PrimaryLayout.scss'
 
-export default class PrimaryLayout extends Component {
-  componentDidMount () {
-    this.props.fetchForCurrentUser()
-    if (this.props.slug) {
-      this.props.fetchForCommunity()
-    }
-  }
+export default function PrimaryLayout ({
+  fetchForCurrentUser,
+  fetchForCommunity,
+  slug,
+  community,
+  network,
+  currentUser,
+  isDrawerOpen,
+  location,
+  toggleDrawer,
+  isCommunityRoute,
+  communityPending,
+  showLogoBadge,
+  goBack
+}) {
+  const smallScreen = isSmallScreen()
 
-  componentDidUpdate (prevProps) {
-    if (get('community.id', this.props) !== get('community.id', prevProps)) {
-      this.props.fetchForCommunity()
-    }
-  }
+  useEffect(() => {
+    (async () => { await fetchForCurrentUser() })()
+  }, [])
 
-  render () {
-    const {
-      community,
-      network,
-      currentUser,
-      isDrawerOpen,
-      location,
-      toggleDrawer,
-      isCommunityRoute,
-      communityPending,
-      showLogoBadge
-    } = this.props
+  useEffect(() => {
+    (async () => { slug && await fetchForCommunity() })()
+  }, [slug])
 
-    if (!currentUser) {
-      return <div styleName='container'>
-        <Loading type='loading-fullscreen' />
-      </div>
-    }
-
-    if (isCommunityRoute) {
-      if (!community && !communityPending) return <NotFound />
-    }
-
-    const closeDrawer = () => isDrawerOpen && toggleDrawer()
-    const hasDetail = some(
-      ({ path }) => matchPath(location.pathname, { path, exact: true }),
-      postDetailRoutes
-    )
-    const showTopics = !isAllCommunitiesPath(location.pathname) && !isNetworkPath(location.pathname) && !isTagPath(location.pathname)
-
+  if (!currentUser) {
     return <div styleName='container'>
-      <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
-      <TopNav styleName='top' onClick={closeDrawer} {...{ community, network, currentUser, showLogoBadge }} />
-      <div styleName='main' onClick={closeDrawer}>
-        <Navigation collapsed={hasDetail} styleName='left' showTopics={showTopics} currentUser={currentUser} />
-        <div styleName='center' id={CENTER_COLUMN_ID}>
-          <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
-          <RedirectToCommunity path='/' currentUser={currentUser} />
-          <RedirectToCommunity path='/app' currentUser={currentUser} />
-          <Switch>
-            {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
-            <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
-            <Route path={`/all/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
-            <Route path={`/n/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path='/n/:networkSlug/members' component={Members} />
-            <Route path={`/n/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
-            <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
-            <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />
-            <Route path='/n/:networkSlug/:topicName' exact component={TopicSupportComingSoon} />
-            <Route path={`/c/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path='/c/:slug/members' component={Members} />
-            <Route path={`/c/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
-            <Route path='/c/:slug/settings' component={CommunitySettings} />
-            <Route path='/c/:slug/topics' component={AllTopics} />
-            <Route path={`/c/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
-            <Route path={`/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
-            <Route path='/settings' component={UserSettings} />
-            <Route path='/search' component={Search} />
-            <Route path='/confirm-community-delete' component={CommunityDeleteConfirmation} />
-            {signupRoutes.map(({ path, child }) =>
-              <Route path={path} key={path} component={props =>
-                <SignupModal {...props} child={child} />} />)}
-            {createCommunityRoutes.map(({ path, component }) =>
-              <Route path={path} key={path} component={props =>
-                <CreateCommunity {...props} component={component} />} />)}
-          </Switch>
-        </div>
-        <div styleName={cx('sidebar', { hidden: hasDetail })}>
-          <Switch>
-            <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
-            <Route path={`/c/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
-            <Route path={`/c/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
-            <Route path={`/n/:networkSlug/${OPTIONAL_NEW_POST_MATCH}`} exact component={NetworkSidebar} />
-            <Route path={`/n/:networkSlug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
-            <Route path={`/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
-          </Switch>
-        </div>
-        <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
-          <Switch>
-            {postDetailRoutes.map(({ path }) =>
-              <Route path={path} component={PostDetail} key={path} />)}
-          </Switch>
-        </div>
-      </div>
-      <Route path='/t/:messageThreadId?' render={props => <Messages {...props} />} />
-      <Switch>
-        {postEditorRoutes.map(({ path }) =>
-          <Route path={path} exact key={path} children={({ match, location }) =>
-            <PostEditorModal match={match} location={location} />} />)}
-      </Switch>
-      <SocketListener location={location} />
-      <SocketSubscriber type='community' id={get('slug', community)} />
-      <Intercom appID={isTest ? null : config.intercom.appId} hide_default_launcher={hasDetail} />
+      <Loading type='loading-fullscreen' />
     </div>
   }
+
+  if (isCommunityRoute) {
+    if (!community && !communityPending) return <NotFound />
+  }
+
+  const closeDrawer = () => isDrawerOpen && toggleDrawer()
+  const hasDetail = some(
+    ({ path }) => matchPath(location.pathname, { path, exact: true }),
+    postDetailRoutes
+  )
+  const showTopics = !isAllCommunitiesPath(location.pathname) && !isNetworkPath(location.pathname) && !isTagPath(location.pathname)
+
+  return <div styleName='container'>
+    <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
+    <TopNav styleName='top' onClick={closeDrawer} smallScreen={smallScreen} goBack={smallScreen && hasDetail ? goBack : null} {...{ community, network, currentUser, showLogoBadge }} />
+    <div styleName='main' onClick={closeDrawer}>
+      <Navigation styleName={cx('left', { hidden: smallScreen })} collapsed={hasDetail} showTopics={showTopics} currentUser={currentUser} />
+      <div styleName={cx('center', { hidden: hasDetail && smallScreen })} id={CENTER_COLUMN_ID}>
+        <RedirectToSignupFlow currentUser={currentUser} pathname={location.pathname} />
+        <RedirectToCommunity path='/' currentUser={currentUser} />
+        <RedirectToCommunity path='/app' currentUser={currentUser} />
+        <Switch>
+          {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
+          <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
+          <Route path={`/all/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+          <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
+          <Route path={`/n/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+          <Route path='/n/:networkSlug/members' component={Members} />
+          <Route path={`/n/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
+          <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
+          <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />
+          <Route path='/n/:networkSlug/:topicName' exact component={TopicSupportComingSoon} />
+          <Route path={`/c/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+          <Route path='/c/:slug/members' component={Members} />
+          <Route path={`/c/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
+          <Route path='/c/:slug/settings' component={CommunitySettings} />
+          <Route path='/c/:slug/topics' component={AllTopics} />
+          <Route path={`/c/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
+          <Route path={`/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
+          <Route path='/settings' component={UserSettings} />
+          <Route path='/search' component={Search} />
+          <Route path='/confirm-community-delete' component={CommunityDeleteConfirmation} />
+          {signupRoutes.map(({ path, child }) =>
+            <Route path={path} key={path} component={props =>
+              <SignupModal {...props} child={child} />} />)}
+          {createCommunityRoutes.map(({ path, component }) =>
+            <Route path={path} key={path} component={props =>
+              <CreateCommunity {...props} component={component} />} />)}
+        </Switch>
+      </div>
+      <div styleName={cx('sidebar', { hidden: hasDetail })}>
+        <Switch>
+          <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
+          <Route path={`/c/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
+          <Route path={`/c/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
+          <Route path={`/n/:networkSlug/${OPTIONAL_NEW_POST_MATCH}`} exact component={NetworkSidebar} />
+          <Route path={`/n/:networkSlug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
+          <Route path={`/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
+        </Switch>
+      </div>
+      <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
+        <Switch>
+          {postDetailRoutes.map(({ path }) =>
+            <Route path={path} component={PostDetail} key={path} />)}
+        </Switch>
+      </div>
+    </div>
+    <Route path='/t/:messageThreadId?' render={props => <Messages {...props} smallScreen={smallScreen} />} />
+    <Switch>
+      {postEditorRoutes.map(({ path }) =>
+        <Route path={path} exact key={path} children={({ match, location }) =>
+          <PostEditorModal match={match} location={location} />} />)}
+    </Switch>
+    <SocketListener location={location} />
+    <SocketSubscriber type='community' id={get('slug', community)} />
+    {/* <Intercom appID={isTest ? null : config.intercom.appId} hide_default_launcher={hasDetail} /> */}
+  </div>
 }
 
 const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH})`

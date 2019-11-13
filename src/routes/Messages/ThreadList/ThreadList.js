@@ -11,6 +11,7 @@ import ScrollListener from 'components/ScrollListener'
 import { toRefArray, itemsToArray } from 'util/reduxOrmMigration'
 import { participantAttributes } from 'store/models/MessageThread'
 import Loading from 'components/Loading'
+import CloseMessages from '../CloseMessages/CloseMessages'
 import './ThreadList.scss'
 
 export default class ThreadList extends Component {
@@ -27,12 +28,14 @@ export default class ThreadList extends Component {
       threads,
       threadSearch,
       onScrollBottom,
+      onCloseURL,
       match: { params: { messageThreadId } },
       className
     } = this.props
 
     return <div styleName='thread-list' className={className}>
       <div styleName='header'>
+        {onCloseURL && <CloseMessages styleName='close-link' onCloseURL={onCloseURL} />}
         <Link to='/t/new'><Button label='New Message' styleName='new-message' /></Link>
         <div styleName='header-text'>Messages</div>
       </div>

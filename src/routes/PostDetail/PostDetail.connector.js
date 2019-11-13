@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { get, find } from 'lodash/fp'
-import { push } from 'connected-react-router'
+import { goBack, push } from 'connected-react-router'
 import { editPostUrl, removePostFromUrl } from 'util/navigation'
 import fetchPost from 'store/actions/fetchPost'
 import getRouteParam from 'store/selectors/getRouteParam'
@@ -24,7 +24,6 @@ export function mapStateToProps (state, props) {
   const post = presentPost(getPost(state, props), get('id', currentCommunity))
   const currentUser = getMe(state)
   const isProjectMember = find(({ id }) => id === get('id', currentUser), get('members', post))
-
   return {
     id,
     routeParams,
@@ -51,7 +50,8 @@ export function mapDispatchToProps (dispatch, props) {
     leaveProject: () => dispatch(leaveProject(postId)),
     voteOnPost: (myVote) => dispatch(voteOnPost(postId, myVote)),
     processStripeToken: (postId, token, amount) => dispatch(processStripeToken(postId, token, amount)),
-    respondToEvent: response => dispatch(respondToEvent(postId, response))
+    respondToEvent: response => dispatch(respondToEvent(postId, response)),
+    goBack: () => dispatch(props.history.length > 2 ? goBack() : push('/'))
   }
 }
 

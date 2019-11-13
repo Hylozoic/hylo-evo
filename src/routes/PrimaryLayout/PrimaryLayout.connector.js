@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { goBack, push } from 'connected-react-router'
 import { toggleDrawer } from './PrimaryLayout.store'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import fetchForCommunity from 'store/actions/fetchForCommunity'
@@ -39,7 +40,8 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchForCurrentUser: () => dispatch(fetchForCurrentUser(slug)),
     fetchForCommunity: () => dispatch(fetchForCommunity(slug)),
-    toggleDrawer: () => dispatch(toggleDrawer())
+    toggleDrawer: () => dispatch(toggleDrawer()),
+    goBack: () => dispatch(props.history.length > 2 ? goBack() : push('/'))
   }
 }
 

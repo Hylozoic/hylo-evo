@@ -9,7 +9,7 @@ export function mapStateToProps (state, props) {
   return {
     error: getLoginError(state),
     returnToURL: getReturnToURL(state),
-    downloadAppUrl: mobileRedirect()
+    downloadAppUrl: process.env.REDIRECT_TO_APP_STORE && mobileRedirect()
   }
 }
 

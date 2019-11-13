@@ -1,9 +1,9 @@
 import React from 'react'
+import { compact } from 'lodash/fp'
+import { EVENTS } from 'config/featureFlags'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
 import './Navigation.scss'
-import { compact } from 'lodash/fp'
-import { EVENTS } from 'config/featureFlags'
 
 export default function Navigation (props) {
   const {

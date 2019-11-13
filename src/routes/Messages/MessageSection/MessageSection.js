@@ -12,7 +12,7 @@ const MAX_MINS_TO_BATCH = 5
 
 const lastSeenAtTimes = {}
 
-export function createMessageList (messages, lastSeenAt) {
+export function createMessageList (messages) {
   let currentHeader
   return messages.reduce((acc, m) => {
     let headerDate, messageDate, diff, greaterThanMax

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 import { get } from 'lodash/fp'
 import Loading from 'components/Loading'
 import PeopleSelector from './PeopleSelector'
@@ -137,7 +138,8 @@ export default class Messages extends React.Component {
       setContactsSearch,
       contacts,
       matchingContacts,
-      recentContacts
+      recentContacts,
+      smallScreen
     } = this.props
     const {
       loading,
@@ -154,15 +156,16 @@ export default class Messages extends React.Component {
 
     return <div styleName='modal'>
       <div styleName='content'>
-        <ThreadList
-          styleName='left-column'
+        {(!messageThreadId || !smallScreen) && <ThreadList
+          styleName={cx('left-column')}
           setThreadSearch={setThreadSearch}
           onScrollBottom={fetchMoreThreads}
+          onCloseURL={smallScreen ? onCloseURL : null}
           currentUser={currentUser}
           threadsPending={threadsPending}
           threads={threads}
-          threadSearch={threadSearch} />
-        <div styleName='right-column'>
+          threadSearch={threadSearch} />}
+        {(messageThreadId || !smallScreen) && <div styleName='right-column'>
           <div styleName='thread'>
             {forNewThread &&
               <PeopleSelector
@@ -182,7 +185,7 @@ export default class Messages extends React.Component {
                 messageThread={messageThread}
                 currentUser={currentUser}
                 pending={messagesPending}
-                onCloseURL={onCloseURL} />}
+                onCloseURL={smallScreen ? '/t' : onCloseURL} />}
             {!forNewThread &&
               <MessageSection
                 socket={socket}
@@ -207,7 +210,7 @@ export default class Messages extends React.Component {
             <PeopleTyping styleName='people-typing' />
             {socket && <SocketSubscriber type='post' id={messageThreadId} />}
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   }
@@ -246,5 +249,6 @@ Messages.propTypes = {
   threads: PropTypes.array,
   threadsPending: PropTypes.bool,
   updateMessageText: PropTypes.func,
-  updateThreadReadTime: PropTypes.func
+  updateThreadReadTime: PropTypes.func,
+  smallScreen: PropTypes.bool
 }

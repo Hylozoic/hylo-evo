@@ -56,7 +56,6 @@ export default class Comments extends Component {
       {comments.map(c => <Comment comment={c} key={c.id} slug={slug} />)}
       <div styleName='form-wrapper' style={style}>
         <CommentForm currentUser={currentUser}
-          width={this.width}
           createComment={createComment} postId={postId} />
         <PeopleTyping styleName='people-typing' />
       </div>

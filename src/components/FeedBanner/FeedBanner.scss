@@ -4,6 +4,11 @@
   position: relative;
   z-index: 2;
 }
+@media (max-width: $bp-small-screen) {
+  .banner {
+    padding-top: 5px;
+  }
+}
 
 .imageShape {
   width: 100%;

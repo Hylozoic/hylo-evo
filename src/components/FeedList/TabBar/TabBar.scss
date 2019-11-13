@@ -6,6 +6,11 @@
   height: $space-7x;
   margin-bottom: $space-3x;
 }
+@media (max-width: $bp-small-screen) {
+  .bar {
+    display: none;
+  }
+}
 
 .tabs {
   flex-grow: 1;

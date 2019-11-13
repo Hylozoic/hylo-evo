@@ -1,5 +1,9 @@
 $messages-inner-padding: $space-6x;
 
+.hidden {
+  display: none;
+}
+
 .modal {
   composes: modal from 'css/layout.scss';
 }
@@ -12,9 +16,19 @@ $messages-inner-padding: $space-6x;
 .left-column {
   width: 30%;
 }
+@media (max-width: $bp-small-screen) {
+  .left-column {
+    width: 100%;
+  }
+}
 
 .right-column {
   width: 70%;
+}
+@media (max-width: $bp-small-screen) {
+  .right-column {
+    width: 100%;
+  }
 }
 
 // Thread

@@ -79,6 +79,11 @@ $size-sidebar-width: 10rem;
   background-color: $color-athens-gray-medium;
   cursor: pointer;
 }
+@media (max-width: $bp-small-screen) {
+  .close-button {
+    left: unset;
+  }
+}
 
 .icon {
   font-size: 30px;

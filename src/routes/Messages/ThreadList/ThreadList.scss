@@ -31,6 +31,11 @@ $active-thread-border-width: 4px;
   float: right;
 }
 
+.close-link {
+  float: right;
+  margin-left: 10px;
+}
+
 .search {
   padding: $search-vertical-padding $search-horizontal-padding;
   border-bottom: $light-border;
