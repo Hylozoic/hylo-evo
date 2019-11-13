@@ -24,7 +24,12 @@
     "ROLLBAR_CLIENT_TOKEN": {
       "required": true
     },
-    "ROLLBAR_ENV": "reviewApp"
+    "ROLLBAR_ENV": "reviewApp",
+    "MIXPANEL_TOKEN": "",
+    "INTERCOM_APP_ID": "",
+    "REDIRECT_TO_APP_STORE": "",
+    "HOLOCHAIN_WEBSOCKET_URI": "ws://localhost:3400",
+    "HOLOCHAIN_GRAPHQL_PATH": "hylo/graphql/graphql"
   },
   "formation": {
   },
