@@ -156,9 +156,9 @@ export default class PostDetail extends Component {
 
     return <div styleName='post' ref={this.setHeaderStateFromDOM}>
       <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
-      <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} />
+      <PostHeader styleName='header' {...post} routeParams={routeParams} />
       {atHeader && <div styleName='header-sticky' style={headerStyle}>
-        <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} />
+        <PostHeader styleName='header' {...post} routeParams={routeParams} />
       </div>}
       <PostImage postId={post.id} styleName='image' linked />
       <PostTags tags={post.tags} />

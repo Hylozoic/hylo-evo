@@ -39,9 +39,10 @@ export default function TopNav ({
       </div>
       <div styleName='navIcons'>
         {!HOLOCHAIN_ACTIVE && <Link to='/search'><Icon name='Search' styleName='icon' /></Link>}
-        <MessagesDropdown renderToggleChildren={showBadge =>
-          <BadgedIcon name='Messages' styleName='icon'
-            showBadge={showBadge} />} />
+        <MessagesDropdown
+          renderToggleChildren={showBadge =>
+            <BadgedIcon name='Messages' styleName='icon' showBadge={showBadge} />}
+          smallScreen={smallScreen} />
         <NotificationsDropdown renderToggleChildren={showBadge =>
           <BadgedIcon name='Notifications' styleName='icon' showBadge={showBadge} />} />
         <Dropdown styleName='user-menu' alignRight toggleChildren={

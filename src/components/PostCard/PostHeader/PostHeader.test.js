@@ -1,4 +1,4 @@
-import PostHeader, { TopicsLine } from './PostHeader'
+import PostHeader from './PostHeader'
 import { shallow } from 'enzyme'
 import React from 'react'
 
@@ -56,17 +56,4 @@ it('matches announcement snapshot', () => {
   expect(wrapper).toMatchSnapshot()
   wrapper.setProps({ deletePost: () => {}, editPost: () => {} })
   expect(wrapper).toMatchSnapshot()
-})
-
-describe('TopicsLine', () => {
-  it('matches last snapshot', () => {
-    const props = {
-      topics: [{ name: 'one' }, { name: 'two' }],
-      slug: 'hay',
-      newLine: true
-    }
-
-    const wrapper = shallow(<TopicsLine {...props} />)
-    expect(wrapper).toMatchSnapshot()
-  })
 })

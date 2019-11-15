@@ -1,0 +1,24 @@
+.topicsLine {
+  composes: text-button from 'css/typography.scss';
+  font-size: 12px;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 220px;
+}
+
+.topic {
+  composes: text-button from 'css/typography.scss';
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+.newLineForTopics {
+  overflow: initial;
+  text-overflow: initial;
+  margin-top: -7px;
+  padding-left: 1rem;
+  margin-bottom: 10px;
+  width: 450px;
+}

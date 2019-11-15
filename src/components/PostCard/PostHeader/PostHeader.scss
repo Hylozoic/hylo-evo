@@ -1,6 +1,6 @@
 .header {
   padding: 0px 15px;
-  margin-bottom: 30px;
+  margin-bottom: 1rem;
 }
 
 .headerMainRow {
@@ -44,14 +44,6 @@
 
 .date {
   line-height: 12px;
-}
-
-.spacer {
-  composes: timestamp from 'css/typography.scss';
-  margin: 0 7px;
-  font-size: 8px;
-  position: relative;
-  top: -2px;
 }
 
 .announcementSpacer {
@@ -130,26 +122,10 @@
   top: 2px;
 }
 
-.topicsLine {
-  composes: text-button from 'css/typography.scss';
-  font-size: 12px;
-  display: inline-block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 220px;
-}
-
-.topic {
-  composes: text-button from 'css/typography.scss';
-  font-size: 12px;
-  margin-right: 10px;
-}
-
-.newLineForTopics {
-  overflow: initial;
-  text-overflow: initial;
-  margin-left: 10px;
-  margin-top: 10px;
-  width: 450px;
+.spacer {
+  composes: timestamp from 'css/typography.scss';
+  margin: 0 7px;
+  font-size: 8px;
+  position: relative;
+  top: -2px;
 }

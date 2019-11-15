@@ -1,6 +1,11 @@
 .cardPadding {
   padding: 0px $space-4x;
 }
+@media (max-width: $bp-small-screen) {
+  .cardPadding {
+    padding: 0px;
+  }  
+}
 
 .body {
   margin-bottom: 36px;

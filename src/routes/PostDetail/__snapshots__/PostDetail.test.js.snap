@@ -26,7 +26,6 @@ exports[`PostDetail renders correctly 1`] = `
         "dancing",
       ]
     }
-    topicsOnNewline={true}
     votesTotal={7}
   />
   <Connect(PostImage)

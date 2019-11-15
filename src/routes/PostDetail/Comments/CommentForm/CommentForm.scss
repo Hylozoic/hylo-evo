@@ -1,6 +1,11 @@
 .commentForm {
   margin-bottom: $space-10x;
 }
+@media (max-width: $bp-small-screen) {
+  .commentForm {
+    margin-bottom: $space-2x;
+  }
+}  
 
 .icon {
   color: $color-caribbean-green;

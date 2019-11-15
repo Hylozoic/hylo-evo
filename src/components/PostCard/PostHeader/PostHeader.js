@@ -3,19 +3,20 @@ import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
+import PostTopics from '../PostTopics'
 import PostLabel from 'components/PostLabel'
 import Highlight from 'components/Highlight'
 import FlagContent from 'components/FlagContent'
 import Icon from 'components/Icon'
-import { personUrl, tagUrl } from 'util/navigation'
+import { personUrl } from 'util/navigation'
 import { humanDate } from 'hylo-utils/text'
 import './PostHeader.scss'
 import { filter, isFunction, isEmpty } from 'lodash'
-import cx from 'classnames'
 
 export default class PostHeader extends PureComponent {
   static defaultProps = {
-    routeParams: {}
+    routeParams: {},
+    topicsInline: false
   }
 
   state = {
@@ -41,7 +42,7 @@ export default class PostHeader extends PureComponent {
       removePost,
       pinPost,
       highlightProps,
-      topicsOnNewline,
+      topicsInline,
       announcement
     } = this.props
 
@@ -85,7 +86,7 @@ export default class PostHeader extends PureComponent {
                 delayShow={550}
                 id='announcement-tt' />
             </span>}
-            {!topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.slug} />}
+            {topicsInline && !isEmpty(topics) && <PostTopics topics={topics} slug={routeParams.slug} spacer={Spacer} />}
           </div>
         </div>
         <div styleName='upperRight'>
@@ -101,15 +102,10 @@ export default class PostHeader extends PureComponent {
           onClose={() => this.setState({ flaggingVisible: false })} />
         }
       </div>
-      {topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.slug} newLine />}
+      {/* {!topicsInline && !isEmpty(topics) && <PostTopics topics={topics} slug={routeParams.slug} />} */}
     </div>
   }
 }
 
-export function TopicsLine ({ topics, slug, newLine }) {
-  return <div styleName={cx('topicsLine', { 'newLineForTopics': newLine })}>
-    {!newLine && <span styleName='spacer'>•</span>}
-    {topics.slice(0, 3).map(t =>
-      <Link styleName='topic' to={tagUrl(t.name, slug)} key={t.name}>#{t.name}</Link>)}
-  </div>
-}
+export const Spacer = () =>
+  <span styleName='spacer'>•</span>

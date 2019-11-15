@@ -17,7 +17,11 @@
   background-color: #FFF;
   padding: 0 $space-6x;
 }
-
+@media (max-width: $bp-small-screen) {
+  .form-wrapper {
+    padding: 0px $space-2x;
+  }  
+}
 .people-typing {
   position: fixed;
   bottom: -3px;

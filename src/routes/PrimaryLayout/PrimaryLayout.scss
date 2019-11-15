@@ -49,11 +49,6 @@
   margin-left: auto;
   margin-right: auto;
 }
-@media (max-width: $bp-small-screen) {
-  .main {
-    width: 100%;
-  }
-}
 
 $drawer-width: 367px;
 $drawer-height: 100vh;

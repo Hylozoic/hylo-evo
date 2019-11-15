@@ -176,7 +176,7 @@ export default class Messages extends React.Component {
                 people={contacts}
                 recentPeople={recentContacts}
                 matchingPeople={matchingContacts}
-                onCloseURL={onCloseURL}
+                onCloseURL={smallScreen ? '/t' : onCloseURL}
                 selectedPeople={participants}
                 selectPerson={this.addParticipant}
                 removePerson={this.removeParticipant} />}
