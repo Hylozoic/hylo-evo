@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { throttle, isEmpty, some } from 'lodash/fp'
 import cx from 'classnames'
+import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 import { CENTER_COLUMN_ID, position } from 'util/scrolling'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
 import TabBar from './TabBar'
@@ -91,7 +92,7 @@ export default class FeedList extends React.Component {
     }
     const isProject = routeParams.postTypeContext === 'project'
     const isEvent = routeParams.postTypeContext === 'event'
-    const showSortAndFilters = !isProject && !isEvent
+    const showSortAndFilters = !isProject && !isEvent && !HOLOCHAIN_ACTIVE
 
     return <div styleName='FeedList-container'>
       <ScrollListener

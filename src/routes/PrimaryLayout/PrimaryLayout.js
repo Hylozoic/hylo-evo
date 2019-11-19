@@ -9,7 +9,7 @@ import cx from 'classnames'
 import { get, some } from 'lodash/fp'
 // import Intercom from 'react-intercom'
 // import config, { isTest } from 'config'
-import { isSmallScreen } from 'util/responsive'
+import { isSmallScreen, isMediumScreen } from 'util/responsive'
 import AddLocation from 'routes/Signup/AddLocation'
 import AddSkills from 'routes/Signup/AddSkills'
 import AllTopics from 'routes/AllTopics'
@@ -71,6 +71,7 @@ export default function PrimaryLayout ({
   goBack
 }) {
   const smallScreen = isSmallScreen()
+  const mediumScreen = isMediumScreen()
 
   useEffect(() => {
     (async () => { await fetchForCurrentUser() })()
@@ -107,8 +108,8 @@ export default function PrimaryLayout ({
       {...{ community, network, currentUser, showLogoBadge }}
     />
     <div styleName='main' onClick={closeDrawer}>
-      <Navigation styleName={cx('left', { hidden: smallScreen })} collapsed={hasDetail} showTopics={showTopics} currentUser={currentUser} />
-      <div styleName={cx('center', { hidden: hasDetail && smallScreen })} id={CENTER_COLUMN_ID}>
+      {!HOLOCHAIN_ACTIVE && <Navigation styleName={cx('left', { hidden: smallScreen })} collapsed={hasDetail || mediumScreen} showTopics={showTopics} currentUser={currentUser} />}
+      <div styleName={cx('center', { hidden: hasDetail && mediumScreen })} id={CENTER_COLUMN_ID}>
         <RedirectToSignupFlow currentUser={currentUser} pathname={location.pathname} />
         <RedirectToCommunity path='/' currentUser={currentUser} />
         <RedirectToCommunity path='/app' currentUser={currentUser} />

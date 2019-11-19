@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
+import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import PostTopics from '../PostTopics'
@@ -56,7 +57,7 @@ export default class PostHeader extends PureComponent {
       id: id,
       type: 'post'
     }
-    const dropdownItems = filter([
+    const dropdownItems = HOLOCHAIN_ACTIVE ? [] : filter([
       { icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost },
       { icon: 'Edit', label: 'Edit', onClick: editPost },
       { icon: 'Flag', label: 'Flag', onClick: this.flagPostFunc() },

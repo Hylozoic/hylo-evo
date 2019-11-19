@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import './Comment.scss'
 import { Link } from 'react-router-dom'
+import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
@@ -10,6 +10,7 @@ import HyloEditor from 'components/HyloEditor'
 import { personUrl } from 'util/navigation'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import { filter, isFunction } from 'lodash'
+import './Comment.scss'
 
 const { object } = PropTypes
 
@@ -37,7 +38,7 @@ export default class Comment extends Component {
     const { creator, createdAt, text, image } = comment
     const profileUrl = personUrl(creator.id, slug)
 
-    const dropdownItems = filter([
+    const dropdownItems = HOLOCHAIN_ACTIVE ? [] : filter([
       {},
       { icon: 'Edit', label: 'Edit', onClick: isCreator && this.editComment },
       { icon: 'Trash', label: 'Delete', onClick: deleteComment },

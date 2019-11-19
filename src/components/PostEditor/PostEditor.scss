@@ -24,6 +24,7 @@ $wrapperBorderRadius: 8px;
 @media (max-width: $bp-small-screen) {
   .wrapper {
     min-width: unset;
+    height: 100%;
   }
 }
 
@@ -114,6 +115,7 @@ $wrapperBorderRadius: 8px;
 .body {
   padding: 0 $space-4x;
   display: flex;
+  flex: 1;
   flex-direction: row;
   &-column:last-child {
     width: 100%;

@@ -5,6 +5,7 @@ import { get, isEqual, throttle } from 'lodash/fp'
 import cheerio from 'cheerio'
 import cx from 'classnames'
 import Moment from 'moment'
+import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
 import { POST_PROP_TYPES } from 'store/models/Post'
 import AttachmentManager from './AttachmentManager'
@@ -442,7 +443,7 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>}
-        <div styleName='footerSection'>
+        {!HOLOCHAIN_ACTIVE && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Topics</div>
           <div styleName='footerSection-communities'>
             <TopicSelector
@@ -450,7 +451,7 @@ export default class PostEditor extends React.Component {
               detailsTopics={detailsTopics}
               ref={this.topicSelector} />
           </div>
-        </div>
+        </div>}
         <div styleName='footerSection'>
           <div styleName='footerSection-label'>Post in</div>
           <div styleName='footerSection-communities'>
@@ -506,7 +507,7 @@ export function ActionsBar ({ id,
   communities
 }) {
   return <div styleName='actionsBar'>
-    <div styleName='actions'>
+    {!HOLOCHAIN_ACTIVE && <div styleName='actions'>
       <ChangeImageButton update={addImage}
         uploadSettings={uploadSettings(id)}
         attachmentType='image'
@@ -538,8 +539,7 @@ export function ActionsBar ({ id,
         myModeratedCommunities={myModeratedCommunities}
         communities={communities}
       />}
-
-    </div>
+    </div>}
     <Button
       onClick={announcementSelected ? toggleAnnouncementModal : save}
       disabled={!valid || loading}

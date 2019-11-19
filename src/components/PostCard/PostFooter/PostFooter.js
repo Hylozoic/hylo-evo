@@ -1,14 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 import { CURRENT_USER_PROP_TYPES } from 'store/models/Me'
 import { RESPONSES } from 'store/models/EventInvitation'
 import { PERSON_PROP_TYPES } from 'store/models/Person'
 import { find, get, sortBy, isFunction, filter } from 'lodash/fp'
-import './PostFooter.scss'
 import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
 import cx from 'classnames'
 import ReactTooltip from 'react-tooltip'
+import './PostFooter.scss'
 
 export default class PostFooter extends React.PureComponent {
   static propTypes= {
@@ -94,11 +95,11 @@ export default class PostFooter extends React.PureComponent {
       <span styleName='caption' onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'inherit' }}>
         {caption}
       </span>
-      <a onClick={vote} styleName={cx('vote-button', { voted: myVote })}
+      {!HOLOCHAIN_ACTIVE && <a onClick={vote} styleName={cx('vote-button', { voted: myVote })}
         data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for='postfooter-tt'>
         <Icon name='ArrowUp' styleName='arrowIcon' />
         {votesTotal}
-      </a>
+      </a>}
       <ReactTooltip
         effect={'solid'}
         delayShow={550}

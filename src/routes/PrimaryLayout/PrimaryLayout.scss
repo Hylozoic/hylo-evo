@@ -45,9 +45,13 @@
   flex-grow: 1;
   display: flex;
   flex-wrap: nowrap;
-  width: $content-width;
   margin-left: auto;
   margin-right: auto;
+}
+@media (max-width: $bp-small-screen) {
+  .main {
+    margin: unset;
+  }
 }
 
 $drawer-width: 367px;
@@ -78,8 +82,9 @@ $drawer-z-index: 51;
   position: relative;
   min-height: 1px; // Prevent collapsing
   height: 100%;
-  flex: 0 0 $center-column-width;
+  flex: 1;
   max-width: $center-column-width;
+  min-width: 500px;
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: $space-2x;
@@ -87,7 +92,8 @@ $drawer-z-index: 51;
 @media (max-width: $bp-small-screen) {
   .center {
     flex: 0 0 100%;
-    max-width: initial;
+    max-width: unset;
+    min-width: unset;
     padding-right: 5px;
     padding-left: 5px;
   }
@@ -97,8 +103,8 @@ $drawer-z-index: 51;
   // From Bootstrap make-col-ready():
   position: relative;
   min-height: 1px; // Prevent collapsing
-  flex: 0 0 29%;
-  max-width: 29%;
+  flex: initial;
+  max-width: 300px;
   transition-delay: 0.1s;
   transition-duration: 0.3s;
   right: 0px;
@@ -122,12 +128,11 @@ $drawer-z-index: 51;
 
 .detail {
   background-color: white;
-  position: absolute;
-  top: 0;
-  right: 0px;
   height: 100%;
   width: $detail-column-width;
-  box-shadow: 0px 4px 56px 0px $color-alto;
+  min-width: 500px;
+  margin: 0 20px 0 20px;
+  box-shadow: 0px 4px 26px 0px $color-alto;
   transition-delay: 0.1s;
   transition-duration: 0.2s;
   overflow-y: auto;
@@ -138,10 +143,18 @@ $drawer-z-index: 51;
     transition-delay: 0.0s;
   }
 }
-
+@media (max-width: $bp-medium-screen) {
+  .detail {
+    width: 100%;
+    margin: unset;
+    z-index: 2;
+  }
+}
 @media (max-width: $bp-small-screen) {
   .detail {
     width: 100%;
+    min-width: unset;
+    margin: unset;
     z-index: 2;
   }
 }
