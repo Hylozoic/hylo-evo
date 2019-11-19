@@ -59,6 +59,17 @@
 .backButton {
   margin-right: 10px;
   color: #777;
+  padding: 0 16px;
+  .image {
+    @include image(20px);
+  }
+  .communityName {
+    font-size: 14px !important;
+    line-height: 14px;
+  }
+  .label {
+    font-size: 8px;
+  }
 }
 
 .title {
@@ -70,23 +81,12 @@
 .label {
   composes: tag from 'css/typography.scss';
 }
-@media (max-width: $bp-small-screen) {
-  .label {
-    display: none;
-  }
-}
 
 .communityName {
   composes: hdr-subheadline from 'css/typography.scss';
   font-size: 16px !important;
   position: relative;
   top: -2px;
-}
-
-@media (max-width: $bp-small-screen) {
-  .communityName {
-    display: none;
-  }
 }
 
 .navIcons {
@@ -113,11 +113,11 @@
   top: 3px;
   font-size: 22px;
 }
-@media (max-width: $bp-small-screen) {
-  .icon {
-    font-size: 28px;
-  }
-}
+// @media (max-width: $bp-small-screen) {
+//   .icon {
+//     font-size: 28px;
+//   }
+// }
 
 .icon:hover {
   color: $color-rhino;

@@ -27,6 +27,12 @@ $wrapperBorderRadius: 8px;
     height: 100%;
   }
 }
+@media (max-height: 500px) {
+  .editor {
+    min-height: unset;
+    height: 100%;
+  }
+}
 
 .wrapper-scrollable-inner {
   max-height: 360px;
@@ -145,10 +151,20 @@ $wrapperBorderRadius: 8px;
 }
 
 .editor {
-  min-height: 100px;
+  min-height: 200px;
   max-height: 200px;
   margin-bottom: $space-6x;
   color: $color-rhino-80;
+}
+@media (max-width: $bp-small-screen) {
+  .editor {
+    min-height: unset;
+  }
+}
+@media (max-height: 500px) {
+  .editor {
+    min-height: unset;
+  }
 }
 
 // Footer area

@@ -74,3 +74,11 @@
     margin: 0px;
   }
 }
+@media (max-height: 500px) {
+  .post-editor-wrapper {
+    width: unset;
+    top: 0px;
+    height: 100%;
+    margin: 0px;
+  }
+}

@@ -26,9 +26,19 @@ $active-thread-border-width: 4px;
   composes: hdr-headline from 'css/typography.scss';
   padding: 6px 0;
 }
+@media (max-width: $bp-small-screen) {
+  .header-text {
+    font-size: 16px;
+  }
+}
 
 .new-message {
   float: right;
+}
+@media (max-width: $bp-small-screen) {
+  .new-message {
+    font-size: 12px;
+  }
 }
 
 .close-link {
