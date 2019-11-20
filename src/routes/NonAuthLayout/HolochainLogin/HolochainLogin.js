@@ -39,7 +39,7 @@ export default class HolochainLogin extends React.Component {
     if (this.state.loading) return <Loading />
 
     return <div className={this.props.className}>
-      <h1 styleName='title'>Register your Holochain agent</h1>
+      <h1 styleName='title'>Register your agent</h1>
       {this.props.error && formatError(this.props.error, 'Login')}
       <div styleName='field'>
         <label htmlFor='name' styleName='field-label'>Your name</label>
@@ -75,7 +75,7 @@ export default class HolochainLogin extends React.Component {
           />
         </div>
       </div>
-      <Button styleName='submit' label='Log In' onClick={this.submit} />
+      <Button styleName='submit' label='Register' onClick={this.submit} />
     </div>
   }
 }

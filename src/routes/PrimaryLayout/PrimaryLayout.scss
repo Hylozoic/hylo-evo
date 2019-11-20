@@ -130,6 +130,7 @@ $drawer-z-index: 51;
   background-color: white;
   height: 100%;
   width: $detail-column-width;
+  max-width: $detail-column-width;
   min-width: 500px;
   margin: 0 20px 0 20px;
   box-shadow: 0px 4px 26px 0px $color-alto;
@@ -154,6 +155,7 @@ $drawer-z-index: 51;
   .detail {
     width: 100%;
     min-width: unset;
+    max-width: unset;
     margin: unset;
     z-index: 2;
   }

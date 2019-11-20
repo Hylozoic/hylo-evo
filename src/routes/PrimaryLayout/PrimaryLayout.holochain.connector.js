@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { graphql, compose } from 'react-apollo'
-import { goBack, push } from 'connected-react-router'
+import { push } from 'connected-react-router'
 import { get } from 'lodash/fp'
+import { communityUrl } from 'util/navigation'
 import mobileRedirect from 'util/mobileRedirect'
 import { HOLOCHAIN_POLL_INTERVAL_SLOW } from 'util/holochain'
 import HolochainCommunityQuery from 'graphql/queries/HolochainCommunityQuery.graphql'
@@ -31,10 +32,12 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
+  const slug = getSlugFromLocation(null, props)
+
   return bindActionCreators({
     fetchForCurrentUserMock,
     toggleDrawer,
-    goBack: () => props.history.length > 2 ? goBack() : push('/')
+    goBack: () => push(communityUrl(slug))
   }, dispatch)
 }
 

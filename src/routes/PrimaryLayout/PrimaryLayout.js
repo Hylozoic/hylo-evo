@@ -104,7 +104,7 @@ export default function PrimaryLayout ({
       styleName='top'
       onClick={closeDrawer}
       smallScreen={smallScreen}
-      goBack={smallScreen && hasDetail ? goBack : null}
+      goBack={mediumScreen && hasDetail ? goBack : null}
       {...{ community, network, currentUser, showLogoBadge }}
     />
     <div styleName='main' onClick={closeDrawer}>
@@ -142,7 +142,7 @@ export default function PrimaryLayout ({
               <CreateCommunity {...props} component={component} />} />)}
         </Switch>
       </div>
-      <div styleName={cx('sidebar', { hidden: hasDetail })}>
+      <div styleName={cx('sidebar', { hidden: hasDetail || HOLOCHAIN_ACTIVE })}>
         <Switch>
           <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
           <Route path={`/c/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />

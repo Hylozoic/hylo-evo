@@ -1,3 +1,18 @@
+.new-message {
+  // float: right;
+}
+@media (max-width: $bp-small-screen) {
+  .new-message {
+    font-size: 14px;
+  }
+}
+.close-link {
+  // float: right;
+  // margin-left: 10px;
+}
+
+//
+
 $messages-inner-padding: $space-6x;
 
 .hidden {
@@ -14,7 +29,8 @@ $messages-inner-padding: $space-6x;
 }
 
 .left-column {
-  width: 30%;
+  flex: initial;
+  border-right: $light-border;
 }
 @media (max-width: $bp-small-screen) {
   .left-column {
@@ -23,11 +39,39 @@ $messages-inner-padding: $space-6x;
 }
 
 .right-column {
-  width: 70%;
+  flex: 1;
 }
 @media (max-width: $bp-small-screen) {
   .right-column {
     width: 100%;
+  }
+}
+
+// Header
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  line-height: 1;
+  border-bottom: $light-border;
+  border-right: $light-border;
+  outline: none;
+  -webkit-box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
+  -moz-box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
+  box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
+  background-color: $color-rhino-10;
+}
+
+.header-text {
+  composes: bdy-drk-lg from 'css/typography.scss';
+  // padding: $space-2x $space-2x $space-7x 0;
+  flex: 1;
+  // word-wrap: break-word;
+}
+@media (max-width: $bp-small-screen) {
+  .header-text {
+    font-size: 18px;
   }
 }
 
@@ -41,15 +85,12 @@ $messages-inner-padding: $space-6x;
   position: relative;
 }
 
-.header {
+.thread-header {
   display: flex;
-  min-height: $messages-header-height;
-  // padding: $space-5x $space-6x;
-  padding-top: $space-5x;
-  padding-left: $space-6x;
-  padding-right: $space-6x;
+  align-items: center;
+  padding: 1rem;
+  line-height: 1;
   border-bottom: $light-border;
-  border-left: $light-border;
   border-right: $light-border;
   outline: none;
   -webkit-box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
@@ -57,19 +98,25 @@ $messages-inner-padding: $space-6x;
   box-shadow: -5px 5px 20px 0px rgba(0,0,0,0.05);
 }
 
-.header-text {
+.thread-header-text {
   composes: bdy-drk-lg from 'css/typography.scss';
-  padding: $space-2x $space-2x $space-7x 0;
+  // padding: $space-2x $space-2x $space-7x 0;
   flex: 1;
-  word-wrap: break-word;
+  // word-wrap: break-word;
 }
+@media (max-width: $bp-small-screen) {
+  .header-text {
+    font-size: 18px;
+  }
+}
+
+// Misc
 
 .more-icon {
   padding: $space-1x 0;
 }
 
 .message-form {
-  border-left: $light-border;
   padding: 0 $messages-inner-padding $space-7x $messages-inner-padding;
   width: 100%;
 }

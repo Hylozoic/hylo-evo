@@ -16,36 +16,6 @@ $active-thread-border-width: 4px;
   flex-shrink: 0;
 }
 
-.header {
-  height: $messages-header-height;
-  padding: $space-5x $space-6x;
-  border-bottom: $light-border;
-}
-
-.header-text {
-  composes: hdr-headline from 'css/typography.scss';
-  padding: 6px 0;
-}
-@media (max-width: $bp-small-screen) {
-  .header-text {
-    font-size: 16px;
-  }
-}
-
-.new-message {
-  float: right;
-}
-@media (max-width: $bp-small-screen) {
-  .new-message {
-    font-size: 12px;
-  }
-}
-
-.close-link {
-  float: right;
-  margin-left: 10px;
-}
-
 .search {
   padding: $search-vertical-padding $search-horizontal-padding;
   border-bottom: $light-border;

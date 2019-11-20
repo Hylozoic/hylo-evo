@@ -5,12 +5,16 @@ import { get } from 'lodash/fp'
 import Loading from 'components/Loading'
 import PeopleSelector from './PeopleSelector'
 import ThreadList from './ThreadList'
-import Header from './Header'
+import ThreadHeader from './ThreadHeader'
 import MessageSection from './MessageSection'
 import MessageForm from './MessageForm'
 import PeopleTyping from 'components/PeopleTyping'
 import SocketSubscriber from 'components/SocketSubscriber'
 import './Messages.scss'
+
+import Button from 'components/Button'
+import CloseMessages from './CloseMessages'
+import { Link } from 'react-router-dom'
 
 export const NEW_THREAD_ID = 'new'
 
@@ -155,12 +159,12 @@ export default class Messages extends React.Component {
     }
 
     return <div styleName='modal'>
+      <Header onCloseURL={onCloseURL} />
       <div styleName='content'>
         {(!messageThreadId || !smallScreen) && <ThreadList
           styleName={cx('left-column')}
           setThreadSearch={setThreadSearch}
           onScrollBottom={fetchMoreThreads}
-          onCloseURL={smallScreen ? onCloseURL : null}
           currentUser={currentUser}
           threadsPending={threadsPending}
           threads={threads}
@@ -176,16 +180,15 @@ export default class Messages extends React.Component {
                 people={contacts}
                 recentPeople={recentContacts}
                 matchingPeople={matchingContacts}
-                onCloseURL={smallScreen ? '/t' : onCloseURL}
+                onCloseURL={'/t'}
                 selectedPeople={participants}
                 selectPerson={this.addParticipant}
                 removePerson={this.removeParticipant} />}
             {!forNewThread &&
-              <Header
+              <ThreadHeader
                 messageThread={messageThread}
                 currentUser={currentUser}
-                pending={messagesPending}
-                onCloseURL={smallScreen ? '/t' : onCloseURL} />}
+                pending={messagesPending} />}
             {!forNewThread &&
               <MessageSection
                 socket={socket}
@@ -251,4 +254,12 @@ Messages.propTypes = {
   updateMessageText: PropTypes.func,
   updateThreadReadTime: PropTypes.func,
   smallScreen: PropTypes.bool
+}
+
+function Header ({ onCloseURL }) {
+  return <div styleName='header'>
+    {onCloseURL && <CloseMessages styleName='close-link' onCloseURL={onCloseURL} />}
+    <div styleName='header-text'>Messages</div>
+    <Link to='/t/new'><Button label='New Message' styleName='new-message' /></Link>
+  </div>
 }

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header should match the latest snapshot 1`] = `
+exports[`MessageHeader should match the latest snapshot 1`] = `
 <div
   data-stylename="header"
   id="thread-header"
