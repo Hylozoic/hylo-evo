@@ -48,6 +48,7 @@
 
 .post-editor-modal {
   position: fixed;
+  min-width: $bp-min-screen-width;
   z-index: 100;
   top: 0;
   left: 0;

@@ -106,7 +106,11 @@ export default function PrimaryLayout ({
       goBack={mediumScreen && hasDetail ? goBack : null}
       {...{ community, network, currentUser, showLogoBadge }} />
     <div styleName='main' onClick={closeDrawer}>
-      {!HOLOCHAIN_ACTIVE && <Navigation styleName={cx('left', { hidden: smallScreen })} collapsed={hasDetail || mediumScreen} showTopics={showTopics} currentUser={currentUser} />}
+      {!HOLOCHAIN_ACTIVE && <Navigation
+        styleName={cx('left', { hidden: smallScreen })}
+        collapsed={hasDetail || mediumScreen}
+        showTopics={showTopics}
+        currentUser={currentUser} />}
       <div styleName={cx('center', { hidden: hasDetail && mediumScreen })} id={CENTER_COLUMN_ID}>
         <RedirectToSignupFlow currentUser={currentUser} pathname={location.pathname} />
         <RedirectToCommunity path='/' currentUser={currentUser} />

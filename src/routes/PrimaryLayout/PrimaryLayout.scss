@@ -7,6 +7,7 @@
 
 .container {
   display: flex;
+  min-width: $bp-min-screen-width;
   flex-direction: column;
   align-content: stretch;
   align-items: stretch;

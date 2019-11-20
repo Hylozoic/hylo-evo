@@ -3,9 +3,10 @@
 }
 @media (max-width: $bp-small-screen) {
   .new-message {
-    font-size: 14px;
+    // font-size: 16px;
   }
 }
+
 .close-link {
   // float: right;
   // margin-left: 10px;
@@ -21,6 +22,7 @@ $messages-inner-padding: $space-6x;
 
 .modal {
   composes: modal from 'css/layout.scss';
+  min-width: $bp-min-screen-width;
 }
 
 .content {

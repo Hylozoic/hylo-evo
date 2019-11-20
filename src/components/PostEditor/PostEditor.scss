@@ -115,6 +115,13 @@ $wrapperBorderRadius: 8px;
     background-color: $color-moon-raker;
   }
 }
+@media (max-width: $bp-small-screen) {
+  .postType {
+    margin: 0 $space-1x;
+    padding: 0 $space-1x;
+    font-size: 11px;
+  }
+}
 
 // Body area
 

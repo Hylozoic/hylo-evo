@@ -4,6 +4,7 @@ import cx from 'classnames'
 import { get } from 'lodash/fp'
 import Loading from 'components/Loading'
 import PeopleSelector from './PeopleSelector'
+import Icon from 'components/Icon'
 import ThreadList from './ThreadList'
 import ThreadHeader from './ThreadHeader'
 import MessageSection from './MessageSection'
@@ -159,7 +160,7 @@ export default class Messages extends React.Component {
     }
 
     return <div styleName='modal'>
-      <Header onCloseURL={onCloseURL} />
+      <Header onCloseURL={onCloseURL} smallScreen={smallScreen} />
       <div styleName='content'>
         {(!messageThreadId || !smallScreen) && <ThreadList
           styleName={cx('left-column')}
@@ -184,12 +185,11 @@ export default class Messages extends React.Component {
                 selectedPeople={participants}
                 selectPerson={this.addParticipant}
                 removePerson={this.removeParticipant} />}
-            {!forNewThread &&
+            {!forNewThread && <>
               <ThreadHeader
                 messageThread={messageThread}
                 currentUser={currentUser}
-                pending={messagesPending} />}
-            {!forNewThread &&
+                pending={messagesPending} />
               <MessageSection
                 socket={socket}
                 currentUser={currentUser}
@@ -198,7 +198,8 @@ export default class Messages extends React.Component {
                 hasMore={hasMoreMessages}
                 pending={messagesPending}
                 updateThreadReadTime={updateThreadReadTime}
-                messageThread={messageThread} />}
+                messageThread={messageThread} />
+            </>}
             {(!forNewThread || participants.length > 0) &&
               <div styleName='message-form'>
                 <MessageForm
@@ -256,10 +257,12 @@ Messages.propTypes = {
   smallScreen: PropTypes.bool
 }
 
-function Header ({ onCloseURL }) {
+function Header ({ onCloseURL, smallScreen }) {
   return <div styleName='header'>
     {onCloseURL && <CloseMessages styleName='close-link' onCloseURL={onCloseURL} />}
     <div styleName='header-text'>Messages</div>
-    <Link to='/t/new'><Button label='New Message' styleName='new-message' /></Link>
+    <Link to='/t/new'>
+      <Button label={smallScreen ? 'New' : 'New Message'} styleName='new-message' />
+    </Link>
   </div>
 }

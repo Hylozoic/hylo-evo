@@ -40,6 +40,7 @@
   top: -110px;
   padding-left: 24px;
   display: flex;
+  align-items: center;
 }
 
 .logo {
@@ -67,6 +68,11 @@
   letter-spacing: -0.47px;
   text-shadow: 0 2px 4px rgba(0,0,0,0.50);
 }
+@media (max-width: $bp-small-screen) {
+  .header-name {
+    font-size: 28px;
+  }
+}
 
 .header-subtitle {
   @include font-regular;
@@ -74,6 +80,11 @@
   font-size: 13px;
   opacity: 0.8;
   margin-top: 10px;
+}
+@media (max-width: $bp-small-screen) {
+  .header-subtitle {
+    font-size: 11px;
+  }
 }
 
 .header-icon {
@@ -105,6 +116,11 @@
   @include font-regular;
   font-size: 16px;
   color: $color-rhino-30;
+}
+@media (max-width: $bp-small-screen) {
+  .postPrompt {
+    font-size: 14px;
+  }
 }
 
 .prompt-image {
