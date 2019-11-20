@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import { get } from 'lodash/fp'
 import Loading from 'components/Loading'
+import Header from './Header'
 import PeopleSelector from './PeopleSelector'
-import Icon from 'components/Icon'
 import ThreadList from './ThreadList'
 import ThreadHeader from './ThreadHeader'
 import MessageSection from './MessageSection'
@@ -12,10 +12,6 @@ import MessageForm from './MessageForm'
 import PeopleTyping from 'components/PeopleTyping'
 import SocketSubscriber from 'components/SocketSubscriber'
 import './Messages.scss'
-
-import Button from 'components/Button'
-import CloseMessages from './CloseMessages'
-import { Link } from 'react-router-dom'
 
 export const NEW_THREAD_ID = 'new'
 
@@ -255,14 +251,4 @@ Messages.propTypes = {
   updateMessageText: PropTypes.func,
   updateThreadReadTime: PropTypes.func,
   smallScreen: PropTypes.bool
-}
-
-function Header ({ onCloseURL, smallScreen }) {
-  return <div styleName='header'>
-    {onCloseURL && <CloseMessages styleName='close-link' onCloseURL={onCloseURL} />}
-    <div styleName='header-text'>Messages</div>
-    <Link to='/t/new'>
-      <Button label={smallScreen ? 'New' : 'New Message'} styleName='new-message' />
-    </Link>
-  </div>
 }

@@ -23,6 +23,8 @@ $messages-inner-padding: $space-6x;
 .modal {
   composes: modal from 'css/layout.scss';
   min-width: $bp-min-screen-width;
+  display: flex;
+  flex-direction: column;
 }
 
 .content {
@@ -80,7 +82,7 @@ $messages-inner-padding: $space-6x;
 // Thread
 
 .thread {
-  height: 100vh;
+  height: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
