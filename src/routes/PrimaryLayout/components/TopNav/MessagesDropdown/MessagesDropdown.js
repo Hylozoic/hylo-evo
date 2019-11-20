@@ -50,7 +50,7 @@ export default class MessagesDropdown extends Component {
       renderToggleChildren,
       threads,
       className,
-      smallScreen,
+      openLastThread,
       goToThread,
       currentUser,
       pending
@@ -83,9 +83,9 @@ export default class MessagesDropdown extends Component {
       ? threadUrl(threads[0].id)
       : newMessageUrl()
 
-    const openMessagesUrl = smallScreen
-      ? messagesUrl()
-      : firstThreadUrl
+    const openMessagesUrl = openLastThread
+      ? firstThreadUrl
+      : messagesUrl()
 
     return <TopNavDropdown
       ref={this.dropdown}

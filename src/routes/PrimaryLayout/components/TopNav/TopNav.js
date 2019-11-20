@@ -3,6 +3,7 @@ import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 import { bgImageStyle } from 'util/index'
 import { personUrl, messagesUrl } from 'util/navigation'
 import { Link } from 'react-router-dom'
+import { isSmallScreen } from 'util/responsive'
 import Icon from 'components/Icon'
 import BadgedIcon from 'components/BadgedIcon'
 import Badge from 'components/Badge'
@@ -24,10 +25,10 @@ export default function TopNav ({
   toggleDrawer,
   showLogoBadge,
   onClick,
-  goBack,
-  smallScreen
+  goBack
 }) {
   const profileUrl = personUrl(get('id', currentUser))
+  const smallScreen = isSmallScreen()
 
   return <div styleName='topNavWrapper' className={className}>
     <div styleName='topNav'>
@@ -46,7 +47,7 @@ export default function TopNav ({
         {!smallScreen && <MessagesDropdown
           renderToggleChildren={showBadge =>
             <BadgedIcon name='Messages' styleName='icon' showBadge={showBadge} />}
-          smallScreen={smallScreen} />}
+          openLastThread={!smallScreen} />}
         {!HOLOCHAIN_ACTIVE && <NotificationsDropdown renderToggleChildren={showBadge =>
           <BadgedIcon name='Notifications' styleName='icon' showBadge={showBadge} />} />}
         <Dropdown styleName='user-menu' alignRight toggleChildren={

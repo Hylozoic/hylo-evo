@@ -26,6 +26,7 @@ exports[`renders as expected with no community 1`] = `
         />
       </Link>
       <Connect(MessagesDropdown)
+        openLastThread={true}
         renderToggleChildren={[Function]}
       />
       <Connect(NotificationsDropdown)
@@ -36,6 +37,7 @@ exports[`renders as expected with no community 1`] = `
         data-stylename="user-menu"
         toggleChildren={
           <RoundImage
+            medium={false}
             small={true}
           />
         }
