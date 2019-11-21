@@ -70,7 +70,7 @@ export default class PostHeader extends PureComponent {
         <Avatar avatarUrl={creator.avatarUrl} url={!HOLOCHAIN_ACTIVE && creatorUrl} styleName='avatar' />
         <div styleName='headerText'>
           <Highlight {...highlightProps}>
-            <Link to={!HOLOCHAIN_ACTIVE && creatorUrl} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
+            {!HOLOCHAIN_ACTIVE && <Link to={creatorUrl} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>}
           </Highlight>
           {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
           <div styleName='timestampRow'>

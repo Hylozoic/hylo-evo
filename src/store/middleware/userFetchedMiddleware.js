@@ -7,7 +7,7 @@ import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 export default function userFetchedMiddleware ({ dispatch, getState }) {
   return next => action => {
     // * Don't use Intercom or Mixpanel for Holochain
-    if (HOLOCHAIN_ACTIVE) next(action)
+    if (HOLOCHAIN_ACTIVE) return next(action)
 
     const wasMe = getMe(getState())
     const result = next(action)
