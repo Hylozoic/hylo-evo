@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ThreadHeader should match the latest snapshot 1`] = `
+<div
+  data-stylename="thread-header"
+  id="thread-header"
+>
+  <div
+    data-stylename="thread-header-text"
+  >
+    one, two, three
+  </div>
+  <CloseMessages
+    onCloseURL="/t"
+  />
+</div>
+`;

@@ -5,24 +5,6 @@ exports[`ThreadList matches the last snapshot 1`] = `
   data-stylename="thread-list"
 >
   <div
-    data-stylename="header"
-  >
-    <Link
-      replace={false}
-      to="/t/new"
-    >
-      <Button
-        data-stylename="new-message"
-        label="New Message"
-      />
-    </Link>
-    <div
-      data-stylename="header-text"
-    >
-      Messages
-    </div>
-  </div>
-  <div
     data-stylename="search"
   >
     <TextInput

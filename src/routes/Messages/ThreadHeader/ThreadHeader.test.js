@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import MessageHeader, { calculateMaxShown, generateDisplayNames, formatNames } from './MessageHeader'
+import ThreadHeader, { calculateMaxShown, generateDisplayNames, formatNames } from './ThreadHeader'
 
-describe('MessageHeader', () => {
+describe('ThreadHeader', () => {
   it('should match the latest snapshot', () => {
     const otherParticipants = ['one', 'two', 'three']
     const props = {
@@ -10,7 +10,7 @@ describe('MessageHeader', () => {
         participants: otherParticipants
       }
     }
-    const wrapper = shallow(<MessageHeader {...props} />)
+    const wrapper = shallow(<ThreadHeader {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

@@ -307,7 +307,6 @@ export default class PostEditor extends React.Component {
       id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, location
     } = this.state.post
     const details = this.editor.current.getContentHTML()
-    console.log('!!!!', this.topicSelector)
     const topicNames = get('current', this.topicSelector) && this.topicSelector.current.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
