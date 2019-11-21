@@ -50,18 +50,17 @@ export default function TopNav ({
           openLastThread={!smallScreen} />}
         {!HOLOCHAIN_ACTIVE && <NotificationsDropdown renderToggleChildren={showBadge =>
           <BadgedIcon name='Notifications' styleName='icon' showBadge={showBadge} />} />}
-        <Dropdown styleName='user-menu' alignRight toggleChildren={
+        {HOLOCHAIN_ACTIVE && <RoundImage url={get('avatarUrl', currentUser)} small={!smallScreen} medium={smallScreen} />}
+        {!HOLOCHAIN_ACTIVE && <Dropdown styleName='user-menu' alignRight toggleChildren={
           <RoundImage url={get('avatarUrl', currentUser)} small={!smallScreen} medium={smallScreen} />}>
-          {!HOLOCHAIN_ACTIVE && <>
-            <li>
-              <Link styleName={'hover-highlight'} to={profileUrl}>
-                Profile
-              </Link>
-            </li>
-            <li><Link styleName={'hover-highlight'} to='/settings'>Settings</Link></li>
-            <li><a onClick={logout}>Log out</a></li>
-          </>}
-        </Dropdown>
+          <li>
+            <Link styleName={'hover-highlight'} to={profileUrl}>
+              Profile
+            </Link>
+          </li>
+          <li><Link styleName={'hover-highlight'} to='/settings'>Settings</Link></li>
+          <li><a onClick={logout}>Log out</a></li>
+        </Dropdown>}
       </div>
     </div>
   </div>

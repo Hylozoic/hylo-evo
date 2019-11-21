@@ -21,6 +21,10 @@ export default class Dropdown extends React.Component {
     toggleChildren: object.isRequired
   }
 
+  static defaultProps = {
+    children: []
+  }
+
   toggle = (event, context) => {
     this.setState({ active: !this.state.active })
     if (event) {
