@@ -1,6 +1,7 @@
 import { Attribute, ForeignKey, ManyToMany } from 'redux-orm/lib/fields'
 import { compact, filter, mapValues } from 'lodash'
 import { isUndefined, omitBy } from 'lodash/fp'
+import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 
 export default class ModelExtractor {
   static addAll ({ session, root, modelName, ...opts }) {
@@ -42,9 +43,18 @@ export default class ModelExtractor {
     const normalized = omitBy(isUndefined, mapValues(node, (value, key) => {
       var type = model.fields[key]
 
-      if (value && value.__typename) {
-        const polymorphicChildId = this._walkOne(value, value.__typename)
-        return `${value.__typename}-${polymorphicChildId}`
+      // __typename extraction disabled for the Holochain / Apollo case:
+      //
+      // Apollo uses __typename extensively and specifically
+      // this extraction was originally added to handle the Hylo Search
+      // functionality in conjunction with they hylo-node backend which
+      // only implemented the graphql __typename functionality for 
+      // that feature.
+      if (!HOLOCHAIN_ACTIVE) {
+        if (value && value.__typename) {
+          const polymorphicChildId = this._walkOne(value, value.__typename)
+          return `${value.__typename}-${polymorphicChildId}`
+        }
       }
 
       if (type instanceof Attribute) {

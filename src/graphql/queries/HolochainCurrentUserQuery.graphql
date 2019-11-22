@@ -4,5 +4,13 @@ query HolochainCurrentUserQuery {
     name
     avatarUrl
     isRegistered
+    memberships {
+      id
+      community {
+        id
+        name
+        slug
+      }
+    }
   }
 }

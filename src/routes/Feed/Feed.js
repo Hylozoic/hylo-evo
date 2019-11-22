@@ -9,6 +9,7 @@ import FeedBanner from 'components/FeedBanner'
 import TopicFeedHeader from 'components/TopicFeedHeader'
 import Button from 'components/Button'
 import { bgImageStyle } from 'util/index'
+import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 
 export default class Feed extends Component {
   static propTypes = {
@@ -77,7 +78,7 @@ export default class Feed extends Component {
 
     if (topicName && !topic) return <Loading />
     if (community && topicName && !communityTopic) return <Loading />
-    if (!currentUser) return <Loading />
+    if (!currentUser || (HOLOCHAIN_ACTIVE && !community)) return <Loading />
     if (membershipsPending) return <Loading />
 
     return <div>

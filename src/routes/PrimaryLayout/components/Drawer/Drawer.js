@@ -10,6 +10,7 @@ import badgeHoverStyles from '../../../../components/Badge/component.scss'
 import { DEFAULT_AVATAR } from 'store/models/Community'
 import cx from 'classnames'
 import { isEmpty, sum } from 'lodash/fp'
+import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 
 const { string, number, arrayOf, shape } = PropTypes
 
@@ -56,20 +57,24 @@ export default class Drawer extends React.PureComponent {
         <Icon name='Settings' styleName='s.settingsIcon' /> Settings
       </Link>}
       {networks.length ? <ul styleName='s.communitiesList'>
-        <li styleName='s.sectionTitle'>Networked Communities</li>
-        {networks.map(network =>
+        {!HOLOCHAIN_ACTIVE &&
+          <li styleName='s.sectionTitle'>Networked Communities</li>}
+        {!HOLOCHAIN_ACTIVE && networks.map(network =>
           <NetworkRow network={network} key={network.id} />)}
-        <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>Independent Communities</li>
+        {!HOLOCHAIN_ACTIVE &&
+          <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>Independent Communities</li>}
+        {HOLOCHAIN_ACTIVE &&
+          <li styleName='s.sectionTitle'>Communities</li>}
         {communities.map(community =>
           <CommunityRow {...community} key={community.id} />
         )}
       </ul> : null}
-      <Button
+      {!HOLOCHAIN_ACTIVE && <Button
         color='white'
         styleName='s.newCommunity'
         label='Start a Community'
         onClick={this.props.goToCreateCommunity}
-      />
+      />}
     </div>
   }
 }
