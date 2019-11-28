@@ -48,7 +48,7 @@ export default class ModelExtractor {
       // Apollo uses __typename extensively and specifically
       // this extraction was originally added to handle the Hylo Search
       // functionality in conjunction with they hylo-node backend which
-      // only implemented the graphql __typename functionality for 
+      // only implemented the graphql __typename functionality for
       // that feature.
       if (!HOLOCHAIN_ACTIVE) {
         if (value && value.__typename) {
