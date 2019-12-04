@@ -44,10 +44,8 @@ export default function TopNav ({
       <div styleName='navIcons'>
         {!HOLOCHAIN_ACTIVE && <Link to='/search'><Icon name='Search' styleName='icon' /></Link>}
         {smallScreen && <Link to={messagesUrl()}><Icon name='Messages' styleName='icon' /></Link>}
-        {!smallScreen && <MessagesDropdown
-          renderToggleChildren={showBadge =>
-            <BadgedIcon name='Messages' styleName='icon' showBadge={showBadge} />}
-          openLastThread={!smallScreen} />}
+        {!smallScreen && <MessagesDropdown renderToggleChildren={showBadge =>
+          <BadgedIcon name='Messages' styleName='icon' showBadge={showBadge} />} />}
         {!HOLOCHAIN_ACTIVE && <NotificationsDropdown renderToggleChildren={showBadge =>
           <BadgedIcon name='Notifications' styleName='icon' showBadge={showBadge} />} />}
         {HOLOCHAIN_ACTIVE && <RoundImage url={get('avatarUrl', currentUser)} small={!smallScreen} medium={smallScreen} />}

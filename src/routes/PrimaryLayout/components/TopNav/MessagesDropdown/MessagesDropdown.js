@@ -14,6 +14,10 @@ import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
 import './MessagesDropdown.scss'
 
 export default class MessagesDropdown extends Component {
+  static defaultProps = {
+    openLastThread: true
+  }
+
   constructor (props) {
     super(props)
     this.dropdown = React.createRef()
