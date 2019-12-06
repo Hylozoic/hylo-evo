@@ -26,7 +26,6 @@ exports[`renders as expected with no community 1`] = `
         />
       </Link>
       <Connect(MessagesDropdown)
-        openLastThread={true}
         renderToggleChildren={[Function]}
       />
       <Connect(NotificationsDropdown)
