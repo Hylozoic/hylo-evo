@@ -112,7 +112,8 @@ export default class PostDetail extends Component {
       pending,
       processStripeToken,
       currentUser,
-      respondToEvent
+      respondToEvent,
+      onClose
     } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
 
@@ -156,9 +157,9 @@ export default class PostDetail extends Component {
 
     return <div styleName='post' ref={this.setHeaderStateFromDOM}>
       <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
-      <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} />
+      <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} />
       {atHeader && <div styleName='header-sticky' style={headerStyle}>
-        <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} />
+        <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} />
       </div>}
       <PostImage postId={post.id} styleName='image' linked />
       <PostTags tags={post.tags} />
