@@ -71,7 +71,7 @@ $drawer-z-index: 51;
   height: 100vh;
   flex: 0 0 $center-column-width;
   max-width: $center-column-width;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   padding-right: $space-2x;
   padding-bottom: 100px;
