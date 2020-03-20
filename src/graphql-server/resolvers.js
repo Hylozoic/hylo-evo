@@ -7,7 +7,7 @@ import {
 
 export const resolvers = {
   Mutation: {
-    async registerUser (_, userData) {    
+    async registerUser (_, userData) {
       return dataMappedCall('person', userData, HyloDnaInterface.currentUser.create)
     },
 
