@@ -9,6 +9,8 @@
 
 1. `yarn install`
 2. `yarn start`
+3. Setup [hylo-node](https://github.com/Hylozoic/hylo-node) and run that locally as well.
+4. Run hylo-node
 
 ## Building for standard Hylo API deployment
 
