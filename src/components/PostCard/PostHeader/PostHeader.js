@@ -38,6 +38,7 @@ export default class PostHeader extends PureComponent {
       className,
       editPost,
       deletePost,
+      fulfillPost,
       removePost,
       pinPost,
       highlightProps,
@@ -58,6 +59,8 @@ export default class PostHeader extends PureComponent {
     const dropdownItems = filter([
       { icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost },
       { icon: 'Edit', label: 'Edit', onClick: editPost },
+      // TODO: track whether a post has been fulfilled or not
+      { icon: 'Completed', label: pinned ? 'Not Complete' : 'Complete', onClick: fulfillPost },
       { icon: 'Flag', label: 'Flag', onClick: this.flagPostFunc() },
       { icon: 'Trash', label: 'Delete', onClick: deletePost, red: true },
       { icon: 'Trash', label: 'Remove From Community', onClick: removePost, red: true }

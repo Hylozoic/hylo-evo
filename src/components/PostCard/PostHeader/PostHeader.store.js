@@ -10,6 +10,8 @@ export const REMOVE_POST = `${MODULE_NAME}/REMOVE_POST`
 export const REMOVE_POST_PENDING = REMOVE_POST + '_PENDING'
 export const PIN_POST = `${MODULE_NAME}/PIN_POST`
 export const PIN_POST_PENDING = `${PIN_POST}_PENDING`
+export const FULFILL_POST = `${MODULE_NAME}/FULFILL_POST`
+export const FULFILL_POST_PENDING = `${MODULE_NAME}/FULFILL_POST_PENDING`
 
 // Action Creators
 export function deletePost (id) {
@@ -76,6 +78,26 @@ export function pinPost (postId, communityId) {
   }
 }
 
+export function fulfillPost (postId) {
+  return {
+    type: FULFILL_POST,
+    graphql: {
+      query: `mutation ($postId: ID) {
+        fulfillPost (postId: $postId) {
+          success
+        }
+      }`,
+      variables: {
+        postId
+      }
+    },
+    meta: {
+      optimistic: true,
+      postId
+    }
+  }
+}
+
 export const getCommunity = ormCreateSelector(
   orm,
   state => state.orm,
@@ -104,5 +126,7 @@ export function ormSessionReducer ({ Post }, { type, meta }) {
       let postMembership = post.postMemberships.filter(p =>
         Number(p.community) === Number(meta.communityId)).toModelArray()[0]
       postMembership && postMembership.update({ pinned: !postMembership.pinned })
+
+    // TODO: anything to update here when a post is fulfilled?
   }
 }
