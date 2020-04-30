@@ -1,10 +1,11 @@
 import React from 'react'
 import path from 'path'
-import { pick } from 'lodash/fp'
+import { pick, get } from 'lodash/fp'
 import Highlight from 'components/Highlight'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import LinkPreview from '../LinkPreview'
+import RequestCompletion from '../RequestCompletion'
 import { sanitize, present, textLength, truncate } from 'hylo-utils/text'
 import './PostDetails.scss'
 
@@ -17,12 +18,16 @@ export default function PostDetails ({
   expanded,
   highlightProps,
   fileAttachments,
-  hideDetails
+  hideDetails,
+  ...post
 }) {
   details = present(sanitize(details), { slug })
   if (!expanded && textLength(details) > maxDetailsLength) {
     details = truncate(details, maxDetailsLength)
   }
+
+  const isRequest = get('type', post) === 'request'
+  console.log(post)
 
   return <Highlight {...highlightProps}>
     <div styleName='postDetails'>
@@ -30,6 +35,10 @@ export default function PostDetails ({
         <ClickCatcher>
           <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
         </ClickCatcher>
+      }
+      {
+        isRequest &&
+        <RequestCompletion />
       }
       {linkPreview &&
         <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />}
