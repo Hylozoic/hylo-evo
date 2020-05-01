@@ -2,7 +2,7 @@ import React from 'react'
 import './RequestCompletion.scss'
 import DropdownButton from 'components/DropdownButton'
 
-export default function RequestCompletion ({ isFulfilled, fulfillPost }) {
+export default function RequestCompletion ({ isFulfilled, fulfillPost, unfulfillPost }) {
   var label
 
   switch (isFulfilled) {
@@ -31,9 +31,7 @@ export default function RequestCompletion ({ isFulfilled, fulfillPost }) {
       choices={choices}
       onChoose={response => {
         console.log(response)
-        if (response === true) {
-          fulfillPost()
-        }
+        response === true ? fulfillPost() : unfulfillPost()
       }} />
   </div>
 }

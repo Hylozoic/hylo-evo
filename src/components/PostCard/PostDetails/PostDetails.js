@@ -20,6 +20,7 @@ export default function PostDetails ({
   fileAttachments,
   hideDetails,
   fulfillPost,
+  unfulfillPost,
   canEdit,
   ...post
 }) {
@@ -40,7 +41,7 @@ export default function PostDetails ({
       }
       {
         isRequest && canEdit &&
-        <RequestCompletion isFulfilled={isFulfilled} fulfillPost={fulfillPost} />
+        <RequestCompletion isFulfilled={isFulfilled} fulfillPost={fulfillPost} unfulfillPost={unfulfillPost} />
       }
       {linkPreview &&
         <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />}

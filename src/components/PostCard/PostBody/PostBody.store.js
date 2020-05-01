@@ -6,6 +6,8 @@ export const MODULE_NAME = 'PostBody'
 // Constants
 export const FULFILL_POST = `${MODULE_NAME}/FULFILL_POST`
 export const FULFILL_POST_PENDING = `${MODULE_NAME}/FULFILL_POST_PENDING`
+export const UNFULFILL_POST = `${MODULE_NAME}/UNFULFILL_POST`
+export const UNFULFILL_POST_PENDING = `${MODULE_NAME}/UNFULFILL_POST_PENDING`
 
 // Action Creators
 export function fulfillPost (postId) {
@@ -28,6 +30,26 @@ export function fulfillPost (postId) {
   }
 }
 
+export function unfulfillPost (postId) {
+  return {
+    type: UNFULFILL_POST,
+    graphql: {
+      query: `mutation ($postId: ID) {
+        unfulfillPost (postId: $postId) {
+          success
+        }
+      }`,
+      variables: {
+        postId
+      }
+    },
+    meta: {
+      optimistic: true,
+      postId
+    }
+  }
+}
+
 export const getCommunity = ormCreateSelector(
   orm,
   state => state.orm,
@@ -36,7 +58,7 @@ export const getCommunity = ormCreateSelector(
 )
 
 export function ormSessionReducer ({ Post }, { type, meta }) {
-  // var post
+  var post
   switch (type) {
     // case DELETE_POST_PENDING:
     //   Post.withId(meta.id).delete()
@@ -59,6 +81,13 @@ export function ormSessionReducer ({ Post }, { type, meta }) {
 
     // TODO: anything to update here when a post is fulfilled?
     case FULFILL_POST_PENDING:
+      post = Post.withId(meta.postId)
+      post.update({ fulfilledAt: true })
+      break
+
+    case UNFULFILL_POST_PENDING:
+      post = Post.withId(meta.postId)
+      post.update({ fulfilledAt: false })
       break
   }
 }

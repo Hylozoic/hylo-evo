@@ -16,6 +16,7 @@ export default class PostBody extends PureComponent {
       className,
       highlightProps,
       fulfillPost,
+      unfulfillPost,
       canEdit,
       ...post
     } = this.props
@@ -27,6 +28,7 @@ export default class PostBody extends PureComponent {
         highlightProp={highlightProps}
         expanded={expanded}
         fulfillPost={fulfillPost}
+        unfulfillPost={unfulfillPost}
         canEdit={canEdit} />
     </div>
   }

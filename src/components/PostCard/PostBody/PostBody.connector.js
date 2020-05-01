@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import {
-  fulfillPost
+  fulfillPost,
+  unfulfillPost
 } from './PostBody.store'
 
 export function mapStateToProps (state, props) {
@@ -14,14 +15,17 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fulfillPost: postId => props.fulfillPost
       ? props.fulfillPost(postId)
-      : dispatch(fulfillPost(postId))
+      : dispatch(fulfillPost(postId)),
+    unfulfillPost: postId => props.unfulfillPost
+      ? props.unfulfillPost(postId)
+      : dispatch(unfulfillPost(postId))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { currentUser } = stateProps
   const { id, creator } = ownProps
-  const { fulfillPost } = dispatchProps
+  const { fulfillPost, unfulfillPost } = dispatchProps
   const isCreator = currentUser && creator && currentUser.id === creator.id
   const canEdit = isCreator
 
@@ -30,6 +34,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...dispatchProps,
     ...ownProps,
     fulfillPost: isCreator ? () => fulfillPost(id) : undefined,
+    unfulfillPost: isCreator ? () => unfulfillPost(id) : undefined,
     canEdit
   }
 }
