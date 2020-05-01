@@ -30,7 +30,6 @@ export default function RequestCompletion ({ isFulfilled, fulfillPost, unfulfill
     <DropdownButton label={label}
       choices={choices}
       onChoose={response => {
-        console.log(response)
         response === true ? fulfillPost() : unfulfillPost()
       }} />
   </div>
