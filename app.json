@@ -27,7 +27,16 @@
     "MIXPANEL_TOKEN": {
       "required": true
     },
-    "ROLLBAR_ENV": "reviewApp"
+    "ROLLBAR_ENV": "reviewApp",
+    "INTERCOM_APP_ID": {
+      "required": true
+    },
+    "HOLOCHAIN_WEBSOCKET_URI": {
+      "required": true
+    },
+    "HOLOCHAIN_GRAPHQL_PATH": {
+      "required": true
+    }
   },
   "formation": {
   },
