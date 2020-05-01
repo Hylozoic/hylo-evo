@@ -1,3 +1,3 @@
-import component from './PostBody'
-
-export default component
+import PostBody from './PostBody'
+import connector from './PostBody.connector'
+export default connector(PostBody)

@@ -1,23 +1,18 @@
 import React from 'react'
 import './RequestCompletion.scss'
 import DropdownButton from 'components/DropdownButton'
-// import { RESPONSES } from 'store/models/EventInvitation'
 
-export default function RequestCompletion ({ completionResponse, respondToEvent }) {
+export default function RequestCompletion ({ isFulfilled, fulfillPost }) {
   var label
 
-  // to do: check if isCompleted = true
-  var isCompleted = false
-  var isNotNeeded = false
-
-  switch (completionResponse) {
-    case !isCompleted:
+  switch (isFulfilled) {
+    case false:
       label = 'I still need this'
       break
-    case isNotNeeded:
-      label = 'I no longer need this'
-      break
-    case isCompleted:
+    // case true:
+    //   label = 'I no longer need this'
+    //   break
+    case true:
       label = 'This request was completed'
       break
     default:
@@ -26,7 +21,7 @@ export default function RequestCompletion ({ completionResponse, respondToEvent 
 
   const choices = [
     { label: 'I still need this', value: false },
-    { label: 'I no longer need this', value: true },
+    // { label: 'I no longer need this', value: true },
     { label: 'This request was completed', value: true }
   ]
 
@@ -34,6 +29,11 @@ export default function RequestCompletion ({ completionResponse, respondToEvent 
     <div>Do you still need this?</div>
     <DropdownButton label={label}
       choices={choices}
-      onChoose={response => respondToEvent(response)} />
+      onChoose={response => {
+        console.log(response)
+        if (response === true) {
+          fulfillPost()
+        }
+      }} />
   </div>
 }

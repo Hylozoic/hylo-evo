@@ -19,6 +19,8 @@ export default function PostDetails ({
   highlightProps,
   fileAttachments,
   hideDetails,
+  fulfillPost,
+  canEdit,
   ...post
 }) {
   details = present(sanitize(details), { slug })
@@ -27,7 +29,7 @@ export default function PostDetails ({
   }
 
   const isRequest = get('type', post) === 'request'
-  console.log(post)
+  const isFulfilled = get('fulfilledAt', post) !== null
 
   return <Highlight {...highlightProps}>
     <div styleName='postDetails'>
@@ -37,8 +39,8 @@ export default function PostDetails ({
         </ClickCatcher>
       }
       {
-        isRequest &&
-        <RequestCompletion />
+        isRequest && canEdit &&
+        <RequestCompletion isFulfilled={isFulfilled} fulfillPost={fulfillPost} />
       }
       {linkPreview &&
         <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />}
