@@ -1,5 +1,5 @@
 import React from 'react'
-import RequestCompletion from './RequestCompletion'
+import PostCompletion from './PostCompletion'
 import { RESPONSES } from 'store/models/EventInvitation'
 import { shallow } from 'enzyme'
 

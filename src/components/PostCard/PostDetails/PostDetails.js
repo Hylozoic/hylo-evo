@@ -5,7 +5,7 @@ import Highlight from 'components/Highlight'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import LinkPreview from '../LinkPreview'
-import RequestCompletion from '../RequestCompletion'
+import PostCompletion from '../PostCompletion'
 import { sanitize, present, textLength, truncate } from 'hylo-utils/text'
 import './PostDetails.scss'
 
@@ -29,7 +29,8 @@ export default function PostDetails ({
     details = truncate(details, maxDetailsLength)
   }
 
-  const isRequest = get('type', post) === 'request'
+  const postType = get('type', post)
+  const canBeCompleted = postType === 'request' || postType === 'offer'
   const isFulfilled = get('fulfilledAt', post) !== null
 
   return <Highlight {...highlightProps}>
@@ -40,8 +41,12 @@ export default function PostDetails ({
         </ClickCatcher>
       }
       {
-        isRequest && canEdit &&
-        <RequestCompletion isFulfilled={isFulfilled} fulfillPost={fulfillPost} unfulfillPost={unfulfillPost} />
+        canBeCompleted && canEdit &&
+        <PostCompletion
+          type={postType}
+          isFulfilled={isFulfilled}
+          fulfillPost={fulfillPost}
+          unfulfillPost={unfulfillPost} />
       }
       {linkPreview &&
         <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />}

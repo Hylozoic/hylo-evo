@@ -1,31 +1,40 @@
 import React from 'react'
-import './RequestCompletion.scss'
+import './PostCompletion.scss'
 import DropdownButton from 'components/DropdownButton'
 
-export default function RequestCompletion ({ isFulfilled, fulfillPost, unfulfillPost }) {
+export default function PostCompletion ({ type, isFulfilled, fulfillPost, unfulfillPost }) {
   var label
 
   switch (isFulfilled) {
     case false:
-      label = 'I still need this'
+      type === 'request' ? label = 'I still need this' : label = 'Available'
       break
     // case true:
     //   label = 'I no longer need this'
     //   break
     case true:
-      label = 'This request was completed'
+      type === 'request' ? label = 'This request was completed' : label = 'Unavailable'
       break
     default:
       label = 'I still need this'
   }
 
-  const choices = [
+  let choices
+
+  const requestChoices = [
     { label: 'I still need this', value: false },
     // { label: 'I no longer need this', value: true },
     { label: 'This request was completed', value: true }
   ]
 
-  return <div styleName='requestCompletion'>
+  const offerChoices = [
+    { label: 'Available', value: false },
+    { label: 'Unavailable', value: true }
+  ]
+
+  type === 'request' ? choices = requestChoices : choices = offerChoices
+
+  return <div styleName='postCompletion'>
     <div>Do you still need this?</div>
     <DropdownButton label={label}
       choices={choices}
