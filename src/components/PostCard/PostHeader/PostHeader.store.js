@@ -126,7 +126,5 @@ export function ormSessionReducer ({ Post }, { type, meta }) {
       let postMembership = post.postMemberships.filter(p =>
         Number(p.community) === Number(meta.communityId)).toModelArray()[0]
       postMembership && postMembership.update({ pinned: !postMembership.pinned })
-
-    // TODO: anything to update here when a post is fulfilled?
   }
 }
