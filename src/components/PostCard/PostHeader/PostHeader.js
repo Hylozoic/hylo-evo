@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
+import moment from 'moment'
 import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import PostLabel from 'components/PostLabel'
@@ -12,6 +13,27 @@ import { humanDate } from 'hylo-utils/text'
 import './PostHeader.scss'
 import { filter, isFunction, isEmpty } from 'lodash'
 import cx from 'classnames'
+
+function getStartDate (startTime) {
+  const current = moment()
+  let start = ''
+  if (moment(startTime).isAfter(current)) {
+    start = moment(startTime).format('MMM D YYYY')
+  }
+  return start
+}
+
+function getEndDate (endTime) {
+  const current = moment()
+  let end = ''
+  const endFormatted = moment(endTime).format('MMM D YYYY')
+  if (moment(endTime).isAfter(current)) {
+    end = `ends ${endFormatted}`
+  } else if (current.isAfter(moment(endTime))) {
+    end = `ended ${endFormatted}`
+  }
+  return end
+}
 
 export default class PostHeader extends PureComponent {
   static defaultProps = {
@@ -32,6 +54,8 @@ export default class PostHeader extends PureComponent {
       createdAt,
       type,
       id,
+      startTime,
+      endTime,
       pinned,
       topics,
       close,
@@ -62,6 +86,18 @@ export default class PostHeader extends PureComponent {
       { icon: 'Trash', label: 'Delete', onClick: deletePost, red: true },
       { icon: 'Trash', label: 'Remove From Community', onClick: removePost, red: true }
     ], item => isFunction(item.onClick))
+
+    const canHaveTimes = type === 'offer' || type === 'request'
+    let timeWindow = ''
+    const startDate = startTime && getStartDate(startTime)
+    const endDate = endTime && getEndDate(endTime)
+    if (startDate && endDate) {
+      timeWindow = `${type} starts ${startDate} and ${endDate}`
+    } else if (endDate) {
+      timeWindow = `${type} ${endDate}`
+    } else if (startDate) {
+      timeWindow = `${type} starts ${startDate}`
+    }
 
     return <div styleName='header' className={className}>
       <div styleName='headerMainRow'>
@@ -102,6 +138,9 @@ export default class PostHeader extends PureComponent {
         }
       </div>
       {topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.slug} newLine />}
+      {canHaveTimes && <div styleName='timeWindow'>
+        {timeWindow}
+      </div>}
     </div>
   }
 }

@@ -15,7 +15,6 @@ import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import Switch from 'components/Switch'
-// import DateSelector from 'components/DateSelector'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 import TopicSelector from 'components/TopicSelector'
 import MemberSelector from 'components/MemberSelector'
@@ -430,9 +429,6 @@ export default class PostEditor extends React.Component {
             </div>
           </div>
         </div>}
-        {
-          // canHaveTimes && <DateSelector startTime={startTime} endTime={endTime} onStartChange={} onEndChange={} dateError={} />
-        }
         {isEvent && <div styleName='footerSection'>
           <div styleName='footerSection-label alignedLabel'>Location</div>
           <input
