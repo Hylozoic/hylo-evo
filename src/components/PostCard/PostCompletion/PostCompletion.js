@@ -9,9 +9,6 @@ export default function PostCompletion ({ type, isFulfilled, fulfillPost, unfulf
     case false:
       type === 'request' ? label = 'I still need this' : label = 'Available'
       break
-    // case true:
-    //   label = 'I no longer need this'
-    //   break
     case true:
       type === 'request' ? label = 'This request was completed' : label = 'Unavailable'
       break
@@ -23,7 +20,6 @@ export default function PostCompletion ({ type, isFulfilled, fulfillPost, unfulf
 
   const requestChoices = [
     { label: 'I still need this', value: false },
-    // { label: 'I no longer need this', value: true },
     { label: 'This request was completed', value: true }
   ]
 
@@ -35,7 +31,7 @@ export default function PostCompletion ({ type, isFulfilled, fulfillPost, unfulf
   type === 'request' ? choices = requestChoices : choices = offerChoices
 
   return <div styleName='postCompletion'>
-    <div>Do you still need this?</div>
+    <div>{type === 'request' ? 'Do you still need this?' : 'Is this still available?'}</div>
     <DropdownButton label={label}
       choices={choices}
       onChoose={response => {

@@ -157,6 +157,12 @@ $wrapperBorderRadius: 8px;
   line-height: 1;
   display: flex;
   align-items: center;
+  &-prompt {
+    color: $color-rhino-30;
+    font-weight: bold;
+    margin: 15px auto 25px;
+    font-size: 18px;
+  }
   &-label {
     composes: section-label;
   }
@@ -182,7 +188,7 @@ $wrapperBorderRadius: 8px;
   border-color: transparent;
   color: $color-rhino-80;
   font-size: inherit;
-  line-height: inherit; 
+  line-height: inherit;
 }
 
 .locationInput::placeholder {

@@ -15,6 +15,7 @@ import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import Switch from 'components/Switch'
+// import DateSelector from 'components/DateSelector'
 import CommunitiesSelector from 'components/CommunitiesSelector'
 import TopicSelector from 'components/TopicSelector'
 import MemberSelector from 'components/MemberSelector'
@@ -334,7 +335,7 @@ export default class PostEditor extends React.Component {
 
   render () {
     const { initialPrompt, titlePlaceholder, titleLengthError, dateError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
-    const { id, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location } = post
+    const { id, type, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location } = post
     const {
       onClose, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
@@ -343,8 +344,9 @@ export default class PostEditor extends React.Component {
     } = this.props
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
-
     const showPostTypes = !isProject && !isEvent
+    const isOffer = type === 'offer'
+    const canHaveTimes = isOffer || isEvent
 
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
       <div styleName='header'>
@@ -413,15 +415,24 @@ export default class PostEditor extends React.Component {
             To accept financial contributions for this project, you have to connect a Stripe account. Go to <a href='/settings/payment'>Settings</a> to set it up. (Remember to save your changes before leaving this form)
           </div>}
         </div>}
-        {isEvent && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
-        {isEvent && <div styleName='footerSection'>
-          <div styleName='footerSection-label alignedLabel'>Start Time</div>
-          <DatePicker value={startTime} onChange={this.handleStartTimeChange} />
+        {canHaveTimes && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
+        {canHaveTimes && <div styleName='footerSection' style={{ display: 'block' }}>
+          {isOffer && <div styleName='footerSection-prompt'>When is this offer available?</div>}
+          {isEvent && <div styleName='footerSection-prompt'>When is this event?</div>}
+          <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+            <div>
+              <div styleName='footerSection-label alignedLabel'>Start Time</div>
+              <DatePicker value={startTime} placeholder={'Select Start Time'} onChange={this.handleStartTimeChange} />
+            </div>
+            <div>
+              <div styleName='footerSection-label alignedLabel'>End Time</div>
+              <DatePicker value={endTime} placeholder={'Select End Time'} onChange={this.handleEndTimeChange} />
+            </div>
+          </div>
         </div>}
-        {isEvent && <div styleName='footerSection'>
-          <div styleName='footerSection-label alignedLabel'>End Time</div>
-          <DatePicker value={endTime} onChange={this.handleEndTimeChange} />
-        </div>}
+        {
+          // canHaveTimes && <DateSelector startTime={startTime} endTime={endTime} onStartChange={} onEndChange={} dateError={} />
+        }
         {isEvent && <div styleName='footerSection'>
           <div styleName='footerSection-label alignedLabel'>Location</div>
           <input

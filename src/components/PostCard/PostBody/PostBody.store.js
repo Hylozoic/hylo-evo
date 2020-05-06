@@ -60,25 +60,6 @@ export const getCommunity = ormCreateSelector(
 export function ormSessionReducer ({ Post }, { type, meta }) {
   var post
   switch (type) {
-    // case DELETE_POST_PENDING:
-    //   Post.withId(meta.id).delete()
-    //   break
-    //
-    // case REMOVE_POST_PENDING:
-    //   post = Post.withId(meta.postId)
-    //   const communities = post.communities.filter(c =>
-    //     c.slug !== meta.slug).toModelArray()
-    //   post.update({ communities })
-    //   break
-    //
-    // case PIN_POST_PENDING:
-    //   post = Post.withId(meta.postId)
-    //   // this line is to clear the selector memoization
-    //   post.update({ _invalidate: (post._invalidate || 0) + 1 })
-    //   let postMembership = post.postMemberships.filter(p =>
-    //     Number(p.community) === Number(meta.communityId)).toModelArray()[0]
-    //   postMembership && postMembership.update({ pinned: !postMembership.pinned })
-
     case FULFILL_POST_PENDING:
       post = Post.withId(meta.postId)
       post.update({ fulfilledAt: true })
