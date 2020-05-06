@@ -41,7 +41,7 @@ export default function PostDetails ({
         </ClickCatcher>
       }
       {
-        canBeCompleted && canEdit &&
+        canBeCompleted && canEdit && expanded &&
         <PostCompletion
           type={postType}
           isFulfilled={isFulfilled}

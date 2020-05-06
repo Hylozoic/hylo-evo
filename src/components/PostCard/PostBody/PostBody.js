@@ -12,6 +12,7 @@ export default class PostBody extends PureComponent {
   render () {
     const {
       slug,
+      routeParams,
       expanded,
       className,
       highlightProps,
