@@ -63,7 +63,7 @@ export default class Feed extends Component {
         'changeSort',
         'changeTab',
         'selectedPostId'
-      ], this.props) // posts are explicitly defined here... where are they being passed to the FeedList?!
+      ], this.props) // posts aren't explicitly defined here...
     }
   }
 
