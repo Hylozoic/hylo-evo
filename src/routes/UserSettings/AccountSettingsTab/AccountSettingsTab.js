@@ -50,8 +50,10 @@ export default class AccountSettingsTab extends Component {
     if (!currentUser) return
 
     const {
-      name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedinUrl
+      name, avatarUrl, bannerUrl, tagline, bio, location, locationText, email, url, facebookUrl, twitterName, linkedinUrl
     } = currentUser
+
+    console.log('current location', locationText, location)
 
     this.setState({
       edits: {
@@ -60,7 +62,8 @@ export default class AccountSettingsTab extends Component {
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         tagline: tagline || '',
         bio: bio || '',
-        location: location || '',
+        locationText: locationText || '',
+        location: location || null,
         email: email || '',
         url: url || '',
         facebookUrl,
@@ -82,12 +85,21 @@ export default class AccountSettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedinUrl
+      name, avatarUrl, bannerUrl, tagline, bio, locationText, email, url, facebookUrl, twitterName, linkedinUrl
     } = edits
 
     const updateSetting = (key, setChanged = true) => event => {
       const { edits, changed } = this.state
       setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
+
+      // let newValue = event
+
+      console.log('changeing setting ', key, ' to ', event.target.value)
+      if (key === 'location') {
+        edits['locationText'] = event.target.value.fullText
+        edits['location'] = event.target.value
+      }
+
       this.setState({
         changed: setChanged ? true : changed,
         edits: {
@@ -122,7 +134,7 @@ export default class AccountSettingsTab extends Component {
       </div>
       <SettingsControl label='Tagline' onChange={updateSetting('tagline')} value={tagline} maxLength={60} />
       <SettingsControl label='About Me' onChange={updateSetting('bio')} value={bio} type='textarea' />
-      <SettingsControl label='Location' onChange={updateSetting('location')} value={location} />
+      <SettingsControl label='Location' onChange={updateSettingDirectly('location', true)} value={locationText} type='location' />
       <SettingsControl label='Email' onChange={updateSetting('email')} value={email} />
       <SettingsControl label='Website' onChange={updateSetting('url')} value={url} />
       <label styleName='social-label'>Social Accounts</label>

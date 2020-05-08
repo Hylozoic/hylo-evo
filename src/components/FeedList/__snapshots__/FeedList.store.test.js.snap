@@ -19,7 +19,7 @@ Object {
     avatarUrl
     bannerUrl
     postCount
-    
+
 posts(
   first: $first,
   offset: $offset,
@@ -31,7 +31,7 @@ posts(
 ) {
   hasMore
   items {
-    
+
   id
   announcement
   title
@@ -46,7 +46,7 @@ posts(
   updatedAt
   startTime
   endTime
-  location
+  locationText
   myEventResponse
   commenters(first: 3) {
     id
@@ -54,7 +54,7 @@ posts(
     avatarUrl
   }
   commentersTotal
-  
+
   linkPreview {
     id
     title
@@ -98,14 +98,14 @@ posts(
       avatarUrl
       bio
       tagline
-      location
+      locationText
       skills (first: 100) {
         items {
           id
           name
         }
       }
-    }  
+    }
   }
   eventInvitations {
     total
@@ -119,14 +119,14 @@ posts(
         avatarUrl
         bio
         tagline
-        location
+        locationText
         skills (first: 100) {
           items {
             id
             name
           }
         }
-      }      
+      }
     }
   }
   }
@@ -165,7 +165,7 @@ Object {
   $topic: ID,
   $first: Int
 ) {
-  
+
 posts(
   first: $first,
   offset: $offset,
@@ -177,7 +177,7 @@ posts(
 ) {
   hasMore
   items {
-    
+
   id
   announcement
   title
@@ -192,7 +192,7 @@ posts(
   updatedAt
   startTime
   endTime
-  location
+  locationText
   myEventResponse
   commenters(first: 3) {
     id
@@ -200,7 +200,7 @@ posts(
     avatarUrl
   }
   commentersTotal
-  
+
   linkPreview {
     id
     title
@@ -244,14 +244,14 @@ posts(
       avatarUrl
       bio
       tagline
-      location
+      locationText
       skills (first: 100) {
         items {
           id
           name
         }
       }
-    }  
+    }
   }
   eventInvitations {
     total
@@ -265,14 +265,14 @@ posts(
         avatarUrl
         bio
         tagline
-        location
+        locationText
         skills (first: 100) {
           items {
             id
             name
           }
         }
-      }      
+      }
     }
   }
   }

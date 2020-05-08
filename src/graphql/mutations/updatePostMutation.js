@@ -16,7 +16,7 @@ export default
   $eventInviteeIds: [ID],
   $startTime: String,
   $endTime: String,
-  $location: String
+  $locationText: String
 ) {
   updatePost(id: $id, data: {
     type: $type,
@@ -32,6 +32,6 @@ export default
     eventInviteeIds: $eventInviteeIds,
     startTime: $startTime,
     endTime: $endTime,
-    location: $location
+    locationText: $locationText
   }) {${postFieldsFragment(false)}}
 }`

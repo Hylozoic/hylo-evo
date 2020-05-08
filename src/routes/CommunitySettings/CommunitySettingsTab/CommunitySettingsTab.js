@@ -36,14 +36,14 @@ export default class CommunitySettingsTab extends Component {
     if (!community) return
 
     const {
-      name, description, location, avatarUrl, bannerUrl
+      name, description, locationText, avatarUrl, bannerUrl
     } = community
 
     this.setState({
       edits: {
         name: name || '',
         description: description || '',
-        location: location || '',
+        locationText: locationText || '',
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER
       }
@@ -56,7 +56,7 @@ export default class CommunitySettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      name, description, location, avatarUrl, bannerUrl
+      name, description, locationText, avatarUrl, bannerUrl
     } = edits
 
     const updateSetting = (key, setChanged = true) => event => {
@@ -93,7 +93,7 @@ export default class CommunitySettingsTab extends Component {
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Description' onChange={updateSetting('description')} value={description} type='textarea' />
-      <SettingsControl label='Location' onChange={updateSetting('location')} value={location} />
+      <SettingsControl label='Location' onChange={updateSetting('locationText')} value={locationText} type='location' />
       <div styleName='button-row'>
         <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
       </div>

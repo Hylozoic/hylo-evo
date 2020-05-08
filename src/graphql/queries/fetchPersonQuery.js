@@ -11,7 +11,11 @@ export default
     facebookUrl
     url
     tagline
-    location
+    locationText
+    location {
+      addressNumber
+      addressStreet
+    }
     messageThreadId
     memberships {
       id

@@ -20,7 +20,7 @@ export default class EventBody extends Component {
   render () {
     const { event, respondToEvent, slug, expanded, className } = this.props
     const { showInviteDialog } = this.state
-    const { id, startTime, endTime, location, eventInvitations } = event
+    const { id, startTime, endTime, locationText, eventInvitations } = event
 
     return <div styleName={cx('body', 'eventBody', { smallMargin: !expanded })} className={className}>
       <EventDate {...event} />
@@ -29,8 +29,8 @@ export default class EventBody extends Component {
         <div styleName='eventData'>
           <Icon name='Clock' styleName='icon' /> {formatDatePair(startTime, endTime)}
         </div>
-        {!!location && <div styleName='eventData eventLocation'>
-          <Icon name='Location' styleName='icon' /> {location}
+        {!!locationText && <div styleName='eventData eventLocation'>
+          <Icon name='Location' styleName='icon' /> {locationText}
         </div>}
         <PostDetails {...event} slug={slug} hideDetails={!expanded} expanded={expanded} />
       </div>

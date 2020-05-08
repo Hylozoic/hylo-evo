@@ -6,7 +6,11 @@ export default
   avatarUrl
   newNotificationCount
   unseenThreadCount
-  location
+  locationText
+  location {
+    addressNumber
+    addressStreet
+  }
   email
   bannerUrl
   bio
