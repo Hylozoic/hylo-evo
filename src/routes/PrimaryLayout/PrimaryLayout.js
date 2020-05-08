@@ -20,6 +20,7 @@ import CommunitySidebar from 'routes/CommunitySidebar'
 import Domain from 'routes/CreateCommunity/Domain'
 import Drawer from './components/Drawer'
 import Feed from 'routes/Feed'
+import MapFeed from 'routes/MapFeed'
 import Loading from 'components/Loading'
 import MemberProfile from 'routes/MemberProfile'
 import MemberSidebar from 'routes/MemberSidebar'
@@ -111,10 +112,10 @@ export default class PrimaryLayout extends Component {
             {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
             <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/all/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path={`/all/map/${OPTIONAL_POST_MATCH}`} exact component={(<div />)} />
+            <Route path={`/all/map/${OPTIONAL_POST_MATCH}`} exact component={MapFeed} />
             <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/n/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path={`/n/:networkSlug/map/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path={`/n/:networkSlug/map/${OPTIONAL_POST_MATCH}`} exact component={MapFeed} />
             <Route path='/n/:networkSlug/members' component={Members} />
             <Route path={`/n/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
@@ -125,7 +126,7 @@ export default class PrimaryLayout extends Component {
             <Route path={`/c/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path='/c/:slug/settings' component={CommunitySettings} />
             <Route path='/c/:slug/topics' component={AllTopics} />
-            <Route path={`/c/:slug/map/${OPTIONAL_POST_MATCH}`} exact component={(<div />)} />
+            <Route path={`/c/:slug/map/${OPTIONAL_POST_MATCH}`} exact component={MapFeed} />
             <Route path={`/c/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path={`/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path='/settings' component={UserSettings} />
