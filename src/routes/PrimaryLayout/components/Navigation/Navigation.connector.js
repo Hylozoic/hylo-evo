@@ -36,6 +36,7 @@ export function mapStateToProps (state, props) {
   }
   const projectsPath = `${rootPath}/project`
   const eventsPath = `${rootPath}/event`
+  const mapPath = `${rootPath}/map`
 
   return {
     rootId,
@@ -44,6 +45,7 @@ export function mapStateToProps (state, props) {
     membersPath,
     projectsPath,
     eventsPath,
+    mapPath,
     badge,
     feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),
     communityMembership

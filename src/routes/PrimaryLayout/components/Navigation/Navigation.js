@@ -16,6 +16,7 @@ export default function Navigation (props) {
     membersPath,
     projectsPath,
     eventsPath,
+    mapPath,
     badge,
     clearBadge,
     clearFeedList,
@@ -54,11 +55,15 @@ export default function Navigation (props) {
       label: 'Members',
       icon: 'Members',
       to: membersPath
+    },
+    mapPath && {
+      label: 'Map',
+      icon: 'Flag', // TODO: enlist design help in editing hylo-icon-font to get appropriate icon
+      to: mapPath
     }
-  // An additional entry will be required here for the map view.
   ])
 
-  return <div styleName={collapsed ? 'collapser-collapsed' : 'collapser'}
+  return <div styleName={collapsed ? 'collapser-collapsed' : 'collapser'} // this currently collapses when a post is opened. Will have to modify behavior to suit map needs
     className={className}>
     <div styleName='navigation'>
       <ul styleName='links'>
