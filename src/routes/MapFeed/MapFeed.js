@@ -63,7 +63,7 @@ export default class Feed extends Component {
         'changeSort',
         'changeTab',
         'selectedPostId'
-      ], this.props) // posts aren't explicitly defined here...
+      ], this.props) // posts aren't explicitly defined here... ahh it is defined in FeedList, FeedList is also connected to the store...
     }
   }
 
@@ -99,7 +99,7 @@ export default class Feed extends Component {
           all={!community && !networkSlug}
           newPost={newPost} // disable for MapFeed?
           currentUserHasMemberships={currentUserHasMemberships} />}
-      {currentUserHasMemberships && <FeedList {...this.getFeedProps()} /> /* how does this get the posts it needs?! */ }
+      {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />  }
       {!membershipsPending && !currentUserHasMemberships && <CreateCommunityPrompt
         goToCreateCommunity={goToCreateCommunity}
       />}
