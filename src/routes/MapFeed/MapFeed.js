@@ -1,12 +1,9 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { get, pick } from 'lodash/fp'
-
 import './MapFeed.scss'
 import FeedList from 'components/FeedList'
 import Loading from 'components/Loading'
-import FeedBanner from 'components/FeedBanner'
-import TopicFeedHeader from 'components/TopicFeedHeader'
 import Button from 'components/Button'
 import { bgImageStyle } from 'util/index'
 
@@ -69,11 +66,11 @@ export default class Feed extends Component {
 
   render () {
     const {
-      routeParams, topic, community, currentUser, postsTotal, followersTotal,
-      communityTopic, newPost, network, currentUserHasMemberships,
-      goToCreateCommunity, membershipsPending, postTypeFilter
+      routeParams, topic, community, currentUser,
+      communityTopic, currentUserHasMemberships,
+      goToCreateCommunity, membershipsPending
     } = this.props
-    const { networkSlug, topicName } = routeParams
+    const { topicName } = routeParams
 
     if (topicName && !topic) return <Loading />
     if (community && topicName && !communityTopic) return <Loading />
@@ -81,25 +78,7 @@ export default class Feed extends Component {
     if (membershipsPending) return <Loading />
 
     return <div>
-      {topicName
-        ? <TopicFeedHeader
-          communityTopic={communityTopic}
-          topicName={topicName}
-          postsTotal={postsTotal}
-          followersTotal={followersTotal}
-          topic={topic}
-          type={postTypeFilter}
-          community={community}
-          currentUser={currentUser}
-          newPost={newPost} />
-        : <FeedBanner // The feedbanner shows users whether they are looking at a specific network, community and the ALL feed. I assume we'll need something similar for the MapFeed but don't see that in the design?
-          community={community || network}
-          currentUser={currentUser}
-          type={postTypeFilter}
-          all={!community && !networkSlug}
-          newPost={newPost} // disable for MapFeed?
-          currentUserHasMemberships={currentUserHasMemberships} />}
-      {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />  }
+      {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}
       {!membershipsPending && !currentUserHasMemberships && <CreateCommunityPrompt
         goToCreateCommunity={goToCreateCommunity}
       />}
