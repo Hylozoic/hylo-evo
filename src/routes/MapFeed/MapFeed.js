@@ -9,7 +9,7 @@ import { bgImageStyle } from 'util/index'
 
 export default class Feed extends Component {
   static propTypes = {
-    newPost: PropTypes.func, // probably skip for MapFeed
+    newPost: PropTypes.func, // delay implementation MapFeed
     routeParams: PropTypes.object,
     querystringParams: PropTypes.object
   }

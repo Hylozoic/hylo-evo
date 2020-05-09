@@ -38,6 +38,9 @@
   width: $content-width;
   margin-left: auto;
   margin-right: auto;
+  &.map-view {
+    width: $map-content-width;
+  }
 }
 
 $drawer-width: 367px;

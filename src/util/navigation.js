@@ -226,3 +226,7 @@ export function isNetworkPath (path) {
 export function isTagPath (path) {
   return (path.startsWith('/tag/'))
 }
+
+export function isMapViewPath (path) {
+  return (path.includes('/map'))
+}

@@ -49,7 +49,8 @@ import {
   isSignupPath,
   isAllCommunitiesPath,
   isNetworkPath,
-  isTagPath
+  isTagPath,
+  isMapViewPath
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import { HOLOCHAIN_ACTIVE, HOLOCHAIN_DEFAULT_COMMUNITY_SLUG } from 'util/holochain'
@@ -91,7 +92,6 @@ export default class PrimaryLayout extends Component {
     if (isCommunityRoute) {
       if (!community && !communityPending) return <NotFound />
     }
-
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
     const hasDetail = some(
       ({ path }) => matchPath(location.pathname, { path, exact: true }),
@@ -102,7 +102,7 @@ export default class PrimaryLayout extends Component {
     return <div styleName='container'>
       <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
       <TopNav styleName='top' onClick={closeDrawer} {...{ community, network, currentUser, showLogoBadge }} />
-      <div styleName='main' onClick={closeDrawer}>
+      <div styleName={cx('main', { 'map-view': isMapViewPath(location.pathname) })} onClick={closeDrawer}>
         <Navigation collapsed={hasDetail} styleName='left' showTopics={showTopics} currentUser={currentUser} />
         <div styleName='center' id={CENTER_COLUMN_ID}>
           <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
