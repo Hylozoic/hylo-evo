@@ -99,12 +99,12 @@ export default class PrimaryLayout extends Component {
     )
     const showTopics = !isAllCommunitiesPath(location.pathname) && !isNetworkPath(location.pathname) && !isTagPath(location.pathname)
 
-    return <div styleName='container'>
+    return <div styleName={cx('container', { 'map-view': isMapViewPath(location.pathname) })}>
       <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
       <TopNav styleName='top' onClick={closeDrawer} {...{ community, network, currentUser, showLogoBadge }} />
       <div styleName={cx('main', { 'map-view': isMapViewPath(location.pathname) })} onClick={closeDrawer}>
-        <Navigation collapsed={hasDetail} styleName='left' showTopics={showTopics} currentUser={currentUser} />
-        <div styleName='center' id={CENTER_COLUMN_ID}>
+        <Navigation collapsed={hasDetail} styleName={cx('left', { 'map-view': isMapViewPath(location.pathname) })} showTopics={showTopics} currentUser={currentUser} />
+        <div styleName={cx('center', { 'map-view': isMapViewPath(location.pathname) })} id={CENTER_COLUMN_ID}>
           <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
           <RedirectToCommunity path='/' currentUser={currentUser} />
           <RedirectToCommunity path='/app' currentUser={currentUser} />
@@ -140,7 +140,7 @@ export default class PrimaryLayout extends Component {
                 <CreateCommunity {...props} component={component} />} />)}
           </Switch>
         </div>
-        <div styleName={cx('sidebar', { hidden: hasDetail })}>
+        <div styleName={cx('sidebar', { hidden: (hasDetail || isMapViewPath(location.pathname)) })}>
           <Switch>
             <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
             <Route path={`/c/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />

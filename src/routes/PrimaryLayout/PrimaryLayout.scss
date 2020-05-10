@@ -3,8 +3,11 @@
   flex-direction: column;
   align-content: stretch;
   align-items: stretch;
-  height: 100vh;
+  height: calc(100vh - 80px);
   overflow: hidden;
+  &.map-view {
+    height: 100vh;
+  }
 }
 
 .debug {
@@ -61,8 +64,8 @@ $drawer-z-index: 51;
   }
 }
 
-.left {
-  /* empty */
+.left .map-field {
+    height: calc(100vh - 60px);
 }
 
 .center {
@@ -78,6 +81,12 @@ $drawer-z-index: 51;
   overflow-x: hidden;
   padding-right: $space-2x;
   padding-bottom: 100px;
+  &.map-view {
+    max-width: $map-center-column-width;
+    flex: 0 0 $map-center-column-width;
+    height: calc(100vh - 40px);
+    padding-bottom: 0px;
+  }
 }
 
 .center::-webkit-scrollbar {

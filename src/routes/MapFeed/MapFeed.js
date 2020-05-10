@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { get, pick } from 'lodash/fp'
 import './MapFeed.scss'
-import FeedList from 'components/FeedList'
+import MapExplorer from 'components/MapExplorer'
 import Loading from 'components/Loading'
 import Button from 'components/Button'
 import { bgImageStyle } from 'util/index'
@@ -60,7 +60,7 @@ export default class Feed extends Component {
         'changeSort',
         'changeTab',
         'selectedPostId'
-      ], this.props) // posts aren't explicitly defined here... ahh it is defined in FeedList, FeedList is also connected to the store...
+      ], this.props)
     }
   }
 
@@ -77,13 +77,13 @@ export default class Feed extends Component {
     if (!currentUser) return <Loading />
     if (membershipsPending) return <Loading />
 
-    return <div>
-      {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}
+    return <React.Fragment>
+      {currentUserHasMemberships && <MapExplorer {...this.getFeedProps()} />}
       {!membershipsPending && !currentUserHasMemberships && <CreateCommunityPrompt
         goToCreateCommunity={goToCreateCommunity}
       />}
       {membershipsPending && <Loading />}
-    </div>
+    </React.Fragment>
   }
 }
 
