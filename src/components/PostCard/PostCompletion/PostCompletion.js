@@ -1,27 +1,9 @@
 import React from 'react'
-import moment from 'moment'
 import './PostCompletion.scss'
 import DropdownButton from 'components/DropdownButton'
 
-const isAvailableBasedOnDates = (startTime, endTime) => {
-  const current = moment()
-  let available = true
-
-  if (!startTime && !endTime) {
-    return available
-  } else if (endTime && current.isAfter(moment(endTime))) {
-    available = false
-  }
-  return available
-}
-
 export default function PostCompletion ({ type, startTime, endTime, isFulfilled, fulfillPost, unfulfillPost }) {
   var label
-
-  const isAvailable = isAvailableBasedOnDates(startTime, endTime)
-  if (isFulfilled === false && isAvailable === false) {
-    isFulfilled = 'expired'
-  }
 
   switch (isFulfilled) {
     case false:
@@ -57,7 +39,7 @@ export default function PostCompletion ({ type, startTime, endTime, isFulfilled,
     <DropdownButton label={label}
       choices={choices}
       onChoose={response => {
-        response === true ? fulfillPost() : unfulfillPost()
+        response === false ? unfulfillPost() : fulfillPost()
       }} />
   </div>
 }
