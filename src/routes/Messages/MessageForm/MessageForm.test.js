@@ -19,7 +19,6 @@ const defaultProps = {
   onSubmit: () => {}
 }
 
-
 describe('component', () => {
   const mockOnSubmit = jest.fn(() => Promise.resolve())
   const sendIsTyping = jest.fn()
