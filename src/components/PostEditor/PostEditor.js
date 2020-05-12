@@ -344,8 +344,7 @@ export default class PostEditor extends React.Component {
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const showPostTypes = !isProject && !isEvent
-    const isOffer = type === 'offer'
-    const canHaveTimes = isOffer || isEvent
+    const canHaveTimes = type !== 'discussion'
 
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
       <div styleName='header'>
@@ -415,18 +414,12 @@ export default class PostEditor extends React.Component {
           </div>}
         </div>}
         {canHaveTimes && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
-        {canHaveTimes && <div styleName='footerSection' style={{ display: 'block' }}>
-          {isOffer && <div styleName='footerSection-prompt'>When is this offer available?</div>}
-          {isEvent && <div styleName='footerSection-prompt'>When is this event?</div>}
-          <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-            <div>
-              <div styleName='footerSection-label alignedLabel'>Start Time</div>
-              <DatePicker value={startTime} placeholder={'Select Start Time'} onChange={this.handleStartTimeChange} />
-            </div>
-            <div>
-              <div styleName='footerSection-label alignedLabel'>End Time</div>
-              <DatePicker value={endTime} placeholder={'Select End Time'} onChange={this.handleEndTimeChange} />
-            </div>
+        {canHaveTimes && <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Timeframe</div>
+          <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+            <DatePicker value={startTime} placeholder={'Select Start Time'} onChange={this.handleStartTimeChange} />
+            <div styleName='footerSection-helper'>To</div>
+            <DatePicker value={endTime} placeholder={'Select End Time'} onChange={this.handleEndTimeChange} />
           </div>
         </div>}
         {isEvent && <div styleName='footerSection'>

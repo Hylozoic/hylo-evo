@@ -44,6 +44,8 @@ export default function PostDetails ({
         canBeCompleted && canEdit && expanded &&
         <PostCompletion
           type={postType}
+          startTime={post.startTime}
+          endTime={post.endTime}
           isFulfilled={isFulfilled}
           fulfillPost={fulfillPost}
           unfulfillPost={unfulfillPost} />

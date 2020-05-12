@@ -14,7 +14,7 @@ import './PostHeader.scss'
 import { filter, isFunction, isEmpty } from 'lodash'
 import cx from 'classnames'
 
-function getStartDate (startTime) {
+const getStartDate = (startTime) => {
   const current = moment()
   let start = ''
   if (moment(startTime).isAfter(current)) {
@@ -23,7 +23,7 @@ function getStartDate (startTime) {
   return start
 }
 
-function getEndDate (endTime) {
+const getEndDate = (endTime) => {
   const current = moment()
   let end = ''
   const endFormatted = moment(endTime).format('MMM D YYYY')
@@ -56,6 +56,7 @@ export default class PostHeader extends PureComponent {
       id,
       startTime,
       endTime,
+      fulfilledAt,
       pinned,
       topics,
       close,
@@ -126,6 +127,7 @@ export default class PostHeader extends PureComponent {
         </div>
         <div styleName='upperRight'>
           {pinned && <Icon name='Pin' styleName='pinIcon' />}
+          {fulfilledAt && <PostLabel type={'completed'} styleName='label' />}
           {type && <PostLabel type={type} styleName='label' />}
           {dropdownItems.length > 0 &&
             <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} />}
