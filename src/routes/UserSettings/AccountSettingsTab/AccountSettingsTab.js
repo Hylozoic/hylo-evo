@@ -50,10 +50,8 @@ export default class AccountSettingsTab extends Component {
     if (!currentUser) return
 
     const {
-      name, avatarUrl, bannerUrl, tagline, bio, location, locationText, email, url, facebookUrl, twitterName, linkedinUrl
+      name, avatarUrl, bannerUrl, tagline, bio, locationId, locationText, email, url, facebookUrl, twitterName, linkedinUrl
     } = currentUser
-
-    console.log('current location', locationText, location)
 
     this.setState({
       edits: {
@@ -63,7 +61,7 @@ export default class AccountSettingsTab extends Component {
         tagline: tagline || '',
         bio: bio || '',
         locationText: locationText || '',
-        location: location || null,
+        locationId: locationId || '',
         email: email || '',
         url: url || '',
         facebookUrl,
@@ -73,13 +71,38 @@ export default class AccountSettingsTab extends Component {
     })
   }
 
+  updateSetting = (key, setChanged = true) => event => {
+    const { edits, changed } = this.state
+    setChanged && this.props.setConfirm('You have unsaved changes, are you sure you want to leave?')
+
+    if (key === 'location') {
+      edits['locationText'] = event.target.value.fullText
+      edits['locationId'] = event.target.value.id
+    } else {
+      edits[key] = event.target.value
+    }
+
+    this.setState({
+      changed: setChanged ? true : changed,
+      edits: { ...edits }
+    })
+  }
+
+  updateSettingDirectly = (key, changed) => value =>
+    this.updateSetting(key, changed)({ target: { value } })
+
+  save = () => {
+    this.setState({ changed: false })
+    this.props.setConfirm(false)
+    this.props.updateUserSettings(this.state.edits)
+  }
+
   render () {
     const {
       currentUser,
       updateUserSettings,
       loginWithService,
-      unlinkAccount,
-      setConfirm
+      unlinkAccount
     } = this.props
     if (!currentUser) return <Loading />
 
@@ -87,68 +110,45 @@ export default class AccountSettingsTab extends Component {
     const {
       name, avatarUrl, bannerUrl, tagline, bio, locationText, email, url, facebookUrl, twitterName, linkedinUrl
     } = edits
-
-    const updateSetting = (key, setChanged = true) => event => {
-      const { edits, changed } = this.state
-      setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
-
-      // let newValue = event
-
-      console.log('changeing setting ', key, ' to ', event.target.value)
-      if (key === 'location') {
-        edits['locationText'] = event.target.value.fullText
-        edits['location'] = event.target.value
-      }
-
-      this.setState({
-        changed: setChanged ? true : changed,
-        edits: {
-          ...edits,
-          [key]: event.target.value
-        }
-      })
-    }
-
-    const updateSettingDirectly = (key, changed) => value =>
-      updateSetting(key, changed)({ target: { value } })
-
-    const save = () => {
-      this.setState({ changed: false })
-      setConfirm(false)
-      updateUserSettings(edits)
-    }
+    const location = currentUser.location
 
     return <div>
-      <input type='text' styleName='name' onChange={updateSetting('name')} value={name || ''} />
+      <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <ChangeImageButton
-          update={updateSettingDirectly('bannerUrl')}
+          update={this.updateSettingDirectly('bannerUrl')}
           uploadSettings={{ type: 'userBanner', id: currentUser.id }}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
         <ChangeImageButton
-          update={updateSettingDirectly('avatarUrl')}
+          update={this.updateSettingDirectly('avatarUrl')}
           uploadSettings={{ type: 'userAvatar', id: currentUser.id }}
           styleName='change-avatar-button' />
       </div>
-      <SettingsControl label='Tagline' onChange={updateSetting('tagline')} value={tagline} maxLength={60} />
-      <SettingsControl label='About Me' onChange={updateSetting('bio')} value={bio} type='textarea' />
-      <SettingsControl label='Location' onChange={updateSettingDirectly('location', true)} value={locationText} type='location' />
-      <SettingsControl label='Email' onChange={updateSetting('email')} value={email} />
-      <SettingsControl label='Website' onChange={updateSetting('url')} value={url} />
+      <SettingsControl label='Tagline' onChange={this.updateSetting('tagline')} value={tagline} maxLength={60} />
+      <SettingsControl label='About Me' onChange={this.updateSetting('bio')} value={bio} type='textarea' />
+      <SettingsControl
+        label='Location'
+        onChange={this.updateSettingDirectly('location', true)}
+        locationText={locationText}
+        location={location}
+        type='location'
+      />
+      <SettingsControl label='Email' onChange={this.updateSetting('email')} value={email} />
+      <SettingsControl label='Website' onChange={this.updateSetting('url')} value={url} />
       <label styleName='social-label'>Social Accounts</label>
       <SocialControl
         label='Facebook'
         onLink={() => loginWithService('facebook')}
-        onChange={updateSettingDirectly('facebookUrl', false)}
+        onChange={this.updateSettingDirectly('facebookUrl', false)}
         unlinkAccount={unlinkAccount}
         provider='facebook'
         value={facebookUrl} />
       <SocialControl
         label='Twitter'
         onLink={() => twitterPrompt()}
-        onChange={updateSettingDirectly('twitterName', false)}
+        onChange={this.updateSettingDirectly('twitterName', false)}
         unlinkAccount={unlinkAccount}
         provider='twitter'
         value={twitterName}
@@ -157,12 +157,12 @@ export default class AccountSettingsTab extends Component {
         label='LinkedIn'
         onLink={() => linkedinPrompt()}
         unlinkAccount={unlinkAccount}
-        onChange={updateSettingDirectly('linkedinUrl', false)}
+        onChange={this.updateSettingDirectly('linkedinUrl', false)}
         provider='linkedin'
         value={linkedinUrl}
         updateUserSettings={updateUserSettings} />
       <div styleName='button-row'>
-        <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
+        <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} styleName='save-button' />
       </div>
     </div>
   }

@@ -1,19 +1,18 @@
 import { connect } from 'react-redux'
 import {
-  findTopics,
-  clearTopics,
-  getTopicResults
-} from '../HyloEditor/HyloEditor.store'
+  fetchLocation,
+  pollingFetchLocation
+} from './LocationInput.store.js'
 
 export function mapStateToProps (state, props) {
-  return {
-    topicResults: getTopicResults(state, props)
-  }
+  return {}
 }
 
-export const mapDispatchToProps = {
-  findTopics,
-  clearTopics
+export const mapDispatchToProps = (dispatch, props) => {
+  return {
+    fetchLocation,
+    pollingFetchLocation: (locationData, callback) => pollingFetchLocation(dispatch, locationData, callback)
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })

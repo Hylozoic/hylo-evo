@@ -13,8 +13,23 @@ export default
     tagline
     locationText
     location {
+      id
       addressNumber
       addressStreet
+      bbox {
+        lat
+        lng
+      }
+      center {
+        lat
+        lng
+      }
+      city
+      country
+      fullText
+      locality
+      neighborhood
+      region
     }
     messageThreadId
     memberships {

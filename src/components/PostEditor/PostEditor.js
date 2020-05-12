@@ -11,6 +11,7 @@ import AttachmentManager from './AttachmentManager'
 import { uploadSettings } from './AttachmentManager/AttachmentManager'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
+import LocationInput from 'components/LocationInput'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
@@ -67,7 +68,7 @@ export default class PostEditor extends React.Component {
       title: '',
       details: '',
       communities: [],
-      location: ''
+      locationText: ''
     },
     editing: false,
     loading: false
@@ -228,10 +229,9 @@ export default class PostEditor extends React.Component {
     }
   }
 
-  handleLocationChange = event => {
-    const location = event.target.value
+  handleLocationChange = location => {
     this.setState({
-      post: { ...this.state.post, location }
+      post: { ...this.state.post, locationText: location.fullText, locationId: location.id }
     })
   }
 
@@ -303,14 +303,14 @@ export default class PostEditor extends React.Component {
       editing, createPost, createProject, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected, isProject
     } = this.props
     const {
-      id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, location
+      id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, locationText, locationId
     } = this.state.post
     const details = this.editor.current.getContentHTML()
     const topicNames = this.topicSelector.current.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, locationText, locationId
     }
     const saveFunc = editing ? updatePost : isProject ? createProject : createPost
     setAnnouncement(false)
@@ -334,7 +334,7 @@ export default class PostEditor extends React.Component {
 
   render () {
     const { initialPrompt, titlePlaceholder, titleLengthError, dateError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
-    const { id, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location } = post
+    const { id, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location, locationText, type } = post
     const {
       onClose, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
@@ -343,6 +343,8 @@ export default class PostEditor extends React.Component {
     } = this.props
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
+
+    const hasLocation = ['event', 'offer', 'request'].includes(type)
 
     const showPostTypes = !isProject && !isEvent
 
@@ -422,14 +424,13 @@ export default class PostEditor extends React.Component {
           <div styleName='footerSection-label alignedLabel'>End Time</div>
           <DatePicker value={endTime} onChange={this.handleEndTimeChange} />
         </div>}
-        {isEvent && <div styleName='footerSection'>
+        {hasLocation && <div styleName='footerSection'>
           <div styleName='footerSection-label alignedLabel'>Location</div>
-          <input
-            type='text'
-            styleName='locationInput'
-            placeholder='Where is your event'
-            value={location || ''}
+          <LocationInput
+            location={location}
+            locationText={locationText}
             onChange={this.handleLocationChange}
+            placeholder={`Where is your ${type} located`}
           />
         </div>}
         {isEvent && <div styleName='footerSection'>

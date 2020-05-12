@@ -8,8 +8,23 @@ export default
   unseenThreadCount
   locationText
   location {
+  id
     addressNumber
     addressStreet
+    bbox {
+      lat
+      lng
+    }
+    center {
+      lat
+      lng
+    }
+    city
+    country
+    fullText
+    locality
+    neighborhood
+    region
   }
   email
   bannerUrl

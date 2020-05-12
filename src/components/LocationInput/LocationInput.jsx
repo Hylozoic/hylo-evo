@@ -7,61 +7,48 @@ import styles from './LocationInput.scss'
 
 export default class LocationInput extends Component {
   static propTypes = {
-    centerAt: PropTypes.object,
-    defaultValue: PropTypes.string,
+    location: PropTypes.object,
+    locationText: PropTypes.string,
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
-    value: PropTypes.string
+    pollingFetchLocation: PropTypes.func
   }
 
   static defaultProps = {
-    centerAt: null,
-    defaultValue: '',
+    location: null,
+    locationText: '',
     onChange: null,
-    placeholder: 'Search for location...',
-    value: ''
+    placeholder: 'Search for a location...'
   }
 
   constructor (props) {
     super(props)
     this.state = {
-      centerAt: props.centerAt,
-      input: props.value || props.defaultValue,
-      location: null,
-      locationEdited: false
+      browserLocation: null
     }
   }
 
-  componentDidMount = () => {
-    if (!this.props.centerAt) {
-      navigator.geolocation.getCurrentPosition((position) => this.setState({ centerAt: { lat: position.coords.latitude, lng: position.coords.longitude } }))
+  componentDidMount () {
+    if (!this.props.location || !this.props.location.center) {
+      navigator.geolocation.getCurrentPosition((position) => this.setState({ browserLocation: { lat: position.coords.latitude, lng: position.coords.longitude } }))
     }
-  }
-
-  reset = () => {
-    this.setState({ data: null, input: this.props.defaultValue, locationEdited: false })
-    this.props.onChange(this.props.defaultValue)
   }
 
   handleInputChange = data => {
-    this.setState({ input: data.place_name, location: data })
-    console.log('chaning location to ', data)
-    this.props.onChange(convertMapboxToLocation(data))
+    this.props.pollingFetchLocation(convertMapboxToLocation(data), (location) => this.props.onChange(location))
   }
 
-  handleSuggest = e => {
-    console.log(e)
-  }
+  handleSuggest = e => { }
 
   render () {
-    const { placeholder } = this.props
-    const { centerAt } = this.state
+    const { location, locationText, placeholder } = this.props
+    const centerAt = (location && location.center) || this.state.browserLocation
 
     return (
       <div className={styles.wrapper}>
         <Geocoder
           accessToken={mapbox.token}
-          defaultInputValue={this.props.defaultValue}
+          defaultInputValue={locationText}
           onSelect={this.handleInputChange}
           onSuggest={this.handleSuggest}
           source='mapbox.places'

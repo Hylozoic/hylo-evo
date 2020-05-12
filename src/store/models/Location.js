@@ -22,8 +22,6 @@ Location.fields = {
   createdAt: attr(),
   fullText: attr(),
   geometry: attr(),
-  lat: attr(),
-  lng: attr(),
   locality: attr(),
   neighborhood: attr(),
   region: attr(),
