@@ -9,7 +9,8 @@ import { queryParamWhitelist } from 'store/reducers/queryResults'
 // import ScrollListener from 'components/ScrollListener'
 import Loading from 'components/Loading'
 import './MapExplorer.scss'
-import Map from '../Map/Map'
+import Map from 'components/Map/Map'
+import { createH3LayerFromPosts } from 'components/Map/layers/askOfferH3Layer'
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
@@ -94,6 +95,8 @@ export default class MapExplorer extends React.Component {
     const isEvent = routeParams.postTypeContext === 'event'
     const showSortAndFilters = !isProject && !isEvent
 
+    const mapLayer = createH3LayerFromPosts(posts)
+
     return <div styleName='MapExplorer-container'>
       {/*{showSortAndFilters && <React.Fragment>*/}
         {/*<div>*/}
@@ -110,7 +113,7 @@ export default class MapExplorer extends React.Component {
                   {/*selectedSort={sortBy} />*/}
         {/*</div>}*/}
       {/*</React.Fragment>}*/}
-        <Map />
+        <Map layers={[mapLayer]} />
       {/*<div styleName='MapExplorerItems'>*/}
         {/*{posts.map(post => {*/}
           {/*const expanded = post.id === routeParams.postId*/}

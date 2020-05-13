@@ -5,7 +5,7 @@ import DeckGL from '@deck.gl/react'
 import { mapbox } from 'config'
 
 function Map (props) {
-  let { layers, shareViewportUpdate} = props
+  let { layers, shareViewportUpdate } = props
   const [viewport, setViewport] = useState({
     latitude: 37.8,
     longitude: -122.3,
