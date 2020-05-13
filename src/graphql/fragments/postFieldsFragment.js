@@ -11,6 +11,7 @@ const postFieldsFragment = withComments => `
   }
   createdAt
   updatedAt
+  fulfilledAt
   startTime
   endTime
   location
@@ -89,7 +90,7 @@ const postFieldsFragment = withComments => `
           name
         }
       }
-    }  
+    }
   }
   eventInvitations {
     total
@@ -110,7 +111,7 @@ const postFieldsFragment = withComments => `
             name
           }
         }
-      }      
+      }
     }
   }`
 

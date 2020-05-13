@@ -334,7 +334,7 @@ export default class PostEditor extends React.Component {
 
   render () {
     const { initialPrompt, titlePlaceholder, titleLengthError, dateError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
-    const { id, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location } = post
+    const { id, type, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location } = post
     const {
       onClose, detailsPlaceholder,
       currentUser, communityOptions, loading, addImage,
@@ -343,8 +343,8 @@ export default class PostEditor extends React.Component {
     } = this.props
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
-
     const showPostTypes = !isProject && !isEvent
+    const canHaveTimes = type !== 'discussion'
 
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
       <div styleName='header'>
@@ -413,14 +413,14 @@ export default class PostEditor extends React.Component {
             To accept financial contributions for this project, you have to connect a Stripe account. Go to <a href='/settings/payment'>Settings</a> to set it up. (Remember to save your changes before leaving this form)
           </div>}
         </div>}
-        {isEvent && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
-        {isEvent && <div styleName='footerSection'>
-          <div styleName='footerSection-label alignedLabel'>Start Time</div>
-          <DatePicker value={startTime} onChange={this.handleStartTimeChange} />
-        </div>}
-        {isEvent && <div styleName='footerSection'>
-          <div styleName='footerSection-label alignedLabel'>End Time</div>
-          <DatePicker value={endTime} onChange={this.handleEndTimeChange} />
+        {canHaveTimes && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
+        {canHaveTimes && <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Timeframe</div>
+          <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+            <DatePicker value={startTime} placeholder={'Select Start Time'} onChange={this.handleStartTimeChange} />
+            <div styleName='footerSection-helper'>To</div>
+            <DatePicker value={endTime} placeholder={'Select End Time'} onChange={this.handleEndTimeChange} />
+          </div>
         </div>}
         {isEvent && <div styleName='footerSection'>
           <div styleName='footerSection-label alignedLabel'>Location</div>

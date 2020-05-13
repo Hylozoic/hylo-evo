@@ -1,10 +1,11 @@
 import React from 'react'
 import path from 'path'
-import { pick } from 'lodash/fp'
+import { pick, get } from 'lodash/fp'
 import Highlight from 'components/Highlight'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import LinkPreview from '../LinkPreview'
+import PostCompletion from '../PostCompletion'
 import { sanitize, present, textLength, truncate } from 'hylo-utils/text'
 import './PostDetails.scss'
 
@@ -17,12 +18,20 @@ export default function PostDetails ({
   expanded,
   highlightProps,
   fileAttachments,
-  hideDetails
+  hideDetails,
+  fulfillPost,
+  unfulfillPost,
+  canEdit,
+  ...post
 }) {
   details = present(sanitize(details), { slug })
   if (!expanded && textLength(details) > maxDetailsLength) {
     details = truncate(details, maxDetailsLength)
   }
+
+  const postType = get('type', post)
+  const canBeCompleted = postType === 'request' || postType === 'offer'
+  const isFulfilled = get('fulfilledAt', post) !== null
 
   return <Highlight {...highlightProps}>
     <div styleName='postDetails'>
@@ -30,6 +39,16 @@ export default function PostDetails ({
         <ClickCatcher>
           <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
         </ClickCatcher>
+      }
+      {
+        canBeCompleted && canEdit && expanded &&
+        <PostCompletion
+          type={postType}
+          startTime={post.startTime}
+          endTime={post.endTime}
+          isFulfilled={isFulfilled}
+          fulfillPost={fulfillPost}
+          unfulfillPost={unfulfillPost} />
       }
       {linkPreview &&
         <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />}
