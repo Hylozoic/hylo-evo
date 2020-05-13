@@ -19,7 +19,7 @@ Object {
     avatarUrl
     bannerUrl
     postCount
-
+    
 posts(
   first: $first,
   offset: $offset,
@@ -31,7 +31,7 @@ posts(
 ) {
   hasMore
   items {
-
+    
   id
   announcement
   title
@@ -46,7 +46,6 @@ posts(
   updatedAt
   startTime
   endTime
-  locationText
   myEventResponse
   commenters(first: 3) {
     id
@@ -54,12 +53,32 @@ posts(
     avatarUrl
   }
   commentersTotal
-
+  
   linkPreview {
     id
     title
     url
     imageUrl
+  }
+  locationText
+  location {
+    id
+    addressNumber
+    addressStreet
+    bbox {
+      lat
+      lng
+    }
+    center {
+      lat
+      lng
+    }
+    city
+    country
+    fullText
+    locality
+    neighborhood
+    region
   }
   votesTotal
   myVote
@@ -165,7 +184,7 @@ Object {
   $topic: ID,
   $first: Int
 ) {
-
+  
 posts(
   first: $first,
   offset: $offset,
@@ -177,7 +196,7 @@ posts(
 ) {
   hasMore
   items {
-
+    
   id
   announcement
   title
@@ -192,7 +211,6 @@ posts(
   updatedAt
   startTime
   endTime
-  locationText
   myEventResponse
   commenters(first: 3) {
     id
@@ -200,12 +218,32 @@ posts(
     avatarUrl
   }
   commentersTotal
-
+  
   linkPreview {
     id
     title
     url
     imageUrl
+  }
+  locationText
+  location {
+    id
+    addressNumber
+    addressStreet
+    bbox {
+      lat
+      lng
+    }
+    center {
+      lat
+      lng
+    }
+    city
+    country
+    fullText
+    locality
+    neighborhood
+    region
   }
   votesTotal
   myVote

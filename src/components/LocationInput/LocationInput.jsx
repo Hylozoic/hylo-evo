@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
-import Geocoder from 'react-geocoder-autocomplete'
 import React, { Component } from 'react'
+import Geocoder from 'components/GeocoderAutocomplete'
 import { mapbox } from 'config'
 import { convertMapboxToLocation } from './util'
 import styles from './LocationInput.scss'
