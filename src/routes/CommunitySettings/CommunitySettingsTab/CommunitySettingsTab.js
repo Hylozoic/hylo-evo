@@ -36,66 +36,79 @@ export default class CommunitySettingsTab extends Component {
     if (!community) return
 
     const {
-      name, description, location, avatarUrl, bannerUrl
+      name, description, locationText, avatarUrl, bannerUrl
     } = community
 
     this.setState({
       edits: {
         name: name || '',
         description: description || '',
-        location: location || '',
+        locationText: locationText || '',
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER
       }
     })
   }
 
+  updateSetting = (key, setChanged = true) => event => {
+    const { edits, changed } = this.state
+
+    if (key === 'location') {
+      edits['locationText'] = event.target.value.fullText
+      edits['locationId'] = event.target.value.id
+    } else {
+      edits[key] = event.target.value
+    }
+
+    this.setState({
+      changed: setChanged ? true : changed,
+      edits: { ...edits }
+    })
+  }
+
+  updateSettingDirectly = (key, changed) => value =>
+    this.updateSetting(key, changed)({ target: { value } })
+
+  save = () => {
+    this.setState({ changed: false })
+    this.props.updateCommunitySettings(this.state.edits)
+  }
+
   render () {
-    const { community, updateCommunitySettings } = this.props
+    const { community } = this.props
     if (!community) return <Loading />
 
     const { edits, changed } = this.state
     const {
-      name, description, location, avatarUrl, bannerUrl
+      name, description, locationText, avatarUrl, bannerUrl
     } = edits
 
-    const updateSetting = (key, setChanged = true) => event => {
-      const { edits, changed } = this.state
-      this.setState({
-        changed: setChanged ? true : changed,
-        edits: {
-          ...edits,
-          [key]: event.target.value
-        }
-      })
-    }
-
-    const updateSettingDirectly = (key, changed) => value =>
-      updateSetting(key, changed)({ target: { value } })
-
-    const save = () => {
-      this.setState({ changed: false })
-      updateCommunitySettings(edits)
-    }
+    const location = community.location
 
     return <div>
-      <input type='text' styleName='name' onChange={updateSetting('name')} value={name || ''} />
+      <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <ChangeImageButton
-          update={updateSettingDirectly('bannerUrl')}
+          update={this.updateSettingDirectly('bannerUrl')}
           uploadSettings={{ type: 'communityBanner', id: community.id }}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
         <ChangeImageButton
-          update={updateSettingDirectly('avatarUrl')}
+          update={this.updateSettingDirectly('avatarUrl')}
           uploadSettings={{ type: 'communityAvatar', id: community.id }}
           styleName='change-avatar-button' />
       </div>
-      <SettingsControl label='Description' onChange={updateSetting('description')} value={description} type='textarea' />
-      <SettingsControl label='Location' onChange={updateSetting('location')} value={location} />
+      <SettingsControl label='Description' onChange={this.updateSetting('description')} value={description} type='textarea' />
+      <SettingsControl
+        label='Location'
+        onChange={this.updateSettingDirectly('location', true)}
+        locationText={locationText}
+        location={location}
+        type='location'
+      />
       <div styleName='button-row'>
-        <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? save : null} styleName='save-button' />
+        <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} styleName='save-button' />
       </div>
     </div>
   }

@@ -54,8 +54,9 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
   />
   <SettingsControl
     label="Location"
+    locationText="Fuji"
     onChange={[Function]}
-    value="Fuji"
+    type="location"
   />
   <div
     data-stylename="button-row"

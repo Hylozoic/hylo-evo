@@ -41,6 +41,9 @@ export const intercom = {
 export const mixpanel = {
   token: process.env.MIXPANEL_TOKEN
 }
+export const mapbox = {
+  token: process.env.MAPBOX_TOKEN
+}
 
 export const featureFlags = () => {
   if (isServer) {
@@ -68,7 +71,8 @@ const config = {
   segment,
   featureFlags,
   intercom,
-  mixpanel
+  mixpanel,
+  mapbox
 }
 
 if (!isServer) window.__appConfig = config

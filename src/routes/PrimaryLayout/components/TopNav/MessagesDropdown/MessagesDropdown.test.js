@@ -51,7 +51,6 @@ describe('MessagesDropdown', () => {
 })
 
 describe('MessagesDropdownItem', () => {
-
   it('renders correctly with an empty thread', () => {
     const thread = new MessageThread({})
     const wrapper = shallow(<MessagesDropdownItem thread={thread} />)
