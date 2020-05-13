@@ -348,6 +348,9 @@ export default class PostEditor extends React.Component {
 
     const showPostTypes = !isProject && !isEvent
 
+    // Center location autocomplete either on post's current location, or current community's location, or current user's location
+    const curLocation = location || (communities.length > 0 ? communities[0].location : null) || currentUser.location
+
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
       <div styleName='header'>
         <div styleName='initial'>
@@ -427,7 +430,7 @@ export default class PostEditor extends React.Component {
         {hasLocation && <div styleName='footerSection'>
           <div styleName='footerSection-label alignedLabel'>Location</div>
           <LocationInput
-            location={location}
+            location={curLocation}
             locationText={locationText}
             onChange={this.handleLocationChange}
             placeholder={`Where is your ${type} located`}

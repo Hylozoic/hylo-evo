@@ -6,6 +6,7 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import getRouteParam from 'store/selectors/getRouteParam'
 import { get } from 'lodash/fp'
 import getCanModerate from 'store/selectors/getCanModerate'
+import getMe from 'store/selectors/getMe'
 import { push } from 'connected-react-router'
 import { communityDeleteConfirmationUrl } from 'util/navigation'
 
@@ -16,6 +17,7 @@ export function mapStateToProps (state, props) {
 
   return {
     community,
+    currentUser: getMe(state),
     slug,
     canModerate
   }
