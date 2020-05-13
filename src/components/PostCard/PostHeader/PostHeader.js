@@ -14,7 +14,7 @@ import './PostHeader.scss'
 import { filter, isFunction, isEmpty } from 'lodash'
 import cx from 'classnames'
 
-const getStartDate = (startTime) => {
+const formatStartDate = (startTime) => {
   const current = moment()
   let start = ''
   if (moment(startTime).isAfter(current)) {
@@ -23,7 +23,7 @@ const getStartDate = (startTime) => {
   return start
 }
 
-const getEndDate = (endTime) => {
+const formatEndDate = (endTime) => {
   const current = moment()
   let end = ''
   const endFormatted = moment(endTime).format('MMM D YYYY')
@@ -90,8 +90,8 @@ export default class PostHeader extends PureComponent {
 
     const canHaveTimes = type === 'offer' || type === 'request'
     let timeWindow = ''
-    const startDate = startTime && getStartDate(startTime)
-    const endDate = endTime && getEndDate(endTime)
+    const startDate = startTime && formatStartDate(startTime)
+    const endDate = endTime && formatEndDate(endTime)
     if (startDate && endDate) {
       timeWindow = `${type} starts ${startDate} and ${endDate}`
     } else if (endDate) {

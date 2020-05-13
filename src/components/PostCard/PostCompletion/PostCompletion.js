@@ -7,13 +7,13 @@ export default function PostCompletion ({ type, startTime, endTime, isFulfilled,
 
   switch (isFulfilled) {
     case false:
-      type === 'request' ? label = 'I still need this' : label = 'Available'
+      label = (type === 'request' ? 'I still need this' : 'Available')
       break
     case true:
-      type === 'request' ? label = 'This request was completed' : label = 'Unavailable'
+      label = (type === 'request' ? 'This request was completed' : 'Unvailable')
       break
     case 'expired':
-      type === 'request' ? label = 'I no longer need this' : label = 'Unavailable'
+      label = (type === 'request' ? 'I no longer need this' : 'Unvailable')
       break
     default:
       label = 'I still need this'

@@ -1,28 +1,19 @@
 import React from 'react'
 import PostCompletion from './PostCompletion'
-import { RESPONSES } from 'store/models/EventInvitation'
 import { shallow } from 'enzyme'
 
-it('renders correctly with YES response', () => {
+it('renders correctly if fulfilled', () => {
   const props = {
-    myEventResponse: RESPONSES.YES
+    isFulfilled: true
   }
-  const wrapper = shallow(<EventRSVP {...props} />)
+  const wrapper = shallow(<PostCompletion {...props} />)
   expect(wrapper).toMatchSnapshot()
 })
 
-it('renders correctly with INTERESTED response', () => {
+it('renders correctly if not fulfilled', () => {
   const props = {
-    myEventResponse: RESPONSES.INTERESTED
+    isFulfilled: false
   }
-  const wrapper = shallow(<EventRSVP {...props} />)
-  expect(wrapper).toMatchSnapshot()
-})
-
-it('renders correctly with NO response', () => {
-  const props = {
-    myEventResponse: RESPONSES.NO
-  }
-  const wrapper = shallow(<EventRSVP {...props} />)
+  const wrapper = shallow(<PostCompletion {...props} />)
   expect(wrapper).toMatchSnapshot()
 })
