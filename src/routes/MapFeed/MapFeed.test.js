@@ -1,10 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import MapFeed, { CreateCommunityPrompt } from './MapFeed'
+import { CreateCommunityPrompt } from './MapFeed'
 
 describe('MapFeed', () => { // most of these
-
-
 
   // it('renders a FeedList with correct props', () => {
   //   const wrapper = shallow(<Feed
@@ -78,7 +76,7 @@ describe('MapFeed', () => { // most of these
 //     expect(wrapper.find('FeedBanner')).toHaveLength(0)
 //     expect(wrapper.find('Connect(TopicFeedHeader)')).toHaveLength(1)
 //   })
-// })
+})
 
 describe('CreateCommunityPrompt', () => {
   it('matches the latest snapshot', () => {

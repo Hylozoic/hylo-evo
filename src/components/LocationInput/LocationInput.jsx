@@ -47,7 +47,7 @@ export default class LocationInput extends Component {
     return (
       <div className={styles.wrapper}>
         <Geocoder
-          accessToken={mapbox.token}
+          accessToken={mapbox.secret_token}
           defaultInputValue={locationText}
           onSelect={this.handleInputChange}
           onSuggest={this.handleSuggest}

@@ -25,7 +25,7 @@ function Map (props) {
       height='100%'
       mapStyle='mapbox://styles/mapbox/light-v9'
       onViewportChange={nextViewport => setViewport(nextViewport)}
-      mapboxApiAccessToken={mapbox.token}
+      mapboxApiAccessToken={mapbox.public_token}
     >
       <DeckGL viewState={viewport} layers={layers} />
 
