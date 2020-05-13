@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import MapGL from 'react-map-gl'
 import DeckGL from '@deck.gl/react'
-
-let MAPBOX_TOKEN = 'pk.eyJ1IjoidG9rdWdhd2EiLCJhIjoiY2s4ejYwcm1mMDA1MDNsbW8zamV1ejhmaSJ9.PvrcmUHyffocIUy7k-teUw'
+import { mapbox } from 'config'
 
 function Map (props) {
   let { layers, shareViewportUpdate} = props
@@ -26,7 +25,7 @@ function Map (props) {
       height='100%'
       mapStyle='mapbox://styles/mapbox/light-v9'
       onViewportChange={nextViewport => setViewport(nextViewport)}
-      mapboxApiAccessToken={MAPBOX_TOKEN}
+      mapboxApiAccessToken={mapbox.token}
     >
       <DeckGL viewState={viewport} layers={layers} />
 
