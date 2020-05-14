@@ -9,7 +9,7 @@ function Map (props) {
   const [viewport, setViewport] = useState({
     latitude: 37.8,
     longitude: -122.3,
-    zoom: 10,
+    zoom: props.zoom,
     bearing: 0,
     pitch: 0
   })
@@ -35,12 +35,14 @@ function Map (props) {
 
 Map.propTypes = {
   layers: PropTypes.array,
-  shareViewportUpdate: PropTypes.func
+  shareViewportUpdate: PropTypes.func,
+  zoom: PropTypes.number
 }
 
 Map.defaultProps = {
   layers: [],
-  shareViewportUpdate: () => {}
+  shareViewportUpdate: () => {},
+  zoom: 10
 }
 
 export default Map

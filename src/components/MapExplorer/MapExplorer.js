@@ -16,7 +16,8 @@ export default class MapExplorer extends React.Component {
   static defaultProps = {
     posts: [],
     routeParams: {},
-    querystringParams: {}
+    querystringParams: {},
+    zoom: 10
   }
 
   constructor (props) {
@@ -85,7 +86,8 @@ export default class MapExplorer extends React.Component {
       changeTab,
       changeSort,
       posts,
-      pending
+      pending,
+      zoom
     } = this.props
     const { atTabBar, tabBarWidth } = this.state
     const style = {
@@ -95,7 +97,7 @@ export default class MapExplorer extends React.Component {
     const isEvent = routeParams.postTypeContext === 'event'
     const showSortAndFilters = !isProject && !isEvent
 
-    const mapLayer = createH3LayerFromPosts(posts)
+    const mapLayer = createH3LayerFromPosts(posts, zoom + 2)
 
     return <div styleName='MapExplorer-container'>
       {/*{showSortAndFilters && <React.Fragment>*/}
@@ -113,7 +115,7 @@ export default class MapExplorer extends React.Component {
                   {/*selectedSort={sortBy} />*/}
         {/*</div>}*/}
       {/*</React.Fragment>}*/}
-        <Map layers={[mapLayer]} />
+        <Map layers={[mapLayer]} zoom={zoom} />
       {/*<div styleName='MapExplorerItems'>*/}
         {/*{posts.map(post => {*/}
           {/*const expanded = post.id === routeParams.postId*/}
