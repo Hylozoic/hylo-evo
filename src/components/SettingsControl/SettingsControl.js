@@ -24,7 +24,6 @@ export default function SettingsControl ({ label, value = '', onChange, type, ..
       break
     case 'location':
       control = <LocationInput
-        defaultValue={value}
         onChange={onChange}
         {...otherProps}
       />

@@ -6,6 +6,6 @@ global.graphql = jest.fn()
 const mockGeolocation = {
   getCurrentPosition: jest.fn(),
   watchPosition: jest.fn()
-};
+}
 
-global.navigator.geolocation = mockGeolocation;
+global.navigator.geolocation = mockGeolocation
