@@ -170,7 +170,7 @@ exports[`renders with a community 1`] = `
     Object {
       "avatarUrl": "avatar.png",
       "bannerUrl": "banner.png",
-      "location": "space, duh",
+      "locationText": "space, duh",
       "name": "Spacebase",
     }
   }

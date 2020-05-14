@@ -1,7 +1,7 @@
 // import { combineReducers } from 'redux'
 import { createSelector } from 'reselect'
-import { createSelector as ormCreateSelector } from 'redux-orm'
-import orm from 'store/models'
+// import { createSelector as ormCreateSelector } from 'redux-orm'
+// import orm from 'store/models'
 
 export const MODULE_NAME = 'Component'
 

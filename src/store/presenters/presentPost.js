@@ -7,6 +7,7 @@ export default function presentPost (post, communityId) {
     ...post.ref,
     creator: post.creator,
     linkPreview: post.linkPreview,
+    location: post.location,
     commenters: post.commenters.toModelArray(),
     communities: post.communities.toModelArray(),
     fileAttachments: post.attachments.filter(a => a.type === 'file').toModelArray(),

@@ -199,6 +199,19 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       data-stylename="footerSection"
     >
       <div
+        data-stylename="footerSection-label alignedLabel"
+      >
+        Location
+      </div>
+      <Connect(LocationInput)
+        onChange={[Function]}
+        placeholder="Where is your request located"
+      />
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
         data-stylename="footerSection-label"
       >
         Topics
@@ -373,6 +386,19 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       data-stylename="footerSection"
     >
       <div
+        data-stylename="footerSection-label alignedLabel"
+      >
+        Location
+      </div>
+      <Connect(LocationInput)
+        onChange={[Function]}
+        placeholder="Where is your request located"
+      />
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
         data-stylename="footerSection-label"
       >
         Topics
@@ -467,7 +493,8 @@ Array [
         "id": "1",
         "title": "a link",
       },
-      "location": undefined,
+      "locationId": undefined,
+      "locationText": undefined,
       "memberIds": undefined,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",
@@ -894,6 +921,19 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       data-stylename="footerSection"
     >
       <div
+        data-stylename="footerSection-label alignedLabel"
+      >
+        Location
+      </div>
+      <Connect(LocationInput)
+        onChange={[Function]}
+        placeholder="Where is your offer located"
+      />
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
         data-stylename="footerSection-label"
       >
         Topics
@@ -1031,6 +1071,19 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
   <div
     data-stylename="footer"
   >
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label alignedLabel"
+      >
+        Location
+      </div>
+      <Connect(LocationInput)
+        onChange={[Function]}
+        placeholder="Where is your request located"
+      />
+    </div>
     <div
       data-stylename="footerSection"
     >
@@ -1244,7 +1297,8 @@ Array [
       "id": undefined,
       "imageUrls": undefined,
       "linkPreview": undefined,
-      "location": undefined,
+      "locationId": undefined,
+      "locationText": undefined,
       "memberIds": undefined,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",
@@ -2009,7 +2063,8 @@ Array [
         "id": "1",
         "title": "a link",
       },
-      "location": undefined,
+      "locationId": undefined,
+      "locationText": undefined,
       "memberIds": undefined,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",

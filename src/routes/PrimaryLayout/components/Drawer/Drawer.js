@@ -18,7 +18,7 @@ export default class Drawer extends React.PureComponent {
     community: shape({
       id: string,
       name: string,
-      location: string,
+      locationText: string,
       slug: string,
       avatarUrl: string
     }),
@@ -150,11 +150,11 @@ export class NetworkRow extends React.Component {
 
 function Logo ({ community, network }) {
   if (!community && !network) return null
-  const { slug, name, location, avatarUrl } = (community || network)
+  const { slug, name, locationText, avatarUrl } = (community || network)
   const link = `/${community ? 'c' : 'n'}/${slug}`
   return <Link styleName='s.currentCommunity' to={link}>
     <div styleName='s.avatar' style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
     <div styleName='s.name' className='drawer-inv-bd'>{name}</div>
-    <div className='drawer-inv-sm'>{location}</div>
+    <div className='drawer-inv-sm'>{locationText}</div>
   </Link>
 }

@@ -46,7 +46,6 @@ posts(
   updatedAt
   startTime
   endTime
-  location
   myEventResponse
   commenters(first: 3) {
     id
@@ -60,6 +59,26 @@ posts(
     title
     url
     imageUrl
+  }
+  locationText
+  location {
+    id
+    addressNumber
+    addressStreet
+    bbox {
+      lat
+      lng
+    }
+    center {
+      lat
+      lng
+    }
+    city
+    country
+    fullText
+    locality
+    neighborhood
+    region
   }
   votesTotal
   myVote
@@ -98,14 +117,14 @@ posts(
       avatarUrl
       bio
       tagline
-      location
+      locationText
       skills (first: 100) {
         items {
           id
           name
         }
       }
-    }  
+    }
   }
   eventInvitations {
     total
@@ -119,14 +138,14 @@ posts(
         avatarUrl
         bio
         tagline
-        location
+        locationText
         skills (first: 100) {
           items {
             id
             name
           }
         }
-      }      
+      }
     }
   }
   }
@@ -192,7 +211,6 @@ posts(
   updatedAt
   startTime
   endTime
-  location
   myEventResponse
   commenters(first: 3) {
     id
@@ -206,6 +224,26 @@ posts(
     title
     url
     imageUrl
+  }
+  locationText
+  location {
+    id
+    addressNumber
+    addressStreet
+    bbox {
+      lat
+      lng
+    }
+    center {
+      lat
+      lng
+    }
+    city
+    country
+    fullText
+    locality
+    neighborhood
+    region
   }
   votesTotal
   myVote
@@ -244,14 +282,14 @@ posts(
       avatarUrl
       bio
       tagline
-      location
+      locationText
       skills (first: 100) {
         items {
           id
           name
         }
       }
-    }  
+    }
   }
   eventInvitations {
     total
@@ -265,14 +303,14 @@ posts(
         avatarUrl
         bio
         tagline
-        location
+        locationText
         skills (first: 100) {
           items {
             id
             name
           }
         }
-      }      
+      }
     }
   }
   }

@@ -22,7 +22,8 @@ export default function createPost (postParams) {
     eventInviteeIds = [],
     startTime,
     endTime,
-    location
+    locationText,
+    locationId
   } = postParams
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
@@ -45,7 +46,8 @@ export default function createPost (postParams) {
         eventInviteeIds,
         startTime: startTime && startTime.valueOf(),
         endTime: endTime && endTime.valueOf(),
-        location
+        locationText,
+        locationId
       }
     },
     meta: {

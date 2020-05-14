@@ -19,7 +19,7 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
         id
         name
         avatarUrl
-        location
+        locationText
         tagline
         skills {
           hasMore
@@ -47,7 +47,7 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
         id
         name
         avatarUrl
-        location
+        locationText
         tagline
         skills {
           hasMore

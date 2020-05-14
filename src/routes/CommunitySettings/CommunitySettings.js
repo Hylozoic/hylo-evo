@@ -15,6 +15,7 @@ const { object, func } = PropTypes
 
 export default class CommunitySettings extends Component {
   static propTypes = {
+    currentUser: object,
     community: object,
     fetchCommunitySettings: func
   }
@@ -32,6 +33,7 @@ export default class CommunitySettings extends Component {
   render () {
     const {
       community,
+      currentUser,
       updateCommunitySettings,
       canModerate,
       deleteCommunity
@@ -50,6 +52,7 @@ export default class CommunitySettings extends Component {
           path: `/c/${slug}/settings`,
           component: <CommunitySettingsTab
             community={community}
+            currentUser={currentUser}
             updateCommunitySettings={updateCommunitySettings}
           />
         },

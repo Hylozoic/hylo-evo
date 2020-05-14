@@ -7,7 +7,7 @@ exports[`EventBody matches last snapshot 1`] = `
 >
   <EventDate
     endTime={"2019-03-07T00:41:23.315Z"}
-    location="Oakland"
+    locationText="Oakland"
     startTime={"2019-03-06T21:41:23.315Z"}
   />
   <div
@@ -15,7 +15,7 @@ exports[`EventBody matches last snapshot 1`] = `
   >
     <PostTitle
       endTime={"2019-03-07T00:41:23.315Z"}
-      location="Oakland"
+      locationText="Oakland"
       startTime={"2019-03-06T21:41:23.315Z"}
     />
     <div
@@ -25,7 +25,7 @@ exports[`EventBody matches last snapshot 1`] = `
         data-stylename="icon"
         name="Clock"
       />
-       
+
       Wed, Mar 6 at 2:41PM - 5:41PM
     </div>
     <div
@@ -35,21 +35,21 @@ exports[`EventBody matches last snapshot 1`] = `
         data-stylename="icon"
         name="Location"
       />
-       
+
       Oakland
     </div>
     <PostDetails
       endTime={"2019-03-07T00:41:23.315Z"}
       expanded={true}
       hideDetails={false}
-      location="Oakland"
+      locationText="Oakland"
       slug="sluggo"
       startTime={"2019-03-06T21:41:23.315Z"}
     />
   </div>
   <EventRSVP
     endTime={"2019-03-07T00:41:23.315Z"}
-    location="Oakland"
+    locationText="Oakland"
     respondToEvent={[Function]}
     startTime={"2019-03-06T21:41:23.315Z"}
   />
