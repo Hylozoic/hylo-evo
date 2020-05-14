@@ -27,37 +27,6 @@
   display: none;
 }
 
-// .root {
-//   display: inline-block;
-//   /* shared font styles */
-//   color: $color-caribbean-green;
-//   font-size: 1em;
-//   line-height: 1.2;
-//   margin-top: -$space-2x;
-//   /* clicking anywhere will focus the input */
-//   cursor: text;
-// }
-
-// .rootFocused {
-//   border-color: #B1B1B1;
-// }
-
-// .search {
-//   display: inline-block;
-//   /* match tag layout */
-//   padding-top: $space-2x;
-//    // prevent autoresize overflowing the container
-//   max-width: 100%;
-//   line-height: 1;
-// }
-
-// @media screen and (min-width: 30em) {
-//   .search {
-//      this will become the offsetParent for suggestions
-//     position: relative;
-//   }
-// }
-
 .suggestions {
   position: absolute;
   top: 100%;
@@ -70,7 +39,7 @@
   background: white;
   border: 1px solid #D1D1D1;
   border-radius: 2px;
-  // -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   z-index: 10;
 }

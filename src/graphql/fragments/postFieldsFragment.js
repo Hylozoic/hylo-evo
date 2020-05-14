@@ -11,6 +11,7 @@ const postFieldsFragment = withComments => `
   }
   createdAt
   updatedAt
+  fulfilledAt
   startTime
   endTime
   myEventResponse

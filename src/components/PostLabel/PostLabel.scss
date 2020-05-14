@@ -12,6 +12,17 @@
   letter-spacing: 0.6px;
 }
 
+.label-inner {
+  display: flex;
+  align-items: center;
+}
+
+.completed {
+  border: 2px solid rgba(13, 195, 159, .3);
+  color: $color-caribbean-green;
+  height: auto;
+}
+
 .discussion {
   color: $color-picton-blue;
   background-color: $color-link-water;

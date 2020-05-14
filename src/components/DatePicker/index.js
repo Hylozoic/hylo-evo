@@ -8,7 +8,8 @@ function isValidDate (current) {
 }
 
 function DatePicker (props) {
-  return <Datetime {...props} styleName='datePicker' isValidDate={isValidDate} />
+  const { placeholder } = props
+  return <Datetime {...props} styleName='datePicker' isValidDate={isValidDate} inputProps={{ placeholder }} />
 }
 
 export default DatePicker

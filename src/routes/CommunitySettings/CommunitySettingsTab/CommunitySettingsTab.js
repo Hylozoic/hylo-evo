@@ -75,7 +75,7 @@ export default class CommunitySettingsTab extends Component {
   }
 
   render () {
-    const { community } = this.props
+    const { community, currentUser } = this.props
     if (!community) return <Loading />
 
     const { edits, changed } = this.state
@@ -83,7 +83,7 @@ export default class CommunitySettingsTab extends Component {
       name, description, locationText, avatarUrl, bannerUrl
     } = edits
 
-    const location = community.location
+    const location = community.location || currentUser.location
 
     return <div>
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
