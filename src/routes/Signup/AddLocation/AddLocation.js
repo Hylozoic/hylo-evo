@@ -9,24 +9,24 @@ export default class AddLocation extends Component {
   constructor () {
     super()
     this.state = {
-      location: ''
+      locationText: ''
     }
   }
   handleLocationChange = (event) => {
-    const location = event.target.value
+    const locationText = event.target.value
     this.setState({
-      location
+      locationText
     })
   }
   setLocation = () => {
     const { currentUser } = this.props
-    if (currentUser && currentUser.location) {
-      this.setState({ location: currentUser.location })
+    if (currentUser && currentUser.locationText) {
+      this.setState({ locationText: currentUser.locationText })
     }
   }
   submit = () => {
-    const location = this.state.location
-    this.props.updateUserSettings({ location })
+    const locationText = this.state.locationText
+    this.props.updateUserSettings({ locationText })
     this.props.goToNextStep()
   }
 
@@ -59,7 +59,7 @@ export default class AddLocation extends Component {
                 this.submit()
               }
             }}
-            value={this.state.location}
+            value={this.state.locationText}
             autoFocus
             placeholder={'Where do you call home?'}
           />

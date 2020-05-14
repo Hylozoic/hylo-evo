@@ -419,7 +419,7 @@ describe('on UPDATE_USER_SETTINGS_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
 
   session.Me.create({
-    location: 'original location',
+    locationText: 'original location',
     tagline: 'old tagline',
     settings: {
       digestFrequency: 'weekly',
@@ -444,7 +444,7 @@ describe('on UPDATE_USER_SETTINGS_PENDING', () => {
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
     const me = newSession.Me.first()
-    expect(me.location).toEqual('original location')
+    expect(me.locationText).toEqual('original location')
     expect(me.tagline).toEqual('new tagline')
     expect(me.settings).toEqual({
       digestFrequency: 'daily',

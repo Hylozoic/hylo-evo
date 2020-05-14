@@ -1,6 +1,6 @@
 import { find, get, includes } from 'lodash/fp'
 import PropTypes from 'prop-types'
-import { attr, many, Model } from 'redux-orm'
+import { attr, fk, many, Model } from 'redux-orm'
 import featureFlag from 'config/featureFlags'
 import { toRefArray } from 'util/reduxOrmMigration'
 
@@ -85,6 +85,8 @@ Me.fields = {
   name: attr(),
   posts: many('Post'),
   intercomHash: attr(),
+  locationText: attr(),
+  location: fk('Location'),
 
   // strictly speaking, a membership belongs to a single person, so it's not a
   // many-to-many relationship. but putting this here ensures that when we have

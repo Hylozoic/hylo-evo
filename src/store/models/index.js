@@ -8,6 +8,7 @@ import CommunityTopic from './CommunityTopic'
 import EventInvitation from './EventInvitation'
 import Invitation from './Invitation'
 import LinkPreview from './LinkPreview'
+import Location from './Location'
 import Me from './Me'
 import Membership from './Membership'
 import Message from './Message'
@@ -35,6 +36,7 @@ orm.register(
   EventInvitation,
   Invitation,
   LinkPreview,
+  Location,
   Me,
   Membership,
   Message,

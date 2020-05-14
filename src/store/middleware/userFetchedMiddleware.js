@@ -30,7 +30,7 @@ export function identifyMixpanelUser (state) {
   mixpanel.people.set({
     '$name': user.name,
     '$email': user.email,
-    '$location': user.location
+    '$location': user.locationText
   })
 }
 

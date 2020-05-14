@@ -14,7 +14,6 @@ const postFieldsFragment = withComments => `
   fulfilledAt
   startTime
   endTime
-  location
   myEventResponse
   commenters(first: 3) {
     id
@@ -45,6 +44,26 @@ const postFieldsFragment = withComments => `
     title
     url
     imageUrl
+  }
+  locationText
+  location {
+    id
+    addressNumber
+    addressStreet
+    bbox {
+      lat
+      lng
+    }
+    center {
+      lat
+      lng
+    }
+    city
+    country
+    fullText
+    locality
+    neighborhood
+    region
   }
   votesTotal
   myVote
@@ -83,7 +102,7 @@ const postFieldsFragment = withComments => `
       avatarUrl
       bio
       tagline
-      location
+      locationText
       skills (first: 100) {
         items {
           id
@@ -104,7 +123,7 @@ const postFieldsFragment = withComments => `
         avatarUrl
         bio
         tagline
-        location
+        locationText
         skills (first: 100) {
           items {
             id

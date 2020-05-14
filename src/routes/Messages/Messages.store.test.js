@@ -277,7 +277,7 @@ describe('getParticipantsFromQuerystring', () => {
 
 describe('connector', () => {
   let session = null
-  let state = null
+  // let state = null
 
   beforeEach(() => {
     session = orm.mutableSession(orm.getEmptyState())
@@ -297,6 +297,6 @@ describe('connector', () => {
     const me = { id: '999', name: 'Break Wind' }
     session.Person.create(me)
     session.Me.create(me)
-    state = { orm: session.state }
+    // state = { orm: session.state }
   })
 })

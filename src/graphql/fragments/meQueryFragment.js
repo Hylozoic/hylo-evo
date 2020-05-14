@@ -6,7 +6,26 @@ export default
   avatarUrl
   newNotificationCount
   unseenThreadCount
-  location
+  locationText
+  location {
+  id
+    addressNumber
+    addressStreet
+    bbox {
+      lat
+      lng
+    }
+    center {
+      lat
+      lng
+    }
+    city
+    country
+    fullText
+    locality
+    neighborhood
+    region
+  }
   email
   bannerUrl
   bio
