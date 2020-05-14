@@ -77,6 +77,10 @@ export default class MapExplorer extends React.Component {
     fetchPosts(posts.length)
   }
 
+  mapViewPortUpdate = (update) => {
+    console.log("map updated ", update)
+  }
+
   render () {
     const {
       routeParams,
@@ -115,7 +119,7 @@ export default class MapExplorer extends React.Component {
                   {/*selectedSort={sortBy} />*/}
         {/*</div>}*/}
       {/*</React.Fragment>}*/}
-        <Map layers={[mapLayer]} zoom={zoom} />
+        <Map layers={[mapLayer]} zoom={zoom} shareViewportUpdate={this.mapViewPortUpdate} />
       {/*<div styleName='MapExplorerItems'>*/}
         {/*{posts.map(post => {*/}
           {/*const expanded = post.id === routeParams.postId*/}
