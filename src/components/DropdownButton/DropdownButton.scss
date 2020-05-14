@@ -59,13 +59,19 @@
   z-index: 10;
   background: aliceblue;
   border-radius: 4px;
-  margin-top: 3px;  
+  margin-top: 3px;
 }
 
 .choice {
+  background-color: lighten(desaturate($color-caribbean-green, 30%), 30%);
+  color: $color-white;
   composes: caption-lt-lg from 'css/typography.scss';
   padding: 5px 15px;
   border-bottom: 1px solid $color-cape-cod-10;
+  cursor: pointer;
+  &:hover {
+    background-color: lighten(desaturate($color-caribbean-green, 30%), 20%);
+  }
 }
 
 .expanded {
