@@ -93,7 +93,7 @@ export function mapDispatchToProps (dispatch, props) {
     },
     fetchNetwork: () => dispatch(fetchNetwork(networkSlug)),
     goToCreateCommunity: () => dispatch(push('/create-community/name')),
-    newPost: () => dispatch(push(newPostUrl(routeParams, querystringParams))) //disable this for mapfeed?
+    newPost: () => dispatch(push(newPostUrl(routeParams, querystringParams))) // disable this for mapfeed?
   }
 }
 

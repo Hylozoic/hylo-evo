@@ -10,7 +10,7 @@ import { queryParamWhitelist } from 'store/reducers/queryResults'
 import Loading from 'components/Loading'
 import './MapExplorer.scss'
 import Map from 'components/Map/Map'
-import { createH3LayerFromPosts } from 'components/Map/layers/askOfferH3Layer'
+import { createH3LayerFromPosts } from 'components/Map/layers/postsH3Layer'
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {

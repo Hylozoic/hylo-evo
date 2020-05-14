@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import Map from 'components/Map'
-import { createAskOfferH3Layer } from './layers/askOfferH3Layer'
+import { createPostsH3Layer } from './layers/postsH3Layer'
 
 let offersAndAsks = [
   { type: 'request', summary: 'Need help Sunday', coordinates: [37.3615593, -122.0553238], hex: '8b283470d921fff' },
@@ -18,7 +18,7 @@ let offersAndAsks = [
 ]
 
 function createH3Layer (zoom = 11) {
-  return [createAskOfferH3Layer(offersAndAsks, Math.round(zoom))]
+  return [createPostsH3Layer(offersAndAsks, Math.round(zoom))]
 }
 
 storiesOf('Map', module)
