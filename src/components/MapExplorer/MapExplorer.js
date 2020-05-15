@@ -25,7 +25,10 @@ export default class MapExplorer extends React.Component {
     this.state = {
       atTabBar: false,
       tabBarWidth: 0,
-      scrollOffset: 0
+      scrollOffset: 0,
+      hoveredObject: null,
+      pointerX: 0,
+      pointerY: 0
     }
   }
 
@@ -78,7 +81,18 @@ export default class MapExplorer extends React.Component {
   }
 
   mapViewPortUpdate = (update) => {
-    console.log("map updated ", update)
+    // console.log("map updated ", update)
+  }
+
+  onMapHover = (info) => { console.log("hover", info); this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y }) }
+
+  _renderTooltip = () => {
+    const { hoveredObject, pointerX, pointerY } = this.state || {}
+    return hoveredObject ? (
+      <div style={{ position: 'absolute', zIndex: 1, pointerEvents: 'none', left: pointerX, top: pointerY }}>
+        { hoveredObject.message }
+      </div>
+    ) : ""
   }
 
   render () {
@@ -101,7 +115,12 @@ export default class MapExplorer extends React.Component {
     const isEvent = routeParams.postTypeContext === 'event'
     const showSortAndFilters = !isProject && !isEvent
 
-    const mapLayer = createH3LayerFromPosts(posts, zoom + 2)
+    // TODO: Feed posts after filtering to the Map, create a layer,
+    //    could start with simple scatterplot layer
+    //     use turf.js to find only new bounding box, subtract old one from the new one
+    //     could make bounding box larger than viewport
+
+    const mapLayer = createH3LayerFromPosts(posts, zoom - 1, this.onMapHover)
 
     return <div styleName='MapExplorer-container'>
       {/*{showSortAndFilters && <React.Fragment>*/}
@@ -119,7 +138,7 @@ export default class MapExplorer extends React.Component {
                   {/*selectedSort={sortBy} />*/}
         {/*</div>}*/}
       {/*</React.Fragment>}*/}
-        <Map layers={[mapLayer]} zoom={zoom} shareViewportUpdate={this.mapViewPortUpdate} />
+        <Map layers={[mapLayer]} zoom={zoom} shareViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
       {/*<div styleName='MapExplorerItems'>*/}
         {/*{posts.map(post => {*/}
           {/*const expanded = post.id === routeParams.postId*/}
