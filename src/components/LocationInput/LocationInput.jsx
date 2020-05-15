@@ -7,6 +7,7 @@ import styles from './LocationInput.scss'
 
 export default class LocationInput extends Component {
   static propTypes = {
+    inputClass: PropTypes.string,
     location: PropTypes.object,
     locationText: PropTypes.string,
     onChange: PropTypes.func,
@@ -15,6 +16,7 @@ export default class LocationInput extends Component {
   }
 
   static defaultProps = {
+    inputClass: styles.input,
     location: null,
     locationText: '',
     onChange: null,
@@ -34,14 +36,18 @@ export default class LocationInput extends Component {
     }
   }
 
-  handleInputChange = data => {
+  handleInputChange = inputData => {
+    this.props.onChange({ fullText: inputData, id: null })
+  }
+
+  handleSelectLocation = data => {
     this.props.pollingFetchLocation(convertMapboxToLocation(data), (location) => this.props.onChange(location))
   }
 
   handleSuggest = e => { }
 
   render () {
-    const { location, locationText, placeholder } = this.props
+    const { inputClass, location, locationText, placeholder } = this.props
     const centerAt = (location && location.center) || this.state.browserLocation
 
     return (
@@ -49,11 +55,12 @@ export default class LocationInput extends Component {
         <Geocoder
           accessToken={mapbox.token}
           defaultInputValue={locationText}
-          onSelect={this.handleInputChange}
+          onInputChange={this.handleInputChange}
+          onSelect={this.handleSelectLocation}
           onSuggest={this.handleSuggest}
           source='mapbox.places'
           endpoint='http://api.tiles.mapbox.com'
-          inputClass={styles.input}
+          inputClass={inputClass}
           inputPlaceholder={placeholder}
           resultClass={styles.result}
           resultsClass={styles.suggestions}

@@ -80,7 +80,6 @@ export function pollingFetchLocation (dispatch, locationData, callback) {
       if (!locationReceived) {
         setTimeout(() => poll(url, delay * 2), delay * 1000)
       } else {
-        console.log('doing callbac', locationReceived)
         callback(locationReceived)
       }
     })
