@@ -33,19 +33,25 @@ export default class CommunitiesSelector extends Component {
 
   findSuggestions = (searchText) => {
     const { options, selected } = this.props
-    const newSuggestions = differenceBy(options, selected, 'id')
-      .filter(o => o.name.match(new RegExp(searchText, 'i')))
-    this.setState({ suggestions: newSuggestions })
+    let newSuggestions
+    if (searchText && searchText > 0) {
+      newSuggestions = differenceBy(options, selected, 'id')
+        .filter(o => o.name.match(new RegExp(searchText, 'i')))
+      this.setState({ suggestions: newSuggestions })
+    } else {
+      newSuggestions = differenceBy(options, selected, 'id')
+      this.setState({ suggestions: newSuggestions })
+    }
   }
 
   clearSuggestions = () =>
     this.setState({ suggestions: CommunitiesSelector.defaultState.suggestions })
 
   handleInputChange = (input) => {
-    if (input && input.length > 0) {
-      this.findSuggestions(input)
-    } else {
+    if (input === null) {
       this.clearSuggestions()
+    } else {
+      this.findSuggestions(input)
     }
   }
 

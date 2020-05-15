@@ -119,9 +119,11 @@ export default class KeyControlledList extends React.Component {
           ? React.cloneElement(element, { ref: i, className })
           : element
       })
-    return <ul {...omit(propsToOmit, props)} className={theme.items}>
-      {this.childrenWithRefs}
-    </ul>
+    return <div style={{ position: 'relative', zIndex: '5' }}>
+      <ul {...omit(propsToOmit, props)} className={theme.items}>
+        {this.childrenWithRefs}
+      </ul>
+    </div>
   }
 }
 
