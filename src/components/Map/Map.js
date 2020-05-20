@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import MapGL from 'react-map-gl'
 import DeckGL from '@deck.gl/react'
@@ -15,9 +15,13 @@ function Map (props) {
     pitch: 0
   })
 
+  const mapRef = useRef();
+
   useEffect(() => {
-    shareViewportUpdate(viewport)
+    shareViewportUpdate(viewport, mapRef.current)
   }, [viewport])
+
+  //const onLoad = () => console.log('mapRef.current is ready for use', mapRef.current);
 
   return (
     <MapGL
@@ -27,6 +31,7 @@ function Map (props) {
       mapStyle='mapbox://styles/mapbox/light-v9'
       onViewportChange={nextViewport => setViewport(nextViewport)}
       mapboxApiAccessToken={mapbox.public_token}
+      ref={ref => mapRef.current = ref && ref.getMap()}
     >
       <DeckGL viewState={viewport} layers={layers} >
         { children }

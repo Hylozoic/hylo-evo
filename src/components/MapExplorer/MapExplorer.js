@@ -28,7 +28,8 @@ export default class MapExplorer extends React.Component {
       scrollOffset: 0,
       hoveredObject: null,
       pointerX: 0,
-      pointerY: 0
+      pointerY: 0,
+      boundingBox: null
     }
   }
 
@@ -42,15 +43,15 @@ export default class MapExplorer extends React.Component {
     })
   }
 
-  handleScrollEvents = throttle(100, event => {
-    const { scrollTop } = event.target
-    const { atTabBar, scrollOffset } = this.state
-    if (atTabBar && scrollTop < scrollOffset) {
-      this.setState({ atTabBar: false })
-    } else if (!atTabBar && scrollTop > scrollOffset) {
-      this.setState({ atTabBar: true })
-    }
-  })
+  // handleScrollEvents = throttle(100, event => {
+  //   const { scrollTop } = event.target
+  //   const { atTabBar, scrollOffset } = this.state
+  //   if (atTabBar && scrollTop < scrollOffset) {
+  //     this.setState({ atTabBar: false })
+  //   } else if (!atTabBar && scrollTop > scrollOffset) {
+  //     this.setState({ atTabBar: true })
+  //   }
+  // })
 
   componentDidMount () {
     this.fetchOrShowCached()
@@ -69,19 +70,21 @@ export default class MapExplorer extends React.Component {
   }
 
   fetchOrShowCached = () => {
-    const { hasMore, posts, fetchPosts, storeFetchPostsParam } = this.props
-    if (isEmpty(posts) && hasMore !== false) fetchPosts()
+    const { posts, fetchPosts, storeFetchPostsParam } = this.props
+    fetchPosts()
     storeFetchPostsParam()
   }
 
-  fetchMorePosts = () => {
-    const { pending, posts, hasMore, fetchPosts } = this.props
-    if (pending || posts.length === 0 || !hasMore) return
-    fetchPosts(posts.length)
-  }
+  // fetchMorePosts = () => {
+  //   const { pending, posts, hasMore, fetchPosts } = this.props
+  //   if (pending || posts.length === 0 || !hasMore) return
+  //   fetchPosts(posts.length)
+  // }
 
-  mapViewPortUpdate = (update) => {
-    // console.log("map updated ", update)
+  mapViewPortUpdate = (update, mapRef) => {
+    const bounds = mapRef ? mapRef.getBounds() : null
+    console.log("map updated ", update, bounds)
+    this.setState({ boundingBox: bounds })
   }
 
   onMapHover = (info) => { console.log("hover", info); this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y }) }

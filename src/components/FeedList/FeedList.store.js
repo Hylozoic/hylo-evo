@@ -57,7 +57,7 @@ const communityQuery = `query (
   $search: String,
   $filter: String,
   $topic: ID,
-  $first: Int
+  $first: Int,
 ) {
   community(slug: $slug, updateLastViewed: true) {
     id

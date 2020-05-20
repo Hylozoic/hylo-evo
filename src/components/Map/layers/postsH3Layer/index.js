@@ -1,6 +1,6 @@
 // import { H3HexagonLayer } from '@deck.gl/geo-layers'
 import { ScatterplotLayer } from '@deck.gl/layers'
-import { geoToH3 } from 'h3-js'
+// import { geoToH3 } from 'h3-js'
 
 export function createH3LayerFromPosts (posts, resolution, onHover) {
   return createPostsH3Layer(posts.filter(post => post.location && post.location.center)

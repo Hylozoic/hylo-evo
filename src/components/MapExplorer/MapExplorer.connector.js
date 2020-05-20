@@ -23,8 +23,9 @@ export function mapStateToProps (state, props) {
     ...pick([
       'subject',
       'sortBy',
-      'topic'
-    ], props)
+      'topic',
+    ], props),
+    boundingBox: state.boundingBox
   }
   // NOTE: In effort to better seperate the query caching from component details
   //       it's better (and necessary) in this case to send the fetch param then
