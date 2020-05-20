@@ -95,7 +95,7 @@ export default class FeedList extends React.Component {
 
     return <div styleName='FeedList-container'>
       <ScrollListener
-        elementId={CENTER_COLUMN_ID}
+        elementId={null}
         onScroll={this.handleScrollEvents} />
       {showSortAndFilters && <React.Fragment>
         <div>
@@ -125,7 +125,7 @@ export default class FeedList extends React.Component {
         })}
       </div>
       <ScrollListener onBottom={this.fetchMorePosts}
-        elementId={CENTER_COLUMN_ID} />
+        elementId={null} />
       {pending && <Loading />}
     </div>
   }

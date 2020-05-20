@@ -3,8 +3,6 @@
   flex-direction: column;
   align-content: stretch;
   align-items: stretch;
-  height: 100vh;
-  overflow: hidden;
 }
 
 .debug {
@@ -28,6 +26,7 @@
 .top {
   /* empty */
   margin-bottom: -1 * $space-6x;
+  position: fixed;
 }
 
 .main {
@@ -38,6 +37,7 @@
   width: $content-width;
   margin-left: auto;
   margin-right: auto;
+  padding-top: 56px;
 }
 
 $drawer-width: 367px;
@@ -59,7 +59,7 @@ $drawer-z-index: 51;
 }
 
 .left {
-  /* empty */
+  height: 100vh;
 }
 
 .center {
@@ -68,11 +68,8 @@ $drawer-z-index: 51;
   // From Bootstrap make-col-ready():
   position: relative;
   min-height: 1px; // Prevent collapsing
-  height: 100vh;
   flex: 0 0 $center-column-width;
   max-width: $center-column-width;
-  overflow-y: auto;
-  overflow-x: hidden;
   padding-right: $space-2x;
   padding-bottom: 100px;
 }
@@ -100,6 +97,7 @@ $drawer-z-index: 51;
   right: 0px;
   padding: 0 16px 0 $layout-spacing;
   overflow-y: auto;
+  overflow-x: hidden;
 
   &.hidden {
     opacity: 0;
@@ -110,8 +108,8 @@ $drawer-z-index: 51;
 
 .detail {
   background-color: white;
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 56px;
   right: 0px;
   height: 100%;
   width: $detail-column-width;
