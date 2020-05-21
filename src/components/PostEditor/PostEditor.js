@@ -58,6 +58,7 @@ export default class PostEditor extends React.Component {
     titlePlaceholderForPostType: {
       offer: 'What super powers can you offer?',
       request: 'What are you looking for help with?',
+      resource: 'What resource is available?',
       project: 'What would you like to call your project?',
       event: 'What is your event called?',
       default: 'What’s on your mind?'
@@ -231,7 +232,8 @@ export default class PostEditor extends React.Component {
 
   handleLocationChange = location => {
     this.setState({
-      post: { ...this.state.post, locationText: location.fullText, locationId: location.id }
+      post: { ...this.state.post, locationText: location.fullText, locationId: location.id },
+      valid: this.isValid({ locationId: location.id })
     })
   }
 
@@ -285,7 +287,7 @@ export default class PostEditor extends React.Component {
   }
 
   isValid = (postUpdates = {}) => {
-    const { type, title, communities, startTime, endTime } = Object.assign({}, this.state.post, postUpdates)
+    const { type, title, communities, startTime, endTime, locationId } = Object.assign({}, this.state.post, postUpdates)
     const { isEvent } = this.props
 
     return !!(this.editor.current &&
@@ -294,7 +296,8 @@ export default class PostEditor extends React.Component {
       title.length > 0 &&
       communities.length > 0 &&
       title.length <= MAX_TITLE_LENGTH &&
-      (!isEvent || (endTime && (startTime < endTime)))
+      (!isEvent || (endTime && (startTime < endTime))) &&
+      (type !== 'resource' || locationId)
     )
   }
 
@@ -344,7 +347,7 @@ export default class PostEditor extends React.Component {
     } = this.props
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
-    const hasLocation = ['event', 'offer', 'request'].includes(type)
+    const hasLocation = ['event', 'offer', 'request', 'resource'].includes(type)
     const showPostTypes = !isProject && !isEvent
     const canHaveTimes = type !== 'discussion'
 
@@ -361,6 +364,7 @@ export default class PostEditor extends React.Component {
           <Button {...this.postTypeButtonProps('discussion')} />
           <Button {...this.postTypeButtonProps('request')} />
           <Button {...this.postTypeButtonProps('offer')} />
+          <Button {...this.postTypeButtonProps('resource')} />
         </div>}
       </div>
       <div styleName='body'>
@@ -433,7 +437,7 @@ export default class PostEditor extends React.Component {
             location={curLocation}
             locationText={locationText}
             onChange={this.handleLocationChange}
-            placeholder={`Where is your ${type} located`}
+            placeholder={`Where is your ${type} located?`}
           />
         </div>}
         {isEvent && <div styleName='footerSection'>
