@@ -89,7 +89,7 @@ export default class PostHeader extends PureComponent {
       { icon: 'Trash', label: 'Remove From Community', onClick: removePost, red: true }
     ], item => isFunction(item.onClick))
 
-    const canHaveTimes = type === 'offer' || type === 'request'
+    const canHaveTimes = type === 'offer' || type === 'request' || type === 'resource'
     let timeWindow = ''
     const startDate = startTime && formatStartDate(startTime)
     const endDate = endTime && formatEndDate(endTime)
