@@ -57,6 +57,7 @@ export default class PostHeader extends PureComponent {
       startTime,
       endTime,
       fulfilledAt,
+      locationText,
       pinned,
       topics,
       close,
@@ -100,6 +101,10 @@ export default class PostHeader extends PureComponent {
       timeWindow = `${type} starts ${startDate}`
     }
 
+    let locationZero = (locationText ? locationText.split(',')[0] : '')
+    let locationOne = (locationText ? locationText.split(',')[1] : '')
+    const generalLocation = `${locationZero}, ${locationOne}`
+
     return <div styleName='header' className={className}>
       <div styleName='headerMainRow'>
         <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' />
@@ -112,6 +117,9 @@ export default class PostHeader extends PureComponent {
             <span styleName='timestamp'>
               {humanDate(createdAt)}
             </span>
+            {locationText && <div><span styleName='announcementSpacer'>•</span>
+              <span styleName='timestamp'>{generalLocation}</span></div>
+            }
             {announcement && <span styleName='announcementSection'>
               <span styleName='announcementSpacer'>•</span>
               <span data-tip='Announcement' data-for='announcement-tt'>
