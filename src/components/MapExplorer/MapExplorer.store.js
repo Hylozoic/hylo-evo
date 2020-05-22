@@ -1,13 +1,14 @@
 import { createSelector } from 'reselect'
 import { get } from 'lodash/fp'
-import { FETCH_POSTS } from 'store/constants'
+import { FETCH_POSTS_MAP } from 'store/constants'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
+
 export const MODULE_NAME = 'MapExplorer'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
 
 // actions
-export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search, filter, topic }) {
+export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search, filter, topic, boundingBox }) {
   var query, extractModel, getItems
 
   if (subject === 'community') {
@@ -23,11 +24,11 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search
     extractModel = 'Post'
     getItems = get('payload.data.posts')
   } else {
-    throw new Error(`FETCH_POSTS with subject=${subject} is not implemented`)
+    throw new Error(`FETCH_POSTS_MAP with subject=${subject} is not implemented`)
   }
 
   return {
-    type: FETCH_POSTS,
+    type: FETCH_POSTS_MAP,
     graphql: {
       query,
       variables: {
@@ -38,7 +39,8 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search
         search,
         filter,
         first: 20,
-        topic
+        topic,
+        boundingBox
       }
     },
     meta: {
@@ -78,7 +80,8 @@ const networkQuery = `query (
   $search: String,
   $filter: String,
   $topic: ID,
-  $first: Int
+  $first: Int,
+  $boundingBox: [PointInput]
 ) {
   network(slug: $networkSlug) {
     id
@@ -92,7 +95,8 @@ const allCommunitiesQuery = `query (
   $search: String,
   $filter: String,
   $topic: ID,
-  $first: Int
+  $first: Int,
+  $boundingBox: [PointInput]
 ) {
   ${postsQueryFragment}
 }`
@@ -105,7 +109,7 @@ export function storeFetchPostsParam (props) {
 }
 
 // selectors
-const getPostResults = makeGetQueryResults(FETCH_POSTS)
+const getPostResults = makeGetQueryResults(FETCH_POSTS_MAP)
 
 export const getPosts = makeQueryResultsModelSelector(
   getPostResults,

@@ -23,9 +23,6 @@ export default class MapExplorer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      atTabBar: false,
-      tabBarWidth: 0,
-      scrollOffset: 0,
       boundingBox: null,
       hoveredObject: null,
       pointerX: 0,
@@ -34,15 +31,15 @@ export default class MapExplorer extends React.Component {
     }
   }
 
-  setStateFromDOM = tabBar => {
-    const element = ReactDOM.findDOMNode(tabBar)
-    const container = document.getElementById(CENTER_COLUMN_ID)
-    if (!element || !container) return
-    this.setState({
-      tabBarWidth: element.offsetWidth,
-      scrollOffset: position(element, container).y
-    })
-  }
+  // setStateFromDOM = tabBar => {
+  //   const element = ReactDOM.findDOMNode(tabBar)
+  //   const container = document.getElementById(CENTER_COLUMN_ID)
+  //   if (!element || !container) return
+  //   this.setState({
+  //     tabBarWidth: element.offsetWidth,
+  //     scrollOffset: position(element, container).y
+  //   })
+  // }
 
   // handleScrollEvents = throttle(100, event => {
   //   const { scrollTop } = event.target
@@ -55,7 +52,7 @@ export default class MapExplorer extends React.Component {
   // })
 
   componentDidMount () {
-    this.fetchOrShowCached()
+    // this.fetchOrShowCached()
   }
 
   componentDidUpdate (prevProps) {
@@ -64,6 +61,7 @@ export default class MapExplorer extends React.Component {
     const updateCheckFunc = key =>
       this.props[key] !== prevProps[key] ||
       this.props.routeParams[key] !== prevProps.routeParams[key]
+
     if (some(key => updateCheckFunc(key), queryParamWhitelist) ||
       (this.props.posts.length === 0 && prevProps.posts.length !== 0)) {
       this.fetchOrShowCached()
@@ -83,9 +81,14 @@ export default class MapExplorer extends React.Component {
   // }
 
   mapViewPortUpdate = (update, mapRef) => {
-    const bounds = mapRef ? mapRef.getBounds() : null
-    console.log("map updated ", update, bounds)
+    let bounds = mapRef ? mapRef.getBounds() : null
+    if (bounds) {
+      bounds = [{ ...bounds._sw }, { ...bounds._ne }]
+    }
+    console.log('map updated ', update, bounds)
     this.setState({ boundingBox: bounds })
+    this.props.storeFetchPostsParam(bounds)
+    this.props.fetchPosts()
   }
 
   onMapHover = (info) => { console.log('hover', info); this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y }) }
@@ -98,7 +101,7 @@ export default class MapExplorer extends React.Component {
       <div style={{ position: 'absolute', zIndex: 1, pointerEvents: 'none', left: pointerX, top: pointerY }}>
         { hoveredObject.message }
       </div>
-    ) : ""
+    ) : ''
   }
 
   render () {
@@ -113,10 +116,7 @@ export default class MapExplorer extends React.Component {
       pending,
       zoom
     } = this.props
-    const { atTabBar, tabBarWidth } = this.state
-    const style = {
-      width: tabBarWidth + 'px'
-    }
+
     const isProject = routeParams.postTypeContext === 'project'
     const isEvent = routeParams.postTypeContext === 'event'
     const showSortAndFilters = !isProject && !isEvent

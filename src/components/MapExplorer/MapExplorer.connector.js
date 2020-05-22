@@ -1,7 +1,7 @@
 import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { pick } from 'lodash/fp'
-import { FETCH_POSTS } from 'store/constants'
+import { FETCH_POSTS_MAP } from 'store/constants'
 import presentPost from 'store/presenters/presentPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import { postUrl } from 'util/navigation'
@@ -25,9 +25,9 @@ export function mapStateToProps (state, props) {
     ...pick([
       'subject',
       'sortBy',
-      'topic',
+      'topic'
     ], props),
-    boundingBox: state.boundingBox
+    boundingBox: state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null
   }
   // NOTE: In effort to better seperate the query caching from component details
   //       it's better (and necessary) in this case to send the fetch param then
@@ -39,15 +39,15 @@ export function mapStateToProps (state, props) {
     posts,
     hasMore,
     fetchPostsParam,
-    pending: state.pending[FETCH_POSTS]
+    pending: state.pending[FETCH_POSTS_MAP]
   }
 }
 
-export function mapDispatchToProps (dispatch) {
+export function mapDispatchToProps (dispatch, props) {
   return {
     fetchPosts: param => offset => dispatch(fetchPosts({ offset, ...param })),
-    storeFetchPostsParam: param => () => dispatch(storeFetchPostsParam(param))
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...props.routeParams, view: 'map' }, props.querystringParams))),
+    storeFetchPostsParam: param => (boundingBox = null) => dispatch(storeFetchPostsParam({ ...param, boundingBox }))
   }
 }
 
