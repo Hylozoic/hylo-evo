@@ -1,8 +1,10 @@
+import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { pick } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
 import presentPost from 'store/presenters/presentPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import { postUrl } from 'util/navigation'
 
 import {
   fetchPosts,
@@ -45,6 +47,7 @@ export function mapDispatchToProps (dispatch) {
   return {
     fetchPosts: param => offset => dispatch(fetchPosts({ offset, ...param })),
     storeFetchPostsParam: param => () => dispatch(storeFetchPostsParam(param))
+    showDetails: (postId) => dispatch(push(postUrl(postId, { ...props.routeParams, view: 'map' }, props.querystringParams))),
   }
 }
 

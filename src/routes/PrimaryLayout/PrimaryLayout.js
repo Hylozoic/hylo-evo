@@ -177,10 +177,13 @@ const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
 const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})/:action(edit)?`
 const postDetailRoutes = [
   { path: `/all/${POST_DETAIL_MATCH}` },
+  { path: `/all/map/${POST_DETAIL_MATCH}` },
   { path: `/n/:networkSlug/m/:personId/${POST_DETAIL_MATCH}` },
   { path: `/n/:networkSlug/${POST_DETAIL_MATCH}` },
+  { path: `/n/:networkSlug/map/${POST_DETAIL_MATCH}` },
   { path: `/c/:slug/m/:personId/${POST_DETAIL_MATCH}` },
   { path: `/c/:slug/${POST_DETAIL_MATCH}` },
+  { path: `/c/:slug/map/${POST_DETAIL_MATCH}` },
   { path: `/c/:slug/:topicName/${POST_DETAIL_MATCH}` },
   { path: `/m/:personId/${POST_DETAIL_MATCH}` }
 ]

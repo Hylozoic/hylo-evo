@@ -5,7 +5,7 @@ import DeckGL from '@deck.gl/react'
 import { mapbox } from 'config'
 
 function Map (props) {
-  let { children, layers, shareViewportUpdate } = props
+  let { children, layers, onViewportUpdate } = props
 
   const [viewport, setViewport] = useState({
     latitude: 37.8,
@@ -15,13 +15,11 @@ function Map (props) {
     pitch: 0
   })
 
-  const mapRef = useRef();
+  const mapRef = useRef()
 
   useEffect(() => {
-    shareViewportUpdate(viewport, mapRef.current)
+    onViewportUpdate(viewport, mapRef.current)
   }, [viewport])
-
-  //const onLoad = () => console.log('mapRef.current is ready for use', mapRef.current);
 
   return (
     <MapGL
@@ -31,7 +29,7 @@ function Map (props) {
       mapStyle='mapbox://styles/mapbox/light-v9'
       onViewportChange={nextViewport => setViewport(nextViewport)}
       mapboxApiAccessToken={mapbox.public_token}
-      ref={ref => mapRef.current = ref && ref.getMap()}
+      ref={ref => { mapRef.current = ref && ref.getMap(); return ref }}
     >
       <DeckGL viewState={viewport} layers={layers} >
         { children }
@@ -44,14 +42,14 @@ function Map (props) {
 Map.propTypes = {
   children: PropTypes.any,
   layers: PropTypes.array,
-  shareViewportUpdate: PropTypes.func,
+  onViewportUpdate: PropTypes.func,
   zoom: PropTypes.number
 }
 
 Map.defaultProps = {
   children: {},
   layers: [],
-  shareViewportUpdate: () => {},
+  onViewportUpdate: () => {},
   zoom: 10
 }
 

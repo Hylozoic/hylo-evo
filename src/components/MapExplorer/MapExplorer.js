@@ -26,10 +26,11 @@ export default class MapExplorer extends React.Component {
       atTabBar: false,
       tabBarWidth: 0,
       scrollOffset: 0,
+      boundingBox: null,
       hoveredObject: null,
       pointerX: 0,
       pointerY: 0,
-      boundingBox: null
+      selectedObject: null
     }
   }
 
@@ -87,7 +88,9 @@ export default class MapExplorer extends React.Component {
     this.setState({ boundingBox: bounds })
   }
 
-  onMapHover = (info) => { console.log("hover", info); this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y }) }
+  onMapHover = (info) => { console.log('hover', info); this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y }) }
+
+  onMapClick = (info) => { console.log('click', info); this.setState({ selectedObject: info.object }); this.props.showDetails(info.object.id) }
 
   _renderTooltip = () => {
     const { hoveredObject, pointerX, pointerY } = this.state || {}
@@ -123,37 +126,37 @@ export default class MapExplorer extends React.Component {
     //     use turf.js to find only new bounding box, subtract old one from the new one
     //     could make bounding box larger than viewport
 
-    const mapLayer = createH3LayerFromPosts(posts, zoom - 1, this.onMapHover)
+    const mapLayer = createH3LayerFromPosts(posts, zoom - 1, this.onMapHover, this.onMapClick)
 
     return <div styleName='MapExplorer-container'>
-      {/*{showSortAndFilters && <React.Fragment>*/}
-        {/*<div>*/}
-          {/*<TabBar ref={this.setStateFromDOM}*/}
-                  {/*onChangeTab={changeTab}*/}
-                  {/*selectedTab={postTypeFilter}*/}
-                  {/*onChangeSort={changeSort}*/}
-                  {/*selectedSort={sortBy} />*/}
-        {/*</div>*/}
-        {/*{atTabBar && <div styleName='tabbar-sticky' style={style}>*/}
-          {/*<TabBar onChangeTab={changeTab}*/}
-                  {/*selectedTab={postTypeFilter}*/}
-                  {/*onChangeSort={changeSort}*/}
-                  {/*selectedSort={sortBy} />*/}
-        {/*</div>}*/}
-      {/*</React.Fragment>}*/}
-        <Map layers={[mapLayer]} zoom={zoom} shareViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
-      {/*<div styleName='MapExplorerItems'>*/}
-        {/*{posts.map(post => {*/}
-          {/*const expanded = post.id === routeParams.postId*/}
-          {/*return <PostCard*/}
-            {/*routeParams={routeParams}*/}
-            {/*querystringParams={querystringParams}*/}
-            {/*post={post}*/}
-            {/*styleName={cx('MapExplorerItem', { expanded })}*/}
-            {/*expanded={expanded}*/}
-            {/*key={post.id} />*/}
-        {/*})}*/}
-      {/*</div>*/}
+      {/* {showSortAndFilters && <React.Fragment> */}
+        {/* <div> */}
+          {/* <TabBar ref={this.setStateFromDOM} */}
+                  {/* onChangeTab={changeTab} */}
+                  {/* selectedTab={postTypeFilter} */}
+                  {/* onChangeSort={changeSort} */}
+                  {/* selectedSort={sortBy} /> */}
+        {/* </div> */}
+        {/* {atTabBar && <div styleName='tabbar-sticky' style={style}> */}
+          {/* <TabBar onChangeTab={changeTab} */}
+                  {/* selectedTab={postTypeFilter} */}
+                  {/* onChangeSort={changeSort} */}
+                  {/* selectedSort={sortBy} /> */}
+        {/* </div>} */}
+      {/* </React.Fragment>} */}
+        <Map layers={[mapLayer]} zoom={zoom} onViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
+      {/* <div styleName='MapExplorerItems'> */}
+        {/* {posts.map(post => { */}
+          {/* const expanded = post.id === routeParams.postId */}
+          {/* return <PostCard */}
+            {/* routeParams={routeParams} */}
+            {/* querystringParams={querystringParams} */}
+            {/* post={post} */}
+            {/* styleName={cx('MapExplorerItem', { expanded })} */}
+            {/* expanded={expanded} */}
+            {/* key={post.id} /> */}
+        {/* })} */}
+      {/* </div> */}
       {pending && <Loading />}
     </div>
   }

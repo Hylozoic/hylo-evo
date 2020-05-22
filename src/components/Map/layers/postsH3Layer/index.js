@@ -2,20 +2,21 @@
 import { ScatterplotLayer } from '@deck.gl/layers'
 // import { geoToH3 } from 'h3-js'
 
-export function createH3LayerFromPosts (posts, resolution, onHover) {
+export function createH3LayerFromPosts (posts, resolution, onHover, onClick) {
   return createPostsH3Layer(posts.filter(post => post.location && post.location.center)
     .map(post => {
       return {
+        id: post.id,
         type: post.type,
         message: post.title,
         summary: post.details,
         coordinates: [parseFloat(post.location.center.lng), parseFloat(post.location.center.lat)],
         hex: '8b283470d921fff'
       }
-    }), resolution, onHover)
+    }), resolution, onHover, onClick)
 }
 
-export function createPostsH3Layer (data, resolution, onHover) {
+export function createPostsH3Layer (data, resolution, onHover, onClick) {
   return new ScatterplotLayer({
     id: `h3-posts-layer-${resolution}`,
     data,
@@ -26,7 +27,7 @@ export function createPostsH3Layer (data, resolution, onHover) {
     pickable: true,
     // Update app state
     onHover,
-    onClick: (info, event) => { console.log('Clicked:', info, event) }
+    onClick
   })
 
   // return new H3HexagonLayer({

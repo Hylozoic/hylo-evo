@@ -60,6 +60,7 @@ export function baseUrl ({
   topicName,
   networkSlug,
   communitySlug, slug,
+  view,
   defaultUrl = ''
 }) {
   const safeMemberId = memberId || personId
@@ -69,6 +70,8 @@ export function baseUrl ({
     return personUrl(safeMemberId, safeCommunitySlug, networkSlug)
   } else if (topicName) {
     return tagUrl(topicName, safeCommunitySlug)
+  } else if (view) {
+    return viewUrl(view, safeCommunitySlug, networkSlug)
   } else if (networkSlug) {
     return networkUrl(networkSlug)
   } else if (safeCommunitySlug) {
@@ -83,6 +86,14 @@ export function communityDeleteConfirmationUrl () {
 }
 
 // derived URL paths
+
+// For specific views of a community or network like 'map', or 'calendar'
+export function viewUrl (view, communitySlug, networkSlug) {
+  if (!view) return '/'
+  const base = baseUrl({ networkSlug, communitySlug })
+
+  return `${base}/${view}`
+}
 
 export function personUrl (id, communitySlug, networkSlug) {
   if (!id) return '/'
