@@ -19,7 +19,7 @@ export function createPostsScatterplotLayer (data, onHover, onClick) {
     data,
     getPosition: d => d.coordinates,
     getRadius: 300,
-    getFillColor: (d) => d.type === 'request' ? [200, 220, 0] : [150, 0, 160],
+    getFillColor: (d) => d.type === 'request' ? [253, 106, 73] : [13, 195, 159],
     // Enable picking
     pickable: true,
     // Update app state
