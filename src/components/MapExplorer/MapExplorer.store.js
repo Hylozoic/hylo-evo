@@ -26,7 +26,6 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search
   } else {
     throw new Error(`FETCH_POSTS_MAP with subject=${subject} is not implemented`)
   }
-
   return {
     type: FETCH_POSTS_MAP,
     graphql: {
