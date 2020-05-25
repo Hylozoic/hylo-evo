@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { throttle, isEmpty, some } from 'lodash/fp'
+import { isEmpty, some} from 'lodash/fp'
+import { debounce } from 'lodash'
 // import cx from 'classnames'
 import { CENTER_COLUMN_ID, position } from 'util/scrolling'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
@@ -10,7 +11,7 @@ import { queryParamWhitelist } from 'store/reducers/queryResults'
 import Loading from 'components/Loading'
 import './MapExplorer.scss'
 import Map from 'components/Map/Map'
-import { createH3LayerFromPosts } from 'components/Map/layers/postsH3Layer'
+import { createScatterplotLayerFromPosts } from 'components/Map/layers/postsScatterplotLayer'
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
@@ -85,11 +86,14 @@ export default class MapExplorer extends React.Component {
     if (bounds) {
       bounds = [{ ...bounds._sw }, { ...bounds._ne }]
     }
-    console.log('map updated ', update, bounds)
+    this.updateBoundingBoxQuery(bounds)
+  }
+
+  updateBoundingBoxQuery = debounce((bounds) => {
     this.setState({ boundingBox: bounds })
     this.props.storeFetchPostsParam(bounds)
     this.props.fetchPosts()
-  }
+  }, 150)
 
   onMapHover = (info) => { console.log('hover', info); this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y }) }
 
@@ -126,7 +130,7 @@ export default class MapExplorer extends React.Component {
     //     use turf.js to find only new bounding box, subtract old one from the new one
     //     could make bounding box larger than viewport
 
-    const mapLayer = createH3LayerFromPosts(posts, zoom - 1, this.onMapHover, this.onMapClick)
+    const mapLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
 
     return <div styleName='MapExplorer-container'>
       {/* {showSortAndFilters && <React.Fragment> */}
