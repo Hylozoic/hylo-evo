@@ -101,9 +101,12 @@ export default class PostHeader extends PureComponent {
       timeWindow = `${type} starts ${startDate}`
     }
 
+    // Formatting location to display in stream view
+    let locationLength = locationText && locationText.split(',').length
     let locationZero = (locationText ? locationText.split(',')[0] : '')
     let locationOne = (locationText ? locationText.split(',')[1] : '')
-    const generalLocation = `${locationZero}, ${locationOne}`
+    let locationTwo = (locationText ? locationText.split(',')[2] : '')
+    const generalLocation = (locationLength > 3 ? `${locationZero}, ${locationOne}, ${locationTwo.split(' ')[1]}` : `${locationZero}, ${locationOne}`)
 
     return <div styleName='header' className={className}>
       <div styleName='headerMainRow'>
@@ -117,8 +120,8 @@ export default class PostHeader extends PureComponent {
             <span styleName='timestamp'>
               {humanDate(createdAt)}
             </span>
-            {locationText && <div><span styleName='announcementSpacer'>•</span>
-              <span styleName='timestamp'>{generalLocation}</span></div>
+            {locationText && <div><span styleName='locationIcon'><img src='/location-pin-stream.svg' /></span>
+              <span styleName='headerLocation'>{generalLocation}</span></div>
             }
             {announcement && <span styleName='announcementSection'>
               <span styleName='announcementSpacer'>•</span>
