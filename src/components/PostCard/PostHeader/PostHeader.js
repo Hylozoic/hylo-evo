@@ -57,6 +57,7 @@ export default class PostHeader extends PureComponent {
       startTime,
       endTime,
       fulfilledAt,
+      location,
       locationText,
       pinned,
       topics,
@@ -102,11 +103,17 @@ export default class PostHeader extends PureComponent {
     }
 
     // Formatting location to display in stream view
-    let locationLength = locationText && locationText.split(',').length
-    let locationZero = (locationText ? locationText.split(',')[0] : '')
-    let locationOne = (locationText ? locationText.split(',')[1] : '')
-    let locationTwo = (locationText ? locationText.split(',')[2] : '')
-    const generalLocation = (locationLength > 3 ? `${locationZero}, ${locationOne}, ${locationTwo.split(' ')[1]}` : `${locationZero}, ${locationOne}`)
+    let generalLocation = locationText || ''
+
+    if (location) {
+      if (location.addressNumber !== null) {
+        generalLocation = `${location.addressNumber} ${location.addressStreet}, ${location.city}, ${location.region}`
+      } else {
+        // Note - Pending location bug fix, can use location city and region
+        // generalLocation = `${location.city}, ${location.region}`
+        generalLocation = `${location.fullText}`
+      }
+    }
 
     return <div styleName='header' className={className}>
       <div styleName='headerMainRow'>
