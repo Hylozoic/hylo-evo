@@ -56,13 +56,21 @@ export default class PostEditor extends React.Component {
       default: 'What are you looking to post?'
     },
     titlePlaceholderForPostType: {
-      offer: 'What super powers can you offer?',
+      offer: 'What help can you offer?',
       request: 'What are you looking for help with?',
+      resource: 'What resource is available?',
       project: 'What would you like to call your project?',
       event: 'What is your event called?',
       default: 'What’s on your mind?'
     },
-    detailsPlaceholder: 'Add a description',
+    detailPlaceholderForPostType: {
+      offer: 'Add a description',
+      request: 'Add a description',
+      resource: 'Please describe the physical resource that is available, including the location.',
+      project: 'Add a description',
+      event: 'Add a description',
+      default: 'Add a description'
+    },
     post: {
       type: 'discussion',
       title: '',
@@ -93,6 +101,7 @@ export default class PostEditor extends React.Component {
       post: currentPost,
       initialPrompt: initialPrompt || this.initialPromptForPostType(currentPost.type),
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
+      detailPlaceholder: this.detailPlaceholderForPostType(currentPost.type),
       valid: editing === true, // if we're editing, than it's already valid upon entry.
       announcementSelected: announcementSelected,
       toggleAnnouncementModal: false,
@@ -146,6 +155,7 @@ export default class PostEditor extends React.Component {
     this.setState({
       post: { ...this.state.post, type },
       titlePlaceholder: this.titlePlaceholderForPostType(type),
+      detailPlaceholder: this.detailPlaceholderForPostType(type),
       valid: this.isValid({ type })
     })
   }
@@ -153,6 +163,11 @@ export default class PostEditor extends React.Component {
   titlePlaceholderForPostType (type) {
     const { titlePlaceholderForPostType } = this.props
     return titlePlaceholderForPostType[type] || titlePlaceholderForPostType['default']
+  }
+
+  detailPlaceholderForPostType (type) {
+    const { detailPlaceholderForPostType } = this.props
+    return detailPlaceholderForPostType[type] || detailPlaceholderForPostType['default']
   }
 
   initialPromptForPostType (type) {
@@ -231,7 +246,8 @@ export default class PostEditor extends React.Component {
 
   handleLocationChange = location => {
     this.setState({
-      post: { ...this.state.post, locationText: location.fullText, locationId: location.id }
+      post: { ...this.state.post, locationText: location.fullText, locationId: location.id },
+      valid: this.isValid({ locationId: location.id })
     })
   }
 
@@ -285,7 +301,7 @@ export default class PostEditor extends React.Component {
   }
 
   isValid = (postUpdates = {}) => {
-    const { type, title, communities, startTime, endTime } = Object.assign({}, this.state.post, postUpdates)
+    const { type, title, communities, startTime, endTime, locationId } = Object.assign({}, this.state.post, postUpdates)
     const { isEvent } = this.props
 
     return !!(this.editor.current &&
@@ -294,7 +310,8 @@ export default class PostEditor extends React.Component {
       title.length > 0 &&
       communities.length > 0 &&
       title.length <= MAX_TITLE_LENGTH &&
-      (!isEvent || (endTime && (startTime < endTime)))
+      (!isEvent || (endTime && (startTime < endTime))) &&
+      (type !== 'resource' || locationId)
     )
   }
 
@@ -333,18 +350,17 @@ export default class PostEditor extends React.Component {
   }
 
   render () {
-    const { initialPrompt, titlePlaceholder, titleLengthError, dateError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
+    const { initialPrompt, titlePlaceholder, detailPlaceholder, titleLengthError, dateError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
     const { id, type, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location, locationText } = post
 
     const {
-      onClose, detailsPlaceholder,
-      currentUser, communityOptions, loading, addImage,
+      onClose, currentUser, communityOptions, loading, addImage,
       showImages, addFile, showFiles, setAnnouncement, announcementSelected,
       canModerate, myModeratedCommunities, isProject, isEvent
     } = this.props
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
-    const hasLocation = ['event', 'offer', 'request'].includes(type)
+    const hasLocation = ['event', 'offer', 'request', 'resource'].includes(type)
     const showPostTypes = !isProject && !isEvent
     const canHaveTimes = type !== 'discussion'
 
@@ -361,6 +377,7 @@ export default class PostEditor extends React.Component {
           <Button {...this.postTypeButtonProps('discussion')} />
           <Button {...this.postTypeButtonProps('request')} />
           <Button {...this.postTypeButtonProps('offer')} />
+          <Button {...this.postTypeButtonProps('resource')} />
         </div>}
       </div>
       <div styleName='body'>
@@ -384,7 +401,7 @@ export default class PostEditor extends React.Component {
           {titleLengthError && <span styleName='title-error'>{`Title can't have more than ${MAX_TITLE_LENGTH} characters`}</span>}
           <HyloEditor
             styleName='editor'
-            placeholder={detailsPlaceholder}
+            placeholder={detailPlaceholder}
             onChange={this.handleDetailsChange}
             contentHTML={details}
             readOnly={loading}
@@ -433,7 +450,7 @@ export default class PostEditor extends React.Component {
             location={curLocation}
             locationText={locationText}
             onChange={this.handleLocationChange}
-            placeholder={`Where is your ${type} located`}
+            placeholder={`Where is your ${type} located?`}
           />
         </div>}
         {isEvent && <div styleName='footerSection'>
