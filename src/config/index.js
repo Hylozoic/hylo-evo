@@ -42,8 +42,7 @@ export const mixpanel = {
   token: process.env.MIXPANEL_TOKEN
 }
 export const mapbox = {
-  public_token: process.env.MAPBOX_PUBLIC_TOKEN,
-  secret_token: process.env.MAPBOX_SECRET_TOKEN
+  public_token: process.env.MAPBOX_PUBLIC_TOKEN
 }
 
 export const featureFlags = () => {
