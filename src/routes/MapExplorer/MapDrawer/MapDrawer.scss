@@ -1,0 +1,15 @@
+.container {
+  height: 100vh;
+  position: fixed;
+  right: 0;
+  top: 0;
+  padding-top: 80px;
+  background: white;
+  width: 360px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.postCard {
+  position: relative;
+}

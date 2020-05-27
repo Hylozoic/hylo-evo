@@ -11,6 +11,7 @@ import { queryParamWhitelist } from 'store/reducers/queryResults'
 import Loading from 'components/Loading'
 import './MapExplorer.scss'
 import Map from 'components/Map/Map'
+import MapDrawer from './MapDrawer'
 import { createScatterplotLayerFromPosts } from 'components/Map/layers/postsScatterplotLayer'
 
 export default class MapExplorer extends React.Component {
@@ -28,7 +29,8 @@ export default class MapExplorer extends React.Component {
       hoveredObject: null,
       pointerX: 0,
       pointerY: 0,
-      selectedObject: null
+      selectedObject: null,
+      showDrawer: props.querystringParams.showDrawer === 'true'
     }
   }
 
@@ -108,6 +110,10 @@ export default class MapExplorer extends React.Component {
     ) : ''
   }
 
+  toggleDrawer = (e) => {
+    this.setState({ showDrawer: !this.state.showDrawer })
+  }
+
   render () {
     const {
       routeParams,
@@ -132,6 +138,8 @@ export default class MapExplorer extends React.Component {
 
     const mapLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
 
+    // TODO: filter posts for drawer by bbox using turf.js (also filter posts to show on layer?)
+
     return <div styleName='MapExplorer-container'>
       {/* {showSortAndFilters && <React.Fragment> */}
         {/* <div> */}
@@ -148,7 +156,11 @@ export default class MapExplorer extends React.Component {
                   {/* selectedSort={sortBy} /> */}
         {/* </div>} */}
       {/* </React.Fragment>} */}
-        <Map layers={[mapLayer]} zoom={zoom} onViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
+
+      <Map layers={[mapLayer]} zoom={zoom} onViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
+      <button styleName='toggleDrawerButton' onClick={this.toggleDrawer}>Show Drawer</button>
+      {this.state.showDrawer ? <MapDrawer posts={posts} queryResults={querystringParams} routeParams={routeParams} /> : ''}
+
       {/* <div styleName='MapExplorerItems'> */}
         {/* {posts.map(post => { */}
           {/* const expanded = post.id === routeParams.postId */}
