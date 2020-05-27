@@ -90,7 +90,7 @@ export default class Members extends Component {
         </div>
       </div>
       <ScrollListener onBottom={this.fetchMore}
-        elementId={CENTER_COLUMN_ID} />
+        elementId={null} />
     </div>
   }
 }
