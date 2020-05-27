@@ -172,7 +172,7 @@ class Geocoder extends Component {
         searchTime: searchTime,
         loading: false,
         results: body.features,
-        focus: 0
+        focus: body.features.length > 0 ? 0 : -1
       })
       this.props.onSuggest(this.state.results)
     }
