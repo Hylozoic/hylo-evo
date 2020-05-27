@@ -106,12 +106,10 @@ export default class PostHeader extends PureComponent {
     let generalLocation = locationText || ''
 
     if (location) {
-      if (location.addressNumber !== null) {
+      if (location.addressNumber !== null && location.addressNumber !== '') {
         generalLocation = `${location.addressNumber} ${location.addressStreet}, ${location.city}, ${location.region}`
       } else {
-        // Note - Pending location bug fix, can use location city and region
-        // generalLocation = `${location.city}, ${location.region}`
-        generalLocation = `${location.fullText}`
+        generalLocation = `${location.city}, ${location.region}`
       }
     }
 
