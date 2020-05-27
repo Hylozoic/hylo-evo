@@ -7,11 +7,12 @@ export function convertMapboxToLocation (mapboxResult) {
 
   let city = placeObject ? placeObject.text : mapboxResult.place_type[0] === 'place' ? mapboxResult.text : ''
 
-  let addressNumber = '', addressStreet = ''
+  let addressNumber = ''
+  let addressStreet = ''
   if (mapboxResult.properties.address) {
     // For Points of Interest and landmarks Mapbox annoyingly stores the address in a single string inside properties
-    addressNumber = mapboxResult.properties.address.split(" ")[0]
-    addressStreet = mapboxResult.properties.address.split(" ")[1]
+    addressNumber = mapboxResult.properties.address.split(' ')[0]
+    addressStreet = mapboxResult.properties.address.split(' ')[1]
   } else if (mapboxResult.place_type[0] === 'address') {
     addressStreet = mapboxResult.text
     addressNumber = mapboxResult.address
