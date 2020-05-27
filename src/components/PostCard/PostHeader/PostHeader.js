@@ -57,8 +57,6 @@ export default class PostHeader extends PureComponent {
       startTime,
       endTime,
       fulfilledAt,
-      location,
-      locationText,
       pinned,
       topics,
       close,
@@ -102,17 +100,6 @@ export default class PostHeader extends PureComponent {
       timeWindow = `${type} starts ${startDate}`
     }
 
-    // Formatting location to display in stream view
-    let generalLocation = locationText || ''
-
-    if (location) {
-      if (location.addressNumber !== null && location.addressNumber !== '') {
-        generalLocation = `${location.addressNumber} ${location.addressStreet}, ${location.city}, ${location.region}`
-      } else {
-        generalLocation = `${location.city}, ${location.region}`
-      }
-    }
-
     return <div styleName='header' className={className}>
       <div styleName='headerMainRow'>
         <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' />
@@ -125,9 +112,6 @@ export default class PostHeader extends PureComponent {
             <span styleName='timestamp'>
               {humanDate(createdAt)}
             </span>
-            {locationText && <div><span styleName='locationIcon'><img src='/location-pin-stream.svg' /></span>
-              <span styleName='headerLocation'>{generalLocation}</span></div>
-            }
             {announcement && <span styleName='announcementSection'>
               <span styleName='announcementSpacer'>•</span>
               <span data-tip='Announcement' data-for='announcement-tt'>

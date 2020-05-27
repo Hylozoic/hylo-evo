@@ -62,21 +62,12 @@
   top: -1px;
 }
 
-.locationIcon {
-  margin: 0 4px 0 10px;
-
-  img {
-    height: 12px;
-    width: 12px;
-  }
-}
-
 .timestampRow {
   align-items: center;
   display: flex;
 }
 
-.timestamp, .headerLocation {
+.timestamp {
   composes: timestamp from 'css/typography.scss';
 }
 
