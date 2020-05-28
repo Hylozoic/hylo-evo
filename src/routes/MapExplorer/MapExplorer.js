@@ -1,13 +1,8 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { isEmpty, some} from 'lodash/fp'
+import { some } from 'lodash/fp'
 import { debounce } from 'lodash'
 // import cx from 'classnames'
-import { CENTER_COLUMN_ID, position } from 'util/scrolling'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
-// import TabBar from './TabBar'
-// import PostCard from 'components/PostCard'
-// import ScrollListener from 'components/ScrollListener'
 import Loading from 'components/Loading'
 import './MapExplorer.scss'
 import Map from 'components/Map/Map'
@@ -34,26 +29,6 @@ export default class MapExplorer extends React.Component {
     }
   }
 
-  // setStateFromDOM = tabBar => {
-  //   const element = ReactDOM.findDOMNode(tabBar)
-  //   const container = document.getElementById(CENTER_COLUMN_ID)
-  //   if (!element || !container) return
-  //   this.setState({
-  //     tabBarWidth: element.offsetWidth,
-  //     scrollOffset: position(element, container).y
-  //   })
-  // }
-
-  // handleScrollEvents = throttle(100, event => {
-  //   const { scrollTop } = event.target
-  //   const { atTabBar, scrollOffset } = this.state
-  //   if (atTabBar && scrollTop < scrollOffset) {
-  //     this.setState({ atTabBar: false })
-  //   } else if (!atTabBar && scrollTop > scrollOffset) {
-  //     this.setState({ atTabBar: true })
-  //   }
-  // })
-
   componentDidMount () {
     // this.fetchOrShowCached()
   }
@@ -72,7 +47,7 @@ export default class MapExplorer extends React.Component {
   }
 
   fetchOrShowCached = () => {
-    const { posts, fetchPosts, storeFetchPostsParam } = this.props
+    const { fetchPosts, storeFetchPostsParam } = this.props
     fetchPosts()
     storeFetchPostsParam()
   }
@@ -116,20 +91,10 @@ export default class MapExplorer extends React.Component {
 
   render () {
     const {
-      routeParams,
-      querystringParams,
-      postTypeFilter,
-      sortBy,
-      changeTab,
-      changeSort,
       posts,
       pending,
       zoom
     } = this.props
-
-    const isProject = routeParams.postTypeContext === 'project'
-    const isEvent = routeParams.postTypeContext === 'event'
-    const showSortAndFilters = !isProject && !isEvent
 
     // TODO: Feed posts after filtering to the Map, create a layer,
     //    could start with simple scatterplot layer
@@ -141,38 +106,9 @@ export default class MapExplorer extends React.Component {
     // TODO: filter posts for drawer by bbox using turf.js (also filter posts to show on layer?)
 
     return <div styleName='MapExplorer-container'>
-      {/* {showSortAndFilters && <React.Fragment> */}
-        {/* <div> */}
-          {/* <TabBar ref={this.setStateFromDOM} */}
-                  {/* onChangeTab={changeTab} */}
-                  {/* selectedTab={postTypeFilter} */}
-                  {/* onChangeSort={changeSort} */}
-                  {/* selectedSort={sortBy} /> */}
-        {/* </div> */}
-        {/* {atTabBar && <div styleName='tabbar-sticky' style={style}> */}
-          {/* <TabBar onChangeTab={changeTab} */}
-                  {/* selectedTab={postTypeFilter} */}
-                  {/* onChangeSort={changeSort} */}
-                  {/* selectedSort={sortBy} /> */}
-        {/* </div>} */}
-      {/* </React.Fragment>} */}
-
       <Map layers={[mapLayer]} zoom={zoom} onViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
       <button styleName='toggleDrawerButton' onClick={this.toggleDrawer}>Show Drawer</button>
       {this.state.showDrawer ? <MapDrawer posts={posts} queryResults={querystringParams} routeParams={routeParams} /> : ''}
-
-      {/* <div styleName='MapExplorerItems'> */}
-        {/* {posts.map(post => { */}
-          {/* const expanded = post.id === routeParams.postId */}
-          {/* return <PostCard */}
-            {/* routeParams={routeParams} */}
-            {/* querystringParams={querystringParams} */}
-            {/* post={post} */}
-            {/* styleName={cx('MapExplorerItem', { expanded })} */}
-            {/* expanded={expanded} */}
-            {/* key={post.id} /> */}
-        {/* })} */}
-      {/* </div> */}
       {pending && <Loading />}
     </div>
   }
