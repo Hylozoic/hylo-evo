@@ -73,9 +73,9 @@ export default class MapExplorer extends React.Component {
     this.props.fetchPosts()
   }, 150)
 
-  onMapHover = (info) => { console.log('hover', info); this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y }) }
+  onMapHover = (info) => this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y })
 
-  onMapClick = (info) => { console.log('click', info); this.setState({ selectedObject: info.object }); this.props.showDetails(info.object.id) }
+  onMapClick = (info) => { this.setState({ selectedObject: info.object }); this.props.showDetails(info.object.id) }
 
   _renderTooltip = () => {
     const { hoveredObject, pointerX, pointerY } = this.state || {}

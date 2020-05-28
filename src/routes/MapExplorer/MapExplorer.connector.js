@@ -62,9 +62,11 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
+  const routeParams = get('match.params', props)
+  const querystringParams = getQuerystringParam(['showDrawer', 't'], null, props)
   return {
     fetchPosts: param => offset => dispatch(fetchPosts({ offset, ...param })),
-    showDetails: (postId) => dispatch(push(postUrl(postId, { ...props.routeParams, view: 'map' }, props.querystringParams))),
+    showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, querystringParams))),
     storeFetchPostsParam: param => (boundingBox = null) => dispatch(storeFetchPostsParam({ ...param, boundingBox }))
   }
 }
