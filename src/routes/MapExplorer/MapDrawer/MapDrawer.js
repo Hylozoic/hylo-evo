@@ -18,7 +18,7 @@ function MapDrawer (props) {
 
   return (
     <div styleName='container'>
-      <h1>{posts.length} Results in this area</h1>
+      <h1>{posts.length} result{posts.length === 1 ? '' : 's'} in this area</h1>
       {postsHTML}
     </div>
   )

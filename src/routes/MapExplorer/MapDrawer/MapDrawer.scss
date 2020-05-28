@@ -5,11 +5,16 @@
   top: 0;
   padding-top: 80px;
   background: white;
-  width: 360px;
+  width: 400px;
   overflow-y: auto;
   overflow-x: hidden;
+
+  h1 {
+    text-align: center;
+  }
 }
 
 .postCard {
   position: relative;
+  margin: 12px;
 }

@@ -27,4 +27,16 @@
   position: absolute;
   left: 0;
   top: 20px;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+}
+
+.toggleDrawerButton:focus {
+  outline:0;
+}
+
+.icon {
+  vertical-align: middle;
+  text-align: center;
 }

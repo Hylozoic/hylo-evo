@@ -3,6 +3,7 @@ import { some } from 'lodash/fp'
 import { debounce } from 'lodash'
 // import cx from 'classnames'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
+import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import './MapExplorer.scss'
 import Map from 'components/Map/Map'
@@ -109,7 +110,7 @@ export default class MapExplorer extends React.Component {
 
     return <div styleName='MapExplorer-container'>
       <Map layers={[mapLayer]} zoom={zoom} onViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
-      <button styleName='toggleDrawerButton' onClick={this.toggleDrawer}>Show Drawer</button>
+      <button styleName='toggleDrawerButton' onClick={this.toggleDrawer}><Icon name='Stack' green={this.state.showDrawer} styleName='icon' /></button>
       {this.state.showDrawer ? <MapDrawer posts={posts} queryResults={querystringParams} routeParams={routeParams} /> : ''}
       {pending && <Loading />}
     </div>
