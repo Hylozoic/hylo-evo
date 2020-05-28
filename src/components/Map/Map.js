@@ -15,6 +15,8 @@ function Map (props) {
     pitch: 0
   })
 
+  const [isHovering, setIsHovering] = useState(false)
+
   const mapRef = useRef()
 
   useEffect(() => {
@@ -31,7 +33,12 @@ function Map (props) {
       mapboxApiAccessToken={mapbox.public_token}
       ref={ref => { mapRef.current = ref && ref.getMap(); return ref }}
     >
-      <DeckGL viewState={viewport} layers={layers} >
+      <DeckGL
+        viewState={viewport}
+        layers={layers}
+        onHover={({ object }) => setIsHovering(Boolean(object))}
+        getCursor={() => isHovering ? 'pointer' : 'grab'}
+      >
         { children }
       </DeckGL>
 
