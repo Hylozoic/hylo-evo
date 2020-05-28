@@ -10,7 +10,7 @@ export default function PostTitle ({
 }) {
   // Formatting location to display in stream view
   let generalLocation = location || ''
-  console.log("post", title, location, " obj = ", locationObject)
+
   if (locationObject) {
     if (locationObject.addressNumber !== null && locationObject.addressNumber !== '') {
       generalLocation = `${locationObject.addressNumber} ${locationObject.addressStreet}, ${locationObject.city}, ${locationObject.region}`
