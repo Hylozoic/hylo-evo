@@ -58,7 +58,7 @@ export default function Navigation (props) {
     },
     mapPath && {
       label: 'Map',
-      icon: 'Flag', // TODO: enlist design help in editing hylo-icon-font to get appropriate icon
+      icon: 'Globe',
       to: mapPath
     }
   ])
