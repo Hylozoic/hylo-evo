@@ -21,7 +21,7 @@ export default class Member extends React.Component {
     const {
       className,
       slug,
-      member: { id, name, locationText, tagline, avatarUrl, skills },
+      member: { id, name, location, tagline, avatarUrl, skills },
       goToPerson,
       canModerate,
       removeMember
@@ -34,7 +34,7 @@ export default class Member extends React.Component {
       <div onClick={goToPerson(id, slug)}>
         <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
         <div styleName='name'>{name}</div>
-        <div styleName='location'>{locationText}</div>
+        <div styleName='location'>{location}</div>
         {skills && <div styleName='skills'>
           {skills.map((skill, index) =>
             <SkillLabel key={index} styleName='skill'>{skill.name}</SkillLabel>
@@ -52,7 +52,7 @@ Member.propTypes = {
   member: shape({
     id: string,
     name: string,
-    locationText: string,
+    location: string,
     tagline: string,
     avatarUrl: string
   }).isRequired

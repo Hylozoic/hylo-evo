@@ -8,8 +8,8 @@ import styles from './LocationInput.scss'
 export default class LocationInput extends Component {
   static propTypes = {
     inputClass: PropTypes.string,
-    location: PropTypes.object,
-    locationText: PropTypes.string,
+    locationObject: PropTypes.object,
+    location: PropTypes.string,
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
     pollingFetchLocation: PropTypes.func
@@ -17,8 +17,8 @@ export default class LocationInput extends Component {
 
   static defaultProps = {
     inputClass: styles.input,
-    location: null,
-    locationText: '',
+    locationObject: null,
+    location: '',
     onChange: null,
     placeholder: 'Search for a location...'
   }
@@ -31,7 +31,7 @@ export default class LocationInput extends Component {
   }
 
   componentDidMount () {
-    if (!this.props.location || !this.props.location.center) {
+    if (!this.props.locationObject || !this.props.locationObject.center) {
       navigator.geolocation.getCurrentPosition((position) => this.setState({ browserLocation: { lat: position.coords.latitude, lng: position.coords.longitude } }))
     }
   }
@@ -47,14 +47,14 @@ export default class LocationInput extends Component {
   handleSuggest = e => { }
 
   render () {
-    const { inputClass, location, locationText, placeholder } = this.props
-    const centerAt = (location && location.center) || this.state.browserLocation
+    const { inputClass, locationObject, location, placeholder } = this.props
+    const centerAt = (locationObject && locationObject.center) || this.state.browserLocation
 
     return (
       <div className={styles.wrapper}>
         <Geocoder
           accessToken={mapbox.token}
-          defaultInputValue={locationText}
+          defaultInputValue={location}
           onInputChange={this.handleInputChange}
           onSelect={this.handleSelectLocation}
           onSuggest={this.handleSuggest}

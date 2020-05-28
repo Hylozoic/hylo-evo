@@ -36,14 +36,14 @@ export default class CommunitySettingsTab extends Component {
     if (!community) return
 
     const {
-      name, description, locationText, avatarUrl, bannerUrl
+      name, description, location, avatarUrl, bannerUrl
     } = community
 
     this.setState({
       edits: {
         name: name || '',
         description: description || '',
-        locationText: locationText || '',
+        location: location || '',
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER
       }
@@ -54,7 +54,7 @@ export default class CommunitySettingsTab extends Component {
     const { edits, changed } = this.state
 
     if (key === 'location') {
-      edits['locationText'] = event.target.value.fullText
+      edits['location'] = event.target.value.fullText
       edits['locationId'] = event.target.value.id
     } else {
       edits[key] = event.target.value
@@ -80,10 +80,10 @@ export default class CommunitySettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      name, description, locationText, avatarUrl, bannerUrl
+      name, description, location, avatarUrl, bannerUrl
     } = edits
 
-    const location = community.location || currentUser.location
+    const locationObject = community.locationObject || currentUser.locationObject
 
     return <div>
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
@@ -103,8 +103,8 @@ export default class CommunitySettingsTab extends Component {
       <SettingsControl
         label='Location'
         onChange={this.updateSettingDirectly('location', true)}
-        locationText={locationText}
         location={location}
+        locationObject={locationObject}
         type='location'
       />
       <div styleName='button-row'>

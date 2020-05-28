@@ -45,8 +45,8 @@ const postFieldsFragment = withComments => `
     url
     imageUrl
   }
-  locationText
-  location {
+  location
+  locationObject {
     id
     addressNumber
     addressStreet
@@ -102,7 +102,7 @@ const postFieldsFragment = withComments => `
       avatarUrl
       bio
       tagline
-      locationText
+      location
       skills (first: 100) {
         items {
           id
@@ -123,7 +123,7 @@ const postFieldsFragment = withComments => `
         avatarUrl
         bio
         tagline
-        locationText
+        location
         skills (first: 100) {
           items {
             id

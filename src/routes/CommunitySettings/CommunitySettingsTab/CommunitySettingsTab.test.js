@@ -8,7 +8,7 @@ describe('CommunitySettingsTab', () => {
       id: 1,
       name: 'Foomunity',
       slug: 'foo',
-      locationText: 'Fuji',
+      location: 'Fuji',
       description: 'Great community',
       avatarUrl: 'avatar.png',
       bannerUrl: 'avatar.png'

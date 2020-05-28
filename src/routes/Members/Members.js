@@ -100,7 +100,7 @@ Members.propTypes = {
   members: arrayOf(shape({
     id: string,
     name: string,
-    locationText: string,
+    location: string,
     tagline: string,
     avatarUrl: string
   })),
@@ -121,7 +121,7 @@ function SortLabel ({ text }) {
 function sortKeysFactory (subject) {
   const sortKeys = {
     name: 'Name',
-    locationText: 'Location'
+    location: 'Location'
   }
   if (subject !== 'network') sortKeys['join'] = 'Newest'
   return sortKeys

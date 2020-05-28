@@ -19,7 +19,7 @@ Object {
     avatarUrl
     bannerUrl
     postCount
-    
+
 posts(
   first: $first,
   offset: $offset,
@@ -31,7 +31,7 @@ posts(
 ) {
   hasMore
   items {
-    
+
   id
   announcement
   title
@@ -53,15 +53,15 @@ posts(
     avatarUrl
   }
   commentersTotal
-  
+
   linkPreview {
     id
     title
     url
     imageUrl
   }
-  locationText
-  location {
+  location
+  locationObject {
     id
     addressNumber
     addressStreet
@@ -117,7 +117,7 @@ posts(
       avatarUrl
       bio
       tagline
-      locationText
+      location
       skills (first: 100) {
         items {
           id
@@ -138,7 +138,7 @@ posts(
         avatarUrl
         bio
         tagline
-        locationText
+        location
         skills (first: 100) {
           items {
             id
@@ -184,7 +184,7 @@ Object {
   $topic: ID,
   $first: Int
 ) {
-  
+
 posts(
   first: $first,
   offset: $offset,
@@ -196,7 +196,7 @@ posts(
 ) {
   hasMore
   items {
-    
+
   id
   announcement
   title
@@ -218,15 +218,15 @@ posts(
     avatarUrl
   }
   commentersTotal
-  
+
   linkPreview {
     id
     title
     url
     imageUrl
   }
-  locationText
-  location {
+  location
+  locationObject {
     id
     addressNumber
     addressStreet
@@ -282,7 +282,7 @@ posts(
       avatarUrl
       bio
       tagline
-      locationText
+      location
       skills (first: 100) {
         items {
           id
@@ -303,7 +303,7 @@ posts(
         avatarUrl
         bio
         tagline
-        locationText
+        location
         skills (first: 100) {
           items {
             id

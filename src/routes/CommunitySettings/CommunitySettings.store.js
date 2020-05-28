@@ -17,7 +17,7 @@ export function fetchCommunitySettings (slug) {
           avatarUrl
           bannerUrl
           description
-          locationText
+          location
           settings
           invitePath
           hidden
