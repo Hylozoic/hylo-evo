@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import PostCard from 'components/PostCard'
 import './MapDrawer.scss'

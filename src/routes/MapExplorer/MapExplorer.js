@@ -91,8 +91,10 @@ export default class MapExplorer extends React.Component {
 
   render () {
     const {
+      querystringParams,
       posts,
       pending,
+      routeParams,
       zoom
     } = this.props
 
