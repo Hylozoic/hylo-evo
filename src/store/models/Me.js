@@ -85,8 +85,11 @@ Me.fields = {
   name: attr(),
   posts: many('Post'),
   intercomHash: attr(),
-  locationText: attr(),
-  location: fk('Location'),
+  location: attr(),
+  locationId: fk({
+    to: 'Location',
+    as: 'locationObject'
+  }),
 
   // strictly speaking, a membership belongs to a single person, so it's not a
   // many-to-many relationship. but putting this here ensures that when we have

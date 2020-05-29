@@ -9,7 +9,7 @@
     "FILEPICKER_API_KEY": {
       "required": true
     },
-    "MAPBOX_PUBLIC_TOKEN": {
+    "MAPBOX_TOKEN": {
       "required": true
     },
     "NODE_MODULES_CACHE": {

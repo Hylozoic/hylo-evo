@@ -6,9 +6,9 @@ export default
   avatarUrl
   newNotificationCount
   unseenThreadCount
-  locationText
-  location {
-  id
+  location
+  locationObject {
+    id
     addressNumber
     addressStreet
     bbox {
