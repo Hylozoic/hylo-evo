@@ -3,9 +3,11 @@ import { some } from 'lodash/fp'
 import { debounce } from 'lodash'
 // import cx from 'classnames'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
+import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import './MapExplorer.scss'
 import Map from 'components/Map/Map'
+import MapDrawer from './MapDrawer'
 import { createScatterplotLayerFromPosts } from 'components/Map/layers/postsScatterplotLayer'
 
 export default class MapExplorer extends React.Component {
@@ -23,7 +25,8 @@ export default class MapExplorer extends React.Component {
       hoveredObject: null,
       pointerX: 0,
       pointerY: 0,
-      selectedObject: null
+      selectedObject: null,
+      showDrawer: props.querystringParams.showDrawer === 'true'
     }
   }
 
@@ -70,9 +73,9 @@ export default class MapExplorer extends React.Component {
     this.props.fetchPosts()
   }, 150)
 
-  onMapHover = (info) => { console.log('hover', info); this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y }) }
+  onMapHover = (info) => this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y })
 
-  onMapClick = (info) => { console.log('click', info); this.setState({ selectedObject: info.object }); this.props.showDetails(info.object.id) }
+  onMapClick = (info) => { this.setState({ selectedObject: info.object }); this.props.showDetails(info.object.id) }
 
   _renderTooltip = () => {
     const { hoveredObject, pointerX, pointerY } = this.state || {}
@@ -83,10 +86,16 @@ export default class MapExplorer extends React.Component {
     ) : ''
   }
 
+  toggleDrawer = (e) => {
+    this.setState({ showDrawer: !this.state.showDrawer })
+  }
+
   render () {
     const {
+      querystringParams,
       posts,
       pending,
+      routeParams,
       zoom
     } = this.props
 
@@ -97,8 +106,12 @@ export default class MapExplorer extends React.Component {
 
     const mapLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
 
+    // TODO: filter posts for drawer by bbox using turf.js (also filter posts to show on layer?)
+
     return <div styleName='MapExplorer-container'>
       <Map layers={[mapLayer]} zoom={zoom} onViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
+      <button styleName='toggleDrawerButton' onClick={this.toggleDrawer}><Icon name='Stack' green={this.state.showDrawer} styleName='icon' /></button>
+      {this.state.showDrawer ? <MapDrawer posts={posts} queryResults={querystringParams} routeParams={routeParams} /> : ''}
       {pending && <Loading />}
     </div>
   }
