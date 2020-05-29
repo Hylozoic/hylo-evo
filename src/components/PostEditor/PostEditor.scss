@@ -94,6 +94,12 @@ $wrapperBorderRadius: 8px;
       background-color: $color-iceberg;
     }
   }
+  &-resource {
+    &.selectable:hover, &:active, &.active  {
+      color: $color-mango-yellow;
+      background-color: $color-mango-yellow-15;
+    }
+  }
   &-project {
     color: $color-fuchsia-pink;
     background-color: $color-prim;

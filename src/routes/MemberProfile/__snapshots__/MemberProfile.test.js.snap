@@ -42,7 +42,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       facebookUrl="https://www.facebook.com/rich.churcher"
       id="46816"
       linkedinUrl="https://www.linkedin.com/in/richchurcher/"
-      locationText="Auckland, New Zealand"
+      location="Auckland, New Zealand"
       memberships={
         Array [
           Object {
@@ -238,7 +238,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         facebookUrl="https://www.facebook.com/rich.churcher"
         id="46816"
         linkedinUrl="https://www.linkedin.com/in/richchurcher/"
-        locationText="Auckland, New Zealand"
+        location="Auckland, New Zealand"
         memberships={
           Array [
             Object {

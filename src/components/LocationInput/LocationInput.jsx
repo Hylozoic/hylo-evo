@@ -7,16 +7,18 @@ import styles from './LocationInput.scss'
 
 export default class LocationInput extends Component {
   static propTypes = {
-    location: PropTypes.object,
-    locationText: PropTypes.string,
+    inputClass: PropTypes.string,
+    locationObject: PropTypes.object,
+    location: PropTypes.string,
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
     pollingFetchLocation: PropTypes.func
   }
 
   static defaultProps = {
-    location: null,
-    locationText: '',
+    inputClass: styles.input,
+    locationObject: null,
+    location: '',
     onChange: null,
     placeholder: 'Search for a location...'
   }
@@ -29,31 +31,36 @@ export default class LocationInput extends Component {
   }
 
   componentDidMount () {
-    if (!this.props.location || !this.props.location.center) {
+    if (!this.props.locationObject || !this.props.locationObject.center) {
       navigator.geolocation.getCurrentPosition((position) => this.setState({ browserLocation: { lat: position.coords.latitude, lng: position.coords.longitude } }))
     }
   }
 
-  handleInputChange = data => {
+  handleInputChange = inputData => {
+    this.props.onChange({ fullText: inputData, id: null })
+  }
+
+  handleSelectLocation = data => {
     this.props.pollingFetchLocation(convertMapboxToLocation(data), (location) => this.props.onChange(location))
   }
 
   handleSuggest = e => { }
 
   render () {
-    const { location, locationText, placeholder } = this.props
-    const centerAt = (location && location.center) || this.state.browserLocation
+    const { inputClass, locationObject, location, placeholder } = this.props
+    const centerAt = (locationObject && locationObject.center) || this.state.browserLocation
 
     return (
       <div className={styles.wrapper}>
         <Geocoder
           accessToken={mapbox.token}
-          defaultInputValue={locationText}
-          onSelect={this.handleInputChange}
+          defaultInputValue={location}
+          onInputChange={this.handleInputChange}
+          onSelect={this.handleSelectLocation}
           onSuggest={this.handleSuggest}
           source='mapbox.places'
           endpoint='http://api.tiles.mapbox.com'
-          inputClass={styles.input}
+          inputClass={inputClass}
           inputPlaceholder={placeholder}
           resultClass={styles.result}
           resultsClass={styles.suggestions}
