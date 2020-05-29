@@ -18,7 +18,9 @@ export function createPostsScatterplotLayer (data, onHover, onClick) {
     id: `scatterplot-posts-layer`,
     data,
     getPosition: d => d.coordinates,
-    getRadius: 300,
+    getRadius: 10,
+    radiusMinPixels: 5,
+    radiusMaxPixels: 12,
     getFillColor: (d) => d.type === 'request' ? [253, 106, 73] : [13, 195, 159],
     // Enable picking
     pickable: true,
