@@ -1,14 +1,14 @@
 import { ScatterplotLayer } from '@deck.gl/layers'
 
 export function createScatterplotLayerFromPosts (posts, onHover, onClick) {
-  return createPostsScatterplotLayer(posts.filter(post => post.location && post.location.center)
+  return createPostsScatterplotLayer(posts.filter(post => post.locationObject && post.locationObject.center)
     .map(post => {
       return {
         id: post.id,
         type: post.type,
         message: post.title,
         summary: post.details,
-        coordinates: [parseFloat(post.location.center.lng), parseFloat(post.location.center.lat)]
+        coordinates: [parseFloat(post.locationObject.center.lng), parseFloat(post.locationObject.center.lat)]
       }
     }), onHover, onClick)
 }
