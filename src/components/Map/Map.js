@@ -26,7 +26,7 @@ function Map (props) {
   return (
     <MapGL
       {...viewport}
-      width='100vw'
+      width='100%'
       height='100vh'
       mapStyle='mapbox://styles/mapbox/light-v9'
       onViewportChange={nextViewport => setViewport(nextViewport)}

@@ -1,6 +1,10 @@
-import { createSelector } from 'reselect'
 import { get } from 'lodash/fp'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import bboxPolygon from '@turf/bbox-polygon'
+import booleanWithin from '@turf/boolean-within'
+import { point } from '@turf/helpers'
 import { FETCH_POSTS_MAP } from 'store/constants'
+import orm from 'store/models/index'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 
@@ -108,6 +112,10 @@ export function storeFetchPostsParam (props) {
 }
 
 // selectors
+export const boundingBoxSelector = (state) => {
+  return state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null
+}
+
 const getPostResults = makeGetQueryResults(FETCH_POSTS_MAP)
 
 export const getPosts = makeQueryResultsModelSelector(
@@ -115,7 +123,29 @@ export const getPosts = makeQueryResultsModelSelector(
   'Post'
 )
 
-export const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
+export const getPostsByBoundingBox = ormCreateSelector(
+  orm,
+  state => state.orm,
+  state => boundingBoxSelector(state),
+  getPosts,
+  (session, boundingBox, posts) => {
+    if (!boundingBox) {
+      return posts
+    }
+
+    const bbox = bboxPolygon([boundingBox[0].lng, boundingBox[0].lat, boundingBox[1].lng, boundingBox[1].lat])
+    return posts.filter(post => {
+      const locationObject = post.locationObject
+      if (locationObject) {
+        const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
+        return booleanWithin(centerPoint, bbox)
+      }
+      return false
+    })
+  }
+)
+
+// export const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
 
 // reducer
 export default function (state = {}, action) {

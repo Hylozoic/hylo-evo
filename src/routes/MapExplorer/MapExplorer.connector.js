@@ -10,8 +10,8 @@ import { postUrl } from 'util/navigation'
 import {
   fetchPosts,
   storeFetchPostsParam,
-  getPosts,
-  getHasMorePosts
+  getPostsByBoundingBox
+  // getHasMorePosts
 } from './MapExplorer.store.js'
 
 export function mapStateToProps (state, props) {
@@ -48,12 +48,13 @@ export function mapStateToProps (state, props) {
   // NOTE: In effort to better seperate the query caching from component details
   //       it's better (and necessary) in this case to send the fetch param then
   //       the raw props of the component.
-  const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, communityId))
-  const hasMore = getHasMorePosts(state, fetchPostsParam)
+  const posts = getPostsByBoundingBox(state, fetchPostsParam).map(p => presentPost(p, communityId))
+
+  // const hasMore = getHasMorePosts(state, fetchPostsParam)
 
   return {
     posts,
-    hasMore,
+    // hasMore,
     fetchPostsParam,
     pending: state.pending[FETCH_POSTS_MAP],
     routeParams,

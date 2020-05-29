@@ -1,7 +1,7 @@
 import React from 'react'
 import { some } from 'lodash/fp'
 import { debounce } from 'lodash'
-// import cx from 'classnames'
+import cx from 'classnames'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
@@ -99,6 +99,8 @@ export default class MapExplorer extends React.Component {
       zoom
     } = this.props
 
+    const { showDrawer } = this.state
+
     // TODO: Feed posts after filtering to the Map, create a layer,
     //    could start with simple scatterplot layer
     //     use turf.js to find only new bounding box, subtract old one from the new one
@@ -110,9 +112,9 @@ export default class MapExplorer extends React.Component {
 
     return <div styleName='MapExplorer-container'>
       <Map layers={[mapLayer]} zoom={zoom} onViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
-      <button styleName='toggleDrawerButton' onClick={this.toggleDrawer}><Icon name='Stack' green={this.state.showDrawer} styleName='icon' /></button>
-      {this.state.showDrawer ? <MapDrawer posts={posts} queryResults={querystringParams} routeParams={routeParams} /> : ''}
-      {pending && <Loading />}
+      <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}><Icon name='Stack' green={showDrawer} styleName='icon' /></button>
+      { showDrawer ? <MapDrawer posts={posts} queryResults={querystringParams} routeParams={routeParams} /> : ''}
+      { pending && <Loading /> }
     </div>
   }
 }
