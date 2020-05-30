@@ -1,0 +1,40 @@
+.MapExplorer-container {
+  position: relative;
+  height: calc(100vh - 60px);
+  overflow: hidden;
+}
+
+.MapExplorerItems {
+  margin: 0 auto;
+  overflow: auto; // prevent margin collapse
+}
+
+.MapExplorerItem {
+  margin: 0 $space-4x $space-6x;
+}
+
+.expanded {
+  margin: 0 $space-2x $space-6x;
+}
+
+.toggleDrawerButton {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+
+  &.drawerOpen {
+    right: 410px;
+  }
+}
+
+.toggleDrawerButton:focus {
+  outline: 0;
+}
+
+.icon {
+  vertical-align: middle;
+  text-align: center;
+}

@@ -20,7 +20,7 @@ import CommunitySidebar from 'routes/CommunitySidebar'
 import Domain from 'routes/CreateCommunity/Domain'
 import Drawer from './components/Drawer'
 import Feed from 'routes/Feed'
-import MapFeed from 'routes/MapFeed'
+import MapExplorer from 'routes/MapExplorer'
 import Loading from 'components/Loading'
 import MemberProfile from 'routes/MemberProfile'
 import MemberSidebar from 'routes/MemberSidebar'
@@ -112,10 +112,10 @@ export default class PrimaryLayout extends Component {
             {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
             <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/all/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path={`/all/map/${OPTIONAL_POST_MATCH}`} exact component={MapFeed} />
+            <Route path={`/all/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
             <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/n/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path={`/n/:networkSlug/map/${OPTIONAL_POST_MATCH}`} exact component={MapFeed} />
+            <Route path={`/n/:networkSlug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
             <Route path='/n/:networkSlug/members' component={Members} />
             <Route path={`/n/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
@@ -126,7 +126,7 @@ export default class PrimaryLayout extends Component {
             <Route path={`/c/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path='/c/:slug/settings' component={CommunitySettings} />
             <Route path='/c/:slug/topics' component={AllTopics} />
-            <Route path={`/c/:slug/map/${OPTIONAL_POST_MATCH}`} exact component={MapFeed} />
+            <Route path={`/c/:slug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
             <Route path={`/c/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path={`/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path='/settings' component={UserSettings} />
@@ -177,13 +177,13 @@ const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
 const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})/:action(edit)?`
 const postDetailRoutes = [
   { path: `/all/${POST_DETAIL_MATCH}` },
-  { path: `/all/map/${POST_DETAIL_MATCH}` },
+  { path: `/all/:view(map)/${POST_DETAIL_MATCH}` },
   { path: `/n/:networkSlug/m/:personId/${POST_DETAIL_MATCH}` },
   { path: `/n/:networkSlug/${POST_DETAIL_MATCH}` },
-  { path: `/n/:networkSlug/map/${POST_DETAIL_MATCH}` },
+  { path: `/n/:networkSlug/:view(map)/${POST_DETAIL_MATCH}` },
   { path: `/c/:slug/m/:personId/${POST_DETAIL_MATCH}` },
   { path: `/c/:slug/${POST_DETAIL_MATCH}` },
-  { path: `/c/:slug/map/${POST_DETAIL_MATCH}` },
+  { path: `/c/:slug/:view(map)/${POST_DETAIL_MATCH}` },
   { path: `/c/:slug/:topicName/${POST_DETAIL_MATCH}` },
   { path: `/m/:personId/${POST_DETAIL_MATCH}` }
 ]
