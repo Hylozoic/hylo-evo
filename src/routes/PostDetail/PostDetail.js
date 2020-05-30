@@ -172,8 +172,9 @@ export default class PostDetail extends Component {
       {!isEvent && <PostBody
         styleName='body'
         expanded
+        routeParams={routeParams}
         slug={routeParams.slug}
-        post={post} />}
+        {...post} />}
       {isProject && <div styleName='join-project-button-container'>
         <JoinProjectButton
           joinProject={joinProject}

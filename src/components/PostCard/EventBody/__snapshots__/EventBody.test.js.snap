@@ -25,7 +25,7 @@ exports[`EventBody matches last snapshot 1`] = `
         data-stylename="icon"
         name="Clock"
       />
-       
+
       Wed, Mar 6 at 2:41PM - 5:41PM
     </div>
     <div
@@ -35,7 +35,7 @@ exports[`EventBody matches last snapshot 1`] = `
         data-stylename="icon"
         name="Location"
       />
-       
+
       Oakland
     </div>
     <PostDetails

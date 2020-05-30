@@ -16,7 +16,6 @@ const resultDataset = [
 ]
 
 it('toInterfaceData should match snapshot', () => {
-
   expect(toInterfaceData('person', uiData)).toMatchSnapshot()
 })
 
@@ -29,6 +28,5 @@ it('toUiQuerySet should match snapshot', () => {
 })
 
 it('toUiKeyMap should match snapshot', () => {
-
   expect(toUiKeyMap).toMatchSnapshot()
 })

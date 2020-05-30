@@ -26,6 +26,23 @@
   margin-bottom: 20px;
 }
 
+.headerLocation {
+  display: block;
+  margin: -10px 0 10px 15px;
+  composes: timestamp from 'css/typography.scss';
+}
+
+.locationIcon {
+  margin: 0 3px 0 0;
+
+  img {
+    height: 12px;
+    width: 12px;
+    position: relative;
+    top: -1px;
+  }
+}
+
 .file-attachments {
   composes: cardPadding;
   display: flex;

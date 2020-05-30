@@ -11,9 +11,9 @@ const postFieldsFragment = withComments => `
   }
   createdAt
   updatedAt
+  fulfilledAt
   startTime
   endTime
-  location
   myEventResponse
   commenters(first: 3) {
     id
@@ -44,6 +44,26 @@ const postFieldsFragment = withComments => `
     title
     url
     imageUrl
+  }
+  location
+  locationObject {
+    id
+    addressNumber
+    addressStreet
+    bbox {
+      lat
+      lng
+    }
+    center {
+      lat
+      lng
+    }
+    city
+    country
+    fullText
+    locality
+    neighborhood
+    region
   }
   votesTotal
   myVote
@@ -89,7 +109,7 @@ const postFieldsFragment = withComments => `
           name
         }
       }
-    }  
+    }
   }
   eventInvitations {
     total
@@ -110,7 +130,7 @@ const postFieldsFragment = withComments => `
             name
           }
         }
-      }      
+      }
     }
   }`
 

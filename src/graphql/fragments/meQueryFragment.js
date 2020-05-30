@@ -7,6 +7,25 @@ export default
   newNotificationCount
   unseenThreadCount
   location
+  locationObject {
+    id
+    addressNumber
+    addressStreet
+    bbox {
+      lat
+      lng
+    }
+    center {
+      lat
+      lng
+    }
+    city
+    country
+    fullText
+    locality
+    neighborhood
+    region
+  }
   email
   bannerUrl
   bio

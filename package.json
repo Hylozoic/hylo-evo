@@ -1,6 +1,6 @@
 {
   "name": "hylo-evo",
-  "version": "0.1.0",
+  "version": "1.1.2",
   "private": true,
   "scripts": {
     "start": "rm -rf ./node_modules/.cache/babel-loader && node --preserve-symlinks scripts/start.js",
@@ -18,9 +18,9 @@
     "@babel/core": "7.2.2",
     "@babel/node": "7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "7.2.3",
     "@babel/preset-react": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.4.4",
     "@holochain/hc-web-client": "0.5.0",
     "@storybook/addon-actions": "^v5.0.10",
     "@storybook/addon-info": "^5.0.10",
@@ -40,10 +40,10 @@
     "autoproxy": "^1.0.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
-    "babel-plugin-import-graphql": "^2.7.0",
     "babel-jest": "23.6.0",
     "babel-loader": "8.0.5",
     "babel-plugin-data-stylename": "0.1.1",
+    "babel-plugin-import-graphql": "^2.7.0",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-module-resolver": "^3.2.0",
     "babel-plugin-named-asset-import": "^0.3.1",
@@ -145,6 +145,7 @@
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
     "react-dom": "^16.8.6",
+    "react-flip-move": "^3.0.4",
     "react-intercom": "^1.0.14",
     "react-particles-js": "^2.1.0",
     "react-redux": "^6.0.0",
@@ -187,7 +188,8 @@
     "webpack": "4.28.3",
     "webpack-dev-server": "3.3.1",
     "webpack-manifest-plugin": "2.0.4",
-    "whatwg-fetch": "2.0.3"
+    "whatwg-fetch": "2.0.3",
+    "xhr": "^2.5.0"
   },
   "devDependencies": {
     "standard": "12.0.1"
