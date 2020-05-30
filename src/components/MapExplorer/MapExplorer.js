@@ -7,6 +7,7 @@ import Loading from 'components/Loading'
 import './MapExplorer.scss'
 import Map from 'components/Map/Map'
 import { createScatterplotLayerFromPosts } from 'components/Map/layers/postsScatterplotLayer'
+import { createClusterLayerFromPosts} from '../Map/layers/clusterLayer'
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {

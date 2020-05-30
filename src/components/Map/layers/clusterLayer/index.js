@@ -1,14 +1,30 @@
 import { CompositeLayer } from '@deck.gl/core'
 import { IconLayer } from '@deck.gl/layers'
 import Supercluster from 'supercluster'
+import { createPostsScatterplotLayer } from '../postsScatterplotLayer'
 
 // function getIconName ({color, size}) {
 //   return `${color}-${size}`
 // }
 
+export function createClusterLayerFromPosts ({posts, onHover, onClick}) {
+  return new clusterLayer({ data: posts.filter(post => post.location && post.location.center)
+    .map(post => {
+      return {
+        id: post.id,
+        type: post.type,
+        message: post.title,
+        summary: post.details,
+        coordinates: [parseFloat(post.location.center.lng), parseFloat(post.location.center.lat)]
+      }
+    }), onHover, onClick, getPosition: d => d.coordinates})
+}
+
 function getIconSize (size) {
   return Math.min(100, size) / 100 + 1
 }
+
+// TODO: do a post filter function; map post type to color
 
 export default class clusterLayer extends CompositeLayer {
   shouldUpdateState ({ changeFlags }) {
@@ -22,7 +38,7 @@ export default class clusterLayer extends CompositeLayer {
       const index = new Supercluster({ maxZoom: 16, radius: props.sizeScale })
       index.load(
         props.data.map(d => ({
-          geometry: { coordinates: props.getPosition(d) },
+          geometry: { coordinates: props.getPosition(d) }, // TODO: make this work with post.location
           properties: d
         }))
       )
@@ -53,7 +69,10 @@ export default class clusterLayer extends CompositeLayer {
 
   renderLayers () {
     const { data } = this.state
-    const { iconAtlas, iconMapping, sizeScale } = this.props
+    const { iconAtlas = 'public/iconAtlas.png',
+            iconMapping = 'public/iconAtlas.json',
+            sizeScale } = this.props
+
 
     return new IconLayer(
       this.getSubLayerProps({
