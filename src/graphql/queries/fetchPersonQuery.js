@@ -11,8 +11,8 @@ export default
     facebookUrl
     url
     tagline
-    locationText
-    location {
+    location
+    locationObject {
       id
       addressNumber
       addressStreet

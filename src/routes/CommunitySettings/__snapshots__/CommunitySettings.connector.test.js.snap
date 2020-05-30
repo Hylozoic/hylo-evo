@@ -28,7 +28,7 @@ Object {
           avatarUrl
           bannerUrl
           description
-          locationText
+          location
           settings
           invitePath
           hidden

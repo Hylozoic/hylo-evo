@@ -50,7 +50,7 @@ export default class AccountSettingsTab extends Component {
     if (!currentUser) return
 
     const {
-      name, avatarUrl, bannerUrl, tagline, bio, locationId, locationText, email, url, facebookUrl, twitterName, linkedinUrl
+      name, avatarUrl, bannerUrl, tagline, bio, locationId, location, email, url, facebookUrl, twitterName, linkedinUrl
     } = currentUser
 
     this.setState({
@@ -60,7 +60,7 @@ export default class AccountSettingsTab extends Component {
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         tagline: tagline || '',
         bio: bio || '',
-        locationText: locationText || '',
+        location: location || '',
         locationId: locationId || '',
         email: email || '',
         url: url || '',
@@ -76,7 +76,7 @@ export default class AccountSettingsTab extends Component {
     setChanged && this.props.setConfirm('You have unsaved changes, are you sure you want to leave?')
 
     if (key === 'location') {
-      edits['locationText'] = event.target.value.fullText
+      edits['location'] = event.target.value.fullText
       edits['locationId'] = event.target.value.id
     } else {
       edits[key] = event.target.value
@@ -108,9 +108,9 @@ export default class AccountSettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      name, avatarUrl, bannerUrl, tagline, bio, locationText, email, url, facebookUrl, twitterName, linkedinUrl
+      name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedinUrl
     } = edits
-    const location = currentUser.location
+    const locationObject = currentUser.locationObject
 
     return <div>
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
@@ -131,8 +131,8 @@ export default class AccountSettingsTab extends Component {
       <SettingsControl
         label='Location'
         onChange={this.updateSettingDirectly('location', true)}
-        locationText={locationText}
         location={location}
+        locationObject={locationObject}
         type='location'
       />
       <SettingsControl label='Email' onChange={this.updateSetting('email')} value={email} />

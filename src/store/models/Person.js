@@ -21,8 +21,11 @@ Person.fields = {
   facebookUrl: attr(),
   linkedinUrl: attr(),
   url: attr(),
-  locationText: attr(),
-  location: fk('Location'),
+  location: attr(),
+  locationId: fk({
+    to: 'Location',
+    as: 'locationObject'
+  }),
   skills: many('Skill'),
   postsTotal: attr(),
   votesTotal: attr()

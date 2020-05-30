@@ -13,12 +13,12 @@ export default class AddLocation extends Component {
       edits: {
         name: null,
         email: null,
-        locationText: null
+        location: null
       },
       readOnly: {
         name: true,
         email: true,
-        locationText: true
+        location: true
       }
     }
   }
@@ -150,7 +150,7 @@ export default class AddLocation extends Component {
             <div styleName='center-input-column'>
               <input
                 styleName='signup-input review-input-padding'
-                onChange={(e) => this.handleInputChange(e, 'locationText')}
+                onChange={(e) => this.handleInputChange(e, 'location')}
                 onKeyPress={event => {
                   if (event.key === 'Enter') {
                     this.submit()
@@ -158,12 +158,12 @@ export default class AddLocation extends Component {
                   }
                 }}
                 autoFocus
-                value={this.getValue('locationText')}
-                readOnly={this.state.readOnly.locationText}
+                value={this.getValue('location')}
+                readOnly={this.state.readOnly.location}
               />
             </div>
             <div styleName='right-input-column'>
-              <span styleName='edit-button text-opacity' onClick={() => this.makeEditable('locationText')}>Edit</span>
+              <span styleName='edit-button text-opacity' onClick={() => this.makeEditable('location')}>Edit</span>
             </div>
           </div>
           <div styleName='three-column-input gray-bottom-border'>

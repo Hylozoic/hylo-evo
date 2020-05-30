@@ -17,7 +17,7 @@ describe('LocationInput', () => {
   })
 
   it('renders correctly with some default props', () => {
-    const wrapper = renderComponent(shallow, { locationText: '123 main st. San Francisco, CA' })
+    const wrapper = renderComponent(shallow, { location: '123 main st. San Francisco, CA' })
     expect(wrapper).toMatchSnapshot()
   })
 })

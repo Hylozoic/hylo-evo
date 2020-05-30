@@ -76,7 +76,7 @@ export default class PostEditor extends React.Component {
       title: '',
       details: '',
       communities: [],
-      locationText: ''
+      location: ''
     },
     editing: false,
     loading: false
@@ -244,10 +244,10 @@ export default class PostEditor extends React.Component {
     }
   }
 
-  handleLocationChange = location => {
+  handleLocationChange = locationObject => {
     this.setState({
-      post: { ...this.state.post, locationText: location.fullText, locationId: location.id },
-      valid: this.isValid({ locationId: location.id })
+      post: { ...this.state.post, location: locationObject.fullText, locationId: locationObject.id },
+      valid: this.isValid({ locationId: locationObject.id })
     })
   }
 
@@ -320,14 +320,14 @@ export default class PostEditor extends React.Component {
       editing, createPost, createProject, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected, isProject
     } = this.props
     const {
-      id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, locationText, locationId
+      id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, location, locationId
     } = this.state.post
     const details = this.editor.current.getContentHTML()
     const topicNames = this.topicSelector.current.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, locationText, locationId
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId
     }
     const saveFunc = editing ? updatePost : isProject ? createProject : createPost
     setAnnouncement(false)
@@ -351,7 +351,7 @@ export default class PostEditor extends React.Component {
 
   render () {
     const { initialPrompt, titlePlaceholder, detailPlaceholder, titleLengthError, dateError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
-    const { id, type, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location, locationText } = post
+    const { id, type, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location, locationObject } = post
 
     const {
       onClose, currentUser, communityOptions, loading, addImage,
@@ -365,7 +365,7 @@ export default class PostEditor extends React.Component {
     const canHaveTimes = type !== 'discussion'
 
     // Center location autocomplete either on post's current location, or current community's location, or current user's location
-    const curLocation = location || (communities.length > 0 ? communities[0].location : null) || currentUser.location
+    const curLocation = locationObject || (communities.length > 0 ? communities[0].locationObject : null) || currentUser.locationObject
 
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
       <div styleName='header'>
@@ -447,8 +447,8 @@ export default class PostEditor extends React.Component {
         {hasLocation && <div styleName='footerSection'>
           <div styleName='footerSection-label alignedLabel'>Location</div>
           <LocationInput
-            location={curLocation}
-            locationText={locationText}
+            locationObject={curLocation}
+            location={location}
             onChange={this.handleLocationChange}
             placeholder={`Where is your ${type} located?`}
           />

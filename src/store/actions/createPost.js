@@ -22,7 +22,7 @@ export default function createPost (postParams) {
     eventInviteeIds = [],
     startTime,
     endTime,
-    locationText,
+    location,
     locationId
   } = postParams
   const linkPreviewId = linkPreview && linkPreview.id
@@ -46,7 +46,7 @@ export default function createPost (postParams) {
         eventInviteeIds,
         startTime: startTime && startTime.valueOf(),
         endTime: endTime && endTime.valueOf(),
-        locationText,
+        location,
         locationId
       }
     },

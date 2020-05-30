@@ -106,16 +106,16 @@ export function ProfileBanner ({ bannerUrl, children }) {
   </div>
 }
 
-export function ProfileNamePlate ({ avatarUrl, name, locationText, role, rightSideContent }) {
+export function ProfileNamePlate ({ avatarUrl, name, location, role, rightSideContent }) {
   return <div styleName='name-plate-container'>
     <div styleName='name-plate'>
       <RoundImage styleName='avatar' url={avatarUrl} xlarge />
       <div styleName='details'>
         <h1 styleName='name'>{name}</h1>
         <div styleName='fine-details'>
-          {locationText && <span styleName='location'>{locationText}</span>}
+          {location && <span styleName='location'>{location}</span>}
           {role && <span styleName='role-bling'>
-            {locationText && <span styleName='spacer'>•</span>}
+            {location && <span styleName='spacer'>•</span>}
             <Icon styleName='star' name='StarCircle' />
             <span styleName='role'>{role}</span>
           </span>}

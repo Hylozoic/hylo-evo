@@ -12,7 +12,7 @@ export default class AddLocation extends Component {
     super()
     this.state = {
       locationId: null,
-      locationText: ''
+      location: ''
     }
   }
 
@@ -22,10 +22,10 @@ export default class AddLocation extends Component {
 
   setLocation = () => {
     const { currentUser } = this.props
-    if (currentUser && currentUser.locationText) {
+    if (currentUser && currentUser.location) {
       this.setState({
-        locationId: currentUser.location ? currentUser.location.id : null,
-        locationText: currentUser.locationText
+        locationId: currentUser.locationObject ? currentUser.locationObject.id : null,
+        location: currentUser.location
       })
     }
   }
@@ -33,13 +33,13 @@ export default class AddLocation extends Component {
   handleLocationChange = (location) => {
     this.setState({
       locationId: location.id,
-      locationText: location.fullText
+      location: location.fullText
     })
   }
 
   submit = () => {
-    const { locationId, locationText } = this.state
-    this.props.updateUserSettings({ locationText, locationId })
+    const { locationId, location } = this.state
+    this.props.updateUserSettings({ location, locationId })
     this.props.goToNextStep()
   }
 
@@ -69,8 +69,8 @@ export default class AddLocation extends Component {
         <div styleName='center'>
           <LocationInput
             inputClass={inputClass}
-            locationText={this.state.locationText}
-            location={this.props.currentUser ? this.props.currentUser.location : null}
+            location={this.state.location}
+            locationObject={this.props.currentUser ? this.props.currentUser.locationObject : null}
             onChange={this.handleLocationChange}
             placeholder='Where do you call home?'
             onKeyPress={event => {

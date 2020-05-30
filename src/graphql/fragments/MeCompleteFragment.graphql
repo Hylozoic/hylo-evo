@@ -5,8 +5,8 @@ fragment MeCompleteFragment on Me {
   avatarUrl
   newNotificationCount
   unseenThreadCount
-  locationText
-  location {
+  location
+  locationObject {
     id
     addressNumber
     addressStreet
