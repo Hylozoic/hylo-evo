@@ -80,7 +80,7 @@ export default class MapExplorer extends React.Component {
   _renderTooltip = () => {
     const { hoveredObject, pointerX, pointerY } = this.state || {}
     return hoveredObject ? (
-      <div style={{ position: 'absolute', zIndex: 1, pointerEvents: 'none', left: pointerX, top: pointerY }}>
+      <div styleName='postTip' style={{ left: pointerX + 15, top: pointerY }}>
         { hoveredObject.message }
       </div>
     ) : ''

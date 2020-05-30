@@ -38,3 +38,12 @@
   vertical-align: middle;
   text-align: center;
 }
+
+.postTip {
+  position: absolute;
+  z-index: 1;
+  pointerEvents: none;
+  border-radius: 4px;
+  background-color: white;
+  border: 1px solid black;
+}
