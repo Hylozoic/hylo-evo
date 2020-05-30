@@ -3,6 +3,7 @@ import React from 'react'
 import { indexOf, isEmpty, omit } from 'lodash/fp'
 import cx from 'classnames'
 import { getKeyCode, keyMap } from 'util/textInput'
+import './KeyControlledList.scss'
 
 const { array, func, object, bool, number, string } = PropTypes
 
@@ -106,7 +107,7 @@ export default class KeyControlledList extends React.Component {
   render () {
     const { selectedIndex } = this.state
 
-    const { theme, children, ...props } = this.props
+    const { tagType, theme, children, ...props } = this.props
 
     this.childrenWithRefs = React.Children.map(children,
       (element, i) => {
@@ -119,8 +120,9 @@ export default class KeyControlledList extends React.Component {
           ? React.cloneElement(element, { ref: i, className })
           : element
       })
-    return <div style={{ position: 'relative', zIndex: '5' }}>
-      <ul {...omit(propsToOmit, props)} className={theme.items}>
+    return <div styleName='keyListContainer'>
+      {tagType && tagType === 'communities' && <div><div styleName='keyListLabel'>Locations</div><div className={theme.item}>Public</div><div styleName='keyListLabel'>Communities</div></div>}
+      <ul {...omit(propsToOmit, props)} className={theme.items} styleName='keyList'>
         {this.childrenWithRefs}
       </ul>
     </div>
@@ -177,6 +179,7 @@ export class KeyControlledItemList extends React.Component {
 
     return <KeyControlledList
       theme={theme}
+      tagType={this.props.tagType}
       children={listItems}
       ref='kcl'
       tabChooses

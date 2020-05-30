@@ -79,6 +79,7 @@ export default class CommunitiesSelector extends Component {
         handleAddition={this.handleAddition}
         handleDelete={this.handleDelete}
         readOnly={readOnly}
+        tagType='communities'
         theme={styles}
       />
     )

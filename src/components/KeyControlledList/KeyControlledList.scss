@@ -1,0 +1,26 @@
+.keyListContainer {
+  background: white;
+  border: 1px solid #D1D1D1;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  border-radius: 2px 2px 0 0;
+  // margin: 0;
+  position: relative;
+  z-index: 5;
+}
+
+.keyListLabel {
+  // background: white;
+  // border-top: 1px solid #D1D1D1;
+  // border-left: 1px solid #D1D1D1;
+  // border-right: 1px solid #D1D1D1;
+  // border-radius: 2px;
+  color: #808C9B;
+  font-size: 10px;
+  margin: 0;
+  padding: 10px 8px;
+  text-transform: uppercase;
+}
+
+.keyList {
+  //
+}

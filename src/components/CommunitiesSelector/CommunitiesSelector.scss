@@ -106,23 +106,29 @@
 }
 
 .suggestions ul {
-  margin: 4px -1px;
+  margin: 0 -1px;
   padding: 0;
   list-style: none;
   background: white;
-  border: 1px solid #D1D1D1;
-  border-radius: 2px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid #D1D1D1;
+  border-left: 1px solid #D1D1D1;
+  border-right: 1px solid #D1D1D1;
+  border-radius: 0 0 2px 2px;
+  box-shadow: 0 0 6px -6px rgba(0, 0, 0, 0.2);
 }
 
 .suggestion {
-  /* !empty */
+  align-items: center;
+  display: flex;
+  font-size: 14px;
+  height: 40px;
+  padding: 6px 8px;
 }
 
 .suggestion a {
   color: $color-caribbean-green;
-  border-bottom: 1px solid #ddd;
-  padding: 6px 8px;
+  // border-bottom: 1px solid #ddd;
+  // padding: 6px 8px;
   display: block;
 }
 

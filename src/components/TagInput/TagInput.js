@@ -113,7 +113,7 @@ export default class TagInput extends Component {
   render () {
     let { tags, placeholder } = this.props
 
-    const { suggestions, className, theme, readOnly, maxTags, addLeadingHashtag, renderSuggestion } = this.props
+    const { suggestions, className, theme, readOnly, maxTags, addLeadingHashtag, renderSuggestion, tagType } = this.props
     if (!tags) tags = []
     if (!placeholder) placeholder = 'Type...'
 
@@ -162,6 +162,7 @@ export default class TagInput extends Component {
           <div className={theme.suggestions}>
             <KeyControlledItemList
               items={suggestionsOrError}
+              tagType={tagType}
               renderlistitem={renderSuggestion}
               onChange={maxReached ? this.resetInput : this.select}
               theme={{
