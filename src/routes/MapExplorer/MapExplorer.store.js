@@ -1,15 +1,15 @@
 import { get } from 'lodash/fp'
-import { createSelector as ormCreateSelector } from 'redux-orm'
+import { createSelector } from 'reselect'
 import bboxPolygon from '@turf/bbox-polygon'
 import booleanWithin from '@turf/boolean-within'
 import { point } from '@turf/helpers'
 import { FETCH_POSTS_MAP } from 'store/constants'
-import orm from 'store/models/index'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 
 export const MODULE_NAME = 'MapExplorer'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
+export const STORE_SEARCH = `${MODULE_NAME}/STORE_SEARCH`
 
 // actions
 export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search, filter, topic, boundingBox }) {
@@ -30,6 +30,7 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search
   } else {
     throw new Error(`FETCH_POSTS_MAP with subject=${subject} is not implemented`)
   }
+
   return {
     type: FETCH_POSTS_MAP,
     graphql: {
@@ -104,16 +105,27 @@ const allCommunitiesQuery = `query (
   ${postsQueryFragment}
 }`
 
-export function storeFetchPostsParam (props) {
+export function storeFetchPostsParam (params) {
   return {
     type: STORE_FETCH_POSTS_PARAM,
-    payload: props
+    payload: params
+  }
+}
+
+export function storeSearch (search) {
+  return {
+    type: STORE_SEARCH,
+    payload: search
   }
 }
 
 // selectors
 export const boundingBoxSelector = (state) => {
   return state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null
+}
+
+export const searchTextSelector = (state) => {
+  return state.MapExplorer.search
 }
 
 const getPostResults = makeGetQueryResults(FETCH_POSTS_MAP)
@@ -123,12 +135,10 @@ export const getPosts = makeQueryResultsModelSelector(
   'Post'
 )
 
-export const getPostsByBoundingBox = ormCreateSelector(
-  orm,
-  state => state.orm,
-  state => boundingBoxSelector(state),
+export const getPostsByBoundingBox = createSelector(
   getPosts,
-  (session, boundingBox, posts) => {
+  boundingBoxSelector,
+  (posts, boundingBox) => {
     if (!boundingBox) {
       return posts
     }
@@ -145,14 +155,37 @@ export const getPostsByBoundingBox = ormCreateSelector(
   }
 )
 
+export const getFilteredPosts = createSelector(
+  getPostsByBoundingBox,
+  searchTextSelector,
+  (posts, searchText) => {
+    return posts.filter(post => post.title.toLowerCase().includes(searchText) ||
+                                post.details.toLowerCase().includes(searchText) ||
+                                post.topics.toModelArray().find(topic => topic.name === searchText))
+  }
+)
+
 // export const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
 
 // reducer
-export default function (state = {}, action) {
+const DEFAULT_STATE = {
+  search: '',
+  fetchPostsParam: {
+    boundingBox: null
+  }
+}
+
+export default function (state = DEFAULT_STATE, action) {
   if (action.type === STORE_FETCH_POSTS_PARAM) {
     return {
       ...state,
       fetchPostsParam: action.payload
+    }
+  }
+  if (action.type === STORE_SEARCH) {
+    return {
+      ...state,
+      search: action.payload
     }
   }
   return state

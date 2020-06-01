@@ -67,15 +67,19 @@ export default class MapExplorer extends React.Component {
     this.updateBoundingBoxQuery(bounds)
   }
 
-  updateBoundingBoxQuery = debounce((bounds) => {
-    this.setState({ boundingBox: bounds })
-    this.props.storeFetchPostsParam(bounds)
+  updateBoundingBoxQuery = debounce((boundingBox) => {
+    this.setState({ boundingBox })
+    this.props.storeFetchPostsParam({ boundingBox })
     this.props.fetchPosts()
   }, 150)
 
   onMapHover = (info) => this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y })
 
   onMapClick = (info) => { this.setState({ selectedObject: info.object }); this.props.showDetails(info.object.id) }
+
+  onSearchMap = (input) => {
+    this.props.storeSearch(input.value)
+  }
 
   _renderTooltip = () => {
     const { hoveredObject, pointerX, pointerY } = this.state || {}
@@ -113,7 +117,7 @@ export default class MapExplorer extends React.Component {
     return <div styleName='MapExplorer-container'>
       <Map layers={[mapLayer]} zoom={zoom} onViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}><Icon name='Stack' green={showDrawer} styleName='icon' /></button>
-      { showDrawer ? <MapDrawer posts={posts} queryResults={querystringParams} routeParams={routeParams} /> : ''}
+      { showDrawer ? <MapDrawer posts={posts} queryResults={querystringParams} routeParams={routeParams} onSearch={this.onSearchMap} /> : ''}
       { pending && <Loading /> }
     </div>
   }
