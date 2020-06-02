@@ -28,7 +28,8 @@
   list-style: none;
   padding: 0 0 0 46px;
   line-height: 27px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   color: $color-rhino-60;
 }
 
