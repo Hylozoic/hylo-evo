@@ -21,6 +21,7 @@ type Community {
   id: String
   name: String
   slug: String
+  memberCount: Int
   posts: [Post]
 }
 

@@ -17,6 +17,7 @@ type Community {
   id: ID
   name: String
   slug: String
+  memberCount: Int
   posts: PostQuerySet
 }
 

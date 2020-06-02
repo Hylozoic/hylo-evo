@@ -359,6 +359,8 @@ export default class PostEditor extends React.Component {
       canModerate, myModeratedCommunities, isProject, isEvent
     } = this.props
 
+    console.log(communityOptions)
+
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const hasLocation = ['event', 'offer', 'request', 'resource'].includes(type)
     const showPostTypes = !isProject && !isEvent

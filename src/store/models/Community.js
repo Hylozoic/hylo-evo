@@ -24,14 +24,15 @@ Community.fields = {
     to: 'Location',
     as: 'locationObject'
   }),
-  name: attr(),
   members: many('Person'),
+  memberCount: attr(),
   moderators: many({
     to: 'Person',
     relatedName: 'moderatedCommunities',
     through: 'CommunityModerator',
     throughFields: [ 'community', 'moderator' ]
   }),
+  name: attr(),
   network: fk('Network'),
   posts: many('Post'),
   postCount: attr(),

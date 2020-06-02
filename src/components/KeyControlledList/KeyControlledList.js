@@ -102,6 +102,10 @@ export default class KeyControlledList extends React.Component {
     this.props.onChange(element, node, event)
   }
 
+  selectPublic = () => {
+    console.log('post in public')
+  }
+
   // FIXME use more standard props e.g. {label, value} instead of {id, name}, or
   // provide an API for configuring them
   render () {
@@ -121,13 +125,17 @@ export default class KeyControlledList extends React.Component {
           : element
       })
     return <div styleName='keyListContainer'>
-      {tagType && tagType === 'communities' && <div><div styleName='keyListLabel'>Locations</div><div className={theme.item}>Public</div><div styleName='keyListLabel'>Communities</div></div>}
+      {tagType && tagType === 'communities' && <div><div styleName='keyListLabel'>Locations</div>
+        <div styleName='keyListPublic' onClick={this.selectPublic}>Public</div>
+        <div styleName='keyListLabel'>Communities</div></div>}
       <ul {...omit(propsToOmit, props)} className={theme.items} styleName='keyList'>
         {this.childrenWithRefs}
       </ul>
     </div>
   }
 }
+
+// <img src='/star-icon.svg' height='16px' width='16px' />
 
 export class KeyControlledItemList extends React.Component {
   static propTypes = {
@@ -168,6 +176,8 @@ export class KeyControlledItemList extends React.Component {
   render () {
     const { items, selected, theme } = this.props
     const selectedIndex = indexOf(selected, items)
+
+    console.log(items)
 
     const renderListItem = this.props.renderListItem
       ? item => this.props.renderListItem({ item, handleChoice: this.change })

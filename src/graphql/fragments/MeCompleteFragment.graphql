@@ -59,6 +59,7 @@ fragment MeCompleteFragment on Me {
       id
       name
       slug
+      memberCount
       avatarUrl
       network {
         id
@@ -70,6 +71,7 @@ fragment MeCompleteFragment on Me {
             id
             name
             slug
+            memberCount
             avatarUrl
             network {
               id
