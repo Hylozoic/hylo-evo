@@ -3,7 +3,6 @@ import getMe from '../selectors/getMe'
 import getMixpanel from '../selectors/getMixpanel'
 import getIntercom from '../selectors/getIntercom'
 import { HOLOCHAIN_ACTIVE } from 'util/holochain'
-import { isDev } from 'config'
 
 export default function userFetchedMiddleware ({ dispatch, getState }) {
   return next => action => {
