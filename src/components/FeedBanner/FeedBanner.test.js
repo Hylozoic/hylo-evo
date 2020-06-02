@@ -14,7 +14,7 @@ const community = {
   bannerUrl: 'banner.png',
   avatarUrl: 'avatar.png',
   name: 'Spacebase',
-  locationText: 'space, duh'
+  location: 'space, duh'
 }
 
 it('renders with a community', () => {

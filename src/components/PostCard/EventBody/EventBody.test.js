@@ -8,7 +8,7 @@ describe('EventBody', () => {
     const event = {
       startTime: moment(1551908483315),
       endTime: moment(1551919283315),
-      locationText: 'Oakland'
+      location: 'Oakland'
     }
 
     const props = {

@@ -15,7 +15,7 @@ export default function FeedBanner ({
   type,
   currentUserHasMemberships
 }) {
-  let bannerUrl, avatarUrl, name, locationText, subtitle
+  let bannerUrl, avatarUrl, name, location, subtitle
 
   if (all) {
     name = 'All Communities'
@@ -25,7 +25,7 @@ export default function FeedBanner ({
   } else if (!community) {
     return null
   } else {
-    ({ bannerUrl, avatarUrl, name, locationText } = community)
+    ({ bannerUrl, avatarUrl, name, location } = community)
   }
 
   return <div styleName={cx('banner', { 'all-communities': all })}>
@@ -35,9 +35,9 @@ export default function FeedBanner ({
         <div styleName={cx('logo', { 'all-logo': all })} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
         <div styleName='header-text'>
           <span styleName='header-name'>{name}</span>
-          {locationText && <div styleName='header-subtitle'>
+          {location && <div styleName='header-subtitle'>
             <Icon name='Location' styleName='header-icon' />
-            {locationText}
+            {location}
           </div>}
           {subtitle && <div styleName='header-subtitle'>
             {subtitle}

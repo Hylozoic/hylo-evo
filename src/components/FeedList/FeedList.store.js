@@ -63,7 +63,7 @@ const communityQuery = `query (
     id
     slug
     name
-    location {
+    locationObject {
       center {
         lat
         lng

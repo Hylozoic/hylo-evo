@@ -3,12 +3,11 @@ import getMe from '../selectors/getMe'
 import getMixpanel from '../selectors/getMixpanel'
 import getIntercom from '../selectors/getIntercom'
 import { HOLOCHAIN_ACTIVE } from 'util/holochain'
-import { isDev } from 'config'
 
 export default function userFetchedMiddleware ({ dispatch, getState }) {
   return next => action => {
     // * Don't use Intercom or Mixpanel for Holochain or on dev
-    if (HOLOCHAIN_ACTIVE || isDev) next(action)
+    if (HOLOCHAIN_ACTIVE) return next(action)
 
     const wasMe = getMe(getState())
     const result = next(action)
@@ -30,7 +29,7 @@ export function identifyMixpanelUser (state) {
   mixpanel.people.set({
     '$name': user.name,
     '$email': user.email,
-    '$location': user.locationText
+    '$location': user.location
   })
 }
 
