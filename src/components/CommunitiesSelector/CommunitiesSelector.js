@@ -67,7 +67,7 @@ export default class CommunitiesSelector extends Component {
   }
 
   render () {
-    const { selected, placeholder, readOnly } = this.props
+    const { selected, placeholder, readOnly, togglePublic } = this.props
     const { suggestions } = this.state
 
     return (
@@ -78,6 +78,7 @@ export default class CommunitiesSelector extends Component {
         handleInputChange={this.handleInputChange}
         handleAddition={this.handleAddition}
         handleDelete={this.handleDelete}
+        togglePublic={togglePublic}
         readOnly={readOnly}
         tagType='communities'
         theme={styles}

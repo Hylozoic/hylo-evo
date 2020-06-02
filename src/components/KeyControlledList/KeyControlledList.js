@@ -102,16 +102,12 @@ export default class KeyControlledList extends React.Component {
     this.props.onChange(element, node, event)
   }
 
-  selectPublic = () => {
-    console.log('post in public')
-  }
-
   // FIXME use more standard props e.g. {label, value} instead of {id, name}, or
   // provide an API for configuring them
   render () {
     const { selectedIndex } = this.state
 
-    const { tagType, theme, children, ...props } = this.props
+    const { tagType, togglePublic, theme, children, ...props } = this.props
 
     this.childrenWithRefs = React.Children.map(children,
       (element, i) => {
@@ -126,7 +122,7 @@ export default class KeyControlledList extends React.Component {
       })
     return <div styleName='keyListContainer'>
       {tagType && tagType === 'communities' && <div><div styleName='keyListLabel'>Locations</div>
-        <div styleName='keyListPublic' onClick={this.selectPublic}>Public</div>
+        <div styleName='keyListPublic' onClick={togglePublic}>Public</div>
         <div styleName='keyListLabel'>Communities</div></div>}
       <ul {...omit(propsToOmit, props)} className={theme.items} styleName='keyList'>
         {this.childrenWithRefs}
@@ -174,7 +170,7 @@ export class KeyControlledItemList extends React.Component {
   // FIXME use more standard props e.g. {label, value} instead of {id, name}, or
   // provide an API for configuring them
   render () {
-    const { items, selected, theme } = this.props
+    const { items, selected, theme, togglePublic, tagType } = this.props
     const selectedIndex = indexOf(selected, items)
 
     console.log(items)
@@ -189,12 +185,13 @@ export class KeyControlledItemList extends React.Component {
 
     return <KeyControlledList
       theme={theme}
-      tagType={this.props.tagType}
+      tagType={tagType}
       children={listItems}
       ref='kcl'
       tabChooses
       selectedIndex={selectedIndex}
       onChange={this.onChangeExtractingItem}
+      togglePublic={tagType === 'communities' && togglePublic}
       {...omit('onChange', this.props)} />
   }
 }

@@ -288,6 +288,14 @@ export default class PostEditor extends React.Component {
     })
   }
 
+  togglePublic = () => {
+    console.log('fire togglePublic in PostEditor')
+    const { isPublic } = this.state.post
+    this.setState({
+      post: { ...this.state.post, isPublic: !isPublic }
+    })
+  }
+
   updateProjectMembers = members => {
     this.setState({
       post: { ...this.state.post, members }
@@ -320,14 +328,14 @@ export default class PostEditor extends React.Component {
       editing, createPost, createProject, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected, isProject
     } = this.props
     const {
-      id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, location, locationId
+      id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, location, locationId, isPublic
     } = this.state.post
     const details = this.editor.current.getContentHTML()
     const topicNames = this.topicSelector.current.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId, public: isPublic
     }
     const saveFunc = editing ? updatePost : isProject ? createProject : createPost
     setAnnouncement(false)
@@ -358,8 +366,6 @@ export default class PostEditor extends React.Component {
       showImages, addFile, showFiles, setAnnouncement, announcementSelected,
       canModerate, myModeratedCommunities, isProject, isEvent
     } = this.props
-
-    console.log(communityOptions)
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const hasLocation = ['event', 'offer', 'request', 'resource'].includes(type)
@@ -481,6 +487,7 @@ export default class PostEditor extends React.Component {
               options={communityOptions}
               selected={communities}
               onChange={this.setSelectedCommunities}
+              togglePublic={this.togglePublic}
               readOnly={loading}
               ref={this.communitiesSelector}
             />
