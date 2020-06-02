@@ -161,7 +161,7 @@ export const getFilteredPosts = createSelector(
   (posts, searchText) => {
     return posts.filter(post => post.title.toLowerCase().includes(searchText) ||
                                 post.details.toLowerCase().includes(searchText) ||
-                                post.topics.toModelArray().find(topic => topic.name === searchText))
+                                post.topics.toModelArray().find(topic => topic.name.includes(searchText)))
   }
 )
 
