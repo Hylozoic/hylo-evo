@@ -9,7 +9,8 @@ import './MapExplorer.scss'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import { createScatterplotLayerFromPosts } from 'components/Map/layers/postsScatterplotLayer'
-import { createClusterLayerFromPosts} from '../Map/layers/clusterLayer'
+import { createClusterLayerFromPosts, createIconLayerFromPosts } from 'components/Map/layers/clusterLayer'
+import {iconAtlas} from 'util/assets'
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
@@ -107,12 +108,15 @@ export default class MapExplorer extends React.Component {
     //     use turf.js to find only new bounding box, subtract old one from the new one
     //     could make bounding box larger than viewport
 
-    const mapLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
+    // const mapLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
+    // const mapLayer = createClusterLayerFromPosts({posts, onHover: this.onMapHover, onClick: this.onMapClick})
+    const mapLayer = createIconLayerFromPosts({ posts, onHover: this.onMapHover, onClick: this.onMapClick })
 
     // TODO: filter posts for drawer by bbox using turf.js (also filter posts to show on layer?)
 
     return <div styleName='MapExplorer-container'>
       <Map layers={[mapLayer]} zoom={zoom} onViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
+      {/*<img src={iconAtlas} />*/}
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}><Icon name='Stack' green={showDrawer} styleName='icon' /></button>
       { showDrawer ? <MapDrawer posts={posts} queryResults={querystringParams} routeParams={routeParams} /> : ''}
       { pending && <Loading /> }
