@@ -10,7 +10,7 @@ import { postUrl } from 'util/navigation'
 import {
   fetchPosts,
   storeFetchPostsParam,
-  storeSearch,
+  storeClientFilterParams,
   getFilteredPosts
   // getHasMorePosts
 } from './MapExplorer.store.js'
@@ -73,7 +73,7 @@ export function mapDispatchToProps (dispatch, props) {
     fetchPosts: param => offset => dispatch(fetchPosts({ offset, ...param })),
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, querystringParams))),
     storeFetchPostsParam: param => opts => dispatch(storeFetchPostsParam({ ...param, ...opts })),
-    storeSearch: search => dispatch(storeSearch(search))
+    storeClientFilterParams: params => dispatch(storeClientFilterParams(params))
   }
 }
 

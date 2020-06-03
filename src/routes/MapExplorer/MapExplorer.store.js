@@ -9,7 +9,12 @@ import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reduce
 
 export const MODULE_NAME = 'MapExplorer'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
-export const STORE_SEARCH = `${MODULE_NAME}/STORE_SEARCH`
+export const STORE_CLIENT_FILTER_PARAMS = `${MODULE_NAME}/STORE_CLIENT_FILTER_PARAMS`
+
+export const SORT_OPTIONS = [
+  { id: 'updated', label: 'Latest' },
+  { id: 'votes', label: 'Popular' }
+]
 
 // actions
 export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search, filter, topic, boundingBox }) {
@@ -112,10 +117,10 @@ export function storeFetchPostsParam (params) {
   }
 }
 
-export function storeSearch (search) {
+export function storeClientFilterParams (params) {
   return {
-    type: STORE_SEARCH,
-    payload: search
+    type: STORE_CLIENT_FILTER_PARAMS,
+    payload: params
   }
 }
 
@@ -125,7 +130,11 @@ export const boundingBoxSelector = (state) => {
 }
 
 export const searchTextSelector = (state) => {
-  return state.MapExplorer.search
+  return state.MapExplorer.clientFilterParams.search
+}
+
+export const sortBySelector = (state) => {
+  return state.MapExplorer.clientFilterParams.sortBy
 }
 
 const getPostResults = makeGetQueryResults(FETCH_POSTS_MAP)
@@ -158,10 +167,12 @@ export const getPostsByBoundingBox = createSelector(
 export const getFilteredPosts = createSelector(
   getPostsByBoundingBox,
   searchTextSelector,
-  (posts, searchText) => {
+  sortBySelector,
+  (posts, searchText, sortBy) => {
     return posts.filter(post => post.title.toLowerCase().includes(searchText) ||
                                 post.details.toLowerCase().includes(searchText) ||
-                                post.topics.toModelArray().find(topic => topic.name.includes(searchText)))
+                                post.topics.toModelArray().find(topic => topic.name.includes(searchText))
+    ).sort((a, b) => sortBy === 'votes' ? b.votesTotal - a.votesTotal : b.createdAt - a.createdAt )
   }
 )
 
@@ -169,7 +180,10 @@ export const getFilteredPosts = createSelector(
 
 // reducer
 const DEFAULT_STATE = {
-  search: '',
+  clientFilterParams: {
+    search: '',
+    sortBy: SORT_OPTIONS[0].id
+  },
   fetchPostsParam: {
     boundingBox: null
   }
@@ -182,10 +196,10 @@ export default function (state = DEFAULT_STATE, action) {
       fetchPostsParam: action.payload
     }
   }
-  if (action.type === STORE_SEARCH) {
+  if (action.type === STORE_CLIENT_FILTER_PARAMS) {
     return {
       ...state,
-      search: action.payload
+      clientFilterParams: { ...state.clientFilterParams, ...action.payload }
     }
   }
   return state
