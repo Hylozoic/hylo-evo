@@ -2,6 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import Map from 'components/Map'
 import { createPostsScatterplotLayer } from './layers/postsScatterplotLayer'
+import { createDemoIconLayer } from './layers/demoIconLayer'
 
 let offersAndAsks = [
   { type: 'request', summary: 'Need help Sunday', coordinates: [37.3615593, -122.0553238], hex: '8b283470d921fff' },
@@ -17,7 +18,7 @@ let offersAndAsks = [
   { type: 'request', summary: 'Need help Saturday', coordinates: [37.8255693, -122.2253638], hex: '8b283470da66fff' }
 ]
 
-function createH3Layer (zoom = 11) {
+function createH3Layer () {
   return [createPostsScatterplotLayer(offersAndAsks)]
 }
 
@@ -25,3 +26,8 @@ storiesOf('Map', module)
   .add('Empty map', () => <Map />)
   .add('Update the parent', () => <Map shareViewportUpdate={(value) => console.log(value, 'value that is shared with the parent component')} />)
   .add('H3 layer demo', () => <Map layers={createH3Layer()} shareViewportUpdate={(value) => console.log(value)} />)
+  .add('Icon layer demo', () => (
+    <div style={{ height: '800px' }}>
+      <Map zoom={3} layers={createDemoIconLayer()} />
+    </div>
+  ))
