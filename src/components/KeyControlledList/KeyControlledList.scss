@@ -33,3 +33,11 @@
 .keyList {
   //
 }
+
+.keyListMemberCount {
+  background: url('/member-icon.svg') left top no-repeat;
+  color: $color-rhino-50;
+  font-size: 12px;
+  margin: 6px 0;
+  padding-left: 15px;
+}

@@ -1,0 +1,31 @@
+.publicToggleContainer {
+  background: url('/public-icon-gray.svg') 20px center no-repeat;
+  background-color: $color-rhino-10;
+  color: $color-rhino-50;
+  height: 33px;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  font-size: 12px;
+  padding: $space-5x;
+}
+
+.postIsPublic {
+  background: url('/public-icon.svg') 20px center no-repeat;
+  background-color: $color-caribbean-green-20;
+  color: $color-caribbean-green;
+}
+
+.publicToggle {
+  padding-left: 30px;
+  align-items: center;
+  display: flex;
+}
+
+.publicGuidance {
+  margin-left: 10px;
+}
+
+.publicState {
+  text-transform: uppercase;
+}

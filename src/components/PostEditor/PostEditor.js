@@ -23,6 +23,7 @@ import LinkPreview from './LinkPreview'
 import DatePicker from 'components/DatePicker'
 import ChangeImageButton from 'components/ChangeImageButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
+import PublicToggle from 'components/PublicToggle'
 import styles from './PostEditor.scss'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 
@@ -335,7 +336,7 @@ export default class PostEditor extends React.Component {
     const memberIds = members && members.map(m => m.id)
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId, public: isPublic
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId, isPublic
     }
     const saveFunc = editing ? updatePost : isProject ? createProject : createPost
     setAnnouncement(false)
@@ -433,16 +434,28 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>}
-        {isProject && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) && <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Accept Contributions</div>
-          {hasStripeAccount && <div styleName={cx('footerSection-communities', 'accept-contributions')}>
-            <Switch value={acceptContributions} onClick={this.toggleContributions} styleName='accept-contributions-switch' />
-            {!acceptContributions && <div styleName='accept-contributions-help'>If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.</div>}
-          </div>}
-          {!hasStripeAccount && <div styleName={cx('footerSection-communities', 'accept-contributions-help')}>
-            To accept financial contributions for this project, you have to connect a Stripe account. Go to <a href='/settings/payment'>Settings</a> to set it up. (Remember to save your changes before leaving this form)
-          </div>}
-        </div>}
+        <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Topics</div>
+          <div styleName='footerSection-communities'>
+            <TopicSelector
+              selectedTopics={topics}
+              detailsTopics={detailsTopics}
+              ref={this.topicSelector} />
+          </div>
+        </div>
+        <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Post in</div>
+          <div styleName='footerSection-communities'>
+            <CommunitiesSelector
+              options={communityOptions}
+              selected={communities}
+              onChange={this.setSelectedCommunities}
+              readOnly={loading}
+              ref={this.communitiesSelector}
+            />
+          </div>
+        </div>
+        <PublicToggle togglePublic={this.togglePublic} isPublic={post.isPublic ? post.isPublic : false} />
         {canHaveTimes && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
         {canHaveTimes && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Timeframe</div>
@@ -471,28 +484,16 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>}
-        <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Topics</div>
-          <div styleName='footerSection-communities'>
-            <TopicSelector
-              selectedTopics={topics}
-              detailsTopics={detailsTopics}
-              ref={this.topicSelector} />
-          </div>
-        </div>
-        <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Post in</div>
-          <div styleName='footerSection-communities'>
-            <CommunitiesSelector
-              options={communityOptions}
-              selected={communities}
-              onChange={this.setSelectedCommunities}
-              togglePublic={this.togglePublic}
-              readOnly={loading}
-              ref={this.communitiesSelector}
-            />
-          </div>
-        </div>
+        {isProject && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) && <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Accept Contributions</div>
+          {hasStripeAccount && <div styleName={cx('footerSection-communities', 'accept-contributions')}>
+            <Switch value={acceptContributions} onClick={this.toggleContributions} styleName='accept-contributions-switch' />
+            {!acceptContributions && <div styleName='accept-contributions-help'>If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.</div>}
+          </div>}
+          {!hasStripeAccount && <div styleName={cx('footerSection-communities', 'accept-contributions-help')}>
+            To accept financial contributions for this project, you have to connect a Stripe account. Go to <a href='/settings/payment'>Settings</a> to set it up. (Remember to save your changes before leaving this form)
+          </div>}
+        </div>}
         <ActionsBar
           id={id}
           addImage={addImage}

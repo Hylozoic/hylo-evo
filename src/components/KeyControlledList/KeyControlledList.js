@@ -120,10 +120,9 @@ export default class KeyControlledList extends React.Component {
           ? React.cloneElement(element, { ref: i, className })
           : element
       })
+
     return <div styleName='keyListContainer'>
-      {tagType && tagType === 'communities' && <div><div styleName='keyListLabel'>Locations</div>
-        <div styleName='keyListPublic' onClick={togglePublic}>Public</div>
-        <div styleName='keyListLabel'>Communities</div></div>}
+      {tagType && tagType === 'communities' && <div styleName='keyListLabel'>Communities</div>}
       <ul {...omit(propsToOmit, props)} className={theme.items} styleName='keyList'>
         {this.childrenWithRefs}
       </ul>
@@ -170,15 +169,16 @@ export class KeyControlledItemList extends React.Component {
   // FIXME use more standard props e.g. {label, value} instead of {id, name}, or
   // provide an API for configuring them
   render () {
-    const { items, selected, theme, togglePublic, tagType } = this.props
+    const { items, selected, theme, tagType } = this.props
     const selectedIndex = indexOf(selected, items)
-
-    console.log(items)
 
     const renderListItem = this.props.renderListItem
       ? item => this.props.renderListItem({ item, handleChoice: this.change })
       : item => <li className={theme.item} key={item.id || 'blank'}>
-        <a onClick={event => this.change(item, event)}>{item.name}</a>
+        <a onClick={event => this.change(item, event)}>
+          <div>{item.name}</div>
+          {tagType && tagType === 'communities' && <div styleName='keyListMemberCount'>{item.memberCount} {item.memberCount !== 1 ? 'Members' : 'Member'}</div>}
+        </a>
       </li>
 
     const listItems = items.map(renderListItem)
@@ -191,7 +191,6 @@ export class KeyControlledItemList extends React.Component {
       tabChooses
       selectedIndex={selectedIndex}
       onChange={this.onChangeExtractingItem}
-      togglePublic={tagType === 'communities' && togglePublic}
       {...omit('onChange', this.props)} />
   }
 }
