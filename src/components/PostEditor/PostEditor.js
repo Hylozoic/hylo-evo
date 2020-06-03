@@ -290,7 +290,6 @@ export default class PostEditor extends React.Component {
   }
 
   togglePublic = () => {
-    console.log('fire togglePublic in PostEditor')
     const { isPublic } = this.state.post
     this.setState({
       post: { ...this.state.post, isPublic: !isPublic }

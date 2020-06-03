@@ -23,7 +23,8 @@ export default function createPost (postParams) {
     startTime,
     endTime,
     location,
-    locationId
+    locationId,
+    isPublic
   } = postParams
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
@@ -47,7 +48,8 @@ export default function createPost (postParams) {
         startTime: startTime && startTime.valueOf(),
         endTime: endTime && endTime.valueOf(),
         location,
-        locationId
+        locationId,
+        isPublic
       }
     },
     meta: {
