@@ -18,21 +18,27 @@ export const ACTION_DONATION_TO = 'donation to'
 export const ACTION_DONATION_FROM = 'donation from'
 export const ACTION_EVENT_INVITATION = 'eventInvitation'
 export function urlForNotification ({ activity: { action, post, comment, community } }) {
+  const communitySlug = get('slug', community)
+    // 2020-06-03 - LEJ
+    // Some notifications (i.e. new comment and comment mention)
+    // didn't have a community available on the activity object,
+    // so pulling from the post object for those cases.
+    // Once all legacy notifications are purged, or migrated,
+    // this line can be removed.
+    || get('0.slug', post.communities.toRefArray())
+
   switch (action) {
-    case ACTION_NEW_COMMENT:
-    case ACTION_COMMENT_MENTION:
-      return commentUrl(post.id, comment.id, {
-        communitySlug: get('0.slug', post.communities.toRefArray())
-      })
     case ACTION_TAG:
     case ACTION_MENTION:
-      return postUrl(post.id, { communitySlug: community.slug })
+    case ACTION_ANNOUNCEMENT:
+      return postUrl(post.id, { communitySlug })
+    case ACTION_NEW_COMMENT:
+    case ACTION_COMMENT_MENTION:
+      return commentUrl(post.id, comment.id, { communitySlug })
     case ACTION_JOIN_REQUEST:
       return communitySettingsUrl(community.slug)
     case ACTION_APPROVED_JOIN_REQUEST:
-      return communityUrl(community.slug)
-    case ACTION_ANNOUNCEMENT:
-      return postUrl(post.id, { communitySlug: community.slug })
+      return communityUrl(communitySlug)
   }
 }
 
