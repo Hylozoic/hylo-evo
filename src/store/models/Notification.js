@@ -18,14 +18,14 @@ export const ACTION_DONATION_TO = 'donation to'
 export const ACTION_DONATION_FROM = 'donation from'
 export const ACTION_EVENT_INVITATION = 'eventInvitation'
 export function urlForNotification ({ activity: { action, post, comment, community } }) {
-  const communitySlug = get('slug', community)
+  const communitySlug = get('slug', community) ||
     // 2020-06-03 - LEJ
     // Some notifications (i.e. new comment and comment mention)
     // didn't have a community available on the activity object,
     // so pulling from the post object for those cases.
     // Once all legacy notifications are purged, or migrated,
     // this line can be removed.
-    || get('0.slug', post.communities.toRefArray())
+    get('0.slug', post.communities.toRefArray())
 
   switch (action) {
     case ACTION_TAG:
