@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import cx from 'classnames'
 import { get, some } from 'lodash/fp'
+import qs from 'querystring'
 import Intercom from 'react-intercom'
 import config, { isTest } from 'config'
 import AddLocation from 'routes/Signup/AddLocation'
@@ -93,6 +94,7 @@ export default class PrimaryLayout extends Component {
       if (!community && !communityPending) return <NotFound />
     }
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
+    const queryParams = qs.parse(location.search.substring(1))
     const hasDetail = some(
       ({ path }) => matchPath(location.pathname, { path, exact: true }),
       postDetailRoutes
@@ -103,7 +105,7 @@ export default class PrimaryLayout extends Component {
       <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
       <TopNav styleName='top' onClick={closeDrawer} {...{ community, network, currentUser, showLogoBadge }} />
       <div styleName={cx('main', { 'map-view': isMapViewPath(location.pathname) })} onClick={closeDrawer}>
-        <Navigation collapsed={hasDetail} styleName={cx('left', { 'map-view': isMapViewPath(location.pathname) })} showTopics={showTopics} currentUser={currentUser} />
+        <Navigation collapsed={hasDetail || queryParams['showDrawer'] === 'true'} styleName={cx('left', { 'map-view': isMapViewPath(location.pathname) })} showTopics={showTopics} currentUser={currentUser} />
         <div styleName={cx('center', { 'map-view': isMapViewPath(location.pathname) })} id={CENTER_COLUMN_ID}>
           <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
           <RedirectToCommunity path='/' currentUser={currentUser} />

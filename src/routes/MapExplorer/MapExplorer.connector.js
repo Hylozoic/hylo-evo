@@ -5,7 +5,7 @@ import { FETCH_POSTS_MAP } from 'store/constants'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import presentPost from 'store/presenters/presentPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import { postUrl } from 'util/navigation'
+import { addQuerystringToPath, baseUrl, postUrl } from 'util/navigation'
 
 import {
   fetchPosts,
@@ -72,6 +72,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchPosts: param => offset => dispatch(fetchPosts({ offset, ...param })),
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, querystringParams))),
+    toggleDrawer: (visible) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, showDrawer: visible }))),
     storeFetchPostsParam: param => opts => dispatch(storeFetchPostsParam({ ...param, ...opts })),
     storeClientFilterParams: params => dispatch(storeClientFilterParams(params))
   }

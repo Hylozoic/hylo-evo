@@ -96,6 +96,7 @@ export default class MapExplorer extends React.Component {
 
   toggleDrawer = (e) => {
     this.setState({ showDrawer: !this.state.showDrawer })
+    this.props.toggleDrawer(!this.state.showDrawer)
   }
 
   render () {
@@ -121,7 +122,7 @@ export default class MapExplorer extends React.Component {
     return <div styleName='MapExplorer-container'>
       <Map layers={[mapLayer]} zoom={zoom} onViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}><Icon name='Stack' green={showDrawer} styleName='icon' /></button>
-      { showDrawer ? <MapDrawer posts={posts} queryResults={querystringParams} routeParams={routeParams} onSearch={this.onSearchMap} onChangeSort={this.onChangeSort} /> : ''}
+      { showDrawer ? <MapDrawer posts={posts} querystringParams={querystringParams} routeParams={routeParams} onSearch={this.onSearchMap} onChangeSort={this.onChangeSort} /> : ''}
       { pending && <Loading /> }
     </div>
   }

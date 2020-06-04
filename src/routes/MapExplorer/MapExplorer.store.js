@@ -169,10 +169,11 @@ export const getFilteredPosts = createSelector(
   searchTextSelector,
   sortBySelector,
   (posts, searchText, sortBy) => {
-    return posts.filter(post => post.title.toLowerCase().includes(searchText) ||
-                                post.details.toLowerCase().includes(searchText) ||
-                                post.topics.toModelArray().find(topic => topic.name.includes(searchText))
-    ).sort((a, b) => sortBy === 'votes' ? b.votesTotal - a.votesTotal : b.createdAt - a.createdAt )
+    return posts.filter(post => {
+      return post.title.toLowerCase().includes(searchText) ||
+             post.details.toLowerCase().includes(searchText) ||
+             post.topics.toModelArray().find(topic => topic.name.includes(searchText))
+    }).sort((a, b) => sortBy === 'votes' ? b.votesTotal - a.votesTotal : b.createdAt - a.createdAt)
   }
 )
 
