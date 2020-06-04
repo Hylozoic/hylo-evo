@@ -6,7 +6,9 @@ export default function presentPost (post, communityId) {
 
   let communities = post.communities.toRefArray()
   if (post.isPublic) {
-    communities.unshift({ name: 'Public', id: 'public', avatarUrl: '/public-icon.svg', slug: '/all' })
+    // TODO Update slug for public context when Public Communities and Posts context is available
+    // for now, this links to the user's All Communities view
+    communities.unshift({ name: 'Public', id: 'public', avatarUrl: '/public-icon.svg', slug: '' })
   }
 
   return {
