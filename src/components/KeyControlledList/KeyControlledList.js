@@ -107,7 +107,7 @@ export default class KeyControlledList extends React.Component {
   render () {
     const { selectedIndex } = this.state
 
-    const { tagType, togglePublic, theme, children, ...props } = this.props
+    const { tagType, theme, children, ...props } = this.props
 
     this.childrenWithRefs = React.Children.map(children,
       (element, i) => {
@@ -129,8 +129,6 @@ export default class KeyControlledList extends React.Component {
     </div>
   }
 }
-
-// <img src='/star-icon.svg' height='16px' width='16px' />
 
 export class KeyControlledItemList extends React.Component {
   static propTypes = {
