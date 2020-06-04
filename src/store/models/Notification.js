@@ -1,4 +1,5 @@
 import { attr, fk, Model } from 'redux-orm'
+import { get } from 'lodash/fp'
 import {
   commentUrl,
   postUrl,
@@ -20,16 +21,18 @@ export function urlForNotification ({ activity: { action, post, comment, communi
   switch (action) {
     case ACTION_NEW_COMMENT:
     case ACTION_COMMENT_MENTION:
-      return commentUrl(post.id, comment.id)
+      return commentUrl(post.id, comment.id, {
+        communitySlug: get('0.slug', post.communities.toRefArray())
+      })
     case ACTION_TAG:
     case ACTION_MENTION:
-      return postUrl(post.id)
+      return postUrl(post.id, { communitySlug: community.slug })
     case ACTION_JOIN_REQUEST:
       return communitySettingsUrl(community.slug)
     case ACTION_APPROVED_JOIN_REQUEST:
       return communityUrl(community.slug)
     case ACTION_ANNOUNCEMENT:
-      return postUrl(post.id)
+      return postUrl(post.id, { communitySlug: community.slug })
   }
 }
 
