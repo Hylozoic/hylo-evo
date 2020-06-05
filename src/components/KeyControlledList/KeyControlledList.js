@@ -3,6 +3,7 @@ import React from 'react'
 import { indexOf, isEmpty, omit } from 'lodash/fp'
 import cx from 'classnames'
 import { getKeyCode, keyMap } from 'util/textInput'
+import Icon from 'components/Icon'
 import './KeyControlledList.scss'
 
 const { array, func, object, bool, number, string } = PropTypes
@@ -177,7 +178,7 @@ export class KeyControlledItemList extends React.Component {
       : item => <li className={theme.item} key={item.id || 'blank'}>
         <a onClick={event => this.change(item, event)}>
           <div>{item.name}</div>
-          {tagType && tagType === 'communities' && <div styleName='keyListMemberCount'>{item.memberCount} {item.memberCount !== 1 ? 'Members' : 'Member'}</div>}
+          {tagType && tagType === 'communities' && <div styleName='keyListMemberCount'><Icon name='Members' styleName='keyListMemberIcon' /> {item.memberCount} {item.memberCount !== 1 ? 'Members' : 'Member'}</div>}
         </a>
       </li>
 

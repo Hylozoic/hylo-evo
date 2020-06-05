@@ -1,5 +1,4 @@
 .publicToggleContainer {
-  background: url('/public-icon-gray.svg') 20px center no-repeat;
   background-color: $color-rhino-10;
   color: $color-rhino-50;
   height: 33px;
@@ -10,10 +9,19 @@
   padding: $space-5x;
 }
 
+.publicToggleIcon {
+  font-size: 14px;
+  padding-right: 10px;
+  color: $color-rhino-50;
+}
+
 .postIsPublic {
-  background: url('/public-icon.svg') 20px center no-repeat;
   background-color: $color-caribbean-green-20;
   color: $color-caribbean-green;
+
+  .publicToggleIcon {
+    color: $color-caribbean-green;
+  }
 }
 
 .publicToggle {

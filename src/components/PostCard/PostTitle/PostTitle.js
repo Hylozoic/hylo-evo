@@ -1,5 +1,6 @@
 import React from 'react'
 import Highlight from 'components/Highlight'
+import Icon from 'components/Icon'
 import './PostTitle.scss'
 
 export default function PostTitle ({
@@ -22,7 +23,7 @@ export default function PostTitle ({
   return <Highlight {...highlightProps}>
     <React.Fragment>
       <div styleName='title' className='hdr-headline'>{title}</div>
-      {location && <div styleName='headerLocation'><span styleName='locationIcon'><img src='/location-pin-stream.svg' /></span>{generalLocation}</div>}
+      {location && <div styleName='headerLocation'><Icon name='Location' styleName='locationIcon' />{generalLocation}</div>}
     </React.Fragment>
   </Highlight>
 }

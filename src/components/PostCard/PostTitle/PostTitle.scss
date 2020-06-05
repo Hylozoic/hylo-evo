@@ -33,14 +33,10 @@
 }
 
 .locationIcon {
+  color: $color-rhino-40;
   margin: 0 3px 0 0;
-
-  img {
-    height: 12px;
-    width: 12px;
-    position: relative;
-    top: -1px;
-  }
+  font-size: 12px;
+  top: 1px;
 }
 
 .file-attachments {

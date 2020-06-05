@@ -35,9 +35,14 @@
 }
 
 .keyListMemberCount {
-  background: url('/member-icon.svg') left top no-repeat;
   color: $color-rhino-50;
   font-size: 12px;
-  margin: 6px 0;
-  padding-left: 15px;
+  margin: 0 0 3px;
+  padding-left: 10px;
+}
+
+.keyListMemberIcon {
+  color: $color-rhino-50;
+  font-size: 18px;
+  top: 2px;
 }
