@@ -8,7 +8,7 @@ import './KeyControlledList.scss'
 
 const { array, func, object, bool, number, string } = PropTypes
 
-const propsToOmit = ['onChange', 'tabChooses', 'spaceChooses', 'selectedIndex', 'items', 'theme']
+const propsToOmit = ['onChange', 'tabChooses', 'spaceChooses', 'selectedIndex', 'items', 'theme', 'tagType', 'renderListItem']
 
 export default class KeyControlledList extends React.Component {
   static propTypes = {

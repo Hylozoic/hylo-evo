@@ -162,7 +162,7 @@ export default class TagInput extends Component {
             <KeyControlledItemList
               items={suggestionsOrError}
               tagType={tagType}
-              renderlistitem={renderSuggestion}
+              renderListItem={renderSuggestion}
               onChange={maxReached ? this.resetInput : this.select}
               theme={{
                 items: theme.suggestions,
