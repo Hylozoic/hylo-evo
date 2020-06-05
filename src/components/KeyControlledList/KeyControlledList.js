@@ -107,6 +107,8 @@ export default class KeyControlledList extends React.Component {
   render () {
     const { selectedIndex } = this.state
 
+    // FIXME To make this more generic, replace tagType with props for headerText and countText,
+    // then check if the item has a .count field to know whether to show a count or not.
     const { tagType, theme, children, ...props } = this.props
 
     this.childrenWithRefs = React.Children.map(children,

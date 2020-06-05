@@ -34,7 +34,7 @@ export default class CommunitiesSelector extends Component {
   findSuggestions = (searchText) => {
     const { options, selected } = this.props
     let newSuggestions
-    if (searchText && searchText > 0) {
+    if (searchText && searchText.trim().length > 0) {
       newSuggestions = differenceBy(options, selected, 'id')
         .filter(o => o.name.match(new RegExp(searchText, 'i')))
       this.setState({ suggestions: newSuggestions })

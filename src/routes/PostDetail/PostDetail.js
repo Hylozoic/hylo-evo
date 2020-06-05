@@ -187,7 +187,7 @@ export default class PostDetail extends Component {
           totalContributions={totalContributions}
           processStripeToken={processStripeToken} />}
       <PostCommunities
-        communities={post.communitiesArray}
+        communities={post.communities}
         slug={routeParams.slug}
         showBottomBorder />
       <div styleName='activity-header' ref={this.setActivityStateFromDOM}>ACTIVITY</div>

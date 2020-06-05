@@ -4,13 +4,6 @@ export default function presentPost (post, communityId) {
     Number(p.community) === Number(communityId)).toRefArray()[0]
   const pinned = postMembership && postMembership.pinned
 
-  let communities = post.communities.toRefArray()
-  if (post.isPublic) {
-    // TODO Update slug for public context when Public Communities and Posts context is available
-    // for now, this links to the user's All Communities view
-    communities.unshift({ name: 'Public', id: 'public', avatarUrl: '/public-icon.svg', slug: '' })
-  }
-
   return {
     ...post.ref,
     creator: post.creator,
@@ -19,7 +12,6 @@ export default function presentPost (post, communityId) {
     isPublic: post.isPublic,
     commenters: post.commenters.toModelArray(),
     communities: post.communities.toModelArray(),
-    communitiesArray: communities,
     fileAttachments: post.attachments.filter(a => a.type === 'file').toModelArray(),
     pinned,
     topics: post.topics.toModelArray(),

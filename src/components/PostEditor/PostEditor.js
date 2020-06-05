@@ -454,7 +454,7 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>
-        <PublicToggle togglePublic={this.togglePublic} isPublic={post.isPublic ? post.isPublic : false} />
+        <PublicToggle togglePublic={this.togglePublic} isPublic={!!post.isPublic} />
         {canHaveTimes && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
         {canHaveTimes && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Timeframe</div>

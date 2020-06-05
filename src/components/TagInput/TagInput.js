@@ -120,7 +120,7 @@ export default class TagInput extends Component {
     const optionalHashtag = addLeadingHashtag ? '#' : ''
 
     const selectedItems = uniqBy('id', tags).map(t =>
-      <li key={t.id} className={theme.selectedTag} styleName='list-item-selected'>
+      <li key={t.id} className={theme.selectedTag}>
         {t.avatarUrl && <RoundImage url={t.avatarUrl} small className={theme.selectedTagImage} />}
         <span className={theme.selectedTagName}>{optionalHashtag}{t.label || t.name}</span>
         <a onClick={!readOnly ? this.remove(t) : undefined} className={theme.selectedTagRemove}>&times;</a>
@@ -136,20 +136,19 @@ export default class TagInput extends Component {
         : [{ name: `no more than ${maxTags} allowed`, isError: true }]
       : suggestions
 
-    return <div className={cx(theme.root, { [theme.readOnly]: readOnly }, className)} styleName='list-outer-container' onClick={this.focus}>
-      <ul className={theme.selected} styleName='list-selected'>
+    return <div className={cx(theme.root, { [theme.readOnly]: readOnly }, className)} onClick={this.focus}>
+      <ul className={theme.selected}>
         {selectedItems}
       </ul>
-      <div className={theme.search} styleName='list-input-container'>
-        <div className={theme.searchInput} styleName='list-inner-container'>
+      <div className={theme.search}>
+        <div className={theme.searchInput}>
           <input
-            className={theme.searchInput}
-            styleName={cx({ 'error': maxReached }, 'list-input')}
+            className={cx(theme.searchInput, { 'error': maxReached })}
             ref={this.input}
             type='text'
             placeholder={placeholder}
             spellCheck={false}
-            onClick={() => { this.handleChange('') }}
+            onFocus={() => { this.handleChange('') }}
             onBlur={() => {
               this.input.current.value = ''
               this.handleChange(null)
