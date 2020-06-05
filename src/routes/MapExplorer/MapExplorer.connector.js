@@ -11,7 +11,8 @@ import {
   fetchPosts,
   storeFetchPostsParam,
   storeClientFilterParams,
-  getFilteredPosts
+  getSortedFilteredPosts,
+  getCurrentTopics
   // getHasMorePosts
 } from './MapExplorer.store.js'
 
@@ -47,22 +48,20 @@ export function mapStateToProps (state, props) {
     boundingBox: state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null
   }
 
-  // NOTE: In effort to better seperate the query caching from component details
-  //       it's better (and necessary) in this case to send the fetch param then
-  //       the raw props of the component.
-
-  // TODO: maybe filtering should happen on the presentedPosts? since we do some of that presentation in the filtering code
-  const posts = getFilteredPosts(state, fetchPostsParam).map(p => presentPost(p, communityId))
+  // TODO: maybe filtering should happen on the presentedPosts? since we do some of that presentation in the filtering code, like calling topics.toModelArray in the filters for every post each time
+  const posts = getSortedFilteredPosts(state, fetchPostsParam).map(p => presentPost(p, communityId))
+  const topics = getCurrentTopics(state, fetchPostsParam)
 
   // const hasMore = getHasMorePosts(state, fetchPostsParam)
 
   return {
-    posts,
-    // hasMore,
     fetchPostsParam,
+    // hasMore,
     pending: state.pending[FETCH_POSTS_MAP],
+    posts,
+    querystringParams,
     routeParams,
-    querystringParams
+    topics
   }
 }
 

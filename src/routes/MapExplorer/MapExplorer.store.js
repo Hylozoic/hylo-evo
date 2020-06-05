@@ -133,6 +133,10 @@ export const searchTextSelector = (state) => {
   return state.MapExplorer.clientFilterParams.search
 }
 
+export const filterTopicsSelector = (state) => {
+  return state.MapExplorer.clientFilterParams.topics
+}
+
 export const sortBySelector = (state) => {
   return state.MapExplorer.clientFilterParams.sortBy
 }
@@ -164,16 +168,52 @@ export const getPostsByBoundingBox = createSelector(
   }
 )
 
-export const getFilteredPosts = createSelector(
+export const getSearchedPosts = createSelector(
   getPostsByBoundingBox,
   searchTextSelector,
-  sortBySelector,
-  (posts, searchText, sortBy) => {
+  (posts, searchText) => {
+    const trimmedText = searchText.trim()
+    if (trimmedText === '') return posts
     return posts.filter(post => {
       return post.title.toLowerCase().includes(searchText) ||
              post.details.toLowerCase().includes(searchText) ||
              post.topics.toModelArray().find(topic => topic.name.includes(searchText))
-    }).sort((a, b) => sortBy === 'votes' ? b.votesTotal - a.votesTotal : b.createdAt - a.createdAt)
+    })
+  }
+)
+
+export const getFilteredPosts = createSelector(
+  getSearchedPosts,
+  filterTopicsSelector,
+  (posts, filterTopics) => {
+    if (filterTopics.length === 0) return posts
+    return posts.filter(post => {
+      return post.topics.toModelArray().find(pt => filterTopics.find(ft => pt.name === ft.name))
+    })
+  }
+)
+
+export const getSortedFilteredPosts = createSelector(
+  getFilteredPosts,
+  sortBySelector,
+  (posts, sortBy) => {
+    // TODO: use createdAt or the same updatedAt which includes comments that is used in the stream?
+    return posts.sort((a, b) => sortBy === 'votes' ? b.votesTotal - a.votesTotal : new Date(b.createdAt) - new Date(a.createdAt))
+  }
+)
+
+export const getCurrentTopics = createSelector(
+  getFilteredPosts,
+  (posts) => {
+    const topics = (posts ? posts.reduce((topics, post) => {
+      post.topics.toModelArray().forEach((topic) => { topics[topic.name] = topics[topic.name] ? topics[topic.name] + 1 : 1 })
+      return topics
+    }, {}) : {})
+    const orderedTopics = []
+    Object.keys(topics).forEach(function(key) {
+      orderedTopics.push({ 'name': key, 'count': topics[key] });
+    });
+    return orderedTopics.sort((a, b) => b.count - a.count)
   }
 )
 
@@ -183,7 +223,8 @@ export const getFilteredPosts = createSelector(
 const DEFAULT_STATE = {
   clientFilterParams: {
     search: '',
-    sortBy: SORT_OPTIONS[0].id
+    sortBy: SORT_OPTIONS[0].id,
+    topics: []
   },
   fetchPostsParam: {
     boundingBox: null

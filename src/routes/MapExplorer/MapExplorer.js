@@ -15,6 +15,7 @@ export default class MapExplorer extends React.Component {
     posts: [],
     routeParams: {},
     querystringParams: {},
+    topics: [],
     zoom: 10
   }
 
@@ -77,12 +78,8 @@ export default class MapExplorer extends React.Component {
 
   onMapClick = (info) => { this.setState({ selectedObject: info.object }); this.props.showDetails(info.object.id) }
 
-  onSearchMap = (input) => {
-    this.props.storeClientFilterParams({ search: input.value })
-  }
-
-  onChangeSort = (sortBy) => {
-    this.props.storeClientFilterParams({ sortBy })
+  updateClientFilters = (opts) => {
+    this.props.storeClientFilterParams(opts)
   }
 
   _renderTooltip = () => {
@@ -105,24 +102,26 @@ export default class MapExplorer extends React.Component {
       posts,
       pending,
       routeParams,
+      topics,
       zoom
     } = this.props
 
     const { showDrawer } = this.state
 
-    // TODO: Feed posts after filtering to the Map, create a layer,
-    //    could start with simple scatterplot layer
-    //     use turf.js to find only new bounding box, subtract old one from the new one
-    //     could make bounding box larger than viewport
-
     const mapLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
-
-    // TODO: filter posts for drawer by bbox using turf.js (also filter posts to show on layer?)
 
     return <div styleName='MapExplorer-container'>
       <Map layers={[mapLayer]} zoom={zoom} onViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}><Icon name='Stack' green={showDrawer} styleName='icon' /></button>
-      { showDrawer ? <MapDrawer posts={posts} querystringParams={querystringParams} routeParams={routeParams} onSearch={this.onSearchMap} onChangeSort={this.onChangeSort} /> : ''}
+      { showDrawer ?
+        <MapDrawer
+          onUpdateFilters={this.updateClientFilters}
+          posts={posts}
+          topics={topics}
+          querystringParams={querystringParams}
+          routeParams={routeParams}
+        />  : ''
+      }
       { pending && <Loading /> }
     </div>
   }
