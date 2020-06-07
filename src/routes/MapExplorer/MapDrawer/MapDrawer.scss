@@ -11,6 +11,7 @@
 
   h1 {
     float: left;
+    margin-bottom: 0
   }
 }
 
@@ -30,6 +31,15 @@
 
 .sorterIcon {
   vertical-align: middle;
+}
+
+.postTypeFilters {
+  clear: both;
+  margin-bottom: 10px;
+}
+
+.postTypeSwitch {
+  margin-right: 10px;
 }
 
 .searchBox {

@@ -4,6 +4,7 @@ import bboxPolygon from '@turf/bbox-polygon'
 import booleanWithin from '@turf/boolean-within'
 import { point } from '@turf/helpers'
 import { FETCH_POSTS_MAP } from 'store/constants'
+import { POST_TYPES } from 'store/models/Post'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 
@@ -129,6 +130,10 @@ export const boundingBoxSelector = (state) => {
   return state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null
 }
 
+export const filterPostTypesSelector = (state) => {
+  return state.MapExplorer.clientFilterParams.postTypes
+}
+
 export const searchTextSelector = (state) => {
   return state.MapExplorer.clientFilterParams.search
 }
@@ -168,8 +173,14 @@ export const getPostsByBoundingBox = createSelector(
   }
 )
 
-export const getSearchedPosts = createSelector(
+export const getPostsFilteredByType = createSelector(
   getPostsByBoundingBox,
+  filterPostTypesSelector,
+  (posts, filterPostTypes) => posts.filter(post => filterPostTypes[post.type])
+)
+
+export const getSearchedPosts = createSelector(
+  getPostsFilteredByType,
   searchTextSelector,
   (posts, searchText) => {
     const trimmedText = searchText.trim()
@@ -210,9 +221,9 @@ export const getCurrentTopics = createSelector(
       return topics
     }, {}) : {})
     const orderedTopics = []
-    Object.keys(topics).forEach(function(key) {
-      orderedTopics.push({ 'name': key, 'count': topics[key] });
-    });
+    Object.keys(topics).forEach(key => {
+      orderedTopics.push({ 'name': key, 'count': topics[key] })
+    })
     return orderedTopics.sort((a, b) => b.count - a.count)
   }
 )
@@ -222,6 +233,7 @@ export const getCurrentTopics = createSelector(
 // reducer
 const DEFAULT_STATE = {
   clientFilterParams: {
+    postTypes: Object.keys(POST_TYPES).reduce((types, type) => { types[type] = true; return types }, {}),
     search: '',
     sortBy: SORT_OPTIONS[0].id,
     topics: []
@@ -241,7 +253,7 @@ export default function (state = DEFAULT_STATE, action) {
   if (action.type === STORE_CLIENT_FILTER_PARAMS) {
     return {
       ...state,
-      clientFilterParams: { ...state.clientFilterParams, ...action.payload }
+      clientFilterParams: { ...state.clientFilterParams, ...action.payload, postTypes: action.payload.postTypes ? {...action.payload.postTypes} : state.clientFilterParams.postTypes  }
     }
   }
   return state

@@ -13,6 +13,7 @@ import { createScatterplotLayerFromPosts } from 'components/Map/layers/postsScat
 export default class MapExplorer extends React.Component {
   static defaultProps = {
     posts: [],
+    postTypes: {},
     routeParams: {},
     querystringParams: {},
     topics: [],
@@ -100,6 +101,7 @@ export default class MapExplorer extends React.Component {
     const {
       querystringParams,
       posts,
+      postTypes,
       pending,
       routeParams,
       topics,
@@ -113,15 +115,16 @@ export default class MapExplorer extends React.Component {
     return <div styleName='MapExplorer-container'>
       <Map layers={[mapLayer]} zoom={zoom} onViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}><Icon name='Stack' green={showDrawer} styleName='icon' /></button>
-      { showDrawer ?
+      { showDrawer ? (
         <MapDrawer
           onUpdateFilters={this.updateClientFilters}
           posts={posts}
+          postTypes={postTypes}
           topics={topics}
           querystringParams={querystringParams}
           routeParams={routeParams}
-        />  : ''
-      }
+        />)
+        : '' }
       { pending && <Loading /> }
     </div>
   }
