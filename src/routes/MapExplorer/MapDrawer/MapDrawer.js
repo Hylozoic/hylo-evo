@@ -10,7 +10,20 @@ import { SORT_OPTIONS } from '../MapExplorer.store'
 import styles from './MapDrawer.scss'
 
 function MapDrawer (props) {
-  let { onUpdateFilters, posts, postTypes, querystringParams, routeParams, topics } = props
+  let {
+    filters,
+    onUpdateFilters,
+    posts,
+    querystringParams,
+    routeParams,
+    topics
+  } = props
+
+  const {
+    postTypes,
+    searchText,
+    sortBy
+  } = filters
 
   const refs = {}
   Object.keys(postTypes).forEach(postType => {
@@ -19,19 +32,14 @@ function MapDrawer (props) {
 
   const [search, setSearch] = useState('')
   const [isSearching, setIsSearching] = useState(false)
-  const [searchText, setSearchText] = useState('')
-  const [sort, setSort] = useState(SORT_OPTIONS[0].id)
-  const [filterTopics, setFilterTopics] = useState([])
 
   const filterByTopic = (topic) => {
-    const newFilterTopics = filterTopics.concat(topic)
-    setFilterTopics(newFilterTopics)
+    const newFilterTopics = filters.topics.concat(topic)
     onUpdateFilters({ topics: newFilterTopics })
   }
 
   const removeTopicFilter = (topic) => (e) => {
-    const newFilterTopics = filterTopics.filter(t => t.name !== topic.name)
-    setFilterTopics(newFilterTopics)
+    const newFilterTopics = filters.topics.filter(t => t.name !== topic.name)
     onUpdateFilters({ topics: newFilterTopics })
   }
 
@@ -51,7 +59,7 @@ function MapDrawer (props) {
   )
 
   // Don't show topics we are already filtering by in searches
-  const searchTopics = topics.filter(topic => !filterTopics.find(t => t.name === topic.name))
+  const searchTopics = topics.filter(topic => !filters.topics.find(t => t.name === topic.name))
 
   // TODO: try this onComponentUpdate? make this a full class component
   ReactTooltip.rebuild()
@@ -62,15 +70,12 @@ function MapDrawer (props) {
 
       <Dropdown styleName='sorter'
         toggleChildren={<span styleName='sorter-label'>
-          {SORT_OPTIONS.find(o => o.id === sort).label}
+          {SORT_OPTIONS.find(o => o.id === sortBy).label}
           <Icon name='ArrowDown' className={styles.sorterIcon} />
         </span>}
         items={SORT_OPTIONS.map(({ id, label }) => ({
           label,
-          onClick: () => {
-            setSort(id)
-            onUpdateFilters({ sortBy: id })
-          }
+          onClick: () => onUpdateFilters({ sortBy: id })
         }))}
         alignRight
       />
@@ -88,7 +93,7 @@ function MapDrawer (props) {
               backgroundColor={POST_TYPES[postType].primaryColor}
               name={postType}
               checked={postTypes[postType]}
-              onChange={(checked, name) => { console.log('yo', !checked, name); togglePostType(name, !checked)}}
+              onChange={(checked, name) => togglePostType(name, !checked)}
             />
           </span>
         })}
@@ -107,7 +112,6 @@ function MapDrawer (props) {
         onKeyUp={e => {
           if (e.keyCode === 13) {
             setSearch('')
-            setSearchText(e.target.value)
             setIsSearching(false)
             onUpdateFilters({ search: e.target.value })
             e.target.blur()
@@ -140,13 +144,13 @@ function MapDrawer (props) {
         {searchText
           ? <div
             styleName='currentSearchText'
-            onClick={() => { setSearchText(''); onUpdateFilters({ search: '' }) }}
+            onClick={() => onUpdateFilters({ search: '' })}
           >
             &quot;{searchText}&quot; x
           </div>
           : ''
         }
-        {filterTopics.map(topic => {
+        {filters.topics.map(topic => {
           return (
             <span
               key={'filter_topic_' + topic.name}

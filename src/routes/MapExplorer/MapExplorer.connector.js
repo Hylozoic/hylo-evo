@@ -51,16 +51,15 @@ export function mapStateToProps (state, props) {
   // TODO: maybe filtering should happen on the presentedPosts? since we do some of that presentation in the filtering code, like calling topics.toModelArray in the filters for every post each time
   const posts = getSortedFilteredPosts(state, fetchPostsParam).map(p => presentPost(p, communityId))
   const topics = getCurrentTopics(state, fetchPostsParam)
-  const postTypes = state.MapExplorer.clientFilterParams.postTypes
 
   // const hasMore = getHasMorePosts(state, fetchPostsParam)
 
   return {
     fetchPostsParam,
+    filters: state.MapExplorer.clientFilterParams,
     // hasMore,
     pending: state.pending[FETCH_POSTS_MAP],
     posts,
-    postTypes,
     querystringParams,
     routeParams,
     topics

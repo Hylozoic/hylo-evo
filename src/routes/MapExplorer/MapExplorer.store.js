@@ -253,7 +253,7 @@ export default function (state = DEFAULT_STATE, action) {
   if (action.type === STORE_CLIENT_FILTER_PARAMS) {
     return {
       ...state,
-      clientFilterParams: { ...state.clientFilterParams, ...action.payload, postTypes: action.payload.postTypes ? {...action.payload.postTypes} : state.clientFilterParams.postTypes  }
+      clientFilterParams: { ...state.clientFilterParams, ...action.payload, postTypes: action.payload.postTypes ? { ...action.payload.postTypes } : state.clientFilterParams.postTypes }
     }
   }
   return state
