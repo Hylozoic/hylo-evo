@@ -5,11 +5,12 @@ $drawer-width: 367px;
 $close-color: #98AFBE;
 $close-offset-top: 27px;
 $close-offset-right: 18px;
+$close-offset-left: 18px;
 $close-dimension: 24px;
 
 $current-avatar-size: 42px;
 $current-avatar-border-radius: 8px;
-$current-padding-top: 28px;
+$current-padding-top: 0px;
 $current-padding-bottom: 20px;
 $current-name-margin-top: 13px;
 
@@ -26,8 +27,6 @@ $badge-width: 20px;
 $community-list-avatar-size: 28px;
 $community-list-font-size: 13px;
 
-$break-border: 1px solid rgba(255,255,255,0.11);
-
 $new-community-width: 310px;
 $new-community-vertical-margin: 15px;
 $new-community-font-size: 14px;
@@ -35,18 +34,29 @@ $new-community-spacing: 16px;
 
 .communityDrawer {
   background-image: linear-gradient(0deg, $color-rhino 0%, $color-chambray 100%);
+  overflow-y: scroll;
+}
+
+.hyloLogoBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 15px 0;
+  height: 55px;
+  width: 100%;
 }
 
 .closeDrawer {
-  color: $close-color;
+  color: $color-white;
   cursor: pointer;
-  position: absolute;
-  top: $close-offset-top;
-  right: $close-offset-right;
   font-size: $close-dimension;
 }
 
+.currentNetwork {
+  background-color: #40A1DD;
+}
+
 .currentCommunity {
+  background-color: $color-caribbean-green;
   padding: $current-padding-top 0 $current-padding-bottom;
   text-align: center;
 
@@ -62,7 +72,12 @@ $new-community-spacing: 16px;
 }
 
 .settingsLink {
-  margin-bottom: 21px;
+  height: 40px;
+  line-height: 38px;
+  padding: 5px 10px;
+  border-radius: 25px;
+  border: 1px solid $color-white-50;
+  margin: 21px 0;
   @include font-regular;
   text-align: center;
   color: $color-white;
@@ -87,7 +102,7 @@ $new-community-spacing: 16px;
   padding-top: 5px;
   padding-left: $ul-horizontal-spacing;
   margin-bottom: 6px;
-  margin: 15px 0 15px 0;
+  margin: 0 0 15px 0;
   text-transform: uppercase;
   font-size: 8pt;
   font-weight: 300;
@@ -97,8 +112,7 @@ $new-community-spacing: 16px;
 }
 
 .sectionTitleSeparator {
-  border-top: $break-border;
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 .avatar {
@@ -111,7 +125,6 @@ $new-community-spacing: 16px;
 
 .communitiesList {
   padding: 0;
-  border-top: $break-border;
   overflow-y: auto;
   li {
     list-style: none;
@@ -244,6 +257,10 @@ $new-community-spacing: 16px;
 }
 
 .newCommunity {
+  text-align: center;
+}
+
+.newCommunityBtn {
   text-align: center;
   width: $new-community-width;
   margin: $new-community-vertical-margin auto;

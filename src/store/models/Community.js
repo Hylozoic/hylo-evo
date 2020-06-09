@@ -45,5 +45,7 @@ export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/defaul
 export const DEFAULT_AVATAR = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png'
 
 export const ALL_COMMUNITIES_ID = 'all-communities'
-
 export const ALL_COMMUNITIES_AVATAR_PATH = '/assets/white-merkaba.png'
+
+export const PUBLIC_COMMUNITIES_ID = 'public-communities'
+export const PUBLIC_COMMUNITIES_AVATAR_PATH = '/public.svg'
