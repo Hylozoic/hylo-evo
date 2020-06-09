@@ -9,7 +9,7 @@ import './MapExplorer.scss'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import { createScatterplotLayerFromPosts } from 'components/Map/layers/postsScatterplotLayer'
-import { createClusterLayerFromPosts} from '../Map/layers/clusterLayer'
+import { createClusterLayerFromPosts} from 'components/Map/layers/clusterLayer'
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
@@ -111,7 +111,7 @@ export default class MapExplorer extends React.Component {
 
     const { showDrawer } = this.state
 
-    const mapLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
+    const mapLayer = createClusterLayerFromPosts({ posts, onHover: this.onMapHover, onClick: this.onMapClick })
 
     return <div styleName='MapExplorer-container'>
       <Map layers={[mapLayer]} zoom={zoom} onViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />

@@ -69,8 +69,8 @@ export default class clusterLayer extends CompositeLayer {
 
   renderLayers () {
     const { data } = this.state
-    const { iconAtlas = 'public/iconAtlas.png',
-            iconMapping = 'public/iconAtlas.json',
+    const { iconAtlas = '/iconAtlas.png',
+            iconMapping = '/iconAtlas.json',
             sizeScale } = this.props
 
 
