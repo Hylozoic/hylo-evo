@@ -50,10 +50,8 @@ export default class Drawer extends React.PureComponent {
   render () {
     const { currentLocation, community, network, communities, networks, defaultNetworks, className, toggleDrawer, canModerate } = this.props
 
-    console.log(networks)
-
     return <div className={className} styleName='s.communityDrawer'>
-      <div styleName={cx({ 's.currentCommunity': community !== null })}>
+      <div styleName={cx({ 's.currentCommunity': community !== null || network !== null })}>
         <div styleName='s.hyloLogoBar'>
           <img src='/hylo.svg' width='50px' />
           <Icon name='Ex' styleName='s.closeDrawer' onClick={toggleDrawer} />
@@ -132,12 +130,11 @@ export class NetworkRow extends React.Component {
   render () {
     const { network, currentLocation } = this.props
     const { communities, name, slug, avatarUrl, nonMemberCommunities } = network
+    const path = network.path || `/n/${slug}`
     const { expanded, seeAllExpanded } = this.state
     const newPostCount = sum(network.communities.map(c => c.newPostCount))
     const imageStyle = bgImageStyle(avatarUrl)
     const showCommunities = !isEmpty(communities)
-
-    const path = network.path || `/n/${slug}`
 
     return <li styleName={cx('s.networkRow', { 's.networkExpanded': expanded }, { 's.currentNetwork': currentLocation === path })}>
       <Link to={path} styleName='s.networkRowLink' title={name} className={badgeHoverStyles.parent}>

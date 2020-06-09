@@ -39,7 +39,7 @@ export function partitionCommunities (memberships) {
     independent: []
   })
 
-  const networks = [].concat(values(omit('independent', reduced)))
+  const networks = values(omit('independent', reduced))
 
   // pulls out the communities that are already a member of from the nonMemberCommunities array
   each(n => {
@@ -71,7 +71,7 @@ export function mapStateToProps (state, props) {
     },
     {
       id: ALL_COMMUNITIES_ID,
-      name: 'All Communities',
+      name: 'All My Communities',
       communities: [],
       path: '/all',
       avatarUrl: ALL_COMMUNITIES_AVATAR_PATH
