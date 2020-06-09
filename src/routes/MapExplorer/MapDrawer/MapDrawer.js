@@ -82,7 +82,7 @@ function MapDrawer (props) {
       />
 
       <div styleName='postTypeFilters'>
-        {['request', 'offer', 'resource'].map(postType => {
+        {['event', 'request', 'offer', 'resource'].map(postType => {
           return <span
             key={postType}
             ref={refs[postType]}
