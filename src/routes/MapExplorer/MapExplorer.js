@@ -13,9 +13,11 @@ import { createClusterLayerFromPosts} from '../Map/layers/clusterLayer'
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
+    filters: {},
     posts: [],
     routeParams: {},
     querystringParams: {},
+    topics: [],
     zoom: 10
   }
 
@@ -68,9 +70,9 @@ export default class MapExplorer extends React.Component {
     this.updateBoundingBoxQuery(bounds)
   }
 
-  updateBoundingBoxQuery = debounce((bounds) => {
-    this.setState({ boundingBox: bounds })
-    this.props.storeFetchPostsParam(bounds)
+  updateBoundingBoxQuery = debounce((boundingBox) => {
+    this.setState({ boundingBox })
+    this.props.storeFetchPostsParam({ boundingBox })
     this.props.fetchPosts()
   }, 150)
 
@@ -78,10 +80,14 @@ export default class MapExplorer extends React.Component {
 
   onMapClick = (info) => { this.setState({ selectedObject: info.object }); this.props.showDetails(info.object.id) }
 
+  updateClientFilters = (opts) => {
+    this.props.storeClientFilterParams(opts)
+  }
+
   _renderTooltip = () => {
     const { hoveredObject, pointerX, pointerY } = this.state || {}
     return hoveredObject ? (
-      <div style={{ position: 'absolute', zIndex: 1, pointerEvents: 'none', left: pointerX, top: pointerY }}>
+      <div styleName='postTip' style={{ left: pointerX + 15, top: pointerY }}>
         { hoveredObject.message }
       </div>
     ) : ''
@@ -89,32 +95,37 @@ export default class MapExplorer extends React.Component {
 
   toggleDrawer = (e) => {
     this.setState({ showDrawer: !this.state.showDrawer })
+    this.props.toggleDrawer(!this.state.showDrawer)
   }
 
   render () {
     const {
+      filters,
       querystringParams,
       posts,
       pending,
       routeParams,
+      topics,
       zoom
     } = this.props
 
     const { showDrawer } = this.state
 
-    // TODO: Feed posts after filtering to the Map, create a layer,
-    //    could start with simple scatterplot layer
-    //     use turf.js to find only new bounding box, subtract old one from the new one
-    //     could make bounding box larger than viewport
-
     const mapLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
-
-    // TODO: filter posts for drawer by bbox using turf.js (also filter posts to show on layer?)
 
     return <div styleName='MapExplorer-container'>
       <Map layers={[mapLayer]} zoom={zoom} onViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}><Icon name='Stack' green={showDrawer} styleName='icon' /></button>
-      { showDrawer ? <MapDrawer posts={posts} queryResults={querystringParams} routeParams={routeParams} /> : ''}
+      { showDrawer ? (
+        <MapDrawer
+          filters={filters}
+          onUpdateFilters={this.updateClientFilters}
+          posts={posts}
+          topics={topics}
+          querystringParams={querystringParams}
+          routeParams={routeParams}
+        />)
+        : '' }
       { pending && <Loading /> }
     </div>
   }

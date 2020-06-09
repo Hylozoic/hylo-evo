@@ -5,12 +5,14 @@ import { FETCH_POSTS_MAP } from 'store/constants'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import presentPost from 'store/presenters/presentPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import { postUrl } from 'util/navigation'
+import { addQuerystringToPath, baseUrl, postUrl } from 'util/navigation'
 
 import {
   fetchPosts,
   storeFetchPostsParam,
-  getPostsByBoundingBox
+  storeClientFilterParams,
+  getSortedFilteredPosts,
+  getCurrentTopics
   // getHasMorePosts
 } from './MapExplorer.store.js'
 
@@ -45,20 +47,22 @@ export function mapStateToProps (state, props) {
     ], props),
     boundingBox: state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null
   }
-  // NOTE: In effort to better seperate the query caching from component details
-  //       it's better (and necessary) in this case to send the fetch param then
-  //       the raw props of the component.
-  const posts = getPostsByBoundingBox(state, fetchPostsParam).map(p => presentPost(p, communityId))
+
+  // TODO: maybe filtering should happen on the presentedPosts? since we do some of that presentation in the filtering code, like calling topics.toModelArray in the filters for every post each time
+  const posts = getSortedFilteredPosts(state, fetchPostsParam).map(p => presentPost(p, communityId))
+  const topics = getCurrentTopics(state, fetchPostsParam)
 
   // const hasMore = getHasMorePosts(state, fetchPostsParam)
 
   return {
-    posts,
-    // hasMore,
     fetchPostsParam,
+    filters: state.MapExplorer.clientFilterParams,
+    // hasMore,
     pending: state.pending[FETCH_POSTS_MAP],
+    posts,
+    querystringParams,
     routeParams,
-    querystringParams
+    topics
   }
 }
 
@@ -68,19 +72,21 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchPosts: param => offset => dispatch(fetchPosts({ offset, ...param })),
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, querystringParams))),
-    storeFetchPostsParam: param => (boundingBox = null) => dispatch(storeFetchPostsParam({ ...param, boundingBox }))
+    toggleDrawer: (visible) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, showDrawer: visible }))),
+    storeFetchPostsParam: param => opts => dispatch(storeFetchPostsParam({ ...param, ...opts })),
+    storeClientFilterParams: params => dispatch(storeClientFilterParams(params))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { fetchPostsParam } = stateProps
-  const { storeFetchPostsParam } = dispatchProps
+  const { fetchPosts, storeFetchPostsParam } = dispatchProps
 
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    fetchPosts: dispatchProps.fetchPosts(fetchPostsParam),
+    fetchPosts: fetchPosts(fetchPostsParam),
     storeFetchPostsParam: storeFetchPostsParam(fetchPostsParam)
   }
 }

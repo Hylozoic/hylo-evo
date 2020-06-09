@@ -61,7 +61,7 @@ export default class AccountSettingsTab extends Component {
         tagline: tagline || '',
         bio: bio || '',
         location: location || '',
-        locationId: locationId || '',
+        locationId: locationId || null,
         email: email || '',
         url: url || '',
         facebookUrl,

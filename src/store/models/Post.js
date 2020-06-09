@@ -74,6 +74,33 @@ Post.fields = {
   topics: many('Topic')
 }
 
+export const POST_TYPES = {
+  'discussion': {
+    primaryColor: '#40A1DD', // $color-picton-blue
+    backgroundColor: '#D9ECF8' // $color-link-water
+  },
+  'event': {
+    primaryColor: '#9883E5', // $color-medium-purple
+    backgroundColor: '#EAE6FA' // $color-moon-raker
+  },
+  'offer': {
+    primaryColor: '#0DC39F', // $color-caribbean-green
+    backgroundColor: '#CFF3EC' // $color-iceberg;
+  },
+  'resource': {
+    primaryColor: '#FDD549', // $color-mango-yellow;
+    backgroundColor: '' // TODO: how to convert this? rgba($color-mango-yellow, 0.15) // $color-mango-yellow-15;
+  },
+  'project': {
+    primaryColor: '#BB60A8', // $color-fuchsia-pink;
+    backgroundColor: '#F1DFEE' // $color-prim;
+  },
+  'request': {
+    primaryColor: '#FE6848', // $color-persimmon;
+    backgroundColor: '#FFE1DA' // $color-peach-schnapps;
+  }
+}
+
 export const POST_PROP_TYPES = {
   id: PropTypes.oneOfType([
     PropTypes.string,
