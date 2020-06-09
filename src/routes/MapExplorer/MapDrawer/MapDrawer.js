@@ -21,9 +21,10 @@ function MapDrawer (props) {
 
   const {
     postTypes,
-    searchText,
     sortBy
   } = filters
+
+  const searchText = filters.search
 
   const refs = {}
   Object.keys(postTypes).forEach(postType => {
