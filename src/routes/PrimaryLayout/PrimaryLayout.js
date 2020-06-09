@@ -113,6 +113,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/all/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
+            <Route path={`/:context(public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/n/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
             <Route path={`/n/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
@@ -174,6 +175,7 @@ const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
 const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})/:action(edit)?`
 const postDetailRoutes = [
   { path: `/all/${POST_DETAIL_MATCH}` },
+  { path: `/public/${POST_DETAIL_MATCH}` },
   { path: `/n/:networkSlug/m/:personId/${POST_DETAIL_MATCH}` },
   { path: `/n/:networkSlug/${POST_DETAIL_MATCH}` },
   { path: `/c/:slug/m/:personId/${POST_DETAIL_MATCH}` },

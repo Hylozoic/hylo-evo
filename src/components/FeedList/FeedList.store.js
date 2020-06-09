@@ -22,6 +22,10 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search
     query = allCommunitiesQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
+  } else if (subject === 'public-communities') {
+    query = allCommunitiesQuery
+    extractModel = 'Post'
+    getItems = get('payload.data.posts')
   } else {
     throw new Error(`FETCH_POSTS with subject=${subject} is not implemented`)
   }

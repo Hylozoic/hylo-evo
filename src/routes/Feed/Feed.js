@@ -41,13 +41,15 @@ export default class Feed extends Component {
 
   getFeedProps () {
     const { routeParams, querystringParams } = this.props
-    const { slug, networkSlug } = routeParams
+    const { slug, networkSlug, context } = routeParams
 
     var subject
     if (slug) {
       subject = 'community'
     } else if (networkSlug) {
       subject = 'network'
+    } else if (context && context === 'public') {
+      subject = 'public-communities'
     } else {
       subject = 'all-communities'
     }
