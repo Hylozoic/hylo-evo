@@ -75,7 +75,7 @@ export default class Feed extends Component {
       communityTopic, newPost, network, currentUserHasMemberships,
       goToCreateCommunity, membershipsPending, postTypeFilter
     } = this.props
-    const { networkSlug, topicName } = routeParams
+    const { topicName, context } = routeParams
 
     if (topicName && !topic) return <Loading />
     if (community && topicName && !communityTopic) return <Loading />
@@ -98,7 +98,8 @@ export default class Feed extends Component {
           community={community || network}
           currentUser={currentUser}
           type={postTypeFilter}
-          all={!community && !networkSlug}
+          all={context && context === 'all'}
+          publicContext={context && context === 'public'}
           newPost={newPost}
           currentUserHasMemberships={currentUserHasMemberships} />}
       {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}

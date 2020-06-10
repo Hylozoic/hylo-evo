@@ -3,12 +3,13 @@ import cx from 'classnames'
 import { bgImageStyle } from 'util/index'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Community'
 import './FeedBanner.scss'
-import { whiteMerkaba, allCommunitiesBanner } from 'util/assets'
+import { whiteMerkaba, allCommunitiesBanner, publicGlobe } from 'util/assets'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 
 export default function FeedBanner ({
   all,
+  publicContext,
   community,
   currentUser,
   newPost,
@@ -22,6 +23,12 @@ export default function FeedBanner ({
     avatarUrl = whiteMerkaba
     bannerUrl = allCommunitiesBanner
     subtitle = currentUser && `${currentUser.memberships.count()} Communities`
+  } else if (publicContext) {
+    name = 'Public Communities & Posts'
+    avatarUrl = publicGlobe
+    bannerUrl = allCommunitiesBanner
+    // TODO list count of public posts and public communities in subtitle
+    subtitle = `All Posts Marked Public`
   } else if (!community) {
     return null
   } else {

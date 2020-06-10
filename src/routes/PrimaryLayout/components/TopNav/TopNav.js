@@ -15,7 +15,7 @@ import NotificationsDropdown from './NotificationsDropdown'
 
 export default class TopNav extends Component {
   render () {
-    const { className, community, network, currentUser, logout, toggleDrawer, showLogoBadge, onClick } = this.props
+    const { className, community, network, currentUser, logout, toggleDrawer, showLogoBadge, onClick, isPublic } = this.props
     const profileUrl = personUrl(get('id', currentUser))
 
     return <div styleName='topNavWrapper' className={className} onClick={onClick}>
@@ -23,7 +23,7 @@ export default class TopNav extends Component {
         <div styleName='logo-hover'>
           <Logo {...{ communityOrNetwork: community || network, toggleDrawer }} />
           {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
-          <Title community={community} network={network} onClick={toggleDrawer} />
+          <Title community={community} network={network} isPublic={isPublic} onClick={toggleDrawer} />
         </div>
         <div styleName='navIcons'>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
@@ -56,12 +56,14 @@ function Logo ({ communityOrNetwork, toggleDrawer, showLogoBadge }) {
   return <span styleName='image' style={imageStyle} onClick={toggleDrawer} />
 }
 
-function Title ({ community, network, onClick }) {
+function Title ({ community, network, isPublic, onClick }) {
   var [ label, name ] = ['GLOBAL', 'All Communities']
   if (community) {
     [ label, name ] = ['COMMUNITY', community.name]
   } else if (network) {
     [ label, name ] = ['NETWORK', network.name]
+  } else if (isPublic) {
+    [ label, name ] = ['GLOBAL', 'Public View']
   }
 
   return <a styleName='title' onClick={onClick}>

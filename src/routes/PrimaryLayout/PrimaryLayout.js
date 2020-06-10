@@ -111,8 +111,8 @@ export default class PrimaryLayout extends Component {
           <Switch>
             {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
             <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
-            <Route path={`/all/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
+            <Route path={`/:context(all)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path='/:context(all)/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/:context(public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/n/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
