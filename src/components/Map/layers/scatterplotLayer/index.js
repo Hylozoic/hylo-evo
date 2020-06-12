@@ -3,7 +3,7 @@ import { CONTENT_TYPES } from 'routes/MapExplorer/MapExplorer'
 import { hexToRgb } from 'util/index'
 
 export function createScatterplotLayerFromPosts (posts, onHover, onClick) {
-  return createScatterplotLayer(posts.filter(post => post.locationObject && post.locationObject.center)
+  return createScatterplotLayer('scatterplot-posts-layer', posts.filter(post => post.locationObject && post.locationObject.center)
     .map(post => {
       return {
         id: post.id,
@@ -17,7 +17,7 @@ export function createScatterplotLayerFromPosts (posts, onHover, onClick) {
 }
 
 export function createScatterplotLayerFromMembers (members, onHover, onClick) {
-  return createScatterplotLayer(members.filter(member => member.locationObject && member.locationObject.center)
+  return createScatterplotLayer('scatterplot-members-layer', members.filter(member => member.locationObject && member.locationObject.center)
     .map(member => {
       return {
         id: member.id,
@@ -29,9 +29,9 @@ export function createScatterplotLayerFromMembers (members, onHover, onClick) {
     }), onHover, onClick)
 }
 
-export function createScatterplotLayer (data, onHover, onClick) {
+export function createScatterplotLayer (id, data, onHover, onClick) {
   return new ScatterplotLayer({
-    id: `scatterplot-posts-layer`,
+    id: id || `scatterplot-layer`,
     data,
     getPosition: d => d.coordinates,
     getRadius: 10,

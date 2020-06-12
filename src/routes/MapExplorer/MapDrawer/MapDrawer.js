@@ -54,7 +54,7 @@ function MapDrawer (props) {
       routeParams={routeParams}
       querystringParams={querystringParams}
       post={post}
-      styleName='postCard'
+      styleName='contentCard'
       expanded={false}
       key={post.id} />
   )
@@ -67,44 +67,6 @@ function MapDrawer (props) {
 
   return (
     <div styleName='container'>
-      <h1>{posts.length} result{posts.length === 1 ? '' : 's'} in this area</h1>
-
-      <Dropdown styleName='sorter'
-        toggleChildren={<span styleName='sorter-label'>
-          {SORT_OPTIONS.find(o => o.id === sortBy).label}
-          <Icon name='ArrowDown' className={styles.sorterIcon} />
-        </span>}
-        items={SORT_OPTIONS.map(({ id, label }) => ({
-          label,
-          onClick: () => onUpdateFilters({ sortBy: id })
-        }))}
-        alignRight
-      />
-
-      <div styleName='contentTypeFilters'>
-        {['event', 'request', 'offer', 'resource', 'member'].map(contentType => {
-          return <span
-            key={contentType}
-            ref={refs[contentType]}
-            styleName='contentTypeSwitch'
-            data-tip={(contentTypes[contentType] ? 'Hide' : 'Show') + ' ' + contentType + 's'}
-            data-for='post-type-switch'
-          >
-            <SwitchStyled
-              backgroundColor={CONTENT_TYPES[contentType].primaryColor}
-              name={contentType}
-              checked={contentTypes[contentType]}
-              onChange={(checked, name) => toggleContentType(name, !checked)}
-            />
-          </span>
-        })}
-      </div>
-      <ReactTooltip
-        effect={'solid'}
-        place='bottom'
-        delayShow={20}
-        id='post-type-switch' />
-
       <input
         styleName='searchBox'
         type='text'
@@ -118,7 +80,7 @@ function MapDrawer (props) {
             e.target.blur()
           }
         }}
-        placeholder='Search among these results'
+        placeholder='Filter by topics and keywords'
         value={search}
       />
       { isSearching
@@ -163,7 +125,49 @@ function MapDrawer (props) {
           )
         })}
       </div>
-      {postsHTML}
+
+      Filter by content type: <div styleName='contentTypeFilters'>
+        {['event', 'request', 'offer', 'resource', 'member'].map(contentType => {
+          return <span
+            key={contentType}
+            ref={refs[contentType]}
+            styleName='contentTypeSwitch'
+            data-tip={(contentTypes[contentType] ? 'Hide' : 'Show') + ' ' + contentType + 's'}
+            data-for='post-type-switch'
+          >
+            <SwitchStyled
+              backgroundColor={CONTENT_TYPES[contentType].primaryColor}
+              name={contentType}
+              checked={contentTypes[contentType]}
+              onChange={(checked, name) => toggleContentType(name, !checked)}
+            />
+          </span>
+        })}
+      </div>
+      <ReactTooltip
+        effect={'solid'}
+        place='bottom'
+        delayShow={20}
+        id='post-type-switch'
+      />
+
+      <h1>{posts.length} result{posts.length === 1 ? '' : 's'} in this area</h1>
+
+      <Dropdown styleName='sorter'
+        toggleChildren={<span styleName='sorter-label'>
+          {SORT_OPTIONS.find(o => o.id === sortBy).label}
+          <Icon name='ArrowDown' className={styles.sorterIcon} />
+        </span>}
+        items={SORT_OPTIONS.map(({ id, label }) => ({
+          label,
+          onClick: () => onUpdateFilters({ sortBy: id })
+        }))}
+        alignRight
+      />
+
+      <div styleName='contentListContainer'>
+        {postsHTML}
+      </div>
     </div>
   )
 }
