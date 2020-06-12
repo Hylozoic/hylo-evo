@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 import bboxPolygon from '@turf/bbox-polygon'
 import booleanWithin from '@turf/boolean-within'
 import { point } from '@turf/helpers'
-import { FETCH_POSTS_MAP } from 'store/constants'
+import { FETCH_MEMBERS_MAP, FETCH_POSTS_MAP } from 'store/constants'
 import { POST_TYPES } from 'store/models/Post'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
@@ -17,20 +17,122 @@ export const SORT_OPTIONS = [
   { id: 'votes', label: 'Popular' }
 ]
 
+const communityPostsQuery = `query (
+  $slug: String,
+  $sortBy: String,
+  $filter: String,
+  $search: String,
+  $topic: ID,
+  $first: Int,
+  $offset: Int,
+  $boundingBox: [PointInput]
+) {
+  community(slug: $slug, updateLastViewed: true) {
+    id
+    slug
+    name
+    avatarUrl
+    bannerUrl
+    postCount
+    ${postsQueryFragment}
+  }
+}`
+
+const networkPostsQuery = `query (
+  $networkSlug: String,
+  $sortBy: String,
+  $search: String,
+  $filter: String,
+  $topic: ID,
+  $first: Int,
+  $offset: Int,
+  $boundingBox: [PointInput]
+) {
+  network(slug: $networkSlug) {
+    id
+    ${postsQueryFragment}
+  }
+}`
+
+const allCommunitiesPostsQuery = `query (
+  $sortBy: String,
+  $search: String,
+  $filter: String,
+  $topic: ID,
+  $first: Int,
+  $offset: Int,
+  $boundingBox: [PointInput]
+) {
+  ${postsQueryFragment}
+}`
+
+const membersFragment = `
+  members(sortBy: $sortBy, order: "desc", boundingBox: $boundingBox, search: $search) {
+    items {
+      id
+      name
+      avatarUrl
+      locationObject {
+        center {
+          lat
+          lng
+        }
+      }
+    }
+  }
+`
+
+const communityMembersQuery = `query (
+  $slug: String,
+  $sortBy: String,
+  $search: String,
+  $boundingBox: [PointInput]
+) {
+  community(slug: $slug, updateLastViewed: true) {
+    id
+    slug
+    name
+    avatarUrl
+    bannerUrl
+    postCount
+    ${membersFragment}
+  }
+}`
+
+const networkMembersQuery = `query (
+  $networkSlug: String,
+  $sortBy: String,
+  $search: String,
+  $boundingBox: [PointInput]
+) {
+  network(slug: $networkSlug) {
+    id
+    ${membersFragment}
+  }
+}`
+
+const allCommunitiesMembersQuery = `query (
+  $sortBy: String,
+  $search: String,
+  $boundingBox: [PointInput]
+) {
+  ${membersFragment}
+}`
+
 // actions
-export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search, filter, topic, boundingBox }) {
+export function fetchPosts ({ subject, slug, networkSlug, sortBy, search, filter, topic, boundingBox }) {
   var query, extractModel, getItems
 
   if (subject === 'community') {
-    query = communityQuery
+    query = communityPostsQuery
     extractModel = 'Community'
     getItems = get('payload.data.community.posts')
   } else if (subject === 'network') {
-    query = networkQuery
+    query = networkPostsQuery
     extractModel = 'Network'
     getItems = get('payload.data.network.posts')
   } else if (subject === 'all-communities') {
-    query = allCommunitiesQuery
+    query = allCommunitiesPostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
   } else {
@@ -45,10 +147,8 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search
         slug,
         networkSlug,
         sortBy,
-        offset,
         search,
         filter,
-        first: 20,
         topic,
         boundingBox
       }
@@ -62,54 +162,45 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search
   }
 }
 
-const communityQuery = `query (
-  $slug: String,
-  $sortBy: String,
-  $offset: Int,
-  $search: String,
-  $filter: String,
-  $topic: ID,
-  $first: Int,
-  $boundingBox: [PointInput]
-) {
-  community(slug: $slug, updateLastViewed: true) {
-    id
-    slug
-    name
-    avatarUrl
-    bannerUrl
-    postCount
-    ${postsQueryFragment}
-  }
-}`
+export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy, search }) {
+  var query, extractModel, getItems
 
-const networkQuery = `query (
-  $networkSlug: String,
-  $sortBy: String,
-  $offset: Int,
-  $search: String,
-  $filter: String,
-  $topic: ID,
-  $first: Int,
-  $boundingBox: [PointInput]
-) {
-  network(slug: $networkSlug) {
-    id
-    ${postsQueryFragment}
+  if (subject === 'community') {
+    query = communityMembersQuery
+    extractModel = 'Community'
+    getItems = get('payload.data.community.members')
+  } else if (subject === 'network') {
+    query = networkMembersQuery
+    extractModel = 'Network'
+    getItems = get('payload.data.network.members')
+  } else if (subject === 'all-communities') {
+    query = allCommunitiesMembersQuery
+    extractModel = 'User'
+    getItems = get('payload.data.people')
+  } else {
+    throw new Error(`FETCH_MEMBERS_MAP with subject=${subject} is not implemented`)
   }
-}`
 
-const allCommunitiesQuery = `query (
-  $sortBy: String,
-  $offset: Int,
-  $search: String,
-  $filter: String,
-  $topic: ID,
-  $first: Int,
-  $boundingBox: [PointInput]
-) {
-  ${postsQueryFragment}
-}`
+  return {
+    type: FETCH_MEMBERS_MAP,
+    graphql: {
+      query,
+      variables: {
+        slug,
+        networkSlug,
+        sortBy,
+        search,
+        boundingBox
+      }
+    },
+    meta: {
+      extractModel,
+      extractQueryResults: {
+        getItems
+      }
+    }
+  }
+}
 
 export function storeFetchPostsParam (params) {
   return {
@@ -213,6 +304,41 @@ export const getSortedFilteredPosts = createSelector(
   }
 )
 
+const getMemberResults = makeGetQueryResults(FETCH_MEMBERS_MAP)
+
+export const getMembers = makeQueryResultsModelSelector(
+  getMemberResults,
+  'Person'
+)
+
+export const getMembersByBoundingBox = createSelector(
+  getMembers,
+  boundingBoxSelector,
+  (members, boundingBox) => {
+    if (!boundingBox) {
+      return members
+    }
+
+    const bbox = bboxPolygon([boundingBox[0].lng, boundingBox[0].lat, boundingBox[1].lng, boundingBox[1].lat])
+    return members.filter(member => {
+      const locationObject = member.locationObject
+      if (locationObject) {
+        const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
+        return booleanWithin(centerPoint, bbox)
+      }
+      return false
+    })
+  }
+)
+
+export const getSortedFilteredMembers = createSelector(
+  getMembersByBoundingBox,
+  sortBySelector,
+  (members, sortBy) => {
+    return members
+  }
+)
+
 export const getCurrentTopics = createSelector(
   getFilteredPosts,
   (posts) => {
@@ -238,6 +364,7 @@ const DEFAULT_STATE = {
     sortBy: SORT_OPTIONS[0].id,
     topics: []
   },
+  selectedPost: null,
   fetchPostsParam: {
     boundingBox: null
   }

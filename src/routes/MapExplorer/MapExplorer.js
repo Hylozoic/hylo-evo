@@ -1,23 +1,21 @@
 import React from 'react'
-import { some } from 'lodash/fp'
 import { debounce } from 'lodash'
 import cx from 'classnames'
-import { queryParamWhitelist } from 'store/reducers/queryResults'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import './MapExplorer.scss'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
-import { createScatterplotLayerFromPosts } from 'components/Map/layers/postsScatterplotLayer'
+import { createScatterplotLayerFromMembers, createScatterplotLayerFromPosts } from 'components/Map/layers/scatterplotLayer'
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
     filters: {},
+    members: [],
     posts: [],
     routeParams: {},
     querystringParams: {},
-    topics: [],
-    zoom: 10
+    topics: []
   }
 
   constructor (props) {
@@ -39,27 +37,16 @@ export default class MapExplorer extends React.Component {
   componentDidUpdate (prevProps) {
     if (!prevProps) return
 
-    const updateCheckFunc = key =>
-      this.props[key] !== prevProps[key] ||
-      this.props.routeParams[key] !== prevProps.routeParams[key]
-
-    if (some(key => updateCheckFunc(key), queryParamWhitelist) ||
-      (this.props.posts.length === 0 && prevProps.posts.length !== 0)) {
+    if (prevProps.fetchPostsParam.boundingBox !== this.props.fetchPostsParam.boundingBox) {
       this.fetchOrShowCached()
     }
   }
 
   fetchOrShowCached = () => {
-    const { fetchPosts, storeFetchPostsParam } = this.props
+    const { fetchMembers, fetchPosts } = this.props
+    fetchMembers()
     fetchPosts()
-    storeFetchPostsParam()
   }
-
-  // fetchMorePosts = () => {
-  //   const { pending, posts, hasMore, fetchPosts } = this.props
-  //   if (pending || posts.length === 0 || !hasMore) return
-  //   fetchPosts(posts.length)
-  // }
 
   mapViewPortUpdate = (update, mapRef) => {
     let bounds = mapRef ? mapRef.getBounds() : null
@@ -72,12 +59,18 @@ export default class MapExplorer extends React.Component {
   updateBoundingBoxQuery = debounce((boundingBox) => {
     this.setState({ boundingBox })
     this.props.storeFetchPostsParam({ boundingBox })
-    this.props.fetchPosts()
   }, 150)
 
   onMapHover = (info) => this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y })
 
-  onMapClick = (info) => { this.setState({ selectedObject: info.object }); this.props.showDetails(info.object.id) }
+  onMapClick = (info) => {
+    this.setState({ selectedObject: info.object })
+    if (info.object.type === 'member') {
+      this.props.gotoMember(info.object.id)
+    } else {
+      this.props.showDetails(info.object.id)
+    }
+  }
 
   updateClientFilters = (opts) => {
     this.props.storeClientFilterParams(opts)
@@ -99,8 +92,10 @@ export default class MapExplorer extends React.Component {
 
   render () {
     const {
+      centerLocation,
       filters,
       querystringParams,
+      members,
       posts,
       pending,
       routeParams,
@@ -110,10 +105,17 @@ export default class MapExplorer extends React.Component {
 
     const { showDrawer } = this.state
 
-    const mapLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
+    const postsLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
+    const membersLayer = createScatterplotLayerFromMembers(members, this.onMapHover, this.onMapClick)
 
     return <div styleName='MapExplorer-container'>
-      <Map layers={[mapLayer]} zoom={zoom} onViewportUpdate={this.mapViewPortUpdate} children={this._renderTooltip()} />
+      <Map
+        center={centerLocation}
+        layers={[membersLayer, postsLayer]}
+        onViewportUpdate={this.mapViewPortUpdate}
+        children={this._renderTooltip()}
+        zoom={zoom}
+      />
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}><Icon name='Stack' green={showDrawer} styleName='icon' /></button>
       { showDrawer ? (
         <MapDrawer
