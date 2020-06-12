@@ -5,8 +5,6 @@ export function mapStateToProps (state, props) {
   let communitiesPlusPublic = props.communities
 
   if (isPublic) {
-    // TODO Update slug for public context when Public Communities and Posts context is available
-    // for now, this links to the user's All Communities view
     communitiesPlusPublic.unshift({ name: 'Public', id: 'public', avatarUrl: '/public-icon.svg', slug: '' })
   }
 

@@ -189,6 +189,8 @@ const EDIT_POST_MATCH = `${POST_DETAIL_MATCH}/:action(edit)`
 const postEditorRoutes = [
   { path: `/all/${NEW_POST_MATCH}` },
   { path: `/all/${EDIT_POST_MATCH}` },
+  { path: `/public/${NEW_POST_MATCH}` },
+  { path: `/public/${EDIT_POST_MATCH}` },
   { path: `/n/:networkSlug/${NEW_POST_MATCH}` },
   { path: `/n/:networkSlug/${EDIT_POST_MATCH}` },
   { path: `/n/:networkSlug/m/:personId/${EDIT_POST_MATCH}` },
