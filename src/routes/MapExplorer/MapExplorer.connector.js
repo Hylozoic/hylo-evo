@@ -106,7 +106,7 @@ export function mapDispatchToProps (dispatch, props) {
     fetchPosts: (params) => () => dispatch(fetchPosts({ ...params })),
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, querystringParams))),
     gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.slug, routeParams.networkSlug))),
-    toggleDrawer: (visible) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), querystringParams))),
+    toggleDrawer: (visible) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), {...querystringParams, showDrawer: visible }))),
     storeFetchPostsParam: param => opts => dispatch(storeFetchPostsParam({ ...param, ...opts })),
     storeClientFilterParams: params => dispatch(storeClientFilterParams(params))
   }
