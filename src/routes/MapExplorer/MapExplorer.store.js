@@ -221,8 +221,8 @@ export const boundingBoxSelector = (state) => {
   return state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null
 }
 
-export const filterPostTypesSelector = (state) => {
-  return state.MapExplorer.clientFilterParams.postTypes
+export const filterContentTypesSelector = (state) => {
+  return state.MapExplorer.clientFilterParams.contentTypes
 }
 
 export const searchTextSelector = (state) => {
@@ -266,8 +266,8 @@ export const getPostsByBoundingBox = createSelector(
 
 export const getPostsFilteredByType = createSelector(
   getPostsByBoundingBox,
-  filterPostTypesSelector,
-  (posts, filterPostTypes) => posts.filter(post => filterPostTypes[post.type])
+  filterContentTypesSelector,
+  (posts, filterContentTypes) => posts.filter(post => filterContentTypes[post.type])
 )
 
 export const getSearchedPosts = createSelector(
@@ -333,9 +333,10 @@ export const getMembersByBoundingBox = createSelector(
 
 export const getSortedFilteredMembers = createSelector(
   getMembersByBoundingBox,
+  filterContentTypesSelector,
   sortBySelector,
-  (members, sortBy) => {
-    return members
+  (members, filterContentTypes, sortBy) => {
+    return filterContentTypes['member'] ? members : []
   }
 )
 
@@ -359,7 +360,7 @@ export const getCurrentTopics = createSelector(
 // reducer
 const DEFAULT_STATE = {
   clientFilterParams: {
-    postTypes: Object.keys(POST_TYPES).reduce((types, type) => { types[type] = true; return types }, {}),
+    contentTypes: Object.keys(POST_TYPES).reduce((types, type) => { types[type] = true; return types }, { 'member': true }),
     search: '',
     sortBy: SORT_OPTIONS[0].id,
     topics: []
@@ -380,7 +381,7 @@ export default function (state = DEFAULT_STATE, action) {
   if (action.type === STORE_CLIENT_FILTER_PARAMS) {
     return {
       ...state,
-      clientFilterParams: { ...state.clientFilterParams, ...action.payload, postTypes: action.payload.postTypes ? { ...action.payload.postTypes } : state.clientFilterParams.postTypes }
+      clientFilterParams: { ...state.clientFilterParams, ...action.payload, contentTypes: action.payload.contentTypes ? { ...action.payload.contentTypes } : state.clientFilterParams.contentTypes }
     }
   }
   return state

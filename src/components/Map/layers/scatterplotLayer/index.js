@@ -1,5 +1,5 @@
 import { ScatterplotLayer } from '@deck.gl/layers'
-import { POST_TYPES } from 'store/models/Post'
+import { CONTENT_TYPES } from 'routes/MapExplorer/MapExplorer'
 import { hexToRgb } from 'util/index'
 
 export function createScatterplotLayerFromPosts (posts, onHover, onClick) {
@@ -10,7 +10,7 @@ export function createScatterplotLayerFromPosts (posts, onHover, onClick) {
         type: post.type,
         message: post.title,
         summary: post.details,
-        color: hexToRgb(POST_TYPES[post.type].primaryColor),
+        color: hexToRgb(CONTENT_TYPES[post.type].primaryColor),
         coordinates: [parseFloat(post.locationObject.center.lng), parseFloat(post.locationObject.center.lat)]
       }
     }), onHover, onClick)
@@ -23,7 +23,7 @@ export function createScatterplotLayerFromMembers (members, onHover, onClick) {
         id: member.id,
         type: 'member',
         message: 'Member: ' + member.name,
-        color: '#2A4059',
+        color: CONTENT_TYPES['member'].primaryColor,
         coordinates: [parseFloat(member.locationObject.center.lng), parseFloat(member.locationObject.center.lat)]
       }
     }), onHover, onClick)

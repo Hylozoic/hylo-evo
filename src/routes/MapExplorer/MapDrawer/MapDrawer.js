@@ -5,7 +5,7 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import PostCard from 'components/PostCard'
 import SwitchStyled from 'components/SwitchStyled'
-import { POST_TYPES } from 'store/models/Post'
+import { CONTENT_TYPES } from 'routes/MapExplorer/MapExplorer'
 import { SORT_OPTIONS } from '../MapExplorer.store'
 import styles from './MapDrawer.scss'
 
@@ -20,15 +20,15 @@ function MapDrawer (props) {
   } = props
 
   const {
-    postTypes,
+    contentTypes,
     sortBy
   } = filters
 
   const searchText = filters.search
 
   const refs = {}
-  Object.keys(postTypes).forEach(postType => {
-    refs[postType] = useRef(null)
+  Object.keys(contentTypes).forEach(contentType => {
+    refs[contentType] = useRef(null)
   })
 
   const [search, setSearch] = useState('')
@@ -44,9 +44,9 @@ function MapDrawer (props) {
     onUpdateFilters({ topics: newFilterTopics })
   }
 
-  const togglePostType = (postType, checked) => {
-    postTypes[postType] = checked
-    onUpdateFilters({ postTypes })
+  const toggleContentType = (type, checked) => {
+    contentTypes[type] = checked
+    onUpdateFilters({ contentTypes })
   }
 
   const postsHTML = posts.map(post =>
@@ -81,20 +81,20 @@ function MapDrawer (props) {
         alignRight
       />
 
-      <div styleName='postTypeFilters'>
-        {['event', 'request', 'offer', 'resource'].map(postType => {
+      <div styleName='contentTypeFilters'>
+        {['event', 'request', 'offer', 'resource', 'member'].map(contentType => {
           return <span
-            key={postType}
-            ref={refs[postType]}
-            styleName='postTypeSwitch'
-            data-tip={(postTypes[postType] ? 'Hide' : 'Show') + ' ' + postType + 's'}
+            key={contentType}
+            ref={refs[contentType]}
+            styleName='contentTypeSwitch'
+            data-tip={(contentTypes[contentType] ? 'Hide' : 'Show') + ' ' + contentType + 's'}
             data-for='post-type-switch'
           >
             <SwitchStyled
-              backgroundColor={POST_TYPES[postType].primaryColor}
-              name={postType}
-              checked={postTypes[postType]}
-              onChange={(checked, name) => togglePostType(name, !checked)}
+              backgroundColor={CONTENT_TYPES[contentType].primaryColor}
+              name={contentType}
+              checked={contentTypes[contentType]}
+              onChange={(checked, name) => toggleContentType(name, !checked)}
             />
           </span>
         })}

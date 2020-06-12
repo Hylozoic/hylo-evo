@@ -3,10 +3,19 @@ import { debounce } from 'lodash'
 import cx from 'classnames'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import './MapExplorer.scss'
+import { POST_TYPES } from 'store/models/Post'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import { createScatterplotLayerFromMembers, createScatterplotLayerFromPosts } from 'components/Map/layers/scatterplotLayer'
+import './MapExplorer.scss'
+
+export const CONTENT_TYPES = {
+  ...POST_TYPES,
+  member: {
+    primaryColor: '#2A4059', // $color-member
+    backgroundColor: '#FAFBFC' // $color-athens-gray
+  }
+}
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {

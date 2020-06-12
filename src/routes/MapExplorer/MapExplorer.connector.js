@@ -58,7 +58,6 @@ export function mapStateToProps (state, props) {
   }
 
   const fetchPostsParam = {
-    filter: props.postTypeFilter,
     subject,
     ...pick([
       'slug',
