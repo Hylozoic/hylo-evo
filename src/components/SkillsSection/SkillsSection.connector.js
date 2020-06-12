@@ -1,3 +1,4 @@
+import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getMe from 'store/selectors/getMe'
@@ -28,12 +29,15 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = {
-  addSkill,
-  removeSkill,
-  fetchSkillSuggestions,
-  fetchMemberSkills,
-  setSearch
+export function mapDispatchToProps (dispatch) {
+  return {
+    addSkill,
+    removeSkill,
+    fetchSkillSuggestions,
+    fetchMemberSkills,
+    setSearch,
+    searchForSkill: (skill) => dispatch(push('/search?t=' + skill))
+  }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {

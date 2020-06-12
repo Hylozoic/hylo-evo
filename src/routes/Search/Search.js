@@ -35,6 +35,9 @@ export default class Search extends Component {
     if (!searchForInput && searchFromQueryString) {
       setSearchTerm(searchFromQueryString)
     }
+    if (searchFromQueryString) {
+      this.props.fetchSearchResults()
+    }
   }
 
   componentDidUpdate (prevProps) {
@@ -49,6 +52,7 @@ export default class Search extends Component {
       pending,
       searchResults,
       searchForInput,
+      searchFromQueryString,
       setSearchTerm,
       updateQueryParam,
       fetchMoreSearchResults,
@@ -59,7 +63,7 @@ export default class Search extends Component {
 
     return <FullPageModal>
       <div styleName='search'>
-        <SearchBar {...{ searchForInput, setSearchTerm, updateQueryParam, setSearchFilter, filter }} />
+        <SearchBar {...{ searchForInput, searchFromQueryString, setSearchTerm, updateQueryParam, setSearchFilter, filter }} />
         <div styleName='search-results'
           id={SEARCH_RESULTS_ID}>
           {searchResults.map(sr =>
@@ -78,6 +82,7 @@ export default class Search extends Component {
 
 export function SearchBar ({
   searchForInput,
+  searchFromQueryString,
   setSearchTerm,
   updateQueryParam,
   setSearchFilter,
@@ -91,7 +96,7 @@ export function SearchBar ({
   return <div styleName='search-bar'>
     <TextInput theme={styles}
       inputRef={x => x && x.focus()}
-      value={searchForInput}
+      value={searchForInput || searchFromQueryString}
       placeholder='Search'
       onChange={onSearchChange} />
     <TabBar setSearchFilter={setSearchFilter} filter={filter} />

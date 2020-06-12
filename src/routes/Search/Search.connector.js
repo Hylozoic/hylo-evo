@@ -16,7 +16,7 @@ import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
 export function mapStateToProps (state, props) {
-  const searchFromQuerystring = getQuerystringParam('t', state, props)
+  const searchFromQueryString = getQuerystringParam('t', state, props)
   const searchForInput = getSearchTerm(state, props)
   const filter = getSearchFilter(state, props)
   const queryResultProps = { search: searchForInput, type: filter }
@@ -26,7 +26,7 @@ export function mapStateToProps (state, props) {
     pending: !!state.pending[FETCH_SEARCH],
     searchResults,
     searchForInput,
-    searchFromQuerystring,
+    searchFromQueryString,
     filter,
     hasMore
   }
@@ -44,17 +44,17 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { searchForInput, searchResults, hasMore, filter } = stateProps
+  const { searchForInput, searchFromQueryString, searchResults, hasMore, filter } = stateProps
   const { fetchSearchResultsDebounced } = dispatchProps
 
   const offset = get('length', searchResults)
 
   const fetchSearchResults = () => {
-    return fetchSearchResultsDebounced({ search: searchForInput, filter })
+    return fetchSearchResultsDebounced({ search: searchForInput || searchFromQueryString, filter })
   }
 
   const fetchMoreSearchResults = () => hasMore
-    ? fetchSearchResultsDebounced({ search: searchForInput, filter, offset })
+    ? fetchSearchResultsDebounced({ search: searchForInput || searchFromQueryString, filter, offset })
     : () => {}
 
   return {

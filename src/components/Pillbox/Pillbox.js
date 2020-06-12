@@ -71,7 +71,7 @@ export default class Pillbox extends Component {
   }, 200)
 
   render () {
-    const { addLabel = 'Add', editable, handleDelete } = this.props
+    const { addLabel = 'Add', editable, handleClick, handleDelete } = this.props
 
     let { pills, placeholder = 'type here', suggestions } = this.props
 
@@ -130,6 +130,7 @@ export default class Pillbox extends Component {
           {pills.map(pill =>
             <Pill key={pill.id}
               {...pill}
+              handleClick={handleClick}
               editable={editable}
               onRemove={handleDelete} />)}
         </CSSTransitionGroup>
@@ -159,7 +160,7 @@ export class Pill extends Component {
   }
 
   render () {
-    const { id, label, onRemove, className, editable } = this.props
+    const { id, label, onRemove, className, editable, handleClick } = this.props
     const { removing } = this.state
 
     const onClick = () => {
@@ -170,6 +171,10 @@ export class Pill extends Component {
           this.setState({ removing: true })
         }
       }
+
+      if (handleClick) {
+        handleClick(id, label)
+      }
     }
 
     const mouseOut = () => {
@@ -179,6 +184,7 @@ export class Pill extends Component {
     const pillStyles = cx(
       'styles.pill',
       {
+        'styles.clickable': !!handleClick,
         'styles.removable': editable && onRemove,
         'styles.removing': editable && onRemove && removing
       }

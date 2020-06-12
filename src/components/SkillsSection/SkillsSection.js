@@ -35,6 +35,10 @@ export default class SkillsSection extends Component {
 
   handleDelete = skillId => this.props.removeSkill(skillId)
 
+  handleClick = (skillId, skillLabel) => {
+    this.props.searchForSkill(skillLabel)
+  }
+
   render () {
     if (this.props.loading) return <Loading />
 
@@ -47,18 +51,19 @@ export default class SkillsSection extends Component {
     return (
       <div>
         <div styleName='header'>
-          My Skills
+          My Skills &amp; Interests
         </div>
         <div
           styleName={cx('pill-container', 'expanded')}>
           <Pillbox
             pills={map(skills, skill => ({ ...skill, label: skill.name }))}
             handleInputChange={this.handleInputChange}
+            handleClick={this.handleClick}
             handleAddition={this.handleAddition}
             handleDelete={this.handleDelete}
             editable={isMe}
-            addLabel='Add a Skill'
-            placeholder={`What ${!isEmpty(skills) ? 'other ' : ''}skills do you have?`}
+            addLabel='Add a Skill or Interest'
+            placeholder={`What ${!isEmpty(skills) ? 'other ' : ''}skills and interests do you have?`}
             suggestions={skillSuggestions}
           />
         </div>
