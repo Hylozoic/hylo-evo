@@ -131,7 +131,6 @@ export default class MapExplorer extends React.Component {
     const membersLayer = createScatterplotLayerFromMembers(members, this.onMapHover, this.onMapClick)
 
     return <div styleName='MapExplorer-container'>
-      { pending && <Loading /> }
       <Map
         center={centerLocation}
         layers={[membersLayer, postsLayer]}
@@ -174,6 +173,8 @@ export default class MapExplorer extends React.Component {
           </div>
         })}
       </div>
+
+      { pending && <Loading /> }
     </div>
   }
 }
