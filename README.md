@@ -9,6 +9,8 @@
 
 1. `yarn install`
 2. `yarn start`
+3. Setup [hylo-node](https://github.com/Hylozoic/hylo-node) and run that locally as well.
+4. Run hylo-node
 
 ## Building for standard Hylo API deployment
 
@@ -20,6 +22,13 @@
 1. Optionally set `HOLOCHAIN_BUILD_PATH` in your local `.env` file. Defaults to `<projectRoot>/build-hc`
 2. Run `yarn build:hc`
 3. Once complete Hylo+Holochain is ready to be served at `<HOLOCHAIN_BUILD_PATH>`
+
+## Build with the Storybook
+
+1. A storybook as been added to the project, yay!
+2. Almost no components have been added, que triste!
+3. If you are building a new UI component, please add :)
+4. Run the storybook with `yarn storybook`
 
 ## Further documentation
 

@@ -58,9 +58,9 @@ export default class ThreadList extends Component {
         })}
         {threadsPending &&
           <Loading type='bottom' />}
-        {isEmpty(threads) && !threadSearch &&
+        {!threadsPending && isEmpty(threads) && !threadSearch &&
           <div styleName='no-conversations'>You have no active conversations</div>}
-        {isEmpty(threads) && threadSearch &&
+        {!threadsPending && isEmpty(threads) && threadSearch &&
           <div styleName='no-conversations'>No conversations found</div>}
       </ul>
       <ScrollListener

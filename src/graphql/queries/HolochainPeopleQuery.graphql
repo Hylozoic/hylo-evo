@@ -4,13 +4,6 @@ query HolochainPeopleQuery ($first: Int) {
       id
       name
       avatarUrl
-      memberships (first: 1) {
-        id
-        community {
-          id
-          name
-        }
-      }
     }
   }
 }

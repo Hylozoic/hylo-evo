@@ -1,5 +1,6 @@
 import React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
+import LocationInput from 'components/LocationInput'
 import './SettingsControl.scss'
 
 export default function SettingsControl ({ label, value = '', onChange, type, ...otherProps }) {
@@ -20,6 +21,12 @@ export default function SettingsControl ({ label, value = '', onChange, type, ..
         value={value}
         onChange={onChange}
         {...otherProps} />
+      break
+    case 'location':
+      control = <LocationInput
+        onChange={onChange}
+        {...otherProps}
+      />
       break
     default:
       control = <input styleName='control-input'

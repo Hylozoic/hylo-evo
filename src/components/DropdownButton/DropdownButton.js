@@ -14,7 +14,7 @@ export default class DropdownButton extends Component {
     })
   }
 
-  onChoose = value => {
+  onChoose = (value, label) => {
     const { onChoose } = this.props
     this.setState({
       expanded: false
@@ -25,6 +25,7 @@ export default class DropdownButton extends Component {
   render () {
     const { label, className, choices } = this.props
     const { expanded } = this.state
+
     return <div>
       <div
         role='button'
@@ -35,7 +36,7 @@ export default class DropdownButton extends Component {
       </div>
       <div styleName={cx('dropdown', { expanded })}>
         {choices.map(({ label, value }) =>
-          <span styleName='choice' key={value} onClick={() => this.onChoose(value)}>{label}</span>)}
+          <span styleName='choice' key={value} onClick={() => this.onChoose(value, label)}>{label}</span>)}
       </div>
     </div>
   }

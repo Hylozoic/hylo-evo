@@ -19,6 +19,12 @@ Community.modelName = 'Community'
 
 Community.fields = {
   id: attr(),
+  slug: attr(),
+  location: attr(),
+  locationId: fk({
+    to: 'Location',
+    as: 'locationObject'
+  }),
   name: attr(),
   members: many('Person'),
   moderators: many({

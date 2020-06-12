@@ -1,0 +1,60 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  background: none;
+  /* prevent autoresize overflowing the container */
+  width: 100%;
+  /* remove styles and layout from this element */
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  color: $color-rhino-80;
+  /* match the font styles */
+  font-size: inherit;
+  line-height: inherit;
+}
+
+
+.input::placeholder {
+  color: $color-rhino-30;
+}
+
+.input::-ms-clear {
+  display: none;
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 380px;
+  background: white;
+  margin: 4px -1px;
+  padding: 0;
+  list-style: none;
+  background: white;
+  border: 1px solid #D1D1D1;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.result {
+  display: block;
+  padding: 6px;
+}
+
+.selectedResult {
+  background: #dddddd;
+}
+
+@media screen and (min-width: 30em) {
+  .suggestions {
+    min-width: 240px;
+  }
+}

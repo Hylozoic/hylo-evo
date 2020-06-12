@@ -1,32 +1,45 @@
+import cx from 'classnames'
 import React, { Component } from 'react'
 import LeftSidebar from '../LeftSidebar'
 import { hyloNameWhiteBackground } from 'util/assets'
 import { bgImageStyle } from 'util/index'
+import LocationInput from 'components/LocationInput'
 import SignupModalFooter from '../SignupModalFooter'
-import '../Signup.scss'
+import styles from '../Signup.scss'
 
 export default class AddLocation extends Component {
   constructor () {
     super()
     this.state = {
+      locationId: null,
       location: ''
     }
   }
-  handleLocationChange = (event) => {
-    const location = event.target.value
-    this.setState({
-      location
-    })
+
+  componentDidMount = () => {
+    this.setLocation()
   }
+
   setLocation = () => {
     const { currentUser } = this.props
     if (currentUser && currentUser.location) {
-      this.setState({ location: currentUser.location })
+      this.setState({
+        locationId: currentUser.locationObject ? currentUser.locationObject.id : null,
+        location: currentUser.location
+      })
     }
   }
+
+  handleLocationChange = (location) => {
+    this.setState({
+      locationId: location.id,
+      location: location.fullText
+    })
+  }
+
   submit = () => {
-    const location = this.state.location
-    this.props.updateUserSettings({ location })
+    const { locationId, location } = this.state
+    this.props.updateUserSettings({ location, locationId })
     this.props.goToNextStep()
   }
 
@@ -34,11 +47,14 @@ export default class AddLocation extends Component {
     this.props.goToPreviousStep()
   }
 
-  componentDidMount = () => {
-    this.setLocation()
-  }
-
   render () {
+    const inputClass = cx({
+      [styles['signup-input']]: true,
+      [styles['signup-padding']]: true,
+      [styles['large-input-text']]: true,
+      [styles['gray-bottom-border']]: true
+    })
+
     return <div styleName='flex-wrapper'>
       <LeftSidebar
         header='Add your location'
@@ -51,17 +67,17 @@ export default class AddLocation extends Component {
           <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
         </div>
         <div styleName='center'>
-          <input
-            styleName='signup-input signup-padding large-input-text gray-bottom-border'
+          <LocationInput
+            inputClass={inputClass}
+            location={this.state.location}
+            locationObject={this.props.currentUser ? this.props.currentUser.locationObject : null}
             onChange={this.handleLocationChange}
+            placeholder='Where do you call home?'
             onKeyPress={event => {
               if (event.key === 'Enter') {
                 this.submit()
               }
             }}
-            value={this.state.location}
-            autoFocus
-            placeholder={'Where do you call home?'}
           />
         </div>
         <div>

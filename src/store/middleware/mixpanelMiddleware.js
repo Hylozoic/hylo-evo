@@ -2,6 +2,7 @@ import { get, isString, isObject, omit } from 'lodash/fp'
 import getMixpanel from '../selectors/getMixpanel'
 import getIsLoggedIn from '../selectors/getIsLoggedIn'
 import getMe from '../selectors/getMe'
+import { isDev } from 'config'
 
 export default function mixpanelMiddleware (store) {
   return next => action => {
@@ -14,8 +15,7 @@ export default function mixpanelMiddleware (store) {
       // NOTE: the mixpanel object is initialized in initialState of the store creation
       const state = store.getState()
       const mixpanel = getMixpanel(state)
-
-      if (!mixpanel) return next(action)
+      if (isDev || !mixpanel) return next(action)
 
       const isLoggedIn = getIsLoggedIn(state)
       const { analytics } = meta

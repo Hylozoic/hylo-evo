@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { attr, many, Model } from 'redux-orm'
+import { attr, fk, many, Model } from 'redux-orm'
 
 const Person = Model.createClass({
   toString () {
@@ -22,6 +22,10 @@ Person.fields = {
   linkedinUrl: attr(),
   url: attr(),
   location: attr(),
+  locationId: fk({
+    to: 'Location',
+    as: 'locationObject'
+  }),
   skills: many('Skill'),
   postsTotal: attr(),
   votesTotal: attr()

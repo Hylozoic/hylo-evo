@@ -15,7 +15,8 @@ export default
   $eventInviteeIds: [ID],
   $startTime: String,
   $endTime: String,
-  $location: String
+  $location: String,
+  $locationId: ID
 ) {
   createPost(data: {
     type: $type,
@@ -31,6 +32,7 @@ export default
     eventInviteeIds: $eventInviteeIds,
     startTime: $startTime,
     endTime: $endTime,
-    location: $location
+    location: $location,
+    locationId: $locationId
   }) {${postFieldsFragment(false)}}
 }`

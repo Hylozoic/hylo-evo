@@ -35,6 +35,11 @@ Post.fields = {
   id: attr(),
   title: attr(),
   type: attr(),
+  location: attr(),
+  locationId: fk({
+    to: 'Location',
+    as: 'locationObject'
+  }),
   details: attr(),
   linkPreview: fk('LinkPreview', 'posts'),
   creator: fk('Person', 'posts'),
@@ -77,6 +82,8 @@ export const POST_PROP_TYPES = {
   type: PropTypes.string,
   title: PropTypes.string,
   details: PropTypes.string,
+  location: PropTypes.string,
+  locationObject: PropTypes.object,
   name: PropTypes.string,
   upVotes: PropTypes.string,
   updatedAt: PropTypes.string,

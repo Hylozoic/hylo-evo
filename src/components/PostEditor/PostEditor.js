@@ -11,6 +11,7 @@ import AttachmentManager from './AttachmentManager'
 import { uploadSettings } from './AttachmentManager/AttachmentManager'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
+import LocationInput from 'components/LocationInput'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
@@ -55,13 +56,21 @@ export default class PostEditor extends React.Component {
       default: 'What are you looking to post?'
     },
     titlePlaceholderForPostType: {
-      offer: 'What super powers can you offer?',
+      offer: 'What help can you offer?',
       request: 'What are you looking for help with?',
+      resource: 'What resource is available?',
       project: 'What would you like to call your project?',
       event: 'What is your event called?',
       default: 'What’s on your mind?'
     },
-    detailsPlaceholder: 'Add a description',
+    detailPlaceholderForPostType: {
+      offer: 'Add a description',
+      request: 'Add a description',
+      resource: 'Please describe the physical resource that is available, including the location.',
+      project: 'Add a description',
+      event: 'Add a description',
+      default: 'Add a description'
+    },
     post: {
       type: 'discussion',
       title: '',
@@ -92,6 +101,7 @@ export default class PostEditor extends React.Component {
       post: currentPost,
       initialPrompt: initialPrompt || this.initialPromptForPostType(currentPost.type),
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
+      detailPlaceholder: this.detailPlaceholderForPostType(currentPost.type),
       valid: editing === true, // if we're editing, than it's already valid upon entry.
       announcementSelected: announcementSelected,
       toggleAnnouncementModal: false,
@@ -145,6 +155,7 @@ export default class PostEditor extends React.Component {
     this.setState({
       post: { ...this.state.post, type },
       titlePlaceholder: this.titlePlaceholderForPostType(type),
+      detailPlaceholder: this.detailPlaceholderForPostType(type),
       valid: this.isValid({ type })
     })
   }
@@ -152,6 +163,11 @@ export default class PostEditor extends React.Component {
   titlePlaceholderForPostType (type) {
     const { titlePlaceholderForPostType } = this.props
     return titlePlaceholderForPostType[type] || titlePlaceholderForPostType['default']
+  }
+
+  detailPlaceholderForPostType (type) {
+    const { detailPlaceholderForPostType } = this.props
+    return detailPlaceholderForPostType[type] || detailPlaceholderForPostType['default']
   }
 
   initialPromptForPostType (type) {
@@ -228,10 +244,10 @@ export default class PostEditor extends React.Component {
     }
   }
 
-  handleLocationChange = event => {
-    const location = event.target.value
+  handleLocationChange = locationObject => {
     this.setState({
-      post: { ...this.state.post, location }
+      post: { ...this.state.post, location: locationObject.fullText, locationId: locationObject.id },
+      valid: this.isValid({ locationId: locationObject.id })
     })
   }
 
@@ -285,7 +301,7 @@ export default class PostEditor extends React.Component {
   }
 
   isValid = (postUpdates = {}) => {
-    const { type, title, communities, startTime, endTime } = Object.assign({}, this.state.post, postUpdates)
+    const { type, title, communities, startTime, endTime, locationId } = Object.assign({}, this.state.post, postUpdates)
     const { isEvent } = this.props
 
     return !!(this.editor.current &&
@@ -294,7 +310,8 @@ export default class PostEditor extends React.Component {
       title.length > 0 &&
       communities.length > 0 &&
       title.length <= MAX_TITLE_LENGTH &&
-      (!isEvent || (endTime && (startTime < endTime)))
+      (!isEvent || (endTime && (startTime < endTime))) &&
+      (type !== 'resource' || locationId)
     )
   }
 
@@ -303,14 +320,14 @@ export default class PostEditor extends React.Component {
       editing, createPost, createProject, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected, isProject
     } = this.props
     const {
-      id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, location
+      id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, location, locationId
     } = this.state.post
     const details = this.editor.current.getContentHTML()
     const topicNames = this.topicSelector.current.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId
     }
     const saveFunc = editing ? updatePost : isProject ? createProject : createPost
     setAnnouncement(false)
@@ -333,18 +350,22 @@ export default class PostEditor extends React.Component {
   }
 
   render () {
-    const { initialPrompt, titlePlaceholder, titleLengthError, dateError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
-    const { id, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location } = post
+    const { initialPrompt, titlePlaceholder, detailPlaceholder, titleLengthError, dateError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
+    const { id, type, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location, locationObject } = post
+
     const {
-      onClose, detailsPlaceholder,
-      currentUser, communityOptions, loading, addImage,
+      onClose, currentUser, communityOptions, loading, addImage,
       showImages, addFile, showFiles, setAnnouncement, announcementSelected,
       canModerate, myModeratedCommunities, isProject, isEvent
     } = this.props
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
-
+    const hasLocation = ['event', 'offer', 'request', 'resource'].includes(type)
     const showPostTypes = !isProject && !isEvent
+    const canHaveTimes = type !== 'discussion'
+
+    // Center location autocomplete either on post's current location, or current community's location, or current user's location
+    const curLocation = locationObject || (communities.length > 0 ? communities[0].locationObject : null) || currentUser.locationObject
 
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
       <div styleName='header'>
@@ -356,6 +377,7 @@ export default class PostEditor extends React.Component {
           <Button {...this.postTypeButtonProps('discussion')} />
           <Button {...this.postTypeButtonProps('request')} />
           <Button {...this.postTypeButtonProps('offer')} />
+          <Button {...this.postTypeButtonProps('resource')} />
         </div>}
       </div>
       <div styleName='body'>
@@ -379,7 +401,7 @@ export default class PostEditor extends React.Component {
           {titleLengthError && <span styleName='title-error'>{`Title can't have more than ${MAX_TITLE_LENGTH} characters`}</span>}
           <HyloEditor
             styleName='editor'
-            placeholder={detailsPlaceholder}
+            placeholder={detailPlaceholder}
             onChange={this.handleDetailsChange}
             contentHTML={details}
             readOnly={loading}
@@ -413,23 +435,22 @@ export default class PostEditor extends React.Component {
             To accept financial contributions for this project, you have to connect a Stripe account. Go to <a href='/settings/payment'>Settings</a> to set it up. (Remember to save your changes before leaving this form)
           </div>}
         </div>}
-        {isEvent && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
-        {isEvent && <div styleName='footerSection'>
-          <div styleName='footerSection-label alignedLabel'>Start Time</div>
-          <DatePicker value={startTime} onChange={this.handleStartTimeChange} />
+        {canHaveTimes && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
+        {canHaveTimes && <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Timeframe</div>
+          <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+            <DatePicker value={startTime} placeholder={'Select Start Time'} onChange={this.handleStartTimeChange} />
+            <div styleName='footerSection-helper'>To</div>
+            <DatePicker value={endTime} placeholder={'Select End Time'} onChange={this.handleEndTimeChange} />
+          </div>
         </div>}
-        {isEvent && <div styleName='footerSection'>
-          <div styleName='footerSection-label alignedLabel'>End Time</div>
-          <DatePicker value={endTime} onChange={this.handleEndTimeChange} />
-        </div>}
-        {isEvent && <div styleName='footerSection'>
+        {hasLocation && <div styleName='footerSection'>
           <div styleName='footerSection-label alignedLabel'>Location</div>
-          <input
-            type='text'
-            styleName='locationInput'
-            placeholder='Where is your event'
-            value={location || ''}
+          <LocationInput
+            locationObject={curLocation}
+            location={location}
             onChange={this.handleLocationChange}
+            placeholder={`Where is your ${type} located?`}
           />
         </div>}
         {isEvent && <div styleName='footerSection'>

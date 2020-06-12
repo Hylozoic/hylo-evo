@@ -1,7 +1,7 @@
 #import '../fragments/HolochainPostFieldsFragment.graphql'
 
 mutation HolochainCreatePostMutation (
-  $communitySlug: String,
+  $communityId: String,
   $type: String,
   $title: String,
   $details: String,
@@ -12,7 +12,7 @@ mutation HolochainCreatePostMutation (
     title: $title,
     details: $details,
     type: $type,
-    communitySlug: $communitySlug,
+    communityId: $communityId,
     createdAt: $createdAt,
   }) {
     ...HolochainPostFieldsFragment

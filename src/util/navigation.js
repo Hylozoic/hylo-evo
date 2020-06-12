@@ -129,11 +129,11 @@ export function editPostUrl (id, opts = {}, querystringParams = {}) {
 }
 
 export function newPostUrl (opts = {}, querystringParams = {}) {
-  return postUrl('new', { ...opts }, querystringParams)
+  return postUrl('new', opts, querystringParams)
 }
 
-export function commentUrl (postId, commentId, communitySlug) {
-  return `${postUrl(postId, { communitySlug })}#comment_${commentId}`
+export function commentUrl (postId, commentId, opts = {}, querystringParams = {}) {
+  return `${postUrl(postId, opts, querystringParams)}#comment_${commentId}`
 }
 
 export function communitySettingsUrl (communitySlug) {

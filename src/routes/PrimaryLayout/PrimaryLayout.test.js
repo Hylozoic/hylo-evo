@@ -3,8 +3,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import orm from 'store/models'
 import PrimaryLayout, {
-  redirectIfCommunity,
-  RedirectToCommunity
+  redirectIfCommunity
+  // RedirectToCommunity
 } from './PrimaryLayout'
 
 it('shows NotFound if a currentUser is loaded and the community does not exist', () => {

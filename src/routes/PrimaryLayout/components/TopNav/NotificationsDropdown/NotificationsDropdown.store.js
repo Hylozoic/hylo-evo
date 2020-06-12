@@ -35,6 +35,10 @@ export function fetchNotifications () {
               post {
                 id
                 title
+                communities {
+                  id
+                  slug
+                }
               }
               community {
                 id

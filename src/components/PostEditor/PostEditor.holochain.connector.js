@@ -73,13 +73,13 @@ export const createPost = graphql(HolochainCreatePostMutation, {
   props: ({ mutate, ownProps }) => ({
     createPost: post => mutate({
       variables: {
-        communitySlug: getRouteParam('slug', {}, ownProps),
-        createdAt: currentDateString(),
         ...pick([
           'type',
           'title',
           'details'
-        ], post)
+        ], post),
+        createdAt: currentDateString(),
+        communityId: get('communities[0].id', post)
       },
       refetchQueries: [{
         query: HolochainCommunityQuery,
