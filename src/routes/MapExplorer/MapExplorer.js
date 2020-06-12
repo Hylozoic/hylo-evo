@@ -6,10 +6,11 @@ import Loading from 'components/Loading'
 import { POST_TYPES } from 'store/models/Post'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
+import SwitchStyled from 'components/SwitchStyled'
 import { createScatterplotLayerFromMembers, createScatterplotLayerFromPosts } from 'components/Map/layers/scatterplotLayer'
 import './MapExplorer.scss'
 
-export const CONTENT_TYPES = {
+export const FEATURE_TYPES = {
   ...POST_TYPES,
   member: {
     primaryColor: '#2A4059', // $color-member
@@ -35,11 +36,17 @@ export default class MapExplorer extends React.Component {
       pointerX: 0,
       pointerY: 0,
       selectedObject: null,
-      showDrawer: props.querystringParams.showDrawer === 'true'
+      showDrawer: props.querystringParams.showDrawer === 'true',
+      showFeatureFilters: false
     }
   }
 
   componentDidMount () {
+    this.refs = {}
+    Object.keys(FEATURE_TYPES).forEach(featureType => {
+      this.refs[featureType] = React.createRef()
+    })
+
     // this.fetchOrShowCached()
   }
 
@@ -81,8 +88,10 @@ export default class MapExplorer extends React.Component {
     }
   }
 
-  updateClientFilters = (opts) => {
-    this.props.storeClientFilterParams(opts)
+  toggleFeatureType = (type, checked) => {
+    const featureTypes = this.props.filters.featureTypes
+    featureTypes[type] = checked
+    this.props.storeClientFilterParams({ featureTypes })
   }
 
   _renderTooltip = () => {
@@ -99,6 +108,10 @@ export default class MapExplorer extends React.Component {
     this.props.toggleDrawer(!this.state.showDrawer)
   }
 
+  toggleFeatureFilters = (e) => {
+    this.setState({ showFeatureFilters: !this.state.showFeatureFilters })
+  }
+
   render () {
     const {
       centerLocation,
@@ -112,12 +125,13 @@ export default class MapExplorer extends React.Component {
       zoom
     } = this.props
 
-    const { showDrawer } = this.state
+    const { showDrawer, showFeatureFilters } = this.state
 
     const postsLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
     const membersLayer = createScatterplotLayerFromMembers(members, this.onMapHover, this.onMapClick)
 
     return <div styleName='MapExplorer-container'>
+      { pending && <Loading /> }
       <Map
         center={centerLocation}
         layers={[membersLayer, postsLayer]}
@@ -125,18 +139,41 @@ export default class MapExplorer extends React.Component {
         children={this._renderTooltip()}
         zoom={zoom}
       />
-      <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}><Icon name='Stack' green={showDrawer} styleName='icon' /></button>
+      <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}>
+        <Icon name='Stack' green={showDrawer} styleName='icon' />
+      </button>
       { showDrawer ? (
         <MapDrawer
           filters={filters}
-          onUpdateFilters={this.updateClientFilters}
+          onUpdateFilters={this.props.storeClientFilterParams}
           posts={posts}
           topics={topics}
           querystringParams={querystringParams}
           routeParams={routeParams}
         />)
         : '' }
-      { pending && <Loading /> }
+
+      <button styleName={cx('toggleFeatureFiltersButton', { 'featureFiltersOpen': showFeatureFilters })} onClick={this.toggleFeatureFilters}>
+        <Icon name='Stack' styleName='icon' />
+      </button>
+      <div styleName={cx('featureTypeFilters', { 'featureFiltersOpen': showFeatureFilters })}>
+        <h3>What do you want to see on the map?</h3>
+        {['event', 'request', 'offer', 'resource', 'member'].map(featureType => {
+          return <div
+            key={featureType}
+            ref={this.refs[featureType]}
+            styleName='featureTypeSwitch'
+          >
+            <SwitchStyled
+              backgroundColor={FEATURE_TYPES[featureType].primaryColor}
+              name={featureType}
+              checked={filters.featureTypes[featureType]}
+              onChange={(checked, name) => this.toggleFeatureType(name, !checked)}
+            />
+            <span>{featureType.charAt(0).toUpperCase() + featureType.slice(1)}s</span>
+          </div>
+        })}
+      </div>
     </div>
   }
 }

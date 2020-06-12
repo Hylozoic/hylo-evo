@@ -48,3 +48,35 @@
   background-color: white;
   border: 1px solid black;
 }
+
+.toggleFeatureFiltersButton {
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+
+  &.featureFiltersOpen {
+    color: white;
+    background-color: green;
+  }
+}
+
+.featureTypeFilters {
+  position: absolute;
+  bottom: 41px;
+  left: 20px;
+  width: 200px;
+  background: white;
+  border: 1px solid gray;
+  display: none;
+
+  &.featureFiltersOpen {
+    display: block;
+  }
+}
+
+.featureTypeSwitch {
+  margin-left: 10px;
+  > span {
+    margin-left: 10px;
+  }
+}

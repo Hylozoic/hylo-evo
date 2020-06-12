@@ -222,7 +222,7 @@ export const boundingBoxSelector = (state) => {
 }
 
 export const filterContentTypesSelector = (state) => {
-  return state.MapExplorer.clientFilterParams.contentTypes
+  return state.MapExplorer.clientFilterParams.featureTypes
 }
 
 export const searchTextSelector = (state) => {
@@ -360,7 +360,7 @@ export const getCurrentTopics = createSelector(
 // reducer
 const DEFAULT_STATE = {
   clientFilterParams: {
-    contentTypes: Object.keys(POST_TYPES).reduce((types, type) => { types[type] = true; return types }, { 'member': true }),
+    featureTypes: Object.keys(POST_TYPES).reduce((types, type) => { types[type] = true; return types }, { 'member': true }),
     search: '',
     sortBy: SORT_OPTIONS[0].id,
     topics: []
@@ -381,7 +381,7 @@ export default function (state = DEFAULT_STATE, action) {
   if (action.type === STORE_CLIENT_FILTER_PARAMS) {
     return {
       ...state,
-      clientFilterParams: { ...state.clientFilterParams, ...action.payload, contentTypes: action.payload.contentTypes ? { ...action.payload.contentTypes } : state.clientFilterParams.contentTypes }
+      clientFilterParams: { ...state.clientFilterParams, ...action.payload, featureTypes: action.payload.featureTypes ? { ...action.payload.featureTypes } : state.clientFilterParams.featureTypes }
     }
   }
   return state

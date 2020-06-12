@@ -1,11 +1,8 @@
-import React, { useRef, useState } from 'react'
-import ReactTooltip from 'react-tooltip'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import PostCard from 'components/PostCard'
-import SwitchStyled from 'components/SwitchStyled'
-import { CONTENT_TYPES } from 'routes/MapExplorer/MapExplorer'
 import { SORT_OPTIONS } from '../MapExplorer.store'
 import styles from './MapDrawer.scss'
 
@@ -20,16 +17,10 @@ function MapDrawer (props) {
   } = props
 
   const {
-    contentTypes,
     sortBy
   } = filters
 
   const searchText = filters.search
-
-  const refs = {}
-  Object.keys(contentTypes).forEach(contentType => {
-    refs[contentType] = useRef(null)
-  })
 
   const [search, setSearch] = useState('')
   const [isSearching, setIsSearching] = useState(false)
@@ -44,11 +35,6 @@ function MapDrawer (props) {
     onUpdateFilters({ topics: newFilterTopics })
   }
 
-  const toggleContentType = (type, checked) => {
-    contentTypes[type] = checked
-    onUpdateFilters({ contentTypes })
-  }
-
   const postsHTML = posts.map(post =>
     <PostCard
       routeParams={routeParams}
@@ -61,9 +47,6 @@ function MapDrawer (props) {
 
   // Don't show topics we are already filtering by in searches
   const searchTopics = topics.filter(topic => !filters.topics.find(t => t.name === topic.name))
-
-  // TODO: try this onComponentUpdate? make this a full class component
-  ReactTooltip.rebuild()
 
   return (
     <div styleName='container'>
@@ -126,33 +109,7 @@ function MapDrawer (props) {
         })}
       </div>
 
-      Filter by content type: <div styleName='contentTypeFilters'>
-        {['event', 'request', 'offer', 'resource', 'member'].map(contentType => {
-          return <span
-            key={contentType}
-            ref={refs[contentType]}
-            styleName='contentTypeSwitch'
-            data-tip={(contentTypes[contentType] ? 'Hide' : 'Show') + ' ' + contentType + 's'}
-            data-for='post-type-switch'
-          >
-            <SwitchStyled
-              backgroundColor={CONTENT_TYPES[contentType].primaryColor}
-              name={contentType}
-              checked={contentTypes[contentType]}
-              onChange={(checked, name) => toggleContentType(name, !checked)}
-            />
-          </span>
-        })}
-      </div>
-      <ReactTooltip
-        effect={'solid'}
-        place='bottom'
-        delayShow={20}
-        id='post-type-switch'
-      />
-
       <h1>{posts.length} result{posts.length === 1 ? '' : 's'} in this area</h1>
-
       <Dropdown styleName='sorter'
         toggleChildren={<span styleName='sorter-label'>
           {SORT_OPTIONS.find(o => o.id === sortBy).label}
