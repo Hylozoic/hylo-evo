@@ -19,7 +19,7 @@ export default function FeedBanner ({
   let bannerUrl, avatarUrl, name, location, subtitle
 
   if (all) {
-    name = 'All Communities'
+    name = 'All My Communities'
     avatarUrl = whiteMerkaba
     bannerUrl = allCommunitiesBanner
     subtitle = currentUser && `${currentUser.memberships.count()} Communities`
