@@ -6,7 +6,7 @@ import Loading from 'components/Loading'
 import { POST_TYPES } from 'store/models/Post'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
-import { createClusterLayerFromPosts, createIconLayerFromPosts } from 'components/Map/layers/clusterLayer'
+import { createIconLayerFromPosts } from 'components/Map/layers/clusterLayer'
 import SwitchStyled from 'components/SwitchStyled'
 import { createScatterplotLayerFromMembers, createScatterplotLayerFromPosts } from 'components/Map/layers/scatterplotLayer'
 import './MapExplorer.scss'
@@ -148,13 +148,13 @@ export default class MapExplorer extends React.Component {
 // =======
     const postsLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
     const membersLayer = createScatterplotLayerFromMembers(members, this.onMapHover, this.onMapClick)
-    const mapLayer = createIconLayerFromPosts({ posts, onHover: this.onMapHover, onClick: this.onMapClick })
-
+    const clusterLayers = createIconLayerFromPosts({ posts, onHover: this.onMapHover, onClick: this.onMapClick })
+    // including all three layers for now to show difference between clustered and non-cluster layers
 
     return <div styleName='MapExplorer-container'>
       <Map
         center={centerLocation}
-        layers={[membersLayer, postsLayer, mapLayer]}
+        layers={[membersLayer, postsLayer, clusterLayers]}
         onViewportUpdate={this.mapViewPortUpdate}
         children={this._renderTooltip()}
         zoom={zoom}

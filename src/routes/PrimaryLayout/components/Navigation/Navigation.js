@@ -4,7 +4,6 @@ import TopicNavigation from './TopicNavigation'
 import './Navigation.scss'
 import { compact } from 'lodash/fp'
 import { EVENTS } from 'config/featureFlags'
-import { iconAtlas } from 'util/assets'
 
 export default function Navigation (props) {
   const {
@@ -67,7 +66,6 @@ export default function Navigation (props) {
   return <div styleName={collapsed ? 'collapser-collapsed' : 'collapser'} // this currently collapses when a post is opened. Will have to modify behavior to suit map needs
     className={className}>
     <div styleName='navigation'>
-      <img src={iconAtlas} />
       <ul styleName='links'>
         {links.map(link =>
           <NavLink key={link.label} {...link} collapsed={collapsed}

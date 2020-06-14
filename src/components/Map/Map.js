@@ -30,7 +30,7 @@ function Map (props) {
       height='100vh'
       mapStyle='mapbox://styles/mapbox/light-v9'
       onViewportChange={nextViewport => setViewport(nextViewport)}
-      mapboxApiAccessToken={'pk.eyJ1IjoidG9rdWdhd2EiLCJhIjoiY2s4ejYwcm1mMDA1MDNsbW8zamV1ejhmaSJ9.PvrcmUHyffocIUy7k-teUw'}
+      mapboxApiAccessToken={mapbox.token}
       ref={ref => { mapRef.current = ref && ref.getMap(); return ref }}
     >
       <DeckGL
