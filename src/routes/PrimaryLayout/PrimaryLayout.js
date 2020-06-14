@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import cx from 'classnames'
 import { get, some } from 'lodash/fp'
+import qs from 'querystring'
 import Intercom from 'react-intercom'
 import config, { isTest } from 'config'
 import AddLocation from 'routes/Signup/AddLocation'
@@ -93,6 +94,7 @@ export default class PrimaryLayout extends Component {
       if (!community && !communityPending) return <NotFound />
     }
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
+    const queryParams = qs.parse(location.search.substring(1))
     const hasDetail = some(
       ({ path }) => matchPath(location.pathname, { path, exact: true }),
       postDetailRoutes
@@ -103,32 +105,32 @@ export default class PrimaryLayout extends Component {
       <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
       <TopNav styleName='top' onClick={closeDrawer} {...{ community, network, currentUser, showLogoBadge }} />
       <div styleName={cx('main', { 'map-view': isMapViewPath(location.pathname) })} onClick={closeDrawer}>
-        <Navigation collapsed={hasDetail} styleName={cx('left', { 'map-view': isMapViewPath(location.pathname) })} showTopics={showTopics} currentUser={currentUser} />
+        <Navigation collapsed={hasDetail || queryParams['showDrawer'] === 'true'} styleName={cx('left', { 'map-view': isMapViewPath(location.pathname) })} showTopics={showTopics} currentUser={currentUser} />
         <div styleName={cx('center', { 'map-view': isMapViewPath(location.pathname) })} id={CENTER_COLUMN_ID}>
           <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
           <RedirectToCommunity path='/' currentUser={currentUser} />
           <RedirectToCommunity path='/app' currentUser={currentUser} />
           <Switch>
             {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
-            <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} />
-            <Route path={`/all/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path={`/all/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
-            <Route path='/all/:topicName' exact component={TopicSupportComingSoon} />
-            <Route path={`/n/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path={`/n/:networkSlug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
-            <Route path='/n/:networkSlug/members' component={Members} />
-            <Route path={`/n/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
-            <Route path='/n/:networkSlug/settings' component={NetworkSettings} />
-            <Route path='/n/:networkSlug/communities' component={NetworkCommunities} />
-            <Route path='/n/:networkSlug/:topicName' exact component={TopicSupportComingSoon} />
-            <Route path={`/c/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path='/c/:slug/members' component={Members} />
-            <Route path={`/c/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
-            <Route path='/c/:slug/settings' component={CommunitySettings} />
-            <Route path='/c/:slug/topics' component={AllTopics} />
-            <Route path={`/c/:slug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
-            <Route path={`/c/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
-            <Route path={`/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
+            <Route path='/:context(tag)/:topicName' exact component={TopicSupportComingSoon} />
+            <Route path={`/:context(all)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path={`/:context(all)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
+            <Route path='/:context(all)/:topicName' exact component={TopicSupportComingSoon} />
+            <Route path={`/:context(n)/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path={`/:context(n)/:networkSlug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
+            <Route path='/:context(n)/:networkSlug/members' component={Members} />
+            <Route path={`/:context(n)/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
+            <Route path='/:context(n)/:networkSlug/settings' component={NetworkSettings} />
+            <Route path='/:context(n)/:networkSlug/communities' component={NetworkCommunities} />
+            <Route path='/:context(n)/:networkSlug/:topicName' exact component={TopicSupportComingSoon} />
+            <Route path={`/:context(c)/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path='/:context(c)/:slug/members' component={Members} />
+            <Route path={`/:context(c)/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
+            <Route path='/:context(c)/:slug/settings' component={CommunitySettings} />
+            <Route path='/:context(c)/:slug/topics' component={AllTopics} />
+            <Route path={`/:context(c)/:slug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
+            <Route path={`/:context(c)/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(m)/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
             <Route path='/confirm-community-delete' component={CommunityDeleteConfirmation} />
@@ -142,12 +144,12 @@ export default class PrimaryLayout extends Component {
         </div>
         <div styleName={cx('sidebar', { hidden: (hasDetail || isMapViewPath(location.pathname)) })}>
           <Switch>
-            <Route path={`/c/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
-            <Route path={`/c/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
-            <Route path={`/c/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
-            <Route path={`/n/:networkSlug/${OPTIONAL_NEW_POST_MATCH}`} exact component={NetworkSidebar} />
-            <Route path={`/n/:networkSlug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
-            <Route path={`/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
+            <Route path={`/:context(c)/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
+            <Route path={`/:context(c)/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
+            <Route path={`/:context(c)/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
+            <Route path={`/:context(n)/:networkSlug/${OPTIONAL_NEW_POST_MATCH}`} exact component={NetworkSidebar} />
+            <Route path={`/:context(n)/:networkSlug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
+            <Route path={`/:context(m)/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
           </Switch>
         </div>
         <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
@@ -176,32 +178,32 @@ const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
 
 const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})/:action(edit)?`
 const postDetailRoutes = [
-  { path: `/all/${POST_DETAIL_MATCH}` },
-  { path: `/all/:view(map)/${POST_DETAIL_MATCH}` },
-  { path: `/n/:networkSlug/m/:personId/${POST_DETAIL_MATCH}` },
-  { path: `/n/:networkSlug/${POST_DETAIL_MATCH}` },
-  { path: `/n/:networkSlug/:view(map)/${POST_DETAIL_MATCH}` },
-  { path: `/c/:slug/m/:personId/${POST_DETAIL_MATCH}` },
-  { path: `/c/:slug/${POST_DETAIL_MATCH}` },
-  { path: `/c/:slug/:view(map)/${POST_DETAIL_MATCH}` },
-  { path: `/c/:slug/:topicName/${POST_DETAIL_MATCH}` },
-  { path: `/m/:personId/${POST_DETAIL_MATCH}` }
+  { path: `/:context(all)/${POST_DETAIL_MATCH}` },
+  { path: `/:context(all)/:view(map)/${POST_DETAIL_MATCH}` },
+  { path: `/:context(n)/:networkSlug/m/:personId/${POST_DETAIL_MATCH}` },
+  { path: `/:context(n)/:networkSlug/${POST_DETAIL_MATCH}` },
+  { path: `/:context(n)/:networkSlug/:view(map)/${POST_DETAIL_MATCH}` },
+  { path: `/:context(c)/:slug/m/:personId/${POST_DETAIL_MATCH}` },
+  { path: `/:context(c)/:slug/${POST_DETAIL_MATCH}` },
+  { path: `/:context(c)/:slug/:view(map)/${POST_DETAIL_MATCH}` },
+  { path: `/:context(c)/:slug/:topicName/${POST_DETAIL_MATCH}` },
+  { path: `/:context(m)/:personId/${POST_DETAIL_MATCH}` }
 ]
 
 const NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:action(new)`
 const EDIT_POST_MATCH = `${POST_DETAIL_MATCH}/:action(edit)`
 const postEditorRoutes = [
-  { path: `/all/${NEW_POST_MATCH}` },
-  { path: `/all/${EDIT_POST_MATCH}` },
-  { path: `/n/:networkSlug/${NEW_POST_MATCH}` },
-  { path: `/n/:networkSlug/${EDIT_POST_MATCH}` },
-  { path: `/n/:networkSlug/m/:personId/${EDIT_POST_MATCH}` },
-  { path: `/c/:slug/${NEW_POST_MATCH}` },
-  { path: `/c/:slug/${EDIT_POST_MATCH}` },
-  { path: `/c/:slug/m/:personId/${EDIT_POST_MATCH}` },
-  { path: `/c/:slug/:topicName/${NEW_POST_MATCH}` },
-  { path: `/c/:slug/:topicName/${EDIT_POST_MATCH}` },
-  { path: `/m/:personId/${EDIT_POST_MATCH}` }
+  { path: `/:context(all)/${NEW_POST_MATCH}` },
+  { path: `/:context(all)/${EDIT_POST_MATCH}` },
+  { path: `/:context(n)/:networkSlug/${NEW_POST_MATCH}` },
+  { path: `/:context(n)/:networkSlug/${EDIT_POST_MATCH}` },
+  { path: `/:context(n)/:networkSlug/m/:personId/${EDIT_POST_MATCH}` },
+  { path: `/:context(c)/:slug/${NEW_POST_MATCH}` },
+  { path: `/:context(c)/:slug/${EDIT_POST_MATCH}` },
+  { path: `/:context(c)/:slug/m/:personId/${EDIT_POST_MATCH}` },
+  { path: `/:context(c)/:slug/:topicName/${NEW_POST_MATCH}` },
+  { path: `/:context(c)/:slug/:topicName/${EDIT_POST_MATCH}` },
+  { path: `/:context(m)/:personId/${EDIT_POST_MATCH}` }
 ]
 
 const signupRoutes = [

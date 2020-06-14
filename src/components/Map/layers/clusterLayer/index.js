@@ -1,7 +1,6 @@
 import { CompositeLayer } from '@deck.gl/core'
 import { IconLayer } from '@deck.gl/layers'
 import Supercluster from 'supercluster'
-import { createPostsScatterplotLayer } from '../postsScatterplotLayer'
 import { iconAtlas } from 'util/assets'
 
 // function getIconName ({color, size}) {

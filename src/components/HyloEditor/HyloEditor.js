@@ -191,6 +191,7 @@ export default class HyloEditor extends Component {
       <Editor
         editorState={editorState}
         spellCheck
+        stripPastedStyles
         onChange={this.handleChange}
         readOnly={readOnly}
         placeholder={placeholder}

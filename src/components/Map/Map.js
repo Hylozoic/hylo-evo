@@ -5,12 +5,12 @@ import DeckGL from '@deck.gl/react'
 import { mapbox } from 'config'
 
 function Map (props) {
-  let { children, layers, onViewportUpdate } = props
+  let { center, children, layers, onViewportUpdate, zoom } = props
 
   const [viewport, setViewport] = useState({
-    latitude: 37.8,
-    longitude: -122.3,
-    zoom: props.zoom,
+    latitude: parseFloat(center.lat),
+    longitude: parseFloat(center.lng),
+    zoom: zoom,
     bearing: 0,
     pitch: 0
   })
@@ -47,6 +47,7 @@ function Map (props) {
 }
 
 Map.propTypes = {
+  center: PropTypes.object,
   children: PropTypes.any,
   layers: PropTypes.array,
   onViewportUpdate: PropTypes.func,
@@ -54,10 +55,11 @@ Map.propTypes = {
 }
 
 Map.defaultProps = {
-  children: [],
+  center: { lat: 35.442845, lng: 7.916598 },
+  children: {},
   layers: [],
   onViewportUpdate: () => {},
-  zoom: 10
+  zoom: 0
 }
 
 export default Map

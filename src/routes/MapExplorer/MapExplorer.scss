@@ -24,9 +24,10 @@
   border-radius: 20px;
   width: 40px;
   height: 40px;
+  background: white;
 
   &.drawerOpen {
-    right: 410px;
+    right: 460px;
   }
 }
 
@@ -37,4 +38,45 @@
 .icon {
   vertical-align: middle;
   text-align: center;
+}
+
+.postTip {
+  position: absolute;
+  z-index: 1;
+  pointerEvents: none;
+  border-radius: 4px;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.toggleFeatureFiltersButton {
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+
+  &.featureFiltersOpen {
+    color: white;
+    background-color: green;
+  }
+}
+
+.featureTypeFilters {
+  position: absolute;
+  bottom: 41px;
+  left: 20px;
+  width: 200px;
+  background: white;
+  border: 1px solid gray;
+  display: none;
+
+  &.featureFiltersOpen {
+    display: block;
+  }
+}
+
+.featureTypeSwitch {
+  margin-left: 10px;
+  > span {
+    margin-left: 10px;
+  }
 }

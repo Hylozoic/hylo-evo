@@ -56,6 +56,7 @@ export const origin = () =>
   typeof window !== 'undefined' ? window.location.origin : host
 
 export function baseUrl ({
+  context,
   personId, memberId,
   topicName,
   networkSlug,
@@ -71,11 +72,13 @@ export function baseUrl ({
   } else if (topicName) {
     return tagUrl(topicName, safeCommunitySlug)
   } else if (view) {
-    return viewUrl(view, safeCommunitySlug, networkSlug)
+    return viewUrl(view, context, safeCommunitySlug, networkSlug)
   } else if (networkSlug) {
     return networkUrl(networkSlug)
   } else if (safeCommunitySlug) {
     return communityUrl(safeCommunitySlug)
+  } else if (context === 'all') {
+    return allCommunitiesUrl()
   } else {
     return defaultUrl
   }
@@ -88,9 +91,9 @@ export function communityDeleteConfirmationUrl () {
 // derived URL paths
 
 // For specific views of a community or network like 'map', or 'calendar'
-export function viewUrl (view, communitySlug, networkSlug) {
+export function viewUrl (view, context, communitySlug, networkSlug) {
   if (!view) return '/'
-  const base = baseUrl({ networkSlug, communitySlug })
+  const base = baseUrl({ context, networkSlug, communitySlug })
 
   return `${base}/${view}`
 }
@@ -142,11 +145,11 @@ export function editPostUrl (id, opts = {}, querystringParams = {}) {
 }
 
 export function newPostUrl (opts = {}, querystringParams = {}) {
-  return postUrl('new', { ...opts }, querystringParams)
+  return postUrl('new', opts, querystringParams)
 }
 
-export function commentUrl (postId, commentId, communitySlug) {
-  return `${postUrl(postId, { communitySlug })}#comment_${commentId}`
+export function commentUrl (postId, commentId, opts = {}, querystringParams = {}) {
+  return `${postUrl(postId, opts, querystringParams)}#comment_${commentId}`
 }
 
 export function communitySettingsUrl (communitySlug) {
