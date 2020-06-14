@@ -63,18 +63,20 @@ export default class PostClusterLayer extends CompositeLayer {
     }
   }
 
-  getPickingInfo ({ info, mode }) {
-    const pickedObject = info.object && info.object.properties
-    if (pickedObject) {
-      if (pickedObject.cluster && mode !== 'hover') {
-        info.objects = this.state.index
-          .getLeaves(pickedObject.cluster_id, 25)
-          .map(f => f.properties)
-      }
-      info.object = pickedObject
-    }
-    return info
-  }
+  // getPickingInfo ({ info, mode }) {
+  //   const pickedObject = info.object && info.object.properties
+  //   if (pickedObject) {
+  //     if (pickedObject.cluster && mode !== 'hover') {
+  //       info.objects = this.state.index
+  //         .getLeaves(pickedObject.cluster_id, 25)
+  //         .map(f => f.properties)
+  //     }
+  //     info.object = pickedObject
+  //   }
+  //   return info
+  // }
+  //
+  // TODO: add attribute `pickable: true` to experiment with this. https://github.com/visgl/deck.gl/blob/8.1-release/examples/website/icon/icon-cluster-layer.js
 
   renderLayers () {
     const { data } = this.state
