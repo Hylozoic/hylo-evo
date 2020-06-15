@@ -60,6 +60,7 @@ export default
       id
       name
       slug
+      memberCount
       avatarUrl
       network {
         id
@@ -72,6 +73,7 @@ export default
             name
             slug
             avatarUrl
+            memberCount
             network {
               id
             }

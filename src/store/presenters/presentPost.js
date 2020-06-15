@@ -3,11 +3,13 @@ export default function presentPost (post, communityId) {
   const postMembership = post.postMemberships.filter(p =>
     Number(p.community) === Number(communityId)).toRefArray()[0]
   const pinned = postMembership && postMembership.pinned
+
   return {
     ...post.ref,
     creator: post.creator,
     linkPreview: post.linkPreview,
     location: post.location,
+    isPublic: post.isPublic,
     commenters: post.commenters.toModelArray(),
     communities: post.communities.toModelArray(),
     fileAttachments: post.attachments.filter(a => a.type === 'file').toModelArray(),
