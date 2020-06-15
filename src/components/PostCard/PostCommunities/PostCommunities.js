@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import cx from 'classnames'
 import { bgImageStyle } from 'util/index'
-import { communityUrl, publicCommunitiesUrl } from 'util/navigation'
+import { communityUrl } from 'util/navigation'
 import { Link } from 'react-router-dom'
 import { get, isEmpty, chunk } from 'lodash/fp'
 import Icon from 'components/Icon'

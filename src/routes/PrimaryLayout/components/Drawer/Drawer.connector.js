@@ -71,7 +71,7 @@ export function partitionCommunities (memberships) {
 
 const getPartitionCommunities = createSelector(
   getMemberships,
-  (memberships) => partitionCommunities(memberships),
+  (memberships) => partitionCommunities(memberships)
 )
 
 export function mapStateToProps (state, props) {
