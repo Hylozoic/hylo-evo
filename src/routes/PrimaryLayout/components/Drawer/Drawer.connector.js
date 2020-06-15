@@ -4,9 +4,26 @@ import getMemberships from 'store/selectors/getMemberships'
 import { push } from 'connected-react-router'
 import { get, values, omit, each } from 'lodash/fp'
 import { pullAllBy } from 'lodash'
-import { ALL_COMMUNITIES_ID, ALL_COMMUNITIES_AVATAR_PATH, PUBLIC_COMMUNITIES_ID, PUBLIC_COMMUNITIES_AVATAR_PATH } from 'store/models/Community'
+import { ALL_COMMUNITIES_ID, ALL_COMMUNITIES_AVATAR_PATH, PUBLIC_CONTEXT_ID, PUBLIC_CONTEXT_AVATAR_PATH } from 'store/models/Community'
 import getMe from 'store/selectors/getMe'
 import { createSelector } from 'reselect'
+
+const defaultNetworks = [
+  {
+    id: PUBLIC_CONTEXT_ID,
+    name: 'Public Communities & Posts',
+    communities: [],
+    path: '/public',
+    avatarUrl: PUBLIC_CONTEXT_AVATAR_PATH
+  },
+  {
+    id: ALL_COMMUNITIES_ID,
+    name: 'All My Communities',
+    communities: [],
+    path: '/all',
+    avatarUrl: ALL_COMMUNITIES_AVATAR_PATH
+  }
+]
 
 export function partitionCommunities (memberships) {
   const allCommunities = memberships.map(m => ({
@@ -54,29 +71,13 @@ export function partitionCommunities (memberships) {
 
 const getPartitionCommunities = createSelector(
   getMemberships,
-  (memberships) => partitionCommunities(memberships)
+  (memberships) => partitionCommunities(memberships),
 )
 
 export function mapStateToProps (state, props) {
   const { currentLocation } = state.locationHistory
   const { networks, communities } = getPartitionCommunities(state)
   const canModerate = props.community && getMe(state, props).canModerate(props.community)
-  const defaultNetworks = [
-    {
-      id: PUBLIC_COMMUNITIES_ID,
-      name: 'Public Communities & Posts',
-      communities: [],
-      path: '/public',
-      avatarUrl: PUBLIC_COMMUNITIES_AVATAR_PATH
-    },
-    {
-      id: ALL_COMMUNITIES_ID,
-      name: 'All My Communities',
-      communities: [],
-      path: '/all',
-      avatarUrl: ALL_COMMUNITIES_AVATAR_PATH
-    }
-  ]
 
   return {
     currentLocation,

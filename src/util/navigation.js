@@ -41,7 +41,13 @@ export function defaultCommunityUrl () {
 }
 
 export function communityUrl (slug, defaultUrl = defaultCommunityUrl()) {
-  return slug ? `/c/${slug}` : defaultUrl
+  if (slug === 'public') {
+    return publicCommunitiesUrl()
+  } else if (slug) {
+    return `/c/${slug}`
+  } else {
+    return defaultUrl
+  }
 }
 
 export function networkUrl (slug) {

@@ -64,7 +64,7 @@ function others (n, expandFunc) {
 
 export function CommunityList ({ communities, expandFunc }) {
   const renderCommunity = (community, comma) => {
-    return <span key={community.id}><Link to={community.name === 'Public' ? publicCommunitiesUrl() : communityUrl(community.slug)} styleName='communityLink'>{community.name === 'Public' && <Icon name='Public' styleName='publicCommunityIcon' />} {community.name}</Link>{comma ? ', ' : ''}</span>
+    return <span key={community.id}><Link to={communityUrl(community.slug)} styleName='communityLink'>{community.name === 'Public' && <Icon name='Public' styleName='publicCommunityIcon' />} {community.name}</Link>{comma ? ', ' : ''}</span>
   }
 
   const maxShown = 2
@@ -96,7 +96,7 @@ export function CommunityCell ({ community }) {
   const { name, avatarUrl } = community
   const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
 
-  return <Link to={community.name === 'Public' ? publicCommunitiesUrl() : communityUrl(community.slug)} styleName='communityCell'>
+  return <Link to={communityUrl(community.slug)} styleName='communityCell'>
     <div styleName='communityCellAvatar' style={imageStyle} />
     <span styleName='communityCellName'>{name}</span>
   </Link>

@@ -5,7 +5,7 @@ export function mapStateToProps (state, props) {
   let communitiesPlusPublic = props.communities
 
   if (isPublic) {
-    communitiesPlusPublic.unshift({ name: 'Public', id: 'public', avatarUrl: '/public-icon.svg', slug: '' })
+    communitiesPlusPublic.unshift({ name: 'Public', id: 'public', avatarUrl: '/public-icon.svg', slug: 'public' })
   }
 
   return {
