@@ -20,7 +20,8 @@ export default function updatePost (post, query = updatePostMutation) {
     eventInviteeIds = [],
     startTime,
     endTime,
-    location
+    location,
+    isPublic
   } = post
   const linkPreviewId = linkPreview && linkPreview.id
   const communityIds = communities.map(c => c.id)
@@ -44,7 +45,8 @@ export default function updatePost (post, query = updatePostMutation) {
         eventInviteeIds,
         startTime: startTime && startTime.valueOf(),
         endTime: endTime && endTime.valueOf(),
-        location
+        location,
+        isPublic
       }
     },
     meta: {

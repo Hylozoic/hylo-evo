@@ -45,6 +45,14 @@
   box-shadow: 0px 2px 6px 0px $color-black-30;
 }
 
+.filterIcon {
+  float: right;
+  position: relative;
+  top: -23px;
+  right: 5px;
+  font-size: 18px;
+}
+
 .searchFilters {
   position: relative;
   background: white;

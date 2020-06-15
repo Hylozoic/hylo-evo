@@ -25,14 +25,15 @@ Community.fields = {
     to: 'Location',
     as: 'locationObject'
   }),
-  name: attr(),
   members: many('Person'),
+  memberCount: attr(),
   moderators: many({
     to: 'Person',
     relatedName: 'moderatedCommunities',
     through: 'CommunityModerator',
     throughFields: [ 'community', 'moderator' ]
   }),
+  name: attr(),
   network: fk('Network'),
   posts: many('Post'),
   postCount: attr(),
@@ -44,5 +45,7 @@ export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/defaul
 export const DEFAULT_AVATAR = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png'
 
 export const ALL_COMMUNITIES_ID = 'all-communities'
-
 export const ALL_COMMUNITIES_AVATAR_PATH = '/assets/white-merkaba.png'
+
+export const PUBLIC_CONTEXT_ID = 'public-context'
+export const PUBLIC_CONTEXT_AVATAR_PATH = '/public.svg'

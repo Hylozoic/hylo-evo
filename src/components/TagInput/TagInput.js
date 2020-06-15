@@ -103,14 +103,17 @@ export default class TagInput extends Component {
   }
 
   handleChange = debounce(value => {
-    const strippedValue = this.props.stripInputHashtag ? value.replace(/^#/, '') : value
+    let strippedValue = value
+    if (value) {
+      strippedValue = this.props.stripInputHashtag ? value.replace(/^#/, '') : value
+    }
     this.props.handleInputChange(strippedValue)
   }, 200)
 
   render () {
     let { tags, placeholder } = this.props
 
-    const { suggestions, className, theme, readOnly, maxTags, addLeadingHashtag, renderSuggestion } = this.props
+    const { suggestions, className, theme, readOnly, maxTags, addLeadingHashtag, renderSuggestion, tagType } = this.props
     if (!tags) tags = []
     if (!placeholder) placeholder = 'Type...'
 
@@ -140,12 +143,16 @@ export default class TagInput extends Component {
       <div className={theme.search}>
         <div className={theme.searchInput}>
           <input
-            className={theme.searchInput}
-            styleName={cx({ 'error': maxReached })}
+            className={cx(theme.searchInput, { 'error': maxReached })}
             ref={this.input}
             type='text'
             placeholder={placeholder}
             spellCheck={false}
+            onFocus={() => { this.handleChange('') }}
+            onBlur={() => {
+              this.input.current.value = ''
+              this.handleChange(null)
+            }}
             onChange={event => this.handleChange(event.target.value)}
             onKeyDown={this.handleKeys}
             disabled={readOnly} />
@@ -154,6 +161,7 @@ export default class TagInput extends Component {
           <div className={theme.suggestions}>
             <KeyControlledItemList
               items={suggestionsOrError}
+              tagType={tagType}
               renderListItem={renderSuggestion}
               onChange={maxReached ? this.resetInput : this.select}
               theme={{
