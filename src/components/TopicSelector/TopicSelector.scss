@@ -101,11 +101,13 @@
 }
 
 .suggestions ul {
-  margin: 4px -1px;
+  margin: 0 -1px;
   padding: 0;
   list-style: none;
   background: white;
-  border: 1px solid #D1D1D1;
+  border-bottom: 1px solid #D1D1D1;
+  border-left: 1px solid #D1D1D1;
+  border-right: 1px solid #D1D1D1;
   border-radius: 2px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   z-index: 10;

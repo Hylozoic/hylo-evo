@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
+import publicPostsQueryFragment from 'graphql/fragments/publicPostsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
@@ -20,6 +21,10 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search
     getItems = get('payload.data.network.posts')
   } else if (subject === 'all-communities') {
     query = allCommunitiesQuery
+    extractModel = 'Post'
+    getItems = get('payload.data.posts')
+  } else if (subject === 'public-communities') {
+    query = publicPostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
   } else {
@@ -103,6 +108,17 @@ const allCommunitiesQuery = `query (
   $boundingBox: [PointInput]
 ) {
   ${postsQueryFragment}
+}`
+
+const publicPostsQuery = `query (
+  $sortBy: String,
+  $offset: Int,
+  $search: String,
+  $filter: String,
+  $topic: ID,
+  $first: Int
+) {
+  ${publicPostsQueryFragment}
 }`
 
 export function storeFetchPostsParam (props) {

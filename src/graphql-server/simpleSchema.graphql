@@ -21,6 +21,7 @@ type Community {
   id: String
   name: String
   slug: String
+  memberCount: Int
   posts: [Post]
 }
 
@@ -30,6 +31,7 @@ type Post {
   details: String
   timestamp: String
   comments: [Comment]
+  isPublic: Boolean
 }
 
 type Comment {

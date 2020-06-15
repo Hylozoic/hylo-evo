@@ -3,10 +3,12 @@ import React from 'react'
 import { indexOf, isEmpty, omit } from 'lodash/fp'
 import cx from 'classnames'
 import { getKeyCode, keyMap } from 'util/textInput'
+import Icon from 'components/Icon'
+import './KeyControlledList.scss'
 
 const { array, func, object, bool, number, string } = PropTypes
 
-const propsToOmit = ['onChange', 'tabChooses', 'spaceChooses', 'selectedIndex', 'items', 'theme']
+const propsToOmit = ['onChange', 'tabChooses', 'spaceChooses', 'selectedIndex', 'items', 'theme', 'tagType', 'renderListItem']
 
 export default class KeyControlledList extends React.Component {
   static propTypes = {
@@ -106,7 +108,9 @@ export default class KeyControlledList extends React.Component {
   render () {
     const { selectedIndex } = this.state
 
-    const { theme, children, ...props } = this.props
+    // FIXME To make this more generic, replace tagType with props for headerText and countText,
+    // then check if the item has a .count field to know whether to show a count or not.
+    const { tagType, theme, children, ...props } = this.props
 
     this.childrenWithRefs = React.Children.map(children,
       (element, i) => {
@@ -119,9 +123,13 @@ export default class KeyControlledList extends React.Component {
           ? React.cloneElement(element, { ref: i, className })
           : element
       })
-    return <ul {...omit(propsToOmit, props)} className={theme.items}>
-      {this.childrenWithRefs}
-    </ul>
+
+    return <div styleName='keyListContainer'>
+      {tagType && tagType === 'communities' && <div styleName='keyListLabel'>Communities</div>}
+      <ul {...omit(propsToOmit, props)} className={theme.items} styleName='keyList'>
+        {this.childrenWithRefs}
+      </ul>
+    </div>
   }
 }
 
@@ -162,19 +170,23 @@ export class KeyControlledItemList extends React.Component {
   // FIXME use more standard props e.g. {label, value} instead of {id, name}, or
   // provide an API for configuring them
   render () {
-    const { items, selected, theme } = this.props
+    const { items, selected, theme, tagType } = this.props
     const selectedIndex = indexOf(selected, items)
 
     const renderListItem = this.props.renderListItem
       ? item => this.props.renderListItem({ item, handleChoice: this.change })
       : item => <li className={theme.item} key={item.id || 'blank'}>
-        <a onClick={event => this.change(item, event)}>{item.name}</a>
+        <a onClick={event => this.change(item, event)}>
+          <div>{item.name}</div>
+          {tagType && tagType === 'communities' && <div styleName='keyListMemberCount'><Icon name='Members' styleName='keyListMemberIcon' /> {item.memberCount} {item.memberCount !== 1 ? 'Members' : 'Member'}</div>}
+        </a>
       </li>
 
     const listItems = items.map(renderListItem)
 
     return <KeyControlledList
       theme={theme}
+      tagType={tagType}
       children={listItems}
       ref='kcl'
       tabChooses
