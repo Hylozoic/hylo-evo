@@ -138,8 +138,8 @@ export default class MapExplorer extends React.Component {
         zoom={zoom}
       />
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}>
-        <img styleName={cx('openDrawer')} src='/icon/menu.svg' />
-        <img styleName={cx('closeDrawer')} src='/icon/x.svg' />
+        <img styleName='openDrawer' src='/icon/menu.svg' />
+        <img styleName='closeDrawer' src='/icon/x.svg' />
       </button>
       { showDrawer ? (
         <MapDrawer
