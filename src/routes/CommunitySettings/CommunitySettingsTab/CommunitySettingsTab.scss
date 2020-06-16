@@ -41,11 +41,57 @@
   width: 30px;
 }
 
+.privacy-settings {
+  margin: 25px 0;
+}
+
+.privacy-detail {
+  color: $color-regent;
+  font-size: 14px;
+  margin: 25px 0;
+}
+
+.privacy-option-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  line-height: 1;
+  margin: 0;
+}
+
+.privacy-option {
+  text-align: left !important;
+  width: 70%;
+}
+
+.privacy-state {
+  border: 1px solid $color-regent;
+  border-radius: 10px;
+  color: $color-regent;
+  font-size: 10px;
+  font-style: bold;
+  padding: 2px 6px;
+}
+
+.on {
+  .privacy-state {
+    border: 1px solid $color-picton-blue;
+    color: $color-picton-blue;
+  }
+}
+
 .control-label {
   display: block;
   composes: tag from 'css/typography.scss';
   color: $color-rhino-30;
   margin-bottom: $space-1x;
+}
+
+.privacy-option {
+  color: $color-rhino;
+  font-size: 16px;
+  margin: 25px 0
 }
 
 .social-label {
