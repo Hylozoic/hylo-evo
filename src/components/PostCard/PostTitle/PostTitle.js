@@ -25,7 +25,7 @@ export default function PostTitle ({
   return <Highlight {...highlightProps}>
     <React.Fragment>
       <div styleName={cx('title', { constrained })} className='hdr-headline'>{title}</div>
-      {location && <div styleName={cx('headerLocation', { constrained })}><Icon name='Location' styleName='locationIcon'><img src='/location-pin-stream.svg' /></span>{generalLocation}</div>}
+      {location && <div styleName={cx('headerLocation', { constrained })}><Icon name='Location' styleName='locationIcon' />{generalLocation}</div>}
     </React.Fragment>
   </Highlight>
 }
