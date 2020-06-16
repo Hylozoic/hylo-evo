@@ -28,7 +28,7 @@ function Map (props) {
       {...viewport}
       width='100%'
       height='100vh'
-      mapStyle='mapbox://styles/mapbox/light-v9'
+      mapStyle='mapbox://styles/mapbox/satellite-streets-v11'
       onViewportChange={nextViewport => setViewport(nextViewport)}
       mapboxApiAccessToken={mapbox.token}
       ref={ref => { mapRef.current = ref && ref.getMap(); return ref }}
