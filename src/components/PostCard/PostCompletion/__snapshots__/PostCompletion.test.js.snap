@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly if fulfilled 1`] = `
+<div
+  data-stylename="postCompletion"
+>
+  <div>
+    Is this still available?
+  </div>
+  <DropdownButton
+    choices={
+      Array [
+        Object {
+          "label": "Available",
+          "value": false,
+        },
+        Object {
+          "label": "Unavailable",
+          "value": true,
+        },
+      ]
+    }
+    label="Unvailable"
+    onChoose={[Function]}
+  />
+</div>
+`;
+
+exports[`renders correctly if not fulfilled 1`] = `
+<div
+  data-stylename="postCompletion"
+>
+  <div>
+    Is this still available?
+  </div>
+  <DropdownButton
+    choices={
+      Array [
+        Object {
+          "label": "Available",
+          "value": false,
+        },
+        Object {
+          "label": "Unavailable",
+          "value": true,
+        },
+      ]
+    }
+    label="Available"
+    onChoose={[Function]}
+  />
+</div>
+`;

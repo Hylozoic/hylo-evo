@@ -26,7 +26,6 @@ exports[`CreateCommunityPrompt matches the latest snapshot 1`] = `
 exports[`Feed with a network it renders a Feed with correct props 1`] = `
 <div>
   <FeedBanner
-    all={false}
     community={
       Object {
         "id": 2,

@@ -41,13 +41,6 @@ Object {
   ],
   "networks": Array [
     Object {
-      "avatarUrl": "/assets/white-merkaba.png",
-      "communities": Array [],
-      "id": "all-communities",
-      "name": "All Communities",
-      "path": "/all",
-    },
-    Object {
       "communities": Array [
         Object {
           "id": "1",
