@@ -30,10 +30,12 @@
   border: none;
 
   &.drawerOpen {
-    right: 470px;
+    right: calc(40% + 20px);
 
     .closeDrawer {
       display: inline-block;
+      position: relative;
+      top: 2px;
     }
 
     .openDrawer {
@@ -45,8 +47,20 @@
     cursor: pointer;
   }
 
+  .openDrawer {
+    font-size: 16px;
+    position: relative;
+    top: 2px;
+  }
+
   .closeDrawer {
     display: none;
+  }
+}
+
+@media screen and (max-width: 1115px) {
+  .toggleDrawerButton.drawerOpen {
+    right: 470px;
   }
 }
 

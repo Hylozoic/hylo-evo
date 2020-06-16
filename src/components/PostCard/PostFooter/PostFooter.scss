@@ -16,6 +16,7 @@ $footer-height: 56px;
 
 .footer.constrained {
   padding-left: 5px;
+  height: 46px;
 }
 
 
@@ -77,4 +78,8 @@ $footer-height: 56px;
       color: white !important;
     }
   }
+}
+
+.constrainend.vote-button {
+  width: 66px;
 }

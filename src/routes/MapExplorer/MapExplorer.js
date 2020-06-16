@@ -1,13 +1,14 @@
 import React from 'react'
 import { debounce } from 'lodash'
 import cx from 'classnames'
+import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import { POST_TYPES } from 'store/models/Post'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import SwitchStyled from 'components/SwitchStyled'
 import { createScatterplotLayerFromMembers, createScatterplotLayerFromPosts } from 'components/Map/layers/scatterplotLayer'
-import './MapExplorer.scss'
+import styles from './MapExplorer.scss'
 
 export const FEATURE_TYPES = {
   ...POST_TYPES,
@@ -138,8 +139,8 @@ export default class MapExplorer extends React.Component {
         zoom={zoom}
       />
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}>
-        <img styleName='openDrawer' src='/icon/menu.svg' />
-        <img styleName='closeDrawer' src='/icon/x.svg' />
+        <Icon name='Hamburger' className={styles.openDrawer} />
+        <Icon name='Ex' className={styles.closeDrawer} />
       </button>
       { showDrawer ? (
         <MapDrawer
