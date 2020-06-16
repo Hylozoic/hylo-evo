@@ -26,6 +26,10 @@ export function allCommunitiesUrl () {
   return '/all'
 }
 
+export function publicCommunitiesUrl () {
+  return '/public'
+}
+
 export function defaultHolochainCommunityUrl () {
   return `/c/${HOLOCHAIN_DEFAULT_COMMUNITY_SLUG}`
 }
@@ -37,7 +41,13 @@ export function defaultCommunityUrl () {
 }
 
 export function communityUrl (slug, defaultUrl = defaultCommunityUrl()) {
-  return slug ? `/c/${slug}` : defaultUrl
+  if (slug === 'public') {
+    return publicCommunitiesUrl()
+  } else if (slug) {
+    return `/c/${slug}`
+  } else {
+    return defaultUrl
+  }
 }
 
 export function networkUrl (slug) {
@@ -79,6 +89,8 @@ export function baseUrl ({
     return communityUrl(safeCommunitySlug)
   } else if (context === 'all') {
     return allCommunitiesUrl()
+  } else if (context === 'public') {
+    return publicCommunitiesUrl()
   } else {
     return defaultUrl
   }

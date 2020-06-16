@@ -75,8 +75,8 @@ export default class PostCard extends React.Component {
         constrained={constrained} />
       <PostImage styleName='image' postId={post.id} />
       {isEvent && <EventBody event={post} slug={routeParams.slug} respondToEvent={respondToEvent} constrained={constrained} />}
-      {!isEvent && <PostBody {...post} slug={routeParams.slug} constrained={constrained} />}
-      <PostCommunities communities={post.communities} slug={routeParams.slug} />
+      {!isEvent && <PostBody {...post} slug={routeParams.slug} />}
+      <PostCommunities isPublic={post.isPublic} communities={post.communities} slug={routeParams.slug} constrained={constrained} />
       <PostFooter {...post} voteOnPost={voteOnPost} constrained={constrained} />
     </div>
   }

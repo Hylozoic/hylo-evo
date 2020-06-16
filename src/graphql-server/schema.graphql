@@ -17,6 +17,7 @@ type Community {
   id: ID
   name: String
   slug: String
+  memberCount: Int
   posts: PostQuerySet
 }
 
@@ -40,6 +41,7 @@ type Post {
   createdAt: String
   updatedAt: String
   creator: Person
+  isPublic: Boolean
   comments(first: Int, cursor: ID, order: String): CommentQuerySet
   commenters(first: Int): [Person]
   commentersTotal: Int

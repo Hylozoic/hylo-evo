@@ -14,6 +14,7 @@ import {
 export function mapStateToProps (state, props) {
   const currentCommunity = getCommunityForCurrentRoute(state, props)
   const communityId = currentCommunity && currentCommunity.id
+
   const fetchPostsParam = {
     filter: props.postTypeFilter,
     ...pick([
@@ -26,6 +27,7 @@ export function mapStateToProps (state, props) {
       'topic'
     ], props)
   }
+
   // NOTE: In effort to better seperate the query caching from component details
   //       it's better (and necessary) in this case to send the fetch param then
   //       the raw props of the component.

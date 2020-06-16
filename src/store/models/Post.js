@@ -71,7 +71,8 @@ Post.fields = {
   fulfilledAt: attr(),
   votesTotal: attr(),
   myVote: attr(),
-  topics: many('Topic')
+  topics: many('Topic'),
+  isPublic: attr()
 }
 
 export const POST_TYPES = {
@@ -116,5 +117,6 @@ export const POST_PROP_TYPES = {
   updatedAt: PropTypes.string,
   imageUrl: PropTypes.string,
   linkPreview: PropTypes.object,
-  communities: PropTypes.array
+  communities: PropTypes.array,
+  isPublic: PropTypes.boolean
 }

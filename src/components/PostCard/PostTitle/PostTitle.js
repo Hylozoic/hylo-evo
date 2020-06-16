@@ -1,6 +1,10 @@
 import React from 'react'
 import Highlight from 'components/Highlight'
+<<<<<<< HEAD
 import cx from 'classnames'
+=======
+import Icon from 'components/Icon'
+>>>>>>> mycelia-map
 import './PostTitle.scss'
 
 export default function PostTitle ({
@@ -24,7 +28,7 @@ export default function PostTitle ({
   return <Highlight {...highlightProps}>
     <React.Fragment>
       <div styleName={cx('title', { constrained })} className='hdr-headline'>{title}</div>
-      {location && <div styleName={cx('headerLocation', { constrained })}><span styleName='locationIcon'><img src='/location-pin-stream.svg' /></span>{generalLocation}</div>}
+      {location && <div styleName={cx('headerLocation', { constrained })}><span name='Location' styleName='locationIcon' />{generalLocation}</div>}
     </React.Fragment>
   </Highlight>
 }

@@ -187,6 +187,7 @@ export default class PostDetail extends Component {
           totalContributions={totalContributions}
           processStripeToken={processStripeToken} />}
       <PostCommunities
+        isPublic={post.isPublic}
         communities={post.communities}
         slug={routeParams.slug}
         showBottomBorder />

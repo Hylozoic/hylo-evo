@@ -48,28 +48,44 @@ export default class Drawer extends React.PureComponent {
   }
 
   render () {
-    const { community, network, communities, networks, className, toggleDrawer, canModerate } = this.props
+    const { currentLocation, community, network, communities, networks, defaultNetworks, className, toggleDrawer, canModerate } = this.props
+
     return <div className={className} styleName='s.communityDrawer'>
-      <Icon name='Ex' styleName='s.closeDrawer' onClick={toggleDrawer} />
-      <Logo community={community} network={network} />
-      {canModerate && <Link styleName='s.settingsLink' to={`/c/${community.slug}/settings`}>
-        <Icon name='Settings' styleName='s.settingsIcon' /> Settings
-      </Link>}
-      {networks.length ? <ul styleName='s.communitiesList'>
-        <li styleName='s.sectionTitle'>Networked Communities</li>
-        {networks.map(network =>
-          <NetworkRow network={network} key={network.id} />)}
-        <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>Independent Communities</li>
-        {communities.map(community =>
-          <CommunityRow {...community} key={community.id} />
-        )}
-      </ul> : null}
-      <Button
-        color='white'
-        styleName='s.newCommunity'
-        label='Start a Community'
-        onClick={this.props.goToCreateCommunity}
-      />
+      <div styleName={cx({ 's.currentCommunity': community !== null || network !== null })}>
+        <div styleName='s.hyloLogoBar'>
+          <img src='/hylo.svg' width='50px' />
+          <Icon name='Ex' styleName='s.closeDrawer' onClick={toggleDrawer} />
+        </div>
+        <Logo community={community} network={network} />
+        {canModerate && <Link styleName='s.settingsLink' to={`/c/${community.slug}/settings`}>
+          <Icon name='Settings' styleName='s.settingsIcon' /> Settings
+        </Link>}
+      </div>
+      <div>
+        <ul styleName='s.communitiesList'>
+          {defaultNetworks && defaultNetworks.map(network =>
+            <NetworkRow network={network} key={network.id} currentLocation={currentLocation} />
+          )}
+        </ul>
+        <ul styleName='s.communitiesList'>
+          {networks.length ? <div><li styleName='s.sectionTitle'>My Networks</li>
+            {networks.map(network =>
+              <NetworkRow network={network} key={network.id} currentLocation={currentLocation} />
+            )}</div> : ''}
+          <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>My Communities</li>
+          {communities.map(community =>
+            <CommunityRow {...community} key={community.id} />
+          )}
+        </ul>
+        <div styleName='s.newCommunity'>
+          <Button
+            color='white'
+            styleName='s.newCommunityBtn'
+            label='Start a Community'
+            onClick={this.props.goToCreateCommunity}
+          />
+        </div>
+      </div>
     </div>
   }
 }
@@ -112,16 +128,15 @@ export class NetworkRow extends React.Component {
   }
 
   render () {
-    const { network } = this.props
+    const { network, currentLocation } = this.props
     const { communities, name, slug, avatarUrl, nonMemberCommunities } = network
+    const path = network.path || `/n/${slug}`
     const { expanded, seeAllExpanded } = this.state
     const newPostCount = sum(network.communities.map(c => c.newPostCount))
     const imageStyle = bgImageStyle(avatarUrl)
     const showCommunities = !isEmpty(communities)
 
-    const path = network.path || `/n/${slug}`
-
-    return <li styleName={cx('s.networkRow', { 's.networkExpanded': expanded })}>
+    return <li styleName={cx('s.networkRow', { 's.networkExpanded': expanded }, { 's.currentNetwork': currentLocation === path })}>
       <Link to={path} styleName='s.networkRowLink' title={name} className={badgeHoverStyles.parent}>
         <div styleName='s.network-name-wrapper'>
           <div styleName='s.avatar' style={imageStyle} />
