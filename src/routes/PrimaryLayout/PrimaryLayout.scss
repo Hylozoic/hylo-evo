@@ -155,6 +155,11 @@ $drawer-z-index: 51;
   max-width: 700px;
 }
 
+.map-view.collapsedState {
+  width: 100%;
+  flex: 0 0 100%;
+}
+
 .detail::-webkit-scrollbar {
   background-color:transparent;
   width: 5px;
