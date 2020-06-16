@@ -1,8 +1,11 @@
 import React from 'react'
 import NavLink from './NavLink'
+import Icon from 'components/Icon'
+import Link from 'react-router-dom'
 import cx from 'classnames'
-import TopicNavigation from './TopicNavigation'
 import './Navigation.scss'
+import TopicNavigation from './TopicNavigation'
+import topicsUrl from 'util/navigation'
 import { compact } from 'lodash/fp'
 import { EVENTS } from 'config/featureFlags'
 
@@ -74,6 +77,9 @@ export default function Navigation (props) {
         {links.map(link =>
           <NavLink key={link.label} {...link} collapsed={collapsed}
             onClick={link.onClick} />)}
+        <li styleName={cx('item', 'topicItem')}>
+            <Icon name='Topics' />
+        </li>
       </ul>
       { /* Based on the current design, we'd need to add a conditional (MapView === true ? show map nav : hide map nav ) */ }
       {/* state changes in this MapNavigation, with all of its filtering toggles, would need to be connected to parts of the app outside */}
