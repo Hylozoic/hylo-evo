@@ -2,6 +2,7 @@ import { find } from 'lodash/fp'
 import { boolean, arrayOf, func, number, shape, string, object } from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+// import CreateTopic from 'components/CreateTopic'
 import { CommunityCell } from 'components/CommunitiesList/CommunitiesList'
 import Dropdown from 'components/Dropdown'
 import FullPageModal from 'routes/FullPageModal'
@@ -79,6 +80,7 @@ export default class AllTopics extends Component {
   render () {
     const {
       routeParams,
+      community,
       topics,
       search,
       setSearch,
@@ -107,6 +109,7 @@ export default class AllTopics extends Component {
           {topics.map(topic =>
             <TopicListItem
               key={topic.id}
+              singleCommunity={community}
               topic={topic}
               routeParams={routeParams}
               canModerate={canModerate}
@@ -145,23 +148,30 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
   </div>
 }
 
-export function TopicListItem ({ topic, routeParams, toggleSubscribe, deleteItem, canModerate }) {
+export function TopicListItem ({ topic, singleCommunity, routeParams, toggleSubscribe, deleteItem, canModerate }) {
   const { name, communityTopics, postsTotal, followersTotal } = topic
   const dropdownItems = []
   // if (canModerate) dropdownItems.push({icon: 'Trash', label: 'Delete', onClick: () => deleteItem(topic.id), red: true})
 
   return <div styleName='topic'>
-    <Link styleName='topic-details' to={topicUrl(name, routeParams)}>
-      <div styleName='topic-name'>#{name}</div>
-      <div styleName='topic-stats'>{inflectedTotal('post', postsTotal)} • {inflectedTotal('follower', followersTotal)}</div>
-    </Link>
     <div styleName='communitiesList'>
-      {communityTopics.map((ct, key) =>
+      <Link styleName='topic-details' to={topicUrl(name, routeParams)}>
+        <div styleName='topic-name'>#{name}</div>
+        {singleCommunity &&
+          <div styleName='topic-stats'>{inflectedTotal('post', postsTotal)} • {inflectedTotal('follower', followersTotal)}</div>}
+        {singleCommunity && toggleSubscribe && <div onClick={() => toggleSubscribe(topic)} styleName='topic-subscribe'>
+          {topic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+        </div>}
+      </Link>
+      {!singleCommunity && communityTopics.map((ct, key) =>
         <CommunityCell community={ct.community} key={key}>
-            ({ct.followersTotal} / {ct.postsTotal})
-          {toggleSubscribe && <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
-            {ct.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
-          </span>}
+          <div styleName='topic-stats'>
+            {inflectedTotal('post', ct.postsTotal)} • {inflectedTotal('follower', ct.followersTotal)}
+            {toggleSubscribe && <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
+              {ct.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+            </span>}
+          </div>
+          <br />
         </CommunityCell>
       )}
     </div>
