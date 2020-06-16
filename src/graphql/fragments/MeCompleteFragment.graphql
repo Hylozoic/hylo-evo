@@ -59,6 +59,7 @@ fragment MeCompleteFragment on Me {
       id
       name
       slug
+      memberCount
       avatarUrl
       communityTopics(subscribed: true) {
         total
@@ -85,6 +86,7 @@ fragment MeCompleteFragment on Me {
             id
             name
             slug
+            memberCount
             avatarUrl
             network {
               id

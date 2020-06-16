@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react'
 import {
   matchPath,
@@ -112,8 +113,10 @@ export default class PrimaryLayout extends Component {
           <Switch>
             {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
             <Route path='/all/topics' component={AllTopics} />
-            <Route path={`/all/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path={`/all/:topicName/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            {/* <Route path='/tag/:topicName' exact component={TopicSupportComingSoon} /> */}
+            <Route path={`/:context(all)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path={`/:context(all)/:topicName/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path={`/:context(public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/n/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/n/:networkSlug/members' component={Members} />
             <Route path={`/n/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
@@ -177,6 +180,7 @@ const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})/
 const postDetailRoutes = [
   { path: `/all/${POST_DETAIL_MATCH}` },
   { path: `/all/:topicName/${POST_DETAIL_MATCH}` },
+  { path: `/public/${POST_DETAIL_MATCH}` },
   { path: `/n/:networkSlug/m/:personId/${POST_DETAIL_MATCH}` },
   { path: `/n/:networkSlug/${POST_DETAIL_MATCH}` },
   { path: `/n/:networkSlug/:topicName/${POST_DETAIL_MATCH}` },
@@ -193,6 +197,8 @@ const postEditorRoutes = [
   { path: `/all/${EDIT_POST_MATCH}` },
   { path: `/all/:topicName/${NEW_POST_MATCH}` },
   { path: `/all/:topicName/${EDIT_POST_MATCH}` },
+  { path: `/public/${NEW_POST_MATCH}` },
+  { path: `/public/${EDIT_POST_MATCH}` },
   { path: `/n/:networkSlug/${NEW_POST_MATCH}` },
   { path: `/n/:networkSlug/${EDIT_POST_MATCH}` },
   { path: `/n/:networkSlug/m/:personId/${EDIT_POST_MATCH}` },

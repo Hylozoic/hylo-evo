@@ -26,6 +26,10 @@ export function allCommunitiesUrl () {
   return '/all'
 }
 
+export function publicCommunitiesUrl () {
+  return '/public'
+}
+
 export function defaultHolochainCommunityUrl () {
   return `/c/${HOLOCHAIN_DEFAULT_COMMUNITY_SLUG}`
 }
@@ -37,7 +41,13 @@ export function defaultCommunityUrl () {
 }
 
 export function communityUrl (slug, defaultUrl = defaultCommunityUrl()) {
-  return slug ? `/c/${slug}` : defaultUrl
+  if (slug === 'public') {
+    return publicCommunitiesUrl()
+  } else if (slug) {
+    return `/c/${slug}`
+  } else {
+    return defaultUrl
+  }
 }
 
 export function networkUrl (slug) {
@@ -56,6 +66,7 @@ export const origin = () =>
   typeof window !== 'undefined' ? window.location.origin : host
 
 export function baseUrl ({
+  context,
   personId, memberId,
   topicName,
   networkSlug,
@@ -75,6 +86,10 @@ export function baseUrl ({
     return networkUrl(networkSlug)
   } else if (safeCommunitySlug) {
     return communityUrl(safeCommunitySlug)
+  } else if (context === 'all') {
+    return allCommunitiesUrl()
+  } else if (context === 'public') {
+    return publicCommunitiesUrl()
   } else {
     return defaultUrl
   }

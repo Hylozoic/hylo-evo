@@ -32,6 +32,7 @@ exports[`CommunitiesList matches last snapshot with 1 community 1`] = `
       replace={false}
       to="/c/one"
     >
+       
       One
     </Link>
   </span>
@@ -50,6 +51,7 @@ exports[`CommunitiesList matches last snapshot with 2 communities 1`] = `
       replace={false}
       to="/c/one"
     >
+       
       One
     </Link>
   </span>
@@ -66,6 +68,7 @@ exports[`CommunitiesList matches last snapshot with 2 communities 1`] = `
       replace={false}
       to="/c/two"
     >
+       
       Two
     </Link>
   </span>
@@ -84,6 +87,7 @@ exports[`CommunitiesList matches last snapshot with 5 community 1`] = `
       replace={false}
       to="/c/one"
     >
+       
       One
     </Link>
     , 
@@ -96,6 +100,7 @@ exports[`CommunitiesList matches last snapshot with 5 community 1`] = `
       replace={false}
       to="/c/two"
     >
+       
       Two
     </Link>
     , 

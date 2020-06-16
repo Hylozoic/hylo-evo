@@ -17,7 +17,8 @@ export default
   $startTime: String,
   $endTime: String,
   $location: String,
-  $locationId: ID
+  $locationId: ID,
+  $isPublic: Boolean
 ) {
   updatePost(id: $id, data: {
     type: $type,
@@ -34,6 +35,7 @@ export default
     startTime: $startTime,
     endTime: $endTime,
     location: $location,
-    locationId: $locationId
+    locationId: $locationId,
+    isPublic: $isPublic
   }) {${postFieldsFragment(false)}}
 }`

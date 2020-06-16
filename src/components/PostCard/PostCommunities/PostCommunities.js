@@ -60,7 +60,7 @@ export function LinkedCommunityNameList ({ communities, maxShown = 2, expandFunc
 
 export function LinkedCommunityName ({ community, children }) {
   return <span key={community.id}>
-    <Link to={communityUrl(community.slug)} styleName='communityLink'>{community.name}</Link>
+    <Link to={communityUrl(community.slug)} styleName='communityLink'>{community.name === 'Public' && <Icon name='Public' styleName='publicCommunityIcon' />} {community.name}</Link>
     {children}
   </span>
 }

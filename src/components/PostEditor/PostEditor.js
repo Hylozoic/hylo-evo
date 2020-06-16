@@ -23,6 +23,7 @@ import LinkPreview from './LinkPreview'
 import DatePicker from 'components/DatePicker'
 import ChangeImageButton from 'components/ChangeImageButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
+import PublicToggle from 'components/PublicToggle'
 import styles from './PostEditor.scss'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 
@@ -288,6 +289,13 @@ export default class PostEditor extends React.Component {
     })
   }
 
+  togglePublic = () => {
+    const { isPublic } = this.state.post
+    this.setState({
+      post: { ...this.state.post, isPublic: !isPublic }
+    })
+  }
+
   updateProjectMembers = members => {
     this.setState({
       post: { ...this.state.post, members }
@@ -320,14 +328,14 @@ export default class PostEditor extends React.Component {
       editing, createPost, createProject, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected, isProject
     } = this.props
     const {
-      id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, location, locationId
+      id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, location, locationId, isPublic
     } = this.state.post
     const details = this.editor.current.getContentHTML()
     const topicNames = this.topicSelector.current.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId
+      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId, isPublic
     }
     const saveFunc = editing ? updatePost : isProject ? createProject : createPost
     setAnnouncement(false)
@@ -365,7 +373,7 @@ export default class PostEditor extends React.Component {
     const canHaveTimes = type !== 'discussion'
 
     // Center location autocomplete either on post's current location, or current community's location, or current user's location
-    const curLocation = locationObject || (communities.length > 0 ? communities[0].locationObject : null) || currentUser.locationObject
+    const curLocation = locationObject || get('0.locationObject', communities) || get('locationObject', currentUser)
 
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
       <div styleName='header'>
@@ -425,16 +433,28 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>}
-        {isProject && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) && <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Accept Contributions</div>
-          {hasStripeAccount && <div styleName={cx('footerSection-communities', 'accept-contributions')}>
-            <Switch value={acceptContributions} onClick={this.toggleContributions} styleName='accept-contributions-switch' />
-            {!acceptContributions && <div styleName='accept-contributions-help'>If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.</div>}
-          </div>}
-          {!hasStripeAccount && <div styleName={cx('footerSection-communities', 'accept-contributions-help')}>
-            To accept financial contributions for this project, you have to connect a Stripe account. Go to <a href='/settings/payment'>Settings</a> to set it up. (Remember to save your changes before leaving this form)
-          </div>}
-        </div>}
+        <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Topics</div>
+          <div styleName='footerSection-communities'>
+            <TopicSelector
+              selectedTopics={topics}
+              detailsTopics={detailsTopics}
+              ref={this.topicSelector} />
+          </div>
+        </div>
+        <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Post in</div>
+          <div styleName='footerSection-communities'>
+            <CommunitiesSelector
+              options={communityOptions}
+              selected={communities}
+              onChange={this.setSelectedCommunities}
+              readOnly={loading}
+              ref={this.communitiesSelector}
+            />
+          </div>
+        </div>
+        <PublicToggle togglePublic={this.togglePublic} isPublic={!!post.isPublic} />
         {canHaveTimes && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
         {canHaveTimes && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Timeframe</div>
@@ -463,27 +483,16 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>}
-        <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Topics</div>
-          <div styleName='footerSection-communities'>
-            <TopicSelector
-              selectedTopics={topics}
-              detailsTopics={detailsTopics}
-              ref={this.topicSelector} />
-          </div>
-        </div>
-        <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Post in</div>
-          <div styleName='footerSection-communities'>
-            <CommunitiesSelector
-              options={communityOptions}
-              selected={communities}
-              onChange={this.setSelectedCommunities}
-              readOnly={loading}
-              ref={this.communitiesSelector}
-            />
-          </div>
-        </div>
+        {isProject && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) && <div styleName='footerSection'>
+          <div styleName='footerSection-label'>Accept Contributions</div>
+          {hasStripeAccount && <div styleName={cx('footerSection-communities', 'accept-contributions')}>
+            <Switch value={acceptContributions} onClick={this.toggleContributions} styleName='accept-contributions-switch' />
+            {!acceptContributions && <div styleName='accept-contributions-help'>If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.</div>}
+          </div>}
+          {!hasStripeAccount && <div styleName={cx('footerSection-communities', 'accept-contributions-help')}>
+            To accept financial contributions for this project, you have to connect a Stripe account. Go to <a href='/settings/payment'>Settings</a> to set it up. (Remember to save your changes before leaving this form)
+          </div>}
+        </div>}
         <ActionsBar
           id={id}
           addImage={addImage}

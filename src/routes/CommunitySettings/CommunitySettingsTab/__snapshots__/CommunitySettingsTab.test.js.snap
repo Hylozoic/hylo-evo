@@ -54,7 +54,8 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
   />
   <SettingsControl
     label="Location"
-    location="Fuji"
+    location=""
+    locationObject="Fuji"
     onChange={[Function]}
     type="location"
   />
