@@ -100,14 +100,16 @@ export default class PrimaryLayout extends Component {
       ({ path }) => matchPath(location.pathname, { path, exact: true }),
       postDetailRoutes
     )
+
     const showTopics = !isAllCommunitiesPath(location.pathname) && !isNetworkPath(location.pathname) && !isTagPath(location.pathname)
+    const collapsedState = hasDetail || queryParams['showDrawer'] === 'true'
 
     return <div styleName={cx('container', { 'map-view': isMapViewPath(location.pathname) })}>
       <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
       <TopNav styleName='top' onClick={closeDrawer} {...{ community, network, currentUser, showLogoBadge }} />
       <div styleName={cx('main', { 'map-view': isMapViewPath(location.pathname) })} onClick={closeDrawer}>
-        <Navigation collapsed={hasDetail || queryParams['showDrawer'] === 'true'} styleName={cx('left', { 'map-view': isMapViewPath(location.pathname) })} showTopics={showTopics} currentUser={currentUser} mapView={true} />
-        <div styleName={cx('center', { 'map-view': isMapViewPath(location.pathname) })} id={CENTER_COLUMN_ID}>
+        <Navigation collapsed={collapsedState} styleName={cx('left', { 'map-view': isMapViewPath(location.pathname) })} showTopics={showTopics} currentUser={currentUser} mapView={isMapViewPath(location.pathname)} />
+        <div styleName={cx('center', { 'map-view': isMapViewPath(location.pathname) }, { collapsedState })} id={CENTER_COLUMN_ID}>
           <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
           <RedirectToCommunity path='/' currentUser={currentUser} />
           <RedirectToCommunity path='/app' currentUser={currentUser} />

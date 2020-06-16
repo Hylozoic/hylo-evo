@@ -92,6 +92,11 @@ $drawer-z-index: 51;
   }
 }
 
+.center.collapsedState {
+  width: 43%;
+  flex: 0 0 43%;
+}
+
 .center::-webkit-scrollbar {
   background-color:transparent;
   width: 5px;
