@@ -49,7 +49,10 @@ export default class TopicNavigation extends Component {
           communitySlug={slug}
           communityTopics={topics} />}
       </div>
-      <TopicsList onClose={goBack} onClick={this.onClickTopic} topics={topics} />
+      <TopicsList
+        onClose={goBack}
+        onClick={this.onClickTopic}
+        topics={topics} />
       <div styleName='s.addTopic'>
         <Link to={seeAllUrl}>see all</Link>
       </div>
@@ -64,7 +67,9 @@ export function TopicsList ({ topics, onClick, onClose }) {
         <NavLink className={badgeHoverStyles.parent}
           styleName='s.topicLink'
           to={topic.url}
-          onClick={() => onClick(topic)}
+          // TODO: Removing onClick event for now
+          //       but not sure why it's breaking things
+          // onClick={() => onClick(topic)}
           activeClassName='active-topic-nav-link'>
           <span styleName='s.name'>#{topic.name}</span>
           {topic.newPostCount > 0 && !topic.current &&
