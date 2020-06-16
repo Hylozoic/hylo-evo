@@ -373,7 +373,7 @@ export default class PostEditor extends React.Component {
     const canHaveTimes = type !== 'discussion'
 
     // Center location autocomplete either on post's current location, or current community's location, or current user's location
-    const curLocation = locationObject || (communities.length > 0 ? communities[0].locationObject : null) || currentUser.locationObject
+    const curLocation = locationObject || get('0.locationObject', communities) || get('locationObject', currentUser)
 
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
       <div styleName='header'>

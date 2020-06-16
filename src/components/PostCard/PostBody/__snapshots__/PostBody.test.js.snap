@@ -1,25 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`matches last snapshot 1`] = `
-<div
-  className="classy"
-  data-stylename="body"
->
-  <PostTitle
-    highlightProp={
-      Object {
-        "term": "foo",
-      }
-    }
-  />
-  <PostDetails
-    expanded={true}
-    highlightProp={
-      Object {
-        "term": "foo",
-      }
-    }
-    slug="foomunity"
-  />
-</div>
+<ContextConsumer>
+  <Component />
+</ContextConsumer>
 `;

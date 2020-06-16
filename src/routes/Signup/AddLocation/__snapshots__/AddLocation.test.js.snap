@@ -32,13 +32,13 @@ exports[`AddLocation renders correctly 1`] = `
     <div
       data-stylename="center"
     >
-      <input
-        autoFocus={true}
-        data-stylename="signup-input signup-padding large-input-text gray-bottom-border"
+      <Connect(LocationInput)
+        inputClass="undefined"
+        location=""
+        locationObject={null}
         onChange={[Function]}
         onKeyPress={[Function]}
         placeholder="Where do you call home?"
-        value=""
       />
     </div>
     <div>

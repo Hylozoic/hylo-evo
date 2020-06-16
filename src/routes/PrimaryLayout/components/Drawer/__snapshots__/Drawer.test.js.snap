@@ -52,72 +52,95 @@ exports[`Drawer renders a community list if networks are present 1`] = `
 <div
   data-stylename="s.communityDrawer"
 >
-  <Icon
-    data-stylename="s.closeDrawer"
-    name="Ex"
-  />
-  <Logo />
-  <ul
-    data-stylename="s.communitiesList"
+  <div
+    data-stylename="s.currentCommunity"
   >
-    <li
-      data-stylename="s.sectionTitle"
+    <div
+      data-stylename="s.hyloLogoBar"
     >
-      Networked Communities
-    </li>
-    <NetworkRow
-      key="1"
-      network={
-        Object {
-          "avatarUrl": "/wombat.png",
-          "communities": Array [
-            Object {
-              "avatarUrl": "/foo.png",
-              "id": "11",
-              "name": "Foomunity",
-              "newPostCount": 0,
-              "slug": "foo",
-            },
-            Object {
-              "avatarUrl": "/bar.png",
-              "id": "22",
-              "name": "Barmunity",
-              "newPostCount": 7,
-              "slug": "bar",
-            },
-          ],
-          "id": "1",
-          "name": "Wombat Network",
-        }
-      }
+      <img
+        src="/hylo.svg"
+        width="50px"
+      />
+      <Icon
+        data-stylename="s.closeDrawer"
+        name="Ex"
+      />
+    </div>
+    <Logo />
+  </div>
+  <div>
+    <ul
+      data-stylename="s.communitiesList"
     />
-    <li
-      data-stylename="s.sectionTitle s.sectionTitleSeparator"
+    <ul
+      data-stylename="s.communitiesList"
     >
-      Independent Communities
-    </li>
-    <CommunityRow
-      avatarUrl="/foo.png"
-      id="11"
-      key="11"
-      name="Foomunity"
-      newPostCount={0}
-      slug="foo"
-    />
-    <CommunityRow
-      avatarUrl="/bar.png"
-      id="22"
-      key="22"
-      name="Barmunity"
-      newPostCount={7}
-      slug="bar"
-    />
-  </ul>
-  <Button
-    color="white"
-    data-stylename="s.newCommunity"
-    label="Start a Community"
-  />
+      <div>
+        <li
+          data-stylename="s.sectionTitle"
+        >
+          My Networks
+        </li>
+        <NetworkRow
+          key="1"
+          network={
+            Object {
+              "avatarUrl": "/wombat.png",
+              "communities": Array [
+                Object {
+                  "avatarUrl": "/foo.png",
+                  "id": "11",
+                  "name": "Foomunity",
+                  "newPostCount": 0,
+                  "slug": "foo",
+                },
+                Object {
+                  "avatarUrl": "/bar.png",
+                  "id": "22",
+                  "name": "Barmunity",
+                  "newPostCount": 7,
+                  "slug": "bar",
+                },
+              ],
+              "id": "1",
+              "name": "Wombat Network",
+            }
+          }
+        />
+      </div>
+      <li
+        data-stylename="s.sectionTitle s.sectionTitleSeparator"
+      >
+        My Communities
+      </li>
+      <CommunityRow
+        avatarUrl="/foo.png"
+        id="11"
+        key="11"
+        name="Foomunity"
+        newPostCount={0}
+        slug="foo"
+      />
+      <CommunityRow
+        avatarUrl="/bar.png"
+        id="22"
+        key="22"
+        name="Barmunity"
+        newPostCount={7}
+        slug="bar"
+      />
+    </ul>
+    <div
+      data-stylename="s.newCommunity"
+    >
+      <Button
+        color="white"
+        data-stylename="s.newCommunityBtn"
+        label="Start a Community"
+      />
+    </div>
+  </div>
 </div>
 `;
 
@@ -125,26 +148,72 @@ exports[`Drawer renders with a current community 1`] = `
 <div
   data-stylename="s.communityDrawer"
 >
-  <Icon
-    data-stylename="s.closeDrawer"
-    name="Ex"
-  />
-  <Logo
-    community={
-      Object {
-        "avatarUrl": "/foo.png",
-        "id": "11",
-        "name": "Foomunity",
-        "newPostCount": 0,
-        "slug": "foo",
+  <div
+    data-stylename="s.currentCommunity"
+  >
+    <div
+      data-stylename="s.hyloLogoBar"
+    >
+      <img
+        src="/hylo.svg"
+        width="50px"
+      />
+      <Icon
+        data-stylename="s.closeDrawer"
+        name="Ex"
+      />
+    </div>
+    <Logo
+      community={
+        Object {
+          "avatarUrl": "/foo.png",
+          "id": "11",
+          "name": "Foomunity",
+          "newPostCount": 0,
+          "slug": "foo",
+        }
       }
-    }
-  />
-  <Button
-    color="white"
-    data-stylename="s.newCommunity"
-    label="Start a Community"
-  />
+    />
+  </div>
+  <div>
+    <ul
+      data-stylename="s.communitiesList"
+    />
+    <ul
+      data-stylename="s.communitiesList"
+    >
+      <li
+        data-stylename="s.sectionTitle s.sectionTitleSeparator"
+      >
+        My Communities
+      </li>
+      <CommunityRow
+        avatarUrl="/foo.png"
+        id="11"
+        key="11"
+        name="Foomunity"
+        newPostCount={0}
+        slug="foo"
+      />
+      <CommunityRow
+        avatarUrl="/bar.png"
+        id="22"
+        key="22"
+        name="Barmunity"
+        newPostCount={7}
+        slug="bar"
+      />
+    </ul>
+    <div
+      data-stylename="s.newCommunity"
+    >
+      <Button
+        color="white"
+        data-stylename="s.newCommunityBtn"
+        label="Start a Community"
+      />
+    </div>
+  </div>
 </div>
 `;
 
@@ -152,16 +221,62 @@ exports[`Drawer renders without a current community 1`] = `
 <div
   data-stylename="s.communityDrawer"
 >
-  <Icon
-    data-stylename="s.closeDrawer"
-    name="Ex"
-  />
-  <Logo />
-  <Button
-    color="white"
-    data-stylename="s.newCommunity"
-    label="Start a Community"
-  />
+  <div
+    data-stylename="s.currentCommunity"
+  >
+    <div
+      data-stylename="s.hyloLogoBar"
+    >
+      <img
+        src="/hylo.svg"
+        width="50px"
+      />
+      <Icon
+        data-stylename="s.closeDrawer"
+        name="Ex"
+      />
+    </div>
+    <Logo />
+  </div>
+  <div>
+    <ul
+      data-stylename="s.communitiesList"
+    />
+    <ul
+      data-stylename="s.communitiesList"
+    >
+      <li
+        data-stylename="s.sectionTitle s.sectionTitleSeparator"
+      >
+        My Communities
+      </li>
+      <CommunityRow
+        avatarUrl="/foo.png"
+        id="11"
+        key="11"
+        name="Foomunity"
+        newPostCount={0}
+        slug="foo"
+      />
+      <CommunityRow
+        avatarUrl="/bar.png"
+        id="22"
+        key="22"
+        name="Barmunity"
+        newPostCount={7}
+        slug="bar"
+      />
+    </ul>
+    <div
+      data-stylename="s.newCommunity"
+    >
+      <Button
+        color="white"
+        data-stylename="s.newCommunityBtn"
+        label="Start a Community"
+      />
+    </div>
+  </div>
 </div>
 `;
 
