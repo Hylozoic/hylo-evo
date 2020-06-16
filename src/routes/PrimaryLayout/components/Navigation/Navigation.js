@@ -1,5 +1,6 @@
 import React from 'react'
 import NavLink from './NavLink'
+import cx from 'classnames'
 import TopicNavigation from './TopicNavigation'
 import './Navigation.scss'
 import { compact } from 'lodash/fp'
@@ -17,6 +18,7 @@ export default function Navigation (props) {
     projectsPath,
     eventsPath,
     mapPath,
+    mapView,
     badge,
     clearBadge,
     clearFeedList,
@@ -63,7 +65,9 @@ export default function Navigation (props) {
     }
   ])
 
-  return <div styleName={collapsed ? 'collapser-collapsed' : 'collapser'} // this currently collapses when a post is opened. Will have to modify behavior to suit map needs
+  const collapserState = collapsed ? 'collapser-collapsed' : 'collapser'
+
+  return <div styleName={cx({ mapView }, collapserState)} // this currently collapses when a post is opened. Will have to modify behavior to suit map needs
     className={className}>
     <div styleName='navigation'>
       <ul styleName='links'>

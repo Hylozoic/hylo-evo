@@ -39,9 +39,10 @@
   display: flex;
   flex-wrap: nowrap;
   width: 100%;
-  max-width: 1600px;
+  max-width: 1500px;
   margin-left: auto;
   margin-right: auto;
+  min-width: 700px;
   &.map-view {
     width: 100%;
     max-width: 100%;
@@ -136,12 +137,17 @@ $drawer-z-index: 51;
   transition-duration: 0.2s;
   padding-bottom: 150px;
   overflow-y: auto;
+  margin-top: -8px;
 
   &.hidden {
     opacity: 0;
     right: -1000px;
     transition-delay: 0.0s;
   }
+}
+
+.map-view .detail {
+  max-width: 700px;
 }
 
 .detail::-webkit-scrollbar {
