@@ -23,6 +23,7 @@ export default class PostCard extends React.Component {
     voteOnPost: PropTypes.func,
     highlightProps: PropTypes.object,
     expanded: PropTypes.bool,
+    constrained: PropTypes.bool,
     className: PropTypes.string
   }
 
@@ -51,26 +52,32 @@ export default class PostCard extends React.Component {
       voteOnPost,
       highlightProps,
       expanded,
+      constrained,
       className,
       respondToEvent
     } = this.props
+
+    const postType = get('type', post)
+
+    console.log(postType)
 
     const isEvent = get('type', post) === 'event'
 
     return <div ref='postCard'
       onClick={this.onClick}
-      styleName={cx('card', { expanded })}
+      styleName={cx('card', postType, { expanded }, { constrained })}
       className={className}>
       <PostHeader
         {...post}
         routeParams={routeParams}
         highlightProps={highlightProps}
-        editPost={editPost} />
+        editPost={editPost}
+        constrained={constrained} />
       <PostImage styleName='image' postId={post.id} />
-      {isEvent && <EventBody event={post} slug={routeParams.slug} respondToEvent={respondToEvent} />}
-      {!isEvent && <PostBody {...post} slug={routeParams.slug} />}
+      {isEvent && <EventBody event={post} slug={routeParams.slug} respondToEvent={respondToEvent} constrained={constrained} />}
+      {!isEvent && <PostBody {...post} slug={routeParams.slug} constrained={constrained} />}
       <PostCommunities communities={post.communities} slug={routeParams.slug} />
-      <PostFooter {...post} voteOnPost={voteOnPost} />
+      <PostFooter {...post} voteOnPost={voteOnPost} constrained={constrained} />
     </div>
   }
 }

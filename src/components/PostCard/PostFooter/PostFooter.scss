@@ -13,12 +13,27 @@ $footer-height: 56px;
   overflow: hidden;
 }
 
+
+.footer.constrained {
+  padding-left: 5px;
+}
+
+
 .people {
   margin-right: 20px;
 }
 
 .caption {
   composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.footer.constrained .caption {
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.footer.constrained .people {
+  margin-right: 5px;
 }
 
 .share {

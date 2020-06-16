@@ -1,32 +1,56 @@
 .container {
-  height: 100vh;
-  position: absolute;
+  height: calc(100vh - 55px);
+  position: fixed;
   right: 0;
-  top: 0;
+  top: 55px;
   padding: 20px 10px 10px 10px;
   background: white;
   width: 450px;
+  transition: all .25s ease;
   overflow-y: auto;
+  z-index: 20;
   overflow-x: hidden;
 
   h1 {
     float: left;
-    margin-bottom: 0
+    margin-bottom: 0;
+    font-size: 16px;
+    color: #2c3f59;
   }
 }
 
 .contentListContainer {
   clear: both;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .contentCard {
   position: relative;
   margin-bottom: 12px;
+
+}
+
+.contentListContainer .contentCard:nth-child(even) {
+  margin-left: 5px;
+  width: calc(50% - 5px);
+}
+
+.contentListContainer .contentCard:nth-child(odd) {
+  margin-right: 5px;
+  width: calc(50% - 5px);
 }
 
 .sorter {
   float: right;
-  margin-top: 12px;
+  border: 1px solid #bfc5ce;
+  border-radius: 25px;
+  padding: 0 15px;
+  margin-top: 0px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  line-height: 28px;
+  height: 30px;
 }
 
 .sorter-label {
@@ -41,7 +65,10 @@
   width: 100%;
   border: 0;
   outline: 0;
-  padding: 2px;
+  padding: 2px 10px;
+  font-size: 14px;
+  height: 40px;
+  border-radius: 5px;
   box-shadow: 0px 2px 6px 0px $color-black-30;
 }
 
@@ -57,8 +84,9 @@
   border: 1px solid #B6EDE2;
   color: $color-caribbean-green;
   padding: 2px;
-  margin: 3px;
+  margin: 5px;
   cursor: pointer;
+  display: inline-block;
 }
 
 .topicCount {

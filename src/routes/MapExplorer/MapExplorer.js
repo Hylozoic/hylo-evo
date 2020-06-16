@@ -1,7 +1,6 @@
 import React from 'react'
 import { debounce } from 'lodash'
 import cx from 'classnames'
-import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import { POST_TYPES } from 'store/models/Post'
 import Map from 'components/Map/Map'
@@ -97,7 +96,7 @@ export default class MapExplorer extends React.Component {
   _renderTooltip = () => {
     const { hoveredObject, pointerX, pointerY } = this.state || {}
     return hoveredObject ? (
-      <div styleName='postTip' style={{ left: pointerX + 15, top: pointerY }}>
+      <div styleName={cx('postTip', hoveredObject.type)} style={{ left: pointerX + 15, top: pointerY }}>
         { hoveredObject.message }
       </div>
     ) : ''
@@ -139,7 +138,8 @@ export default class MapExplorer extends React.Component {
         zoom={zoom}
       />
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}>
-        <Icon name='Stack' green={showDrawer} styleName='icon' />
+        <img styleName={cx('openDrawer')} src='/icon/menu.svg' />
+        <img styleName={cx('closeDrawer')} src='/icon/x.svg' />
       </button>
       { showDrawer ? (
         <MapDrawer
@@ -153,7 +153,7 @@ export default class MapExplorer extends React.Component {
         : '' }
 
       <button styleName={cx('toggleFeatureFiltersButton', { 'featureFiltersOpen': showFeatureFilters })} onClick={this.toggleFeatureFilters}>
-        <Icon name='Stack' styleName='icon' />
+        Post Types: <strong>6/7</strong>
       </button>
       <div styleName={cx('featureTypeFilters', { 'featureFiltersOpen': showFeatureFilters })}>
         <h3>What do you want to see on the map?</h3>
@@ -172,6 +172,7 @@ export default class MapExplorer extends React.Component {
             <span>{featureType.charAt(0).toUpperCase() + featureType.slice(1)}s</span>
           </div>
         })}
+        <div styleName={cx('pointer')} />
       </div>
 
       { pending && <Loading /> }

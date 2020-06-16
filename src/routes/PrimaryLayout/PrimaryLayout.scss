@@ -38,11 +38,13 @@
   flex-grow: 1;
   display: flex;
   flex-wrap: nowrap;
-  width: $content-width;
+  width: 100%;
+  max-width: 1600px;
   margin-left: auto;
   margin-right: auto;
   &.map-view {
-    width: $map-content-width;
+    width: 100%;
+    max-width: 100%;
   }
 }
 
@@ -104,6 +106,7 @@ $drawer-z-index: 51;
 .sidebar {
   // From Bootstrap make-col-ready():
   position: relative;
+  z-index: 10;
   min-height: 1px; // Prevent collapsing
   flex: 0 0 29%;
   max-width: 29%;
@@ -123,6 +126,7 @@ $drawer-z-index: 51;
 .detail {
   background-color: white;
   position: absolute;
+  z-index: 30;
   top: 0;
   right: 0px;
   height: 100%;
