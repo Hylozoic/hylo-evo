@@ -237,6 +237,10 @@ $drawer-z-index: 51;
     padding: 0;
   }
 
+  .detail {
+    z-index: 110;
+  }
+
   .left {
     position: fixed;
     box-shadow: 0px 4px 56px 0px $shadow-color;
