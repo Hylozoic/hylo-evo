@@ -38,13 +38,15 @@ export default class CommunitySettingsTab extends Component {
     if (!community) return
 
     const {
-      name, description, location, avatarUrl, bannerUrl
+      name, description, location, avatarUrl, bannerUrl, isPublic, isAutoJoinable, publicMemberDirectory
     } = community
 
-    // TODO change to inherit from community once these are in DB
-    let isDiscoverable = false
-    let requestSetting = 'isRequestable'
-    let membersViewable = false
+    let requestSetting = ''
+    if (isPublic && isAutoJoinable) {
+      requestSetting = 'isAutoJoinable'
+    } else if (isPublic) {
+      requestSetting = 'isRequestable'
+    }
 
     this.setState({
       edits: {
@@ -53,9 +55,10 @@ export default class CommunitySettingsTab extends Component {
         location: location || '',
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER,
-        isDiscoverable: isDiscoverable || false,
+        isPublic: isPublic || false,
         requestSetting: requestSetting,
-        membersViewable: membersViewable || false
+        isAutoJoinable: isAutoJoinable || false,
+        publicMemberDirectory: publicMemberDirectory || false
       }
     })
   }
@@ -66,16 +69,18 @@ export default class CommunitySettingsTab extends Component {
     if (key === 'location') {
       edits['location'] = event.target.value.fullText
       edits['locationId'] = event.target.value.id
-    } else if (key === 'isDiscoverable') {
+    } else if (key === 'isPublic') {
       edits[key] = !edits[key]
       if (event === true) {
         edits['requestSetting'] = ''
-        edits['membersViewable'] = false
+        edits['publicMemberDirectory'] = false
+      } else if (event === false) {
+        edits['requestSetting'] = 'isRequestable'
       }
-    } else if (key === 'membersViewable') {
+    } else if (key === 'publicMemberDirectory') {
       edits[key] = !edits[key]
       if (event === false) {
-        edits['isDiscoverable'] = true
+        edits['isPublic'] = true
         edits['requestSetting'] = 'isRequestable'
       }
     } else {
@@ -93,6 +98,10 @@ export default class CommunitySettingsTab extends Component {
 
     edits['requestSetting'] = event.target.value
 
+    if (event.target.value === 'isAutoJoinable') {
+      edits['isAutoJoinable'] = true
+    }
+
     this.setState({
       changed: true,
       edits: { ...edits }
@@ -104,6 +113,7 @@ export default class CommunitySettingsTab extends Component {
 
   save = () => {
     this.setState({ changed: false })
+    delete this.state.edits['requestSetting']
     this.props.updateCommunitySettings(this.state.edits)
   }
 
@@ -113,7 +123,7 @@ export default class CommunitySettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      name, description, location, avatarUrl, bannerUrl, isDiscoverable, requestSetting, membersViewable
+      name, description, location, avatarUrl, bannerUrl, isPublic, requestSetting, publicMemberDirectory
     } = edits
 
     const locationObject = community.locationObject || currentUser.locationObject
@@ -145,32 +155,32 @@ export default class CommunitySettingsTab extends Component {
         <div styleName='privacy-detail'>By default, your community is not listed in the public directory.
         Only people invited to your community can join it, and only members of your community can see posts.</div>
         <div>
-          <div styleName={cx('privacy-option-container', { on: isDiscoverable })}>
+          <div styleName={cx('privacy-option-container', { on: isPublic })}>
             <div>
-              <SwitchStyled checked={isDiscoverable} onChange={this.updateSetting('isDiscoverable')} backgroundColor={isDiscoverable ? '#40A1DD' : '#808C9B'} />
+              <SwitchStyled checked={isPublic} onChange={this.updateSetting('isPublic')} backgroundColor={isPublic ? '#40A1DD' : '#808C9B'} />
               <span styleName='privacy-option'>Allow anyone to see {community.name}</span>
             </div>
-            <span styleName='privacy-state'>{isDiscoverable ? 'ON' : 'OFF'}</span>
+            <span styleName='privacy-state'>{isPublic ? 'ON' : 'OFF'}</span>
           </div>
           <div styleName='request-setting'>
-            <div styleName={cx({ on: isDiscoverable })}>
+            <div styleName={cx({ on: isPublic })}>
               <label>
-                <input type='radio' id='isRequestable' name='requestSetting' value='isRequestable' disabled={isDiscoverable === false} onChange={this.updatePrivacySettings} checked={requestSetting === 'isRequestable'} />
-                <span styleName={cx('privacy-option', { disabled: !isDiscoverable })}>Anyone can request to become a member of {community.name}</span>
+                <input type='radio' id='isRequestable' name='requestSetting' value='isRequestable' disabled={isPublic === false} onChange={this.updatePrivacySettings} checked={requestSetting === 'isRequestable'} />
+                <span styleName={cx('privacy-option', { disabled: !isPublic })}>Anyone can request to become a member of {community.name}</span>
               </label>
             </div>
-            <div styleName={cx({ on: isDiscoverable })}>
+            <div styleName={cx({ on: isPublic })}>
               <label>
-                <input type='radio' id='isAutoJoinable' name='requestSetting' value='isAutoJoinable' disabled={isDiscoverable === false} onChange={this.updatePrivacySettings} />
-                <span styleName={cx('privacy-option', { disabled: !isDiscoverable })}>Anyone can automatically join {community.name}</span>
+                <input type='radio' id='isAutoJoinable' name='requestSetting' value='isAutoJoinable' disabled={isPublic === false} onChange={this.updatePrivacySettings} checked={requestSetting === 'isAutoJoinable'} />
+                <span styleName={cx('privacy-option', { disabled: !isPublic })}>Anyone can automatically join {community.name}</span>
               </label>
             </div>
-            <div styleName={cx('privacy-option-container', { on: membersViewable })}>
+            <div styleName={cx('privacy-option-container', { on: publicMemberDirectory })}>
               <div>
-                <SwitchStyled checked={membersViewable} onChange={this.updateSetting('membersViewable')} backgroundColor={membersViewable ? '#40A1DD' : '#808C9B'} />
-                <span styleName={cx('privacy-option', { disabled: !isDiscoverable })}>Anyone can see who is a member of {community.name}</span>
+                <SwitchStyled checked={publicMemberDirectory} onChange={this.updateSetting('publicMemberDirectory')} backgroundColor={publicMemberDirectory ? '#40A1DD' : '#808C9B'} />
+                <span styleName={cx('privacy-option', { disabled: !isPublic })}>Anyone can see who is a member of {community.name}</span>
               </div>
-              <span styleName='privacy-state'>{membersViewable ? 'ON' : 'OFF'}</span>
+              <span styleName='privacy-state'>{publicMemberDirectory ? 'ON' : 'OFF'}</span>
             </div>
           </div>
         </div>
