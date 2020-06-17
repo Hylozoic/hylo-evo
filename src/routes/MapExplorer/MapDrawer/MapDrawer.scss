@@ -111,3 +111,43 @@
 .currentFilters {
   padding: 10px 5px 5px;
 }
+
+
+@media screen and (max-width: 600px) {
+  .contentListContainer .contentCard:nth-child(even) {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: calc(100% - 10px);
+  }
+
+  .contentListContainer .contentCard:nth-child(odd) {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: calc(100% - 10px);
+  }
+
+  .container {
+    width: calc(100% - 64px);
+    min-width: auto;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .container {
+    width: 100%;
+  }
+
+  .searchBox {
+    margin-left: 46px;
+    width: calc(100% - 46px);
+  }
+
+  .searchFilters {
+    width: calc(100% - 46px);
+    left: 46px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+}
