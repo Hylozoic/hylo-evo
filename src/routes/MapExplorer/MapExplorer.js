@@ -66,6 +66,7 @@ export default class MapExplorer extends React.Component {
     if (prevProps.fetchPostsParam.boundingBox !== this.props.fetchPostsParam.boundingBox) {
       this.fetchOrShowCached()
     }
+
     if (prevProps.fetchPostsParam.boundingBox !== this.props.fetchPostsParam.boundingBox ||
           prevProps.posts !== this.props.posts ||
           prevProps.members !== this.props.members) {
@@ -206,7 +207,7 @@ export default class MapExplorer extends React.Component {
         : '' }
 
       <button styleName={cx('toggleFeatureFiltersButton', { 'featureFiltersOpen': showFeatureFilters })} onClick={this.toggleFeatureFilters}>
-        Post Types: <strong>6/7</strong>
+        Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/5</strong>
       </button>
       <div styleName={cx('featureTypeFilters', { 'featureFiltersOpen': showFeatureFilters })}>
         <h3>What do you want to see on the map?</h3>

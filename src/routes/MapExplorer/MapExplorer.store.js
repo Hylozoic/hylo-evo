@@ -355,12 +355,10 @@ export const getCurrentTopics = createSelector(
   }
 )
 
-// export const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
-
 // reducer
 const DEFAULT_STATE = {
   clientFilterParams: {
-    featureTypes: Object.keys(POST_TYPES).reduce((types, type) => { types[type] = true; return types }, { 'member': true }),
+    featureTypes: Object.keys(POST_TYPES).filter(t => POST_TYPES[t].map).reduce((types, type) => { types[type] = true; return types }, { 'member': true }),
     search: '',
     sortBy: SORT_OPTIONS[0].id,
     topics: []

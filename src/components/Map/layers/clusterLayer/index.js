@@ -45,7 +45,7 @@ export default class PostClusterLayer extends CompositeLayer {
   updateState ({ props, oldProps, changeFlags }) {
     const { boundingBox, data, getPosition } = props
 
-    if (props.data.length === 0) {
+    if (!boundingBox) {
       return
     }
 
