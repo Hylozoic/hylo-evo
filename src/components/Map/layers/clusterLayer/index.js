@@ -5,24 +5,15 @@ import { FEATURE_TYPES } from 'routes/MapExplorer/MapExplorer'
 import { hexToRgb } from 'util/index'
 
 const iconMapping = {
-  '0DC39F-10': { 'x': 0, 'y': 0, 'width': 10, 'height': 10 },
-  '0DC39F-16': { 'x': 50, 'y': 0, 'width': 16, 'height': 16 },
-  '0DC39F-20': { 'x': 16, 'y': 16, 'width': 20, 'height': 20 },
-  '40A1DD-10': { 'x': 10, 'y': 0, 'width': 10, 'height': 10 },
-  '40A1DD-16': { 'x': 66, 'y': 0, 'width': 16, 'height': 16 },
-  '40A1DD-20': { 'x': 36, 'y': 16, 'width': 20, 'height': 20 },
-  'BB60A8-10': { 'x': 20, 'y': 0, 'width': 10, 'height': 10 },
-  'BB60A8-16': { 'x': 82, 'y': 0, 'width': 16, 'height': 16 },
-  'BB60A8-20': { 'x': 56, 'y': 16, 'width': 20, 'height': 20 },
-  'FD6A49-10': { 'x': 40, 'y': 0, 'width': 10, 'height': 10 },
-  'FD6A49-16': { 'x': 0, 'y': 16, 'width': 16, 'height': 16 },
-  'FD6A49-20': { 'x': 96, 'y': 16, 'width': 20, 'height': 20 },
-  'FDD549-10': { 'x': 30, 'y': 0, 'width': 10, 'height': 10 },
-  'FDD549-16': { 'x': 98, 'y': 0, 'width': 16, 'height': 16 },
-  'FDD549-20': { 'x': 76, 'y': 16, 'width': 20, 'height': 20 }
+  'cluster': { 'x': 0, 'y': 0, 'width': 30, 'height': 30 },
+  'event': { 'x': 30, 'y': 0, 'width': 20, 'height': 20 },
+  'member': { 'x': 50, 'y': 0, 'width': 20, 'height': 20 },
+  'offer': { 'x': 70, 'y': 0, 'width': 20, 'height': 20 },
+  'request': { 'x': 90, 'y': 0, 'width': 20, 'height': 20 },
+  'resource': { 'x': 110, 'y': 0, 'width': 20, 'height': 20 }
 }
 
-export function createIconLayerFromPosts ({ boundingBox, posts, onHover, onClick }) {
+export function createIconLayerFromPostsAndMembers ({ boundingBox, members, posts, onHover, onClick }) {
   // TODO: shouldn't need to filter by locationObject, should all have one for map...?
   let data = posts.filter(post => post.locationObject && post.locationObject.center)
     .map(post => {
@@ -35,6 +26,14 @@ export function createIconLayerFromPosts ({ boundingBox, posts, onHover, onClick
         coordinates: [parseFloat(post.locationObject.center.lng), parseFloat(post.locationObject.center.lat)]
       }
     })
+  data = data.concat(members.map(member => {
+    return {
+      id: member.id,
+      type: 'member',
+      message: 'Member: ' + member.name,
+      coordinates: [parseFloat(member.locationObject.center.lng), parseFloat(member.locationObject.center.lat)]
+    }
+  }))
   return new PostClusterLayer({ boundingBox, data, onHover, onClick, getPosition: d => d.coordinates })
 }
 
@@ -88,7 +87,7 @@ export default class PostClusterLayer extends CompositeLayer {
   renderLayers () {
     const { data } = this.state
     const {
-      iconAtlas = '/iconAtlas.png'
+      iconAtlas = '/mapIconAtlas.png'
     } = this.props
 
     const iconSubLayer = new IconLayer(
@@ -99,7 +98,7 @@ export default class PostClusterLayer extends CompositeLayer {
         iconMapping,
         sizeScale: 1,
         getPosition: d => d.geometry.coordinates,
-        getIcon: d => d.properties.cluster ? `BB60A8-20` : `0DC39F-20`, // TODO: accommodate all icons and/or adjust to proper iconAtlas
+        getIcon: d => d.properties.cluster ? 'cluster' : d.properties.type,
         getSize: d => d.properties.cluster ? 30 : 20,
         sizeUnits: 'pixels',
         sizeMinPixels: 20,

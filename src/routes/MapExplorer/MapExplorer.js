@@ -7,7 +7,7 @@ import Loading from 'components/Loading'
 import { POST_TYPES } from 'store/models/Post'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
-import { createIconLayerFromPosts } from 'components/Map/layers/clusterLayer'
+import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
 import SwitchStyled from 'components/SwitchStyled'
 import './MapExplorer.scss'
 
@@ -67,9 +67,16 @@ export default class MapExplorer extends React.Component {
       this.fetchOrShowCached()
     }
     if (prevProps.fetchPostsParam.boundingBox !== this.props.fetchPostsParam.boundingBox ||
-          prevProps.posts !== this.props.posts) {
+          prevProps.posts !== this.props.posts ||
+          prevProps.members !== this.props.members) {
       this.setState({
-        clusterLayer: createIconLayerFromPosts({ posts: this.props.posts, onHover: this.onMapHover, onClick: this.onMapClick, boundingBox: this.props.fetchPostsParam.boundingBox })
+        clusterLayer: createIconLayerFromPostsAndMembers({
+          members: this.props.members,
+          posts: this.props.posts,
+          onHover: this.onMapHover,
+          onClick: this.onMapClick,
+          boundingBox: this.props.fetchPostsParam.boundingBox
+        })
       })
     }
   }
@@ -171,9 +178,6 @@ export default class MapExplorer extends React.Component {
       showFeatureFilters,
       viewport
     } = this.state
-
-    // const postsLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
-    // const membersLayer = createScatterplotLayerFromMembers(members, this.onMapHover, this.onMapClick)
 
     return <div styleName='MapExplorer-container'>
       <Map
