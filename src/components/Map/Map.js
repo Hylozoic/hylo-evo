@@ -5,22 +5,16 @@ import DeckGL from '@deck.gl/react'
 import { mapbox } from 'config'
 
 function Map (props) {
-  let { center, children, layers, onViewportUpdate, zoom } = props
-
-  const [viewport, setViewport] = useState({
-    latitude: parseFloat(center.lat),
-    longitude: parseFloat(center.lng),
-    zoom: zoom,
-    bearing: 0,
-    pitch: 0
-  })
+  let { children, layers, afterViewportUpdate, onViewportUpdate, viewport } = props
 
   const [isHovering, setIsHovering] = useState(false)
 
   const mapRef = useRef()
 
+  // XXX: Have to do this because onViewPortChange gets called before ref gets set
+  //   and we need the ref to get the bounds in the parent component
   useEffect(() => {
-    onViewportUpdate(viewport, mapRef.current)
+    afterViewportUpdate(viewport, mapRef.current)
   }, [viewport])
 
   return (
@@ -29,7 +23,7 @@ function Map (props) {
       width='100%'
       height='100vh'
       mapStyle='mapbox://styles/mapbox/light-v9'
-      onViewportChange={nextViewport => setViewport(nextViewport)}
+      onViewportChange={nextViewport => onViewportUpdate(nextViewport, mapRef.current)}
       mapboxApiAccessToken={mapbox.token}
       ref={ref => { mapRef.current = ref && ref.getMap(); return ref }}
     >
@@ -55,11 +49,16 @@ Map.propTypes = {
 }
 
 Map.defaultProps = {
-  center: { lat: 35.442845, lng: 7.916598 },
   children: {},
   layers: [],
   onViewportUpdate: () => {},
-  zoom: 0
+  viewport: {
+    latitude: 35.442845,
+    longitude: 7.916598,
+    zoom: 0,
+    bearing: 0,
+    pitch: 0
+  }
 }
 
 export default Map

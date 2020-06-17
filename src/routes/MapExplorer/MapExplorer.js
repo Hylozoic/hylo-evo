@@ -1,5 +1,6 @@
 import React from 'react'
-import { debounce } from 'lodash'
+import { FlyToInterpolator } from 'react-map-gl'
+import { debounce, groupBy } from 'lodash'
 import cx from 'classnames'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
@@ -8,7 +9,6 @@ import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import { createIconLayerFromPosts } from 'components/Map/layers/clusterLayer'
 import SwitchStyled from 'components/SwitchStyled'
-import { createScatterplotLayerFromMembers, createScatterplotLayerFromPosts } from 'components/Map/layers/scatterplotLayer'
 import './MapExplorer.scss'
 
 export const FEATURE_TYPES = {
@@ -21,24 +21,35 @@ export const FEATURE_TYPES = {
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
+    centerLocation: { lat: 35.442845, lng: 7.916598 },
     filters: {},
     members: [],
     posts: [],
     routeParams: {},
     querystringParams: {},
-    topics: []
+    topics: [],
+    zoom: 0
   }
 
   constructor (props) {
     super(props)
+
     this.state = {
       boundingBox: null,
+      clusterLayer: null,
       hoveredObject: null,
       pointerX: 0,
       pointerY: 0,
       selectedObject: null,
       showDrawer: props.querystringParams.showDrawer === 'true',
-      showFeatureFilters: false
+      showFeatureFilters: false,
+      viewport: {
+        latitude: parseFloat(props.centerLocation.lat),
+        longitude: parseFloat(props.centerLocation.lng),
+        zoom: props.zoom,
+        bearing: 0,
+        pitch: 0
+      }
     }
   }
 
@@ -47,8 +58,6 @@ export default class MapExplorer extends React.Component {
     Object.keys(FEATURE_TYPES).forEach(featureType => {
       this.refs[featureType] = React.createRef()
     })
-
-    // this.fetchOrShowCached()
   }
 
   componentDidUpdate (prevProps) {
@@ -56,6 +65,12 @@ export default class MapExplorer extends React.Component {
 
     if (prevProps.fetchPostsParam.boundingBox !== this.props.fetchPostsParam.boundingBox) {
       this.fetchOrShowCached()
+    }
+    if (prevProps.fetchPostsParam.boundingBox !== this.props.fetchPostsParam.boundingBox ||
+          prevProps.posts !== this.props.posts) {
+      this.setState({
+        clusterLayer: createIconLayerFromPosts({ posts: this.props.posts, onHover: this.onMapHover, onClick: this.onMapClick, boundingBox: this.props.fetchPostsParam.boundingBox })
+      })
     }
   }
 
@@ -65,12 +80,16 @@ export default class MapExplorer extends React.Component {
     fetchPosts()
   }
 
-  mapViewPortUpdate = (update, mapRef) => {
-    let bounds = mapRef ? mapRef.getBounds() : null
-    if (bounds) {
+  mapViewPortUpdate = (update) => {
+    this.setState({ viewport: update })
+  }
+
+  afterViewportUpdate = (update, mapRef) => {
+    if (mapRef) {
+      let bounds = mapRef.getBounds()
       bounds = [{ ...bounds._sw }, { ...bounds._ne }]
+      this.updateBoundingBoxQuery(bounds)
     }
-    this.updateBoundingBoxQuery(bounds)
   }
 
   updateBoundingBoxQuery = debounce((boundingBox) => {
@@ -78,14 +97,25 @@ export default class MapExplorer extends React.Component {
     this.props.storeFetchPostsParam({ boundingBox })
   }, 150)
 
-  onMapHover = (info) => this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y })
+  onMapHover = (info) => this.setState({ hoveredObject: info.objects || info.object, pointerX: info.x, pointerY: info.y })
 
-  onMapClick = (info) => {
-    this.setState({ selectedObject: info.object })
-    if (info.object.type === 'member') {
-      this.props.gotoMember(info.object.id)
+  onMapClick = (info, e) => {
+    if (info.objects) {
+      this.setState({ viewport: {
+        ...this.state.viewport,
+        longitude: info.lngLat[0],
+        latitude: info.lngLat[1],
+        zoom: this.state.viewport.zoom + 1,
+        transitionDuration: 500,
+        transitionInterpolator: new FlyToInterpolator()
+      } })
     } else {
-      this.props.showDetails(info.object.id)
+      this.setState({ selectedObject: info.object })
+      if (info.object.type === 'member') {
+        this.props.gotoMember(info.object.id)
+      } else {
+        this.props.showDetails(info.object.id)
+      }
     }
   }
 
@@ -97,11 +127,23 @@ export default class MapExplorer extends React.Component {
 
   _renderTooltip = () => {
     const { hoveredObject, pointerX, pointerY } = this.state || {}
-    return hoveredObject ? (
-      <div styleName='postTip' style={{ left: pointerX + 15, top: pointerY }}>
-        { hoveredObject.message }
-      </div>
-    ) : ''
+    if (hoveredObject) {
+      let message
+      if (Array.isArray(hoveredObject) && hoveredObject.length > 0) {
+        // cluster
+        const types = groupBy(hoveredObject, 'type')
+        message = Object.keys(types).map(type => <p key={type}>{types[type].length} {type}{types[type].length === 1 ? '' : 's'}</p>)
+      } else {
+        message = hoveredObject.message
+      }
+
+      return (
+        <div styleName='postTip' style={{ left: pointerX + 15, top: pointerY }}>
+          { message }
+        </div>
+      )
+    }
+    return ''
   }
 
   toggleDrawer = (e) => {
@@ -115,30 +157,31 @@ export default class MapExplorer extends React.Component {
 
   render () {
     const {
-      centerLocation,
       filters,
       querystringParams,
-      members,
       posts,
       pending,
       routeParams,
-      topics,
-      zoom
+      topics
     } = this.props
 
-    const { showDrawer, showFeatureFilters } = this.state
-    const postsLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
-    const membersLayer = createScatterplotLayerFromMembers(members, this.onMapHover, this.onMapClick)
-    const clusterLayers = createIconLayerFromPosts({ posts, onHover: this.onMapHover, onClick: this.onMapClick })
-    // including all three layers for now to show difference between clustered and non-cluster layers
+    const {
+      clusterLayer,
+      showDrawer,
+      showFeatureFilters,
+      viewport
+    } = this.state
+
+    // const postsLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
+    // const membersLayer = createScatterplotLayerFromMembers(members, this.onMapHover, this.onMapClick)
 
     return <div styleName='MapExplorer-container'>
       <Map
-        center={centerLocation}
-        layers={[membersLayer, postsLayer, clusterLayers]}
+        layers={[clusterLayer]}
+        afterViewportUpdate={this.afterViewportUpdate}
         onViewportUpdate={this.mapViewPortUpdate}
         children={this._renderTooltip()}
-        zoom={zoom}
+        viewport={viewport}
       />
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}>
         <Icon name='Stack' green={showDrawer} styleName='icon' />
