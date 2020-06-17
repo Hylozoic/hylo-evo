@@ -56,7 +56,6 @@ function MapDrawer (props) {
         type='text'
         onChange={e => setSearch(e.target.value)}
         onFocus={e => setIsSearching(true)}
-        onBlur={e => setIsSearching(false)}
         onKeyUp={e => {
           if (e.keyCode === 13) {
             setSearch('')
