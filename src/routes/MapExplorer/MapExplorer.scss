@@ -86,6 +86,11 @@
   border: 1px solid red;
   height: 30px;
   line-height: 28px;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .postTip.discussion {
@@ -109,6 +114,11 @@
 }
 
 .postTip.project {
+  color: $color-fuchsia-pink;
+  border: 1px solid $color-fuchsia-pink;
+}
+
+.postTip.cluster {
   color: $color-fuchsia-pink;
   border: 1px solid $color-fuchsia-pink;
 }

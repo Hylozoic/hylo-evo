@@ -17,7 +17,7 @@ let offersAndAsks = [
   { type: 'request', summary: 'Need help Saturday', coordinates: [37.8255693, -122.2253638], hex: '8b283470da66fff' }
 ]
 
-function createH3Layer (zoom = 11) {
+function createH3Layer () {
   return [createPostsScatterplotLayer(offersAndAsks)]
 }
 

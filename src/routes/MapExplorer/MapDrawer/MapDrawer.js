@@ -41,7 +41,7 @@ function MapDrawer (props) {
       querystringParams={querystringParams}
       post={post}
       styleName='contentCard'
-      constrained={true}
+      constrained
       expanded={false}
       key={post.id} />
   )
