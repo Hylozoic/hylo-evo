@@ -70,3 +70,18 @@ $comment-left-margin: 69px;
   padding: 3px 5px 10px 5px;
   border: 1px solid $color-cape-cod-10;
 }
+
+
+@media screen and (max-width: 425px) {
+  .comment {
+    padding: 0 10px;
+  }
+
+  .avatar {
+    margin-right: 10px;
+  }
+
+  .text {
+    margin-left: 54px;
+  }
+}

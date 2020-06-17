@@ -56,7 +56,7 @@ $drawer-z-index: 51;
   height: $drawer-height;
   position: fixed;
   left: 0px;
-  z-index: $drawer-z-index;
+  z-index: 600;
   display: flex;
   flex-direction: column;
   transition-delay: 0s;
@@ -256,4 +256,10 @@ $drawer-z-index: 51;
     margin-top: 0;
   }
 
+  .center {
+    overflow-y: scroll;
+  }
+  .center.map-view {
+    overflow-y: auto;
+  }
 }

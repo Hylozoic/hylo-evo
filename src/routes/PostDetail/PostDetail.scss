@@ -69,3 +69,9 @@
   }
   margin-right: 7px;
 }
+
+@media screen and (max-width: 425px) {
+  .header-sticky {
+    transform: translateY(8px);
+  }
+}

@@ -8,6 +8,7 @@
 }
 
 .tabs {
+  overflow: hidden;
   flex-grow: 1;
   > span {
     cursor: pointer;

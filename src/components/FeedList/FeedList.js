@@ -79,6 +79,7 @@ export default class FeedList extends React.Component {
       routeParams,
       querystringParams,
       postTypeFilter,
+      collapsedState,
       sortBy,
       changeTab,
       changeSort,
@@ -112,7 +113,7 @@ export default class FeedList extends React.Component {
             selectedSort={sortBy} />
         </div>}
       </React.Fragment>}
-      <div styleName='FeedListItems'>
+      <div styleName={cx('FeedListItems', { collapsedState })}>
         {posts.map(post => {
           const expanded = post.id === routeParams.postId
           return <PostCard

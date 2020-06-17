@@ -22,8 +22,19 @@
   background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(255, 255, 255, 0.9) 55%, rgba(255, 255, 255, 0));
 }
 
+.collapsedState {
+  border: 1px solid red;
+}
+
 @media screen and (max-width: 600px) {
   .FeedListItem {
     margin: 0 10px 10px 10px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .FeedListItem {
+    padding-top: 10px;
+    margin: 0 0 10px 5px;
   }
 }
