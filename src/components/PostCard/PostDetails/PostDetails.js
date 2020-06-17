@@ -37,7 +37,7 @@ export default function PostDetails ({
 
   return <Highlight {...highlightProps}>
     <div styleName={cx('postDetails', { constrained })}>
-      <div styleName={cx('fade')} />
+      <div styleName='fade' />
       {details && !hideDetails &&
         <ClickCatcher>
           <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />

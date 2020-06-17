@@ -17,6 +17,15 @@ export const SORT_OPTIONS = [
   { id: 'votes', label: 'Popular' }
 ]
 
+export const FEATURE_TYPES = {
+  ...POST_TYPES,
+  member: {
+    primaryColor: '#2A4059', // $color-member
+    backgroundColor: '#FAFBFC', // $color-athens-gray
+    map: true
+  }
+}
+
 const communityPostsQuery = `query (
   $slug: String,
   $sortBy: String,
@@ -358,7 +367,7 @@ export const getCurrentTopics = createSelector(
 // reducer
 const DEFAULT_STATE = {
   clientFilterParams: {
-    featureTypes: Object.keys(POST_TYPES).filter(t => POST_TYPES[t].map).reduce((types, type) => { types[type] = true; return types }, { 'member': true }),
+    featureTypes: Object.keys(FEATURE_TYPES).filter(t => FEATURE_TYPES[t].map).reduce((types, type) => { types[type] = true; return types }, {}),
     search: '',
     sortBy: SORT_OPTIONS[0].id,
     topics: []

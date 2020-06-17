@@ -1,7 +1,7 @@
 import { CompositeLayer } from '@deck.gl/core'
 import { IconLayer, TextLayer } from '@deck.gl/layers'
 import Supercluster from 'supercluster'
-import { FEATURE_TYPES } from 'routes/MapExplorer/MapExplorer'
+import { FEATURE_TYPES } from 'routes/MapExplorer/MapExplorer.store'
 import { hexToRgb } from 'util/index'
 
 const iconMapping = {

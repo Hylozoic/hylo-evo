@@ -4,20 +4,12 @@ import { debounce, groupBy } from 'lodash'
 import cx from 'classnames'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import { POST_TYPES } from 'store/models/Post'
+import { FEATURE_TYPES } from './MapExplorer.store'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
 import SwitchStyled from 'components/SwitchStyled'
 import styles from './MapExplorer.scss'
-
-export const FEATURE_TYPES = {
-  ...POST_TYPES,
-  member: {
-    primaryColor: '#2A4059', // $color-member
-    backgroundColor: '#FAFBFC' // $color-athens-gray
-  }
-}
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
