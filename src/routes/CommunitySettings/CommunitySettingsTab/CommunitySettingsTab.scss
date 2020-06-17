@@ -60,9 +60,23 @@
   margin: 0;
 }
 
+.request-setting {
+  padding-left: 25px;
+}
+
 .privacy-option {
+  margin-left: 10px !important;
   text-align: left !important;
   width: 70%;
+}
+
+.privacy-option.disabled {
+  color: $color-regent-70;
+}
+
+label {
+  color: $color-regent-70;
+  margin-left: 10px;
 }
 
 .privacy-state {
@@ -78,6 +92,10 @@
   .privacy-state {
     border: 1px solid $color-picton-blue;
     color: $color-picton-blue;
+  }
+
+  label {
+    color: $color-regent !important;
   }
 }
 
