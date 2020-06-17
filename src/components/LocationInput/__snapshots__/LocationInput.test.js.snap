@@ -3,10 +3,9 @@
 exports[`LocationInput renders correctly (with min props) 1`] = `
 <div>
   <Geocoder
-    accessToken="sk.eyJ1IjoidGVycmFuY29sbGVjdGl2ZSIsImEiOiJjazlnOHphZngwbGRtM25vMW9hazBxOHA2In0.-eD6z8lOkfp7bJg2QEDCJw"
     bbox=""
     defaultInputValue=""
-    endpoint="http://api.tiles.mapbox.com"
+    endpoint="//api.tiles.mapbox.com"
     focusOnMount={true}
     inputClass=""
     inputPlaceholder="Search for a location..."
@@ -28,10 +27,9 @@ exports[`LocationInput renders correctly (with min props) 1`] = `
 exports[`LocationInput renders correctly with some default props 1`] = `
 <div>
   <Geocoder
-    accessToken="sk.eyJ1IjoidGVycmFuY29sbGVjdGl2ZSIsImEiOiJjazlnOHphZngwbGRtM25vMW9hazBxOHA2In0.-eD6z8lOkfp7bJg2QEDCJw"
     bbox=""
     defaultInputValue="123 main st. San Francisco, CA"
-    endpoint="http://api.tiles.mapbox.com"
+    endpoint="//api.tiles.mapbox.com"
     focusOnMount={true}
     inputClass=""
     inputPlaceholder="Search for a location..."

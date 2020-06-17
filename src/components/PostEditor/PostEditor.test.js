@@ -36,16 +36,22 @@ describe('PostEditor', () => {
       discussion: 'discussion placeholder',
       request: 'request placeholder',
       offer: 'offer placeholder',
+      resource: 'resource placeholder',
       default: 'default placeholder'
     }
     const renderForType = (type) => {
       const props = {
-        post: { type, communities: [] },
+        post: {
+          type,
+          startTime: new Date(1551908483315),
+          endTime: new Date(1551908483315),  
+          communities: []
+        },
         titlePlaceholderForPostType
       }
       return shallow(<PostEditor {...props} />)
     }
-    ['discussion', 'request', 'offer'].forEach(postType =>
+    ['discussion', 'request', 'offer', 'resource'].forEach(postType =>
       test(`correct title placeholder and type button selection for "${postType}" type`, () => {
         expect(renderForType(postType)).toMatchSnapshot()
       })

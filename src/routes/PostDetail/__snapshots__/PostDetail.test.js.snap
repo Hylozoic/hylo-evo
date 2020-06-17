@@ -42,26 +42,29 @@ exports[`PostDetail renders correctly 1`] = `
       ]
     }
   />
-  <PostBody
+  <Connect(PostBody)
     data-stylename="body"
+    details="the body of the post"
     expanded={true}
-    post={
+    id="91"
+    imageUrl="foo.jpg"
+    members={Array []}
+    myVote={true}
+    routeParams={
       Object {
-        "details": "the body of the post",
-        "id": "91",
-        "imageUrl": "foo.jpg",
-        "members": Array [],
-        "myVote": true,
-        "tags": Array [
-          "singing",
-          "dancing",
-        ],
-        "votesTotal": 7,
+        "slug": "foo",
       }
     }
     slug="foo"
+    tags={
+      Array [
+        "singing",
+        "dancing",
+      ]
+    }
+    votesTotal={7}
   />
-  <PostCommunities
+  <Connect(PostCommunities)
     showBottomBorder={true}
     slug="foo"
   />
