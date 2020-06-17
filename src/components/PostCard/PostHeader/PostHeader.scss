@@ -174,3 +174,9 @@
   margin-top: 10px;
   width: 450px;
 }
+
+@media screen and (max-width: 375px) {
+  .upperRight {
+    display: none;
+  }
+}

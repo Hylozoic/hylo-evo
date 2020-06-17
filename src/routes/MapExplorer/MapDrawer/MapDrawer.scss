@@ -138,13 +138,18 @@
   }
 
   .searchBox {
-    margin-left: 46px;
-    width: calc(100% - 46px);
+    margin-left: 54px;
+    width: calc(100% - 60px);
+    margin-top: 10px;
   }
 
   .searchFilters {
-    width: calc(100% - 46px);
-    left: 46px;
+    width: calc(100% - 60px);
+    left: 54px;
+  }
+
+  .filterIcon {
+    right: 15px;
   }
 
   .container {

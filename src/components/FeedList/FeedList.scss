@@ -21,3 +21,9 @@
   z-index: 22;
   background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(255, 255, 255, 0.9) 55%, rgba(255, 255, 255, 0));
 }
+
+@media screen and (max-width: 600px) {
+  .FeedListItem {
+    margin: 0 10px 10px 10px;
+  }
+}

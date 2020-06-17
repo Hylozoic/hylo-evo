@@ -131,3 +131,13 @@
     display: none;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .imageShape {
+    border-radius: 0;
+  }
+
+  .banner {
+    padding-top: 0;
+  }
+}
