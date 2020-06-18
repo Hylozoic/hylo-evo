@@ -1,6 +1,7 @@
 import { ApolloClient } from 'apollo-client'
 import { ApolloLink } from 'apollo-link'
 import apolloLogger from 'apollo-link-logger'
+import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
 const link = ApolloLink.from([
