@@ -196,7 +196,9 @@ export default class Messages extends React.Component {
                 onCloseURL={onCloseURL}
                 selectedPeople={participants}
                 selectPerson={this.addParticipant}
-                removePerson={this.removeParticipant} />}
+                removePerson={this.removeParticipant}
+                messagesOpen={messagesOpen}
+                toggleMessages={this.toggleMessages} />}
             {!forNewThread && messageThreadId &&
               <Header
                 messageThread={messageThread}

@@ -178,8 +178,16 @@ $active-thread-border-width: 4px;
     margin-left: 20px;
   }
 
+  .header > a {
+    z-index: 100;
+    position: relative;
+  }
+
   .closeMessages {
     display: block;
+    position: fixed;
+    top: 23px;
+    left: 6px;
   }
 }
 
