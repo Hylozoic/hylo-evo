@@ -140,3 +140,10 @@
   opacity: 0.5;
   cursor: auto;
 }
+
+@media screen and (max-width: 600px) {
+  .search {
+    position: relative;
+    font-size: 14px;
+  }
+}
