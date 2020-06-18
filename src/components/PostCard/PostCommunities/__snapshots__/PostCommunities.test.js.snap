@@ -1,153 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CommunityCell matches last snapshot with 1 community 1`] = `
-<Link
-  data-stylename="communityCell"
-  replace={false}
-  to="/all"
->
-  <div
-    data-stylename="communityCellAvatar"
-    style={
-      Object {
-        "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png)",
-      }
-    }
-  />
-  <span
-    data-stylename="communityCellName"
-  />
-</Link>
-`;
-
-exports[`CommunitiesList matches last snapshot with 1 community 1`] = `
-<span
-  data-stylename="communityList"
->
-  <span
-    key="1"
-  >
-    <Link
-      data-stylename="communityLink"
-      replace={false}
-      to="/c/one"
-    >
-       
-      One
-    </Link>
-  </span>
-</span>
-`;
-
-exports[`CommunitiesList matches last snapshot with 2 communities 1`] = `
-<span
-  data-stylename="communityList"
->
-  <span
-    key="1"
-  >
-    <Link
-      data-stylename="communityLink"
-      replace={false}
-      to="/c/one"
-    >
-       
-      One
-    </Link>
-  </span>
-  <span
-    key="and"
-  >
-     and 
-  </span>
-  <span
-    key="2"
-  >
-    <Link
-      data-stylename="communityLink"
-      replace={false}
-      to="/c/two"
-    >
-       
-      Two
-    </Link>
-  </span>
-</span>
-`;
-
-exports[`CommunitiesList matches last snapshot with 5 community 1`] = `
-<span
-  data-stylename="communityList"
->
-  <span
-    key="1"
-  >
-    <Link
-      data-stylename="communityLink"
-      replace={false}
-      to="/c/one"
-    >
-       
-      One
-    </Link>
-    , 
-  </span>
-  <span
-    key="2"
-  >
-    <Link
-      data-stylename="communityLink"
-      replace={false}
-      to="/c/two"
-    >
-       
-      Two
-    </Link>
-    , 
-  </span>
-  <span
-    key="and"
-  >
-     and 
-  </span>
-  <a
-    data-stylename="communityLink"
-    key="others"
-    onClick={[Function]}
-  >
-    3
-     others
-  </a>
-</span>
-`;
-
-exports[`CommunityRow matches last snapshot with 1 community 1`] = `
-<div
-  data-stylename="communityRow"
->
-  <CommunityCell
-    community={
-      Object {
-        "id": 1,
-        "name": "One",
-        "slug": "one",
-      }
-    }
-    key="1"
-  />
-  <CommunityCell
-    community={
-      Object {
-        "id": 2,
-        "name": "Two",
-        "slug": "two",
-      }
-    }
-    key="2"
-  />
-</div>
-`;
-
 exports[`PostCommunities matches last snapshot 1`] = `
 <div
   data-stylename="communities"
@@ -160,7 +12,7 @@ exports[`PostCommunities matches last snapshot 1`] = `
     >
       Posted In: 
     </span>
-    <CommunitiesList
+    <LinkedCommunityNameList
       communities={
         Array [
           Object {
@@ -181,6 +33,7 @@ exports[`PostCommunities matches last snapshot 1`] = `
         ]
       }
       expandFunc={[Function]}
+      maxShown={2}
     />
     <a
       data-stylename="expandLink"
@@ -198,59 +51,47 @@ exports[`PostCommunities matches last snapshot 1`] = `
 exports[`PostCommunities matches last snapshot when expanded 1`] = `
 <div
   data-stylename="communities expanded"
+  onClick={[Function]}
 >
-  <span
-    data-stylename="expandedSection"
-    onClick={[Function]}
+  <div
+    data-stylename="row"
   >
-    <div
-      data-stylename="row"
+    <span
+      data-stylename="label"
     >
-      <span
-        data-stylename="label"
-      >
-        Posted In: 
-      </span>
-      <a
-        data-stylename="expandLink"
-        onClick={[Function]}
-      >
-        <Icon
-          data-stylename="expandIcon"
-          name="ArrowUp"
-        />
-      </a>
-    </div>
-    <CommunityRow
-      communities={
-        Array [
-          Object {
-            "id": 1,
-            "name": "One",
-            "slug": "one",
-          },
-          Object {
-            "id": 2,
-            "name": "Two",
-            "slug": "two",
-          },
-        ]
-      }
-      key="1"
-    />
-    <CommunityRow
-      communities={
-        Array [
-          Object {
-            "id": 3,
-            "name": "Three",
-            "slug": "three",
-          },
-        ]
-      }
-      key="3"
-    />
-  </span>
+      Posted In: 
+    </span>
+    <a
+      data-stylename="expandLink"
+      onClick={[Function]}
+    >
+      <Icon
+        data-stylename="expandIcon"
+        name="ArrowUp"
+      />
+    </a>
+  </div>
+  <CommunitiesList
+    communities={
+      Array [
+        Object {
+          "id": 1,
+          "name": "One",
+          "slug": "one",
+        },
+        Object {
+          "id": 2,
+          "name": "Two",
+          "slug": "two",
+        },
+        Object {
+          "id": 3,
+          "name": "Three",
+          "slug": "three",
+        },
+      ]
+    }
+  />
 </div>
 `;
 

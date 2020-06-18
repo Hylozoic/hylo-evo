@@ -1,4 +1,4 @@
-import { debounce } from 'lodash/fp'
+import debounce from 'lodash/fp/debounce'
 
 export const DEFAULT_DEBOUNCE_DELAY = 250
 

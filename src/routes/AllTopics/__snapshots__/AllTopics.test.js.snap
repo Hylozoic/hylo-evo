@@ -19,51 +19,35 @@ exports[`AllTopics matches the latest snapshot 1`] = `
       data-stylename="controls"
     >
       <SearchBar />
-      <Connect(CreateTopic)
-        buttonText="Add a Topic"
-        communityId="1"
-        communitySlug="goteam"
-        communityTopics={
-          Array [
-            Object {
-              "followersTotal": 52,
-              "id": "1",
-              "isSubscribed": false,
-              "postsTotal": 24,
-              "topic": Object {
-                "id": "2",
-                "name": "petitions",
-              },
-            },
-          ]
-        }
-      />
     </div>
     <div
       data-stylename="topic-list"
       id="topic-list"
     >
       <TopicListItem
-        deleteTopic={[Function]}
-        item={
-          Object {
-            "followersTotal": 52,
-            "id": "1",
-            "isSubscribed": false,
-            "postsTotal": 24,
-            "topic": Object {
-              "id": "2",
-              "name": "petitions",
-            },
-          }
-        }
+        deleteItem={[Function]}
         key="1"
         routeParams={
           Object {
             "slug": "goteam",
           }
         }
+        singleCommunity={
+          Object {
+            "id": "1",
+            "slug": "goteam",
+          }
+        }
         toggleSubscribe={[Function]}
+        topic={
+          Object {
+            "followersTotal": 52,
+            "id": "1",
+            "isSubscribed": false,
+            "name": "petitions",
+            "postsTotal": 24,
+          }
+        }
       />
       <ScrollListener
         elementId="topic-list"
@@ -114,28 +98,49 @@ exports[`SearchBar matches the latest snapshot 1`] = `
 </div>
 `;
 
-exports[`TopicListItem matches the latest snapshot 1`] = `
+exports[`TopicListItem when multiple communities matches the latest snapshot 1`] = `
 <div
   data-stylename="topic"
 >
-  <Link
-    data-stylename="topic-details"
-    replace={false}
-    to="/c/goteam/petitions"
+  <div
+    data-stylename="communitiesList"
   >
-    <div
-      data-stylename="topic-name"
+    <Link
+      data-stylename="topic-details"
+      replace={false}
+      to="/c/goteam/petitions"
     >
-      #
-      petitions
-    </div>
-    <div
-      data-stylename="topic-stats"
+      <div
+        data-stylename="topic-name"
+      >
+        #
+        petitions
+      </div>
+    </Link>
+    <CommunityCell
+      key="0"
     >
-      24 posts
-       • 
-      52 followers
-    </div>
-  </Link>
+      <div
+        data-stylename="topic-stats"
+      >
+        24 posts
+         • 
+        52 followers
+      </div>
+      <br />
+    </CommunityCell>
+    <CommunityCell
+      key="1"
+    >
+      <div
+        data-stylename="topic-stats"
+      >
+        1 post
+         • 
+        4 followers
+      </div>
+      <br />
+    </CommunityCell>
+  </div>
 </div>
 `;

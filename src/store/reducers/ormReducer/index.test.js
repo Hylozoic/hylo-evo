@@ -182,16 +182,18 @@ describe('on MARK_ALL_ACTIVITIES_READ_PENDING', () => {
 describe('on TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING', () => {
   it('will set isSubscribed to false and decrement followersTotal', () => {
     const session = orm.session(orm.getEmptyState())
-    session.CommunityTopic.create({
+    session.Topic.create({ id: '2' })
+    session.Community.create({ id: '3' })
+    const communityTopic = session.CommunityTopic.create({
       id: '1',
-      community: '1',
-      topic: '1',
+      topic: '2',
+      community: '3',
       followersTotal: 10,
       isSubscribed: true
     })
     const state = session.state
     const action = {
-      ...toggleCommunityTopicSubscribe('1', '1'),
+      ...toggleCommunityTopicSubscribe(communityTopic),
       type: TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING
     }
     const newState = ormReducer(state, action)
@@ -200,15 +202,17 @@ describe('on TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING', () => {
 
   it('will set isSubscribed to true and increment followersTotal', () => {
     const session = orm.session(orm.getEmptyState())
-    session.CommunityTopic.create({
+    session.Topic.create({ id: '2' })
+    session.Community.create({ id: '3' })
+    const communityTopic = session.CommunityTopic.create({
       id: '1',
-      community: '3',
       topic: '2',
+      community: '3',
       followersTotal: 10
     })
     const state = session.state
     const action = {
-      ...toggleCommunityTopicSubscribe('2', '3', true),
+      ...toggleCommunityTopicSubscribe(communityTopic),
       type: TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING
     }
     const newState = ormReducer(state, action)
