@@ -78,27 +78,33 @@ Post.fields = {
 export const POST_TYPES = {
   'discussion': {
     primaryColor: '#40A1DD', // $color-picton-blue
-    backgroundColor: '#D9ECF8' // $color-link-water
+    backgroundColor: '#D9ECF8', // $color-link-water
+    map: false
   },
   'event': {
     primaryColor: '#9883E5', // $color-medium-purple
-    backgroundColor: '#EAE6FA' // $color-moon-raker
+    backgroundColor: '#EAE6FA', // $color-moon-raker
+    map: true
   },
   'offer': {
     primaryColor: '#0DC39F', // $color-caribbean-green
-    backgroundColor: '#CFF3EC' // $color-iceberg;
+    backgroundColor: '#CFF3EC', // $color-iceberg;
+    map: true
   },
   'resource': {
     primaryColor: '#FDD549', // $color-mango-yellow;
-    backgroundColor: '' // TODO: how to convert this? rgba($color-mango-yellow, 0.15) // $color-mango-yellow-15;
+    backgroundColor: '', // TODO: how to convert this? rgba($color-mango-yellow, 0.15) // $color-mango-yellow-15;
+    map: true
   },
   'project': {
     primaryColor: '#BB60A8', // $color-fuchsia-pink;
-    backgroundColor: '#F1DFEE' // $color-prim;
+    backgroundColor: '#F1DFEE', // $color-prim;
+    map: false
   },
   'request': {
     primaryColor: '#FE6848', // $color-persimmon;
-    backgroundColor: '#FFE1DA' // $color-peach-schnapps;
+    backgroundColor: '#FFE1DA', // $color-peach-schnapps;
+    map: true
   }
 }
 

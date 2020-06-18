@@ -84,8 +84,12 @@
   color: rgba(87, 102, 123, 1.000);
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
   border: 1px solid red;
-  height: 30px;
   line-height: 28px;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .postTip.discussion {
@@ -109,6 +113,11 @@
 }
 
 .postTip.project {
+  color: $color-fuchsia-pink;
+  border: 1px solid $color-fuchsia-pink;
+}
+
+.postTip.cluster {
   color: $color-fuchsia-pink;
   border: 1px solid $color-fuchsia-pink;
 }
@@ -147,7 +156,6 @@ button.toggleFeatureFiltersButton {
   position: absolute;
   bottom: 50px;
   left: 20px;
-  width: 320px;
   background: white;
   display: none;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);

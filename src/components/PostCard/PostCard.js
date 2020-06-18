@@ -58,9 +58,6 @@ export default class PostCard extends React.Component {
     } = this.props
 
     const postType = get('type', post)
-
-    console.log(postType)
-
     const isEvent = get('type', post) === 'event'
 
     return <div ref='postCard'
