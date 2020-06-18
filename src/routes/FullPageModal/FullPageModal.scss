@@ -5,6 +5,14 @@ $size-sidebar-width: 10rem;
   overflow-y: scroll;
 }
 
+.modal.topicView {
+  width: 100%;
+
+  .left-sidebar {
+    display: none;
+  }
+}
+
 .content {
   composes: modal-content from 'css/layout.scss';
 }
@@ -88,13 +96,36 @@ $size-sidebar-width: 10rem;
 }
 
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
   .center {
     width: 60%;
   }
 }
 
+@media screen and (max-width: 900px) {
+  .center {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .center {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .center {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
 @media screen and (max-width: 600px) {
+  .center {
+    width: 95%;
+  }
+
   .left-sidebar {
     width: 100%;
     padding-right: 0;
@@ -118,14 +149,35 @@ $size-sidebar-width: 10rem;
     margin: 0 10px;
   }
 
-  .center {
-    width: 100%;
-  }
-
   .narrow {
     padding-top: 25px;
     padding-left: 25px;
     padding-right: 25px;
   }
+}
 
+@media screen and (max-width: 425px) {
+  .nav-link {
+    font-size: 14px;
+    padding: 0 4px;
+    margin: 0 4px;
+  }
+
+  .narrow {
+    padding: 0 0 150px 0;
+  }
+
+  .icon {
+    font-size: 20px;
+    top: -10px;
+  }
+
+  .close-button {
+    width: 30px;
+    height: 30px;
+  }
+
+  .switch {
+    margin-left: 20px;
+  }
 }

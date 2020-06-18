@@ -93,3 +93,13 @@
 .hover, .active {
   display: inline-block;
 }
+
+
+@media screen and (max-width: 375px) {
+  .button {
+    font-size: 14px;
+    height: 30px;
+    padding: 0 15px;
+    line-height: 30px;
+  }
+}
