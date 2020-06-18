@@ -1,6 +1,8 @@
 import mixpanel from 'mixpanel-browser'
-import config, { isProduction } from 'config'
+import config, { isProduction, isTest } from 'config'
 
-mixpanel.init(config.mixpanel.token, { debug: !isProduction })
+if (!isTest) {
+  mixpanel.init(config.mixpanel.token, { debug: !isProduction })
+}
 
 export default (state = mixpanel, action) => state
