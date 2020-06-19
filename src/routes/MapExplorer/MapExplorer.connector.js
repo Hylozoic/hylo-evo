@@ -11,6 +11,9 @@ import { addQuerystringToPath, baseUrl, personUrl, postUrl } from 'util/navigati
 import {
   fetchMembers,
   fetchPosts,
+  fetchPublicCommunities,
+  getPublicCommunities,
+  // getPublicCommunitiesByBoundingBox,
   storeFetchPostsParam,
   storeClientFilterParams,
   getSortedFilteredMembers,
@@ -30,7 +33,7 @@ export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
   const communityId = community && community.id
   const routeParams = get('match.params', props)
-  const { slug, networkSlug } = routeParams
+  const { slug, networkSlug, context } = routeParams
 
   const querystringParams = getQuerystringParam(['showDrawer', 't'], null, props)
 
@@ -39,6 +42,8 @@ export function mapStateToProps (state, props) {
     subject = 'community'
   } else if (networkSlug) {
     subject = 'network'
+  } else if (context === 'public') {
+    subject = 'public-communities'
   } else {
     subject = 'all-communities'
   }
@@ -55,6 +60,11 @@ export function mapStateToProps (state, props) {
       'topic'
     ], props),
     boundingBox: state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null
+  }
+
+  const fetchPublicCommunitiesParam = {
+    boundingBox: state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null,
+    subject
   }
 
   const fetchPostsParam = {
@@ -75,6 +85,7 @@ export function mapStateToProps (state, props) {
   const members = getSortedFilteredMembers(state, fetchMembersParam).map(m => presentMember(m, communityId))
   const posts = getSortedFilteredPosts(state, fetchPostsParam).map(p => presentPost(p, communityId))
   const topics = getCurrentTopics(state, fetchPostsParam)
+  const publicCommunities = getPublicCommunities(state, fetchPublicCommunitiesParam)
 
   const me = getMe(state)
   const centerLocation = community && community.locationObject ? community.locationObject.center
@@ -86,11 +97,13 @@ export function mapStateToProps (state, props) {
     centerLocation,
     fetchMembersParam,
     fetchPostsParam,
+    fetchPublicCommunitiesParam,
     filters: state.MapExplorer.clientFilterParams,
     members,
     // TODO: show loading spinner while pending
     pending: state.pending[FETCH_POSTS_MAP],
     posts,
+    publicCommunities,
     querystringParams,
     routeParams,
     topics,
@@ -104,6 +117,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchMembers: (params) => () => dispatch(fetchMembers({ ...params })),
     fetchPosts: (params) => () => dispatch(fetchPosts({ ...params })),
+    fetchPublicCommunities: (params) => () => dispatch(fetchPublicCommunities({ ...params })),
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, querystringParams))),
     gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.slug, routeParams.networkSlug))),
     toggleDrawer: (visible) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, showDrawer: visible }))),
@@ -113,14 +127,15 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { fetchMembersParam, fetchPostsParam } = stateProps
-  const { fetchMembers, fetchPosts, storeFetchPostsParam } = dispatchProps
+  const { fetchMembersParam, fetchPostsParam, fetchPublicCommunitiesParam } = stateProps
+  const { fetchMembers, fetchPosts, fetchPublicCommunities, storeFetchPostsParam } = dispatchProps
 
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
     fetchMembers: fetchMembers(fetchMembersParam),
+    fetchPublicCommunities: fetchPublicCommunities(fetchPublicCommunitiesParam),
     fetchPosts: fetchPosts(fetchPostsParam),
     storeFetchPostsParam: storeFetchPostsParam(fetchPostsParam)
   }

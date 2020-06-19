@@ -7,7 +7,7 @@ import { POST_TYPES } from 'store/models/Post'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import SwitchStyled from 'components/SwitchStyled'
-import { createScatterplotLayerFromMembers, createScatterplotLayerFromPosts } from 'components/Map/layers/scatterplotLayer'
+import { createScatterplotLayerFromMembers, createScatterplotLayerFromPosts, createScatterplotLayerFromPublicCommunities } from 'components/Map/layers/scatterplotLayer'
 import './MapExplorer.scss'
 
 export const FEATURE_TYPES = {
@@ -15,6 +15,10 @@ export const FEATURE_TYPES = {
   member: {
     primaryColor: '#2A4059', // $color-member
     backgroundColor: '#FAFBFC' // $color-athens-gray
+  },
+  community: {
+    primaryColor: 'rgba(35, 64, 91, 1.000)', // $color-?
+    backgroundColor: 'rgba(191, 197, 206, 1.000)' // $color-?
   }
 }
 
@@ -23,6 +27,7 @@ export default class MapExplorer extends React.Component {
     filters: {},
     members: [],
     posts: [],
+    publicCommunities: [],
     routeParams: {},
     querystringParams: {},
     topics: []
@@ -59,9 +64,10 @@ export default class MapExplorer extends React.Component {
   }
 
   fetchOrShowCached = () => {
-    const { fetchMembers, fetchPosts } = this.props
+    const { fetchMembers, fetchPosts, fetchPublicCommunities } = this.props
     fetchMembers()
     fetchPosts()
+    fetchPublicCommunities()
   }
 
   mapViewPortUpdate = (update, mapRef) => {
@@ -118,8 +124,9 @@ export default class MapExplorer extends React.Component {
       filters,
       querystringParams,
       members,
-      posts,
       pending,
+      posts,
+      publicCommunities,
       routeParams,
       topics,
       zoom
@@ -127,13 +134,16 @@ export default class MapExplorer extends React.Component {
 
     const { showDrawer, showFeatureFilters } = this.state
 
+    console.log('\nPUBLIC', publicCommunities)
+
     const postsLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
     const membersLayer = createScatterplotLayerFromMembers(members, this.onMapHover, this.onMapClick)
+    const publicCommunitiesLayer = createScatterplotLayerFromPublicCommunities(publicCommunities, this.onMapHover, this.onMapClick)
 
     return <div styleName='MapExplorer-container'>
       <Map
         center={centerLocation}
-        layers={[membersLayer, postsLayer]}
+        layers={[membersLayer, postsLayer, publicCommunitiesLayer]}
         onViewportUpdate={this.mapViewPortUpdate}
         children={this._renderTooltip()}
         zoom={zoom}
@@ -147,6 +157,7 @@ export default class MapExplorer extends React.Component {
           onUpdateFilters={this.props.storeClientFilterParams}
           posts={posts}
           topics={topics}
+          publicCommunities={publicCommunities}
           querystringParams={querystringParams}
           routeParams={routeParams}
         />)

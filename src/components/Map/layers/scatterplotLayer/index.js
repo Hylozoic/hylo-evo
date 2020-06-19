@@ -29,6 +29,19 @@ export function createScatterplotLayerFromMembers (members, onHover, onClick) {
     }), onHover, onClick)
 }
 
+export function createScatterplotLayerFromPublicCommunities (publicCommunities, onHover, onClick) {
+  return createScatterplotLayer('scatterplot-public-communities-layer', publicCommunities.filter(community => community.locationObject && community.locationObject.center)
+    .map(community => {
+      return {
+        id: community.id,
+        type: 'community',
+        message: 'Community: ' + community.name,
+        color: FEATURE_TYPES['community'].primaryColor,
+        coordinates: [parseFloat(community.locationObject.center.lng), parseFloat(community.locationObject.center.lat)]
+      }
+    }), onHover, onClick)
+}
+
 export function createScatterplotLayer (id, data, onHover, onClick) {
   return new ScatterplotLayer({
     id: id || `scatterplot-layer`,

@@ -3,9 +3,11 @@ import { createSelector } from 'reselect'
 import bboxPolygon from '@turf/bbox-polygon'
 import booleanWithin from '@turf/boolean-within'
 import { point } from '@turf/helpers'
-import { FETCH_MEMBERS_MAP, FETCH_POSTS_MAP } from 'store/constants'
+import { FETCH_MEMBERS_MAP, FETCH_POSTS_MAP, FETCH_COMMUNITIES_MAP } from 'store/constants'
 import { POST_TYPES } from 'store/models/Post'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
+import publicPostsQueryFragment from 'graphql/fragments/publicPostsQueryFragment'
+import publicCommunitiesQueryFragment from 'graphql/fragments/publicCommunitiesQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 
 export const MODULE_NAME = 'MapExplorer'
@@ -119,6 +121,25 @@ const allCommunitiesMembersQuery = `query (
   ${membersFragment}
 }`
 
+const publicPostsQuery = `query (
+  $sortBy: String,
+  $offset: Int,
+  $search: String,
+  $filter: String,
+  $topic: ID,
+  $first: Int
+) {
+  ${publicPostsQueryFragment}
+}`
+
+const publicCommunitiesQuery = `query (
+  $sortBy: String,
+  $search: String,
+  $boundingBox: [PointInput]
+) {
+  ${publicCommunitiesQueryFragment}
+}`
+
 // actions
 export function fetchPosts ({ subject, slug, networkSlug, sortBy, search, filter, topic, boundingBox }) {
   var query, extractModel, getItems
@@ -133,6 +154,10 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, search, filter
     getItems = get('payload.data.network.posts')
   } else if (subject === 'all-communities') {
     query = allCommunitiesPostsQuery
+    extractModel = 'Post'
+    getItems = get('payload.data.posts')
+  } else if (subject === 'public-communities') {
+    query = publicPostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
   } else {
@@ -177,6 +202,9 @@ export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy,
     query = allCommunitiesMembersQuery
     extractModel = 'User'
     getItems = get('payload.data.people')
+  } else if (subject === 'public-communities') {
+    // No Members in Public Context, yet
+    return { type: 'RETURN NO MEMBERS FOR PUBLIC' }
   } else {
     throw new Error(`FETCH_MEMBERS_MAP with subject=${subject} is not implemented`)
   }
@@ -188,6 +216,42 @@ export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy,
       variables: {
         slug,
         networkSlug,
+        sortBy,
+        search,
+        boundingBox
+      }
+    },
+    meta: {
+      extractModel,
+      extractQueryResults: {
+        getItems
+      }
+    }
+  }
+}
+
+export function fetchPublicCommunities ({ boundingBox, subject, sortBy, search }) {
+  var query, extractModel, getItems
+
+  if (subject === 'public-communities') {
+    query = publicCommunitiesQuery
+    extractModel = 'Community'
+    getItems = get('payload.data.communities')
+  } else if (subject === 'community') {
+    return { type: 'RETURN NULL FOR COMMUNITY' }
+  } else if (subject === 'network') {
+    return { type: 'RETURN NULL FOR NETWORK' }
+  } else if (subject === 'all-communities') {
+    return { type: 'RETURN NULL FOR ALL COMMUNITIES' }
+  } else {
+    throw new Error(`FETCH_COMMUNITIES_MAP with subject=${subject} is not implemented`)
+  }
+
+  return {
+    type: FETCH_COMMUNITIES_MAP,
+    graphql: {
+      query,
+      variables: {
         sortBy,
         search,
         boundingBox
@@ -352,6 +416,33 @@ export const getCurrentTopics = createSelector(
       orderedTopics.push({ 'name': key, 'count': topics[key] })
     })
     return orderedTopics.sort((a, b) => b.count - a.count)
+  }
+)
+
+const getPublicCommunitiesResults = makeGetQueryResults(FETCH_COMMUNITIES_MAP)
+
+export const getPublicCommunities = makeQueryResultsModelSelector(
+  getPublicCommunitiesResults,
+  'Community'
+)
+
+export const getPublicCommunitiesByBoundingBox = createSelector(
+  getPublicCommunities,
+  boundingBoxSelector,
+  (communities, boundingBox) => {
+    if (!boundingBox) {
+      return communities
+    }
+
+    const bbox = bboxPolygon([boundingBox[0].lng, boundingBox[0].lat, boundingBox[1].lng, boundingBox[1].lat])
+    return communities.filter(community => {
+      const locationObject = community.locationObject
+      if (locationObject) {
+        const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
+        return booleanWithin(centerPoint, bbox)
+      }
+      return false
+    })
   }
 )
 
