@@ -267,3 +267,9 @@ $drawer-z-index: 51;
     overflow-y: auto;
   }
 }
+
+@media screen and (max-width: 375px) {
+  .drawer {
+    width: 100%;
+  }
+}
