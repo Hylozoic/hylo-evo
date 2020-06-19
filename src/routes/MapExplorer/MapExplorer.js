@@ -86,7 +86,7 @@ export default class MapExplorer extends React.Component {
   onMapHover = (info) => this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y })
 
   onMapClick = (info) => {
-    console.log('\nMAP CLICK', info)
+    console.log('\nMAP CLICK', info.object)
     this.setState({ selectedObject: info.object })
     if (info.object.type === 'member') {
       this.props.gotoMember(info.object.id)
@@ -136,8 +136,6 @@ export default class MapExplorer extends React.Component {
     } = this.props
 
     const { showDrawer, showFeatureFilters } = this.state
-
-    console.log('\nPUBLIC', publicCommunities)
 
     const postsLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
     const membersLayer = createScatterplotLayerFromMembers(members, this.onMapHover, this.onMapClick)

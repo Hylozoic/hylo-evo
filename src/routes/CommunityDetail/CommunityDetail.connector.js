@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 // import { get, find } from 'lodash/fp'
-// import { push } from 'connected-react-router'
-// import { editPostUrl, removePostFromUrl } from 'util/navigation'
-// import fetchPost from 'store/actions/fetchPost'
+import { push } from 'connected-react-router'
+import { removeCommunityFromUrl } from 'util/navigation' // editPostUrl,
+import fetchCommunity from 'store/actions/fetchForCommunity'
 import getRouteParam from 'store/selectors/getRouteParam'
 // import getPost from 'store/selectors/getPost'
 // import presentPost from 'store/presenters/presentPost'
@@ -29,17 +29,18 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  // const { location } = props
-  // const postId = getRouteParam('postId', {}, props)
-  // const closeLocation = {
-  //   ...props.location,
-  //   pathname: removePostFromUrl(location.pathname)
-  // }
+  const { location } = props
+  console.log('\n COMMUNITY LOCATION', location)
+  const communityId = getRouteParam('communityId', {}, props)
+  const closeLocation = {
+    ...props.location,
+    pathname: removeCommunityFromUrl(location.pathname)
+  }
 
   return {
-    // fetchPost: () => dispatch(fetchPost(postId)),
+    fetchCommunity: () => dispatch(fetchCommunity(communityId)),
     // editPost: () => dispatch(push(editPostUrl(postId, props.match.params))),
-    // onClose: () => dispatch(push(closeLocation)),
+    onClose: () => dispatch(push(closeLocation))
     // joinProject: () => dispatch(joinProject(postId)),
     // leaveProject: () => dispatch(leaveProject(postId)),
     // voteOnPost: (myVote) => dispatch(voteOnPost(postId, myVote)),

@@ -16,7 +16,7 @@ export const POST_ID_MATCH = HOLOCHAIN_ACTIVE
   ? HOLOCHAIN_HASH_MATCH
   : HYLO_ID_MATCH
 export const DEFAULT_POST_TYPE_CONTEXT = 'p'
-export const POST_TYPE_CONTEXTS = ['project', 'event']
+export const POST_TYPE_CONTEXTS = ['project', 'event', 'c']
 export const VALID_POST_TYPE_CONTEXTS = [...POST_TYPE_CONTEXTS, DEFAULT_POST_TYPE_CONTEXT]
 export const VALID_POST_TYPE_CONTEXTS_MATCH = VALID_POST_TYPE_CONTEXTS.join('|')
 
@@ -50,6 +50,14 @@ export function communityUrl (slug, defaultUrl = defaultCommunityUrl()) {
     return publicCommunitiesUrl()
   } else if (slug) {
     return `/c/${slug}`
+  } else {
+    return defaultUrl
+  }
+}
+
+export function communityMapDetailUrl (id, defaultUrl = publicCommunitiesUrl()) {
+  if (id) {
+    return `/public/map/c/${id}`
   } else {
     return defaultUrl
   }
@@ -211,6 +219,21 @@ export function removePostFromUrl (url) {
     matchForReplaceRegex = `/${DEFAULT_POST_TYPE_CONTEXT}/${POST_ID_MATCH}`
   } else {
     matchForReplaceRegex = `/${POST_ID_MATCH}`
+  }
+
+  return url.replace(new RegExp(matchForReplaceRegex), '')
+}
+
+export function removeCommunityFromUrl (url) {
+  let matchForReplaceRegex
+
+  // Remove default context and post id otherwise
+  // remove current post id and stay in the current post
+  // context.
+  if (url.match(`/${DEFAULT_COMMUNITY_CONTEXT}/`)) {
+    matchForReplaceRegex = `/${DEFAULT_COMMUNITY_CONTEXT}/${HYLO_ID_MATCH}`
+  } else {
+    matchForReplaceRegex = `/${HYLO_ID_MATCH}`
   }
 
   return url.replace(new RegExp(matchForReplaceRegex), '')

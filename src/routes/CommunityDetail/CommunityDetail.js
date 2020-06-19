@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { get, throttle, isEmpty } from 'lodash/fp'
+// import { Link } from 'react-router-dom'
+// import { get, throttle, isEmpty } from 'lodash/fp'
+import { throttle } from 'lodash/fp'
 // import { tagUrl } from 'util/navigation'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import ScrollListener from 'components/ScrollListener'
-import Comments from './Comments'
+// import Comments from './Comments'
 import SocketSubscriber from 'components/SocketSubscriber'
-import Button from 'components/Button'
+// import Button from 'components/Button'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
 import './CommunityDetail.scss'
@@ -92,27 +93,26 @@ export default class CommunityDetail extends Component {
     const {
       routeParams,
       community,
-      pending,
-      currentUser,
-      respondToEvent,
-      onClose
+      pending
+      // currentUser,
+      // onClose
     } = this.props
-    const { atHeader, atActivity, headerWidth, activityWidth } = this.state
+    // const { atHeader, atActivity, headerWidth, activityWidth } = this.state
 
     if (!community && !pending) return <NotFound />
     if (pending) return <Loading />
 
-    const scrollToBottom = () => {
-      const detail = document.getElementById(DETAIL_COLUMN_ID)
-      detail.scrollTop = detail.scrollHeight
-    }
-    const headerStyle = {
-      width: headerWidth + 'px'
-    }
-    const activityStyle = {
-      width: activityWidth + 'px',
-      marginTop: STICKY_HEADER_SCROLL_OFFSET + 'px'
-    }
+    // const scrollToBottom = () => {
+    //   const detail = document.getElementById(DETAIL_COLUMN_ID)
+    //   detail.scrollTop = detail.scrollHeight
+    // }
+    // const headerStyle = {
+    //   width: headerWidth + 'px'
+    // }
+    // const activityStyle = {
+    //   width: activityWidth + 'px',
+    //   marginTop: STICKY_HEADER_SCROLL_OFFSET + 'px'
+    // }
 
     // var people, postPeopleDialogTitle
     // if (isProject) {
@@ -128,9 +128,10 @@ export default class CommunityDetail extends Component {
     // showPeopleDialog = hasPeople && showPeopleDialog
     // const togglePeopleDialog = hasPeople && this.togglePeopleDialog ? this.togglePeopleDialog : undefined
 
+    // <CommunityTags tags={community.tags} />
+
     return <div styleName='community' ref={this.setHeaderStateFromDOM}>
       <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
-      <CommunityTags tags={community.tags} />
       <div
         styleName='body'
         expanded
