@@ -126,6 +126,7 @@ $drawer-z-index: 51;
   right: 0px;
   padding: 0 16px 0 $layout-spacing;
   overflow-y: auto;
+  overflow-x: hidden;
 
   &.hidden {
     opacity: 0;
@@ -271,5 +272,9 @@ $drawer-z-index: 51;
 @media screen and (max-width: 375px) {
   .drawer {
     width: 100%;
+
+    &.hidden {
+      left: -100%;
+    }
   }
 }
