@@ -1,17 +1,19 @@
 import { CompositeLayer } from '@deck.gl/core'
 import { IconLayer, TextLayer } from '@deck.gl/layers'
 import Supercluster from 'supercluster'
-import { FEATURE_TYPES } from 'routes/MapExplorer/MapExplorer.store'
-import { hexToRgb } from 'util/index'
 
-const iconMapping = {
-  'cluster': { 'x': 0, 'y': 0, 'width': 30, 'height': 30 },
-  'event': { 'x': 30, 'y': 0, 'width': 20, 'height': 20 },
-  'member': { 'x': 50, 'y': 0, 'width': 20, 'height': 20 },
-  'offer': { 'x': 70, 'y': 0, 'width': 20, 'height': 20 },
-  'request': { 'x': 90, 'y': 0, 'width': 20, 'height': 20 },
-  'resource': { 'x': 110, 'y': 0, 'width': 20, 'height': 20 }
-}
+import mapSpriteData from './mapIconAtlas.json'
+
+const iconMapping = Object.keys(mapSpriteData.frames).reduce((result, sprite) => {
+  const data = mapSpriteData.frames[sprite].frame
+  result[sprite] = {
+    x: data.x,
+    y: data.y,
+    width: data.w,
+    height: data.h
+  }
+  return result
+}, {})
 
 export function createIconLayerFromPostsAndMembers ({ boundingBox, members, posts, onHover, onClick }) {
   // TODO: shouldn't need to filter by locationObject, should all have one for map...?
@@ -20,9 +22,7 @@ export function createIconLayerFromPostsAndMembers ({ boundingBox, members, post
       return {
         id: post.id,
         type: post.type,
-        color: hexToRgb(FEATURE_TYPES[post.type].primaryColor),
         message: post.title,
-        summary: post.details,
         coordinates: [parseFloat(post.locationObject.center.lng), parseFloat(post.locationObject.center.lat)]
       }
     })
@@ -98,7 +98,21 @@ export default class PostClusterLayer extends CompositeLayer {
         iconMapping,
         sizeScale: 1,
         getPosition: d => d.geometry.coordinates,
-        getIcon: d => d.properties.cluster ? 'cluster' : d.properties.type,
+        getIcon: d => {
+          if (d.properties.cluster) {
+            const features = this.state.index
+              .getLeaves(d.properties.cluster_id, 25)
+              .map(f => f.properties)
+
+            const sprite = ['event', 'member', 'offer', 'request', 'resource'].reduce((result, type) => {
+              return features.find(feature => feature.type === type) ? result.concat(type + 's') : result
+            }, [])
+
+            return sprite.join('-') + '.png'
+          }
+
+          return d.properties.type + 's.png'
+        },
         getSize: d => d.properties.cluster ? 30 : 20,
         sizeUnits: 'pixels',
         sizeMinPixels: 20,
@@ -111,6 +125,7 @@ export default class PostClusterLayer extends CompositeLayer {
         id: 'text-cluster',
         data,
         sizeScale: 1,
+        getColor: [255, 255, 255, 255],
         getPosition: d => d.geometry.coordinates,
         getTextAnchor: 'middle',
         getAlignmentBaseline: 'center',
