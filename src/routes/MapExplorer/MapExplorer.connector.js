@@ -6,7 +6,7 @@ import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import presentPost from 'store/presenters/presentPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getMe from 'store/selectors/getMe'
-import { addQuerystringToPath, baseUrl, personUrl, postUrl } from 'util/navigation'
+import { addQuerystringToPath, baseUrl, personUrl, postUrl, communityUrl } from 'util/navigation'
 
 import {
   fetchMembers,
@@ -119,6 +119,7 @@ export function mapDispatchToProps (dispatch, props) {
     fetchPosts: (params) => () => dispatch(fetchPosts({ ...params })),
     fetchPublicCommunities: (params) => () => dispatch(fetchPublicCommunities({ ...params })),
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, querystringParams))),
+    showCommunityDetails: (communityId) => dispatch(push(communityUrl(communityId, { ...routeParams, view: 'map' }, querystringParams))),
     gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.slug, routeParams.networkSlug))),
     toggleDrawer: (visible) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, showDrawer: visible }))),
     storeFetchPostsParam: param => opts => dispatch(storeFetchPostsParam({ ...param, ...opts })),

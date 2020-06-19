@@ -11,6 +11,7 @@ function MapDrawer (props) {
     filters,
     onUpdateFilters,
     posts,
+    // publicCommunities,
     querystringParams,
     routeParams,
     topics

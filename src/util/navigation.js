@@ -20,6 +20,11 @@ export const POST_TYPE_CONTEXTS = ['project', 'event']
 export const VALID_POST_TYPE_CONTEXTS = [...POST_TYPE_CONTEXTS, DEFAULT_POST_TYPE_CONTEXT]
 export const VALID_POST_TYPE_CONTEXTS_MATCH = VALID_POST_TYPE_CONTEXTS.join('|')
 
+// Community Context
+export const DEFAULT_COMMUNITY_CONTEXT = 'c'
+export const VALID_COMMUNITY_CONTEXTS = [DEFAULT_COMMUNITY_CONTEXT]
+export const VALID_COMMUNITY_CONTEXTS_MATCH = VALID_COMMUNITY_CONTEXTS.join('|')
+
 // Fundamental URL paths
 
 export function allCommunitiesUrl () {

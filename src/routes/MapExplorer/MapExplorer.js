@@ -86,9 +86,12 @@ export default class MapExplorer extends React.Component {
   onMapHover = (info) => this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y })
 
   onMapClick = (info) => {
+    console.log('\nMAP CLICK', info)
     this.setState({ selectedObject: info.object })
     if (info.object.type === 'member') {
       this.props.gotoMember(info.object.id)
+    } else if (info.object.type === 'community') {
+      this.props.showCommunityDetails(info.object.id)
     } else {
       this.props.showDetails(info.object.id)
     }
