@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 import { get } from 'lodash/fp'
 import Loading from 'components/Loading'
 import PeopleSelector from './PeopleSelector'
@@ -24,9 +25,17 @@ export default class Messages extends React.Component {
   constructor (props) {
     super(props)
 
+    let messagesOpen = false
+    if (props.messageThreadId && !props.isInbox) {
+      messagesOpen = true
+    } else if (props.isInbox) {
+      messagesOpen = false
+    }
+
     this.state = {
       loading: true,
       onCloseURL: props.onCloseURL,
+      messagesOpen: messagesOpen,
       participants: [],
       forNewThread: props.messageThreadId === NEW_THREAD_ID
     }
@@ -104,6 +113,12 @@ export default class Messages extends React.Component {
     }))
   }
 
+  toggleMessages = (e) => {
+    this.setState(state => ({
+      messagesOpen: !this.state.messagesOpen
+    }))
+  }
+
   updateMessageText = messageText => {
     this.props.updateMessageText(this.props.messageThreadId, messageText)
   }
@@ -142,6 +157,7 @@ export default class Messages extends React.Component {
     const {
       loading,
       participants,
+      messagesOpen,
       onCloseURL
     } = this.state
     const { forNewThread } = this.state
@@ -152,7 +168,7 @@ export default class Messages extends React.Component {
       </div>
     }
 
-    return <div styleName='modal'>
+    return <div styleName={cx('modal', { messagesOpen })}>
       <div styleName='content'>
         <ThreadList
           styleName='left-column'
@@ -161,7 +177,11 @@ export default class Messages extends React.Component {
           currentUser={currentUser}
           threadsPending={threadsPending}
           threads={threads}
-          threadSearch={threadSearch} />
+          onCloseURL={onCloseURL}
+          threadSearch={threadSearch}
+          messagesOpen={messagesOpen}
+          toggleMessages={this.toggleMessages}
+        />
         <div styleName='right-column'>
           <div styleName='thread'>
             {forNewThread &&
@@ -176,13 +196,17 @@ export default class Messages extends React.Component {
                 onCloseURL={onCloseURL}
                 selectedPeople={participants}
                 selectPerson={this.addParticipant}
-                removePerson={this.removeParticipant} />}
-            {!forNewThread &&
+                removePerson={this.removeParticipant}
+                messagesOpen={messagesOpen}
+                toggleMessages={this.toggleMessages} />}
+            {!forNewThread && messageThreadId &&
               <Header
                 messageThread={messageThread}
                 currentUser={currentUser}
                 pending={messagesPending}
-                onCloseURL={onCloseURL} />}
+                onCloseURL={onCloseURL}
+                messagesOpen={messagesOpen}
+                toggleMessages={this.toggleMessages} />}
             {!forNewThread &&
               <MessageSection
                 socket={socket}

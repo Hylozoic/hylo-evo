@@ -1,8 +1,9 @@
 import React from 'react'
 import NavLink from './NavLink'
+import Icon from 'components/Icon'
 import cx from 'classnames'
-import TopicNavigation from './TopicNavigation'
 import './Navigation.scss'
+import TopicNavigation from './TopicNavigation'
 import { compact } from 'lodash/fp'
 import { EVENTS } from 'config/featureFlags'
 
@@ -74,6 +75,9 @@ export default function Navigation (props) {
         {links.map(link =>
           <NavLink key={link.label} {...link} collapsed={collapsed}
             onClick={link.onClick} />)}
+        <li styleName={cx('item', 'topicItem')}>
+          <Icon name='Topics' />
+        </li>
       </ul>
       {showTopics && <TopicNavigation backUrl={rootPath} communityId={rootId} communitySlug={rootSlug} collapsed={collapsed} />}
     </div>

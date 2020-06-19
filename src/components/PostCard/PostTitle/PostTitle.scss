@@ -98,3 +98,13 @@
     }
   }
 }
+
+@media screen and (max-width: 425px) {
+  .title {
+    margin-bottom: 5px;
+  }
+
+  .headerLocation {
+    margin: -5px 0 5px 5px;
+  }
+}

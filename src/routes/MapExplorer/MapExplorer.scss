@@ -177,3 +177,17 @@ button.toggleFeatureFiltersButton {
     margin-left: 10px;
   }
 }
+
+
+@media screen and (max-width: 600px) {
+    .toggleDrawerButton.drawerOpen {
+      left: 10px;
+      right: auto;
+    }
+}
+
+@media screen and (max-width: 375px) {
+  .toggleDrawerButton.drawerOpen {
+    z-index: 100;
+  }
+}

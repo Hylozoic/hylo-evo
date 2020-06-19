@@ -47,7 +47,7 @@ export default function TopicFeedHeader ({
         firstName={currentUser.firstName()}
         type={type}
         avatarUrl={currentUser.avatarUrl}
-        newPost={newPost} />}
+        newPost={newPost} />
     </div>
   </div>
 }

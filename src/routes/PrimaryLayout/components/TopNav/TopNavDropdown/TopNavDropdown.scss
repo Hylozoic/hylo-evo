@@ -67,3 +67,9 @@ $dropdown-width: 375px;
   height: $messages-body-height;
   overflow: auto;
 }
+
+@media screen and (max-width: 425px) {
+  .wrapper {
+    width: 90%;
+  }
+}

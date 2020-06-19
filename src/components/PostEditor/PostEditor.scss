@@ -259,3 +259,43 @@ $wrapperBorderRadius: 8px;
 .accept-contributions-help {
   composes: caption-lt-lg from 'css/typography.scss';
 }
+
+.datePickerModule {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+
+@media screen and (max-width: 600px) {
+  .wrapper {
+    min-width: 320px;
+    border-radius: 0;
+  }
+
+  .postType {
+    font-size: 10px;
+    padding: 0 5px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .postType {
+    margin: 0 2px;
+  }
+
+  .editor {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  .footerSection-helper {
+    margin: 0 5px;
+    font-size: 10px;
+  }
+
+  .section-label, .footerSection-label, .section-label.footerSection-label {
+    margin-right: 15px;
+  }
+}
