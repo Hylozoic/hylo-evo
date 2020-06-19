@@ -50,7 +50,7 @@ import {
   POST_ID_MATCH,
   HYLO_ID_MATCH,
   VALID_POST_TYPE_CONTEXTS_MATCH,
-  VALID_COMMUNITY_CONTEXTS_MATCH,
+  // VALID_COMMUNITY_CONTEXTS_MATCH,
   isSignupPath,
   isAllCommunitiesPath,
   isNetworkPath,
@@ -119,6 +119,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/:context(tag)/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
+            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_COMMUNITY_MATCH}`} exact component={MapExplorer} />
             <Route path='/:context(all|public)/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/:context(n)/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/:context(n)/:networkSlug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
@@ -182,8 +183,8 @@ const OPTIONAL_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:postId(${POST_ID_MATCH
 const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
 const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})/:action(edit)?`
 
-const COMMUNITY_CONTEXT_MATCH = `:postTypeContext(${VALID_COMMUNITY_CONTEXTS_MATCH})`
-// const OPTIONAL_COMMUNITY_MATCH = `${COMMUNITY_CONTEXT_MATCH}?/:communityId(${HYLO_ID_MATCH})?/:action(new|edit)?`
+const COMMUNITY_CONTEXT_MATCH = `c`
+const OPTIONAL_COMMUNITY_MATCH = `${COMMUNITY_CONTEXT_MATCH}?/:communityId(${HYLO_ID_MATCH})?/:action(new|edit)?`
 const COMMUNITY_DETAIL_MATCH = `${COMMUNITY_CONTEXT_MATCH}/:communityId(${HYLO_ID_MATCH})/:action(edit)?`
 
 const postDetailRoutes = [

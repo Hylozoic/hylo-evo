@@ -2,20 +2,19 @@ import { connect } from 'react-redux'
 // import { get, find } from 'lodash/fp'
 import { push } from 'connected-react-router'
 import { removeCommunityFromUrl } from 'util/navigation' // editPostUrl,
-import fetchCommunity from 'store/actions/fetchForCommunity'
+import fetchCommunity from 'store/actions/fetchCommunityById'
 import getRouteParam from 'store/selectors/getRouteParam'
 // import getPost from 'store/selectors/getPost'
 // import presentPost from 'store/presenters/presentPost'
 import getMe from 'store/selectors/getMe'
-import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getCommunity from 'store/selectors/getCommunity'
 import { FETCH_COMMUNITY } from 'store/constants'
 
 export function mapStateToProps (state, props) {
   // match params
   const id = getRouteParam('communityId', state, props)
   const routeParams = props.match.params
-  // everything else
-  const community = getCommunityForCurrentRoute(state, props)
+  const community = getCommunity(state, props)
   // const community = getPost(state, props), get('id', currentCommunity)
   const currentUser = getMe(state)
 
@@ -30,7 +29,6 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   const { location } = props
-  console.log('\n COMMUNITY LOCATION', location)
   const communityId = getRouteParam('communityId', {}, props)
   const closeLocation = {
     ...props.location,

@@ -16,7 +16,7 @@ export const POST_ID_MATCH = HOLOCHAIN_ACTIVE
   ? HOLOCHAIN_HASH_MATCH
   : HYLO_ID_MATCH
 export const DEFAULT_POST_TYPE_CONTEXT = 'p'
-export const POST_TYPE_CONTEXTS = ['project', 'event', 'c']
+export const POST_TYPE_CONTEXTS = ['project', 'event']
 export const VALID_POST_TYPE_CONTEXTS = [...POST_TYPE_CONTEXTS, DEFAULT_POST_TYPE_CONTEXT]
 export const VALID_POST_TYPE_CONTEXTS_MATCH = VALID_POST_TYPE_CONTEXTS.join('|')
 

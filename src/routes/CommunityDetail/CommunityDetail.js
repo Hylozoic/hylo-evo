@@ -10,7 +10,7 @@ import ScrollListener from 'components/ScrollListener'
 // import Comments from './Comments'
 import SocketSubscriber from 'components/SocketSubscriber'
 // import Button from 'components/Button'
-import Loading from 'components/Loading'
+// import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
 import './CommunityDetail.scss'
 
@@ -65,6 +65,7 @@ export default class CommunityDetail extends Component {
   }
 
   onCommunityIdChange = () => {
+    console.log('\n calling community')
     this.props.fetchCommunity()
   }
 
@@ -91,7 +92,7 @@ export default class CommunityDetail extends Component {
 
   render () {
     const {
-      routeParams,
+      // routeParams,
       community,
       pending
       // currentUser,
@@ -99,8 +100,10 @@ export default class CommunityDetail extends Component {
     } = this.props
     // const { atHeader, atActivity, headerWidth, activityWidth } = this.state
 
+    console.log('\n IN COMMUNITY DETAIL', community)
+
     if (!community && !pending) return <NotFound />
-    if (pending) return <Loading />
+    // if (pending) return <Loading />
 
     // const scrollToBottom = () => {
     //   const detail = document.getElementById(DETAIL_COLUMN_ID)
@@ -132,15 +135,16 @@ export default class CommunityDetail extends Component {
 
     return <div styleName='community' ref={this.setHeaderStateFromDOM}>
       <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
-      <div
-        styleName='body'
-        expanded
-        routeParams={routeParams}
-        slug={routeParams.slug}
-        {...community}>
-        Inside Community Detail
+      <div>
+        Inside Community Detail for {community.name}
       </div>
       <SocketSubscriber type='community' id={community.id} />
     </div>
   }
 }
+
+// styleName='body'
+// expanded
+// routeParams={routeParams}
+// slug={routeParams.slug || ''}
+// {...community}
