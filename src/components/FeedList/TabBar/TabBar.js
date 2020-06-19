@@ -39,6 +39,7 @@ export default class TabBar extends React.Component {
 
     return <div styleName='bar'>
       <div styleName='tabs'>
+        <div styleName='filterLabel'>Post types: <strong>{selectedTab}</strong> <Icon name='ArrowDown' /></div>
         {tabs.map(({ id, label }) => <span
           key={id}
           styleName={id === selectedTab ? 'tab-active' : 'tab'}

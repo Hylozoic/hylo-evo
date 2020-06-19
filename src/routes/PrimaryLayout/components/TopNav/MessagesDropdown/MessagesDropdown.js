@@ -79,7 +79,7 @@ export default class MessagesDropdown extends Component {
     }
 
     const firstThreadUrl = !isEmpty(threads)
-      ? threadUrl(threads[0].id)
+      ? threadUrl(threads[0].id) + '?inbox=1'
       : newMessageUrl()
 
     return <TopNavDropdown

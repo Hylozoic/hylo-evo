@@ -60,9 +60,19 @@
 }
 
 .post-editor-wrapper {
-  position: relative;
-  z-index: 1;
-  width: $post-editor-width;
-  margin: -($post-editor-height/2) auto 70px;
-  top: 50%;
+    width: 100%;
+    max-width: 590px;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    margin: 0 0 0 0;
+    transform: translate(-50%, -50%);
+    max-height: 100vh;
+}
+
+@media screen and (max-width: 600px) {
+  .post-editor-wrapper {
+    width: 100%;
+  }
 }

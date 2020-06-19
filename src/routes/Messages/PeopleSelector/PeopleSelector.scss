@@ -9,6 +9,10 @@
   min-height: $space-13x;
 }
 
+.backButton {
+  display: none;
+}
+
 .autocomplete {
   composes: body-drk-lg from 'css/typography.scss';
   flex: 1;
@@ -47,9 +51,28 @@
   margin-left: $space-6x;
 }
 
+.arrow-down {
+  margin-right: 30px;
+  margin-top: 10px;
+  color: $color-caribbean-green;
+  cursor: pointer;
+}
+
 .thread-header {
   composes: header from '../Messages.scss';
   padding-top: $space-4x;
   padding-bottom: $space-3x;
   height: unset;
+}
+
+@media screen and (max-width: 650px) {
+  .backButton {
+    display: block;
+
+    span {
+      transform: rotate(90deg);
+      display: block;
+      top: -2px;
+    }
+  }
 }

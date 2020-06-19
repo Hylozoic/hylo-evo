@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { humanDate } from 'hylo-utils/text'
 import RoundImage from 'components/RoundImage'
 import Badge from 'components/Badge'
+import CloseMessages from '../CloseMessages'
 import Button from 'components/Button'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
@@ -25,15 +26,21 @@ export default class ThreadList extends Component {
       currentUser,
       threadsPending,
       threads,
+      onCloseURL,
       threadSearch,
       onScrollBottom,
+      messagesOpen,
+      toggleMessages,
       match: { params: { messageThreadId } },
       className
     } = this.props
 
     return <div styleName='thread-list' className={className}>
       <div styleName='header'>
-        <Link to='/t/new'><Button label='New Message' styleName='new-message' /></Link>
+        <div styleName='closeMessages'>
+          <CloseMessages onCloseURL={onCloseURL} />
+        </div>
+        <Link to='/t/new' onClick={toggleMessages}><Button label='New Message' styleName='new-message' /></Link>
         <div styleName='header-text'>Messages</div>
       </div>
       <div styleName='search'>
@@ -54,7 +61,9 @@ export default class ThreadList extends Component {
             latestMessage={latestMessage}
             currentUser={currentUser}
             unreadCount={t.unreadCount}
-            key={`thread-li-${t.id}`} />
+            key={`thread-li-${t.id}`}
+            messagesOpen={messagesOpen}
+            toggleMessages={toggleMessages} />
         })}
         {threadsPending &&
           <Loading type='bottom' />}
@@ -82,7 +91,7 @@ ThreadList.propTypes = {
 }
 
 export function ThreadListItem ({
-  currentUser, active, id, thread, latestMessage, unreadCount
+  currentUser, active, id, thread, latestMessage, unreadCount, toggleMessages
 }) {
   const maxTextLength = 54
   let text = ''
@@ -97,7 +106,7 @@ export function ThreadListItem ({
   const { names, avatarUrls } = participantAttributes(thread, currentUser, 2)
 
   return <li styleName='list-item'>
-    <Link to={`/t/${id}`}>
+    <Link to={`/t/${id}`} onClick={toggleMessages}>
       {active && <div styleName='active-thread' />}
       <ThreadAvatars avatarUrls={avatarUrls} />
       <div styleName='li-center-content'>

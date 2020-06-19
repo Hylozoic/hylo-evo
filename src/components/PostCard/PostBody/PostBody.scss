@@ -144,5 +144,20 @@
 
 .icon {
   margin-right: 5px;
-  font-size: 40px;
+  font-size: 20px;
+}
+
+@media screen and (max-width: 425px) {
+  .eventRightColumn, .calendarDate {
+    display: none;
+  }
+
+  .eventData {
+    padding: 0 0 0 0;
+    margin: 0 0 5px 0;
+  }
+
+  .eventBody {
+    padding: 0 15px 0 15px;
+  }
 }

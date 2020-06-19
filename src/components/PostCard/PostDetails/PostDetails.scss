@@ -105,3 +105,14 @@
     }
   }
 }
+
+@media screen and (max-width: 425px) {
+  .details.cardPadding {
+    padding: 0 5px;
+  }
+
+  .details {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}

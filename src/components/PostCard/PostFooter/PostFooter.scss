@@ -83,3 +83,14 @@ $footer-height: 56px;
 .constrainend.vote-button {
   width: 66px;
 }
+
+@media screen and (max-width: 425px) {
+  .footer {
+    height: 40px;
+    padding-left: 10px;
+  }
+
+  .vote-button {
+    width: 70px;
+  }
+}
