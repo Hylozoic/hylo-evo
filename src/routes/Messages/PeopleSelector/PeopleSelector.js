@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { debounce, throttle } from 'lodash/fp'
+import Icon from 'components/Icon'
 import { getKeyCode, keyMap } from 'util/textInput'
 import CloseMessages from '../CloseMessages'
 import MatchingPeopleList from './MatchingPeopleList'
@@ -105,7 +106,8 @@ export default class PeopleSelector extends React.Component {
       recentPeople,
       matchingPeople,
       onCloseURL,
-      selectedPeople
+      selectedPeople,
+      toggleMessages
     } = this.props
     const {
       currentMatch
@@ -113,6 +115,9 @@ export default class PeopleSelector extends React.Component {
 
     return <React.Fragment>
       <div styleName='thread-header' tabIndex='0'>
+        <div styleName='backButton' onClick={toggleMessages}>
+          <Icon name='ArrowDown' styleName='arrow-down' />
+        </div>
         <div styleName='autocomplete-control'>
           {selectedPeople && selectedPeople.map(person =>
             <MatchingPeopleListItem

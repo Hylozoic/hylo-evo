@@ -24,11 +24,11 @@ export default class FullPageModal extends Component {
   }
 
   render () {
-    const { content, children, narrow } = this.props
+    const { content, children, narrow, topicView } = this.props
 
     const multipleTabs = Array.isArray(content)
 
-    return <div styleName='modal'>
+    return <div styleName={cx('modal', { topicView })}>
       <div styleName='content'>
         <div styleName='left-sidebar'>
           <div styleName={cx('left-sidebar-fixed', { border: multipleTabs })}>

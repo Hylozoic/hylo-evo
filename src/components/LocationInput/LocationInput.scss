@@ -58,3 +58,9 @@
     min-width: 240px;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .wrapper {
+    font-size: 14px;
+  }
+}
