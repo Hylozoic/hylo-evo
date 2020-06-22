@@ -21,6 +21,7 @@ import {
 export function presentMember (person, communityId) {
   return {
     ...pick([ 'id', 'name', 'avatarUrl', 'locationObject' ], person.ref),
+    type: 'member',
     community: person.memberships.first()
       ? person.memberships.first().community.name : null
   }
@@ -74,6 +75,7 @@ export function mapStateToProps (state, props) {
   // TODO: maybe filtering should happen on the presentedPosts? since we do some of that presentation in the filtering code, like calling topics.toModelArray in the filters for every post each time
   const members = getSortedFilteredMembers(state, fetchMembersParam).map(m => presentMember(m, communityId))
   const posts = getSortedFilteredPosts(state, fetchPostsParam).map(p => presentPost(p, communityId))
+  const features = posts.concat(members)
   const topics = getCurrentTopics(state, fetchPostsParam)
 
   const me = getMe(state)
@@ -84,6 +86,7 @@ export function mapStateToProps (state, props) {
 
   return {
     centerLocation,
+    features,
     fetchMembersParam,
     fetchPostsParam,
     filters: state.MapExplorer.clientFilterParams,

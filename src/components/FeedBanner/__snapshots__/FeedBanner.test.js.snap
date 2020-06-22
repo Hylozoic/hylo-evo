@@ -49,7 +49,7 @@ exports[`matches the snapshot for an orphan user 1`] = `
           <span
             data-stylename="header-name"
           >
-            All Communities
+            All My Communities
           </span>
           <div
             data-stylename="header-subtitle"
@@ -116,7 +116,7 @@ exports[`renders for all communities 1`] = `
           <span
             data-stylename="header-name"
           >
-            All Communities
+            All My Communities
           </span>
           <div
             data-stylename="header-subtitle"

@@ -28,7 +28,6 @@ Object {
         "posts": undefined,
         "slug": "foo",
       },
-      "slug": "foo",
     },
     SessionBoundModel {
       "_fields": Object {
@@ -38,7 +37,6 @@ Object {
         "posts": undefined,
         "slug": "bar",
       },
-      "slug": "bar",
     },
   ],
   "communitySlug": "foo",
@@ -50,7 +48,6 @@ Object {
       "posts": undefined,
       "slug": "foo",
     },
-    "slug": "foo",
   },
   "currentUser": SessionBoundModel {
     "_fields": Object {
@@ -81,7 +78,6 @@ Object {
         "posts": undefined,
         "slug": "foo",
       },
-      "slug": "foo",
     },
   ],
   "networkSlug": undefined,
@@ -108,7 +104,6 @@ Object {
         "posts": undefined,
         "slug": "foo",
       },
-      "slug": "foo",
     },
     SessionBoundModel {
       "_fields": Object {
@@ -118,7 +113,6 @@ Object {
         "posts": undefined,
         "slug": "bar",
       },
-      "slug": "bar",
     },
   ],
   "communitySlug": "foo",
@@ -130,7 +124,6 @@ Object {
       "posts": undefined,
       "slug": "foo",
     },
-    "slug": "foo",
   },
   "currentUser": SessionBoundModel {
     "_fields": Object {
@@ -161,7 +154,6 @@ Object {
         "posts": undefined,
         "slug": "foo",
       },
-      "slug": "foo",
     },
   ],
   "networkSlug": undefined,

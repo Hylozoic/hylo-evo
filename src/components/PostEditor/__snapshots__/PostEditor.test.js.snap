@@ -141,6 +141,13 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         label="offer"
         onClick={[Function]}
       />
+      <Button
+        className="undefined"
+        color=""
+        disabled={false}
+        label="resource"
+        onClick={[Function]}
+      />
     </div>
   </div>
   <div
@@ -199,19 +206,6 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       data-stylename="footerSection"
     >
       <div
-        data-stylename="footerSection-label alignedLabel"
-      >
-        Location
-      </div>
-      <Connect(LocationInput)
-        onChange={[Function]}
-        placeholder="Where is your request located"
-      />
-    </div>
-    <div
-      data-stylename="footerSection"
-    >
-      <div
         data-stylename="footerSection-label"
       >
         Topics
@@ -254,6 +248,57 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
           }
         />
       </div>
+    </div>
+    <PublicToggle
+      isPublic={false}
+      togglePublic={[Function]}
+    />
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Timeframe
+      </div>
+      <div
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "justifyContent": "space-evenly",
+          }
+        }
+      >
+        <DatePicker
+          onChange={[Function]}
+          placeholder="Select Start Time"
+          value={"2019-03-06T21:41:23.315Z"}
+        />
+        <div
+          data-stylename="footerSection-helper"
+        >
+          To
+        </div>
+        <DatePicker
+          onChange={[Function]}
+          placeholder="Select End Time"
+          value={"2019-03-06T21:41:23.315Z"}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label alignedLabel"
+      >
+        Location
+      </div>
+      <Connect(LocationInput)
+        onChange={[Function]}
+        placeholder="Where is your request located?"
+      />
     </div>
     <ActionsBar
       communities={
@@ -328,6 +373,13 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         label="offer"
         onClick={[Function]}
       />
+      <Button
+        className="undefined"
+        color=""
+        disabled={false}
+        label="resource"
+        onClick={[Function]}
+      />
     </div>
   </div>
   <div
@@ -386,19 +438,6 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       data-stylename="footerSection"
     >
       <div
-        data-stylename="footerSection-label alignedLabel"
-      >
-        Location
-      </div>
-      <Connect(LocationInput)
-        onChange={[Function]}
-        placeholder="Where is your request located"
-      />
-    </div>
-    <div
-      data-stylename="footerSection"
-    >
-      <div
         data-stylename="footerSection-label"
       >
         Topics
@@ -441,6 +480,57 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
           }
         />
       </div>
+    </div>
+    <PublicToggle
+      isPublic={false}
+      togglePublic={[Function]}
+    />
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Timeframe
+      </div>
+      <div
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "justifyContent": "space-evenly",
+          }
+        }
+      >
+        <DatePicker
+          onChange={[Function]}
+          placeholder="Select Start Time"
+          value={"2019-03-06T21:41:23.315Z"}
+        />
+        <div
+          data-stylename="footerSection-helper"
+        >
+          To
+        </div>
+        <DatePicker
+          onChange={[Function]}
+          placeholder="Select End Time"
+          value={"2019-03-06T21:41:23.315Z"}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label alignedLabel"
+      >
+        Location
+      </div>
+      <Connect(LocationInput)
+        onChange={[Function]}
+        placeholder="Where is your request located?"
+      />
     </div>
     <ActionsBar
       communities={
@@ -489,12 +579,13 @@ Array [
       "fileUrls": undefined,
       "id": "test",
       "imageUrls": undefined,
+      "isPublic": undefined,
       "linkPreview": Object {
         "id": "1",
         "title": "a link",
       },
-      "locationId": undefined,
       "location": undefined,
+      "locationId": undefined,
       "memberIds": undefined,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",
@@ -731,6 +822,13 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         label="offer"
         onClick={[Function]}
       />
+      <Button
+        className="undefined"
+        color=""
+        disabled={false}
+        label="resource"
+        onClick={[Function]}
+      />
     </div>
   </div>
   <div
@@ -812,6 +910,10 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         />
       </div>
     </div>
+    <PublicToggle
+      isPublic={false}
+      togglePublic={[Function]}
+    />
     <ActionsBar
       communities={Array []}
       communityCount={0}
@@ -872,6 +974,13 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         label="offer"
         onClick={[Function]}
       />
+      <Button
+        className="undefined"
+        color=""
+        disabled={false}
+        label="resource"
+        onClick={[Function]}
+      />
     </div>
   </div>
   <div
@@ -921,19 +1030,6 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       data-stylename="footerSection"
     >
       <div
-        data-stylename="footerSection-label alignedLabel"
-      >
-        Location
-      </div>
-      <Connect(LocationInput)
-        onChange={[Function]}
-        placeholder="Where is your offer located"
-      />
-    </div>
-    <div
-      data-stylename="footerSection"
-    >
-      <div
         data-stylename="footerSection-label"
       >
         Topics
@@ -965,6 +1061,57 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
           selected={Array []}
         />
       </div>
+    </div>
+    <PublicToggle
+      isPublic={false}
+      togglePublic={[Function]}
+    />
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Timeframe
+      </div>
+      <div
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "justifyContent": "space-evenly",
+          }
+        }
+      >
+        <DatePicker
+          onChange={[Function]}
+          placeholder="Select Start Time"
+          value={"2019-03-06T21:41:23.315Z"}
+        />
+        <div
+          data-stylename="footerSection-helper"
+        >
+          To
+        </div>
+        <DatePicker
+          onChange={[Function]}
+          placeholder="Select End Time"
+          value={"2019-03-06T21:41:23.315Z"}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label alignedLabel"
+      >
+        Location
+      </div>
+      <Connect(LocationInput)
+        onChange={[Function]}
+        placeholder="Where is your offer located?"
+      />
     </div>
     <ActionsBar
       communities={Array []}
@@ -1026,6 +1173,13 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         label="offer"
         onClick={[Function]}
       />
+      <Button
+        className="undefined"
+        color=""
+        disabled={false}
+        label="resource"
+        onClick={[Function]}
+      />
     </div>
   </div>
   <div
@@ -1075,15 +1229,201 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       data-stylename="footerSection"
     >
       <div
+        data-stylename="footerSection-label"
+      >
+        Topics
+      </div>
+      <div
+        data-stylename="footerSection-communities"
+      >
+        <Connect(TopicSelector)
+          detailsTopics={Array []}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Post in
+      </div>
+      <div
+        data-stylename="footerSection-communities"
+      >
+        <CommunitiesSelector
+          onChange={[Function]}
+          options={Array []}
+          placeholder="Type community name..."
+          readOnly={false}
+          selected={Array []}
+        />
+      </div>
+    </div>
+    <PublicToggle
+      isPublic={false}
+      togglePublic={[Function]}
+    />
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Timeframe
+      </div>
+      <div
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "justifyContent": "space-evenly",
+          }
+        }
+      >
+        <DatePicker
+          onChange={[Function]}
+          placeholder="Select Start Time"
+          value={"2019-03-06T21:41:23.315Z"}
+        />
+        <div
+          data-stylename="footerSection-helper"
+        >
+          To
+        </div>
+        <DatePicker
+          onChange={[Function]}
+          placeholder="Select End Time"
+          value={"2019-03-06T21:41:23.315Z"}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
         data-stylename="footerSection-label alignedLabel"
       >
         Location
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your request located"
+        placeholder="Where is your request located?"
       />
     </div>
+    <ActionsBar
+      communities={Array []}
+      communityCount={0}
+      loading={false}
+      save={[Function]}
+      submitButtonLabel="Post"
+      toggleAnnouncementModal={[Function]}
+      valid={false}
+    />
+  </div>
+</div>
+`;
+
+exports[`PostEditor for a new post correct title placeholder and type button selection for "resource" type 1`] = `
+<div
+  data-stylename="wrapper"
+>
+  <div
+    data-stylename="header"
+  >
+    <div
+      data-stylename="initial"
+    >
+      <div
+        data-stylename="initial-prompt"
+      >
+        What are you looking to post?
+      </div>
+      <a
+        data-stylename="initial-closeButton"
+      >
+        <Icon
+          name="Ex"
+        />
+      </a>
+    </div>
+    <div
+      data-stylename="postTypes"
+    >
+      <Button
+        className="undefined"
+        color=""
+        disabled={false}
+        label="discussion"
+        onClick={[Function]}
+      />
+      <Button
+        className="undefined"
+        color=""
+        disabled={false}
+        label="request"
+        onClick={[Function]}
+      />
+      <Button
+        className="undefined"
+        color=""
+        disabled={false}
+        label="offer"
+        onClick={[Function]}
+      />
+      <Button
+        className=""
+        color=""
+        disabled={false}
+        label="resource"
+        onClick={[Function]}
+      />
+    </div>
+  </div>
+  <div
+    data-stylename="body"
+  >
+    <div
+      data-stylename="body-column"
+    >
+      <RoundImage
+        data-stylename="titleAvatar"
+        medium={true}
+      />
+    </div>
+    <div
+      data-stylename="body-column"
+    >
+      <input
+        data-stylename="titleInput"
+        disabled={false}
+        maxLength={50}
+        onChange={[Function]}
+        placeholder="resource placeholder"
+        type="text"
+        value=""
+      />
+      <Connect(HyloEditor)
+        data-stylename="editor"
+        onChange={[Function]}
+        parentComponent="PostEditor"
+        placeholder="Please describe the physical resource that is available, including the location."
+        readOnly={false}
+      />
+    </div>
+  </div>
+  <Connect(AttachmentManager)
+    postId="new"
+    type="image"
+  />
+  <Connect(AttachmentManager)
+    postId="new"
+    type="file"
+  />
+  <div
+    data-stylename="footer"
+  >
     <div
       data-stylename="footerSection"
     >
@@ -1119,6 +1459,57 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
           selected={Array []}
         />
       </div>
+    </div>
+    <PublicToggle
+      isPublic={false}
+      togglePublic={[Function]}
+    />
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Timeframe
+      </div>
+      <div
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "justifyContent": "space-evenly",
+          }
+        }
+      >
+        <DatePicker
+          onChange={[Function]}
+          placeholder="Select Start Time"
+          value={"2019-03-06T21:41:23.315Z"}
+        />
+        <div
+          data-stylename="footerSection-helper"
+        >
+          To
+        </div>
+        <DatePicker
+          onChange={[Function]}
+          placeholder="Select End Time"
+          value={"2019-03-06T21:41:23.315Z"}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label alignedLabel"
+      >
+        Location
+      </div>
+      <Connect(LocationInput)
+        onChange={[Function]}
+        placeholder="Where is your resource located?"
+      />
     </div>
     <ActionsBar
       communities={Array []}
@@ -1180,6 +1571,13 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         label="offer"
         onClick={[Function]}
       />
+      <Button
+        className="undefined"
+        color=""
+        disabled={false}
+        label="resource"
+        onClick={[Function]}
+      />
     </div>
   </div>
   <div
@@ -1210,7 +1608,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
-        placeholder="details placeholder"
+        placeholder="Add a description"
         readOnly={false}
       />
     </div>
@@ -1262,6 +1660,10 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         />
       </div>
     </div>
+    <PublicToggle
+      isPublic={false}
+      togglePublic={[Function]}
+    />
     <ActionsBar
       communities={Array []}
       communityCount={0}
@@ -1296,9 +1698,10 @@ Array [
       "fileUrls": undefined,
       "id": undefined,
       "imageUrls": undefined,
+      "isPublic": undefined,
       "linkPreview": undefined,
-      "locationId": undefined,
       "location": undefined,
+      "locationId": undefined,
       "memberIds": undefined,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",
@@ -1359,6 +1762,13 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         label="offer"
         onClick={[Function]}
       />
+      <Button
+        className=""
+        color=""
+        disabled={true}
+        label="resource"
+        onClick={[Function]}
+      />
     </div>
   </div>
   <div
@@ -1441,6 +1851,10 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         />
       </div>
     </div>
+    <PublicToggle
+      isPublic={false}
+      togglePublic={[Function]}
+    />
     <ActionsBar
       communities={Array []}
       communityCount={0}
@@ -1501,6 +1915,13 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
         label="offer"
         onClick={[Function]}
       />
+      <Button
+        className=""
+        color=""
+        disabled={true}
+        label="resource"
+        onClick={[Function]}
+      />
     </div>
   </div>
   <div
@@ -1583,6 +2004,10 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
         />
       </div>
     </div>
+    <PublicToggle
+      isPublic={false}
+      togglePublic={[Function]}
+    />
     <ActionsBar
       communities={Array []}
       communityCount={0}
@@ -1641,6 +2066,13 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
         color=""
         disabled={false}
         label="offer"
+        onClick={[Function]}
+      />
+      <Button
+        className="undefined"
+        color=""
+        disabled={false}
+        label="resource"
         onClick={[Function]}
       />
     </div>
@@ -1725,6 +2157,10 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
         />
       </div>
     </div>
+    <PublicToggle
+      isPublic={false}
+      togglePublic={[Function]}
+    />
     <ActionsBar
       canModerate={true}
       communities={Array []}
@@ -1831,28 +2267,6 @@ exports[`PostEditor renders contribution button 1`] = `
       <div
         data-stylename="footerSection-label"
       >
-        Accept Contributions
-      </div>
-      <div
-        data-stylename="footerSection-communities accept-contributions"
-      >
-        <Switch
-          data-stylename="accept-contributions-switch"
-          onClick={[Function]}
-        />
-        <div
-          data-stylename="accept-contributions-help"
-        >
-          If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.
-        </div>
-      </div>
-    </div>
-    <div
-      data-stylename="footerSection"
-    >
-      <div
-        data-stylename="footerSection-label"
-      >
         Topics
       </div>
       <div
@@ -1881,6 +2295,32 @@ exports[`PostEditor renders contribution button 1`] = `
           readOnly={false}
           selected={Array []}
         />
+      </div>
+    </div>
+    <PublicToggle
+      isPublic={false}
+      togglePublic={[Function]}
+    />
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Accept Contributions
+      </div>
+      <div
+        data-stylename="footerSection-communities accept-contributions"
+      >
+        <Switch
+          data-stylename="accept-contributions-switch"
+          onClick={[Function]}
+        />
+        <div
+          data-stylename="accept-contributions-help"
+        >
+          If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.
+        </div>
       </div>
     </div>
     <ActionsBar
@@ -1941,6 +2381,13 @@ exports[`PostEditor renders with min props 1`] = `
         color=""
         disabled={false}
         label="offer"
+        onClick={[Function]}
+      />
+      <Button
+        className="undefined"
+        color=""
+        disabled={false}
+        label="resource"
         onClick={[Function]}
       />
     </div>
@@ -2025,6 +2472,10 @@ exports[`PostEditor renders with min props 1`] = `
         />
       </div>
     </div>
+    <PublicToggle
+      isPublic={false}
+      togglePublic={[Function]}
+    />
     <ActionsBar
       communities={Array []}
       communityCount={0}
@@ -2059,12 +2510,13 @@ Array [
       "fileUrls": undefined,
       "id": "test",
       "imageUrls": undefined,
+      "isPublic": undefined,
       "linkPreview": Object {
         "id": "1",
         "title": "a link",
       },
-      "locationId": undefined,
       "location": undefined,
+      "locationId": undefined,
       "memberIds": undefined,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",

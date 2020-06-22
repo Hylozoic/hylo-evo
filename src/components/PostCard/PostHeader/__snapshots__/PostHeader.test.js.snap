@@ -165,6 +165,9 @@ exports[`matches announcement snapshot 2`] = `
       />
     </div>
   </div>
+  <div
+    data-stylename="timeWindow"
+  />
 </div>
 `;
 
@@ -261,6 +264,9 @@ exports[`matches announcement snapshot 3`] = `
       />
     </div>
   </div>
+  <div
+    data-stylename="timeWindow"
+  />
 </div>
 `;
 
@@ -350,6 +356,9 @@ exports[`matches snapshot 2`] = `
       />
     </div>
   </div>
+  <div
+    data-stylename="timeWindow"
+  />
 </div>
 `;
 
@@ -419,5 +428,8 @@ exports[`matches snapshot 3`] = `
       />
     </div>
   </div>
+  <div
+    data-stylename="timeWindow"
+  />
 </div>
 `;

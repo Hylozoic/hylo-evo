@@ -160,9 +160,10 @@ export default class MapExplorer extends React.Component {
 
   render () {
     const {
+      features,
+      fetchPostsParam,
       filters,
       querystringParams,
-      posts,
       pending,
       routeParams,
       topics
@@ -189,9 +190,10 @@ export default class MapExplorer extends React.Component {
       </button>
       { showDrawer ? (
         <MapDrawer
+          fetchPostsParam={fetchPostsParam}
           filters={filters}
           onUpdateFilters={this.props.storeClientFilterParams}
-          posts={posts}
+          features={features}
           topics={topics}
           querystringParams={querystringParams}
           routeParams={routeParams}

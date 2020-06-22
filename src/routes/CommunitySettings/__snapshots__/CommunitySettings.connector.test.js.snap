@@ -11,7 +11,17 @@ Object {
       "posts": undefined,
       "slug": "foo",
     },
-    "slug": "foo",
+  },
+  "currentUser": SessionBoundModel {
+    "_fields": Object {
+      "blockedUsers": undefined,
+      "id": "1",
+      "messageThreads": undefined,
+      "notifications": undefined,
+      "posts": undefined,
+      "skills": undefined,
+    },
+    "id": "1",
   },
   "slug": "foo",
 }
@@ -96,7 +106,17 @@ Object {
       "posts": undefined,
       "slug": "foo",
     },
-    "slug": "foo",
+  },
+  "currentUser": SessionBoundModel {
+    "_fields": Object {
+      "blockedUsers": undefined,
+      "id": "1",
+      "messageThreads": undefined,
+      "notifications": undefined,
+      "posts": undefined,
+      "skills": undefined,
+    },
+    "id": "1",
   },
   "deleteCommunity": [Function],
   "fetchCommunitySettings": [Function],

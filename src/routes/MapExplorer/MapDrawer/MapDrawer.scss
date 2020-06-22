@@ -29,7 +29,11 @@
 .contentCard {
   position: relative;
   margin-bottom: 12px;
+}
 
+.contentCard.member {
+  padding: 16px;
+  max-width: none;
 }
 
 .contentListContainer .contentCard:nth-child(even) {

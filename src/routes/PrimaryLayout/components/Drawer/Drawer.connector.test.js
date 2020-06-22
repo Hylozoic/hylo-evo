@@ -18,7 +18,7 @@ describe('partitionCommunities', () => {
 
     const partitionedCommunities = partitionCommunities(getMemberships({ orm: session.state }))
     expect(partitionedCommunities).toMatchSnapshot()
-    expect(partitionedCommunities.networks[1].nonMemberCommunities[0].id).toEqual('100')
+    expect(partitionedCommunities.networks[0].nonMemberCommunities[0].id).toEqual('100')
   })
 })
 
@@ -37,6 +37,6 @@ describe('mapStateToProps', () => {
       })]
     })
 
-    expect(mapStateToProps({ orm: session.state }, { community })).toMatchSnapshot()
+    expect(mapStateToProps({ orm: session.state, locationHistory: { currentLocation: 'mock' } }, { community })).toMatchSnapshot()
   })
 })
