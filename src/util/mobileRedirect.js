@@ -4,6 +4,7 @@ export const APP_STORE_APP_URL = 'https://appsto.re/us/0gcV7.i'
 export const GOOGLE_PLAY_APP_URL = 'https://play.google.com/store/apps/details?id=com.hylo.hyloandroid'
 
 export default function mobileRedirect () {
+  return null
   const forceApp = (
     isMobile.apple.phone ||
     isMobile.apple.ipod ||

@@ -399,3 +399,16 @@
 .gray-text {
   color: $color-dove-gray-75;
 }
+
+
+@media screen and (max-width: 680px) {
+  .flex-wrapper {
+    min-width: 100%;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  .signup-wrapper {
+    width: 100%;
+  }
+}
