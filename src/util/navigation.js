@@ -55,14 +55,6 @@ export function communityUrl (slug, defaultUrl = defaultCommunityUrl()) {
   }
 }
 
-export function communityMapDetailUrl (id, defaultUrl = publicCommunitiesUrl()) {
-  if (id) {
-    return `/public/map/c/${id}`
-  } else {
-    return defaultUrl
-  }
-}
-
 export function networkUrl (slug) {
   return slug ? `/n/${slug}` : ''
 }
@@ -160,6 +152,15 @@ export function postUrl (id, opts = {}, querystringParams = {}) {
 
   if (!inPostTypeContext) result = `${result}/${DEFAULT_POST_TYPE_CONTEXT}`
   result = `${result}/${id}`
+  if (action) result = `${result}/${action}`
+
+  return addQuerystringToPath(result, querystringParams)
+}
+
+export function communityMapDetailUrl (id, opts = {}, querystringParams = {}) {
+  const action = get('action', opts)
+  let result = publicCommunitiesUrl()
+  result = `${result}/map/${DEFAULT_COMMUNITY_CONTEXT}/${id}`
   if (action) result = `${result}/${action}`
 
   return addQuerystringToPath(result, querystringParams)

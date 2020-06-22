@@ -8,7 +8,7 @@ communities(
   search: $search
 ) {
   items {
-    ${communityFieldsFragment()}
+    ${communityFieldsFragment(false)}
   }
 }`
 

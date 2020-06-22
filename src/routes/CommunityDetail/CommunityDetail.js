@@ -7,10 +7,11 @@ import { throttle } from 'lodash/fp'
 // import { tagUrl } from 'util/navigation'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import ScrollListener from 'components/ScrollListener'
+import Icon from 'components/Icon'
 // import Comments from './Comments'
 import SocketSubscriber from 'components/SocketSubscriber'
 // import Button from 'components/Button'
-// import Loading from 'components/Loading'
+import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
 import './CommunityDetail.scss'
 
@@ -65,7 +66,6 @@ export default class CommunityDetail extends Component {
   }
 
   onCommunityIdChange = () => {
-    console.log('\n calling community')
     this.props.fetchCommunity()
   }
 
@@ -94,16 +94,16 @@ export default class CommunityDetail extends Component {
     const {
       // routeParams,
       community,
-      pending
+      pending,
       // currentUser,
-      // onClose
+      onClose
     } = this.props
     // const { atHeader, atActivity, headerWidth, activityWidth } = this.state
 
-    console.log('\n IN COMMUNITY DETAIL', community)
+    console.log(community)
 
     if (!community && !pending) return <NotFound />
-    // if (pending) return <Loading />
+    if (pending) return <Loading />
 
     // const scrollToBottom = () => {
     //   const detail = document.getElementById(DETAIL_COLUMN_ID)
@@ -117,34 +117,22 @@ export default class CommunityDetail extends Component {
     //   marginTop: STICKY_HEADER_SCROLL_OFFSET + 'px'
     // }
 
-    // var people, postPeopleDialogTitle
-    // if (isProject) {
-    //   people = post.members
-    //   postPeopleDialogTitle = 'Project Members'
-    // } else if (isEvent) {
-    //   people = post.eventInvitations
-    //   postPeopleDialogTitle = 'Responses'
-    // }
-    //
-    // const hasPeople = people && people.length > 0
-    // let { showPeopleDialog } = this.state
-    // showPeopleDialog = hasPeople && showPeopleDialog
-    // const togglePeopleDialog = hasPeople && this.togglePeopleDialog ? this.togglePeopleDialog : undefined
-
     // <CommunityTags tags={community.tags} />
 
     return <div styleName='community' ref={this.setHeaderStateFromDOM}>
       <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
-      <div>
-        Inside Community Detail for {community.name}
+      <div styleName='communityDetailHeader' style={{ backgroundImage: `url(${community.bannerUrl})` }}>
+        {onClose &&
+          <a styleName='close' onClick={onClose}><Icon name='Ex' /></a>}
+        <div styleName='communityTitleContainer'>
+          <img src={community.avatarUrl} height='50px' width='50px' />
+          <div styleName='communityTitle'>{community.name}</div>
+        </div>
+      </div>
+      <div styleName='communityDetailBody'>
+        <div styleName='communityDescription'>{community.description}</div>
       </div>
       <SocketSubscriber type='community' id={community.id} />
     </div>
   }
 }
-
-// styleName='body'
-// expanded
-// routeParams={routeParams}
-// slug={routeParams.slug || ''}
-// {...community}

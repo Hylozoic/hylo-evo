@@ -6,6 +6,7 @@ export default
   name
   slug
   description
+  bannerUrl
   avatarUrl
   isPublic
   isAutoJoinable

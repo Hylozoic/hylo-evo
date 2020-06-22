@@ -1,9 +1,10 @@
-const communityFieldsFragment = () => `
+const communityFieldsFragment = withTopics => `
   id
   name
   slug
   description
   avatarUrl
+  bannerUrl
   isPublic
   isAutoJoinable
   publicMemberDirectory
@@ -52,6 +53,18 @@ const communityFieldsFragment = () => `
     locality
     neighborhood
     region
-  }`
+  }
+  ${withTopics ? `communityTopics(first: 8, order: "desc") {
+    items {
+      id
+      postsTotal
+      topic {
+        id
+        name
+      }
+    }
+    total
+    hasMore
+  }` : ''}`
 
 export default communityFieldsFragment

@@ -2,6 +2,49 @@
   //
 }
 
-.body {
-  //
+.communityDetailHeader {
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  height: 244px;
+  width: 100%;
+}
+
+.communityTitleContainer {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+}
+
+.communityTitle {
+  color: $color-white;
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 15px;
+}
+
+.close {
+  background-color: $color-white;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  padding: 3px;
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  width: 30px;
+  z-index: 2;
+}
+
+.communityDetailBody {
+  padding: 25px 30px;
+}
+
+.communityDescription {
+  color: $color-regent;
+  font-size: 16px;
 }

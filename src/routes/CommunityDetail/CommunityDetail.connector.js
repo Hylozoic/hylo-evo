@@ -11,11 +11,9 @@ import getCommunity from 'store/selectors/getCommunity'
 import { FETCH_COMMUNITY } from 'store/constants'
 
 export function mapStateToProps (state, props) {
-  // match params
   const id = getRouteParam('communityId', state, props)
   const routeParams = props.match.params
   const community = getCommunity(state, props)
-  // const community = getPost(state, props), get('id', currentCommunity)
   const currentUser = getMe(state)
 
   return {
@@ -41,9 +39,6 @@ export function mapDispatchToProps (dispatch, props) {
     onClose: () => dispatch(push(closeLocation))
     // joinProject: () => dispatch(joinProject(postId)),
     // leaveProject: () => dispatch(leaveProject(postId)),
-    // voteOnPost: (myVote) => dispatch(voteOnPost(postId, myVote)),
-    // processStripeToken: (postId, token, amount) => dispatch(processStripeToken(postId, token, amount)),
-    // respondToEvent: response => dispatch(respondToEvent(postId, response))
   }
 }
 
