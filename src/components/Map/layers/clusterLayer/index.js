@@ -2,10 +2,10 @@ import { CompositeLayer } from '@deck.gl/core'
 import { IconLayer, TextLayer } from '@deck.gl/layers'
 import Supercluster from 'supercluster'
 
-var mapSpriteData = require('components/Map/mapIconAtlas.json')
+import mapSpriteData from 'components/Map/layers/clusterLayer/mapIconAtlas.js'
 
-const iconMapping = Object.keys(mapSpriteData.frames).reduce((result, sprite) => {
-  const data = mapSpriteData.frames[sprite].frame
+const iconMapping = Object.keys(mapSpriteData).reduce((result, sprite) => {
+  const data = mapSpriteData[sprite].frame
   result[sprite] = {
     x: data.x,
     y: data.y,
