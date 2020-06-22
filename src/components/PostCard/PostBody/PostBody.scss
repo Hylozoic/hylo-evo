@@ -17,6 +17,10 @@
   margin-bottom: 12px;
 }
 
+.constrained.smallMargin {
+  margin-bottom: 0;
+}
+
 .title {
   composes: cardPadding;
   margin-bottom: 12px;
@@ -82,9 +86,21 @@
   padding: 0px 30px;
 }
 
+.constrained.eventBody {
+  padding: 10px 15px 0 15px;
+}
+
 .eventBodyColumn {
   display: flex;
   flex-direction: column;
+}
+
+.constrained .eventBodyColumn .eventLocation {
+  display: none;
+}
+
+.constrained .eventRightColumn {
+  display: none;
 }
 
 .eventRightColumn {
@@ -100,8 +116,26 @@
   margin-bottom: 15px;
 }
 
+.constrained .eventData {
+  padding: 0 0 0 0;
+  height: 55px;
+  margin-bottom: 1px;
+}
+
 .eventLocation {
   margin-bottom: 20px;
+}
+
+.constrained .calendarDate {
+  display: none;
+}
+
+.eventDetails {
+
+}
+
+.constrained.eventDetails {
+  display: none;
 }
 
 .inviteButton {
@@ -109,6 +143,6 @@
 }
 
 .icon {
-  margin-right: 10px;
-  font-size: 16px;
+  margin-right: 5px;
+  font-size: 40px;
 }

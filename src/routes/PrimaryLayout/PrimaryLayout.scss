@@ -3,7 +3,7 @@
   flex-direction: column;
   align-content: stretch;
   align-items: stretch;
-  height: calc(100vh - 80px);
+  height: 100vh;
   overflow: hidden;
   &.map-view {
     height: 100vh;
@@ -38,11 +38,14 @@
   flex-grow: 1;
   display: flex;
   flex-wrap: nowrap;
-  width: $content-width;
+  width: 100%;
+  max-width: 1500px;
   margin-left: auto;
   margin-right: auto;
+  min-width: 700px;
   &.map-view {
-    width: $map-content-width;
+    width: 100%;
+    max-width: 100%;
   }
 }
 
@@ -89,6 +92,11 @@ $drawer-z-index: 51;
   }
 }
 
+.center.collapsedState {
+  width: 43%;
+  flex: 0 0 43%;
+}
+
 .center::-webkit-scrollbar {
   background-color:transparent;
   width: 5px;
@@ -104,6 +112,7 @@ $drawer-z-index: 51;
 .sidebar {
   // From Bootstrap make-col-ready():
   position: relative;
+  z-index: 10;
   min-height: 1px; // Prevent collapsing
   flex: 0 0 29%;
   max-width: 29%;
@@ -123,21 +132,32 @@ $drawer-z-index: 51;
 .detail {
   background-color: white;
   position: absolute;
+  z-index: 30;
   top: 0;
   right: 0px;
   height: 100%;
   width: $detail-column-width;
-  box-shadow: 0px 4px 56px 0px $color-alto;
+  box-shadow: 0px 4px 56px 0px $shadow-color;
   transition-delay: 0.1s;
   transition-duration: 0.2s;
   padding-bottom: 150px;
   overflow-y: auto;
+  margin-top: -8px;
 
   &.hidden {
     opacity: 0;
     right: -1000px;
     transition-delay: 0.0s;
   }
+}
+
+.map-view .detail {
+  max-width: 700px;
+}
+
+.map-view.collapsedState {
+  width: 100%;
+  flex: 0 0 100%;
 }
 
 .detail::-webkit-scrollbar {

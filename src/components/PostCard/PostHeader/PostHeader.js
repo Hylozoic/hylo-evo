@@ -61,6 +61,7 @@ export default class PostHeader extends PureComponent {
       topics,
       close,
       className,
+      constrained,
       editPost,
       deletePost,
       removePost,
@@ -100,7 +101,7 @@ export default class PostHeader extends PureComponent {
       timeWindow = `${type} starts ${startDate}`
     }
 
-    return <div styleName='header' className={className}>
+    return <div styleName={cx('header', { constrained })} className={className}>
       <div styleName='headerMainRow'>
         <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' />
         <div styleName='headerText'>

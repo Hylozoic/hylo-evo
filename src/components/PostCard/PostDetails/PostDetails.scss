@@ -6,6 +6,10 @@
   padding: 0px $space-4x;
 }
 
+.constrained .cardPadding {
+  padding: 0px 0px;
+}
+
 .body {
   margin-bottom: 36px;
 }
@@ -19,6 +23,27 @@
   margin-bottom: 12px;
 }
 
+.constrained {
+  position: relative;
+}
+
+.fade {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  opacity: .8;
+  display: none;
+  left: 0;
+  height: 36px;
+  background: -webkit-linear-gradient(rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+  background: -o-linear-gradient(rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+  background: linear-gradient(rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+}
+
+.constrained .fade {
+  display: block;
+}
+
 .details {
   composes: cardPadding;
   // Extract typography? This one is exactly half way between
@@ -28,6 +53,13 @@
   font-size: 16px;
   line-height: 24px;
   margin-bottom: 20px;
+}
+
+.constrained .details {
+  font-size: 12px;
+  height: 36px;
+  line-height: 20px;
+  overflow: hidden;
 }
 
 .file-attachments {

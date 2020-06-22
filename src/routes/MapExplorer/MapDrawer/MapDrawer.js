@@ -1,17 +1,19 @@
+import cx from 'classnames'
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
+import Member from 'components/Member'
 import PostCard from 'components/PostCard'
 import { SORT_OPTIONS } from '../MapExplorer.store'
 import styles from './MapDrawer.scss'
 
 function MapDrawer (props) {
   let {
+    fetchPostsParam,
     filters,
     onUpdateFilters,
-    posts,
-    // publicCommunities,
+    features,
     querystringParams,
     routeParams,
     topics
@@ -36,14 +38,24 @@ function MapDrawer (props) {
     onUpdateFilters({ topics: newFilterTopics })
   }
 
-  const postsHTML = posts.map(post =>
+  const featuresHTML = features.map(f => f.type === 'member' ?
+    <Member
+      canModerate={false}
+      className={cx({[styles.contentCard]: true, [styles.member]: true })}
+      member={f}
+      key={f.id}
+      slug={routeParams.networkSlug || routeParams.slug}
+      subject={fetchPostsParam.subject}
+    /> :
     <PostCard
       routeParams={routeParams}
       querystringParams={querystringParams}
-      post={post}
+      post={f}
       styleName='contentCard'
+      constrained
       expanded={false}
-      key={post.id} />
+      key={f.id}
+    />
   )
 
   // Don't show topics we are already filtering by in searches
@@ -112,7 +124,7 @@ function MapDrawer (props) {
         })}
       </div>
 
-      <h1>{posts.length} result{posts.length === 1 ? '' : 's'} in this area</h1>
+      <h1>{features.length} result{features.length === 1 ? '' : 's'} in this area</h1>
       <Dropdown styleName='sorter'
         toggleChildren={<span styleName='sorter-label'>
           {SORT_OPTIONS.find(o => o.id === sortBy).label}
@@ -126,21 +138,21 @@ function MapDrawer (props) {
       />
 
       <div styleName='contentListContainer'>
-        {postsHTML}
+        {featuresHTML}
       </div>
     </div>
   )
 }
 
 MapDrawer.propTypes = {
-  posts: PropTypes.array,
+  features: PropTypes.array,
   querystringParams: PropTypes.object,
   routeParams: PropTypes.object,
   onUpdateFilters: PropTypes.func
 }
 
 MapDrawer.defaultProps = {
-  posts: [],
+  features: [],
   querystringParams: {},
   routeParams: {},
   onUpdateFilters: (opts) => { console.log('Updating filters with: ' + opts) }

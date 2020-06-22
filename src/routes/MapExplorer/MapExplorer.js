@@ -1,48 +1,47 @@
 import React from 'react'
-import { debounce } from 'lodash'
+import { FlyToInterpolator } from 'react-map-gl'
+import { debounce, groupBy } from 'lodash'
 import cx from 'classnames'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import { POST_TYPES } from 'store/models/Post'
+import { FEATURE_TYPES } from './MapExplorer.store'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
-import SwitchStyled from 'components/SwitchStyled'
-import { createScatterplotLayerFromMembers, createScatterplotLayerFromPosts, createScatterplotLayerFromPublicCommunities } from 'components/Map/layers/scatterplotLayer'
+import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
+import { createScatterplotLayerFromPublicCommunities } from 'components/Map/layers/scatterplotLayer'
 import './MapExplorer.scss'
-
-export const FEATURE_TYPES = {
-  ...POST_TYPES,
-  member: {
-    primaryColor: '#2A4059', // $color-member
-    backgroundColor: '#FAFBFC' // $color-athens-gray
-  },
-  community: {
-    primaryColor: 'rgba(35, 64, 91, 1.000)', // $color-?
-    backgroundColor: 'rgba(191, 197, 206, 1.000)' // $color-?
-  }
-}
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
+    centerLocation: { lat: 35.442845, lng: 7.916598 },
     filters: {},
     members: [],
     posts: [],
     publicCommunities: [],
     routeParams: {},
     querystringParams: {},
-    topics: []
+    topics: [],
+    zoom: 0
   }
 
   constructor (props) {
     super(props)
     this.state = {
       boundingBox: null,
+      clusterLayer: null,
       hoveredObject: null,
       pointerX: 0,
       pointerY: 0,
       selectedObject: null,
       showDrawer: props.querystringParams.showDrawer === 'true',
-      showFeatureFilters: false
+      showFeatureFilters: false,
+      viewport: {
+        latitude: parseFloat(props.centerLocation.lat),
+        longitude: parseFloat(props.centerLocation.lng),
+        zoom: props.zoom,
+        bearing: 0,
+        pitch: 0
+      }
     }
   }
 
@@ -61,6 +60,20 @@ export default class MapExplorer extends React.Component {
     if (prevProps.fetchPostsParam.boundingBox !== this.props.fetchPostsParam.boundingBox) {
       this.fetchOrShowCached()
     }
+
+    if (prevProps.fetchPostsParam.boundingBox !== this.props.fetchPostsParam.boundingBox ||
+         prevProps.posts !== this.props.posts ||
+         prevProps.members !== this.props.members) {
+     this.setState({
+       clusterLayer: createIconLayerFromPostsAndMembers({
+         members: this.props.members,
+         posts: this.props.posts,
+         onHover: this.onMapHover,
+         onClick: this.onMapClick,
+         boundingBox: this.props.fetchPostsParam.boundingBox
+       })
+     })
+   }
   }
 
   fetchOrShowCached = () => {
@@ -70,12 +83,16 @@ export default class MapExplorer extends React.Component {
     fetchPublicCommunities()
   }
 
-  mapViewPortUpdate = (update, mapRef) => {
-    let bounds = mapRef ? mapRef.getBounds() : null
-    if (bounds) {
+  mapViewPortUpdate = (update) => {
+    this.setState({ viewport: update })
+  }
+
+  afterViewportUpdate = (update, mapRef) => {
+    if (mapRef) {
+      let bounds = mapRef.getBounds()
       bounds = [{ ...bounds._sw }, { ...bounds._ne }]
+      this.updateBoundingBoxQuery(bounds)
     }
-    this.updateBoundingBoxQuery(bounds)
   }
 
   updateBoundingBoxQuery = debounce((boundingBox) => {
@@ -85,14 +102,25 @@ export default class MapExplorer extends React.Component {
 
   onMapHover = (info) => this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y })
 
-  onMapClick = (info) => {
-    this.setState({ selectedObject: info.object })
-    if (info.object.type === 'member') {
-      this.props.gotoMember(info.object.id)
-    } else if (info.object.type === 'community') {
-      this.props.showCommunityDetails(info.object.id)
+  onMapClick = (info, e) => {
+    if (info.objects) {
+      this.setState({ viewport: {
+        ...this.state.viewport,
+        longitude: info.lngLat[0],
+        latitude: info.lngLat[1],
+        zoom: this.state.viewport.zoom + 1,
+        transitionDuration: 500,
+        transitionInterpolator: new FlyToInterpolator()
+      } })
     } else {
-      this.props.showDetails(info.object.id)
+        this.setState({ selectedObject: info.object })
+        if (info.object.type === 'member') {
+          this.props.gotoMember(info.object.id)
+        } else if (info.object.type === 'community') {
+          this.props.showCommunityDetails(info.object.id)
+        } else {
+          this.props.showDetails(info.object.id)
+        }
     }
   }
 
@@ -104,11 +132,26 @@ export default class MapExplorer extends React.Component {
 
   _renderTooltip = () => {
     const { hoveredObject, pointerX, pointerY } = this.state || {}
-    return hoveredObject ? (
-      <div styleName='postTip' style={{ left: pointerX + 15, top: pointerY }}>
-        { hoveredObject.message }
-      </div>
-    ) : ''
+    if (hoveredObject) {
+      let message
+      let type
+      if (Array.isArray(hoveredObject) && hoveredObject.length > 0) {
+        // cluster
+        const types = groupBy(hoveredObject, 'type')
+        message = Object.keys(types).map(type => <p key={type}>{types[type].length} {type}{types[type].length === 1 ? '' : 's'}</p>)
+        type = 'cluster'
+      } else {
+        message = hoveredObject.message
+        type = hoveredObject.type
+      }
+
+      return (
+        <div styleName='postTip' className={styles[type]} style={{ left: pointerX + 15, top: pointerY }}>
+          { message }
+        </div>
+      )
+    }
+    return ''
   }
 
   toggleDrawer = (e) => {
@@ -122,49 +165,51 @@ export default class MapExplorer extends React.Component {
 
   render () {
     const {
-      centerLocation,
+      features,
+      fetchPostsParam,
       filters,
       querystringParams,
-      members,
       pending,
-      posts,
-      publicCommunities,
       routeParams,
       topics,
-      zoom
+      publicCommunities
     } = this.props
 
-    const { showDrawer, showFeatureFilters } = this.state
+    const {
+      clusterLayer,
+      showDrawer,
+      showFeatureFilters,
+      viewport
+    } = this.state
 
-    const postsLayer = createScatterplotLayerFromPosts(posts, this.onMapHover, this.onMapClick)
-    const membersLayer = createScatterplotLayerFromMembers(members, this.onMapHover, this.onMapClick)
     const publicCommunitiesLayer = createScatterplotLayerFromPublicCommunities(publicCommunities, this.onMapHover, this.onMapClick)
 
     return <div styleName='MapExplorer-container'>
       <Map
-        center={centerLocation}
-        layers={[membersLayer, postsLayer, publicCommunitiesLayer]}
+        layers={[clusterLayer, publicCommunitiesLayer]}
+        afterViewportUpdate={this.afterViewportUpdate}
         onViewportUpdate={this.mapViewPortUpdate}
         children={this._renderTooltip()}
-        zoom={zoom}
+        viewport={viewport}
       />
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}>
-        <Icon name='Stack' green={showDrawer} styleName='icon' />
+        <Icon name='Hamburger' className={styles.openDrawer} />
+        <Icon name='Ex' className={styles.closeDrawer} />
       </button>
       { showDrawer ? (
         <MapDrawer
+          fetchPostsParam={fetchPostsParam}
           filters={filters}
           onUpdateFilters={this.props.storeClientFilterParams}
-          posts={posts}
+          features={features}
           topics={topics}
-          publicCommunities={publicCommunities}
           querystringParams={querystringParams}
           routeParams={routeParams}
         />)
         : '' }
 
       <button styleName={cx('toggleFeatureFiltersButton', { 'featureFiltersOpen': showFeatureFilters })} onClick={this.toggleFeatureFilters}>
-        <Icon name='Stack' styleName='icon' />
+        Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/5</strong>
       </button>
       <div styleName={cx('featureTypeFilters', { 'featureFiltersOpen': showFeatureFilters })}>
         <h3>What do you want to see on the map?</h3>
@@ -183,6 +228,7 @@ export default class MapExplorer extends React.Component {
             <span>{featureType.charAt(0).toUpperCase() + featureType.slice(1)}s</span>
           </div>
         })}
+        <div styleName={cx('pointer')} />
       </div>
 
       { pending && <Loading /> }

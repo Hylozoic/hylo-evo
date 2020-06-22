@@ -1,6 +1,6 @@
 .MapExplorer-container {
   position: relative;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 56px);
   overflow: hidden;
 }
 
@@ -18,16 +18,49 @@
 }
 
 .toggleDrawerButton {
-  position: absolute;
+  position: fixed;
   right: 20px;
-  top: 20px;
+  top: 75px;
   border-radius: 20px;
   width: 40px;
   height: 40px;
   background: white;
+  transition: all .25s ease;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  border: none;
 
   &.drawerOpen {
-    right: 460px;
+    right: calc(40% + 20px);
+
+    .closeDrawer {
+      display: inline-block;
+      position: relative;
+      top: 2px;
+    }
+
+    .openDrawer {
+      display: none;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .openDrawer {
+    font-size: 16px;
+    position: relative;
+    top: 2px;
+  }
+
+  .closeDrawer {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1115px) {
+  .toggleDrawerButton.drawerOpen {
+    right: 470px;
   }
 }
 
@@ -46,36 +79,100 @@
   pointerEvents: none;
   border-radius: 4px;
   background-color: white;
-  border: 1px solid black;
+  border-radius: 20px;
+  padding: 0 15px;
+  color: rgba(87, 102, 123, 1.000);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  border: 1px solid red;
+  line-height: 28px;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
 }
 
-.toggleFeatureFiltersButton {
+.postTip.discussion {
+  color: $color-picton-blue;
+  border: 1px solid $color-picton-blue;
+}
+
+.postTip.event {
+  color: $color-medium-purple;
+  border: 1px solid $color-medium-purple;
+}
+
+.postTip.offer {
+  color: $color-caribbean-green;
+  border: 1px solid $color-caribbean-green;
+}
+
+.postTip.resource {
+  color: $color-mango-yellow;
+  border: 1px solid $color-mango-yellow;
+}
+
+.postTip.project {
+  color: $color-fuchsia-pink;
+  border: 1px solid $color-fuchsia-pink;
+}
+
+.postTip.cluster {
+  color: $color-fuchsia-pink;
+  border: 1px solid $color-fuchsia-pink;
+}
+
+button.toggleFeatureFiltersButton {
   position: absolute;
   bottom: 10px;
   left: 20px;
+  color: rgba(125, 140, 157, 1.000);
+  background-color: rgba(255,255,255,1);
+  border: none;
+  outline: none !important;
+  border-radius: 5px;
+  height: 30px;
+  text-align: center;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  padding: 0 10px;
 
   &.featureFiltersOpen {
-    color: white;
-    background-color: green;
+    color: rgba(255,255,255,1);
+    background-color: $color-caribbean-green;
   }
+}
+
+.pointer {
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  position: absolute;
+  bottom: -5px;
+  left: 55px;
+  background-color: white;
 }
 
 .featureTypeFilters {
   position: absolute;
-  bottom: 41px;
+  bottom: 50px;
   left: 20px;
-  width: 200px;
   background: white;
-  border: 1px solid gray;
   display: none;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
 
   &.featureFiltersOpen {
     display: block;
   }
+
+  h3 {
+    font-size: 14px;
+    padding: 10px;
+    border-bottom: 1px solid rgba(224, 229, 233, 1.000);
+  }
 }
 
 .featureTypeSwitch {
-  margin-left: 10px;
+  margin: 10px;
   > span {
     margin-left: 10px;
   }

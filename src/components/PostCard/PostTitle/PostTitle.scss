@@ -2,6 +2,10 @@
   padding: 0px $space-4x;
 }
 
+.constrained.cardPadding {
+  padding: 0px 0px;
+}
+
 .body {
   margin-bottom: 36px;
 }
@@ -13,6 +17,14 @@
 .title {
   composes: cardPadding;
   margin-bottom: 12px;
+}
+
+.constrained.title {
+  font-size: 14px;
+  margin-bottom: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .details {
@@ -30,6 +42,10 @@
   display: block;
   margin: -10px 0 10px 15px;
   composes: timestamp from 'css/typography.scss';
+}
+
+.constrained.headerLocation {
+  display: none;
 }
 
 .locationIcon {

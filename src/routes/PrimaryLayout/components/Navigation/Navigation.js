@@ -1,5 +1,6 @@
 import React from 'react'
 import NavLink from './NavLink'
+import cx from 'classnames'
 import TopicNavigation from './TopicNavigation'
 import './Navigation.scss'
 import { compact } from 'lodash/fp'
@@ -17,6 +18,7 @@ export default function Navigation (props) {
     projectsPath,
     eventsPath,
     mapPath,
+    mapView,
     badge,
     clearBadge,
     clearFeedList,
@@ -63,7 +65,9 @@ export default function Navigation (props) {
     }
   ])
 
-  return <div styleName={collapsed ? 'collapser-collapsed' : 'collapser'} // this currently collapses when a post is opened. Will have to modify behavior to suit map needs
+  const collapserState = collapsed ? 'collapser-collapsed' : 'collapser'
+
+  return <div styleName={cx({ mapView }, collapserState)}
     className={className}>
     <div styleName='navigation'>
       <ul styleName='links'>
@@ -71,9 +75,6 @@ export default function Navigation (props) {
           <NavLink key={link.label} {...link} collapsed={collapsed}
             onClick={link.onClick} />)}
       </ul>
-      { /* Based on the current design, we'd need to add a conditional (MapView === true ? show map nav : hide map nav ) */ }
-      {/* state changes in this MapNavigation, with all of its filtering toggles, would need to be connected to parts of the app outside */}
-      {/* So either throwing it into a store or perhaps sharing a custom hook. */}
       {showTopics && <TopicNavigation backUrl={rootPath} communityId={rootId} communitySlug={rootSlug} collapsed={collapsed} />}
     </div>
   </div>

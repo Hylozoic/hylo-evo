@@ -19,6 +19,19 @@ export const SORT_OPTIONS = [
   { id: 'votes', label: 'Popular' }
 ]
 
+export const FEATURE_TYPES = {
+  ...POST_TYPES,
+  member: {
+    primaryColor: '#2A4059', // $color-member
+    backgroundColor: '#FAFBFC', // $color-athens-gray
+    map: true
+  },
+  community: {
+    primaryColor: 'rgba(35, 64, 91, 1.000)',
+    backgroundColor: 'rgba(191, 197, 206, 1.000)'
+  }
+}
+
 const communityPostsQuery = `query (
   $slug: String,
   $sortBy: String,
@@ -451,7 +464,7 @@ export const getPublicCommunitiesByBoundingBox = createSelector(
 // reducer
 const DEFAULT_STATE = {
   clientFilterParams: {
-    featureTypes: Object.keys(POST_TYPES).reduce((types, type) => { types[type] = true; return types }, { 'member': true }),
+    featureTypes: Object.keys(FEATURE_TYPES).filter(t => FEATURE_TYPES[t].map).reduce((types, type) => { types[type] = true; return types }, {}),
     search: '',
     sortBy: SORT_OPTIONS[0].id,
     topics: []
