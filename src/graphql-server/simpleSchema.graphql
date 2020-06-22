@@ -23,6 +23,9 @@ type Community {
   slug: String
   memberCount: Int
   posts: [Post]
+  isPublic: Boolean
+  isAutoJoinable: Boolean
+  publicMemberDirectory: Boolean
 }
 
 type Post {

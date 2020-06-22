@@ -38,7 +38,10 @@ Community.fields = {
   posts: many('Post'),
   postCount: attr(),
   feedOrder: attr(),
-  allowCommunityInvites: attr()
+  allowCommunityInvites: attr(),
+  isPublic: attr(),
+  isAutoJoinable: attr(),
+  publicMemberDirectory: attr()
 }
 
 export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg'
