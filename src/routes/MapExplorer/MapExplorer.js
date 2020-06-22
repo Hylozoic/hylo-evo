@@ -164,7 +164,6 @@ export default class MapExplorer extends React.Component {
       fetchPostsParam,
       filters,
       querystringParams,
-      posts,
       pending,
       routeParams,
       topics
