@@ -9,7 +9,8 @@ import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
 import { createScatterplotLayerFromPublicCommunities } from 'components/Map/layers/scatterplotLayer'
-import './MapExplorer.scss'
+import SwitchStyled from 'components/SwitchStyled'
+import styles from './MapExplorer.scss'
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
@@ -64,16 +65,16 @@ export default class MapExplorer extends React.Component {
     if (prevProps.fetchPostsParam.boundingBox !== this.props.fetchPostsParam.boundingBox ||
          prevProps.posts !== this.props.posts ||
          prevProps.members !== this.props.members) {
-     this.setState({
-       clusterLayer: createIconLayerFromPostsAndMembers({
-         members: this.props.members,
-         posts: this.props.posts,
-         onHover: this.onMapHover,
-         onClick: this.onMapClick,
-         boundingBox: this.props.fetchPostsParam.boundingBox
-       })
-     })
-   }
+      this.setState({
+        clusterLayer: createIconLayerFromPostsAndMembers({
+          members: this.props.members,
+          posts: this.props.posts,
+          onHover: this.onMapHover,
+          onClick: this.onMapClick,
+          boundingBox: this.props.fetchPostsParam.boundingBox
+        })
+      })
+    }
   }
 
   fetchOrShowCached = () => {
@@ -113,14 +114,14 @@ export default class MapExplorer extends React.Component {
         transitionInterpolator: new FlyToInterpolator()
       } })
     } else {
-        this.setState({ selectedObject: info.object })
-        if (info.object.type === 'member') {
-          this.props.gotoMember(info.object.id)
-        } else if (info.object.type === 'community') {
-          this.props.showCommunityDetails(info.object.id)
-        } else {
-          this.props.showDetails(info.object.id)
-        }
+      this.setState({ selectedObject: info.object })
+      if (info.object.type === 'member') {
+        this.props.gotoMember(info.object.id)
+      } else if (info.object.type === 'community') {
+        this.props.showCommunityDetails(info.object.id)
+      } else {
+        this.props.showDetails(info.object.id)
+      }
     }
   }
 

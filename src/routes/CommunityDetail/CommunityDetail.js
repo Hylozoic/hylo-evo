@@ -100,8 +100,6 @@ export default class CommunityDetail extends Component {
     } = this.props
     // const { atHeader, atActivity, headerWidth, activityWidth } = this.state
 
-    console.log(community)
-
     if (!community && !pending) return <NotFound />
     if (pending) return <Loading />
 

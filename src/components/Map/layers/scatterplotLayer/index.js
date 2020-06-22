@@ -1,5 +1,5 @@
 import { ScatterplotLayer } from '@deck.gl/layers'
-import { FEATURE_TYPES } from 'routes/MapExplorer/MapExplorer'
+import { FEATURE_TYPES } from 'routes/MapExplorer/MapExplorer.store'
 import { hexToRgb } from 'util/index'
 
 export function createScatterplotLayerFromPosts (posts, onHover, onClick) {

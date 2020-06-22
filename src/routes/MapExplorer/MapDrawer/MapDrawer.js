@@ -38,16 +38,16 @@ function MapDrawer (props) {
     onUpdateFilters({ topics: newFilterTopics })
   }
 
-  const featuresHTML = features.map(f => f.type === 'member' ?
-    <Member
+  const featuresHTML = features.map(f => f.type === 'member'
+    ? <Member
       canModerate={false}
-      className={cx({[styles.contentCard]: true, [styles.member]: true })}
+      className={cx({ [styles.contentCard]: true, [styles.member]: true })}
       member={f}
       key={f.id}
       slug={routeParams.networkSlug || routeParams.slug}
       subject={fetchPostsParam.subject}
-    /> :
-    <PostCard
+    />
+    : <PostCard
       routeParams={routeParams}
       querystringParams={querystringParams}
       post={f}
