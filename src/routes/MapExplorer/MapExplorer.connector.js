@@ -79,13 +79,10 @@ export function mapStateToProps (state, props) {
   const topics = getCurrentTopics(state, fetchPostsParam)
 
   const me = getMe(state)
-  const centerLocation = community && community.locationObject ? community.locationObject.center
-    : me.locationObject ? me.locationObject.center
-      : { lat: 35.442845, lng: 7.916598 }
-  const zoom = centerLocation ? 10 : 0
+  const centerLocation = community && community.locationObject ? community.locationObject.center : me.locationObject ? me.locationObject.center : null
 
   return {
-    centerLocation,
+    centerLocation: centerLocation || { lat: 35.442845, lng: 7.916598 },
     features,
     fetchMembersParam,
     fetchPostsParam,
@@ -97,7 +94,7 @@ export function mapStateToProps (state, props) {
     querystringParams,
     routeParams,
     topics,
-    zoom
+    zoom: centerLocation ? 10 : 0
   }
 }
 
