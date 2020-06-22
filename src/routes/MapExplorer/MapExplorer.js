@@ -101,7 +101,7 @@ export default class MapExplorer extends React.Component {
     this.props.storeFetchPostsParam({ boundingBox })
   }, 150)
 
-  onMapHover = (info) => this.setState({ hoveredObject: info.object, pointerX: info.x, pointerY: info.y })
+  onMapHover = (info) => this.setState({ hoveredObject: info.objects || info.object, pointerX: info.x, pointerY: info.y })
 
   onMapClick = (info, e) => {
     if (info.objects) {
