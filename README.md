@@ -17,12 +17,6 @@
 1. Run `yarn build`
 2. Once complete Hylo is ready to be served at `<projectRoot>/build`
 
-## Building for Holochain
-
-1. Optionally set `HOLOCHAIN_BUILD_PATH` in your local `.env` file. Defaults to `<projectRoot>/build-hc`
-2. Run `yarn build:hc`
-3. Once complete Hylo+Holochain is ready to be served at `<HOLOCHAIN_BUILD_PATH>`
-
 ## Build with the Storybook
 
 1. A storybook as been added to the project, yay!
