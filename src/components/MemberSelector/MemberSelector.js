@@ -26,10 +26,11 @@ export default class MemberSelector extends Component {
   }
 
   handleInputChange = input => {
+    const { forCommunities } = this.props
     this.props.setAutocomplete(input)
     if (!isEmpty(input)) {
       // this fetched should be debounced or throttled, maybe here, or in the connector
-      this.props.fetchPeople(input)
+      this.props.fetchPeople(input, forCommunities ? forCommunities.map(c => c.id) : null)
     }
   }
 

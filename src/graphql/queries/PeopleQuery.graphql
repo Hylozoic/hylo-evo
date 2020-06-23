@@ -1,5 +1,5 @@
-query PeopleQuery ($autocomplete: String, $first: Int) {
-  people (autocomplete: $autocomplete, first: $first) {
+query PeopleQuery ($autocomplete: String, $first: Int, $communityIds: [String]) {
+  people (autocomplete: $autocomplete, first: $first, communityIds: $communityIds) {
     items {
       id
       name

@@ -480,6 +480,7 @@ export default class PostEditor extends React.Component {
               initialMembers={eventInvitations || []}
               onChange={this.updateEventInvitations}
               readOnly={loading}
+              forCommunities={communities}
             />
           </div>
         </div>}
