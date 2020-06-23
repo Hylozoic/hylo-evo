@@ -43,12 +43,3 @@ Object {
   "type": "EventInviteDialog/INVITE_PEOPLE_TO_EVENT",
 }
 `;
-
-exports[`presentPerson extracts the right keys 1`] = `
-Object {
-  "avatarUrl": "jo.png",
-  "community": "coomunity",
-  "id": 1,
-  "name": "jo",
-}
-`;

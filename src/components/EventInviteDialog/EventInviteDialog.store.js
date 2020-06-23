@@ -28,9 +28,10 @@ export const peopleSelector = createSelector(
       map(pick([ 'id', 'name', 'avatarUrl' ])),
       orderBy('name', 'asc')
     ]
-    
+
     return flow(processors)(communities)
-})
+  }
+)
 
 export function invitePeopleToEvent (eventId, inviteeIds) {
   return {

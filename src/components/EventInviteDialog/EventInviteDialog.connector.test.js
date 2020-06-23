@@ -2,7 +2,7 @@ import { mapStateToProps, mapDispatchToProps } from './EventInviteDialog.connect
 
 describe('mapStateToProps', () => {
   it('returns the right keys', () => {
-    const stateProps = mapStateToProps({})
+    const stateProps = mapStateToProps({}, { forCommunities: [] })
     expect(stateProps).toMatchSnapshot()
   })
 })

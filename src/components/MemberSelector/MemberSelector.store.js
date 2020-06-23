@@ -3,7 +3,6 @@ import { pick, uniqBy, orderBy, flow, reject, filter, map, reduce } from 'lodash
 
 import getMe from 'store/selectors/getMe'
 import orm from 'store/models'
-import { DROP_QUERY_RESULTS } from 'store/constants'
 
 export const MODULE_NAME = 'MemberSelector'
 
@@ -57,7 +56,7 @@ export const getMemberMatches = createSelector(
     { Community },
     members,
     currentUser,
-    forCommunities = null,
+    forCommunities,
     autocomplete
   ) => {
     const forCommunityIds = forCommunities && forCommunities.map(c => c.id)
@@ -76,9 +75,10 @@ export const getMemberMatches = createSelector(
       map(pick([ 'id', 'name', 'avatarUrl' ])),
       orderBy('name', 'asc')
     ]
-    
+
     return flow(processors)(communities)
-})
+  }
+)
 
 export const defaultState = {
   autocomplete: '',

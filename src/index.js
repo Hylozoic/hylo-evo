@@ -6,7 +6,7 @@ import createStore from './store'
 import './client/websockets'
 import { rootDomId } from 'client/util'
 
-// Apollo Setup for possible use with Hylo-node backend 
+// Apollo Setup for possible use with Hylo-node backend
 //
 // import { ApolloProvider } from 'react-apollo'
 // import apolloClient from 'client/apolloClient'
