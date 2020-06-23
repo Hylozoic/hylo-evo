@@ -1,8 +1,9 @@
 import { createSelector } from 'redux-orm'
-import { pick } from 'lodash/fp'
+import { pick, uniqBy, orderBy, flow, reject, filter, map, reduce } from 'lodash/fp'
 
 import getMe from 'store/selectors/getMe'
 import orm from 'store/models'
+import { DROP_QUERY_RESULTS } from 'store/constants'
 
 export const MODULE_NAME = 'MemberSelector'
 
@@ -41,17 +42,6 @@ export function setAutocomplete (autocomplete) {
   }
 }
 
-export function pickPersonListItem (person) {
-  return {
-    ...pick([ 'id', 'name', 'avatarUrl' ], person.ref),
-    community: person.memberships.first()
-      ? person.memberships.first().community.name : null
-  }
-}
-
-export const autocompletePersonFilter = autocomplete =>
-  person => autocomplete && person.name.toLowerCase().includes(autocomplete.toLowerCase())
-
 export const getAutocomplete = (state, _) => state[MODULE_NAME].autocomplete
 
 export const getMembers = (state, _) => state[MODULE_NAME].members
@@ -64,26 +54,31 @@ export const getMemberMatches = createSelector(
   (_, props) => props.forCommunities,
   getAutocomplete,
   (
-    session,
+    { Community },
     members,
     currentUser,
-    communityIds = null,
+    forCommunities = null,
     autocomplete
   ) => {
-    console.log('!!!!! communityIds in selector:', communityIds)
-    const memberIds = members.map(m => m.id)
-    const autcompleteFilter = autocompletePersonFilter(autocomplete)
-  
-    return session.Person
-      .all()
-      .filter(p => !memberIds.includes(p.id))
-      .filter(autcompleteFilter)
-      .filter(p => currentUser ? currentUser.id !== p.id : true)
-      .orderBy('name')
+    const forCommunityIds = forCommunities && forCommunities.map(c => c.id)
+    const communities = Community
+      .filter(c => forCommunityIds ? forCommunityIds.includes(c.id) : true)
       .toModelArray()
-      .map(pickPersonListItem)
-  }
-)
+    const memberIds = members.map(m => m.id)
+    const autocompleteFilter = p =>
+      autocomplete && p.name.toLowerCase().includes(autocomplete.toLowerCase())
+    const processors = [
+      reduce((result, c) => result.concat(c.members.toModelArray()), []),
+      uniqBy('id'),
+      reject(p => memberIds.includes(p.id)),
+      reject(p => currentUser ? currentUser.id === p.id : false),
+      filter(autocompleteFilter),
+      map(pick([ 'id', 'name', 'avatarUrl' ])),
+      orderBy('name', 'asc')
+    ]
+    
+    return flow(processors)(communities)
+})
 
 export const defaultState = {
   autocomplete: '',

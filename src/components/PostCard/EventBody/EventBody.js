@@ -20,7 +20,7 @@ export default class EventBody extends Component {
   render () {
     const { event, respondToEvent, slug, expanded, className } = this.props
     const { showInviteDialog } = this.state
-    const { id, startTime, endTime, location, eventInvitations } = event
+    const { id, startTime, endTime, location, eventInvitations, communities } = event
 
     return <div styleName={cx('body', 'eventBody', { smallMargin: !expanded })} className={className}>
       <EventDate {...event} />
@@ -41,6 +41,7 @@ export default class EventBody extends Component {
       {showInviteDialog && <EventInviteDialog
         eventId={id}
         eventInvitations={eventInvitations}
+        forCommunities={communities}
         onClose={this.toggleInviteDialog} />}
     </div>
   }

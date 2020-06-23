@@ -1,16 +1,35 @@
-query PeopleQuery ($autocomplete: String, $first: Int, $communityIds: [String]) {
-  people (autocomplete: $autocomplete, first: $first, communityIds: $communityIds) {
+query PeopleQuery (
+  $first: Int,
+  $autocomplete: String,
+  $communityIds: [String]
+) {
+  communities(communityIds: $communityIds) {
     items {
       id
-      name
-      avatarUrl
-      memberships {
-        id
-        community {
+      members(first: $first, search: $autocomplete, sortBy: "name", order: "desc") {
+        items {
           id
           name
+          avatarUrl
         }
       }
     }
   }
 }
+
+# query PeopleQuery ($autocomplete: String, $first: Int, $communityIds: [String]) {
+#   people (autocomplete: $autocomplete, first: $first, communityIds: $communityIds) {
+#     items {
+#       id
+#       name
+#       avatarUrl
+#       communityMemberships: memberships {
+#         id
+#         community {
+#           id
+#           name
+#         }
+#       }
+#     }
+#   }
+# }
