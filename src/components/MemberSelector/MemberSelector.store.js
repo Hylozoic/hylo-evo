@@ -49,35 +49,40 @@ export function pickPersonListItem (person) {
   }
 }
 
-export function getPersonListItem (session, members, currentUser, search = () => true) {
-  return session.Person
-    .all()
-    .filter(p => !members.includes(p.id))
-    .filter(search)
-    .filter(p => currentUser ? currentUser.id !== p.id : true)
-    .orderBy('name')
-    .toModelArray()
-    .map(pickPersonListItem)
-}
+export const autocompletePersonFilter = autocomplete =>
+  person => autocomplete && person.name.toLowerCase().includes(autocomplete.toLowerCase())
 
 export const getAutocomplete = (state, _) => state[MODULE_NAME].autocomplete
 
-export const getMembers = (state, props) => {
-  return state[MODULE_NAME].members
-}
+export const getMembers = (state, _) => state[MODULE_NAME].members
 
-export const matchesSelector = createSelector(
+export const getMemberMatches = createSelector(
   orm,
   state => state.orm,
-  state => state[MODULE_NAME].members.map(m => m.id),
+  getMembers,
   getMe,
-  state => p => {
-    const { autocomplete } = state[MODULE_NAME]
-    if (autocomplete) {
-      return p.name.toLowerCase().includes(autocomplete.toLowerCase())
-    }
-  },
-  getPersonListItem
+  (_, props) => props.forCommunities,
+  getAutocomplete,
+  (
+    session,
+    members,
+    currentUser,
+    communityIds = null,
+    autocomplete
+  ) => {
+    console.log('!!!!! communityIds in selector:', communityIds)
+    const memberIds = members.map(m => m.id)
+    const autcompleteFilter = autocompletePersonFilter(autocomplete)
+  
+    return session.Person
+      .all()
+      .filter(p => !memberIds.includes(p.id))
+      .filter(autcompleteFilter)
+      .filter(p => currentUser ? currentUser.id !== p.id : true)
+      .orderBy('name')
+      .toModelArray()
+      .map(pickPersonListItem)
+  }
 )
 
 export const defaultState = {

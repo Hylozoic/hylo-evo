@@ -43,13 +43,13 @@ export default class MemberSelector extends Component {
   }
 
   render () {
-    const { placeholder, readOnly, people, autocomplete, members = [] } = this.props
+    const { placeholder, readOnly, memberMatches, autocomplete, members = [] } = this.props
 
     return (
       <TagInput
         placeholder={placeholder}
         tags={members}
-        suggestions={isEmpty(autocomplete) ? [] : people}
+        suggestions={isEmpty(autocomplete) ? [] : memberMatches}
         handleInputChange={this.handleInputChange}
         handleAddition={this.handleAddition}
         handleDelete={this.handleDelete}

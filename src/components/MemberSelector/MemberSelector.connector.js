@@ -2,23 +2,20 @@ import { connect } from 'react-redux'
 
 import fetchPeople from 'store/actions/fetchPeople'
 import {
-  matchesSelector,
-  setAutocomplete,
-  getAutocomplete,
   addMember,
   removeMember,
   getMembers,
-  setMembers
+  setMembers,
+  setAutocomplete,
+  getAutocomplete,
+  getMemberMatches
 } from '../MemberSelector/MemberSelector.store'
 
 export function mapStateToProps (state, props) {
-  const people = matchesSelector(state, props)
-  const autocomplete = getAutocomplete(state, props)
-  const members = getMembers(state, props)
   return {
-    people,
-    autocomplete,
-    members
+    members: getMembers(state, props),
+    autocomplete: getAutocomplete(state, props),
+    memberMatches: getMemberMatches(state, props)
   }
 }
 
