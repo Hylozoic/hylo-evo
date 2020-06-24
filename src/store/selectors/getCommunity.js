@@ -8,7 +8,7 @@ const getCommunity = ormCreateSelector(
   (state, props) => getRouteParam('communityId', state, props),
   ({ Community }, id) => {
     try {
-      return Community.get({ id })
+      return Community.safeGet({ id })
     } catch (e) {
       return null
     }

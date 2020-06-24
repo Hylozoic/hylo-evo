@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-// import { Link } from 'react-router-dom'
-// import { get, throttle, isEmpty } from 'lodash/fp'
 import { throttle } from 'lodash/fp'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
+import Avatar from 'components/Avatar'
 import ScrollListener from 'components/ScrollListener'
 import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
@@ -65,7 +64,6 @@ export default class CommunityDetail extends Component {
 
   onCommunityIdChange = () => {
     this.props.fetchCommunity()
-    // this.props.fetchCommunityTopics()
   }
 
   handleScroll = throttle(100, event => {
@@ -93,34 +91,15 @@ export default class CommunityDetail extends Component {
     const {
       // routeParams,
       community,
-      communityTopics,
       pending,
       // currentUser,
       onClose
     } = this.props
-    // const { atHeader, atActivity, headerWidth, activityWidth } = this.state
 
     if (!community && !pending) return <NotFound />
     if (pending) return <Loading />
 
-    const topics = communityTopics ? communityTopics.items : [{ topic: { id: 1234, name: 'Recipes' }, postsTotal: 7 }, { topic: { id: 2345, name: 'Flour' }, postsTotal: 3 }]
-
-    console.log(communityTopics)
-    console.log(community)
-
-    // const scrollToBottom = () => {
-    //   const detail = document.getElementById(DETAIL_COLUMN_ID)
-    //   detail.scrollTop = detail.scrollHeight
-    // }
-    // const headerStyle = {
-    //   width: headerWidth + 'px'
-    // }
-    // const activityStyle = {
-    //   width: activityWidth + 'px',
-    //   marginTop: STICKY_HEADER_SCROLL_OFFSET + 'px'
-    // }
-
-    // <CommunityTags tags={community.tags} />
+    const topics = community && community.communityTopics
 
     return <div styleName='c.community' ref={this.setHeaderStateFromDOM}>
       <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
@@ -140,10 +119,10 @@ export default class CommunityDetail extends Component {
             {topics.slice(0, 10).map(topic => {
               return (
                 <span
-                  key={'topic_' + topic.topic.name}
+                  key={'topic_' + topic.id}
                   styleName='m.topicButton'
                 >
-                  <span styleName='m.topicCount'>{topic.postsTotal}</span> #{topic.topic.name}
+                  <span styleName='m.topicCount'>{topic.postsTotal}</span> #{topic.name}
                 </span>
               )
             })}
@@ -160,10 +139,15 @@ export default class CommunityDetail extends Component {
           </div>
           <div styleName='c.detailContainer'>
             <div styleName='c.communitySubtitle'>{community.memberCount} {community.memberCount > 1 ? `Members` : `Member`}</div>
-            <div styleName='c.detail'>
-              <Icon name='Unlock' />
-              <span styleName='c.detailText'>Join to see</span>
-            </div>
+            {community.publicMemberDirectory
+              ? <div>{community.members.map(member => {
+                return <div key={member.id} styleName='c.avatarContainer'><Avatar avatarUrl={member.avatarUrl} url={member.avatarUrl} styleName='c.avatar' /><span>{member.name}</span></div>
+              })}</div>
+              : <div styleName='c.detail'>
+                <Icon name='Unlock' />
+                <span styleName='c.detailText'>Join to see</span>
+              </div>
+            }
           </div>
         </div>
         <div styleName='c.requestBar'>
