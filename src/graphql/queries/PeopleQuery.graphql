@@ -16,20 +16,3 @@ query PeopleQuery (
     }
   }
 }
-
-# query PeopleQuery ($autocomplete: String, $first: Int, $communityIds: [String]) {
-#   people (autocomplete: $autocomplete, first: $first, communityIds: $communityIds) {
-#     items {
-#       id
-#       name
-#       avatarUrl
-#       communityMemberships: memberships {
-#         id
-#         community {
-#           id
-#           name
-#         }
-#       }
-#     }
-#   }
-# }

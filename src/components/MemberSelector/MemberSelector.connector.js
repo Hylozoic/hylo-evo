@@ -10,7 +10,7 @@ import {
   setAutocomplete,
   getAutocomplete,
   getMemberMatches
-} from '../MemberSelector/MemberSelector.store'
+} from './MemberSelector.store'
 
 export function mapStateToProps (state, props) {
   return {
@@ -28,7 +28,7 @@ export function mapDispatchToProps (dispatch, props) {
       removeMember,
       setMembers
     }, dispatch),
-    fetchPeople: debounce(300, opts => dispatch(fetchPeople(opts)))
+    fetchPeople: debounce(300, (...args) => dispatch(fetchPeople(...args)))
   }
 }
 
