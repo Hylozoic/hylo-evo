@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-
+import { bindActionCreators } from 'redux'
+import { debounce } from 'lodash/fp'
 import fetchPeople from 'store/actions/fetchPeople'
 import {
   addMember,
@@ -19,8 +20,16 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = {
-  fetchPeople, setAutocomplete, addMember, removeMember, setMembers
+export function mapDispatchToProps (dispatch, props) {
+  return {
+    ...bindActionCreators({
+      setAutocomplete,
+      addMember,
+      removeMember,
+      setMembers
+    }, dispatch),
+    fetchPeople: debounce(300, opts => dispatch(fetchPeople(opts)))
+  }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {

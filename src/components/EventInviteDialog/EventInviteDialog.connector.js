@@ -1,4 +1,6 @@
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { debounce } from 'lodash/fp'
 import fetchPeople from 'store/actions/fetchPeople'
 import { invitePeopleToEvent, peopleSelector } from './EventInviteDialog.store'
 
@@ -10,8 +12,13 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = {
-  fetchPeople, invitePeopleToEvent
+export function mapDispatchToProps (dispatch, props) {
+  return {
+    ...bindActionCreators({
+      invitePeopleToEvent
+    }, dispatch),
+    fetchPeople: debounce(300, opts => dispatch(fetchPeople(opts)))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
