@@ -4,16 +4,14 @@ import PropTypes from 'prop-types'
 // import { Link } from 'react-router-dom'
 // import { get, throttle, isEmpty } from 'lodash/fp'
 import { throttle } from 'lodash/fp'
-// import { tagUrl } from 'util/navigation'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import ScrollListener from 'components/ScrollListener'
 import Icon from 'components/Icon'
-// import Comments from './Comments'
 import SocketSubscriber from 'components/SocketSubscriber'
-// import Button from 'components/Button'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
-import './CommunityDetail.scss'
+import c from './CommunityDetail.scss' // eslint-disable-line no-unused-vars
+import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
 
 // the height of the header plus the padding-top
 const STICKY_HEADER_SCROLL_OFFSET = 78
@@ -67,6 +65,7 @@ export default class CommunityDetail extends Component {
 
   onCommunityIdChange = () => {
     this.props.fetchCommunity()
+    // this.props.fetchCommunityTopics()
   }
 
   handleScroll = throttle(100, event => {
@@ -94,6 +93,7 @@ export default class CommunityDetail extends Component {
     const {
       // routeParams,
       community,
+      communityTopics,
       pending,
       // currentUser,
       onClose
@@ -102,6 +102,11 @@ export default class CommunityDetail extends Component {
 
     if (!community && !pending) return <NotFound />
     if (pending) return <Loading />
+
+    const topics = communityTopics ? communityTopics.items : [{ topic: { id: 1234, name: 'Recipes' }, postsTotal: 7 }, { topic: { id: 2345, name: 'Flour' }, postsTotal: 3 }]
+
+    console.log(communityTopics)
+    console.log(community)
 
     // const scrollToBottom = () => {
     //   const detail = document.getElementById(DETAIL_COLUMN_ID)
@@ -117,18 +122,58 @@ export default class CommunityDetail extends Component {
 
     // <CommunityTags tags={community.tags} />
 
-    return <div styleName='community' ref={this.setHeaderStateFromDOM}>
+    return <div styleName='c.community' ref={this.setHeaderStateFromDOM}>
       <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
-      <div styleName='communityDetailHeader' style={{ backgroundImage: `url(${community.bannerUrl})` }}>
+      <div styleName='c.communityDetailHeader' style={{ backgroundImage: `url(${community.bannerUrl})` }}>
         {onClose &&
-          <a styleName='close' onClick={onClose}><Icon name='Ex' /></a>}
-        <div styleName='communityTitleContainer'>
+          <a styleName='c.close' onClick={onClose}><Icon name='Ex' /></a>}
+        <div styleName='c.communityTitleContainer'>
           <img src={community.avatarUrl} height='50px' width='50px' />
-          <div styleName='communityTitle'>{community.name}</div>
+          <div styleName='c.communityTitle'>{community.name}</div>
         </div>
       </div>
-      <div styleName='communityDetailBody'>
-        <div styleName='communityDescription'>{community.description}</div>
+      <div styleName='c.communityDetailBody'>
+        <div styleName='c.communityDescription'>{community.description}</div>
+        { topics && topics.length
+          ? <div styleName='c.communityTopics'>
+            <div styleName='c.communitySubtitle'>Topics</div>
+            {topics.slice(0, 10).map(topic => {
+              return (
+                <span
+                  key={'topic_' + topic.topic.name}
+                  styleName='m.topicButton'
+                >
+                  <span styleName='m.topicCount'>{topic.postsTotal}</span> #{topic.topic.name}
+                </span>
+              )
+            })}
+          </div>
+          : ''
+        }
+        <div styleName='c.communityDetails'>
+          <div styleName='c.detailContainer'>
+            <div styleName='c.communitySubtitle'>Recent Posts</div>
+            <div styleName='c.detail'>
+              <Icon name='BadgeCheck' />
+              <span styleName='c.detailText'>Only members of this community can see posts</span>
+            </div>
+          </div>
+          <div styleName='c.detailContainer'>
+            <div styleName='c.communitySubtitle'>{community.memberCount} {community.memberCount > 1 ? `Members` : `Member`}</div>
+            <div styleName='c.detail'>
+              <Icon name='Unlock' />
+              <span styleName='c.detailText'>Join to see</span>
+            </div>
+          </div>
+        </div>
+        <div styleName='c.requestBar'>
+          {community.isAutoJoinable
+            ? <div styleName='c.requestOption'>
+              <div styleName='c.requestHint'>Anyone can join this community!</div>
+              <div styleName='c.requestButton'>Join <span styleName='c.requestCommunity'>{community.name}</span></div>
+            </div>
+            : <div styleName='c.requestOption'><div styleName='c.requestButton'>Request Membership in <span styleName='c.requestCommunity'>{community.name}</span></div></div>}
+        </div>
       </div>
       <SocketSubscriber type='community' id={community.id} />
     </div>

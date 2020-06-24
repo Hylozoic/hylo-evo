@@ -95,17 +95,21 @@
 
 .topicButton {
   border: 1px solid #B6EDE2;
+  border-radius: 2px;
   color: $color-caribbean-green;
-  padding: 2px;
-  margin: 5px;
+  padding: 0 8px 0 0;
+  margin-right: 8px;
   cursor: pointer;
   display: inline-block;
 }
 
 .topicCount {
   color: $color-caribbean-green;
-  background: #B6EDE2;
-  padding: 0 4px;
+  background: $color-caribbean-green-20;
+  display: inline-block;
+  height: 100%;
+  margin: 0 6px 0 0 !important;
+  padding: 4px 10px;
 }
 
 .currentSearchText {

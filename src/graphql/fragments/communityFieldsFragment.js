@@ -1,4 +1,4 @@
-const communityFieldsFragment = withTopics => `
+const communityFieldsFragment = (withTopics) => `
   id
   name
   slug
@@ -54,17 +54,16 @@ const communityFieldsFragment = withTopics => `
     neighborhood
     region
   }
-  ${withTopics ? `communityTopics(first: 8, order: "desc") {
+  ${withTopics ? `communityTopics(first: 8) {
     items {
       id
-      postsTotal
       topic {
         id
         name
       }
+      postsTotal
     }
-    total
-    hasMore
-  }` : ''}`
+  }` : ''}
+`
 
 export default communityFieldsFragment
