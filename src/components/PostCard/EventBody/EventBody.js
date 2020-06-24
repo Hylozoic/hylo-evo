@@ -36,7 +36,7 @@ export default class EventBody extends Component {
       </div>
       <div styleName='eventRightColumn'>
         <EventRSVP {...event} respondToEvent={respondToEvent} />
-        <Button label='Invite' onClick={this.toggleInviteDialog} narrow small color='gray' styleName='inviteButton' />
+        <Button label='Invite' onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
       </div>
       {showInviteDialog && <EventInviteDialog
         eventId={id}
