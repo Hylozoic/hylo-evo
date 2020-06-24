@@ -9,6 +9,6 @@ describe('mapStateToProps', () => {
 
 describe('mapDispatchToProps', () => {
   it('returns the right keys', () => {
-    expect(mapDispatchToProps).toMatchSnapshot()
+    expect(mapDispatchToProps()).toMatchSnapshot()
   })
 })
