@@ -73,3 +73,9 @@ $text-input-height: 40px;
   width: 100%;
   border-bottom: none;
 }
+
+@media screen and (max-width: 700px) {
+  .modal-input {
+    font-size: 18px;
+  }
+}

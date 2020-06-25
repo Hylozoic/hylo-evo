@@ -91,3 +91,21 @@
   border-radius: 50%;
   transform: rotate(255deg);
 }
+
+@media screen and (max-width: 700px) {
+  .sidebar-header-full-page {
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .sidebar-text-full-page {
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .sidebar {
+    flex: .2 1;
+  }
+}

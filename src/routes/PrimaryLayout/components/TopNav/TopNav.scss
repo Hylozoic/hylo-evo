@@ -119,3 +119,9 @@
 .hover-highlight:hover {
   color: $color-black;
 }
+
+@media screen and (max-width: 375px) {
+  .communityName, .label {
+    display: none;
+  }
+}

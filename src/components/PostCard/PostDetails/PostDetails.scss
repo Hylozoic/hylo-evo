@@ -116,3 +116,11 @@
     line-height: 20px;
   }
 }
+
+@media screen and (max-width: 375px) {
+
+  .details {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}

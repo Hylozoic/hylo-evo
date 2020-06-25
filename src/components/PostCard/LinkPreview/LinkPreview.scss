@@ -47,3 +47,17 @@ $preview-height: 80px;
   color: $color-dove-gray-50;
   font-size: 12px;
 }
+
+@media screen and (max-width: 325px) {
+  .previewTitle {
+    font-size: 12px;
+    line-height: 12px;
+    display: block;
+    font-weight: bold;
+  }
+
+  .linkPreview {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

@@ -271,5 +271,9 @@ $drawer-z-index: 51;
 @media screen and (max-width: 375px) {
   .drawer {
     width: 100%;
+
+    &.hidden {
+      left: -100%;
+    }
   }
 }
