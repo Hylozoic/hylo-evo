@@ -100,6 +100,7 @@ export default class CommunityDetail extends Component {
     if (pending) return <Loading />
 
     const topics = community && community.communityTopics
+    console.log('\n COMMUNITY', community)
 
     return <div styleName='c.community' ref={this.setHeaderStateFromDOM}>
       <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />

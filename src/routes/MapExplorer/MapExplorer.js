@@ -8,6 +8,7 @@ import { FEATURE_TYPES } from './MapExplorer.store'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
+// import { createIconLayerFromCommunities } from 'components/Map/layers/iconLayer'
 import { createScatterplotLayerFromPublicCommunities } from 'components/Map/layers/scatterplotLayer'
 import SwitchStyled from 'components/SwitchStyled'
 import styles from './MapExplorer.scss'
@@ -30,6 +31,7 @@ export default class MapExplorer extends React.Component {
     this.state = {
       boundingBox: null,
       clusterLayer: null,
+      communityIconLayer: null,
       hoveredObject: null,
       pointerX: 0,
       pointerY: 0,
@@ -75,6 +77,18 @@ export default class MapExplorer extends React.Component {
         })
       })
     }
+
+    // FIXME - Fetch for image url returns error
+    // if (prevProps.publicCommunities !== this.props.publicCommunities) {
+    //   this.setState({
+    //     communityIconLayer: createIconLayerFromCommunities({
+    //       communities: this.props.publicCommunities,
+    //       onHover: this.onMapHover,
+    //       onClick: this.onMapClick,
+    //       boundingBox: this.props.fetchPostsParam.boundingBox
+    //     })
+    //   })
+    // }
   }
 
   fetchOrShowCached = () => {
@@ -178,6 +192,7 @@ export default class MapExplorer extends React.Component {
 
     const {
       clusterLayer,
+      // communityIconLayer,
       showDrawer,
       showFeatureFilters,
       viewport
