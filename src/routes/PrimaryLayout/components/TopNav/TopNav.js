@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
 import BadgedIcon from 'components/BadgedIcon'
 import Badge from 'components/Badge'
+import { IntercomAPI } from 'react-intercom';
 import RoundImage from 'components/RoundImage'
 import './TopNav.scss'
 import Dropdown from 'components/Dropdown'
@@ -12,6 +13,10 @@ import { get } from 'lodash/fp'
 import { hyloLogo } from 'util/assets'
 import MessagesDropdown from './MessagesDropdown'
 import NotificationsDropdown from './NotificationsDropdown'
+
+function showIntercom () {
+  IntercomAPI('show');
+}
 
 export default class TopNav extends Component {
   render () {
@@ -43,6 +48,7 @@ export default class TopNav extends Component {
               </Link>
             </li>
             <li><Link styleName={'hover-highlight'} to='/settings'>Settings</Link></li>
+            <li><span styleName={'hover-highlight'} onClick={showIntercom}>Feedback & Support</span></li>
             <li><a onClick={logout}>Log out</a></li>
           </Dropdown>
         </div>

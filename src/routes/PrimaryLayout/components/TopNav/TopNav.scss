@@ -98,7 +98,7 @@
 
 .user-menu {
   margin-right: 0 !important;
-  li a {
+  li a, li span {
     &, &:not([href]) {
       color: $color-rhino-60;
       cursor: pointer;
