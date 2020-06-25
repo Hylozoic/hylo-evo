@@ -12,7 +12,7 @@ $current-avatar-size: 42px;
 $current-avatar-border-radius: 8px;
 $current-padding-top: 0px;
 $current-padding-bottom: 20px;
-$current-name-margin-top: 13px;
+$current-name-margin-bottom: 13px;
 
 $ul-vertical-spacing: 10px;
 $ul-horizontal-spacing: 14px;
@@ -37,6 +37,23 @@ $new-community-spacing: 16px;
   overflow-y: scroll;
 }
 
+.communityDrawer {
+  scrollbar-width: thin;
+  scrollbar-color: white rgba(200,200,200,.5);
+}
+
+.communityDrawer::-webkit-scrollbar {
+  background-color: white;
+  width: 5px;
+  border-radius: 5px;
+}
+
+.communityDrawer::-webkit-scrollbar-thumb {
+  background-color: rgba(35, 64, 91, .3);
+  outline: none;
+}
+
+
 .hyloLogoBar {
   display: flex;
   justify-content: space-between;
@@ -58,6 +75,10 @@ $new-community-spacing: 16px;
   }
 }
 
+.communityDrawer > .currentCommunity {
+  box-shadow: 0px 4px 56px 0px rgba(0,0,0,.5);
+}
+
 .currentCommunity {
   background-color: $color-caribbean-green;
   padding: $current-padding-top 0 $current-padding-bottom;
@@ -68,22 +89,19 @@ $new-community-spacing: 16px;
     margin: 0 auto;
     border-radius: $current-avatar-border-radius;
   }
-
-  .name {
-    margin-top: $current-name-margin-top;
-  }
 }
 
 .settingsLink {
   height: 40px;
   line-height: 38px;
-  padding: 5px 10px;
+  padding: 0 15px;
   border-radius: 25px;
+  display: inline-block;
   border: 1px solid $color-white-50;
-  margin: 21px 0;
   @include font-regular;
   text-align: center;
   color: $color-white;
+  margin-top: 15px;
   font-size: 16px;
   &:hover {
     color: $color-white;
@@ -132,6 +150,19 @@ $new-community-spacing: 16px;
   li {
     list-style: none;
   }
+}
+
+.contextsList {
+  margin: 10px 0;
+  padding: 0px;
+  overflow-y: auto;
+  li {
+    list-style: none;
+  }
+}
+
+.communitiesList li.networkRow:nth-child(even) {
+  background: linear-gradient(0deg, #2A4059 0%, rgba(42, 64, 89, 0) 100%);
 }
 
 .networkCommunitiesList {
@@ -265,9 +296,12 @@ $new-community-spacing: 16px;
 
 .newCommunityBtn {
   text-align: center;
-  width: $new-community-width;
+  width: 80%;
   margin: $new-community-vertical-margin auto;
   font-size: $new-community-font-size;
   padding: 0;
   box-shadow: 0 5px 15px 0 rgba(0,0,0,0.05);
+  height: 40px;
+  line-height: 38px;
+  margin-bottom: 70px;
 }

@@ -106,6 +106,14 @@
   }
 
   .sidebar {
-    flex: .2 1;
+    flex: initial;
+    margin-left: 15px;
+    margin-bottom: 15px;
+    height: auto;
+    margin-right: 15px;
+  }
+
+  .sidebar-header-full-page {
+    margin-top: 0;
   }
 }
