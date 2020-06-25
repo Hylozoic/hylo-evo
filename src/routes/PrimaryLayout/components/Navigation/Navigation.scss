@@ -58,6 +58,14 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+
+  .links {
+    border-bottom: none;
+    padding: 0 0 0 0;
+  }
+
+}
 
 @media screen and (max-width: 600px) {
   .navigation {
