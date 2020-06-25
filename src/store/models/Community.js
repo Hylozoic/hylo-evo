@@ -51,13 +51,6 @@ Community.fields = {
   publicMemberDirectory: attr()
 }
 
-// communityTopics: many({
-//   to: 'Topic',
-//   relatedName: 'communityTopics',
-//   through: 'CommunityTopic',
-//   throughFields: [ 'community', 'topic' ]
-// })
-
 export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg'
 export const DEFAULT_AVATAR = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png'
 
