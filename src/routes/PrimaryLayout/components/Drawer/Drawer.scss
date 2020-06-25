@@ -292,3 +292,9 @@ $new-community-spacing: 16px;
   line-height: 38px;
   margin-bottom: 70px;
 }
+
+@media screen and (max-width: 600px) {
+  .newCommunityBtn {
+      margin-bottom: 250px;
+  }
+}
