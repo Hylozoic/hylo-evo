@@ -69,10 +69,7 @@ $new-community-spacing: 16px;
 }
 
 .currentNetwork {
-  background-color: #40A1DD;
-  &:hover {
-    background: #40A1DD !important;
-  }
+  border-left: 5px solid rgba(13, 195, 159, 1.000);
 }
 
 .communityDrawer > .currentCommunity {
@@ -152,19 +149,6 @@ $new-community-spacing: 16px;
   }
 }
 
-.contextsList {
-  margin: 10px 0;
-  padding: 0px;
-  overflow-y: auto;
-  li {
-    list-style: none;
-  }
-}
-
-.communitiesList li.networkRow:nth-child(even) {
-  background: linear-gradient(0deg, #2A4059 0%, rgba(42, 64, 89, 0) 100%);
-}
-
 .networkCommunitiesList {
   padding: 0;
   li {
@@ -182,8 +166,9 @@ $new-community-spacing: 16px;
 
 .communityRow {
   padding: 6px $ul-horizontal-spacing 6px 28px;
+  transition: background .3s ease;
   &:hover {
-    background: $color-black-10;
+    background: rgba(35, 57, 87, 1.000);
   }
 }
 
@@ -212,8 +197,9 @@ $new-community-spacing: 16px;
 
 .networkRow {
   padding: 6px 0;
+  transition: background .3s ease;
   &:hover {
-    background: $color-black-10;
+    background: linear-gradient(0deg, #2A4059 0%, rgba(42, 64, 89, .3) 100%);
   }
 }
 
@@ -228,7 +214,7 @@ $new-community-spacing: 16px;
 }
 
 .networkExpanded {
-  background-color: $color-black-10;
+  background: linear-gradient(0deg, #2A4059 0%, rgba(42, 64, 89, 0) 100%);
 }
 
 .community-name, .network-name {
