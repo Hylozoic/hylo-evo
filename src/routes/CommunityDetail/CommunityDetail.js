@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import { throttle } from 'lodash/fp'
-import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import Avatar from 'components/Avatar'
-import ScrollListener from 'components/ScrollListener'
 import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
@@ -12,44 +8,12 @@ import NotFound from 'components/NotFound'
 import c from './CommunityDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
 
-// the height of the header plus the padding-top
-const STICKY_HEADER_SCROLL_OFFSET = 78
-
 export default class CommunityDetail extends Component {
   static propTypes = {
     community: PropTypes.object,
     routeParams: PropTypes.object,
     currentUser: PropTypes.object,
     fetchCommunity: PropTypes.func
-  }
-
-  state = {
-    atHeader: false,
-    headerWidth: 0,
-    headerScrollOffset: 0,
-    atActivity: false,
-    activityWidth: 0,
-    activityScrollOffset: 0,
-    showPeopleDialog: false
-  }
-
-  setHeaderStateFromDOM = () => {
-    const container = document.getElementById(DETAIL_COLUMN_ID)
-    if (!container) return
-    this.setState({
-      headerWidth: container.offsetWidth
-    })
-  }
-
-  setActivityStateFromDOM = activity => {
-    const element = ReactDOM.findDOMNode(activity)
-    const container = document.getElementById(DETAIL_COLUMN_ID)
-    if (!element || !container) return
-    const offset = position(element, container).y - STICKY_HEADER_SCROLL_OFFSET
-    this.setState({
-      activityWidth: element.offsetWidth,
-      activityScrollOffset: offset
-    })
   }
 
   componentDidMount () {
@@ -66,27 +30,6 @@ export default class CommunityDetail extends Component {
     this.props.fetchCommunity()
   }
 
-  handleScroll = throttle(100, event => {
-    const { scrollTop } = event.target
-    const {
-      atHeader,
-      atActivity,
-      headerScrollOffset,
-      activityScrollOffset
-    } = this.state
-    if (!atActivity && scrollTop >= activityScrollOffset) {
-      this.setState({ atActivity: true })
-    } else if (atActivity && scrollTop < activityScrollOffset) {
-      this.setState({ atActivity: false })
-    }
-
-    if (!atHeader && scrollTop > headerScrollOffset) {
-      this.setState({ atHeader: true })
-    } else if (atHeader && scrollTop <= headerScrollOffset) {
-      this.setState({ atHeader: false })
-    }
-  })
-
   render () {
     const {
       // routeParams,
@@ -100,10 +43,8 @@ export default class CommunityDetail extends Component {
     if (pending) return <Loading />
 
     const topics = community && community.communityTopics
-    console.log('\n COMMUNITY', community)
 
-    return <div styleName='c.community' ref={this.setHeaderStateFromDOM}>
-      <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
+    return <div styleName='c.community'>
       <div styleName='c.communityDetailHeader' style={{ backgroundImage: `url(${community.bannerUrl})` }}>
         {onClose &&
           <a styleName='c.close' onClick={onClose}><Icon name='Ex' /></a>}

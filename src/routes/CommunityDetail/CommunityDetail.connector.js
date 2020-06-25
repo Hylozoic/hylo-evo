@@ -33,7 +33,6 @@ export function mapDispatchToProps (dispatch, props) {
 
   return {
     fetchCommunity: () => dispatch(fetchCommunity(communityId)),
-    // fetchCommunityTopics: () => dispatch(fetchCommunityTopics(communityId, { first: 8 })),
     onClose: () => dispatch(push(closeLocation))
   }
 }

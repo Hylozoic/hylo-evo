@@ -13,7 +13,6 @@ import {
   fetchPosts,
   fetchPublicCommunities,
   getPublicCommunities,
-  // getPublicCommunitiesByBoundingBox,
   storeFetchPostsParam,
   storeClientFilterParams,
   getSortedFilteredMembers,
