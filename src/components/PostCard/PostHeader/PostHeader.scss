@@ -191,6 +191,14 @@
     max-width: calc(100% - 160px);
   }
 
+  .userTitle {
+    font-size: 10px;
+    opacity: .5;
+    display: block;
+    overflow: hidden;
+    height: 14px;
+  }
+
   .header {
     padding: 0 10px;
     margin-bottom: 20px;
