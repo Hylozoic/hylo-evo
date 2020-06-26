@@ -96,6 +96,14 @@
   color: $color-rhino;
 }
 
+.isMobileDevice {
+  display: block;
+}
+
+.isntMobileDevice {
+  display: none;
+}
+
 .user-menu {
   margin-right: 0 !important;
   li a, li span {

@@ -3,6 +3,7 @@ import { bgImageStyle } from 'util/index'
 import { personUrl } from 'util/navigation'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
+import isMobile from 'ismobilejs'
 import BadgedIcon from 'components/BadgedIcon'
 import Badge from 'components/Badge'
 import { IntercomAPI } from 'react-intercom';
@@ -14,13 +15,34 @@ import { hyloLogo } from 'util/assets'
 import MessagesDropdown from './MessagesDropdown'
 import NotificationsDropdown from './NotificationsDropdown'
 
+const mobileDevice = (
+  isMobile.apple.phone ||
+  isMobile.apple.ipod ||
+  isMobile.android.phone ||
+  isMobile.seven_inch
+)
+
+const appStoreLinkClass = mobileDevice ? 'isMobileDevice' : 'isntMobileDevice'
+
 function showIntercom () {
   IntercomAPI('show');
 }
 
+function downloadApp () {
+  if (mobileDevice) {
+    if (isMobile.apple.device) {
+      window.open('https://appsto.re/us/0gcV7.i', "_blank")
+    } else if (isMobile.android.device) {
+      window.open('https://play.google.com/store/apps/details?id=com.hylo.hyloandroid', "_blank")
+    } else {
+      return false
+    }
+  }
+}
+
 export default class TopNav extends Component {
   render () {
-    const { className, community, network, currentUser, logout, toggleDrawer, showLogoBadge, onClick, isPublic } = this.props
+    const { className, community, network, currentUser, appStoreLinkClass, logout, toggleDrawer, showLogoBadge, onClick, isPublic } = this.props
     const profileUrl = personUrl(get('id', currentUser))
 
     return <div styleName='topNavWrapper' className={className} onClick={onClick}>
@@ -49,6 +71,7 @@ export default class TopNav extends Component {
             </li>
             <li><Link styleName={'hover-highlight'} to='/settings'>Settings</Link></li>
             <li><span styleName={'hover-highlight'} onClick={showIntercom}>Feedback & Support</span></li>
+            <li><span styleName={'hover-highlight'} onClick={downloadApp}>Download App</span></li>
             <li><a onClick={logout}>Log out</a></li>
           </Dropdown>
         </div>
