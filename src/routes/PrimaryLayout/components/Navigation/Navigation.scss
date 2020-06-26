@@ -16,6 +16,7 @@
   margin: 0 $layout-spacing 0 15px;
   overflow: hidden;
   white-space: nowrap;
+  height: 100vh;
 }
 
 .mapView.collapser {
@@ -75,6 +76,7 @@
 
   .collapser {
     margin: 0;
+    height: auto;
   }
 
   .links {

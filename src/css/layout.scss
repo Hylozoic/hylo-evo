@@ -5,8 +5,10 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 25;
+  z-index: 20;
   height: 100vh;
+  top: 56px;
+  height: calc(100vh - 56px);
 }
 
 .modal-content {
@@ -21,5 +23,10 @@
 @media screen and (max-width: 600px) {
   .modal-content {
     display: block;
+  }
+
+  .modal {
+    top: 56px;
+    height: calc(100vh - 106px);
   }
 }

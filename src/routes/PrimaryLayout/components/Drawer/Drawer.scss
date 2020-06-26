@@ -166,7 +166,9 @@ $new-community-spacing: 16px;
 
 .communityRow {
   padding: 6px $ul-horizontal-spacing 6px 28px;
-  transition: background .3s ease;
+  transition: all .3s ease;
+  background: rgba(35, 57, 87, 0);
+
   &:hover {
     background: rgba(35, 57, 87, 1.000);
   }

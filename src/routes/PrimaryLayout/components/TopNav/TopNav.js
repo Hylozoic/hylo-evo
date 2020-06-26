@@ -7,7 +7,7 @@ import Icon from 'components/Icon'
 import isMobile from 'ismobilejs'
 import BadgedIcon from 'components/BadgedIcon'
 import Badge from 'components/Badge'
-import { IntercomAPI } from 'react-intercom';
+import { IntercomAPI } from 'react-intercom'
 import RoundImage from 'components/RoundImage'
 import './TopNav.scss'
 import Dropdown from 'components/Dropdown'
@@ -24,15 +24,15 @@ const mobileDevice = (
 )
 
 function showIntercom () {
-  IntercomAPI('show');
+  IntercomAPI('show')
 }
 
 function downloadApp () {
   if (mobileDevice) {
     if (isMobile.apple.device) {
-      window.open('https://appsto.re/us/0gcV7.i', "_blank")
+      window.open('https://appsto.re/us/0gcV7.i', '_blank')
     } else if (isMobile.android.device) {
-      window.open('https://play.google.com/store/apps/details?id=com.hylo.hyloandroid', "_blank")
+      window.open('https://play.google.com/store/apps/details?id=com.hylo.hyloandroid', '_blank')
     } else {
       return false
     }
