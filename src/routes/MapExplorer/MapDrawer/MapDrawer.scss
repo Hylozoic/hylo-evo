@@ -175,6 +175,7 @@
   .container {
     width: calc(100% - 64px);
     min-width: auto;
+    padding-bottom: 100px;
   }
 }
 
@@ -199,6 +200,6 @@
   }
 
   .container {
-    padding: 10px;
+    padding: 10px 10px 100px 10px;
   }
 }
