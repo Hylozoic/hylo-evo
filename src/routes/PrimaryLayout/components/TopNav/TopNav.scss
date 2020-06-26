@@ -96,11 +96,11 @@
   color: $color-rhino;
 }
 
-.isMobileDevice {
+.user-menu li span.isMobileDevice {
   display: block;
 }
 
-.isntMobileDevice {
+.user-menu li span.isntMobileDevice {
   display: none;
 }
 

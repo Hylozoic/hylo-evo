@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bgImageStyle } from 'util/index'
 import { personUrl } from 'util/navigation'
 import { Link } from 'react-router-dom'
+import cx from 'classnames'
 import Icon from 'components/Icon'
 import isMobile from 'ismobilejs'
 import BadgedIcon from 'components/BadgedIcon'
@@ -22,8 +23,6 @@ const mobileDevice = (
   isMobile.seven_inch
 )
 
-const appStoreLinkClass = mobileDevice ? 'isMobileDevice' : 'isntMobileDevice'
-
 function showIntercom () {
   IntercomAPI('show');
 }
@@ -42,8 +41,10 @@ function downloadApp () {
 
 export default class TopNav extends Component {
   render () {
-    const { className, community, network, currentUser, appStoreLinkClass, logout, toggleDrawer, showLogoBadge, onClick, isPublic } = this.props
+    const { className, community, network, currentUser, logout, toggleDrawer, showLogoBadge, onClick, isPublic } = this.props
     const profileUrl = personUrl(get('id', currentUser))
+
+    const appStoreLinkClass = mobileDevice ? 'isMobileDevice' : 'isntMobileDevice'
 
     return <div styleName='topNavWrapper' className={className} onClick={onClick}>
       <div styleName='topNav' ref='topNav'>
@@ -71,7 +72,7 @@ export default class TopNav extends Component {
             </li>
             <li><Link styleName={'hover-highlight'} to='/settings'>Settings</Link></li>
             <li><span styleName={'hover-highlight'} onClick={showIntercom}>Feedback & Support</span></li>
-            <li><span styleName={'hover-highlight'} onClick={downloadApp}>Download App</span></li>
+            <li><span styleName={cx('hover-highlight', appStoreLinkClass)} onClick={downloadApp}>Download App</span></li>
             <li><a onClick={logout}>Log out</a></li>
           </Dropdown>
         </div>
