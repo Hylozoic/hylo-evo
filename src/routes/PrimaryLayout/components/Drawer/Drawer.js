@@ -6,7 +6,7 @@ import Badge from 'components/Badge'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import s from './Drawer.scss' // eslint-disable-line no-unused-vars
-import badgeHoverStyles from '../../../../components/Badge/component.scss'
+import badgeHoverStyles from 'components/Badge/component.scss'
 import { DEFAULT_AVATAR } from 'store/models/Community'
 import cx from 'classnames'
 import { isEmpty, sum } from 'lodash/fp'
