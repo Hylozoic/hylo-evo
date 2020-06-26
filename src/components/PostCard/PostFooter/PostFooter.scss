@@ -22,6 +22,7 @@ $footer-height: 56px;
 
 .people {
   margin-right: 20px;
+    white-space: nowrap;
 }
 
 .caption {
@@ -96,6 +97,5 @@ $footer-height: 56px;
 
   .people {
     margin-right: 10px;
-    white-space: nowrap;
   }
 }

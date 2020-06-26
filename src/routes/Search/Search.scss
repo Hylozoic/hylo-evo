@@ -109,3 +109,10 @@
 .person-skill {
   margin-left: auto;
 }
+
+@media screen and (max-width: 425px) {
+  .input {
+    width: 100%;
+    font-size: 24px;
+  }
+}
