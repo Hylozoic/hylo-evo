@@ -17,8 +17,21 @@
   width: 100%;
   margin: 0 auto;
   display: flex;
-  height: 100vh;
+  height: calc(100vh - 56px);
 }
+
+.modal::-webkit-scrollbar {
+  background-color:transparent;
+  width: 5px;
+  border-radius: 5px;
+}
+
+.modal::-webkit-scrollbar-thumb {
+  background-color: rgba(200,200,200,.5   );
+  outline: none;
+  border-radius: 3px;
+}
+
 
 @media screen and (max-width: 600px) {
   .modal-content {

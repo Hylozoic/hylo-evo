@@ -42,6 +42,9 @@
   display: block;
   margin: -10px 0 10px 15px;
   composes: timestamp from 'css/typography.scss';
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 50%;
 }
 
 .constrained.headerLocation {
