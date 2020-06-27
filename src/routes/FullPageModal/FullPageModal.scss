@@ -95,6 +95,10 @@ $size-sidebar-width: 10rem;
   color: $color-rhino;
 }
 
+.arrowDown {
+  display: none;
+}
+
 
 @media screen and (max-width: 1000px) {
   .center {
@@ -129,30 +133,67 @@ $size-sidebar-width: 10rem;
   .left-sidebar {
     width: 100%;
     padding-right: 0;
+    height: 100px;
+    z-index: 100;
+    position: relative;
   }
 
   .left-sidebar .left-sidebar-fixed {
     padding-right: 32px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     width: 100%;
     position: relative;
     padding-right: 0;
     padding-top: 80px;
-    flex-direction: row;
+    flex-direction: columns;
     border-right: none;
     border-bottom: 1px solid $color-cape-cod-10;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    width: 160px;
+    padding: 0;
+    overflow: hidden;
+    height: 40px;
+    border: 1px solid rgba(235, 236, 239, 1.000);
+    border-radius: 5px;
+    background-color: white;
+    align-items: flex-start;
+
+    &:hover {
+      height: auto;
+    }
+  }
+
+  .active {
+    order: -5;
+  }
+
+  .arrowDown {
+    display: block;
+    position: absolute;
+    top: 9px;
+    right: 10px;
   }
 
   .nav-link {
     padding: 0 10px;
     margin: 0 10px;
+    display: block;
+    height: 40px;
+    line-height: 40px;
   }
 
   .narrow {
     padding-top: 25px;
     padding-left: 25px;
     padding-right: 25px;
+  }
+
+  .right-sidebar {
+    position: relative;
+    z-index: 120;
   }
 }
 
@@ -167,13 +208,22 @@ $size-sidebar-width: 10rem;
     padding: 0 0 250px 0;
   }
 
+  .left-sidebar {
+    height: 85px;
+  }
+
   .icon {
     font-size: 20px;
     top: -10px;
   }
 
+  .left-sidebar .left-sidebar-fixed {
+    top: 21px;
+  }
+
   .close-button {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
+    line-height: 64px;
   }
 }

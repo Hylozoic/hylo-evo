@@ -41,6 +41,7 @@ export default class FullPageModal extends Component {
                 key={tab.path}>
                 {tab.name}
               </NavLink>)}
+              <Icon name='ArrowDown' styleName='arrowDown' />
           </div>
         </div>
         {multipleTabs && <div styleName='center narrow'>
