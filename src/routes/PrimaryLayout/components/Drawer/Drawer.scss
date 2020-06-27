@@ -76,6 +76,10 @@ $new-community-spacing: 16px;
   box-shadow: 0px 4px 56px 0px rgba(0,0,0,.5);
 }
 
+a.currentCommunity:hover {
+  text-decoration: none;
+}
+
 .currentCommunity {
   background-color: $color-caribbean-green;
   padding: $current-padding-top 0 $current-padding-bottom;
