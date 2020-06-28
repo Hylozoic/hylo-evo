@@ -82,7 +82,7 @@ describe('MemberSelector', () => {
       const theInput = 'hithere'
       wrapper.instance().handleInputChange(theInput)
       expect(setAutocomplete).toHaveBeenCalledWith(theInput)
-      expect(fetchPeople).toHaveBeenCalledWith(theInput)
+      expect(fetchPeople).toHaveBeenCalledWith(theInput, null)
     })
   })
 
