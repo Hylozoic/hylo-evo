@@ -8,8 +8,8 @@ import { FEATURE_TYPES } from './MapExplorer.store'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
-// import { createIconLayerFromCommunities } from 'components/Map/layers/iconLayer'
-import { createScatterplotLayerFromPublicCommunities } from 'components/Map/layers/scatterplotLayer'
+import { createIconLayerFromCommunities } from 'components/Map/layers/iconLayer'
+// import { createScatterplotLayerFromPublicCommunities } from 'components/Map/layers/scatterplotLayer'
 import SwitchStyled from 'components/SwitchStyled'
 import styles from './MapExplorer.scss'
 
@@ -79,16 +79,16 @@ export default class MapExplorer extends React.Component {
     }
 
     // FIXME - Fetch for image url returns error
-    // if (prevProps.publicCommunities !== this.props.publicCommunities) {
-    //   this.setState({
-    //     communityIconLayer: createIconLayerFromCommunities({
-    //       communities: this.props.publicCommunities,
-    //       onHover: this.onMapHover,
-    //       onClick: this.onMapClick,
-    //       boundingBox: this.props.fetchPostsParam.boundingBox
-    //     })
-    //   })
-    // }
+    if (prevProps.publicCommunities !== this.props.publicCommunities) {
+      this.setState({
+        communityIconLayer: createIconLayerFromCommunities({
+          communities: this.props.publicCommunities,
+          onHover: this.onMapHover,
+          onClick: this.onMapClick,
+          boundingBox: this.props.fetchPostsParam.boundingBox
+        })
+      })
+    }
   }
 
   fetchOrShowCached = () => {
@@ -186,23 +186,23 @@ export default class MapExplorer extends React.Component {
       querystringParams,
       pending,
       routeParams,
-      topics,
-      publicCommunities
+      topics
+      // publicCommunities
     } = this.props
 
     const {
       clusterLayer,
-      // communityIconLayer,
+      communityIconLayer,
       showDrawer,
       showFeatureFilters,
       viewport
     } = this.state
 
-    const publicCommunitiesLayer = createScatterplotLayerFromPublicCommunities(publicCommunities, this.onMapHover, this.onMapClick)
+    // const publicCommunitiesLayer = createScatterplotLayerFromPublicCommunities(publicCommunities, this.onMapHover, this.onMapClick)
 
     return <div styleName='MapExplorer-container'>
       <Map
-        layers={[clusterLayer, publicCommunitiesLayer]}
+        layers={[clusterLayer, communityIconLayer]}
         afterViewportUpdate={this.afterViewportUpdate}
         onViewportUpdate={this.mapViewPortUpdate}
         children={this._renderTooltip()}

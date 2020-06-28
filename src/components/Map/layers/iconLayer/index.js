@@ -1,6 +1,8 @@
 import { CompositeLayer } from '@deck.gl/core'
 import { IconLayer } from '@deck.gl/layers'
 
+const defaultCommunityUrl = `${window.location.origin}/assets/default_community_avatar.png`
+
 // Icon Layer for Communities
 export function createIconLayerFromCommunities ({ boundingBox, communities, onHover, onClick }) {
   let data = communities.filter(community => community.locationObject && community.locationObject.center)
@@ -18,7 +20,9 @@ export function createIconLayerFromCommunities ({ boundingBox, communities, onHo
     loadOptions: {
       mode: 'no-cors',
       headers: {
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': 'yes',
+        'Origin': 'bloop'
       }
     },
     id: 'community-icon-layer',
@@ -26,9 +30,9 @@ export function createIconLayerFromCommunities ({ boundingBox, communities, onHo
     sizeScale: 1,
     getPosition: d => d.coordinates,
     // getIcon return an object which contains url to fetch icon of each data point
-    // d.avatarUrl || '/assets/all-communities-avatar.png'
+    // d.avatarUrl || defaultCommunityUrl
     getIcon: d => ({
-      url: d.avatarUrl,
+      url: process.env.NODE_ENV === 'development' ? defaultCommunityUrl : d.avatarUrl,
       width: 40,
       height: 40,
       anchorY: 40
