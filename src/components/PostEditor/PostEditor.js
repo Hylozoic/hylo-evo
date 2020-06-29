@@ -430,9 +430,7 @@ export default class PostEditor extends React.Component {
             <MemberSelector
               initialMembers={members || []}
               onChange={this.updateProjectMembers}
-              // NOTE: Turn-on to limit Project Member selection
-              // to the membership of the selected communities
-              // forCommunities={communities}
+              forCommunities={communities}
               readOnly={loading}
             />
           </div>

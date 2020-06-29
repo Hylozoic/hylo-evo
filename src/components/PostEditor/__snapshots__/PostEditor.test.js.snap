@@ -2255,6 +2255,7 @@ exports[`PostEditor renders contribution button 1`] = `
         data-stylename="footerSection-communities"
       >
         <Connect(MemberSelector)
+          forCommunities={Array []}
           initialMembers={Array []}
           onChange={[Function]}
           readOnly={false}
