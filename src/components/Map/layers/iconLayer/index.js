@@ -1,7 +1,7 @@
 import { CompositeLayer } from '@deck.gl/core'
 import { IconLayer } from '@deck.gl/layers'
 
-const defaultCommunityUrl = `${window.location.origin}/assets/default_community_avatar.png`
+const defaultCommunityUrl = '/assets/default_community_avatar.png'
 
 // Icon Layer for Communities
 export function createIconLayerFromCommunities ({ boundingBox, communities, onHover, onClick }) {
