@@ -37,6 +37,10 @@ $size-sidebar-width: 10rem;
   }
 }
 
+.left-sidebar.leftSideBarHidden {
+  display: none;
+}
+
 .nav-link {
   margin-bottom: 8px;
   @include font-regular;

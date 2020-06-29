@@ -24,13 +24,13 @@ export default class FullPageModal extends Component {
   }
 
   render () {
-    const { content, children, narrow, fullWidth } = this.props
+    const { content, children, narrow, fullWidth, leftSideBarHidden } = this.props
 
     const multipleTabs = Array.isArray(content)
 
     return <div styleName={cx('modal', { fullWidth })}>
       <div styleName='content'>
-        <div styleName='left-sidebar'>
+        <div styleName={cx('left-sidebar', { leftSideBarHidden })}>
           <div styleName={cx('left-sidebar-fixed', { border: multipleTabs })}>
             {multipleTabs && content.filter(tab => !!tab.name).map(tab =>
               <NavLink to={tab.path}
