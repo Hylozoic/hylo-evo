@@ -107,7 +107,7 @@ function MapDrawer (props) {
             styleName='currentSearchText'
             onClick={() => onUpdateFilters({ search: '' })}
           >
-            &quot;{searchText}&quot; <Icon name='Ex' className={styles.Ex} styleName='textEx' />
+            &quot;{searchText}&quot; <Icon name='Ex' className={styles.Ex} />
           </div>
           : ''
         }
@@ -118,7 +118,7 @@ function MapDrawer (props) {
               onClick={removeTopicFilter(topic)}
               styleName='topicButton'
             >
-              <span styleName='topicCount'>{topic.count}</span> #{topic.name} <Icon name='Ex' className={styles.Ex} styleName='filterEx' />
+              <span styleName='topicCount'>{topic.count}</span> #{topic.name} <Icon name='Ex' className={styles.Ex} />
             </span>
           )
         })}

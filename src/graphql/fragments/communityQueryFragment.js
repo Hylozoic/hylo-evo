@@ -6,7 +6,11 @@ export default
   name
   slug
   description
+  bannerUrl
   avatarUrl
+  isPublic
+  isAutoJoinable
+  publicMemberDirectory
   network {
     id
     slug

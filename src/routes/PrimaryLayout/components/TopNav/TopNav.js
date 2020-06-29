@@ -12,7 +12,7 @@ import RoundImage from 'components/RoundImage'
 import './TopNav.scss'
 import Dropdown from 'components/Dropdown'
 import { get } from 'lodash/fp'
-import { hyloLogo } from 'util/assets'
+import { hyloLogo, publicLogo } from 'util/assets'
 import MessagesDropdown from './MessagesDropdown'
 import NotificationsDropdown from './NotificationsDropdown'
 
@@ -49,7 +49,7 @@ export default class TopNav extends Component {
     return <div styleName='topNavWrapper' className={className} onClick={onClick}>
       <div styleName='topNav' ref='topNav'>
         <div styleName='logo-hover'>
-          <Logo {...{ communityOrNetwork: community || network, toggleDrawer }} />
+          <Logo {...{ communityOrNetwork: community || network, isPublic, toggleDrawer }} />
           {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
           <Title community={community} network={network} isPublic={isPublic} onClick={toggleDrawer} />
         </div>
@@ -81,8 +81,14 @@ export default class TopNav extends Component {
   }
 }
 
-function Logo ({ communityOrNetwork, toggleDrawer, showLogoBadge }) {
-  const imageStyle = bgImageStyle(get('avatarUrl', communityOrNetwork) || hyloLogo)
+function Logo ({ communityOrNetwork, isPublic, toggleDrawer, showLogoBadge }) {
+  let imageStyle = bgImageStyle(hyloLogo)
+  if (communityOrNetwork) {
+    imageStyle = bgImageStyle(get('avatarUrl', communityOrNetwork))
+  } else if (isPublic) {
+    imageStyle = bgImageStyle(publicLogo)
+  }
+
   return <span styleName='image' style={imageStyle} onClick={toggleDrawer} />
 }
 

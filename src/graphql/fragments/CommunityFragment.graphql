@@ -6,7 +6,11 @@ fragment CommunityFragment on Community {
   slug
   description
   avatarUrl
+  bannerUrl
   memberCount
+  isPublic
+  isAutoJoinable
+  publicMemberDirectory
   network {
     id
     slug
