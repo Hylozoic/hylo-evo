@@ -1,4 +1,5 @@
-import { mapStateToProps, mapDispatchToProps } from './EventInviteDialog.connector'
+import { mapStateToProps, mapDispatchToProps } from './MemberSelector.connector'
+import { MODULE_NAME } from './MemberSelector.store'
 
 jest.mock('lodash/fp', () => ({
   ...jest.requireActual('lodash/fp'),
@@ -8,9 +9,14 @@ jest.mock('lodash/fp', () => ({
   }
 }))
 
+jest.mock('./MemberSelector.store', () => ({
+  ...jest.requireActual('./MemberSelector.store'),
+  getMemberMatches: () => jest.fn()
+}))
+
 describe('mapStateToProps', () => {
   it('returns the expected keys', () => {
-    const state = {}
+    const state = { [MODULE_NAME]: {} }
     const props = { forCommunities: [] }
     const stateProps = mapStateToProps(state, props)
     expect(stateProps).toMatchSnapshot()

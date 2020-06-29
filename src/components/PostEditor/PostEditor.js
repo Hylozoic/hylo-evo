@@ -93,6 +93,7 @@ export default class PostEditor extends React.Component {
     })
     const currentPost = post
       ? ({ ...post,
+        locationId: post.locationObject.id,
         startTime: Moment(post.startTime),
         endTime: Moment(post.endTime)
       })
@@ -429,6 +430,9 @@ export default class PostEditor extends React.Component {
             <MemberSelector
               initialMembers={members || []}
               onChange={this.updateProjectMembers}
+              // NOTE: Turn-on to limit Project Member selection
+              // to the membership of the selected communities
+              // forCommunities={communities}
               readOnly={loading}
             />
           </div>
@@ -479,6 +483,7 @@ export default class PostEditor extends React.Component {
             <MemberSelector
               initialMembers={eventInvitations || []}
               onChange={this.updateEventInvitations}
+              forCommunities={communities}
               readOnly={loading}
             />
           </div>

@@ -255,7 +255,6 @@ describe('getParticipantsFromQuerystring', () => {
 
   it('returns the correct id', () => {
     const location = { search: '?participants=72297' }
-    console.log(people)
     const expected = session.Person.filter(p => p.id === '72297').toRefArray()
     const actual = getParticipantsFromQuerystring(state, { location })
     expect(actual).toEqual(expected)

@@ -28,10 +28,6 @@ exports[`renders children correctly 1`] = `
 <ErrorBoundary
   message="An Error Message"
 >
-  <FailingChild>
-    <div>
-      A Child
-    </div>
-  </FailingChild>
+  <Something />
 </ErrorBoundary>
 `;

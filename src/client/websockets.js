@@ -1,5 +1,4 @@
 import curry from 'lodash/curry'
-import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 
 const environment = process.env.NODE_ENV || 'development'
 const socketHost = process.env.SOCKET_HOST
@@ -7,7 +6,7 @@ const isClient = typeof window !== 'undefined' && !window.isMock
 
 let socket // client-side singleton
 
-if (isClient && !HOLOCHAIN_ACTIVE) {
+if (isClient) {
   const socketIOClient = require('socket.io-client')
   const sailsIOClient = require('sails.io.js')
   const io = sailsIOClient(socketIOClient)

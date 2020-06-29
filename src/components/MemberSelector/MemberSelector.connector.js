@@ -1,29 +1,35 @@
 import { connect } from 'react-redux'
-
+import { bindActionCreators } from 'redux'
+import { debounce } from 'lodash/fp'
 import fetchPeople from 'store/actions/fetchPeople'
 import {
-  matchesSelector,
-  setAutocomplete,
-  getAutocomplete,
   addMember,
   removeMember,
   getMembers,
-  setMembers
-} from '../MemberSelector/MemberSelector.store'
+  setMembers,
+  setAutocomplete,
+  getAutocomplete,
+  getMemberMatches
+} from './MemberSelector.store'
 
 export function mapStateToProps (state, props) {
-  const people = matchesSelector(state, props)
-  const autocomplete = getAutocomplete(state, props)
-  const members = getMembers(state, props)
   return {
-    people,
-    autocomplete,
-    members
+    members: getMembers(state, props),
+    autocomplete: getAutocomplete(state, props),
+    memberMatches: getMemberMatches(state, props)
   }
 }
 
-export const mapDispatchToProps = {
-  fetchPeople, setAutocomplete, addMember, removeMember, setMembers
+export function mapDispatchToProps (dispatch, props) {
+  return {
+    ...bindActionCreators({
+      setAutocomplete,
+      addMember,
+      removeMember,
+      setMembers
+    }, dispatch),
+    fetchPeople: debounce(300, (...args) => dispatch(fetchPeople(...args)))
+  }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {

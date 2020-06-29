@@ -4,8 +4,8 @@ import { mountWithMockRouter } from 'util/testing'
 import Loading from 'components/Loading'
 import MessageSection from './MessageSection'
 
-const person1 = { id: '1', name: 'City Bob' }
-const person2 = { id: '2', name: 'Country Alice' }
+const person1 = { id: '1', name: 'City Bob', avatarUrl: '' }
+const person2 = { id: '2', name: 'Country Alice', avatarUrl: '' }
 
 const messages = [
   {
