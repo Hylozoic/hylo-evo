@@ -8,9 +8,9 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
     data-stylename="people"
     imageUrls={
       Array [
-        undefined,
-        undefined,
-        undefined,
+        "",
+        "",
+        "",
       ]
     }
   />
@@ -29,6 +29,7 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
     data-stylename="vote-button"
     data-tip="Upvote this post so more people see it."
     data-tip-disable={false}
+    onClick={[Function]}
   >
     <Icon
       data-stylename="arrowIcon"
@@ -56,9 +57,9 @@ exports[`PostFooter matches the latest snapshot 1`] = `
     data-stylename="people"
     imageUrls={
       Array [
-        undefined,
-        undefined,
-        undefined,
+        "",
+        "",
+        "",
       ]
     }
   />
@@ -77,6 +78,7 @@ exports[`PostFooter matches the latest snapshot 1`] = `
     data-stylename="vote-button voted"
     data-tip="Upvote this post so more people see it."
     data-tip-disable={true}
+    onClick={[Function]}
   >
     <Icon
       data-stylename="arrowIcon"
@@ -118,6 +120,7 @@ exports[`PostFooter matches the latest snapshot for event 1`] = `
     data-for="postfooter-tt"
     data-stylename="vote-button"
     data-tip="Upvote this post so more people see it."
+    onClick={[Function]}
   >
     <Icon
       data-stylename="arrowIcon"
@@ -145,7 +148,7 @@ exports[`PostFooter matches the latest snapshot for project 1`] = `
     data-stylename="people"
     imageUrls={
       Array [
-        undefined,
+        "",
       ]
     }
   />
@@ -163,6 +166,7 @@ exports[`PostFooter matches the latest snapshot for project 1`] = `
     data-for="postfooter-tt"
     data-stylename="vote-button"
     data-tip="Upvote this post so more people see it."
+    onClick={[Function]}
   >
     <Icon
       data-stylename="arrowIcon"

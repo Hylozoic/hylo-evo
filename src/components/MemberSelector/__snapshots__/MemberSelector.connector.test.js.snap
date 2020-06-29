@@ -25,13 +25,18 @@ Object {
 
 exports[`mapDispatchToProps returns the expected keys 1`] = `
 Object {
+  "addMember": [Function],
   "fetchPeople": [Function],
-  "invitePeopleToEvent": [Function],
+  "removeMember": [Function],
+  "setAutocomplete": [Function],
+  "setMembers": [Function],
 }
 `;
 
 exports[`mapStateToProps returns the expected keys 1`] = `
 Object {
-  "people": Array [],
+  "autocomplete": undefined,
+  "memberMatches": [MockFunction],
+  "members": undefined,
 }
 `;

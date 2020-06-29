@@ -3,6 +3,7 @@
 exports[`LocationInput renders correctly (with min props) 1`] = `
 <div>
   <Geocoder
+    accessToken=""
     bbox=""
     defaultInputValue=""
     endpoint="//api.tiles.mapbox.com"
@@ -27,6 +28,7 @@ exports[`LocationInput renders correctly (with min props) 1`] = `
 exports[`LocationInput renders correctly with some default props 1`] = `
 <div>
   <Geocoder
+    accessToken=""
     bbox=""
     defaultInputValue="123 main st. San Francisco, CA"
     endpoint="//api.tiles.mapbox.com"

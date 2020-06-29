@@ -16,6 +16,7 @@ export default class LocationInput extends Component {
   }
 
   static defaultProps = {
+    mapboxToken: mapbox.token,
     inputClass: styles.input,
     locationObject: null,
     location: '',
@@ -47,13 +48,13 @@ export default class LocationInput extends Component {
   handleSuggest = e => { }
 
   render () {
-    const { inputClass, locationObject, location, placeholder } = this.props
+    const { inputClass, locationObject, location, placeholder, mapboxToken } = this.props
     const centerAt = (locationObject && locationObject.center) || this.state.browserLocation
 
     return (
       <div className={styles.wrapper}>
         <Geocoder
-          accessToken={mapbox.token}
+          accessToken={mapboxToken}
           defaultInputValue={location}
           onInputChange={this.handleInputChange}
           onSelect={this.handleSelectLocation}

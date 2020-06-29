@@ -21,6 +21,7 @@ export default function updatePost (post, query = updatePostMutation) {
     startTime,
     endTime,
     location,
+    locationId,
     isPublic
   } = post
   const linkPreviewId = linkPreview && linkPreview.id
@@ -46,6 +47,7 @@ export default function updatePost (post, query = updatePostMutation) {
         startTime: startTime && startTime.valueOf(),
         endTime: endTime && endTime.valueOf(),
         location,
+        locationId,
         isPublic
       }
     },

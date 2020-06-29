@@ -3,7 +3,9 @@ import { shallow } from 'enzyme'
 import LocationInput from './LocationInput'
 
 describe('LocationInput', () => {
-  const defaultMinProps = { }
+  const defaultMinProps = {
+    mapboxToken: ''
+  }
 
   function renderComponent (renderFunc, props = {}) {
     return renderFunc(
