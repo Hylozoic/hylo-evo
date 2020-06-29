@@ -1,15 +1,17 @@
-import { loadScript } from './util'
-import { filepickerKey } from 'config'
+import { filestackKey } from 'config'
+import * as filestack from 'filestack-js'
 
-const services = [
-  'COMPUTER',
-  'URL',
-  'WEBCAM',
-  'FACEBOOK',
-  'INSTAGRAM',
-  'DROPBOX',
-  'GOOGLE_DRIVE',
-  'IMAGESEARCH'
+const filePicker = filestack.init(filestackKey)
+
+const fromSources = [
+  'local_file_system',
+  'url',
+  'webcam',
+  'facebook',
+  'instagram',
+  'dropbox',
+  'googledrive',
+  'imagesearch'
 ]
 
 /*
@@ -18,18 +20,18 @@ const services = [
  *   failure:  a failure callback, which receives the error as an argument
  *   attachmentType: either 'image' or 'file'. Determines what file types are allowed
  */
-const uploadCore = function ({ success, failure, attachmentType }) {
-  const mimetype = attachmentType === 'image' ? 'image/*' : null
-  window.filepicker.setKey(filepickerKey)
-  window.filepicker.pick(
-    { mimetype, multiple: false, services },
-    blob => success(blob.url, blob.filename),
-    failure
-  )
-}
+export const uploadFile = function ({ success, cancel, failure, attachmentType }) {
+  const accept = attachmentType === 'image' ? ['image/*'] : ['video/*', 'audio/*', 'application/*', 'text/*']
 
-export function pick (opts) {
-  Promise.resolve(
-    window.filepicker || loadScript('//api.filepicker.io/v2/filepicker.js')
-  ).then(() => uploadCore(opts))
+  filePicker.picker({
+    accept,
+    fromSources,
+    maxFiles: 1, // TODO: allow for more at once in PostEditor
+    onFileUploadFinished: file => {
+      const url = attachmentType === 'image' ? 'https://cdn.filestackcontent.com/rotate=deg:exif/' + file.handle : file.url
+      success(url, file.filename)
+    },
+    onFileUploadFailed: failure,
+    onCancel: cancel
+  }).open()
 }

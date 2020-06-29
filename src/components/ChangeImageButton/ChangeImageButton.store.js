@@ -1,4 +1,4 @@
-import { pick } from 'client/filepicker'
+import { uploadFile } from 'client/filepicker'
 import { UPLOAD_ATTACHMENT } from 'store/constants'
 
 export function upload (opts) {
@@ -8,7 +8,7 @@ export function upload (opts) {
     attachmentType // this is the type of the upload itself, e.g. image or file
   } = opts
   let payload = new Promise((resolve, reject) => {
-    pick({
+    uploadFile({
       success: (url, filename) => resolve({
         api: {
           method: 'post',
@@ -16,15 +16,8 @@ export function upload (opts) {
           params: { url, id, type, filename }
         }
       }),
-      failure: err => {
-        // code 101 = user canceled the filepicker UI.
-        // we have to resolve or reject so that we don't stay in pending state,
-        // but we also don't want to create an action with an error, since there
-        // wasn't any real error, so we just resolve with an empty payload.
-        if (err.code === 101) return resolve({})
-
-        reject(err)
-      },
+      cancel: () => resolve({}),
+      failure: err => reject(err),
       attachmentType
     })
   })
