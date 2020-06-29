@@ -6,6 +6,7 @@
   vertical-align: middle;
   cursor: pointer;
   user-select: none;
+  margin-left: 14px;
 }
 
 .containerDisabled {
@@ -36,4 +37,11 @@
 .buttonChecked {
   right: 4px;
   left: 15px;
+}
+
+
+@media screen and (max-width: 325px) {
+  .container {
+    margin-left: 6px;
+  }
 }

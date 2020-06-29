@@ -6,7 +6,7 @@ import Badge from 'components/Badge'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import s from './Drawer.scss' // eslint-disable-line no-unused-vars
-import badgeHoverStyles from '../../../../components/Badge/component.scss'
+import badgeHoverStyles from 'components/Badge/component.scss'
 import { DEFAULT_AVATAR } from 'store/models/Community'
 import cx from 'classnames'
 import { isEmpty, sum } from 'lodash/fp'
@@ -169,7 +169,7 @@ function Logo ({ community, network }) {
   const link = `/${community ? 'c' : 'n'}/${slug}`
   return <Link styleName='s.currentCommunity' to={link}>
     <div styleName='s.avatar' style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
-    <div styleName='s.name' className='drawer-inv-bd'>{name}</div>
+    <div className='drawer-inv-bd'>{name}</div>
     <div className='drawer-inv-sm'>{location}</div>
   </Link>
 }

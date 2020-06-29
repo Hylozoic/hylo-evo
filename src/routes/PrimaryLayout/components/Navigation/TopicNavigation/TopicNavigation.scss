@@ -36,7 +36,21 @@
   color: $color-rhino-60;
 }
 
+.topics::-webkit-scrollbar {
+  background-color:transparent;
+  width: 5px;
+  border-radius: 5px;
+}
+
+.topics::-webkit-scrollbar-thumb {
+  background-color: rgba(200,200,200,.5   );
+  outline: none;
+  border-radius: 3px;
+}
+
 .topic {
+  position: relative;
+
   a {
     font-size: 14.5px;
     color: $color-rhino-60;
@@ -68,8 +82,22 @@
 
 .badge {
   padding-right: 2px;
-  display: flex;
+  display: block;
   width: auto;
+  position: absolute;
+  left: -25px;
+  top: -1px;
+
+  span {
+    width: 15px;
+    height: 15px;
+
+    span {
+      color: white;
+      font-size: 10px;
+      line-height: 15px;
+    }
+  }
 }
 
 .closeIcon {

@@ -17,6 +17,10 @@
   margin-right: 10px;
 }
 
+.constrained .avatar {
+  margin-right: 5px;
+}
+
 .headerText {
   display: block;
   position: relative;
@@ -26,6 +30,8 @@
 
 .constrained.header {
   margin-bottom: 0;
+  height: 50px;
+  padding: 0 10px;
 }
 
 .userName {
@@ -37,6 +43,10 @@
     color: $color-rhino;
     text-decoration: none;
   }
+}
+
+.constrained .userName {
+  font-size: 12px;
 }
 
 .userTitle {
@@ -179,6 +189,14 @@
 
   .headerText {
     max-width: calc(100% - 160px);
+  }
+
+  .userTitle {
+    font-size: 10px;
+    opacity: .5;
+    display: block;
+    overflow: hidden;
+    height: 14px;
   }
 
   .header {

@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import { bgImageStyle } from 'util/index'
 import { personUrl } from 'util/navigation'
 import { Link } from 'react-router-dom'
+import cx from 'classnames'
 import Icon from 'components/Icon'
+import isMobile from 'ismobilejs'
 import BadgedIcon from 'components/BadgedIcon'
 import Badge from 'components/Badge'
+import { IntercomAPI } from 'react-intercom'
 import RoundImage from 'components/RoundImage'
 import './TopNav.scss'
 import Dropdown from 'components/Dropdown'
@@ -13,10 +16,35 @@ import { hyloLogo, publicLogo } from 'util/assets'
 import MessagesDropdown from './MessagesDropdown'
 import NotificationsDropdown from './NotificationsDropdown'
 
+const mobileDevice = (
+  isMobile.apple.phone ||
+  isMobile.apple.ipod ||
+  isMobile.android.phone ||
+  isMobile.seven_inch
+)
+
+function showIntercom () {
+  IntercomAPI('show')
+}
+
+function downloadApp () {
+  if (mobileDevice) {
+    if (isMobile.apple.device) {
+      window.open('https://appsto.re/us/0gcV7.i', '_blank')
+    } else if (isMobile.android.device) {
+      window.open('https://play.google.com/store/apps/details?id=com.hylo.hyloandroid', '_blank')
+    } else {
+      return false
+    }
+  }
+}
+
 export default class TopNav extends Component {
   render () {
     const { className, community, network, currentUser, logout, toggleDrawer, showLogoBadge, onClick, isPublic } = this.props
     const profileUrl = personUrl(get('id', currentUser))
+
+    const appStoreLinkClass = mobileDevice ? 'isMobileDevice' : 'isntMobileDevice'
 
     return <div styleName='topNavWrapper' className={className} onClick={onClick}>
       <div styleName='topNav' ref='topNav'>
@@ -43,6 +71,8 @@ export default class TopNav extends Component {
               </Link>
             </li>
             <li><Link styleName={'hover-highlight'} to='/settings'>Settings</Link></li>
+            <li><span styleName={'hover-highlight'} onClick={showIntercom}>Feedback & Support</span></li>
+            <li><span styleName={cx('hover-highlight', appStoreLinkClass)} onClick={downloadApp}>Download App</span></li>
             <li><a onClick={logout}>Log out</a></li>
           </Dropdown>
         </div>

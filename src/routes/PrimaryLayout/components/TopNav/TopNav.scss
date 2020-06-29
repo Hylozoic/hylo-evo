@@ -1,6 +1,10 @@
 .topNavWrapper {
   width: 100%;
   z-index: 21;
+
+  &:hover {
+    z-index: 111;
+  }
 }
 
 .topNav {
@@ -96,9 +100,17 @@
   color: $color-rhino;
 }
 
+.user-menu li span.isMobileDevice {
+  display: block;
+}
+
+.user-menu li span.isntMobileDevice {
+  display: none;
+}
+
 .user-menu {
   margin-right: 0 !important;
-  li a {
+  li a, li span {
     &, &:not([href]) {
       color: $color-rhino-60;
       cursor: pointer;
@@ -116,6 +128,12 @@
   /* emtpy */
 }
 
-.hover-highlight:hover {
+.hover-highlight:hover, .user-menu li span:hover {
   color: $color-black;
+}
+
+@media screen and (max-width: 375px) {
+  .communityName, .label {
+    display: none;
+  }
 }

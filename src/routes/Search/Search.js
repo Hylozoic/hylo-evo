@@ -57,7 +57,7 @@ export default class Search extends Component {
       filter
     } = this.props
 
-    return <FullPageModal>
+    return <FullPageModal leftSideBarHidden>
       <div styleName='search'>
         <SearchBar {...{ searchForInput, setSearchTerm, updateQueryParam, setSearchFilter, filter }} />
         <div styleName='search-results'

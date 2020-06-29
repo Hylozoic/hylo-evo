@@ -34,3 +34,19 @@ $circle-size: 9px;
   right: 0;
   color: $color-caribbean-green;
 }
+
+@media screen and (max-width: 600px) {
+  .badgeWrapper {
+    position: relative;
+    top: 3px;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    line-height: 20px;
+    display: inline-block;
+  }
+
+  .badgeNumber {
+    font-size: 10px;
+  }
+}

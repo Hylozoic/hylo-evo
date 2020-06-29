@@ -57,3 +57,18 @@
   padding-right: 85px;
   opacity: 0.7;
 }
+
+@media screen and (max-width: 700px) {
+  .signup-modal-footer, .press-enter {
+    text-align: center;
+    padding-right: 0;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .signup-modal-footer {
+    margin-right: 0;
+    bottom: 120px;
+  }
+}

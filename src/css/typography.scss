@@ -162,6 +162,7 @@
   font-size: 12px;
   letter-spacing: 0;
   line-height: 16px;
+  white-space: nowrap;
 }
 
 .faint-lt-sm {
@@ -201,8 +202,24 @@
     padding: 0 5px;
   }
 
+  .hdr-display {
+    font-size: 20px;
+  }
+
   .bdy-lt-sm {
     font-size: 14px;
     line-height: 20px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .bdy-lt-sm {
+    font-size: 12px;
+    line-height: 16px
+  }
+
+  .caption-lt-lg {
+    font-size: 10px;
+    line-height: 12px
   }
 }

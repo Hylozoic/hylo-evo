@@ -26,10 +26,9 @@ export default class Messages extends React.Component {
     super(props)
 
     let messagesOpen = false
+
     if (props.messageThreadId && !props.isInbox) {
       messagesOpen = true
-    } else if (props.isInbox) {
-      messagesOpen = false
     }
 
     this.state = {
