@@ -19,6 +19,9 @@ type Community {
   slug: String
   memberCount: Int
   posts: PostQuerySet
+  isPublic: Boolean
+  isAutoJoinable: Boolean
+  publicMemberDirectory: Boolean
 }
 
 type PeopleQuerySet {

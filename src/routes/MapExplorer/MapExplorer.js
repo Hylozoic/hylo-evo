@@ -8,6 +8,8 @@ import { FEATURE_TYPES } from './MapExplorer.store'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
+import { createIconLayerFromCommunities } from 'components/Map/layers/iconLayer'
+// import { createScatterplotLayerFromPublicCommunities } from 'components/Map/layers/scatterplotLayer'
 import SwitchStyled from 'components/SwitchStyled'
 import styles from './MapExplorer.scss'
 
@@ -17,6 +19,7 @@ export default class MapExplorer extends React.Component {
     filters: {},
     members: [],
     posts: [],
+    publicCommunities: [],
     routeParams: {},
     querystringParams: {},
     topics: [],
@@ -25,10 +28,10 @@ export default class MapExplorer extends React.Component {
 
   constructor (props) {
     super(props)
-
     this.state = {
       boundingBox: null,
       clusterLayer: null,
+      communityIconLayer: null,
       hoveredObject: null,
       pointerX: 0,
       pointerY: 0,
@@ -50,6 +53,8 @@ export default class MapExplorer extends React.Component {
     Object.keys(FEATURE_TYPES).forEach(featureType => {
       this.refs[featureType] = React.createRef()
     })
+
+    // this.fetchOrShowCached()
   }
 
   componentDidUpdate (prevProps) {
@@ -60,8 +65,8 @@ export default class MapExplorer extends React.Component {
     }
 
     if (prevProps.fetchPostsParam.boundingBox !== this.props.fetchPostsParam.boundingBox ||
-          prevProps.posts !== this.props.posts ||
-          prevProps.members !== this.props.members) {
+         prevProps.posts !== this.props.posts ||
+         prevProps.members !== this.props.members) {
       this.setState({
         clusterLayer: createIconLayerFromPostsAndMembers({
           members: this.props.members,
@@ -72,12 +77,25 @@ export default class MapExplorer extends React.Component {
         })
       })
     }
+
+    // FIXME - Fetch for image url returns error
+    if (prevProps.publicCommunities !== this.props.publicCommunities) {
+      this.setState({
+        communityIconLayer: createIconLayerFromCommunities({
+          communities: this.props.publicCommunities,
+          onHover: this.onMapHover,
+          onClick: this.onMapClick,
+          boundingBox: this.props.fetchPostsParam.boundingBox
+        })
+      })
+    }
   }
 
   fetchOrShowCached = () => {
-    const { fetchMembers, fetchPosts } = this.props
+    const { fetchMembers, fetchPosts, fetchPublicCommunities } = this.props
     fetchMembers()
     fetchPosts()
+    fetchPublicCommunities()
   }
 
   mapViewPortUpdate = (update) => {
@@ -113,6 +131,8 @@ export default class MapExplorer extends React.Component {
       this.setState({ selectedObject: info.object })
       if (info.object.type === 'member') {
         this.props.gotoMember(info.object.id)
+      } else if (info.object.type === 'community') {
+        this.props.showCommunityDetails(info.object.id)
       } else {
         this.props.showDetails(info.object.id)
       }
@@ -167,18 +187,22 @@ export default class MapExplorer extends React.Component {
       pending,
       routeParams,
       topics
+      // publicCommunities
     } = this.props
 
     const {
       clusterLayer,
+      communityIconLayer,
       showDrawer,
       showFeatureFilters,
       viewport
     } = this.state
 
+    // const publicCommunitiesLayer = createScatterplotLayerFromPublicCommunities(publicCommunities, this.onMapHover, this.onMapClick)
+
     return <div styleName='MapExplorer-container'>
       <Map
-        layers={[clusterLayer]}
+        layers={[clusterLayer, communityIconLayer]}
         afterViewportUpdate={this.afterViewportUpdate}
         onViewportUpdate={this.mapViewPortUpdate}
         children={this._renderTooltip()}

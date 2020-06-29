@@ -8,6 +8,7 @@
     font-family: inherit;
     font-weight: bold;
     line-height: inherit;
+    width: 120px;
     height: 35px;
     margin: 10px 0;
     text-align: right;
@@ -16,6 +17,19 @@
       background: url('/calendar-icon.svg') 12px 0 no-repeat #D9EBF8;
       color: #40A1DD;
       height: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .datePicker {
+    input {
+      width: 90px;
+      padding-left: 9px;
+
+      &::placeholder {
+        background-image: none;
+      }
     }
   }
 }

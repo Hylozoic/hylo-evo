@@ -8,6 +8,7 @@
 }
 
 .tabs {
+  overflow: hidden;
   flex-grow: 1;
   > span {
     cursor: pointer;
@@ -42,5 +43,57 @@
   > span {
     vertical-align: middle;
     margin-left: $space-1x;
+  }
+}
+
+.filterLabel {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .tab {
+    display: block;
+  }
+
+  .filterLabel {
+    display: inline-block;
+  }
+
+  .bar {
+    justify-content: space-between;
+    position: relative;
+    z-index: 10;
+  }
+
+  .filterLabel {
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+
+    span {
+      position: relative;
+      top: 7px;
+    }
+  }
+
+  .tabs {
+    max-width: 200px;
+    height: 30px;
+    overflow: hidden;
+    border-radius: 5px;
+    padding: 0 5px 10px 5px;
+    top: -3px;
+    position: relative;
+    color: rgba(125, 140, 157, 1.000);
+
+    strong {
+      text-transform: capitalize;
+    }
+
+    &:hover {
+      height: 150px;
+      box-shadow: 0px 4px 56px 0px $shadow-color;
+      background-color: #fff;
+    }
   }
 }

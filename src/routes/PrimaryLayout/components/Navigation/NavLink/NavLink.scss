@@ -45,3 +45,23 @@
 .label {
   min-width: 102px;
 }
+
+
+@media screen and (max-width: 600px) {
+  .label {
+    display: none;
+  }
+
+  .link {
+    text-align: center;
+  }
+
+  .item {
+    margin: 0 5px;
+  }
+
+  .icon {
+    margin: 0;
+    margin-top: 7px;
+  }
+}

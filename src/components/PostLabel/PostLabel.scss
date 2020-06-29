@@ -59,3 +59,9 @@
   color: $color-persimmon;
   background-color: $color-peach-schnapps;
 }
+
+@media screen and (max-width: 425px) {
+  .label {
+    min-width: auto;
+  }
+}

@@ -12,8 +12,14 @@
 .modal-content {
   display: flex;
   justify-content: center;
-  width: $content-width;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   height: 100vh;
+}
+
+@media screen and (max-width: 600px) {
+  .modal-content {
+    display: block;
+  }
 }

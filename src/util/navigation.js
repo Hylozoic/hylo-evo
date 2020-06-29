@@ -20,6 +20,11 @@ export const POST_TYPE_CONTEXTS = ['project', 'event']
 export const VALID_POST_TYPE_CONTEXTS = [...POST_TYPE_CONTEXTS, DEFAULT_POST_TYPE_CONTEXT]
 export const VALID_POST_TYPE_CONTEXTS_MATCH = VALID_POST_TYPE_CONTEXTS.join('|')
 
+// Community Context
+export const DEFAULT_COMMUNITY_CONTEXT = 'c'
+export const VALID_COMMUNITY_CONTEXTS = [DEFAULT_COMMUNITY_CONTEXT]
+export const VALID_COMMUNITY_CONTEXTS_MATCH = VALID_COMMUNITY_CONTEXTS.join('|')
+
 // Fundamental URL paths
 
 export function allCommunitiesUrl () {
@@ -152,6 +157,15 @@ export function postUrl (id, opts = {}, querystringParams = {}) {
   return addQuerystringToPath(result, querystringParams)
 }
 
+export function communityMapDetailUrl (id, opts = {}, querystringParams = {}) {
+  const action = get('action', opts)
+  let result = publicCommunitiesUrl()
+  result = `${result}/map/${DEFAULT_COMMUNITY_CONTEXT}/${id}`
+  if (action) result = `${result}/${action}`
+
+  return addQuerystringToPath(result, querystringParams)
+}
+
 export function editPostUrl (id, opts = {}, querystringParams = {}) {
   return postUrl(id, { ...opts, action: 'edit' }, querystringParams)
 }
@@ -206,6 +220,21 @@ export function removePostFromUrl (url) {
     matchForReplaceRegex = `/${DEFAULT_POST_TYPE_CONTEXT}/${POST_ID_MATCH}`
   } else {
     matchForReplaceRegex = `/${POST_ID_MATCH}`
+  }
+
+  return url.replace(new RegExp(matchForReplaceRegex), '')
+}
+
+export function removeCommunityFromUrl (url) {
+  let matchForReplaceRegex
+
+  // Remove default context and post id otherwise
+  // remove current post id and stay in the current post
+  // context.
+  if (url.match(`/${DEFAULT_COMMUNITY_CONTEXT}/`)) {
+    matchForReplaceRegex = `/${DEFAULT_COMMUNITY_CONTEXT}/${HYLO_ID_MATCH}`
+  } else {
+    matchForReplaceRegex = `/${HYLO_ID_MATCH}`
   }
 
   return url.replace(new RegExp(matchForReplaceRegex), '')

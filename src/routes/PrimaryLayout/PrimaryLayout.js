@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import {
   matchPath,
@@ -15,6 +14,7 @@ import AddLocation from 'routes/Signup/AddLocation'
 import AddSkills from 'routes/Signup/AddSkills'
 import AllTopics from 'routes/AllTopics'
 import CreateCommunity from 'routes/CreateCommunity'
+import CommunityDetail from 'routes/CommunityDetail'
 import CommunityDeleteConfirmation from 'routes/CommunitySettings/CommunityDeleteConfirmation'
 import CommunityReview from 'routes/CreateCommunity/Review'
 import CommunitySettings from 'routes/CommunitySettings'
@@ -47,7 +47,9 @@ import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
 import {
   POST_ID_MATCH,
+  HYLO_ID_MATCH,
   VALID_POST_TYPE_CONTEXTS_MATCH,
+  // VALID_COMMUNITY_CONTEXTS_MATCH,
   isSignupPath,
   isAllCommunitiesPath,
   isNetworkPath,
@@ -98,7 +100,7 @@ export default class PrimaryLayout extends Component {
     const queryParams = qs.parse(location.search.substring(1))
     const hasDetail = some(
       ({ path }) => matchPath(location.pathname, { path, exact: true }),
-      postDetailRoutes
+      detailRoutes
     )
 
     const showTopics = !isAllCommunitiesPath(location.pathname) && !isNetworkPath(location.pathname) && !isTagPath(location.pathname)
@@ -118,6 +120,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/:context(tag)/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
+            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_COMMUNITY_MATCH}`} exact component={MapExplorer} />
             <Route path='/:context(all|public)/:topicName' exact component={TopicSupportComingSoon} />
             <Route path={`/:context(n)/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/:context(n)/:networkSlug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
@@ -157,8 +160,8 @@ export default class PrimaryLayout extends Component {
         </div>
         <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
           <Switch>
-            {postDetailRoutes.map(({ path }) =>
-              <Route path={path} component={PostDetail} key={path} />)}
+            {detailRoutes.map(({ path, component }) =>
+              <Route path={path} component={component} key={path} />)}
           </Switch>
         </div>
       </div>
@@ -178,19 +181,24 @@ export default class PrimaryLayout extends Component {
 const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH})`
 const OPTIONAL_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:postId(${POST_ID_MATCH})?/:action(new|edit)?`
 const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
-
 const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})/:action(edit)?`
-const postDetailRoutes = [
-  { path: `/:context(all|public)/${POST_DETAIL_MATCH}` },
-  { path: `/:context(all|public)/:view(map)/${POST_DETAIL_MATCH}` },
-  { path: `/:context(n)/:networkSlug/m/:personId/${POST_DETAIL_MATCH}` },
-  { path: `/:context(n)/:networkSlug/${POST_DETAIL_MATCH}` },
-  { path: `/:context(n)/:networkSlug/:view(map)/${POST_DETAIL_MATCH}` },
-  { path: `/:context(c)/:slug/m/:personId/${POST_DETAIL_MATCH}` },
-  { path: `/:context(c)/:slug/${POST_DETAIL_MATCH}` },
-  { path: `/:context(c)/:slug/:view(map)/${POST_DETAIL_MATCH}` },
-  { path: `/:context(c)/:slug/:topicName/${POST_DETAIL_MATCH}` },
-  { path: `/:context(m)/:personId/${POST_DETAIL_MATCH}` }
+
+const COMMUNITY_CONTEXT_MATCH = `:communityContext(c)`
+const OPTIONAL_COMMUNITY_MATCH = `${COMMUNITY_CONTEXT_MATCH}?/:communityId(${HYLO_ID_MATCH})?/:action(new|edit)?`
+const COMMUNITY_DETAIL_MATCH = `${COMMUNITY_CONTEXT_MATCH}/:communityId(${HYLO_ID_MATCH})/:action(edit)?`
+
+const detailRoutes = [
+  { path: `/:context(all|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(all|public)/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(all|public)/:view(map)/${COMMUNITY_DETAIL_MATCH}`, component: CommunityDetail },
+  { path: `/:context(n)/:networkSlug/m/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(n)/:networkSlug/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(n)/:networkSlug/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(c)/:slug/m/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(c)/:slug/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(c)/:slug/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(c)/:slug/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(m)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail }
 ]
 
 const NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:action(new)`

@@ -153,3 +153,11 @@
   font-size: 12px;
   margin-right: 3px;
 }
+
+
+@media screen and (max-width: 600px) {
+  .search {
+    position: relative;
+    font-size: 14px;
+  }
+}
