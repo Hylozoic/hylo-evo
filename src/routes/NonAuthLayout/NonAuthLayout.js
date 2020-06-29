@@ -42,15 +42,17 @@ export default class NonAuthLayout extends React.Component {
         } />
       </div>
 
-      <div styleName='signupRow'>
-        <Route path='/login' component={() =>
+      <Route path='/login' component={() =>
+        <div styleName='signupRow'>
           <Login {...this.props} styleName='form' />
-        } />
+        </div>
+      } />
 
-        <Route path='/signup' component={() =>
+      <Route path='/signup' component={() =>
+        <div styleName='signupRow'>
           <Signup {...this.props} styleName='form' />
-        } />
-      </div>
+        </div>
+      } />
 
       <Route path='/reset-password' component={() =>
         <PasswordReset {...this.props} styleName='form' />
