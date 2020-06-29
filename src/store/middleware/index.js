@@ -5,7 +5,6 @@ import promiseMiddleware from 'redux-promise'
 import { isDev } from 'config'
 import graphqlMiddleware from './graphqlMiddleware'
 import apiMiddleware from './apiMiddleware'
-import apolloMiddleware from './apolloMiddleware'
 import pendingMiddleware from './pendingMiddleware'
 import optimisticMiddleware from './optimisticMiddleware'
 import userFetchedMiddleware from './userFetchedMiddleware'
@@ -17,7 +16,6 @@ import { routerMiddleware } from 'connected-react-router'
 export default function createMiddleware (history, req) {
   const middleware = compact([
     routerMiddleware(history),
-    apolloMiddleware,
     graphqlMiddleware,
     apiMiddleware(req),
     errorMiddleware,
