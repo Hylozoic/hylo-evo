@@ -3,9 +3,9 @@ function setupUpload (shouldSucceed, callbackArgs) {
 
   jest.doMock('client/filepicker', () => {
     if (shouldSucceed) {
-      return { pick: opts => opts.success(...callbackArgs) }
+      return { uploadFile: opts => opts.success(...callbackArgs) }
     } else {
-      return { pick: opts => opts.failure(...callbackArgs) }
+      return { uploadFile: opts => opts.failure(...callbackArgs) }
     }
   })
 
