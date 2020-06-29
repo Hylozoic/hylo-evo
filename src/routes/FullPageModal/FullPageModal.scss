@@ -37,10 +37,6 @@ $size-sidebar-width: 10rem;
   }
 }
 
-.left-sidebar.leftSideBarHidden {
-  display: none;
-}
-
 .nav-link {
   margin-bottom: 8px;
   @include font-regular;
@@ -130,6 +126,11 @@ $size-sidebar-width: 10rem;
 }
 
 @media screen and (max-width: 600px) {
+
+  .left-sidebar.leftSideBarHidden {
+    display: none;
+  }
+
   .center {
     width: 95%;
   }
