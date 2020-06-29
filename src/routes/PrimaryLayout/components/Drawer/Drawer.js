@@ -169,7 +169,7 @@ function Logo ({ community, network }) {
   const link = `/${community ? 'c' : 'n'}/${slug}`
   return <Link styleName='s.currentCommunity' to={link}>
     <div styleName='s.avatar' style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
-    <div styleName='s.name' className='drawer-inv-bd'>{name}</div>
+    <div className='drawer-inv-bd'>{name}</div>
     <div className='drawer-inv-sm'>{location}</div>
   </Link>
 }
