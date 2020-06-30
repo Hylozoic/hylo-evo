@@ -1,11 +1,20 @@
+import cx from 'classnames'
+import { some } from 'lodash/fp'
 import React from 'react'
-import { Route, Link } from 'react-router-dom'
+import { matchPath, Route, Link, Switch } from 'react-router-dom'
 import Particles from 'react-particles-js'
 import particlesjsConfig from './particlesjsConfig'
 import Button from 'components/Button'
 import Login from './Login'
 import Signup from './Signup'
+import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
+import CommunityDetail from 'routes/CommunityDetail'
+import Feed from 'routes/Feed'
+import MapExplorer from 'routes/MapExplorer'
 import PasswordReset from 'routes/NonAuthLayout/PasswordReset'
+import PostDetail from 'routes/PostDetail'
+import { HYLO_ID_MATCH, POST_ID_MATCH, VALID_POST_TYPE_CONTEXTS_MATCH } from 'util/navigation'
+import { DETAIL_COLUMN_ID } from 'util/scrolling'
 import './NonAuthLayout.scss'
 
 export default class NonAuthLayout extends React.Component {
@@ -15,6 +24,8 @@ export default class NonAuthLayout extends React.Component {
   }
 
   render () {
+    const { location } = this.props
+
     const particlesStyle = {
       position: 'fixed',
       top: 0,
@@ -22,6 +33,12 @@ export default class NonAuthLayout extends React.Component {
       width: '100%',
       height: '100%'
     }
+
+    const hasDetail = some(
+      ({ path }) => matchPath(location.pathname, { path, exact: true }),
+      detailRoutes
+    )
+
     return <div styleName='background'>
       <div styleName='particlesBackgroundWrapper'>
         <Particles params={particlesjsConfig} style={particlesStyle} />
@@ -58,6 +75,20 @@ export default class NonAuthLayout extends React.Component {
         <PasswordReset {...this.props} styleName='form' />
       } />
 
+      <Switch>
+        <Route path={`/:context(public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+        <Route path={`/:context(public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
+        <Route path={`/:context(public)/:view(map)/${OPTIONAL_COMMUNITY_MATCH}`} exact component={MapExplorer} />
+        <Route path='/:context(public)/:topicName' exact component={TopicSupportComingSoon} />
+      </Switch>
+
+      <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
+        <Switch>
+          {detailRoutes.map(({ path, component }) =>
+            <Route path={path} component={component} key={path} />)}
+        </Switch>
+      </div>
+
       <div styleName='signupToggle'>
         <p styleName='below-container'>
           <Route path='/signup' component={() =>
@@ -70,3 +101,17 @@ export default class NonAuthLayout extends React.Component {
     </div>
   }
 }
+
+const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH})`
+const OPTIONAL_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:postId(${POST_ID_MATCH})?`
+const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})`
+
+const COMMUNITY_CONTEXT_MATCH = `:communityContext(c)`
+const OPTIONAL_COMMUNITY_MATCH = `${COMMUNITY_CONTEXT_MATCH}?/:communityId(${HYLO_ID_MATCH})?`
+const COMMUNITY_DETAIL_MATCH = `${COMMUNITY_CONTEXT_MATCH}/:communityId(${HYLO_ID_MATCH})`
+
+const detailRoutes = [
+  { path: `/:context(|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(|public)/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(|public)/:view(map)/${COMMUNITY_DETAIL_MATCH}`, component: CommunityDetail }
+]

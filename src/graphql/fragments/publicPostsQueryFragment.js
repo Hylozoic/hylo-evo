@@ -8,6 +8,7 @@ posts(
   sortBy: $sortBy,
   search: $search,
   filter: $filter,
+  boundingBox: $boundingBox,
   topic: $topic,
   order: "desc"
 ) {

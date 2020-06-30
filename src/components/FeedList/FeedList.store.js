@@ -116,7 +116,8 @@ const publicPostsQuery = `query (
   $search: String,
   $filter: String,
   $topic: ID,
-  $first: Int
+  $first: Int,
+  $boundingBox: [PointInput]
 ) {
   ${publicPostsQueryFragment}
 }`

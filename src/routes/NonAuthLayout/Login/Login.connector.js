@@ -1,3 +1,4 @@
+import qs from 'querystring'
 import { connect } from 'react-redux'
 import getLoginError from 'store/selectors/getLoginError'
 import { checkLogin, login, loginWithService } from './Login.store'
@@ -6,9 +7,10 @@ import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.sto
 import mobileRedirect from 'util/mobileRedirect'
 
 export function mapStateToProps (state, props) {
+  const queryParams = qs.parse(props.location.search.substring(1))
   return {
     error: getLoginError(state),
-    returnToURL: getReturnToURL(state),
+    returnToURL: queryParams['returnToUrl'] || getReturnToURL(state),
     downloadAppUrl: mobileRedirect()
   }
 }

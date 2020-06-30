@@ -202,7 +202,7 @@ export default class MapExplorer extends React.Component {
 
     return <div styleName='MapExplorer-container'>
       <Map
-        layers={[clusterLayer, communityIconLayer]}
+        layers={[communityIconLayer, clusterLayer]}
         afterViewportUpdate={this.afterViewportUpdate}
         onViewportUpdate={this.mapViewPortUpdate}
         children={this._renderTooltip()}
