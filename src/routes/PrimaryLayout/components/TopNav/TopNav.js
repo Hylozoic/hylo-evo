@@ -16,19 +16,21 @@ import { hyloLogo, publicLogo } from 'util/assets'
 import MessagesDropdown from './MessagesDropdown'
 import NotificationsDropdown from './NotificationsDropdown'
 
-const mobileDevice = (
-  isMobile.apple.phone ||
-  isMobile.apple.ipod ||
-  isMobile.android.phone ||
-  isMobile.seven_inch
-)
+function isMobileDevice () {
+  return (
+    isMobile.apple.phone ||
+    isMobile.apple.ipod ||
+    isMobile.android.phone ||
+    isMobile.seven_inch
+  )
+}
 
 function showIntercom () {
   IntercomAPI('show')
 }
 
 function downloadApp () {
-  if (mobileDevice) {
+  if (isMobileDevice()) {
     if (isMobile.apple.device) {
       window.open('https://appsto.re/us/0gcV7.i', '_blank')
     } else if (isMobile.android.device) {
@@ -44,7 +46,7 @@ export default class TopNav extends Component {
     const { className, community, network, currentUser, logout, toggleDrawer, showLogoBadge, onClick, isPublic } = this.props
     const profileUrl = personUrl(get('id', currentUser))
 
-    const appStoreLinkClass = mobileDevice ? 'isMobileDevice' : 'isntMobileDevice'
+    const appStoreLinkClass = isMobileDevice() ? 'isMobileDevice' : 'isntMobileDevice'
 
     return <div styleName='topNavWrapper' className={className} onClick={onClick}>
       <div styleName='topNav' ref='topNav'>
