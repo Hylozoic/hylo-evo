@@ -113,7 +113,7 @@ export default class MapExplorer extends React.Component {
   updateBoundingBoxQuery = debounce((boundingBox) => {
     this.setState({ boundingBox })
     this.props.storeFetchPostsParam({ boundingBox })
-  }, 150)
+  }, 300)
 
   onMapHover = (info) => this.setState({ hoveredObject: info.objects || info.object, pointerX: info.x, pointerY: info.y })
 
