@@ -31,33 +31,33 @@
 }
 
 .discussion {
-  color: $color-picton-blue;
-  background-color: $color-link-water;
+  color: $color-discussions;
+  background-color: $color-discussions-20;
 }
 
 .event {
-  color: $color-medium-purple;
-  background-color: $color-moon-raker;
+  color: $color-events;
+  background-color: $color-events-20;
 }
 
 .offer {
-  color: $color-caribbean-green;
-  background-color: $color-iceberg;
+  color: $color-offers;
+  background-color: $color-offers-20;
 }
 
 .resource {
-  color: $color-mango-yellow;
-  background-color: $color-mango-yellow-15;
+  color: $color-resources;
+  background-color: $color-resources-20;
 }
 
 .project {
-  color: $color-fuchsia-pink;
-  background-color: $color-prim;
+  color: $color-projects;
+  background-color: $color-projects-20;
 }
 
 .request {
-  color: $color-persimmon;
-  background-color: $color-peach-schnapps;
+  color: $color-requests;
+  background-color: $color-requests-20;
 }
 
 @media screen and (max-width: 425px) {
