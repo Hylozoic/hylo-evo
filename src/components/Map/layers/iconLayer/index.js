@@ -33,13 +33,13 @@ export function createIconLayerFromCommunities ({ boundingBox, communities, onHo
     // d.avatarUrl || defaultCommunityUrl
     getIcon: d => ({
       url: process.env.NODE_ENV === 'development' ? defaultCommunityUrl : d.avatarUrl,
-      width: 40,
-      height: 40,
-      anchorY: 40
+      width: 48,
+      height: 48,
+      anchorY: 0
     }),
-    getSize: d => 40,
+    getSize: d => 48,
     sizeUnits: 'pixels',
-    sizeMinPixels: 20,
+    // sizeMinPixels: 20,
     pickable: true,
     onHover,
     onClick

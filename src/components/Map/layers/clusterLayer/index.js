@@ -108,14 +108,18 @@ export default class PostClusterLayer extends CompositeLayer {
               return features.find(feature => feature.type === type) ? result.concat(type + 's') : result
             }, [])
 
-            return sprite.join('-') + '.png'
+            if (sprite.length === 1) {
+              return sprite + '.png'
+            } else {
+              return sprite.join('-') + '.png'
+            }
           }
 
-          return d.properties.type + 's.png'
+          return d.properties.type + '.png'
         },
-        getSize: d => d.properties.cluster ? 30 : 20,
+        getSize: d => d.properties.cluster ? 48 : 20,
         sizeUnits: 'pixels',
-        sizeMinPixels: 20,
+        // sizeMinPixels: 20,
         pickable: true
       })
     )
@@ -124,15 +128,16 @@ export default class PostClusterLayer extends CompositeLayer {
       this.getSubLayerProps({
         id: 'text-cluster',
         data,
+        fontFamily: '"Circular Bold", sans-serif',
         sizeScale: 1,
         getColor: [255, 255, 255, 255],
         getPosition: d => d.geometry.coordinates,
         getTextAnchor: 'middle',
         getAlignmentBaseline: 'center',
         getText: d => d.properties.cluster ? `${d.properties.point_count}` : ' ',
-        getSize: d => d.properties.cluster ? 22 : 0,
+        getSize: d => d.properties.cluster ? 20 : 0,
         sizeUnits: 'pixels',
-        sizeMinPixels: 22
+        sizeMinPixels: 20
       })
     )
 
