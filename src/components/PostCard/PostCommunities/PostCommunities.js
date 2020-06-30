@@ -46,7 +46,7 @@ export default class PostCommunities extends Component {
         <a onClick={this.toggleExpanded} styleName='expandLink'><Icon name='ArrowDown' styleName='expandIcon' /></a>
       </div>
 
-    return <div styleName={cx('communities', {constrained}, { expanded, bottomBorder: showBottomBorder })}>
+    return <div styleName={cx('communities', { constrained }, { expanded, bottomBorder: showBottomBorder })}>
       {content}
     </div>
   }
