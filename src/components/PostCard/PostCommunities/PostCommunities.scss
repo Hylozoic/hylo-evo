@@ -9,6 +9,10 @@
   min-height: 40px;
 }
 
+.constrained.communities {
+  padding-left: 10px;
+}
+
 .bottomBorder {
   border-bottom: 1px solid $color-cape-cod-10;
   margin-bottom: 10px;
@@ -30,6 +34,8 @@
 
 .communityList {
   composes: timestamp from 'css/typography.scss';
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .communityLink {
