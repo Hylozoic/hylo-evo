@@ -45,7 +45,7 @@ export default class CommentForm extends Component {
 
     return <div styleName='commentForm' className={className}
       onClick={() => this.editor.current.focus()}>
-      <div styleName={cx('prompt', {'disabled': !currentUser })}>
+      <div styleName={cx('prompt', { 'disabled': !currentUser })}>
         { currentUser
           ? <RoundImage url={currentUser.avatarUrl} small styleName='image' />
           : <Icon name='Person' styleName='anonymous-image' />

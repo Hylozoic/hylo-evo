@@ -49,6 +49,6 @@ export function hexToRgb (hex) {
   ] : null
 }
 
-export function inIframe() {
+export function inIframe () {
   return window.location !== window.parent.location
 }
