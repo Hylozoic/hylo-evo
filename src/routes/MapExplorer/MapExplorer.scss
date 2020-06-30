@@ -165,6 +165,7 @@ button.toggleFeatureFiltersButton {
   left: 20px;
   background: white;
   display: none;
+  padding-bottom: 10px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
 
   &.featureFiltersOpen {
@@ -173,6 +174,7 @@ button.toggleFeatureFiltersButton {
 
   h3 {
     font-size: 14px;
+    margin-bottom: 15px;
     padding: 10px;
     border-bottom: 1px solid rgba(224, 229, 233, 1.000);
   }
