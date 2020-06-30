@@ -1028,7 +1028,7 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
-"@deck.gl/core@^8.1.1":
+"@deck.gl/core@^8.2":
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/@deck.gl/core/-/core-8.2.0.tgz#aa27bc142d6a3322e41ced60a389b7c1b8cae608"
   integrity sha512-WjdFEh9oc6ftjAuBppxv+gDzVSgUsmFtT0O4NY2lpaZcMROHPaGsm7tDIh0e9//YiJOPZv5eq0pvj37FIF6Dtw==
@@ -1042,7 +1042,7 @@
     mjolnir.js "^2.3.0"
     probe.gl "^3.2.1"
 
-"@deck.gl/geo-layers@^8.1.1":
+"@deck.gl/geo-layers@^8.2":
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/@deck.gl/geo-layers/-/geo-layers-8.2.0.tgz#85743fd7c3290833b3672090a4a604a314f3013c"
   integrity sha512-M5cCUhw104ItG49cSg5RLomxzFkXc8JVwsHNdS3yyEgh5L2EiknSC+vFdv0Sd0Vi5PaDjuwCWGwDV5g8g824Ew==
@@ -1058,7 +1058,7 @@
     long "^3.2.0"
     math.gl "^3.2.1"
 
-"@deck.gl/layers@^8.1.1":
+"@deck.gl/layers@^8.2":
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/@deck.gl/layers/-/layers-8.2.0.tgz#a674ae9102fe9e125b6c480b97cdfde21c9a5d90"
   integrity sha512-zQV422P/Jt2YrzxZAV7YxrXf9oBhT22eU8zZKATxoy6srF0qbomiO0K6gUu/FFguNqyoq4f22xLDkneXqL5g7g==
@@ -1068,7 +1068,7 @@
     "@math.gl/polygon" "^3.2.1"
     earcut "^2.0.6"
 
-"@deck.gl/mesh-layers@^8.1.1":
+"@deck.gl/mesh-layers@^8.2":
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/@deck.gl/mesh-layers/-/mesh-layers-8.2.0.tgz#e0416ef55c7273fe919544e9b5d886bf72105a52"
   integrity sha512-muf+zyfD5Sob7CClpce3swFPdLvZRcamAT2el+NqR6RjFZ8S56Wn4Gzi8CUhYPPpnQl6pr3r0zWc/F89V5O+bg==
@@ -1076,7 +1076,7 @@
     "@luma.gl/experimental" "^8.2.0"
     "@luma.gl/shadertools" "^8.2.0"
 
-"@deck.gl/react@^8.1.1":
+"@deck.gl/react@^8.2":
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/@deck.gl/react/-/react-8.2.0.tgz#689be8ccc43e2c34f8215fe9299e2e0c75905a40"
   integrity sha512-rYDMY5fFOdYUtFBYJ9Q2RLy6cHhA4tSBVW2huEc6EYJiWaJqEOLCYPbnEdPb9NoVO5J8wQZFNcaRiLnBXo+wzQ==

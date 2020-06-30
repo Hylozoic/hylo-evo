@@ -9,7 +9,7 @@ export function createIconLayerFromCommunities ({ boundingBox, communities, onHo
     .map(community => {
       return {
         id: community.id,
-        type: 'Community',
+        type: 'community',
         message: 'Community: ' + community.name,
         avatarUrl: community.avatarUrl,
         coordinates: [parseFloat(community.locationObject.center.lng), parseFloat(community.locationObject.center.lat)]
@@ -32,7 +32,7 @@ export function createIconLayerFromCommunities ({ boundingBox, communities, onHo
     // getIcon return an object which contains url to fetch icon of each data point
     // d.avatarUrl || defaultCommunityUrl
     getIcon: d => ({
-      url: process.env.NODE_ENV === 'development' ? defaultCommunityUrl : d.avatarUrl,
+      url: defaultCommunityUrl, // process.env.NODE_ENV === 'development' ? defaultCommunityUrl : d.avatarUrl,
       width: 48,
       height: 48,
       anchorY: 0
