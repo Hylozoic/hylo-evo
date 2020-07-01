@@ -25,6 +25,13 @@
   /* empty */
 }
 
+.communityPublicToggle {
+  background: rgba(244, 247, 250, 0.56);
+  border: 1px dashed #E1E5E9;
+  padding: 25px;
+  margin-bottom: 25px;
+}
+
 .avatar {
   display: flex;
   align-items: flex-end;
@@ -57,7 +64,7 @@
   justify-content: space-between;
   height: 40px;
   line-height: 1;
-  margin: 0;
+  margin-bottom: 25px;
 }
 
 .request-setting {
@@ -125,4 +132,33 @@ label {
 
 .save-button {
   margin: 0 auto;
+}
+
+
+.communityPublicToggle h3 {
+  color: $color-black-50;
+}
+
+.communityPublicToggle p {
+  color: $color-black-30;
+}
+
+.communityPublicToggle.on h3, .communityPublicToggle.on p {
+  color: $color-black;
+}
+
+.communityPublicToggle.on p {
+  color: $color-black-60;
+}
+
+
+.communityPublicToggle h3 {
+  font-size: 14px;
+}
+
+.communityPublicToggle p {
+  font-size: 12px;
+  border-bottom: 1px dashed #E1E5E9;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
 }
