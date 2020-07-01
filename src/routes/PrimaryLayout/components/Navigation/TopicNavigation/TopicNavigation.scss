@@ -33,6 +33,7 @@
   padding: 0 0 0 46px;
   line-height: 27px;
   overflow: auto;
+  transition: opacity .3s ease;
   color: $color-rhino-60;
 }
 
@@ -117,6 +118,12 @@
 :global {
   .active-topic-nav-link {
     color: $color-caribbean-green !important;
+  }
+}
+
+@media screen and (max-width: 930px) {
+  .topics {
+    opacity: 0;
   }
 }
 

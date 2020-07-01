@@ -223,3 +223,9 @@
     line-height: 12px
   }
 }
+
+@media screen and (max-width: 320px) {
+  .timestamp {
+    font-size: 10px;
+  }
+}

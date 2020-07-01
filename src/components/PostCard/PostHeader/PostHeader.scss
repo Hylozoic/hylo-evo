@@ -95,6 +95,10 @@
   margin: 10px;
 }
 
+.constrained .timeWindow {
+  display: none;
+}
+
 .context {
   // Extract typography?
   @include font-regular;
@@ -189,6 +193,8 @@
 
   .headerText {
     max-width: calc(100% - 160px);
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   .userTitle {

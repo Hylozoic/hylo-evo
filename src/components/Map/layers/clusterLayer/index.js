@@ -117,9 +117,8 @@ export default class PostClusterLayer extends CompositeLayer {
 
           return d.properties.type + '.png'
         },
-        getSize: d => d.properties.cluster ? 48 : 20,
+        getSize: d => d.properties.cluster ? 50 : 22,
         sizeUnits: 'pixels',
-        // sizeMinPixels: 20,
         pickable: true
       })
     )
