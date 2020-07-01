@@ -189,10 +189,13 @@ button.toggleFeatureFiltersButton {
 
 
 @media screen and (max-width: 600px) {
-    .toggleDrawerButton.drawerOpen {
-      left: 10px;
-      right: auto;
-    }
+  .toggleDrawerButton.drawerOpen {
+    left: 10px;
+    right: auto;
+  }
+  .toggleFeatureFiltersButton {
+    bottom: 66px;
+  }
 }
 
 @media screen and (max-width: 375px) {

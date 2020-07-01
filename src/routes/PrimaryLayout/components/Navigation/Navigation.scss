@@ -90,12 +90,17 @@
 
   .topicItem {
     display: block;
-    padding: 0 10px;
+    padding: 0 15px;
 
     a {
       display: inline-block;
       position: relative;
+      text-decoration: none;
       top: 6px;
+
+      &:hover, &:focus {
+        text-decoration: none;
+      }
     }
   }
 

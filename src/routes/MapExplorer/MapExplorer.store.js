@@ -28,7 +28,7 @@ export const FEATURE_TYPES = {
   },
   community: {
     primaryColor: 'rgba(201, 88, 172, 1.000)',
-    backgroundColor: 'rgba(201, 88, 172, 1.000)',
+    backgroundColor: 'rgba(201, 88, 172, 1.000)'
   }
 }
 
