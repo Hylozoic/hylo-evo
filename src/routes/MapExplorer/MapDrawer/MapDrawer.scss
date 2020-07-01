@@ -99,33 +99,69 @@
   padding: 5px;
 }
 
+.currentFilters {
+  padding: 10px 5px 5px 5px;
+}
+
 .topicButton {
   border: 1px solid #B6EDE2;
-  border-radius: 2px;
   color: $color-caribbean-green;
-  padding: 0 8px 0 0;
-  margin-right: 8px;
+  margin: 4px 4px 4px 0px;
   cursor: pointer;
   display: inline-block;
+  position: relative;
+  height: 30px;
+  padding: 0 10px 0 40px;
+  border-radius: 3px;
+  font-size: 14px;
+  line-height: 30px;
 }
 
 .topicCount {
-  color: $color-caribbean-green;
-  background: $color-caribbean-green-20;
+  background: #B6EDE2;
   display: inline-block;
   height: 100%;
   margin: 0 6px 0 0 !important;
-  padding: 4px 10px;
+  color: #0DC39F;
+  width: 30px;
+  display: inline-block;
+  border-radius: 3px 0 0 3px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 4px;
+  font-weight: bold;
+}
+
+.filterEx {
+  color: rgba(182, 237, 226, 1.000);
+  font-size: 18px;
+  position: relative;
+  top: 3px;
 }
 
 .currentSearchText {
   cursor: pointer;
+  border: 1px solid rgba(224, 229, 233, 1.000);
+  border-radius: 3px;
+  padding: 0 10px;
+  color: rgba(125, 140, 157, 1.000);
+  display:inline-block;
+  height: 30px;
+  line-height: 30px;
+  margin: 4px 4px 4px 0px;
+  font-size: 14px;
 }
 
-.currentFilters {
-  padding: 10px 5px 5px;
+.textEx {
+  color: rgba(224, 229, 233, 1.000);
+  font-size: 18px;
+  position: relative;
+  top: 3px;
 }
-
 
 @media screen and (max-width: 600px) {
   .contentListContainer .contentCard:nth-child(even) {
