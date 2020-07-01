@@ -65,3 +65,9 @@
     margin-top: 7px;
   }
 }
+
+@media screen and (max-width: 320px) {
+  .icon {
+    font-size: 20px;
+  }
+}
