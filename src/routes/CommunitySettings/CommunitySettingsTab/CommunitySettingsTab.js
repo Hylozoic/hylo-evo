@@ -128,7 +128,7 @@ export default class CommunitySettingsTab extends Component {
 
     const locationObject = community.locationObject || currentUser.locationObject
 
-    return <div>
+    return <div styleName='communitySettings'>
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <ChangeImageButton
