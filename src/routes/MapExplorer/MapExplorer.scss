@@ -95,11 +95,9 @@
   pointerEvents: none;
   border-radius: 4px;
   background-color: white;
-  border-radius: 20px;
   padding: 0 15px;
   color: rgba(87, 102, 123, 1.000);
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
-  border: 1px solid red;
   line-height: 28px;
 
   p {
@@ -109,33 +107,27 @@
 }
 
 .postTip.discussion {
-  color: $color-picton-blue;
-  border: 1px solid $color-picton-blue;
+  color: $color-discussions;
 }
 
 .postTip.event {
-  color: $color-medium-purple;
-  border: 1px solid $color-medium-purple;
+  color: $color-events;
 }
 
 .postTip.offer {
-  color: $color-caribbean-green;
-  border: 1px solid $color-caribbean-green;
+  color: $color-offers;
 }
 
 .postTip.resource {
-  color: $color-mango-yellow;
-  border: 1px solid $color-mango-yellow;
+  color: $color-resources;
 }
 
 .postTip.project {
-  color: $color-fuchsia-pink;
-  border: 1px solid $color-fuchsia-pink;
+  color: $color-projects;
 }
 
 .postTip.cluster {
-  color: $color-fuchsia-pink;
-  border: 1px solid $color-fuchsia-pink;
+  color: $color-black;
 }
 
 button.toggleFeatureFiltersButton {
@@ -174,6 +166,7 @@ button.toggleFeatureFiltersButton {
   left: 20px;
   background: white;
   display: none;
+  padding-bottom: 10px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
 
   &.featureFiltersOpen {
@@ -182,6 +175,7 @@ button.toggleFeatureFiltersButton {
 
   h3 {
     font-size: 14px;
+    margin-bottom: 15px;
     padding: 10px;
     border-bottom: 1px solid rgba(224, 229, 233, 1.000);
   }
@@ -196,10 +190,18 @@ button.toggleFeatureFiltersButton {
 
 
 @media screen and (max-width: 600px) {
-    .toggleDrawerButton.drawerOpen {
-      left: 10px;
-      right: auto;
-    }
+  .toggleDrawerButton.drawerOpen {
+    left: 10px;
+    right: auto;
+  }
+
+  .featureTypeFilters {
+    bottom: 106px;
+  }
+
+  button.toggleFeatureFiltersButton {
+    bottom: 66px;
+  }
 }
 
 @media screen and (max-width: 375px) {

@@ -52,7 +52,7 @@ export default class PostClusterLayer extends CompositeLayer {
     const rebuildIndex = changeFlags.dataChanged
     if (rebuildIndex) {
       // Radius here also adjusts how aggressively this layer clusters, lower means less clusters
-      const index = new Supercluster({ maxZoom: 16, radius: 20 })
+      const index = new Supercluster({ maxZoom: 25, radius: 20 })
       index.load(
         data.map(d => ({
           geometry: { coordinates: getPosition(d) },
@@ -117,9 +117,8 @@ export default class PostClusterLayer extends CompositeLayer {
 
           return d.properties.type + '.png'
         },
-        getSize: d => d.properties.cluster ? 48 : 20,
+        getSize: d => d.properties.cluster ? 50 : 22,
         sizeUnits: 'pixels',
-        // sizeMinPixels: 20,
         pickable: true
       })
     )

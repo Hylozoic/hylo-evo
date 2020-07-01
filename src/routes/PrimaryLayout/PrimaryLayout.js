@@ -76,6 +76,7 @@ export default class PrimaryLayout extends Component {
   render () {
     const {
       community,
+      slug,
       network,
       currentUser,
       isDrawerOpen,
@@ -109,7 +110,7 @@ export default class PrimaryLayout extends Component {
       <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
       <TopNav styleName='top' onClick={closeDrawer} {...{ community, network, currentUser, showLogoBadge }} />
       <div styleName={cx('main', { 'map-view': isMapViewPath(location.pathname) })} onClick={closeDrawer}>
-        <Navigation collapsed={collapsedState} styleName={cx('left', { 'map-view': isMapViewPath(location.pathname) })} showTopics={showTopics} currentUser={currentUser} mapView={isMapViewPath(location.pathname)} />
+        <Navigation collapsed={collapsedState} styleName={cx('left', { 'map-view': isMapViewPath(location.pathname) })} showTopics={showTopics} currentUser={currentUser} mapView={isMapViewPath(location.pathname)} communitySlug={slug} />
         <div styleName={cx('center', { 'map-view': isMapViewPath(location.pathname) }, { collapsedState })} id={CENTER_COLUMN_ID}>
           <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
           <RedirectToCommunity path='/' currentUser={currentUser} />

@@ -22,13 +22,13 @@ export const SORT_OPTIONS = [
 export const FEATURE_TYPES = {
   ...POST_TYPES,
   member: {
-    primaryColor: '#2A4059', // $color-member
-    backgroundColor: '#FAFBFC', // $color-athens-gray
+    primaryColor: 'rgba(201, 88, 172, 1.000)',
+    backgroundColor: 'rgba(201, 88, 172, 1.000)',
     map: true
   },
   community: {
-    primaryColor: 'rgba(35, 64, 91, 1.000)',
-    backgroundColor: 'rgba(191, 197, 206, 1.000)'
+    primaryColor: 'rgba(201, 88, 172, 1.000)',
+    backgroundColor: 'rgba(201, 88, 172, 1.000)'
   }
 }
 
