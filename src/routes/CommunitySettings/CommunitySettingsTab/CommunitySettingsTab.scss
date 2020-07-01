@@ -116,7 +116,7 @@ label {
 .privacy-option {
   color: $color-rhino;
   font-size: 16px;
-  margin: 25px 0
+  flex-grow: 1;
 }
 
 .social-label {
@@ -161,4 +161,9 @@ label {
   border-bottom: 1px dashed #E1E5E9;
   padding-bottom: 20px;
   margin-bottom: 30px;
+}
+
+.request-setting label {
+    display: flex;
+    align-items: center;
 }
