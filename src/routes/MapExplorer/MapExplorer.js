@@ -9,7 +9,6 @@ import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
 import { createIconLayerFromCommunities } from 'components/Map/layers/iconLayer'
-// import { createScatterplotLayerFromPublicCommunities } from 'components/Map/layers/scatterplotLayer'
 import SwitchStyled from 'components/SwitchStyled'
 import styles from './MapExplorer.scss'
 
@@ -184,6 +183,7 @@ export default class MapExplorer extends React.Component {
 
   render () {
     const {
+      currentUser,
       features,
       fetchPostsParam,
       filters,
@@ -191,7 +191,6 @@ export default class MapExplorer extends React.Component {
       pending,
       routeParams,
       topics
-      // publicCommunities
     } = this.props
 
     const {
@@ -202,9 +201,7 @@ export default class MapExplorer extends React.Component {
       viewport
     } = this.state
 
-    // const publicCommunitiesLayer = createScatterplotLayerFromPublicCommunities(publicCommunities, this.onMapHover, this.onMapClick)
-
-    return <div styleName='MapExplorer-container'>
+    return <div styleName={cx('container', { 'noUser': !currentUser })}>
       <Map
         layers={[communityIconLayer, clusterLayer]}
         afterViewportUpdate={this.afterViewportUpdate}
@@ -218,6 +215,7 @@ export default class MapExplorer extends React.Component {
       </button>
       { showDrawer ? (
         <MapDrawer
+          currentUser={currentUser}
           fetchPostsParam={fetchPostsParam}
           filters={filters}
           onUpdateFilters={this.props.storeClientFilterParams}

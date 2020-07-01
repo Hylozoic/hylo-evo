@@ -93,6 +93,7 @@ export function mapStateToProps (state, props) {
 
   return {
     centerLocation: centerLocation || { lat: 35.442845, lng: 7.916598 },
+    currentUser: me,
     features,
     fetchMembersParam,
     fetchPostsParam,

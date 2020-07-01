@@ -12,6 +12,11 @@
   z-index: 20;
   overflow-x: hidden;
 
+  &.noUser {
+    height: 100%;
+    top: 0;
+  }
+
   h1 {
     float: left;
     margin-bottom: 0;

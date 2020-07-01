@@ -1,17 +1,13 @@
-.MapExplorer-container {
+.container {
   position: relative;
   height: calc(100vh - 56px);
   overflow: hidden;
-  width: 100%;
-}
+  width: calc(100% - 11px);
 
-.MapExplorerItems {
-  margin: 0 auto;
-  overflow: auto; // prevent margin collapse
-}
-
-.MapExplorerItem {
-  margin: 0 $space-4x $space-6x;
+  &.noUser {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 .expanded {
@@ -72,6 +68,10 @@
   .closeDrawer {
     display: none;
   }
+}
+
+.noUser .toggleDrawerButton {
+  top: 20px;
 }
 
 @media screen and (max-width: 1115px) {

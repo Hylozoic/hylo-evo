@@ -21,7 +21,9 @@ function Map (props) {
     <MapGL
       {...viewport}
       width='100%'
-      height='100vh'
+      height='100%'
+      mapOptions={{logoPosition: 'bottom-right'}}
+      attributionControl={false}
       mapStyle='mapbox://styles/mapbox/light-v9'
       onViewportChange={nextViewport => onViewportUpdate(nextViewport, mapRef.current)}
       mapboxApiAccessToken={mapbox.token}

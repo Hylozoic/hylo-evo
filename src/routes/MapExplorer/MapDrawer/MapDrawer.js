@@ -10,6 +10,7 @@ import styles from './MapDrawer.scss'
 
 function MapDrawer (props) {
   let {
+    currentUser,
     fetchPostsParam,
     filters,
     onUpdateFilters,
@@ -62,7 +63,7 @@ function MapDrawer (props) {
   const searchTopics = topics.filter(topic => !filters.topics.find(t => t.name === topic.name))
 
   return (
-    <div styleName='container'>
+    <div styleName={cx('styles.container', { 'styles.noUser': !currentUser })}>
       <input
         styleName='searchBox'
         type='text'
