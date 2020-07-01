@@ -189,6 +189,8 @@
 
   .headerText {
     max-width: calc(100% - 160px);
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   .userTitle {

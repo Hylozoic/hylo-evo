@@ -92,6 +92,8 @@
 
 .eventBodyColumn {
   display: flex;
+  text-overflow: ellipsis;
+  overflow: hidden;
   flex-direction: column;
 }
 
