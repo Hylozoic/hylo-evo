@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Avatar from 'components/Avatar'
 import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
+import { inIframe } from 'util/index'
+
 import c from './CommunityDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
 
@@ -96,9 +99,14 @@ export default class CommunityDetail extends Component {
           {community.isAutoJoinable
             ? <div styleName='c.requestOption'>
               <div styleName='c.requestHint'>Anyone can join this community!</div>
-              <div styleName='c.requestButton'>Join <span styleName='c.requestCommunity'>{community.name}</span></div>
+              {/*<Link to={community.invitePath} target={inIframe() ? '_blank' : ''} styleName='c.requestButton'>Join <span styleName='c.requestCommunity'>{community.name}</span></Link>*/}
+              <Link to={'/c/' + community.slug} target={inIframe() ? '_blank' : ''} styleName='c.requestButton'>Signup or Login to post in <span styleName='c.requestCommunity'>{community.name}</span></Link>
             </div>
-            : <div styleName='c.requestOption'><div styleName='c.requestButton'>Request Membership in <span styleName='c.requestCommunity'>{community.name}</span></div></div>}
+            : <div styleName='c.requestOption'>
+              <div styleName='c.requestButton'>Request Membership in <span styleName='c.requestCommunity'>{community.name}</span>
+              </div>
+            </div>
+          }
         </div>
       </div>
       <SocketSubscriber type='community' id={community.id} />
