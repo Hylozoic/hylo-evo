@@ -119,14 +119,18 @@ export default class MapExplorer extends React.Component {
 
   onMapClick = (info, e) => {
     if (info.objects) {
-      this.setState({ viewport: {
-        ...this.state.viewport,
-        longitude: info.lngLat[0],
-        latitude: info.lngLat[1],
-        zoom: this.state.viewport.zoom + 1,
-        transitionDuration: 500,
-        transitionInterpolator: new FlyToInterpolator()
-      } })
+      if (this.state.viewport.zoom > 22) {
+        this.setState({ showDrawer: true })
+      } else {
+        this.setState({ viewport: {
+          ...this.state.viewport,
+          longitude: info.lngLat[0],
+          latitude: info.lngLat[1],
+          zoom: this.state.viewport.zoom + 1,
+          transitionDuration: 500,
+          transitionInterpolator: new FlyToInterpolator()
+        } })
+      }
     } else {
       this.setState({ selectedObject: info.object })
       if (info.object.type === 'member') {
