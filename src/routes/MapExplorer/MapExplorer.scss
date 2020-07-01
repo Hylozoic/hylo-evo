@@ -194,7 +194,11 @@ button.toggleFeatureFiltersButton {
     right: auto;
   }
 
-  .toggleFeatureFiltersButton {
+  .featureTypeFilters {
+    bottom: 106px;
+  }
+
+  button.toggleFeatureFiltersButton {
     bottom: 66px;
   }
 }
