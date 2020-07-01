@@ -95,6 +95,10 @@
   margin: 10px;
 }
 
+.constrained .timeWindow {
+  display: none;
+}
+
 .context {
   // Extract typography?
   @include font-regular;
