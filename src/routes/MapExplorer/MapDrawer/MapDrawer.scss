@@ -1,8 +1,8 @@
 .container {
   height: calc(100vh - 55px);
-  position: absolute;
+  position: fixed;
   right: 0px;
-  top: 0px;
+  top: 55px;
   padding: 20px;
   background: white;
   width: 40%;
