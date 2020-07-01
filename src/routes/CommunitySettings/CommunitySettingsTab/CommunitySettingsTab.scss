@@ -30,6 +30,18 @@
   border: 1px dashed #E1E5E9;
   padding: 25px;
   margin-bottom: 25px;
+  position: relative;
+}
+
+.settingDisabled {
+  border: 1px solid $color-black-10;
+  border-radius: 3px;
+  padding: 2px 10px;
+  position: absolute;
+  transition: opacity .2s ease;
+  top: 20px;
+  right: 25px;
+  font-size: 14px;
 }
 
 .avatar {
@@ -84,6 +96,7 @@
 label {
   color: $color-regent-70;
   margin-left: 10px;
+  transition: color .25s ease;
 }
 
 .privacy-state {
@@ -92,6 +105,7 @@ label {
   color: $color-regent;
   font-size: 10px;
   font-style: bold;
+  transition: color .25s ease;
   padding: 2px 6px;
 }
 
@@ -134,9 +148,13 @@ label {
   margin: 0 auto;
 }
 
+.on .settingDisabled {
+  opacity: 0;
+}
 
 .communityPublicToggle h3 {
   color: $color-black-50;
+  padding-right: 80px;
 }
 
 .communityPublicToggle p {
@@ -145,12 +163,13 @@ label {
 
 .communityPublicToggle.on h3, .communityPublicToggle.on p {
   color: $color-black;
+  transition: all .25s ease;
+  padding-right: 0;
 }
 
 .communityPublicToggle.on p {
   color: $color-black-60;
 }
-
 
 .communityPublicToggle h3 {
   font-size: 14px;
@@ -166,4 +185,10 @@ label {
 .request-setting label {
     display: flex;
     align-items: center;
+}
+
+.member-visibility {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
