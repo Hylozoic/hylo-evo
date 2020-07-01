@@ -86,7 +86,7 @@ export default class PrimaryLayout extends Component {
       communityPending,
       showLogoBadge
     } = this.props
-    console.log(location)
+
     if (!currentUser) {
       return <div styleName='container'>
         <Loading type='loading-fullscreen' />
