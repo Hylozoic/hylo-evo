@@ -163,7 +163,7 @@ export class Pill extends Component {
     const { id, label, onRemove, className, editable, handleClick } = this.props
     const { removing } = this.state
 
-    const onClick = () => {
+    const deletePill = () => {
       if (editable && onRemove) {
         if (removing) {
           onRemove(id, label)
@@ -171,7 +171,9 @@ export class Pill extends Component {
           this.setState({ removing: true })
         }
       }
+    }
 
+    const search = () => {
       if (handleClick) {
         handleClick(id, label)
       }
@@ -192,12 +194,11 @@ export class Pill extends Component {
 
     return <div styleName={pillStyles}
       className={className}
-      data-tip='Click to Remove'
+      data-tip='Click to Search'
       data-for='pill-remove'
-      onClick={onClick}
       onMouseLeave={mouseOut}>
-      <span styleName='styles.display-label'>{label}</span>
-      {editable && <Icon styleName='styles.remove-label' name='Ex' />}
+      <span styleName='styles.display-label' onClick={search}>{label}</span>
+      {editable && <Icon styleName='styles.remove-label' name='Ex' onClick={deletePill} />}
     </div>
   }
 }

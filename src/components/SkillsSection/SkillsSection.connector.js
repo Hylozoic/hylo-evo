@@ -31,11 +31,11 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch) {
   return {
-    addSkill,
-    removeSkill,
-    fetchSkillSuggestions,
-    fetchMemberSkills,
-    setSearch,
+    addSkill: name => dispatch(addSkill(name)),
+    removeSkill: skillId => dispatch(removeSkill(skillId)),
+    fetchSkillSuggestions: search => dispatch(fetchSkillSuggestions(search)),
+    fetchMemberSkills: (id, limit) => dispatch(fetchMemberSkills(id, limit)),
+    setSearch: search => dispatch(setSearch(search)),
     searchForSkill: (skill) => dispatch(push('/search?t=' + skill))
   }
 }
