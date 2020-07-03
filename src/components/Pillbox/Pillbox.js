@@ -137,7 +137,7 @@ export default class Pillbox extends Component {
       </div>
       <ReactTooltip place='top'
         type='dark'
-        id='pill-remove'
+        id='pill-label'
         effect='solid'
         disable={!editable}
         delayShow={500} />
@@ -194,11 +194,9 @@ export class Pill extends Component {
 
     return <div styleName={pillStyles}
       className={className}
-      data-tip='Click to Search'
-      data-for='pill-remove'
       onMouseLeave={mouseOut}>
-      <span styleName='styles.display-label' onClick={search}>{label}</span>
-      {editable && <Icon styleName='styles.remove-label' name='Ex' onClick={deletePill} />}
+      <span data-tip='Click to Search' data-for='pill-label' styleName='styles.display-label' onClick={search}>{label}</span>
+      {editable && <Icon styleName='styles.remove-label' dataTip='Double click to delete' dataTipFor='pill-label' name='Ex' onClick={deletePill} />}
     </div>
   }
 }
