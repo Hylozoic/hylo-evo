@@ -164,6 +164,10 @@ $search-width: 266px;
   // onclick bump word to left to make room for X
   // click again to actually remove it
 
+  &.clickable {
+    cursor: pointer;
+  }
+
   &.removable {
     cursor: pointer;
 

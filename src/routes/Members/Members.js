@@ -72,7 +72,7 @@ export default class Members extends Component {
             label: sortKeys[k],
             onClick: () => changeSort(k)
           }))} />
-        <TextInput placeholder='Search by name or skills'
+        <TextInput placeholder='Search by name or skills & interests'
           styleName='search'
           defaultValue={search}
           onChange={e => this.search(e.target.value)} />
