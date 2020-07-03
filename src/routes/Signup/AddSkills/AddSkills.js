@@ -66,7 +66,7 @@ export default class AddSkills extends Component {
     return <div styleName='flex-wrapper'>
       <LeftSidebar
         header='Share your unique super powers and what excites or interests you!'
-        body="What skills are you known for? What topics you love to explore and discuss? What do you want to learn more about? The more you add, the more relevant the content. It's like magic."
+        body="What skills are you known for? What topics do you love to explore and discuss? What do you want to learn more about? The more you add, the more relevant the content. It's like magic."
       />
       <div styleName='panel'>
         <span styleName='white-text step-count'>STEP 3/4</span>
@@ -88,7 +88,7 @@ export default class AddSkills extends Component {
             }}
             onClick={() => this.editNewSkill()}
             onChange={this.handleInputChange}
-            placeholder={editing ? '' : 'How can you help?'}
+            placeholder={editing ? '' : 'Add skills & interests'}
             readOnly={!editing}
           />
         </div>

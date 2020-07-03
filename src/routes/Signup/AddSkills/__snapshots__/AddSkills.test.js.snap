@@ -5,8 +5,8 @@ exports[`AddSkills renders correctly 1`] = `
   data-stylename="flex-wrapper"
 >
   <Connect(LeftSidebar)
-    body="What skills are you known for? The more skills you add, the more relevant the content. It's like magic."
-    header="Share your unique super powers!"
+    body="What skills are you known for? What topics do you love to explore and discuss? What do you want to learn more about? The more you add, the more relevant the content. It's like magic."
+    header="Share your unique super powers and what excites or interests you!"
   />
   <div
     data-stylename="panel"
@@ -26,7 +26,7 @@ exports[`AddSkills renders correctly 1`] = `
         onChange={[Function]}
         onClick={[Function]}
         onKeyPress={[Function]}
-        placeholder="How can you help?"
+        placeholder="Add skills & interests"
         readOnly={true}
         value=""
       />
