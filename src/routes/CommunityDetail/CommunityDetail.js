@@ -92,7 +92,7 @@ export default class CommunityDetail extends Component {
             }
           </div>
         </div>
-        <div styleName='c.requestBar'>
+        <div styleName={community.isAutoJoinable ? 'c.requestBarBordered' : 'c.requestBarBorderless'}>
           {community.isAutoJoinable
             ? <div styleName='c.requestOption'>
               <div styleName='c.requestHint'>Anyone can join this community!</div>
