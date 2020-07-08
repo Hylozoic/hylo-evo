@@ -30,12 +30,44 @@ export default class CommunityDetail extends Component {
     this.props.fetchCommunity()
   }
 
+  joinCommunity = () => {
+    const { community = {}, currentUser = {}, joinCommunity } = this.props
+
+    joinCommunity(community.id, currentUser.id)
+      .then(res => {
+        const { membership } = res.payload.data.joinCommunity
+        let errorMessage, successMessage
+        if (membership) successMessage = 'Joined community'
+        else errorMessage = 'Error joining community'
+        this.setState({
+          errorMessage,
+          successMessage,
+          membership
+        })
+      })
+  }
+
+  requestToJoinCommunity = () => {
+    const { community = {}, currentUser = {}, requestToJoinCommunity } = this.props
+
+    requestToJoinCommunity(community.id, currentUser.id)
+      .then(res => {
+        const { request } = res.payload.data.createJoinRequest
+        let errorMessage, successMessage
+        if (request) successMessage = 'Request sent'
+        else errorMessage = 'Error sending your join request'
+        this.setState({
+          errorMessage,
+          successMessage,
+          request
+        })
+      })
+  }
+
   render () {
     const {
-      // routeParams,
       community,
       pending,
-      // currentUser,
       onClose
     } = this.props
 
@@ -96,9 +128,9 @@ export default class CommunityDetail extends Component {
           {community.isAutoJoinable
             ? <div styleName='c.requestOption'>
               <div styleName='c.requestHint'>Anyone can join this community!</div>
-              <div styleName='c.requestButton'>Join <span styleName='c.requestCommunity'>{community.name}</span></div>
+              <div styleName='c.requestButton' onClick={this.joinCommunity}>Join <span styleName='c.requestCommunity'>{community.name}</span></div>
             </div>
-            : <div styleName='c.requestOption'><div styleName='c.requestButton'>Request Membership in <span styleName='c.requestCommunity'>{community.name}</span></div></div>}
+            : <div styleName='c.requestOption'><div styleName='c.requestButton' onClick={this.requestToJoinCommunity}>Request Membership in <span styleName='c.requestCommunity'>{community.name}</span></div></div>}
         </div>
       </div>
       <SocketSubscriber type='community' id={community.id} />

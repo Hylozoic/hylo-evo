@@ -7,6 +7,10 @@ import getRouteParam from 'store/selectors/getRouteParam'
 import getMe from 'store/selectors/getMe'
 import getCommunity from 'store/selectors/getCommunity'
 import { FETCH_COMMUNITY } from 'store/constants'
+import {
+  createJoinRequest,
+  joinCommunity
+} from './CommunityDetail.store'
 
 export function mapStateToProps (state, props) {
   const id = getRouteParam('communityId', state, props)
@@ -33,7 +37,9 @@ export function mapDispatchToProps (dispatch, props) {
 
   return {
     fetchCommunity: () => dispatch(fetchCommunity(communityId)),
-    onClose: () => dispatch(push(closeLocation))
+    onClose: () => dispatch(push(closeLocation)),
+    joinCommunity: (communityId, userId) => dispatch(joinCommunity(communityId, userId)),
+    requestToJoinCommunity: (communityId, userId) => dispatch(createJoinRequest(communityId, userId))
   }
 }
 
