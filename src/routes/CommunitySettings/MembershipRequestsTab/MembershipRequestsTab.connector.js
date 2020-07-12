@@ -2,18 +2,18 @@ import { connect } from 'react-redux'
 import {
   acceptJoinRequest,
   declineJoinRequest,
-  fetchJoinRequests,
-  getJoinRequests
+  fetchJoinRequests
 } from './MembershipRequestsTab.store'
 import { get } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
-  const joinRequests = getJoinRequests(state, props)
-  const { community } = props
+  const { community, joinRequests } = props
+  const { JoinRequests } = state
 
   return {
     communityId: get('id', community),
-    joinRequests
+    joinRequests: JoinRequests
+
   }
 }
 

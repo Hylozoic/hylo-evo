@@ -29,14 +29,24 @@ export function fetchJoinRequests (communityId) {
     graphql: {
       query: `query ($communityId: ID) {
         joinRequests (communityId: $communityId) {
-          id
-          user {
+          total
+          hasMore
+          items {
             id
+            status
+            createdAt    
+            user {
+              id
+              avatarUrl
+              name
+              skills {
+                items {
+                  id
+                  name
+                }
+              }
+            }
           }
-          community {
-            id
-          }
-          status          
         }
       }`,
       variables: { communityId }
@@ -97,11 +107,3 @@ export function declineJoinRequest (joinRequestId) {
   }
 }
 
-// expects props to be of the form {communityId}
-export const getJoinRequests = ormCreateSelector(
-  orm,
-  state => state.orm,
-  ({ JoinRequest }) => {
-    return JoinRequest
-  }
-)

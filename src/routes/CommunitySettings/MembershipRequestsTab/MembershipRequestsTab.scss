@@ -1,10 +1,76 @@
 // MembershipRequestsTab
 .header {
   text-align: center;
-  margin-top: 15px;
+  margin-top: 15px auto 30px;
 }
 
 .response-time {
   font-size: 14px;
   line-height: 18px;
+}
+
+.request-list {
+  margin: 57px;
+}
+
+.request {
+  display: flex;
+  justify-content: flex-start;
+  width: 60%;
+  margin: 20px 0px;
+}
+
+.requestorAvatar img {
+  border-radius: 40px;
+  width: 40px;
+  margin-right: 23px;
+}
+
+.requestorInfo {
+  display: block;
+}
+
+.name {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+
+  color: #2A4059;
+}
+
+.skills span {
+  font-size: 12px;
+  line-height: 15px;
+  margin-right: 4px;
+  color: #0DC39F;
+}
+
+.action-buttons {
+  margin: 25px 14px;
+  display: flex;
+  justify-content: center;
+}
+
+.action-buttons div {
+  height: 40px;
+  box-sizing: border-box;
+  border: 1px solid #E1E5E9;
+  border-radius: 5px;
+  font-size: 12px;
+  line-height: 15px;
+  color: #808C9B;
+  margin-right: 20px;
+  line-height: 40px;
+  padding: 0 12px;
+}
+
+.accept {
+  color: red;
+}
+
+.icon {
+  margin-right: 5px;
+  top: 4px;
+  font-size: 20px;
 }
