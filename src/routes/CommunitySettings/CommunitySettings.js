@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import './CommunitySettings.scss'
 import CommunitySettingsTab from './CommunitySettingsTab'
+import MembershipRequestsTab from './MembershipRequestsTab'
 import ModeratorsSettingsTab from './ModeratorsSettingsTab'
 import InviteSettingsTab from './InviteSettingsTab'
 import DeleteSettingsTab from './DeleteSettingsTab'
@@ -45,8 +46,22 @@ export default class CommunitySettings extends Component {
 
     const { slug } = community
 
+    // Placeholders
+    const acceptJoinRequest = () => console.log('request accepted')
+    const declineJoinRequest = () => console.log('request declined')
+
     return <FullPageModal goToOnClose={`/c/${slug}`}
       content={[
+        {
+          name: 'Membership Requests',
+          path: `/c/${slug}/settings/requests`,
+          component: <MembershipRequestsTab
+            community={community}
+            currentUser={currentUser}
+            acceptJoinRequest={acceptJoinRequest}
+            declineJoinRequest={declineJoinRequest}
+          />
+        },
         {
           name: 'Settings',
           path: `/c/${slug}/settings`,

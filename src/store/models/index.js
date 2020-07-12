@@ -7,6 +7,7 @@ import Community, { CommunityModerator } from './Community'
 import CommunityTopic from './CommunityTopic'
 import EventInvitation from './EventInvitation'
 import Invitation from './Invitation'
+import JoinRequest from './JoinRequest'
 import LinkPreview from './LinkPreview'
 import Location from './Location'
 import Me from './Me'
@@ -37,6 +38,7 @@ orm.register(
   Invitation,
   LinkPreview,
   Location,
+  JoinRequest,
   Me,
   Membership,
   Message,

@@ -28,6 +28,7 @@ import AllTopics from 'routes/AllTopics/AllTopics.store'
 import Search from 'routes/Search/Search.store'
 import queryResults from './queryResults'
 import FeedList from 'components/FeedList/FeedList.store'
+import JoinRequests from 'routes/CommunitySettings/MembershipRequestsTab/MembershipRequestsTab.store'
 import JoinCommunity from 'routes/JoinCommunity/JoinCommunity.store'
 import CreateCommunity from 'routes/CreateCommunity/CreateCommunity.store'
 import CreateTopic from 'components/CreateTopic/CreateTopic.store'
@@ -57,6 +58,7 @@ export const combinedReducers = combineReducers({
   FullPageModal,
   HyloEditor,
   JoinCommunity,
+  JoinRequests,
   MapExplorer,
   Members,
   MemberSelector,
