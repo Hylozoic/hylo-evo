@@ -7,22 +7,41 @@
 .response-time {
   font-size: 14px;
   line-height: 18px;
+  display: none;
+}
+
+.no-requests {
+  text-align: center;
+  margin-top: 85px;
+}
+
+.view-members {
+  margin-top: 50px;
+  height: 40px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  font-size: 14px;
+  line-height: 40px;
 }
 
 .request-list {
-  margin: 57px;
+  margin: 57px 5px;
 }
 
 .request {
   display: flex;
-  justify-content: flex-start;
-  width: 60%;
-  margin: 20px 0px;
+  justify-content: space-between;
+  padding: 20px 0px;
+  border-bottom: 1px solid #E1E5E9;
 }
 
-.requestorAvatar img {
-  border-radius: 40px;
-  width: 40px;
+.requestor {
+  display: flex;
+  justify-content: flex-start;
+  width: 60%;
+}
+
+.requestorAvatar {
   margin-right: 23px;
 }
 
@@ -47,7 +66,6 @@
 }
 
 .action-buttons {
-  margin: 25px 14px;
   display: flex;
   justify-content: center;
 }
@@ -63,14 +81,25 @@
   margin-right: 20px;
   line-height: 40px;
   padding: 0 12px;
+  cursor: pointer;
 }
 
 .accept {
   color: red;
 }
 
-.icon {
+%icon {
   margin-right: 5px;
   top: 4px;
   font-size: 20px;
+}
+
+.icon-red {
+  @extend %icon;
+  color: #FD6A49;
+}
+
+.icon-green {
+  @extend %icon;
+  color: #0DC39F;
 }

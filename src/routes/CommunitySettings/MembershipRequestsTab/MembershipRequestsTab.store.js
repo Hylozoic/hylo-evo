@@ -1,5 +1,6 @@
 import {
   FETCH_JOIN_REQUESTS,
+  FETCH_JOIN_REQUESTS_PENDING,
   ACCEPT_JOIN_REQUEST,
   DECLINE_JOIN_REQUEST
 } from 'store/constants'
@@ -14,10 +15,17 @@ export default function reducer (state = defaultState, action) {
   if (error) return state
 
   switch (type) {
+    case FETCH_JOIN_REQUESTS_PENDING:
+      return null;
     case FETCH_JOIN_REQUESTS:
-      return payload.data.joinRequests
+      const requests = payload.data.joinRequests.items || []
+      return requests.filter(r => r.status === 0)
     case ACCEPT_JOIN_REQUEST:
-      return []
+      const { acceptJoinRequest } = payload.data
+      return (state || []).filter(item => item.id !== acceptJoinRequest.id)
+    case DECLINE_JOIN_REQUEST:
+      const { declineJoinRequest } = payload.data
+      return (state || []).filter(item => item.id !== declineJoinRequest.id)
     default:
       return state
   }
@@ -57,23 +65,16 @@ export function fetchJoinRequests (communityId) {
   }
 }
 
-export function acceptJoinRequest (joinRequestId) {
+export function acceptJoinRequest (joinRequestId, communityId, userId) {
   return {
     type: ACCEPT_JOIN_REQUEST,
     graphql: {
-      query: `mutation ($joinRequestId: ID) {
-        acceptJoinRequest(joinRequestId: $joinRequestId) {
+      query: `mutation ($joinRequestId: ID, $communityId: ID, $userId: ID) {
+        acceptJoinRequest(joinRequestId: $joinRequestId, communityId: $communityId, userId: $userId) {
           id
-          user {
-            id
-          }
-          community {
-            id
-          }
-          status  
         }
       }`,
-      variables: { joinRequestId }
+      variables: { joinRequestId, communityId, userId }
     },
     meta: {
       joinRequestId,
@@ -89,13 +90,6 @@ export function declineJoinRequest (joinRequestId) {
       query: `mutation ($joinRequestId: ID) {
         declineJoinRequest(joinRequestId: $joinRequestId) {
           id
-          user {
-            id
-          }
-          community {
-            id
-          }
-          status  
         }
       }`,
       variables: { joinRequestId }
@@ -106,4 +100,3 @@ export function declineJoinRequest (joinRequestId) {
     }
   }
 }
-

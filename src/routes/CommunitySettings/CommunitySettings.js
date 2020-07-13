@@ -46,10 +46,6 @@ export default class CommunitySettings extends Component {
 
     const { slug } = community
 
-    // Placeholders
-    const acceptJoinRequest = () => console.log('request accepted')
-    const declineJoinRequest = () => console.log('request declined')
-
     return <FullPageModal goToOnClose={`/c/${slug}`}
       content={[
         {
@@ -58,8 +54,6 @@ export default class CommunitySettings extends Component {
           component: <MembershipRequestsTab
             community={community}
             currentUser={currentUser}
-            acceptJoinRequest={acceptJoinRequest}
-            declineJoinRequest={declineJoinRequest}
           />
         },
         {
