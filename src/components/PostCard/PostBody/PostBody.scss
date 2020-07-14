@@ -3,6 +3,7 @@
 }
 
 .body {
+  flex: 1;
   margin-bottom: 36px;
   display: flex;
   composes: cardPadding;
