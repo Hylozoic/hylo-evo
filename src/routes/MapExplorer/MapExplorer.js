@@ -119,14 +119,14 @@ export default class MapExplorer extends React.Component {
 
   onMapClick = (info, e) => {
     if (info.objects) {
-      if (this.state.viewport.zoom > 22) {
+      if (this.state.viewport.zoom >= 20) {
         this.setState({ showDrawer: true })
       } else {
         this.setState({ viewport: {
           ...this.state.viewport,
           longitude: info.lngLat[0],
           latitude: info.lngLat[1],
-          zoom: this.state.viewport.zoom + 1,
+          zoom: info.expansionZoom,
           transitionDuration: 500,
           transitionInterpolator: new FlyToInterpolator()
         } })
