@@ -100,6 +100,7 @@
   color: $color-caribbean-green;
   padding: 0 8px 0 0;
   margin-right: 8px;
+  margin-bottom: 8px;
   cursor: pointer;
   display: inline-block;
 }
@@ -121,6 +122,19 @@
   padding: 10px 5px 5px;
 }
 
+.filterEx {
+  color: rgba(182, 237, 226, 1.000);
+  font-size: 18px;
+  position: relative;
+  top: 3px;
+}
+
+.textEx {
+  color: rgba(224, 229, 233, 1.000);
+  font-size: 18px;
+  position: relative;
+  top: 3px;
+}
 
 @media screen and (max-width: 600px) {
   .contentListContainer .contentCard:nth-child(even) {
