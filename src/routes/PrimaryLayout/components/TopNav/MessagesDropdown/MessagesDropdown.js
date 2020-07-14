@@ -45,20 +45,23 @@ export default class MessagesDropdown extends Component {
     )
   }
 
+  close = () => {
+    this.dropdown.current.toggle(false)
+  }
+
+  onClick = id => {
+    if (id) this.props.goToThread(id)
+    this.dropdown.current.toggle(false)
+  }
+
   render () {
     const {
       renderToggleChildren,
       threads,
       className,
-      goToThread,
       currentUser,
       pending
     } = this.props
-
-    const onClick = id => {
-      if (id) goToThread(id)
-      this.dropdown.current.toggle(false)
-    }
 
     let body
     if (pending) {
@@ -70,7 +73,7 @@ export default class MessagesDropdown extends Component {
         {threads.map(thread =>
           <MessagesDropdownItem
             thread={thread}
-            onClick={() => onClick(thread.id)}
+            onClick={() => this.onClick(thread.id)}
             currentUser={currentUser}
             key={thread.id}
           />
@@ -89,10 +92,10 @@ export default class MessagesDropdown extends Component {
       toggleChildren={renderToggleChildren(this.hasUnread())}
       header={
         <div styleName='header-content'>
-          <Link to={firstThreadUrl} styleName='open'>
+          <Link to={firstThreadUrl} styleName='open' onClick={this.close}>
             Open Messages
           </Link>
-          <Link to={newMessageUrl()} styleName='new'>New</Link>
+          <Link to={newMessageUrl()} styleName='new' onClick={this.close}>New</Link>
         </div>}
       body={body}
     />

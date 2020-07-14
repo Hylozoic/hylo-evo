@@ -39,6 +39,7 @@ export default class PeopleSelector extends React.Component {
   setCurrentMatch = (person) => this.setState(() => ({ currentMatch: person }))
 
   selectPerson = (person) => {
+    if (!person) return
     this.autocompleteInput.current.focus()
     if (this.props.selectedPeople.find(p => p.id === person.id)) return
     this.props.setPeopleSearch(null)
@@ -61,16 +62,18 @@ export default class PeopleSelector extends React.Component {
   }
 
   arrow (direction, event) {
-    event.preventDefault()
-    let delta = 0
-    const idx = this.props.matchingPeople.findIndex(m => m.id === this.state.currentMatch.id)
-    if (direction === 'up') {
-      if (idx > 0) delta = -1
+    if (this.props.matchingPeople) {
+      event.preventDefault()
+      let delta = 0
+      const idx = this.props.matchingPeople.findIndex(m => m.id === this.state.currentMatch.id)
+      if (direction === 'up') {
+        if (idx > 0) delta = -1
+      }
+      if (direction === 'down') {
+        if (idx < this.props.matchingPeople.length - 1) delta = 1
+      }
+      this.setCurrentMatch(this.props.matchingPeople[idx + delta])
     }
-    if (direction === 'down') {
-      if (idx < this.props.matchingPeople.length - 1) delta = 1
-    }
-    this.setCurrentMatch(this.props.matchingPeople[idx + delta])
   }
 
   autocompleteSearch = throttle(1000, this.props.fetchPeople)
