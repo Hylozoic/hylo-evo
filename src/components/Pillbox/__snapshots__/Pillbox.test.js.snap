@@ -6,14 +6,14 @@ exports[`Pill renders 1`] = `
   label="mountain climbing"
 >
   <div
-    data-for="pill-remove"
     data-stylename="styles.pill"
-    data-tip="Click to Remove"
-    onClick={[Function]}
     onMouseLeave={[Function]}
   >
     <span
+      data-for="pill-label"
       data-stylename="styles.display-label"
+      data-tip="Click to Search"
+      onClick={[Function]}
     >
       mountain climbing
     </span>
@@ -28,24 +28,30 @@ exports[`Pill renders when editable 1`] = `
   label="mountain climbing"
 >
   <div
-    data-for="pill-remove"
     data-stylename="styles.pill"
-    data-tip="Click to Remove"
-    onClick={[Function]}
     onMouseLeave={[Function]}
   >
     <span
+      data-for="pill-label"
       data-stylename="styles.display-label"
+      data-tip="Click to Search"
+      onClick={[Function]}
     >
       mountain climbing
     </span>
     <Icon
       data-stylename="styles.remove-label"
+      dataTip="Double click to delete"
+      dataTipFor="pill-label"
       name="Ex"
+      onClick={[Function]}
     >
       <span
         className="icon-Ex"
+        data-for="pill-label"
         data-stylename="icon"
+        data-tip="Double click to delete"
+        onClick={[Function]}
       />
     </Icon>
   </div>
@@ -92,7 +98,7 @@ exports[`Pillbox renders 1`] = `
     delayShow={500}
     disable={true}
     effect="solid"
-    id="pill-remove"
+    id="pill-label"
     insecure={true}
     place="top"
     resizeHide={true}

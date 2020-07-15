@@ -162,7 +162,7 @@ exports[`AddSkills renders correctly 1`] = `
           data-stylename="your-skills-label"
         >
           <span>
-            Your Skills:
+            Your Skills & Interests:
           </span>
         </div>
         <div
