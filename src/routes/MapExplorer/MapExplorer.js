@@ -233,7 +233,7 @@ export default class MapExplorer extends React.Component {
       </button>
       <div styleName={cx('featureTypeFilters', { 'featureFiltersOpen': showFeatureFilters })}>
         <h3>What do you want to see on the map?</h3>
-        {['event', 'request', 'offer', 'resource', 'member'].map(featureType => {
+        {['member', 'request', 'offer', 'resource', 'event'].map(featureType => {
           return <div
             key={featureType}
             ref={this.refs[featureType]}
