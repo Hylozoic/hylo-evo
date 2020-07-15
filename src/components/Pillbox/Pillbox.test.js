@@ -29,8 +29,9 @@ describe('Pill', () => {
       label='mountain climbing'
       editable
       onRemove={onRemove} />)
-    node.simulate('click')
-    node.simulate('click')
+    const deletePillIcon = node.find('Icon').first()
+    deletePillIcon.simulate('click')
+    deletePillIcon.simulate('click')
     expect(onRemove).toBeCalled()
   })
 })
