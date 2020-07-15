@@ -117,7 +117,8 @@ $wrapperBorderRadius: 8px;
   display: flex;
   flex-direction: row;
   &-column:last-child {
-    width: 100%;
+    flex: 1;
+    overflow: hidden;
   }
 }
 
