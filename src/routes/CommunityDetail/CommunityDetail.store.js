@@ -64,14 +64,10 @@ export function createJoinRequest (communityId, userId) {
             createdAt
             updatedAt
             status
-            error
           }
         }
       }`,
-      variables: {
-        communityId,
-        userId
-      }
+      variables: { communityId, userId }
     },
     meta: {
       communityId,
