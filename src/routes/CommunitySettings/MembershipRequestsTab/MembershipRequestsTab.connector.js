@@ -19,7 +19,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    acceptJoinRequest: (joinRequestId, communityId, userId) => dispatch(acceptJoinRequest(joinRequestId, communityId, userId)),
+    acceptJoinRequest: (joinRequestId, communityId, userId, moderatorId) => dispatch(acceptJoinRequest(joinRequestId, communityId, userId, moderatorId)),
     declineJoinRequest: (joinRequestId) => dispatch(declineJoinRequest(joinRequestId)),
     fetchJoinRequestsMaker: communityId => () => dispatch(fetchJoinRequests(communityId)),
     viewMembers: (slug) => dispatch(push(`/c/${slug}/members`))

@@ -28,8 +28,9 @@ export default class MembershipRequestsTab extends Component {
     this.props.fetchJoinRequests(communityId)
   }
 
-  submitAccept = (joinRequestId, communityId, userId) => {
-    this.props.acceptJoinRequest(joinRequestId, communityId, userId)
+  submitAccept = (joinRequestId, userId) => {
+    const { community, currentUser } = this.props
+    this.props.acceptJoinRequest(joinRequestId, community.id, userId, currentUser.id)
   }
   
   
@@ -51,9 +52,7 @@ export default class MembershipRequestsTab extends Component {
       ? <NewRequests 
           accept={this.submitAccept}
           decline={this.submitDecline} 
-          community={community}
-          joinRequests={joinRequests}
-          selectedRequestId={joinRequests[0].id}/>
+          joinRequests={joinRequests} />
     : <NoRequests community={community} viewMembers={this.viewMembers} />
   }
 }
@@ -77,25 +76,25 @@ export function NoRequests({ community, viewMembers }) {
   )
 }
 
-export function NewRequests({accept, decline, community, joinRequests}) {
+export function NewRequests({accept, decline, joinRequests}) {
   return (
     <React.Fragment>
       <div styleName='header'>
         <h2>People want to join your community!</h2>
-        <span styleName='response-time'>Your average response time: 1 day</span>
+        {/* TODO: For later implementation
+        <span styleName='response-time'>Your average response time: 1 day</span> */}
       </div>
       <div styleName='request-list'>
         {joinRequests.map(r => <JoinRequest
           accept={accept}
-          decline={decline} 
-          community={community}
+          decline={decline}
           request={r}/>)}
       </div>
     </React.Fragment>
   )
 }
 
-export function JoinRequest({ accept, decline, community, request }) {
+export function JoinRequest({ accept, decline, request }) {
   const { user } = request
 
   return (
@@ -108,7 +107,7 @@ export function JoinRequest({ accept, decline, community, request }) {
         </div>
       </div>
       <div styleName='action-buttons'>
-          <div styleName='accept' onClick={() => accept(request.id, community.id, user.id)}><Icon name='Checkmark' styleName='icon-green' />Welcome</div>
+          <div styleName='accept' onClick={() => accept(request.id, user.id)}><Icon name='Checkmark' styleName='icon-green' />Welcome</div>
           <div onClick={() => decline(request.id)}><Icon name='Ex' styleName='icon-red' />Decline</div>
         </div>
     </div>
