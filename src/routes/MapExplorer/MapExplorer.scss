@@ -1,16 +1,7 @@
-.MapExplorer-container {
+.container {
   position: relative;
   height: calc(100vh - 56px);
   overflow: hidden;
-}
-
-.MapExplorerItems {
-  margin: 0 auto;
-  overflow: auto; // prevent margin collapse
-}
-
-.MapExplorerItem {
-  margin: 0 $space-4x $space-6x;
 }
 
 .expanded {
