@@ -1,6 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { withResizeDetector } from 'react-resize-detector';
+import { withResizeDetector } from 'react-resize-detector'
 import { throttle, isEmpty, some } from 'lodash/fp'
 import cx from 'classnames'
 import { CENTER_COLUMN_ID, position } from 'util/scrolling'

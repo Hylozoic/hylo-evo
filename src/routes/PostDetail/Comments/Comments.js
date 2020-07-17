@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { withResizeDetector } from 'react-resize-detector';
+import { withResizeDetector } from 'react-resize-detector'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
 import PeopleTyping from 'components/PeopleTyping'
