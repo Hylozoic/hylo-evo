@@ -19,7 +19,7 @@ const sortOptions = [
   { id: 'votes', label: 'Popular' }
 ]
 
-export default class TabBar extends React.Component {
+class TabBar extends React.Component {
   static propTypes = {
     onChangeTab: PropTypes.func,
     onChangeSort: PropTypes.func,
@@ -35,9 +35,9 @@ export default class TabBar extends React.Component {
   }
 
   render () {
-    const { selectedTab, selectedSort, onChangeTab, onChangeSort } = this.props
+    const { forwardedRef, selectedTab, selectedSort, onChangeTab, onChangeSort } = this.props
 
-    return <div styleName='bar'>
+    return <div styleName='bar' ref={forwardedRef}>
       <div styleName='tabs'>
         <div styleName='filterLabel'>Post types: <strong>{selectedTab}</strong> <Icon name='ArrowDown' /></div>
         {tabs.map(({ id, label }) => <span
@@ -60,3 +60,5 @@ export default class TabBar extends React.Component {
     </div>
   }
 }
+
+export default React.forwardRef((props, ref) => <TabBar {...props} forwardedRef={ref} />)

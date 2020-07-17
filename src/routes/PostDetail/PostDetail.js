@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import ReactResizeDetector from 'react-resize-detector'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { get, throttle, isEmpty } from 'lodash/fp'
@@ -25,14 +26,14 @@ import PostPeopleDialog from 'components/PostPeopleDialog'
 import './PostDetail.scss'
 
 // the height of the header plus the padding-top
-const STICKY_HEADER_SCROLL_OFFSET = 78
+const STICKY_HEADER_SCROLL_OFFSET = 69
 
 export default class PostDetail extends Component {
   static propTypes = {
-    post: PropTypes.object,
-    routeParams: PropTypes.object,
     currentUser: PropTypes.object,
-    fetchPost: PropTypes.func
+    fetchPost: PropTypes.func,
+    post: PropTypes.object,
+    routeParams: PropTypes.object
   }
 
   state = {
@@ -45,23 +46,9 @@ export default class PostDetail extends Component {
     showPeopleDialog: false
   }
 
-  setHeaderStateFromDOM = () => {
-    const container = document.getElementById(DETAIL_COLUMN_ID)
-    if (!container) return
-    this.setState({
-      headerWidth: container.offsetWidth
-    })
-  }
-
-  setActivityStateFromDOM = activity => {
-    const element = ReactDOM.findDOMNode(activity)
-    const container = document.getElementById(DETAIL_COLUMN_ID)
-    if (!element || !container) return
-    const offset = position(element, container).y - STICKY_HEADER_SCROLL_OFFSET
-    this.setState({
-      activityWidth: element.offsetWidth,
-      activityScrollOffset: offset
-    })
+  constructor (props) {
+    super(props)
+    this.activityHeader = React.createRef()
   }
 
   componentDidMount () {
@@ -72,6 +59,17 @@ export default class PostDetail extends Component {
     if (this.props.id && this.props.id !== prevProps.id) {
       this.onPostIdChange()
     }
+  }
+
+  setComponentPositions = () => {
+    const container = document.getElementById(DETAIL_COLUMN_ID)
+    if (!container) return
+    const element = this.activityHeader.current
+    this.setState({
+      headerWidth: container.offsetWidth,
+      activityWidth: element ? element.offsetWidth : 0,
+      activityScrollOffset: element ? position(element, container).y - STICKY_HEADER_SCROLL_OFFSET : 0
+    })
   }
 
   onPostIdChange = () => {
@@ -155,7 +153,8 @@ export default class PostDetail extends Component {
       voteOnPost={voteOnPost}
       onClick={togglePeopleDialog} />
 
-    return <div styleName='post' ref={this.setHeaderStateFromDOM}>
+    return <ReactResizeDetector handleWidth handleHeight={false} onResize={this.setComponentPositions}>{({ width, height }) =>
+      <div styleName='post'>
       <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
       <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} />
       {atHeader && <div styleName='header-sticky' style={headerStyle}>
@@ -191,7 +190,7 @@ export default class PostDetail extends Component {
         communities={post.communities}
         slug={routeParams.slug}
         showBottomBorder />
-      <div styleName='activity-header' ref={this.setActivityStateFromDOM}>ACTIVITY</div>
+      <div styleName='activity-header' ref={this.activityHeader}>ACTIVITY</div>
       {postFooter}
       {showPeopleDialog && <PostPeopleDialog
         title={postPeopleDialogTitle}
@@ -204,6 +203,7 @@ export default class PostDetail extends Component {
       <Comments postId={post.id} slug={routeParams.slug} scrollToBottom={scrollToBottom} />
       <SocketSubscriber type='post' id={post.id} />
     </div>
+    }</ReactResizeDetector>
   }
 }
 

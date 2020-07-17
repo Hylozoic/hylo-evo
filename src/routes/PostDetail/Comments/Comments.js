@@ -1,34 +1,27 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { withResizeDetector } from 'react-resize-detector';
 import Comment from './Comment'
 import CommentForm from './CommentForm'
 import PeopleTyping from 'components/PeopleTyping'
 import './Comments.scss'
 const { array, func, object, number, string } = PropTypes
 
-export default class Comments extends Component {
+class Comments extends Component {
   static propTypes = {
     comments: array,
     commentsTotal: number,
     fetchComments: func,
+    height: number,
     createComment: func,
     currentUser: object,
     postId: string,
-    slug: string
+    slug: string,
+    width: number
   }
 
   static defaultProps = {
     comments: []
-  }
-
-  constructor (props) {
-    super(props)
-
-    this.comments = React.createRef()
-  }
-
-  componentDidMount () {
-    this.width = this.comments.current.offsetWidth
   }
 
   render () {
@@ -40,14 +33,15 @@ export default class Comments extends Component {
       currentUser,
       createComment,
       slug,
-      postId
+      postId,
+      width
     } = this.props
 
     const style = {
-      width: this.width + 'px'
+      width: width + 'px'
     }
 
-    return <div styleName='comments' ref={this.comments}>
+    return <div styleName='comments'>
       <ShowMore
         commentsLength={comments.length}
         total={total}
@@ -56,13 +50,15 @@ export default class Comments extends Component {
       {comments.map(c => <Comment comment={c} key={c.id} slug={slug} />)}
       <div styleName='form-wrapper' style={style}>
         <CommentForm currentUser={currentUser}
-          width={this.width}
+          width={width}
           createComment={createComment} postId={postId} />
         <PeopleTyping styleName='people-typing' />
       </div>
     </div>
   }
 }
+
+export default withResizeDetector(Comments, { handleHeight: false })
 
 export function ShowMore ({ commentsLength, total, hasMore, fetchComments }) {
   if (!hasMore) return null
