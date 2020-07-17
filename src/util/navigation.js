@@ -257,6 +257,10 @@ export function isJoinCommunityPath (path) {
   return (path.startsWith('/h/use-invitation'))
 }
 
+export function isPublicPath (path) {
+  return (path.startsWith('/public'))
+}
+
 export function isAllCommunitiesPath (path) {
   return (path.startsWith('/all'))
 }
