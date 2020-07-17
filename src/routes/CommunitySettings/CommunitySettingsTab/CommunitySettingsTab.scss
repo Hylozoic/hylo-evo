@@ -25,6 +25,25 @@
   /* empty */
 }
 
+.communityPublicToggle {
+  background: rgba(244, 247, 250, 0.56);
+  border: 1px dashed #E1E5E9;
+  padding: 25px;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.settingDisabled {
+  border: 1px solid $color-black-10;
+  border-radius: 3px;
+  padding: 2px 10px;
+  position: absolute;
+  transition: opacity .2s ease;
+  top: 20px;
+  right: 25px;
+  font-size: 14px;
+}
+
 .avatar {
   display: flex;
   align-items: flex-end;
@@ -57,7 +76,7 @@
   justify-content: space-between;
   height: 40px;
   line-height: 1;
-  margin: 0;
+  margin-bottom: 25px;
 }
 
 .request-setting {
@@ -77,6 +96,7 @@
 label {
   color: $color-regent-70;
   margin-left: 10px;
+  transition: color .25s ease;
 }
 
 .privacy-state {
@@ -85,6 +105,7 @@ label {
   color: $color-regent;
   font-size: 10px;
   font-style: bold;
+  transition: color .25s ease;
   padding: 2px 6px;
 }
 
@@ -109,7 +130,7 @@ label {
 .privacy-option {
   color: $color-rhino;
   font-size: 16px;
-  margin: 25px 0
+  flex-grow: 1;
 }
 
 .social-label {
@@ -125,4 +146,53 @@ label {
 
 .save-button {
   margin: 0 auto;
+}
+
+.on .settingDisabled {
+  opacity: 0;
+}
+
+.communityPublicToggle h3 {
+  color: $color-black-50;
+  padding-right: 80px;
+}
+
+.communityPublicToggle p {
+  color: $color-black-30;
+}
+
+.communityPublicToggle.on h3, .communityPublicToggle.on p {
+  color: $color-black;
+  transition: all .25s ease;
+  padding-right: 0;
+}
+
+.communityPublicToggle.on p {
+  color: $color-black-60;
+}
+
+.communityPublicToggle h3 {
+  font-size: 14px;
+}
+
+.communityPublicToggle p {
+  font-size: 12px;
+  border-bottom: 1px dashed #E1E5E9;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.request-setting label {
+    display: flex;
+    align-items: center;
+}
+
+.member-visibility {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.communitySettings {
+  padding-bottom: 150px;
 }
