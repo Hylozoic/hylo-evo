@@ -5,6 +5,7 @@ import {
   DECLINE_JOIN_REQUEST
 } from 'store/constants'
 import { createSelector as ormCreateSelector } from 'redux-orm'
+import fetchJoinRequestsQuery from 'graphql/queries/fetchJoinRequestsQuery'
 import orm from 'store/models'
 export const MODULE_NAME = 'MembershipRequestsTab'
 
@@ -35,28 +36,7 @@ export function fetchJoinRequests (communityId) {
   return {
     type: FETCH_JOIN_REQUESTS,
     graphql: {
-      query: `query ($communityId: ID) {
-        joinRequests (communityId: $communityId) {
-          total
-          hasMore
-          items {
-            id
-            status
-            createdAt    
-            user {
-              id
-              avatarUrl
-              name
-              skills {
-                items {
-                  id
-                  name
-                }
-              }
-            }
-          }
-        }
-      }`,
+      query: fetchJoinRequestsQuery,
       variables: { communityId }
     },
     meta: {
