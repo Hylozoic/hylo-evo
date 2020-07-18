@@ -94,7 +94,7 @@ class FeedList extends React.Component {
       targetRef
     } = this.props
     const { atTabBar, tabBarWidth } = this.state
-    const style = {
+    const stickyTabBarStyle = {
       width: tabBarWidth + 'px'
     }
     const isProject = routeParams.postTypeContext === 'project'
@@ -114,7 +114,7 @@ class FeedList extends React.Component {
             onChangeSort={changeSort}
             selectedSort={sortBy} />
         </div>
-        {atTabBar && <div styleName='tabbar-sticky' style={style}>
+        {atTabBar && <div styleName='tabbar-sticky' style={stickyTabBarStyle}>
           <TabBar onChangeTab={changeTab}
             selectedTab={postTypeFilter}
             onChangeSort={changeSort}
