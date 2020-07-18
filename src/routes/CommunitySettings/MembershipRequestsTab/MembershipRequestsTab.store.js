@@ -4,9 +4,7 @@ import {
   ACCEPT_JOIN_REQUEST,
   DECLINE_JOIN_REQUEST
 } from 'store/constants'
-import { createSelector as ormCreateSelector } from 'redux-orm'
 import fetchJoinRequestsQuery from 'graphql/queries/fetchJoinRequestsQuery'
-import orm from 'store/models'
 export const MODULE_NAME = 'MembershipRequestsTab'
 
 const defaultState = []
@@ -17,7 +15,7 @@ export default function reducer (state = defaultState, action) {
 
   switch (type) {
     case FETCH_JOIN_REQUESTS_PENDING:
-      return null;
+      return null
     case FETCH_JOIN_REQUESTS:
       const requests = payload.data.joinRequests.items || []
       return requests.filter(r => r.status === 0)

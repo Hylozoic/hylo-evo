@@ -4,7 +4,7 @@ import Avatar from 'components/Avatar'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import styles from './MembershipRequestsTab.scss'
+import styles from './MembershipRequestsTab.scss' // eslint-disable-line no-unused-vars
 import { jollyAxolotl } from 'util/assets'
 
 const { array, func, object } = PropTypes
@@ -32,8 +32,7 @@ export default class MembershipRequestsTab extends Component {
     const { community, currentUser } = this.props
     this.props.acceptJoinRequest(joinRequestId, community.id, userId, currentUser.id)
   }
-  
-  
+
   submitDecline = (joinRequestId) => {
     this.props.declineJoinRequest(joinRequestId)
   }
@@ -48,20 +47,21 @@ export default class MembershipRequestsTab extends Component {
 
     if (!joinRequests) return <Loading />
 
-    return  joinRequests.length
-      ? <NewRequests 
-          accept={this.submitAccept}
-          decline={this.submitDecline} 
-          joinRequests={joinRequests} />
-    : <NoRequests community={community} viewMembers={this.viewMembers} />
+    return joinRequests.length
+      ? <NewRequests
+        accept={this.submitAccept}
+        decline={this.submitDecline}
+        joinRequests={joinRequests} />
+      : <NoRequests community={community} viewMembers={this.viewMembers} />
   }
 }
 
-export function NoRequests({ community, viewMembers }) {
+export function NoRequests ({ community, viewMembers }) {
   return (
     <React.Fragment>
       <div styleName='no-requests'>
-        <img src={jollyAxolotl}/><br/>
+        <img src={jollyAxolotl} />
+        <br />
         <div>
           <h2>No new membership requests</h2>
           We'll notify you by email when someone wants to join <strong>{community.name}</strong>
@@ -70,13 +70,13 @@ export function NoRequests({ community, viewMembers }) {
           label='View Current Members'
           onClick={viewMembers}
           styleName='view-members'
-          />
-        </div>
+        />
+      </div>
     </React.Fragment>
   )
 }
 
-export function NewRequests({accept, decline, joinRequests}) {
+export function NewRequests ({ accept, decline, joinRequests }) {
   return (
     <React.Fragment>
       <div styleName='header'>
@@ -88,28 +88,28 @@ export function NewRequests({accept, decline, joinRequests}) {
         {joinRequests.map(r => <JoinRequest
           accept={accept}
           decline={decline}
-          request={r}/>)}
+          request={r} />)}
       </div>
     </React.Fragment>
   )
 }
 
-export function JoinRequest({ accept, decline, request }) {
+export function JoinRequest ({ accept, decline, request }) {
   const { user } = request
 
   return (
-    <div styleName="request">
+    <div styleName='request'>
       <div styleName='requestor'>
-        <Avatar avatarUrl={user.avatarUrl} url={`/m/${user.id}`} styleName='requestorAvatar'/>
+        <Avatar avatarUrl={user.avatarUrl} url={`/m/${user.id}`} styleName='requestorAvatar' />
         <div styleName='requestorInfo'>
           <div styleName='name'>{user.name}</div>
           <div styleName='skills'>{user.skills.items.map(({ name }) => <span>#{name}</span>)}</div>
         </div>
       </div>
       <div styleName='action-buttons'>
-          <div styleName='accept' onClick={() => accept(request.id, user.id)}><Icon name='Checkmark' styleName='icon-green' />Welcome</div>
-          <div onClick={() => decline(request.id)}><Icon name='Ex' styleName='icon-red' />Decline</div>
-        </div>
+        <div styleName='accept' onClick={() => accept(request.id, user.id)}><Icon name='Checkmark' styleName='icon-green' />Welcome</div>
+        <div onClick={() => decline(request.id)}><Icon name='Ex' styleName='icon-red' />Decline</div>
+      </div>
     </div>
   )
 }

@@ -9,12 +9,13 @@ import NotFound from 'components/NotFound'
 import c from './CommunityDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
 import get from 'lodash/get'
+import keyBy from 'lodash/keyBy'
 
 export const initialState = {
   errorMessage: undefined,
   successMessage: undefined,
   membership: undefined,
-  request: undefined,
+  request: undefined
 }
 export default class CommunityDetail extends Component {
   static propTypes = {
@@ -28,6 +29,7 @@ export default class CommunityDetail extends Component {
 
   componentDidMount () {
     this.onCommunityIdChange()
+    this.props.fetchJoinRequests()
   }
 
   componentDidUpdate (prevProps) {
@@ -38,6 +40,7 @@ export default class CommunityDetail extends Component {
 
   onCommunityIdChange = () => {
     this.props.fetchCommunity()
+    this.props.fetchJoinRequests()
     this.setState(initialState)
   }
 
@@ -50,7 +53,7 @@ export default class CommunityDetail extends Component {
         let errorMessage, successMessage
         if (res.error) errorMessage = `Error joining ${communityName}.`
         const membership = get(res, 'payload.data')
-        if (membership) successMessage = `You have joined ${communityName}`
+        if (membership) successMessage = `You have joined ${communityName}.`
         return this.setState({ errorMessage, successMessage, membership })
       })
   }
@@ -61,7 +64,7 @@ export default class CommunityDetail extends Component {
     requestToJoinCommunity(community.id, currentUser.id)
       .then(res => {
         let errorMessage, successMessage
-        if (res.error) errorMessage = `Error sending your join request. You may already have a request pending.`
+        if (res.error) errorMessage = `Error sending your join request.`
         const request = get(res, 'payload.data')
         if (request) successMessage = `Your membership request is pending.`
         return this.setState({ errorMessage, successMessage, request })
@@ -110,8 +113,8 @@ export default class CommunityDetail extends Component {
           </div>
           : ''
         }
-        { isMember 
-          ? <div styleName="c.existingMember">You are already a member of <Link to={`/c/${community.slug}`}>{community.name}</Link>!</div>
+        { isMember
+          ? <div styleName='c.existingMember'>You are already a member of <Link to={`/c/${community.slug}`}>{community.name}</Link>!</div>
           : this.renderCommunityDetails()
         }
       </div>
@@ -119,9 +122,12 @@ export default class CommunityDetail extends Component {
     </div>
   }
 
-  renderCommunityDetails() {
-    const { community } = this.props
+  renderCommunityDetails () {
+    const { community, currentUser, joinRequests } = this.props
     const { errorMessage, successMessage } = this.state
+    const usersWithPendingRequests = keyBy(joinRequests, 'user.id')
+    const request = usersWithPendingRequests[currentUser.id]
+    const displayMessage = errorMessage || successMessage || request
     return (
       <div>
         <div styleName='c.communityDetails'>
@@ -143,10 +149,10 @@ export default class CommunityDetail extends Component {
                 <span styleName='c.detailText'>Join to see</span>
               </div>
             }
+          </div>
         </div>
-      </div>
-        { errorMessage || successMessage
-          ? <Message errorMessage={errorMessage} successMessage={successMessage}/>
+        { displayMessage
+          ? <Message errorMessage={errorMessage} successMessage={successMessage} request={request} />
           : <Request community={community} joinCommunity={this.joinCommunity} requestToJoinCommunity={this.requestToJoinCommunity} />
         }
       </div>
@@ -154,21 +160,21 @@ export default class CommunityDetail extends Component {
   }
 }
 
-export function Request({community, joinCommunity, requestToJoinCommunity}) {
+export function Request ({ community, joinCommunity, requestToJoinCommunity }) {
   return (
     <div styleName={community.isAutoJoinable ? 'c.requestBarBordered' : 'c.requestBarBorderless'}>
-    {community.isAutoJoinable
-      ? <div styleName='c.requestOption'>
+      { community.isAutoJoinable
+        ? <div styleName='c.requestOption'>
           <div styleName='c.requestHint'>Anyone can join this community!</div>
           <div styleName='c.requestButton' onClick={joinCommunity}>Join <span styleName='c.requestCommunity'>{community.name}</span></div>
         </div>
-      : <div styleName='c.requestOption'><div styleName='c.requestButton' onClick={requestToJoinCommunity}>Request Membership in <span styleName='c.requestCommunity'>{community.name}</span></div></div>}
+        : <div styleName='c.requestOption'><div styleName='c.requestButton' onClick={requestToJoinCommunity}>Request Membership in <span styleName='c.requestCommunity'>{community.name}</span></div></div>
+      }
     </div>
   )
 }
 
-export function Message({ errorMessage, successMessage }) {
-  return (
-    <div styleName='c.message'> {errorMessage || successMessage} </div>
-  )
+export function Message ({ errorMessage, successMessage, request }) {
+  const message = request ? 'You have already requested to join this community.' : (errorMessage || successMessage)
+  return (<div styleName='c.message'>{message}</div>)
 }

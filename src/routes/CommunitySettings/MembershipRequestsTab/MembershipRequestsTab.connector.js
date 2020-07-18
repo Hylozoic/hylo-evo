@@ -8,12 +8,12 @@ import { get } from 'lodash/fp'
 import { push } from 'connected-react-router'
 
 export function mapStateToProps (state, props) {
-  const { community, joinRequests } = props
-  const { JoinRequests } = state
+  const { community } = props
+  const { MembershipRequests } = state
 
   return {
     communityId: get('id', community),
-    joinRequests: JoinRequests
+    joinRequests: MembershipRequests
   }
 }
 

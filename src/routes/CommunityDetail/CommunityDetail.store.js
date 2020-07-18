@@ -1,3 +1,6 @@
+import { FETCH_JOIN_REQUESTS } from 'store/constants'
+import fetchJoinRequestsQuery from 'graphql/queries/fetchJoinRequestsQuery'
+
 export const MODULE_NAME = 'CommunityDetail'
 export const CREATE_JOIN_REQUEST = `${MODULE_NAME}/CREATE_JOIN_REQUEST`
 export const CREATE_JOIN_REQUEST_PENDING = `${MODULE_NAME}/CREATE_JOIN_REQUEST_PENDING`
@@ -8,12 +11,30 @@ export const JOIN_COMMUNITY_PENDING = `${MODULE_NAME}/JOIN_COMMUNITY_PENDING`
 const defaultState = []
 
 export default function reducer (state = defaultState, action) {
-  const { error, type } = action
+  const { error, payload, type } = action
   if (error) return state
-
   switch (type) {
+    case FETCH_JOIN_REQUESTS:
+      const requests = payload.data.joinRequests.items || []
+      return requests.filter(r => r.status === 0)
+    case CREATE_JOIN_REQUEST:
+      const { request } = payload.data.createJoinRequest
+      return request
     default:
       return state
+  }
+}
+
+export function fetchJoinRequests (communityId) {
+  return {
+    type: FETCH_JOIN_REQUESTS,
+    graphql: {
+      query: fetchJoinRequestsQuery,
+      variables: { communityId }
+    },
+    meta: {
+      communityId
+    }
   }
 }
 
