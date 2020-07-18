@@ -1,13 +1,21 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Avatar from 'components/Avatar'
+import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
 import c from './CommunityDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
+import get from 'lodash/get'
 
+export const initialState = {
+  errorMessage: undefined,
+  successMessage: undefined,
+  membership: undefined,
+  request: undefined,
+}
 export default class CommunityDetail extends Component {
   static propTypes = {
     community: PropTypes.object,
@@ -15,6 +23,8 @@ export default class CommunityDetail extends Component {
     currentUser: PropTypes.object,
     fetchCommunity: PropTypes.func
   }
+
+  state = {}
 
   componentDidMount () {
     this.onCommunityIdChange()
@@ -28,6 +38,7 @@ export default class CommunityDetail extends Component {
 
   onCommunityIdChange = () => {
     this.props.fetchCommunity()
+    this.setState(initialState)
   }
 
   joinCommunity = () => {
@@ -35,15 +46,12 @@ export default class CommunityDetail extends Component {
 
     joinCommunity(community.id, currentUser.id)
       .then(res => {
-        const { membership } = res.payload.data.joinCommunity
+        const communityName = community.name || 'this community'
         let errorMessage, successMessage
-        if (membership) successMessage = 'Joined community'
-        else errorMessage = 'Error joining community'
-        this.setState({
-          errorMessage,
-          successMessage,
-          membership
-        })
+        if (res.error) errorMessage = `Error joining ${communityName}.`
+        const membership = get(res, 'payload.data')
+        if (membership) successMessage = `You have joined ${communityName}`
+        return this.setState({ errorMessage, successMessage, membership })
       })
   }
 
@@ -52,21 +60,18 @@ export default class CommunityDetail extends Component {
 
     requestToJoinCommunity(community.id, currentUser.id)
       .then(res => {
-        const { request } = res.payload.data.createJoinRequest
         let errorMessage, successMessage
-        if (request) successMessage = 'Request sent'
-        else errorMessage = 'Error sending your join request'
-        this.setState({
-          errorMessage,
-          successMessage,
-          request
-        })
+        if (res.error) errorMessage = `Error sending your join request. You may already have a request pending.`
+        const request = get(res, 'payload.data')
+        if (request) successMessage = `Your membership request is pending.`
+        return this.setState({ errorMessage, successMessage, request })
       })
   }
 
   render () {
     const {
       community,
+      currentUser,
       pending,
       onClose
     } = this.props
@@ -75,6 +80,8 @@ export default class CommunityDetail extends Component {
     if (pending) return <Loading />
 
     const topics = community && community.communityTopics
+
+    const isMember = (community.members || []).map(m => m.id).includes(currentUser.id)
 
     return <div styleName='c.community'>
       <div styleName='c.communityDetailHeader' style={{ backgroundImage: `url(${community.bannerUrl})` }}>
@@ -103,6 +110,20 @@ export default class CommunityDetail extends Component {
           </div>
           : ''
         }
+        { isMember 
+          ? <div styleName="c.existingMember">You are already a member of <Link to={`/c/${community.slug}`}>{community.name}</Link>!</div>
+          : this.renderCommunityDetails()
+        }
+      </div>
+      <SocketSubscriber type='community' id={community.id} />
+    </div>
+  }
+
+  renderCommunityDetails() {
+    const { community } = this.props
+    const { errorMessage, successMessage } = this.state
+    return (
+      <div>
         <div styleName='c.communityDetails'>
           <div styleName='c.detailContainer'>
             <div styleName='c.communitySubtitle'>Recent Posts</div>
@@ -122,18 +143,32 @@ export default class CommunityDetail extends Component {
                 <span styleName='c.detailText'>Join to see</span>
               </div>
             }
-          </div>
-        </div>
-        <div styleName={community.isAutoJoinable ? 'c.requestBarBordered' : 'c.requestBarBorderless'}>
-          {community.isAutoJoinable
-            ? <div styleName='c.requestOption'>
-              <div styleName='c.requestHint'>Anyone can join this community!</div>
-              <div styleName='c.requestButton' onClick={this.joinCommunity}>Join <span styleName='c.requestCommunity'>{community.name}</span></div>
-            </div>
-            : <div styleName='c.requestOption'><div styleName='c.requestButton' onClick={this.requestToJoinCommunity}>Request Membership in <span styleName='c.requestCommunity'>{community.name}</span></div></div>}
         </div>
       </div>
-      <SocketSubscriber type='community' id={community.id} />
-    </div>
+        { errorMessage || successMessage
+          ? <Message errorMessage={errorMessage} successMessage={successMessage}/>
+          : <Request community={community} joinCommunity={this.joinCommunity} requestToJoinCommunity={this.requestToJoinCommunity} />
+        }
+      </div>
+    )
   }
+}
+
+export function Request({community, joinCommunity, requestToJoinCommunity}) {
+  return (
+    <div styleName={community.isAutoJoinable ? 'c.requestBarBordered' : 'c.requestBarBorderless'}>
+    {community.isAutoJoinable
+      ? <div styleName='c.requestOption'>
+          <div styleName='c.requestHint'>Anyone can join this community!</div>
+          <div styleName='c.requestButton' onClick={joinCommunity}>Join <span styleName='c.requestCommunity'>{community.name}</span></div>
+        </div>
+      : <div styleName='c.requestOption'><div styleName='c.requestButton' onClick={requestToJoinCommunity}>Request Membership in <span styleName='c.requestCommunity'>{community.name}</span></div></div>}
+    </div>
+  )
+}
+
+export function Message({ errorMessage, successMessage }) {
+  return (
+    <div styleName='c.message'> {errorMessage || successMessage} </div>
+  )
 }

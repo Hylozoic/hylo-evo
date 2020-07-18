@@ -44,9 +44,14 @@
   padding: 25px 30px;
 }
 
+.existingMember {
+  text-align: center;
+}
+
 .communityDescription {
   color: $color-regent;
   font-size: 16px;
+  margin-bottom: 18px;
 }
 
 .communityTopics {
@@ -148,4 +153,15 @@
 
 .requestCommunity {
   font-weight: bold;
+}
+
+.message {
+  border-radius: 5px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  background: #2A4059;
+  color: #FFFFFF;
+  padding: 14px 0px;
 }
