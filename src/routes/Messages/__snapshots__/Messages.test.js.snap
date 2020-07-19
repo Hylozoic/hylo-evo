@@ -9,7 +9,9 @@ exports[`renders entire component when not loading 1`] = `
   >
     <withRouter(ThreadList)
       data-stylename="left-column"
+      messagesOpen={false}
       threads={Array []}
+      toggleMessages={[Function]}
     />
     <div
       data-stylename="right-column"
@@ -17,7 +19,6 @@ exports[`renders entire component when not loading 1`] = `
       <div
         data-stylename="thread"
       >
-        <Header />
         <MessageSection
           fetchMessages={[Function]}
           messages={Array []}

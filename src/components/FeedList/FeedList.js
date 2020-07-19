@@ -1,5 +1,4 @@
 import React from 'react'
-import { withResizeDetector } from 'react-resize-detector'
 import { throttle, isEmpty, some } from 'lodash/fp'
 import cx from 'classnames'
 import { CENTER_COLUMN_ID, position } from 'util/scrolling'
@@ -10,7 +9,7 @@ import ScrollListener from 'components/ScrollListener'
 import Loading from 'components/Loading'
 import './FeedList.scss'
 
-class FeedList extends React.Component {
+export default class FeedList extends React.Component {
   static defaultProps = {
     posts: [],
     routeParams: {},
@@ -139,5 +138,3 @@ class FeedList extends React.Component {
     </div>
   }
 }
-
-export default withResizeDetector(FeedList, { handleHeight: false })

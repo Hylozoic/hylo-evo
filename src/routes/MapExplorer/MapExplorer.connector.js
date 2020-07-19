@@ -90,7 +90,7 @@ export function mapStateToProps (state, props) {
   const publicCommunities = getPublicCommunities(state, fetchPublicCommunitiesParam)
 
   const me = getMe(state)
-  const centerLocation = community && community.locationObject ? community.locationObject.center : me.locationObject ? me.locationObject.center : null
+  const centerLocation = community && community.locationObject ? community.locationObject.center : me && me.locationObject ? me.locationObject.center : null
 
   return {
     centerLocation: centerLocation || { lat: 35.442845, lng: 7.916598 },

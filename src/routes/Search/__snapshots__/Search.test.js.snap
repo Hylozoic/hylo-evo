@@ -80,7 +80,9 @@ exports[`PersonCard renders correctly 1`] = `
 `;
 
 exports[`Search matches the latest snapshot 1`] = `
-<withRouter(Connect(FullPageModal))>
+<withRouter(Connect(FullPageModal))
+  leftSideBarHidden={true}
+>
   <div
     data-stylename="search"
   >

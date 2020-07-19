@@ -25,7 +25,7 @@ it('shows nothing for a community route if the community and currentUser are not
 it('shows normal children for a community route if the community is loaded', () => {
   const wrapper = shallow(<PrimaryLayout
     isCommunityRoute
-    location={{ pathname: '/' }}
+    location={{ pathname: '/', search: '' }}
     community={{ id: '1' }}
     currentUser={{}} />, { disableLifecycleMethods: true })
   expect(wrapper.name()).toEqual('div')

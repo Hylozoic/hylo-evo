@@ -7,10 +7,15 @@ exports[`renders correctly for All Communities 1`] = `
   <div
     data-stylename="s.header"
   >
-    <Icon
-      data-stylename="s.icon"
-      name="Topics"
-    />
+    <Link
+      replace={false}
+      to="/c/foo/topics"
+    >
+      <Icon
+        data-stylename="s.icon"
+        name="Topics"
+      />
+    </Link>
     <span
       data-stylename="s.title"
     >
@@ -155,10 +160,15 @@ exports[`renders correctly for a community 1`] = `
   <div
     data-stylename="s.header"
   >
-    <Icon
-      data-stylename="s.icon"
-      name="Topics"
-    />
+    <Link
+      replace={false}
+      to="/c/foo/topics"
+    >
+      <Icon
+        data-stylename="s.icon"
+        name="Topics"
+      />
+    </Link>
     <span
       data-stylename="s.title"
     >

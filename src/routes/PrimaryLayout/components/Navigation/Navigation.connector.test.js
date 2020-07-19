@@ -10,6 +10,9 @@ describe('mapStateToProps', () => {
     const props = {
       match: {
         params: { slug: 'foo' }
+      },
+      location: {
+        pathname: ''
       }
     }
 

@@ -1,11 +1,12 @@
 import orm from 'store/models'
 import { mapStateToProps } from './MapExplorer.connector'
 import { buildKey } from 'store/reducers/queryResults'
-import { FETCH_POSTS } from 'store/constants'
+import { FETCH_POSTS_MAP } from 'store/constants'
 import { times } from 'lodash/fp'
 
 describe('mapStateToProps', () => {
   let state
+  let props
 
   beforeEach(() => {
     const session = orm.session(orm.getEmptyState())
@@ -14,42 +15,65 @@ describe('mapStateToProps', () => {
       session.Post.create({ id: i.toString(), communities: ['1'] })
     }, 5)
 
+    props = {
+      location: { search: '' },
+      match: {
+        params: { 'slug': 'foo' }
+      },
+    }
+
     state = {
       orm: session.state,
       pending: {},
+      MapExplorer: {
+        fetchPostsParam: { },
+        clientFilterParams: {
+          featureTypes: { request: true, offer: true },
+          search: '',
+          topics: []
+        }
+      },
       queryResults: {
-        [buildKey(FETCH_POSTS, { filter: 'foo' })]: {
-          ids: ['1', '3', '2'],
-          hasMore: true
+        [buildKey(FETCH_POSTS_MAP, { slug: 'foo' })]: {
+          ids: ['1', '3', '2']
         }
       }
     }
   })
 
-  it('returns empty posts if no results exist', () => {
-    expect(mapStateToProps(state, { postTypeFilter: 'bar' })).toHaveProperty('posts', [])
-  })
-
   it('returns posts in the correct order', () => {
-    expect(mapStateToProps(state, { postTypeFilter: 'foo' })).toEqual(
+    expect(mapStateToProps(state, props)).toEqual(
       expect.objectContaining({
-        hasMore: true,
+        centerLocation: { lat: 35.442845, lng: 7.916598},
+        features: [],
+        fetchMembersParam: {boundingBox: undefined, slug: "foo", subject: "community"},
+        fetchPostsParam: {boundingBox: undefined, slug: "foo", subject: "community"},
+        fetchPublicCommunitiesParam: {boundingBox: undefined, subject: "community"},
+        filters: {
+          featureTypes: { offer: true, request: true},
+          search: "",
+          topics: []
+        },
+        members: [],
         pending: undefined,
-        posts: [
-          expect.objectContaining({ id: '1' }),
-          expect.objectContaining({ id: '3' }),
-          expect.objectContaining({ id: '2' })
-        ]
+        posts: [],
+        publicCommunities: [],
+        querystringParams: {},
+        routeParams: { slug: "foo"},
+        topics: [],
+        zoom: 0
       })
     )
   })
 
-  it('checks if FETCH_POSTS is pending', () => {
+  // TODO: one with posts and members and communities
+
+  it('checks if FETCH_POSTS_MAP is pending', () => {
     state = {
       ...state,
-      pending: { [FETCH_POSTS]: true }
+      pending: { [FETCH_POSTS_MAP]: true }
     }
-    const result = mapStateToProps(state, { id: 'foo' })
+    const result = mapStateToProps(state, props)
     expect(result).toMatchObject({ pending: true })
   })
 })

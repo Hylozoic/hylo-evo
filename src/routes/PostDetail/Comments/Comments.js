@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { withResizeDetector } from 'react-resize-detector'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
 import PeopleTyping from 'components/PeopleTyping'
 import './Comments.scss'
 const { array, func, object, number, string } = PropTypes
 
-class Comments extends Component {
+export default class Comments extends Component {
   static propTypes = {
     comments: array,
     commentsTotal: number,
@@ -57,8 +56,6 @@ class Comments extends Component {
     </div>
   }
 }
-
-export default withResizeDetector(Comments, { handleHeight: false })
 
 export function ShowMore ({ commentsLength, total, hasMore, fetchComments }) {
   if (!hasMore) return null
