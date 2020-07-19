@@ -8,6 +8,7 @@ posts(
   search: $search,
   filter: $filter,
   topic: $topic,
+  boundingBox: $boundingBox,
   order: "desc"
 ) {
   hasMore

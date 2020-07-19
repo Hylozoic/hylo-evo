@@ -10,7 +10,7 @@ export default function PostLabel ({ type, className }) {
   let styleName = cx('label', type)
   return <div styleName={styleName} className={className}>
     <div className='label-inner'>{type === 'completed' &&
-    <Icon name='star-icon' styleName='starIcon' />} {type}
+    <Icon name='Star' styleName='starIcon' />} {type}
     </div>
   </div>
 }

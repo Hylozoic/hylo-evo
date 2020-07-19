@@ -8,7 +8,6 @@ function SwitchStyled ({ onChange, checked, disabled, backgroundColor, name }) {
   }
   return (
     <div styleName={cx('container', { containerDisabled: disabled })} onClick={disabled ? null : handleToggle}>
-
       <input type='hidden' name={name} defaultChecked={checked} />
       <span styleName={'track'} style={{ backgroundColor, opacity: checked ? 1 : 0.4 }} />
       <span styleName={cx('button', { buttonChecked: checked })} />

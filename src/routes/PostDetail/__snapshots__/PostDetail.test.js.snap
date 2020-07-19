@@ -1,101 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PostDetail renders correctly 1`] = `
-<div
-  data-stylename="post"
+<ResizeDetector
+  handleHeight={false}
+  handleWidth={true}
+  nodeType="div"
+  onResize={[Function]}
+  querySelector={null}
+  refreshRate={1000}
+  skipOnMount={false}
+  targetDomEl={null}
+  targetRef={null}
 >
-  <ScrollListener
-    elementId="detail-column"
-    onScroll={[Function]}
-  />
-  <Connect(PostHeader)
-    data-stylename="header"
-    details="the body of the post"
-    id="91"
-    imageUrl="foo.jpg"
-    members={Array []}
-    myVote={true}
-    routeParams={
-      Object {
-        "slug": "foo",
-      }
-    }
-    tags={
-      Array [
-        "singing",
-        "dancing",
-      ]
-    }
-    topicsOnNewline={true}
-    votesTotal={7}
-  />
-  <Connect(PostImage)
-    data-stylename="image"
-    linked={true}
-    postId="91"
-  />
-  <PostTags
-    tags={
-      Array [
-        "singing",
-        "dancing",
-      ]
-    }
-  />
-  <Connect(PostBody)
-    data-stylename="body"
-    details="the body of the post"
-    expanded={true}
-    id="91"
-    imageUrl="foo.jpg"
-    members={Array []}
-    myVote={true}
-    routeParams={
-      Object {
-        "slug": "foo",
-      }
-    }
-    slug="foo"
-    tags={
-      Array [
-        "singing",
-        "dancing",
-      ]
-    }
-    votesTotal={7}
-  />
-  <Connect(PostCommunities)
-    showBottomBorder={true}
-    slug="foo"
-  />
-  <div
-    data-stylename="activity-header"
-  >
-    ACTIVITY
-  </div>
-  <PostFooter
-    details="the body of the post"
-    id="91"
-    imageUrl="foo.jpg"
-    members={Array []}
-    myVote={true}
-    tags={
-      Array [
-        "singing",
-        "dancing",
-      ]
-    }
-    voteOnPost={[MockFunction]}
-    votesTotal={7}
-  />
-  <Connect(Comments)
-    postId="91"
-    scrollToBottom={[Function]}
-    slug="foo"
-  />
-  <Connect(SocketSubscriber)
-    id="91"
-    type="post"
-  />
-</div>
+  <Component />
+</ResizeDetector>
 `;

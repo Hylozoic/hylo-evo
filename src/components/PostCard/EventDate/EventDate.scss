@@ -1,5 +1,5 @@
 .eventDate {
-  border: 3px solid $color-moon-raker;
+  border: 3px solid $color-events-20;
   border-radius: 4px;
   width: 45px;
   height: 45px;
@@ -11,12 +11,12 @@
 
 .month {
   text-transform: uppercase;
-  color: $color-medium-purple;
+  color: $color-events;
   font-size: 12px !important;
   line-height: 0.6;
   font-size: 20px;
 }
 
 .day {
-  color: $color-medium-purple;
+  color: $color-events;
 }

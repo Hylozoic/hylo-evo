@@ -10,3 +10,13 @@
     }
   }
 }
+
+
+@media screen and (max-width: 650px) {
+  .close-messages {
+    position: fixed;
+    left: 10px;
+    z-index: 5;
+    top: 20px;
+  }
+}

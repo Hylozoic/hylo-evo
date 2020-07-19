@@ -30,7 +30,6 @@ describe('mapDispatchToProps', () => {
     expect(result).toMatchSnapshot()
   })
 
-
   it('returns the expected action for fetchPeople', () => {
     const dispatch = r => r
     const result = mapDispatchToProps(dispatch)

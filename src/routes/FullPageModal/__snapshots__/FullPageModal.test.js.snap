@@ -12,7 +12,12 @@ exports[`FullPageModal renders correctly when passed children 1`] = `
     >
       <div
         data-stylename="left-sidebar-fixed"
-      />
+      >
+        <Icon
+          data-stylename="arrowDown"
+          name="ArrowDown"
+        />
+      </div>
     </div>
     <div
       data-stylename="center"
@@ -51,7 +56,12 @@ exports[`FullPageModal renders correctly with a single component 1`] = `
     >
       <div
         data-stylename="left-sidebar-fixed"
-      />
+      >
+        <Icon
+          data-stylename="arrowDown"
+          name="ArrowDown"
+        />
+      </div>
     </div>
     <div
       data-stylename="center"
@@ -110,6 +120,10 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
         >
           Communities
         </NavLink>
+        <Icon
+          data-stylename="arrowDown"
+          name="ArrowDown"
+        />
       </div>
     </div>
     <div

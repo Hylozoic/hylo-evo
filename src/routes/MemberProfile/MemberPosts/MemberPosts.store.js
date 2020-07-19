@@ -12,7 +12,8 @@ const memberPostsQuery =
   $search: String,
   $filter: String,
   $first: Int,
-  $topic: ID
+  $topic: ID,
+  $boundingBox: [PointInput]
 ) {
   person (id: $id) {
     id

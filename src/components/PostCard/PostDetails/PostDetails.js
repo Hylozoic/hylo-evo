@@ -3,6 +3,7 @@ import path from 'path'
 import { pick, get } from 'lodash/fp'
 import Highlight from 'components/Highlight'
 import Icon from 'components/Icon'
+import cx from 'classnames'
 import ClickCatcher from 'components/ClickCatcher'
 import LinkPreview from '../LinkPreview'
 import PostCompletion from '../PostCompletion'
@@ -15,6 +16,7 @@ export default function PostDetails ({
   details,
   linkPreview,
   slug,
+  constrained,
   expanded,
   highlightProps,
   fileAttachments,
@@ -34,7 +36,8 @@ export default function PostDetails ({
   const isFulfilled = get('fulfilledAt', post) !== null
 
   return <Highlight {...highlightProps}>
-    <div styleName='postDetails'>
+    <div styleName={cx('postDetails', { constrained })}>
+      <div styleName='fade' />
       {details && !hideDetails &&
         <ClickCatcher>
           <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />

@@ -11,6 +11,19 @@
   padding: 16px 0 32px 0;
 }
 
+.search-results::-webkit-scrollbar {
+  background-color:transparent;
+  width: 5px;
+  border-radius: 5px;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+  background-color: rgba(200,200,200,.5   );
+  outline: none;
+  border-radius: 3px;
+}
+
+
 // Highlight
 .highlight {
   background-color: $color-caribbean-green-20;
@@ -108,4 +121,11 @@
 
 .person-skill {
   margin-left: auto;
+}
+
+@media screen and (max-width: 425px) {
+  .input {
+    width: 100%;
+    font-size: 24px;
+  }
 }

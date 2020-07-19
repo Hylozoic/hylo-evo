@@ -15,6 +15,7 @@ export default class PostBody extends PureComponent {
       routeParams,
       expanded,
       className,
+      constrained,
       highlightProps,
       fulfillPost,
       unfulfillPost,
@@ -22,12 +23,16 @@ export default class PostBody extends PureComponent {
       ...post
     } = this.props
 
-    return <div styleName={cx('body', { smallMargin: !expanded })} className={className}>
-      <PostTitle {...post} highlightProp={highlightProps} />
+    return <div styleName={cx('body', { smallMargin: !expanded }, { constrained })} className={className}>
+      <PostTitle {...post}
+        highlightProp={highlightProps}
+        constrained={constrained}
+      />
       <PostDetails {...post}
         slug={slug}
         highlightProp={highlightProps}
         expanded={expanded}
+        constrained={constrained}
         fulfillPost={fulfillPost}
         unfulfillPost={unfulfillPost}
         canEdit={canEdit} />

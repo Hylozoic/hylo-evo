@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+import ReactResizeDetector from 'react-resize-detector'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { get, throttle, isEmpty } from 'lodash/fp'
@@ -25,14 +25,14 @@ import PostPeopleDialog from 'components/PostPeopleDialog'
 import './PostDetail.scss'
 
 // the height of the header plus the padding-top
-const STICKY_HEADER_SCROLL_OFFSET = 78
+const STICKY_HEADER_SCROLL_OFFSET = 69
 
 export default class PostDetail extends Component {
   static propTypes = {
-    post: PropTypes.object,
-    routeParams: PropTypes.object,
     currentUser: PropTypes.object,
-    fetchPost: PropTypes.func
+    fetchPost: PropTypes.func,
+    post: PropTypes.object,
+    routeParams: PropTypes.object
   }
 
   state = {
@@ -45,23 +45,9 @@ export default class PostDetail extends Component {
     showPeopleDialog: false
   }
 
-  setHeaderStateFromDOM = () => {
-    const container = document.getElementById(DETAIL_COLUMN_ID)
-    if (!container) return
-    this.setState({
-      headerWidth: container.offsetWidth
-    })
-  }
-
-  setActivityStateFromDOM = activity => {
-    const element = ReactDOM.findDOMNode(activity)
-    const container = document.getElementById(DETAIL_COLUMN_ID)
-    if (!element || !container) return
-    const offset = position(element, container).y - STICKY_HEADER_SCROLL_OFFSET
-    this.setState({
-      activityWidth: element.offsetWidth,
-      activityScrollOffset: offset
-    })
+  constructor (props) {
+    super(props)
+    this.activityHeader = React.createRef()
   }
 
   componentDidMount () {
@@ -72,6 +58,17 @@ export default class PostDetail extends Component {
     if (this.props.id && this.props.id !== prevProps.id) {
       this.onPostIdChange()
     }
+  }
+
+  setComponentPositions = () => {
+    const container = document.getElementById(DETAIL_COLUMN_ID)
+    if (!container) return
+    const element = this.activityHeader.current
+    this.setState({
+      headerWidth: container.offsetWidth,
+      activityWidth: element ? element.offsetWidth : 0,
+      activityScrollOffset: element ? position(element, container).y - STICKY_HEADER_SCROLL_OFFSET : 0
+    })
   }
 
   onPostIdChange = () => {
@@ -155,55 +152,57 @@ export default class PostDetail extends Component {
       voteOnPost={voteOnPost}
       onClick={togglePeopleDialog} />
 
-    return <div styleName='post' ref={this.setHeaderStateFromDOM}>
-      <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
-      <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} />
-      {atHeader && <div styleName='header-sticky' style={headerStyle}>
+    return <ReactResizeDetector handleWidth handleHeight={false} onResize={this.setComponentPositions}>{({ width, height }) =>
+      <div styleName='post'>
+        <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
         <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} />
-      </div>}
-      <PostImage postId={post.id} styleName='image' linked />
-      <PostTags tags={post.tags} />
-      {isEvent && <EventBody
-        styleName='body'
-        expanded
-        slug={routeParams.slug}
-        event={post}
-        respondToEvent={respondToEvent} />}
-      {!isEvent && <PostBody
-        styleName='body'
-        expanded
-        routeParams={routeParams}
-        slug={routeParams.slug}
-        {...post} />}
-      {isProject && <div styleName='join-project-button-container'>
-        <JoinProjectButton
-          joinProject={joinProject}
-          leaveProject={leaveProject}
-          leaving={isProjectMember} />
-      </div>}
-      {isProject && acceptContributions && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) &&
-        <ProjectContributions
-          postId={post.id}
-          totalContributions={totalContributions}
-          processStripeToken={processStripeToken} />}
-      <PostCommunities
-        isPublic={post.isPublic}
-        communities={post.communities}
-        slug={routeParams.slug}
-        showBottomBorder />
-      <div styleName='activity-header' ref={this.setActivityStateFromDOM}>ACTIVITY</div>
-      {postFooter}
-      {showPeopleDialog && <PostPeopleDialog
-        title={postPeopleDialogTitle}
-        members={people}
-        onClose={togglePeopleDialog} />}
-      {atActivity && <div styleName='activity-sticky' style={activityStyle}>
-        <div styleName='activity-header'>ACTIVITY</div>
+        {atHeader && <div styleName='header-sticky' style={headerStyle}>
+          <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} />
+        </div>}
+        <PostImage postId={post.id} styleName='image' linked />
+        <PostTags tags={post.tags} />
+        {isEvent && <EventBody
+          styleName='body'
+          expanded
+          slug={routeParams.slug}
+          event={post}
+          respondToEvent={respondToEvent} />}
+        {!isEvent && <PostBody
+          styleName='body'
+          expanded
+          routeParams={routeParams}
+          slug={routeParams.slug}
+          {...post} />}
+        {isProject && <div styleName='join-project-button-container'>
+          <JoinProjectButton
+            joinProject={joinProject}
+            leaveProject={leaveProject}
+            leaving={isProjectMember} />
+        </div>}
+        {isProject && acceptContributions && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) &&
+          <ProjectContributions
+            postId={post.id}
+            totalContributions={totalContributions}
+            processStripeToken={processStripeToken} />}
+        <PostCommunities
+          isPublic={post.isPublic}
+          communities={post.communities}
+          slug={routeParams.slug}
+          showBottomBorder />
+        <div styleName='activity-header' ref={this.activityHeader}>ACTIVITY</div>
         {postFooter}
-      </div>}
-      <Comments postId={post.id} slug={routeParams.slug} scrollToBottom={scrollToBottom} />
-      <SocketSubscriber type='post' id={post.id} />
-    </div>
+        {showPeopleDialog && <PostPeopleDialog
+          title={postPeopleDialogTitle}
+          members={people}
+          onClose={togglePeopleDialog} />}
+        {atActivity && <div styleName='activity-sticky' style={activityStyle}>
+          <div styleName='activity-header'>ACTIVITY</div>
+          {postFooter}
+        </div>}
+        <Comments postId={post.id} slug={routeParams.slug} scrollToBottom={scrollToBottom} />
+        <SocketSubscriber type='post' id={post.id} />
+      </div>
+    }</ReactResizeDetector>
   }
 }
 

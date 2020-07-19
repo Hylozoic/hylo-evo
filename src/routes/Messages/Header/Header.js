@@ -53,13 +53,16 @@ export default class Header extends React.Component {
 
   render () {
     const { showAll } = this.state
-    const { onCloseURL, pending } = this.props
+    const { onCloseURL, pending, toggleMessages } = this.props
     const otherParticipants = this.getOthers(this.props)
     const maxShown = calculateMaxShown(showAll, otherParticipants, MAX_CHARACTERS)
     const { displayNames, andOthers } = generateDisplayNames(maxShown, otherParticipants)
     const showArrow = !!andOthers
 
     return <div styleName='header' id='thread-header'>
+      <div styleName='backButton' onClick={toggleMessages}>
+        <Icon name='ArrowDown' styleName='arrow-down' />
+      </div>
       <div styleName='header-text'>
         {!pending && <React.Fragment>
           {displayNames}
@@ -68,7 +71,7 @@ export default class Header extends React.Component {
       </div>
       {showArrow && !showAll && <Icon name='ArrowDown' styleName='arrow-down' onClick={this.toggleShowAll} />}
       {showAll && <Icon name='ArrowUp' styleName='arrow-up' onClick={this.toggleShowAll} />}
-      <CloseMessages onCloseURL={onCloseURL} />
+      <CloseMessages onCloseURL={onCloseURL} styleName='closeMessages' />
     </div>
   }
 }

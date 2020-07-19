@@ -16,6 +16,7 @@ export default class PostFooter extends React.PureComponent {
     currentUser: PropTypes.shape(CURRENT_USER_PROP_TYPES),
     commenters: PropTypes.array,
     commentersTotal: PropTypes.number,
+    constrained: PropTypes.bool,
     votesTotal: PropTypes.number,
     myVote: PropTypes.bool,
     members: PropTypes.arrayOf(PropTypes.shape(PERSON_PROP_TYPES)),
@@ -27,6 +28,7 @@ export default class PostFooter extends React.PureComponent {
     const {
       currentUser,
       commenters,
+      constrained,
       eventInvitations,
       commentersTotal,
       votesTotal,
@@ -89,7 +91,7 @@ export default class PostFooter extends React.PureComponent {
     }
     const { caption, avatarUrls } = peopleRowResult
 
-    return <div styleName='footer'>
+    return <div styleName={cx('footer', { constrained })}>
       <RoundImageRow imageUrls={avatarUrls.slice(0, 3)} styleName='people' onClick={onClick} />
       <span styleName='caption' onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'inherit' }}>
         {caption}

@@ -5,6 +5,9 @@
   align-items: stretch;
   height: 100vh;
   overflow: hidden;
+  &.map-view {
+    height: 100vh;
+  }
 }
 
 .debug {
@@ -35,9 +38,14 @@
   flex-grow: 1;
   display: flex;
   flex-wrap: nowrap;
-  width: $content-width;
+  width: 100%;
+  max-width: 1500px;
   margin-left: auto;
   margin-right: auto;
+  &.map-view {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 $drawer-width: 367px;
@@ -48,18 +56,25 @@ $drawer-z-index: 51;
   height: $drawer-height;
   position: fixed;
   left: 0px;
-  z-index: $drawer-z-index;
+  z-index: 600;
   display: flex;
   flex-direction: column;
   transition-delay: 0s;
   transition-duration: 0.2s;
+  box-shadow: 0px 4px 56px 0px rgba(35, 64, 91, .5);
+
   &.hidden {
     left: -$drawer-width;
+    box-shadow: 0px 4px 56px 0px rgba(35, 64, 91, 0);
   }
 }
 
 .left {
-  /* empty */
+  transition: all .45s ease;
+}
+
+.left .map-field {
+    height: calc(100vh - 60px);
 }
 
 .center {
@@ -68,13 +83,25 @@ $drawer-z-index: 51;
   // From Bootstrap make-col-ready():
   position: relative;
   min-height: 1px; // Prevent collapsing
-  height: 100vh;
+  height: calc(100vh - 56px);
   flex: 0 0 $center-column-width;
   max-width: $center-column-width;
   overflow-y: auto;
   overflow-x: hidden;
+  transition: all .45s ease;
   padding-right: $space-2x;
   padding-bottom: 100px;
+  &.map-view {
+    max-width: $map-center-column-width;
+    flex: 0 0 $map-center-column-width;
+    height: calc(100vh - 40px);
+    padding-bottom: 0px;
+  }
+}
+
+.center.collapsedState {
+  width: 43%;
+  flex: 0 0 43%;
 }
 
 .center::-webkit-scrollbar {
@@ -92,14 +119,17 @@ $drawer-z-index: 51;
 .sidebar {
   // From Bootstrap make-col-ready():
   position: relative;
+  z-index: 10;
   min-height: 1px; // Prevent collapsing
   flex: 0 0 29%;
   max-width: 29%;
   transition-delay: 0.1s;
   transition-duration: 0.3s;
+  top: 0;
   right: 0px;
   padding: 0 16px 0 $layout-spacing;
   overflow-y: auto;
+  overflow-x: hidden;
 
   &.hidden {
     opacity: 0;
@@ -111,21 +141,32 @@ $drawer-z-index: 51;
 .detail {
   background-color: white;
   position: absolute;
+  z-index: 30;
   top: 0;
   right: 0px;
   height: 100%;
   width: $detail-column-width;
-  box-shadow: 0px 4px 56px 0px $color-alto;
+  box-shadow: 0px 4px 56px 0px $shadow-color;
   transition-delay: 0.1s;
   transition-duration: 0.2s;
   padding-bottom: 150px;
   overflow-y: auto;
+  margin-top: -8px;
 
   &.hidden {
     opacity: 0;
-    right: -580px;
+    right: -1000px;
     transition-delay: 0.0s;
   }
+}
+
+.map-view .detail {
+  max-width: 700px;
+}
+
+.map-view.collapsedState {
+  width: 100%;
+  flex: 0 0 100%;
 }
 
 .detail::-webkit-scrollbar {
@@ -139,3 +180,114 @@ $drawer-z-index: 51;
   outline: none;
 }
 
+
+@media screen and (max-width: 1024px) {
+  .sidebar {
+    top: -100vh;
+    opacity: 0;
+  }
+
+  .center {
+    max-width: 70%;
+    flex: 0 0 75%;
+  }
+
+  .center.collapsedState {
+    width: 60%;
+    flex: 0 0 60%;
+  }
+
+  .detail {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 930px) {
+  .center {
+    max-width: 80%;
+    flex: 0 0 80%;
+    left: 5%;
+  }
+
+  .center.map-view {
+    max-width: 93%;
+    flex-basis: 93%;
+    left: 0;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .center {
+    max-width: 86%;
+    flex: 0 0 86%;
+    left: 0%;
+  }
+
+  .center.map-view {
+    max-width: 90%;
+    flex: 0 0 90%;
+  }
+
+  .detail {
+    width: calc(100% - 80px);
+    margin-top: 0;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+  .center {
+    max-width: 100%;
+    flex: 0 0 100%;
+    left: 0%;
+    height: calc(100vh - 104px);
+    padding: 0 0 150px 0;
+  }
+
+  .center.map-view {
+    max-width: 100%;
+    flex: 0 0 100%;
+    left: 0;
+    padding: 0;
+  }
+
+  .detail {
+    z-index: 110;
+  }
+
+  .left {
+    position: fixed;
+    box-shadow: 0px 4px 56px 0px $shadow-color;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    width: 100%;
+    max-width: 100%;
+    flex: 0 0 100%;
+    height: 50px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .detail {
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .center {
+    overflow-y: scroll;
+  }
+  .center.map-view {
+    overflow-y: auto;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .drawer {
+    width: 100%;
+
+    &.hidden {
+      left: -100%;
+    }
+  }
+}

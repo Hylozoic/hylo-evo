@@ -166,7 +166,9 @@ exports[`NonAuthLayout renders correctly 1`] = `
     component={[Function]}
     path="/reset-password"
   />
-  <div>
+  <div
+    data-stylename="signupToggle"
+  >
     <p
       data-stylename="below-container"
     >

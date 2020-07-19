@@ -10,7 +10,8 @@ Object {
   $search: String,
   $filter: String,
   $topic: ID,
-  $first: Int
+  $first: Int,
+  $boundingBox: [PointInput]
 ) {
   community(slug: $slug, updateLastViewed: true) {
     id
@@ -33,6 +34,7 @@ posts(
   search: $search,
   filter: $filter,
   topic: $topic,
+  boundingBox: $boundingBox,
   order: \\"desc\\"
 ) {
   hasMore
@@ -191,6 +193,7 @@ Object {
   $filter: String,
   $topic: ID,
   $first: Int
+  $boundingBox: [PointInput]
 ) {
   
 posts(
@@ -200,6 +203,7 @@ posts(
   search: $search,
   filter: $filter,
   topic: $topic,
+  boundingBox: $boundingBox,
   order: \\"desc\\"
 ) {
   hasMore

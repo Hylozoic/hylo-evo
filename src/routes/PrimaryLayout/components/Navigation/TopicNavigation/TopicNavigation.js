@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
 import { Link, NavLink, matchPath } from 'react-router-dom'
-
 import Badge from 'components/Badge'
 import CreateTopic from 'components/CreateTopic'
 import Icon from 'components/Icon'
@@ -35,7 +34,9 @@ export default class TopicNavigation extends Component {
     return <div styleName='s.topicNavigation'>
       <div styleName={cx('s.header', { 's.header-link': collapsed })}
         onClick={expand}>
-        <Icon name='Topics' styleName='s.icon' />
+        <Link to={topicsUrl(communitySlug)}>
+          <Icon name='Topics' styleName='s.icon' />
+        </Link>
         <span styleName='s.title'>Topics</span>
         <CreateTopic
           communityId={communityId}
