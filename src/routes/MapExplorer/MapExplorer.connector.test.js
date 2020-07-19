@@ -19,7 +19,7 @@ describe('mapStateToProps', () => {
       location: { search: '' },
       match: {
         params: { 'slug': 'foo' }
-      },
+      }
     }
 
     state = {
@@ -44,14 +44,14 @@ describe('mapStateToProps', () => {
   it('returns posts in the correct order', () => {
     expect(mapStateToProps(state, props)).toEqual(
       expect.objectContaining({
-        centerLocation: { lat: 35.442845, lng: 7.916598},
+        centerLocation: { lat: 35.442845, lng: 7.916598 },
         features: [],
-        fetchMembersParam: {boundingBox: undefined, slug: "foo", subject: "community"},
-        fetchPostsParam: {boundingBox: undefined, slug: "foo", subject: "community"},
-        fetchPublicCommunitiesParam: {boundingBox: undefined, subject: "community"},
+        fetchMembersParam: { boundingBox: undefined, slug: 'foo', subject: 'community' },
+        fetchPostsParam: { boundingBox: undefined, slug: 'foo', subject: 'community' },
+        fetchPublicCommunitiesParam: { boundingBox: undefined, subject: 'community' },
         filters: {
-          featureTypes: { offer: true, request: true},
-          search: "",
+          featureTypes: { offer: true, request: true },
+          search: '',
           topics: []
         },
         members: [],
@@ -59,7 +59,7 @@ describe('mapStateToProps', () => {
         posts: [],
         publicCommunities: [],
         querystringParams: {},
-        routeParams: { slug: "foo"},
+        routeParams: { slug: 'foo' },
         topics: [],
         zoom: 0
       })

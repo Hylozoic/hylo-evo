@@ -7,8 +7,8 @@ describe('MapExplorer', () => {
     const wrapper = shallow(<MapExplorer
       storeFetchPostsParam={jest.fn()}
       fetchPosts={jest.fn()}
-      match={{params: {}}}
-      filters={{ featureTypes: { request: true, offer: true }}}
+      match={{ params: {} }}
+      filters={{ featureTypes: { request: true, offer: true } }}
     />)
     expect(wrapper.find('TabBar')).toBeTruthy()
   })
