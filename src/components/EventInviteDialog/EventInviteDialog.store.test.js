@@ -1,26 +1,4 @@
-import { presentPerson, invitePeopleToEvent } from './EventInviteDialog.store'
-
-describe('presentPerson', () => {
-  it('extracts the right keys', () => {
-    const peopleModel = {
-      ref: {
-        id: 1,
-        name: 'jo',
-        avatarUrl: 'jo.png',
-        unusedField: 'yup'
-      },
-      memberships: {
-        first: () => ({
-          community: {
-            name: 'coomunity'
-          }
-        })
-      }
-    }
-
-    expect(presentPerson(peopleModel)).toMatchSnapshot()
-  })
-})
+import { invitePeopleToEvent } from './EventInviteDialog.store'
 
 describe('invitePeopleToEvent', () => {
   it('matches snapshot', () => {

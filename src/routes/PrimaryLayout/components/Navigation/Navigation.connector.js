@@ -3,7 +3,7 @@ import { get } from 'lodash/fp'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { baseUrl, allCommunitiesUrl } from 'util/navigation'
+import { communityUrl, networkUrl, publicCommunitiesUrl } from 'util/navigation'
 import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
 import { makeDropQueryResults } from 'store/reducers/queryResults'
@@ -11,11 +11,11 @@ import { makeDropQueryResults } from 'store/reducers/queryResults'
 export function mapStateToProps (state, props) {
   const routeParams = props.match.params
   const community = getCommunityForCurrentRoute(state, props)
-  const rootPath = baseUrl(routeParams, allCommunitiesUrl())
-  const membersPath = `${rootPath}/members`
-  const projectsPath = `${rootPath}/project`
-  const eventsPath = `${rootPath}/event`
-  let communityMembership, badge
+  const network = getNetworkForCurrentRoute(state, props)
+  let rootId, rootSlug, rootPath, membersPath, communityMembership, badge
+  const isPublic = props.location.pathname.includes('public')
+
+  // TODO: what about all communities path? as default?
 
   if (community) {
     // we have to select the Community Membership from the ORM separately. we can't just
@@ -24,7 +24,21 @@ export function mapStateToProps (state, props) {
     // newPostCount.
     communityMembership = getCommunityMembership(state, { communityId: community.id })
     badge = get('newPostCount', communityMembership)
+  } else if (network) {
+    rootId = network.id
+    rootSlug = get('slug', network)
+    rootPath = networkUrl(rootSlug)
+    membersPath = `${rootPath}/members`
+  } else if (isPublic) {
+    rootSlug = 'public'
+    rootPath = publicCommunitiesUrl()
+  } else {
+    rootSlug = ''
+    rootPath = communityUrl()
   }
+  const projectsPath = `${rootPath}/project`
+  const eventsPath = `${rootPath}/event`
+  const mapPath = `${rootPath}/map`
 
   return {
     routeParams,
@@ -33,6 +47,7 @@ export function mapStateToProps (state, props) {
     membersPath,
     projectsPath,
     eventsPath,
+    mapPath,
     badge,
     feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),
     communityMembership

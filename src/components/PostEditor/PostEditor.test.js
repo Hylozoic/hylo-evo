@@ -44,7 +44,7 @@ describe('PostEditor', () => {
         post: {
           type,
           startTime: new Date(1551908483315),
-          endTime: new Date(1551908483315),  
+          endTime: new Date(1551908483315),
           communities: []
         },
         titlePlaceholderForPostType

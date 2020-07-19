@@ -1,8 +1,5 @@
-import { HOLOCHAIN_ACTIVE } from 'util/holochain'
+import { withResizeDetector } from 'react-resize-detector'
 import component from './FeedList'
-import holochainConnector from './FeedList.holochain.connector'
 import connector from './FeedList.connector'
 
-export default HOLOCHAIN_ACTIVE
-  ? holochainConnector(component)
-  : connector(component)
+export default connector(withResizeDetector(component, { handleHeight: false }))

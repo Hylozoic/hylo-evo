@@ -213,3 +213,14 @@ $rowHeight: 60px;
 .switch-label {
   composes: caption-lt-lg from 'css/typography.scss';
 }
+
+@media screen and (max-width: 525px) {
+  .invite-link-settings {
+    display: block;
+    text-align: center;
+  }
+
+  .switch {
+    margin-left: 20px;
+  }
+}

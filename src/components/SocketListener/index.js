@@ -1,7 +1,4 @@
-import SocketListener from './SocketListener'
+import component from './SocketListener'
 import connector from './SocketListener.connector'
-import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 
-export default HOLOCHAIN_ACTIVE
-  ? () => null
-  : connector(SocketListener)
+export default connector(component)

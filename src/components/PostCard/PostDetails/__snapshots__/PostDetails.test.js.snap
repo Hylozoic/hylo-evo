@@ -9,6 +9,9 @@ exports[`matches last snapshot 1`] = `
   <div
     data-stylename="postDetails"
   >
+    <div
+      data-stylename="fade"
+    />
     <Connect(ClickCatcher)>
       <div
         dangerouslySetInnerHTML={

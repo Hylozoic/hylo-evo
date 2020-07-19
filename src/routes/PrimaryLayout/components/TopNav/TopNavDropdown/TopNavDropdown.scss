@@ -8,6 +8,7 @@ $dropdown-width: 375px;
   bottom: 0px;
   left: 0px;
   background-color: transparent;
+  z-index: 51;
 }
 
 .wrapper {
@@ -22,6 +23,7 @@ $dropdown-width: 375px;
   box-shadow: 11px 12px 26px 0px rgba(#dcdcdc, 0.6);
   &.active {
     display: block;
+    z-index: 52;
   }
 }
 
@@ -66,4 +68,41 @@ $dropdown-width: 375px;
 .body {
   height: $messages-body-height;
   overflow: auto;
+}
+
+@-webkit-keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+.animateFadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+}
+
+@media screen and (max-width: 425px) {
+  .wrapper {
+    width: 90%;
+  }
 }

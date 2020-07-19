@@ -42,6 +42,7 @@ $active-thread-border-width: 4px;
   margin: 0;
   padding: 0;
   overflow-y: auto;
+  width: 100%;
 }
 
 .no-conversations {
@@ -155,6 +156,52 @@ $active-thread-border-width: 4px;
   align-items: flex-end;
 }
 
+.closeMessages {
+  display: none;
+}
+
 .message-time {
   composes: timestamp from 'css/typography.scss'
+}
+
+.closeMessages {
+  display: none;
+}
+
+@media screen and (max-width: 1150px) {
+  .header-text {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .header-text {
+    margin-left: 20px;
+  }
+
+  .header > a {
+    z-index: 100;
+    position: relative;
+  }
+
+  .closeMessages {
+    display: block;
+    position: fixed;
+    top: 23px;
+    left: 6px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .header-text {
+    top: 4px;
+    position: relative;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .header a {
+    position: relative;
+    top: 4px;
+  }
 }

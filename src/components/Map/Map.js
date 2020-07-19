@@ -1,0 +1,64 @@
+import React, { useState, useEffect, useRef } from 'react'
+import PropTypes from 'prop-types'
+import MapGL from 'react-map-gl'
+import DeckGL from '@deck.gl/react'
+import { mapbox } from 'config'
+
+function Map (props) {
+  let { children, layers, afterViewportUpdate, onViewportUpdate, viewport } = props
+
+  const [isHovering, setIsHovering] = useState(false)
+
+  const mapRef = useRef()
+
+  // XXX: Have to do this because onViewPortChange gets called before ref gets set
+  //   and we need the ref to get the bounds in the parent component
+  useEffect(() => {
+    afterViewportUpdate(viewport, mapRef.current)
+  }, [viewport])
+
+  return (
+    <MapGL
+      {...viewport}
+      width='100%'
+      height='100vh'
+      mapStyle='mapbox://styles/mapbox/light-v9'
+      onViewportChange={nextViewport => onViewportUpdate(nextViewport, mapRef.current)}
+      mapboxApiAccessToken={mapbox.token}
+      ref={ref => { mapRef.current = ref && ref.getMap(); return ref }}
+    >
+      <DeckGL
+        viewState={viewport}
+        layers={layers}
+        onHover={({ object }) => setIsHovering(Boolean(object))}
+        getCursor={() => isHovering ? 'pointer' : 'grab'}
+      >
+        { children }
+      </DeckGL>
+
+    </MapGL>
+  )
+}
+
+Map.propTypes = {
+  center: PropTypes.object,
+  children: PropTypes.any,
+  layers: PropTypes.array,
+  onViewportUpdate: PropTypes.func,
+  zoom: PropTypes.number
+}
+
+Map.defaultProps = {
+  children: {},
+  layers: [],
+  onViewportUpdate: () => {},
+  viewport: {
+    latitude: 35.442845,
+    longitude: 7.916598,
+    zoom: 0,
+    bearing: 0,
+    pitch: 0
+  }
+}
+
+export default Map

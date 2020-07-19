@@ -2,7 +2,7 @@
 
 exports[`renders as expected 1`] = `
 <div
-  data-stylename="card"
+  data-stylename="card offer"
   onClick={[Function]}
 >
   <Connect(PostHeader)

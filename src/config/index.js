@@ -14,7 +14,7 @@ const isServer = typeof window === 'undefined'
 //   require('dotenv').load({silent: true})
 // }
 
-export const filepickerKey = process.env.FILEPICKER_API_KEY
+export const filestackKey = process.env.FILESTACK_API_KEY || process.env.FILEPICKER_API_KEY
 export const logLevel = process.env.LOG_LEVEL
 export const socketHost = process.env.SOCKET_HOST
 export const host = process.env.HOST
@@ -61,7 +61,7 @@ export const featureFlags = () => {
 
 const config = {
   environment,
-  filepickerKey,
+  filestackKey,
   logLevel,
   host,
   slack,

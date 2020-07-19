@@ -41,14 +41,16 @@ export default function FeedBanner ({
       <div styleName='header'>
         <div styleName={cx('logo', { 'all-logo': all })} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
         <div styleName='header-text'>
-          <span styleName='header-name'>{name}</span>
-          {location && <div styleName='header-subtitle'>
-            <Icon name='Location' styleName='header-icon' />
-            {location}
-          </div>}
-          {subtitle && <div styleName='header-subtitle'>
-            {subtitle}
-          </div>}
+          <div styleName='header-contents'>
+            <span styleName='header-name'>{name}</span>
+            {location && <div styleName='header-subtitle'>
+              <Icon name='Location' styleName='header-icon' />
+              {location}
+            </div>}
+            {subtitle && <div styleName='header-subtitle'>
+              {subtitle}
+            </div>}
+          </div>
         </div>
       </div>
     </div>

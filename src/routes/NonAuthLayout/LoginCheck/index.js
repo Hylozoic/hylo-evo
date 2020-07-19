@@ -1,7 +1,5 @@
 import { withRouter } from 'react-router-dom'
-import { HOLOCHAIN_ACTIVE } from 'util/holochain'
 import component from './LoginCheck'
-import holochainConnector from './LoginCheck.holochain.connector'
 import connector from './LoginCheck.connector'
 
 // withRouter is necessary here, and it's necessary for it to wrap the
@@ -11,8 +9,4 @@ import connector from './LoginCheck.connector'
 //
 // [1]: https://reacttraining.com/react-router/web/api/withRouter
 //
-export default withRouter(
-  HOLOCHAIN_ACTIVE
-    ? holochainConnector(component)
-    : connector(component)
-)
+export default withRouter(connector(component))

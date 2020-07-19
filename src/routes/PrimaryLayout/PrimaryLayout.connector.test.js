@@ -2,8 +2,7 @@ import { mapStateToProps } from './PrimaryLayout.connector'
 
 const emptyState = {
   PrimaryLayout: {},
-  pending: {},
-  holochain: {}
+  pending: {}
 }
 
 describe('PrimaryLayout.connector', () => {

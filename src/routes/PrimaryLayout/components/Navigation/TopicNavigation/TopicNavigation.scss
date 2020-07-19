@@ -1,5 +1,4 @@
 .topicNavigation {
-  min-width: 206px;
   padding: 32px 12.5px 0 12.5px;
   color: $color-rhino-60;
   overflow: hidden;
@@ -14,6 +13,10 @@
   color: $color-rhino-60;
   margin-bottom: 14px;
   padding-right: $space-2x;
+
+  a:hover {
+    text-decoration: none;
+  }
 }
 
 .header-link {
@@ -28,11 +31,27 @@
   list-style: none;
   padding: 0 0 0 46px;
   line-height: 27px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: opacity .3s ease;
   color: $color-rhino-60;
 }
 
+.topics::-webkit-scrollbar {
+  background-color:transparent;
+  width: 5px;
+  border-radius: 5px;
+}
+
+.topics::-webkit-scrollbar-thumb {
+  background-color: rgba(200,200,200,.5   );
+  outline: none;
+  border-radius: 3px;
+}
+
 .topic {
+  position: relative;
+
   a {
     font-size: 14.5px;
     color: $color-rhino-60;
@@ -56,7 +75,6 @@
 }
 
 .name {
-  // min-width: 104px;
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -64,8 +82,22 @@
 
 .badge {
   padding-right: 2px;
-  display: flex;
+  display: block;
   width: auto;
+  position: absolute;
+  left: -25px;
+  top: -1px;
+
+  span {
+    width: 15px;
+    height: 15px;
+
+    span {
+      color: white;
+      font-size: 10px;
+      line-height: 15px;
+    }
+  }
 }
 
 .closeIcon {
@@ -85,5 +117,17 @@
 :global {
   .active-topic-nav-link {
     color: $color-caribbean-green !important;
+  }
+}
+
+@media screen and (max-width: 930px) {
+  .topics {
+    opacity: 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topicNavigation {
+    display: none;
   }
 }

@@ -1,10 +1,12 @@
 import React from 'react'
 import Highlight from 'components/Highlight'
+import cx from 'classnames'
 import Icon from 'components/Icon'
 import './PostTitle.scss'
 
 export default function PostTitle ({
   title,
+  constrained,
   highlightProps,
   locationObject,
   location
@@ -22,8 +24,8 @@ export default function PostTitle ({
 
   return <Highlight {...highlightProps}>
     <React.Fragment>
-      <div styleName='title' className='hdr-headline'>{title}</div>
-      {location && <div styleName='headerLocation'><Icon name='Location' styleName='locationIcon' />{generalLocation}</div>}
+      <div styleName={cx('title', { constrained })} className='hdr-headline'>{title}</div>
+      {location && <div styleName={cx('headerLocation', { constrained })}><Icon name='Location' styleName='locationIcon' />{generalLocation}</div>}
     </React.Fragment>
   </Highlight>
 }

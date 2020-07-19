@@ -5,7 +5,7 @@
 
   .post-editor-wrapper {
     opacity: 0;
-    transform: translate(0, -100px);
+    transform: translate(50%, -50%);
   }
 }
 
@@ -17,7 +17,7 @@
 
   .post-editor-wrapper {
     opacity: 1;
-    transform: translate(0, 0);
+    transform: translate(-50%, -50%);
     transition: transform 300ms ease-out, opacity 400ms ease-out;
   }
 }
@@ -60,9 +60,19 @@
 }
 
 .post-editor-wrapper {
-  position: relative;
-  z-index: 1;
-  width: $post-editor-width;
-  margin: -($post-editor-height/2) auto 70px;
-  top: 50%;
+    width: 100%;
+    max-width: 590px;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    margin: 0 0 0 0;
+    transform: translate(-50%, -50%);
+    max-height: 100vh;
+}
+
+@media screen and (max-width: 600px) {
+  .post-editor-wrapper {
+    width: 100%;
+  }
 }

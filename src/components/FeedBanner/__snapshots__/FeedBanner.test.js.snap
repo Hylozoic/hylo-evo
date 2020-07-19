@@ -46,15 +46,19 @@ exports[`matches the snapshot for an orphan user 1`] = `
         <div
           data-stylename="header-text"
         >
-          <span
-            data-stylename="header-name"
-          >
-            All My Communities
-          </span>
           <div
-            data-stylename="header-subtitle"
+            data-stylename="header-contents"
           >
-            18 Communities
+            <span
+              data-stylename="header-name"
+            >
+              All My Communities
+            </span>
+            <div
+              data-stylename="header-subtitle"
+            >
+              18 Communities
+            </div>
           </div>
         </div>
       </div>
@@ -113,15 +117,19 @@ exports[`renders for all communities 1`] = `
         <div
           data-stylename="header-text"
         >
-          <span
-            data-stylename="header-name"
-          >
-            All My Communities
-          </span>
           <div
-            data-stylename="header-subtitle"
+            data-stylename="header-contents"
           >
-            18 Communities
+            <span
+              data-stylename="header-name"
+            >
+              All My Communities
+            </span>
+            <div
+              data-stylename="header-subtitle"
+            >
+              18 Communities
+            </div>
           </div>
         </div>
       </div>
@@ -207,24 +215,28 @@ exports[`renders with a community 1`] = `
         <div
           data-stylename="header-text"
         >
-          <span
-            data-stylename="header-name"
-          >
-            Spacebase
-          </span>
           <div
-            data-stylename="header-subtitle"
+            data-stylename="header-contents"
           >
-            <Icon
-              data-stylename="header-icon"
-              name="Location"
+            <span
+              data-stylename="header-name"
             >
-              <span
-                className="icon-Location"
-                data-stylename="icon"
-              />
-            </Icon>
-            space, duh
+              Spacebase
+            </span>
+            <div
+              data-stylename="header-subtitle"
+            >
+              <Icon
+                data-stylename="header-icon"
+                name="Location"
+              >
+                <span
+                  className="icon-Location"
+                  data-stylename="icon"
+                />
+              </Icon>
+              space, duh
+            </div>
           </div>
         </div>
       </div>

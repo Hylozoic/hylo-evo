@@ -37,3 +37,9 @@
 .publicState {
   text-transform: uppercase;
 }
+
+@media screen and (max-width: 325px) {
+  .publicGuidance {
+    padding-right: 28px;
+  }
+}

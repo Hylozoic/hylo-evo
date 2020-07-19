@@ -7,6 +7,14 @@ exports[`PeopleSelector matches the last snapshot 1`] = `
     tabIndex="0"
   >
     <div
+      data-stylename="backButton"
+    >
+      <Icon
+        data-stylename="arrow-down"
+        name="ArrowDown"
+      />
+    </div>
+    <div
       data-stylename="autocomplete-control"
     >
       <input

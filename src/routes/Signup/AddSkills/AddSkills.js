@@ -65,8 +65,8 @@ export default class AddSkills extends Component {
 
     return <div styleName='flex-wrapper'>
       <LeftSidebar
-        header='Share your unique super powers!'
-        body="What skills are you known for? The more skills you add, the more relevant the content. It's like magic."
+        header='Share your unique super powers and what excites or interests you!'
+        body="What skills are you known for? What topics do you love to explore and discuss? What do you want to learn more about? The more you add, the more relevant the content. It's like magic."
       />
       <div styleName='panel'>
         <span styleName='white-text step-count'>STEP 3/4</span>
@@ -88,7 +88,7 @@ export default class AddSkills extends Component {
             }}
             onClick={() => this.editNewSkill()}
             onChange={this.handleInputChange}
-            placeholder={editing ? '' : 'How can you help?'}
+            placeholder={editing ? '' : 'Add skills & interests'}
             readOnly={!editing}
           />
         </div>
@@ -102,7 +102,7 @@ export default class AddSkills extends Component {
         </div>
         <div>
           {!isEmpty(this.props.skills) && <div styleName='your-skills'>
-            <div styleName='your-skills-label'><span>Your Skills:</span></div>
+            <div styleName='your-skills-label'><span>Your Skills &amp; Interests:</span></div>
             <div styleName='your-skills-list'>
               {this.props.skills.map((skill, index) =>
                 <Pill key={index} skill={skill} clickHandler={() => this.props.removeSkill(skill.id)} />
@@ -114,7 +114,7 @@ export default class AddSkills extends Component {
           <SignupModalFooter
             previous={this.previous}
             submit={editing ? this.createNewSkill : this.submit}
-            continueText={editing ? 'Save Skill' : 'Boom, Done'} />
+            continueText={editing ? 'Save Skill or Interest' : 'Boom, Done'} />
         </div>
       </div>
     </div>

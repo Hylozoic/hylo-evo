@@ -42,7 +42,7 @@ export default class TopNavDropdown extends Component {
       <a onClick={() => this.toggle()} ref='toggle'>
         {toggleChildren}
       </a>
-      <div styleName={cx('wrapper', { active })}>
+      <div styleName={cx('wrapper', 'animateFadeInDown', { active })}>
         <ul styleName='menu'>
           <li styleName='triangle' style={triangleStyle} />
           <ErrorBoundary>

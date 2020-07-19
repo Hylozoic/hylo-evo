@@ -36,8 +36,10 @@ $space-20x: $space-base-unit * 20;
 
 $topnav-height: 56px;
 $content-width: 80rem;
+$map-content-width: 90rem;
 $center-column-width: 49%;
-$detail-column-width: 43%;
+$map-center-column-width: calc(85% - 2px);
+$detail-column-width: 49%;
 $layout-spacing: 70px;
 $messages-header-height: 80px;
 $post-editor-width: 590px;
@@ -59,15 +61,19 @@ $color-rhino-10: rgba($color-rhino, .1);
 $color-rhino-darker: #2C405A;
 $color-nepal: #8DABC4;
 $color-chambray: #315280;
-$color-black-10: rgba(#000, 0.1);
 
 // Grays
 $color-white: #FFFFFF;
 $color-white-80: rgba($color-white, .8);
 $color-white-60: rgba($color-white, .6);
 $color-white-50: rgba($color-white, .5);
-$color-black: #000000;
+$color-black: rgba(35, 64, 91, 1.000);
 $color-black-10: rgba($color-black, .1);
+$color-black-30: rgba($color-black, .3);
+$color-black-50: rgba($color-black, .5);
+$color-black-60: rgba($color-black, .6);
+$color-regent: #808C9B;
+$color-regent-70: rgba($color-regent, .7);
 $color-athens-gray: #FAFBFC;
 $color-athens-gray-medium: #F1F2F4;
 $color-athens-gray-dark: #E1E5EA;
@@ -90,17 +96,70 @@ $color-slate-gray-80: rgba(#67768A, .6);
 $color-saltpan: #FAFCFB;
 $color-loblolly: #BFC5CD;
 
+// post types
+
+$color-members: rgba(201, 88, 172, 1);
+$color-members-20: rgba(201, 88, 172, .2);
+$color-members-30: rgba(201, 88, 172, .3);
+$color-members-40: rgba(201, 88, 172, .4);
+$color-members-50: rgba(201, 88, 172, .5);
+
+$color-requests: rgba(102, 75, 165, 1);
+$color-requests-20: rgba(102, 75, 165, .2);
+$color-requests-30: rgba(102, 75, 165, .3);
+$color-requests-40: rgba(102, 75, 165, .4);
+$color-requests-50: rgba(102, 75, 165, .5);
+
+$color-discussions: rgba(0, 163, 227, 1);
+$color-discussions-20: rgba(0, 163, 227, .2);
+$color-discussions-30: rgba(0, 163, 227, .3);
+$color-discussions-40: rgba(0, 163, 227, .4);
+$color-discussions-50: rgba(0, 163, 227, .5);
+
+$color-offers: rgba(0, 199, 157, 1);
+$color-offers-20: rgba(0, 199, 157, .2);
+$color-offers-30: rgba(0, 199, 157, .3);
+$color-offers-40: rgba(0, 199, 157, .4);
+$color-offers-50: rgba(0, 199, 157, .5);
+
+$color-resources: rgba(255, 212, 3, 1);
+$color-resources-20: rgba(255, 212, 3, .2);
+$color-resources-30: rgba(255, 212, 3, .3);
+$color-resources-40: rgba(255, 212, 3, .4);
+$color-resources-50: rgba(255, 212, 3, .5);
+
+$color-projects: rgba(252, 128, 0, 1);
+$color-projects-20: rgba(252, 128, 0, .2);
+$color-projects-30: rgba(252, 128, 0, .3);
+$color-projects-40: rgba(252, 128, 0, .4);
+$color-projects-50: rgba(252, 128, 0, .5);
+
+$color-events: rgba(254, 72, 80, 1);
+$color-events-20: rgba(254, 72, 80, .2);
+$color-events-30: rgba(254, 72, 80, .3);
+$color-events-40: rgba(254, 72, 80, .4);
+$color-events-50: rgba(254, 72, 80, .5);
+
 $color-caribbean-green: #0DC39F;
 $color-caribbean-green-50: rgba($color-caribbean-green, 0.5);
 $color-caribbean-green-20: rgba($color-caribbean-green, 0.2);
+
 $color-medium-purple: #9883E5;
+$color-medium-purple-50: rgba($color-medium-purple, .5);
+
 $color-fuchsia-pink: #BB60A8;
+$color-fuchsia-pink-50: rgba($color-fuchsia-pink, .5);;
+
 $color-picton-blue: #40A1DD;
+$color-picton-blue-50: rgba($color-picton-blue, .5);
+
 $color-persimmon: #FE6848;
+$color-persimmon-50: rgba($color-persimmon, .5);;
 
 // Resources
 $color-mango-yellow: #FDD549;
 $color-mango-yellow-15: rgba($color-mango-yellow, 0.15);
+$color-mango-yellow-50: rgba($color-mango-yellow, 0.5);
 
 $color-iceberg: #CFF3EC;
 $color-moon-raker: #EAE6FA;
@@ -119,11 +178,16 @@ $color-polar: #F0FCF9;
 $color-ziggurat: #BDE0DC;
 $color-gossamer: #0A9682;
 
+$shadow-color: rgba(42, 64, 89, 0.3);
+
 $color-tree-poppy: #FF9D21;
 
 $light-border: 1px solid $color-cape-cod-10;
 
 $color-pale-pink: #FFD6DF;
+
+// Member
+$color-member: #2A4059;
 
 // Fonts
 @mixin font-regular {

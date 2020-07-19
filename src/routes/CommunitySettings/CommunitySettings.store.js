@@ -22,7 +22,10 @@ export function fetchCommunitySettings (slug) {
           invitePath
           hidden
           allowCommunityInvites
-          pendingInvitations (first: 100) {
+          isPublic
+          isAutoJoinable
+          publicMemberDirectory
+          pendingInvitations {
             hasMore
             items {
               id

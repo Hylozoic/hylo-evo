@@ -93,6 +93,7 @@ export default class PostEditor extends React.Component {
     })
     const currentPost = post
       ? ({ ...post,
+        locationId: post.locationObject ? post.locationObject.id : null,
         startTime: Moment(post.startTime),
         endTime: Moment(post.endTime)
       })
@@ -429,6 +430,7 @@ export default class PostEditor extends React.Component {
             <MemberSelector
               initialMembers={members || []}
               onChange={this.updateProjectMembers}
+              forCommunities={communities}
               readOnly={loading}
             />
           </div>
@@ -458,10 +460,10 @@ export default class PostEditor extends React.Component {
         {canHaveTimes && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
         {canHaveTimes && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Timeframe</div>
-          <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
-            <DatePicker value={startTime} placeholder={'Select Start Time'} onChange={this.handleStartTimeChange} />
+          <div styleName='datePickerModule'>
+            <DatePicker value={startTime} placeholder={'Select Start'} onChange={this.handleStartTimeChange} />
             <div styleName='footerSection-helper'>To</div>
-            <DatePicker value={endTime} placeholder={'Select End Time'} onChange={this.handleEndTimeChange} />
+            <DatePicker value={endTime} placeholder={'Select End'} onChange={this.handleEndTimeChange} />
           </div>
         </div>}
         {hasLocation && <div styleName='footerSection'>
@@ -479,6 +481,7 @@ export default class PostEditor extends React.Component {
             <MemberSelector
               initialMembers={eventInvitations || []}
               onChange={this.updateEventInvitations}
+              forCommunities={communities}
               readOnly={loading}
             />
           </div>

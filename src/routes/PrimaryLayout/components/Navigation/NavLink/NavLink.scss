@@ -43,5 +43,39 @@
 }
 
 .label {
-  min-width: 102px;
+  padding-right: 5px;
+}
+
+
+@media screen and (max-width: 600px) {
+  .label {
+    display: none;
+  }
+
+  .link {
+    text-align: center;
+  }
+
+  .item {
+    margin: 0 5px;
+  }
+
+  .icon {
+    margin: 0;
+    margin-top: 7px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .icon {
+    font-size: 20px;
+  }
+
+  .link {
+    height: 32px;
+  }
+
+  .item {
+    padding: 0 8px;
+  }
 }

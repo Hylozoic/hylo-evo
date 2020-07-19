@@ -24,19 +24,20 @@ export default class PostCommunities extends Component {
   }
 
   render () {
-    const { communities, slug, showBottomBorder } = this.props
+    const { communities, constrained, slug, showBottomBorder } = this.props
     const { expanded } = this.state
 
     // don't show if there are no communities or this isn't cross posted
     if (isEmpty(communities) || (communities.length === 1 && get('0.slug', communities) === slug)) return null
 
-    return <div styleName={cx('communities', { expanded, bottomBorder: showBottomBorder })} onClick={expanded ? this.toggleExpanded : undefined}>
+    return <div styleName={cx('communities', { constrained, expanded, bottomBorder: showBottomBorder })} onClick={expanded ? this.toggleExpanded : undefined}>
       <div styleName='row'>
         <span styleName='label'>Posted In:&nbsp;</span>
         {!expanded &&
           <LinkedCommunityNameList communities={communities} maxShown={2} expandFunc={this.toggleExpanded} />}
         <a onClick={this.toggleExpanded} styleName='expandLink'><Icon name={expanded ? 'ArrowUp' : 'ArrowDown'} styleName='expandIcon' /></a>
       </div>
+
       {expanded && <CommunitiesList communities={communities} />}
     </div>
   }

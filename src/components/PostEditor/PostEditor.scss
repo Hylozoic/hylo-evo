@@ -62,7 +62,7 @@ $wrapperBorderRadius: 8px;
   color: $color-rhino-darker;
   font-size: 11px;
   letter-spacing: 1.2px;
-  line-height: 40px !important;
+  line-height: 40px;
   display: inline-block;
   width: 100%;
   margin: 0 $space-2x;
@@ -78,35 +78,35 @@ $wrapperBorderRadius: 8px;
   }
   &-discussion {
     &.selectable:hover, &:active, &.active {
-      color: $color-picton-blue;
-      background-color: $color-link-water;
+      color: $color-discussions;
+      background-color: $color-discussions-20;
     }
   }
   &-request {
     &.selectable:hover, &:active, &.active {
-      color: $color-persimmon;
-      background-color: $color-peach-schnapps;
+      color: $color-requests;
+      background-color: $color-requests-20;
     }
   }
   &-offer {
     &.selectable:hover, &:active, &.active  {
-      color: $color-caribbean-green;
-      background-color: $color-iceberg;
+      color: $color-offers;
+      background-color: $color-offers-20;
     }
   }
   &-resource {
     &.selectable:hover, &:active, &.active  {
-      color: $color-mango-yellow;
-      background-color: $color-mango-yellow-15;
+      color: $color-resources;
+      background-color: $color-resources-20;
     }
   }
   &-project {
-    color: $color-fuchsia-pink;
-    background-color: $color-prim;
+    color: $color-projects;
+    background-color: $color-projects-20;
   }
   &-event {
-    color: $color-medium-purple;
-    background-color: $color-moon-raker;
+    color: $color-events;
+    background-color: $color-events-20;
   }
 }
 
@@ -117,7 +117,8 @@ $wrapperBorderRadius: 8px;
   display: flex;
   flex-direction: row;
   &-column:last-child {
-    width: 100%;
+    flex: 1;
+    overflow: hidden;
   }
 }
 
@@ -258,4 +259,46 @@ $wrapperBorderRadius: 8px;
 
 .accept-contributions-help {
   composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.datePickerModule {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+
+@media screen and (max-width: 600px) {
+  .wrapper {
+    min-width: 320px;
+    border-radius: 0;
+  }
+
+  .postType {
+    font-size: 10px;
+    padding: 0 5px;
+    line-height: 32px;
+    height: 32px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .postType {
+    margin: 0 2px;
+  }
+
+  .editor {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  .footerSection-helper {
+    margin: 0 5px;
+    font-size: 10px;
+  }
+
+  .section-label, .footerSection-label, .section-label.footerSection-label {
+    margin-right: 15px;
+  }
 }

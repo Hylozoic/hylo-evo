@@ -35,6 +35,7 @@ Object {
   "currentUser": undefined,
   "hasMoreMessages": true,
   "hasMoreThreads": undefined,
+  "isInbox": false,
   "matchingContacts": null,
   "messageCreatePending": false,
   "messageText": "",

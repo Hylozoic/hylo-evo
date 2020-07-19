@@ -18,29 +18,34 @@ export default class EventBody extends Component {
   toggleInviteDialog = () => this.setState({ showInviteDialog: !this.state.showInviteDialog })
 
   render () {
-    const { event, respondToEvent, slug, expanded, className } = this.props
+    const { event, respondToEvent, slug, expanded, className, constrained } = this.props
     const { showInviteDialog } = this.state
-    const { id, startTime, endTime, location, eventInvitations } = event
+    const { id, startTime, endTime, location, eventInvitations, communities } = event
 
-    return <div styleName={cx('body', 'eventBody', { smallMargin: !expanded })} className={className}>
-      <EventDate {...event} />
-      <div styleName='eventBodyColumn'>
-        <PostTitle {...event} />
-        <div styleName='eventData'>
+    return <div styleName={cx('body', 'eventBody', { smallMargin: !expanded }, { constrained })} className={className}>
+      <div styleName='calendarDate'>
+        <EventDate {...event} />
+      </div>
+      <div styleName={cx('eventBodyColumn', { constrained })}>
+        <PostTitle {...event} constrained={constrained} />
+        <div styleName={cx('eventData', { constrained })}>
           <Icon name='Clock' styleName='icon' /> {formatDatePair(startTime, endTime)}
         </div>
         {!!location && <div styleName='eventData eventLocation'>
           <Icon name='Location' styleName='icon' /> {location}
         </div>}
-        <PostDetails {...event} slug={slug} hideDetails={!expanded} expanded={expanded} />
+        <div styleName={cx('eventDetails', { constrained })}>
+          <PostDetails {...event} slug={slug} hideDetails={!expanded} expanded={expanded} constrained={constrained} />
+        </div>
       </div>
       <div styleName='eventRightColumn'>
         <EventRSVP {...event} respondToEvent={respondToEvent} />
-        <Button label='Invite' onClick={this.toggleInviteDialog} narrow small color='gray' styleName='inviteButton' />
+        <Button label='Invite' onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
       </div>
       {showInviteDialog && <EventInviteDialog
         eventId={id}
         eventInvitations={eventInvitations}
+        forCommunities={communities}
         onClose={this.toggleInviteDialog} />}
     </div>
   }

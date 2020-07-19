@@ -93,7 +93,7 @@ export default class AllTopics extends Component {
     } = this.props
     const { totalTopicsCached } = this.state
 
-    return <FullPageModal>
+    return <FullPageModal fullWidth>
       <div styleName='all-topics'>
         <div styleName='title'>Topics</div>
         <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>

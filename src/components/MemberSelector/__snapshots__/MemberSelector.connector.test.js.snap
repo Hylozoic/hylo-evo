@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapDispatchToProps returns the expected action for fetchPeople 1`] = `
+Object {
+  "graphql": Object {
+    "query": Object {},
+    "variables": Object {
+      "autocomplete": "searchstring",
+      "communityIds": Array [
+        1,
+        2,
+      ],
+      "first": 20,
+    },
+  },
+  "meta": Object {
+    "extractModel": "Community",
+    "extractQueryResults": Object {
+      "getItems": [Function],
+    },
+  },
+  "type": "FETCH_PEOPLE",
+}
+`;
+
+exports[`mapDispatchToProps returns the expected keys 1`] = `
+Object {
+  "addMember": [Function],
+  "fetchPeople": [Function],
+  "removeMember": [Function],
+  "setAutocomplete": [Function],
+  "setMembers": [Function],
+}
+`;
+
+exports[`mapStateToProps returns the expected keys 1`] = `
+Object {
+  "autocomplete": undefined,
+  "memberMatches": [MockFunction],
+  "members": undefined,
+}
+`;

@@ -36,9 +36,11 @@ import {
 export function mapStateToProps (state, props) {
   const routeParams = get('match.params', props)
   const messageThreadId = get('messageThreadId', routeParams)
+  const isInbox = !!props.location.search.includes('inbox')
 
   return {
     messageThreadId,
+    isInbox,
     contacts: getAllContacts(state, props),
     recentContacts: getRecentContacts(state),
     matchingContacts: getMatchingContacts(state, props),

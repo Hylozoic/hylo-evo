@@ -26,10 +26,11 @@ export default class MemberSelector extends Component {
   }
 
   handleInputChange = input => {
+    const { forCommunities } = this.props
     this.props.setAutocomplete(input)
     if (!isEmpty(input)) {
       // this fetched should be debounced or throttled, maybe here, or in the connector
-      this.props.fetchPeople(input)
+      this.props.fetchPeople(input, forCommunities ? forCommunities.map(c => c.id) : null)
     }
   }
 
@@ -42,13 +43,13 @@ export default class MemberSelector extends Component {
   }
 
   render () {
-    const { placeholder, readOnly, people, autocomplete, members = [] } = this.props
+    const { placeholder, readOnly, memberMatches, autocomplete, members = [] } = this.props
 
     return (
       <TagInput
         placeholder={placeholder}
         tags={members}
-        suggestions={isEmpty(autocomplete) ? [] : people}
+        suggestions={isEmpty(autocomplete) ? [] : memberMatches}
         handleInputChange={this.handleInputChange}
         handleAddition={this.handleAddition}
         handleDelete={this.handleDelete}

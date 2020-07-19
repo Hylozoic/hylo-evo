@@ -29,8 +29,10 @@ export default class EventInviteDialog extends React.PureComponent {
   }
 
   onSearchChange = ({ target: { value } }) => {
+    const { fetchPeople, forCommunities } = this.props
+    const forCommunityIds = forCommunities.map(c => c.id)
     this.setState({ searchTerm: value })
-    this.props.fetchPeople(value)
+    fetchPeople(value, forCommunityIds)
   }
 
   getFilteredInviteSuggestions = () => {
@@ -79,7 +81,12 @@ export default class EventInviteDialog extends React.PureComponent {
         </div>
         <div styleName='alreadyInvitedLabel'>Already Invited</div>
         <div styleName='alreadyInvited'>
-          {eventInvitations.map(eventInvitation => <InviteeRow person={eventInvitation} showResponse key={eventInvitation.id} />)}
+          {eventInvitations.map(eventInvitation =>
+            <InviteeRow
+              person={eventInvitation}
+              showResponse
+              key={eventInvitation.id}
+            />)}
         </div>
         <Button
           small

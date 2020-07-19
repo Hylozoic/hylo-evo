@@ -8,6 +8,10 @@
   min-height: 40px;
 }
 
+.constrained.communities {
+  padding-left: 10px;
+}
+
 .communityList {
   composes: timestamp from 'css/typography.scss';
 }
@@ -45,6 +49,8 @@
 
 .communityList {
   composes: timestamp from 'css/typography.scss';
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .communityLink {
@@ -71,4 +77,51 @@
 .expandIcon {
   composes: timestamp from 'css/typography.scss';
   font-size: 20px;
+}
+
+.expandedSection {
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.communityRow {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.communityCell {
+  flex: 1;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.communityCellAvatar {
+  @include image(20px);
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.communityCellName {
+  composes: text-button from 'css/typography.scss';
+  font-size: 12px;
+}
+
+@media screen and (max-width: 325px) {
+
+  .communityList {
+    overflow: hidden;
+    display: block;
+    height: 20px;
+    text-overflow: ellipsis;
+    line-height: 20px;
+    padding-left: 5px;
+  }
+
+  .label {
+    text-align: right;
+  }
+
 }
