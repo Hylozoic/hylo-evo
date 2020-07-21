@@ -14,6 +14,7 @@ import { topicUrl } from 'util/navigation'
 import './AllTopics.scss'
 
 const sortOptions = [
+  { id: 'name', label: 'Name' },
   { id: 'num_followers', label: 'Popular' },
   { id: 'updated_at', label: 'Recent' }
 ]
@@ -81,6 +82,7 @@ export default class AllTopics extends Component {
     const {
       routeParams,
       community,
+      network,
       topics,
       search,
       setSearch,
@@ -95,7 +97,7 @@ export default class AllTopics extends Component {
 
     return <FullPageModal fullWidth>
       <div styleName='all-topics'>
-        <div styleName='title'>Topics</div>
+        <div styleName='title'>{community ? community.name : network ? network.name : 'All'} Topics</div>
         <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
         <div styleName='controls'>
           <SearchBar {...{ search, setSearch, selectedSort, setSort, fetchIsPending }} />
@@ -150,23 +152,24 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
 
 export function TopicListItem ({ topic, singleCommunity, routeParams, toggleSubscribe, deleteItem, canModerate }) {
   const { name, communityTopics, postsTotal, followersTotal } = topic
-  const dropdownItems = []
-  // if (canModerate) dropdownItems.push({icon: 'Trash', label: 'Delete', onClick: () => deleteItem(topic.id), red: true})
-
+  const communityTopic = singleCommunity && topic.communityTopics[0]
   return <div styleName='topic'>
     <div styleName='communitiesList'>
       <Link styleName='topic-details' to={topicUrl(name, routeParams)}>
         <div styleName='topic-name'>#{name}</div>
-        {singleCommunity &&
-          <div styleName='topic-stats'>{inflectedTotal('post', postsTotal)} • {inflectedTotal('follower', followersTotal)}</div>}
-        {singleCommunity && toggleSubscribe && <div onClick={() => toggleSubscribe(topic)} styleName='topic-subscribe'>
-          {topic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
-        </div>}
       </Link>
+      {singleCommunity &&
+        <div styleName='topic-stats'>
+          {inflectedTotal('post', postsTotal)} • {inflectedTotal('follower', followersTotal)} •
+          {toggleSubscribe && <span onClick={() => toggleSubscribe(communityTopic)} styleName='topic-subscribe'>
+            {communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+          </span>}
+        </div>
+      }
       {!singleCommunity && communityTopics.map((ct, key) =>
         <CommunityCell community={ct.community} key={key}>
           <div styleName='topic-stats'>
-            {inflectedTotal('post', ct.postsTotal)} • {inflectedTotal('follower', ct.followersTotal)}
+            {inflectedTotal('post', ct.postsTotal)} • {inflectedTotal('follower', ct.followersTotal)} •
             {toggleSubscribe && <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
               {ct.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
             </span>}
@@ -175,6 +178,5 @@ export function TopicListItem ({ topic, singleCommunity, routeParams, toggleSubs
         </CommunityCell>
       )}
     </div>
-    {canModerate && <Dropdown styleName='topic-dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
   </div>
 }

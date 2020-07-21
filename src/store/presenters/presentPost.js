@@ -1,3 +1,5 @@
+import presentTopic from 'store/presenters/presentTopic'
+
 export default function presentPost (post, communityId) {
   if (!post) return null
   const postMembership = post.postMemberships.filter(p =>
@@ -14,7 +16,7 @@ export default function presentPost (post, communityId) {
     communities: post.communities.toModelArray(),
     fileAttachments: post.attachments.filter(a => a.type === 'file').toModelArray(),
     pinned,
-    topics: post.topics.toModelArray(),
+    topics: post.topics.toModelArray().map(topic => presentTopic(topic, {})),
     members: post.members.toModelArray().map(person => {
       return {
         ...person.ref,

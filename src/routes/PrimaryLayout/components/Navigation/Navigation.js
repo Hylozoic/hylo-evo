@@ -1,25 +1,19 @@
-import React from 'react'
-import { compact } from 'lodash/fp'
-import { EVENTS } from 'config/featureFlags'
-import NavLink from './NavLink'
-import Icon from 'components/Icon'
-import { Link } from 'react-router-dom'
 import cx from 'classnames'
-import './Navigation.scss'
-import { topicsUrl } from 'util/navigation'
-import TopicNavigation from './TopicNavigation'
 import { compact } from 'lodash/fp'
-import { EVENTS } from 'config/featureFlags'
+import React from 'react'
+import { Link } from 'react-router-dom'
+import Icon from 'components/Icon'
+import { topicsUrl } from 'util/navigation'
+import NavLink from './NavLink'
+import TopicNavigation from './TopicNavigation'
+
+import './Navigation.scss'
 
 export default function Navigation (props) {
   const {
-    currentUser,
     className,
     collapsed,
     routeParams,
-    communitySlug,
-    rootId,
-    rootSlug,
     rootPath,
     membersPath,
     projectsPath,
@@ -40,8 +34,6 @@ export default function Navigation (props) {
     }
   }
 
-  const hasEventsFeature = currentUser && currentUser.hasFeature(EVENTS)
-
   const links = compact([
     rootPath && {
       label: 'Home',
@@ -56,7 +48,7 @@ export default function Navigation (props) {
       icon: 'Projects',
       to: projectsPath
     },
-    eventsPath && hasEventsFeature && {
+    eventsPath && {
       label: 'Events',
       icon: 'Events',
       to: eventsPath
@@ -83,7 +75,7 @@ export default function Navigation (props) {
           <NavLink key={link.label} {...link} collapsed={collapsed}
             onClick={link.onClick} />)}
         <li styleName={cx('item', 'topicItem')}>
-          <Link to={topicsUrl(communitySlug)}>
+          <Link to={topicsUrl({ routeParams })}>
             <Icon name='Topics' />
           </Link>
         </li>

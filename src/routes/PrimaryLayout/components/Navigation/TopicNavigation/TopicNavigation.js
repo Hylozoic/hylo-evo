@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
-import { Link, NavLink, matchPath } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import Badge from 'components/Badge'
-import CreateTopic from 'components/CreateTopic'
 import Icon from 'components/Icon'
 import badgeHoverStyles from '../../../../../components/Badge/component.scss'
 import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
@@ -36,26 +35,27 @@ export default class TopicNavigation extends Component {
 
   render () {
     const {
-      topics, goBack, seeAllUrl, collapsed, expand, routeParams, communityId
+      topics, goBack, seeAllUrl, collapsed, expand
     } = this.props
-    const { slug } = routeParams
 
     return <div styleName='s.topicNavigation'>
-      <div styleName={cx('s.header', { 's.header-link': collapsed })}
-        onClick={expand}>
-        <Link to={topicsUrl(communitySlug)}>
+      <div styleName={cx('s.header', { 's.header-link': collapsed })} onClick={expand}>
+        <Link to={seeAllUrl}>
           <Icon name='Topics' styleName='s.icon' />
+          <span styleName='s.title'>Topics</span>
         </Link>
-        <span styleName='s.title'>Topics</span>
-        {communityId && <CreateTopic
+        {/* TODO: remove for now, probably for good?
+          {communityId && <CreateTopic
           communityId={communityId}
           communitySlug={slug}
-          communityTopics={topics} />}
+          topics={topics}
+        />} */}
       </div>
       <TopicsList
         onClose={goBack}
         onClick={this.onClickTopic}
-        topics={topics} />
+        topics={topics}
+      />
       <div styleName='s.addTopic'>
         <Link to={seeAllUrl}>see all</Link>
       </div>
@@ -66,14 +66,16 @@ export default class TopicNavigation extends Component {
 export function TopicsList ({ topics, onClick, onClose }) {
   return <ul styleName='s.topics'>
     {topics.map(topic =>
-      <li key={topic.name} styleName='s.topic'>
+      <li key={topic.name} styleName='s.topic' className={cx({ [s.pinned]: topic.visibility === 2 })}>
         <NavLink className={badgeHoverStyles.parent}
           styleName='s.topicLink'
           to={topic.url}
           // TODO: Removing onClick event for now
           //       but not sure why it's breaking things
           // onClick={() => onClick(topic)}
-          activeClassName='active-topic-nav-link'>
+          activeClassName='active-topic-nav-link'
+        >
+          { topic.visibility === 2 && <Icon name='Pin' styleName='s.pinIcon' /> }
           <span styleName='s.name'>#{topic.name}</span>
           {topic.newPostCount > 0 && !topic.current &&
             <Badge number={topic.newPostCount} styleName='s.badge' />}

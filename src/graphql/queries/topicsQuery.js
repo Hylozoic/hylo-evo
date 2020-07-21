@@ -1,7 +1,9 @@
 export default `query (
   $communitySlug: String,
   $networkSlug: String,
-  $autocomplete: String
+  $autocomplete: String,
+  $isDefault: Boolean,
+  $visibility: [Int],
   $first: Int,
   $offset: Int,
   $sortBy: String
@@ -10,9 +12,11 @@ export default `query (
     communitySlug: $communitySlug,
     networkSlug: $networkSlug,
     autocomplete: $autocomplete,
+    isDefault: $isDefault,
+    visibility: $visibility,
     first: $first,
     offset: $offset,
-    sortBy: $sortBy
+    sortBy: $sortBy,
   ) {
     hasMore
     total
@@ -27,7 +31,7 @@ export default `query (
         communitySlug: $communitySlug,
         networkSlug: $networkSlug
       )
-      communityTopics {
+      communityTopics(isDefault: $isDefault, visibility: $visibility) {
         items {
           id
           community {
@@ -43,6 +47,8 @@ export default `query (
           followersTotal
           isSubscribed
           newPostCount
+          isDefault
+          visibility
         }
       }
     }

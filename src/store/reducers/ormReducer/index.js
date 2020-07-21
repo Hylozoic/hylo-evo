@@ -15,6 +15,7 @@ import {
   UPDATE_THREAD_READ_TIME,
   VOTE_ON_POST_PENDING,
   UPDATE_POST_PENDING,
+  UPDATE_COMMUNITY_TOPIC_PENDING,
   UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING,
   PROCESS_STRIPE_TOKEN_PENDING,
   RESPOND_TO_EVENT_PENDING
@@ -86,7 +87,7 @@ export default function ormReducer (state = {}, action) {
     extractModelsFromAction(action, session)
   }
 
-  let me, membership, community, person, post, comment
+  let me, membership, community, person, post, comment, communityTopic
 
   switch (type) {
     case CREATE_COMMENT_PENDING:
@@ -142,11 +143,16 @@ export default function ormReducer (state = {}, action) {
       break
 
     case TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING:
-      const ct = CommunityTopic.get({ topic: meta.topicId, community: meta.communityId })
-      ct.update({
-        followersTotal: ct.followersTotal + (meta.isSubscribing ? 1 : -1),
+      communityTopic = CommunityTopic.get({ topic: meta.topicId, community: meta.communityId })
+      communityTopic.update({
+        followersTotal: communityTopic.followersTotal + (meta.isSubscribing ? 1 : -1),
         isSubscribed: !!meta.isSubscribing
       })
+      break
+
+    case UPDATE_COMMUNITY_TOPIC_PENDING:
+      communityTopic = CommunityTopic.withId(meta.id)
+      communityTopic.update(meta.data)
       break
 
     case VOTE_ON_POST_PENDING:
@@ -286,7 +292,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case DELETE_COMMUNITY_TOPIC_PENDING:
-      const communityTopic = CommunityTopic.withId(meta.id)
+      communityTopic = CommunityTopic.withId(meta.id)
       communityTopic.delete()
       break
 

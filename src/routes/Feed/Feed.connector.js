@@ -35,7 +35,6 @@ export function mapStateToProps (state, props) {
   }
   if (topicName) {
     topic = getTopicForCurrentRoute(state, props)
-    topic = topic && topic.ref
   }
   if (networkSlug) {
     network = getNetworkForCurrentRoute(state, props)

@@ -17,6 +17,7 @@ const requiredProps = {
   topics,
   location: { pathname: '/' },
   backUrl: '/return-here',
+  seeAllUrl: '/seeAllTopics',
   routeParams: {
     slug: community.slug
   }

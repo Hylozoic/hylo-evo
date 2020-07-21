@@ -5,6 +5,7 @@ import CommunitySettingsTab from './CommunitySettingsTab'
 import ModeratorsSettingsTab from './ModeratorsSettingsTab'
 import InviteSettingsTab from './InviteSettingsTab'
 import DeleteSettingsTab from './DeleteSettingsTab'
+import TopicsSettingsTab from './TopicsSettingsTab'
 import Loading from 'components/Loading'
 import FullPageModal from 'routes/FullPageModal'
 import { get } from 'lodash/fp'
@@ -60,6 +61,11 @@ export default class CommunitySettings extends Component {
           name: 'Moderators',
           path: `/c/${slug}/settings/moderators`,
           component: <ModeratorsSettingsTab communityId={community.id} slug={community.slug} />
+        },
+        {
+          name: 'Topics',
+          path: `/c/${slug}/settings/topics`,
+          component: <TopicsSettingsTab community={community} />
         },
         {
           name: 'Invite',

@@ -21,7 +21,7 @@ export default function resetNewPostCount (id, type) {
 }
 
 const CommunityTopicQuery = `mutation($id: ID, $data: CommunityTopicInput) {
-    updateCommunityTopic(id: $id, data: $data) {
+    updateCommunityTopicFollow(id: $id, data: $data) {
       success
     }
   }`

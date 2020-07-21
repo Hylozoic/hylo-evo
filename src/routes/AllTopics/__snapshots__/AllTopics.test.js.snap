@@ -10,7 +10,7 @@ exports[`AllTopics matches the latest snapshot 1`] = `
     <div
       data-stylename="title"
     >
-      Topics
+       Topics
     </div>
     <div
       data-stylename="subtitle"
@@ -77,6 +77,10 @@ exports[`SearchBar matches the latest snapshot 1`] = `
     items={
       Array [
         Object {
+          "label": "Name",
+          "onClick": [Function],
+        },
+        Object {
           "label": "Popular",
           "onClick": [Function],
         },
@@ -90,7 +94,7 @@ exports[`SearchBar matches the latest snapshot 1`] = `
       <span
         data-stylename="search-sorter-label"
       >
-        Popular
+        Name
         <Icon
           name="ArrowDown"
         />
@@ -128,6 +132,7 @@ exports[`TopicListItem when multiple communities matches the latest snapshot 1`]
         24 posts
          • 
         52 followers
+         •
       </div>
       <br />
     </CommunityCell>
@@ -140,6 +145,7 @@ exports[`TopicListItem when multiple communities matches the latest snapshot 1`]
         1 post
          • 
         4 followers
+         •
       </div>
       <br />
     </CommunityCell>

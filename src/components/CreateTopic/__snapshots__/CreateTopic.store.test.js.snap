@@ -3,8 +3,8 @@
 exports[`matches the last snapshot for createTopic 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($topicName: String, $communityId: ID) {
-        createTopic(topicName: $topicName, communityId: $communityId) {
+    "query": "mutation ($topicName: String, $communityId: ID, $isDefault: Boolean, $isSubscribing: Boolean) {
+        createTopic(topicName: $topicName, communityId: $communityId, isDefault: $isDefault, isSubscribing: $isSubscribing) {
           id
           name
           communityTopics {
@@ -12,11 +12,14 @@ Object {
               id
               community {
                 id
+                slug
               }
+              isDefault
               isSubscribed
               newPostCount
               postsTotal
               followersTotal
+              visibility
             }
           }
           followersTotal
@@ -25,11 +28,18 @@ Object {
       }",
     "variables": Object {
       "communityId": "1",
+      "isDefault": false,
+      "isSubscribing": false,
       "topicName": "wombats",
     },
   },
   "meta": Object {
     "analytics": "Topic Created",
+    "data": Object {
+      "communityId": "1",
+      "isDefault": false,
+      "topicName": "wombats",
+    },
     "extractModel": Array [
       Object {
         "getRoot": [Function],

@@ -33,6 +33,19 @@ exports[`renders correctly with a community 1`] = `
         "path": "/c/foo/settings/moderators",
       },
       Object {
+        "component": <Connect(TopicsSettingsTab)
+          community={
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
+          }
+        />,
+        "name": "Topics",
+        "path": "/c/foo/settings/topics",
+      },
+      Object {
         "component": <Connect(InviteSettingsTab)
           community={
             Object {

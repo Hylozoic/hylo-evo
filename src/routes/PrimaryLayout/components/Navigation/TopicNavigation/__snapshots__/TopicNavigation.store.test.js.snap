@@ -9,9 +9,11 @@ Array [
       "isSubscribed": true,
       "newPostCount": 7,
       "topic": "3",
+      "visibility": 2,
     },
     "isSubscribed": true,
     "newPostCount": 7,
+    "visibility": 2,
   },
   SessionBoundModel {
     "_fields": Object {
@@ -20,9 +22,11 @@ Array [
       "isSubscribed": true,
       "newPostCount": 5,
       "topic": "1",
+      "visibility": 1,
     },
     "isSubscribed": true,
     "newPostCount": 5,
+    "visibility": 1,
   },
 ]
 `;

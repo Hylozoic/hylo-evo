@@ -18,16 +18,12 @@ describe('CreateTopic', () => {
           'wombat-community': true
         }
       },
-      communityTopics: [
+      subscribeAfterCreate: true,
+      topics: [
         {
-          followersTotal: 100,
-          id: '1',
-          isSubscribed: false,
-          postsTotal: 3,
-          topic: {
-            id: '3',
-            name: 'flarglebargles'
-          }
+          id: '3',
+          name: 'flarglebargles',
+          value: 'flarglebargles'
         }
       ],
       createTopic: () => {},
@@ -95,6 +91,7 @@ describe('CreateTopic', () => {
 
     it('subscribes and redirects to existing topics', () => {
       wrapper.setProps({
+        subscribeAfterCreate: true,
         communityTopicExists: {
           aardvark: {
             'wombat-community': true

@@ -19,12 +19,14 @@ import {
 import createPost from 'store/actions/createPost'
 import createProject from 'store/actions/createProject'
 import updatePost from 'store/actions/updatePost'
+import { fetchDefaultTopics } from 'store/actions/fetchTopics'
 import {
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
   pollingFetchLinkPreview,
   removeLinkPreview,
   clearLinkPreview,
+  getDefaultTopics,
   getLinkPreview,
   setAnnouncement
 } from './PostEditor.store'
@@ -63,11 +65,13 @@ export function mapStateToProps (state, props) {
   const isEvent = postTypeContext === 'event' || get('type', post) === 'event'
   const announcementSelected = state[MODULE_NAME].announcement
   const canModerate = currentUser && currentUser.canModerate(currentCommunity)
+  const defaultTopics = getDefaultTopics(state, { communitySlug: communitySlug, sortBy: 'name' })
 
   return {
     currentUser,
     currentCommunity,
     communityOptions,
+    defaultTopics,
     postTypeContext,
     isProject,
     isEvent,
@@ -94,16 +98,17 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = (dispatch, props) => {
   return {
-    pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
-    removeLinkPreview: () => dispatch(removeLinkPreview()),
+    addFile: url => dispatch(addAttachment(url, 'file')),
+    addImage: url => dispatch(addAttachment(url, 'image')),
     clearLinkPreview: () => dispatch(clearLinkPreview()),
-    updatePost: postParams => dispatch(updatePost(postParams)),
     createPost: postParams => dispatch(createPost(postParams)),
     createProject: postParams => dispatch(createProject(postParams)),
+    fetchDefaultTopics: (params) => dispatch(fetchDefaultTopics(params)),
     goToUrl: url => dispatch(push(url)),
-    addImage: url => dispatch(addAttachment(url, 'image')),
-    addFile: url => dispatch(addAttachment(url, 'file')),
-    setAnnouncement: bool => dispatch(setAnnouncement(bool))
+    pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
+    removeLinkPreview: () => dispatch(removeLinkPreview()),
+    setAnnouncement: bool => dispatch(setAnnouncement(bool)),
+    updatePost: postParams => dispatch(updatePost(postParams))
   }
 }
 
@@ -125,15 +130,17 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const createPost = postParams => dispatchProps.createPost({ networkSlug, ...postParams })
   const createProject = projectParams =>
     dispatchProps.createProject({ networkSlug, ...projectParams })
+  const fetchDefaultTopics = () => dispatchProps.fetchDefaultTopics({ networkSlug, communitySlug })
 
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    goToPost,
-    pollingFetchLinkPreview,
     createPost,
-    createProject
+    createProject,
+    fetchDefaultTopics,
+    goToPost,
+    pollingFetchLinkPreview
   }
 }
 

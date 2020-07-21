@@ -24,8 +24,8 @@ export const getTopicsFromSubscribedCommunityTopics = (state, props) => {
     }
   })
 
+  // TODO: WTF?
   const names = topics.map(topic => topic.name)
-
   topics = topics.filter((topic, index) => names.indexOf(topic.name) === index)
 
   return topics
@@ -41,10 +41,13 @@ export const getSubscribedCommunityTopics = ormCreateSelector(
 
     if (community) {
       communityTopics = session.CommunityTopic
-        .filter({ community: community.id, isSubscribed: true })
+        .filter({ community: community.id, isSubscribed: true, visibility: 1 })
+        .toModelArray()
+      const pinnedCommunityTopics = session.CommunityTopic
+        .filter({ community: community.id, isSubscribed: true, visibility: 2 })
         .toModelArray()
 
-      return sortBy(getTopicName, communityTopics)
+      return sortBy(getTopicName, pinnedCommunityTopics).concat(sortBy(getTopicName, communityTopics))
     }
 
     if (network) {
