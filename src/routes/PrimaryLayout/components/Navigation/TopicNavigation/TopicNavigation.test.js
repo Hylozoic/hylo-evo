@@ -3,10 +3,10 @@ import TopicNavigation from './TopicNavigation'
 import { shallow } from 'enzyme'
 
 const topics = [
-  {name: 't1', url: '/t1', newPostCount: 3},
-  {name: 't2', url: '/t2', newPostCount: 0},
-  {name: 't3', url: '/t3', current: true},
-  {name: 't4', url: '/t4', newPostCount: 2}
+  { name: 't1', url: '/t1', newPostCount: 3 },
+  { name: 't2', url: '/t2', newPostCount: 0 },
+  { name: 't3', url: '/t3', current: true },
+  { name: 't4', url: '/t4', newPostCount: 2 }
 ]
 
 const community = {

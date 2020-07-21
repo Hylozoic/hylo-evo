@@ -8,7 +8,7 @@ describe('mapStateToProps', () => {
     const state = {
       [MODULE_NAME]: {},
       pending: {},
-      queryResults: {},
+      queryResults: {}
     }
     const props = {
       navigation: {},
@@ -32,9 +32,9 @@ describe('mergeProps', () => {
       fetchTopicsParams: {
         communitySlug: 'testcommunityslug'
       }
-    }    
+    }
     const fetchTopics = jest.fn()
-    const dispatchProps = { fetchTopics } 
+    const dispatchProps = { fetchTopics }
     const merged = mergeProps(stateProps, dispatchProps, {})
 
     expect(fetchTopics).not.toHaveBeenCalled()

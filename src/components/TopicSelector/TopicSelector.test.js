@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import TopicSelector, { Suggestion } from './TopicSelector'
+import TopicSelector from './TopicSelector'
 
 describe('TopicSelector', () => {
   const defaultMinProps = { }
