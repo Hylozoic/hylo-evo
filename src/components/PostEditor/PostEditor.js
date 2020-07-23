@@ -310,7 +310,7 @@ export default class PostEditor extends React.Component {
   }
 
   isValid = (postUpdates = {}) => {
-    const { type, title, communities, startTime, endTime, locationId } = Object.assign({}, this.state.post, postUpdates)
+    const { type, title, communities, startTime, endTime } = Object.assign({}, this.state.post, postUpdates)
     const { isEvent } = this.props
 
     return !!(this.editor.current &&
@@ -319,8 +319,7 @@ export default class PostEditor extends React.Component {
       title.length > 0 &&
       communities.length > 0 &&
       title.length <= MAX_TITLE_LENGTH &&
-      (!isEvent || (endTime && (startTime < endTime))) &&
-      (type !== 'resource' || locationId)
+      (!isEvent || (endTime && (startTime < endTime)))
     )
   }
 
