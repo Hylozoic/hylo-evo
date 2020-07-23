@@ -25,7 +25,7 @@ export default class CommunityDetail extends Component {
     fetchCommunity: PropTypes.func
   }
 
-  state = {}
+  state = initialState
 
   componentDidMount () {
     this.onCommunityIdChange()
@@ -49,11 +49,10 @@ export default class CommunityDetail extends Component {
 
     joinCommunity(community.id, currentUser.id)
       .then(res => {
-        const communityName = community.name || 'this community'
         let errorMessage, successMessage
-        if (res.error) errorMessage = `Error joining ${communityName}.`
+        if (res.error) errorMessage = `Error joining ${community.name}.`
         const membership = get(res, 'payload.data')
-        if (membership) successMessage = `You have joined ${communityName}.`
+        if (membership) successMessage = `You have joined ${community.name}.`
         return this.setState({ errorMessage, successMessage, membership })
       })
   }
@@ -84,7 +83,7 @@ export default class CommunityDetail extends Component {
 
     const topics = community && community.communityTopics
 
-    const isMember = (community.members || []).map(m => m.id).includes(currentUser.id)
+    const isMember = (community.members || []).find(m => m.id === currentUser.id)
 
     return <div styleName='c.community'>
       <div styleName='c.communityDetailHeader' style={{ backgroundImage: `url(${community.bannerUrl})` }}>
