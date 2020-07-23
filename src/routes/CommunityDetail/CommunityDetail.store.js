@@ -17,9 +17,6 @@ export default function reducer (state = defaultState, action) {
     case FETCH_JOIN_REQUESTS:
       const requests = payload.data.joinRequests.items || []
       return requests.filter(r => r.status === 0)
-    case CREATE_JOIN_REQUEST:
-      const { request } = payload.data.createJoinRequest
-      return request
     default:
       return state
   }
