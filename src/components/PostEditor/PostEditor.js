@@ -67,7 +67,7 @@ export default class PostEditor extends React.Component {
     detailPlaceholderForPostType: {
       offer: 'Add a description',
       request: 'Add a description',
-      resource: 'Please describe the physical resource that is available, including the location.',
+      resource: 'Describe the resource that is available',
       project: 'Add a description',
       event: 'Add a description',
       default: 'Add a description'

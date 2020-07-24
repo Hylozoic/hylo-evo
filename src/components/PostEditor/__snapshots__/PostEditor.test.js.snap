@@ -1384,7 +1384,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
-        placeholder="Please describe the physical resource that is available, including the location."
+        placeholder="Describe the resource that is available"
         readOnly={false}
       />
     </div>
