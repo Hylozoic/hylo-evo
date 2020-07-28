@@ -7,6 +7,7 @@ import BlockedUsersTab from './BlockedUsersTab/BlockedUsersTab'
 import NotificationSettingsTab from './NotificationSettingsTab/NotificationSettingsTab'
 import AccountSettingsTab from './AccountSettingsTab/AccountSettingsTab'
 import PaymentSettingsTab from './PaymentSettingsTab/PaymentSettingsTab'
+import SavedSearchesTab from './SavedSearchesTab/SavedSearchesTab'
 import FullPageModal from 'routes/FullPageModal'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import './UserSettings.scss'
@@ -20,7 +21,9 @@ export default class UserSettings extends Component {
   }
 
   componentDidMount () {
+    const { currentUser } = this.props
     this.props.fetchForCurrentUser()
+    this.props.fetchSavedSearches(currentUser.id)
   }
 
   render () {
@@ -40,7 +43,9 @@ export default class UserSettings extends Component {
       allCommunitiesSettings,
       fetchPending,
       queryParams,
-      registerStripeAccount
+      registerStripeAccount,
+      searches,
+      deleteSearch
     } = this.props
 
     const content = [
@@ -81,6 +86,13 @@ export default class UserSettings extends Component {
           currentUser={currentUser}
           updateUserSettings={updateUserSettings}
           setConfirm={setConfirm} />
+      },
+      {
+        name: 'Saved Searches',
+        path: '/settings/saved-searches',
+        component: <SavedSearchesTab
+          searches={searches}
+          deleteSearch={deleteSearch} />
       }
     ]
 

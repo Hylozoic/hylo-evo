@@ -1,0 +1,51 @@
+// CommunityControl
+.search-control {
+  min-height: 52px;
+  border-bottom: 1px solid $color-ghost;
+}
+
+.title {
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 4px;
+  margin-bottom: 25px;
+  composes: hdr-display from 'css/typography.scss';
+  background-color: $color-catskill-white;
+  border: none;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin: 8px 0px;
+}
+
+.name {
+  composes: bdy-drk-sm from 'css/typography.scss';
+  font-size: 16px;
+  &:hover {
+    color: $color-rhino;
+    text-decoration: none;
+  }
+}
+
+.params-icon {
+  font-size: 10px;
+  margin-left: 5px;
+  padding: 2px 7px;
+  background: #fffce3;
+  border: 1px solid #cecece;
+  border-radius: 15px;
+}
+
+.delete-button {
+  margin-left: auto;
+  composes: text-button from 'css/typography.scss';
+  color: $color-amaranth;
+  @include font-regular;
+  &:hover {
+    color: $color-maroon-flush;
+  }
+}

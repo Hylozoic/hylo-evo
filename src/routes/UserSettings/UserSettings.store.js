@@ -1,4 +1,6 @@
 import {
+  FETCH_SAVED_SEARCHES,
+  DELETE_SAVED_SEARCH,
   LEAVE_COMMUNITY,
   UNLINK_ACCOUNT
 } from 'store/constants'
@@ -12,6 +14,31 @@ export const UPDATE_MEMBERSHIP_SETTINGS_PENDING = UPDATE_MEMBERSHIP_SETTINGS + '
 export const UPDATE_ALL_MEMBERSHIP_SETTINGS = `${MODULE_NAME}/UPDATE_ALL_MEMBERSHIP_SETTINGS`
 export const UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING = `${UPDATE_ALL_MEMBERSHIP_SETTINGS}_PENDING`
 export const REGISTER_STRIPE_ACCOUNT = `${MODULE_NAME}/REGISTER_STRIPE_ACCOUNT`
+
+const defaultState = {
+  searches: []
+}
+
+export default function reducer (state = defaultState, action) {
+  const { error, type, payload } = action
+  if (error) return state
+
+  switch (type) {
+    case FETCH_SAVED_SEARCHES:
+      return {
+        ...state,
+        searches: payload.data.savedSearches.items
+      }
+    case DELETE_SAVED_SEARCH:
+      const deletedId = payload.data.deleteSavedSearch
+      return {
+        ...state,
+        searches: state.searches.filter(s => s.id !== deletedId)
+      }
+    default:
+      return state
+  }
+}
 
 export function updateUserSettings (changes) {
   return {
@@ -29,6 +56,51 @@ export function updateUserSettings (changes) {
     meta: {
       optimistic: true,
       changes
+    }
+  }
+}
+
+export function fetchSavedSearches (userId) {
+  return {
+    type: FETCH_SAVED_SEARCHES,
+    graphql: {
+      query: `query ($userId: ID) {
+        savedSearches(userId: $userId) {
+          total
+          hasMore
+          items {
+            id
+            name
+            community {
+              slug
+            }
+            network {
+              slug
+            }
+            isPublic
+            active
+            searchText
+            postTypes
+          }
+        }
+      }`,
+      variables: { userId }
+    }
+  }
+}
+
+export function deleteSearch (id) {
+  return {
+    type: DELETE_SAVED_SEARCH,
+    graphql: {
+      query: `mutation ($id: ID) {
+        deleteSavedSearch(id: $id)
+      }`,
+      variables: { id }
+    },
+    meta: {
+      id,
+      optimistic: true
     }
   }
 }
