@@ -12,7 +12,8 @@ export default class LocationInput extends Component {
     location: PropTypes.string,
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
-    pollingFetchLocation: PropTypes.func
+    pollingFetchLocation: PropTypes.func,
+    saveLocationToDB: PropTypes.bool
   }
 
   static defaultProps = {
@@ -21,7 +22,8 @@ export default class LocationInput extends Component {
     locationObject: null,
     location: '',
     onChange: null,
-    placeholder: 'Search for a location...'
+    placeholder: 'Search for a location...',
+    saveLocationToDB: true
   }
 
   constructor (props) {
@@ -42,7 +44,11 @@ export default class LocationInput extends Component {
   }
 
   handleSelectLocation = data => {
-    this.props.pollingFetchLocation(convertMapboxToLocation(data), (location) => this.props.onChange(location))
+    if (this.props.saveLocationToDB) {
+      this.props.pollingFetchLocation(convertMapboxToLocation(data), (location) => this.props.onChange(location))
+    } else {
+      this.props.onChange(convertMapboxToLocation(data))
+    }
   }
 
   handleSuggest = e => { }

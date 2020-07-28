@@ -68,6 +68,7 @@ export default class AddLocation extends Component {
         </div>
         <div styleName='center'>
           <LocationInput
+            saveLocationToDB
             inputClass={inputClass}
             location={this.state.location}
             locationObject={this.props.currentUser ? this.props.currentUser.locationObject : null}

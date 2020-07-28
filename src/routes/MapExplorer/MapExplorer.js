@@ -101,8 +101,8 @@ export default class MapExplorer extends React.Component {
   }
 
   handleLocationInputSelection = (value) => {
-    if (value.id){
-      this.setState({viewport: locationObjectToViewport(this.state.viewport, value)})
+    if (value.id) {
+      this.setState({ viewport: locationObjectToViewport(this.state.viewport, value) })
     }
   }
 
@@ -236,7 +236,7 @@ export default class MapExplorer extends React.Component {
         />)
         : '' }
       <div styleName={cx('searchAutocomplete')}>
-        <LocationInput onChange={(value) => this.handleLocationInputSelection(value)} />
+        <LocationInput saveLocationToDB={false} onChange={(value) => this.handleLocationInputSelection(value)} />
       </div>
       <button styleName={cx('toggleFeatureFiltersButton', { 'featureFiltersOpen': showFeatureFilters })} onClick={this.toggleFeatureFilters}>
         Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/5</strong>
